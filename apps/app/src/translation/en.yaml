@@ -36,7 +36,7 @@
   value: Listing - Pros (title)
 0931bae674f385d4352f8bb5199e1d2390a7e0008f4c93551330702f:
   ref: No listings with transactions (message)
-  value: No listings with transactions (message)
+  value: There are no listings with messages yet.
 0a08e45b023a7e9c7c4856084c91d4a78b31861ac5bf75f91fe4780a:
   ref: Listing restriction (label)
   value: Listing restriction (label)
@@ -70,12 +70,18 @@
 1088c3fcabd70b4e385443272326be10f59a63b577e719b5ac8c5821:
   ref: Listing ignore (hint)
   value: Listing ignore (hint)
+10f914ea9cc83041c29c8bb26973587f54d1113366f11ee5daad4a4d:
+  ref: System update (label)
+  value: System update (label)
 1127abe5ce9696ad1b6477d3c6557314bacdf45155e4e890091f1d3e:
   ref: Save (button)
   value: Save (button)
 124648485fb6d6f50a0829d36808e384ad3c0904126f300a12fda2e7:
   ref: Reject transaction - confirm (button)
   value: Reject transaction - confirm (button)
+125ec29a54fbffbd5ccf6e8eb6753f639182e0f2caf71a6236341929:
+  ref: Transaction row - location activity (label)
+  value: Shared location
 12e75835dcd53665e98ab2e6c1064379dd6094870afd31f532f39e47:
   ref: Listing restriction (hint)
   value: Listing restriction (hint)
@@ -91,6 +97,12 @@
 17d657e028b311247a42416aa1a3a6a7bbd603c9ad2640db1a845a89:
   ref: Feed location security (hint)
   value: Feed location security (hint)
+186a677d557f7be59d408a2651518edd80e606957e8b35bcc05cdc0a:
+  ref: gallery
+  value: gallery
+188182c2fe82cee01a535fea542022b96a389bdbc5c5f374f0aa5564:
+  ref: Chat - transaction resolved - seller cannot write (message)
+  value: Chat - transaction resolved - seller cannot write (message)
 1943b1ef0623fcc6116ef391b30cce37b7fd75dcde851410b1d5f9d6:
   ref: Upload photos (button)
   value: Upload photos (button)
@@ -123,7 +135,7 @@
   value: Listing condition not selected
 202839a5815da796fc7bf9523af6a1632740384024fad4cbbdf1ab3a:
   ref: No listings for current filter (message)
-  value: No listings for current filter (message)
+  value: No listings with messages match the current filter.
 2250c7f0548b5cbe0fbdac80837ac558866128e004997e4f6b879f72:
   ref: Feed delivery not selected
   value: Feed delivery not selected
@@ -172,6 +184,9 @@
 2ff3786d4505b98b160e38838692be1ceb7b97965d65a15f2e095e9f:
   ref: Decision rate (label)
   value: Decision rate (label)
+2ffcf19b394b65e8c4db7ec91a5f08de4dea061f7193574edb14c032:
+  ref: Transaction row - gallery activity (label)
+  value: Shared photos
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
   ref: Age (title)
   value: Age (title)
@@ -205,6 +220,9 @@
 39506faaa681b27e6ed65d4237e07c6a2c63838b44f9495159f1ec8b:
   ref: Listing - Pros not filled
   value: Listing - Pros not filled
+3a1b3a1d80c69a71c07cd3e3bb533761f1e1262f783807d8052329c9:
+  ref: Transaction status rejected (label)
+  value: Transaction rejected
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
   ref: Price (placeholder)
   value: Price (placeholder)
@@ -250,6 +268,9 @@
 45fd6a456d2df867fc9e5e6b00a48088350c9551963f2be871e604e3:
   ref: No my listings (message)
   value: No my listings (message)
+46d22046c4077be76cb0b5c7ff1df1142a3bbdafa6f844c53909ffb2:
+  ref: Transaction options (title)
+  value: Transaction options (title)
 46fc4830636405387727b8b88545e0e351e9227eaeac0426eafdb244:
   ref: Ignore listing (button)
   value: Ignore listing (button)
@@ -271,6 +292,9 @@
 4d603e3fca4e9f047b0fd3fdd009a1808b0b50eda2aa6f12c206a9c7:
   ref: Share location (button)
   value: Share location (button)
+4d83e7c062f2a34e98c8953735ec95520b6b39a4300df4c9742f5cb7:
+  ref: Transaction status pending (label)
+  value: New buyer interest
 4e635fa67582dafe43092219c67fa6a2e596a963d1b95673277dda75:
   ref: search
   value: search
@@ -283,12 +307,18 @@
 4f04083c52884888c6258c7fe83a35ff1ce96d78ee8c600a0397392c:
   ref: Seller info (button)
   value: Seller info (button)
+4ff4882e934b1e4c4ed0e5873160931aeada352a1001061997555d13:
+  ref: Transaction status dispute (label)
+  value: Issue reported
 5216a97ce804ea83d2142778cf1659ad70adc72c670ea7365e396fcb:
   ref: Go home (welcome)
   value: Go home (welcome)
 53630910d2b191f4a79a007e555fd44b9e109f75bafb3df5171ea48f:
   ref: New seller message (label)
   value: New seller message (label)
+55672785780f3eaea6cb3ccba093853d44e33d6e4f984123c2b89a7a:
+  ref: Transaction status expired (label)
+  value: Transaction expired
 5611e161fc48366fdb56f2529712795617513c1b346552e32a53ff19:
   ref: Loading... (button)
   value: Loading... (button)
@@ -298,6 +328,9 @@
 564debf52b19422fec7c41c13caf2b5416f0c8b03bb2e36a07be7139:
   ref: Expired rate (label)
   value: Expired rate (label)
+5696a362d2b856058349f5f1d7eddcfddf637ff45f3266696b41f04a:
+  ref: package
+  value: package
 57cf1f27b485ad4ccfff9487dc973c5a5a9d3582b03670f822646bc0:
   ref: Transaction not accepted - seller (message)
   value: Transaction not accepted - seller (message)
@@ -310,6 +343,9 @@
 5a5a2baed8c4a4673ac53e4bffc4d31e2508fb9c8c1fb184da880680:
   ref: Listing - Pros (message)
   value: Listing - Pros (message)
+5a8078e6e02d8cb9bd3325ff9d933c81a891ba287edbbf7175e41c29:
+  ref: Transaction status resolved (label)
+  value: Resolved
 5b65a4cf7255c3e4465c81b9bc1b31317d2f4aa306b4c038a4a5b00c:
   ref: Feed category (label)
   value: Feed category (label)
@@ -325,18 +361,30 @@
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
   ref: Listing age (label)
   value: Listing age (label)
+5ececd176ea0ae450bdc45029a0801ebc901ed8269d67ec157a5d983:
+  ref: location
+  value: location
 5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
   ref: Feed name (placeholder)
   value: Feed name (placeholder)
 5f8d3eb16bf7b5c857416890f7e4c3ff3d02dfa73a7d621f9a603e9f:
   ref: Listing photo gallery (label)
   value: Listing photo gallery (label)
+5f8fac6b4c34a106a1ca60552e94ccd263a2dd51ce2099c6de06e4f9:
+  ref: Transaction status sold (label)
+  value: Marked as sold
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
   ref: Really delete feed (button)
   value: Really delete feed (button)
 61324250f05e5b53c0994000ad235a587fa6c894a2414d561a434548:
   ref: Draft list (title)
   value: Draft list (title)
+61dd087b73e6d2b3291aa14c76d9dcc813946be2957f788836796746:
+  ref: Transaction status closed (label)
+  value: Transaction closed
+62323b76d8ec615cba6e105b1c5c1e2e4f6e9f89de5a251ed565809f:
+  ref: Transaction row - personal activity (label)
+  value: Shared handoff details
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
   ref: View transactions (button)
   value: View transactions (button)
@@ -364,9 +412,15 @@
 69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
   ref: Feed category not selected
   value: Feed category not selected
+69ecfcc9f50466ecbb4da735d6b6f5a55898fe06c4befd118f245ad9:
+  ref: Messages active listings section (title)
+  value: Needs attention
 6ca3f3546da9df7cda3ed2984fd874d81938723ee09b0116ce96825a:
   ref: Search (button)
   value: Search (button)
+6dbcf4fc35bb69ec88d55c0a6ab2a709d55dc49588e018564cbca5a1:
+  ref: Transaction update (label)
+  value: Transaction update (label)
 70ed6d112dab8cf69d055339929e4dd23299e2c5f9c4ef97371bd13e:
   ref: No drafts for current filter (title)
   value: No drafts for current filter (title)
@@ -496,6 +550,9 @@
 92f8ed3e921515bd08034e9707119cb1472e34759a88f45647289475:
   ref: resolved
   value: resolved
+93580224c5f7a548173e9671932098b0671d7deae93ab57295cb300b:
+  ref: Transaction status success (label)
+  value: Transaction completed
 93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
   ref: Listing title (title)
   value: Listing title (title)
@@ -520,6 +577,9 @@
 9a23de247d53984321cd59852cc78c51be5369fcae87518e33d8b38b:
   ref: Seller info (title)
   value: Seller info (title)
+9b4e31938f7bfe43653601280094968b3e4bab6d2464057c41166c54:
+  ref: Transaction row - package activity (label)
+  value: Shared delivery details
 9be03a22c6dda814a581e5407a9d23f5a7660c55eb918e86f93d2951:
   ref: Listing seller info not available (title)
   value: Listing seller info not available (title)
@@ -535,6 +595,9 @@
 9ec0c5126167d5163918eaad873d557770c9bf65cd72b2ee8bd27c29:
   ref: Share package (button)
   value: Share package (button)
+9ee5f3bd7911a7eeba1208301fcf3964b7f1e029bb39480bef8a63c5:
+  ref: Messages inactive listings section (title)
+  value: Waiting
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
   ref: Fulltext (placeholder)
   value: Fulltext (placeholder)
@@ -574,6 +637,9 @@ a92a914e77188202f38d6b42be76d7f92cee60d777d0c00ca5aecbde:
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
   ref: Photo upload placeholder (title)
   value: Photo upload placeholder (title)
+ac4e887fc8f3f64d662b6a940ff6e823894c748bf103185448f43afa:
+  ref: personal
+  value: personal
 acca87272a911bd673bc0f526d8ddaf4bedf8c4d04a375401d80df47:
   ref: Restriction not selected
   value: Restriction not selected
@@ -713,7 +779,7 @@ d95b6247e69f90b9f6f613b62be4396f37f5c45acb205f993f42dd18:
   value: Reaction rate (label)
 dbb55f0c704298dbeda11ddad88ff05b151057e984bf244f0d09c4d9:
   ref: No listings with transactions (title)
-  value: No listings with transactions (title)
+  value: Nothing here yet
 dc9bf90858ca4e7cede4dc10e9939dea37d678f40fb69f16c9b30d9e:
   ref: Personal - Name (label)
   value: Personal - Name (label)
@@ -765,6 +831,9 @@ f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
 f614ee6abd82ea21f37d43a4669a4ccdcda5dfb0553501b5cd572420:
   ref: No transactions as buyer (title)
   value: No transactions as buyer (title)
+f718d2ba74693c352dc2c17cc74e1b23c47ed2051d1c31598d0dd766:
+  ref: sold
+  value: sold
 f7656349927879425de1f295c96260d551349336336a22ada2d9ff70:
   ref: Clear all (button)
   value: Clear all (button)
@@ -776,7 +845,10 @@ f807d8f885d618d3ba330d91e5719faba4383e66108e44f61570ab43:
   value: Listing seller hint (label)
 f8924c7bea8110f11a043a464cb81540cfa7c080d408ee2a13a3d711:
   ref: No listings for current filter (title)
-  value: No listings for current filter (title)
+  value: Nothing found
+f8bfd5ef36954017656843ec3970fa1e4069233279b0585be0806995:
+  ref: Unknown update (label)
+  value: Unknown update (label)
 f8e11e40da643ca8591082d562def7e52fe18e6922da04ac3e53b8ef:
   ref: Feed age not selected
   value: Feed age not selected
@@ -825,3 +897,6 @@ ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
 ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
   ref: open
   value: open
+ffbc6be860a399d98c4f2dba58bd6deca4118189f2befade5e28ce2f:
+  ref: Transaction status open (label)
+  value: Transaction accepted

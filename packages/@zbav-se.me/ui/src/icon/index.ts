@@ -30,6 +30,7 @@ export { ListingIcon } from "./ListingIcon";
 export { LocationIcon } from "./LocationIcon";
 export { LockIcon } from "./LockIcon";
 export { MyListingsIcon } from "./MyListingsIcon";
+export { PaperclipIcon } from "./PaperclipIcon";
 export { PassKeyIcon } from "./PassKeyIcon";
 export { PhotoIcon } from "./PhotoIcon";
 export { PostIcon } from "./PostIcon";

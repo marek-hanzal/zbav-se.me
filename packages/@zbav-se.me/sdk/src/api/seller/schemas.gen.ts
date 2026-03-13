@@ -1452,6 +1452,12 @@ export const sTransaction = {
         currency: {
             $ref: '#/components/schemas/CurrencyEnum'
         },
+        entry: {
+            $ref: '#/components/schemas/TransactionEntry'
+        },
+        unreadCount: {
+            type: 'number'
+        },
         location: {
             $ref: '#/components/schemas/Location'
         }
@@ -1469,6 +1475,8 @@ export const sTransaction = {
         'price',
         'priceType',
         'currency',
+        'entry',
+        'unreadCount',
         'location'
     ]
 } as const;
@@ -1485,6 +1493,406 @@ export const sTransactionStatusEnum = {
         'expired',
         'success',
         'closed'
+    ]
+} as const;
+
+export const sTransactionEntry = {
+    oneOf: [
+        {
+            $ref: '#/components/schemas/TransactionEntryText'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryGallery'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryLocation'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryPackage'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryPersonal'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryCommon'
+        }
+    ],
+    discriminator: {
+        propertyName: 'kind',
+        mapping: {
+            text: '#/components/schemas/TransactionEntryText',
+            gallery: '#/components/schemas/TransactionEntryGallery',
+            location: '#/components/schemas/TransactionEntryLocation',
+            package: '#/components/schemas/TransactionEntryPackage',
+            personal: '#/components/schemas/TransactionEntryPersonal',
+            'status-pending': '#/components/schemas/TransactionEntryCommon',
+            'status-open': '#/components/schemas/TransactionEntryCommon',
+            'status-resolved': '#/components/schemas/TransactionEntryCommon',
+            'status-dispute-buyer': '#/components/schemas/TransactionEntryCommon',
+            'status-dispute-seller': '#/components/schemas/TransactionEntryCommon',
+            'status-rejected-buyer': '#/components/schemas/TransactionEntryCommon',
+            'status-rejected-seller': '#/components/schemas/TransactionEntryCommon',
+            'status-sold': '#/components/schemas/TransactionEntryCommon',
+            'status-expired': '#/components/schemas/TransactionEntryCommon',
+            'status-success': '#/components/schemas/TransactionEntryCommon',
+            'status-closed': '#/components/schemas/TransactionEntryCommon'
+        }
+    }
+} as const;
+
+export const sTransactionEntryText = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'text'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                text: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'text'
+            ],
+            additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'userId',
+        'createdAt',
+        'kind',
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
+} as const;
+
+export const sTransactionEntryDirectionEnum = {
+    type: 'string',
+    enum: [
+        'in',
+        'out',
+        'system'
+    ]
+} as const;
+
+export const sTransactionEntryGallery = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'gallery'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                galleryId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'galleryId'
+            ],
+            additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'userId',
+        'createdAt',
+        'kind',
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
+} as const;
+
+export const sTransactionEntryLocation = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'location'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                locationId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'locationId'
+            ],
+            additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'userId',
+        'createdAt',
+        'kind',
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
+} as const;
+
+export const sTransactionEntryPackage = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'package'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                link: {
+                    type: 'string',
+                    format: 'uri'
+                },
+                number: {
+                    type: [
+                        'string',
+                        'null'
+                    ]
+                }
+            },
+            required: [
+                'link',
+                'number'
+            ],
+            additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'userId',
+        'createdAt',
+        'kind',
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
+} as const;
+
+export const sTransactionEntryPersonal = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'personal'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                name: {
+                    type: 'string'
+                },
+                phone: {
+                    type: 'string'
+                },
+                email: {
+                    type: 'string',
+                    format: 'email'
+                },
+                locationId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'name',
+                'phone',
+                'email',
+                'locationId'
+            ],
+            additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'userId',
+        'createdAt',
+        'kind',
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
+} as const;
+
+export const sTransactionEntryCommon = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        kind: {
+            $ref: '#/components/schemas/TransactionCommonKindEnum'
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                text: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'text'
+            ],
+            additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'userId',
+        'createdAt',
+        'kind',
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
+} as const;
+
+export const sTransactionCommonKindEnum = {
+    type: 'string',
+    enum: [
+        'status-pending',
+        'status-open',
+        'status-resolved',
+        'status-dispute-buyer',
+        'status-dispute-seller',
+        'status-rejected-buyer',
+        'status-rejected-seller',
+        'status-sold',
+        'status-expired',
+        'status-success',
+        'status-closed'
     ]
 } as const;
 
@@ -1893,6 +2301,12 @@ export const sTransactionListing = {
             ],
             minimum: 0
         },
+        unreadCount: {
+            type: 'number'
+        },
+        entry: {
+            $ref: '#/components/schemas/TransactionEntry'
+        },
         lastAt: {
             type: 'string'
         }
@@ -1903,6 +2317,8 @@ export const sTransactionListing = {
         'title',
         'gallery',
         'count',
+        'unreadCount',
+        'entry',
         'lastAt'
     ]
 } as const;
@@ -1943,6 +2359,9 @@ export const sTransactionListingFilter = {
         fulltext: {
             type: 'string'
         },
+        active: {
+            type: 'boolean'
+        },
         userId: {
             type: 'string'
         }
@@ -1963,6 +2382,9 @@ export const sTransactionListingWhere = {
         },
         fulltext: {
             type: 'string'
+        },
+        active: {
+            type: 'boolean'
         },
         userId: {
             type: 'string'
@@ -1989,7 +2411,8 @@ export const sTransactionListingSort = {
 export const sTransactionListingSortField = {
     type: 'string',
     enum: [
-        'createdAt'
+        'createdAt',
+        'lastAt'
     ]
 } as const;
 

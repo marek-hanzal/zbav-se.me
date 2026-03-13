@@ -5,13 +5,19 @@ import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller";
+import { zListingCreate } from "@zbav-se.me/sdk/api/seller";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { CategorySelect } from "~/app/@session/category/ui/CategorySelect/CategorySelect";
 import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
+
+const CategorySchema = zListingCreate.pick({
+	categoryId: true,
+});
 
 export namespace CategoryPatch {
 	export interface Props extends TitleContainer.Props {
@@ -30,6 +36,29 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ draft, onCancel, onView
 			"collection",
 		],
 	});
+	const form = useAppForm({
+		defaultValues: {
+			categoryId: draft.categoryId ?? null,
+		},
+		validators: {
+			onMount: CategorySchema,
+			onChange: CategorySchema,
+			onBlur: CategorySchema,
+			onSubmit: CategorySchema,
+		},
+		async onSubmit({ value }) {
+			mutation.mutate({
+				patch: {
+					categoryId: value.categoryId,
+				},
+				query: {
+					where: {
+						id: draft.id,
+					},
+				},
+			});
+		},
+	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "single",
 		initial: draft.categoryId
@@ -39,9 +68,14 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ draft, onCancel, onView
 					},
 				]
 			: [],
+		onSelect(item) {
+			form.setFieldValue("categoryId", item?.id ?? null);
+			form.setFieldMeta("categoryId", (meta) => ({
+				...meta,
+				isTouched: true,
+			}));
+		},
 	});
-
-	const categoryId = selection.optional.singleId();
 
 	return (
 		<TitleContainer
@@ -59,34 +93,33 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ draft, onCancel, onView
 					gap: "default",
 				}}
 			>
-				<CategorySelect
-					selection={selection}
-					categoryId={categoryId}
-				/>
+				<form.AppField name={"categoryId"}>
+					{(field) => (
+						<CategorySelect
+							selection={selection}
+							categoryId={field.state.value ?? undefined}
+						/>
+					)}
+				</form.AppField>
 
-				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
-						mutation.mutate({
-							patch: {
-								categoryId,
-							},
-							query: {
-								where: {
-									id: draft.id,
-								},
-							},
-						});
-					}}
-					loading={mutation.isPending}
-					disabled={!categoryId}
-					textSave={<Tx label={"Continue (label)"} />}
-					textCancel={<Tx label={"Back (label)"} />}
-					saveProps={{
-						iconEnabled: ArrowRightIcon,
-						iconPosition: "right",
-					}}
-				/>
+				<form.Subscribe selector={(state) => state.isValid}>
+					{(isValid) => (
+						<SaveContainer
+							onCancel={onCancel}
+							onSave={() => {
+								form.handleSubmit();
+							}}
+							loading={mutation.isPending}
+							disabled={!isValid || mutation.isPending}
+							textSave={<Tx label={"Continue (label)"} />}
+							textCancel={<Tx label={"Back (label)"} />}
+							saveProps={{
+								iconEnabled: ArrowRightIcon,
+								iconPosition: "right",
+							}}
+						/>
+					)}
+				</form.Subscribe>
 			</Container>
 		</TitleContainer>
 	);

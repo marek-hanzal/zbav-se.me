@@ -10,6 +10,12 @@ export const InboxFilterSchema = z
 		userId: z.string().optional().openapi({
 			description: "Inbox owner filter",
 		}),
+		reference: z.string().optional().openapi({
+			description: "Match inbox rows whose reference array contains this key",
+		}),
+		referenceIn: z.array(z.string()).min(1).optional().openapi({
+			description: "Match inbox rows whose reference array overlaps any of these keys",
+		}),
 		family: InboxFamilyEnumSchema.optional(),
 		type: InboxTypeEnumSchema.optional(),
 		priority: InboxPriorityEnumSchema.optional(),

@@ -240,6 +240,14 @@ export type tInboxFilter = {
      * Inbox owner filter
      */
     userId?: string;
+    /**
+     * Match inbox rows whose reference array contains this key
+     */
+    reference?: string;
+    /**
+     * Match inbox rows whose reference array overlaps any of these keys
+     */
+    referenceIn?: Array<string>;
     family?: tInboxFamilyEnum;
     type?: tInboxTypeEnum;
     priority?: tInboxPriorityEnum;
@@ -260,7 +268,7 @@ export type tInboxFilter = {
 /**
  * Inbox family
  */
-export const tInboxFamilyEnum = { message: 'message', reaction: 'reaction' } as const;
+export const tInboxFamilyEnum = { transaction: 'transaction', reaction: 'reaction' } as const;
 
 /**
  * Inbox family
@@ -316,6 +324,14 @@ export type tInboxWhere = {
      * Inbox owner filter
      */
     userId?: string;
+    /**
+     * Match inbox rows whose reference array contains this key
+     */
+    reference?: string;
+    /**
+     * Match inbox rows whose reference array overlaps any of these keys
+     */
+    referenceIn?: Array<string>;
     family?: tInboxFamilyEnum;
     type?: tInboxTypeEnum;
     priority?: tInboxPriorityEnum;
@@ -386,10 +402,14 @@ export type tInboxBuyerMessage = {
      */
     userId: string;
     /**
+     * Normalized reference keys used for inbox grouping
+     */
+    reference: Array<string>;
+    /**
      * Inbox event timestamp
      */
     timestamp: string;
-    family: 'message';
+    family: 'transaction';
     priority: tInboxPriorityEnum;
     /**
      * Archive timestamp (null = active)
@@ -419,10 +439,14 @@ export type tInboxSellerMessage = {
      */
     userId: string;
     /**
+     * Normalized reference keys used for inbox grouping
+     */
+    reference: Array<string>;
+    /**
      * Inbox event timestamp
      */
     timestamp: string;
-    family: 'message';
+    family: 'transaction';
     priority: tInboxPriorityEnum;
     /**
      * Archive timestamp (null = active)
@@ -452,10 +476,14 @@ export type tInboxTransaction = {
      */
     userId: string;
     /**
+     * Normalized reference keys used for inbox grouping
+     */
+    reference: Array<string>;
+    /**
      * Inbox event timestamp
      */
     timestamp: string;
-    family: 'message';
+    family: 'transaction';
     priority: tInboxPriorityEnum;
     /**
      * Archive timestamp (null = active)
@@ -500,10 +528,14 @@ export type tInboxSystem = {
      */
     userId: string;
     /**
+     * Normalized reference keys used for inbox grouping
+     */
+    reference: Array<string>;
+    /**
      * Inbox event timestamp
      */
     timestamp: string;
-    family: 'message';
+    family: 'transaction';
     priority: tInboxPriorityEnum;
     /**
      * Archive timestamp (null = active)
@@ -538,10 +570,14 @@ export type tInboxUnknown = {
      */
     userId: string;
     /**
+     * Normalized reference keys used for inbox grouping
+     */
+    reference: Array<string>;
+    /**
      * Inbox event timestamp
      */
     timestamp: string;
-    family: 'message';
+    family: 'transaction';
     priority: tInboxPriorityEnum;
     /**
      * Archive timestamp (null = active)
@@ -575,6 +611,10 @@ export type tInboxThumb = {
      * Recipient user identifier
      */
     userId: string;
+    /**
+     * Normalized reference keys used for inbox grouping
+     */
+    reference: Array<string>;
     /**
      * Inbox event timestamp
      */
@@ -616,6 +656,10 @@ export type tInboxFavourite = {
      */
     userId: string;
     /**
+     * Normalized reference keys used for inbox grouping
+     */
+    reference: Array<string>;
+    /**
      * Inbox event timestamp
      */
     timestamp: string;
@@ -644,6 +688,10 @@ export type tInboxUnfavourite = {
      * Recipient user identifier
      */
     userId: string;
+    /**
+     * Normalized reference keys used for inbox grouping
+     */
+    reference: Array<string>;
     /**
      * Inbox event timestamp
      */
@@ -676,6 +724,19 @@ export type tInboxCountQuery = {
  * Patch one inbox item resolved by query
  */
 export type tInboxPatch = {
+    patch: {
+        /**
+         * Archive timestamp
+         */
+        archivedAt?: string;
+    };
+    query: tInboxQuery;
+};
+
+/**
+ * Patch inbox items resolved by query
+ */
+export type tInboxPatchCollection = {
     patch: {
         /**
          * Archive timestamp
@@ -947,7 +1008,7 @@ export type tTransactionEntryCommon = {
      * Creation timestamp
      */
     createdAt: string;
-    kind: 'status-pending' | 'status-open' | 'status-resolved' | 'status-dispute-buyer' | 'status-dispute-seller' | 'status-rejected-buyer' | 'status-rejected-seller' | 'status-sold' | 'status-expired' | 'status-success' | 'status-closed';
+    kind: tTransactionCommonKindEnum;
     payload: {
         /**
          * Translation key for the system/status timeline entry
@@ -958,6 +1019,28 @@ export type tTransactionEntryCommon = {
     direction: tTransactionEntryDirectionEnum;
     [key: string]: unknown;
 };
+
+/**
+ * Common (shared) entries sharing same shape
+ */
+export const tTransactionCommonKindEnum = {
+    'status-pending': 'status-pending',
+    'status-open': 'status-open',
+    'status-resolved': 'status-resolved',
+    'status-dispute-buyer': 'status-dispute-buyer',
+    'status-dispute-seller': 'status-dispute-seller',
+    'status-rejected-buyer': 'status-rejected-buyer',
+    'status-rejected-seller': 'status-rejected-seller',
+    'status-sold': 'status-sold',
+    'status-expired': 'status-expired',
+    'status-success': 'status-success',
+    'status-closed': 'status-closed'
+} as const;
+
+/**
+ * Common (shared) entries sharing same shape
+ */
+export type tTransactionCommonKindEnum = typeof tTransactionCommonKindEnum[keyof typeof tTransactionCommonKindEnum];
 
 /**
  * Query object for transaction entry collection
@@ -1191,6 +1274,23 @@ export type tTransactionEntryPersonalCreate = {
         locationId: string;
         [key: string]: unknown;
     };
+};
+
+/**
+ * Query object for transaction-entry gallery fetch
+ */
+export type tTransactionEntryGalleryQuery = {
+    where: tTransactionEntryGalleryWhere;
+};
+
+/**
+ * Gallery lookup scoped by transaction entry identifier
+ */
+export type tTransactionEntryGalleryWhere = {
+    /**
+     * Transaction entry identifier linked to the gallery
+     */
+    transactionEntryId: string;
 };
 
 /**
@@ -1530,6 +1630,34 @@ export type tApiInboxPatchResponse = {
 
 export type apiInboxPatchResponse = tApiInboxPatchResponse[keyof tApiInboxPatchResponse];
 
+export type tApiInboxPatchCollectionRequest = {
+    /**
+     * Inbox collection patch payload
+     */
+    body?: tInboxPatchCollection;
+    path?: never;
+    query?: never;
+    url: '/api/user/inbox/patch-collection';
+};
+
+export type apiInboxPatchCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiInboxPatchCollectionError = apiInboxPatchCollectionErrors[keyof apiInboxPatchCollectionErrors];
+
+export type tApiInboxPatchCollectionResponse = {
+    /**
+     * Patched inbox items
+     */
+    200: Array<tInbox>;
+};
+
+export type apiInboxPatchCollectionResponse = tApiInboxPatchCollectionResponse[keyof tApiInboxPatchCollectionResponse];
+
 export type tApiS3PresignRequest = {
     body: {
         /**
@@ -1679,6 +1807,38 @@ export type tApiTransactionEntryFetchResponse = {
 };
 
 export type apiTransactionEntryFetchResponse = tApiTransactionEntryFetchResponse[keyof tApiTransactionEntryFetchResponse];
+
+export type tApiTransactionEntryGalleryFetchRequest = {
+    /**
+     * Transaction-entry gallery query object
+     */
+    body?: tTransactionEntryGalleryQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-entry/gallery/fetch';
+};
+
+export type apiTransactionEntryGalleryFetchErrors = {
+    /**
+     * Gallery not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionEntryGalleryFetchError = apiTransactionEntryGalleryFetchErrors[keyof apiTransactionEntryGalleryFetchErrors];
+
+export type tApiTransactionEntryGalleryFetchResponse = {
+    /**
+     * Gallery linked to the requested transaction entry
+     */
+    200: tGallery;
+};
+
+export type apiTransactionEntryGalleryFetchResponse = tApiTransactionEntryGalleryFetchResponse[keyof tApiTransactionEntryGalleryFetchResponse];
 
 export type tApiUploadCreateRequest = {
     /**

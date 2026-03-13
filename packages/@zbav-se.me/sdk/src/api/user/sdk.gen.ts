@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiGalleryCollectionErrors, apiGalleryCountErrors, apiGalleryFetchErrors, apiInboxArchiveErrors, apiInboxCollectionErrors, apiInboxCountErrors, apiInboxFetchErrors, apiInboxPatchErrors, apiS3PresignErrors, apiTransactionEntryCollectionErrors, apiTransactionEntryCountErrors, apiTransactionEntryCreateErrors, apiTransactionEntryFetchErrors, apiUploadCreateErrors, apiUploadFetchErrors, apiUserExPatchErrors, apiUserTokenDisableErrors, apiUserTokenEnableErrors, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiInboxArchiveRequest, tApiInboxArchiveResponse, tApiInboxCollectionRequest, tApiInboxCollectionResponse, tApiInboxCountRequest, tApiInboxCountResponse, tApiInboxFetchRequest, tApiInboxFetchResponse, tApiInboxPatchRequest, tApiInboxPatchResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiTransactionEntryCollectionRequest, tApiTransactionEntryCollectionResponse, tApiTransactionEntryCountRequest, tApiTransactionEntryCountResponse, tApiTransactionEntryCreateRequest, tApiTransactionEntryCreateResponse, tApiTransactionEntryFetchRequest, tApiTransactionEntryFetchResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUploadFetchRequest, tApiUploadFetchResponse, tApiUserExPatchRequest, tApiUserExPatchResponse, tApiUserTokenDisableRequest, tApiUserTokenDisableResponse, tApiUserTokenEnableRequest, tApiUserTokenEnableResponse } from './types.gen';
-import { zApiGalleryCollectionData, zApiGalleryCollectionResponse, zApiGalleryCountData, zApiGalleryCountResponse, zApiGalleryFetchData, zApiGalleryFetchResponse, zApiInboxArchiveData, zApiInboxArchiveResponse, zApiInboxCollectionData, zApiInboxCollectionResponse, zApiInboxCountData, zApiInboxCountResponse, zApiInboxFetchData, zApiInboxFetchResponse, zApiInboxPatchData, zApiInboxPatchResponse, zApiS3PresignData, zApiS3PresignResponse, zApiTransactionEntryCollectionData, zApiTransactionEntryCollectionResponse, zApiTransactionEntryCountData, zApiTransactionEntryCountResponse, zApiTransactionEntryCreateData, zApiTransactionEntryCreateResponse, zApiTransactionEntryFetchData, zApiTransactionEntryFetchResponse, zApiUploadCreateData, zApiUploadCreateResponse, zApiUploadFetchData, zApiUploadFetchResponse, zApiUserExPatchData, zApiUserExPatchResponse, zApiUserTokenDisableData, zApiUserTokenDisableResponse, zApiUserTokenEnableData, zApiUserTokenEnableResponse } from './zod.gen';
+import type { apiGalleryCollectionErrors, apiGalleryCountErrors, apiGalleryFetchErrors, apiInboxArchiveErrors, apiInboxCollectionErrors, apiInboxCountErrors, apiInboxFetchErrors, apiInboxPatchCollectionErrors, apiInboxPatchErrors, apiS3PresignErrors, apiTransactionEntryCollectionErrors, apiTransactionEntryCountErrors, apiTransactionEntryCreateErrors, apiTransactionEntryFetchErrors, apiTransactionEntryGalleryFetchErrors, apiUploadCreateErrors, apiUploadFetchErrors, apiUserExPatchErrors, apiUserTokenDisableErrors, apiUserTokenEnableErrors, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiInboxArchiveRequest, tApiInboxArchiveResponse, tApiInboxCollectionRequest, tApiInboxCollectionResponse, tApiInboxCountRequest, tApiInboxCountResponse, tApiInboxFetchRequest, tApiInboxFetchResponse, tApiInboxPatchCollectionRequest, tApiInboxPatchCollectionResponse, tApiInboxPatchRequest, tApiInboxPatchResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiTransactionEntryCollectionRequest, tApiTransactionEntryCollectionResponse, tApiTransactionEntryCountRequest, tApiTransactionEntryCountResponse, tApiTransactionEntryCreateRequest, tApiTransactionEntryCreateResponse, tApiTransactionEntryFetchRequest, tApiTransactionEntryFetchResponse, tApiTransactionEntryGalleryFetchRequest, tApiTransactionEntryGalleryFetchResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUploadFetchRequest, tApiUploadFetchResponse, tApiUserExPatchRequest, tApiUserExPatchResponse, tApiUserTokenDisableRequest, tApiUserTokenDisableResponse, tApiUserTokenEnableRequest, tApiUserTokenEnableResponse } from './types.gen';
+import { zApiGalleryCollectionData, zApiGalleryCollectionResponse, zApiGalleryCountData, zApiGalleryCountResponse, zApiGalleryFetchData, zApiGalleryFetchResponse, zApiInboxArchiveData, zApiInboxArchiveResponse, zApiInboxCollectionData, zApiInboxCollectionResponse, zApiInboxCountData, zApiInboxCountResponse, zApiInboxFetchData, zApiInboxFetchResponse, zApiInboxPatchCollectionData, zApiInboxPatchCollectionResponse, zApiInboxPatchData, zApiInboxPatchResponse, zApiS3PresignData, zApiS3PresignResponse, zApiTransactionEntryCollectionData, zApiTransactionEntryCollectionResponse, zApiTransactionEntryCountData, zApiTransactionEntryCountResponse, zApiTransactionEntryCreateData, zApiTransactionEntryCreateResponse, zApiTransactionEntryFetchData, zApiTransactionEntryFetchResponse, zApiTransactionEntryGalleryFetchData, zApiTransactionEntryGalleryFetchResponse, zApiUploadCreateData, zApiUploadCreateResponse, zApiUploadFetchData, zApiUploadFetchResponse, zApiUserExPatchData, zApiUserExPatchResponse, zApiUserTokenDisableData, zApiUserTokenDisableResponse, zApiUserTokenEnableData, zApiUserTokenEnableResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -155,6 +155,23 @@ export const apiInboxPatch = <ThrowOnError extends boolean = false>(options?: Op
 });
 
 /**
+ * Patch inbox collection
+ *
+ * Patch inbox items resolved by query
+ */
+export const apiInboxPatchCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiInboxPatchCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiInboxPatchCollectionResponse, apiInboxPatchCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiInboxPatchCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiInboxPatchCollectionResponse.parseAsync(data),
+    url: '/api/user/inbox/patch-collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
  * Generate a pre-signed URL for direct S3-compatible PUT upload
  *
  * Generate a pre-signed URL for direct S3-compatible PUT upload (private bucket). Expiration is server-controlled. A random suffix is always added.
@@ -232,6 +249,23 @@ export const apiTransactionEntryFetch = <ThrowOnError extends boolean = false>(o
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionEntryFetchResponse.parseAsync(data),
     url: '/api/user/transaction-entry/fetch',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Fetch gallery for one transaction entry
+ *
+ * Returns a gallery linked to a transaction entry when the current user is a participant of the transaction
+ */
+export const apiTransactionEntryGalleryFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionEntryGalleryFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionEntryGalleryFetchResponse, apiTransactionEntryGalleryFetchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiTransactionEntryGalleryFetchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiTransactionEntryGalleryFetchResponse.parseAsync(data),
+    url: '/api/user/transaction-entry/gallery/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',

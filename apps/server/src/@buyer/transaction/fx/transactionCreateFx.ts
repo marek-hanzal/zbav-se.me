@@ -134,7 +134,11 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 
 			yield* inboxCreateFx({
 				userId: listing.userId,
-				family: "message",
+				reference: [
+					listingId,
+					id,
+				],
+				family: "transaction",
 				type: "buyer-message",
 				payload: {
 					transactionId: id,

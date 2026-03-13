@@ -4,4 +4,5 @@
 @import "./ui/container/Container.css";
 @import "./ui/fade/Fade.css";
 @import "./ui/group/Group.css";
+@import "./ui/markdown/Markdown.css";
 @import "./ui/typo/Typo.css";

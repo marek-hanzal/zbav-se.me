@@ -228,7 +228,7 @@ export type zGalleryCountQuery = z.infer<typeof zGalleryCountQuery>;
 /**
  * Inbox family
  */
-export const zInboxFamilyEnum = z.enum(['message', 'reaction']).register(z.globalRegistry, {
+export const zInboxFamilyEnum = z.enum(['transaction', 'reaction']).register(z.globalRegistry, {
     description: 'Inbox family'
 });
 
@@ -277,6 +277,12 @@ export const zInboxFilter = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Inbox owner filter'
     }).optional(),
+    reference: z.string().register(z.globalRegistry, {
+        description: 'Match inbox rows whose reference array contains this key'
+    }).optional(),
+    referenceIn: z.array(z.string()).min(1).register(z.globalRegistry, {
+        description: 'Match inbox rows whose reference array overlaps any of these keys'
+    }).optional(),
     family: zInboxFamilyEnum.optional(),
     type: zInboxTypeEnum.optional(),
     priority: zInboxPriorityEnum.optional(),
@@ -310,6 +316,12 @@ export const zInboxWhere = z.object({
     }).optional(),
     userId: z.string().register(z.globalRegistry, {
         description: 'Inbox owner filter'
+    }).optional(),
+    reference: z.string().register(z.globalRegistry, {
+        description: 'Match inbox rows whose reference array contains this key'
+    }).optional(),
+    referenceIn: z.array(z.string()).min(1).register(z.globalRegistry, {
+        description: 'Match inbox rows whose reference array overlaps any of these keys'
     }).optional(),
     family: zInboxFamilyEnum.optional(),
     type: zInboxTypeEnum.optional(),
@@ -375,10 +387,13 @@ export const zInboxBuyerMessage = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
-    family: z.enum(['message']),
+    family: z.enum(['transaction']),
     priority: zInboxPriorityEnum,
     archivedAt: z.iso.datetime().nullable(),
     type: z.enum(['buyer-message']),
@@ -401,10 +416,13 @@ export const zInboxSellerMessage = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
-    family: z.enum(['message']),
+    family: z.enum(['transaction']),
     priority: zInboxPriorityEnum,
     archivedAt: z.iso.datetime().nullable(),
     type: z.enum(['seller-message']),
@@ -436,10 +454,13 @@ export const zInboxTransaction = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
-    family: z.enum(['message']),
+    family: z.enum(['transaction']),
     priority: zInboxPriorityEnum,
     archivedAt: z.iso.datetime().nullable(),
     type: z.enum(['transaction']),
@@ -466,10 +487,13 @@ export const zInboxSystem = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
-    family: z.enum(['message']),
+    family: z.enum(['transaction']),
     priority: zInboxPriorityEnum,
     archivedAt: z.iso.datetime().nullable(),
     type: z.enum(['system']),
@@ -496,10 +520,13 @@ export const zInboxUnknown = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
-    family: z.enum(['message']),
+    family: z.enum(['transaction']),
     priority: zInboxPriorityEnum,
     archivedAt: z.iso.datetime().nullable(),
     type: z.enum(['unknown']),
@@ -535,6 +562,9 @@ export const zInboxThumb = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
@@ -559,6 +589,9 @@ export const zInboxFavourite = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
@@ -581,6 +614,9 @@ export const zInboxUnfavourite = z.object({
     }),
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
+    }),
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
     }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
@@ -657,6 +693,22 @@ export const zInboxPatch = z.object({
 });
 
 export type zInboxPatch = z.infer<typeof zInboxPatch>;
+
+/**
+ * Patch inbox items resolved by query
+ */
+export const zInboxPatchCollection = z.object({
+    patch: z.object({
+        archivedAt: z.string().register(z.globalRegistry, {
+            description: 'Archive timestamp'
+        }).optional()
+    }),
+    query: zInboxQuery
+}).register(z.globalRegistry, {
+    description: 'Patch inbox items resolved by query'
+});
+
+export type zInboxPatchCollection = z.infer<typeof zInboxPatchCollection>;
 
 /**
  * Allowed extensions
@@ -850,6 +902,27 @@ export const zTransactionEntryPersonal = z.object({
 export type zTransactionEntryPersonal = z.infer<typeof zTransactionEntryPersonal>;
 
 /**
+ * Common (shared) entries sharing same shape
+ */
+export const zTransactionCommonKindEnum = z.enum([
+    'status-pending',
+    'status-open',
+    'status-resolved',
+    'status-dispute-buyer',
+    'status-dispute-seller',
+    'status-rejected-buyer',
+    'status-rejected-seller',
+    'status-sold',
+    'status-expired',
+    'status-success',
+    'status-closed'
+]).register(z.globalRegistry, {
+    description: 'Common (shared) entries sharing same shape'
+});
+
+export type zTransactionCommonKindEnum = z.infer<typeof zTransactionCommonKindEnum>;
+
+/**
  * Transaction system entry with shared status or informational payload
  */
 export const zTransactionEntryCommon = z.object({
@@ -863,19 +936,7 @@ export const zTransactionEntryCommon = z.object({
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
-    kind: z.enum([
-        'status-pending',
-        'status-open',
-        'status-resolved',
-        'status-dispute-buyer',
-        'status-dispute-seller',
-        'status-rejected-buyer',
-        'status-rejected-seller',
-        'status-sold',
-        'status-expired',
-        'status-success',
-        'status-closed'
-    ]),
+    kind: zTransactionCommonKindEnum,
     payload: z.object({
         text: z.string().register(z.globalRegistry, {
             description: 'Translation key for the system/status timeline entry'
@@ -1161,6 +1222,30 @@ export const zTransactionEntryCreate = z.union([
 export type zTransactionEntryCreate = z.infer<typeof zTransactionEntryCreate>;
 
 /**
+ * Gallery lookup scoped by transaction entry identifier
+ */
+export const zTransactionEntryGalleryWhere = z.object({
+    transactionEntryId: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier linked to the gallery'
+    })
+}).register(z.globalRegistry, {
+    description: 'Gallery lookup scoped by transaction entry identifier'
+});
+
+export type zTransactionEntryGalleryWhere = z.infer<typeof zTransactionEntryGalleryWhere>;
+
+/**
+ * Query object for transaction-entry gallery fetch
+ */
+export const zTransactionEntryGalleryQuery = z.object({
+    where: zTransactionEntryGalleryWhere
+}).register(z.globalRegistry, {
+    description: 'Query object for transaction-entry gallery fetch'
+});
+
+export type zTransactionEntryGalleryQuery = z.infer<typeof zTransactionEntryGalleryQuery>;
+
+/**
  * Data for creating a new upload
  */
 export const zUploadCreate = z.object({
@@ -1411,6 +1496,23 @@ export const zApiInboxPatchResponse = zInbox;
 
 export type zapiInboxPatchResponse = z.infer<typeof zApiInboxPatchResponse>;
 
+export const zApiInboxPatchCollectionData = z.object({
+    body: zInboxPatchCollection.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
+});
+
+export type zapiInboxPatchCollectionRequest = z.infer<typeof zApiInboxPatchCollectionData>;
+
+/**
+ * Patched inbox items
+ */
+export const zApiInboxPatchCollectionResponse = z.array(zInbox).register(z.globalRegistry, {
+    description: 'Patched inbox items'
+});
+
+export type zapiInboxPatchCollectionResponse = z.infer<typeof zApiInboxPatchCollectionResponse>;
+
 export const zApiS3PresignData = z.object({
     body: z.object({
         path: z.string().min(3).register(z.globalRegistry, {
@@ -1500,6 +1602,21 @@ export type zapiTransactionEntryFetchRequest = z.infer<typeof zApiTransactionEnt
 export const zApiTransactionEntryFetchResponse = zTransactionEntry;
 
 export type zapiTransactionEntryFetchResponse = z.infer<typeof zApiTransactionEntryFetchResponse>;
+
+export const zApiTransactionEntryGalleryFetchData = z.object({
+    body: zTransactionEntryGalleryQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
+});
+
+export type zapiTransactionEntryGalleryFetchRequest = z.infer<typeof zApiTransactionEntryGalleryFetchData>;
+
+/**
+ * Gallery linked to the requested transaction entry
+ */
+export const zApiTransactionEntryGalleryFetchResponse = zGallery;
+
+export type zapiTransactionEntryGalleryFetchResponse = z.infer<typeof zApiTransactionEntryGalleryFetchResponse>;
 
 export const zApiUploadCreateData = z.object({
     body: zUploadCreate.optional(),

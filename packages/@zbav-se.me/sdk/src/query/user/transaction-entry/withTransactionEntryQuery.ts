@@ -59,6 +59,9 @@ export const withTransactionEntryQuery = withEntityQuery<
 	async patchFn(_data) {
 		throw new Error("Transaction entry patch is not supported.");
 	},
+	async patchCollectionFn(_data) {
+		throw new Error("Transaction entry collection patch is not supported.");
+	},
 	async deleteFn(_data) {
 		throw new Error("Transaction entry delete is not supported.");
 	},

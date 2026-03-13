@@ -34,6 +34,9 @@ export const InboxMigration: Migration = {
 			.createTable("inbox")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
+			.addColumn("reference", sql`text[]`, (col) =>
+				col.defaultTo(sql`'{}'::text[]`).notNull(),
+			)
 			.addColumn("timestamp", "timestamptz", (col) => col.notNull())
 			.addColumn("family", "text", (col) => col.notNull())
 			.addColumn("type", sql`inbox_type_enum`, (col) => col.notNull())
@@ -77,5 +80,11 @@ export const InboxMigration: Migration = {
 				"family",
 			])
 			.execute();
+
+		await sql`
+			CREATE INDEX "inbox_[reference]_idx"
+			ON "inbox"
+			USING GIN ("reference");
+		`.execute(db);
 	},
 };

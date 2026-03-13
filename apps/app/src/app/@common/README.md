@@ -80,13 +80,29 @@ When adding to `@common`:
 ## Recent updates
 
 - Transaction list container abstraction was removed from `@common/transaction/ui/`; buyer/seller now keep their own domain-specific list containers to avoid cross-domain generic query wrappers.
+- Transaction-entry timeline rendering now lives in active common scope at `@common/transaction-entry/*`; buyer/seller transaction detail screens no longer import the old `v0` common stack.
 - Transaction-entry rendering is split into focused parts:
-  - `@common/transaction-entry/TransactionEntryList/Data.tsx` handles data/container composition.
-  - `@common/transaction-entry/TransactionEntryList/TransactionEntryList.tsx` composes local suspense fallback for feature call-sites.
+  - `@common/transaction-entry/TransactionEntryList/TransactionEntryList.tsx` now owns collection fetch + container composition directly and publicly acknowledges `MarkSuspense.Props`.
   - `@common/transaction-entry/TransactionEntryList/Item/Data.tsx` owns `transaction_entry.kind` dispatch (`text/status/gallery/location/personal/package`).
-  - `@common/transaction-entry/TransactionEntryList/Item/type/*` contains local entry render variants used only by the list item renderer.
+  - `@common/transaction-entry/TransactionEntryList/Item/type/*` contains folder-local entry render variants used only by the list item renderer; async entry types that fetch extra data (`gallery`, `location`, `personal`) follow the local `Component/Data/Pending` pattern to keep load-state height stable, while plain text/common/package renders stay inline without extra suspense noise.
+  - `@common/transaction-entry/ui/TransactionEntryList/Item/type/TypeContainer.tsx` now holds the shared direction-aware bubble container used by the entry type renderers.
+  - `@common/transaction-entry/ui/button/LocationButton/*` now owns the shared transaction-entry location action flow; it no longer lives in the old `v0/@common/location` stack and accepts the shared transaction menu `close` callback.
+  - `@common/transaction-entry/ui/button/PersonalButton/*` now owns the shared transaction-entry personal-data action flow; it no longer lives in the old `v0/@common/personal` stack and accepts the shared transaction menu `close` callback.
+  - `@common/transaction-entry/ui/button/PackageButton/*` now owns the shared transaction-entry package/tracking action flow; it no longer lives in the old `v0/@common/package` stack and accepts the shared transaction menu `close` callback.
+  - `Gallery/*` uses local `Suspense -> Data/Pending` composition and reads linked gallery content through the transaction-entry gallery endpoint, not the owner-scoped gallery fetch route.
   - `Text.tsx` and `Common.tsx` stay intentionally separate, even though they currently render near-identical UI.
 - Shared page-level title navigation now uses `@common/nav/BackHomeButton/BackHomeButton.tsx` for screens that should provide an explicit return path to home.
+- Shared transaction detail bottom-sheet trigger now lives in active common scope:
+  - `@common/transaction/ui/TransactionMenuButton.tsx`
+  - buyer/seller transaction menus pass role-specific menu content through `children` instead of keeping duplicate button + sheet implementations.
+- Shared transaction detail wrapper UI now also lives in active common scope:
+  - `@common/transaction/ui/TransactionChat.tsx`
+  - `@common/transaction/ui/TransactionMessage.tsx`
+  - `@common/transaction/ui/TransactionToolbar.tsx`
+  - buyer/seller detail screens keep role-specific status/action content local, but reuse the shared status switch + chat shell instead of carrying duplicate wrapper components.
+- Shared transaction action button UI presets now live in active common scope:
+  - `@common/transaction/ui/MessageButtonUi.ts`
+  - `@common/transaction/ui/TransactionButtonUi.ts`
 - Shared message creation controls now create user-authored `transaction_entry` records:
   - package, personal, location, text, and gallery flows use transaction-entry SDK wrappers
   - linked gallery/location data is fetched through dedicated queries instead of old message payload hydration
@@ -143,6 +159,9 @@ When adding to `@common`:
   - `@common/listing/ui/ListingCount/ListingCount.tsx`
   - `@common/listing/ui/ListingCount/Data.tsx`
   - `@common/listing/ui/ListingCount/Pending.tsx`
+- Shared `ListItem` loading shell now lives in active common scope:
+  - `@common/list-item/ListItemPending.tsx`
+- Shared `ListItem` hero input now parses upload-compatible values first and otherwise renders the provided node content directly, so domain call-sites can keep the same row shell while swapping the left visual slot from image to status/icon UI.
 - `GalleryPreview` was extracted to active scope:
   - `@common/gallery/ui/GalleryPreview.tsx`
 - `GalleryUploadContainer` abstraction was removed; gallery upload flow is now embedded directly at call-sites.

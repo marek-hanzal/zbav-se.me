@@ -73,4 +73,7 @@ export const withDraftQuery = withEntityQuery<
 			}),
 		);
 	},
+	async patchCollectionFn(_data) {
+		throw new Error("Draft collection patch is not supported.");
+	},
 });

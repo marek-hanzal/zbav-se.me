@@ -56,4 +56,7 @@ export const withTransactionQuery = withEntityQuery<
 	async patchFn(_data) {
 		throw new Error("Transaction patch is not supported.");
 	},
+	async patchCollectionFn(_data) {
+		throw new Error("Transaction collection patch is not supported.");
+	},
 });

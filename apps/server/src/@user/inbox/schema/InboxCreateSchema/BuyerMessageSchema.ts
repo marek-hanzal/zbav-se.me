@@ -4,7 +4,7 @@ import { InboxSchema } from "./InboxSchema";
 export const BuyerMessageSchema = z
 	.looseObject({
 		...InboxSchema.shape,
-		family: z.literal("message"),
+		family: z.literal("transaction"),
 		type: z.literal("buyer-message"),
 		payload: z.looseObject({
 			transactionId: z.string().openapi({

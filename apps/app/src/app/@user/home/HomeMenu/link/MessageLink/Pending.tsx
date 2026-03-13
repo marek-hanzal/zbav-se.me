@@ -45,7 +45,7 @@ export const Pending: FC<Pending.Props> = ({ iconProps }) => {
 				}}
 			>
 				<LinkTo
-					to={"/$locale/seller/message/list"}
+					to={"/$locale/seller/transaction/list"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
 					params={{
@@ -77,7 +77,7 @@ export const Pending: FC<Pending.Props> = ({ iconProps }) => {
 				</LinkTo>
 
 				<LinkTo
-					to={"/$locale/buyer/message/list"}
+					to={"/$locale/buyer/transaction/list"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
 					params={{

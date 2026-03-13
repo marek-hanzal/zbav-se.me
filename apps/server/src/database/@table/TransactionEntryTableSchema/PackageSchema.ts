@@ -1,10 +1,13 @@
 import { z } from "@hono/zod-openapi";
+import { TransactionEntryKindEnumSchema } from "~/database/@enum/TransactionEntryKindEnumSchema";
 import { EntrySchema } from "./EntrySchema";
 
 export const PackageSchema = z
 	.looseObject({
 		...EntrySchema.shape,
-		kind: z.literal("package"),
+		kind: TransactionEntryKindEnumSchema.extract([
+			"package",
+		]),
 		payload: z.looseObject({
 			link: z.url().openapi({
 				description: "Package tracking link",

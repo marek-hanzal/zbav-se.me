@@ -26,6 +26,16 @@ Maps to server API: `/api/seller/*`.
 
 ## Recent updates
 
+- Seller top-level transaction list now lives in active scope at `@seller/transaction-listing/*` instead of the remaining `v0` stack.
+- Seller transaction detail now imports shared transaction-entry timeline rendering from active common scope at `@common/transaction-entry/*` instead of the old `v0` common stack.
+- Seller transaction detail root component, menu, and status stacks now live in active scope at `@seller/transaction/ui/*`; shared chat/message/toolbar wrappers now live in `@common/transaction/ui/*`, and the shared bottom-sheet trigger button lives in `@common/transaction/ui/TransactionMenuButton.tsx`.
+- Seller transaction detail now suspends at the page/route boundary:
+  - `@seller/transaction/TransactionDetailPage/TransactionDetailPage.tsx` publicly acknowledges `MarkSuspense.Props`
+  - `@seller/transaction/TransactionDetailPage/TransactionDetailPendingPage.tsx` is the route-level pending shell
+- Seller listing aggregate rows now use Inbox-driven unread counts grouped by listing `reference`; badge and unread emphasis must come from Inbox rather than local transaction counters.
+- Seller listing-detail transaction rows now also surface Inbox-driven unread state per transaction, using unread `buyer-message` rows whose `reference[]` contains the transaction id.
+- Opening a seller transaction detail now bulk-archives matching unread inbox rows for that transaction `reference`, so unread badges clear from both transaction and listing aggregates without requiring an extra Inbox tap.
+- Seller top-level transaction rows now render listing title, latest activity label, and latest activity time from the `transaction-listing` aggregate.
 - Draft editor localizes single-use read-only value components:
   - `@seller/draft/DraftEditPage/DraftEditor/value/CategoryValue.tsx`
   - `@seller/draft/DraftEditPage/DraftEditor/value/AgeValue.tsx`
@@ -41,3 +51,5 @@ Maps to server API: `/api/seller/*`.
 - Seller transaction action buttons now use the seller transaction mutation SDK surface (`accept`, `dispute`, `reject`, `resolve`) and invalidate `transaction-entry` timeline queries.
 - Seller message detail UI now reads conversation timeline through `@user/transaction-entry`, with `resolved` treated as seller read-only.
 - Seller `TitleContainer` pages that navigate back home now use the shared `@common/nav/BackHomeButton` instead of repeating inline `LinkTo + uiBackButton` wiring.
+- Seller listing-level transaction screen now lives in active scope at `@seller/transaction-listing/*`; `page/ListingTransactionListPage/*` owns the page-local hero banner next to the page component, transaction rows keep their local `ui/Item/*` stack, and seller transaction status labeling now lives in `@seller/transaction/toStatusLabel.ts`.
+- Seller listing sheet/detail card now live in active scope at `@seller/listing/ui/ListingSheet.tsx` and `@seller/listing/ui/ListingCard.tsx`; the old `v0` seller listing sheet stack is no longer used.

@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import type { withInboxSelectFx } from "~/@user/inbox/db/withInboxSelectFx";
 import type { InboxFilterSchema } from "~/@user/inbox/schema/InboxFilterSchema";
 
@@ -32,6 +33,18 @@ export const withInboxQueryBuilderFx = Effect.fn("withInboxQueryBuilderFx")(func
 
 	if (where.userId) {
 		query = query.where("i.userId", "=", where.userId) as TSelect;
+	}
+
+	if (where.reference) {
+		query = query.where(
+			sql<boolean>`${sql.ref("i.reference")} @> ARRAY[${where.reference}]::text[]`,
+		) as TSelect;
+	}
+
+	if (where.referenceIn && where.referenceIn.length > 0) {
+		query = query.where(
+			sql<boolean>`${sql.ref("i.reference")} && ARRAY[${sql.join(where.referenceIn)}]::text[]`,
+		) as TSelect;
 	}
 
 	if (where.family) {

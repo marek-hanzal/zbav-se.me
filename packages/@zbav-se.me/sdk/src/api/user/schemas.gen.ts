@@ -281,6 +281,16 @@ export const sInboxFilter = {
         userId: {
             type: 'string'
         },
+        reference: {
+            type: 'string'
+        },
+        referenceIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            minItems: 1
+        },
         family: {
             $ref: '#/components/schemas/InboxFamilyEnum'
         },
@@ -305,7 +315,7 @@ export const sInboxFilter = {
 export const sInboxFamilyEnum = {
     type: 'string',
     enum: [
-        'message',
+        'transaction',
         'reaction'
     ]
 } as const;
@@ -349,6 +359,16 @@ export const sInboxWhere = {
         },
         userId: {
             type: 'string'
+        },
+        reference: {
+            type: 'string'
+        },
+        referenceIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            minItems: 1
         },
         family: {
             $ref: '#/components/schemas/InboxFamilyEnum'
@@ -447,13 +467,19 @@ export const sInboxBuyerMessage = {
         userId: {
             type: 'string'
         },
+        reference: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
         timestamp: {
             type: 'string'
         },
         family: {
             type: 'string',
             enum: [
-                'message'
+                'transaction'
             ]
         },
         priority: {
@@ -491,6 +517,7 @@ export const sInboxBuyerMessage = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -509,13 +536,19 @@ export const sInboxSellerMessage = {
         userId: {
             type: 'string'
         },
+        reference: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
         timestamp: {
             type: 'string'
         },
         family: {
             type: 'string',
             enum: [
-                'message'
+                'transaction'
             ]
         },
         priority: {
@@ -553,6 +586,7 @@ export const sInboxSellerMessage = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -571,13 +605,19 @@ export const sInboxTransaction = {
         userId: {
             type: 'string'
         },
+        reference: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
         timestamp: {
             type: 'string'
         },
         family: {
             type: 'string',
             enum: [
-                'message'
+                'transaction'
             ]
         },
         priority: {
@@ -623,6 +663,7 @@ export const sInboxTransaction = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -649,13 +690,19 @@ export const sInboxSystem = {
         userId: {
             type: 'string'
         },
+        reference: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
         timestamp: {
             type: 'string'
         },
         family: {
             type: 'string',
             enum: [
-                'message'
+                'transaction'
             ]
         },
         priority: {
@@ -701,6 +748,7 @@ export const sInboxSystem = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -719,13 +767,19 @@ export const sInboxUnknown = {
         userId: {
             type: 'string'
         },
+        reference: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
         timestamp: {
             type: 'string'
         },
         family: {
             type: 'string',
             enum: [
-                'message'
+                'transaction'
             ]
         },
         priority: {
@@ -771,6 +825,7 @@ export const sInboxUnknown = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -788,6 +843,12 @@ export const sInboxThumb = {
         },
         userId: {
             type: 'string'
+        },
+        reference: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
         },
         timestamp: {
             type: 'string'
@@ -834,6 +895,7 @@ export const sInboxThumb = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -859,6 +921,12 @@ export const sInboxFavourite = {
         },
         userId: {
             type: 'string'
+        },
+        reference: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
         },
         timestamp: {
             type: 'string'
@@ -901,6 +969,7 @@ export const sInboxFavourite = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -918,6 +987,12 @@ export const sInboxUnfavourite = {
         },
         userId: {
             type: 'string'
+        },
+        reference: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
         },
         timestamp: {
             type: 'string'
@@ -960,6 +1035,7 @@ export const sInboxUnfavourite = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -982,6 +1058,27 @@ export const sInboxCountQuery = {
 } as const;
 
 export const sInboxPatch = {
+    type: 'object',
+    properties: {
+        patch: {
+            type: 'object',
+            properties: {
+                archivedAt: {
+                    type: 'string'
+                }
+            }
+        },
+        query: {
+            $ref: '#/components/schemas/InboxQuery'
+        }
+    },
+    required: [
+        'patch',
+        'query'
+    ]
+} as const;
+
+export const sInboxPatchCollection = {
     type: 'object',
     properties: {
         patch: {
@@ -1380,20 +1477,7 @@ export const sTransactionEntryCommon = {
             type: 'string'
         },
         kind: {
-            type: 'string',
-            enum: [
-                'status-pending',
-                'status-open',
-                'status-resolved',
-                'status-dispute-buyer',
-                'status-dispute-seller',
-                'status-rejected-buyer',
-                'status-rejected-seller',
-                'status-sold',
-                'status-expired',
-                'status-success',
-                'status-closed'
-            ]
+            $ref: '#/components/schemas/TransactionCommonKindEnum'
         },
         payload: {
             type: 'object',
@@ -1421,6 +1505,23 @@ export const sTransactionEntryCommon = {
         'direction'
     ],
     additionalProperties: {}
+} as const;
+
+export const sTransactionCommonKindEnum = {
+    type: 'string',
+    enum: [
+        'status-pending',
+        'status-open',
+        'status-resolved',
+        'status-dispute-buyer',
+        'status-dispute-seller',
+        'status-rejected-buyer',
+        'status-rejected-seller',
+        'status-sold',
+        'status-expired',
+        'status-success',
+        'status-closed'
+    ]
 } as const;
 
 export const sTransactionEntryQuery = {
@@ -1783,6 +1884,30 @@ export const sTransactionEntryPersonalCreate = {
         'transactionId',
         'kind',
         'payload'
+    ]
+} as const;
+
+export const sTransactionEntryGalleryQuery = {
+    type: 'object',
+    properties: {
+        where: {
+            $ref: '#/components/schemas/TransactionEntryGalleryWhere'
+        }
+    },
+    required: [
+        'where'
+    ]
+} as const;
+
+export const sTransactionEntryGalleryWhere = {
+    type: 'object',
+    properties: {
+        transactionEntryId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionEntryId'
     ]
 } as const;
 

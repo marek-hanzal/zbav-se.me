@@ -5,7 +5,7 @@ import { uiBackButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export namespace BackHomeButton {
-	export interface Props {}
+	export type Props = {};
 }
 
 export const BackHomeButton: FC<BackHomeButton.Props> = () => {

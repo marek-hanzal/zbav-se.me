@@ -29,6 +29,7 @@ This domain handles all operations on user-owned, private data. Everything in th
   - **Collection** - List transaction entries with query/filter/sort/cursor
   - **Count** - Count transaction entries for a query
   - **Fetch** - Get one transaction entry by query
+  - **Gallery fetch** - Get gallery content for one gallery entry after transaction participation is validated
   - **Create** - Create one user-authored typed transaction entry
 - Transaction entry contracts are discriminated by root `kind`, not by payload-only unions
 - **Transaction Entry Kinds**:
@@ -45,10 +46,13 @@ This domain handles all operations on user-owned, private data. Everything in th
 - **Fetch** - Resolve one inbox item
 - **Count** - Count inbox items for active/archived sections
 - **Patch** - Mark one inbox item as archived/read
+- **Patch Collection** - Patch multiple inbox items resolved by one `InboxQuery`
 - **Archive** - Bulk archive selected items using `InboxQuery`
 - Inbox contracts are discriminated by root `type`, not by payload-only unions
+- Inbox is the source of truth for unread state, badge counts, grouped unread counts by `reference`, and similar "needs attention" signals across the app.
+- Features must derive unread/badge behavior from Inbox instead of inventing parallel counters or transaction-status heuristics.
 - Family:
-  - `message`
+  - `transaction`
   - `reaction`
 - Types:
   - `buyer-message`
@@ -60,11 +64,14 @@ This domain handles all operations on user-owned, private data. Everything in th
   - `favourite`
   - `unfavourite`
 - Transaction-like inbox payloads (`transaction`, `system`, `unknown`) carry `transactionId`, `listingId`, and recipient `target` so the app can deep-link into the correct buyer/seller transaction detail route.
-- Local Docker Compose upgrade for existing databases:
-  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'ALTER TABLE "inbox" ADD COLUMN IF NOT EXISTS "family" text;'`
-- Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c "UPDATE \"inbox\" SET \"family\" = CASE WHEN \"type\" IN ('buyer-message', 'seller-message', 'transaction', 'system', 'unknown') THEN 'message' WHEN \"type\" IN ('thumb', 'favourite', 'unfavourite') THEN 'reaction' ELSE \"family\" END WHERE \"family\" IS NULL;"`
-  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'ALTER TABLE "inbox" ALTER COLUMN "family" SET NOT NULL;'`
-  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'CREATE INDEX IF NOT EXISTS "inbox_[userId-family]_idx" ON "inbox" ("userId", "family");'`
+- Inbox rows can store optional normalized `reference` metadata as `string[]`.
+- Reference rules:
+  - reaction-family rows store the related listing reference only: `[listingId]`
+  - transaction-family rows store both listing and transaction references: `[listingId, transactionId]`
+  - `where.reference` means "reference array contains this value"
+  - `where.referenceIn` means "reference array overlaps any of these values"
+- Inbox collection/count coalesces `buyer-message` and `seller-message` rows by `payload.transactionId`, always keeping the newest inbox row for a thread.
+- Owner-scoped `@user/gallery/*` fetches must not be reused for transaction conversation rendering; timeline gallery access goes through `@user/transaction-entry/gallery/fetch`, which validates transaction participation first and only then returns the linked gallery.
 
 ### Transaction Timeline
 - Transaction communication now enters through the unified **Transaction Entry** API.

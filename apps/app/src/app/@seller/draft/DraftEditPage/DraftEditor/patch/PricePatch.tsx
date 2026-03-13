@@ -3,13 +3,19 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller";
+import { zListingCreate } from "@zbav-se.me/sdk/api/seller";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
-import { type FC, useState } from "react";
+import { useAppForm } from "@zbav-se.me/ui/form";
+import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
+
+const PriceSchema = zListingCreate.pick({
+	price: true,
+});
 
 export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {
@@ -20,9 +26,6 @@ export namespace PricePatch {
 }
 
 export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onView, ...props }) => {
-	const [price, setPrice] = useState<string | undefined>(
-		draft.price ? String(draft.price) : undefined,
-	);
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
 			onView("priceType");
@@ -30,6 +33,29 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onView, ...p
 		invalidate: [
 			"collection",
 		],
+	});
+	const form = useAppForm({
+		defaultValues: {
+			price: draft.price ?? null,
+		},
+		validators: {
+			onMount: PriceSchema,
+			onChange: PriceSchema,
+			onBlur: PriceSchema,
+			onSubmit: PriceSchema,
+		},
+		async onSubmit({ value }) {
+			mutation.mutate({
+				patch: {
+					price: value.price,
+				},
+				query: {
+					where: {
+						id: draft.id,
+					},
+				},
+			});
+		},
 	});
 
 	return (
@@ -48,41 +74,46 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onView, ...p
 					gap: "default",
 				}}
 			>
-				<Dial
-					value={price}
-					onChange={setPrice}
-					placeholder={translator.text("Price (placeholder)")}
-					ui={{
-						inner: "default",
-					}}
-				/>
+				<form.AppField name={"price"}>
+					{(field) => (
+						<Dial
+							value={
+								typeof field.state.value === "number"
+									? String(field.state.value)
+									: undefined
+							}
+							onChange={(value) => {
+								field.handleChange(
+									value === undefined ? null : Number.parseFloat(value),
+								);
+								field.handleBlur();
+							}}
+							placeholder={translator.text("Price (placeholder)")}
+							ui={{
+								inner: "default",
+							}}
+						/>
+					)}
+				</form.AppField>
 
-				<SaveContainer
-					onCancel={() => {
-						onCancel();
-						setPrice(draft.price ? String(draft.price) : undefined);
-					}}
-					onSave={() => {
-						mutation.mutate({
-							patch: {
-								price: price ? parseFloat(price) : null,
-							},
-							query: {
-								where: {
-									id: draft.id,
-								},
-							},
-						});
-					}}
-					loading={mutation.isPending}
-					disabled={!price}
-					textSave={<Tx label={"Continue (label)"} />}
-					textCancel={<Tx label={"Back (label)"} />}
-					saveProps={{
-						iconEnabled: ArrowRightIcon,
-						iconPosition: "right",
-					}}
-				/>
+				<form.Subscribe selector={(state) => state.isValid}>
+					{(isValid) => (
+						<SaveContainer
+							onCancel={onCancel}
+							onSave={() => {
+								form.handleSubmit();
+							}}
+							loading={mutation.isPending}
+							disabled={!isValid || mutation.isPending}
+							textSave={<Tx label={"Continue (label)"} />}
+							textCancel={<Tx label={"Back (label)"} />}
+							saveProps={{
+								iconEnabled: ArrowRightIcon,
+								iconPosition: "right",
+							}}
+						/>
+					)}
+				</form.Subscribe>
 			</Container>
 		</TitleContainer>
 	);

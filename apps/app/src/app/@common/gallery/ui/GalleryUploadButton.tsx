@@ -54,6 +54,7 @@ export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads>({
 				onCancel={onCancel}
 				state={state}
 				defaultUploadIds={defaultUploadIds}
+				detent={"default"}
 			/>
 		</>
 	);

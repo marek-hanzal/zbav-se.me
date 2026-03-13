@@ -46,7 +46,7 @@ export const Data: FC<Data.Props> = ({ _suspense, iconProps }) => {
 				}}
 			>
 				<LinkTo
-					to={"/$locale/seller/message/list"}
+					to={"/$locale/seller/transaction/list"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
 					params={{
@@ -78,7 +78,7 @@ export const Data: FC<Data.Props> = ({ _suspense, iconProps }) => {
 				</LinkTo>
 
 				<LinkTo
-					to={"/$locale/buyer/message/list"}
+					to={"/$locale/buyer/transaction/list"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
 					params={{

@@ -25,7 +25,6 @@ export async function getRouter() {
 	const router = createRouter({
 		routeTree,
 		context: {
-			user: null,
 			queryClient,
 		},
 		defaultPreload: "intent",

@@ -57,6 +57,9 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 
 						yield* inboxCreateFx({
 							userId: listingUserId,
+							reference: [
+								listingId,
+							],
 							family: "reaction",
 							type: "favourite",
 							payload: {
@@ -89,6 +92,9 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 
 						yield* inboxCreateFx({
 							userId: listingUserId,
+							reference: [
+								listingId,
+							],
 							family: "reaction",
 							type: "unfavourite",
 							payload: {

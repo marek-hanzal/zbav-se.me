@@ -29,10 +29,9 @@ export const InboxBuyerMessageItem: FC<InboxBuyerMessageItem.Props> = ({ item })
 
 	return (
 		<LinkTo
-			to="/$locale/seller/message/$listingId/$transactionId"
+			to="/$locale/seller/transaction/$transactionId/detail"
 			params={{
 				locale,
-				listingId: transaction.listingId,
 				transactionId: transaction.id,
 			}}
 			onClick={() => {
