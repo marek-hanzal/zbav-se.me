@@ -1,3 +1,4 @@
+import { CloseIcon } from "@use-pico/client/icon";
 import type { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
@@ -6,7 +7,7 @@ import type { tListing } from "@zbav-se.me/sdk/api/seller";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useMemo, useState } from "react";
 import { GalleryPreview } from "~/app/@common/gallery/ui/GalleryPreview";
-import { ListingDetail } from "./ListingDetail";
+import { ListingCard } from "./ListingCard";
 
 export namespace ListingSheet {
 	export type View = "detail" | "gallery";
@@ -24,8 +25,8 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ listing, state, ...props 
 		return {
 			detail: {
 				children: (
-					<ListingDetail
-						data-ui={"ListingSheet-[ListingDetailContainer]"}
+					<ListingCard
+						data-ui={"ListingSheet-[ListingCardContainer]"}
 						listing={listing}
 						ui={{
 							inner: "default",
@@ -46,12 +47,13 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ listing, state, ...props 
 				),
 				header: () => ({
 					title: translator.text("Listing gallery (title)"),
-					right: <CloseButton onClick={() => setView("detail")} />,
+					right: (
+						<CloseButton
+							iconEnabled={CloseIcon}
+							onClick={() => setView("detail")}
+						/>
+					),
 				}),
-				contentProps: {
-					disableScroll: true,
-				},
-				scroller: false,
 			},
 		};
 	}, [
@@ -69,7 +71,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ listing, state, ...props 
 				value: view,
 				set: setView,
 			}}
-			detent={"full"}
+			detent={"default"}
 			views={views}
 			{...props}
 		/>

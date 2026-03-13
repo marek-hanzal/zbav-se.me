@@ -6,8 +6,8 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
-import { ListingTransactionHero } from "../ListingTransactionHero";
-import { TransactionList } from "../ui/TransactionList";
+import { TransactionList } from "../../ui/TransactionList";
+import { ListingHero } from "./ListingHero";
 
 export namespace ListingTransactionListPage {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
@@ -49,7 +49,7 @@ export const ListingTransactionListPage: FC<ListingTransactionListPage.Props> = 
 			{...props}
 		>
 			<Container>
-				<ListingTransactionHero
+				<ListingHero
 					_suspense={_suspense}
 					listingId={listingId}
 				/>

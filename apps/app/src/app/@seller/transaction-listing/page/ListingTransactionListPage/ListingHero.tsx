@@ -1,26 +1,20 @@
 import type { MarkSuspense } from "@use-pico/client/type";
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
-import { CloseButton } from "@zbav-se.me/ui/button";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
+import { ListingSheet } from "~/app/v0/@seller/listing/ui/ListingSheet";
 
-export namespace ListingTransactionHero {
+export namespace ListingHero {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		listingId: string;
 	}
 }
 
-export const ListingTransactionHero: FC<ListingTransactionHero.Props> = ({
-	_suspense,
-	listingId,
-	ui,
-	...props
-}) => {
+export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ui, ...props }) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const [isOpen, setIsOpen] = useState(false);
 	const hero = useUpload(listing.gallery.items);
@@ -28,7 +22,7 @@ export const ListingTransactionHero: FC<ListingTransactionHero.Props> = ({
 	return (
 		<>
 			<Container
-				data-ui="ListingTransactionHero[Container]"
+				data-ui="ListingHero[Container]"
 				ui={{
 					position: "relative",
 					height: "content",
@@ -40,14 +34,14 @@ export const ListingTransactionHero: FC<ListingTransactionHero.Props> = ({
 				{...props}
 			>
 				<HeroImage
-					data-ui="ListingTransactionHero-[Image]"
+					data-ui="ListingHero-[Image]"
 					src={hero.url}
 					alt={`Hero image for listing ${listing.id}`}
 					className={"h-42"}
 				/>
 
 				<Container
-					data-ui="ListingTransactionHero-[TitleOverlay]"
+					data-ui="ListingHero-[TitleOverlay]"
 					className={"pointer-events-none"}
 					ui={{
 						snapTo: "bottom-center",
@@ -79,31 +73,13 @@ export const ListingTransactionHero: FC<ListingTransactionHero.Props> = ({
 				</Container>
 			</Container>
 
-			<BottomSheet
-				data-ui="ListingTransactionHero[BottomSheet]"
-				isOpen={isOpen}
-				onClose={() => {
-					setIsOpen(false);
+			<ListingSheet
+				listing={listing}
+				state={{
+					value: isOpen,
+					set: setIsOpen,
 				}}
-				header={({ close }) => ({
-					title: listing.title,
-					right: <CloseButton onClick={close} />,
-				})}
-			>
-				<Container
-					data-ui="ListingTransactionHero-[Placeholder]"
-					ui={{
-						inner: "default",
-					}}
-				>
-					<Typo
-						label={listing.title}
-						ui={{
-							opacity: "7",
-						}}
-					/>
-				</Container>
-			</BottomSheet>
+			/>
 		</>
 	);
 };

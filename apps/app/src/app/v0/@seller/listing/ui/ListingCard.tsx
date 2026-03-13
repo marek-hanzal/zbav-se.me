@@ -11,7 +11,7 @@ import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
 
-export namespace ListingDetail {
+export namespace ListingCard {
 	export interface Hooks {
 		onGallery(): void;
 		onMessages?(): void;
@@ -23,12 +23,12 @@ export namespace ListingDetail {
 	}
 }
 
-export const ListingDetail: FC<ListingDetail.Props> = ({ listing, ui, hooks, ...props }) => {
+export const ListingCard: FC<ListingCard.Props> = ({ listing, ui, hooks, ...props }) => {
 	const hero = useUpload(listing.gallery.items);
 
 	return (
 		<Container
-			data-ui={"ListingDetail[Container]"}
+			data-ui={"ListingCard[Container]"}
 			ui={{
 				layout: "vertical-flex",
 				gap: "xl",
@@ -37,7 +37,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({ listing, ui, hooks, ...
 			{...props}
 		>
 			<Container
-				data-ui={"ListingDetail-[Container.hero]"}
+				data-ui={"ListingCard-[Container.hero]"}
 				ui={{
 					position: "relative",
 				}}
@@ -55,7 +55,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({ listing, ui, hooks, ...
 				/>
 
 				<HeroImage
-					data-ui={"ListingDetail-[HeroImage]"}
+					data-ui={"ListingCard-[HeroImage]"}
 					src={hero.url}
 					alt={`Hero image for listing ${listing.id}`}
 					onClick={hooks.onGallery}
@@ -67,7 +67,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({ listing, ui, hooks, ...
 			</Container>
 
 			<Container
-				data-ui={"ListingDetail-[Container.info]"}
+				data-ui={"ListingCard-[Container.info]"}
 				ui={{
 					layout: "vertical-flex",
 					gap: "default",
@@ -95,7 +95,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({ listing, ui, hooks, ...
 
 				{listing.pros?.length ? (
 					<ValueList
-						data-ui={"ListingDetail[ProsValue]"}
+						data-ui={"ListingCard[ProsValue]"}
 						textLabel={translator.text("Listing - Pros (label)")}
 						textEmpty={translator.text("Listing - Pros not filled")}
 						items={listing.pros.map((pro, index) => ({
@@ -108,7 +108,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({ listing, ui, hooks, ...
 
 				{listing.cons?.length ? (
 					<ValueList
-						data-ui={"ListingDetail[ConsValue]"}
+						data-ui={"ListingCard[ConsValue]"}
 						textLabel={translator.text("Listing - Cons (label)")}
 						textEmpty={translator.text("Listing - Cons not filled")}
 						items={listing.cons.map((con, index) => ({
@@ -121,7 +121,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({ listing, ui, hooks, ...
 
 				{listing.delivery?.length ? (
 					<ValueList
-						data-ui={"ListingDetail[DeliveryValue]"}
+						data-ui={"ListingCard[DeliveryValue]"}
 						textLabel={translator.text("Listing delivery (label)")}
 						textEmpty={translator.text("Delivery not selected")}
 						items={(listing.delivery ?? []).map((delivery) => ({
