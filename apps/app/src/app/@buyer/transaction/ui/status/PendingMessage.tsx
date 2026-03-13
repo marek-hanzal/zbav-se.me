@@ -3,7 +3,7 @@ import { Group } from "@use-pico/client/ui/group";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { SellerInfoButton } from "~/app/@buyer/listing/~public/SellerInfoButton";
-import { MessageButtonUi } from "~/app/@common/transaction/ui";
+import { MessageButtonUi } from "~/app/@common/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { RejectButton } from "../button/RejectButton";
 

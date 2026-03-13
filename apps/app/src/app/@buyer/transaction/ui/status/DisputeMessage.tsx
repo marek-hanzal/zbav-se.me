@@ -5,7 +5,7 @@ import { withTransactionEntryGalleryCreateMutation } from "@zbav-se.me/sdk/mutat
 import { type FC, useState } from "react";
 import { SellerInfoButton } from "~/app/@buyer/listing/~public/SellerInfoButton";
 import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
-import { MessageButtonUi } from "~/app/@common/transaction/ui";
+import { MessageButtonUi } from "~/app/@common/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { LocationButton } from "~/app/@common/transaction-entry/ui/button/LocationButton";
 import { PersonalButton } from "~/app/@common/transaction-entry/ui/button/PersonalButton";
