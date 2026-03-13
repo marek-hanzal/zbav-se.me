@@ -36,7 +36,7 @@
 		"zod": "4.3.6"
 	},
 	"devDependencies": {
-		"@iconify/json": "2.2.448",
+		"@iconify/json": "2.2.449",
 		"@iconify/tailwind4": "1.2.3",
 		"@modyfi/vite-plugin-yaml": "1.1.1",
 		"@tailwindcss/vite": "4.2.1",
@@ -45,9 +45,9 @@
 		"@types/luxon": "3.7.1",
 		"@types/react": "19.2.14",
 		"@types/react-dom": "19.2.3",
-		"@typescript/native-preview": "7.0.0-dev.20260311.1",
+		"@typescript/native-preview": "7.0.0-dev.20260313.1",
 		"@use-pico/vite-asset-size": "1.0.4",
-		"@vitejs/plugin-react": "5.1.4",
+		"@vitejs/plugin-react": "6.0.0",
 		"google-fonts-helper": "3.7.3",
 		"knip": "5.86.0",
 		"nitro": "3.0.1-alpha.2",
