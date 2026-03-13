@@ -6,7 +6,7 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
-import { ListingSheet } from "~/app/v0/@seller/listing/ui/ListingSheet";
+import { ListingSheet } from "~/app/@seller/listing/~public/ListingSheet";
 
 export namespace ListingHero {
 	export interface Props extends Container.Props, MarkSuspense.Props {
