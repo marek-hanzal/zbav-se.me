@@ -1,13 +1,16 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
+import { withInboxQueryBuilderFx } from "~/@user/inbox/db/withInboxQueryBuilderFx";
 import { withInboxSelectFx } from "~/@user/inbox/db/withInboxSelectFx";
+import type { InboxFilterSchema } from "~/@user/inbox/schema/InboxFilterSchema";
 import type { InboxSortSchema } from "~/@user/inbox/schema/InboxSortSchema";
 import type { InboxTableSchema } from "~/database/@table/InboxTableSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withInboxCollectionSelectFx {
 	export interface Props {
+		layers?: Array<InboxFilterSchema.Type | undefined>;
 		sort?: InboxSortSchema.Type[];
 	}
 
@@ -15,10 +18,18 @@ export namespace withInboxCollectionSelectFx {
 }
 
 export const withInboxCollectionSelectFx = Effect.fn("withInboxCollectionSelectFx")(function* ({
+	layers,
 	sort,
 }: withInboxCollectionSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
-	const sourceSelect = yield* withInboxSelectFx({});
+	let sourceSelect = yield* withInboxSelectFx({});
+
+	for (const layer of layers ?? []) {
+		sourceSelect = yield* withInboxQueryBuilderFx({
+			select: sourceSelect,
+			where: layer,
+		});
+	}
 
 	let query = kysely
 		.selectFrom(

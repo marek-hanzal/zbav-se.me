@@ -70,7 +70,7 @@ This domain handles all operations on user-owned, private data. Everything in th
   - transaction-family rows store both listing and transaction references: `[listingId, transactionId]`
   - `where.reference` means "reference array contains this value"
   - `where.referenceIn` means "reference array overlaps any of these values"
-- Inbox collection/count coalesces `buyer-message` and `seller-message` rows by `payload.transactionId`, always keeping the newest inbox row for a thread.
+- Inbox collection/count coalesces `buyer-message` and `seller-message` rows by `payload.transactionId`, but only after query filters/scope are applied, and then keeps the newest inbox row for each surviving thread.
 - Owner-scoped `@user/gallery/*` fetches must not be reused for transaction conversation rendering; timeline gallery access goes through `@user/transaction-entry/gallery/fetch`, which validates transaction participation first and only then returns the linked gallery.
 
 ### Transaction Timeline

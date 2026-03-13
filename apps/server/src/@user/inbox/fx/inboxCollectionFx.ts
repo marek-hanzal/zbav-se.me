@@ -1,7 +1,5 @@
-import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { withInboxCollectionSelectFx } from "~/@user/inbox/db/withInboxCollectionSelectFx";
-import { withInboxQueryBuilderFx } from "~/@user/inbox/db/withInboxQueryBuilderFx";
 import type { InboxFilterSchema } from "~/@user/inbox/schema/InboxFilterSchema";
 import type { InboxQuerySchema } from "~/@user/inbox/schema/InboxQuerySchema";
 
@@ -18,18 +16,24 @@ export const inboxCollectionFx = Effect.fn("inboxCollectionFx")(function* ({
 	scope,
 	sort,
 }: inboxCollectionFx.Props) {
-	return yield* withCollectionFx({
-		selectFx: withInboxCollectionSelectFx({
-			sort,
-		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 30,
-		},
-		filter,
-		where,
-		scope,
-		queryFx: withInboxQueryBuilderFx,
+	const select = yield* withInboxCollectionSelectFx({
+		layers: [
+			filter,
+			where,
+			scope,
+		],
+		sort,
+	});
+	const resolvedCursor = cursor ?? {
+		page: 0,
+		size: 30,
+	};
+
+	return yield* Effect.promise(async () => {
+		return select
+			.limit(resolvedCursor.size)
+			.offset(resolvedCursor.page * resolvedCursor.size)
+			.execute();
 	});
 });
 

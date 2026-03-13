@@ -1,13 +1,15 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
+import { translator } from "@use-pico/common/translator";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
+import { TransactionChat, TransactionMenuButton } from "~/app/@common/transaction/ui";
 import { TransactionEntryList } from "~/app/@common/transaction-entry/ui/TransactionEntryList";
-import { TransactionChat } from "~/app/@seller/transaction/~public/TransactionChat";
+import { TransactionMenu } from "./TransactionMenu";
 
 export namespace Transaction {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -92,6 +94,28 @@ export const Transaction: FC<Transaction.Props> = ({
 
 				<TransactionChat
 					transaction={transaction}
+					left={
+						<TransactionMenuButton>
+							{(close) => (
+								<TransactionMenu
+									close={close}
+									transaction={transaction}
+								/>
+							)}
+						</TransactionMenuButton>
+					}
+					resolved={"readonly"}
+					text={{
+						open: translator.text("Transaction - send a message (placeholder)"),
+						dispute: translator.text(
+							"Transaction - dispute - send a message (placeholder)",
+						),
+						pending: translator.text("Transaction not accepted - seller (message)"),
+						resolved: translator.text(
+							"Chat - transaction resolved - seller cannot write (message)",
+						),
+						closed: translator.text("Chat - transaction closed (message)"),
+					}}
 					ui={{
 						inner: "default",
 					}}

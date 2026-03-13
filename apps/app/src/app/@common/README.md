@@ -94,7 +94,12 @@ When adding to `@common`:
 - Shared page-level title navigation now uses `@common/nav/BackHomeButton/BackHomeButton.tsx` for screens that should provide an explicit return path to home.
 - Shared transaction detail bottom-sheet trigger now lives in active common scope:
   - `@common/transaction/ui/TransactionMenuButton.tsx`
-  - buyer/seller transaction chats pass role-specific menu content through `children` instead of keeping duplicate button + sheet implementations.
+  - buyer/seller transaction menus pass role-specific menu content through `children` instead of keeping duplicate button + sheet implementations.
+- Shared transaction detail wrapper UI now also lives in active common scope:
+  - `@common/transaction/ui/TransactionChat.tsx`
+  - `@common/transaction/ui/TransactionMessage.tsx`
+  - `@common/transaction/ui/TransactionToolbar.tsx`
+  - buyer/seller detail screens keep role-specific status/action content local, but reuse the shared status switch + chat shell instead of carrying duplicate wrapper components.
 - Shared transaction action button UI presets now live in active common scope:
   - `@common/transaction/ui/MessageButtonUi.ts`
   - `@common/transaction/ui/TransactionButtonUi.ts`
