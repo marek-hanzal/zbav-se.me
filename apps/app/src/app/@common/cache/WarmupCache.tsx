@@ -99,6 +99,36 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 	 * Feed warm-up
 	 */
 	{
+		const defaultFeedQuery = {
+			sort: [
+				{
+					field: "updatedAt",
+					order: "desc",
+				},
+			],
+			filter: {
+				type: "user",
+			},
+			cursor: {
+				page: 0,
+				size: 1,
+			},
+		} satisfies tFeedQuery;
+		const searchFeedQuery = {
+			sort: [
+				{
+					field: "updatedAt",
+					order: "desc",
+				},
+			],
+			filter: {
+				type: "search",
+			},
+			cursor: {
+				page: 0,
+				size: 1,
+			},
+		} satisfies tFeedQuery;
 		const query = {
 			sort: [
 				{
@@ -119,9 +149,17 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				type: "user",
 			},
 		} satisfies tFeedCountQuery;
+		const searchCountQuery = {
+			filter: {
+				type: "search",
+			},
+		} satisfies tFeedCountQuery;
 
+		withFeedQuery.useCollectionQuery(defaultFeedQuery);
+		withFeedQuery.useCollectionQuery(searchFeedQuery);
 		withFeedQuery.useCollectionQuery(query);
 		withFeedQuery.useCountQuery(countQuery);
+		withFeedQuery.useCountQuery(searchCountQuery);
 	}
 
 	/**
@@ -200,13 +238,8 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		} satisfies tTransactionListingQuery;
-		withTransactionListingQuery.useCollectionQuery(activeQuery, {
-			refetchInterval: 5_000,
-		});
-
-		withTransactionListingQuery.useCollectionQuery(inactiveQuery, {
-			refetchInterval: 5_000,
-		});
+		withTransactionListingQuery.useCollectionQuery(activeQuery);
+		withTransactionListingQuery.useCollectionQuery(inactiveQuery);
 
 		withTransactionListingQuery.useCountQuery({});
 	}
