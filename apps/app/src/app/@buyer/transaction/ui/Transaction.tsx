@@ -119,7 +119,7 @@ export const Transaction: FC<Transaction.Props> = ({
 							)}
 						</TransactionMenuButton>
 					}
-					resolved={"chat"}
+					mode={"chat"}
 					text={{
 						open: translator.text("Transaction - send a message (placeholder)"),
 						dispute: translator.text(

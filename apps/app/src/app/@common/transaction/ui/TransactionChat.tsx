@@ -5,11 +5,12 @@ import type { tTransaction as tSellerTransaction } from "@zbav-se.me/sdk/api/sel
 import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC, ReactNode } from "react";
+import { useCallback } from "react";
 import { match } from "ts-pattern";
 
 export namespace TransactionChat {
 	type Status = tBuyerTransaction["status"] | tSellerTransaction["status"];
-	export type Mode = "chat" | "readonly";
+	export type mode = "chat" | "readonly";
 
 	export interface Text {
 		closed: string;
@@ -26,7 +27,7 @@ export namespace TransactionChat {
 
 	export interface Props extends Container.Props {
 		left?: ReactNode;
-		resolved: TransactionChat.Mode;
+		mode: mode;
 		text: Text;
 		transaction: Transaction;
 	}
@@ -34,7 +35,7 @@ export namespace TransactionChat {
 
 export const TransactionChat: FC<TransactionChat.Props> = ({
 	left,
-	resolved,
+	mode,
 	text,
 	transaction,
 	ui,
@@ -47,15 +48,21 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 		],
 	});
 
-	const submit = (message: string) => {
-		messageMutation.mutate({
-			transactionId: transaction.id,
-			kind: "text",
-			payload: {
-				text: message,
-			},
-		});
-	};
+	const submit = useCallback(
+		(message: string) => {
+			messageMutation.mutate({
+				transactionId: transaction.id,
+				kind: "text",
+				payload: {
+					text: message,
+				},
+			});
+		},
+		[
+			messageMutation,
+			transaction.id,
+		],
+	);
 
 	return (
 		<Container
@@ -79,7 +86,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 					);
 				})
 				.with("resolved", () => {
-					return resolved === "chat" ? (
+					return mode === "chat" ? (
 						<ChatInput
 							onSubmit={submit}
 							placeholder={text.resolved}

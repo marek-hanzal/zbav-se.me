@@ -3,7 +3,6 @@ import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { withTransactionListingSourceSelectFx } from "~/@seller/transaction-listing/db/withTransactionListingSourceSelectFx";
-import { withUnreadBuyerMessageInboxQuery } from "~/@seller/transaction-listing/db/withUnreadBuyerMessageInboxQuery";
 import type { TransactionListingSortSchema } from "~/@seller/transaction-listing/schema/TransactionListingSortSchema";
 import { withGallerySelectFx } from "~/@user/gallery/db/withGallerySelectFx";
 
@@ -22,8 +21,6 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 		const gallerySelect = yield* withGallerySelectFx({});
 
 		let query = sourceSelect.select((eb) => {
-			const unreadSelect = withUnreadBuyerMessageInboxQuery(eb.selectFrom("inbox as i"));
-
 			return [
 				eb.ref("l.id").as("listingId"),
 				jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))
@@ -33,11 +30,21 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 					.selectFrom("transaction as lt")
 					.select((eb) => eb.fn.countAll<number>().as("count"))
 					.whereRef("lt.listingId", "=", "l.id")})`.as("count"),
-				sql<number>`coalesce((${unreadSelect.select((eb) =>
-					sql<number>`count(distinct ${eb.ref("i.payload")} ->> 'transactionId')`.as(
-						"unreadCount",
-					),
-				)}), 0)`.as("unreadCount"),
+				sql<number>`coalesce((${eb
+					.selectFrom("inbox as i")
+					.select((eb) =>
+						sql<number>`count(distinct ${eb.ref("i.payload")} ->> 'transactionId')`.as(
+							"unreadCount",
+						),
+					)
+					.whereRef("i.userId", "=", "l.userId")
+					.where("i.family", "=", "transaction")
+					.where("i.type", "=", "buyer-message")
+					.where("i.archivedAt", "is", null)
+					.where(
+						(eb) =>
+							sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`,
+					)}), 0)`.as("unreadCount"),
 			];
 		});
 

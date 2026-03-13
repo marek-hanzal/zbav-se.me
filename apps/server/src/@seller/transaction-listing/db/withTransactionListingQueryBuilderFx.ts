@@ -1,6 +1,6 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import type { withTransactionListingSourceSelectFx } from "~/@seller/transaction-listing/db/withTransactionListingSourceSelectFx";
-import { withUnreadBuyerMessageInboxQuery } from "~/@seller/transaction-listing/db/withUnreadBuyerMessageInboxQuery";
 import type { TransactionListingFilterSchema } from "~/@seller/transaction-listing/schema/TransactionListingFilterSchema";
 
 export namespace withTransactionListingQueryBuilderFx {
@@ -53,9 +53,16 @@ export const withTransactionListingQueryBuilderFx = Effect.fn(
 
 	if (where.active !== undefined) {
 		query = query.where(({ exists, not, selectFrom }) => {
-			const unreadSelect = withUnreadBuyerMessageInboxQuery(
-				selectFrom("inbox as i").select("i.id"),
-			);
+			const unreadSelect = selectFrom("inbox as i")
+				.select("i.id")
+				.whereRef("i.userId", "=", "l.userId")
+				.where("i.family", "=", "transaction")
+				.where("i.type", "=", "buyer-message")
+				.where("i.archivedAt", "is", null)
+				.where(
+					(eb) =>
+						sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`,
+				);
 
 			return where.active ? exists(unreadSelect) : not(exists(unreadSelect));
 		}) as TSelect;

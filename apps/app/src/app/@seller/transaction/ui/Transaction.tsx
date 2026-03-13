@@ -105,7 +105,7 @@ export const Transaction: FC<Transaction.Props> = ({
 							)}
 						</TransactionMenuButton>
 					}
-					resolved={"readonly"}
+					mode={"readonly"}
 					text={{
 						open: translator.text("Transaction - send a message (placeholder)"),
 						dispute: translator.text(
