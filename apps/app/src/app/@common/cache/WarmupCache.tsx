@@ -1,24 +1,16 @@
-// import { useSuspenseQuery } from "@tanstack/react-query";
-// import type { MarkSuspense } from "@use-pico/client/type";
-// import type { tListingQuery as tBuyerListingQuery, tFeedQuery } from "@zbav-se.me/sdk/api/buyer";
-// import type { tDraftQuery } from "@zbav-se.me/sdk/api/seller";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
-
-import { withListingQuery as withBuyerListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
-// import { withTransactionQuery as withBuyerTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
-// import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
-// import { withListingQuery as withSellerListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
-// import { withTransactionQuery as withSellerTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
-// import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
-// import { withInboxQuery } from "@zbav-se.me/sdk/query/user";
-// import type { FC } from "react";
-// import { FEED_LIMIT } from "~/app/@common/limit/Limit";
-
 import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
+import { withListingQuery as withBuyerListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
+import { withTransactionQuery as withBuyerTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
+import { withListingQuery as withSellerListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
+import { withTransactionQuery as withSellerTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
+import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
-import type { FC } from "react";
+import { type FC, useEffect } from "react";
+import { FEED_LIMIT } from "~/app/@common/limit/Limit";
 
 export namespace WarmupCache {
 	export interface Props extends MarkSuspense.Props {
@@ -61,7 +53,34 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 	 * Feed pre-warming
 	 */
 	{
+		withFeedQuery.useCollectionQuery({
+			filter: {
+				type: "user",
+			},
+			cursor: {
+				page: 0,
+				size: FEED_LIMIT,
+			},
+			sort: [
+				{
+					field: "createdAt",
+					order: "desc",
+				},
+			],
+		});
 		withFeedQuery.useEntityQuery({
+			filter: {
+				type: "user",
+			},
+			sort: [
+				{
+					field: "updatedAt",
+					order: "desc",
+				},
+			],
+		});
+
+		const { data: search } = withFeedQuery.useEntityQuery({
 			filter: {
 				type: "search",
 			},
@@ -72,6 +91,16 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		});
+		withBuyerListingQuery.useCollectionQuery(search.query);
+		withBuyerListingQuery.useCountQuery(search.query);
+
+		const update = withFeedQuery.useUpdate();
+
+		// biome-ignore lint/correctness/useExhaustiveDependencies: Single-shot
+		useEffect(() => {
+			update(search);
+		}, []);
+
 		withFeedQuery.useCountQuery({
 			filter: {
 				type: "user",
@@ -83,9 +112,24 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 	 * Buyer listing stuff
 	 */
 	{
+		withBuyerListingQuery.useCollectionQuery({
+			sort: [
+				{
+					field: "createdAt",
+					order: "desc",
+				},
+			],
+			where: {
+				isFavourite: true,
+				withIgnored: false,
+			},
+		});
 		withBuyerListingQuery.useCountQuery({
-            
-        });
+			where: {
+				isFavourite: true,
+				withIgnored: false,
+			},
+		});
 	}
 
 	/**
@@ -118,37 +162,39 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 	/**
 	 * Draft warm-up
 	 */
-	// {
-	// 	const query = {
-	// 		where: {
-	// 			usedAtIsNull: true,
-	// 		},
-	// 		sort: [
-	// 			{
-	// 				field: "updatedAt",
-	// 				order: "desc",
-	// 			},
-	// 		],
-	// 	} satisfies tDraftQuery;
-
-	// 	withDraftQuery.useCollectionQuery({
-	// 		where: {
-	// 			usedAtIsNull: true,
-	// 		},
-	// 		cursor: {
-	// 			page: 0,
-	// 			size: 1,
-	// 		},
-	// 		sort: [
-	// 			{
-	// 				field: "updatedAt",
-	// 				order: "desc",
-	// 			},
-	// 		],
-	// 	});
-	// 	withDraftQuery.useCollectionQuery(query);
-	// 	withDraftQuery.useCountQuery(query);
-	// }
+	{
+		withDraftQuery.useCollectionQuery({
+			where: {
+				usedAtIsNull: true,
+			},
+			cursor: {
+				page: 0,
+				size: 1,
+			},
+			sort: [
+				{
+					field: "updatedAt",
+					order: "desc",
+				},
+			],
+		});
+		withDraftQuery.useCollectionQuery({
+			where: {
+				usedAtIsNull: true,
+			},
+			sort: [
+				{
+					field: "updatedAt",
+					order: "desc",
+				},
+			],
+		});
+		withDraftQuery.useCountQuery({
+			where: {
+				usedAtIsNull: true,
+			},
+		});
+	}
 
 	// /**
 	//  * Feed warm-up
@@ -256,94 +302,99 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 	// 	});
 	// }
 
-	// /**
-	//  * Buyer transaction warm-up
-	//  */
-	// {
-	// 	withBuyerTransactionQuery.useCollectionQuery({
-	// 		sort: [
-	// 			{
-	// 				field: "status",
-	// 				order: "asc",
-	// 			},
-	// 			{
-	// 				field: "createdAt",
-	// 				order: "desc",
-	// 			},
-	// 		],
-	// 	});
-	// 	withBuyerTransactionQuery.useCountQuery({});
-	// }
+	/**
+	 * Buyer transaction warm-up
+	 */
+	{
+		withBuyerTransactionQuery.useCollectionQuery({
+			sort: [
+				{
+					field: "status",
+					order: "asc",
+				},
+				{
+					field: "createdAt",
+					order: "desc",
+				},
+			],
+		});
+		withBuyerTransactionQuery.useCountQuery({});
+	}
 
-	// /**
-	//  * Seller transaction listing warm-up
-	//  */
-	// {
-	// 	withSellerTransactionQuery.useCollectionQuery({
-	// 		sort: [
-	// 			{
-	// 				field: "status",
-	// 				order: "asc",
-	// 			},
-	// 			{
-	// 				field: "updatedAt",
-	// 				order: "desc",
-	// 			},
-	// 		],
-	// 	});
-	// 	withSellerTransactionQuery.useCountQuery({});
+	/**
+	 * Seller transaction listing warm-up
+	 */
+	{
+		withSellerTransactionQuery.useCollectionQuery({
+			sort: [
+				{
+					field: "status",
+					order: "asc",
+				},
+				{
+					field: "updatedAt",
+					order: "desc",
+				},
+			],
+		});
+		withSellerTransactionQuery.useCountQuery({});
+	}
 
-	// 	withTransactionListingQuery.useCollectionQuery({
-	// 		filter: {
-	// 			active: true,
-	// 		},
-	// 		cursor: {
-	// 			page: 0,
-	// 			size: 1000,
-	// 		},
-	// 		sort: [
-	// 			{
-	// 				field: "lastAt",
-	// 				order: "desc",
-	// 			},
-	// 		],
-	// 	});
-	// 	withTransactionListingQuery.useCollectionQuery({
-	// 		filter: {
-	// 			active: false,
-	// 		},
-	// 		cursor: {
-	// 			page: 0,
-	// 			size: 1000,
-	// 		},
-	// 		sort: [
-	// 			{
-	// 				field: "lastAt",
-	// 				order: "desc",
-	// 			},
-	// 		],
-	// 	});
-	// 	withTransactionListingQuery.useCountQuery({});
-	// }
+	/**
+	 * Seller transaction listing
+	 */
+	{
+		withTransactionListingQuery.useCollectionQuery({
+			cursor: {
+				page: 0,
+				size: 1000,
+			},
+			filter: {
+				active: true,
+			},
+			sort: [
+				{
+					field: "lastAt",
+					order: "desc",
+				},
+			],
+		});
+		withTransactionListingQuery.useCollectionQuery({
+			cursor: {
+				page: 0,
+				size: 1000,
+			},
+			filter: {
+				active: false,
+			},
+			sort: [
+				{
+					field: "lastAt",
+					order: "desc",
+				},
+			],
+		});
+		withTransactionListingQuery.useCountQuery({});
+	}
 
-	// /**
-	//  * My listing warm-up
-	//  */
-	// {
-	// 	withSellerListingQuery.useCollectionQuery({
-	// 		cursor: {
-	// 			page: 0,
-	// 			size: 100,
-	// 		},
-	// 		sort: [
-	// 			{
-	// 				field: "createdAt",
-	// 				order: "desc",
-	// 			},
-	// 		],
-	// 	});
-	// 	withSellerListingQuery.useCountQuery({});
-	// }
+	/**
+	 * My listing warm-up
+	 */
+	{
+		withSellerListingQuery.useCollectionQuery({
+			cursor: {
+				page: 0,
+				size: 100,
+			},
+			sort: [
+				{
+					field: "createdAt",
+					order: "desc",
+				},
+			],
+		});
+		withSellerListingQuery.useCountQuery({});
+	}
 
 	return null;
 };

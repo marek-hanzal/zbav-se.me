@@ -33,14 +33,6 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ ui, ...props }) => {
 		>
 			<FeedList
 				data-ui={"FeedList-[FeedList]"}
-				query={{
-					sort: [
-						{
-							field: "createdAt",
-							order: "desc",
-						},
-					],
-				}}
 				limit={FEED_LIMIT}
 			/>
 		</TitleContainer>

@@ -5,19 +5,18 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tTransactionListingQuery } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
 import type { FC } from "react";
 
 export namespace Empty {
-	export interface Props {
-		query: tTransactionListingQuery;
+	export interface Props extends Container.Props {
+		//
 	}
 }
 
-export const Empty: FC<Empty.Props> = ({ query }) => {
+export const Empty: FC<Empty.Props> = (props) => {
 	const locale = useLocale();
-	const { data: transactionListingCount } = withTransactionListingQuery.useCountQuery(query);
+	const { data: transactionListingCount } = withTransactionListingQuery.useCountQuery({});
 
 	return transactionListingCount.isEmpty ? (
 		<Container
@@ -25,6 +24,7 @@ export const Empty: FC<Empty.Props> = ({ query }) => {
 				layout: "vertical-centered",
 				height: "full",
 			}}
+			{...props}
 		>
 			<Status
 				icon={MessageIcon}
@@ -63,6 +63,7 @@ export const Empty: FC<Empty.Props> = ({ query }) => {
 				layout: "vertical-centered",
 				height: "full",
 			}}
+			{...props}
 		>
 			<Status
 				icon={MessageIcon}

@@ -16,7 +16,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/default")({
 	async loader({ context: { queryClient }, params: { locale } }) {
 		const feed =
 			(await withFeedQuery
-				.fetchFn({
+				.ensureEntityQuery(queryClient, {
 					filter: {
 						type: "user",
 					},

@@ -336,6 +336,22 @@ export const withEntityQuery = <
 		});
 	}
 
+	function ensureFetchQuery(
+		queryClient: QueryClient,
+		id: string,
+		opts?: withEntityQuery.QueryOptions<TEntity>,
+	) {
+		const request = toIdKey(id);
+
+		return queryClient.ensureQueryData({
+			queryKey: $keys("fetch", request),
+			queryFn() {
+				return fetchFn(request);
+			},
+			...opts,
+		});
+	}
+
 	/**
 	 * Fetches a single entity by id using canonical fetch keys.
 	 *
@@ -377,6 +393,20 @@ export const withEntityQuery = <
 						return $updateFn(queryClient, item).id;
 					}),
 				);
+			},
+			...opts,
+		});
+	}
+
+	function ensureCountQuery(
+		queryClient: QueryClient,
+		data: TCountRequest,
+		opts?: withEntityQuery.QueryOptions<CountSchema.Type>,
+	) {
+		return queryClient.ensureQueryData({
+			queryKey: $keys("count", data),
+			queryFn() {
+				return countFn(data);
 			},
 			...opts,
 		});
@@ -662,10 +692,13 @@ export const withEntityQuery = <
 		keys: $keys,
 		//
 		fetchFn,
+		ensureFetchQuery,
 		ensureEntityQuery,
 		//
 		collectionFn,
+		//
 		countFn,
+		ensureCountQuery,
 		//
 		updateFn: $updateFn,
 		//
