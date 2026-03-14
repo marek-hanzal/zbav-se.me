@@ -68,7 +68,7 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		});
-		const { data: feed } = withFeedQuery.useEntityQuery({
+		const { data: feed } = withFeedQuery.useMaybeEntityQuery({
 			filter: {
 				type: "user",
 			},
@@ -79,10 +79,10 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		});
-		withBuyerListingQuery.useCollectionQuery(feed.query);
-		withBuyerListingQuery.useCountQuery(feed.query);
+		withBuyerListingQuery.useCollectionQuery(feed?.query || {});
+		withBuyerListingQuery.useCountQuery(feed?.query ?? {});
 
-		const { data: search } = withFeedQuery.useEntityQuery({
+		const { data: search } = withFeedQuery.useMaybeEntityQuery({
 			filter: {
 				type: "search",
 			},
@@ -93,15 +93,15 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		});
-		withBuyerListingQuery.useCollectionQuery(search.query);
-		withBuyerListingQuery.useCountQuery(search.query);
+		withBuyerListingQuery.useCollectionQuery(search?.query || {});
+		withBuyerListingQuery.useCountQuery(search?.query || {});
 
 		const update = withFeedQuery.useUpdate();
 
 		// biome-ignore lint/correctness/useExhaustiveDependencies: Single-shot
 		useEffect(() => {
-			update(feed);
-			update(search);
+			feed && update(feed);
+			search && update(search);
 		}, []);
 
 		withFeedQuery.useCountQuery({

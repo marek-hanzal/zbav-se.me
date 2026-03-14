@@ -336,6 +336,19 @@ export const withEntityQuery = <
 		});
 	}
 
+	function useMaybeEntityQuery(
+		data: TFetchRequest,
+		opts?: withEntityQuery.QueryOptions<TEntity | undefined>,
+	) {
+		return useSuspenseQuery({
+			queryKey: $keys("fetch", data),
+			queryFn() {
+				return fetchFn(data).catch(() => undefined);
+			},
+			...opts,
+		});
+	}
+
 	function ensureFetchQuery(
 		queryClient: QueryClient,
 		id: string,
@@ -711,6 +724,7 @@ export const withEntityQuery = <
 		//
 		useFetchQuery,
 		useEntityQuery,
+		useMaybeEntityQuery,
 		useCollectionQuery,
 		useCountQuery,
 		//
