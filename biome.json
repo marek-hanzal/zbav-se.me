@@ -87,7 +87,8 @@
 				"useHookAtTopLevel": "off"
 			},
 			"complexity": {
-				"noBannedTypes": "off"
+				"noBannedTypes": "off",
+				"noUselessLoneBlockStatements": "off"
 			}
 		}
 	},

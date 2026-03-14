@@ -7,7 +7,7 @@ import { userExPatchFx } from "~/@user/user-ex/fx/userExPatchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
-import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
+import { SeedProgressContextFx } from "~/seed/context/withSeedProgressFx";
 import { ensureSeedUserFx } from "~/seed/fx/ensureSeedUserFx";
 import { seedInteractionScenarioFx } from "~/seed/fx/interaction/seedInteractionScenarioFx";
 import { seedThumbBatchFx } from "~/seed/fx/interaction/seedThumbBatchFx";

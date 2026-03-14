@@ -5,7 +5,6 @@ import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveF
 import { transactionStatusMessageFx } from "~/@user/transaction/fx/transactionStatusMessageFx";
 import { transactionUpdateStatusFx } from "~/@user/transaction/fx/transactionUpdateStatusFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace transactionDisputeFx {
 	export interface Props {
@@ -18,15 +17,6 @@ export const transactionDisputeFx = Effect.fn("transactionDisputeFx")(function* 
 	userId,
 	transactionId,
 }: transactionDisputeFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "transactionDisputeFx",
-		input: {
-			userId,
-			transactionId,
-		},
-	});
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const transaction = yield* transactionResolveFx({
@@ -36,7 +26,6 @@ export const transactionDisputeFx = Effect.fn("transactionDisputeFx")(function* 
 			});
 
 			yield* transactionUpdateStatusFx({
-				userId,
 				transactionId: transaction.id,
 				status: transaction.status,
 				request: "dispute",

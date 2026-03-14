@@ -7,7 +7,6 @@ import type { ListingEventCreateSchema } from "~/@buyer/listing-event/schema/Lis
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace listingEventCreateFx {
 	export interface Props extends ListingEventCreateSchema.Type {
@@ -20,16 +19,6 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 	listingId,
 	event,
 }: listingEventCreateFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "listingEventCreateFx",
-		input: {
-			userId,
-			listingId,
-			event,
-		},
-	});
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

@@ -26,17 +26,6 @@ export const DraftListPage: FC<DraftListPage.Props> = (props) => {
 			{...props}
 		>
 			<DraftList
-				query={{
-					where: {
-						usedAtIsNull: true,
-					},
-					sort: [
-						{
-							field: "updatedAt",
-							order: "desc",
-						},
-					],
-				}}
 				ui={{
 					inner: "default",
 				}}

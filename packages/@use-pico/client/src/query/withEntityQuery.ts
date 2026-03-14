@@ -309,6 +309,20 @@ export const withEntityQuery = <
 		return Promise.all(what);
 	}
 
+	function ensureEntityQuery(
+		queryClient: QueryClient,
+		data: TFetchRequest,
+		opts?: withEntityQuery.QueryOptions<TEntity>,
+	) {
+		return queryClient.ensureQueryData({
+			queryKey: $keys("fetch", data),
+			queryFn() {
+				return fetchFn(data);
+			},
+			...opts,
+		});
+	}
+
 	/**
 	 * Internal suspense fetch hook by canonical fetch request payload.
 	 */
@@ -317,6 +331,22 @@ export const withEntityQuery = <
 			queryKey: $keys("fetch", data),
 			queryFn() {
 				return fetchFn(data);
+			},
+			...opts,
+		});
+	}
+
+	function ensureFetchQuery(
+		queryClient: QueryClient,
+		id: string,
+		opts?: withEntityQuery.QueryOptions<TEntity>,
+	) {
+		const request = toIdKey(id);
+
+		return queryClient.ensureQueryData({
+			queryKey: $keys("fetch", request),
+			queryFn() {
+				return fetchFn(request);
 			},
 			...opts,
 		});
@@ -363,6 +393,20 @@ export const withEntityQuery = <
 						return $updateFn(queryClient, item).id;
 					}),
 				);
+			},
+			...opts,
+		});
+	}
+
+	function ensureCountQuery(
+		queryClient: QueryClient,
+		data: TCountRequest,
+		opts?: withEntityQuery.QueryOptions<CountSchema.Type>,
+	) {
+		return queryClient.ensureQueryData({
+			queryKey: $keys("count", data),
+			queryFn() {
+				return countFn(data);
 			},
 			...opts,
 		});
@@ -645,9 +689,16 @@ export const withEntityQuery = <
 	 * - non-hook mutation pipelines (`createFn/patchFn/deleteFn`) for external orchestration
 	 */
 	return {
+		keys: $keys,
+		//
 		fetchFn,
+		ensureFetchQuery,
+		ensureEntityQuery,
+		//
 		collectionFn,
+		//
 		countFn,
+		ensureCountQuery,
 		//
 		updateFn: $updateFn,
 		//
@@ -659,6 +710,7 @@ export const withEntityQuery = <
 		invalidator,
 		//
 		useFetchQuery,
+		useEntityQuery,
 		useCollectionQuery,
 		useCountQuery,
 		//

@@ -43,6 +43,7 @@ This domain provides endpoints that require a session (authenticated user) but w
 - Requires authentication (session)
 - Data is "privately open" - any authenticated user can access
 - May return user-related data, but it's considered public in protected space
+- Runtime logging / tracing hooks are intentionally kept out of session handlers and effects
 - **Can be accessed by**: Any domain with session (`@buyer-session`, `@seller-session`, `@buyer-user`, `@seller-user`, `@user`)
 - **Cannot be accessed by**: `@public` (no session)
 - **Can import from**: `@common` only

@@ -6,13 +6,11 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tTransactionQuery } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import type { FC, ReactNode } from "react";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		query: tTransactionQuery;
 		renderItem(transactionId: string): ReactNode;
 		refetchInterval?: number;
 	}
@@ -20,17 +18,30 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({
 	_suspense,
-	query,
 	renderItem,
 	refetchInterval = 5_000,
 	ui,
 	...props
 }) => {
 	const locale = useLocale();
-	const { data } = withTransactionQuery.useCollectionQuery(query, {
-		refetchInterval,
-	});
-	const { data: transactionCount } = withTransactionQuery.useCountQuery(query);
+	const { data } = withTransactionQuery.useCollectionQuery(
+		{
+			sort: [
+				{
+					field: "status",
+					order: "asc",
+				},
+				{
+					field: "createdAt",
+					order: "desc",
+				},
+			],
+		},
+		{
+			refetchInterval,
+		},
+	);
+	const { data: transactionCount } = withTransactionQuery.useCountQuery({});
 
 	return (
 		<Container

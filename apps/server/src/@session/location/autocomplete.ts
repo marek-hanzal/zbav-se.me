@@ -1,7 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
@@ -11,7 +10,6 @@ import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -59,18 +57,9 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 				summary: "Return a location autocomplete",
 			}),
 			async (c) => {
-				const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 				const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
 
 				return Effect.gen(function* () {
-					const user = c.get("user");
-
-					yield* Effect.annotateLogsScoped({
-						endpoint: "apiLocationAutocomplete",
-						userId: user.id,
-					});
-
 					return c.json(
 						yield* zodGuardFx({
 							schema: z.array(LocationSchema),
@@ -81,7 +70,6 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 						200,
 					);
 				}).pipe(
-					withLoggingFx(axiomConfig, "apiLocationAutocomplete", c.get("traceId")),
 					withKyselyFx(c.get("kysely")),
 					withLocationFx({
 						geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,

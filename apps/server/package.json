@@ -14,7 +14,6 @@
 		"knip": "knip --include dependencies --no-config-hints"
 	},
 	"dependencies": {
-		"@axiomhq/js": "1.4.0",
 		"@better-auth/passkey": "1.5.5",
 		"@hono/zod-openapi": "1.2.2",
 		"@modelcontextprotocol/sdk": "1.27.1",

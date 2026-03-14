@@ -51,15 +51,6 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 		],
 	};
 
-	const baseQuery: tTransactionListingQuery = {
-		sort: [
-			{
-				field: "lastAt",
-				order: "desc",
-			},
-		],
-	};
-
 	const refetchInterval = 5_000;
 
 	const { data: activeTransactionListingIds } = withTransactionListingQuery.useCollectionQuery(
@@ -86,7 +77,7 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 			{...props}
 		>
 			{isEmpty ? (
-				<Empty query={baseQuery} />
+				<Empty />
 			) : (
 				<Container
 					ui={{

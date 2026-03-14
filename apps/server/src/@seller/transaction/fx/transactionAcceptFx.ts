@@ -6,7 +6,6 @@ import { transactionStatusMessageFx } from "~/@user/transaction/fx/transactionSt
 import { transactionUpdateStatusFx } from "~/@user/transaction/fx/transactionUpdateStatusFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace transactionAcceptFx {
 	export interface Props {
@@ -19,15 +18,6 @@ export const transactionAcceptFx = Effect.fn("transactionAcceptFx")(function* ({
 	userId,
 	transactionId,
 }: transactionAcceptFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "transactionAcceptFx",
-		input: {
-			userId,
-			transactionId,
-		},
-	});
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const transaction = yield* transactionResolveFx({
@@ -37,7 +27,6 @@ export const transactionAcceptFx = Effect.fn("transactionAcceptFx")(function* ({
 			});
 
 			yield* transactionUpdateStatusFx({
-				userId,
 				transactionId: transaction.id,
 				status: transaction.status,
 				request: "open",

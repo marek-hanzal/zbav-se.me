@@ -7,7 +7,6 @@ import type { TransactionPatchSchema } from "~/@seller/transaction/schema/Transa
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace transactionPatchFx {
 	export interface Props extends TransactionPatchSchema.Type {
@@ -22,17 +21,6 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 	query,
 	scope,
 }: transactionPatchFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "transactionPatchFx",
-		input: {
-			userId,
-			patch,
-			query,
-			scope,
-		},
-	});
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

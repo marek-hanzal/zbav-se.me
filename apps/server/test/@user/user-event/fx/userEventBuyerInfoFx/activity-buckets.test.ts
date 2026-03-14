@@ -1,4 +1,4 @@
-import { DateContextLayer } from "@use-pico/common/date";
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
@@ -8,7 +8,7 @@ import { auth } from "~/auth/auth";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { testabase } from "~test/testabase";
-import { withTestAxiomFx } from "~test/withTestAxiomFx";
+import { withTestRuntimeFx } from "~test/withTestRuntimeFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Activity buckets - high activity (recent user actions)", async () => {
@@ -40,11 +40,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => createTime,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => createTime,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -55,27 +53,19 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return DateTime.now().minus({
-								days: 5,
-							});
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return DateTime.now().minus({
+							days: 5,
+						});
+					},
+				}),
 			);
 
 			return yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
-		}).pipe(
-			withKyselyFx(database),
-			withDateFx,
-			withTestAxiomFx,
-			Effect.scoped,
-			Effect.runPromise,
-		);
+		}).pipe(withKyselyFx(database), withDateFx, withTestRuntimeFx, Effect.runPromise);
 
 		expect(result).not.toBeNull();
 		if (!result) return;
@@ -112,11 +102,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => createTime,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => createTime,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -127,27 +115,19 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return DateTime.now().minus({
-								days: 45,
-							});
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return DateTime.now().minus({
+							days: 45,
+						});
+					},
+				}),
 			);
 
 			return yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
-		}).pipe(
-			withKyselyFx(database),
-			withDateFx,
-			withTestAxiomFx,
-			Effect.scoped,
-			Effect.runPromise,
-		);
+		}).pipe(withKyselyFx(database), withDateFx, withTestRuntimeFx, Effect.runPromise);
 
 		expect(result).not.toBeNull();
 		if (!result) return;
@@ -184,11 +164,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => createTime,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => createTime,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -199,27 +177,19 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return DateTime.now().minus({
-								days: 75,
-							});
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return DateTime.now().minus({
+							days: 75,
+						});
+					},
+				}),
 			);
 
 			return yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
-		}).pipe(
-			withKyselyFx(database),
-			withDateFx,
-			withTestAxiomFx,
-			Effect.scoped,
-			Effect.runPromise,
-		);
+		}).pipe(withKyselyFx(database), withDateFx, withTestRuntimeFx, Effect.runPromise);
 
 		expect(result).not.toBeNull();
 		if (!result) return;
@@ -254,14 +224,12 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.open",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () =>
-							DateTime.now().minus({
-								days: 10,
-							}),
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () =>
+						DateTime.now().minus({
+							days: 10,
+						}),
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -272,26 +240,18 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.open",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () =>
-							DateTime.now().minus({
-								days: 20,
-							}),
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () =>
+						DateTime.now().minus({
+							days: 20,
+						}),
+				}),
 			);
 
 			return yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
-		}).pipe(
-			withKyselyFx(database),
-			withDateFx,
-			withTestAxiomFx,
-			Effect.scoped,
-			Effect.runPromise,
-		);
+		}).pipe(withKyselyFx(database), withDateFx, withTestRuntimeFx, Effect.runPromise);
 
 		expect(result).not.toBeNull();
 		if (!result) return;

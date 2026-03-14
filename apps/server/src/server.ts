@@ -1,10 +1,9 @@
-import { DialectContextLayer } from "@use-pico/common/database";
+import { DialectContextFx } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
 import { withBuyerApiFx } from "~/@buyer/withBuyerApiFx";
 import { withBuyerHono } from "~/@buyer/withBuyerHono";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { withPublicApiFx } from "~/@public/withPublicApiFx";
 import { withPublicHono } from "~/@public/withPublicHono";
 import { withSellerApiFx } from "~/@seller/withSellerApiFx";
@@ -13,33 +12,18 @@ import { withSessionApiFx } from "~/@session/withSessionApiFx";
 import { withSessionHono } from "~/@session/withSessionHono";
 import { withUserApiFx } from "~/@user/withUserApiFx";
 import { withUserHono } from "~/@user/withUserHono";
-import { KyselyContextLayerFx } from "~/database/context/KyselyContextLayerFx";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { database } from "~/database/kysely";
 import { withHono } from "~/hono/withHono";
 import { initMiddlewareFx } from "~/init/initMiddlewareFx";
 import { withMcpApiFx } from "~/mcp/withMcpApiFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { RoutesContextLayer } from "~/route/context/RoutesContextLayer";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { ServerDatabaseSchema } from "~/schema/env/ServerDatabaseSchema";
 
 const app = await Effect.gen(function* () {
 	const { root } = yield* RoutesContextFx;
-	const axiomConfig = ServerAxiomSchema.parse(process.env);
 
 	root.onError((err, c) => {
-		void Effect.logError("server.fallback.error")
-			.pipe(
-				Effect.annotateLogs({
-					error: err instanceof Error ? err.message : "unknown-error",
-					method: c.req.method,
-					path: c.req.path,
-				}),
-				withLoggingFx(axiomConfig, "server.fallback", c.get("traceId")),
-				Effect.runPromise,
-			)
-			.catch(() => undefined);
-
 		return c.json(
 			{
 				type: "error",
@@ -53,22 +37,19 @@ const app = await Effect.gen(function* () {
 	});
 
 	const databaseConfig = ServerDatabaseSchema.parse(process.env);
-	const kyselyContext = KyselyContextLayerFx(
-		database.pipe(
-			Effect.provide(
-				DialectContextLayer(
-					new PostgresDialect({
-						pool: new Pool({
-							connectionString: databaseConfig.SERVER_DATABASE_URL,
-							max: 3,
-						}),
-					}),
-				),
-			),
+	const kyselyContext = yield* database.pipe(
+		Effect.provideService(
+			DialectContextFx,
+			new PostgresDialect({
+				pool: new Pool({
+					connectionString: databaseConfig.SERVER_DATABASE_URL,
+					max: 3,
+				}),
+			}),
 		),
 	);
 
-	yield* initMiddlewareFx().pipe(Effect.provide(kyselyContext));
+	yield* initMiddlewareFx().pipe(withKyselyFx(kyselyContext));
 
 	yield* Effect.all([
 		withPublicApiFx(),
@@ -77,20 +58,18 @@ const app = await Effect.gen(function* () {
 		withSellerApiFx(),
 		withBuyerApiFx(),
 		withMcpApiFx(),
-	]).pipe(Effect.provide(kyselyContext));
+	]).pipe(withKyselyFx(kyselyContext));
 
 	return root;
 }).pipe(
-	Effect.provide(
-		RoutesContextLayer({
-			root: withHono(),
-			publicHono: withPublicHono(),
-			sessionHono: withSessionHono(),
-			userHono: withUserHono(),
-			sellerHono: withSellerHono(),
-			buyerHono: withBuyerHono(),
-		}),
-	),
+	Effect.provideService(RoutesContextFx, {
+		root: withHono(),
+		publicHono: withPublicHono(),
+		sessionHono: withSessionHono(),
+		userHono: withUserHono(),
+		sellerHono: withSellerHono(),
+		buyerHono: withBuyerHono(),
+	}),
 	Effect.runPromise,
 );
 

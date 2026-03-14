@@ -1,16 +1,12 @@
-import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { bodyLimit } from "hono/body-limit";
 import { cors } from "hono/cors";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
-import { match } from "ts-pattern";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import type { auth as authType } from "~/auth/auth";
 import { auth } from "~/auth/auth";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { ServerDebugSchema } from "~/schema/env/ServerDebugSchema";
 import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 
@@ -25,48 +21,10 @@ const withAuthorizationToken = (headers: Headers): null | string => {
 	return authorization.slice(bearerPrefix.length).trim();
 };
 
-export namespace withAuthLog {
-	export interface Props {
-		hasAuthorization: boolean;
-		hasUser: boolean;
-		level: "error" | "info" | "warning";
-		method: string;
-		path: string;
-		reason: string;
-		source: "anonymous" | "bearer" | "mcp-session" | "session" | "unknown";
-		traceId: string;
-		userAgent: string;
-	}
-}
-
-const withAuthLog = async (axiomConfig: ServerAxiomSchema.Type, props: withAuthLog.Props) => {
-	const logFx = match(props.level)
-		.with("warning", () => Effect.logWarning("auth.resolve"))
-		.with("error", () => Effect.logError("auth.resolve"))
-		.otherwise(() => Effect.log("auth.resolve"));
-
-	await logFx
-		.pipe(
-			Effect.annotateLogs({
-				hasAuthorization: props.hasAuthorization,
-				hasUser: props.hasUser,
-				method: props.method,
-				path: props.path,
-				reason: props.reason,
-				source: props.source,
-				userAgent: props.userAgent,
-			}),
-			withLoggingFx(axiomConfig, "auth.resolve", props.traceId),
-			Effect.runPromise,
-		)
-		.catch(() => undefined);
-};
-
 export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 	const { root } = yield* RoutesContextFx;
 	const kysely = yield* KyselyContextFx;
 
-	const axiomConfig = ServerAxiomSchema.parse(process.env);
 	const debugConfig = ServerDebugSchema.parse(process.env);
 	const viteConfig = ServerViteSchema.parse(process.env);
 	const withOpenCors = cors({
@@ -95,45 +53,6 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 		credentials: false,
 	});
 
-	root.use(async (c, next) => {
-		c.set("traceId", genId());
-		return next();
-	});
-	root.use(async (c, next) => {
-		const startedAt = Date.now();
-
-		await next();
-
-		const status = c.res.status;
-		const message =
-			status >= 500
-				? "http.response.error"
-				: status >= 400
-					? "http.response.warn"
-					: "http.response.info";
-		const logFx =
-			status >= 500
-				? Effect.logError(message)
-				: status >= 400
-					? Effect.logWarning(message)
-					: Effect.log(message);
-
-		await logFx
-			.pipe(
-				Effect.annotateLogs({
-					durationMs: Date.now() - startedAt,
-					hasAuthorization: Boolean(c.req.header("authorization")),
-					hasUser: Boolean(c.get("user")),
-					method: c.req.method,
-					path: c.req.path,
-					status,
-					userAgent: c.req.header("user-agent") ?? "",
-				}),
-				withLoggingFx(axiomConfig, "http.response", c.get("traceId")),
-				Effect.runPromise,
-			)
-			.catch(() => undefined);
-	});
 	root.use(requestId());
 	root.use(secureHeaders());
 	root.use("/api/mcp", withOpenCors);
@@ -196,17 +115,6 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 				const token = withAuthorizationToken(c.req.raw.headers);
 
 				if (!token) {
-					await withAuthLog(axiomConfig, {
-						hasAuthorization: Boolean(c.req.header("authorization")),
-						hasUser: false,
-						level: "warning",
-						method: c.req.method,
-						path: c.req.path,
-						reason: "no-token",
-						source: "anonymous",
-						traceId: c.get("traceId"),
-						userAgent: c.req.header("user-agent") ?? "",
-					});
 					c.set("user", null);
 					return next();
 				}
@@ -228,32 +136,10 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 						.executeTakeFirst();
 
 					if (!mcpOauthUser) {
-						await withAuthLog(axiomConfig, {
-							hasAuthorization: Boolean(c.req.header("authorization")),
-							hasUser: false,
-							level: "warning",
-							method: c.req.method,
-							path: c.req.path,
-							reason: "mcp-session-user-not-found",
-							source: "mcp-session",
-							traceId: c.get("traceId"),
-							userAgent: c.req.header("user-agent") ?? "",
-						});
 						c.set("user", null);
 						return next();
 					}
 
-					await withAuthLog(axiomConfig, {
-						hasAuthorization: Boolean(c.req.header("authorization")),
-						hasUser: true,
-						level: "info",
-						method: c.req.method,
-						path: c.req.path,
-						reason: "mcp-session-user",
-						source: "mcp-session",
-						traceId: c.get("traceId"),
-						userAgent: c.req.header("user-agent") ?? "",
-					});
 					c.set("user", mcpOauthUser as authType.User);
 					return next();
 				}
@@ -270,60 +156,17 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 					.executeTakeFirst();
 
 				if (!mcpUser) {
-					await withAuthLog(axiomConfig, {
-						hasAuthorization: Boolean(c.req.header("authorization")),
-						hasUser: false,
-						level: "warning",
-						method: c.req.method,
-						path: c.req.path,
-						reason: "bearer-user-not-found",
-						source: "bearer",
-						traceId: c.get("traceId"),
-						userAgent: c.req.header("user-agent") ?? "",
-					});
 					c.set("user", null);
 					return next();
 				}
 
-				await withAuthLog(axiomConfig, {
-					hasAuthorization: Boolean(c.req.header("authorization")),
-					hasUser: true,
-					level: "info",
-					method: c.req.method,
-					path: c.req.path,
-					reason: "bearer-user",
-					source: "bearer",
-					traceId: c.get("traceId"),
-					userAgent: c.req.header("user-agent") ?? "",
-				});
 				c.set("user", mcpUser as authType.User);
 				return next();
 			}
-			await withAuthLog(axiomConfig, {
-				hasAuthorization: Boolean(c.req.header("authorization")),
-				hasUser: true,
-				level: "info",
-				method: c.req.method,
-				path: c.req.path,
-				reason: "session-user",
-				source: "session",
-				traceId: c.get("traceId"),
-				userAgent: c.req.header("user-agent") ?? "",
-			});
+
 			c.set("user", session.user);
 			return next();
 		} catch {
-			await withAuthLog(axiomConfig, {
-				hasAuthorization: Boolean(c.req.header("authorization")),
-				hasUser: false,
-				level: "error",
-				method: c.req.method,
-				path: c.req.path,
-				reason: "auth-runtime-error",
-				source: "unknown",
-				traceId: c.get("traceId"),
-				userAgent: c.req.header("user-agent") ?? "",
-			});
 			c.set("user", null);
 			return next();
 		}

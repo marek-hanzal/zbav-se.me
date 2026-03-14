@@ -7,7 +7,7 @@ import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
-import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
+import { SeedProgressContextFx } from "~/seed/context/withSeedProgressFx";
 import { withRandomPastDate } from "~/seed/fx/time/seedTime";
 import { withSeedNowFx } from "~/seed/fx/time/withSeedNowFx";
 

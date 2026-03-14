@@ -1,4 +1,4 @@
-import { Context, Effect, Layer } from "effect";
+import { Context, Effect } from "effect";
 import { terminal as term } from "terminal-kit";
 
 type PhaseState = {
@@ -149,7 +149,6 @@ const withProgressRenderer = (): SeedProgress => {
 	};
 };
 
-export const SeedProgressContextLayer = Layer.succeed(
-	SeedProgressContextFx,
-	withProgressRenderer(),
-);
+export const withSeedProgressFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
+	return effect.pipe(Effect.provideService(SeedProgressContextFx, withProgressRenderer()));
+};

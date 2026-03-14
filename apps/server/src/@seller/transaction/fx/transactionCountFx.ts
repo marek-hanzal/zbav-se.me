@@ -4,7 +4,6 @@ import type { TransactionCountQuerySchema } from "~/@common/transaction/schema/T
 import type { TransactionFilterSchema } from "~/@common/transaction/schema/TransactionFilterSchema";
 import { withTransactionCollectionSelectFx } from "~/@seller/transaction/db/withTransactionCollectionSelectFx";
 import { withTransactionQueryBuilderFx } from "~/@seller/transaction/db/withTransactionQueryBuilderFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace transactionCountFx {
 	export interface Props extends TransactionCountQuerySchema.Type {
@@ -17,16 +16,6 @@ export const transactionCountFx = Effect.fn("transactionCountFx")(function* ({
 	where,
 	scope,
 }: transactionCountFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "transactionCountFx",
-		input: {
-			filter,
-			where,
-			scope,
-		},
-	});
-
 	return yield* withCountFx({
 		selectFx: withTransactionCollectionSelectFx({}),
 		filter,

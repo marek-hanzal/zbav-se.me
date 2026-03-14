@@ -4,7 +4,6 @@ import { withListingEventCollectionSelectFx } from "~/@buyer/listing-event/db/wi
 import { withListingEventQueryBuilderFx } from "~/@buyer/listing-event/db/withListingEventQueryBuilderFx";
 import type { ListingEventFilterSchema } from "~/@buyer/listing-event/schema/ListingEventFilterSchema";
 import type { ListingEventQuerySchema } from "~/@buyer/listing-event/schema/ListingEventQuerySchema";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace listingEventCollectionFx {
 	export interface Props extends ListingEventQuerySchema.Type {
@@ -19,18 +18,6 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 	sort,
 	scope,
 }: listingEventCollectionFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "listingEventCollectionFx",
-		input: {
-			cursor,
-			filter,
-			where,
-			sort,
-			scope,
-		},
-	});
-
 	return yield* withCollectionFx({
 		selectFx: withListingEventCollectionSelectFx({
 			sort,

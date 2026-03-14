@@ -1,7 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { inboxPatchCollectionFx } from "~/@user/inbox/fx/inboxPatchCollectionFx";
@@ -10,7 +9,6 @@ import { InboxSchema } from "~/@user/inbox/schema/InboxSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const CollectionSchema = z.array(InboxSchema);
@@ -58,15 +56,8 @@ export const withPatchCollectionApiFx = Effect.fn("withPatchCollectionApiFx")(fu
 			summary: "Patch inbox collection",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			return Effect.gen(function* () {
 				const user = c.get("user");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiInboxPatchCollection",
-					userId: user.id,
-				});
 
 				return c.json(
 					yield* zodGuardFx({
@@ -82,7 +73,6 @@ export const withPatchCollectionApiFx = Effect.fn("withPatchCollectionApiFx")(fu
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiInboxPatchCollection", c.get("traceId")),
 				withCatchFx({
 					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);

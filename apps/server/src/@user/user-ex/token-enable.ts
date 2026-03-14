@@ -1,7 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { userExTokenEnableFx } from "~/@user/user-ex/fx/userExTokenEnableFx";
@@ -9,7 +8,6 @@ import { UserExSchema } from "~/@user/user-ex/schema/UserExSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withTokenEnableApiFx = Effect.fn("withTokenEnableApiFx")(function* () {
@@ -54,15 +52,8 @@ export const withTokenEnableApiFx = Effect.fn("withTokenEnableApiFx")(function* 
 			summary: "Enable user token",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			return Effect.gen(function* () {
 				const user = c.get("user");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiUserTokenEnable",
-					userId: user.id,
-				});
 
 				return c.json(
 					yield* zodGuardFx({
@@ -75,7 +66,6 @@ export const withTokenEnableApiFx = Effect.fn("withTokenEnableApiFx")(function* 
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiUserTokenEnable", c.get("traceId")),
 				withCatchFx({
 					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);

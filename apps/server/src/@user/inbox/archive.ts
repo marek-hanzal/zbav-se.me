@@ -1,6 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect } from "effect";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeError } from "~/@common/notice/noticeError";
 import { inboxArchiveFx } from "~/@user/inbox/fx/inboxArchiveFx";
 import { InboxQuerySchema } from "~/@user/inbox/schema/InboxQuerySchema";
@@ -8,7 +7,6 @@ import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withArchiveApiFx = Effect.fn("withArchiveApiFx")(function* () {
@@ -49,15 +47,8 @@ export const withArchiveApiFx = Effect.fn("withArchiveApiFx")(function* () {
 			summary: "Archive selected inbox items",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			return Effect.gen(function* () {
 				const user = c.get("user");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiInboxArchive",
-					userId: user.id,
-				});
 
 				yield* inboxArchiveFx({
 					...c.req.valid("json"),
@@ -69,7 +60,6 @@ export const withArchiveApiFx = Effect.fn("withArchiveApiFx")(function* () {
 				return c.body(null, 204);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiInboxArchive", c.get("traceId")),
 				withDateFx,
 				withCatchFx({
 					RuntimeErrorFx(e) {

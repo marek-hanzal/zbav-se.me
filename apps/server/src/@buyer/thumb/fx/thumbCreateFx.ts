@@ -9,7 +9,6 @@ import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace thumbCreateFx {
 	export interface Props extends ThumbCreateSchema.Type {
@@ -23,17 +22,6 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 	type,
 	...data
 }: thumbCreateFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "thumbCreateFx",
-		input: {
-			userId,
-			listingId,
-			type,
-			...data,
-		},
-	});
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

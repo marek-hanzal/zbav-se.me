@@ -20,18 +20,6 @@ export const TransactionListPage: FC<TransactionListPage.Props> = (props) => {
 			{...props}
 		>
 			<TransactionList
-				query={{
-					sort: [
-						{
-							field: "status",
-							order: "asc",
-						},
-						{
-							field: "createdAt",
-							order: "desc",
-						},
-					],
-				}}
 				ui={{
 					inner: "default",
 				}}

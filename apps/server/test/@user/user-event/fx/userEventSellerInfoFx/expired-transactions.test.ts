@@ -1,4 +1,4 @@
-import { DateContextLayer } from "@use-pico/common/date";
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
@@ -8,7 +8,7 @@ import { auth } from "~/auth/auth";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { testabase } from "~test/testabase";
-import { withTestAxiomFx } from "~test/withTestAxiomFx";
+import { withTestRuntimeFx } from "~test/withTestRuntimeFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Expired transactions - buyer pings, seller doesn't act, transaction expires", async () => {
@@ -71,13 +71,11 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t1Create;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t1Create;
+					},
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -88,13 +86,11 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.expired",
 				isTerminal: true,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t1Expired;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t1Expired;
+					},
+				}),
 			);
 
 			// Transaction 2: Buyer nudges, then expires
@@ -106,13 +102,11 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t2Create;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t2Create;
+					},
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -123,13 +117,11 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t2Message;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t2Message;
+					},
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -140,13 +132,11 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.expired",
 				isTerminal: true,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t2Expired;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t2Expired;
+					},
+				}),
 			);
 
 			// Transaction 3: Seller acts, then expires (should not count)
@@ -158,13 +148,11 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t3Create;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t3Create;
+					},
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -175,13 +163,11 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t3SellerMessage;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t3SellerMessage;
+					},
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -192,25 +178,17 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.expired",
 				isTerminal: true,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t3Expired;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t3Expired;
+					},
+				}),
 			);
 
 			return yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(
-			withKyselyFx(database),
-			withDateFx,
-			withTestAxiomFx,
-			Effect.scoped,
-			Effect.runPromise,
-		);
+		}).pipe(withKyselyFx(database), withDateFx, withTestRuntimeFx, Effect.runPromise);
 
 		expect(result).not.toBeNull();
 		if (!result) return;

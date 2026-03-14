@@ -6,7 +6,6 @@ import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace draftGalleryCreateFx {
@@ -25,13 +24,6 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 			const { kysely } = yield* KyselyContextFx;
 
 			if (uploadIds.length === 0) {
-				yield* traceLogFx({
-					level: "trace",
-					message: "draftGalleryCreateFx",
-					error: {
-						message: "At least one upload is required",
-					},
-				});
 				return yield* new InvalidRequestErrorFx({
 					message: "At least one upload is required",
 				});

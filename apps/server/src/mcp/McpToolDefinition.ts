@@ -10,7 +10,6 @@ export namespace McpToolDefinition {
 	}
 
 	export interface Context {
-		traceId: string;
 		userId: string;
 	}
 

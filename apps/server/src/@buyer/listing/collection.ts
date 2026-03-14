@@ -4,12 +4,10 @@ import { Effect } from "effect";
 import { listingCollectionFx } from "~/@buyer/listing/fx/listingCollectionFx";
 import { ListingQuerySchema } from "~/@buyer/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "~/@buyer/listing/schema/ListingSchema";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const CollectionSchema = z.array(ListingSchema);
@@ -55,15 +53,8 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			summary: "Fetch a collection of listings based on the provided query",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			return Effect.gen(function* () {
 				const user = c.get("user");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiListingCollection",
-					userId: user.id,
-				});
 
 				return c.json(
 					yield* zodGuardFx({
@@ -78,7 +69,6 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiListingCollection", c.get("traceId")),
 				withCatchFx({
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);

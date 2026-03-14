@@ -44,6 +44,7 @@ This domain unifies former buyer session and buyer user capabilities behind `/ap
 - Mounted at `/api/buyer/*`.
 - Can import from: `@common`, `@session`, `@user`.
 - Must not import from seller domains.
+- Runtime logging / tracing hooks are intentionally kept out of buyer handlers and effects.
 
 ## Related Domains
 

@@ -4,7 +4,6 @@ import { Effect } from "effect";
 import type { IgnoreCreateSchema } from "~/@buyer/ignore/schema/IgnoreCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace ignoreCreateFx {
 	export interface Props extends IgnoreCreateSchema.Type {
@@ -16,15 +15,6 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 	userId,
 	listingId,
 }: ignoreCreateFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "ignoreCreateFx",
-		input: {
-			userId,
-			listingId,
-		},
-	});
-
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

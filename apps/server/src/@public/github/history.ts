@@ -293,8 +293,7 @@ export const withHistoryApiFx = Effect.fn("withHistoryApiFx")(function* () {
 				}
 
 				return c.json(days, 200);
-			} catch (e) {
-				console.error(e);
+			} catch {
 				return c.json<NoticeSchema.Type, 500>(
 					{
 						type: "error",

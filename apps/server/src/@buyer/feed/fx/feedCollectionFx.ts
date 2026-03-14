@@ -4,7 +4,6 @@ import { withFeedCollectionSelectFx } from "~/@buyer/feed/db/withFeedCollectionS
 import { withFeedQueryBuilderFx } from "~/@buyer/feed/db/withFeedQueryBuilderFx";
 import type { FeedFilterSchema } from "~/@buyer/feed/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/@buyer/feed/schema/FeedQuerySchema";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace feedCollectionFx {
 	export interface Props extends FeedQuerySchema.Type {
@@ -19,18 +18,6 @@ export const feedCollectionFx = Effect.fn("feedCollectionFx")(function* ({
 	cursor,
 	sort,
 }: feedCollectionFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "feedCollectionFx",
-		input: {
-			filter,
-			where,
-			scope,
-			cursor,
-			sort,
-		},
-	});
-
 	return yield* withCollectionFx({
 		selectFx: withFeedCollectionSelectFx({
 			sort,

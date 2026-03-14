@@ -1,4 +1,4 @@
-import { DateContextLayer } from "@use-pico/common/date";
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
@@ -8,7 +8,7 @@ import { auth } from "~/auth/auth";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { testabase } from "~test/testabase";
-import { withTestAxiomFx } from "~test/withTestAxiomFx";
+import { withTestRuntimeFx } from "~test/withTestRuntimeFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Single event returns nothing", async () => {
@@ -35,27 +35,19 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return DateTime.now().minus({
-								days: 10,
-							});
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return DateTime.now().minus({
+							days: 10,
+						});
+					},
+				}),
 			);
 
 			return yield* userEventBuyerInfoFx({
 				userId: buyer.id,
 			});
-		}).pipe(
-			withKyselyFx(database),
-			withDateFx,
-			withTestAxiomFx,
-			Effect.scoped,
-			Effect.runPromise,
-		);
+		}).pipe(withKyselyFx(database), withDateFx, withTestRuntimeFx, Effect.runPromise);
 
 		expect(result).toBeNull();
 	});

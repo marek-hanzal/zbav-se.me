@@ -4,7 +4,6 @@ import { Effect } from "effect";
 import { listingEventCreateFx } from "~/@buyer/listing-event/fx/listingEventCreateFx";
 import { ListingEventCreateSchema } from "~/@buyer/listing-event/schema/ListingEventCreateSchema";
 import { ListingEventSchema } from "~/@buyer/listing-event/schema/ListingEventSchema";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
@@ -12,7 +11,6 @@ import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
@@ -81,15 +79,8 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 			summary: "Create a new listing event",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			return Effect.gen(function* () {
 				const user = c.get("user");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiListingEventCreate",
-					userId: user.id,
-				});
 
 				return c.json(
 					yield* zodGuardFx({
@@ -102,7 +93,6 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					201,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiListingEventCreate", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withCatchFx({

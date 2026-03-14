@@ -8,7 +8,6 @@ import type { InboxPatchCollectionSchema } from "~/@user/inbox/schema/InboxPatch
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace inboxPatchCollectionFx {
 	export interface Props extends InboxPatchCollectionSchema.Type {
@@ -21,16 +20,6 @@ export const inboxPatchCollectionFx = Effect.fn("inboxPatchCollectionFx")(functi
 	query,
 	scope,
 }: inboxPatchCollectionFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "inboxPatchCollectionFx",
-		input: {
-			patch,
-			query,
-			scope,
-		},
-	});
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

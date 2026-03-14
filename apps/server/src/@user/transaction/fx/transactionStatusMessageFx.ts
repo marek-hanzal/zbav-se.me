@@ -6,7 +6,6 @@ import type { TransactionStatusEnumSchema } from "~/database/@enum/TransactionSt
 import type { TransactionEntryTableSchema } from "~/database/@table/TransactionEntryTableSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 const KindMap = {
 	"pending:buyer": "status-pending",
@@ -42,37 +41,12 @@ export const transactionStatusMessageFx = Effect.fn("transactionStatusMessageFx"
 	target,
 	userId,
 }: transactionStatusMessageFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "transactionStatusMessageFx",
-		input: {
-			transactionId,
-			request,
-			target,
-			userId,
-		},
-	});
-
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 	const key: transactionStatusMessageFx.Key = `${request}:${target ?? "null"}`;
 	const kind = KindMap[key as keyof typeof KindMap];
 
 	if (!kind) {
-		yield* traceLogFx({
-			level: "warning",
-			message: "transactionStatusMessageFx.skip",
-			input: {
-				transactionId,
-				request,
-				target,
-				userId,
-			},
-			error: {
-				message: `Missing transaction status message mapping for ${key}`,
-			},
-		});
-
 		return;
 	}
 

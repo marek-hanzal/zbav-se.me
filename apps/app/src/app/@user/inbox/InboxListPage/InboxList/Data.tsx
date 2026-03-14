@@ -15,7 +15,10 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ _suspense, query, textEmpty, ...props }) => {
 	const { data: inboxList } = withInboxQuery.useCollectionQuery(query);
-	const { data: inboxCount } = withInboxQuery.useCountQuery(query);
+	const { data: inboxCount } = withInboxQuery.useCountQuery({
+		filter: query.filter,
+		where: query.where,
+	});
 
 	if (textEmpty && inboxCount.filter === 0) {
 		return <Empty textMessage={textEmpty} />;

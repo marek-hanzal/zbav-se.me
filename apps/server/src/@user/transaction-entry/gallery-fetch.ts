@@ -1,7 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
@@ -10,7 +9,6 @@ import { TransactionEntryGalleryQuerySchema } from "~/@user/transaction-entry/sc
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withTransactionEntryGalleryFetchApiFx = Effect.fn(
@@ -67,15 +65,8 @@ export const withTransactionEntryGalleryFetchApiFx = Effect.fn(
 			summary: "Fetch gallery for one transaction entry",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			return Effect.gen(function* () {
 				const user = c.get("user");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiTransactionEntryGalleryFetch",
-					userId: user.id,
-				});
 
 				return c.json(
 					yield* zodGuardFx({
@@ -88,7 +79,6 @@ export const withTransactionEntryGalleryFetchApiFx = Effect.fn(
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiTransactionEntryGalleryFetch", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({
 					NotFoundErrorFx() {

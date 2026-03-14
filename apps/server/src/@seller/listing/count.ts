@@ -1,7 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { listingCountFx } from "~/@seller/listing/fx/listingCountFx";
 import { ListingCountQuerySchema } from "~/@seller/listing/schema/ListingCountQuerySchema";
@@ -9,7 +8,6 @@ import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { CountSchema } from "~/schema/CountSchema";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
@@ -53,15 +51,8 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 			summary: "Count listings based on the provided query",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			return Effect.gen(function* () {
 				const user = c.get("user");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiListingCount",
-					userId: user.id,
-				});
 
 				return c.json(
 					yield* zodGuardFx({
@@ -76,7 +67,6 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiListingCount", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({
 					ZodErrorFx({ zod }) {

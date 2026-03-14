@@ -8,9 +8,7 @@ import type {
 } from "@modelcontextprotocol/sdk/types.js";
 import { withMcpAuth } from "better-auth/plugins";
 import { Effect } from "effect";
-import { match } from "ts-pattern";
 import type { z } from "zod";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { auth } from "~/auth/auth";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withDateFx } from "~/database/fx/withDateFx";
@@ -21,7 +19,6 @@ import { withMcpResources } from "~/mcp/resource";
 import { SERVER_INFO } from "~/mcp/serverInfo";
 import { mcpTools } from "~/mcp/tool";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 
 type McpSession = {
 	accessToken: string;
@@ -29,36 +26,6 @@ type McpSession = {
 	scopes: string;
 	userId: string;
 };
-interface HandleProps {
-	method: string;
-	path: string;
-	request: Request;
-	session: McpSession;
-	traceId: string;
-	userAgent: string;
-}
-
-interface WithMcpLogProps {
-	level?: "error" | "info" | "warning";
-	message: string;
-	traceId: string;
-	values?: Record<string, unknown>;
-}
-
-interface McpRequestLogValues {
-	hasArguments?: boolean;
-	jsonRpcId?: null | number | string;
-	jsonRpcMethod?: string;
-	jsonRpcToolName?: string;
-	requestBody?: unknown;
-}
-
-interface McpResponseLogValues {
-	jsonRpcErrorCode?: number;
-	jsonRpcErrorMessage?: string;
-	jsonRpcId?: null | number | string;
-	responseBody?: unknown;
-}
 
 const withMcpCompatibleRequest = (request: Request): Request => {
 	const accept = request.headers.get("Accept") ?? "";
@@ -84,77 +51,6 @@ const withMcpCompatibleRequest = (request: Request): Request => {
 	}
 
 	return new Request(request.url, init);
-};
-
-const withJsonRpcId = (value: unknown): McpRequestLogValues["jsonRpcId"] => {
-	if (typeof value === "string" || typeof value === "number" || value === null) {
-		return value;
-	}
-
-	return undefined;
-};
-
-const withRequestLogValues = async (request: Request): Promise<McpRequestLogValues> => {
-	const contentType = request.headers.get("content-type") ?? "";
-	if (!contentType.includes("application/json")) {
-		return {};
-	}
-
-	try {
-		const requestBody = await request.clone().json();
-		if (!McpSchema.isJsonRecord(requestBody)) {
-			return {
-				requestBody,
-			};
-		}
-
-		const params = McpSchema.isJsonRecord(requestBody.params) ? requestBody.params : undefined;
-
-		return {
-			requestBody,
-			jsonRpcId: withJsonRpcId(requestBody.id),
-			jsonRpcMethod: typeof requestBody.method === "string" ? requestBody.method : undefined,
-			jsonRpcToolName: typeof params?.name === "string" ? params.name : undefined,
-			hasArguments: params ? "arguments" in params : undefined,
-		};
-	} catch {
-		return {};
-	}
-};
-
-const withErrorResponseLogValues = async (response: Response): Promise<McpResponseLogValues> => {
-	const contentType = response.headers.get("content-type") ?? "";
-	if (contentType.includes("application/json")) {
-		try {
-			const responseBody = await response.clone().json();
-			if (!McpSchema.isJsonRecord(responseBody)) {
-				return {
-					responseBody,
-				};
-			}
-
-			const error = McpSchema.isJsonRecord(responseBody.error)
-				? responseBody.error
-				: undefined;
-
-			return {
-				responseBody,
-				jsonRpcId: withJsonRpcId(responseBody.id),
-				jsonRpcErrorCode: typeof error?.code === "number" ? error.code : undefined,
-				jsonRpcErrorMessage: typeof error?.message === "string" ? error.message : undefined,
-			};
-		} catch {
-			return {};
-		}
-	}
-
-	try {
-		return {
-			responseBody: await response.clone().text(),
-		};
-	} catch {
-		return {};
-	}
 };
 
 const withStructuredContent = (value: unknown): Record<string, unknown> => {
@@ -231,66 +127,15 @@ const withErrorResult = (error: unknown): CallToolResult => {
 	};
 };
 
-const withSerializedError = (error: unknown) => {
-	if (error instanceof Error) {
-		return {
-			name: error.name,
-			message: error.message,
-			stack: error.stack,
-			cause: error.cause,
-		};
-	}
-
-	return {
-		error,
-	};
-};
-
 export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 	const { root } = yield* RoutesContextFx;
 	const kysely = yield* KyselyContextFx;
 	const { dialect } = kysely;
-	const axiomConfig = ServerAxiomSchema.parse(process.env);
 	const authApi = auth(() => dialect, {
 		basePath: "/api/oauth",
 	});
 
-	const withMcpLog = async ({
-		level = "info",
-		message,
-		traceId,
-		values = {},
-	}: WithMcpLogProps) => {
-		const logFx = match(level)
-			.with("warning", () => Effect.logWarning(message))
-			.with("error", () => Effect.logError(message))
-			.otherwise(() => Effect.log(message));
-
-		await logFx
-			.pipe(
-				Effect.annotateLogs(values),
-				withLoggingFx(axiomConfig, "mcp", traceId),
-				Effect.runPromise,
-			)
-			.catch(() => undefined);
-	};
-
-	const handle = async ({ method, path, request, session, traceId, userAgent }: HandleProps) => {
-		const requestValues = await withRequestLogValues(request);
-
-		await withMcpLog({
-			message: "mcp.request.start",
-			traceId,
-			values: {
-				method,
-				path,
-				userAgent,
-				clientId: session.clientId,
-				userId: session.userId,
-				...requestValues,
-			},
-		});
-
+	const handle = async ({ request, session }: { request: Request; session: McpSession }) => {
 		const server = new McpServer(SERVER_INFO);
 		const { resources, templates } = withMcpResources({
 			serverInfo: SERVER_INFO,
@@ -329,41 +174,17 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 				args: z.output<z.ZodType>,
 				_extra: RequestHandlerExtra<ServerRequest, ServerNotification>,
 			): Promise<CallToolResult> => {
-				await withMcpLog({
-					message: "mcp.tool.invoke",
-					traceId,
-					values: {
-						toolName,
-						userId: session.userId,
-						arguments: args,
-					},
-				});
-
 				try {
 					const effect = tool
 						.execute(args, {
 							userId: session.userId,
-							traceId,
 						})
-						.pipe(
-							withKyselyFx(kysely),
-							withDateFx,
-							withLoggingFx(axiomConfig, "mcp", traceId),
-							Effect.annotateLogs({
-								toolName,
-								userId: session.userId,
-							}),
-						) as Effect.Effect<unknown, unknown, never>;
+						.pipe(withKyselyFx(kysely), withDateFx) as Effect.Effect<
+						unknown,
+						unknown,
+						never
+					>;
 					const result = await Effect.runPromise(effect);
-
-					await withMcpLog({
-						message: "mcp.tool.result",
-						traceId,
-						values: {
-							toolName,
-							ok: true,
-						},
-					});
 
 					return withSuccessResult({
 						value: result,
@@ -371,18 +192,6 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 						schemaResourceUri: McpSchema.withSchemaResourceUri(toolName),
 					});
 				} catch (error) {
-					await withMcpLog({
-						level: "error",
-						message: "mcp.tool.error",
-						traceId,
-						values: {
-							toolName,
-							ok: false,
-							arguments: args,
-							error: withSerializedError(error),
-						},
-					});
-
 					return withErrorResult(error);
 				}
 			}) as never;
@@ -448,146 +257,17 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 
 		await server.connect(transport);
 
-		try {
-			const response = await transport.handleRequest(request);
-
-			if (response.ok) {
-				await withMcpLog({
-					message: "mcp.request.result",
-					traceId,
-					values: {
-						method,
-						path,
-						status: response.status,
-						ok: true,
-						jsonRpcId: requestValues.jsonRpcId,
-						jsonRpcMethod: requestValues.jsonRpcMethod,
-						jsonRpcToolName: requestValues.jsonRpcToolName,
-					},
-				});
-			} else {
-				await withMcpLog({
-					level: "warning",
-					message: "mcp.request.failed",
-					traceId,
-					values: {
-						method,
-						path,
-						status: response.status,
-						ok: false,
-						jsonRpcMethod: requestValues.jsonRpcMethod,
-						jsonRpcToolName: requestValues.jsonRpcToolName,
-						...(await withErrorResponseLogValues(response)),
-					},
-				});
-			}
-
-			return response;
-		} catch (error) {
-			await withMcpLog({
-				level: "error",
-				message: "mcp.request.error",
-				traceId,
-				values: {
-					method,
-					path,
-					jsonRpcMethod: requestValues.jsonRpcMethod,
-					jsonRpcToolName: requestValues.jsonRpcToolName,
-					error: withSerializedError(error),
-				},
-			});
-
-			throw error;
-		}
+		return transport.handleRequest(request);
 	};
 
-	const withHandler = (method: string, path: string, traceId: string, userAgent: string) =>
+	const withHandler = () =>
 		withMcpAuth(authApi, async (request, session) =>
 			handle({
-				method,
-				path,
 				request: withMcpCompatibleRequest(request),
 				session,
-				traceId,
-				userAgent,
 			}),
 		);
 
-	root.all("/api/mcp", async (c) => {
-		try {
-			const response = await withHandler(
-				c.req.method,
-				c.req.path,
-				c.get("traceId"),
-				c.req.header("user-agent") ?? "",
-			)(c.req.raw);
-
-			if (response.status === 401) {
-				await withMcpLog({
-					level: "warning",
-					message: "mcp.auth.unauthorized",
-					traceId: c.get("traceId"),
-					values: {
-						method: c.req.method,
-						path: c.req.path,
-						userAgent: c.req.header("user-agent") ?? "",
-					},
-				});
-			}
-
-			return response;
-		} catch (error) {
-			await withMcpLog({
-				level: "error",
-				message: "mcp.route.error",
-				traceId: c.get("traceId"),
-				values: {
-					method: c.req.method,
-					path: c.req.path,
-					userAgent: c.req.header("user-agent") ?? "",
-					error: withSerializedError(error),
-				},
-			});
-			throw error;
-		}
-	});
-
-	root.all("/api/mcp/*", async (c) => {
-		try {
-			const response = await withHandler(
-				c.req.method,
-				c.req.path,
-				c.get("traceId"),
-				c.req.header("user-agent") ?? "",
-			)(c.req.raw);
-
-			if (response.status === 401) {
-				await withMcpLog({
-					level: "warning",
-					message: "mcp.auth.unauthorized",
-					traceId: c.get("traceId"),
-					values: {
-						method: c.req.method,
-						path: c.req.path,
-						userAgent: c.req.header("user-agent") ?? "",
-					},
-				});
-			}
-
-			return response;
-		} catch (error) {
-			await withMcpLog({
-				level: "error",
-				message: "mcp.route.error",
-				traceId: c.get("traceId"),
-				values: {
-					method: c.req.method,
-					path: c.req.path,
-					userAgent: c.req.header("user-agent") ?? "",
-					error: withSerializedError(error),
-				},
-			});
-			throw error;
-		}
-	});
+	root.all("/api/mcp", (c) => withHandler()(c.req.raw));
+	root.all("/api/mcp/*", (c) => withHandler()(c.req.raw));
 });

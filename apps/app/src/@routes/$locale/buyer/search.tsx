@@ -9,7 +9,7 @@ export const Route = createFileRoute("/$locale/buyer/search")({
 	async loader({ context: { queryClient } }) {
 		return (
 			(await withFeedQuery
-				.fetchFn({
+				.ensureEntityQuery(queryClient, {
 					filter: {
 						type: "search",
 					},

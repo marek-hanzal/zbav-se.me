@@ -26,8 +26,8 @@
 ## Endpoint contract
 - Register endpoints via `domainHono.openapi(createRoute(...), async (c) => ...)`.
 - Keep Zod request/response schemas (`NoticeSchema` for error payloads).
-- In handlers use `Effect.gen` + scoped logs (`Effect.annotateLogsScoped`) and `zodGuardFx` around domain effects.
-- Keep pipe order: `withLoggingFx` -> `withKyselyFx` -> optional infra layers -> `withCatchFx` -> `Effect.runPromise`.
+- In handlers use `Effect.gen` and `zodGuardFx` around domain effects.
+- Keep pipe order: `withKyselyFx` -> optional infra layers -> `withCatchFx` -> `Effect.runPromise`.
 
 ## Logging, errors, OpenAPI
 - Keep stable `endpoint` and `operationId` (`api*`).

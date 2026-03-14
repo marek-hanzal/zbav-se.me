@@ -10,7 +10,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/list")({
 		/**
 		 * Use count for existence check. It's cheaper than loading a full feed object.
 		 */
-		const feedCount = await withFeedQuery.countFn({
+		const feedCount = await withFeedQuery.ensureCountQuery(queryClient, {
 			filter: {
 				type: "user",
 			},

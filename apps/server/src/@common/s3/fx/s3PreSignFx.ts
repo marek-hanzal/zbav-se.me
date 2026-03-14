@@ -5,7 +5,6 @@ import { Effect } from "effect";
 import { S3ContextFx } from "~/@common/s3/context/S3ContextFx";
 import { s3ClientFx } from "~/@common/s3/fx/s3ClientFx";
 import { UploadContextFx } from "~/@common/upload/context/UploadContextFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace s3PreSignFx {
 	export interface Props {
@@ -20,16 +19,6 @@ export const s3PreSignFx = Effect.fn("s3PreSignFx")(function* ({
 	path,
 	extension,
 }: s3PreSignFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "s3PreSignFx",
-		input: {
-			userId,
-			path,
-			extension,
-		},
-	});
-
 	const { cdn } = yield* UploadContextFx;
 	const { bucket } = yield* S3ContextFx;
 

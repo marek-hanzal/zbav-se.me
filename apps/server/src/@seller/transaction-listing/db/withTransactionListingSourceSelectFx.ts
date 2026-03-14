@@ -6,8 +6,6 @@ import type { TransactionEntrySchema } from "~/@user/transaction-entry/schema/Tr
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withTransactionListingSourceSelectFx {
-	export type Props = {};
-
 	export type Select = Effect.Effect.Success<
 		ReturnType<typeof withTransactionListingSourceSelectFx>
 	>;
@@ -15,7 +13,7 @@ export namespace withTransactionListingSourceSelectFx {
 
 export const withTransactionListingSourceSelectFx = Effect.fn(
 	"withTransactionListingSourceSelectFx",
-)(function* (_props: withTransactionListingSourceSelectFx.Props) {
+)(function* () {
 	const { kysely } = yield* KyselyContextFx;
 
 	return kysely
