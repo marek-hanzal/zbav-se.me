@@ -166,15 +166,15 @@ jobs:
         environment: production
         needs: [validate-common-env]
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6.0.2
 
             - name: Setup Node.js
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v6.3.0
               with:
                   node-version: "24"
 
             - name: Setup Bun
-              uses: oven-sh/setup-bun@v2
+              uses: oven-sh/setup-bun@v2.2.0
 
             - name: Upsert web env
               env:
@@ -202,15 +202,15 @@ jobs:
         environment: production
         needs: [validate-common-env]
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6.0.2
 
             - name: Setup Node.js
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v6.3.0
               with:
                   node-version: "24"
 
             - name: Setup Bun
-              uses: oven-sh/setup-bun@v2
+              uses: oven-sh/setup-bun@v2.2.0
 
             - name: Upsert app env
               env:
@@ -238,19 +238,19 @@ jobs:
         environment: production
         needs: [validate-common-env]
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6.0.2
 
             - name: Setup Node.js
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v6.3.0
               with:
                   node-version: "24"
 
             - name: Setup Bun
-              uses: oven-sh/setup-bun@v2
+              uses: oven-sh/setup-bun@v2.2.0
 
             - name: Resolve prod DB URL via Neon
               id: neon
-              uses: neondatabase/create-branch-action@v6
+              uses: neondatabase/create-branch-action@v6.4.0
               with:
                   project_id: ${{ env.NEON_PROJECT_ID }}
                   branch_name: production
@@ -285,15 +285,15 @@ jobs:
         environment: production
         needs: [validate-common-env]
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6.0.2
 
             - name: Setup Node.js
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v6.3.0
               with:
                   node-version: "24"
 
             - name: Setup Bun
-              uses: oven-sh/setup-bun@v2
+              uses: oven-sh/setup-bun@v2.2.0
 
             - name: Install dependencies
               run: bun install --frozen-lockfile
@@ -302,19 +302,19 @@ jobs:
               run: bun run build
 
             - name: Cache save (web prebuilt)
-              uses: actions/cache/save@v4
+              uses: actions/cache/save@v5.0.3
               with:
                   path: apps/web/.vercel/output
                   key: web-${{ github.run_id }}
 
             - name: Cache save (app prebuilt)
-              uses: actions/cache/save@v4
+              uses: actions/cache/save@v5.0.3
               with:
                   path: apps/app/.vercel/output
                   key: app-${{ github.run_id }}
 
             - name: Cache save (server prebuilt)
-              uses: actions/cache/save@v4
+              uses: actions/cache/save@v5.0.3
               with:
                   path: apps/server/.vercel/output
                   key: server-${{ github.run_id }}
@@ -326,19 +326,19 @@ jobs:
         needs: [build]
         steps:
             - name: Cache restore (server prebuilt)
-              uses: actions/cache/restore@v4
+              uses: actions/cache/restore@v5.0.3
               with:
                   path: apps/server/.vercel/output
                   key: server-${{ github.run_id }}
                   fail-on-cache-miss: true
 
             - name: Setup Node.js
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v6.3.0
               with:
                   node-version: "24"
 
             - name: Setup Bun
-              uses: oven-sh/setup-bun@v2
+              uses: oven-sh/setup-bun@v2.2.0
 
             - name: Deploy to Vercel (server)
               working-directory: apps/server
@@ -357,19 +357,19 @@ jobs:
         needs: [build, vercel-server]
         steps:
             - name: Cache restore (web prebuilt)
-              uses: actions/cache/restore@v4
+              uses: actions/cache/restore@v5.0.3
               with:
                   path: apps/web/.vercel/output
                   key: web-${{ github.run_id }}
                   fail-on-cache-miss: true
 
             - name: Setup Node.js
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v6.3.0
               with:
                   node-version: "24"
 
             - name: Setup Bun
-              uses: oven-sh/setup-bun@v2
+              uses: oven-sh/setup-bun@v2.2.0
 
             - name: Strip assets
               working-directory: apps/web
@@ -392,19 +392,19 @@ jobs:
         needs: [build, vercel-server]
         steps:
             - name: Cache restore (app prebuilt)
-              uses: actions/cache/restore@v4
+              uses: actions/cache/restore@v5.0.3
               with:
                   path: apps/app/.vercel/output
                   key: app-${{ github.run_id }}
                   fail-on-cache-miss: true
 
             - name: Setup Node.js
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v6.3.0
               with:
                   node-version: "24"
 
             - name: Setup Bun
-              uses: oven-sh/setup-bun@v2
+              uses: oven-sh/setup-bun@v2.0.1
 
             - name: Strip assets
               working-directory: apps/app
@@ -427,7 +427,7 @@ jobs:
         needs: [build, vercel-server]
         steps:
             - name: Cache restore (web prebuilt)
-              uses: actions/cache/restore@v4
+              uses: actions/cache/restore@v5.0.3
               with:
                   path: apps/web/.vercel/output
                   key: web-${{ github.run_id }}
@@ -437,7 +437,7 @@ jobs:
               run: |
                   set -euo pipefail
                   CONF="${GITHUB_WORKSPACE}/rclone.conf"
-                  OBF=$(docker run --rm rclone/rclone:1.66 obscure "${BUNNY_TOKEN}")
+                  OBF=$(docker run --rm rclone/rclone:1.73.2 obscure "${BUNNY_TOKEN}")
                   cat > "$CONF" <<EOF
                   [bunny]
                   type = sftp
@@ -449,7 +449,7 @@ jobs:
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
             - name: Sync CDN (web assets)
-              uses: docker://rclone/rclone:1.66
+              uses: docker://rclone/rclone:1.73.2
               with:
                   args: >
                       sync /github/workspace/apps/web/.vercel/output/static/assets bunny:/production/web/assets
@@ -466,7 +466,7 @@ jobs:
                       --verbose
 
             - name: Copy root favicon/manifest to CDN /
-              uses: docker://rclone/rclone:1.66
+              uses: docker://rclone/rclone:1.73.2
               with:
                   args: >
                       copy /github/workspace/apps/web/.vercel/output/static bunny:/production/web/
@@ -493,7 +493,7 @@ jobs:
         needs: [build, vercel-server]
         steps:
             - name: Cache restore (app prebuilt)
-              uses: actions/cache/restore@v4
+              uses: actions/cache/restore@v5.0.3
               with:
                   path: apps/app/.vercel/output
                   key: app-${{ github.run_id }}
@@ -503,7 +503,7 @@ jobs:
               run: |
                   set -euo pipefail
                   CONF="${GITHUB_WORKSPACE}/rclone.conf"
-                  OBF=$(docker run --rm rclone/rclone:1.66 obscure "${BUNNY_TOKEN}")
+                  OBF=$(docker run --rm rclone/rclone:1.73.2 obscure "${BUNNY_TOKEN}")
                   cat > "$CONF" <<EOF
                   [bunny]
                   type = sftp
@@ -515,7 +515,7 @@ jobs:
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
             - name: Sync CDN (app assets)
-              uses: docker://rclone/rclone:1.66
+              uses: docker://rclone/rclone:1.73.2
               with:
                   args: >
                       sync /github/workspace/apps/app/.vercel/output/static/assets bunny:/production/app/assets
@@ -532,7 +532,7 @@ jobs:
                       --verbose
 
             - name: Copy root favicon/manifest to CDN /
-              uses: docker://rclone/rclone:1.66
+              uses: docker://rclone/rclone:1.73.2
               with:
                   args: >
                       copy /github/workspace/apps/app/.vercel/output/static bunny:/production/app/

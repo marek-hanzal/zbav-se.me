@@ -99,18 +99,18 @@ jobs:
         runs-on: ubuntu-latest
         environment: staging
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6.0.2
 
             - name: Setup Node.js
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v6.3.0
               with:
                   node-version: "24"
 
             - name: Setup Bun
-              uses: oven-sh/setup-bun@v2
+              uses: oven-sh/setup-bun@v2.2.0
 
             - name: Cache node_modules (root)
-              uses: actions/cache@v4
+              uses: actions/cache@v5.0.3
               with:
                   path: node_modules
                   key: root-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
