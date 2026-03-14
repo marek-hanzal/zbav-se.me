@@ -68,7 +68,7 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		});
-		withFeedQuery.useEntityQuery({
+		const { data: feed } = withFeedQuery.useEntityQuery({
 			filter: {
 				type: "user",
 			},
@@ -79,6 +79,8 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		});
+		withBuyerListingQuery.useCollectionQuery(feed.query);
+		withBuyerListingQuery.useCountQuery(feed.query);
 
 		const { data: search } = withFeedQuery.useEntityQuery({
 			filter: {
@@ -98,6 +100,7 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 
 		// biome-ignore lint/correctness/useExhaustiveDependencies: Single-shot
 		useEffect(() => {
+			update(feed);
 			update(search);
 		}, []);
 
