@@ -28,7 +28,7 @@ export const Data: FC<Data.Props> = ({ _suspense, iconProps, onLinkClick }) => {
 			},
 		},
 		{
-			refetchInterval: 2_500,
+			// refetchInterval: 2_500,
 		},
 	);
 

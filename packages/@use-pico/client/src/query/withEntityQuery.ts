@@ -309,6 +309,20 @@ export const withEntityQuery = <
 		return Promise.all(what);
 	}
 
+	function ensureEntityQuery(
+		queryClient: QueryClient,
+		data: TFetchRequest,
+		opts?: withEntityQuery.QueryOptions<TEntity>,
+	) {
+		return queryClient.ensureQueryData({
+			queryKey: $keys("fetch", data),
+			queryFn() {
+				return fetchFn(data);
+			},
+			...opts,
+		});
+	}
+
 	/**
 	 * Internal suspense fetch hook by canonical fetch request payload.
 	 */
@@ -645,7 +659,11 @@ export const withEntityQuery = <
 	 * - non-hook mutation pipelines (`createFn/patchFn/deleteFn`) for external orchestration
 	 */
 	return {
+		keys: $keys,
+		//
 		fetchFn,
+		ensureEntityQuery,
+		//
 		collectionFn,
 		countFn,
 		//
@@ -659,6 +677,7 @@ export const withEntityQuery = <
 		invalidator,
 		//
 		useFetchQuery,
+		useEntityQuery,
 		useCollectionQuery,
 		useCountQuery,
 		//
