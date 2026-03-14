@@ -338,12 +338,16 @@ export const withEntityQuery = <
 
 	function useMaybeEntityQuery(
 		data: TFetchRequest,
-		opts?: withEntityQuery.QueryOptions<TEntity | undefined>,
+		opts?: withEntityQuery.QueryOptions<TEntity | null>,
 	) {
 		return useSuspenseQuery({
 			queryKey: $keys("fetch", data),
-			queryFn() {
-				return fetchFn(data).catch(() => undefined);
+			async queryFn() {
+				try {
+					return await fetchFn(data);
+				} catch {
+					return null;
+				}
 			},
 			...opts,
 		});
