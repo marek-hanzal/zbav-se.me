@@ -1,9 +1,8 @@
-import { useQueryClient } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import type { MarkSuspense } from "@use-pico/client/type";
 import type {
 	tListingQuery as tBuyerListingQuery,
 	tTransactionQuery as tBuyerTransactionQuery,
-	tFeed,
 	tFeedCountQuery,
 	tFeedQuery,
 } from "@zbav-se.me/sdk/api/buyer";
@@ -32,19 +31,17 @@ export namespace WarmupCache {
 }
 
 export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
-	const queryClient = useQueryClient();
-
 	/**
 	 * Inbox warm-up
 	 */
 	{
-		const query = {
+		withInboxQuery.useCountQuery({
 			where: {
 				priority: "high",
 				archivedAtIsNull: true,
 			},
-		} satisfies tInboxCountQuery;
-		const collectionQuery = {
+		} satisfies tInboxCountQuery);
+		withInboxQuery.useCollectionQuery({
 			where: {
 				priority: "high",
 				archivedAtIsNull: true,
@@ -59,17 +56,26 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 					order: "desc",
 				},
 			],
-		} satisfies tInboxQuery;
-
-		withInboxQuery.useCountQuery(query);
-		withInboxQuery.useCollectionQuery(collectionQuery);
+		} satisfies tInboxQuery);
 	}
 
 	/**
 	 * Draft warm-up
 	 */
 	{
-		const menuQuery = {
+		const query = {
+			where: {
+				usedAtIsNull: true,
+			},
+			sort: [
+				{
+					field: "updatedAt",
+					order: "desc",
+				},
+			],
+		} satisfies tDraftQuery;
+
+		withDraftQuery.useCollectionQuery({
 			where: {
 				usedAtIsNull: true,
 			},
@@ -83,20 +89,7 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 					order: "desc",
 				},
 			],
-		} satisfies tDraftQuery;
-		const query = {
-			where: {
-				usedAtIsNull: true,
-			},
-			sort: [
-				{
-					field: "updatedAt",
-					order: "desc",
-				},
-			],
-		} satisfies tDraftQuery;
-
-		withDraftQuery.useCollectionQuery(menuQuery);
+		} satisfies tDraftQuery);
 		withDraftQuery.useCollectionQuery(query);
 		withDraftQuery.useCountQuery(query);
 	}
@@ -120,7 +113,26 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				size: 1,
 			},
 		} satisfies tFeedQuery;
-		const searchFeedQuery = {
+		const { data: defaultFeed } = useSuspenseQuery({
+			queryKey: [
+				"feed",
+				"fetch",
+				defaultFeedQuery,
+			],
+			queryFn() {
+				return withFeedQuery.fetchFn(defaultFeedQuery);
+			},
+		});
+		const defaultListingQuery: tBuyerListingQuery = defaultFeed?.query ?? {};
+		const defaultListingCollectionQuery: tBuyerListingQuery = {
+			...defaultListingQuery,
+			cursor: {
+				page: 0,
+				size: 256,
+			},
+		};
+
+		withFeedQuery.useCollectionQuery({
 			sort: [
 				{
 					field: "updatedAt",
@@ -134,8 +146,8 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				page: 0,
 				size: 1,
 			},
-		} satisfies tFeedQuery;
-		const query = {
+		} satisfies tFeedQuery);
+		withFeedQuery.useCollectionQuery({
 			sort: [
 				{
 					field: "createdAt",
@@ -149,43 +161,17 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				page: 0,
 				size: FEED_LIMIT,
 			},
-		} satisfies tFeedQuery;
-		const countQuery = {
+		} satisfies tFeedQuery);
+		withFeedQuery.useCountQuery({
 			filter: {
 				type: "user",
 			},
-		} satisfies tFeedCountQuery;
-		const searchCountQuery = {
+		} satisfies tFeedCountQuery);
+		withFeedQuery.useCountQuery({
 			filter: {
 				type: "search",
 			},
-		} satisfies tFeedCountQuery;
-		const { data: defaultFeedIds } = withFeedQuery.useCollectionQuery(defaultFeedQuery);
-		const [defaultFeedId] = defaultFeedIds;
-		const defaultFeed = defaultFeedId
-			? queryClient.getQueryData<tFeed>([
-					"feed",
-					"fetch",
-					{
-						where: {
-							id: defaultFeedId,
-						},
-					},
-				])
-			: undefined;
-		const defaultListingQuery: tBuyerListingQuery = defaultFeed?.query ?? {};
-		const defaultListingCollectionQuery: tBuyerListingQuery = {
-			...defaultListingQuery,
-			cursor: {
-				page: 0,
-				size: 256,
-			},
-		};
-
-		withFeedQuery.useCollectionQuery(searchFeedQuery);
-		withFeedQuery.useCollectionQuery(query);
-		withFeedQuery.useCountQuery(countQuery);
-		withFeedQuery.useCountQuery(searchCountQuery);
+		} satisfies tFeedCountQuery);
 		withBuyerListingQuery.useCollectionQuery(defaultListingCollectionQuery);
 		withBuyerListingQuery.useCountQuery(defaultListingQuery);
 	}
@@ -194,7 +180,7 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 	 * Favourite warm-up
 	 */
 	{
-		const query = {
+		withBuyerListingQuery.useCollectionQuery({
 			where: {
 				isFavourite: true,
 				withIgnored: false,
@@ -205,17 +191,20 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 					order: "desc",
 				},
 			],
-		} satisfies tBuyerListingQuery;
-
-		withBuyerListingQuery.useCollectionQuery(query);
-		withBuyerListingQuery.useCountQuery(query);
+		} satisfies tBuyerListingQuery);
+		withBuyerListingQuery.useCountQuery({
+			where: {
+				isFavourite: true,
+				withIgnored: false,
+			},
+		} satisfies tBuyerListingQuery);
 	}
 
 	/**
 	 * Buyer transaction warm-up
 	 */
 	{
-		const query = {
+		withBuyerTransactionQuery.useCollectionQuery({
 			sort: [
 				{
 					field: "status",
@@ -226,9 +215,7 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 					order: "desc",
 				},
 			],
-		} satisfies tBuyerTransactionQuery;
-
-		withBuyerTransactionQuery.useCollectionQuery(query);
+		} satisfies tBuyerTransactionQuery);
 		withBuyerTransactionQuery.useCountQuery({});
 	}
 
@@ -236,7 +223,7 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 	 * Seller transaction listing warm-up
 	 */
 	{
-		const transactionQuery = {
+		withSellerTransactionQuery.useCollectionQuery({
 			sort: [
 				{
 					field: "status",
@@ -247,8 +234,10 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 					order: "desc",
 				},
 			],
-		} satisfies tSellerTransactionQuery;
-		const activeQuery = {
+		} satisfies tSellerTransactionQuery);
+		withSellerTransactionQuery.useCountQuery({});
+
+		withTransactionListingQuery.useCollectionQuery({
 			filter: {
 				active: true,
 			},
@@ -262,8 +251,8 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 					order: "desc",
 				},
 			],
-		} satisfies tTransactionListingQuery;
-		const inactiveQuery = {
+		} satisfies tTransactionListingQuery);
+		withTransactionListingQuery.useCollectionQuery({
 			filter: {
 				active: false,
 			},
@@ -277,13 +266,7 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 					order: "desc",
 				},
 			],
-		} satisfies tTransactionListingQuery;
-
-		withSellerTransactionQuery.useCollectionQuery(transactionQuery);
-		withSellerTransactionQuery.useCountQuery({});
-
-		withTransactionListingQuery.useCollectionQuery(activeQuery);
-		withTransactionListingQuery.useCollectionQuery(inactiveQuery);
+		} satisfies tTransactionListingQuery);
 		withTransactionListingQuery.useCountQuery({});
 	}
 
@@ -291,7 +274,7 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 	 * My listing warm-up
 	 */
 	{
-		const query = {
+		withSellerListingQuery.useCollectionQuery({
 			cursor: {
 				page: 0,
 				size: 100,
@@ -302,9 +285,7 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 					order: "desc",
 				},
 			],
-		} satisfies tSellerListingQuery;
-
-		withSellerListingQuery.useCollectionQuery(query);
+		} satisfies tSellerListingQuery);
 		withSellerListingQuery.useCountQuery({});
 	}
 
