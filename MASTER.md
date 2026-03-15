@@ -2861,6 +2861,9 @@ Kontrakt komunikace:
 - Neučím. Nevysvětluju. Rozdíl se má projevit chováním UI (viz [Landing](#koncept-landing), [Navigace](#koncept-navigace)).
 - “Ticho” je default i v růstu: žádnej spam. Inbox je autorita (viz [Notifikace](#koncept-notifikace)).
 
+Slogany:
+- „Hoď to sem taky.“
+
 Related:
 - [Landing](#koncept-landing)
 - [Navigace](#koncept-navigace)
