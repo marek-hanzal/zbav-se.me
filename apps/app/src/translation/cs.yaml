@@ -35,6 +35,9 @@
 065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
     ref: Feed sorting (label)
     value: Řazení inzerátů
+06616f1eb298047657fcaf296af7f6364f463736858dd7db7026d021:
+    ref: Inbox empty (message)
+    value: ...ale až se něco zajímavého objeví, budeš o tom vědět!
 069a14aec9bb4a553c78c2032f6e521d3b8dccbbb4cfac68e67fa1c1:
     ref: Listing - Pros (title)
     value: Co chci vyzdvihnout
@@ -46,7 +49,9 @@
     value: Nastavení omezení
 0a0e1258e91df9fa887eb547e6dd2bb4f6445b495d72d8ba321244cc:
     ref: Feed list empty (message)
-    value: ...ale můžeš si nějaký seznam vytvořit - třeba pro sebe, děti, auto, co tě napadne.
+    value:
+        ...ale můžeš si nějaký seznam vytvořit - třeba pro sebe, děti, auto, co
+        tě napadne.
 0a5c73cd28c41a15c8769a38be34b6d388bcba18e90ca7e28b762bc9:
     ref: Listing - Cons (title)
     value: Chci být upřímný
@@ -341,6 +346,9 @@
     value: >
         Nastav si svůj název seznamu, abys poznal, co v něm očekáváš (např. zimní
         pneu).
+4c71066d8f9db4647c7ce0049724adb35f4b87cfd7a602bad98b84af:
+    ref: Inbox empty (title)
+    value: Zatím tu nic není...
 4d603e3fca4e9f047b0fd3fdd009a1808b0b50eda2aa6f12c206a9c7:
     ref: Share location (button)
     value: Sdílet polohu

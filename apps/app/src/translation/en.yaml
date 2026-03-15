@@ -31,6 +31,9 @@
 065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
   ref: Feed sorting (label)
   value: Feed sorting (label)
+06616f1eb298047657fcaf296af7f6364f463736858dd7db7026d021:
+  ref: Inbox empty (message)
+  value: Inbox empty (message)
 069a14aec9bb4a553c78c2032f6e521d3b8dccbbb4cfac68e67fa1c1:
   ref: Listing - Pros (title)
   value: Listing - Pros (title)
@@ -292,6 +295,9 @@
 4a6d672731040044ea10a6210d1d72de8ce2a49c57e6eab1ba45eb66:
   ref: Feed name (required)
   value: Feed name (required)
+4c71066d8f9db4647c7ce0049724adb35f4b87cfd7a602bad98b84af:
+  ref: Inbox empty (title)
+  value: Inbox empty (title)
 4d603e3fca4e9f047b0fd3fdd009a1808b0b50eda2aa6f12c206a9c7:
   ref: Share location (button)
   value: Share location (button)
