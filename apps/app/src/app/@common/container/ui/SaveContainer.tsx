@@ -52,6 +52,7 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 			{...props}
 		>
 			<Button
+				data-action={"cancel"}
 				onClick={onCancel}
 				disabled={loading}
 				iconEnabled={ArrowLeftIcon}
@@ -69,6 +70,7 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 			</Button>
 
 			<Button
+				data-action={"save"}
 				onClick={onSave}
 				disabled={loading || disabled}
 				loading={loading}

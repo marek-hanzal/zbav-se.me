@@ -37,6 +37,7 @@ export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 			{...props}
 		>
 			<LinkTo
+				data-action={"open feed listings"}
 				data-ui={"FeedList-[LinkTo.header]"}
 				to={"/$locale/buyer/feed/$id/list"}
 				params={{
@@ -87,6 +88,7 @@ export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 
 			<Button
 				data-ui={"Item-[FeedSetupButton]"}
+				data-action={isEditor ? "close feed editor" : "open feed editor"}
 				iconEnabled={EditIcon}
 				iconProps={{
 					ui: {
