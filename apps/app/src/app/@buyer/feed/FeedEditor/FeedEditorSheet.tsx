@@ -22,6 +22,7 @@ export const FeedEditorSheet: FC<FeedEditorSheet.Props> = ({ state, ...props }) 
 				title: translator.text("Feed editor (title)"),
 				right: (
 					<CloseButton
+						data-action={"close feed editor"}
 						onClick={close}
 						ui={{
 							background: undefined,

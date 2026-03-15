@@ -43,6 +43,7 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 			{hidden?.includes("header") ? null : (
 				<Group>
 					<GalleryValue
+						data-action={"edit feed gallery"}
 						label={translator.text("Feed photo gallery (label)")}
 						uploads={
 							feed.upload
@@ -55,6 +56,7 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 					/>
 
 					<NameValue
+						data-action={"edit feed name"}
 						name={feed.name}
 						action={
 							<Icon
@@ -76,6 +78,7 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 
 			<Group>
 				<CategoryValueList
+					data-action={"edit feed category"}
 					categoryIdIn={feed.query?.filter?.categoryIdIn}
 					textLabel={translator.text("Feed category (label)")}
 					textEmpty={translator.text("Feed category not selected")}
@@ -101,6 +104,7 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 
 			<Group>
 				<LocationValue
+					data-action={"edit feed location"}
 					locationId={feed.locationId}
 					textLabel={translator.text("Feed location (label)")}
 					textEmpty={translator.text("Feed location not selected")}
@@ -122,6 +126,7 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 				/>
 
 				<RangeValue
+					data-action={"edit feed range"}
 					range={feed.query?.filter?.range}
 					ui={{
 						disabled: !feed.query?.meta?.latLon,
@@ -145,6 +150,7 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 
 			<Group>
 				<SortValue
+					data-action={"edit feed sort"}
 					sort={feed.query?.sort ?? []}
 					action={
 						<Icon
@@ -165,6 +171,7 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 
 			<Group>
 				<ConditionValueList
+					data-action={"edit feed condition"}
 					conditionIn={feed.query?.filter?.conditionIn ?? []}
 					action={
 						<Icon
@@ -186,6 +193,7 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 				/>
 
 				<AgeValueList
+					data-action={"edit feed age"}
 					ageIn={feed.query?.filter?.ageIn ?? []}
 					action={
 						<Icon
@@ -209,6 +217,7 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 
 			<Group>
 				<DeliveryValueList
+					data-action={"edit feed delivery"}
 					deliveryIn={feed.query?.filter?.deliveryIn ?? []}
 					action={
 						<Icon
@@ -232,6 +241,7 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 
 			<Group>
 				<WarrantyValueList
+					data-action={"edit feed warranty"}
 					warrantyIn={feed.query?.filter?.warrantyIn ?? []}
 					action={
 						<Icon
@@ -255,6 +265,7 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 
 			<Group>
 				<TitleValue
+					data-action={"edit feed title"}
 					title={feed.query?.filter?.title ?? null}
 					textLabel={translator.text("Feed title (label)")}
 					textEmpty={translator.text("Feed title not filled")}
