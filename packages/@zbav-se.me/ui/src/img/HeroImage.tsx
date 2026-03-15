@@ -122,6 +122,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 						className,
 					],
 				})}
+				data-ui={"HeroImage"}
 				//
 				loading={"eager"}
 				fetchPriority={"high"}
@@ -154,7 +155,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 
 			{status === "error" ? (
 				<Container
-					data-ui={"HeroImage-error"}
+					data-ui={"HeroImage"}
 					ui={{
 						layout: "vertical-centered",
 						tone: "primary",
@@ -162,6 +163,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 					}}
 				>
 					<Status
+						data-ui={"ErrorStatus"}
 						icon={"icon-[ph--image-broken-duotone]"}
 						textTitle={translator.text("Image not available anymore")}
 						{...errorStatusProps}

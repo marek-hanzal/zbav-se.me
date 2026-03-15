@@ -32,6 +32,7 @@ export const Data: FC<Data.Props> = ({
 
 	return (
 		<ConfirmButton
+			data-action={listing.isIgnored ? "unignore listing" : "ignore listing"}
 			iconEnabled={TrashIcon}
 			iconProps={{
 				ui: {

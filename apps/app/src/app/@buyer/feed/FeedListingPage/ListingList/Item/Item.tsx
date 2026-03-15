@@ -10,8 +10,11 @@ export namespace Item {
 
 export const Item: FC<Item.Props> = (props) => {
 	return (
-		<Suspense fallback={<Pending />}>
-			<Data {...props} />
+		<Suspense fallback={<Pending data-ui={"Item"} />}>
+			<Data
+				data-ui={"Item"}
+				{...props}
+			/>
 		</Suspense>
 	);
 };

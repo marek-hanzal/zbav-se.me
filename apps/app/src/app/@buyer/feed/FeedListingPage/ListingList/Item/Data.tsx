@@ -38,7 +38,8 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 		<>
 			<Container
 				data-id={listing.id}
-				data-ui={"ListingHeroContainer[Container]"}
+				data-ui={"Data"}
+				data-action={"open listing detail"}
 				ui={{
 					height: "full",
 					width: "full",
@@ -50,7 +51,6 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 				{listing.isIgnored ? <Overlay type={"subtle"} /> : null}
 
 				<ListingPrice
-					data-ui={"ListingOverlay-[ListingPrice]"}
 					price={listing.price}
 					priceType={listing.priceType}
 					currency={listing.currency}
@@ -62,7 +62,6 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 				/>
 
 				<LocationBadge
-					data-ui={"ListingOverlay-[LocationBadge]"}
 					location={listing.location}
 					distance={listing.distance}
 					ui={{
@@ -73,15 +72,10 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 				/>
 
 				<HeroImage
-					data-ui={"ListingHeroContainer-[HeroImage]"}
 					src={hero.url}
 					alt={`Hero image for listing ${listing.id}`}
 					visible
-					invisible={
-						<SpinnerContainer
-							data-ui={"ListingHeroContainer-[SpinnerContainer.invisible]"}
-						/>
-					}
+					invisible={<SpinnerContainer />}
 				/>
 			</Container>
 
@@ -93,6 +87,7 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 			>
 				{listing.isIgnored || listing.hasFlag || listing.my ? null : (
 					<Container
+						data-ui={"ThumbWrapper"}
 						ui={{
 							layout: "horizontal-flex",
 							width: "full",
@@ -106,7 +101,7 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 				)}
 
 				{listing.isFavourite || listing.thumb === "like" || listing.my ? null : (
-					<Group>
+					<Group data-ui={"FlagIgnoreWrapper"}>
 						<IgnoreButton listingId={listingId} />
 
 						<FlagButton listingId={listingId} />

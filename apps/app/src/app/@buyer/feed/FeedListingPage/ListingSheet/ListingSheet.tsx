@@ -44,7 +44,12 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				),
 				header: ({ close }) => ({
 					title: listing.title,
-					right: <CloseButton onClick={close} />,
+					right: (
+						<CloseButton
+							data-action={"close listing detail"}
+							onClick={close}
+						/>
+					),
 				}),
 			},
 			gallery: {
@@ -55,6 +60,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					title: translator.text("Listing gallery (title)"),
 					right: (
 						<CloseButton
+							data-action={"close listing gallery"}
 							iconEnabled={CloseIcon}
 							onClick={$onClose}
 						/>
@@ -74,6 +80,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					title: translator.text("Seller info (title)"),
 					right: (
 						<CloseButton
+							data-action={"close seller info"}
 							iconEnabled={CloseIcon}
 							onClick={$onClose}
 						/>
@@ -90,6 +97,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 
 	return (
 		<SheetView<ListingSheet.View>
+			data-ui={"ListingSheet"}
 			state={{
 				value: view,
 				set: setView,

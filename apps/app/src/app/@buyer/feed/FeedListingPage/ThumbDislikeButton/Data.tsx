@@ -29,6 +29,8 @@ export const Data: FC<Data.Props> = ({ _suspense, listingId, ui, ...props }) => 
 
 	return (
 		<Button
+			data-ui={"Data"}
+			data-action={"dislike listing"}
 			iconEnabled={DislikeIcon}
 			iconProps={{
 				ui: {

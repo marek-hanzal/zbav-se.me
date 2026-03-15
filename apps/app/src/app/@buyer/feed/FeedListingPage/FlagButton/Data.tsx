@@ -36,6 +36,7 @@ export const Data: FC<Data.Props> = ({
 	return (
 		<>
 			<ConfirmButton
+				data-action={listing.hasFlag ? "unflag listing" : "flag listing"}
 				iconEnabled={FlagIcon}
 				iconProps={{
 					ui: {

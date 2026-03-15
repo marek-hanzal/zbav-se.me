@@ -4,7 +4,7 @@ import { SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/containe
 import { EmptyState } from "@use-pico/client/ui/empty-state";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
-import { type FC, type ReactNode, useMemo } from "react";
+import { type FC, type ReactNode, useCallback, useMemo } from "react";
 import { Empty } from "./Empty";
 import { FilterEmpty } from "./FilterEmpty";
 import { Item } from "./Item/Item";
@@ -45,6 +45,10 @@ export const Data: FC<Data.Props> = ({ query, appendix, feedId, withScore, visib
 		listingCount,
 	]);
 
+	const placeholder = useCallback(() => {
+		return <SpinnerContainer />;
+	}, []);
+
 	return (
 		<EmptyState check={check}>
 			<VisibilityProvider store={visibility}>
@@ -52,13 +56,8 @@ export const Data: FC<Data.Props> = ({ query, appendix, feedId, withScore, visib
 					<VisibleContainer
 						key={listingId}
 						id={listingId}
-						data-ui="ListingListContainer-[VisibleContainer]"
-						placeholder={() => (
-							<SpinnerContainer
-								data-ui={"ListingListContainer-[SpinnerContainer.placeholder]"}
-								data-id={listingId}
-							/>
-						)}
+						data-id={listingId}
+						placeholder={placeholder}
 						ui={{
 							height: "full",
 							width: "full",

@@ -8,10 +8,5 @@ export namespace Pending {
 }
 
 export const Pending: FC<Pending.Props> = (props) => {
-	return (
-		<SpinnerContainer
-			data-ui={"ListingListContainer-[SpinnerContainer]"}
-			{...props}
-		/>
-	);
+	return <SpinnerContainer {...props} />;
 };

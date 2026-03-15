@@ -58,7 +58,7 @@ export const ListingList: FC<ListingList.Props> = ({
 	return (
 		<Container
 			ref={mergedRef}
-			data-ui={"ListingListContainer[Container]"}
+			data-ui={"ListingList"}
 			ui={{
 				layout: "vertical-full",
 				snap: "vertical",

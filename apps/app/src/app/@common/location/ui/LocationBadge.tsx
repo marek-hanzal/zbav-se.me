@@ -30,7 +30,7 @@ export const LocationBadge: FC<LocationBadge.Props> = ({
 
 	return (
 		<Badge
-			data-ui={"LocationBadge[Root]"}
+			data-ui={"LocationBadge"}
 			className={[
 				"flex flex-col h-fit py-2 gap-0",
 				className,
@@ -46,6 +46,7 @@ export const LocationBadge: FC<LocationBadge.Props> = ({
 			{...props}
 		>
 			<Container
+				data-ui={"Wrapper"}
 				ui={{
 					flow: "horizontal",
 					items: "center",
@@ -53,9 +54,9 @@ export const LocationBadge: FC<LocationBadge.Props> = ({
 					gap: "default",
 				}}
 			>
-				<Container>{location.address}</Container>
+				<Container data-ui={"Address"}>{location.address}</Container>
 				{distance ? (
-					<Container>
+					<Container data-ui={"Distance"}>
 						{toLocaleNumber({
 							locale,
 							number: distance,
