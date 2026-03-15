@@ -4,17 +4,17 @@ import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { Group } from "@use-pico/client/ui/group";
 import { Suspense, useRef } from "react";
-import { DraftLink } from "./link/DraftLink/DraftLink";
-import { DraftListLink } from "./link/DraftListLink/DraftListLink";
-import { FavouritesLink } from "./link/FavouritesLink/FavouritesLink";
-import { FeedLink } from "./link/FeedLink/FeedLink";
-import { HomeLink } from "./link/HomeLink/HomeLink";
-import { ListingsLink } from "./link/ListingsLink/ListingsLink";
-import { MessageLink } from "./link/MessageLink/MessageLink";
-import { MyListingsLink } from "./link/MyListingsLink/MyListingsLink";
-import { NotificationLink } from "./link/NotificationLink/NotificationLink";
-import { ProfileLink } from "./link/ProfileLink/ProfileLink";
-import { SearchLink } from "./link/SearchLink/SearchLink";
+import { DraftLink } from "./link/DraftLink";
+import { DraftListLink } from "./link/DraftListLink";
+import { FavouritesLink } from "./link/FavouritesLink";
+import { FeedLink } from "./link/FeedLink";
+import { HomeLink } from "./link/HomeLink";
+import { ListingsLink } from "./link/ListingsLink";
+import { MessageLink } from "./link/MessageLink";
+import { MyListingsLink } from "./link/MyListingsLink";
+import { NotificationLink } from "./link/NotificationLink";
+import { ProfileLink } from "./link/ProfileLink";
+import { SearchLink } from "./link/SearchLink";
 
 const icon: uiIcon.Ui = {
 	color: "lead",
