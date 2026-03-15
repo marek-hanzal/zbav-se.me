@@ -11,7 +11,7 @@ import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { withFallback } from "@use-pico/client/utils";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
-import { type ReactNode, useCallback, useEffect, useMemo, useRef } from "react";
+import { type ReactNode, Suspense, useCallback, useEffect, useMemo, useRef } from "react";
 import { Empty } from "./Empty";
 import { FilterEmpty } from "./FilterEmpty";
 import { Item } from "./Item/Item";
@@ -113,11 +113,13 @@ export const ListingList = withFallback(
 									width: "full",
 								}}
 							>
-								<Item
-									listingId={listingId}
-									feedId={feedId}
-									withScore={withScore}
-								/>
+								<Suspense fallback={<Item.Fallback />}>
+									<Item
+										listingId={listingId}
+										feedId={feedId}
+										withScore={withScore}
+									/>
+								</Suspense>
 							</VisibleContainer>
 						))}
 
