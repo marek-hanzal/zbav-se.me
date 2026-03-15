@@ -31,6 +31,9 @@
 065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
   ref: Feed sorting (label)
   value: Feed sorting (label)
+06616f1eb298047657fcaf296af7f6364f463736858dd7db7026d021:
+  ref: Inbox empty (message)
+  value: Inbox empty (message)
 069a14aec9bb4a553c78c2032f6e521d3b8dccbbb4cfac68e67fa1c1:
   ref: Listing - Pros (title)
   value: Listing - Pros (title)
@@ -40,6 +43,9 @@
 0a08e45b023a7e9c7c4856084c91d4a78b31861ac5bf75f91fe4780a:
   ref: Listing restriction (label)
   value: Listing restriction (label)
+0a0e1258e91df9fa887eb547e6dd2bb4f6445b495d72d8ba321244cc:
+  ref: Feed list empty (message)
+  value: Feed list empty (message)
 0a5c73cd28c41a15c8769a38be34b6d388bcba18e90ca7e28b762bc9:
   ref: Listing - Cons (title)
   value: Listing - Cons (title)
@@ -118,6 +124,9 @@
 1b63424af287e8864ce39b0f977235e745ee16c2db56823d017bc4fd:
   ref: Listing warranty (label)
   value: Listing warranty (label)
+1c6da36192114121f8f85006f6e2c569b33b116bda34ecbb5df8ffae:
+  ref: Create new feed (hint)
+  value: Create new feed (hint)
 1caad87c986357cb074ce8038eadce0b76d7d51170a2dc3017f1c59c:
   ref: Save as feed (button)
   value: Save as feed (button)
@@ -268,9 +277,6 @@
 45fd6a456d2df867fc9e5e6b00a48088350c9551963f2be871e604e3:
   ref: No my listings (message)
   value: No my listings (message)
-46d22046c4077be76cb0b5c7ff1df1142a3bbdafa6f844c53909ffb2:
-  ref: Transaction options (title)
-  value: Transaction options (title)
 46fc4830636405387727b8b88545e0e351e9227eaeac0426eafdb244:
   ref: Ignore listing (button)
   value: Ignore listing (button)
@@ -289,12 +295,18 @@
 4a6d672731040044ea10a6210d1d72de8ce2a49c57e6eab1ba45eb66:
   ref: Feed name (required)
   value: Feed name (required)
+4c71066d8f9db4647c7ce0049724adb35f4b87cfd7a602bad98b84af:
+  ref: Inbox empty (title)
+  value: Inbox empty (title)
 4d603e3fca4e9f047b0fd3fdd009a1808b0b50eda2aa6f12c206a9c7:
   ref: Share location (button)
   value: Share location (button)
 4d83e7c062f2a34e98c8953735ec95520b6b39a4300df4c9742f5cb7:
   ref: Transaction status pending (label)
   value: New buyer interest
+4de936d4b1f35fb13cdfb1640a634d4d7225802275960a2a2abdf6ad:
+  ref: Create new feed (button)
+  value: Create new feed (button)
 4e635fa67582dafe43092219c67fa6a2e596a963d1b95673277dda75:
   ref: search
   value: search
@@ -421,12 +433,12 @@
 6dbcf4fc35bb69ec88d55c0a6ab2a709d55dc49588e018564cbca5a1:
   ref: Transaction update (label)
   value: Transaction update (label)
-70ed6d112dab8cf69d055339929e4dd23299e2c5f9c4ef97371bd13e:
-  ref: No drafts for current filter (title)
-  value: No drafts for current filter (title)
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
   ref: Feed sorting not selected
   value: Feed sorting not selected
+7231a814e73cfe40658f42c9975a364d8b3780b3c3648d7cd17747a7:
+  ref: Create new draft (hint)
+  value: Create new draft (hint)
 730685ddac55ab05051064ae829f90b99a300329a4818c287d8f51a5:
   ref: Tracking number not filled
   value: Tracking number not filled
@@ -520,9 +532,6 @@
 8b45608bd106d13d544cc9d7aa8d9c7fdb279ac083715341bc1afbb8:
   ref: User registered (label)
   value: User registered (label)
-8bee5abe33920819b660cb8114ecaef4b2f1e001cc7cb506ff9d6cc1:
-  ref: No drafts for current filter (message)
-  value: No drafts for current filter (message)
 8c38d8ac3140e2fb666243047eb1a394a10ec1487ad707d29716fac1:
   ref: Transaction - resolved -send a message (placeholder)
   value: Transaction - resolved -send a message (placeholder)
@@ -658,6 +667,9 @@ b00de300bf157b03b1058da19b680a271fa960ab182ee923c3994e03:
 b0a721169f47da108f0195d392e3d788b2d417564f50dd126981465a:
   ref: No transactions as seller (message)
   value: No transactions as seller (message)
+b0b9b650bd13bdc0f5c2afaba9c5e8c971301d5a8a663f985816c28a:
+  ref: Create new draft (link)
+  value: Create new draft (link)
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
   ref: Expire (title)
   value: Expire (title)
@@ -825,6 +837,9 @@ f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
 f3f9c0a66a107af2911fa0f9019dc4526940d1afe4a957e1445e3447:
   ref: Condition not selected
   value: Condition not selected
+f46058bf18d21ce15dec12d40576f79fa0ad2591d6605ed13ed1bb7a:
+  ref: Feed list empty (title)
+  value: Feed list empty (title)
 f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
   ref: My listings (title)
   value: My listings (title)

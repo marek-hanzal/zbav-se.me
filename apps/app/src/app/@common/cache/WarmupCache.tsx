@@ -5,12 +5,10 @@ import { withListingQuery as withBuyerListingQuery } from "@zbav-se.me/sdk/query
 import { withTransactionQuery as withBuyerTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { withListingQuery as withSellerListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
-import { withTransactionQuery as withSellerTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import { type FC, useEffect } from "react";
-import { FEED_LIMIT } from "~/app/@common/limit/Limit";
 
 export namespace WarmupCache {
 	export interface Props extends MarkSuspense.Props {
@@ -56,10 +54,6 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 		withFeedQuery.useCollectionQuery({
 			filter: {
 				type: "user",
-			},
-			cursor: {
-				page: 0,
-				size: FEED_LIMIT,
 			},
 			sort: [
 				{
@@ -127,12 +121,6 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				withIgnored: false,
 			},
 		});
-		withBuyerListingQuery.useCountQuery({
-			where: {
-				isFavourite: true,
-				withIgnored: false,
-			},
-		});
 	}
 
 	/**
@@ -192,11 +180,6 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		});
-		withDraftQuery.useCountQuery({
-			where: {
-				usedAtIsNull: true,
-			},
-		});
 	}
 
 	/**
@@ -215,26 +198,6 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		});
-		withBuyerTransactionQuery.useCountQuery({});
-	}
-
-	/**
-	 * Seller transaction listing warm-up
-	 */
-	{
-		withSellerTransactionQuery.useCollectionQuery({
-			sort: [
-				{
-					field: "status",
-					order: "asc",
-				},
-				{
-					field: "updatedAt",
-					order: "desc",
-				},
-			],
-		});
-		withSellerTransactionQuery.useCountQuery({});
 	}
 
 	/**
@@ -290,7 +253,6 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		});
-		withSellerListingQuery.useCountQuery({});
 	}
 
 	return null;

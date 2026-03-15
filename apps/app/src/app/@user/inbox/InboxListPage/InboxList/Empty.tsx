@@ -1,24 +1,24 @@
-import { Container } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
+import { NotificationIcon } from "@use-pico/client/icon";
+import type { Container } from "@use-pico/client/ui/container";
+import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { EmptyStatus } from "~/app/@common/status/ui/EmptyStatus";
 
 export namespace Empty {
 	export interface Props extends Container.Props {
-		textMessage: string;
+		//
 	}
 }
 
-export const Empty: FC<Empty.Props> = ({ textMessage, ...props }) => {
+export const Empty: FC<Empty.Props> = ({ ui, ...props }) => {
 	return (
-		<Container
+		<EmptyStatus
 			data-ui="InboxList[Empty]"
-			ui={{
-				layout: "vertical-centered",
-				height: "full",
-			}}
+			icon={NotificationIcon}
+			textTitle={translator.text("Inbox empty (title)")}
+			textMessage={translator.text("Inbox empty (message)")}
+			ui={ui}
 			{...props}
-		>
-			<Tx label={textMessage} />
-		</Container>
+		/>
 	);
 };

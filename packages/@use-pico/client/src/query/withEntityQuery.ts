@@ -385,6 +385,30 @@ export const withEntityQuery = <
 		return useEntityQuery(request, opts);
 	}
 
+	async function $collectionFn(queryClient: QueryClient, data: TCollectionRequest) {
+		const result = await collectionFn(data);
+
+		return notifyManager.batch(() =>
+			result.map((item) => {
+				return $updateFn(queryClient, item).id;
+			}),
+		);
+	}
+
+	function ensureCollectionQuery(
+		queryClient: QueryClient,
+		data: TCollectionRequest,
+		opts?: withEntityQuery.QueryOptions<string[]>,
+	) {
+		return queryClient.ensureQueryData({
+			queryKey: $keys("collection", data),
+			async queryFn() {
+				return $collectionFn(queryClient, data);
+			},
+			...opts,
+		});
+	}
+
 	/**
 	 * Source hook for collection data.
 	 *
@@ -403,13 +427,7 @@ export const withEntityQuery = <
 		return useSuspenseQuery({
 			queryKey: $keys("collection", data),
 			async queryFn() {
-				const result = await collectionFn(data);
-
-				return notifyManager.batch(() =>
-					result.map((item) => {
-						return $updateFn(queryClient, item).id;
-					}),
-				);
+				return $collectionFn(queryClient, data);
 			},
 			...opts,
 		});
@@ -713,6 +731,7 @@ export const withEntityQuery = <
 		ensureEntityQuery,
 		//
 		collectionFn,
+		ensureCollectionQuery,
 		//
 		countFn,
 		ensureCountQuery,

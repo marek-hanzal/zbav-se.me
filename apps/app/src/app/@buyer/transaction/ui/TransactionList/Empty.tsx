@@ -1,26 +1,32 @@
 import { useLocale } from "@use-pico/client/hook";
-import { ChevronRightIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon, MessageIcon } from "@use-pico/client/icon";
+import type { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { SearchIcon } from "@zbav-se.me/ui/icon";
 import { uiCtaLinkButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import { EmptyStatus } from "~/app/@common/status/ui/EmptyStatus";
 
-export const Empty: FC = () => {
+export namespace Empty {
+	export interface Props extends Container.Props {
+		//
+	}
+}
+
+export const Empty: FC<Empty.Props> = ({ ui, ...props }) => {
 	const locale = useLocale();
 
 	return (
 		<EmptyStatus
-			icon={SearchIcon}
-			textTitle={translator.text("No my listings (title)")}
-			textMessage={translator.text("No my listings (message)")}
+			icon={MessageIcon}
+			textTitle={translator.text("No transactions as buyer (title)")}
+			textMessage={translator.text("No transactions as buyer (message)")}
 			action={
 				<LinkTo
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
-					to={"/$locale/seller/draft/resolve"}
+					to="/$locale/buyer/feed/default"
 					params={{
 						locale,
 					}}
@@ -28,9 +34,11 @@ export const Empty: FC = () => {
 						className: [],
 					})}
 				>
-					<Tx label={"Create listing (label)"} />
+					<Tx label="Go to my feed (button)" />
 				</LinkTo>
 			}
+			ui={ui}
+			{...props}
 		/>
 	);
 };

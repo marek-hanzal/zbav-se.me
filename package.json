@@ -24,19 +24,19 @@
 		"workflow:update": "run-s sp:fix sp:update sp:fix sp:update workflow:format update workflow:check"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.6",
+		"@biomejs/biome": "2.4.7",
 		"@types/node": "25.5.0",
 		"dotenv-cli": "11.0.0",
 		"npm-run-all2": "8.0.4",
 		"syncpack": "14.2.0",
-		"turbo": "2.8.16",
+		"turbo": "2.8.17",
 		"typescript": "beta"
 	},
 	"license": "MIT",
 	"repository": "marek-hanzal/zbav-se.me.git",
 	"overrides": {
 		"@types/react": "19.2.14",
-		"kysely": "0.28.11"
+		"kysely": "0.28.12"
 	},
 	"packageManager": "bun@1.3.0",
 	"private": true,

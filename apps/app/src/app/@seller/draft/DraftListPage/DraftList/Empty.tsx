@@ -3,19 +3,25 @@ import { ChevronRightIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { SearchIcon } from "@zbav-se.me/ui/icon";
+import { DraftIcon } from "@zbav-se.me/ui/icon";
 import { uiCtaLinkButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import { EmptyStatus } from "~/app/@common/status/ui/EmptyStatus";
 
-export const Empty: FC = () => {
+export namespace Empty {
+	export interface Props extends EmptyStatus.Props {
+		//
+	}
+}
+
+export const Empty: FC<Empty.Props> = (props) => {
 	const locale = useLocale();
 
 	return (
 		<EmptyStatus
-			icon={SearchIcon}
-			textTitle={translator.text("No my listings (title)")}
-			textMessage={translator.text("No my listings (message)")}
+			icon={DraftIcon}
+			textTitle={translator.text("No drafts (title)")}
+			textMessage={translator.text("No drafts (message)")}
 			action={
 				<LinkTo
 					icon={ChevronRightIcon}
@@ -28,9 +34,10 @@ export const Empty: FC = () => {
 						className: [],
 					})}
 				>
-					<Tx label={"Create listing (label)"} />
+					<Tx label={"Create new draft (link)"} />
 				</LinkTo>
 			}
+			{...props}
 		/>
 	);
 };

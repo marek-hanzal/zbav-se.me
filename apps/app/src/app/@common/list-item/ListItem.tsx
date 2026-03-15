@@ -33,7 +33,21 @@ export const ListItem: FC<ListItem.Props> = ({
 		) : upload.success ? (
 			<Image src={upload.data.url} />
 		) : (
-			(hero as ReactNode)
+			<Container
+				className={"aspect-square h-full shrink-0 overflow-hidden"}
+				ui={{
+					tone: "subtle",
+					theme: "light",
+					round: "md",
+					height: "full",
+					flow: "horizontal",
+					items: "center",
+					justify: "center",
+					background: "default",
+				}}
+			>
+				{hero as ReactNode}
+			</Container>
 		);
 
 	return (

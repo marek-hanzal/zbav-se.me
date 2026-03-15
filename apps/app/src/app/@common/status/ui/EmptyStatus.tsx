@@ -1,22 +1,37 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import { translator } from "@use-pico/common/translator";
-import { SearchIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
-export const FilterEmpty: FC = () => {
+export namespace EmptyStatus {
+	export interface Props
+		extends Container.Props,
+			Pick<Status.Props, "icon" | "textTitle" | "textMessage" | "action"> {
+		//
+	}
+}
+
+export const EmptyStatus: FC<EmptyStatus.Props> = ({
+	action,
+	icon,
+	textMessage,
+	textTitle,
+	ui,
+	...props
+}) => {
 	return (
 		<Container
 			ui={{
 				layout: "vertical-centered",
 				height: "full",
+				...ui,
 			}}
+			{...props}
 		>
 			<Status
-				data-ui={"BuyerFavouriteList-[Status.filter-empty]"}
-				icon={SearchIcon}
-				textTitle={translator.text("No listings for current filter (title)")}
-				textMessage={translator.text("No listings for current filter (message)")}
+				icon={icon}
+				textTitle={textTitle}
+				textMessage={textMessage}
+				action={action}
 				ui={{
 					tone: "brand",
 					theme: "light",
