@@ -2,7 +2,7 @@ import { Group } from "@use-pico/client/ui/group";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller";
-import type { FC } from "react";
+import { Suspense, type FC } from "react";
 import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { TitleValue } from "~/app/@common/title/ui/TitleValue";
@@ -69,19 +69,22 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ draft, onView }) =>
 					}}
 				/>
 
-				<LocationValue
-					locationId={draft.locationId}
-					textLabel={translator.text("Listing location (label)")}
-					textEmpty={translator.text("Listing location not selected")}
-					textHint={translator.text("Listing location (hint)")}
-					wrapperProps={{
-						ui: {
-							tone: draft.locationId ? "neutral" : "primary",
-						},
-					}}
-					action={<ChevronAction />}
-					onClick={() => onView("location")}
-				/>
+				<Suspense fallback={<LocationValue.Fallback locationId={draft.locationId} />}>
+					<LocationValue
+						_suspense={"I know"}
+						locationId={draft.locationId}
+						textLabel={translator.text("Listing location (label)")}
+						textEmpty={translator.text("Listing location not selected")}
+						textHint={translator.text("Listing location (hint)")}
+						wrapperProps={{
+							ui: {
+								tone: draft.locationId ? "neutral" : "primary",
+							},
+						}}
+						action={<ChevronAction />}
+						onClick={() => onView("location")}
+					/>
+				</Suspense>
 			</Group>
 
 			<Group>

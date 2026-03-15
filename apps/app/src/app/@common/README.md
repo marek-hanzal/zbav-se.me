@@ -129,6 +129,9 @@ When adding to `@common`:
 - `LocationSelect` component was extracted to active scope:
   - `@common/location/ui/LocationSelect.tsx`
   - `@common/location/ui/LocationSelect/ListContainer/*`
+- Shared location value and select result wrappers are flattening `Data.tsx` + `Pending.tsx` into parent `withFallback(...)` components:
+  - `LocationValue.tsx` now owns its fetch + empty-state rendering directly
+  - `LocationSelect.tsx` owns the suspense boundary for `LocationSelect/ListContainer.tsx`
 - PatchContainer abstraction was removed; patch views now compose `TitleContainer`/`Container` + `SaveContainer` inline at call-sites.
 - `LocationSelectContainer` abstraction was removed; call-sites now embed `LocationSelect` + `SaveContainer` inline.
 - `PriceTypeSelect` was extracted to active scope:

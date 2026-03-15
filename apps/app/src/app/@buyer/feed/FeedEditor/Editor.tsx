@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
-import type { FC } from "react";
+import { Suspense, type FC } from "react";
 import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
@@ -103,27 +103,30 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 			</Group>
 
 			<Group>
-				<LocationValue
-					data-action={"edit feed location"}
-					locationId={feed.locationId}
-					textLabel={translator.text("Feed location (label)")}
-					textEmpty={translator.text("Feed location not selected")}
-					textHint={translator.text("Feed location (hint)")}
-					action={
-						<Icon
-							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
-						/>
-					}
-					wrapperProps={{
-						ui: {
-							tone: feed.locationId ? "neutral" : "secondary",
-						},
-					}}
-					onClick={() => onView("location")}
-				/>
+				<Suspense fallback={<LocationValue.Fallback locationId={feed.locationId} />}>
+					<LocationValue
+						_suspense={"I know"}
+						data-action={"edit feed location"}
+						locationId={feed.locationId}
+						textLabel={translator.text("Feed location (label)")}
+						textEmpty={translator.text("Feed location not selected")}
+						textHint={translator.text("Feed location (hint)")}
+						action={
+							<Icon
+								icon={ChevronRightIcon}
+								ui={{
+									text: "xl",
+								}}
+							/>
+						}
+						wrapperProps={{
+							ui: {
+								tone: feed.locationId ? "neutral" : "secondary",
+							},
+						}}
+						onClick={() => onView("location")}
+					/>
+				</Suspense>
 
 				<RangeValue
 					data-action={"edit feed range"}
