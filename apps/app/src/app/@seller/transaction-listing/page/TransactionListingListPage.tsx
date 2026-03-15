@@ -1,5 +1,6 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
+import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { tTransactionListingQuery } from "@zbav-se.me/sdk/api/seller";
@@ -65,8 +66,19 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 			refetchInterval,
 		},
 	);
-	const isEmpty =
-		activeTransactionListingIds.length === 0 && inactiveTransactionListingIds.length === 0;
+	const check = [
+		{
+			check() {
+				return (
+					activeTransactionListingIds.length === 0 &&
+					inactiveTransactionListingIds.length === 0
+				);
+			},
+			render() {
+				return <Empty />;
+			},
+		},
+	] satisfies EmptyState.Check[];
 
 	return (
 		<TitleContainer
@@ -76,9 +88,7 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			{isEmpty ? (
-				<Empty />
-			) : (
+			<EmptyState check={check}>
 				<Container
 					ui={{
 						scroll: "vertical",
@@ -144,7 +154,7 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 						</Container>
 					) : null}
 				</Container>
-			)}
+			</EmptyState>
 		</TitleContainer>
 	);
 };
