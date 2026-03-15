@@ -1,6 +1,6 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import type { FC } from "react";
+import { Suspense, type FC } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { DraftList } from "./DraftList";
@@ -25,11 +25,14 @@ export const DraftListPage: FC<DraftListPage.Props> = (props) => {
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<DraftList
-				ui={{
-					inner: "default",
-				}}
-			/>
+			<Suspense fallback={<DraftList.Fallback />}>
+				<DraftList
+					_suspense={"I know"}
+					ui={{
+						inner: "default",
+					}}
+				/>
+			</Suspense>
 		</TitleContainer>
 	);
 };

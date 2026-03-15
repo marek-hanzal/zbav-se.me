@@ -53,3 +53,6 @@ Maps to server API: `/api/seller/*`.
 - Seller `TitleContainer` pages that navigate back home now use the shared `@common/nav/BackHomeButton` instead of repeating inline `LinkTo + uiBackButton` wiring.
 - Seller listing-level transaction screen now lives in active scope at `@seller/transaction-listing/*`; `page/ListingTransactionListPage/*` owns the page-local hero banner next to the page component, transaction rows keep their local `ui/Item/*` stack, and seller transaction status labeling now lives in `@seller/transaction/toStatusLabel.ts`.
 - Seller listing sheet/detail card now live in active scope at `@seller/listing/ui/ListingSheet.tsx` and `@seller/listing/ui/ListingCard.tsx`; the old `v0` seller listing sheet stack is no longer used.
+- Seller listing and draft list screens are flattening `Data.tsx` + `Pending.tsx` wrappers into parent `withFallback(...)` components:
+  - page components own `Suspense` boundaries
+  - list components suspend around item rendering instead of through dedicated wrapper files
