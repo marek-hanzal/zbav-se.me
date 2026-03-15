@@ -13,6 +13,7 @@ export const Content: FC<Content.Props> = (props) => {
 		<Suspense fallback={<SpinnerContainer />}>
 			<Data
 				_suspense={"I know"}
+				data-ui={"Content"}
 				{...props}
 			/>
 		</Suspense>

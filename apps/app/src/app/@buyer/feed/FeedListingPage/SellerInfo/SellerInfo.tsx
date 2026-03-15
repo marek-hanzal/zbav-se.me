@@ -13,6 +13,7 @@ export const SellerInfo: FC<SellerInfo.Props> = (props) => {
 		<Suspense fallback={<Pending />}>
 			<Data
 				_suspense={"I know"}
+				data-ui={"SellerInfo"}
 				{...props}
 			/>
 		</Suspense>

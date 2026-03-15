@@ -20,6 +20,7 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 
 	return (
 		<Container
+			data-ui={"EmptyListing"}
 			ui={{
 				layout: "vertical-centered",
 				height: "full",
@@ -44,6 +45,7 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 				action={
 					<>
 						<LinkTo
+							data-action={"create first listing"}
 							icon={ChevronRightIcon}
 							iconPosition={"right"}
 							to={"/$locale/seller/draft/resolve"}
@@ -65,6 +67,7 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 						</LinkTo>
 
 						<LinkTo
+							data-action={"go home"}
 							icon={ChevronRightIcon}
 							iconPosition={"right"}
 							to={"/$locale/home"}

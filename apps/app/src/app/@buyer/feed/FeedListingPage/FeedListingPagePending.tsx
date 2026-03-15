@@ -23,7 +23,6 @@ export const FeedListingPagePending: FC<FeedListingPagePending.Props> = (props) 
 					{...uiBackButton({
 						className: [],
 					})}
-					data-ui={"BackButton"}
 					data-action={"go home"}
 					icon={ArrowLeftIcon}
 					to={"/$locale/home"}

@@ -46,7 +46,6 @@ export const LocationBadge: FC<LocationBadge.Props> = ({
 			{...props}
 		>
 			<Container
-				data-ui={"Wrapper"}
 				ui={{
 					flow: "horizontal",
 					items: "center",
@@ -54,9 +53,9 @@ export const LocationBadge: FC<LocationBadge.Props> = ({
 					gap: "default",
 				}}
 			>
-				<Container data-ui={"Address"}>{location.address}</Container>
+				<Container>{location.address}</Container>
 				{distance ? (
-					<Container data-ui={"Distance"}>
+					<Container>
 						{toLocaleNumber({
 							locale,
 							number: distance,

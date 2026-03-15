@@ -22,7 +22,7 @@ export const Data: FC<Data.Props> = ({ feedId, scrollToId, sentinelRef, isLast }
 	return (
 		<>
 			<Button
-				data-ui={"FeedSetupButton[SheetButton]"}
+				data-action={isEditor ? "close feed setup" : "open feed setup"}
 				iconEnabled={SettingsIcon}
 				onClick={() => setIsEditor((prev) => !prev)}
 				ui={{

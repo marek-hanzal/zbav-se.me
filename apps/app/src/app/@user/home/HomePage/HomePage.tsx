@@ -18,6 +18,7 @@ export namespace HomePage {
 export const HomePage: FC<HomePage.Props> = (props) => {
 	return (
 		<TitleContainer
+			data-ui={"HomePage"}
 			textTitle={translator.text("zbav-se.me")}
 			{...props}
 		>

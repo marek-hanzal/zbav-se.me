@@ -53,7 +53,6 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, onView }) => {
 				<Group>
 					{listing.pros?.length ? (
 						<ValueList
-							data-ui={"Pros"}
 							textLabel={translator.text("Listing - Pros (label)")}
 							textEmpty={translator.text("Listing - Pros not filled")}
 							items={listing.pros.map((pro, index) => ({
@@ -66,7 +65,6 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, onView }) => {
 
 					{listing.cons?.length ? (
 						<ValueList
-							data-ui={"Cons"}
 							textLabel={translator.text("Listing - Cons (label)")}
 							textEmpty={translator.text("Listing - Cons not filled")}
 							items={listing.cons.map((con, index) => ({
@@ -82,7 +80,6 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, onView }) => {
 			{listing.delivery?.length ? (
 				<Group>
 					<ValueList
-						data-ui={"Delivery"}
 						textLabel={translator.text("Listing delivery (label)")}
 						textEmpty={translator.text("Delivery not selected")}
 						items={(listing.delivery ?? []).map((delivery) => ({

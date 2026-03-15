@@ -33,7 +33,6 @@ export const FeedListingPage: FC<FeedListingPage.Props> = ({ feedId, scrollToId,
 						},
 						className: [],
 					})}
-					data-ui={"BackButton"}
 					data-action={"go home"}
 					icon={ArrowLeftIcon}
 					to={"/$locale/home"}

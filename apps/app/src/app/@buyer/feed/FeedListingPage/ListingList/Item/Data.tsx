@@ -87,7 +87,6 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 			>
 				{listing.isIgnored || listing.hasFlag || listing.my ? null : (
 					<Container
-						data-ui={"ThumbWrapper"}
 						ui={{
 							layout: "horizontal-flex",
 							width: "full",
@@ -101,7 +100,7 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 				)}
 
 				{listing.isFavourite || listing.thumb === "like" || listing.my ? null : (
-					<Group data-ui={"FlagIgnoreWrapper"}>
+					<Group>
 						<IgnoreButton listingId={listingId} />
 
 						<FlagButton listingId={listingId} />
