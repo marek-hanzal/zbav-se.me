@@ -26,7 +26,7 @@ export const Data: FC<Data.Props> = ({ feedId, listingId, onView, ui, children, 
 
 	return (
 		<Container
-			data-ui={"ListingDetail[Container]"}
+			data-ui={"Data"}
 			ui={{
 				layout: "vertical-flex",
 				gap: "xl",

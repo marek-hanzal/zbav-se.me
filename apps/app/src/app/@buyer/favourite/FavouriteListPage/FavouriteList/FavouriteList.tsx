@@ -23,7 +23,7 @@ export const FavouriteList: FC<FavouriteList.Props> = (props) => {
 
 	return (
 		<Container
-			data-ui={"BuyerFavouriteList[Container]"}
+			data-ui={"FavouriteList"}
 			ref={scrollerRef}
 			ui={{
 				flow: "vertical",

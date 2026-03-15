@@ -10,7 +10,7 @@ export namespace FlagButton {
 
 export const FlagButton: FC<FlagButton.Props> = (props) => {
 	return (
-		<Suspense fallback={<Pending data-ui={"FlagButton"} />}>
+		<Suspense fallback={<Pending />}>
 			<Data
 				_suspense={"I know"}
 				data-ui={"FlagButton"}

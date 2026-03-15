@@ -24,7 +24,7 @@ export const FeedListingPage: FC<FeedListingPage.Props> = ({ feedId, scrollToId,
 
 	return (
 		<FlowContainer
-			data-ui={"BuyerFeedList[FlowContainer]"}
+			data-ui={"FeedListingPage"}
 			left={
 				<LinkTo
 					{...uiBackButton({
@@ -33,7 +33,8 @@ export const FeedListingPage: FC<FeedListingPage.Props> = ({ feedId, scrollToId,
 						},
 						className: [],
 					})}
-					data-ui={"BuyerFeedList-[LinkTo.left]"}
+					data-ui={"BackButton"}
+					data-action={"go home"}
 					icon={ArrowLeftIcon}
 					to={"/$locale/home"}
 					params={{

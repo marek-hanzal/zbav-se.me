@@ -13,6 +13,7 @@ export const FavouriteButton: FC<FavouriteButton.Props> = (props) => {
 		<Suspense fallback={<Pending />}>
 			<Data
 				_suspense={"I know"}
+				data-ui={"FavouriteButton"}
 				{...props}
 			/>
 		</Suspense>

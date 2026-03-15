@@ -20,6 +20,7 @@ export const Data: FC<Data.Props> = ({ _suspense, listingId, onView }) => {
 
 	return (
 		<LabelValue
+			data-action={"open seller info"}
 			textLabel={translator.text("Listing seller hint (label)")}
 			textValue={
 				sellerInfo.events ? <RatingIcon rating={sellerInfo.events.score.rank} /> : null

@@ -19,6 +19,8 @@ export const Data: FC<Data.Props> = ({ listingId }) => {
 
 	return (
 		<ListItem
+			data-ui={"Data"}
+			data-action={"open listing detail"}
 			hero={hero}
 			title={
 				<Typo

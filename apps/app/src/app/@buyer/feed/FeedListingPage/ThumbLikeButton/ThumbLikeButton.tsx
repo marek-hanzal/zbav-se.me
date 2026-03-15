@@ -10,7 +10,7 @@ export namespace ThumbLikeButton {
 
 export const ThumbLikeButton: FC<ThumbLikeButton.Props> = (props) => {
 	return (
-		<Suspense fallback={<Pending data-ui={"ThumbLikeButton"} />}>
+		<Suspense fallback={<Pending />}>
 			<Data
 				_suspense={"I know"}
 				data-ui={"ThumbLikeButton"}

@@ -13,6 +13,7 @@ export const ListingCard: FC<ListingCard.Props> = (props) => {
 		<Suspense fallback={<Pending />}>
 			<Data
 				_suspense={"I know"}
+				data-ui={"ListingCard"}
 				{...props}
 			/>
 		</Suspense>

@@ -10,7 +10,7 @@ export namespace IgnoreButton {
 
 export const IgnoreButton: FC<IgnoreButton.Props> = (props) => {
 	return (
-		<Suspense fallback={<Pending data-ui={"IgnoreButton"} />}>
+		<Suspense fallback={<Pending />}>
 			<Data
 				_suspense={"I know"}
 				data-ui={"IgnoreButton"}

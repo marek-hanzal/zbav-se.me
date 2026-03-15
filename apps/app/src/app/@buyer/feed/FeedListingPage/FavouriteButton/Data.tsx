@@ -33,6 +33,8 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId, listingId, ui, ...prop
 
 	return (
 		<Button
+			data-ui={"Data"}
+			data-action={listing.isFavourite ? "remove listing from favourites" : "save listing"}
 			iconEnabled={listing.isFavourite ? FavouriteIcon : FavouriteOffIcon}
 			disabled={favouriteToggle.isPending}
 			loading={favouriteToggle.isPending}

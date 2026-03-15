@@ -22,13 +22,12 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 	return (
 		<>
 			<Container
-				data-ui={"HeroSection[Container]"}
+				data-ui={"HeroSection"}
 				ui={{
 					position: "relative",
 				}}
 			>
 				<ListingPrice
-					data-ui={"HeroSection-[ListingPrice]"}
 					price={listing.price}
 					priceType={listing.priceType}
 					currency={listing.currency}
@@ -40,7 +39,6 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 				/>
 
 				<LocationBadge
-					data-ui={"HeroSection-[LocationBadge]"}
 					location={listing.location}
 					distance={listing.distance}
 					ui={{
@@ -74,9 +72,9 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 				)}
 
 				<HeroImage
-					data-ui={"HeroSection-[HeroImage]"}
 					src={hero.url}
 					alt={`Hero image for listing ${listing.id}`}
+					data-action={"open listing gallery"}
 					onClick={() => onView("gallery")}
 					ui={{
 						round: "default",
