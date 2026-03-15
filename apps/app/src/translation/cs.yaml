@@ -497,6 +497,9 @@
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
     value: Výchozí řazení
+7231a814e73cfe40658f42c9975a364d8b3780b3c3648d7cd17747a7:
+    ref: Create new draft (hint)
+    value: Nechceš prodat něco dalšího?
 730685ddac55ab05051064ae829f90b99a300329a4818c287d8f51a5:
     ref: Tracking number not filled
     value: Číslo zásilky není vyplněné

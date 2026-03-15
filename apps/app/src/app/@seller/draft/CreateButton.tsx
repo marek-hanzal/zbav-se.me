@@ -1,18 +1,18 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
-import { PlusIcon, SpinnerIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { Icon, PlusIcon } from "@use-pico/client/icon";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import type { FC } from "react";
+import { ListItem } from "~/app/@common/list-item/ListItem";
 
 export namespace CreateButton {
-	export interface Props extends Button.Props {
+	export interface Props extends ListItem.PropsEx {
 		//
 	}
 }
 
-export const CreateButton: FC<CreateButton.Props> = ({ ui, className, ...props }) => {
+export const CreateButton: FC<CreateButton.Props> = ({ ...props }) => {
 	const navigate = useNavigate();
 	const locale = useLocale();
 	const draftCreateMutation = withDraftQuery.useCreateMutation({
@@ -32,39 +32,39 @@ export const CreateButton: FC<CreateButton.Props> = ({ ui, className, ...props }
 	});
 
 	return (
-		<Button
+		<ListItem
 			data-ui={"DraftCreateButton[Button]"}
 			onClick={() => {
 				draftCreateMutation.mutate({});
 			}}
-			disabled={draftCreateMutation.isPending}
-			loading={draftCreateMutation.isPending}
-			iconEnabled={PlusIcon}
-			iconLoading={SpinnerIcon}
-			iconProps={{
-				ui: {
-					text: "2xl",
-					opacity: "4",
-				},
-			}}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				flow: "vertical",
-				items: "center",
-				inner: "default",
-				color: "lead",
-				font: "semibold",
-				text: "lg",
-				...ui,
-			}}
-			className={[
-				className,
-				"shrink-0",
-			]}
+			hero={
+				<Icon
+					icon={PlusIcon}
+					ui={{
+						text: "2xl",
+						color: "lead",
+						opacity: "6",
+					}}
+				/>
+			}
+			title={
+				<Tx
+					label={"Create new draft (title)"}
+					ui={{
+						font: "bold",
+					}}
+				/>
+			}
+			bottom={
+				<Tx
+					label={"Create new draft (hint)"}
+					ui={{
+						text: "sm",
+						opacity: "6",
+					}}
+				/>
+			}
 			{...props}
-		>
-			<Tx label={"Create new draft (title)"} />
-		</Button>
+		/>
 	);
 };
