@@ -3,7 +3,7 @@ import { ValueList } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tCategoryItem } from "@zbav-se.me/sdk/api/session";
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
-import type { FC } from "react";
+import { Suspense, type FC } from "react";
 import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
 
 export namespace Data {
@@ -23,7 +23,11 @@ export const Data: FC<Data.Props> = ({ _suspense, categoryIdIn, ...props }) => {
 
 	return (
 		<ValueList<EntitySchema.Type>
-			renderFn={(item) => <CategoryInline categoryId={item.id} />}
+			renderFn={(item) => (
+				<Suspense fallback={<CategoryInline.Fallback />}>
+					<CategoryInline categoryId={item.id} />
+				</Suspense>
+			)}
 			items={categoryIds.map((id) => ({
 				id,
 			}))}

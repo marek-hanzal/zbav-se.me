@@ -72,12 +72,15 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 			},
 			"seller-info": {
 				children: (
-					<SellerInfo
-						listingId={listing.id}
-						ui={{
-							inner: "default",
-						}}
-					/>
+					<Suspense fallback={<SellerInfo.Fallback />}>
+						<SellerInfo
+							_suspense={"I know"}
+							listingId={listing.id}
+							ui={{
+								inner: "default",
+							}}
+						/>
+					</Suspense>
 				),
 				header: () => ({
 					title: translator.text("Seller info (title)"),

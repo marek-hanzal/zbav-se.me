@@ -29,13 +29,15 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, onView }) => {
 				<LabelValue
 					textLabel={translator.text("Listing category (label)")}
 					textValue={
-						<CategoryInline
-							categoryId={listing.category.id}
-							ui={{
-								tone: "secondary",
-								theme: "light",
-							}}
-						/>
+						<Suspense fallback={<CategoryInline.Fallback />}>
+							<CategoryInline
+								categoryId={listing.category.id}
+								ui={{
+									tone: "secondary",
+									theme: "light",
+								}}
+							/>
+						</Suspense>
 					}
 				/>
 			</Group>

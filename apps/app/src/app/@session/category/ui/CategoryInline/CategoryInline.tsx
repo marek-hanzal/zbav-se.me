@@ -1,10 +1,13 @@
-import { type FC, Suspense } from "react";
-import { Data } from "./Data";
-import { Pending } from "./Pending";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Typo } from "@use-pico/client/ui/typo";
+import { withFallback } from "@use-pico/client/utils";
+import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 
 export namespace CategoryInline {
-	export interface Props extends Data.Props {
-		//
+	export interface Props extends Container.Props {
+		categoryId: string;
+		textGroupProps?: Typo.PropsEx;
+		textCategoryProps?: Typo.PropsEx;
 	}
 }
 
@@ -14,10 +17,50 @@ export namespace CategoryInline {
  *
  * @see apps/app/src/app//draft/ui/DraftEditor/patch/CategoryPatch.tsx
  */
-export const CategoryInline: FC<CategoryInline.Props> = (props) => {
-	return (
-		<Suspense fallback={<Pending />}>
-			<Data {...props} />
-		</Suspense>
-	);
-};
+export const CategoryInline = withFallback(
+	({ ui, categoryId, textGroupProps, textCategoryProps, ...props }: CategoryInline.Props) => {
+		const { data: category } = withCategoryQuery.useFetchQuery(categoryId);
+
+		return (
+			<Container
+				data-ui="CategoryInline"
+				ui={{
+					flow: "vertical",
+					gap: "xs",
+					items: "start",
+					...ui,
+				}}
+				{...props}
+			>
+				<Typo
+					label={category.group}
+					ui={{
+						tone: "secondary",
+						theme: "light",
+						text: "default",
+						opacity: "6",
+					}}
+					{...textGroupProps}
+				/>
+
+				<Typo
+					label={category.category}
+					ui={{
+						tone: "secondary",
+						theme: "light",
+						text: "default",
+					}}
+					{...textCategoryProps}
+				/>
+			</Container>
+		);
+	},
+	(props: SpinnerContainer.Props) => {
+		return (
+			<SpinnerContainer
+				data-ui={"CategoryValueListContent-[SpinnerContainer.category-inline]"}
+				{...props}
+			/>
+		);
+	},
+);

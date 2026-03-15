@@ -1,6 +1,6 @@
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { FC } from "react";
+import { Suspense, type FC } from "react";
 import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
 
 export namespace CategoryValue {
@@ -22,13 +22,15 @@ export const CategoryValue: FC<CategoryValue.Props> = ({ categoryId, ...props })
 			textLabel={translator.text("Listing category (label)")}
 			textValue={
 				categoryId ? (
-					<CategoryInline
-						categoryId={categoryId}
-						ui={{
-							tone: "secondary",
-							theme: "light",
-						}}
-					/>
+					<Suspense fallback={<CategoryInline.Fallback />}>
+						<CategoryInline
+							categoryId={categoryId}
+							ui={{
+								tone: "secondary",
+								theme: "light",
+							}}
+						/>
+					</Suspense>
 				) : null
 			}
 			textEmpty={translator.text("Listing category not selected")}

@@ -5,7 +5,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/seller";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import type { FC } from "react";
+import { Suspense, type FC } from "react";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
@@ -76,13 +76,15 @@ export const ListingCard: FC<ListingCard.Props> = ({ listing, ui, hooks, ...prop
 				<LabelValue
 					textLabel={translator.text("Listing category (label)")}
 					textValue={
-						<CategoryInline
-							categoryId={listing.category.id}
-							ui={{
-								tone: "secondary",
-								theme: "light",
-							}}
-						/>
+						<Suspense fallback={<CategoryInline.Fallback />}>
+							<CategoryInline
+								categoryId={listing.category.id}
+								ui={{
+									tone: "secondary",
+									theme: "light",
+								}}
+							/>
+						</Suspense>
 					}
 				/>
 
