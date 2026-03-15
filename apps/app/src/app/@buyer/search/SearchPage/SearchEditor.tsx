@@ -40,7 +40,12 @@ export const SearchEditor: FC<SearchEditor.Props> = ({ feedId, ui, ...props }) =
 						}}
 					>
 						<Group>
-							<SearchButton feedId={feedId} />
+							<Suspense fallback={<SearchButton.Fallback feedId={feedId} />}>
+								<SearchButton
+									_suspense={"I know"}
+									feedId={feedId}
+								/>
+							</Suspense>
 							<SaveAsFeedButton feedId={feedId} />
 							<ResetButton feedId={feedId} />
 						</Group>

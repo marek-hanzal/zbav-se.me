@@ -9,14 +9,14 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/app/@common/gallery/ui/GalleryUpload";
-import type { Data } from "../Data";
+import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
 export namespace GalleryPatch {
 	export interface Props extends Container.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onView(view: Data.View): void;
+		onView(view: DraftEditor.View): void;
 		defaultUploadIds: string[];
 	}
 }

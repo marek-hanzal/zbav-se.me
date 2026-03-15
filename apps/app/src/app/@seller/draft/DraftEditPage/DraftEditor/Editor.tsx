@@ -5,7 +5,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
-import type { Data } from "./Data";
+import type { DraftEditor } from "./DraftEditor";
 import { ActionSection } from "./section/ActionSection";
 import { OptionalSection } from "./section/OptionalSection";
 import { RequiredSection } from "./section/RequiredSection";
@@ -13,7 +13,7 @@ import { RequiredSection } from "./section/RequiredSection";
 export namespace Editor {
 	export interface Props {
 		draft: tDraft;
-		onView(view: Data.View): void;
+		onView(view: DraftEditor.View): void;
 	}
 }
 

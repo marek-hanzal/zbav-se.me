@@ -10,7 +10,7 @@ import { Dial } from "@zbav-se.me/ui/dial";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import type { Data } from "../Data";
+import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
 const PriceSchema = zListingCreate.pick({
@@ -21,7 +21,7 @@ export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onView(view: Data.View): void;
+		onView(view: DraftEditor.View): void;
 	}
 }
 

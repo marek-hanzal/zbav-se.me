@@ -7,7 +7,7 @@ import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { TitleValue } from "~/app/@common/title/ui/TitleValue";
 import { ChevronAction } from "../ChevronAction";
-import type { Data } from "../Data";
+import type { DraftEditor } from "../DraftEditor";
 import { CategoryValue } from "../value/CategoryValue";
 import { ExpireAtValue } from "../value/ExpireAtValue";
 import { PriceTypeValue } from "../value/PriceTypeValue";
@@ -17,7 +17,7 @@ import { RestrictionValue } from "../value/RestrictionValue";
 export namespace RequiredSection {
 	export interface Props {
 		draft: tDraft;
-		onView(view: Data.View): void;
+		onView(view: DraftEditor.View): void;
 	}
 }
 
