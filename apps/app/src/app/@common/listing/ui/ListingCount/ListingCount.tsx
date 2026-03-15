@@ -1,20 +1,28 @@
-import { type FC, Suspense } from "react";
-import { Data } from "./Data";
+import type { MarkSuspense } from "@use-pico/client/type";
+import { withFallback } from "@use-pico/client/utils";
+import { useLocale } from "@use-pico/client/hook";
+import { toLocaleNumber } from "@use-pico/common/to-locale-number";
+import { translator } from "@use-pico/common/translator";
+import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { Pending } from "./Pending";
 
 export namespace ListingCount {
-	export interface Props extends Omit<Data.Props, "_suspense"> {
+	export interface Props extends MarkSuspense.Props {
+		query: tListingQuery;
+		textEmpty?: string;
 		//
 	}
 }
 
-export const ListingCount: FC<ListingCount.Props> = (props) => {
-	return (
-		<Suspense fallback={<Pending />}>
-			<Data
-				_suspense={"I know"}
-				{...props}
-			/>
-		</Suspense>
-	);
-};
+export const ListingCount = withFallback(({ _suspense, textEmpty, query }: ListingCount.Props) => {
+	const locale = useLocale();
+	const { data } = withListingQuery.useCountQuery(query);
+
+	return data.filter > 0
+		? toLocaleNumber({
+				locale,
+				number: data.filter,
+			})
+		: (textEmpty ?? translator.text("Listing count - empty (label)"));
+}, Pending);

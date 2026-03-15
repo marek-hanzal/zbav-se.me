@@ -10,7 +10,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import { withFallback } from "@use-pico/client/utils";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { ListItem } from "~/app/@common/list-item/ListItem";
 import { ListingCount } from "~/app/@common/listing/ui/ListingCount";
 import { FeedEditorSheet } from "../../../FeedEditor/FeedEditorSheet";
@@ -77,7 +77,14 @@ export const Item = withFallback(
 						}
 						bottom={
 							<Typo
-								label={<ListingCount query={feed.query} />}
+								label={
+									<Suspense fallback={<ListingCount.Fallback />}>
+										<ListingCount
+											_suspense={"I know"}
+											query={feed.query}
+										/>
+									</Suspense>
+								}
 								ui={{
 									tone: "neutral",
 									theme: "light",

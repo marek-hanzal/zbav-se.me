@@ -1,5 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { FC } from "react";
+import { Suspense, type FC } from "react";
 import { Pending } from "./Pending";
 import { Placeholder } from "./Placeholder";
 import { Preview } from "./Preview";
@@ -68,7 +68,14 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 
 			{!value && !controller.isPending ? <Placeholder disabled={ui?.disabled} /> : null}
 
-			{value && !controller.isPending ? <Preview uploadId={value} /> : null}
+			{value && !controller.isPending ? (
+				<Suspense fallback={<Preview.Fallback />}>
+					<Preview
+						_suspense={"I know"}
+						uploadId={value}
+					/>
+				</Suspense>
+			) : null}
 		</Container>
 	);
 };
