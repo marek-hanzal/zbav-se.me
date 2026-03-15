@@ -1,6 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
-import type { FC } from "react";
+import { Suspense, type FC } from "react";
 import { FeedEditor } from "~/app/@buyer/feed/~public/FeedEditor";
 import { ResetButton } from "./ResetButton";
 import { SaveAsFeedButton } from "./SaveAsFeedButton";
@@ -26,24 +26,27 @@ export const SearchEditor: FC<SearchEditor.Props> = ({ feedId, ui, ...props }) =
 			}}
 			{...props}
 		>
-			<FeedEditor
-				feedId={feedId}
-				hidden={hidden}
-			>
-				<Container
-					data-ui={"SearchEditor-[Container.actions]"}
-					ui={{
-						flow: "vertical",
-						gap: "default",
-					}}
+			<Suspense fallback={<FeedEditor.Fallback />}>
+				<FeedEditor
+					_suspense={"I know"}
+					feedId={feedId}
+					hidden={hidden}
 				>
-					<Group>
-						<SearchButton feedId={feedId} />
-						<SaveAsFeedButton feedId={feedId} />
-						<ResetButton feedId={feedId} />
-					</Group>
-				</Container>
-			</FeedEditor>
+					<Container
+						data-ui={"SearchEditor-[Container.actions]"}
+						ui={{
+							flow: "vertical",
+							gap: "default",
+						}}
+					>
+						<Group>
+							<SearchButton feedId={feedId} />
+							<SaveAsFeedButton feedId={feedId} />
+							<ResetButton feedId={feedId} />
+						</Group>
+					</Container>
+				</FeedEditor>
+			</Suspense>
 		</Container>
 	);
 };

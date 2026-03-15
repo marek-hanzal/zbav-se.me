@@ -1,0 +1,1 @@
+export { ThumbLikeButton } from "./ThumbLikeButton";

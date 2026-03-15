@@ -5,9 +5,9 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
 import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
-import { SellerInfo } from "../../SellerInfo/SellerInfo";
+import { SellerInfo } from "../../SellerInfo";
 
 export namespace InfoSection {
 	export interface Props {
@@ -120,10 +120,20 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, onView }) => {
 
 			{listing.my ? null : (
 				<Group>
-					<SellerInfo
-						listingId={listing.id}
-						onView={onView}
-					/>
+					<Suspense
+						fallback={
+							<SellerInfo.Fallback
+								listingId={listing.id}
+								onView={onView}
+							/>
+						}
+					>
+						<SellerInfo
+							_suspense={"I know"}
+							listingId={listing.id}
+							onView={onView}
+						/>
+					</Suspense>
 				</Group>
 			)}
 		</Container>

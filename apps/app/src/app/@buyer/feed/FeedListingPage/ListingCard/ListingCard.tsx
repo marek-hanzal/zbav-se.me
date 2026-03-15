@@ -1,21 +1,55 @@
-import { type FC, Suspense } from "react";
-import { Data } from "./Data";
-import { Pending } from "./Pending";
+import type { MarkSuspense } from "@use-pico/client/type";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { withFallback } from "@use-pico/client/utils";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
+import { useListingEvent } from "~/app/@buyer/listing/~public/useListingEvent";
+import { HeroSection } from "./section/HeroSection";
+import { InfoSection } from "./section/InfoSection";
 
 export namespace ListingCard {
-	export interface Props extends Omit<Data.Props, "_suspense"> {
-		//
+	export interface Props extends Container.Props, MarkSuspense.Props {
+		feedId: string;
+		listingId: string;
+		onView(view: "gallery" | "seller-info"): void;
 	}
 }
 
-export const ListingCard: FC<ListingCard.Props> = (props) => {
-	return (
-		<Suspense fallback={<Pending />}>
-			<Data
-				_suspense={"I know"}
+export const ListingCard = withFallback(
+	({ feedId, listingId, onView, ui, children, ...props }: ListingCard.Props) => {
+		const { data: listing } = withListingQuery.useFetchQuery(listingId);
+
+		useListingEvent({
+			enabled: true,
+			listingId,
+			event: "view",
+			timeoutMs: 2_500,
+		});
+
+		return (
+			<Container
 				data-ui={"ListingCard"}
+				ui={{
+					layout: "vertical-flex",
+					gap: "xl",
+					inner: "default",
+					...ui,
+				}}
 				{...props}
-			/>
-		</Suspense>
-	);
-};
+			>
+				<HeroSection
+					feedId={feedId}
+					listing={listing}
+					onView={onView}
+				/>
+
+				<InfoSection
+					listing={listing}
+					onView={onView}
+				/>
+
+				{children}
+			</Container>
+		);
+	},
+	SpinnerContainer,
+);

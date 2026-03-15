@@ -1,25 +1,59 @@
 import { useElementVisibility } from "@use-pico/client/hook";
-import { Container } from "@use-pico/client/ui/container";
-import { type FC, Suspense, useRef } from "react";
-import { Data } from "./Data";
-import { Pending } from "./Pending";
+import type { MarkSuspense } from "@use-pico/client/type";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { EmptyState } from "@use-pico/client/ui/empty-state";
+import { withFallback } from "@use-pico/client/utils";
+import { VisibilityProvider } from "@use-pico/client/context";
+import type { createVisibilityStore } from "@use-pico/client/store";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
+import { useMemo, useRef } from "react";
+import { Content } from "./Content";
+import { Empty } from "./Data/Empty";
 
 export namespace FavouriteList {
-	export interface Props extends Container.Props {
-		//
+	export interface Props extends Container.Props, MarkSuspense.Props {
+		visibility?: createVisibilityStore.Hook;
 	}
 }
 
-export const FavouriteList: FC<FavouriteList.Props> = (props) => {
+export const FavouriteList = withFallback(({ _suspense, visibility, ...props }: FavouriteList.Props) => {
 	const scrollerRef = useRef<HTMLDivElement>(null);
 
-	const visibility = useElementVisibility({
+	const visibilityStore = visibility ?? useElementVisibility({
 		scrollerRef,
 		visible: {},
 		proximity: {
 			overscan: 4,
 		},
 	});
+
+	const { data: listingCollection } = withListingQuery.useCollectionQuery({
+		where: {
+			isFavourite: true,
+			withIgnored: false,
+		},
+		sort: [
+			{
+				field: "createdAt",
+				order: "desc",
+			},
+		],
+	});
+
+	const check = useMemo(() => {
+		return [
+			{
+				check() {
+					return !listingCollection.length;
+				},
+				render() {
+					return <Empty />;
+				},
+			},
+		] satisfies EmptyState.Check[];
+	}, [
+		listingCollection,
+	]);
 
 	return (
 		<Container
@@ -34,9 +68,14 @@ export const FavouriteList: FC<FavouriteList.Props> = (props) => {
 			}}
 			{...props}
 		>
-			<Suspense fallback={<Pending />}>
-				<Data visibility={visibility} />
-			</Suspense>
+			<EmptyState check={check}>
+				<VisibilityProvider store={visibilityStore}>
+					<Content
+						_suspense={"I know"}
+						listingIds={listingCollection}
+					/>
+				</VisibilityProvider>
+			</EmptyState>
 		</Container>
 	);
-};
+}, SpinnerContainer);

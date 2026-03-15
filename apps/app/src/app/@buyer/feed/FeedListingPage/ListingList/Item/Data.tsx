@@ -3,16 +3,16 @@ import { Group } from "@use-pico/client/ui/group";
 import { Overlay } from "@use-pico/client/ui/overlay";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, useState } from "react";
+import { type FC, Suspense, useState } from "react";
 import { useListingEvent } from "~/app/@buyer/listing/~public/useListingEvent";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
-import { FlagButton } from "../../FlagButton/FlagButton";
-import { IgnoreButton } from "../../IgnoreButton/IgnoreButton";
+import { FlagButton } from "../../FlagButton";
+import { IgnoreButton } from "../../IgnoreButton";
 import { ListingSheet } from "../../ListingSheet/ListingSheet";
-import { ThumbDislikeButton } from "../../ThumbDislikeButton/ThumbDislikeButton";
-import { ThumbLikeButton } from "../../ThumbLikeButton/ThumbLikeButton";
+import { ThumbDislikeButton } from "../../ThumbDislikeButton";
+import { ThumbLikeButton } from "../../ThumbLikeButton";
 
 export namespace Data {
 	export interface Props extends Container.Props {
@@ -94,16 +94,36 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 							justify: "space-evenly",
 						}}
 					>
-						<ThumbLikeButton listingId={listingId} />
-						<ThumbDislikeButton listingId={listingId} />
+						<Suspense fallback={<ThumbLikeButton.Fallback listingId={listingId} />}>
+							<ThumbLikeButton
+								_suspense={"I know"}
+								listingId={listingId}
+							/>
+						</Suspense>
+						<Suspense fallback={<ThumbDislikeButton.Fallback listingId={listingId} />}>
+							<ThumbDislikeButton
+								_suspense={"I know"}
+								listingId={listingId}
+							/>
+						</Suspense>
 					</Container>
 				)}
 
 				{listing.isFavourite || listing.thumb === "like" || listing.my ? null : (
 					<Group>
-						<IgnoreButton listingId={listingId} />
+						<Suspense fallback={<IgnoreButton.Fallback listingId={listingId} />}>
+							<IgnoreButton
+								_suspense={"I know"}
+								listingId={listingId}
+							/>
+						</Suspense>
 
-						<FlagButton listingId={listingId} />
+						<Suspense fallback={<FlagButton.Fallback listingId={listingId} />}>
+							<FlagButton
+								_suspense={"I know"}
+								listingId={listingId}
+							/>
+						</Suspense>
 					</Group>
 				)}
 			</ListingSheet>

@@ -3,10 +3,10 @@ import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { CloseButton } from "@zbav-se.me/ui/button";
-import { type FC, type PropsWithChildren, useCallback, useMemo, useState } from "react";
+import { Suspense, type FC, type PropsWithChildren, useCallback, useMemo, useState } from "react";
 import { SellerInfo } from "~/app/@buyer/listing/~public/SellerInfo";
 import { GalleryPreview } from "~/app/@common/gallery/ui/GalleryPreview";
-import { ListingCard } from "../ListingCard/ListingCard";
+import { ListingCard } from "../ListingCard";
 
 export namespace ListingSheet {
 	export type View = "default" | "gallery" | "seller-info";
@@ -34,13 +34,16 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 		return {
 			default: {
 				children: (
-					<ListingCard
-						feedId={feedId}
-						listingId={listing.id}
-						onView={setView}
-					>
-						{children}
-					</ListingCard>
+					<Suspense fallback={<ListingCard.Fallback />}>
+						<ListingCard
+							_suspense={"I know"}
+							feedId={feedId}
+							listingId={listing.id}
+							onView={setView}
+						>
+							{children}
+						</ListingCard>
+					</Suspense>
 				),
 				header: ({ close }) => ({
 					title: listing.title,

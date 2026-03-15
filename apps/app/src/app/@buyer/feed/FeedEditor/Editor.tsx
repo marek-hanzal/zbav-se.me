@@ -8,7 +8,7 @@ import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { TitleValue } from "~/app/@common/title/ui/TitleValue";
-import type { Data } from "./Data";
+import type { FeedEditor } from "./FeedEditor";
 import { AgeValueList } from "./value/AgeValueList";
 import { CategoryValueList } from "./value/CategoryValueList/CategoryValueList";
 import { ConditionValueList } from "./value/ConditionValueList";
@@ -22,7 +22,7 @@ export namespace Editor {
 
 	export interface Props extends Omit<Container.Props, "hidden"> {
 		feed: tFeed;
-		onView(view: Data.View): void;
+		onView(view: FeedEditor.View): void;
 		hidden?: readonly Section[];
 	}
 }
