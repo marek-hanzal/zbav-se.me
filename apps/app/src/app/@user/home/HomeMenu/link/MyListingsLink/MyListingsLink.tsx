@@ -14,73 +14,76 @@ export namespace MyListingsLink {
 	}
 }
 
-export const MyListingsLink = withFallback(({ _suspense, ...props }: MyListingsLink.Props) => {
-	const locale = useLocale();
+export const MyListingsLink = withFallback(
+	({ _suspense, ...props }: MyListingsLink.Props) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"open my listings"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={MyListingsIcon}
-			to="/$locale/seller/listing/my"
-			params={{
-				locale,
-			}}
-			activeProps={uiMenuButton({
-				ui: {
-					tone: "primary",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...uiMenuButton({
-				ui: {
-					tone: "neutral",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...props}
-		>
-			<TypoIcon
-				flip
-				icon={ChevronRightIcon}
-				iconProps={{
-					ui: {
-						opacity: "5",
-					},
+		return (
+			<LinkTo
+				data-action={"open my listings"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={MyListingsIcon}
+				to="/$locale/seller/listing/my"
+				params={{
+					locale,
 				}}
+				activeProps={uiMenuButton({
+					ui: {
+						tone: "primary",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...uiMenuButton({
+					ui: {
+						tone: "neutral",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...props}
 			>
-				<Tx label="My listings (label)" />
-			</TypoIcon>
-		</LinkTo>
-	);
-}, (props: Omit<MyListingsLink.Props, "_suspense">) => {
-	const locale = useLocale();
+				<TypoIcon
+					flip
+					icon={ChevronRightIcon}
+					iconProps={{
+						ui: {
+							opacity: "5",
+						},
+					}}
+				>
+					<Tx label="My listings (label)" />
+				</TypoIcon>
+			</LinkTo>
+		);
+	},
+	(props: Omit<MyListingsLink.Props, "_suspense">) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"open my listings"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={MyListingsIcon}
-			to="/$locale/seller/listing/my"
-			params={{
-				locale,
-			}}
-			activeProps={uiMenuButton({
-				ui: {
-					tone: "primary",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...props}
-		>
-			<Tx label={"Loading... (label)"} />
-		</LinkTo>
-	);
-});
+		return (
+			<LinkTo
+				data-action={"open my listings"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={MyListingsIcon}
+				to="/$locale/seller/listing/my"
+				params={{
+					locale,
+				}}
+				activeProps={uiMenuButton({
+					ui: {
+						tone: "primary",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...props}
+			>
+				<Tx label={"Loading... (label)"} />
+			</LinkTo>
+		);
+	},
+);

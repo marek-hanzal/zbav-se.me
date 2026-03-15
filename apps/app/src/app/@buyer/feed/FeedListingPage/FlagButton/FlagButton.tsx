@@ -86,7 +86,11 @@ export const FlagButton = withFallback(
 					}}
 					{...props}
 				>
-					<Tx label={listing.hasFlag ? "Unflag listing (button)" : "Flag listing (button)"} />
+					<Tx
+						label={
+							listing.hasFlag ? "Unflag listing (button)" : "Flag listing (button)"
+						}
+					/>
 				</ConfirmButton>
 
 				{listing.hasFlag ? null : (

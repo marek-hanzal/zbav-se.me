@@ -15,200 +15,203 @@ export namespace MessageLink {
 	}
 }
 
-export const MessageLink = withFallback(({ _suspense, iconProps }: MessageLink.Props) => {
-	const locale = useLocale();
+export const MessageLink = withFallback(
+	({ _suspense, iconProps }: MessageLink.Props) => {
+		const locale = useLocale();
 
-	return (
-		<Group
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				background: "default",
-			}}
-		>
-			<TypoIcon
-				icon={MessageIcon}
-				iconProps={iconProps}
+		return (
+			<Group
 				ui={{
-					inner: "lg",
-					justify: "start",
-					text: "lg",
+					tone: "neutral",
+					theme: "light",
+					background: "default",
 				}}
 			>
-				<Tx label={"Messages (label)"} />
-			</TypoIcon>
-
-			<Container
-				ui={{
-					flow: "horizontal",
-					justify: "space-evenly",
-					inner: "default",
-				}}
-			>
-				<LinkTo
-					data-action={"open seller messages"}
-					to={"/$locale/seller/transaction/list"}
-					icon={ChevronRightIcon}
-					iconPosition={"right"}
-					params={{
-						locale,
+				<TypoIcon
+					icon={MessageIcon}
+					iconProps={iconProps}
+					ui={{
+						inner: "lg",
+						justify: "start",
+						text: "lg",
 					}}
-					activeProps={uiMenuButton({
-						ui: {
-							flow: "horizontal",
-							justify: "center",
-							items: "center",
-							tone: "primary",
-							theme: "light",
-						},
-						className: [],
-					})}
-					{...uiMenuButton({
-						ui: {
-							flow: "horizontal",
-							justify: "center",
-							items: "center",
-							tone: "neutral",
-							theme: "light",
-							text: "lg",
-						},
-						className: [],
-					})}
 				>
-					<Tx label={"Messages - seller (label)"} />
-				</LinkTo>
+					<Tx label={"Messages (label)"} />
+				</TypoIcon>
 
-				<LinkTo
-					data-action={"open buyer messages"}
-					to={"/$locale/buyer/transaction/list"}
-					icon={ChevronRightIcon}
-					iconPosition={"right"}
-					params={{
-						locale,
+				<Container
+					ui={{
+						flow: "horizontal",
+						justify: "space-evenly",
+						inner: "default",
 					}}
-					activeProps={uiMenuButton({
-						ui: {
-							flow: "horizontal",
-							justify: "center",
-							items: "center",
-							tone: "primary",
-							theme: "light",
-						},
-						className: [],
-					})}
-					{...uiMenuButton({
-						ui: {
-							flow: "horizontal",
-							justify: "center",
-							items: "center",
-							tone: "neutral",
-							theme: "light",
-							text: "lg",
-						},
-						className: [],
-					})}
 				>
-					<Tx label={"Messages - buyer (label)"} />
-				</LinkTo>
-			</Container>
-		</Group>
-	);
-}, ({ iconProps }: Omit<MessageLink.Props, "_suspense">) => {
-	const locale = useLocale();
+					<LinkTo
+						data-action={"open seller messages"}
+						to={"/$locale/seller/transaction/list"}
+						icon={ChevronRightIcon}
+						iconPosition={"right"}
+						params={{
+							locale,
+						}}
+						activeProps={uiMenuButton({
+							ui: {
+								flow: "horizontal",
+								justify: "center",
+								items: "center",
+								tone: "primary",
+								theme: "light",
+							},
+							className: [],
+						})}
+						{...uiMenuButton({
+							ui: {
+								flow: "horizontal",
+								justify: "center",
+								items: "center",
+								tone: "neutral",
+								theme: "light",
+								text: "lg",
+							},
+							className: [],
+						})}
+					>
+						<Tx label={"Messages - seller (label)"} />
+					</LinkTo>
 
-	return (
-		<Group
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				background: "default",
-			}}
-		>
-			<TypoIcon
-				icon={MessageIcon}
-				iconProps={iconProps}
+					<LinkTo
+						data-action={"open buyer messages"}
+						to={"/$locale/buyer/transaction/list"}
+						icon={ChevronRightIcon}
+						iconPosition={"right"}
+						params={{
+							locale,
+						}}
+						activeProps={uiMenuButton({
+							ui: {
+								flow: "horizontal",
+								justify: "center",
+								items: "center",
+								tone: "primary",
+								theme: "light",
+							},
+							className: [],
+						})}
+						{...uiMenuButton({
+							ui: {
+								flow: "horizontal",
+								justify: "center",
+								items: "center",
+								tone: "neutral",
+								theme: "light",
+								text: "lg",
+							},
+							className: [],
+						})}
+					>
+						<Tx label={"Messages - buyer (label)"} />
+					</LinkTo>
+				</Container>
+			</Group>
+		);
+	},
+	({ iconProps }: Omit<MessageLink.Props, "_suspense">) => {
+		const locale = useLocale();
+
+		return (
+			<Group
 				ui={{
-					inner: "lg",
-					justify: "start",
-					text: "lg",
+					tone: "neutral",
+					theme: "light",
+					background: "default",
 				}}
 			>
-				<Tx label={"Loading... (label)"} />
-			</TypoIcon>
-
-			<Container
-				ui={{
-					flow: "horizontal",
-					justify: "space-evenly",
-					inner: "default",
-				}}
-			>
-				<LinkTo
-					data-action={"open seller messages"}
-					to={"/$locale/seller/transaction/list"}
-					icon={ChevronRightIcon}
-					iconPosition={"right"}
-					params={{
-						locale,
+				<TypoIcon
+					icon={MessageIcon}
+					iconProps={iconProps}
+					ui={{
+						inner: "lg",
+						justify: "start",
+						text: "lg",
 					}}
-					activeProps={uiMenuButton({
-						ui: {
-							flow: "horizontal",
-							justify: "center",
-							items: "center",
-							tone: "primary",
-							theme: "light",
-						},
-						className: [],
-					})}
-					{...uiMenuButton({
-						ui: {
-							flow: "horizontal",
-							justify: "center",
-							items: "center",
-							tone: "neutral",
-							theme: "light",
-							text: "lg",
-						},
-						className: [],
-					})}
 				>
 					<Tx label={"Loading... (label)"} />
-				</LinkTo>
+				</TypoIcon>
 
-				<LinkTo
-					data-action={"open buyer messages"}
-					to={"/$locale/buyer/transaction/list"}
-					icon={ChevronRightIcon}
-					iconPosition={"right"}
-					params={{
-						locale,
+				<Container
+					ui={{
+						flow: "horizontal",
+						justify: "space-evenly",
+						inner: "default",
 					}}
-					activeProps={uiMenuButton({
-						ui: {
-							flow: "horizontal",
-							justify: "center",
-							items: "center",
-							tone: "primary",
-							theme: "light",
-						},
-						className: [],
-					})}
-					{...uiMenuButton({
-						ui: {
-							flow: "horizontal",
-							justify: "center",
-							items: "center",
-							tone: "neutral",
-							theme: "light",
-							text: "lg",
-						},
-						className: [],
-					})}
 				>
-					<Tx label={"Loading... (label)"} />
-				</LinkTo>
-			</Container>
-		</Group>
-	);
-});
+					<LinkTo
+						data-action={"open seller messages"}
+						to={"/$locale/seller/transaction/list"}
+						icon={ChevronRightIcon}
+						iconPosition={"right"}
+						params={{
+							locale,
+						}}
+						activeProps={uiMenuButton({
+							ui: {
+								flow: "horizontal",
+								justify: "center",
+								items: "center",
+								tone: "primary",
+								theme: "light",
+							},
+							className: [],
+						})}
+						{...uiMenuButton({
+							ui: {
+								flow: "horizontal",
+								justify: "center",
+								items: "center",
+								tone: "neutral",
+								theme: "light",
+								text: "lg",
+							},
+							className: [],
+						})}
+					>
+						<Tx label={"Loading... (label)"} />
+					</LinkTo>
+
+					<LinkTo
+						data-action={"open buyer messages"}
+						to={"/$locale/buyer/transaction/list"}
+						icon={ChevronRightIcon}
+						iconPosition={"right"}
+						params={{
+							locale,
+						}}
+						activeProps={uiMenuButton({
+							ui: {
+								flow: "horizontal",
+								justify: "center",
+								items: "center",
+								tone: "primary",
+								theme: "light",
+							},
+							className: [],
+						})}
+						{...uiMenuButton({
+							ui: {
+								flow: "horizontal",
+								justify: "center",
+								items: "center",
+								tone: "neutral",
+								theme: "light",
+								text: "lg",
+							},
+							className: [],
+						})}
+					>
+						<Tx label={"Loading... (label)"} />
+					</LinkTo>
+				</Container>
+			</Group>
+		);
+	},
+);

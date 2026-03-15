@@ -13,73 +13,76 @@ export namespace ProfileLink {
 	}
 }
 
-export const ProfileLink = withFallback(({ _suspense, ...props }: ProfileLink.Props) => {
-	const locale = useLocale();
+export const ProfileLink = withFallback(
+	({ _suspense, ...props }: ProfileLink.Props) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"open profile"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={UserIcon}
-			to="/$locale/user"
-			params={{
-				locale,
-			}}
-			activeProps={uiMenuButton({
-				ui: {
-					tone: "primary",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...uiMenuButton({
-				ui: {
-					tone: "neutral",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...props}
-		>
-			<TypoIcon
-				flip
-				icon={ChevronRightIcon}
-				iconProps={{
-					ui: {
-						opacity: "5",
-					},
+		return (
+			<LinkTo
+				data-action={"open profile"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={UserIcon}
+				to="/$locale/user"
+				params={{
+					locale,
 				}}
+				activeProps={uiMenuButton({
+					ui: {
+						tone: "primary",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...uiMenuButton({
+					ui: {
+						tone: "neutral",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...props}
 			>
-				<Tx label="My profile (label)" />
-			</TypoIcon>
-		</LinkTo>
-	);
-}, (props: Omit<ProfileLink.Props, "_suspense">) => {
-	const locale = useLocale();
+				<TypoIcon
+					flip
+					icon={ChevronRightIcon}
+					iconProps={{
+						ui: {
+							opacity: "5",
+						},
+					}}
+				>
+					<Tx label="My profile (label)" />
+				</TypoIcon>
+			</LinkTo>
+		);
+	},
+	(props: Omit<ProfileLink.Props, "_suspense">) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"open profile"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={UserIcon}
-			to="/$locale/user"
-			params={{
-				locale,
-			}}
-			activeProps={uiMenuButton({
-				ui: {
-					tone: "primary",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...props}
-		>
-			<Tx label={"Loading... (label)"} />
-		</LinkTo>
-	);
-});
+		return (
+			<LinkTo
+				data-action={"open profile"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={UserIcon}
+				to="/$locale/user"
+				params={{
+					locale,
+				}}
+				activeProps={uiMenuButton({
+					ui: {
+						tone: "primary",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...props}
+			>
+				<Tx label={"Loading... (label)"} />
+			</LinkTo>
+		);
+	},
+);

@@ -3,7 +3,7 @@ import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
-import { Suspense, type FC, useState } from "react";
+import { type FC, Suspense, useState } from "react";
 import { ListContainer } from "~/app/@common/location/ui/LocationSelect/ListContainer";
 
 export namespace LocationSelect {

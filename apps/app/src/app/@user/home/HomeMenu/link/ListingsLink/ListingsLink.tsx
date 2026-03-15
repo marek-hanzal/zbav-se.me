@@ -13,52 +13,55 @@ export namespace ListingsLink {
 	}
 }
 
-export const ListingsLink = withFallback(({ _suspense, ...props }: ListingsLink.Props) => {
-	const locale = useLocale();
+export const ListingsLink = withFallback(
+	({ _suspense, ...props }: ListingsLink.Props) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"open listings"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={CartIcon}
-			to="/$locale/buyer/feed/default"
-			params={{
-				locale,
-			}}
-			{...props}
-		>
-			<TypoIcon
-				flip
-				icon={ChevronRightIcon}
-				iconProps={{
-					ui: {
-						opacity: "5",
-					},
+		return (
+			<LinkTo
+				data-action={"open listings"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={CartIcon}
+				to="/$locale/buyer/feed/default"
+				params={{
+					locale,
 				}}
+				{...props}
 			>
-				<Tx label="Listings (label)" />
-			</TypoIcon>
-		</LinkTo>
-	);
-}, (props: Omit<ListingsLink.Props, "_suspense">) => {
-	const locale = useLocale();
+				<TypoIcon
+					flip
+					icon={ChevronRightIcon}
+					iconProps={{
+						ui: {
+							opacity: "5",
+						},
+					}}
+				>
+					<Tx label="Listings (label)" />
+				</TypoIcon>
+			</LinkTo>
+		);
+	},
+	(props: Omit<ListingsLink.Props, "_suspense">) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"open listings"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={CartIcon}
-			to="/$locale/buyer/feed/default"
-			params={{
-				locale,
-			}}
-			{...props}
-		>
-			<Tx label={"Loading... (label)"} />
-		</LinkTo>
-	);
-});
+		return (
+			<LinkTo
+				data-action={"open listings"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={CartIcon}
+				to="/$locale/buyer/feed/default"
+				params={{
+					locale,
+				}}
+				{...props}
+			>
+				<Tx label={"Loading... (label)"} />
+			</LinkTo>
+		);
+	},
+);

@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
-import { Suspense, type FC } from "react";
+import { type FC, Suspense } from "react";
 import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";

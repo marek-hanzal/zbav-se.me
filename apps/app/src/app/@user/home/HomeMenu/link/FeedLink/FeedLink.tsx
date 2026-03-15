@@ -13,73 +13,76 @@ export namespace FeedLink {
 	}
 }
 
-export const FeedLink = withFallback(({ _suspense, ...props }: FeedLink.Props) => {
-	const locale = useLocale();
+export const FeedLink = withFallback(
+	({ _suspense, ...props }: FeedLink.Props) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"open feed list"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={"icon-[solar--archive-up-minimlistic-linear]"}
-			to="/$locale/buyer/feed/list"
-			params={{
-				locale,
-			}}
-			activeProps={uiMenuButton({
-				ui: {
-					tone: "primary",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...uiMenuButton({
-				ui: {
-					tone: "neutral",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...props}
-		>
-			<TypoIcon
-				flip
-				icon={ChevronRightIcon}
-				iconProps={{
-					ui: {
-						opacity: "5",
-					},
+		return (
+			<LinkTo
+				data-action={"open feed list"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={"icon-[solar--archive-up-minimlistic-linear]"}
+				to="/$locale/buyer/feed/list"
+				params={{
+					locale,
 				}}
+				activeProps={uiMenuButton({
+					ui: {
+						tone: "primary",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...uiMenuButton({
+					ui: {
+						tone: "neutral",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...props}
 			>
-				<Tx label="Feed (label)" />
-			</TypoIcon>
-		</LinkTo>
-	);
-}, (props: Omit<FeedLink.Props, "_suspense">) => {
-	const locale = useLocale();
+				<TypoIcon
+					flip
+					icon={ChevronRightIcon}
+					iconProps={{
+						ui: {
+							opacity: "5",
+						},
+					}}
+				>
+					<Tx label="Feed (label)" />
+				</TypoIcon>
+			</LinkTo>
+		);
+	},
+	(props: Omit<FeedLink.Props, "_suspense">) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"open feed list"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={"icon-[solar--archive-up-minimlistic-linear]"}
-			to="/$locale/buyer/feed/list"
-			params={{
-				locale,
-			}}
-			activeProps={uiMenuButton({
-				ui: {
-					tone: "primary",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...props}
-		>
-			<Tx label={"Loading... (label)"} />
-		</LinkTo>
-	);
-});
+		return (
+			<LinkTo
+				data-action={"open feed list"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={"icon-[solar--archive-up-minimlistic-linear]"}
+				to="/$locale/buyer/feed/list"
+				params={{
+					locale,
+				}}
+				activeProps={uiMenuButton({
+					ui: {
+						tone: "primary",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...props}
+			>
+				<Tx label={"Loading... (label)"} />
+			</LinkTo>
+		);
+	},
+);

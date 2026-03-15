@@ -1,6 +1,6 @@
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import { Suspense, type FC } from "react";
+import { type FC, Suspense } from "react";
 import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
 
 export namespace CategoryValue {

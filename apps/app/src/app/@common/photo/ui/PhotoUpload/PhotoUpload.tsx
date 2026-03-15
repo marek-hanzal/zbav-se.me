@@ -1,6 +1,9 @@
+import { SpinnerIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
-import { Suspense, type FC } from "react";
-import { Pending } from "./Pending";
+import { Progress } from "@use-pico/client/ui/progress";
+import { Status } from "@use-pico/client/ui/status";
+import { translator } from "@use-pico/common/translator";
+import { type FC, Suspense } from "react";
 import { Placeholder } from "./Placeholder";
 import { Preview } from "./Preview";
 import { useController } from "./useController";
@@ -15,6 +18,40 @@ export namespace PhotoUpload {
 		onChange: OnChangeFn;
 	}
 }
+
+const UploadPending: FC<{
+	progress: number;
+}> = ({ progress }) => {
+	return (
+		<Container
+			data-ui={"PhotoUpload-[Container.spinner]"}
+			ui={{
+				flow: "vertical",
+				height: "full",
+				items: "center",
+				justify: "center",
+			}}
+		>
+			<Status
+				data-ui={"PhotoUpload-[Status.spinner]"}
+				icon={SpinnerIcon}
+				textTitle={translator.text("Uploading photo (title)")}
+				action={
+					<Progress
+						value={progress * 100}
+						size={"lg"}
+						tone={"primary"}
+						theme={"dark"}
+					/>
+				}
+				ui={{
+					tone: "primary",
+					theme: "light",
+				}}
+			/>
+		</Container>
+	);
+};
 
 /**
  * Coordinates photo file input and upload-ready state for the parent form.
@@ -64,7 +101,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				onChange={controller.onUpload}
 			/>
 
-			{controller.isPending ? <Pending progress={controller.progress} /> : null}
+			{controller.isPending ? <UploadPending progress={controller.progress} /> : null}
 
 			{!value && !controller.isPending ? <Placeholder disabled={ui?.disabled} /> : null}
 

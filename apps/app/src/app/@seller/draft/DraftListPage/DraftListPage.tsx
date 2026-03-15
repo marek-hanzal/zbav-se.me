@@ -1,6 +1,6 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { Suspense, type FC } from "react";
+import { type FC, Suspense } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { DraftList } from "./DraftList";

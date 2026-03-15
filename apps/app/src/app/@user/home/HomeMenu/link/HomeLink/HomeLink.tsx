@@ -14,52 +14,55 @@ export namespace HomeLink {
 	}
 }
 
-export const HomeLink = withFallback(({ _suspense, ...props }: HomeLink.Props) => {
-	const locale = useLocale();
+export const HomeLink = withFallback(
+	({ _suspense, ...props }: HomeLink.Props) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"go home"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={HomeIcon}
-			to="/$locale/home"
-			params={{
-				locale,
-			}}
-			{...props}
-		>
-			<TypoIcon
-				flip
-				icon={ChevronRightIcon}
-				iconProps={{
-					ui: {
-						opacity: "5",
-					},
+		return (
+			<LinkTo
+				data-action={"go home"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={HomeIcon}
+				to="/$locale/home"
+				params={{
+					locale,
 				}}
+				{...props}
 			>
-				<Tx label="Home (label)" />
-			</TypoIcon>
-		</LinkTo>
-	);
-}, (props: Omit<HomeLink.Props, "_suspense">) => {
-	const locale = useLocale();
+				<TypoIcon
+					flip
+					icon={ChevronRightIcon}
+					iconProps={{
+						ui: {
+							opacity: "5",
+						},
+					}}
+				>
+					<Tx label="Home (label)" />
+				</TypoIcon>
+			</LinkTo>
+		);
+	},
+	(props: Omit<HomeLink.Props, "_suspense">) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"go home"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={HomeIcon}
-			to="/$locale/home"
-			params={{
-				locale,
-			}}
-			{...props}
-		>
-			<Tx label={"Loading... (label)"} />
-		</LinkTo>
-	);
-});
+		return (
+			<LinkTo
+				data-action={"go home"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={HomeIcon}
+				to="/$locale/home"
+				params={{
+					locale,
+				}}
+				{...props}
+			>
+				<Tx label={"Loading... (label)"} />
+			</LinkTo>
+		);
+	},
+);

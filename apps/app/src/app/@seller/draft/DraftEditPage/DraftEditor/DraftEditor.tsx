@@ -2,8 +2,12 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { View } from "@use-pico/client/ui/view";
 import { withFallback } from "@use-pico/client/utils";
+import { translator } from "@use-pico/common/translator";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
+import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useCallback, useMemo, useState } from "react";
+import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
+import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { Editor } from "./Editor";
 import { AgePatch } from "./patch/AgePatch";
 import { CategoryPatch } from "./patch/CategoryPatch";
@@ -51,173 +55,187 @@ export namespace DraftEditor {
  *
  * @see apps/app/src/app//draft/page/DraftEditPage.tsx
  */
-export const DraftEditor = withFallback(({ _suspense, draftId }: DraftEditor.Props) => {
-	const { data: draft } = withDraftQuery.useFetchQuery(draftId);
-	const [view, setView] = useState<DraftEditor.View>("default");
+export const DraftEditor = withFallback(
+	({ _suspense, draftId }: DraftEditor.Props) => {
+		const { data: draft } = withDraftQuery.useFetchQuery(draftId);
+		const [view, setView] = useState<DraftEditor.View>("default");
 
-	const onDone = useCallback(() => {
-		setView("default");
-	}, []);
+		const onDone = useCallback(() => {
+			setView("default");
+		}, []);
 
-	const views = useMemo<View.Views<DraftEditor.View>>(() => {
-		return {
-			default: {
-				children: (
-					<Editor
-						draft={draft}
-						onView={setView}
-					/>
-				),
-			},
-			title: {
-				children: (
-					<TitlePatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-			location: {
-				children: (
-					<LocationPatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-			price: {
-				children: (
-					<PricePatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-			priceType: {
-				children: (
-					<PriceTypePatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-			category: {
-				children: (
-					<CategoryPatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-			condition: {
-				children: (
-					<ConditionPatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-			age: {
-				children: (
-					<AgePatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-			delivery: {
-				children: (
-					<DeliveryPatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-			warranty: {
-				children: (
-					<WarrantyPatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-			restriction: {
-				children: (
-					<RestrictionPatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-			expireAt: {
-				children: (
-					<ExpireAtPatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-			gallery: {
-				children: (
-					<GalleryPatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-						defaultUploadIds={draft.gallery.items.map((item) => item.uploadId)}
-					/>
-				),
-			},
-			description: {
-				children: (
-					<DescriptionPatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-			pros: {
-				children: (
-					<ProsPatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-			cons: {
-				children: (
-					<ConsPatch
-						draft={draft}
-						onCancel={onDone}
-						onView={setView}
-					/>
-				),
-			},
-		};
-	}, [
-		draft,
-		onDone,
-	]);
+		const views = useMemo<View.Views<DraftEditor.View>>(() => {
+			return {
+				default: {
+					children: (
+						<Editor
+							draft={draft}
+							onView={setView}
+						/>
+					),
+				},
+				title: {
+					children: (
+						<TitlePatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+				location: {
+					children: (
+						<LocationPatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+				price: {
+					children: (
+						<PricePatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+				priceType: {
+					children: (
+						<PriceTypePatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+				category: {
+					children: (
+						<CategoryPatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+				condition: {
+					children: (
+						<ConditionPatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+				age: {
+					children: (
+						<AgePatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+				delivery: {
+					children: (
+						<DeliveryPatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+				warranty: {
+					children: (
+						<WarrantyPatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+				restriction: {
+					children: (
+						<RestrictionPatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+				expireAt: {
+					children: (
+						<ExpireAtPatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+				gallery: {
+					children: (
+						<GalleryPatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+							defaultUploadIds={draft.gallery.items.map((item) => item.uploadId)}
+						/>
+					),
+				},
+				description: {
+					children: (
+						<DescriptionPatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+				pros: {
+					children: (
+						<ProsPatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+				cons: {
+					children: (
+						<ConsPatch
+							draft={draft}
+							onCancel={onDone}
+							onView={setView}
+						/>
+					),
+				},
+			};
+		}, [
+			draft,
+			onDone,
+		]);
 
-	return (
-		<View<DraftEditor.View>
-			state={{
-				value: view,
-				set: setView,
-			}}
-			views={views}
-		/>
-	);
-}, SpinnerContainer);
+		return (
+			<View<DraftEditor.View>
+				state={{
+					value: view,
+					set: setView,
+				}}
+				views={views}
+			/>
+		);
+	},
+	function DraftEditorFallback(props: TitleContainer.Props) {
+		return (
+			<TitleContainer
+				textTitle={translator.text("Draft edit (title)")}
+				left={<BackHomeButton />}
+				right={<HomeMenuButton />}
+				{...props}
+			>
+				<SpinnerContainer />
+			</TitleContainer>
+		);
+	},
+);

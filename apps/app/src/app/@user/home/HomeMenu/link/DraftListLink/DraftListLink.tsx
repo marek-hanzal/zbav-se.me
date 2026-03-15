@@ -14,73 +14,76 @@ export namespace DraftListLink {
 	}
 }
 
-export const DraftListLink = withFallback(({ _suspense, ...props }: DraftListLink.Props) => {
-	const locale = useLocale();
+export const DraftListLink = withFallback(
+	({ _suspense, ...props }: DraftListLink.Props) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"open draft list"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={DraftIcon}
-			to="/$locale/seller/draft/list"
-			params={{
-				locale,
-			}}
-			activeProps={uiMenuButton({
-				ui: {
-					tone: "primary",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...uiMenuButton({
-				ui: {
-					tone: "neutral",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...props}
-		>
-			<TypoIcon
-				flip
-				icon={ChevronRightIcon}
-				iconProps={{
-					ui: {
-						opacity: "5",
-					},
+		return (
+			<LinkTo
+				data-action={"open draft list"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={DraftIcon}
+				to="/$locale/seller/draft/list"
+				params={{
+					locale,
 				}}
+				activeProps={uiMenuButton({
+					ui: {
+						tone: "primary",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...uiMenuButton({
+					ui: {
+						tone: "neutral",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...props}
 			>
-				<Tx label={"Draft list (label)"} />
-			</TypoIcon>
-		</LinkTo>
-	);
-}, (props: Omit<DraftListLink.Props, "_suspense">) => {
-	const locale = useLocale();
+				<TypoIcon
+					flip
+					icon={ChevronRightIcon}
+					iconProps={{
+						ui: {
+							opacity: "5",
+						},
+					}}
+				>
+					<Tx label={"Draft list (label)"} />
+				</TypoIcon>
+			</LinkTo>
+		);
+	},
+	(props: Omit<DraftListLink.Props, "_suspense">) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"open draft list"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={DraftIcon}
-			to="/$locale/seller/draft/list"
-			params={{
-				locale,
-			}}
-			activeProps={uiMenuButton({
-				ui: {
-					tone: "primary",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...props}
-		>
-			<Tx label={"Loading... (label)"} />
-		</LinkTo>
-	);
-});
+		return (
+			<LinkTo
+				data-action={"open draft list"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={DraftIcon}
+				to="/$locale/seller/draft/list"
+				params={{
+					locale,
+				}}
+				activeProps={uiMenuButton({
+					ui: {
+						tone: "primary",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...props}
+			>
+				<Tx label={"Loading... (label)"} />
+			</LinkTo>
+		);
+	},
+);

@@ -11,7 +11,6 @@ import { Location } from "./type/Location";
 import { Package } from "./type/Package";
 import { Personal } from "./type/Personal";
 import { Text } from "./type/Text";
-import { Pending } from "./Pending";
 
 export namespace Item {
 	export interface Props extends MarkSuspense.Props {
@@ -122,4 +121,4 @@ export const Item = withFallback(({ _suspense, side, transactionEntryId }: Item.
 			(transactionEntry) => <Package transactionEntry={transactionEntry} />,
 		)
 		.exhaustive();
-}, Pending);
+}, SpinnerContainer);

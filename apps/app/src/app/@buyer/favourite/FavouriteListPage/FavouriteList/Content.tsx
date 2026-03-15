@@ -1,6 +1,6 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { VisibleContainer } from "@use-pico/client/ui/container";
-import { Suspense, type FC, useCallback } from "react";
+import { type FC, Suspense, useCallback } from "react";
 import { Item } from "./Item";
 
 export namespace Content {

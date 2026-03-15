@@ -3,7 +3,7 @@ import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { CloseButton } from "@zbav-se.me/ui/button";
-import { Suspense, type FC, type PropsWithChildren, useCallback, useMemo, useState } from "react";
+import { type FC, type PropsWithChildren, Suspense, useCallback, useMemo, useState } from "react";
 import { SellerInfo } from "~/app/@buyer/listing/~public/SellerInfo";
 import { GalleryPreview } from "~/app/@common/gallery/ui/GalleryPreview";
 import { ListingCard } from "../ListingCard";

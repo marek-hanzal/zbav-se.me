@@ -71,7 +71,9 @@ export const IgnoreButton = withFallback(
 				{...props}
 			>
 				<Tx
-					label={listing.isIgnored ? "Unignore listing (button)" : "Ignore listing (button)"}
+					label={
+						listing.isIgnored ? "Unignore listing (button)" : "Ignore listing (button)"
+					}
 				/>
 			</ConfirmButton>
 		);

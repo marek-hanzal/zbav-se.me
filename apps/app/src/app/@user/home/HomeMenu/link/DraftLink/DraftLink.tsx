@@ -22,92 +22,97 @@ export namespace DraftLink {
 	}
 }
 
-export const DraftLink = withFallback(({ _suspense, ...props }: DraftLink.Props) => {
-	const locale = useLocale();
-	const matchRoute = useMatchRoute();
-	const { data } = withDraftQuery.useCollectionQuery({
-		where: {
-			usedAtIsNull: true,
-		},
-		cursor: {
-			page: 0,
-			size: 1,
-		},
-		sort: [
-			{
-				field: "updatedAt",
-				order: "desc",
+export const DraftLink = withFallback(
+	({ _suspense, ...props }: DraftLink.Props) => {
+		const locale = useLocale();
+		const matchRoute = useMatchRoute();
+		const { data } = withDraftQuery.useCollectionQuery({
+			where: {
+				usedAtIsNull: true,
 			},
-		],
-	});
-
-	return (
-		<LinkTo
-			data-action={data.length > 0 ? "continue listing" : "create listing"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={
-				data.length > 0
-					? "icon-[solar--bill-check-linear]"
-					: "icon-[solar--bill-list-linear]"
-			}
-			to="/$locale/seller/draft/resolve"
-			params={{
-				locale,
-			}}
-			{...(matchRoute({
-				to: "/$locale/seller/draft/$id/edit",
-			})
-				? uiMenuButton({
-						ui: {
-							tone: "primary",
-							theme: "light",
-						},
-						className: [],
-					})
-				: {})}
-			{...props}
-		>
-			<TypoIcon
-				flip
-				icon={ChevronRightIcon}
-				iconProps={{
-					ui: {
-						opacity: "5",
-					},
-				}}
-			>
-				<Tx
-					label={data.length > 0 ? "Continue listing (label)" : "Create listing (label)"}
-				/>
-			</TypoIcon>
-		</LinkTo>
-	);
-}, (props: Omit<DraftLink.Props, "_suspense">) => {
-	const locale = useLocale();
-
-	return (
-		<LinkTo
-			data-action={"create listing"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={DraftIcon}
-			to="/$locale/seller/draft/resolve"
-			params={{
-				locale,
-			}}
-			activeProps={uiMenuButton({
-				ui: {
-					tone: "primary",
-					theme: "light",
+			cursor: {
+				page: 0,
+				size: 1,
+			},
+			sort: [
+				{
+					field: "updatedAt",
+					order: "desc",
 				},
-				className: [],
-			})}
-			{...props}
-		>
-			<Tx label={"Loading... (label)"} />
-		</LinkTo>
-	);
-});
+			],
+		});
+
+		return (
+			<LinkTo
+				data-action={data.length > 0 ? "continue listing" : "create listing"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={
+					data.length > 0
+						? "icon-[solar--bill-check-linear]"
+						: "icon-[solar--bill-list-linear]"
+				}
+				to="/$locale/seller/draft/resolve"
+				params={{
+					locale,
+				}}
+				{...(matchRoute({
+					to: "/$locale/seller/draft/$id/edit",
+				})
+					? uiMenuButton({
+							ui: {
+								tone: "primary",
+								theme: "light",
+							},
+							className: [],
+						})
+					: {})}
+				{...props}
+			>
+				<TypoIcon
+					flip
+					icon={ChevronRightIcon}
+					iconProps={{
+						ui: {
+							opacity: "5",
+						},
+					}}
+				>
+					<Tx
+						label={
+							data.length > 0 ? "Continue listing (label)" : "Create listing (label)"
+						}
+					/>
+				</TypoIcon>
+			</LinkTo>
+		);
+	},
+	(props: Omit<DraftLink.Props, "_suspense">) => {
+		const locale = useLocale();
+
+		return (
+			<LinkTo
+				data-action={"create listing"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={DraftIcon}
+				to="/$locale/seller/draft/resolve"
+				params={{
+					locale,
+				}}
+				activeProps={uiMenuButton({
+					ui: {
+						tone: "primary",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...props}
+			>
+				<Tx label={"Loading... (label)"} />
+			</LinkTo>
+		);
+	},
+);

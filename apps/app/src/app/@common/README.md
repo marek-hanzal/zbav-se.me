@@ -117,7 +117,6 @@ When adding to `@common`:
 - Photo upload UI was extracted to active scope and split into focused pieces:
   - `@common/photo/ui/PhotoUpload/PhotoUpload.tsx` is the local root component (`index.ts` exports `PhotoUpload` only).
   - `@common/photo/ui/PhotoUpload/useController.ts` owns upload/input/pending orchestration.
-  - `@common/photo/ui/PhotoUpload/Pending.tsx`
   - `@common/photo/ui/PhotoUpload/Placeholder.tsx`
   - `@common/photo/ui/PhotoUpload/Preview.tsx`
   - `@common/photo/ui/PhotoUpload/PhotoUploadPreviewImageSuspense.tsx` composes local suspense fallback (`PhotoUploadPreviewImagePending`).
@@ -160,7 +159,6 @@ When adding to `@common`:
   - `@common/limit/Limit.ts`
 - Shared listing count suspense component now lives in active common scope:
   - `@common/listing/ui/ListingCount/ListingCount.tsx`
-  - `@common/listing/ui/ListingCount/Pending.tsx`
 - Shared photo preview and transaction-entry async renderers are flattening old `Data.tsx` wrappers into parent `withFallback(...)` components:
   - `@common/photo/ui/PhotoUpload/Preview/Preview.tsx`
   - `@common/transaction-entry/ui/TransactionEntryList/Item/Item.tsx`

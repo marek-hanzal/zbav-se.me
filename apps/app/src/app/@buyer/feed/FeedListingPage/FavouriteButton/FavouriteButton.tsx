@@ -36,7 +36,9 @@ export const FavouriteButton = withFallback(
 		return (
 			<Button
 				data-ui={"FavouriteButton"}
-				data-action={listing.isFavourite ? "remove listing from favourites" : "save listing"}
+				data-action={
+					listing.isFavourite ? "remove listing from favourites" : "save listing"
+				}
 				iconEnabled={listing.isFavourite ? FavouriteIcon : FavouriteOffIcon}
 				disabled={favouriteToggle.isPending}
 				loading={favouriteToggle.isPending}

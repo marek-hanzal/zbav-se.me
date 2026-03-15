@@ -1,12 +1,18 @@
 import { useLocale } from "@use-pico/client/hook";
-import { ChevronRightIcon, Icon, LoaderIcon, type Icon as IconType, NotificationIcon } from "@use-pico/client/icon";
+import {
+	ChevronRightIcon,
+	Icon,
+	type Icon as IconType,
+	LoaderIcon,
+	NotificationIcon,
+} from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { withFallback } from "@use-pico/client/utils";
+import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";

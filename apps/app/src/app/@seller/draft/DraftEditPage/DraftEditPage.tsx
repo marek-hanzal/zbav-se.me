@@ -1,6 +1,5 @@
 import { type FC, Suspense } from "react";
 import { DraftEditor } from "./DraftEditor/DraftEditor";
-import { Pending } from "./DraftEditor/Pending";
 
 export namespace DraftEditPage {
 	export interface Props {
@@ -16,7 +15,7 @@ export namespace DraftEditPage {
  */
 export const DraftEditPage: FC<DraftEditPage.Props> = ({ draftId }) => {
 	return (
-		<Suspense fallback={<Pending />}>
+		<Suspense fallback={<DraftEditor.Fallback />}>
 			<DraftEditor
 				_suspense={"I know"}
 				draftId={draftId}

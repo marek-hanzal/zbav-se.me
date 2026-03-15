@@ -14,73 +14,76 @@ export namespace SearchLink {
 	}
 }
 
-export const SearchLink = withFallback(({ _suspense, ...props }: SearchLink.Props) => {
-	const locale = useLocale();
+export const SearchLink = withFallback(
+	({ _suspense, ...props }: SearchLink.Props) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"search listings"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={FindListingsIcon}
-			to="/$locale/buyer/search"
-			params={{
-				locale,
-			}}
-			activeProps={uiMenuButton({
-				ui: {
-					tone: "primary",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...uiMenuButton({
-				ui: {
-					tone: "neutral",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...props}
-		>
-			<TypoIcon
-				flip
-				icon={ChevronRightIcon}
-				iconProps={{
-					ui: {
-						opacity: "5",
-					},
+		return (
+			<LinkTo
+				data-action={"search listings"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={FindListingsIcon}
+				to="/$locale/buyer/search"
+				params={{
+					locale,
 				}}
+				activeProps={uiMenuButton({
+					ui: {
+						tone: "primary",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...uiMenuButton({
+					ui: {
+						tone: "neutral",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...props}
 			>
-				<Tx label="Find listings (label)" />
-			</TypoIcon>
-		</LinkTo>
-	);
-}, (props: Omit<SearchLink.Props, "_suspense">) => {
-	const locale = useLocale();
+				<TypoIcon
+					flip
+					icon={ChevronRightIcon}
+					iconProps={{
+						ui: {
+							opacity: "5",
+						},
+					}}
+				>
+					<Tx label="Find listings (label)" />
+				</TypoIcon>
+			</LinkTo>
+		);
+	},
+	(props: Omit<SearchLink.Props, "_suspense">) => {
+		const locale = useLocale();
 
-	return (
-		<LinkTo
-			data-action={"search listings"}
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={FindListingsIcon}
-			to="/$locale/buyer/search"
-			params={{
-				locale,
-			}}
-			activeProps={uiMenuButton({
-				ui: {
-					tone: "primary",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...props}
-		>
-			<Tx label={"Loading... (label)"} />
-		</LinkTo>
-	);
-});
+		return (
+			<LinkTo
+				data-action={"search listings"}
+				{...uiMenuButton({
+					className: [],
+				})}
+				icon={FindListingsIcon}
+				to="/$locale/buyer/search"
+				params={{
+					locale,
+				}}
+				activeProps={uiMenuButton({
+					ui: {
+						tone: "primary",
+						theme: "light",
+					},
+					className: [],
+				})}
+				{...props}
+			>
+				<Tx label={"Loading... (label)"} />
+			</LinkTo>
+		);
+	},
+);

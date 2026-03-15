@@ -20,43 +20,46 @@ export namespace CategoryItem {
  *
  * @see apps/app/src/app//draft/ui/DraftEditor/patch/CategoryPatch.tsx
  */
-export const CategoryItem = withFallback(({ categoryId, selection }: CategoryItem.Props) => {
-	const { data: item } = withCategoryQuery.useFetchQuery(categoryId);
-	const isSelected = selection.isSelected(item.id);
+export const CategoryItem = withFallback(
+	({ categoryId, selection }: CategoryItem.Props) => {
+		const { data: item } = withCategoryQuery.useFetchQuery(categoryId);
+		const isSelected = selection.isSelected(item.id);
 
-	return (
-		<Button
-			data-id={item.id}
-			onClick={() => {
-				selection.toggle(item);
-			}}
-			{...uiSelectButton({
-				isSelected,
-				className: undefined,
-			})}
-			data-ui="CategoryItem"
-		>
-			<Typo
-				label={item.group}
-				ui={{
-					text: "sm",
+		return (
+			<Button
+				data-id={item.id}
+				onClick={() => {
+					selection.toggle(item);
 				}}
-			/>
+				{...uiSelectButton({
+					isSelected,
+					className: undefined,
+				})}
+				data-ui="CategoryItem"
+			>
+				<Typo
+					label={item.group}
+					ui={{
+						text: "sm",
+					}}
+				/>
 
-			<Typo
-				label={item.category}
-				ui={{
-					text: "lg",
-					font: isSelected ? "bold" : "normal",
-				}}
+				<Typo
+					label={item.category}
+					ui={{
+						text: "lg",
+						font: isSelected ? "bold" : "normal",
+					}}
+				/>
+			</Button>
+		);
+	},
+	(props: SpinnerContainer.Props) => {
+		return (
+			<SpinnerContainer
+				data-ui="CategoryItem-[SpinnerContainer]"
+				{...props}
 			/>
-		</Button>
-	);
-}, (props: SpinnerContainer.Props) => {
-	return (
-		<SpinnerContainer
-			data-ui="CategoryItem-[SpinnerContainer]"
-			{...props}
-		/>
-	);
-});
+		);
+	},
+);

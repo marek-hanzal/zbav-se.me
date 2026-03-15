@@ -4,7 +4,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { SellerIcon } from "@zbav-se.me/ui/icon";
-import { Suspense, type FC, useState } from "react";
+import { type FC, Suspense, useState } from "react";
 import { SellerInfo } from "./SellerInfo";
 
 export namespace SellerInfoButton {
