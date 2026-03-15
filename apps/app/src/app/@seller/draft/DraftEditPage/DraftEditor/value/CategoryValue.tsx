@@ -1,7 +1,7 @@
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import { type FC, Suspense } from "react";
-import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
+import { CategoryInline } from "~/app/@session/category/ui/CategoryInline";
 
 export namespace CategoryValue {
 	export interface Props extends LabelValue.PropsEx {

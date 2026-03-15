@@ -9,7 +9,7 @@ import { type FC, Suspense } from "react";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
-import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
+import { CategoryInline } from "~/app/@session/category/ui/CategoryInline";
 
 export namespace ListingCard {
 	export interface Hooks {

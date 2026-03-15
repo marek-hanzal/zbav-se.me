@@ -1,1 +1,1 @@
-export { LocalePage } from "../LocalePage/LocalePage";
+export { LocalePage } from "../LocalePage";

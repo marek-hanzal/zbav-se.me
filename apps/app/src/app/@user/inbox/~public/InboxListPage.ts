@@ -1,1 +1,1 @@
-export { InboxListPage } from "../InboxListPage/InboxListPage";
+export { InboxListPage } from "../InboxListPage";

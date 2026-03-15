@@ -5,7 +5,7 @@ import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { CategorySelect } from "~/app/@session/category/ui/CategorySelect/CategorySelect";
+import { CategorySelect } from "~/app/@session/category/ui/CategorySelect";
 
 export namespace CategoryPatch {
 	export interface Props extends Container.Props {

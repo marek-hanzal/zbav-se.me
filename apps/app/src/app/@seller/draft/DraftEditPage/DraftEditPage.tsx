@@ -1,5 +1,5 @@
 import { type FC, Suspense } from "react";
-import { DraftEditor } from "./DraftEditor/DraftEditor";
+import { DraftEditor } from "./DraftEditor";
 
 export namespace DraftEditPage {
 	export interface Props {

@@ -11,7 +11,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { CategorySelect } from "~/app/@session/category/ui/CategorySelect/CategorySelect";
+import { CategorySelect } from "~/app/@session/category/ui/CategorySelect";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 

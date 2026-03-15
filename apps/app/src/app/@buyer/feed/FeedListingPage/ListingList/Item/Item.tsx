@@ -11,7 +11,7 @@ import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
 import { FlagButton } from "../../FlagButton";
 import { IgnoreButton } from "../../IgnoreButton";
-import { ListingSheet } from "../../ListingSheet/ListingSheet";
+import { ListingSheet } from "../../ListingSheet";
 import { ThumbDislikeButton } from "../../ThumbDislikeButton";
 import { ThumbLikeButton } from "../../ThumbLikeButton";
 

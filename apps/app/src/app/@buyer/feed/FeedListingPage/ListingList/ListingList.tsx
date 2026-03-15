@@ -14,7 +14,7 @@ import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { type ReactNode, Suspense, useCallback, useEffect, useMemo, useRef } from "react";
 import { Empty } from "./Empty";
 import { FilterEmpty } from "./FilterEmpty";
-import { Item } from "./Item/Item";
+import { Item } from "./Item";
 
 export namespace ListingList {
 	export interface Props extends Container.Props, MarkSuspense.Props {

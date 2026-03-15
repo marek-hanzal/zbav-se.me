@@ -6,7 +6,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { type FC, Suspense } from "react";
-import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
+import { CategoryInline } from "~/app/@session/category/ui/CategoryInline";
 import { SellerInfo } from "../../SellerInfo";
 
 export namespace InfoSection {

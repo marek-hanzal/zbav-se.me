@@ -1,7 +1,7 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { HomeMenu } from "../HomeMenu/HomeMenu";
+import { HomeMenu } from "../HomeMenu";
 
 export namespace HomePage {
 	export interface Props extends TitleContainer.Props {

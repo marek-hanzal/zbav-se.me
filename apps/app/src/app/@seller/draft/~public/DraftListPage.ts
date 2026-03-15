@@ -1,1 +1,1 @@
-export { DraftListPage } from "../DraftListPage/DraftListPage";
+export { DraftListPage } from "../DraftListPage";

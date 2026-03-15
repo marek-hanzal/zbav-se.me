@@ -10,7 +10,7 @@ import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { TitleValue } from "~/app/@common/title/ui/TitleValue";
 import type { FeedEditor } from "./FeedEditor";
 import { AgeValueList } from "./value/AgeValueList";
-import { CategoryValueList } from "./value/CategoryValueList/CategoryValueList";
+import { CategoryValueList } from "./value/CategoryValueList";
 import { ConditionValueList } from "./value/ConditionValueList";
 import { NameValue } from "./value/NameValue";
 import { RangeValue } from "./value/RangeValue";

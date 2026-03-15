@@ -1,1 +1,1 @@
-export { HomeMenu } from "../HomeMenu/HomeMenu";
+export { HomeMenu } from "../HomeMenu";

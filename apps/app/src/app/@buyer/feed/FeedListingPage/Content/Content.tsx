@@ -6,7 +6,7 @@ import { withFallback } from "@use-pico/client/utils";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { type Ref, Suspense, useState } from "react";
 import { FeedEditorSheet } from "../../FeedEditor/FeedEditorSheet";
-import { ListingList } from "../ListingList/ListingList";
+import { ListingList } from "../ListingList";
 
 export namespace Content {
 	export interface Props extends MarkSuspense.Props {

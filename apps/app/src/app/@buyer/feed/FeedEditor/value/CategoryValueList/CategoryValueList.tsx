@@ -5,7 +5,7 @@ import { translator } from "@use-pico/common/translator";
 import type { tCategoryItem } from "@zbav-se.me/sdk/api/session";
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import { Suspense } from "react";
-import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
+import { CategoryInline } from "~/app/@session/category/ui/CategoryInline";
 
 export namespace CategoryValueList {
 	export interface Props extends Omit<ValueList.Props<tCategoryItem>, "items" | "renderFn"> {

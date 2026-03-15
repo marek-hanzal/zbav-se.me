@@ -6,7 +6,7 @@ import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
 import { FavouriteButton } from "../../FavouriteButton";
-import { TransactionButton } from "../../TransactionButton/TransactionButton";
+import { TransactionButton } from "../../TransactionButton";
 
 export namespace HeroSection {
 	export interface Props {
