@@ -6,7 +6,9 @@ import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { ListingList } from "./ListingList";
 
 export namespace MyListingPage {
-	export interface Props extends TitleContainer.Props {}
+	export interface Props extends TitleContainer.Props {
+		//
+	}
 }
 
 /**
@@ -23,20 +25,7 @@ export const MyListingPage: FC<MyListingPage.Props> = (props) => {
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<ListingList
-				query={{
-					cursor: {
-						page: 0,
-						size: 100,
-					},
-					sort: [
-						{
-							field: "createdAt",
-							order: "desc",
-						},
-					],
-				}}
-			/>
+			<ListingList />
 		</TitleContainer>
 	);
 };

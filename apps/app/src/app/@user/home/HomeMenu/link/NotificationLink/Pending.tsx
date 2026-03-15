@@ -19,13 +19,13 @@ export const Pending: FC<Pending.Props> = ({ iconProps, onLinkClick }) => {
 
 	return (
 		<LinkTo
-			to={"/$locale/inbox/$type"}
+			to={"/$locale/inbox/$priority"}
 			icon={NotificationIcon}
 			iconProps={iconProps}
 			onClick={onLinkClick}
 			params={{
 				locale,
-				type: "high",
+				priority: "high",
 			}}
 			activeProps={uiMenuButton({
 				ui: {

@@ -34,13 +34,13 @@ export const Data: FC<Data.Props> = ({ _suspense, iconProps, onLinkClick }) => {
 
 	return (
 		<LinkTo
-			to={"/$locale/inbox/$type"}
+			to={"/$locale/inbox/$priority"}
 			icon={NotificationIcon}
 			iconProps={iconProps}
 			onClick={onLinkClick}
 			params={{
 				locale,
-				type: "high",
+				priority: "high",
 			}}
 			activeProps={uiMenuButton({
 				ui: {

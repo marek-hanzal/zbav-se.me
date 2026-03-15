@@ -1,40 +1,71 @@
-import { VisibilityProvider } from "@use-pico/client/context";
-import type { createVisibilityStore } from "@use-pico/client/store";
-import type { tListingQuery } from "@zbav-se.me/sdk/api/seller";
+import { Container } from "@use-pico/client/ui/container";
+import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
-import type { FC } from "react";
-import { Content } from "../Content";
+import { type FC, useMemo } from "react";
+import { CreateButton } from "~/app/@seller/draft/~public/CreateButton";
+import { ListingItem } from "../ListingItem";
 import { Empty } from "./Empty";
-import { FilterEmpty } from "./FilterEmpty";
 
 export namespace Data {
-	export interface Props {
-		query: tListingQuery;
-		visibility: createVisibilityStore.Hook;
+	export interface Props extends Container.Props {
+		//
 	}
 }
 
-export const Data: FC<Data.Props> = ({ query, visibility }) => {
-	const listingCollectionQuery = withListingQuery.useCollectionQuery(query);
-	const { data: listingCount } = withListingQuery.useCountQuery({
-		filter: query.filter,
-		where: query.where,
+export const Data: FC<Data.Props> = ({ ui, ...props }) => {
+	const { data: listingCollection } = withListingQuery.useCollectionQuery({
+		cursor: {
+			page: 0,
+			size: 100,
+		},
+		sort: [
+			{
+				field: "createdAt",
+				order: "desc",
+			},
+		],
 	});
 
-	if (listingCount.isEmpty) {
-		return <Empty />;
-	}
-
-	if (listingCount.isFilterEmpty) {
-		return <FilterEmpty />;
-	}
+	const check = useMemo(() => {
+		return [
+			{
+				check() {
+					return !listingCollection.length;
+				},
+				render() {
+					return <Empty />;
+				},
+			},
+		] as EmptyState.Check[];
+	}, [
+		listingCollection,
+	]);
 
 	return (
-		<VisibilityProvider store={visibility}>
-			<Content
-				_suspense={"I know"}
-				listingIds={listingCollectionQuery.data}
-			/>
-		</VisibilityProvider>
+		<Container
+			data-ui={"MyListing[Container]"}
+			ui={{
+				flow: "vertical",
+				scroll: "vertical",
+				height: "full",
+				gap: "default",
+				inner: "default",
+				...ui,
+			}}
+			{...props}
+		>
+			<EmptyState check={check}>
+				{listingCollection.map((listingId) => {
+					return (
+						<ListingItem
+							key={listingId}
+							listingId={listingId}
+						/>
+					);
+				})}
+
+				<CreateButton />
+			</EmptyState>
+		</Container>
 	);
 };
