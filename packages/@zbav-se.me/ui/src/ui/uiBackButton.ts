@@ -5,7 +5,7 @@ export namespace uiBackButton {
 	export interface Ui extends uiButton.Ui {
 		//
 	}
-    
+
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
 
 	export interface Props extends coolUi.PropsEx<Ui> {
