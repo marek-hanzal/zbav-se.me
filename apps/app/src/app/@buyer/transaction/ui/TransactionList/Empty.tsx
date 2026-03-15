@@ -24,6 +24,7 @@ export const Empty: FC<Empty.Props> = ({ ui, ...props }) => {
 			textMessage={translator.text("No transactions as buyer (message)")}
 			action={
 				<LinkTo
+					data-action={"go to my feed"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
 					to="/$locale/buyer/feed/default"

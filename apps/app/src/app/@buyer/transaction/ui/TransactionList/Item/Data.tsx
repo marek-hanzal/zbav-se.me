@@ -22,6 +22,7 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ...props }) => 
 
 	return (
 		<LinkTo
+			data-action={"open transaction detail"}
 			to="/$locale/buyer/transaction/$transactionId/detail"
 			params={{
 				locale,

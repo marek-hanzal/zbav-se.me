@@ -23,6 +23,7 @@ export const SuccessButton: FC<SuccessButton.Props> = ({ close, transaction, ...
 	return (
 		<Button
 			data-ui="SuccessButton[Button]"
+			data-action={"mark transaction successful"}
 			iconEnabled={CheckIcon}
 			onClick={() => {
 				mutation.mutate({
