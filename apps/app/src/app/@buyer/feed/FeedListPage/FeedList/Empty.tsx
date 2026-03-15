@@ -33,7 +33,11 @@ export const Empty: FC<Empty.Props> = (props) => {
 					ui={{
 						tone: "brand",
 						theme: "light",
+						color: "lead",
+						text: "4xl",
+						inner: "4xl",
 					}}
+					className={"text-center"}
 					action={
 						<Button
 							iconEnabled={ChevronRightIcon}

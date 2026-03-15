@@ -40,6 +40,9 @@
 0a08e45b023a7e9c7c4856084c91d4a78b31861ac5bf75f91fe4780a:
   ref: Listing restriction (label)
   value: Listing restriction (label)
+0a0e1258e91df9fa887eb547e6dd2bb4f6445b495d72d8ba321244cc:
+  ref: Feed list empty (message)
+  value: Feed list empty (message)
 0a5c73cd28c41a15c8769a38be34b6d388bcba18e90ca7e28b762bc9:
   ref: Listing - Cons (title)
   value: Listing - Cons (title)
@@ -295,6 +298,9 @@
 4d83e7c062f2a34e98c8953735ec95520b6b39a4300df4c9742f5cb7:
   ref: Transaction status pending (label)
   value: New buyer interest
+4de936d4b1f35fb13cdfb1640a634d4d7225802275960a2a2abdf6ad:
+  ref: Create new feed (button)
+  value: Create new feed (button)
 4e635fa67582dafe43092219c67fa6a2e596a963d1b95673277dda75:
   ref: search
   value: search
@@ -825,6 +831,9 @@ f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
 f3f9c0a66a107af2911fa0f9019dc4526940d1afe4a957e1445e3447:
   ref: Condition not selected
   value: Condition not selected
+f46058bf18d21ce15dec12d40576f79fa0ad2591d6605ed13ed1bb7a:
+  ref: Feed list empty (title)
+  value: Feed list empty (title)
 f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
   ref: My listings (title)
   value: My listings (title)

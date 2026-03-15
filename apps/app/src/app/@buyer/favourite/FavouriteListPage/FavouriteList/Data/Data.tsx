@@ -30,7 +30,7 @@ export const Data: FC<Data.Props> = ({ visibility }) => {
 		return [
 			{
 				check() {
-					return !!listingCollection.length;
+					return !listingCollection.length;
 				},
 				render() {
 					return <Empty />;
