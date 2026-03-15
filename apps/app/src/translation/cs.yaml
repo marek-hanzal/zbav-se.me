@@ -253,7 +253,7 @@
     value: Inzerát je oblíbený!
 3685c79576a1efb41990be4a56a962ff63eaab48e01dd64da8e62c16:
     ref: No drafts (title)
-    value: No drafts (title)
+    value: Zatím tu nic není...
 376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
     ref: rejected
     value: rejected
@@ -491,9 +491,6 @@
 6dbcf4fc35bb69ec88d55c0a6ab2a709d55dc49588e018564cbca5a1:
     ref: Transaction update (label)
     value: Transaction update (label)
-70ed6d112dab8cf69d055339929e4dd23299e2c5f9c4ef97371bd13e:
-    ref: No drafts for current filter (title)
-    value: No drafts for current filter (title)
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
     value: Výchozí řazení
@@ -604,9 +601,6 @@
 8b45608bd106d13d544cc9d7aa8d9c7fdb279ac083715341bc1afbb8:
     ref: User registered (label)
     value: Datum registrace
-8bee5abe33920819b660cb8114ecaef4b2f1e001cc7cb506ff9d6cc1:
-    ref: No drafts for current filter (message)
-    value: No drafts for current filter (message)
 8c38d8ac3140e2fb666243047eb1a394a10ec1487ad707d29716fac1:
     ref: Transaction - resolved -send a message (placeholder)
     value: Chceš něco dodat?
@@ -1036,6 +1030,9 @@ b00de300bf157b03b1058da19b680a271fa960ab182ee923c3994e03:
 b0a721169f47da108f0195d392e3d788b2d417564f50dd126981465a:
     ref: No transactions as seller (message)
     value: Můžeš se podívat, jak se tvým inzerátům daří.
+b0b9b650bd13bdc0f5c2afaba9c5e8c971301d5a8a663f985816c28a:
+    ref: Create new draft (link)
+    value: Čas něco prodat!
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
     ref: Expire (title)
     value: Automatické ukončení
@@ -1343,7 +1340,7 @@ fe53b76f86226fc536cae35874aff7a3ccfbc38e4700d3ac5c087b9b:
         **Lokalita předaná tímto způsobem se vymaže po ukončení obchodu.**
 ff16f6190259edb2dc944cd87e70410856d658de53880f79b4e9c403:
     ref: No drafts (message)
-    value: No drafts (message)
+    value: ...ale můžeš si tu nachystat nové inzeráty
 ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
     ref: No categories found (title)
     value: Ajajaj, nic jsme nenašli!

@@ -433,9 +433,6 @@
 6dbcf4fc35bb69ec88d55c0a6ab2a709d55dc49588e018564cbca5a1:
   ref: Transaction update (label)
   value: Transaction update (label)
-70ed6d112dab8cf69d055339929e4dd23299e2c5f9c4ef97371bd13e:
-  ref: No drafts for current filter (title)
-  value: No drafts for current filter (title)
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
   ref: Feed sorting not selected
   value: Feed sorting not selected
@@ -535,9 +532,6 @@
 8b45608bd106d13d544cc9d7aa8d9c7fdb279ac083715341bc1afbb8:
   ref: User registered (label)
   value: User registered (label)
-8bee5abe33920819b660cb8114ecaef4b2f1e001cc7cb506ff9d6cc1:
-  ref: No drafts for current filter (message)
-  value: No drafts for current filter (message)
 8c38d8ac3140e2fb666243047eb1a394a10ec1487ad707d29716fac1:
   ref: Transaction - resolved -send a message (placeholder)
   value: Transaction - resolved -send a message (placeholder)
@@ -673,6 +667,9 @@ b00de300bf157b03b1058da19b680a271fa960ab182ee923c3994e03:
 b0a721169f47da108f0195d392e3d788b2d417564f50dd126981465a:
   ref: No transactions as seller (message)
   value: No transactions as seller (message)
+b0b9b650bd13bdc0f5c2afaba9c5e8c971301d5a8a663f985816c28a:
+  ref: Create new draft (link)
+  value: Create new draft (link)
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
   ref: Expire (title)
   value: Expire (title)
