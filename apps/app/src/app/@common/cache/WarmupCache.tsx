@@ -127,12 +127,6 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				withIgnored: false,
 			},
 		});
-		withBuyerListingQuery.useCountQuery({
-			where: {
-				isFavourite: true,
-				withIgnored: false,
-			},
-		});
 	}
 
 	/**

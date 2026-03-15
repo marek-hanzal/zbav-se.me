@@ -1,41 +1,54 @@
 import { VisibilityProvider } from "@use-pico/client/context";
 import type { createVisibilityStore } from "@use-pico/client/store";
-import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer";
+import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
-import type { FC } from "react";
+import { type FC, useMemo } from "react";
 import { Content } from "../Content";
 import { Empty } from "./Empty";
-import { FilterEmpty } from "./FilterEmpty";
 
 export namespace Data {
 	export interface Props {
-		query: tListingQuery;
 		visibility: createVisibilityStore.Hook;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ query, visibility }) => {
-	const listingCollectionQuery = withListingQuery.useCollectionQuery(query);
-	const { data: listingCount } = withListingQuery.useCountQuery({
-		filter: query.filter,
-		where: query.where,
-		meta: query.meta,
+export const Data: FC<Data.Props> = ({ visibility }) => {
+	const { data: listingCollection } = withListingQuery.useCollectionQuery({
+		where: {
+			isFavourite: true,
+			withIgnored: false,
+		},
+		sort: [
+			{
+				field: "createdAt",
+				order: "desc",
+			},
+		],
 	});
 
-	if (listingCount.isEmpty) {
-		return <Empty />;
-	}
-
-	if (listingCount.isFilterEmpty) {
-		return <FilterEmpty />;
-	}
+	const check = useMemo(() => {
+		return [
+			{
+				check() {
+					return !!listingCollection.length;
+				},
+				render() {
+					return <Empty />;
+				},
+			},
+		] satisfies EmptyState.Check[];
+	}, [
+		listingCollection,
+	]);
 
 	return (
-		<VisibilityProvider store={visibility}>
-			<Content
-				_suspense={"I know"}
-				listingIds={listingCollectionQuery.data}
-			/>
-		</VisibilityProvider>
+		<EmptyState check={check}>
+			<VisibilityProvider store={visibility}>
+				<Content
+					_suspense={"I know"}
+					listingIds={listingCollection}
+				/>
+			</VisibilityProvider>
+		</EmptyState>
 	);
 };

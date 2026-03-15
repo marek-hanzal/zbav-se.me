@@ -5,6 +5,9 @@ type tState = ReactNode | null | undefined;
 
 export namespace EmptyState {
 	export interface Check {
+		/**
+		 * When "true", use this check as the content
+		 */
 		check: () => boolean | Promise<boolean>;
 		render: () => ReactNode;
 	}

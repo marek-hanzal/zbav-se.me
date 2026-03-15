@@ -1,11 +1,11 @@
 import { uiButton } from "@use-pico/client/ui/button";
 import type { ui as coolUi } from "@use-pico/cls";
 
-export namespace uiBackButton {
+export namespace uiCtaLinkButton {
 	export interface Ui extends uiButton.Ui {
 		//
 	}
-    
+
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
 
 	export interface Props extends coolUi.PropsEx<Ui> {
@@ -13,17 +13,14 @@ export namespace uiBackButton {
 	}
 }
 
-export const uiBackButton = ({ ui, className }: uiBackButton.Props) => {
+export const uiCtaLinkButton = ({ ui, className }: uiCtaLinkButton.Props) => {
 	return uiButton({
 		ui: {
-			tone: "neutral",
+			tone: "link",
 			theme: "light",
-			justify: "center",
-			round: "full",
-			square: "md",
-			text: "xl",
-			opacity: "6",
-			color: "lead",
+			text: "lg",
+			color: "text",
+			inner: "default",
 			...ui,
 		},
 		className,

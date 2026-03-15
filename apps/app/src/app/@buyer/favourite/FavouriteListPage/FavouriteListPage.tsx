@@ -17,20 +17,7 @@ export const FavouriteListPage: FC<FavouriteListPage.Props> = (props) => {
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<FavouriteList
-				query={{
-					where: {
-						isFavourite: true,
-						withIgnored: false,
-					},
-					sort: [
-						{
-							field: "createdAt",
-							order: "desc",
-						},
-					],
-				}}
-			/>
+			<FavouriteList />
 		</TitleContainer>
 	);
 };
