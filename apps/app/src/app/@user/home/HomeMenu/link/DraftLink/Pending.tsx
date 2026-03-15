@@ -16,6 +16,7 @@ export const Pending: FC<Pending.Props> = (props) => {
 
 	return (
 		<LinkTo
+			data-action={"create listing"}
 			{...uiMenuButton({
 				className: [],
 			})}

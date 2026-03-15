@@ -45,6 +45,7 @@ export const Pending: FC<Pending.Props> = ({ iconProps }) => {
 				}}
 			>
 				<LinkTo
+					data-action={"open seller messages"}
 					to={"/$locale/seller/transaction/list"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
@@ -77,6 +78,7 @@ export const Pending: FC<Pending.Props> = ({ iconProps }) => {
 				</LinkTo>
 
 				<LinkTo
+					data-action={"open buyer messages"}
 					to={"/$locale/buyer/transaction/list"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}

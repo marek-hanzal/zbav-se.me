@@ -19,6 +19,7 @@ export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 
 	return (
 		<LinkTo
+			data-action={"go home"}
 			{...uiMenuButton({
 				className: [],
 			})}

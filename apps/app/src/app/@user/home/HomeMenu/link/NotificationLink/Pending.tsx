@@ -19,6 +19,7 @@ export const Pending: FC<Pending.Props> = ({ iconProps, onLinkClick }) => {
 
 	return (
 		<LinkTo
+			data-action={"open notifications"}
 			to={"/$locale/inbox/$priority"}
 			icon={NotificationIcon}
 			iconProps={iconProps}

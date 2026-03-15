@@ -26,6 +26,7 @@ export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ ui, ...props }) => {
 		<>
 			<Button
 				data-ui={"HomeMenuButton[Button]"}
+				data-action={"open home menu"}
 				iconEnabled={MenuIcon}
 				iconProps={{
 					ui: {
@@ -56,6 +57,7 @@ export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ ui, ...props }) => {
 					title: translator.text("zbav-se.me"),
 					right: (
 						<CloseButton
+							data-action={"close home menu"}
 							onClick={close}
 							ui={{
 								background: undefined,

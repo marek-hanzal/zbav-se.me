@@ -34,6 +34,7 @@ export const Data: FC<Data.Props> = ({ _suspense, iconProps, onLinkClick }) => {
 
 	return (
 		<LinkTo
+			data-action={"open notifications"}
 			to={"/$locale/inbox/$priority"}
 			icon={NotificationIcon}
 			iconProps={iconProps}

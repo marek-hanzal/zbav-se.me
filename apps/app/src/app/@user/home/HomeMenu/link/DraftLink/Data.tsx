@@ -36,6 +36,7 @@ export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 
 	return (
 		<LinkTo
+			data-action={data.length > 0 ? "continue listing" : "create listing"}
 			{...uiMenuButton({
 				className: [],
 			})}
