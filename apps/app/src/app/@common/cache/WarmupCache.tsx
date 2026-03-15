@@ -10,7 +10,6 @@ import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transa
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import { type FC, useEffect } from "react";
-import { FEED_LIMIT } from "~/app/@common/limit/Limit";
 
 export namespace WarmupCache {
 	export interface Props extends MarkSuspense.Props {
@@ -56,10 +55,6 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 		withFeedQuery.useCollectionQuery({
 			filter: {
 				type: "user",
-			},
-			cursor: {
-				page: 0,
-				size: FEED_LIMIT,
 			},
 			sort: [
 				{
