@@ -27,5 +27,8 @@ export const Route = createFileRoute("/$locale/buyer/feed/list")({
 		}
 	},
 	component: FeedListPage,
+	/**
+	 * We've loader here, don't remove!
+	 */
 	pendingComponent: FeedListPagePending,
 });
