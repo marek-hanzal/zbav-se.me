@@ -3,7 +3,7 @@ import type { uiIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { Group } from "@use-pico/client/ui/group";
-import { useRef } from "react";
+import { Suspense, useRef } from "react";
 import { DraftLink } from "./link/DraftLink/DraftLink";
 import { DraftListLink } from "./link/DraftListLink/DraftListLink";
 import { FavouritesLink } from "./link/FavouritesLink/FavouritesLink";
@@ -67,104 +67,248 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 			>
 				{isHome ? null : (
 					<Group>
-						<HomeLink
+						<Suspense
+							fallback={
+								<HomeLink.Fallback
+									iconProps={{
+										ui: {
+											...icon,
+										},
+									}}
+								/>
+							}
+						>
+							<HomeLink
+								_suspense={"I know"}
+								iconProps={{
+									ui: {
+										...icon,
+									},
+								}}
+							/>
+						</Suspense>
+					</Group>
+				)}
+
+				<Group>
+					<Suspense
+						fallback={
+							<NotificationLink.Fallback
+								onLinkClick={onLinkClick}
+								iconProps={{
+									ui: {
+										...icon,
+									},
+								}}
+							/>
+						}
+					>
+						<NotificationLink
+							_suspense={"I know"}
+							onLinkClick={onLinkClick}
 							iconProps={{
 								ui: {
 									...icon,
 								},
 							}}
 						/>
-					</Group>
-				)}
-
-				<Group>
-					<NotificationLink
-						onLinkClick={onLinkClick}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-					/>
+					</Suspense>
 				</Group>
 
 				<Group>
-					<SearchLink
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-					/>
+					<Suspense
+						fallback={
+							<SearchLink.Fallback
+								iconProps={{
+									ui: {
+										...icon,
+									},
+								}}
+							/>
+						}
+					>
+						<SearchLink
+							_suspense={"I know"}
+							iconProps={{
+								ui: {
+									...icon,
+								},
+							}}
+						/>
+					</Suspense>
 				</Group>
 
 				<Group>
-					<ListingsLink
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-					/>
-					<DraftLink
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-					/>
+					<Suspense
+						fallback={
+							<ListingsLink.Fallback
+								iconProps={{
+									ui: {
+										...icon,
+									},
+								}}
+							/>
+						}
+					>
+						<ListingsLink
+							_suspense={"I know"}
+							iconProps={{
+								ui: {
+									...icon,
+								},
+							}}
+						/>
+					</Suspense>
+					<Suspense
+						fallback={
+							<DraftLink.Fallback
+								iconProps={{
+									ui: {
+										...icon,
+									},
+								}}
+							/>
+						}
+					>
+						<DraftLink
+							_suspense={"I know"}
+							iconProps={{
+								ui: {
+									...icon,
+								},
+							}}
+						/>
+					</Suspense>
 				</Group>
 
 				<Group>
-					<MyListingsLink
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-					/>
-					<DraftListLink
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-					/>
+					<Suspense
+						fallback={
+							<MyListingsLink.Fallback
+								iconProps={{
+									ui: {
+										...icon,
+									},
+								}}
+							/>
+						}
+					>
+						<MyListingsLink
+							_suspense={"I know"}
+							iconProps={{
+								ui: {
+									...icon,
+								},
+							}}
+						/>
+					</Suspense>
+					<Suspense
+						fallback={
+							<DraftListLink.Fallback
+								iconProps={{
+									ui: {
+										...icon,
+									},
+								}}
+							/>
+						}
+					>
+						<DraftListLink
+							_suspense={"I know"}
+							iconProps={{
+								ui: {
+									...icon,
+								},
+							}}
+						/>
+					</Suspense>
 				</Group>
 
 				<Group>
-					<FeedLink
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-					/>
-					<FavouritesLink
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-					/>
+					<Suspense
+						fallback={
+							<FeedLink.Fallback
+								iconProps={{
+									ui: {
+										...icon,
+									},
+								}}
+							/>
+						}
+					>
+						<FeedLink
+							_suspense={"I know"}
+							iconProps={{
+								ui: {
+									...icon,
+								},
+							}}
+						/>
+					</Suspense>
+					<Suspense
+						fallback={
+							<FavouritesLink.Fallback
+								iconProps={{
+									ui: {
+										...icon,
+									},
+								}}
+							/>
+						}
+					>
+						<FavouritesLink
+							_suspense={"I know"}
+							iconProps={{
+								ui: {
+									...icon,
+								},
+							}}
+						/>
+					</Suspense>
 				</Group>
 
-				<MessageLink
-					iconProps={{
-						ui: {
-							...icon,
-						},
-					}}
-				/>
-
-				<Group>
-					<ProfileLink
+				<Suspense
+					fallback={
+						<MessageLink.Fallback
+							iconProps={{
+								ui: {
+									...icon,
+								},
+							}}
+						/>
+					}
+				>
+					<MessageLink
+						_suspense={"I know"}
 						iconProps={{
 							ui: {
 								...icon,
 							},
 						}}
 					/>
+				</Suspense>
+
+				<Group>
+					<Suspense
+						fallback={
+							<ProfileLink.Fallback
+								iconProps={{
+									ui: {
+										...icon,
+									},
+								}}
+							/>
+						}
+					>
+						<ProfileLink
+							_suspense={"I know"}
+							iconProps={{
+								ui: {
+									...icon,
+								},
+							}}
+						/>
+					</Suspense>
 				</Group>
 			</Container>
 		</Container>
