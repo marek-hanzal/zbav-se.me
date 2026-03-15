@@ -6,6 +6,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
+import { uiCtaLinkButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export const Empty: FC = () => {
@@ -31,13 +32,9 @@ export const Empty: FC = () => {
 						params={{
 							locale,
 						}}
-						ui={{
-							background: "default",
-							border: true,
-							shadow: true,
-							round: "default",
-							size: "default",
-						}}
+						{...uiCtaLinkButton({
+							className: [],
+						})}
 					>
 						<Tx label={"Create listing (label)"} />
 					</LinkTo>
