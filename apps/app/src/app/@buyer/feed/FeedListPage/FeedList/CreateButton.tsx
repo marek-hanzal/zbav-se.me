@@ -28,6 +28,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ ui, className, ...props }
 	const feedCreateMutation = withFeedQuery.useCreateMutation({
 		onSettled() {
 			setIsOpen(false);
+			setName("");
 		},
 		invalidate: [
 			"collection",
@@ -100,7 +101,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ ui, className, ...props }
 							textTitle={translator.text("Feed name (title)")}
 							action={
 								<FormField>
-									{(fieldProps) => (
+									{(props) => (
 										<TextInput
 											value={name}
 											onChange={(e) => {
@@ -109,7 +110,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ ui, className, ...props }
 											placeholder={translator.text("Feed name (placeholder)")}
 											autoFocus
 											minLength={sFeedCreate.properties.name.minLength}
-											{...fieldProps}
+											{...props}
 										/>
 									)}
 								</FormField>
