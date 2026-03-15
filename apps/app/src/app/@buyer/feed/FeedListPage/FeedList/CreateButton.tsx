@@ -1,94 +1,84 @@
-import { CloseIcon, PlusIcon } from "@use-pico/client/icon";
+import { Icon, PlusIcon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
+import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { sFeedCreate, type tFeed } from "@zbav-se.me/sdk/api/buyer";
+import { sFeedCreate } from "@zbav-se.me/sdk/api/buyer";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { getFeedDefaultCreate } from "~/app/@common/feed/service/getFeedDefaultCreate";
+import { ListItem } from "~/app/@common/list-item/ListItem";
 
 export namespace CreateButton {
-	export interface Props extends Button.Props {
-		isLimitReached: boolean;
-		onCreate?(feed: tFeed): void;
+	export interface Props extends ListItem.PropsEx {
+		//
 	}
 }
 
-export const CreateButton: FC<CreateButton.Props> = ({
-	isLimitReached,
-	onCreate,
-	ui,
-	className,
-	...props
-}) => {
+export const CreateButton: FC<CreateButton.Props> = ({ ui, className, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [name, setName] = useState("");
 
 	const feedCreateMutation = withFeedQuery.useCreateMutation({
-		onSuccess: onCreate,
 		onSettled() {
 			setIsOpen(false);
 		},
+		invalidate: [
+			"collection",
+			"count",
+		],
 	});
 
 	const invalid = !name || name.length < sFeedCreate.properties.name.minLength;
 
 	return (
 		<>
-			<Button
+			<ListItem
 				data-ui={"CreateButton[Button]"}
-				onClick={() => setIsOpen(true)}
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					round: "lg",
-					width: "full",
-					size: undefined,
-					shadow: true,
-					...ui,
-				}}
-				className={[
-					"h-48 md:h-92",
-					className,
-				]}
-				{...props}
-			>
-				<Container
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						width: "full",
-						height: "full",
-						round: "lg",
-						flow: "horizontal",
-						items: "center",
-						justify: "center",
-						background: "default",
-						position: "relative",
-						opacity: "6",
-					}}
-				>
-					<Status
-						icon={isLimitReached ? CloseIcon : PlusIcon}
-						textTitle={translator.text(
-							isLimitReached ? "Limit reached (title)" : "Create new feed (title)",
-						)}
+				hero={
+					<Icon
+						icon={PlusIcon}
+						ui={{
+							text: "2xl",
+							color: "lead",
+							opacity: "6",
+						}}
 					/>
-				</Container>
-			</Button>
+				}
+				title={
+					<Tx
+						label={"Create new feed (title)"}
+						ui={{
+							font: "bold",
+						}}
+					/>
+				}
+				bottom={
+					<Tx
+						label={"Create new feed (hint)"}
+						ui={{
+							text: "sm",
+							opacity: "6",
+						}}
+					/>
+				}
+				onClick={() => setIsOpen(true)}
+				{...props}
+			/>
 
 			<BottomSheet
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
-				detent={"full"}
-				header={() => ({
+				detent={"default"}
+				header={({ close }) => ({
 					title: "Create new feed (title)",
+					right: <CloseButton onClick={close} />,
 				})}
 			>
 				<Container

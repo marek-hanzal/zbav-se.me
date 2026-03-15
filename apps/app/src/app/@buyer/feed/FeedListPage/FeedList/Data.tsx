@@ -7,21 +7,17 @@ import { Item } from "./Item";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		limit: number;
+		//
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, limit, ...props }) => {
+export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 	/**
 	 * This is intentional to trigger parent suspense
 	 */
 	const { data: feedList } = withFeedQuery.useCollectionQuery({
 		filter: {
 			type: "user",
-		},
-		cursor: {
-			page: 0,
-			size: limit,
 		},
 		sort: [
 			{
@@ -30,12 +26,6 @@ export const Data: FC<Data.Props> = ({ _suspense, limit, ...props }) => {
 			},
 		],
 	});
-	const { data: feedCount } = withFeedQuery.useCountQuery({
-		filter: {
-			type: "user",
-		},
-	});
-	const isLimitReached = feedCount.filter >= limit;
 
 	return (
 		<Container
@@ -58,10 +48,7 @@ export const Data: FC<Data.Props> = ({ _suspense, limit, ...props }) => {
 				);
 			})}
 
-			<CreateButton
-				disabled={isLimitReached}
-				isLimitReached={isLimitReached}
-			/>
+			<CreateButton />
 		</Container>
 	);
 };
