@@ -5,7 +5,6 @@ import { withListingQuery as withBuyerListingQuery } from "@zbav-se.me/sdk/query
 import { withTransactionQuery as withBuyerTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { withListingQuery as withSellerListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
-import { withTransactionQuery as withSellerTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
@@ -181,11 +180,6 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		});
-		withDraftQuery.useCountQuery({
-			where: {
-				usedAtIsNull: true,
-			},
-		});
 	}
 
 	/**
@@ -204,26 +198,6 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		});
-		withBuyerTransactionQuery.useCountQuery({});
-	}
-
-	/**
-	 * Seller transaction listing warm-up
-	 */
-	{
-		withSellerTransactionQuery.useCollectionQuery({
-			sort: [
-				{
-					field: "status",
-					order: "asc",
-				},
-				{
-					field: "updatedAt",
-					order: "desc",
-				},
-			],
-		});
-		withSellerTransactionQuery.useCountQuery({});
 	}
 
 	/**
@@ -279,7 +253,6 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		});
-		withSellerListingQuery.useCountQuery({});
 	}
 
 	return null;
