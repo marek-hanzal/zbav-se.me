@@ -1,18 +1,20 @@
-import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { EmptyStatus } from "~/app/@common/status/ui/EmptyStatus";
 
 export namespace FilterEmpty {
-	export type Props = {};
+	export interface Props extends EmptyStatus.Props {
+		//
+	}
 }
 
-export const FilterEmpty: FC<FilterEmpty.Props> = () => {
+export const FilterEmpty: FC<FilterEmpty.Props> = (props) => {
 	return (
-		<Status
-			data-ui={"ListingListContainer-[Status.filter-empty]"}
+		<EmptyStatus
 			icon={"icon-[streamline--sad-face-remix]"}
 			textTitle={translator.text("No listings for current filter (title)")}
 			textMessage={translator.text("No listings for current filter (message)")}
+			{...props}
 		/>
 	);
 };

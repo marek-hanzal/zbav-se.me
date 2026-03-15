@@ -166,4 +166,6 @@ When adding to `@common`:
   - `@common/gallery/ui/GalleryPreview.tsx`
 - Shared warm-up cache now lives in active common scope:
   - `@common/cache/WarmupCache.tsx`
+- Shared empty-state status wrapper now lives in active common scope:
+  - `@common/status/ui/EmptyStatus.tsx`
 - `GalleryUploadContainer` abstraction was removed; gallery upload flow is now embedded directly at call-sites.
