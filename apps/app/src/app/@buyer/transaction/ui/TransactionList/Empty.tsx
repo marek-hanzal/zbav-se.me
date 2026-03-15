@@ -5,6 +5,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
+import { uiCtaLinkButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export namespace Empty {
@@ -37,13 +38,9 @@ export const Empty: FC<Empty.Props> = ({ ui, ...props }) => {
 						params={{
 							locale,
 						}}
-						ui={{
-							background: "default",
-							border: true,
-							shadow: true,
-							round: "default",
-							size: "default",
-						}}
+						{...uiCtaLinkButton({
+							className: [],
+						})}
 					>
 						<Tx label="Go to my feed (button)" />
 					</LinkTo>
