@@ -1,35 +1,21 @@
-import { Badge } from "@use-pico/client/ui/badge";
-import type { Container as ContainerUi } from "@use-pico/client/ui/container";
-import { Container } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
+import { SearchIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { EmptyStatus } from "~/app/@common/status/ui/EmptyStatus";
 
 export namespace Empty {
-	export interface Props extends Pick<ContainerUi.Props, "ui"> {
+	export interface Props extends EmptyStatus.Props {
 		//
 	}
 }
 
-export const Empty: FC<Empty.Props> = ({ ui }) => {
+export const Empty: FC<Empty.Props> = (props) => {
 	return (
-		<Container
+		<EmptyStatus
 			data-ui="ListContainer[Container.empty]"
-			ui={{
-				layout: "vertical-centered",
-				height: "full",
-				...ui,
-			}}
-		>
-			<Badge
-				className="text-center mx-auto"
-				ui={{
-					size: "lg",
-					tone: "danger",
-					theme: "light",
-				}}
-			>
-				<Tx label="Location not found (badge)" />
-			</Badge>
-		</Container>
+			icon={SearchIcon}
+			textTitle={translator.text("Location not found (badge)")}
+			{...props}
+		/>
 	);
 };
