@@ -1,5 +1,5 @@
 import type { RefObject } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export namespace useSentinel {
 	export interface Props {
@@ -35,42 +35,53 @@ export function useSentinel<TElement extends HTMLElement | null>({
 	latestRef.current.onEnter = onEnter;
 	latestRef.current.onLeave = onLeave;
 
-	const disconnect = () => {
-		if (!ioRef.current) return;
+	const disconnect = useCallback(() => {
+		if (!ioRef.current) {
+			return;
+		}
 		ioRef.current.disconnect();
 		ioRef.current = null;
 		lastRef.current = null;
-	};
+	}, []);
 
-	const connect = (root: HTMLElement, sentinel: HTMLElement) => {
-		disconnect();
+	const connect = useCallback(
+		(root: HTMLElement, sentinel: HTMLElement) => {
+			disconnect();
 
-		const io = new IntersectionObserver(
-			([entry]) => {
-				if (!entry) return;
+			const io = new IntersectionObserver(
+				([entry]) => {
+					if (!entry) {
+						return;
+					}
 
-				const next = entry.isIntersecting;
-				if (lastRef.current === next) return;
+					const next = entry.isIntersecting;
+					if (lastRef.current === next) {
+						return;
+					}
 
-				lastRef.current = next;
-				setInView(next);
+					lastRef.current = next;
+					setInView(next);
 
-				if (next) {
-					latestRef.current.onEnter?.();
-					return;
-				}
+					if (next) {
+						latestRef.current.onEnter?.();
+						return;
+					}
 
-				latestRef.current.onLeave?.();
-			},
-			{
-				root,
-				threshold: latestRef.current.threshold,
-			},
-		);
+					latestRef.current.onLeave?.();
+				},
+				{
+					root,
+					threshold: latestRef.current.threshold,
+				},
+			);
 
-		io.observe(sentinel);
-		ioRef.current = io;
-	};
+			io.observe(sentinel);
+			ioRef.current = io;
+		},
+		[
+			disconnect,
+		],
+	);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Ssst
 	const sentinelRef = useMemo<RefObject<TElement>>(() => {

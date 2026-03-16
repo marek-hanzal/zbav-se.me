@@ -109,6 +109,7 @@ export const ListingList = withFallback(
 					))}
 
 					<EmptyStatus
+						ref={sentinelRef}
 						icon={DeadEndIcon}
 						textTitle={translator.text("Feed - end of road (title)")}
 						textMessage={translator.text("Feed - end of road (message)")}
@@ -140,8 +141,6 @@ export const ListingList = withFallback(
 							</>
 						}
 					/>
-
-					<div ref={sentinelRef} />
 				</VisibilityProvider>
 			</Container>
 		);

@@ -22,6 +22,8 @@ export const FeedListingPage: FC<FeedListingPage.Props> = ({ feedId, scrollToId,
 		threshold: 0.25,
 	});
 
+	console.log("view", isLast, sentinelRef.current);
+
 	return (
 		<FlowContainer
 			data-ui={"FeedListingPage"}
@@ -49,6 +51,7 @@ export const FeedListingPage: FC<FeedListingPage.Props> = ({ feedId, scrollToId,
 					_suspense={"I know"}
 					feedId={feedId}
 					scrollToId={scrollToId}
+					containerRef={containerRef}
 					sentinelRef={sentinelRef}
 					isLast={isLast}
 				/>

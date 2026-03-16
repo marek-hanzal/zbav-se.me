@@ -15,13 +15,14 @@ export namespace Content {
 	export interface Props extends MarkSuspense.Props {
 		feedId: string;
 		scrollToId: string | undefined;
+		containerRef: Ref<HTMLDivElement | null>;
 		sentinelRef: Ref<HTMLDivElement | null>;
 		isLast: boolean;
 	}
 }
 
 export const Content = withFallback(
-	({ _suspense, feedId, scrollToId, sentinelRef, isLast }: Content.Props) => {
+	({ _suspense, feedId, scrollToId, containerRef, sentinelRef, isLast }: Content.Props) => {
 		const [isEditor, setIsEditor] = useState(false);
 		const { data: anyListingCollection } = withListingQuery.useCollectionQuery({});
 		const { data: currentListingCollection } = withListingQuery.useCollectionQuery({});
@@ -75,6 +76,7 @@ export const Content = withFallback(
 
 					<ListingList
 						_suspense={"I know"}
+						ref={containerRef}
 						feedId={feedId}
 						scrollToId={scrollToId}
 						sentinelRef={sentinelRef}
