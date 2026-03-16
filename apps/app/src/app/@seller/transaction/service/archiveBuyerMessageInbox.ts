@@ -16,7 +16,7 @@ export const archiveBuyerMessageInbox = async ({
 	queryClient,
 	transactionId,
 }: archiveBuyerMessageInbox.Props): Promise<void> => {
-	await withInboxQuery.patchCollectionFn(
+	const inboxList = await withInboxQuery.patchCollectionFn(
 		queryClient,
 		{
 			patch: {
@@ -40,6 +40,10 @@ export const archiveBuyerMessageInbox = async ({
 			"count",
 		],
 	);
+
+	if (inboxList.length === 0) {
+		return;
+	}
 
 	await Promise.all([
 		withTransactionQuery.invalidator(queryClient, [

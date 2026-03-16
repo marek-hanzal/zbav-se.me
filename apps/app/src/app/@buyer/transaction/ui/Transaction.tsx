@@ -38,21 +38,14 @@ export const Transaction: FC<Transaction.Props> = ({
 	const hero = useUpload(transaction.gallery.items);
 	const archiveMutation = withArchiveSellerMessageInboxMutation.useMutation();
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK here
+	// biome-ignore lint/correctness/useExhaustiveDependencies: fires once on mount; component remounts between transactions
 	useEffect(() => {
-		if (archiveMutation.status !== "idle") {
-			return;
-		}
 		archiveMutation.mutate({
 			transactionId: transaction.id,
 			listingId: transaction.listingId,
 			status: transaction.status,
 		});
-	}, [
-		transaction.id,
-		transaction.listingId,
-		transaction.status,
-	]);
+	}, []);
 
 	return (
 		<Container

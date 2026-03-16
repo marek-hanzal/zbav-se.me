@@ -4,6 +4,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { withFallback } from "@use-pico/client/utils";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { type Ref, useMemo, useState } from "react";
 import { FeedEditorSheet } from "../../FeedEditor/FeedEditorSheet";
@@ -15,17 +16,22 @@ export namespace Content {
 	export interface Props extends MarkSuspense.Props {
 		feedId: string;
 		scrollToId: string | undefined;
-		containerRef: Ref<HTMLDivElement | null>;
 		sentinelRef: Ref<HTMLDivElement | null>;
 		isLast: boolean;
 	}
 }
 
 export const Content = withFallback(
-	({ _suspense, feedId, scrollToId, containerRef, sentinelRef, isLast }: Content.Props) => {
+	({ _suspense, feedId, scrollToId, sentinelRef, isLast }: Content.Props) => {
 		const [isEditor, setIsEditor] = useState(false);
-		const { data: anyListingCollection } = withListingQuery.useCollectionQuery({});
-		const { data: currentListingCollection } = withListingQuery.useCollectionQuery({});
+		const { data: feed } = withFeedQuery.useFetchQuery(feedId);
+		const { data: anyListingCollection } = withListingQuery.useCollectionQuery({
+			cursor: { page: 0, size: 1 },
+		});
+		const { data: currentListingCollection } = withListingQuery.useCollectionQuery({
+			...feed.query,
+			cursor: { page: 0, size: 1 },
+		});
 
 		const check = useMemo(() => {
 			return [
@@ -76,7 +82,6 @@ export const Content = withFallback(
 
 					<ListingList
 						_suspense={"I know"}
-						ref={containerRef}
 						feedId={feedId}
 						scrollToId={scrollToId}
 						sentinelRef={sentinelRef}

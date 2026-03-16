@@ -5,13 +5,14 @@ import { translator } from "@use-pico/common/translator";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, useRef } from "react";
+import { type FC, useEffect, useRef } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { TransactionChat } from "~/app/@common/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/app/@common/transaction-entry/ui/TransactionEntryList";
 import { archiveBuyerMessageInbox } from "../service/archiveBuyerMessageInbox";
+import { withArchiveBuyerMessageInboxMutation } from "../service/withArchiveBuyerMessageInboxMutation";
 import { TransactionMenu } from "./TransactionMenu";
 
 export namespace Transaction {
@@ -33,6 +34,16 @@ export const Transaction: FC<Transaction.Props> = ({
 		refetchInterval: refresh,
 	});
 	const hero = useUpload(transaction.gallery.items);
+	const archiveMutation = withArchiveBuyerMessageInboxMutation.useMutation();
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: fires once on mount; component remounts between transactions
+	useEffect(() => {
+		archiveMutation.mutate({
+			transactionId: transaction.id,
+			listingId: transaction.listingId,
+			status: transaction.status,
+		});
+	}, []);
 
 	return (
 		<Container

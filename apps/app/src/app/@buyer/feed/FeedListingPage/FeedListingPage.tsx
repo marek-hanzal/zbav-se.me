@@ -32,6 +32,7 @@ export const FeedListingPage: FC<FeedListingPage.Props> = ({
 
 	return (
 		<FlowContainer
+			ref={containerRef}
 			data-ui={"FeedListingPage"}
 			left={
 				<LinkTo
@@ -56,7 +57,6 @@ export const FeedListingPage: FC<FeedListingPage.Props> = ({
 				_suspense={"I know"}
 				feedId={feedId}
 				scrollToId={scrollToId}
-				containerRef={containerRef}
 				sentinelRef={sentinelRef}
 				isLast={isLast}
 			/>
