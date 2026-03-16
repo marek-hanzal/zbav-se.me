@@ -3,86 +3,101 @@ import { Container } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
-import type { tTransactionListingQuery } from "@zbav-se.me/sdk/api/seller";
+import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import type { FC } from "react";
+import { type FC, useMemo } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
-import { TransactionListingList } from "../ui/TransactionListingList";
-import { Empty } from "../ui/TransactionListingList/Empty";
+import { Empty } from "./Empty";
+import { EmptyListings } from "./EmptyListings";
+import { TransactionListingList } from "./TransactionListingList";
 
 export namespace TransactionListingListPage {
-	export interface Props extends TitleContainer.Props, MarkSuspense.Props {}
+	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
+		refetchInterval?: number;
+	}
 }
 
 export const TransactionListingListPage: FC<TransactionListingListPage.Props> = ({
 	_suspense,
+	refetchInterval = 5_000,
 	...props
 }) => {
-	const activeQuery: tTransactionListingQuery = {
-		filter: {
-			active: true,
-		},
+	const { data: listingCollection } = withListingQuery.useCollectionQuery({
 		cursor: {
 			page: 0,
-			size: 1000,
+			size: 1,
 		},
-		sort: [
-			{
-				field: "lastAt",
-				order: "desc",
+	});
+	const { data: activeCollection } = withTransactionListingQuery.useCollectionQuery(
+		{
+			filter: {
+				active: true,
 			},
-		],
-	};
-
-	const inactiveQuery: tTransactionListingQuery = {
-		filter: {
-			active: false,
-		},
-		cursor: {
-			page: 0,
-			size: 1000,
-		},
-		sort: [
-			{
-				field: "lastAt",
-				order: "desc",
+			cursor: {
+				page: 0,
+				size: 1000,
 			},
-		],
-	};
-
-	const refetchInterval = 5_000;
-
-	const { data: activeTransactionListingIds } = withTransactionListingQuery.useCollectionQuery(
-		activeQuery,
+			sort: [
+				{
+					field: "lastAt",
+					order: "desc",
+				},
+			],
+		},
 		{
 			refetchInterval,
 		},
 	);
-	const { data: inactiveTransactionListingIds } = withTransactionListingQuery.useCollectionQuery(
-		inactiveQuery,
+	const { data: inactiveCollection } = withTransactionListingQuery.useCollectionQuery(
+		{
+			filter: {
+				active: false,
+			},
+			cursor: {
+				page: 0,
+				size: 1000,
+			},
+			sort: [
+				{
+					field: "lastAt",
+					order: "desc",
+				},
+			],
+		},
 		{
 			refetchInterval,
 		},
 	);
-	const check = [
-		{
-			check() {
-				return (
-					activeTransactionListingIds.length === 0 &&
-					inactiveTransactionListingIds.length === 0
-				);
+	const check = useMemo(() => {
+		return [
+			{
+				check() {
+					return !listingCollection.length;
+				},
+				render() {
+					return <EmptyListings />;
+				},
 			},
-			render() {
-				return <Empty />;
+			{
+				check() {
+					return activeCollection.length === 0 && inactiveCollection.length === 0;
+				},
+				render() {
+					return <Empty />;
+				},
 			},
-		},
-	] satisfies EmptyState.Check[];
+		] satisfies EmptyState.Check[];
+	}, [
+		listingCollection,
+		activeCollection,
+		inactiveCollection,
+	]);
 
 	return (
 		<TitleContainer
-			data-ui="TransactionListingList[TitleContainer]"
+			data-ui="TransactionListingListPage"
 			textTitle={translator.text("Messages (title)")}
 			left={<BackHomeButton />}
 			right={<HomeMenuButton />}
@@ -98,7 +113,7 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 						inner: "default",
 					}}
 				>
-					{activeTransactionListingIds.length > 0 ? (
+					{activeCollection.length > 0 ? (
 						<Container
 							ui={{
 								layout: "vertical-flex",
@@ -117,14 +132,11 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 								className={"text-center"}
 							/>
 
-							<TransactionListingList
-								_suspense={_suspense}
-								transactionListingIds={activeTransactionListingIds}
-							/>
+							<TransactionListingList transactionListingIds={activeCollection} />
 						</Container>
 					) : null}
 
-					{inactiveTransactionListingIds.length > 0 ? (
+					{inactiveCollection.length > 0 ? (
 						<Container
 							ui={{
 								layout: "vertical-flex",
@@ -147,10 +159,7 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 								className={"text-center"}
 							/>
 
-							<TransactionListingList
-								_suspense={_suspense}
-								transactionListingIds={inactiveTransactionListingIds}
-							/>
+							<TransactionListingList transactionListingIds={inactiveCollection} />
 						</Container>
 					) : null}
 				</Container>

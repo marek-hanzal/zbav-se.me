@@ -11,8 +11,8 @@ import { SignOutButton } from "./SignOutButton";
 
 export namespace UserPage {
 	export interface Props extends TitleContainer.Props {
-        //
-    }
+		//
+	}
 }
 
 /**

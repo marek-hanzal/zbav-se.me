@@ -1,29 +1,49 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
-import type { tTransactionQuery } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
 import { Empty } from "./Empty";
 import { Item } from "./Item";
 
 export namespace TransactionList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		query: tTransactionQuery;
+		listingId: string;
 		refetchInterval?: number;
 	}
 }
 
 export const TransactionList: FC<TransactionList.Props> = ({
 	_suspense,
-	query,
+	listingId,
 	refetchInterval = 5_000,
 	ui,
 	...props
 }) => {
-	const { data } = withTransactionQuery.useCollectionQuery(query, {
-		refetchInterval,
-	});
+	const { data: transactionCollection } = withTransactionQuery.useCollectionQuery(
+		{
+			where: {
+				listingId,
+			},
+			cursor: {
+				page: 0,
+				size: 1000,
+			},
+			sort: [
+				{
+					field: "status",
+					order: "asc",
+				},
+				{
+					field: "updatedAt",
+					order: "desc",
+				},
+			],
+		},
+		{
+			refetchInterval,
+		},
+	);
 
 	return (
 		<Container
@@ -38,10 +58,10 @@ export const TransactionList: FC<TransactionList.Props> = ({
 				check={[
 					{
 						check() {
-							return !data.length;
+							return !transactionCollection.length;
 						},
 						render() {
-							return <Empty query={query} />;
+							return <Empty />;
 						},
 					},
 				]}
@@ -52,14 +72,18 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						gap: "default",
 					}}
 				>
-					{data.map((transactionId) => {
+					{transactionCollection.map((transactionId) => {
 						return (
-							<Item
+							<Suspense
 								key={transactionId}
-								data-id={transactionId}
-								_suspense={_suspense}
-								transactionId={transactionId}
-							/>
+								fallback={<Item.Fallback />}
+							>
+								<Item
+									data-id={transactionId}
+									_suspense={_suspense}
+									transactionId={transactionId}
+								/>
+							</Suspense>
 						);
 					})}
 				</Container>
