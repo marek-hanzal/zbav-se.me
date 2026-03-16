@@ -1440,6 +1440,14 @@ export type tTransactionFilter = {
      * This filter matches the exact listingId
      */
     listingId?: string;
+    /**
+     * When true, match transactions with unread inbox activity for the current side; when false, match transactions without unread inbox activity for the current side
+     */
+    active?: boolean;
+    /**
+     * When true, match transactions already in a terminal status; when false, match transactions that still have a non-terminal status
+     */
+    terminal?: boolean;
     status?: tTransactionStatusEnum & unknown;
     /**
      * This filter matches any of the provided statuses for the current status of the transaction
@@ -1471,6 +1479,14 @@ export type tTransactionWhere = {
      * This filter matches the exact listingId
      */
     listingId?: string;
+    /**
+     * When true, match transactions with unread inbox activity for the current side; when false, match transactions without unread inbox activity for the current side
+     */
+    active?: boolean;
+    /**
+     * When true, match transactions already in a terminal status; when false, match transactions that still have a non-terminal status
+     */
+    terminal?: boolean;
     status?: tTransactionStatusEnum & unknown;
     /**
      * This filter matches any of the provided statuses for the current status of the transaction

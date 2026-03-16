@@ -2181,6 +2181,12 @@ export const sTransactionFilter = {
         listingId: {
             type: 'string'
         },
+        active: {
+            type: 'boolean'
+        },
+        terminal: {
+            type: 'boolean'
+        },
         status: {
             allOf: [
                 {
@@ -2218,6 +2224,12 @@ export const sTransactionWhere = {
         },
         listingId: {
             type: 'string'
+        },
+        active: {
+            type: 'boolean'
+        },
+        terminal: {
+            type: 'boolean'
         },
         status: {
             allOf: [

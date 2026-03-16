@@ -1,6 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
+import { TransactionEntrySchema } from "~/@user/transaction-entry/schema/TransactionEntrySchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
 import { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
 import { TransactionTableSchema } from "~/database/@table/TransactionTableSchema";
@@ -22,6 +23,11 @@ export const TransactionSchema = z
 		}),
 		priceType: ListingPriceEnumSchema,
 		currency: CurrencyEnumSchema,
+		entry: TransactionEntrySchema,
+		unreadCount: z.coerce.number().int().nonnegative().openapi({
+			description: "Unread inbox seller-message count for this transaction",
+			type: "number",
+		}),
 		//
 		location: LocationSchema,
 	})
