@@ -28,7 +28,10 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ close, transaction, ui, ...
 			queryClient,
 			transactionId: transaction.id,
 		});
-	}, [queryClient, transaction.id]);
+	}, [
+		queryClient,
+		transaction.id,
+	]);
 
 	return (
 		<>

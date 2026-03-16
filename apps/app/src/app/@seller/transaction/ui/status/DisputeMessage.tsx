@@ -29,7 +29,11 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 			transactionId: transaction.id,
 			listingId: transaction.listingId,
 		});
-	}, [queryClient, transaction.id, transaction.listingId]);
+	}, [
+		queryClient,
+		transaction.id,
+		transaction.listingId,
+	]);
 
 	return (
 		<Group

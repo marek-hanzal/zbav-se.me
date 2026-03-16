@@ -47,7 +47,13 @@ export const Transaction: FC<Transaction.Props> = ({
 			listingId: transaction.listingId,
 			status: transaction.status,
 		});
-	}, [transaction.id, transaction.listingId, transaction.status, archiveMutation.status, archiveMutation.mutate]);
+	}, [
+		transaction.id,
+		transaction.listingId,
+		transaction.status,
+		archiveMutation.status,
+		archiveMutation.mutate,
+	]);
 
 	return (
 		<Container
