@@ -19,17 +19,16 @@ export namespace Item {
 	export interface Props extends Container.Props {
 		listingId: string;
 		feedId: string;
-		withScore: boolean;
 	}
 }
 
-export const Item = withFallback(({ listingId, feedId, withScore, ...props }: Item.Props) => {
+export const Item = withFallback(({ listingId, feedId, ...props }: Item.Props) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const [detail, setDetail] = useState<boolean>(false);
 	const hero = useUpload(listing.gallery.items);
 
 	useListingEvent({
-		enabled: withScore,
+		enabled: true,
 		listingId: listing.id,
 		event: "impression",
 		timeoutMs: 1_600,

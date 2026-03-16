@@ -208,6 +208,9 @@
 29b5698dbd428037dfdf3d01534751de7b9bbdce4a6eeb4df2655548:
     ref: Price not set
     value: Cenu nemáš vyplněnou
+2a62eb2578fa76e11eec026820fa9f654778a2893ae2533aa8d311ac:
+    ref: See other feeds (link)
+    value: Další seznamy
 2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
     ref: zbav-se.me
     value: zbav-se.me
@@ -509,6 +512,9 @@
 730685ddac55ab05051064ae829f90b99a300329a4818c287d8f51a5:
     ref: Tracking number not filled
     value: Číslo zásilky není vyplněné
+75d0eb333247ea43f5320a9f21b8a1b318fced5eb1f03495bf4ed3d7:
+    ref: Go home (link)
+    value: Zpět domů
 762a69754130506fe02ffe5a75e930686249ef4fe12d6ec21706de37:
     ref: Buyer load (label)
     value: Odhadovaná dostupnost
@@ -988,6 +994,9 @@ a46be85abba5f0371038aa633d7378f4fd8376be6b7e7a9b7b22ec05:
     ref: Listing age (hint)
     value: |
         Definuje, jak moc moderní věc je.
+a581c9ffb63bcde0ca5969bb759a89d1cb8179dbc01bacab1ae61681:
+    ref: Feed - end of road (title)
+    value: Konec cesty - prozatím
 a62fb7339fce50f73673412c11f10a25880e1e7b942b7261366a8529:
     ref: closed
     value: closed
@@ -1250,6 +1259,9 @@ e6ae675232ef4ec304588531c21f87323fba1e262aff12e5dccf22d5:
 e6e98190c9dcd8856d75c6344e46e58cb61850f74e3d39859ead2035:
     ref: No transactions, no listings (message)
     value: ...tady se ti zobrazí zprávy k inzerátům, které nabízíš.
+e71d354084e447c188977c94dd32b5163d009bd889d26e8819df7ead:
+    ref: Feed - end of road (message)
+    value: Došel jsi na konec cesty, nicméně si můžeš buď poladit aktuální seznam, nebo se podívej další, které máš připravené.
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
     ref: Feed location not selected
     value: Nemáš uvedenou
