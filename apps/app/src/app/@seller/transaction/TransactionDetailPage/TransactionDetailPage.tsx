@@ -1,6 +1,7 @@
 import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { translator } from "@use-pico/common/translator";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
@@ -19,15 +20,17 @@ export const TransactionDetailPage: FC<TransactionDetailPage.Props> = ({
 	...props
 }) => {
 	const locale = useLocale();
+	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 
 	return (
 		<TitleContainer
 			textTitle={translator.text("Messages (title)")}
 			left={
 				<BackHomeButton
-					to="/$locale/seller/transaction/list"
+					to="/$locale/seller/transaction/$listingId/list"
 					params={{
 						locale,
+						listingId: transaction.listingId,
 					}}
 				/>
 			}
