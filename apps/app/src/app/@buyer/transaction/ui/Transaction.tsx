@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
@@ -11,6 +12,7 @@ import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
 import { TransactionChat } from "~/app/@common/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/app/@common/transaction-entry/ui/TransactionEntryList";
+import { archiveSellerMessageInbox } from "../service/archiveSellerMessageInbox";
 import { TransactionMenu } from "./TransactionMenu";
 
 export namespace Transaction {
@@ -27,6 +29,7 @@ export const Transaction: FC<Transaction.Props> = ({
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
+	const queryClient = useQueryClient();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId, {
 		refetchInterval: refresh,
 	});
@@ -109,6 +112,18 @@ export const Transaction: FC<Transaction.Props> = ({
 				</Container>
 
 				<TransactionChat
+					hooks={{
+						async onPostMutation() {
+							try {
+								await archiveSellerMessageInbox({
+									queryClient,
+									transactionId: transaction.id,
+								});
+							} catch {
+								// Keep message send flow usable even if unread archival fails.
+							}
+						},
+					}}
 					transaction={transaction}
 					left={
 						<TransactionMenuButton>

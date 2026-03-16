@@ -67,3 +67,4 @@ Maps to server API: `/api/buyer/*`.
 - Buyer transaction action buttons now use the buyer transaction mutation SDK surface (`close`, `dispute`, `reject`, `success`) and invalidate `transaction-entry` timeline queries.
 - Buyer message detail UI now reads conversation timeline through `@user/transaction-entry` instead of the removed message query wrapper.
 - Buyer `TitleContainer` pages that navigate back home now use the shared `@common/nav/BackHomeButton` instead of repeating inline `LinkTo + uiBackButton` wiring.
+- Buyer seller-message inbox rows no longer archive on Inbox click; unread buyer state now clears only after an explicit buyer action in the transaction detail (message send, close/reject/dispute/success).

@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { CheckIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -5,6 +6,7 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionCloseMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
 import type { FC } from "react";
 import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
+import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";
 
 export namespace CloseButton {
 	export interface Props extends Button.Props {
@@ -14,8 +16,18 @@ export namespace CloseButton {
 }
 
 export const CloseButton: FC<CloseButton.Props> = ({ close, transaction, ...props }) => {
+	const queryClient = useQueryClient();
 	const mutation = withTransactionCloseMutation.useMutation({
-		onSuccess() {
+		async onPostMutation() {
+			try {
+				await archiveSellerMessageInbox({
+					queryClient,
+					transactionId: transaction.id,
+				});
+			} catch {
+				// Keep close flow usable even if unread archival fails.
+			}
+
 			close();
 		},
 	});
