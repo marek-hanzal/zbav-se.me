@@ -48,6 +48,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 				return (
 					<Button
 						key={`${sortKeyId}-${sortValue}`}
+						data-action={`toggle sort by ${sortValue}`}
 						onClick={() => {
 							const idx = state.value.findIndex((s) => s.field === sortValue);
 
@@ -114,6 +115,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 
 			<Button
 				iconEnabled={TrashIcon}
+				data-action={"clear all sorts"}
 				onClick={() => {
 					state.set([]);
 				}}

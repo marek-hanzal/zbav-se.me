@@ -59,6 +59,7 @@ export const Transaction: FC<Transaction.Props> = ({
 				>
 					<Container
 						data-ui="Transaction-[HeroContainer]"
+						data-action={"open transaction detail"}
 						ui={{
 							position: "relative",
 							height: "content",

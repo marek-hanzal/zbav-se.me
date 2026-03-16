@@ -28,6 +28,7 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 
 	return (
 		<ConfirmButton
+			data-action={"delete feed"}
 			iconEnabled={TrashIcon}
 			iconProps={{
 				ui: {

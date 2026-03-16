@@ -3,7 +3,7 @@ import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
-import { type FC, useState } from "react";
+import { type FC, Suspense, useState } from "react";
 import { ListContainer } from "~/app/@common/location/ui/LocationSelect/ListContainer";
 
 export namespace LocationSelect {
@@ -58,14 +58,16 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 				textPlaceholder={translator.text("Location search (placeholder)")}
 			/>
 
-			<ListContainer
-				textHint={textHint}
-				search={search}
-				value={value}
-				onChange={onChange}
-				onLocation={onLocation}
-				warningStatusProps={warningStatusProps}
-			/>
+			<Suspense fallback={<ListContainer.Fallback />}>
+				<ListContainer
+					textHint={textHint}
+					search={search}
+					value={value}
+					onChange={onChange}
+					onLocation={onLocation}
+					warningStatusProps={warningStatusProps}
+				/>
+			</Suspense>
 		</Container>
 	);
 };

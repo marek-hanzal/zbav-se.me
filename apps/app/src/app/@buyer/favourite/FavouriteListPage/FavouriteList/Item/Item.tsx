@@ -1,17 +1,66 @@
-import { type FC, Suspense } from "react";
-import { Data } from "./Data";
-import { Pending } from "./Pending";
+import { useLocale } from "@use-pico/client/hook";
+import type { MarkSuspense } from "@use-pico/client/type";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
+import { Typo } from "@use-pico/client/ui/typo";
+import { withFallback } from "@use-pico/client/utils";
+import { toTimeDiff } from "@use-pico/common/time";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
+import { useUpload } from "~/app/@common/gallery/hook/useUpload";
+import { ListItem } from "~/app/@common/list-item/ListItem";
 
 export namespace Item {
-	export interface Props extends Data.Props {
-		//
+	export interface Props extends MarkSuspense.Props {
+		listingId: string;
 	}
 }
 
-export const Item: FC<Item.Props> = (props) => {
+export const Item = withFallback(({ _suspense, listingId }: Item.Props) => {
+	const locale = useLocale();
+	const { data: listing } = withListingQuery.useFetchQuery(listingId);
+	const hero = useUpload(listing.gallery.items);
+
 	return (
-		<Suspense fallback={<Pending />}>
-			<Data {...props} />
-		</Suspense>
+		<ListItem
+			data-ui={"Item"}
+			data-action={"open listing detail"}
+			hero={hero}
+			title={
+				<Typo
+					label={listing.title}
+					ui={{
+						tone: "neutral",
+						theme: "light",
+						color: "lead",
+						font: "semibold",
+						text: "sm",
+						display: "block",
+						width: "full",
+						truncate: true,
+					}}
+					className={[
+						"block",
+						"w-full",
+						"max-w-full",
+						"min-w-0",
+					]}
+				/>
+			}
+			bottom={
+				<Typo
+					label={toTimeDiff({
+						locale,
+						time: listing.updatedAt,
+					})}
+					ui={{
+						tone: "neutral",
+						theme: "light",
+						text: "xs",
+						font: "normal",
+						color: "text",
+						opacity: "5",
+					}}
+				/>
+			}
+		/>
 	);
-};
+}, SpinnerContainer);

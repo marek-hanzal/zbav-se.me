@@ -1,9 +1,8 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { VisibleContainer } from "@use-pico/client/ui/container";
-import type { FC } from "react";
+import { type FC, Suspense, useCallback } from "react";
 import { CreateButton } from "~/app/@seller/draft/~public/CreateButton";
 import { ListingItem } from "./ListingItem";
-import { Pending } from "./ListingItem/Pending";
 
 export namespace Content {
 	export interface Props extends MarkSuspense.Props {
@@ -12,6 +11,10 @@ export namespace Content {
 }
 
 export const Content: FC<Content.Props> = ({ _suspense, listingIds }) => {
+	const placeholder = useCallback(() => {
+		return <ListingItem.Fallback />;
+	}, []);
+
 	return (
 		<>
 			{listingIds.map((listingId) => {
@@ -19,12 +22,11 @@ export const Content: FC<Content.Props> = ({ _suspense, listingIds }) => {
 					<VisibleContainer
 						key={listingId}
 						id={listingId}
-						placeholder={() => <Pending />}
+						placeholder={placeholder}
 					>
-						<ListingItem
-							key={listingId}
-							listingId={listingId}
-						/>
+						<Suspense fallback={<ListingItem.Fallback />}>
+							<ListingItem listingId={listingId} />
+						</Suspense>
 					</VisibleContainer>
 				);
 			})}

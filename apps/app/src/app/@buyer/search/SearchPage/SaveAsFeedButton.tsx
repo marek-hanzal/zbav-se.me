@@ -1,6 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { SaveIcon } from "@use-pico/client/icon";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -15,15 +16,15 @@ import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import type { FC } from "react";
 import { useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { FEED_LIMIT } from "~/app/@common/limit/Limit";
 
 export namespace SaveAsFeedButton {
-	export interface Props extends Button.Props {
+	export interface Props extends Button.Props, MarkSuspense.Props {
 		feedId: string;
 	}
 }
 
 export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
+	_suspense,
 	feedId,
 	ui,
 	className,
@@ -32,11 +33,6 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 	const navigate = useNavigate();
 	const locale = useLocale();
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
-	const { data: feedCount } = withFeedQuery.useCountQuery({
-		filter: {
-			type: "user",
-		},
-	});
 	const [isOpen, setIsOpen] = useState(false);
 	const [name, setName] = useState("");
 	const createMutation = withFeedQuery.useCreateMutation({
@@ -56,14 +52,12 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 	});
 
 	const invalid = !name || name.length < sFeedCreate.properties.name.minLength;
-	const isLimitReached = feedCount.filter >= FEED_LIMIT;
 
 	return (
 		<>
 			<Button
 				data-ui={"SaveAsFeedButton[Button]"}
 				onClick={() => setIsOpen(true)}
-				disabled={isLimitReached}
 				iconEnabled={SaveIcon}
 				iconProps={{
 					ui: {
@@ -86,7 +80,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 				className={className}
 				{...props}
 			>
-				<Tx label={isLimitReached ? "Limit reached (title)" : "Save as feed (button)"} />
+				<Tx label={"Save as feed (button)"} />
 			</Button>
 
 			<BottomSheet

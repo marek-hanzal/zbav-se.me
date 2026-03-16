@@ -1,7 +1,7 @@
 import { translator } from "@use-pico/common/translator";
 import type { zInboxPriorityEnum } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { InboxList } from "./InboxList";
@@ -20,7 +20,12 @@ export const InboxListPage: FC<InboxListPage.Props> = ({ priority, ...props }) =
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<InboxList priority={priority} />
+			<Suspense fallback={<InboxList.Fallback />}>
+				<InboxList
+					_suspense={"I know"}
+					priority={priority}
+				/>
+			</Suspense>
 		</TitleContainer>
 	);
 };

@@ -1,1 +1,1 @@
-export { FeedEditor } from "../FeedEditor/FeedEditor";
+export { FeedEditor } from "../FeedEditor";

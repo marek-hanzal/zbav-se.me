@@ -19,11 +19,13 @@ export const Empty: FC<Empty.Props> = (props) => {
 
 	return (
 		<EmptyStatus
+			data-ui={"Empty"}
 			icon={FavouriteIcon}
 			textTitle={translator.text("No items in favourites (title)")}
 			textMessage={translator.text("No items in favourites (message)")}
 			action={
 				<LinkTo
+					data-action={"go to listings"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
 					to={"/$locale/buyer/feed/default"}

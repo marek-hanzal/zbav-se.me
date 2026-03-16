@@ -1,10 +1,17 @@
-import type { FC } from "react";
-import { Suspense } from "react";
-import { Data } from "./Data";
-import { Pending } from "./Pending";
+import type { useSelection } from "@use-pico/client/hook";
+import { Button } from "@use-pico/client/ui/button";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
+import { Typo } from "@use-pico/client/ui/typo";
+import { withFallback } from "@use-pico/client/utils";
+import type { EntitySchema } from "@use-pico/common/schema";
+import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
+import { uiSelectButton } from "@zbav-se.me/ui/ui";
 
 export namespace CategoryItem {
-	export interface Props extends Omit<Data.Props, "_suspense"> {}
+	export interface Props {
+		categoryId: string;
+		selection: useSelection.Selection<EntitySchema.Type>;
+	}
 }
 
 /**
@@ -13,13 +20,46 @@ export namespace CategoryItem {
  *
  * @see apps/app/src/app//draft/ui/DraftEditor/patch/CategoryPatch.tsx
  */
-export const CategoryItem: FC<CategoryItem.Props> = (props) => {
-	return (
-		<Suspense fallback={<Pending />}>
-			<Data
-				_suspense={"I know"}
+export const CategoryItem = withFallback(
+	({ categoryId, selection }: CategoryItem.Props) => {
+		const { data: item } = withCategoryQuery.useFetchQuery(categoryId);
+		const isSelected = selection.isSelected(item.id);
+
+		return (
+			<Button
+				data-id={item.id}
+				onClick={() => {
+					selection.toggle(item);
+				}}
+				{...uiSelectButton({
+					isSelected,
+					className: undefined,
+				})}
+				data-ui="CategoryItem"
+			>
+				<Typo
+					label={item.group}
+					ui={{
+						text: "sm",
+					}}
+				/>
+
+				<Typo
+					label={item.category}
+					ui={{
+						text: "lg",
+						font: isSelected ? "bold" : "normal",
+					}}
+				/>
+			</Button>
+		);
+	},
+	(props: SpinnerContainer.Props) => {
+		return (
+			<SpinnerContainer
+				data-ui="CategoryItem-[SpinnerContainer]"
 				{...props}
 			/>
-		</Suspense>
-	);
-};
+		);
+	},
+);

@@ -3,7 +3,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
-import { type FC, type RefObject, useRef } from "react";
+import { type FC, type RefObject, Suspense, useRef } from "react";
 import { Item } from "./Item";
 
 export namespace TransactionEntryList {
@@ -64,11 +64,16 @@ export const TransactionEntryList: FC<TransactionEntryList.Props> = ({
 		>
 			{data.map((transactionEntryId) => {
 				return (
-					<Item
+					<Suspense
 						key={transactionEntryId}
-						side={side}
-						transactionEntryId={transactionEntryId}
-					/>
+						fallback={<Item.Fallback />}
+					>
+						<Item
+							_suspense={"I know"}
+							side={side}
+							transactionEntryId={transactionEntryId}
+						/>
+					</Suspense>
 				);
 			})}
 

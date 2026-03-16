@@ -11,6 +11,7 @@ export namespace FilterEmpty {
 export const FilterEmpty: FC<FilterEmpty.Props> = (props) => {
 	return (
 		<EmptyStatus
+			data-ui={"FilterEmpty"}
 			icon={"icon-[streamline--sad-face-remix]"}
 			textTitle={translator.text("No listings for current filter (title)")}
 			textMessage={translator.text("No listings for current filter (message)")}

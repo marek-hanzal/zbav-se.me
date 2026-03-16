@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { HeroImage } from "@zbav-se.me/ui/img";
@@ -5,11 +6,11 @@ import type { FC } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
-import { FavouriteButton } from "../../FavouriteButton/FavouriteButton";
-import { TransactionButton } from "../../TransactionButton/TransactionButton";
+import { FavouriteButton } from "../../FavouriteButton";
+import { TransactionButton } from "../../TransactionButton";
 
 export namespace HeroSection {
-	export interface Props {
+	export interface Props extends MarkSuspense.Props {
 		feedId: string;
 		listing: tListing;
 		onView(view: "gallery"): void;
@@ -22,13 +23,12 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 	return (
 		<>
 			<Container
-				data-ui={"HeroSection[Container]"}
+				data-ui={"HeroSection"}
 				ui={{
 					position: "relative",
 				}}
 			>
 				<ListingPrice
-					data-ui={"HeroSection-[ListingPrice]"}
 					price={listing.price}
 					priceType={listing.priceType}
 					currency={listing.currency}
@@ -40,7 +40,6 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 				/>
 
 				<LocationBadge
-					data-ui={"HeroSection-[LocationBadge]"}
 					location={listing.location}
 					distance={listing.distance}
 					ui={{
@@ -52,6 +51,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 
 				{listing.my ? null : (
 					<FavouriteButton
+						_suspense={"I know"}
 						feedId={feedId}
 						listingId={listing.id}
 						iconProps={{
@@ -74,9 +74,9 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 				)}
 
 				<HeroImage
-					data-ui={"HeroSection-[HeroImage]"}
 					src={hero.url}
 					alt={`Hero image for listing ${listing.id}`}
+					data-action={"open listing gallery"}
 					onClick={() => onView("gallery")}
 					ui={{
 						round: "default",

@@ -1,12 +1,23 @@
+import { VisibilityProvider } from "@use-pico/client/context";
 import { useElementVisibility, useMergeRefs, useScrollTo } from "@use-pico/client/hook";
-import { Container } from "@use-pico/client/ui/container";
+import type { MarkSuspense } from "@use-pico/client/type";
+import {
+	Container,
+	SpinnerContainer,
+	VisibleContainer,
+	SpinnerContainer as VisibleSpinnerContainer,
+} from "@use-pico/client/ui/container";
+import { EmptyState } from "@use-pico/client/ui/empty-state";
+import { withFallback } from "@use-pico/client/utils";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer";
-import { type FC, type ReactNode, Suspense, useEffect, useRef } from "react";
-import { Data } from "./Data";
-import { Pending } from "./Pending";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
+import { type ReactNode, Suspense, useCallback, useEffect, useMemo, useRef } from "react";
+import { Empty } from "./Empty";
+import { FilterEmpty } from "./FilterEmpty";
+import { Item } from "./Item";
 
 export namespace ListingList {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		query: tListingQuery;
 		/**
 		 * Listing ID to scroll to
@@ -18,64 +29,105 @@ export namespace ListingList {
 	}
 }
 
-export const ListingList: FC<ListingList.Props> = ({
-	ref,
-	query,
-	scrollToId,
-	appendix,
-	feedId,
-	withScore,
-	...props
-}) => {
-	const containerRef = useRef<HTMLDivElement>(null);
-	const mergedRef = useMergeRefs([
-		containerRef,
-		ref,
-	]);
+export const ListingList = withFallback(
+	({ ref, query, scrollToId, appendix, feedId, withScore, ...props }: ListingList.Props) => {
+		const containerRef = useRef<HTMLDivElement>(null);
+		const mergedRef = useMergeRefs([
+			containerRef,
+			ref,
+		]);
 
-	const scrollTo = useScrollTo(containerRef);
+		const scrollTo = useScrollTo(containerRef);
 
-	useEffect(() => {
-		if (!scrollToId || !containerRef.current) {
-			return;
-		}
-		scrollTo(`[data-id="${scrollToId}"]`, {
-			behavior: "instant",
+		useEffect(() => {
+			if (!scrollToId || !containerRef.current) {
+				return;
+			}
+			scrollTo(`[data-id="${scrollToId}"]`, {
+				behavior: "instant",
+			});
+		}, [
+			scrollToId,
+			scrollTo,
+		]);
+
+		const visibility = useElementVisibility({
+			scrollerRef: containerRef,
+			visible: {},
+			proximity: {
+				overscan: 4,
+			},
 		});
-	}, [
-		scrollToId,
-		scrollTo,
-	]);
 
-	const visibility = useElementVisibility({
-		scrollerRef: containerRef,
-		visible: {},
-		proximity: {
-			overscan: 4,
-		},
-	});
+		const { data: listingCollection } = withListingQuery.useCollectionQuery(query);
+		const { data: listingCount } = withListingQuery.useCountQuery(query);
+		const check = useMemo(() => {
+			return [
+				{
+					check() {
+						return listingCount.isEmpty;
+					},
+					render() {
+						return <Empty />;
+					},
+				},
+				{
+					check() {
+						return listingCount.isFilterEmpty;
+					},
+					render() {
+						return <FilterEmpty />;
+					},
+				},
+			] satisfies EmptyState.Check[];
+		}, [
+			listingCount,
+		]);
 
-	return (
-		<Container
-			ref={mergedRef}
-			data-ui={"ListingListContainer[Container]"}
-			ui={{
-				layout: "vertical-full",
-				snap: "vertical",
-				snapAlign: "center",
-				height: "full",
-			}}
-			{...props}
-		>
-			<Suspense fallback={<Pending />}>
-				<Data
-					query={query}
-					appendix={appendix}
-					feedId={feedId}
-					withScore={withScore}
-					visibility={visibility}
-				/>
-			</Suspense>
-		</Container>
-	);
-};
+		const placeholder = useCallback(() => {
+			return <VisibleSpinnerContainer />;
+		}, []);
+
+		return (
+			<Container
+				ref={mergedRef}
+				data-ui={"ListingList"}
+				ui={{
+					layout: "vertical-full",
+					snap: "vertical",
+					snapAlign: "center",
+					height: "full",
+				}}
+				{...props}
+			>
+				<EmptyState check={check}>
+					<VisibilityProvider store={visibility}>
+						{listingCollection.map((listingId) => (
+							<VisibleContainer
+								key={listingId}
+								id={listingId}
+								data-id={listingId}
+								placeholder={placeholder}
+								ui={{
+									height: "full",
+									width: "full",
+								}}
+							>
+								<Suspense fallback={<Item.Fallback />}>
+									<Item
+										listingId={listingId}
+										feedId={feedId}
+										withScore={withScore}
+									/>
+								</Suspense>
+							</VisibleContainer>
+						))}
+
+						{appendix}
+					</VisibilityProvider>
+				</EmptyState>
+			</Container>
+		);
+	},
+	SpinnerContainer,
+);

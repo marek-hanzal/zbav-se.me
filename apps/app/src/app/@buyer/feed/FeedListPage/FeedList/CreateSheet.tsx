@@ -41,7 +41,12 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ state, ...props }) => {
 			detent={"default"}
 			header={({ close }) => ({
 				title: "Create new feed (title)",
-				right: <CloseButton onClick={close} />,
+				right: (
+					<CloseButton
+						data-action={"close create feed"}
+						onClick={close}
+					/>
+				),
 			})}
 			{...props}
 		>

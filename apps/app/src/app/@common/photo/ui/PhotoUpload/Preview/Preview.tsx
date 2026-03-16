@@ -1,10 +1,12 @@
-import { type FC, Suspense } from "react";
-import { Data } from "./Data";
-import { Pending } from "./Pending";
+import type { MarkSuspense } from "@use-pico/client/type";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
+import { withFallback } from "@use-pico/client/utils";
+import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { HeroImage } from "@zbav-se.me/ui/img";
 
 export namespace Preview {
-	export interface Props extends Omit<Data.Props, "_suspense"> {
-		//
+	export interface Props extends MarkSuspense.Props {
+		uploadId: string;
 	}
 }
 
@@ -14,18 +16,21 @@ export namespace Preview {
  *
  * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const Preview: FC<Preview.Props> = ({ uploadId, ...props }) => {
-	if (!uploadId) {
-		return null;
-	}
+export const Preview = withFallback(({ _suspense, uploadId }: Preview.Props) => {
+	const { data } = withUploadFetchQuery.useSuspenseQuery({
+		where: {
+			id: uploadId,
+		},
+	});
 
 	return (
-		<Suspense fallback={<Pending />}>
-			<Data
-				_suspense={"I know"}
-				uploadId={uploadId}
-				{...props}
-			/>
-		</Suspense>
+		<HeroImage
+			src={data.url}
+			alt={data.id}
+			visible
+			ui={{
+				round: "default",
+			}}
+		/>
 	);
-};
+}, SpinnerContainer);

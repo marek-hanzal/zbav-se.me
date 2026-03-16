@@ -23,6 +23,7 @@ export const CloseButton: FC<CloseButton.Props> = ({ close, transaction, ...prop
 	return (
 		<Button
 			data-ui="CloseButton[Button]"
+			data-action={"close transaction"}
 			iconEnabled={CheckIcon}
 			onClick={() => {
 				mutation.mutate({

@@ -74,6 +74,7 @@ export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ui, .
 			</Container>
 
 			<ListingSheet
+				_suspense={"I know"}
 				listing={listing}
 				state={{
 					value: isOpen,

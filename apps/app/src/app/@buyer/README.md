@@ -58,6 +58,12 @@ Maps to server API: `/api/buyer/*`.
   - `@buyer/search/SearchPage/SearchButton.tsx`
   - `@buyer/search/SearchPage/SaveAsFeedButton.tsx`
   - `@buyer/search/SearchPage/ResetButton.tsx`
+- Feed listing page listing list selectors were simplified for browser navigation:
+  - root components now use simple `data-ui` names
+  - key interactive controls expose English `data-action` labels
+- Buyer suspense wrappers are being flattened from `Data.tsx` + `Pending.tsx` pairs into parent `withFallback(...)` components:
+  - route/page boundaries now own `Suspense` where needed
+  - list components suspend around child item rendering instead of through separate wrapper files
 - Buyer transaction action buttons now use the buyer transaction mutation SDK surface (`close`, `dispute`, `reject`, `success`) and invalidate `transaction-entry` timeline queries.
 - Buyer message detail UI now reads conversation timeline through `@user/transaction-entry` instead of the removed message query wrapper.
 - Buyer `TitleContainer` pages that navigate back home now use the shared `@common/nav/BackHomeButton` instead of repeating inline `LinkTo + uiBackButton` wiring.

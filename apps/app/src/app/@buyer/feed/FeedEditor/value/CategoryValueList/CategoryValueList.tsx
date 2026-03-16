@@ -1,11 +1,17 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { ValueList } from "@use-pico/client/ui/container";
+import { withFallback } from "@use-pico/client/utils";
+import type { EntitySchema } from "@use-pico/common/schema";
+import { translator } from "@use-pico/common/translator";
 import type { tCategoryItem } from "@zbav-se.me/sdk/api/session";
-import { type FC, Suspense } from "react";
-import { Data } from "./Data";
-import { Pending } from "./Pending";
+import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
+import { Suspense } from "react";
+import { CategoryInline } from "~/app/@session/category/ui/CategoryInline";
 
 export namespace CategoryValueList {
-	export interface Props extends Omit<ValueList.Props<tCategoryItem>, "items" | "renderFn"> {
+	export interface Props
+		extends Omit<ValueList.Props<tCategoryItem>, "items" | "renderFn">,
+			MarkSuspense.Props {
 		categoryIdIn: string[] | undefined | null;
 	}
 }
@@ -16,24 +22,57 @@ export namespace CategoryValueList {
  *
  * @see apps/app/src/app//draft/ui/DraftEditor/patch/CategoryPatch.tsx
  */
-export const CategoryValueList: FC<CategoryValueList.Props> = ({ categoryIdIn, ...props }) => {
-	if (!categoryIdIn || categoryIdIn.length === 0) {
+export const CategoryValueList = withFallback(
+	({ _suspense, categoryIdIn, ...props }: CategoryValueList.Props) => {
+		if (!categoryIdIn || categoryIdIn.length === 0) {
+			return (
+				<ValueList<tCategoryItem>
+					renderFn={() => null}
+					items={[]}
+					{...props}
+				/>
+			);
+		}
+
+		const { data: categoryIds } = withCategoryQuery.useCollectionQuery({
+			where: {
+				idIn: categoryIdIn,
+			},
+		});
+
 		return (
-			<ValueList<tCategoryItem>
-				renderFn={() => null}
-				items={[]}
+			<ValueList<EntitySchema.Type>
+				renderFn={(item) => (
+					<Suspense fallback={<CategoryInline.Fallback />}>
+						<CategoryInline
+							_suspense={"I know"}
+							categoryId={item.id}
+						/>
+					</Suspense>
+				)}
+				items={categoryIds.map((id) => ({
+					id,
+				}))}
+				wrapperProps={{
+					ui: {
+						tone: "neutral",
+						theme: "light",
+					},
+				}}
 				{...props}
 			/>
 		);
-	}
-
-	return (
-		<Suspense fallback={<Pending {...props} />}>
-			<Data
-				_suspense={"I know"}
-				categoryIdIn={categoryIdIn}
+	},
+	(props: ValueList.PropsEx<tCategoryItem>) => {
+		return (
+			<ValueList<tCategoryItem>
+				textLabel={translator.text("Loading... (label)")}
+				textEmpty={translator.text("No categories found (label)")}
+				renderFn={() => null}
+				items={[]}
+				loading={true}
 				{...props}
 			/>
-		</Suspense>
-	);
-};
+		);
+	},
+);

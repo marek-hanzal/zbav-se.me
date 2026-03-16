@@ -25,6 +25,7 @@ export const Empty: FC<Empty.Props> = (props) => {
 				textMessage={translator.text("Feed list empty (message)")}
 				action={
 					<Button
+						data-action={"create new feed"}
 						iconEnabled={ChevronRightIcon}
 						iconPosition={"right"}
 						onClick={() => setIsOpen(true)}

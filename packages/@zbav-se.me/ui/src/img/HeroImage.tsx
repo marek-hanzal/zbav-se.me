@@ -122,6 +122,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 						className,
 					],
 				})}
+				data-ui={"HeroImage"}
 				//
 				loading={"eager"}
 				fetchPriority={"high"}
@@ -154,7 +155,6 @@ export const HeroImage: FC<HeroImage.Props> = ({
 
 			{status === "error" ? (
 				<Container
-					data-ui={"HeroImage-error"}
 					ui={{
 						layout: "vertical-centered",
 						tone: "primary",

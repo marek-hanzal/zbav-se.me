@@ -1,20 +1,22 @@
 import { useMatchRoute } from "@tanstack/react-router";
 import type { uiIcon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
+import type { MarkSuspense } from "@use-pico/client/type";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { Group } from "@use-pico/client/ui/group";
+import { withFallback } from "@use-pico/client/utils";
 import { useRef } from "react";
-import { DraftLink } from "./link/DraftLink/DraftLink";
-import { DraftListLink } from "./link/DraftListLink/DraftListLink";
-import { FavouritesLink } from "./link/FavouritesLink/FavouritesLink";
-import { FeedLink } from "./link/FeedLink/FeedLink";
-import { HomeLink } from "./link/HomeLink/HomeLink";
-import { ListingsLink } from "./link/ListingsLink/ListingsLink";
-import { MessageLink } from "./link/MessageLink/MessageLink";
-import { MyListingsLink } from "./link/MyListingsLink/MyListingsLink";
-import { NotificationLink } from "./link/NotificationLink/NotificationLink";
-import { ProfileLink } from "./link/ProfileLink/ProfileLink";
-import { SearchLink } from "./link/SearchLink/SearchLink";
+import { DraftLink } from "./link/DraftLink";
+import { DraftListLink } from "./link/DraftListLink";
+import { FavouritesLink } from "./link/FavouritesLink";
+import { FeedLink } from "./link/FeedLink";
+import { HomeLink } from "./link/HomeLink";
+import { ListingsLink } from "./link/ListingsLink";
+import { MessageLink } from "./link/MessageLink";
+import { MyListingsLink } from "./link/MyListingsLink";
+import { NotificationLink } from "./link/NotificationLink";
+import { ProfileLink } from "./link/ProfileLink";
+import { SearchLink } from "./link/SearchLink";
 
 const icon: uiIcon.Ui = {
 	color: "lead",
@@ -22,7 +24,7 @@ const icon: uiIcon.Ui = {
 };
 
 export namespace HomeMenu {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		onLinkClick?: () => void;
 	}
 }
@@ -33,7 +35,7 @@ export namespace HomeMenu {
  *
  * @see apps/app/src/app/@user/home/page/HomePage.tsx
  */
-export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
+export const HomeMenu = withFallback(({ _suspense, ui, onLinkClick, ...props }: HomeMenu.Props) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const isHome = useMatchRoute()({
 		to: "/$locale/home",
@@ -68,6 +70,7 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 				{isHome ? null : (
 					<Group>
 						<HomeLink
+							_suspense={"I know"}
 							iconProps={{
 								ui: {
 									...icon,
@@ -79,6 +82,7 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 
 				<Group>
 					<NotificationLink
+						_suspense={"I know"}
 						onLinkClick={onLinkClick}
 						iconProps={{
 							ui: {
@@ -90,6 +94,7 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 
 				<Group>
 					<SearchLink
+						_suspense={"I know"}
 						iconProps={{
 							ui: {
 								...icon,
@@ -100,6 +105,7 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 
 				<Group>
 					<ListingsLink
+						_suspense={"I know"}
 						iconProps={{
 							ui: {
 								...icon,
@@ -107,6 +113,7 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 						}}
 					/>
 					<DraftLink
+						_suspense={"I know"}
 						iconProps={{
 							ui: {
 								...icon,
@@ -117,6 +124,7 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 
 				<Group>
 					<MyListingsLink
+						_suspense={"I know"}
 						iconProps={{
 							ui: {
 								...icon,
@@ -124,6 +132,7 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 						}}
 					/>
 					<DraftListLink
+						_suspense={"I know"}
 						iconProps={{
 							ui: {
 								...icon,
@@ -134,6 +143,7 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 
 				<Group>
 					<FeedLink
+						_suspense={"I know"}
 						iconProps={{
 							ui: {
 								...icon,
@@ -141,6 +151,7 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 						}}
 					/>
 					<FavouritesLink
+						_suspense={"I know"}
 						iconProps={{
 							ui: {
 								...icon,
@@ -150,6 +161,7 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 				</Group>
 
 				<MessageLink
+					_suspense={"I know"}
 					iconProps={{
 						ui: {
 							...icon,
@@ -159,6 +171,7 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 
 				<Group>
 					<ProfileLink
+						_suspense={"I know"}
 						iconProps={{
 							ui: {
 								...icon,
@@ -169,4 +182,4 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 			</Container>
 		</Container>
 	);
-};
+}, SpinnerContainer);

@@ -61,6 +61,8 @@ export const TransactionButton: FC<TransactionButton.Props> = ({ listing, ui, ..
 					},
 					className: [],
 				})}
+				data-ui={"TransactionButton"}
+				data-action={"open transactions"}
 			>
 				<Tx label="View transactions (button)" />
 			</LinkTo>
@@ -69,6 +71,8 @@ export const TransactionButton: FC<TransactionButton.Props> = ({ listing, ui, ..
 
 	return (
 		<Button
+			data-ui={"TransactionButton"}
+			data-action={"create transaction"}
 			iconEnabled={TransactionIcon}
 			iconProps={{
 				ui: {

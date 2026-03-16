@@ -17,13 +17,13 @@ export const FeedListingPagePending: FC<FeedListingPagePending.Props> = (props) 
 
 	return (
 		<FlowContainer
-			data-ui={"BuyerFeedList[FlowContainer]"}
+			data-ui={"FeedListingPagePending"}
 			left={
 				<LinkTo
 					{...uiBackButton({
 						className: [],
 					})}
-					data-ui={"BuyerFeedList-[LinkTo.left]"}
+					data-action={"go home"}
 					icon={ArrowLeftIcon}
 					to={"/$locale/home"}
 					params={{

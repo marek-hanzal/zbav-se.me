@@ -1,4 +1,5 @@
 import { CloseIcon } from "@use-pico/client/icon";
+import type { MarkSuspense } from "@use-pico/client/type";
 import type { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
@@ -12,13 +13,13 @@ import { ListingCard } from "./ListingCard";
 export namespace ListingSheet {
 	export type View = "detail" | "gallery";
 
-	export interface Props extends BottomSheet.PropsEx {
+	export interface Props extends BottomSheet.PropsEx, MarkSuspense.Props {
 		listing: tListing;
 		state: StateType.State<boolean>;
 	}
 }
 
-export const ListingSheet: FC<ListingSheet.Props> = ({ listing, state, ...props }) => {
+export const ListingSheet: FC<ListingSheet.Props> = ({ _suspense, listing, state, ...props }) => {
 	const [view, setView] = useState<ListingSheet.View>("detail");
 
 	const views = useMemo<SheetView.Views<ListingSheet.View>>(() => {
@@ -26,6 +27,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ listing, state, ...props 
 			detail: {
 				children: (
 					<ListingCard
+						_suspense={"I know"}
 						data-ui={"ListingSheet-[ListingCardContainer]"}
 						listing={listing}
 						ui={{

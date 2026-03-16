@@ -1,12 +1,13 @@
 import { CloseIcon } from "@use-pico/client/icon";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { CloseButton } from "@zbav-se.me/ui/button";
-import { type FC, type PropsWithChildren, useCallback, useMemo, useState } from "react";
+import { type FC, type PropsWithChildren, Suspense, useCallback, useMemo, useState } from "react";
 import { SellerInfo } from "~/app/@buyer/listing/~public/SellerInfo";
 import { GalleryPreview } from "~/app/@common/gallery/ui/GalleryPreview";
-import { ListingCard } from "../ListingCard/ListingCard";
+import { ListingCard } from "../ListingCard";
 
 export namespace ListingSheet {
 	export type View = "default" | "gallery" | "seller-info";
@@ -35,6 +36,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 			default: {
 				children: (
 					<ListingCard
+						_suspense={"I know"}
 						feedId={feedId}
 						listingId={listing.id}
 						onView={setView}
@@ -44,7 +46,12 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				),
 				header: ({ close }) => ({
 					title: listing.title,
-					right: <CloseButton onClick={close} />,
+					right: (
+						<CloseButton
+							data-action={"close listing detail"}
+							onClick={close}
+						/>
+					),
 				}),
 			},
 			gallery: {
@@ -55,6 +62,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					title: translator.text("Listing gallery (title)"),
 					right: (
 						<CloseButton
+							data-action={"close listing gallery"}
 							iconEnabled={CloseIcon}
 							onClick={$onClose}
 						/>
@@ -64,6 +72,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 			"seller-info": {
 				children: (
 					<SellerInfo
+						_suspense={"I know"}
 						listingId={listing.id}
 						ui={{
 							inner: "default",
@@ -74,6 +83,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					title: translator.text("Seller info (title)"),
 					right: (
 						<CloseButton
+							data-action={"close seller info"}
 							iconEnabled={CloseIcon}
 							onClick={$onClose}
 						/>
@@ -89,18 +99,21 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 	]);
 
 	return (
-		<SheetView<ListingSheet.View>
-			state={{
-				value: view,
-				set: setView,
-			}}
-			views={views}
-			detent={"default"}
-			onClose={() => {
-				onClose();
-				setView("default");
-			}}
-			{...props}
-		/>
+		<Suspense fallback={<SpinnerContainer />}>
+			<SheetView<ListingSheet.View>
+				data-ui={"ListingSheet"}
+				state={{
+					value: view,
+					set: setView,
+				}}
+				views={views}
+				detent={"default"}
+				onClose={() => {
+					onClose();
+					setView("default");
+				}}
+				{...props}
+			/>
+		</Suspense>
 	);
 };

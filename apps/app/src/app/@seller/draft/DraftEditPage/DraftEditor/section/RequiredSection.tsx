@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Group } from "@use-pico/client/ui/group";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
@@ -7,7 +8,7 @@ import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { TitleValue } from "~/app/@common/title/ui/TitleValue";
 import { ChevronAction } from "../ChevronAction";
-import type { Data } from "../Data";
+import type { DraftEditor } from "../DraftEditor";
 import { CategoryValue } from "../value/CategoryValue";
 import { ExpireAtValue } from "../value/ExpireAtValue";
 import { PriceTypeValue } from "../value/PriceTypeValue";
@@ -15,13 +16,13 @@ import { PriceValue } from "../value/PriceValue";
 import { RestrictionValue } from "../value/RestrictionValue";
 
 export namespace RequiredSection {
-	export interface Props {
+	export interface Props extends MarkSuspense.Props {
 		draft: tDraft;
-		onView(view: Data.View): void;
+		onView(view: DraftEditor.View): void;
 	}
 }
 
-export const RequiredSection: FC<RequiredSection.Props> = ({ draft, onView }) => {
+export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, onView }) => {
 	return (
 		<>
 			<Group>
@@ -59,6 +60,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ draft, onView }) =>
 				/>
 
 				<CategoryValue
+					_suspense={"I know"}
 					categoryId={draft.categoryId}
 					action={<ChevronAction />}
 					onClick={() => onView("category")}
@@ -70,6 +72,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ draft, onView }) =>
 				/>
 
 				<LocationValue
+					_suspense={"I know"}
 					locationId={draft.locationId}
 					textLabel={translator.text("Listing location (label)")}
 					textEmpty={translator.text("Listing location not selected")}

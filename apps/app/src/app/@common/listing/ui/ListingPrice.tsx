@@ -31,7 +31,7 @@ export const ListingPrice: FC<ListingPrice.Props> = ({
 
 	return (
 		<Badge
-			data-ui={"ListingPrice[Badge]"}
+			data-ui={"ListingPrice"}
 			className="max-w-1/2"
 			ui={{
 				tone: "secondary",

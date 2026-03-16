@@ -11,7 +11,7 @@ import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { ExpireAtSelect } from "~/app/@common/expire-at/ui/ExpireAtSelect";
-import type { Data } from "../Data";
+import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
 const ExpireAtSchema = zListingCreate.pick({
@@ -22,7 +22,7 @@ export namespace ExpireAtPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onView(view: Data.View): void;
+		onView(view: DraftEditor.View): void;
 	}
 }
 

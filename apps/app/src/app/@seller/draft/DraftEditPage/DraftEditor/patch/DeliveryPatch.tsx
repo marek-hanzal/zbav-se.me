@@ -10,14 +10,14 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { DeliverySelect } from "~/app/@common/delivery/ui/DeliverySelect";
-import type { Data } from "../Data";
+import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
 export namespace DeliveryPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onView(view: Data.View): void;
+		onView(view: DraftEditor.View): void;
 	}
 }
 

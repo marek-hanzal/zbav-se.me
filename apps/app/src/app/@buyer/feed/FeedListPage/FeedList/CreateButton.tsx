@@ -17,6 +17,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ ui, className, ...props }
 		<>
 			<ListItem
 				data-ui={"CreateButton[Button]"}
+				data-action={"create new feed"}
 				hero={
 					<Icon
 						icon={PlusIcon}

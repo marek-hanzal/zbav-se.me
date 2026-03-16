@@ -23,6 +23,7 @@ export const DisputeButton: FC<DisputeButton.Props> = ({ close, transaction, ...
 	return (
 		<ConfirmButton
 			data-ui="DisputeButton[Button]"
+			data-action={"dispute transaction"}
 			iconEnabled={FlagIcon}
 			confirmProps={{
 				ui: {

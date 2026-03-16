@@ -1,10 +1,13 @@
-import { type FC, Suspense } from "react";
-import { Data } from "./Data";
-import { Pending } from "./Pending";
+import { Typo } from "@use-pico/client/ui/typo";
+import { withFallback } from "@use-pico/client/utils";
+import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
+import { useUpload } from "~/app/@common/gallery/hook/useUpload";
+import { ListItem } from "~/app/@common/list-item/ListItem";
+import { ListItemPending } from "~/app/@common/list-item/ListItemPending";
 
 export namespace ListingItem {
-	export interface Props extends Data.Props {
-		//
+	export interface Props {
+		listingId: string;
 	}
 }
 
@@ -14,10 +17,35 @@ export namespace ListingItem {
  *
  * @see apps/app/src/app//listing/MyListingPage/ListingList/ListingList.tsx
  */
-export const ListingItem: FC<ListingItem.Props> = (props) => {
+export const ListingItem = withFallback(({ listingId }: ListingItem.Props) => {
+	const { data: listing } = withListingQuery.useFetchQuery(listingId);
+	const hero = useUpload(listing.gallery.items);
+
 	return (
-		<Suspense fallback={<Pending />}>
-			<Data {...props} />
-		</Suspense>
+		<ListItem
+			hero={hero}
+			title={
+				<Typo
+					label={listing.title ?? "Draft (label)"}
+					ui={{
+						tone: "neutral",
+						theme: "light",
+						color: "lead",
+						font: "semibold",
+						text: "sm",
+						display: "block",
+						width: "full",
+						truncate: true,
+					}}
+					className={[
+						"block",
+						"w-full",
+						"max-w-full",
+						"min-w-0",
+					]}
+				/>
+			}
+			bottom={undefined}
+		/>
 	);
-};
+}, ListItemPending);

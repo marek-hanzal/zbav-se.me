@@ -2,8 +2,8 @@ import type { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { type FC, useState } from "react";
-import { ListContainer } from "./ListContainer/ListContainer";
+import { type FC, Suspense, useState } from "react";
+import { ListContainer } from "./ListContainer";
 
 export namespace CategorySelect {
 	export interface Props extends Container.Props {
@@ -44,11 +44,13 @@ export const CategorySelect: FC<CategorySelect.Props> = ({
 				}}
 			/>
 
-			<ListContainer
-				fulltext={fulltext}
-				selection={selection}
-				categoryId={categoryId}
-			/>
+			<Suspense fallback={<ListContainer.Fallback />}>
+				<ListContainer
+					fulltext={fulltext}
+					selection={selection}
+					categoryId={categoryId}
+				/>
+			</Suspense>
 		</Container>
 	);
 };

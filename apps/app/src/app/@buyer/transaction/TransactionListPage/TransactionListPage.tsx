@@ -1,6 +1,6 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
 import { TransactionList } from "~/app/@buyer/transaction/~public/TransactionList";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
@@ -19,11 +19,14 @@ export const TransactionListPage: FC<TransactionListPage.Props> = (props) => {
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<TransactionList
-				ui={{
-					inner: "default",
-				}}
-			/>
+			<Suspense fallback={<TransactionList.Fallback />}>
+				<TransactionList
+					_suspense={"I know"}
+					ui={{
+						inner: "default",
+					}}
+				/>
+			</Suspense>
 		</TitleContainer>
 	);
 };

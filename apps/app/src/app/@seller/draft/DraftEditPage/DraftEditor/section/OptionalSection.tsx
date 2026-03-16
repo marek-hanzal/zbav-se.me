@@ -4,7 +4,7 @@ import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
 import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { ChevronAction } from "../ChevronAction";
-import type { Data } from "../Data";
+import type { DraftEditor } from "../DraftEditor";
 import { AgeValue } from "../value/AgeValue";
 import { ConditionValue } from "../value/ConditionValue";
 import { ConsValueList } from "../value/ConsValueList";
@@ -15,7 +15,7 @@ import { WarrantyValue } from "../value/WarrantyValue";
 export namespace OptionalSection {
 	export interface Props {
 		draft: tDraft;
-		onView(view: Data.View): void;
+		onView(view: DraftEditor.View): void;
 	}
 }
 

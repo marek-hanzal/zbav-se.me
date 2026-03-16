@@ -1,1 +1,1 @@
-export { FeedListingPage } from "../FeedListingPage/FeedListingPage";
+export { FeedListingPage } from "../FeedListingPage";

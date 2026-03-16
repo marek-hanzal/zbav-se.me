@@ -4,7 +4,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { SellerIcon } from "@zbav-se.me/ui/icon";
-import { type FC, useState } from "react";
+import { type FC, Suspense, useState } from "react";
 import { SellerInfo } from "./SellerInfo";
 
 export namespace SellerInfoButton {
@@ -46,12 +46,15 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ listingId, ...pro
 					right: <CloseButton onClick={close} />,
 				})}
 			>
-				<SellerInfo
-					listingId={listingId}
-					ui={{
-						inner: "default",
-					}}
-				/>
+				<Suspense fallback={<SellerInfo.Fallback />}>
+					<SellerInfo
+						_suspense={"I know"}
+						listingId={listingId}
+						ui={{
+							inner: "default",
+						}}
+					/>
+				</Suspense>
 			</BottomSheet>
 		</>
 	);

@@ -83,13 +83,13 @@ When adding to `@common`:
 - Transaction-entry timeline rendering now lives in active common scope at `@common/transaction-entry/*`; buyer/seller transaction detail screens no longer import the old `v0` common stack.
 - Transaction-entry rendering is split into focused parts:
   - `@common/transaction-entry/TransactionEntryList/TransactionEntryList.tsx` now owns collection fetch + container composition directly and publicly acknowledges `MarkSuspense.Props`.
-  - `@common/transaction-entry/TransactionEntryList/Item/Data.tsx` owns `transaction_entry.kind` dispatch (`text/status/gallery/location/personal/package`).
-  - `@common/transaction-entry/TransactionEntryList/Item/type/*` contains folder-local entry render variants used only by the list item renderer; async entry types that fetch extra data (`gallery`, `location`, `personal`) follow the local `Component/Data/Pending` pattern to keep load-state height stable, while plain text/common/package renders stay inline without extra suspense noise.
+  - `@common/transaction-entry/TransactionEntryList/Item/Item.tsx` owns `transaction_entry.kind` dispatch (`text/status/gallery/location/personal/package`) directly and exposes `Item.Fallback` for list-level suspense boundaries.
+  - `@common/transaction-entry/TransactionEntryList/Item/type/*` contains folder-local entry render variants used only by the list item renderer; async entry types that fetch extra data (`gallery`, `location`, `personal`) are now flattened into parent `withFallback(...)` components while keeping load-state height stable through local fallback shells.
   - `@common/transaction-entry/ui/TransactionEntryList/Item/type/TypeContainer.tsx` now holds the shared direction-aware bubble container used by the entry type renderers.
   - `@common/transaction-entry/ui/button/LocationButton/*` now owns the shared transaction-entry location action flow; it no longer lives in the old `v0/@common/location` stack and accepts the shared transaction menu `close` callback.
   - `@common/transaction-entry/ui/button/PersonalButton/*` now owns the shared transaction-entry personal-data action flow; it no longer lives in the old `v0/@common/personal` stack and accepts the shared transaction menu `close` callback.
   - `@common/transaction-entry/ui/button/PackageButton/*` now owns the shared transaction-entry package/tracking action flow; it no longer lives in the old `v0/@common/package` stack and accepts the shared transaction menu `close` callback.
-  - `Gallery/*` uses local `Suspense -> Data/Pending` composition and reads linked gallery content through the transaction-entry gallery endpoint, not the owner-scoped gallery fetch route.
+  - `Gallery/*` reads linked gallery content through the transaction-entry gallery endpoint, not the owner-scoped gallery fetch route, and now exposes its loading shell through `Gallery.Fallback`.
   - `Text.tsx` and `Common.tsx` stay intentionally separate, even though they currently render near-identical UI.
 - Shared page-level title navigation now uses `@common/nav/BackHomeButton/BackHomeButton.tsx` for screens that should provide an explicit return path to home.
 - Shared transaction detail bottom-sheet trigger now lives in active common scope:
@@ -117,7 +117,6 @@ When adding to `@common`:
 - Photo upload UI was extracted to active scope and split into focused pieces:
   - `@common/photo/ui/PhotoUpload/PhotoUpload.tsx` is the local root component (`index.ts` exports `PhotoUpload` only).
   - `@common/photo/ui/PhotoUpload/useController.ts` owns upload/input/pending orchestration.
-  - `@common/photo/ui/PhotoUpload/Pending.tsx`
   - `@common/photo/ui/PhotoUpload/Placeholder.tsx`
   - `@common/photo/ui/PhotoUpload/Preview.tsx`
   - `@common/photo/ui/PhotoUpload/PhotoUploadPreviewImageSuspense.tsx` composes local suspense fallback (`PhotoUploadPreviewImagePending`).
@@ -129,6 +128,9 @@ When adding to `@common`:
 - `LocationSelect` component was extracted to active scope:
   - `@common/location/ui/LocationSelect.tsx`
   - `@common/location/ui/LocationSelect/ListContainer/*`
+- Shared location value and select result wrappers are flattening `Data.tsx` + `Pending.tsx` into parent `withFallback(...)` components:
+  - `LocationValue.tsx` now owns its fetch + empty-state rendering directly
+  - `LocationSelect.tsx` owns the suspense boundary for `LocationSelect/ListContainer.tsx`
 - PatchContainer abstraction was removed; patch views now compose `TitleContainer`/`Container` + `SaveContainer` inline at call-sites.
 - `LocationSelectContainer` abstraction was removed; call-sites now embed `LocationSelect` + `SaveContainer` inline.
 - `PriceTypeSelect` was extracted to active scope:
@@ -157,8 +159,12 @@ When adding to `@common`:
   - `@common/limit/Limit.ts`
 - Shared listing count suspense component now lives in active common scope:
   - `@common/listing/ui/ListingCount/ListingCount.tsx`
-  - `@common/listing/ui/ListingCount/Data.tsx`
-  - `@common/listing/ui/ListingCount/Pending.tsx`
+- Shared photo preview and transaction-entry async renderers are flattening old `Data.tsx` wrappers into parent `withFallback(...)` components:
+  - `@common/photo/ui/PhotoUpload/Preview/Preview.tsx`
+  - `@common/transaction-entry/ui/TransactionEntryList/Item/Item.tsx`
+  - `@common/transaction-entry/ui/TransactionEntryList/Item/type/Gallery/Gallery.tsx`
+  - `@common/transaction-entry/ui/TransactionEntryList/Item/type/Location/Location.tsx`
+  - `@common/transaction-entry/ui/TransactionEntryList/Item/type/Personal/Personal.tsx`
 - Shared `ListItem` loading shell now lives in active common scope:
   - `@common/list-item/ListItemPending.tsx`
 - Shared `ListItem` hero input now parses upload-compatible values first and otherwise renders the provided node content directly, so domain call-sites can keep the same row shell while swapping the left visual slot from image to status/icon UI.

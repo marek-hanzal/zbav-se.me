@@ -1,1 +1,1 @@
-export { FavouriteListPage } from "../FavouriteListPage/FavouriteListPage";
+export { FavouriteListPage } from "../FavouriteListPage";

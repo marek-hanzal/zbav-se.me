@@ -1,7 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { linkTo } from "@use-pico/common/link-to";
 import { withSessionQuery } from "~/app/@common/auth/query/withSessionQuery";
-import { WarmupCache } from "~/app/@common/cache/WarmupCache";
 import { LocalePage } from "~/app/@common/locale/~public/LocalePage";
 
 export const Route = createFileRoute("/$locale")({
@@ -48,7 +47,7 @@ export const Route = createFileRoute("/$locale")({
 				locale={locale}
 				translations={translations}
 			>
-				<WarmupCache _suspense={"I know"} />
+				{/* <WarmupCache _suspense={"I know"} /> */}
 
 				<Outlet />
 			</LocalePage>

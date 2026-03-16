@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, LabelValue, ValueList } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import { Markdown } from "@use-pico/client/ui/markdown";
@@ -6,20 +7,20 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
-import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
-import { SellerInfo } from "../../SellerInfo/SellerInfo";
+import { CategoryInline } from "~/app/@session/category/ui/CategoryInline";
+import { SellerInfo } from "../../SellerInfo";
 
 export namespace InfoSection {
-	export interface Props {
+	export interface Props extends MarkSuspense.Props {
 		listing: tListing;
 		onView(view: "seller-info"): void;
 	}
 }
 
-export const InfoSection: FC<InfoSection.Props> = ({ listing, onView }) => {
+export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView }) => {
 	return (
 		<Container
-			data-ui={"ListingDetail-[Container.info]"}
+			data-ui={"InfoSection"}
 			ui={{
 				layout: "vertical-flex",
 				gap: "default",
@@ -30,6 +31,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, onView }) => {
 					textLabel={translator.text("Listing category (label)")}
 					textValue={
 						<CategoryInline
+							_suspense={"I know"}
 							categoryId={listing.category.id}
 							ui={{
 								tone: "secondary",
@@ -53,7 +55,6 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, onView }) => {
 				<Group>
 					{listing.pros?.length ? (
 						<ValueList
-							data-ui={"ListingDetail[ProsValue]"}
 							textLabel={translator.text("Listing - Pros (label)")}
 							textEmpty={translator.text("Listing - Pros not filled")}
 							items={listing.pros.map((pro, index) => ({
@@ -66,7 +67,6 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, onView }) => {
 
 					{listing.cons?.length ? (
 						<ValueList
-							data-ui={"ListingDetail[ConsValue]"}
 							textLabel={translator.text("Listing - Cons (label)")}
 							textEmpty={translator.text("Listing - Cons not filled")}
 							items={listing.cons.map((con, index) => ({
@@ -82,7 +82,6 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, onView }) => {
 			{listing.delivery?.length ? (
 				<Group>
 					<ValueList
-						data-ui={"ListingDetail[DeliveryValue]"}
 						textLabel={translator.text("Listing delivery (label)")}
 						textEmpty={translator.text("Delivery not selected")}
 						items={(listing.delivery ?? []).map((delivery) => ({
@@ -124,6 +123,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, onView }) => {
 			{listing.my ? null : (
 				<Group>
 					<SellerInfo
+						_suspense={"I know"}
 						listingId={listing.id}
 						onView={onView}
 					/>

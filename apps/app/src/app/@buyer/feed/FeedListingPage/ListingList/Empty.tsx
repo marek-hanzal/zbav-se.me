@@ -15,10 +15,12 @@ export const Empty: FC<Empty.Props> = () => {
 
 	return (
 		<EmptyStatus
+			data-ui={"Empty"}
 			icon={"icon-[streamline--sad-face-remix]"}
 			textTitle={translator.text("No listings (title)")}
 			action={
 				<LinkTo
+					data-action={"go home"}
 					icon={ChevronLeftIcon}
 					to={"/$locale/home"}
 					params={{

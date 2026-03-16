@@ -30,7 +30,7 @@ export const LocationBadge: FC<LocationBadge.Props> = ({
 
 	return (
 		<Badge
-			data-ui={"LocationBadge[Root]"}
+			data-ui={"LocationBadge"}
 			className={[
 				"flex flex-col h-fit py-2 gap-0",
 				className,

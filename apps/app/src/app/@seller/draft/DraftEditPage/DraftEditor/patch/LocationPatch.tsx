@@ -10,7 +10,7 @@ import { useAppForm } from "@zbav-se.me/ui/form";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/app/@common/location/ui/LocationSelect";
-import type { Data } from "../Data";
+import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
 const LocationSchema = zListingCreate.pick({
@@ -21,7 +21,7 @@ export namespace LocationPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onView(view: Data.View): void;
+		onView(view: DraftEditor.View): void;
 	}
 }
 
