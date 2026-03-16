@@ -51,6 +51,7 @@ export const FeedEditor = withFallback(
 			const editorView = {
 				children: (
 					<Editor
+						_suspense={"I know"}
 						feed={feed}
 						onView={setView}
 						hidden={hidden}

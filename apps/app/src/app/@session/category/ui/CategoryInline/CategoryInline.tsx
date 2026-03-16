@@ -1,10 +1,11 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 
 export namespace CategoryInline {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		categoryId: string;
 		textGroupProps?: Typo.PropsEx;
 		textCategoryProps?: Typo.PropsEx;
@@ -18,7 +19,14 @@ export namespace CategoryInline {
  * @see apps/app/src/app//draft/ui/DraftEditor/patch/CategoryPatch.tsx
  */
 export const CategoryInline = withFallback(
-	({ ui, categoryId, textGroupProps, textCategoryProps, ...props }: CategoryInline.Props) => {
+	({
+		_suspense,
+		ui,
+		categoryId,
+		textGroupProps,
+		textCategoryProps,
+		...props
+	}: CategoryInline.Props) => {
 		const { data: category } = withCategoryQuery.useFetchQuery(categoryId);
 
 		return (

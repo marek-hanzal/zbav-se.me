@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, LabelValue, ValueList } from "@use-pico/client/ui/container";
 import { Markdown } from "@use-pico/client/ui/markdown";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -5,7 +6,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/seller";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, Suspense } from "react";
+import type { FC } from "react";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
@@ -17,13 +18,13 @@ export namespace ListingCard {
 		onMessages?(): void;
 	}
 
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		listing: tListing;
 		hooks: Hooks;
 	}
 }
 
-export const ListingCard: FC<ListingCard.Props> = ({ listing, ui, hooks, ...props }) => {
+export const ListingCard: FC<ListingCard.Props> = ({ _suspense, listing, ui, hooks, ...props }) => {
 	const hero = useUpload(listing.gallery.items);
 
 	return (
@@ -76,15 +77,14 @@ export const ListingCard: FC<ListingCard.Props> = ({ listing, ui, hooks, ...prop
 				<LabelValue
 					textLabel={translator.text("Listing category (label)")}
 					textValue={
-						<Suspense fallback={<CategoryInline.Fallback />}>
-							<CategoryInline
-								categoryId={listing.category.id}
-								ui={{
-									tone: "secondary",
-									theme: "light",
-								}}
-							/>
-						</Suspense>
+						<CategoryInline
+							_suspense={"I know"}
+							categoryId={listing.category.id}
+							ui={{
+								tone: "secondary",
+								theme: "light",
+							}}
+						/>
 					}
 				/>
 

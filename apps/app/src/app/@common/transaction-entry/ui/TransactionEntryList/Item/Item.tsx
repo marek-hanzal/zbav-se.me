@@ -3,7 +3,6 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
-import { Suspense } from "react";
 import { match } from "ts-pattern";
 import { Common } from "./type/Common";
 import { Gallery } from "./type/Gallery";
@@ -80,12 +79,10 @@ export const Item = withFallback(({ _suspense, side, transactionEntryId }: Item.
 				kind: "gallery",
 			},
 			(transactionEntry) => (
-				<Suspense fallback={<Gallery.Fallback transactionEntry={transactionEntry} />}>
-					<Gallery
-						_suspense={"I know"}
-						transactionEntry={transactionEntry}
-					/>
-				</Suspense>
+				<Gallery
+					_suspense={"I know"}
+					transactionEntry={transactionEntry}
+				/>
 			),
 		)
 		.with(
@@ -93,12 +90,10 @@ export const Item = withFallback(({ _suspense, side, transactionEntryId }: Item.
 				kind: "location",
 			},
 			(transactionEntry) => (
-				<Suspense fallback={<Location.Fallback transactionEntry={transactionEntry} />}>
-					<Location
-						_suspense={"I know"}
-						transactionEntry={transactionEntry}
-					/>
-				</Suspense>
+				<Location
+					_suspense={"I know"}
+					transactionEntry={transactionEntry}
+				/>
 			),
 		)
 		.with(
@@ -106,12 +101,10 @@ export const Item = withFallback(({ _suspense, side, transactionEntryId }: Item.
 				kind: "personal",
 			},
 			(transactionEntry) => (
-				<Suspense fallback={<Personal.Fallback transactionEntry={transactionEntry} />}>
-					<Personal
-						_suspense={"I know"}
-						transactionEntry={transactionEntry}
-					/>
-				</Suspense>
+				<Personal
+					_suspense={"I know"}
+					transactionEntry={transactionEntry}
+				/>
 			),
 		)
 		.with(

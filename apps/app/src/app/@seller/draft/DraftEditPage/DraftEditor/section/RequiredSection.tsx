@@ -1,8 +1,9 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Group } from "@use-pico/client/ui/group";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller";
-import { type FC, Suspense } from "react";
+import type { FC } from "react";
 import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { TitleValue } from "~/app/@common/title/ui/TitleValue";
@@ -15,13 +16,13 @@ import { PriceValue } from "../value/PriceValue";
 import { RestrictionValue } from "../value/RestrictionValue";
 
 export namespace RequiredSection {
-	export interface Props {
+	export interface Props extends MarkSuspense.Props {
 		draft: tDraft;
 		onView(view: DraftEditor.View): void;
 	}
 }
 
-export const RequiredSection: FC<RequiredSection.Props> = ({ draft, onView }) => {
+export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, onView }) => {
 	return (
 		<>
 			<Group>
@@ -59,6 +60,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ draft, onView }) =>
 				/>
 
 				<CategoryValue
+					_suspense={"I know"}
 					categoryId={draft.categoryId}
 					action={<ChevronAction />}
 					onClick={() => onView("category")}
@@ -69,22 +71,20 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ draft, onView }) =>
 					}}
 				/>
 
-				<Suspense fallback={<LocationValue.Fallback locationId={draft.locationId} />}>
-					<LocationValue
-						_suspense={"I know"}
-						locationId={draft.locationId}
-						textLabel={translator.text("Listing location (label)")}
-						textEmpty={translator.text("Listing location not selected")}
-						textHint={translator.text("Listing location (hint)")}
-						wrapperProps={{
-							ui: {
-								tone: draft.locationId ? "neutral" : "primary",
-							},
-						}}
-						action={<ChevronAction />}
-						onClick={() => onView("location")}
-					/>
-				</Suspense>
+				<LocationValue
+					_suspense={"I know"}
+					locationId={draft.locationId}
+					textLabel={translator.text("Listing location (label)")}
+					textEmpty={translator.text("Listing location not selected")}
+					textHint={translator.text("Listing location (hint)")}
+					wrapperProps={{
+						ui: {
+							tone: draft.locationId ? "neutral" : "primary",
+						},
+					}}
+					action={<ChevronAction />}
+					onClick={() => onView("location")}
+				/>
 			</Group>
 
 			<Group>

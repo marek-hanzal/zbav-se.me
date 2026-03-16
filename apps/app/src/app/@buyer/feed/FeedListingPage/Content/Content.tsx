@@ -4,7 +4,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
-import { type Ref, Suspense, useState } from "react";
+import { type Ref, useState } from "react";
 import { FeedEditorSheet } from "../../FeedEditor/FeedEditorSheet";
 import { ListingList } from "../ListingList";
 
@@ -45,22 +45,20 @@ export const Content = withFallback(
 					className={"transition-all"}
 				/>
 
-				<Suspense fallback={<ListingList.Fallback />}>
-					<ListingList
-						_suspense={"I know"}
-						feedId={feedId}
-						withScore
-						scrollToId={scrollToId}
-						query={{
-							...feed.query,
-							cursor: {
-								page: 0,
-								size: 256,
-							},
-						}}
-						appendix={<div ref={sentinelRef} />}
-					/>
-				</Suspense>
+				<ListingList
+					_suspense={"I know"}
+					feedId={feedId}
+					withScore
+					scrollToId={scrollToId}
+					query={{
+						...feed.query,
+						cursor: {
+							page: 0,
+							size: 256,
+						},
+					}}
+					appendix={<div ref={sentinelRef} />}
+				/>
 
 				<FeedEditorSheet
 					feedId={feedId}

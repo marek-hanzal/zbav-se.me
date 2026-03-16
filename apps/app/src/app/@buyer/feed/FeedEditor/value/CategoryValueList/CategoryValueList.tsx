@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { ValueList } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
 import type { EntitySchema } from "@use-pico/common/schema";
@@ -8,7 +9,9 @@ import { Suspense } from "react";
 import { CategoryInline } from "~/app/@session/category/ui/CategoryInline";
 
 export namespace CategoryValueList {
-	export interface Props extends Omit<ValueList.Props<tCategoryItem>, "items" | "renderFn"> {
+	export interface Props
+		extends Omit<ValueList.Props<tCategoryItem>, "items" | "renderFn">,
+			MarkSuspense.Props {
 		categoryIdIn: string[] | undefined | null;
 	}
 }
@@ -20,7 +23,7 @@ export namespace CategoryValueList {
  * @see apps/app/src/app//draft/ui/DraftEditor/patch/CategoryPatch.tsx
  */
 export const CategoryValueList = withFallback(
-	({ categoryIdIn, ...props }: CategoryValueList.Props) => {
+	({ _suspense, categoryIdIn, ...props }: CategoryValueList.Props) => {
 		if (!categoryIdIn || categoryIdIn.length === 0) {
 			return (
 				<ValueList<tCategoryItem>
@@ -41,7 +44,10 @@ export const CategoryValueList = withFallback(
 			<ValueList<EntitySchema.Type>
 				renderFn={(item) => (
 					<Suspense fallback={<CategoryInline.Fallback />}>
-						<CategoryInline categoryId={item.id} />
+						<CategoryInline
+							_suspense={"I know"}
+							categoryId={item.id}
+						/>
 					</Suspense>
 				)}
 				items={categoryIds.map((id) => ({

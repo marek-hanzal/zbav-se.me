@@ -1,6 +1,6 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
 import { HomeMenu } from "../HomeMenu";
 
 export namespace HomePage {
@@ -22,7 +22,9 @@ export const HomePage: FC<HomePage.Props> = (props) => {
 			textTitle={translator.text("zbav-se.me")}
 			{...props}
 		>
-			<HomeMenu />
+			<Suspense fallback={<HomeMenu.Fallback />}>
+				<HomeMenu _suspense={"I know"} />
+			</Suspense>
 		</TitleContainer>
 	);
 };

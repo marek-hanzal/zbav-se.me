@@ -3,8 +3,7 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
-import type { FC } from "react";
-import { useState } from "react";
+import { type FC, Suspense, useState } from "react";
 import { HomeMenu } from "./HomeMenu";
 
 export namespace HomeMenuButton {
@@ -71,11 +70,14 @@ export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ ui, ...props }) => {
 					disableScroll: true,
 				}}
 			>
-				<HomeMenu
-					onLinkClick={() => {
-						setIsOpen(false);
-					}}
-				/>
+				<Suspense fallback={<HomeMenu.Fallback />}>
+					<HomeMenu
+						_suspense={"I know"}
+						onLinkClick={() => {
+							setIsOpen(false);
+						}}
+					/>
+				</Suspense>
 			</BottomSheet>
 		</>
 	);

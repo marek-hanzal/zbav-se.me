@@ -1,9 +1,10 @@
 import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
-import { type FC, Suspense } from "react";
+import type { FC } from "react";
 import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
@@ -20,14 +21,22 @@ import { WarrantyValueList } from "./value/WarrantyValueList";
 export namespace Editor {
 	export type Section = "header";
 
-	export interface Props extends Omit<Container.Props, "hidden"> {
+	export interface Props extends Omit<Container.Props, "hidden">, MarkSuspense.Props {
 		feed: tFeed;
 		onView(view: FeedEditor.View): void;
 		hidden?: readonly Section[];
 	}
 }
 
-export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, ...props }) => {
+export const Editor: FC<Editor.Props> = ({
+	_suspense,
+	feed,
+	onView,
+	hidden,
+	ui,
+	children,
+	...props
+}) => {
 	return (
 		<Container
 			data-ui={"FeedEditor-[Container.content]"}
@@ -78,6 +87,7 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 
 			<Group>
 				<CategoryValueList
+					_suspense={"I know"}
 					data-action={"edit feed category"}
 					categoryIdIn={feed.query?.filter?.categoryIdIn}
 					textLabel={translator.text("Feed category (label)")}
@@ -103,30 +113,28 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, .
 			</Group>
 
 			<Group>
-				<Suspense fallback={<LocationValue.Fallback locationId={feed.locationId} />}>
-					<LocationValue
-						_suspense={"I know"}
-						data-action={"edit feed location"}
-						locationId={feed.locationId}
-						textLabel={translator.text("Feed location (label)")}
-						textEmpty={translator.text("Feed location not selected")}
-						textHint={translator.text("Feed location (hint)")}
-						action={
-							<Icon
-								icon={ChevronRightIcon}
-								ui={{
-									text: "xl",
-								}}
-							/>
-						}
-						wrapperProps={{
-							ui: {
-								tone: feed.locationId ? "neutral" : "secondary",
-							},
-						}}
-						onClick={() => onView("location")}
-					/>
-				</Suspense>
+				<LocationValue
+					_suspense={"I know"}
+					data-action={"edit feed location"}
+					locationId={feed.locationId}
+					textLabel={translator.text("Feed location (label)")}
+					textEmpty={translator.text("Feed location not selected")}
+					textHint={translator.text("Feed location (hint)")}
+					action={
+						<Icon
+							icon={ChevronRightIcon}
+							ui={{
+								text: "xl",
+							}}
+						/>
+					}
+					wrapperProps={{
+						ui: {
+							tone: feed.locationId ? "neutral" : "secondary",
+						},
+					}}
+					onClick={() => onView("location")}
+				/>
 
 				<RangeValue
 					data-action={"edit feed range"}

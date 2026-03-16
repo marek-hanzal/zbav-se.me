@@ -1,7 +1,8 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, Suspense } from "react";
+import type { FC } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
@@ -9,7 +10,7 @@ import { FavouriteButton } from "../../FavouriteButton";
 import { TransactionButton } from "../../TransactionButton";
 
 export namespace HeroSection {
-	export interface Props {
+	export interface Props extends MarkSuspense.Props {
 		feedId: string;
 		listing: tListing;
 		onView(view: "gallery"): void;
@@ -49,52 +50,27 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 				/>
 
 				{listing.my ? null : (
-					<Suspense
-						fallback={
-							<FavouriteButton.Fallback
-								feedId={feedId}
-								listingId={listing.id}
-								iconProps={{
-									ui: {
-										text: "xl",
-									},
-								}}
-								ui={{
-									tone: "secondary",
-									theme: "light",
-									round: "full",
-									square: "md",
-									justify: "center",
-									items: "center",
-									size: undefined,
-									inner: undefined,
-									snapTo: "top-right",
-								}}
-							/>
-						}
-					>
-						<FavouriteButton
-							_suspense={"I know"}
-							feedId={feedId}
-							listingId={listing.id}
-							iconProps={{
-								ui: {
-									text: "xl",
-								},
-							}}
-							ui={{
-								tone: "secondary",
-								theme: "light",
-								round: "full",
-								square: "md",
-								justify: "center",
-								items: "center",
-								size: undefined,
-								inner: undefined,
-								snapTo: "top-right",
-							}}
-						/>
-					</Suspense>
+					<FavouriteButton
+						_suspense={"I know"}
+						feedId={feedId}
+						listingId={listing.id}
+						iconProps={{
+							ui: {
+								text: "xl",
+							},
+						}}
+						ui={{
+							tone: "secondary",
+							theme: "light",
+							round: "full",
+							square: "md",
+							justify: "center",
+							items: "center",
+							size: undefined,
+							inner: undefined,
+							snapTo: "top-right",
+						}}
+					/>
 				)}
 
 				<HeroImage

@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller";
@@ -11,13 +12,13 @@ import { OptionalSection } from "./section/OptionalSection";
 import { RequiredSection } from "./section/RequiredSection";
 
 export namespace Editor {
-	export interface Props {
+	export interface Props extends MarkSuspense.Props {
 		draft: tDraft;
 		onView(view: DraftEditor.View): void;
 	}
 }
 
-export const Editor: FC<Editor.Props> = ({ draft, onView }) => {
+export const Editor: FC<Editor.Props> = ({ _suspense, draft, onView }) => {
 	return (
 		<TitleContainer
 			textTitle={translator.text("Draft edit (title)")}
@@ -35,6 +36,7 @@ export const Editor: FC<Editor.Props> = ({ draft, onView }) => {
 				}}
 			>
 				<RequiredSection
+					_suspense={"I know"}
 					draft={draft}
 					onView={onView}
 				/>

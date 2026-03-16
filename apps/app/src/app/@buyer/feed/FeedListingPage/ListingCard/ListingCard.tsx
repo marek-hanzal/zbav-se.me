@@ -15,7 +15,7 @@ export namespace ListingCard {
 }
 
 export const ListingCard = withFallback(
-	({ feedId, listingId, onView, ui, children, ...props }: ListingCard.Props) => {
+	({ _suspense, feedId, listingId, onView, ui, children, ...props }: ListingCard.Props) => {
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
 
 		useListingEvent({
@@ -37,12 +37,14 @@ export const ListingCard = withFallback(
 				{...props}
 			>
 				<HeroSection
+					_suspense={"I know"}
 					feedId={feedId}
 					listing={listing}
 					onView={onView}
 				/>
 
 				<InfoSection
+					_suspense={"I know"}
 					listing={listing}
 					onView={onView}
 				/>

@@ -1,6 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { SaveIcon } from "@use-pico/client/icon";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -17,12 +18,13 @@ import { useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace SaveAsFeedButton {
-	export interface Props extends Button.Props {
+	export interface Props extends Button.Props, MarkSuspense.Props {
 		feedId: string;
 	}
 }
 
 export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
+	_suspense,
 	feedId,
 	ui,
 	className,

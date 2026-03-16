@@ -1,4 +1,5 @@
 import { CloseIcon } from "@use-pico/client/icon";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
@@ -34,16 +35,14 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 		return {
 			default: {
 				children: (
-					<Suspense fallback={<ListingCard.Fallback />}>
-						<ListingCard
-							_suspense={"I know"}
-							feedId={feedId}
-							listingId={listing.id}
-							onView={setView}
-						>
-							{children}
-						</ListingCard>
-					</Suspense>
+					<ListingCard
+						_suspense={"I know"}
+						feedId={feedId}
+						listingId={listing.id}
+						onView={setView}
+					>
+						{children}
+					</ListingCard>
 				),
 				header: ({ close }) => ({
 					title: listing.title,
@@ -72,15 +71,13 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 			},
 			"seller-info": {
 				children: (
-					<Suspense fallback={<SellerInfo.Fallback />}>
-						<SellerInfo
-							_suspense={"I know"}
-							listingId={listing.id}
-							ui={{
-								inner: "default",
-							}}
-						/>
-					</Suspense>
+					<SellerInfo
+						_suspense={"I know"}
+						listingId={listing.id}
+						ui={{
+							inner: "default",
+						}}
+					/>
 				),
 				header: () => ({
 					title: translator.text("Seller info (title)"),
@@ -102,19 +99,21 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 	]);
 
 	return (
-		<SheetView<ListingSheet.View>
-			data-ui={"ListingSheet"}
-			state={{
-				value: view,
-				set: setView,
-			}}
-			views={views}
-			detent={"default"}
-			onClose={() => {
-				onClose();
-				setView("default");
-			}}
-			{...props}
-		/>
+		<Suspense fallback={<SpinnerContainer />}>
+			<SheetView<ListingSheet.View>
+				data-ui={"ListingSheet"}
+				state={{
+					value: view,
+					set: setView,
+				}}
+				views={views}
+				detent={"default"}
+				onClose={() => {
+					onClose();
+					setView("default");
+				}}
+				{...props}
+			/>
+		</Suspense>
 	);
 };

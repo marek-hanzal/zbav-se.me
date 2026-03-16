@@ -69,6 +69,7 @@ export const DraftEditor = withFallback(
 				default: {
 					children: (
 						<Editor
+							_suspense={"I know"}
 							draft={draft}
 							onView={setView}
 						/>
