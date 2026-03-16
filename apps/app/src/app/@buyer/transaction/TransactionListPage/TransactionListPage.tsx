@@ -2,15 +2,13 @@ import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
-import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useMemo } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
-import { TransactionList } from "../ui/TransactionList";
 import { Empty } from "../ui/TransactionList/Empty";
+import { ListGroup, useCollection } from "./ListGroup";
 
 export namespace TransactionListPage {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
@@ -24,68 +22,26 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 	...props
 }) => {
 	const locale = useLocale();
-	const { data: activeCollection } = withTransactionQuery.useCollectionQuery(
-		{
-			filter: {
-				active: true,
-			},
-			cursor: {
-				page: 0,
-				size: 1000,
-			},
-			sort: [
-				{
-					field: "lastAt",
-					order: "desc",
-				},
-			],
+	const { data: activeCollection } = useCollection({
+		filter: {
+			active: true,
 		},
-		{
-			refetchInterval,
+		refetchInterval,
+	});
+	const { data: inactiveCollection } = useCollection({
+		filter: {
+			active: false,
+			terminal: false,
 		},
-	);
-	const { data: inactiveCollection } = withTransactionQuery.useCollectionQuery(
-		{
-			filter: {
-				active: false,
-				terminal: false,
-			},
-			cursor: {
-				page: 0,
-				size: 1000,
-			},
-			sort: [
-				{
-					field: "lastAt",
-					order: "desc",
-				},
-			],
+		refetchInterval,
+	});
+	const { data: closedCollection } = useCollection({
+		filter: {
+			active: false,
+			terminal: true,
 		},
-		{
-			refetchInterval,
-		},
-	);
-	const { data: closedCollection } = withTransactionQuery.useCollectionQuery(
-		{
-			filter: {
-				active: false,
-				terminal: true,
-			},
-			cursor: {
-				page: 0,
-				size: 1000,
-			},
-			sort: [
-				{
-					field: "lastAt",
-					order: "desc",
-				},
-			],
-		},
-		{
-			refetchInterval,
-		},
-	);
+		refetchInterval,
+	});
 	const check = useMemo(() => {
 		return [
 			{
@@ -132,79 +88,37 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 						inner: "default",
 					}}
 				>
-					{activeCollection.length > 0 ? (
-						<Container
-							ui={{
-								layout: "vertical-flex",
-								gap: "default",
-							}}
-						>
-							<Typo
-								label={translator.text("Messages active listings section (title)")}
-								ui={{
-									tone: "primary",
-									theme: "light",
-									text: "sm",
-									font: "bold",
-									color: "lead",
-								}}
-								className={"text-center"}
-							/>
+					<ListGroup
+						label={translator.text("Messages active listings section (title)")}
+						transactionIds={activeCollection}
+						typoUi={{
+							tone: "primary",
+							theme: "light",
+						}}
+					/>
 
-							<TransactionList transactionIds={activeCollection} />
-						</Container>
-					) : null}
+					<ListGroup
+						label={translator.text("Messages inactive listings section (title)")}
+						transactionIds={inactiveCollection}
+						typoUi={{
+							tone: "neutral",
+							theme: "light",
+							opacity: "7",
+						}}
+					/>
 
-					{inactiveCollection.length > 0 ? (
-						<Container
-							ui={{
-								layout: "vertical-flex",
-								gap: "default",
-							}}
-						>
-							<Typo
-								label={translator.text(
-									"Messages inactive listings section (title)",
-								)}
-								ui={{
-									tone: "neutral",
-									theme: "light",
-									text: "sm",
-									font: "bold",
-									color: "lead",
-									opacity: "7",
-								}}
-								className={"text-center"}
-							/>
-
-							<TransactionList transactionIds={inactiveCollection} />
-						</Container>
-					) : null}
-
-					{closedCollection.length > 0 ? (
-						<Container
-							ui={{
-								layout: "vertical-flex",
-								gap: "default",
-								opacity: "7",
-							}}
-						>
-							<Typo
-								label={translator.text("Messages closed listings section (title)")}
-								ui={{
-									tone: "neutral",
-									theme: "light",
-									text: "sm",
-									font: "bold",
-									color: "lead",
-									opacity: "7",
-								}}
-								className={"text-center"}
-							/>
-
-							<TransactionList transactionIds={closedCollection} />
-						</Container>
-					) : null}
+					<ListGroup
+						label={translator.text("Messages closed listings section (title)")}
+						transactionIds={closedCollection}
+						ui={{
+							opacity: "7",
+						}}
+						typoUi={{
+							tone: "neutral",
+							theme: "light",
+							opacity: "7",
+						}}
+					/>
 				</Container>
 			</EmptyState>
 		</TitleContainer>
