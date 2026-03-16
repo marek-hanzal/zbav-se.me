@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense } from "react";
@@ -10,10 +11,19 @@ export namespace FavouriteListPage {
 }
 
 export const FavouriteListPage: FC<FavouriteListPage.Props> = (props) => {
+	const locale = useLocale();
+
 	return (
 		<TitleContainer
 			textTitle={translator.text("Your favourites (title)")}
-			left={<BackHomeButton />}
+			left={
+				<BackHomeButton
+					to="/$locale/home"
+					params={{
+						locale,
+					}}
+				/>
+			}
 			right={<HomeMenuButton />}
 			{...props}
 		>

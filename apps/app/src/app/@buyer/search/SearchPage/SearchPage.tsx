@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense } from "react";
@@ -18,11 +19,20 @@ export namespace SearchPage {
  * @see apps/app/src/@routes
  */
 export const SearchPage: FC<SearchPage.Props> = ({ feedId, ui, ...props }) => {
+	const locale = useLocale();
+
 	return (
 		<TitleContainer
 			data-ui={"SearchPage[TitleContainer]"}
 			textTitle={translator.text("Search (title)")}
-			left={<BackHomeButton />}
+			left={
+				<BackHomeButton
+					to="/$locale/home"
+					params={{
+						locale,
+					}}
+				/>
+			}
 			ui={{
 				layout: "vertical-header-content",
 				...ui,

@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense } from "react";
@@ -18,10 +19,19 @@ export namespace DraftListPage {
  * @see apps/app/src/@routes
  */
 export const DraftListPage: FC<DraftListPage.Props> = (props) => {
+	const locale = useLocale();
+
 	return (
 		<TitleContainer
 			textTitle={translator.text("Draft list (title)")}
-			left={<BackHomeButton />}
+			left={
+				<BackHomeButton
+					to="/$locale/home"
+					params={{
+						locale,
+					}}
+				/>
+			}
 			right={<HomeMenuButton />}
 			{...props}
 		>

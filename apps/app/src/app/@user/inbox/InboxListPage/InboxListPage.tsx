@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { translator } from "@use-pico/common/translator";
 import type { zInboxPriorityEnum } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
@@ -13,10 +14,19 @@ export namespace InboxListPage {
 }
 
 export const InboxListPage: FC<InboxListPage.Props> = ({ priority, ...props }) => {
+	const locale = useLocale();
+
 	return (
 		<TitleContainer
 			textTitle={translator.text("Inbox (title)")}
-			left={<BackHomeButton />}
+			left={
+				<BackHomeButton
+					to="/$locale/home"
+					params={{
+						locale,
+					}}
+				/>
+			}
 			right={<HomeMenuButton />}
 			{...props}
 		>

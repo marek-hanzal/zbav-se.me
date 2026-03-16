@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
@@ -24,6 +25,7 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 	refetchInterval = 5_000,
 	...props
 }) => {
+	const locale = useLocale();
 	const { data: listingCollection } = withListingQuery.useCollectionQuery({
 		cursor: {
 			page: 0,
@@ -126,7 +128,14 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 		<TitleContainer
 			data-ui="TransactionListingListPage"
 			textTitle={translator.text("Messages (title)")}
-			left={<BackHomeButton />}
+			left={
+				<BackHomeButton
+					to="/$locale/home"
+					params={{
+						locale,
+					}}
+				/>
+			}
 			right={<HomeMenuButton />}
 			{...props}
 		>

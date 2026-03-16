@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
@@ -19,11 +20,20 @@ export const ListingTransactionListPage: FC<ListingTransactionListPage.Props> = 
 	listingId,
 	...props
 }) => {
+	const locale = useLocale();
+
 	return (
 		<TitleContainer
 			data-ui="ListingTransactionList[TitleContainer]"
 			textTitle={translator.text("Messages (title)")}
-			left={<BackHomeButton />}
+			left={
+				<BackHomeButton
+					to="/$locale/seller/transaction/list"
+					params={{
+						locale,
+					}}
+				/>
+			}
 			right={<HomeMenuButton />}
 			{...props}
 		>

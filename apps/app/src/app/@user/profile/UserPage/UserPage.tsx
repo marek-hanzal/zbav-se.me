@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { UserIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
@@ -22,13 +23,21 @@ export namespace UserPage {
  * @see apps/app/src/@routes
  */
 export const UserPage: FC<UserPage.Props> = ({ ui, ...props }) => {
+	const locale = useLocale();
 	const user = useUser();
 
 	return (
 		<TitleContainer
 			data-ui={"User[TitleContainer]"}
 			textTitle={translator.text("User profile (title)")}
-			left={<BackHomeButton />}
+			left={
+				<BackHomeButton
+					to="/$locale/home"
+					params={{
+						locale,
+					}}
+				/>
+			}
 			right={<HomeMenuButton />}
 			ui={{
 				layout: "vertical-header-content",

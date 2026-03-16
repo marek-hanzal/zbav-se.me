@@ -14,15 +14,23 @@ import { RequiredSection } from "./section/RequiredSection";
 export namespace Editor {
 	export interface Props extends MarkSuspense.Props {
 		draft: tDraft;
+		locale: string;
 		onView(view: DraftEditor.View): void;
 	}
 }
 
-export const Editor: FC<Editor.Props> = ({ _suspense, draft, onView }) => {
+export const Editor: FC<Editor.Props> = ({ _suspense, draft, locale, onView }) => {
 	return (
 		<TitleContainer
 			textTitle={translator.text("Draft edit (title)")}
-			left={<BackHomeButton />}
+			left={
+				<BackHomeButton
+					to="/$locale/seller/draft/list"
+					params={{
+						locale,
+					}}
+				/>
+			}
 			right={<HomeMenuButton />}
 		>
 			<Container

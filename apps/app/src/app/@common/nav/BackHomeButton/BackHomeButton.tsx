@@ -1,26 +1,43 @@
-import { useLocale } from "@use-pico/client/hook";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { LinkTo } from "@use-pico/client/ui/link-to";
+import { createLink, type LinkComponent } from "@tanstack/react-router";
+import { ArrowLeftIcon, Icon } from "@use-pico/client/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import type { FC } from "react";
+import type { ComponentProps, FC } from "react";
 
 export namespace BackHomeButton {
-	export type Props = {};
+	export interface Props extends ComponentProps<typeof BackHomeButton> {
+		//
+	}
 }
 
-export const BackHomeButton: FC<BackHomeButton.Props> = () => {
-	const locale = useLocale();
-
+const BaseBackHomeButton: FC<uiBackButton.Component<ComponentProps<"a">>> = ({
+	ui,
+	className,
+	...props
+}) => {
 	return (
-		<LinkTo
+		<a
+			data-root={"BackHomeButton"}
 			{...uiBackButton({
-				className: [],
+				ui,
+				className,
 			})}
-			icon={ArrowLeftIcon}
-			to="/$locale/home"
-			params={{
-				locale,
-			}}
+			{...props}
+		>
+			<Icon
+				data-ui={"BackHomeButton-[Icon]"}
+				icon={ArrowLeftIcon}
+			/>
+		</a>
+	);
+};
+
+const CreateBackHomeButton = createLink(BaseBackHomeButton);
+
+export const BackHomeButton: LinkComponent<typeof BaseBackHomeButton> = (props) => {
+	return (
+		<CreateBackHomeButton
+			preload={"intent"}
+			{...props}
 		/>
 	);
 };

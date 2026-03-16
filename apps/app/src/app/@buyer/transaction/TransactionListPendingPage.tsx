@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
@@ -10,11 +11,20 @@ export namespace TransactionListPendingPage {
 }
 
 export const TransactionListPendingPage: FC<TransactionListPendingPage.Props> = (props) => {
+	const locale = useLocale();
+
 	return (
 		<TitleContainer
 			data-ui="TransactionList[TitleContainer]"
 			textTitle={translator.text("Messages (title)")}
-			left={<BackHomeButton />}
+			left={
+				<BackHomeButton
+					to="/$locale/home"
+					params={{
+						locale,
+					}}
+				/>
+			}
 			right={<HomeMenuButton />}
 			{...props}
 		>
