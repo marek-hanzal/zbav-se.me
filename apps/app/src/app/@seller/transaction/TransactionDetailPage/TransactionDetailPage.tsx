@@ -5,7 +5,6 @@ import type { FC } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { Transaction } from "~/app/@seller/transaction/~public/Transaction";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
-import { TransactionDetailInvalidate } from "./TransactionDetailInvalidate";
 
 export namespace TransactionDetailPage {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
@@ -25,8 +24,6 @@ export const TransactionDetailPage: FC<TransactionDetailPage.Props> = ({
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<TransactionDetailInvalidate transactionId={transactionId} />
-
 			<Transaction
 				_suspense={_suspense}
 				transactionId={transactionId}

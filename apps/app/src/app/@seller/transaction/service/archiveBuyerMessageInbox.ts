@@ -1,0 +1,54 @@
+import type { QueryClient } from "@tanstack/react-query";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
+import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
+import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
+
+export namespace archiveBuyerMessageInbox {
+	export interface Props {
+		listingId: string;
+		queryClient: QueryClient;
+		transactionId: string;
+	}
+}
+
+export const archiveBuyerMessageInbox = async ({
+	listingId,
+	queryClient,
+	transactionId,
+}: archiveBuyerMessageInbox.Props): Promise<void> => {
+	await withInboxQuery.patchCollectionFn(
+		queryClient,
+		{
+			patch: {
+				archivedAt: new Date().toISOString(),
+			},
+			query: {
+				where: {
+					archivedAtIsNull: true,
+					family: "transaction",
+					type: "buyer-message",
+					referenceIn: [
+						transactionId,
+						listingId,
+					],
+				},
+			},
+		},
+		[
+			"fetch",
+			"collection",
+			"count",
+		],
+	);
+
+	await Promise.all([
+		withTransactionQuery.invalidator(queryClient, [
+			"collection",
+			"count",
+		]),
+		withTransactionListingQuery.invalidator(queryClient, [
+			"collection",
+			"count",
+		]),
+	]);
+};
