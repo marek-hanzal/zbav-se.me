@@ -283,6 +283,9 @@ export const zInboxFilter = z.object({
     referenceIn: z.array(z.string()).min(1).register(z.globalRegistry, {
         description: 'Match inbox rows whose reference array overlaps any of these keys'
     }).optional(),
+    referenceAllIn: z.array(z.string()).min(1).register(z.globalRegistry, {
+        description: 'Match inbox rows whose reference array contains all of these keys'
+    }).optional(),
     family: zInboxFamilyEnum.optional(),
     type: zInboxTypeEnum.optional(),
     priority: zInboxPriorityEnum.optional(),
@@ -322,6 +325,9 @@ export const zInboxWhere = z.object({
     }).optional(),
     referenceIn: z.array(z.string()).min(1).register(z.globalRegistry, {
         description: 'Match inbox rows whose reference array overlaps any of these keys'
+    }).optional(),
+    referenceAllIn: z.array(z.string()).min(1).register(z.globalRegistry, {
+        description: 'Match inbox rows whose reference array contains all of these keys'
     }).optional(),
     family: zInboxFamilyEnum.optional(),
     type: zInboxTypeEnum.optional(),

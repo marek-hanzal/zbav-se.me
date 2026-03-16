@@ -22,17 +22,17 @@ export const archiveBuyerMessageInbox = async ({
 			patch: {
 				archivedAt: new Date().toISOString(),
 			},
-			query: {
-				where: {
-					archivedAtIsNull: true,
-					family: "transaction",
-					type: "buyer-message",
-					referenceIn: [
-						transactionId,
-						listingId,
-					],
+				query: {
+					where: {
+						archivedAtIsNull: true,
+						family: "transaction",
+						type: "buyer-message",
+						referenceAllIn: [
+							transactionId,
+							listingId,
+						],
+					},
 				},
-			},
 		},
 		[
 			"fetch",
@@ -51,6 +51,10 @@ export const archiveBuyerMessageInbox = async ({
 			"count",
 		]),
 		withTransactionListingQuery.invalidator(queryClient, [
+			"collection",
+			"count",
+		]),
+		withInboxQuery.invalidator(queryClient, [
 			"collection",
 			"count",
 		]),

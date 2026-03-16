@@ -16,6 +16,9 @@ export const InboxFilterSchema = z
 		referenceIn: z.array(z.string()).min(1).optional().openapi({
 			description: "Match inbox rows whose reference array overlaps any of these keys",
 		}),
+		referenceAllIn: z.array(z.string()).min(1).optional().openapi({
+			description: "Match inbox rows whose reference array contains all of these keys",
+		}),
 		family: InboxFamilyEnumSchema.optional(),
 		type: InboxTypeEnumSchema.optional(),
 		priority: InboxPriorityEnumSchema.optional(),

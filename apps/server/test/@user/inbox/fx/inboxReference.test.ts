@@ -240,7 +240,7 @@ describe("inbox reference", () => {
 		]);
 	});
 
-	it("matches single reference and referenceIn against reference arrays", async () => {
+	it("matches single reference, any-reference and all-reference filters", async () => {
 		const database = await testabase("inboxReference-query-filtering");
 
 		const { api } = auth(() => {
@@ -319,11 +319,28 @@ describe("inbox reference", () => {
 			});
 		}).pipe(withInboxRuntimeFx(database), Effect.runPromise);
 
+		const allReference = await Effect.gen(function* () {
+			return yield* inboxCollectionFx({
+				where: {
+					referenceAllIn: [
+						"listing-1",
+						"transaction-1",
+					],
+				},
+				scope: {
+					userId: user.id,
+				},
+			});
+		}).pipe(withInboxRuntimeFx(database), Effect.runPromise);
+
 		expect(singleReference.map(({ id }) => id)).toEqual([
 			inboxIds.listingInboxId,
 		]);
 		expect(anyReference.map(({ id }) => id)).toEqual([
 			inboxIds.otherInboxId,
+		]);
+		expect(allReference.map(({ id }) => id)).toEqual([
+			inboxIds.listingInboxId,
 		]);
 	});
 });

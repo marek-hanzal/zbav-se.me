@@ -291,6 +291,13 @@ export const sInboxFilter = {
             },
             minItems: 1
         },
+        referenceAllIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            minItems: 1
+        },
         family: {
             $ref: '#/components/schemas/InboxFamilyEnum'
         },
@@ -364,6 +371,13 @@ export const sInboxWhere = {
             type: 'string'
         },
         referenceIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            minItems: 1
+        },
+        referenceAllIn: {
             type: 'array',
             items: {
                 type: 'string'
