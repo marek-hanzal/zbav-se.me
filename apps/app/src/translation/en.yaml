@@ -22,9 +22,15 @@
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
   ref: Listing category (title)
   value: Listing category (title)
+04cf9e0686a93465f2354dfd8553727d51dd7516e95953b741620240:
+  ref: Go to drafts (link)
+  value: Go to drafts (link)
 050d325dc0ab4741ff8dd2e315e563bf0a746ea997e21d31bc54f8dd:
   ref: Listing category not selected
   value: Listing category not selected
+053186ab8ac076e257afc816ae62151a4fb7bc87e4e1927dc5312e2b:
+  ref: No listings - all empty (message)
+  value: No listings - all empty (message)
 056c5d8421348af4114fe316b813803bc6d3a9f939e93b4487b32779:
   ref: Listing expiration (hint)
   value: Listing expiration (hint)
@@ -388,6 +394,9 @@
 61324250f05e5b53c0994000ad235a587fa6c894a2414d561a434548:
   ref: Draft list (title)
   value: Draft list (title)
+615b016adf6d7fbbaeadbba5cef67b63930f5eea2c5729100da00315:
+  ref: No listings - all empty (title)
+  value: No listings - all empty (title)
 61dd087b73e6d2b3291aa14c76d9dcc813946be2957f788836796746:
   ref: Transaction status closed (label)
   value: Transaction closed
@@ -496,9 +505,6 @@
 847f52b94d2fd82f89cf548490067c305182a98ca1342616d166ae6a:
   ref: Personal - Phone (placeholder)
   value: Personal - Phone (placeholder)
-85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
-  ref: No listings (title)
-  value: No listings (title)
 86856c2ffab9a4998ded4e5585299bf873d60db1bcaed1e4f8f13869:
   ref: Image not available anymore
   value: Image not available anymore

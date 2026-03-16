@@ -20,7 +20,7 @@ export namespace FeedListPage {
 export const FeedListPage: FC<FeedListPage.Props> = ({ ui, ...props }) => {
 	return (
 		<TitleContainer
-			data-ui={"FeedList[TitleContainer]"}
+			data-ui={"FeedListPage"}
 			textTitle={translator.text("Feed select (title)")}
 			left={<BackHomeButton />}
 			ui={{
