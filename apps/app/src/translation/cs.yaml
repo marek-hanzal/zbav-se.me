@@ -144,7 +144,7 @@
     value: gallery
 188182c2fe82cee01a535fea542022b96a389bdbc5c5f374f0aa5564:
     ref: Chat - transaction resolved - seller cannot write (message)
-    value: Chat - transaction resolved - seller cannot write (message)
+    value: Máš vyřízeno, nic dalšího tu nemusíš řešit.
 1943b1ef0623fcc6116ef391b30cce37b7fd75dcde851410b1d5f9d6:
     ref: Upload photos (button)
     value: Nahraj fotky
@@ -1417,4 +1417,62 @@ seller - Transaction successful (message):
         **Všechno v pohodě, obchod byl úspěšný!**
 
         Dál už tu nic není.
+    static: true
+transaction - seller - status-pending:
+    value: |
+        **Prodejce čeká na tvoje potvrzení**
+    static: true
+transaction - buyer - status-pending:
+    value: |
+        **Obchod se otevře, až ho prodejce přijme**
+
+        _Alespoň budeš mít jasno, zda o obchod má zájem, buď prosím trpělivý._
+    static: true
+transaction - seller - status-open:
+    value: |
+        **Otevřel jsi obchod**
+
+        _Teď se do toho můžete společně pustit!_
+    static: true
+transaction - buyer - status-open:
+    value: |
+        **Prodejce otevřel obchod**
+
+        _Teď se do toho můžete společně pustit!_
+    static: true
+transaction - seller - status-resolved:
+    value: |
+        **Máš vyřešeno**
+
+        _Dál už tu pro tebe (zatím) nic není._
+    static: true
+transaction - buyer - status-resolved:
+    value: |
+        **Prodejce vyřídil obchod**
+
+        _Později se prosím vrať obchod uzavřít, prozatím je to vše._
+    static: true
+transaction - seller - status-dispute-seller:
+    value: |
+        **Otevřel jsi řešení problému**
+
+        _Domluvte se, co je špatně a společně problém rozlouskněte._
+    static: true
+transaction - buyer - status-dispute-seller:
+    value: |
+        **Je potřeba tvoje pozornost**
+
+        _Prodejce si žádá vyřešit problém - společně se na to podívejte a domluvte se._
+    static: true
+transaction - seller - status-success:
+    value: |
+        **Paráda!**
+
+        _Kupující je spokojený, obchod byl úspěšně uzavřen!_
+    static: true
+transaction - buyer - status-success:
+    value: |
+        **Skvělé!**
+
+        _Úspěšně jsi uzavřel obchod, dál už tady nic není._
     static: true
