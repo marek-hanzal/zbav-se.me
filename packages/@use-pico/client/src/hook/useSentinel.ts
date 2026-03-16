@@ -1,5 +1,5 @@
 import type { RefObject } from "react";
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export namespace useSentinel {
 	export interface Props<TElement extends HTMLElement> {
@@ -143,10 +143,10 @@ export function useSentinel<TElement extends HTMLElement>({
 		sentinelRef,
 	]);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		sync();
 
-		const { root } = observedRef.current;
+		const root = containerRef.current;
 		if (!root) {
 			return;
 		}
@@ -165,6 +165,7 @@ export function useSentinel<TElement extends HTMLElement>({
 			disconnect();
 		};
 	}, [
+		containerRef,
 		disconnect,
 		sync,
 	]);
