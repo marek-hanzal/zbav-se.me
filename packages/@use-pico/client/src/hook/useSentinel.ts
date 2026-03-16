@@ -1,31 +1,42 @@
 import type { RefObject } from "react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 export namespace useSentinel {
-	export interface Props {
+	export interface Props<TElement extends HTMLElement> {
 		containerRef: RefObject<HTMLElement | null>;
-		threshold?: number | number[];
+		sentinelRef: RefObject<TElement | null>;
+		threshold?: number;
 		onEnter?(): void;
 		onLeave?(): void;
 	}
 
-	export interface Result<TElement extends HTMLElement | null> {
-		sentinelRef: RefObject<TElement>;
+	export interface Result {
 		inView: boolean;
 	}
 }
 
-export function useSentinel<TElement extends HTMLElement | null>({
+type useSentinelObserved = {
+	root: HTMLElement | null;
+	sentinel: HTMLElement | null;
+	threshold: number;
+};
+
+export function useSentinel<TElement extends HTMLElement>({
 	containerRef,
+	sentinelRef,
 	threshold = 1,
 	onEnter,
 	onLeave,
-}: useSentinel.Props): useSentinel.Result<TElement> {
+}: useSentinel.Props<TElement>): useSentinel.Result {
 	const [inView, setInView] = useState(false);
 
-	const sentinelElRef = useRef<TElement>(null);
 	const ioRef = useRef<IntersectionObserver | null>(null);
 	const lastRef = useRef<boolean | null>(null);
+	const observedRef = useRef<useSentinelObserved>({
+		root: null,
+		sentinel: null,
+		threshold,
+	});
 	const latestRef = useRef({
 		threshold,
 		onEnter,
@@ -44,6 +55,18 @@ export function useSentinel<TElement extends HTMLElement | null>({
 		lastRef.current = null;
 	}, []);
 
+	const reset = useCallback(() => {
+		observedRef.current = {
+			root: null,
+			sentinel: null,
+			threshold: latestRef.current.threshold,
+		};
+		disconnect();
+		setInView(false);
+	}, [
+		disconnect,
+	]);
+
 	const connect = useCallback(
 		(root: HTMLElement, sentinel: HTMLElement) => {
 			disconnect();
@@ -54,7 +77,9 @@ export function useSentinel<TElement extends HTMLElement | null>({
 						return;
 					}
 
-					const next = entry.isIntersecting;
+					const next =
+						entry.isIntersecting &&
+						entry.intersectionRatio >= latestRef.current.threshold;
 					if (lastRef.current === next) {
 						return;
 					}
@@ -83,51 +108,68 @@ export function useSentinel<TElement extends HTMLElement | null>({
 		],
 	);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Ssst
-	const sentinelRef = useMemo<RefObject<TElement>>(() => {
-		const obj: any = {};
+	const sync = useCallback(() => {
+		const root = containerRef.current;
+		const sentinel = sentinelRef.current;
+		const {
+			root: observedRoot,
+			sentinel: observedSentinel,
+			threshold: observedThreshold,
+		} = observedRef.current;
 
-		Object.defineProperty(obj, "current", {
-			enumerable: true,
-			get() {
-				return sentinelElRef.current;
-			},
-			set(next: HTMLElement | null) {
-				if (sentinelElRef.current === next) {
-					return;
-				}
+		if (!root || !sentinel) {
+			reset();
+			return;
+		}
 
-				sentinelElRef.current = next as TElement;
+		if (
+			observedRoot === root &&
+			observedSentinel === sentinel &&
+			observedThreshold === latestRef.current.threshold
+		) {
+			return;
+		}
 
-				if (!next) {
-					disconnect();
-					setInView(false);
-					return;
-				}
+		observedRef.current = {
+			root,
+			sentinel,
+			threshold: latestRef.current.threshold,
+		};
+		connect(root, sentinel);
+	}, [
+		connect,
+		containerRef,
+		reset,
+		sentinelRef,
+	]);
 
-				const root = containerRef.current;
-				if (!root) {
-					return;
-				}
+	useLayoutEffect(() => {
+		sync();
 
-				connect(root, next);
-			},
+		const { root } = observedRef.current;
+		if (!root) {
+			return;
+		}
+
+		const mo = new MutationObserver(() => {
+			sync();
 		});
 
-		return obj;
-	}, []);
+		mo.observe(root, {
+			childList: true,
+			subtree: true,
+		});
 
-	// cleanup on unmount
-	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
-	useEffect(() => {
 		return () => {
+			mo.disconnect();
 			disconnect();
-			sentinelElRef.current = null;
 		};
-	}, []);
+	}, [
+		disconnect,
+		sync,
+	]);
 
 	return {
-		sentinelRef,
 		inView,
 	};
 }

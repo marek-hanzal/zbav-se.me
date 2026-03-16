@@ -22,9 +22,11 @@ export const FeedListingPage: FC<FeedListingPage.Props> = ({
 }) => {
 	const locale = useLocale();
 	const containerRef = useRef<HTMLDivElement>(null);
+	const sentinelRef = useRef<HTMLDivElement>(null);
 
-	const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
+	const { inView: isLast } = useSentinel<HTMLDivElement>({
 		containerRef,
+		sentinelRef,
 		threshold: 0.25,
 	});
 

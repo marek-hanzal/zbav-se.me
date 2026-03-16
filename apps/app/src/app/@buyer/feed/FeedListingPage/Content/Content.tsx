@@ -69,7 +69,7 @@ export const Content = withFallback(
 							round: "full",
 							snapTo: "top-right",
 							text: "xl",
-							opacity: isLast ? "none" : "8",
+							opacity: isLast ? "full" : "8",
 						}}
 						className={"transition-all"}
 					/>
