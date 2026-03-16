@@ -26,11 +26,17 @@ export const Content = withFallback(
 		const [isEditor, setIsEditor] = useState(false);
 		const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 		const { data: anyListingCollection } = withListingQuery.useCollectionQuery({
-			cursor: { page: 0, size: 1 },
+			cursor: {
+				page: 0,
+				size: 1,
+			},
 		});
 		const { data: currentListingCollection } = withListingQuery.useCollectionQuery({
 			...feed.query,
-			cursor: { page: 0, size: 1 },
+			cursor: {
+				page: 0,
+				size: 1,
+			},
 		});
 
 		const check = useMemo(() => {
