@@ -1476,3 +1476,15 @@ transaction - buyer - status-success:
 
         _Úspěšně jsi uzavřel obchod, dál už tady nic není._
     static: true
+transaction - seller - status-rejected-seller:
+    value: |
+        **Odmítl jsi obchod**
+
+        _V pořádku, kupující dostal zprávu, dál už tady nic řešit nemusíš._
+    static: true
+transaction - buyer - status-rejected-seller:
+    value: |
+        **Dneska to nevyšlo**
+
+        _Prodejce tento obchod nepřijal._
+    static: true

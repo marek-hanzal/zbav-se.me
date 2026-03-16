@@ -7,6 +7,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionCreateMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
@@ -20,7 +21,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({ listing, ui, ..
 	const locale = useLocale();
 	const queryClient = useQueryClient();
 	const transactionCreateMutation = withTransactionCreateMutation.useMutation({
-		async onSuccess() {
+		async onPostMutation() {
 			await withListingQuery.invalidator(
 				queryClient,
 				[
@@ -34,6 +35,10 @@ export const TransactionButton: FC<TransactionButton.Props> = ({ listing, ui, ..
 					},
 				},
 			);
+			await withTransactionQuery.invalidator(queryClient, [
+				"collection",
+				"count",
+			]);
 		},
 	});
 
