@@ -1393,6 +1393,9 @@ export const zTransactionListingFilter = z.object({
     active: z.boolean().register(z.globalRegistry, {
         description: 'When true, match listings with unread buyer-message inbox activity; when false, match listings without unread buyer-message inbox activity'
     }).optional(),
+    terminal: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match listings whose every transaction is terminal; when false, match listings that still have at least one non-terminal transaction state'
+    }).optional(),
     userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches listings of a specific seller (by userId)'
     }).optional()
@@ -1417,6 +1420,9 @@ export const zTransactionListingWhere = z.object({
     }).optional(),
     active: z.boolean().register(z.globalRegistry, {
         description: 'When true, match listings with unread buyer-message inbox activity; when false, match listings without unread buyer-message inbox activity'
+    }).optional(),
+    terminal: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match listings whose every transaction is terminal; when false, match listings that still have at least one non-terminal transaction state'
     }).optional(),
     userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches listings of a specific seller (by userId)'

@@ -1572,6 +1572,10 @@ export type tTransactionListingFilter = {
      */
     active?: boolean;
     /**
+     * When true, match listings whose every transaction is terminal; when false, match listings that still have at least one non-terminal transaction state
+     */
+    terminal?: boolean;
+    /**
      * This filter matches listings of a specific seller (by userId)
      */
     userId?: string;
@@ -1597,6 +1601,10 @@ export type tTransactionListingWhere = {
      * When true, match listings with unread buyer-message inbox activity; when false, match listings without unread buyer-message inbox activity
      */
     active?: boolean;
+    /**
+     * When true, match listings whose every transaction is terminal; when false, match listings that still have at least one non-terminal transaction state
+     */
+    terminal?: boolean;
     /**
      * This filter matches listings of a specific seller (by userId)
      */

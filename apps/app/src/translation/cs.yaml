@@ -447,6 +447,9 @@
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
     ref: Really delete feed (button)
     value: Opravdu?
+60bd5af3d46611e7edb008e343a2a70f21feb735ec5ad10a9926350b:
+    ref: Messages closed listings section (title)
+    value: Uzavřeno (archiv)
 61324250f05e5b53c0994000ad235a587fa6c894a2414d561a434548:
     ref: Draft list (title)
     value: Rozpracované inzeráty
@@ -690,7 +693,7 @@
     value: Trasování balíčku
 9ee5f3bd7911a7eeba1208301fcf3964b7f1e029bb39480bef8a63c5:
     ref: Messages inactive listings section (title)
-    value: Odbaveno
+    value: Čeká na kupujícího
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
     ref: Fulltext (placeholder)
     value: Najít
@@ -1261,7 +1264,9 @@ e6e98190c9dcd8856d75c6344e46e58cb61850f74e3d39859ead2035:
     value: ...tady se ti zobrazí zprávy k inzerátům, které nabízíš.
 e71d354084e447c188977c94dd32b5163d009bd889d26e8819df7ead:
     ref: Feed - end of road (message)
-    value: Došel jsi na konec cesty, nicméně si můžeš buď poladit aktuální seznam, nebo se podívej další, které máš připravené.
+    value:
+        Došel jsi na konec cesty, nicméně si můžeš buď poladit aktuální seznam,
+        nebo se podívej další, které máš připravené.
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
     ref: Feed location not selected
     value: Nemáš uvedenou
@@ -1418,21 +1423,13 @@ seller - Transaction successful (message):
 
         Dál už tu nic není.
     static: true
-transaction - seller - status-pending:
-    value: |
-        **Prodejce čeká na tvoje potvrzení**
-    static: true
-transaction - buyer - status-pending:
-    value: |
-        **Obchod se otevře, až ho prodejce přijme**
+transaction - buyer - status-dispute-seller:
+    value: >
+        **Je potřeba tvoje pozornost**
 
-        _Alespoň budeš mít jasno, zda o obchod má zájem, buď prosím trpělivý._
-    static: true
-transaction - seller - status-open:
-    value: |
-        **Otevřel jsi obchod**
 
-        _Teď se do toho můžete společně pustit!_
+        _Prodejce si žádá vyřešit problém - společně se na to podívejte a domluvte
+        se._
     static: true
 transaction - buyer - status-open:
     value: |
@@ -1440,11 +1437,17 @@ transaction - buyer - status-open:
 
         _Teď se do toho můžete společně pustit!_
     static: true
-transaction - seller - status-resolved:
+transaction - buyer - status-pending:
     value: |
-        **Máš vyřešeno**
+        **Obchod se otevře, až ho prodejce přijme**
 
-        _Dál už tu pro tebe (zatím) nic není._
+        _Alespoň budeš mít jasno, zda o obchod má zájem, buď prosím trpělivý._
+    static: true
+transaction - buyer - status-rejected-seller:
+    value: |
+        **Dneska to nevyšlo**
+
+        _Prodejce tento obchod nepřijal._
     static: true
 transaction - buyer - status-resolved:
     value: |
@@ -1452,29 +1455,27 @@ transaction - buyer - status-resolved:
 
         _Později se prosím vrať obchod uzavřít, prozatím je to vše._
     static: true
+transaction - buyer - status-success:
+    value: |
+        **Skvělé!**
+
+        _Úspěšně jsi uzavřel obchod, dál už tady nic není._
+    static: true
 transaction - seller - status-dispute-seller:
     value: |
         **Otevřel jsi řešení problému**
 
         _Domluvte se, co je špatně a společně problém rozlouskněte._
     static: true
-transaction - buyer - status-dispute-seller:
+transaction - seller - status-open:
     value: |
-        **Je potřeba tvoje pozornost**
+        **Otevřel jsi obchod**
 
-        _Prodejce si žádá vyřešit problém - společně se na to podívejte a domluvte se._
+        _Teď se do toho můžete společně pustit!_
     static: true
-transaction - seller - status-success:
+transaction - seller - status-pending:
     value: |
-        **Paráda!**
-
-        _Kupující je spokojený, obchod byl úspěšně uzavřen!_
-    static: true
-transaction - buyer - status-success:
-    value: |
-        **Skvělé!**
-
-        _Úspěšně jsi uzavřel obchod, dál už tady nic není._
+        **Prodejce čeká na tvoje potvrzení**
     static: true
 transaction - seller - status-rejected-seller:
     value: |
@@ -1482,9 +1483,15 @@ transaction - seller - status-rejected-seller:
 
         _V pořádku, kupující dostal zprávu, dál už tady nic řešit nemusíš._
     static: true
-transaction - buyer - status-rejected-seller:
+transaction - seller - status-resolved:
     value: |
-        **Dneska to nevyšlo**
+        **Máš vyřešeno**
 
-        _Prodejce tento obchod nepřijal._
+        _Dál už tu pro tebe (zatím) nic není._
+    static: true
+transaction - seller - status-success:
+    value: |
+        **Paráda!**
+
+        _Kupující je spokojený, obchod byl úspěšně uzavřen!_
     static: true

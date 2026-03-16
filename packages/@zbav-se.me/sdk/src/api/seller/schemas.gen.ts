@@ -2362,6 +2362,9 @@ export const sTransactionListingFilter = {
         active: {
             type: 'boolean'
         },
+        terminal: {
+            type: 'boolean'
+        },
         userId: {
             type: 'string'
         }
@@ -2384,6 +2387,9 @@ export const sTransactionListingWhere = {
             type: 'string'
         },
         active: {
+            type: 'boolean'
+        },
+        terminal: {
             type: 'boolean'
         },
         userId: {

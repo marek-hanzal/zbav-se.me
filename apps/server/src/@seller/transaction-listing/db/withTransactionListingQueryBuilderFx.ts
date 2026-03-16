@@ -23,6 +23,12 @@ export const withTransactionListingQueryBuilderFx = Effect.fn(
 	select,
 	where,
 }: withTransactionListingQueryBuilderFx.Props<TSelect>) {
+	const openStatuses = [
+		"pending",
+		"open",
+		"resolved",
+		"dispute",
+	] as const;
 	let query = select;
 
 	if (!where) {
@@ -65,6 +71,19 @@ export const withTransactionListingQueryBuilderFx = Effect.fn(
 				);
 
 			return where.active ? exists(unreadSelect) : not(exists(unreadSelect));
+		}) as TSelect;
+	}
+
+	if (where.terminal !== undefined) {
+		query = query.where(({ exists, not, selectFrom }) => {
+			const openTransactionSelect = selectFrom("transaction as lt")
+				.select("lt.id")
+				.whereRef("lt.listingId", "=", "l.id")
+				.where("lt.status", "in", openStatuses);
+
+			return where.terminal
+				? not(exists(openTransactionSelect))
+				: exists(openTransactionSelect);
 		}) as TSelect;
 	}
 

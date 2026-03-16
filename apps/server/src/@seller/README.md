@@ -25,6 +25,7 @@ This domain unifies former seller session and seller user capabilities behind `/
 - Seller transaction status actions append shared status/system timeline entries through the user transaction helpers.
 - Seller `transaction-listing` aggregates now carry the latest activity timestamp/kind/text for each listing row.
 - Seller `transaction-listing` unread counts are derived from unread Inbox `buyer-message` rows by checking whether the inbox `reference[]` contains the listing id.
+- Seller `transaction-listing` collection filters can now distinguish listings whose every child transaction is already terminal versus listings that still have at least one non-terminal transaction, using real `transaction.status` checks in SQL rather than synthetic aggregate payload fields.
 - Seller transaction collection/fetch now also exposes unread Inbox `buyer-message` counts per transaction via the same `reference[]` containment rule.
 - Seller-side attention/badge signals must stay aligned with Inbox as the unread source of truth rather than inventing separate unread counters inside transaction aggregates.
 

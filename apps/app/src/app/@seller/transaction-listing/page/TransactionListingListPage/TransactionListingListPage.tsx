@@ -54,6 +54,28 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 		{
 			filter: {
 				active: false,
+				terminal: false,
+			},
+			cursor: {
+				page: 0,
+				size: 1000,
+			},
+			sort: [
+				{
+					field: "lastAt",
+					order: "desc",
+				},
+			],
+		},
+		{
+			refetchInterval,
+		},
+	);
+	const { data: closedCollection } = withTransactionListingQuery.useCollectionQuery(
+		{
+			filter: {
+				active: false,
+				terminal: true,
 			},
 			cursor: {
 				page: 0,
@@ -82,7 +104,11 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 			},
 			{
 				check() {
-					return activeCollection.length === 0 && inactiveCollection.length === 0;
+					return (
+						activeCollection.length === 0 &&
+						inactiveCollection.length === 0 &&
+						closedCollection.length === 0
+					);
 				},
 				render() {
 					return <Empty />;
@@ -93,6 +119,7 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 		listingCollection,
 		activeCollection,
 		inactiveCollection,
+		closedCollection,
 	]);
 
 	return (
@@ -141,7 +168,6 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 							ui={{
 								layout: "vertical-flex",
 								gap: "default",
-								opacity: "7",
 							}}
 						>
 							<Typo
@@ -160,6 +186,31 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 							/>
 
 							<TransactionListingList transactionListingIds={inactiveCollection} />
+						</Container>
+					) : null}
+
+					{closedCollection.length > 0 ? (
+						<Container
+							ui={{
+								layout: "vertical-flex",
+								gap: "default",
+								opacity: "7",
+							}}
+						>
+							<Typo
+								label={translator.text("Messages closed listings section (title)")}
+								ui={{
+									tone: "neutral",
+									theme: "light",
+									text: "sm",
+									font: "bold",
+									color: "lead",
+									opacity: "7",
+								}}
+								className={"text-center"}
+							/>
+
+							<TransactionListingList transactionListingIds={closedCollection} />
 						</Container>
 					) : null}
 				</Container>
