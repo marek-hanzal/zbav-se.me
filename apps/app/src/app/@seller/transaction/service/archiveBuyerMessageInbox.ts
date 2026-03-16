@@ -22,17 +22,17 @@ export const archiveBuyerMessageInbox = async ({
 			patch: {
 				archivedAt: new Date().toISOString(),
 			},
-				query: {
-					where: {
-						archivedAtIsNull: true,
-						family: "transaction",
-						type: "buyer-message",
-						referenceAllIn: [
-							transactionId,
-							listingId,
-						],
-					},
+			query: {
+				where: {
+					archivedAtIsNull: true,
+					family: "transaction",
+					type: "buyer-message",
+					referenceAllIn: [
+						transactionId,
+						listingId,
+					],
 				},
+			},
 		},
 		[
 			"fetch",

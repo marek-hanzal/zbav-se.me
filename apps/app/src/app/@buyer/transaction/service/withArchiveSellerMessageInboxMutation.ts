@@ -46,17 +46,17 @@ export const withArchiveSellerMessageInboxMutation = withMutation<
 		}
 		return withApi(
 			apiInboxArchive({
-					body: {
-						where: {
-							archivedAtIsNull: true,
-							family: tInboxFamilyEnum.transaction,
-							type: tInboxTypeEnum["seller-message"],
-							referenceAllIn: [
-								transactionId,
-								listingId,
-							],
-						},
+				body: {
+					where: {
+						archivedAtIsNull: true,
+						family: tInboxFamilyEnum.transaction,
+						type: tInboxTypeEnum["seller-message"],
+						referenceAllIn: [
+							transactionId,
+							listingId,
+						],
 					},
+				},
 			}),
 		);
 	},

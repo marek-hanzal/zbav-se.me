@@ -5,12 +5,12 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionEntryGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction-entry";
 import { type FC, useCallback, useState } from "react";
 import { SellerInfoButton } from "~/app/@buyer/listing/~public/SellerInfoButton";
-import { archiveSellerMessageInbox } from "~/app/@buyer/transaction/service/archiveSellerMessageInbox";
 import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
 import { MessageButtonUi } from "~/app/@common/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { LocationButton } from "~/app/@common/transaction-entry/ui/button/LocationButton";
 import { PersonalButton } from "~/app/@common/transaction-entry/ui/button/PersonalButton";
+import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";
 
 export namespace DisputeMessage {
 	export interface Props extends Container.Props {
