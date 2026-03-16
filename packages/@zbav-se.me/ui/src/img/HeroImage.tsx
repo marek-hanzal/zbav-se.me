@@ -10,6 +10,13 @@ import {
 	useState,
 } from "react";
 
+type ImageStatus = "loading" | "loaded" | "error";
+
+type ImageState = {
+	src: string | undefined;
+	status: ImageStatus;
+};
+
 /**
  * Shared hero-image primitives.
  */
@@ -74,10 +81,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	//
 	...props
 }) => {
-	const [state, setState] = useState<{
-		src: string | undefined;
-		status: "loading" | "loaded" | "error";
-	}>({
+	const [state, setState] = useState<ImageState>({
 		src: props.src,
 		status: "loading",
 	});
@@ -105,24 +109,26 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	}
 
 	return (
-		<>
+		<Container
+			{...uiContainer({
+				ui: {
+					height: "full",
+					width: "full",
+					position: "relative",
+					...ui,
+				},
+				className: [
+					"overflow-hidden",
+					className,
+				],
+			})}
+			data-ui={"HeroImage"}
+		>
 			{/** biome-ignore lint/a11y/useAltText: Should go from props */}
 			<img
 				ref={imgRef}
 				key={props.src ?? "no-src"}
-				{...uiContainer({
-					ui: {
-						height: "full",
-						width: "full",
-						...ui,
-					},
-					className: [
-						"object-cover",
-						"object-center",
-						className,
-					],
-				})}
-				data-ui={"HeroImage"}
+				className={"absolute inset-0 h-full w-full object-cover object-center"}
 				//
 				loading={"eager"}
 				fetchPriority={"high"}
@@ -151,7 +157,20 @@ export const HeroImage: FC<HeroImage.Props> = ({
 				{...props}
 			/>
 
-			{status === "loading" ? (spinner ?? <SpinnerContainer />) : null}
+			{status === "loading" ? (
+				<Container
+					ui={{
+						height: "full",
+						width: "full",
+						position: "absolute",
+						layout: "vertical-centered",
+					}}
+					className={"inset-0"}
+					data-ui={"HeroImage-[LoadingOverlay]"}
+				>
+					{spinner ?? <SpinnerContainer />}
+				</Container>
+			) : null}
 
 			{status === "error" ? (
 				<Container
@@ -159,7 +178,12 @@ export const HeroImage: FC<HeroImage.Props> = ({
 						layout: "vertical-centered",
 						tone: "primary",
 						theme: "light",
+						height: "full",
+						width: "full",
+						position: "absolute",
 					}}
+					className={"inset-0"}
+					data-ui={"HeroImage-[ErrorOverlay]"}
 				>
 					<Status
 						icon={"icon-[ph--image-broken-duotone]"}
@@ -168,6 +192,6 @@ export const HeroImage: FC<HeroImage.Props> = ({
 					/>
 				</Container>
 			) : null}
-		</>
+		</Container>
 	);
 };
