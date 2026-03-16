@@ -45,10 +45,13 @@ export const archiveSellerMessageInbox = async ({
 	);
 
 	if (inboxList.length === 0) {
+		await withTransactionQuery.invalidator(queryClient, [
+			"collection",
+			"count",
+		]);
+
 		return;
 	}
-
-	withTransactionQuery.updateFn(queryClient, transaction);
 
 	await Promise.all([
 		withTransactionQuery.invalidator(queryClient, [

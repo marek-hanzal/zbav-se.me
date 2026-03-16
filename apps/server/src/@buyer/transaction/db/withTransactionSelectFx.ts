@@ -37,7 +37,12 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 			"l.price",
 			"l.priceType",
 			"l.currency",
-			"lt.updatedAt as lastAt",
+			eb.fn
+				.coalesce(
+					lastActivitySelect.select("te.createdAt").$asScalar(),
+					eb.ref("lt.updatedAt"),
+				)
+				.as("lastAt"),
 			jsonObjectFrom(
 				lastActivitySelect.selectAll("te").select((eb) =>
 					sql<TransactionEntryDirectionEnumSchema.Type>`case

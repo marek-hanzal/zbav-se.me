@@ -2270,6 +2270,7 @@ export const sTransactionSortField = {
         'createdAt',
         'updatedAt',
         'expiresAt',
+        'lastAt',
         'status'
     ]
 } as const;

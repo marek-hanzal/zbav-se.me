@@ -1509,6 +1509,7 @@ export const tTransactionSortField = {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     expiresAt: 'expiresAt',
+    lastAt: 'lastAt',
     status: 'status'
 } as const;
 

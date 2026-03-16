@@ -11,10 +11,8 @@ export namespace withTransactionCollectionSelectFx {
 
 export const withTransactionCollectionSelectFx = Effect.fn("withTransactionCollectionSelectFx")(
 	function* ({ sort }: withTransactionCollectionSelectFx.Props) {
-		const sourceSelect = yield* withTransactionSelectFx({
+		return yield* withTransactionSelectFx({
 			sort,
 		});
-
-		return sourceSelect;
 	},
 );

@@ -3,7 +3,7 @@ import { useLocale } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tDraft, tListingCreate } from "@zbav-se.me/sdk/api/seller";
-import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation/seller/listing";
+import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import { isValid } from "~/app/@common/draft/util/isValid";
@@ -22,7 +22,7 @@ export const CreateListingButton: FC<CreateListingButton.Props> = ({
 }) => {
 	const navigate = useNavigate();
 	const locale = useLocale();
-	const listingCreateMutation = withListingCreateMutation.useMutation({
+	const listingCreateMutation = withListingQuery.useCreateMutation({
 		async onPostMutation() {
 			await navigate({
 				to: "/$locale/seller/listing/my",

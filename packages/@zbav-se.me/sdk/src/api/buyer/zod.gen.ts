@@ -2002,6 +2002,7 @@ export const zTransactionSortField = z.enum([
     'createdAt',
     'updatedAt',
     'expiresAt',
+    'lastAt',
     'status'
 ]).register(z.globalRegistry, {
     description: 'Field of the transaction sort'
