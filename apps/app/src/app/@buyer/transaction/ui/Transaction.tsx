@@ -47,6 +47,7 @@ export const Transaction: FC<Transaction.Props> = ({
 		});
 	}, []);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
 	useEffect(() => {
 		archiveMutation.mutate({
 			transactionId: transaction.id,
@@ -54,7 +55,6 @@ export const Transaction: FC<Transaction.Props> = ({
 			status: transaction.status,
 		});
 	}, [
-		archiveMutation,
 		transaction,
 	]);
 

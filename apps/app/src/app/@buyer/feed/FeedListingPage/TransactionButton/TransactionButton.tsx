@@ -45,9 +45,10 @@ export const TransactionButton: FC<TransactionButton.Props> = ({ listing, ui, ..
 	if (listing.transactionId) {
 		return (
 			<LinkTo
-				to={"/$locale/buyer/transaction/list"}
+				to={"/$locale/buyer/transaction/$transactionId/detail"}
 				params={{
 					locale,
+					transactionId: listing.transactionId,
 				}}
 				icon={ChevronRightIcon}
 				iconPosition={"right"}
