@@ -3,12 +3,13 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { translator } from "@use-pico/common/translator";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useMemo } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { Empty } from "../ui/TransactionList/Empty";
-import { ListGroup, useCollection } from "./ListGroup";
+import { ListGroup } from "./ListGroup";
 
 export namespace TransactionListPage {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
@@ -22,35 +23,18 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 	...props
 }) => {
 	const locale = useLocale();
-	const { data: activeCollection } = useCollection({
-		filter: {
-			active: true,
+	const { data: hasTransaction } = withTransactionQuery.useCollectionQuery({
+		cursor: {
+			page: 0,
+			size: 1,
 		},
-		refetchInterval,
 	});
-	const { data: inactiveCollection } = useCollection({
-		filter: {
-			active: false,
-			terminal: false,
-		},
-		refetchInterval,
-	});
-	const { data: closedCollection } = useCollection({
-		filter: {
-			active: false,
-			terminal: true,
-		},
-		refetchInterval,
-	});
+
 	const check = useMemo(() => {
 		return [
 			{
 				check() {
-					return (
-						activeCollection.length === 0 &&
-						inactiveCollection.length === 0 &&
-						closedCollection.length === 0
-					);
+					return !hasTransaction.length;
 				},
 				render() {
 					return <Empty />;
@@ -58,9 +42,7 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 			},
 		] satisfies EmptyState.Check[];
 	}, [
-		activeCollection,
-		inactiveCollection,
-		closedCollection,
+		hasTransaction,
 	]);
 
 	return (
@@ -90,7 +72,10 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 				>
 					<ListGroup
 						label={translator.text("Messages active listings section (title)")}
-						transactionIds={activeCollection}
+						filter={{
+							active: true,
+						}}
+						refetchInterval={refetchInterval}
 						typoUi={{
 							tone: "primary",
 							theme: "light",
@@ -99,7 +84,11 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 
 					<ListGroup
 						label={translator.text("Messages inactive listings section (title)")}
-						transactionIds={inactiveCollection}
+						filter={{
+							active: false,
+							terminal: false,
+						}}
+						refetchInterval={refetchInterval}
 						typoUi={{
 							tone: "neutral",
 							theme: "light",
@@ -109,7 +98,11 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 
 					<ListGroup
 						label={translator.text("Messages closed listings section (title)")}
-						transactionIds={closedCollection}
+						filter={{
+							active: false,
+							terminal: true,
+						}}
+						refetchInterval={refetchInterval}
 						ui={{
 							opacity: "7",
 						}}

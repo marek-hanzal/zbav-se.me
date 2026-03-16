@@ -5,15 +5,24 @@ import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import type { FC } from "react";
 import { TransactionList } from "../ui/TransactionList";
 
-export namespace useCollection {
-	export interface Props {
+export namespace ListGroup {
+	export interface Props extends Container.Props {
+		label: string;
 		filter: tTransactionFilter;
 		refetchInterval: number;
+		typoUi?: uiTypo.Ui;
 	}
 }
 
-export const useCollection = ({ filter, refetchInterval }: useCollection.Props) => {
-	return withTransactionQuery.useCollectionQuery(
+export const ListGroup: FC<ListGroup.Props> = ({
+	label,
+	filter,
+	refetchInterval,
+	typoUi,
+	ui,
+	...props
+}) => {
+	const { data: transactionCollection } = withTransactionQuery.useCollectionQuery(
 		{
 			filter,
 			cursor: {
@@ -31,18 +40,8 @@ export const useCollection = ({ filter, refetchInterval }: useCollection.Props) 
 			refetchInterval,
 		},
 	);
-};
 
-export namespace ListGroup {
-	export interface Props extends Container.Props {
-		label: string;
-		transactionIds: string[];
-		typoUi?: uiTypo.Ui;
-	}
-}
-
-export const ListGroup: FC<ListGroup.Props> = ({ label, transactionIds, typoUi, ui, ...props }) => {
-	if (transactionIds.length === 0) {
+	if (transactionCollection.length === 0) {
 		return null;
 	}
 
@@ -66,7 +65,7 @@ export const ListGroup: FC<ListGroup.Props> = ({ label, transactionIds, typoUi, 
 				className={"text-center"}
 			/>
 
-			<TransactionList transactionIds={transactionIds} />
+			<TransactionList transactionIds={transactionCollection} />
 		</Container>
 	);
 };
