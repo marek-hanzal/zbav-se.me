@@ -1,84 +1,36 @@
-import { MenuIcon } from "@use-pico/client/icon";
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Button } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
-import { CloseButton } from "@zbav-se.me/ui/button";
-import { type FC, Suspense, useState } from "react";
-import { HomeMenu } from "./HomeMenu";
+import { useLocale } from "@use-pico/client/hook";
+import { LinkTo } from "@use-pico/client/ui/link-to";
+import { HomeIcon } from "@zbav-se.me/ui/icon";
+import type { FC } from "react";
 
 export namespace HomeMenuButton {
-	export interface Props extends Button.Props {
-		//
-	}
+	export type Props = {};
 }
 
-/**
- * Encapsulates a focused home menu action behind shared app styling and behavior.
- * Use it when the home menu action should stay consistent across screens.
- *
- * @see apps/app/src/app/@user/home/page/HomePage.tsx
- */
-export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ ui, ...props }) => {
-	const [isOpen, setIsOpen] = useState(false);
+export const HomeMenuButton: FC<HomeMenuButton.Props> = () => {
+	const locale = useLocale();
 
 	return (
-		<>
-			<Button
-				data-ui={"HomeMenuButton[Button]"}
-				data-action={"open home menu"}
-				iconEnabled={MenuIcon}
-				iconProps={{
-					ui: {
-						text: "2xl",
-					},
-				}}
-				onClick={() => setIsOpen(true)}
-				ui={{
-					tone: "primary",
-					theme: "light",
-					color: "lead",
-					background: undefined,
-					border: false,
-					shadow: false,
-					...ui,
-				}}
-				{...props}
-			/>
-
-			<BottomSheet
-				isOpen={isOpen}
-				onClose={() => {
-					setIsOpen(false);
-				}}
-				data-ui={"HomeMenuSheet[BottomSheet]"}
-				detent={"default"}
-				header={({ close }) => ({
-					title: translator.text("zbav-se.me"),
-					right: (
-						<CloseButton
-							data-action={"close home menu"}
-							onClick={close}
-							ui={{
-								background: undefined,
-								shadow: false,
-								border: false,
-							}}
-						/>
-					),
-				})}
-				contentProps={{
-					disableScroll: true,
-				}}
-			>
-				<Suspense fallback={<HomeMenu.Fallback />}>
-					<HomeMenu
-						_suspense={"I know"}
-						onLinkClick={() => {
-							setIsOpen(false);
-						}}
-					/>
-				</Suspense>
-			</BottomSheet>
-		</>
+		<LinkTo
+			data-ui={"HomeMenuButton"}
+			data-action={"go home"}
+			icon={HomeIcon}
+			to={"/$locale/home"}
+			params={{
+				locale,
+			}}
+			ui={{
+				tone: "neutral",
+				theme: "light",
+				text: "xl",
+				color: "icon",
+				round: "full",
+				background: "default",
+				shadow: true,
+				border: true,
+				inner: "md",
+				opacity: "7",
+			}}
+		/>
 	);
 };
