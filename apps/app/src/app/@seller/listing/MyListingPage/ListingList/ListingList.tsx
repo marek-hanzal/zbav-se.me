@@ -1,8 +1,10 @@
+import { VisibilityProvider } from "@use-pico/client/context";
+import { useElementVisibility } from "@use-pico/client/hook";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { withFallback } from "@use-pico/client/utils";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { Content } from "./Content";
 import { Empty } from "./Data/Empty";
 
@@ -47,9 +49,19 @@ export const ListingList = withFallback(({ ui, ...props }: ListingList.Props) =>
 		listingCollection,
 	]);
 
+	const scrollerRef = useRef<HTMLDivElement | null>(null);
+	const visible = useElementVisibility({
+		scrollerRef,
+		visible: {},
+		proximity: {
+			overscan: 4,
+		},
+	});
+
 	return (
 		<Container
 			data-ui={"MyListing[Container]"}
+			ref={scrollerRef}
 			ui={{
 				flow: "vertical",
 				scroll: "vertical",
@@ -61,10 +73,12 @@ export const ListingList = withFallback(({ ui, ...props }: ListingList.Props) =>
 			{...props}
 		>
 			<EmptyState check={check}>
-				<Content
-					_suspense={"I know"}
-					listingIds={listingCollection}
-				/>
+				<VisibilityProvider store={visible}>
+					<Content
+						_suspense={"I know"}
+						listingIds={listingCollection}
+					/>
+				</VisibilityProvider>
 			</EmptyState>
 		</Container>
 	);

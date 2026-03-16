@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { View } from "@use-pico/client/ui/view";
@@ -57,6 +58,7 @@ export namespace DraftEditor {
  */
 export const DraftEditor = withFallback(
 	({ _suspense, draftId }: DraftEditor.Props) => {
+		const locale = useLocale();
 		const { data: draft } = withDraftQuery.useFetchQuery(draftId);
 		const [view, setView] = useState<DraftEditor.View>("default");
 
@@ -71,6 +73,7 @@ export const DraftEditor = withFallback(
 						<Editor
 							_suspense={"I know"}
 							draft={draft}
+							locale={locale}
 							onView={setView}
 						/>
 					),
@@ -214,6 +217,7 @@ export const DraftEditor = withFallback(
 			};
 		}, [
 			draft,
+			locale,
 			onDone,
 		]);
 
@@ -228,10 +232,19 @@ export const DraftEditor = withFallback(
 		);
 	},
 	function DraftEditorFallback(props: TitleContainer.Props) {
+		const locale = useLocale();
+
 		return (
 			<TitleContainer
 				textTitle={translator.text("Draft edit (title)")}
-				left={<BackHomeButton />}
+				left={
+					<BackHomeButton
+						to="/$locale/seller/draft/list"
+						params={{
+							locale,
+						}}
+					/>
+				}
 				right={<HomeMenuButton />}
 				{...props}
 			>

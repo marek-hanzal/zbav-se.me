@@ -1660,6 +1660,11 @@ export type tTransaction = {
     price: number;
     priceType: tListingPriceEnum;
     currency: tCurrencyEnum;
+    entry: tTransactionEntry;
+    /**
+     * Unread inbox seller-message count for this transaction
+     */
+    unreadCount: number;
     location: tLocation;
 };
 
@@ -1682,6 +1687,267 @@ export const tTransactionStatusEnum = {
  * Current status of the listing transaction
  */
 export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
+
+/**
+ * Transaction timeline entry
+ */
+export type tTransactionEntry = ({
+    kind: 'text';
+} & tTransactionEntryText) | ({
+    kind: 'gallery';
+} & tTransactionEntryGallery) | ({
+    kind: 'location';
+} & tTransactionEntryLocation) | ({
+    kind: 'package';
+} & tTransactionEntryPackage) | ({
+    kind: 'personal';
+} & tTransactionEntryPersonal) | ({
+    kind: 'status-pending' | 'status-open' | 'status-resolved' | 'status-dispute-buyer' | 'status-dispute-seller' | 'status-rejected-buyer' | 'status-rejected-seller' | 'status-sold' | 'status-expired' | 'status-success' | 'status-closed';
+} & tTransactionEntryCommon);
+
+/**
+ * Transaction text entry with user-authored message payload
+ */
+export type tTransactionEntryText = {
+    /**
+     * Transaction entry identifier
+     */
+    id: string;
+    /**
+     * Transaction identifier
+     */
+    transactionId: string;
+    /**
+     * Author/actor user identifier
+     */
+    userId: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    kind: 'text';
+    payload: {
+        /**
+         * Text entry body
+         */
+        text: string;
+        [key: string]: unknown;
+    };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
+};
+
+/**
+ * Direction of the transaction entry from the current viewer perspective
+ */
+export const tTransactionEntryDirectionEnum = {
+    in: 'in',
+    out: 'out',
+    system: 'system'
+} as const;
+
+/**
+ * Direction of the transaction entry from the current viewer perspective
+ */
+export type tTransactionEntryDirectionEnum = typeof tTransactionEntryDirectionEnum[keyof typeof tTransactionEntryDirectionEnum];
+
+/**
+ * Transaction gallery entry with linked gallery payload
+ */
+export type tTransactionEntryGallery = {
+    /**
+     * Transaction entry identifier
+     */
+    id: string;
+    /**
+     * Transaction identifier
+     */
+    transactionId: string;
+    /**
+     * Author/actor user identifier
+     */
+    userId: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    kind: 'gallery';
+    payload: {
+        /**
+         * Gallery identifier linked to this entry
+         */
+        galleryId: string;
+        [key: string]: unknown;
+    };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
+};
+
+/**
+ * Transaction location entry with linked location payload
+ */
+export type tTransactionEntryLocation = {
+    /**
+     * Transaction entry identifier
+     */
+    id: string;
+    /**
+     * Transaction identifier
+     */
+    transactionId: string;
+    /**
+     * Author/actor user identifier
+     */
+    userId: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    kind: 'location';
+    payload: {
+        /**
+         * Location identifier linked to this entry
+         */
+        locationId: string;
+        [key: string]: unknown;
+    };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
+};
+
+/**
+ * Transaction package entry with shipment tracking payload
+ */
+export type tTransactionEntryPackage = {
+    /**
+     * Transaction entry identifier
+     */
+    id: string;
+    /**
+     * Transaction identifier
+     */
+    transactionId: string;
+    /**
+     * Author/actor user identifier
+     */
+    userId: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    kind: 'package';
+    payload: {
+        /**
+         * Package tracking link
+         */
+        link: string;
+        /**
+         * Package tracking number
+         */
+        number: string | null;
+        [key: string]: unknown;
+    };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
+};
+
+/**
+ * Transaction personal entry with contact and handoff payload
+ */
+export type tTransactionEntryPersonal = {
+    /**
+     * Transaction entry identifier
+     */
+    id: string;
+    /**
+     * Transaction identifier
+     */
+    transactionId: string;
+    /**
+     * Author/actor user identifier
+     */
+    userId: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    kind: 'personal';
+    payload: {
+        /**
+         * Contact name
+         */
+        name: string;
+        /**
+         * Contact phone
+         */
+        phone: string;
+        /**
+         * Contact email
+         */
+        email: string;
+        /**
+         * Contact location identifier
+         */
+        locationId: string;
+        [key: string]: unknown;
+    };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
+};
+
+/**
+ * Transaction system entry with shared status or informational payload
+ */
+export type tTransactionEntryCommon = {
+    /**
+     * Transaction entry identifier
+     */
+    id: string;
+    /**
+     * Transaction identifier
+     */
+    transactionId: string;
+    /**
+     * Author/actor user identifier
+     */
+    userId: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    kind: tTransactionCommonKindEnum;
+    payload: {
+        /**
+         * Translation key for the system/status timeline entry
+         */
+        text: string;
+        [key: string]: unknown;
+    };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
+};
+
+/**
+ * Common (shared) entries sharing same shape
+ */
+export const tTransactionCommonKindEnum = {
+    'status-pending': 'status-pending',
+    'status-open': 'status-open',
+    'status-resolved': 'status-resolved',
+    'status-dispute-buyer': 'status-dispute-buyer',
+    'status-dispute-seller': 'status-dispute-seller',
+    'status-rejected-buyer': 'status-rejected-buyer',
+    'status-rejected-seller': 'status-rejected-seller',
+    'status-sold': 'status-sold',
+    'status-expired': 'status-expired',
+    'status-success': 'status-success',
+    'status-closed': 'status-closed'
+} as const;
+
+/**
+ * Common (shared) entries sharing same shape
+ */
+export type tTransactionCommonKindEnum = typeof tTransactionCommonKindEnum[keyof typeof tTransactionCommonKindEnum];
 
 /**
  * Query object for transaction collection
@@ -1717,6 +1983,14 @@ export type tTransactionFilter = {
      * This filter matches the exact listingId
      */
     listingId?: string;
+    /**
+     * When true, match transactions with unread inbox activity for the current side; when false, match transactions without unread inbox activity for the current side
+     */
+    active?: boolean;
+    /**
+     * When true, match transactions already in a terminal status; when false, match transactions that still have a non-terminal status
+     */
+    terminal?: boolean;
     status?: tTransactionStatusEnum & unknown;
     /**
      * This filter matches any of the provided statuses for the current status of the transaction
@@ -1748,6 +2022,14 @@ export type tTransactionWhere = {
      * This filter matches the exact listingId
      */
     listingId?: string;
+    /**
+     * When true, match transactions with unread inbox activity for the current side; when false, match transactions without unread inbox activity for the current side
+     */
+    active?: boolean;
+    /**
+     * When true, match transactions already in a terminal status; when false, match transactions that still have a non-terminal status
+     */
+    terminal?: boolean;
     status?: tTransactionStatusEnum & unknown;
     /**
      * This filter matches any of the provided statuses for the current status of the transaction
@@ -1770,6 +2052,7 @@ export const tTransactionSortField = {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     expiresAt: 'expiresAt',
+    lastAt: 'lastAt',
     status: 'status'
 } as const;
 

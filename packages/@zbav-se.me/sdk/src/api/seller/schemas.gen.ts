@@ -2181,6 +2181,12 @@ export const sTransactionFilter = {
         listingId: {
             type: 'string'
         },
+        active: {
+            type: 'boolean'
+        },
+        terminal: {
+            type: 'boolean'
+        },
         status: {
             allOf: [
                 {
@@ -2218,6 +2224,12 @@ export const sTransactionWhere = {
         },
         listingId: {
             type: 'string'
+        },
+        active: {
+            type: 'boolean'
+        },
+        terminal: {
+            type: 'boolean'
         },
         status: {
             allOf: [
@@ -2258,6 +2270,7 @@ export const sTransactionSortField = {
         'createdAt',
         'updatedAt',
         'expiresAt',
+        'lastAt',
         'status'
     ]
 } as const;
@@ -2362,6 +2375,9 @@ export const sTransactionListingFilter = {
         active: {
             type: 'boolean'
         },
+        terminal: {
+            type: 'boolean'
+        },
         userId: {
             type: 'string'
         }
@@ -2384,6 +2400,9 @@ export const sTransactionListingWhere = {
             type: 'string'
         },
         active: {
+            type: 'boolean'
+        },
+        terminal: {
             type: 'boolean'
         },
         userId: {

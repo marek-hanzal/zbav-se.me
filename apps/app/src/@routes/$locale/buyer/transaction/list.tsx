@@ -1,6 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { TransactionListPage } from "~/app/@buyer/transaction/~public/TransactionListPage";
+import {
+	TransactionListPage,
+	TransactionListPendingPage,
+} from "~/app/@buyer/transaction/~public/TransactionListPage";
 
 export const Route = createFileRoute("/$locale/buyer/transaction/list")({
-	component: TransactionListPage,
+	pendingComponent: TransactionListPendingPage,
+	component() {
+		return <TransactionListPage _suspense={"I know"} />;
+	},
 });

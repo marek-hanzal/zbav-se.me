@@ -248,6 +248,10 @@ export type tInboxFilter = {
      * Match inbox rows whose reference array overlaps any of these keys
      */
     referenceIn?: Array<string>;
+    /**
+     * Match inbox rows whose reference array contains all of these keys
+     */
+    referenceAllIn?: Array<string>;
     family?: tInboxFamilyEnum;
     type?: tInboxTypeEnum;
     priority?: tInboxPriorityEnum;
@@ -332,6 +336,10 @@ export type tInboxWhere = {
      * Match inbox rows whose reference array overlaps any of these keys
      */
     referenceIn?: Array<string>;
+    /**
+     * Match inbox rows whose reference array contains all of these keys
+     */
+    referenceAllIn?: Array<string>;
     family?: tInboxFamilyEnum;
     type?: tInboxTypeEnum;
     priority?: tInboxPriorityEnum;

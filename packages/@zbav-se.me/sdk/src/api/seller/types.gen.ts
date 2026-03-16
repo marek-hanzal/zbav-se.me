@@ -1440,6 +1440,14 @@ export type tTransactionFilter = {
      * This filter matches the exact listingId
      */
     listingId?: string;
+    /**
+     * When true, match transactions with unread inbox activity for the current side; when false, match transactions without unread inbox activity for the current side
+     */
+    active?: boolean;
+    /**
+     * When true, match transactions already in a terminal status; when false, match transactions that still have a non-terminal status
+     */
+    terminal?: boolean;
     status?: tTransactionStatusEnum & unknown;
     /**
      * This filter matches any of the provided statuses for the current status of the transaction
@@ -1471,6 +1479,14 @@ export type tTransactionWhere = {
      * This filter matches the exact listingId
      */
     listingId?: string;
+    /**
+     * When true, match transactions with unread inbox activity for the current side; when false, match transactions without unread inbox activity for the current side
+     */
+    active?: boolean;
+    /**
+     * When true, match transactions already in a terminal status; when false, match transactions that still have a non-terminal status
+     */
+    terminal?: boolean;
     status?: tTransactionStatusEnum & unknown;
     /**
      * This filter matches any of the provided statuses for the current status of the transaction
@@ -1493,6 +1509,7 @@ export const tTransactionSortField = {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     expiresAt: 'expiresAt',
+    lastAt: 'lastAt',
     status: 'status'
 } as const;
 
@@ -1572,6 +1589,10 @@ export type tTransactionListingFilter = {
      */
     active?: boolean;
     /**
+     * When true, match listings whose every transaction is terminal; when false, match listings that still have at least one non-terminal transaction state
+     */
+    terminal?: boolean;
+    /**
      * This filter matches listings of a specific seller (by userId)
      */
     userId?: string;
@@ -1597,6 +1618,10 @@ export type tTransactionListingWhere = {
      * When true, match listings with unread buyer-message inbox activity; when false, match listings without unread buyer-message inbox activity
      */
     active?: boolean;
+    /**
+     * When true, match listings whose every transaction is terminal; when false, match listings that still have at least one non-terminal transaction state
+     */
+    terminal?: boolean;
     /**
      * This filter matches listings of a specific seller (by userId)
      */

@@ -6,7 +6,6 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tInboxSellerMessage } from "@zbav-se.me/sdk/api/user";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
-import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import type { FC } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListItem } from "~/app/@common/list-item/ListItem";
@@ -21,11 +20,6 @@ export const InboxSellerMessageItem: FC<InboxSellerMessageItem.Props> = ({ item 
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(item.payload.transactionId);
 	const hero = useUpload(transaction.gallery.items);
-	const patchMutation = withInboxQuery.usePatchMutation({
-		invalidate: [
-			"count",
-		],
-	});
 
 	return (
 		<LinkTo
@@ -33,21 +27,6 @@ export const InboxSellerMessageItem: FC<InboxSellerMessageItem.Props> = ({ item 
 			params={{
 				locale,
 				transactionId: transaction.id,
-			}}
-			onClick={() => {
-				if (item.archivedAt) {
-					return;
-				}
-				patchMutation.mutate({
-					patch: {
-						archivedAt: new Date().toISOString(),
-					},
-					query: {
-						where: {
-							id: item.id,
-						},
-					},
-				});
 			}}
 		>
 			<ListItem

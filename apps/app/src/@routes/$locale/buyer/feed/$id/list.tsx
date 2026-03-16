@@ -31,6 +31,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 
 		return (
 			<FeedListingPage
+				_suspense={"I know"}
 				feedId={id}
 				scrollToId={scrollToId}
 			/>

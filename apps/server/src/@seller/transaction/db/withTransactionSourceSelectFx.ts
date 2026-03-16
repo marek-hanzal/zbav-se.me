@@ -26,6 +26,22 @@ export const withTransactionSourceSelectFx = Effect.fn("withTransactionSourceSel
 			.with("createdAt", () => query.orderBy("lt.createdAt", item.order))
 			.with("updatedAt", () => query.orderBy("lt.updatedAt", item.order))
 			.with("expiresAt", () => query.orderBy("lt.expiresAt", item.order))
+			.with("lastAt", () =>
+				query.orderBy(
+					(eb) =>
+						eb.fn.coalesce(
+							eb
+								.selectFrom("transaction_entry as te")
+								.select("te.createdAt")
+								.whereRef("te.transactionId", "=", "lt.id")
+								.orderBy("te.createdAt", "desc")
+								.limit(1)
+								.$asScalar(),
+							eb.ref("lt.updatedAt"),
+						),
+					item.order,
+				),
+			)
 			.with("status", () =>
 				query.orderBy(
 					(eb) =>

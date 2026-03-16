@@ -47,6 +47,12 @@ export const withInboxQueryBuilderFx = Effect.fn("withInboxQueryBuilderFx")(func
 		) as TSelect;
 	}
 
+	if (where.referenceAllIn && where.referenceAllIn.length > 0) {
+		query = query.where(
+			sql<boolean>`${sql.ref("i.reference")} @> ARRAY[${sql.join(where.referenceAllIn)}]::text[]`,
+		) as TSelect;
+	}
+
 	if (where.family) {
 		query = query.where("i.family", "=", where.family) as TSelect;
 	}

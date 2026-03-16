@@ -10,6 +10,10 @@ import { match } from "ts-pattern";
 export namespace TransactionChat {
 	export type Mode = "chat" | "readonly";
 
+	export interface Hooks {
+		onPostMutation?(): Promise<void>;
+	}
+
 	export interface Text {
 		closed: string;
 		dispute: string;
@@ -24,6 +28,7 @@ export namespace TransactionChat {
 	}
 
 	export interface Props extends Container.Props {
+		hooks?: Hooks;
 		left?: ReactNode;
 		mode: Mode;
 		text: Text;
@@ -32,6 +37,7 @@ export namespace TransactionChat {
 }
 
 export const TransactionChat: FC<TransactionChat.Props> = ({
+	hooks,
 	left,
 	mode,
 	text,
@@ -44,6 +50,9 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 			"collection",
 			"count",
 		],
+		async onPostMutation() {
+			await hooks?.onPostMutation?.();
+		},
 	});
 
 	const submit = useCallback(

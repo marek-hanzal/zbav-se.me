@@ -1,13 +1,13 @@
+import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tTransactionQuery } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
-import { TransactionList } from "../../ui/TransactionList";
 import { ListingHero } from "./ListingHero";
+import { TransactionList } from "./TransactionList";
 
 export namespace ListingTransactionListPage {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
@@ -20,31 +20,20 @@ export const ListingTransactionListPage: FC<ListingTransactionListPage.Props> = 
 	listingId,
 	...props
 }) => {
-	const query: tTransactionQuery = {
-		where: {
-			listingId,
-		},
-		cursor: {
-			page: 0,
-			size: 1000,
-		},
-		sort: [
-			{
-				field: "status",
-				order: "asc",
-			},
-			{
-				field: "updatedAt",
-				order: "desc",
-			},
-		],
-	};
+	const locale = useLocale();
 
 	return (
 		<TitleContainer
 			data-ui="ListingTransactionList[TitleContainer]"
 			textTitle={translator.text("Messages (title)")}
-			left={<BackHomeButton />}
+			left={
+				<BackHomeButton
+					to="/$locale/seller/transaction/list"
+					params={{
+						locale,
+					}}
+				/>
+			}
 			right={<HomeMenuButton />}
 			{...props}
 		>
@@ -56,7 +45,7 @@ export const ListingTransactionListPage: FC<ListingTransactionListPage.Props> = 
 
 				<TransactionList
 					_suspense={_suspense}
-					query={query}
+					listingId={listingId}
 					ui={{
 						inner: "default",
 					}}

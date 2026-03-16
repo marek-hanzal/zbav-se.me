@@ -1,29 +1,38 @@
 import { useLocale, useSentinel } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { type FC, Suspense, useRef } from "react";
+import { type FC, useRef } from "react";
 import { Content } from "./Content";
 
 export namespace FeedListingPage {
-	export interface Props extends FlowContainer.Props {
+	export interface Props extends FlowContainer.Props, MarkSuspense.Props {
 		feedId: string;
 		scrollToId: string | undefined;
 	}
 }
 
-export const FeedListingPage: FC<FeedListingPage.Props> = ({ feedId, scrollToId, ...props }) => {
+export const FeedListingPage: FC<FeedListingPage.Props> = ({
+	_suspense,
+	feedId,
+	scrollToId,
+	...props
+}) => {
 	const locale = useLocale();
 	const containerRef = useRef<HTMLDivElement>(null);
+	const sentinelRef = useRef<HTMLDivElement>(null);
 
-	const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
+	const { inView: isLast } = useSentinel<HTMLDivElement>({
 		containerRef,
+		sentinelRef,
 		threshold: 0.25,
 	});
 
 	return (
 		<FlowContainer
+			ref={containerRef}
 			data-ui={"FeedListingPage"}
 			left={
 				<LinkTo
@@ -44,15 +53,13 @@ export const FeedListingPage: FC<FeedListingPage.Props> = ({ feedId, scrollToId,
 			}
 			{...props}
 		>
-			<Suspense fallback={<Content.Fallback />}>
-				<Content
-					_suspense={"I know"}
-					feedId={feedId}
-					scrollToId={scrollToId}
-					sentinelRef={sentinelRef}
-					isLast={isLast}
-				/>
-			</Suspense>
+			<Content
+				_suspense={"I know"}
+				feedId={feedId}
+				scrollToId={scrollToId}
+				sentinelRef={sentinelRef}
+				isLast={isLast}
+			/>
 		</FlowContainer>
 	);
 };

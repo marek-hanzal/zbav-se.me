@@ -11,10 +11,16 @@ export namespace LocationButton {
 	export interface Props extends Omit<Trigger.Props, "onOpen"> {
 		close: TransactionMenuButton.Close;
 		transactionId: string;
+		onPostMutation?: () => Promise<void>;
 	}
 }
 
-export const LocationButton: FC<LocationButton.Props> = ({ close, transactionId, ...props }) => {
+export const LocationButton: FC<LocationButton.Props> = ({
+	close,
+	transactionId,
+	onPostMutation,
+	...props
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [locationId, setLocationId] = useState<string | undefined | null>(null);
 	const [location, setLocation] = useState<tLocation | undefined>(undefined);
@@ -24,6 +30,7 @@ export const LocationButton: FC<LocationButton.Props> = ({ close, transactionId,
 			"count",
 		],
 		async onPostMutation() {
+			await onPostMutation?.();
 			setIsOpen(false);
 			close();
 		},

@@ -1633,6 +1633,250 @@ export const zTransactionStatusEnum = z.enum([
 export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
 
 /**
+ * Direction of the transaction entry from the current viewer perspective
+ */
+export const zTransactionEntryDirectionEnum = z.enum([
+    'in',
+    'out',
+    'system'
+]).register(z.globalRegistry, {
+    description: 'Direction of the transaction entry from the current viewer perspective'
+});
+
+export type zTransactionEntryDirectionEnum = z.infer<typeof zTransactionEntryDirectionEnum>;
+
+/**
+ * Transaction text entry with user-authored message payload
+ */
+export const zTransactionEntryText = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier'
+    }),
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Transaction identifier'
+    }),
+    userId: z.string().nullable(),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    kind: z.enum(['text']),
+    payload: z.object({
+        text: z.string().register(z.globalRegistry, {
+            description: 'Text entry body'
+        })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction text entry with user-authored message payload'
+});
+
+export type zTransactionEntryText = z.infer<typeof zTransactionEntryText>;
+
+/**
+ * Transaction gallery entry with linked gallery payload
+ */
+export const zTransactionEntryGallery = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier'
+    }),
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Transaction identifier'
+    }),
+    userId: z.string().nullable(),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    kind: z.enum(['gallery']),
+    payload: z.object({
+        galleryId: z.string().register(z.globalRegistry, {
+            description: 'Gallery identifier linked to this entry'
+        })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction gallery entry with linked gallery payload'
+});
+
+export type zTransactionEntryGallery = z.infer<typeof zTransactionEntryGallery>;
+
+/**
+ * Transaction location entry with linked location payload
+ */
+export const zTransactionEntryLocation = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier'
+    }),
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Transaction identifier'
+    }),
+    userId: z.string().nullable(),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    kind: z.enum(['location']),
+    payload: z.object({
+        locationId: z.string().register(z.globalRegistry, {
+            description: 'Location identifier linked to this entry'
+        })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction location entry with linked location payload'
+});
+
+export type zTransactionEntryLocation = z.infer<typeof zTransactionEntryLocation>;
+
+/**
+ * Transaction package entry with shipment tracking payload
+ */
+export const zTransactionEntryPackage = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier'
+    }),
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Transaction identifier'
+    }),
+    userId: z.string().nullable(),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    kind: z.enum(['package']),
+    payload: z.object({
+        link: z.url().register(z.globalRegistry, {
+            description: 'Package tracking link'
+        }),
+        number: z.string().nullable()
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction package entry with shipment tracking payload'
+});
+
+export type zTransactionEntryPackage = z.infer<typeof zTransactionEntryPackage>;
+
+/**
+ * Transaction personal entry with contact and handoff payload
+ */
+export const zTransactionEntryPersonal = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier'
+    }),
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Transaction identifier'
+    }),
+    userId: z.string().nullable(),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    kind: z.enum(['personal']),
+    payload: z.object({
+        name: z.string().register(z.globalRegistry, {
+            description: 'Contact name'
+        }),
+        phone: z.string().register(z.globalRegistry, {
+            description: 'Contact phone'
+        }),
+        email: z.email().register(z.globalRegistry, {
+            description: 'Contact email'
+        }),
+        locationId: z.string().register(z.globalRegistry, {
+            description: 'Contact location identifier'
+        })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction personal entry with contact and handoff payload'
+});
+
+export type zTransactionEntryPersonal = z.infer<typeof zTransactionEntryPersonal>;
+
+/**
+ * Common (shared) entries sharing same shape
+ */
+export const zTransactionCommonKindEnum = z.enum([
+    'status-pending',
+    'status-open',
+    'status-resolved',
+    'status-dispute-buyer',
+    'status-dispute-seller',
+    'status-rejected-buyer',
+    'status-rejected-seller',
+    'status-sold',
+    'status-expired',
+    'status-success',
+    'status-closed'
+]).register(z.globalRegistry, {
+    description: 'Common (shared) entries sharing same shape'
+});
+
+export type zTransactionCommonKindEnum = z.infer<typeof zTransactionCommonKindEnum>;
+
+/**
+ * Transaction system entry with shared status or informational payload
+ */
+export const zTransactionEntryCommon = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier'
+    }),
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Transaction identifier'
+    }),
+    userId: z.string().nullable(),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    kind: zTransactionCommonKindEnum,
+    payload: z.object({
+        text: z.string().register(z.globalRegistry, {
+            description: 'Translation key for the system/status timeline entry'
+        })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction system entry with shared status or informational payload'
+});
+
+export type zTransactionEntryCommon = z.infer<typeof zTransactionEntryCommon>;
+
+/**
+ * Transaction timeline entry
+ */
+export const zTransactionEntry = z.union([
+    z.object({
+        kind: z.literal('text')
+    }).and(zTransactionEntryText),
+    z.object({
+        kind: z.literal('gallery')
+    }).and(zTransactionEntryGallery),
+    z.object({
+        kind: z.literal('location')
+    }).and(zTransactionEntryLocation),
+    z.object({
+        kind: z.literal('package')
+    }).and(zTransactionEntryPackage),
+    z.object({
+        kind: z.literal('personal')
+    }).and(zTransactionEntryPersonal),
+    z.object({
+        kind: z.union([
+            z.literal('status-pending'),
+            z.literal('status-open'),
+            z.literal('status-resolved'),
+            z.literal('status-dispute-buyer'),
+            z.literal('status-dispute-seller'),
+            z.literal('status-rejected-buyer'),
+            z.literal('status-rejected-seller'),
+            z.literal('status-sold'),
+            z.literal('status-expired'),
+            z.literal('status-success'),
+            z.literal('status-closed')
+        ])
+    }).and(zTransactionEntryCommon)
+]);
+
+export type zTransactionEntry = z.infer<typeof zTransactionEntry>;
+
+/**
  * Transaction data
  */
 export const zTransaction = z.object({
@@ -1666,6 +1910,10 @@ export const zTransaction = z.object({
     }),
     priceType: zListingPriceEnum,
     currency: zCurrencyEnum,
+    entry: zTransactionEntry,
+    unreadCount: z.number().register(z.globalRegistry, {
+        description: 'Unread inbox seller-message count for this transaction'
+    }),
     location: zLocation
 }).register(z.globalRegistry, {
     description: 'Transaction data'
@@ -1691,6 +1939,12 @@ export const zTransactionFilter = z.object({
     }).optional(),
     listingId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
+    }).optional(),
+    active: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match transactions with unread inbox activity for the current side; when false, match transactions without unread inbox activity for the current side'
+    }).optional(),
+    terminal: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match transactions already in a terminal status; when false, match transactions that still have a non-terminal status'
     }).optional(),
     status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'This filter matches the current status of the transaction'
@@ -1723,6 +1977,12 @@ export const zTransactionWhere = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
     }).optional(),
+    active: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match transactions with unread inbox activity for the current side; when false, match transactions without unread inbox activity for the current side'
+    }).optional(),
+    terminal: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match transactions already in a terminal status; when false, match transactions that still have a non-terminal status'
+    }).optional(),
     status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'This filter matches the current status of the transaction'
     })).optional(),
@@ -1742,6 +2002,7 @@ export const zTransactionSortField = z.enum([
     'createdAt',
     'updatedAt',
     'expiresAt',
+    'lastAt',
     'status'
 ]).register(z.globalRegistry, {
     description: 'Field of the transaction sort'

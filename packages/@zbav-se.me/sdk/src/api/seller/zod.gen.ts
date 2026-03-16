@@ -1252,6 +1252,12 @@ export const zTransactionFilter = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
     }).optional(),
+    active: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match transactions with unread inbox activity for the current side; when false, match transactions without unread inbox activity for the current side'
+    }).optional(),
+    terminal: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match transactions already in a terminal status; when false, match transactions that still have a non-terminal status'
+    }).optional(),
     status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'This filter matches the current status of the transaction'
     })).optional(),
@@ -1283,6 +1289,12 @@ export const zTransactionWhere = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
     }).optional(),
+    active: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match transactions with unread inbox activity for the current side; when false, match transactions without unread inbox activity for the current side'
+    }).optional(),
+    terminal: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match transactions already in a terminal status; when false, match transactions that still have a non-terminal status'
+    }).optional(),
     status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'This filter matches the current status of the transaction'
     })).optional(),
@@ -1302,6 +1314,7 @@ export const zTransactionSortField = z.enum([
     'createdAt',
     'updatedAt',
     'expiresAt',
+    'lastAt',
     'status'
 ]).register(z.globalRegistry, {
     description: 'Field of the transaction sort'
@@ -1393,6 +1406,9 @@ export const zTransactionListingFilter = z.object({
     active: z.boolean().register(z.globalRegistry, {
         description: 'When true, match listings with unread buyer-message inbox activity; when false, match listings without unread buyer-message inbox activity'
     }).optional(),
+    terminal: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match listings whose every transaction is terminal; when false, match listings that still have at least one non-terminal transaction state'
+    }).optional(),
     userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches listings of a specific seller (by userId)'
     }).optional()
@@ -1417,6 +1433,9 @@ export const zTransactionListingWhere = z.object({
     }).optional(),
     active: z.boolean().register(z.globalRegistry, {
         description: 'When true, match listings with unread buyer-message inbox activity; when false, match listings without unread buyer-message inbox activity'
+    }).optional(),
+    terminal: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match listings whose every transaction is terminal; when false, match listings that still have at least one non-terminal transaction state'
     }).optional(),
     userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches listings of a specific seller (by userId)'

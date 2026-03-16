@@ -12,10 +12,16 @@ export namespace PackageButton {
 	export interface Props extends Button.Props {
 		close?: TransactionMenuButton.Close;
 		transactionId: string;
+		onPostMutation?: () => Promise<void>;
 	}
 }
 
-export const PackageButton: FC<PackageButton.Props> = ({ close, transactionId, ...props }) => {
+export const PackageButton: FC<PackageButton.Props> = ({
+	close,
+	transactionId,
+	onPostMutation,
+	...props
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const mutation = withTransactionEntryQuery.useCreateMutation({
 		invalidate: [
@@ -23,6 +29,7 @@ export const PackageButton: FC<PackageButton.Props> = ({ close, transactionId, .
 			"count",
 		],
 		async onPostMutation() {
+			await onPostMutation?.();
 			setIsOpen(false);
 			close?.();
 		},

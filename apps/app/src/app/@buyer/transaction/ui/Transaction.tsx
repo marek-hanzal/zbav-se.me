@@ -1,16 +1,19 @@
+import { useQueryClient } from "@tanstack/react-query";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, useRef, useState } from "react";
+import { type FC, useEffect, useRef, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
 import { TransactionChat } from "~/app/@common/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/app/@common/transaction-entry/ui/TransactionEntryList";
+import { archiveSellerMessageInbox } from "../service/archiveSellerMessageInbox";
+import { withArchiveSellerMessageInboxMutation } from "../service/withArchiveSellerMessageInboxMutation";
 import { TransactionMenu } from "./TransactionMenu";
 
 export namespace Transaction {
@@ -27,11 +30,24 @@ export const Transaction: FC<Transaction.Props> = ({
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
+	const queryClient = useQueryClient();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId, {
 		refetchInterval: refresh,
 	});
 	const [, setDetail] = useState(false);
 	const hero = useUpload(transaction.gallery.items);
+	const archiveMutation = withArchiveSellerMessageInboxMutation.useMutation();
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
+	useEffect(() => {
+		archiveMutation.mutate({
+			transactionId: transaction.id,
+			listingId: transaction.listingId,
+			status: transaction.status,
+		});
+	}, [
+		transaction,
+	]);
 
 	return (
 		<Container
@@ -109,6 +125,18 @@ export const Transaction: FC<Transaction.Props> = ({
 				</Container>
 
 				<TransactionChat
+					hooks={{
+						async onPostMutation() {
+							try {
+								await archiveSellerMessageInbox({
+									queryClient,
+									transactionId: transaction.id,
+								});
+							} catch {
+								// Keep message send flow usable even if unread archival fails.
+							}
+						},
+					}}
 					transaction={transaction}
 					left={
 						<TransactionMenuButton>

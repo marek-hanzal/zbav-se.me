@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense } from "react";
@@ -18,11 +19,20 @@ export namespace FeedListPage {
  * @see apps/app/src/@routes
  */
 export const FeedListPage: FC<FeedListPage.Props> = ({ ui, ...props }) => {
+	const locale = useLocale();
+
 	return (
 		<TitleContainer
-			data-ui={"FeedList[TitleContainer]"}
+			data-ui={"FeedListPage"}
 			textTitle={translator.text("Feed select (title)")}
-			left={<BackHomeButton />}
+			left={
+				<BackHomeButton
+					to="/$locale/home"
+					params={{
+						locale,
+					}}
+				/>
+			}
 			ui={{
 				layout: "vertical-header-content",
 				...ui,

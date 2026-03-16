@@ -11,6 +11,14 @@ export const TransactionFilterSchema = z
 		listingId: z.string().optional().openapi({
 			description: "This filter matches the exact listingId",
 		}),
+		active: z.boolean().optional().openapi({
+			description:
+				"When true, match transactions with unread inbox activity for the current side; when false, match transactions without unread inbox activity for the current side",
+		}),
+		terminal: z.boolean().optional().openapi({
+			description:
+				"When true, match transactions already in a terminal status; when false, match transactions that still have a non-terminal status",
+		}),
 		status: TransactionStatusEnumSchema.optional().openapi({
 			description: "This filter matches the current status of the transaction",
 		}),

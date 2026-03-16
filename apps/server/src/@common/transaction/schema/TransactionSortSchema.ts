@@ -8,6 +8,7 @@ export const TransactionSortSchema = z
 				"createdAt",
 				"updatedAt",
 				"expiresAt",
+				"lastAt",
 				"status",
 			])
 			.openapi("TransactionSortField", {

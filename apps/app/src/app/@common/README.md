@@ -100,6 +100,7 @@ When adding to `@common`:
   - `@common/transaction/ui/TransactionMessage.tsx`
   - `@common/transaction/ui/TransactionToolbar.tsx`
   - buyer/seller detail screens keep role-specific status/action content local, but reuse the shared status switch + chat shell instead of carrying duplicate wrapper components.
+  - `TransactionChat.tsx` now also accepts an optional post-mutation hook so role-specific screens can react to successful message sends without forking the shared chat shell.
 - Shared transaction action button UI presets now live in active common scope:
   - `@common/transaction/ui/MessageButtonUi.ts`
   - `@common/transaction/ui/TransactionButtonUi.ts`

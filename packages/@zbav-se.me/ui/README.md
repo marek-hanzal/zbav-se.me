@@ -51,7 +51,7 @@ Comprehensive icon set for the application:
 
 ### 🖼️ Images (`img/`)
 Image components and utilities:
-- `HeroImage` - Hero/banner image component
+- `HeroImage` - Hero/banner image component with a stable wrapper and in-place loading/error overlays
 - `HeroImageCls` - Hero image styling
 
 ### 🏷️ Branding (`logo/`)

@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
@@ -17,10 +18,19 @@ export const TransactionDetailPage: FC<TransactionDetailPage.Props> = ({
 	transactionId,
 	...props
 }) => {
+	const locale = useLocale();
+
 	return (
 		<TitleContainer
 			textTitle={translator.text("Messages (title)")}
-			left={<BackHomeButton />}
+			left={
+				<BackHomeButton
+					to="/$locale/buyer/transaction/list"
+					params={{
+						locale,
+					}}
+				/>
+			}
 			right={<HomeMenuButton />}
 			{...props}
 		>

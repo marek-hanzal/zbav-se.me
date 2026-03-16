@@ -22,10 +22,11 @@ export const Common: FC<Common.Props> = ({ side, transactionEntry, ...props }) =
 		<TypeContainer
 			data-ui={"CommonEntry[TypeContainer]"}
 			direction={transactionEntry.direction}
+			className={"w-full"}
 			{...props}
 		>
 			<Mx
-				label={`${side} - ${transactionEntry.payload.text}`}
+				label={`transaction - ${side} - ${transactionEntry.payload.text}`}
 				fallback={transactionEntry.payload.text}
 			/>
 

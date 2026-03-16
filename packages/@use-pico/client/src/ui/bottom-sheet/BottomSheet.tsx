@@ -67,6 +67,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 				ease: "easeOut",
 				duration: 0.15,
 			}}
+			detent={"default"}
 			{...props}
 		>
 			<Sheet.Container

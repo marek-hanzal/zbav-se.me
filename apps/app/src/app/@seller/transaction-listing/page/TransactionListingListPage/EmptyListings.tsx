@@ -7,25 +7,26 @@ import { uiCtaLinkButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import { EmptyStatus } from "~/app/@common/status/ui/EmptyStatus";
 
-export namespace Empty {
+export namespace EmptyListings {
 	export interface Props extends EmptyStatus.Props {
 		//
 	}
 }
 
-export const Empty: FC<Empty.Props> = (props) => {
+export const EmptyListings: FC<EmptyListings.Props> = (props) => {
 	const locale = useLocale();
 
 	return (
 		<EmptyStatus
 			icon={MessageIcon}
-			textTitle={translator.text("No listings with transactions (title)")}
-			textMessage={translator.text("No listings with transactions (message)")}
+			textTitle={translator.text("No transactions, no listings (title)")}
+			textMessage={translator.text("No transactions, no listings (message)")}
 			action={
 				<LinkTo
+					data-action={"go to drafts"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
-					to={"/$locale/seller/listing/my"}
+					to={"/$locale/seller/draft/resolve"}
 					params={{
 						locale,
 					}}
@@ -33,7 +34,7 @@ export const Empty: FC<Empty.Props> = (props) => {
 						className: [],
 					})}
 				>
-					<Tx label={"Go to my listings (button)"} />
+					<Tx label={"Go to my drafts (button)"} />
 				</LinkTo>
 			}
 			{...props}

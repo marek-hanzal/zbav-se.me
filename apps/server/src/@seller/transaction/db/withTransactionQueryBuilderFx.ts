@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import type { TransactionFilterSchema } from "~/@common/transaction/schema/TransactionFilterSchema";
 import type { withTransactionSourceSelectFx } from "~/@seller/transaction/db/withTransactionSourceSelectFx";
 
@@ -22,6 +23,13 @@ export namespace withTransactionQueryBuilderFx {
 export const withTransactionQueryBuilderFx = Effect.fn("withTransactionQueryBuilderFx")(function* <
 	TSelect extends withTransactionSourceSelectFx.Select,
 >({ select, where }: withTransactionQueryBuilderFx.Props<TSelect>) {
+	const terminalStatuses = [
+		"rejected",
+		"sold",
+		"expired",
+		"success",
+		"closed",
+	] as const;
 	let query = select;
 
 	if (!where) {
@@ -42,6 +50,31 @@ export const withTransactionQueryBuilderFx = Effect.fn("withTransactionQueryBuil
 
 	if (where.listingId) {
 		query = query.where("lt.listingId", "=", where.listingId) as TSelect;
+	}
+
+	if (where.active !== undefined) {
+		query = query.where(({ exists, not, selectFrom }) => {
+			const unreadSelect = selectFrom("inbox as i")
+				.select("i.id")
+				.whereRef("i.userId", "=", "l.userId")
+				.where("i.family", "=", "transaction")
+				.where("i.type", "=", "buyer-message")
+				.where("i.archivedAt", "is", null)
+				.where(
+					(eb) =>
+						sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`,
+				);
+
+			return where.active ? exists(unreadSelect) : not(exists(unreadSelect));
+		}) as TSelect;
+	}
+
+	if (where.terminal !== undefined) {
+		query = query.where(
+			"lt.status",
+			where.terminal ? "in" : "not in",
+			terminalStatuses,
+		) as TSelect;
 	}
 
 	if (where.status) {

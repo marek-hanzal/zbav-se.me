@@ -45,6 +45,7 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ listingId, ...pro
 					title: translator.text("Seller info (title)"),
 					right: <CloseButton onClick={close} />,
 				})}
+				detent={"default"}
 			>
 				<Suspense fallback={<SellerInfo.Fallback />}>
 					<SellerInfo

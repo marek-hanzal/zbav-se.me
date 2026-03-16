@@ -34,6 +34,8 @@ This domain unifies former buyer session and buyer user capabilities behind `/ap
 ### Transactions
 - **Transaction** - Collection/count/create/fetch/close/dispute/reject/success
 - Buyer transaction status actions append shared status/system timeline entries through the user transaction helpers.
+- Buyer transaction collection/fetch now exposes latest activity entry plus unread Inbox `seller-message` counts per transaction, and supports inbox-driven `active` plus real-status `terminal` filtering for list slicing.
+- Buyer transaction collection sort now also supports `lastAt`, aligned with the latest transaction-entry activity timestamp used in payloads and buyer app section ordering.
 
 ### User Events
 - Buyer and seller scoring/behavior info used in buyer flows.

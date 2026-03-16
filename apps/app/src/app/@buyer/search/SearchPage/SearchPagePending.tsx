@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
@@ -12,11 +13,20 @@ export namespace SearchPagePending {
 }
 
 export const SearchPagePending: FC<SearchPagePending.Props> = ({ ui, ...props }) => {
+	const locale = useLocale();
+
 	return (
 		<TitleContainer
 			data-ui={"SearchPagePending[TitleContainer]"}
 			textTitle={translator.text("Search (title)")}
-			left={<BackHomeButton />}
+			left={
+				<BackHomeButton
+					to="/$locale/home"
+					params={{
+						locale,
+					}}
+				/>
+			}
 			ui={{
 				layout: "vertical-header-content",
 				...ui,

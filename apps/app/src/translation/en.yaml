@@ -22,9 +22,15 @@
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
   ref: Listing category (title)
   value: Listing category (title)
+04cf9e0686a93465f2354dfd8553727d51dd7516e95953b741620240:
+  ref: Go to drafts (link)
+  value: Go to drafts (link)
 050d325dc0ab4741ff8dd2e315e563bf0a746ea997e21d31bc54f8dd:
   ref: Listing category not selected
   value: Listing category not selected
+053186ab8ac076e257afc816ae62151a4fb7bc87e4e1927dc5312e2b:
+  ref: No listings - all empty (message)
+  value: No listings - all empty (message)
 056c5d8421348af4114fe316b813803bc6d3a9f939e93b4487b32779:
   ref: Listing expiration (hint)
   value: Listing expiration (hint)
@@ -172,6 +178,9 @@
 29b5698dbd428037dfdf3d01534751de7b9bbdce4a6eeb4df2655548:
   ref: Price not set
   value: Price not set
+2a62eb2578fa76e11eec026820fa9f654778a2893ae2533aa8d311ac:
+  ref: See other feeds (link)
+  value: See other feeds (link)
 2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
   ref: zbav-se.me
   value: zbav-se.me
@@ -223,9 +232,6 @@
 376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
   ref: rejected
   value: rejected
-3909b76e2a3d9bc647acf212b06c89d58d39e1cae4b5b24e98596848:
-  ref: No transactions for current filter (message)
-  value: No transactions for current filter (message)
 39506faaa681b27e6ed65d4237e07c6a2c63838b44f9495159f1ec8b:
   ref: Listing - Pros not filled
   value: Listing - Pros not filled
@@ -388,9 +394,15 @@
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
   ref: Really delete feed (button)
   value: Really delete feed (button)
+60bd5af3d46611e7edb008e343a2a70f21feb735ec5ad10a9926350b:
+  ref: Messages closed listings section (title)
+  value: Messages closed listings section (title)
 61324250f05e5b53c0994000ad235a587fa6c894a2414d561a434548:
   ref: Draft list (title)
   value: Draft list (title)
+615b016adf6d7fbbaeadbba5cef67b63930f5eea2c5729100da00315:
+  ref: No listings - all empty (title)
+  value: No listings - all empty (title)
 61dd087b73e6d2b3291aa14c76d9dcc813946be2957f788836796746:
   ref: Transaction status closed (label)
   value: Transaction closed
@@ -418,6 +430,9 @@
 6526401dc54716accd5e7f420d3f70d39b06beff9a4a9bf64dcd15d0:
   ref: Share contact info (button)
   value: Share contact info (button)
+662a56f5cfa8ba60ad1d101b6f3e7e7921b42bcf0f084b60ab221df7:
+  ref: Go to my drafts (button)
+  value: Go to my drafts (button)
 66c5975c97c2be7afe44dcec132ec657eac3943eeb2688ad68bd0193:
   ref: Transaction - send a message (placeholder)
   value: Transaction - send a message (placeholder)
@@ -442,9 +457,9 @@
 730685ddac55ab05051064ae829f90b99a300329a4818c287d8f51a5:
   ref: Tracking number not filled
   value: Tracking number not filled
-7580acbe8e7737448df6843032c9575ad2499c73387ed60adad1e37f:
-  ref: No transactions for current filter (title)
-  value: No transactions for current filter (title)
+75d0eb333247ea43f5320a9f21b8a1b318fced5eb1f03495bf4ed3d7:
+  ref: Go home (link)
+  value: Go home (link)
 762a69754130506fe02ffe5a75e930686249ef4fe12d6ec21706de37:
   ref: Buyer load (label)
   value: Buyer load (label)
@@ -499,9 +514,6 @@
 847f52b94d2fd82f89cf548490067c305182a98ca1342616d166ae6a:
   ref: Personal - Phone (placeholder)
   value: Personal - Phone (placeholder)
-85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
-  ref: No listings (title)
-  value: No listings (title)
 86856c2ffab9a4998ded4e5585299bf873d60db1bcaed1e4f8f13869:
   ref: Image not available anymore
   value: Image not available anymore
@@ -520,9 +532,6 @@
 892fa1e47fe46e918f187198c917e00504737676df992315e0c40b8c:
   ref: Warranty not selected
   value: Warranty not selected
-8934b7cd7560e4ff51988a56a295f330a17e5109dbdc4cb542b1f6cb:
-  ref: Limit reached (title)
-  value: Limit reached (title)
 8a1aa12fd03400172454828dba4c0e3bf755d16c69c73449f540cbb7:
   ref: No items in favourites (message)
   value: No items in favourites (message)
@@ -628,6 +637,9 @@ a221a6d62ef13cc1c9f1269bcb08f09d61d7aea9f0bcea418d744384:
 a46be85abba5f0371038aa633d7378f4fd8376be6b7e7a9b7b22ec05:
   ref: Listing age (hint)
   value: Listing age (hint)
+a581c9ffb63bcde0ca5969bb759a89d1cb8179dbc01bacab1ae61681:
+  ref: Feed - end of road (title)
+  value: Feed - end of road (title)
 a62fb7339fce50f73673412c11f10a25880e1e7b942b7261366a8529:
   ref: closed
   value: closed
@@ -676,6 +688,9 @@ b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
 b1c2d0799271082a0dee9aff6d0d911d9ca94c48f4efa8287557e28d:
   ref: Personal - Name (placeholder)
   value: Personal - Name (placeholder)
+b312d611d09a8713e3cb39e9327586fbf41795c99e62ff611cee4a30:
+  ref: No transactions, no listings (title)
+  value: No transactions, no listings (title)
 b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
   ref: Sign out
   value: Sign out
@@ -813,6 +828,12 @@ e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
 e6ae675232ef4ec304588531c21f87323fba1e262aff12e5dccf22d5:
   ref: Warranty (title)
   value: Warranty (title)
+e6e98190c9dcd8856d75c6344e46e58cb61850f74e3d39859ead2035:
+  ref: No transactions, no listings (message)
+  value: No transactions, no listings (message)
+e71d354084e447c188977c94dd32b5163d009bd889d26e8819df7ead:
+  ref: Feed - end of road (message)
+  value: Feed - end of road (message)
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
   ref: Feed location not selected
   value: Feed location not selected

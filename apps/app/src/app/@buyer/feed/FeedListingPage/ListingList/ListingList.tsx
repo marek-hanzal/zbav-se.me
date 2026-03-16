@@ -1,5 +1,6 @@
 import { VisibilityProvider } from "@use-pico/client/context";
-import { useElementVisibility, useMergeRefs, useScrollTo } from "@use-pico/client/hook";
+import { useElementVisibility, useLocale, useMergeRefs, useScrollTo } from "@use-pico/client/hook";
+import { ChevronLeftIcon, ChevronRightIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import {
 	Container,
@@ -7,35 +8,46 @@ import {
 	VisibleContainer,
 	SpinnerContainer as VisibleSpinnerContainer,
 } from "@use-pico/client/ui/container";
-import { EmptyState } from "@use-pico/client/ui/empty-state";
+import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
-import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer";
+import { translator } from "@use-pico/common/translator";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
-import { type ReactNode, Suspense, useCallback, useEffect, useMemo, useRef } from "react";
-import { Empty } from "./Empty";
-import { FilterEmpty } from "./FilterEmpty";
+import { DeadEndIcon } from "@zbav-se.me/ui/icon";
+import { uiCtaLinkButton } from "@zbav-se.me/ui/ui";
+import { type Ref, Suspense, useCallback, useEffect, useRef } from "react";
+import { EmptyStatus } from "~/app/@common/status/ui/EmptyStatus";
 import { Item } from "./Item";
 
 export namespace ListingList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		query: tListingQuery;
 		/**
 		 * Listing ID to scroll to
 		 */
 		scrollToId: string | undefined;
-		appendix?: ReactNode;
 		feedId: string;
-		withScore: boolean;
+		sentinelRef: Ref<HTMLDivElement | null>;
 	}
 }
 
 export const ListingList = withFallback(
-	({ ref, query, scrollToId, appendix, feedId, withScore, ...props }: ListingList.Props) => {
+	({ ref, scrollToId, feedId, sentinelRef, ...props }: ListingList.Props) => {
+		const locale = useLocale();
 		const containerRef = useRef<HTMLDivElement>(null);
 		const mergedRef = useMergeRefs([
 			containerRef,
 			ref,
 		]);
+
+		const { data: feed } = withFeedQuery.useFetchQuery(feedId);
+		const { data: listingCollection } = withListingQuery.useCollectionQuery({
+			...feed.query,
+			cursor: {
+				page: 0,
+				size: 256,
+			},
+		});
 
 		const scrollTo = useScrollTo(containerRef);
 
@@ -59,31 +71,6 @@ export const ListingList = withFallback(
 			},
 		});
 
-		const { data: listingCollection } = withListingQuery.useCollectionQuery(query);
-		const { data: listingCount } = withListingQuery.useCountQuery(query);
-		const check = useMemo(() => {
-			return [
-				{
-					check() {
-						return listingCount.isEmpty;
-					},
-					render() {
-						return <Empty />;
-					},
-				},
-				{
-					check() {
-						return listingCount.isFilterEmpty;
-					},
-					render() {
-						return <FilterEmpty />;
-					},
-				},
-			] satisfies EmptyState.Check[];
-		}, [
-			listingCount,
-		]);
-
 		const placeholder = useCallback(() => {
 			return <VisibleSpinnerContainer />;
 		}, []);
@@ -100,32 +87,61 @@ export const ListingList = withFallback(
 				}}
 				{...props}
 			>
-				<EmptyState check={check}>
-					<VisibilityProvider store={visibility}>
-						{listingCollection.map((listingId) => (
-							<VisibleContainer
-								key={listingId}
-								id={listingId}
-								data-id={listingId}
-								placeholder={placeholder}
-								ui={{
-									height: "full",
-									width: "full",
-								}}
-							>
-								<Suspense fallback={<Item.Fallback />}>
-									<Item
-										listingId={listingId}
-										feedId={feedId}
-										withScore={withScore}
-									/>
-								</Suspense>
-							</VisibleContainer>
-						))}
+				<VisibilityProvider store={visibility}>
+					{listingCollection.map((listingId) => (
+						<VisibleContainer
+							key={listingId}
+							id={listingId}
+							data-id={listingId}
+							placeholder={placeholder}
+							ui={{
+								height: "full",
+								width: "full",
+							}}
+						>
+							<Suspense fallback={<Item.Fallback />}>
+								<Item
+									listingId={listingId}
+									feedId={feedId}
+								/>
+							</Suspense>
+						</VisibleContainer>
+					))}
 
-						{appendix}
-					</VisibilityProvider>
-				</EmptyState>
+					<EmptyStatus
+						ref={sentinelRef}
+						icon={DeadEndIcon}
+						textTitle={translator.text("Feed - end of road (title)")}
+						textMessage={translator.text("Feed - end of road (message)")}
+						action={
+							<>
+								<LinkTo
+									icon={ChevronLeftIcon}
+									to={"/$locale/home"}
+									params={{
+										locale,
+									}}
+								>
+									<Tx label={"Go home (link)"} />
+								</LinkTo>
+
+								<LinkTo
+									icon={ChevronRightIcon}
+									iconPosition={"right"}
+									to={"/$locale/buyer/feed/list"}
+									params={{
+										locale,
+									}}
+									{...uiCtaLinkButton({
+										className: [],
+									})}
+								>
+									<Tx label={"See other feeds (link)"} />
+								</LinkTo>
+							</>
+						}
+					/>
+				</VisibilityProvider>
 			</Container>
 		);
 	},

@@ -12,7 +12,7 @@ export const FilterEmpty: FC<FilterEmpty.Props> = (props) => {
 	return (
 		<EmptyStatus
 			data-ui={"FilterEmpty"}
-			icon={"icon-[streamline--sad-face-remix]"}
+			icon={"icon-[famicons--trail-sign-outline]"}
 			textTitle={translator.text("No listings for current filter (title)")}
 			textMessage={translator.text("No listings for current filter (message)")}
 			{...props}

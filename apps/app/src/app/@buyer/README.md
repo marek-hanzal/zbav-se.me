@@ -67,3 +67,9 @@ Maps to server API: `/api/buyer/*`.
 - Buyer transaction action buttons now use the buyer transaction mutation SDK surface (`close`, `dispute`, `reject`, `success`) and invalidate `transaction-entry` timeline queries.
 - Buyer message detail UI now reads conversation timeline through `@user/transaction-entry` instead of the removed message query wrapper.
 - Buyer `TitleContainer` pages that navigate back home now use the shared `@common/nav/BackHomeButton` instead of repeating inline `LinkTo + uiBackButton` wiring.
+- Buyer seller-message inbox rows no longer archive on Inbox click; unread buyer state now clears only after an explicit buyer action in the transaction detail (message send, close/reject/dispute/success).
+- Buyer transaction list page now mirrors seller transaction-listing structure:
+  - the route owns pending UI through `@buyer/transaction/TransactionListPendingPage.tsx`
+  - `@buyer/transaction/TransactionListPage/TransactionListPage.tsx` owns the three inbox-driven sections (`active`, `inactive`, `closed`)
+  - `@buyer/transaction/ui/TransactionList/TransactionList.tsx` is a dumb transaction-id renderer with per-item suspense only
+- Buyer transaction chat send now always invalidates buyer transaction collection/count queries even when no seller-message inbox rows were archived, so section lists refresh on `lastAt` changes from outbound buyer messages.

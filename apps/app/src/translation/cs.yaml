@@ -22,9 +22,15 @@
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
     ref: Listing category (title)
     value: Kategorie
+04cf9e0686a93465f2354dfd8553727d51dd7516e95953b741620240:
+    ref: Go to drafts (link)
+    value: Nabídni něco k prodeji
 050d325dc0ab4741ff8dd2e315e563bf0a746ea997e21d31bc54f8dd:
     ref: Listing category not selected
     value: Kategorii nemáš vybranou
+053186ab8ac076e257afc816ae62151a4fb7bc87e4e1927dc5312e2b:
+    ref: No listings - all empty (message)
+    value: Máš tu čest vystavit úplně první inzerát a vyzkoušet, jak systém funguje!
 056c5d8421348af4114fe316b813803bc6d3a9f939e93b4487b32779:
     ref: Listing expiration (hint)
     value: |
@@ -138,7 +144,7 @@
     value: gallery
 188182c2fe82cee01a535fea542022b96a389bdbc5c5f374f0aa5564:
     ref: Chat - transaction resolved - seller cannot write (message)
-    value: Chat - transaction resolved - seller cannot write (message)
+    value: Máš vyřízeno, nic dalšího tu nemusíš řešit.
 1943b1ef0623fcc6116ef391b30cce37b7fd75dcde851410b1d5f9d6:
     ref: Upload photos (button)
     value: Nahraj fotky
@@ -202,6 +208,9 @@
 29b5698dbd428037dfdf3d01534751de7b9bbdce4a6eeb4df2655548:
     ref: Price not set
     value: Cenu nemáš vyplněnou
+2a62eb2578fa76e11eec026820fa9f654778a2893ae2533aa8d311ac:
+    ref: See other feeds (link)
+    value: Další seznamy
 2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
     ref: zbav-se.me
     value: zbav-se.me
@@ -257,9 +266,6 @@
 376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
     ref: rejected
     value: rejected
-3909b76e2a3d9bc647acf212b06c89d58d39e1cae4b5b24e98596848:
-    ref: No transactions for current filter (message)
-    value: No transactions for current filter (message)
 39506faaa681b27e6ed65d4237e07c6a2c63838b44f9495159f1ec8b:
     ref: Listing - Pros not filled
     value: Nechceš něco vyzdvihnout?
@@ -441,9 +447,15 @@
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
     ref: Really delete feed (button)
     value: Opravdu?
+60bd5af3d46611e7edb008e343a2a70f21feb735ec5ad10a9926350b:
+    ref: Messages closed listings section (title)
+    value: Uzavřeno (archiv)
 61324250f05e5b53c0994000ad235a587fa6c894a2414d561a434548:
     ref: Draft list (title)
     value: Rozpracované inzeráty
+615b016adf6d7fbbaeadbba5cef67b63930f5eea2c5729100da00315:
+    ref: No listings - all empty (title)
+    value: Jsi úplně první!
 61dd087b73e6d2b3291aa14c76d9dcc813946be2957f788836796746:
     ref: Transaction status closed (label)
     value: Obchod uzavřen
@@ -476,6 +488,9 @@
 6526401dc54716accd5e7f420d3f70d39b06beff9a4a9bf64dcd15d0:
     ref: Share contact info (button)
     value: Sdílet osobní údaje
+662a56f5cfa8ba60ad1d101b6f3e7e7921b42bcf0f084b60ab221df7:
+    ref: Go to my drafts (button)
+    value: Nechceš něco nabídnout?
 66c5975c97c2be7afe44dcec132ec657eac3943eeb2688ad68bd0193:
     ref: Transaction - send a message (placeholder)
     value: Co máš na srdci?
@@ -500,9 +515,9 @@
 730685ddac55ab05051064ae829f90b99a300329a4818c287d8f51a5:
     ref: Tracking number not filled
     value: Číslo zásilky není vyplněné
-7580acbe8e7737448df6843032c9575ad2499c73387ed60adad1e37f:
-    ref: No transactions for current filter (title)
-    value: No transactions for current filter (title)
+75d0eb333247ea43f5320a9f21b8a1b318fced5eb1f03495bf4ed3d7:
+    ref: Go home (link)
+    value: Zpět domů
 762a69754130506fe02ffe5a75e930686249ef4fe12d6ec21706de37:
     ref: Buyer load (label)
     value: Odhadovaná dostupnost
@@ -563,9 +578,6 @@
 847f52b94d2fd82f89cf548490067c305182a98ca1342616d166ae6a:
     ref: Personal - Phone (placeholder)
     value: Tvoje telefonní číslo
-85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
-    ref: No listings (title)
-    value: Kde nic, tu nic. Ale všechno bude, všechno bude!
 86856c2ffab9a4998ded4e5585299bf873d60db1bcaed1e4f8f13869:
     ref: Image not available anymore
     value: Obrázek už není dostupný, tohle by se nemělo stát.
@@ -588,9 +600,6 @@
 892fa1e47fe46e918f187198c917e00504737676df992315e0c40b8c:
     ref: Warranty not selected
     value: Bez garance záruky
-8934b7cd7560e4ff51988a56a295f330a17e5109dbdc4cb542b1f6cb:
-    ref: Limit reached (title)
-    value: Víc už toho bohužel nejde.
 8a1aa12fd03400172454828dba4c0e3bf755d16c69c73449f540cbb7:
     ref: No items in favourites (message)
     value: ...ale můžeš se podívat na inzeráty a nějaké si sem přidat!
@@ -684,7 +693,7 @@
     value: Trasování balíčku
 9ee5f3bd7911a7eeba1208301fcf3964b7f1e029bb39480bef8a63c5:
     ref: Messages inactive listings section (title)
-    value: Odbaveno
+    value: Čeká na kupujícího
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
     ref: Fulltext (placeholder)
     value: Najít
@@ -988,6 +997,9 @@ a46be85abba5f0371038aa633d7378f4fd8376be6b7e7a9b7b22ec05:
     ref: Listing age (hint)
     value: |
         Definuje, jak moc moderní věc je.
+a581c9ffb63bcde0ca5969bb759a89d1cb8179dbc01bacab1ae61681:
+    ref: Feed - end of road (title)
+    value: Konec cesty - prozatím
 a62fb7339fce50f73673412c11f10a25880e1e7b942b7261366a8529:
     ref: closed
     value: closed
@@ -1039,6 +1051,9 @@ b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
 b1c2d0799271082a0dee9aff6d0d911d9ca94c48f4efa8287557e28d:
     ref: Personal - Name (placeholder)
     value: Celé jméno
+b312d611d09a8713e3cb39e9327586fbf41795c99e62ff611cee4a30:
+    ref: No transactions, no listings (title)
+    value: Nic neprodáváš...
 b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
     ref: Sign out
     value: Odhlásit se
@@ -1244,6 +1259,14 @@ e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
 e6ae675232ef4ec304588531c21f87323fba1e262aff12e5dccf22d5:
     ref: Warranty (title)
     value: Záruka
+e6e98190c9dcd8856d75c6344e46e58cb61850f74e3d39859ead2035:
+    ref: No transactions, no listings (message)
+    value: ...tady se ti zobrazí zprávy k inzerátům, které nabízíš.
+e71d354084e447c188977c94dd32b5163d009bd889d26e8819df7ead:
+    ref: Feed - end of road (message)
+    value:
+        Došel jsi na konec cesty, nicméně si můžeš buď poladit aktuální seznam,
+        nebo se podívej další, které máš připravené.
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
     ref: Feed location not selected
     value: Nemáš uvedenou
@@ -1399,4 +1422,88 @@ seller - Transaction successful (message):
         **Všechno v pohodě, obchod byl úspěšný!**
 
         Dál už tu nic není.
+    static: true
+transaction - buyer - status-dispute-seller:
+    value: >
+        **Je potřeba tvoje pozornost**
+
+
+        _Prodejce si žádá vyřešit problém - společně se na to podívejte a domluvte
+        se._
+    static: true
+transaction - buyer - status-open:
+    value: |
+        **Prodejce otevřel obchod**
+
+        _Teď se do toho můžete společně pustit!_
+    static: true
+transaction - buyer - status-pending:
+    value: |
+        **Obchod se otevře, až ho prodejce přijme**
+
+        _Alespoň budeš mít jasno, zda o obchod má zájem, buď prosím trpělivý._
+    static: true
+transaction - buyer - status-rejected-seller:
+    value: |
+        **Dneska to nevyšlo**
+
+        _Prodejce tento obchod nepřijal._
+    static: true
+transaction - buyer - status-resolved:
+    value: |
+        **Prodejce vyřídil obchod**
+
+        _Později se prosím vrať obchod uzavřít, prozatím je to vše._
+    static: true
+transaction - buyer - status-success:
+    value: |
+        **Skvělé!**
+
+        _Úspěšně jsi uzavřel obchod, dál už tady nic není._
+    static: true
+transaction - seller - status-dispute-seller:
+    value: |
+        **Otevřel jsi řešení problému**
+
+        _Domluvte se, co je špatně a společně problém rozlouskněte._
+    static: true
+transaction - seller - status-open:
+    value: |
+        **Otevřel jsi obchod**
+
+        _Teď se do toho můžete společně pustit!_
+    static: true
+transaction - seller - status-pending:
+    value: |
+        **Prodejce čeká na tvoje potvrzení**
+    static: true
+transaction - seller - status-rejected-seller:
+    value: |
+        **Odmítl jsi obchod**
+
+        _V pořádku, kupující dostal zprávu, dál už tady nic řešit nemusíš._
+    static: true
+transaction - seller - status-resolved:
+    value: |
+        **Máš vyřešeno**
+
+        _Dál už tu pro tebe (zatím) nic není._
+    static: true
+transaction - seller - status-success:
+    value: |
+        **Paráda!**
+
+        _Kupující je spokojený, obchod byl úspěšně uzavřen!_
+    static: true
+transaction - seller - status-closed:
+    value: |
+        **Hotovo**
+
+        _Tady už je všechno vyřešeno, můžete jít dál._
+    static: true
+transaction - buyer - status-closed:
+    value: |
+        **Hotovo**
+
+        _Tady už je všechno vyřešeno, můžete jít dál._
     static: true
