@@ -1,9 +1,11 @@
+import { useQueryClient } from "@tanstack/react-query";
 import type { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionEntryGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction-entry";
-import { type FC, useState } from "react";
+import { type FC, useCallback, useState } from "react";
 import { SellerInfoButton } from "~/app/@buyer/listing/~public/SellerInfoButton";
+import { archiveSellerMessageInbox } from "~/app/@buyer/transaction/service/archiveSellerMessageInbox";
 import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
 import { MessageButtonUi } from "~/app/@common/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
@@ -18,7 +20,15 @@ export namespace DisputeMessage {
 }
 
 export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, ui, ...props }) => {
+	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+
+	const archiveInbox = useCallback(async () => {
+		await archiveSellerMessageInbox({
+			queryClient,
+			transactionId: transaction.id,
+		});
+	}, [queryClient, transaction.id]);
 
 	return (
 		<>
@@ -42,7 +52,8 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 						transactionId: transaction.id,
 						uploadIds,
 					})}
-					onSuccess={() => {
+					onSuccess={async () => {
+						await archiveInbox();
 						setIsGalleryOpen(false);
 						close();
 					}}
@@ -55,12 +66,14 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 				<LocationButton
 					close={close}
 					transactionId={transaction.id}
+					onPostMutation={archiveInbox}
 					{...MessageButtonUi}
 				/>
 
 				<PersonalButton
 					close={close}
 					transactionId={transaction.id}
+					onPostMutation={archiveInbox}
 					{...MessageButtonUi}
 				/>
 			</Group>

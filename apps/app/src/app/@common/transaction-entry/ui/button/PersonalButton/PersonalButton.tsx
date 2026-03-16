@@ -13,10 +13,16 @@ export namespace PersonalButton {
 	export interface Props extends Button.Props {
 		close?: TransactionMenuButton.Close;
 		transactionId: string;
+		onPostMutation?: () => Promise<void>;
 	}
 }
 
-export const PersonalButton: FC<PersonalButton.Props> = ({ close, transactionId, ...props }) => {
+export const PersonalButton: FC<PersonalButton.Props> = ({
+	close,
+	transactionId,
+	onPostMutation,
+	...props
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const mutation = withTransactionEntryQuery.useCreateMutation({
 		invalidate: [
@@ -24,6 +30,7 @@ export const PersonalButton: FC<PersonalButton.Props> = ({ close, transactionId,
 			"count",
 		],
 		async onPostMutation() {
+			await onPostMutation?.();
 			setIsOpen(false);
 			close?.();
 		},
