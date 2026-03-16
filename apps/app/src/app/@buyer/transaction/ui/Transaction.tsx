@@ -38,6 +38,7 @@ export const Transaction: FC<Transaction.Props> = ({
 	const hero = useUpload(transaction.gallery.items);
 	const archiveMutation = withArchiveSellerMessageInboxMutation.useMutation();
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK here
 	useEffect(() => {
 		if (archiveMutation.status !== "idle") {
 			return;
@@ -51,8 +52,6 @@ export const Transaction: FC<Transaction.Props> = ({
 		transaction.id,
 		transaction.listingId,
 		transaction.status,
-		archiveMutation.status,
-		archiveMutation.mutate,
 	]);
 
 	return (
