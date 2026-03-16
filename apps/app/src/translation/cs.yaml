@@ -1495,3 +1495,15 @@ transaction - seller - status-success:
 
         _Kupující je spokojený, obchod byl úspěšně uzavřen!_
     static: true
+transaction - seller - status-closed:
+    value: |
+        **Hotovo**
+
+        _Tady už je všechno vyřešeno, můžete jít dál._
+    static: true
+transaction - buyer - status-closed:
+    value: |
+        **Hotovo**
+
+        _Tady už je všechno vyřešeno, můžete jít dál._
+    static: true

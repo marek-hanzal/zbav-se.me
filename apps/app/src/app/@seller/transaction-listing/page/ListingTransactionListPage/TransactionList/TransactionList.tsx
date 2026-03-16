@@ -1,9 +1,10 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
+import { translator } from "@use-pico/common/translator";
 import { tTransactionStatusEnum } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
-import type { FC } from "react";
+import { type FC, useMemo } from "react";
 import { toStatusLabel } from "~/app/@seller/transaction/~public/toStatusLabel";
 import { Empty } from "./Empty";
 import { ListGroup } from "./ListGroup";
@@ -15,39 +16,10 @@ export namespace TransactionList {
 	}
 }
 
-interface Group extends Partial<ListGroup.Props> {
-	status: tTransactionStatusEnum;
+interface Group extends Partial<Omit<ListGroup.Props, "filter" | "label" | "refetchInterval">> {
+	label: string;
+	statuses: tTransactionStatusEnum[];
 }
-
-const groups: Group[] = [
-	{
-		status: tTransactionStatusEnum.open,
-	},
-	{
-		status: tTransactionStatusEnum.pending,
-	},
-	{
-		status: tTransactionStatusEnum.dispute,
-	},
-	{
-		status: tTransactionStatusEnum.resolved,
-	},
-	{
-		status: tTransactionStatusEnum.success,
-	},
-	{
-		status: tTransactionStatusEnum.rejected,
-	},
-	{
-		status: tTransactionStatusEnum.sold,
-	},
-	{
-		status: tTransactionStatusEnum.closed,
-	},
-	{
-		status: tTransactionStatusEnum.expired,
-	},
-];
 
 export const TransactionList: FC<TransactionList.Props> = ({
 	_suspense,
@@ -70,6 +42,59 @@ export const TransactionList: FC<TransactionList.Props> = ({
 			refetchInterval,
 		},
 	);
+	/**
+	 * This must be here, because we're using translations - so when put outside of the component,
+	 * translations are... not being translated :).
+	 */
+	const groups = useMemo(
+		() =>
+			[
+				{
+					label: toStatusLabel(tTransactionStatusEnum.open),
+					statuses: [
+						tTransactionStatusEnum.open,
+					],
+				},
+				{
+					label: toStatusLabel(tTransactionStatusEnum.pending),
+					statuses: [
+						tTransactionStatusEnum.pending,
+					],
+				},
+				{
+					label: toStatusLabel(tTransactionStatusEnum.dispute),
+					statuses: [
+						tTransactionStatusEnum.dispute,
+					],
+				},
+				{
+					label: toStatusLabel(tTransactionStatusEnum.resolved),
+					statuses: [
+						tTransactionStatusEnum.resolved,
+					],
+				},
+				{
+					label: translator.text("Messages closed listings section (title)"),
+					statuses: [
+						tTransactionStatusEnum.success,
+						tTransactionStatusEnum.rejected,
+						tTransactionStatusEnum.sold,
+						tTransactionStatusEnum.closed,
+						tTransactionStatusEnum.expired,
+					],
+					ui: {
+						opacity: "7",
+					},
+					typoUi: {
+						tone: "neutral",
+						theme: "light",
+						opacity: "7",
+					},
+				},
+			] satisfies Group[],
+		[],
+	);
+
 	return (
 		<Container
 			ui={{
@@ -97,15 +122,21 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						gap: "2xl",
 					}}
 				>
-					{groups.map(({ status, ...props }) => {
+					{groups.map(({ statuses, label, ...props }) => {
 						return (
 							<ListGroup
-								key={status}
+								key={statuses.join(":")}
 								_suspense={_suspense}
-								label={toStatusLabel(status)}
+								label={label}
 								filter={{
 									listingId,
-									status,
+									...(statuses.length === 1
+										? {
+												status: statuses[0],
+											}
+										: {
+												statusIn: statuses,
+											}),
 								}}
 								refetchInterval={refetchInterval}
 								{...props}
