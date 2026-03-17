@@ -3,6 +3,9 @@ import { describe, expect, it } from "vitest";
 import { inboxArchiveFx } from "~/@user/inbox/fx/inboxArchiveFx";
 import { inboxCollectionFx } from "~/@user/inbox/fx/inboxCollectionFx";
 import { auth } from "~/auth/auth";
+import type { InboxPriorityEnumSchema } from "~/database/@enum/InboxPriorityEnumSchema";
+import type { InboxTypeEnumSchema } from "~/database/@enum/InboxTypeEnumSchema";
+import type { InboxTableSchema } from "~/database/@table/InboxTableSchema/InboxTableSchema";
 import { withRuntimeFx } from "~test/fixture/transactionFixture";
 import { testabase } from "~test/testabase";
 
@@ -12,15 +15,15 @@ import { testabase } from "~test/testabase";
  */
 const seedInbox = async (
 	database: Awaited<ReturnType<typeof import("~test/testabase").testabase>>,
-	rows: Array<{
-		id: string;
-		userId: string;
-		reference: string[];
-		family: "transaction" | "reaction";
-		type: string;
-		payload: Record<string, unknown>;
-		priority: "high" | "common";
-	}>,
+	rows: Array<
+		Pick<InboxTableSchema.Type, "family" | "payload"> & {
+			id: string;
+			userId: string;
+			reference: string[];
+			type: InboxTypeEnumSchema.Type;
+			priority: InboxPriorityEnumSchema.Type;
+		}
+	>,
 ) => {
 	await database.kysely
 		.insertInto("inbox")

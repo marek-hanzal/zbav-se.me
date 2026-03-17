@@ -120,7 +120,7 @@ describe("inbox deduplication (PARTITION BY transactionId)", () => {
 				password: "12345678",
 			},
 		});
-		const { user: buyer } = await api.signUpEmail({
+		await api.signUpEmail({
 			body: {
 				email: "buyer@inbox-dedup-sep.cz",
 				name: "Buyer",
