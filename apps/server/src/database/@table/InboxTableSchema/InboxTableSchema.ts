@@ -1,11 +1,15 @@
 import { z } from "@hono/zod-openapi";
 import { BuyerMessageSchema } from "./BuyerMessageSchema";
 import { FavouriteSchema } from "./FavouriteSchema";
+import { FlagSchema } from "./FlagSchema";
+import { IgnoreSchema } from "./IgnoreSchema";
 import { SellerMessageSchema } from "./SellerMessageSchema";
 import { SystemSchema } from "./SystemSchema";
 import { ThumbSchema } from "./ThumbSchema";
 import { TransactionSchema } from "./TransactionSchema";
 import { UnfavouriteSchema } from "./UnfavouriteSchema";
+import { UnflagSchema } from "./UnflagSchema";
+import { UnignoreSchema } from "./UnignoreSchema";
 import { UnknownSchema } from "./UnknownSchema";
 
 export const InboxTableSchema = z
@@ -18,6 +22,10 @@ export const InboxTableSchema = z
 		ThumbSchema,
 		FavouriteSchema,
 		UnfavouriteSchema,
+		FlagSchema,
+		UnflagSchema,
+		IgnoreSchema,
+		UnignoreSchema,
 	])
 	.openapi("Inbox", {
 		description: "Inbox item",

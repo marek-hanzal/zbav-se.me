@@ -68,9 +68,6 @@ common -> sdk, ui
 sdk, ui -> no @zbav-se.me dependencies
 ```
 
-Core domain/product invariants live in [MASTER.md](./MASTER.md).
-Team implementation rules live in [AGENTS.md](./AGENTS.md).
-
 ## Contributing
 
 Issues and PRs are welcome for bug reports, quality improvements, and architecture feedback.

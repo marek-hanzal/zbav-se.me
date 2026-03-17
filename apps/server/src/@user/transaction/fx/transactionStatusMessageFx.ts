@@ -15,7 +15,7 @@ const KindMap = {
 	"dispute:seller": "status-dispute-seller",
 	"rejected:buyer": "status-rejected-buyer",
 	"rejected:seller": "status-rejected-seller",
-	"sold:null": "status-sold",
+	"sold:buyer": "status-sold",
 	"expired:null": "status-expired",
 	"success:buyer": "status-success",
 	"closed:buyer": "status-closed",

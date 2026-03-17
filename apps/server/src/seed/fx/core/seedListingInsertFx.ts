@@ -70,6 +70,7 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 				createdAt: nowDate,
 				updatedAt: nowDate,
 				currency: "CZK",
+				status: "live",
 				...data,
 				titleVec: withCachedTitleVec(data.title),
 				expiresAt: match(data.expiresAt)

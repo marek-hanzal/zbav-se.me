@@ -27,8 +27,13 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 >({ userId, select, where, meta }: withListingQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 
+	// Status filter is always applied — buyers see only "live" and "sold" listings
+	query = query.where("l.status", "in", [
+		"live",
+	] as const) as TSelect;
+
 	if (!where) {
-		return yield* Effect.succeed(select);
+		return yield* Effect.succeed(query);
 	}
 
 	if (where.id) {

@@ -128,7 +128,9 @@ export const HeroImage: FC<HeroImage.Props> = ({
 			<img
 				ref={imgRef}
 				key={props.src ?? "no-src"}
-				className={"absolute inset-0 h-full w-full object-cover object-center"}
+				className={
+					"absolute inset-0 h-full w-full object-cover object-center transition-all"
+				}
 				//
 				loading={"eager"}
 				fetchPriority={"high"}

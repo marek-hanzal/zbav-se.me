@@ -10,6 +10,10 @@ export const InboxTypeEnumSchema = z
 		"thumb",
 		"favourite",
 		"unfavourite",
+		"flag",
+		"unflag",
+		"ignore",
+		"unignore",
 	])
 	.openapi("InboxTypeEnum", {
 		description: "Inbox type",

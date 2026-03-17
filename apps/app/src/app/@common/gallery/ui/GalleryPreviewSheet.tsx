@@ -1,4 +1,5 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
+import { translator } from "@use-pico/common/translator";
 import type { tUpload } from "@zbav-se.me/sdk/api/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC } from "react";
@@ -19,10 +20,10 @@ export namespace GalleryPreviewSheet {
 export const GalleryPreviewSheet: FC<GalleryPreviewSheet.Props> = ({ uploads, ...props }) => {
 	return (
 		<BottomSheet
-			data-ui={"GalleryButton[BottomSheet]"}
-			detent={"full"}
+			data-ui={"GalleryPreviewSheet"}
+			detent={"default"}
 			header={({ close }) => ({
-				title: "Gallery (title)",
+				title: translator.text("Gallery (title)"),
 				right: <CloseButton onClick={close} />,
 			})}
 			contentProps={{

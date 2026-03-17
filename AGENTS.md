@@ -1,7 +1,6 @@
 # AGENTS.md (shared)
 
 ## Source of truth
-- Product/domain invariants: `MASTER.md`.
 - Shared implementation policy: this file.
 - App-specific overlays:
   - `apps/app/AGENTS.md`
@@ -19,6 +18,7 @@
 8. If touched directory has `README.md`, update it.
 9. Run relevant checks before handoff.
 10. If work drifts into a long side task outside the current Linear scope, ask for a new issue.
+11. Don't start `dev`, it's already running
 
 ## Monorepo dependency boundaries (hard)
 ```txt
@@ -38,17 +38,5 @@ sdk, ui -> no @zbav-se.me dependencies
 - Keep export chain complete through local/parent `index.ts`.
 - Contract changes require `bun run sdk` from repo root.
 
-## Domain invariants (hard)
-- No pay-to-win for trust/reputation.
-- Sensitivity/admin-ban are hard 404 gates.
-- Terminal transaction states are read-only.
-- Automatic expiration must remain intact.
-- Minimal PII model must remain intact.
-
-## Root commands
-- `bun install`
-- `bun run dev|build|preview`
-- `bun run format|lint|typecheck|test|sdk|workflow:check`
-
 ## Formatting baseline
-- Biome: tabs, line width 100.
+- Use `bun run format`

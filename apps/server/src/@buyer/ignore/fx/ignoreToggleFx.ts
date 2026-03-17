@@ -5,6 +5,7 @@ import type { IgnoreToggleSchema } from "~/@buyer/ignore/schema/IgnoreToggleSche
 import { listingCheckIfOwnFx } from "~/@buyer/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/@buyer/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/@buyer/listing-event/fx/listingEventCreateFx";
+import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace ignoreToggleFx {
@@ -20,7 +21,7 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 }: ignoreToggleFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			yield* listingCheckIfOwnFx({
+			const listingUserId = yield* listingCheckIfOwnFx({
 				userId,
 				listingId,
 				message: "You cannot ignore your own listing",
@@ -39,6 +40,19 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 							listingId,
 							event: "ignore",
 						}).pipe(Effect.ignore);
+
+						yield* inboxCreateFx({
+							userId: listingUserId,
+							reference: [
+								listingId,
+							],
+							family: "reaction",
+							type: "ignore",
+							payload: {
+								listingId,
+							},
+							priority: "common",
+						});
 
 						return yield* listingFetchFx({
 							userId,
@@ -61,6 +75,19 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 							listingId,
 							event: "unignore",
 						}).pipe(Effect.ignore);
+
+						yield* inboxCreateFx({
+							userId: listingUserId,
+							reference: [
+								listingId,
+							],
+							family: "reaction",
+							type: "unignore",
+							payload: {
+								listingId,
+							},
+							priority: "common",
+						});
 
 						return yield* listingFetchFx({
 							userId,

@@ -26,6 +26,10 @@ export const InboxMigration: Migration = {
 					"thumb",
 					"favourite",
 					"unfavourite",
+					"flag",
+					"unflag",
+					"ignore",
+					"unignore",
 				] as const),
 			)
 			.execute();

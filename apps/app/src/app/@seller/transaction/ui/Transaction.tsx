@@ -13,6 +13,7 @@ import { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionM
 import { TransactionEntryList } from "~/app/@common/transaction-entry/ui/TransactionEntryList";
 import { archiveBuyerMessageInbox } from "../service/archiveBuyerMessageInbox";
 import { withArchiveBuyerMessageInboxMutation } from "../service/withArchiveBuyerMessageInboxMutation";
+import { PendingMessage } from "./status/PendingMessage";
 import { TransactionMenu } from "./TransactionMenu";
 
 export namespace Transaction {
@@ -109,47 +110,59 @@ export const Transaction: FC<Transaction.Props> = ({
 					/>
 				</Container>
 
-				<TransactionChat
-					hooks={{
-						async onPostMutation() {
-							try {
-								await archiveBuyerMessageInbox({
-									queryClient,
-									transactionId: transaction.id,
-									listingId: transaction.listingId,
-								});
-							} catch {
-								// Keep message send flow usable even if unread archival fails.
-							}
-						},
-					}}
-					transaction={transaction}
-					left={
-						<TransactionMenuButton>
-							{(close) => (
-								<TransactionMenu
-									close={close}
-									transaction={transaction}
-								/>
-							)}
-						</TransactionMenuButton>
-					}
-					mode={"readonly"}
-					text={{
-						open: translator.text("Transaction - send a message (placeholder)"),
-						dispute: translator.text(
-							"Transaction - dispute - send a message (placeholder)",
-						),
-						pending: translator.text("Transaction not accepted - seller (message)"),
-						resolved: translator.text(
-							"Chat - transaction resolved - seller cannot write (message)",
-						),
-						closed: translator.text("Chat - transaction closed (message)"),
-					}}
-					ui={{
-						inner: "default",
-					}}
-				/>
+				{transaction.status === "pending" ? (
+					<Container
+						ui={{
+							inner: "default",
+						}}
+					>
+						<PendingMessage
+							close={() => {}}
+							transaction={transaction}
+						/>
+					</Container>
+				) : (
+					<TransactionChat
+						hooks={{
+							async onPostMutation() {
+								try {
+									await archiveBuyerMessageInbox({
+										queryClient,
+										transactionId: transaction.id,
+										listingId: transaction.listingId,
+									});
+								} catch {
+									// Keep message send flow usable even if unread archival fails.
+								}
+							},
+						}}
+						transaction={transaction}
+						left={
+							<TransactionMenuButton>
+								{(close) => (
+									<TransactionMenu
+										close={close}
+										transaction={transaction}
+									/>
+								)}
+							</TransactionMenuButton>
+						}
+						text={{
+							open: translator.text("Transaction - send a message (placeholder)"),
+							dispute: translator.text(
+								"Transaction - dispute - send a message (placeholder)",
+							),
+							pending: translator.text("Transaction not accepted - seller (message)"),
+							resolved: translator.text(
+								"Chat - transaction resolved - seller cannot write (message)",
+							),
+							closed: translator.text("Chat - transaction closed (message)"),
+						}}
+						ui={{
+							inner: "default",
+						}}
+					/>
+				)}
 			</Container>
 		</Container>
 	);
