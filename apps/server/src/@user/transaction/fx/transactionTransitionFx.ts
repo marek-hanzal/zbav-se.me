@@ -305,10 +305,6 @@ export namespace Transitions {
 	 * - object key = current transaction state we are validating from
 	 * - array item = one allowed request from that state
 	 * - empty array = hard stop, nothing more is allowed from that state
-	 *
-	 * This file should stay blunt and easy to compare with `MASTER.md`, client UX,
-	 * and endpoint behavior. If there is a conflict, this machine is the thing we
-	 * compare against first.
 	 */
 	export const Machine = {
 		null: [
