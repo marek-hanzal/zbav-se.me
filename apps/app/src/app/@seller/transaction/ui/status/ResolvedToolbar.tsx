@@ -1,3 +1,4 @@
+import { Group } from "@use-pico/client/ui/group";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
 import { TransactionButtonUi } from "~/app/@common/transaction/ui/TransactionButtonUi";
@@ -12,9 +13,11 @@ export namespace ResolvedToolbar {
 }
 
 export const ResolvedToolbar: FC<ResolvedToolbar.Props> = ({ close, transaction }) => (
-	<DisputeButton
-		close={close}
-		transaction={transaction}
-		{...TransactionButtonUi}
-	/>
+	<Group>
+		<DisputeButton
+			close={close}
+			transaction={transaction}
+			{...TransactionButtonUi}
+		/>
+	</Group>
 );

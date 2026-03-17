@@ -1,5 +1,4 @@
-import type { Container } from "@use-pico/client/ui/container";
-import { Group } from "@use-pico/client/ui/group";
+import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction as tBuyerTransaction } from "@zbav-se.me/sdk/api/buyer";
 import type { tTransaction as tSellerTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC, ReactNode } from "react";
@@ -49,7 +48,7 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 		.exhaustive();
 
 	return toolbar ? (
-		<Group
+		<Container
 			data-ui={"TransactionToolbar[Group]"}
 			ui={{
 				flow: "vertical",
@@ -57,11 +56,12 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 				justify: "center",
 				items: "center",
 				width: "full",
+				gap: "default",
 				...ui,
 			}}
 			{...props}
 		>
 			{toolbar}
-		</Group>
+		</Container>
 	) : null;
 };

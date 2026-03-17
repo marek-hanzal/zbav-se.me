@@ -1,3 +1,4 @@
+import { Group } from "@use-pico/client/ui/group";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { TransactionButtonUi } from "~/app/@common/transaction/ui/TransactionButtonUi";
@@ -14,17 +15,18 @@ export namespace OpenToolbar {
 
 export const OpenToolbar: FC<OpenToolbar.Props> = ({ close, transaction }) => {
 	return (
-		<>
+		<Group>
 			<SuccessButton
 				close={close}
 				transaction={transaction}
 				{...TransactionButtonUi}
 			/>
+
 			<CloseButton
 				close={close}
 				transaction={transaction}
 				{...TransactionButtonUi}
 			/>
-		</>
+		</Group>
 	);
 };
