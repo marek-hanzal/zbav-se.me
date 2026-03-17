@@ -50,15 +50,19 @@ export const TransactionList: FC<TransactionList.Props> = ({
 		() =>
 			[
 				{
-					label: toStatusLabel(tTransactionStatusEnum.open),
-					statuses: [
-						tTransactionStatusEnum.open,
-					],
-				},
-				{
 					label: toStatusLabel(tTransactionStatusEnum.pending),
 					statuses: [
 						tTransactionStatusEnum.pending,
+					],
+					typoUi: {
+						tone: "brand",
+						theme: "light",
+					},
+				},
+				{
+					label: toStatusLabel(tTransactionStatusEnum.open),
+					statuses: [
+						tTransactionStatusEnum.open,
 					],
 				},
 				{
