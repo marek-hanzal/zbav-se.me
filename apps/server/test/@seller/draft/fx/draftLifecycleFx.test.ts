@@ -16,7 +16,11 @@ describe("draft lifecycle", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@draft-create.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@draft-create.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 
 		const draft = await Effect.gen(function* () {
@@ -64,13 +68,19 @@ describe("draft lifecycle", () => {
 			return yield* draftCreateFx({
 				userId: seller.id,
 				title: "Draft with uploads",
-				uploadIds: [upload1.id, upload2.id],
+				uploadIds: [
+					upload1.id,
+					upload2.id,
+				],
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		const galleryItems = await database.kysely
 			.selectFrom("gallery_item")
-			.select(["uploadId", "sort"])
+			.select([
+				"uploadId",
+				"sort",
+			])
 			.where("galleryId", "=", draft.galleryId)
 			.orderBy("sort", "asc")
 			.execute();
@@ -85,7 +95,11 @@ describe("draft lifecycle", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@draft-patch.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@draft-patch.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 
 		const draft = await Effect.gen(function* () {
@@ -97,9 +111,18 @@ describe("draft lifecycle", () => {
 
 		const patched = await Effect.gen(function* () {
 			return yield* draftPatchFx({
-				patch: { title: "Updated title", price: 999 },
-				query: { where: { id: draft.id } },
-				scope: { userId: seller.id },
+				patch: {
+					title: "Updated title",
+					price: 999,
+				},
+				query: {
+					where: {
+						id: draft.id,
+					},
+				},
+				scope: {
+					userId: seller.id,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -114,12 +137,18 @@ describe("draft lifecycle", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@draft-to-listing.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@draft-to-listing.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 
 		const { draft, listing } = await Effect.gen(function* () {
 			const category = yield* categoryFetchFx({
-				where: { slug: "pocitace-a-kancelar--uloziste-ssd-hdd" },
+				where: {
+					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
+				},
 				scope: {},
 			});
 
@@ -152,10 +181,15 @@ describe("draft lifecycle", () => {
 				categoryId: category.id,
 				// biome-ignore lint/style/noNonNullAssertion: asserted by locationAutocompleteFx
 				locationId: location[0]!.id,
-				uploadIds: [upload.id],
+				uploadIds: [
+					upload.id,
+				],
 			});
 
-			return { draft: createdDraft, listing: createdListing };
+			return {
+				draft: createdDraft,
+				listing: createdListing,
+			};
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		// Listing was created with status live
@@ -164,7 +198,10 @@ describe("draft lifecycle", () => {
 		// draft.usedAt must be set after listing creation
 		const updatedDraft = await database.kysely
 			.selectFrom("draft")
-			.select(["usedAt", "updatedAt"])
+			.select([
+				"usedAt",
+				"updatedAt",
+			])
 			.where("id", "=", draft.id)
 			.executeTakeFirstOrThrow();
 
@@ -178,12 +215,18 @@ describe("draft lifecycle", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@listing-no-draft.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@listing-no-draft.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 
 		await Effect.gen(function* () {
 			const category = yield* categoryFetchFx({
-				where: { slug: "pocitace-a-kancelar--uloziste-ssd-hdd" },
+				where: {
+					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
+				},
 				scope: {},
 			});
 			const location = yield* locationAutocompleteFx({
@@ -197,7 +240,10 @@ describe("draft lifecycle", () => {
 			});
 
 			// Create draft but do NOT pass draftId to listingCreateFx
-			yield* draftCreateFx({ userId: seller.id, title: "Unused draft" });
+			yield* draftCreateFx({
+				userId: seller.id,
+				title: "Unused draft",
+			});
 
 			yield* listingCreateFx({
 				userId: seller.id,
@@ -211,7 +257,9 @@ describe("draft lifecycle", () => {
 				categoryId: category.id,
 				// biome-ignore lint/style/noNonNullAssertion: asserted by locationAutocompleteFx
 				locationId: location[0]!.id,
-				uploadIds: [upload.id],
+				uploadIds: [
+					upload.id,
+				],
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 

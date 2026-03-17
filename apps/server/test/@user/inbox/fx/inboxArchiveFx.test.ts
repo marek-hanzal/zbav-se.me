@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { inboxArchiveFx } from "~/@user/inbox/fx/inboxArchiveFx";
 import { inboxCollectionFx } from "~/@user/inbox/fx/inboxCollectionFx";
 import { auth } from "~/auth/auth";
-import { testabase } from "~test/testabase";
 import { withRuntimeFx } from "~test/fixture/transactionFixture";
+import { testabase } from "~test/testabase";
 
 /**
  * Inserts inbox rows directly into the DB — bypasses inboxCreateFx so tests
@@ -40,35 +40,53 @@ describe("inboxArchiveFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user } = await api.signUpEmail({
-			body: { email: "user@inbox-archive-ref.cz", name: "User", password: "12345678" },
+			body: {
+				email: "user@inbox-archive-ref.cz",
+				name: "User",
+				password: "12345678",
+			},
 		});
 
 		await seedInbox(database, [
 			{
 				id: "arch-ref-a1",
 				userId: user.id,
-				reference: ["listing-a", "tx-1"],
+				reference: [
+					"listing-a",
+					"tx-1",
+				],
 				family: "transaction",
 				type: "buyer-message",
-				payload: { transactionId: "tx-1" },
+				payload: {
+					transactionId: "tx-1",
+				},
 				priority: "high",
 			},
 			{
 				id: "arch-ref-a2",
 				userId: user.id,
-				reference: ["listing-a", "tx-1"],
+				reference: [
+					"listing-a",
+					"tx-1",
+				],
 				family: "transaction",
 				type: "seller-message",
-				payload: { transactionId: "tx-1" },
+				payload: {
+					transactionId: "tx-1",
+				},
 				priority: "high",
 			},
 			{
 				id: "arch-ref-b1",
 				userId: user.id,
-				reference: ["listing-b"],
+				reference: [
+					"listing-b",
+				],
 				family: "reaction",
 				type: "favourite",
-				payload: { listingId: "listing-b" },
+				payload: {
+					listingId: "listing-b",
+				},
 				priority: "common",
 			},
 		]);
@@ -76,16 +94,26 @@ describe("inboxArchiveFx", () => {
 		// Archive all items that reference "listing-a"
 		await Effect.gen(function* () {
 			yield* inboxArchiveFx({
-				scope: { userId: user.id },
-				where: { reference: "listing-a" },
+				scope: {
+					userId: user.id,
+				},
+				where: {
+					reference: "listing-a",
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		// listing-a items should now have archivedAt set
 		const archivedItems = await database.kysely
 			.selectFrom("inbox")
-			.select(["id", "archivedAt"])
-			.where("id", "in", ["arch-ref-a1", "arch-ref-a2"])
+			.select([
+				"id",
+				"archivedAt",
+			])
+			.where("id", "in", [
+				"arch-ref-a1",
+				"arch-ref-a2",
+			])
 			.execute();
 
 		expect(archivedItems.every((i) => i.archivedAt !== null)).toBe(true);
@@ -116,19 +144,27 @@ describe("inboxArchiveFx", () => {
 			{
 				id: "coll-active",
 				userId: user.id,
-				reference: ["listing-active"],
+				reference: [
+					"listing-active",
+				],
 				family: "reaction",
 				type: "favourite",
-				payload: { listingId: "listing-active" },
+				payload: {
+					listingId: "listing-active",
+				},
 				priority: "common",
 			},
 			{
 				id: "coll-to-archive",
 				userId: user.id,
-				reference: ["listing-old"],
+				reference: [
+					"listing-old",
+				],
 				family: "reaction",
 				type: "favourite",
-				payload: { listingId: "listing-old" },
+				payload: {
+					listingId: "listing-old",
+				},
 				priority: "common",
 			},
 		]);
@@ -136,16 +172,24 @@ describe("inboxArchiveFx", () => {
 		// Archive the old one
 		await Effect.gen(function* () {
 			yield* inboxArchiveFx({
-				scope: { userId: user.id },
-				where: { reference: "listing-old" },
+				scope: {
+					userId: user.id,
+				},
+				where: {
+					reference: "listing-old",
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		// Collection with archivedAtIsNull: true — should only return active item
 		const active = await Effect.gen(function* () {
 			return yield* inboxCollectionFx({
-				scope: { userId: user.id },
-				where: { archivedAtIsNull: true },
+				scope: {
+					userId: user.id,
+				},
+				where: {
+					archivedAtIsNull: true,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -156,7 +200,9 @@ describe("inboxArchiveFx", () => {
 		// Collection without filter returns both
 		const all = await Effect.gen(function* () {
 			return yield* inboxCollectionFx({
-				scope: { userId: user.id },
+				scope: {
+					userId: user.id,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -170,29 +216,45 @@ describe("inboxArchiveFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: alice } = await api.signUpEmail({
-			body: { email: "alice@inbox-scope.cz", name: "Alice", password: "12345678" },
+			body: {
+				email: "alice@inbox-scope.cz",
+				name: "Alice",
+				password: "12345678",
+			},
 		});
 		const { user: bob } = await api.signUpEmail({
-			body: { email: "bob@inbox-scope.cz", name: "Bob", password: "12345678" },
+			body: {
+				email: "bob@inbox-scope.cz",
+				name: "Bob",
+				password: "12345678",
+			},
 		});
 
 		await seedInbox(database, [
 			{
 				id: "scope-alice",
 				userId: alice.id,
-				reference: ["listing-shared"],
+				reference: [
+					"listing-shared",
+				],
 				family: "reaction",
 				type: "favourite",
-				payload: { listingId: "listing-shared" },
+				payload: {
+					listingId: "listing-shared",
+				},
 				priority: "common",
 			},
 			{
 				id: "scope-bob",
 				userId: bob.id,
-				reference: ["listing-shared"],
+				reference: [
+					"listing-shared",
+				],
 				family: "reaction",
 				type: "favourite",
-				payload: { listingId: "listing-shared" },
+				payload: {
+					listingId: "listing-shared",
+				},
 				priority: "common",
 			},
 		]);
@@ -200,8 +262,12 @@ describe("inboxArchiveFx", () => {
 		// Alice archives by reference — scope is alice's userId
 		await Effect.gen(function* () {
 			yield* inboxArchiveFx({
-				scope: { userId: alice.id },
-				where: { reference: "listing-shared" },
+				scope: {
+					userId: alice.id,
+				},
+				where: {
+					reference: "listing-shared",
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -238,19 +304,28 @@ describe("inboxArchiveFx", () => {
 			{
 				id: "family-tx",
 				userId: user.id,
-				reference: ["listing-x", "tx-x"],
+				reference: [
+					"listing-x",
+					"tx-x",
+				],
 				family: "transaction",
 				type: "buyer-message",
-				payload: { transactionId: "tx-x" },
+				payload: {
+					transactionId: "tx-x",
+				},
 				priority: "high",
 			},
 			{
 				id: "family-reaction",
 				userId: user.id,
-				reference: ["listing-x"],
+				reference: [
+					"listing-x",
+				],
 				family: "reaction",
 				type: "favourite",
-				payload: { listingId: "listing-x" },
+				payload: {
+					listingId: "listing-x",
+				},
 				priority: "common",
 			},
 		]);
@@ -258,8 +333,12 @@ describe("inboxArchiveFx", () => {
 		// Archive only transaction family
 		await Effect.gen(function* () {
 			yield* inboxArchiveFx({
-				scope: { userId: user.id },
-				where: { family: "transaction" },
+				scope: {
+					userId: user.id,
+				},
+				where: {
+					family: "transaction",
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -295,28 +374,40 @@ describe("inboxArchiveFx", () => {
 			{
 				id: "cursor-1",
 				userId: user.id,
-				reference: ["listing-cursor"],
+				reference: [
+					"listing-cursor",
+				],
 				family: "reaction",
 				type: "favourite",
-				payload: { listingId: "listing-cursor" },
+				payload: {
+					listingId: "listing-cursor",
+				},
 				priority: "common",
 			},
 			{
 				id: "cursor-2",
 				userId: user.id,
-				reference: ["listing-cursor"],
+				reference: [
+					"listing-cursor",
+				],
 				family: "reaction",
 				type: "favourite",
-				payload: { listingId: "listing-cursor" },
+				payload: {
+					listingId: "listing-cursor",
+				},
 				priority: "common",
 			},
 			{
 				id: "cursor-3",
 				userId: user.id,
-				reference: ["listing-cursor"],
+				reference: [
+					"listing-cursor",
+				],
 				family: "reaction",
 				type: "favourite",
-				payload: { listingId: "listing-cursor" },
+				payload: {
+					listingId: "listing-cursor",
+				},
 				priority: "common",
 			},
 		]);
@@ -324,9 +415,16 @@ describe("inboxArchiveFx", () => {
 		// Archive with cursor size 2 — only 2 should be archived
 		await Effect.gen(function* () {
 			yield* inboxArchiveFx({
-				scope: { userId: user.id },
-				where: { reference: "listing-cursor" },
-				cursor: { page: 0, size: 2 },
+				scope: {
+					userId: user.id,
+				},
+				where: {
+					reference: "listing-cursor",
+				},
+				cursor: {
+					page: 0,
+					size: 2,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 

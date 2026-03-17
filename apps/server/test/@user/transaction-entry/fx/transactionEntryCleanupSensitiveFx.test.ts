@@ -2,11 +2,8 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionRejectFx } from "~/@seller/transaction/fx/transactionRejectFx";
 import { auth } from "~/auth/auth";
+import { createOpenScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
 import { testabase } from "~test/testabase";
-import {
-	createOpenScenarioFx,
-	withRuntimeFx,
-} from "~test/fixture/transactionFixture";
 
 describe("transactionEntryCleanupSensitiveFx", () => {
 	it("deletes location/package/personal entries on rejection, keeps text and status entries", async () => {
@@ -14,10 +11,18 @@ describe("transactionEntryCleanupSensitiveFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@entry-cleanup.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@entry-cleanup.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 		const { user: buyer } = await api.signUpEmail({
-			body: { email: "buyer@entry-cleanup.cz", name: "Buyer", password: "12345678" },
+			body: {
+				email: "buyer@entry-cleanup.cz",
+				name: "Buyer",
+				password: "12345678",
+			},
 		});
 
 		const { transactionId } = await createOpenScenarioFx({
@@ -35,7 +40,9 @@ describe("transactionEntryCleanupSensitiveFx", () => {
 					transactionId,
 					kind: "location",
 					userId: seller.id,
-					payload: { text: "location data" },
+					payload: {
+						text: "location data",
+					},
 					createdAt: new Date(),
 				},
 				{
@@ -43,7 +50,9 @@ describe("transactionEntryCleanupSensitiveFx", () => {
 					transactionId,
 					kind: "package",
 					userId: seller.id,
-					payload: { text: "package data" },
+					payload: {
+						text: "package data",
+					},
 					createdAt: new Date(),
 				},
 				{
@@ -51,7 +60,9 @@ describe("transactionEntryCleanupSensitiveFx", () => {
 					transactionId,
 					kind: "personal",
 					userId: buyer.id,
-					payload: { text: "personal data" },
+					payload: {
+						text: "personal data",
+					},
 					createdAt: new Date(),
 				},
 				{
@@ -59,7 +70,9 @@ describe("transactionEntryCleanupSensitiveFx", () => {
 					transactionId,
 					kind: "text",
 					userId: buyer.id,
-					payload: { text: "hello" },
+					payload: {
+						text: "hello",
+					},
 					createdAt: new Date(),
 				},
 			])
@@ -70,14 +83,22 @@ describe("transactionEntryCleanupSensitiveFx", () => {
 			.selectFrom("transaction_entry")
 			.select("kind")
 			.where("transactionId", "=", transactionId)
-			.where("kind", "in", ["location", "package", "personal", "text"])
+			.where("kind", "in", [
+				"location",
+				"package",
+				"personal",
+				"text",
+			])
 			.execute();
 
 		expect(before).toHaveLength(4);
 
 		// Rejection triggers transactionUpdateStatusFx → transactionEntryCleanupSensitiveFx
 		await Effect.gen(function* () {
-			yield* transactionRejectFx({ transactionId, userId: seller.id });
+			yield* transactionRejectFx({
+				transactionId,
+				userId: seller.id,
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		const after = await database.kysely
@@ -132,7 +153,9 @@ describe("transactionEntryCleanupSensitiveFx", () => {
 					transactionId,
 					kind: "location",
 					userId: seller.id,
-					payload: { text: "location data" },
+					payload: {
+						text: "location data",
+					},
 					createdAt: new Date(),
 				},
 			])

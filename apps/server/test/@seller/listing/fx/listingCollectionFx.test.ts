@@ -2,12 +2,12 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/@seller/listing/fx/listingCollectionFx";
 import { auth } from "~/auth/auth";
-import { testabase } from "~test/testabase";
 import {
 	createListingFx,
 	createResolvedScenarioFx,
 	withRuntimeFx,
 } from "~test/fixture/transactionFixture";
+import { testabase } from "~test/testabase";
 
 describe("listingCollectionFx (seller)", () => {
 	it("seller sees their own live listing", async () => {
@@ -15,7 +15,11 @@ describe("listingCollectionFx (seller)", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@seller-listing-live.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@seller-listing-live.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 
 		const listing = await createListingFx(seller.id).pipe(
@@ -25,7 +29,9 @@ describe("listingCollectionFx (seller)", () => {
 
 		const collection = await Effect.gen(function* () {
 			return yield* listingCollectionFx({
-				scope: { userId: seller.id },
+				scope: {
+					userId: seller.id,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -69,7 +75,9 @@ describe("listingCollectionFx (seller)", () => {
 		// Seller listing collection has no status filter — sold listing is visible
 		const collection = await Effect.gen(function* () {
 			return yield* listingCollectionFx({
-				scope: { userId: seller.id },
+				scope: {
+					userId: seller.id,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -106,7 +114,9 @@ describe("listingCollectionFx (seller)", () => {
 
 		const collection = await Effect.gen(function* () {
 			return yield* listingCollectionFx({
-				scope: { userId: seller1.id },
+				scope: {
+					userId: seller1.id,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -132,8 +142,12 @@ describe("listingCollectionFx (seller)", () => {
 
 		const collection = await Effect.gen(function* () {
 			return yield* listingCollectionFx({
-				scope: { userId: seller.id },
-				where: { fulltext: "Test listing" },
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					fulltext: "Test listing",
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -143,8 +157,12 @@ describe("listingCollectionFx (seller)", () => {
 		// Non-matching search returns empty
 		const empty = await Effect.gen(function* () {
 			return yield* listingCollectionFx({
-				scope: { userId: seller.id },
-				where: { fulltext: "xyzzy-nonexistent-title" },
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					fulltext: "xyzzy-nonexistent-title",
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 

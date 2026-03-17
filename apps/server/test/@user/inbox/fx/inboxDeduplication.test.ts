@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { inboxCollectionFx } from "~/@user/inbox/fx/inboxCollectionFx";
 import { auth } from "~/auth/auth";
-import { testabase } from "~test/testabase";
 import { withRuntimeFx } from "~test/fixture/transactionFixture";
+import { testabase } from "~test/testabase";
 
 describe("inbox deduplication (PARTITION BY transactionId)", () => {
 	it("multiple buyer-message entries for same transactionId collapse into one (latest)", async () => {
@@ -11,7 +11,11 @@ describe("inbox deduplication (PARTITION BY transactionId)", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@inbox-dedup.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@inbox-dedup.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 
 		const txId = "dedup-tx-001";
@@ -24,10 +28,16 @@ describe("inbox deduplication (PARTITION BY transactionId)", () => {
 				{
 					id: "dedup-inbox-1",
 					userId: seller.id,
-					reference: [listingId, txId],
+					reference: [
+						listingId,
+						txId,
+					],
 					family: "transaction",
 					type: "buyer-message",
-					payload: { transactionId: txId, transactionEntryId: "entry-1" },
+					payload: {
+						transactionId: txId,
+						transactionEntryId: "entry-1",
+					},
 					priority: "high",
 					timestamp: new Date("2026-03-17T10:00:00.000Z"),
 					archivedAt: null,
@@ -35,10 +45,16 @@ describe("inbox deduplication (PARTITION BY transactionId)", () => {
 				{
 					id: "dedup-inbox-2",
 					userId: seller.id,
-					reference: [listingId, txId],
+					reference: [
+						listingId,
+						txId,
+					],
 					family: "transaction",
 					type: "buyer-message",
-					payload: { transactionId: txId, transactionEntryId: "entry-2" },
+					payload: {
+						transactionId: txId,
+						transactionEntryId: "entry-2",
+					},
 					priority: "high",
 					timestamp: new Date("2026-03-17T10:01:00.000Z"),
 					archivedAt: null,
@@ -46,10 +62,16 @@ describe("inbox deduplication (PARTITION BY transactionId)", () => {
 				{
 					id: "dedup-inbox-3",
 					userId: seller.id,
-					reference: [listingId, txId],
+					reference: [
+						listingId,
+						txId,
+					],
 					family: "transaction",
 					type: "buyer-message",
-					payload: { transactionId: txId, transactionEntryId: "entry-3" },
+					payload: {
+						transactionId: txId,
+						transactionEntryId: "entry-3",
+					},
 					priority: "high",
 					timestamp: new Date("2026-03-17T10:02:00.000Z"),
 					archivedAt: null,
@@ -61,7 +83,11 @@ describe("inbox deduplication (PARTITION BY transactionId)", () => {
 		const rawItems = await database.kysely
 			.selectFrom("inbox")
 			.select("id")
-			.where("id", "in", ["dedup-inbox-1", "dedup-inbox-2", "dedup-inbox-3"])
+			.where("id", "in", [
+				"dedup-inbox-1",
+				"dedup-inbox-2",
+				"dedup-inbox-3",
+			])
 			.execute();
 
 		expect(rawItems).toHaveLength(3);
@@ -69,8 +95,12 @@ describe("inbox deduplication (PARTITION BY transactionId)", () => {
 		// inboxCollectionFx uses PARTITION BY and should return only the latest one
 		const collection = await Effect.gen(function* () {
 			return yield* inboxCollectionFx({
-				scope: { userId: seller.id },
-				where: { userId: seller.id },
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					userId: seller.id,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -105,10 +135,16 @@ describe("inbox deduplication (PARTITION BY transactionId)", () => {
 				{
 					id: "dedup-sep-1",
 					userId: seller.id,
-					reference: ["listing-y", "tx-aaa"],
+					reference: [
+						"listing-y",
+						"tx-aaa",
+					],
 					family: "transaction",
 					type: "buyer-message",
-					payload: { transactionId: "tx-aaa", transactionEntryId: "entry-a" },
+					payload: {
+						transactionId: "tx-aaa",
+						transactionEntryId: "entry-a",
+					},
 					priority: "high",
 					timestamp: new Date("2026-03-17T11:00:00.000Z"),
 					archivedAt: null,
@@ -116,10 +152,16 @@ describe("inbox deduplication (PARTITION BY transactionId)", () => {
 				{
 					id: "dedup-sep-2",
 					userId: seller.id,
-					reference: ["listing-z", "tx-bbb"],
+					reference: [
+						"listing-z",
+						"tx-bbb",
+					],
 					family: "transaction",
 					type: "buyer-message",
-					payload: { transactionId: "tx-bbb", transactionEntryId: "entry-b" },
+					payload: {
+						transactionId: "tx-bbb",
+						transactionEntryId: "entry-b",
+					},
 					priority: "high",
 					timestamp: new Date("2026-03-17T11:01:00.000Z"),
 					archivedAt: null,
@@ -129,8 +171,12 @@ describe("inbox deduplication (PARTITION BY transactionId)", () => {
 
 		const collection = await Effect.gen(function* () {
 			return yield* inboxCollectionFx({
-				scope: { userId: seller.id },
-				where: { userId: seller.id },
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					userId: seller.id,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 

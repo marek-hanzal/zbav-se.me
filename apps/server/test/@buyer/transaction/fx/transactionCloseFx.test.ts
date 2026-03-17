@@ -2,11 +2,8 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCloseFx } from "~/@buyer/transaction/fx/transactionCloseFx";
 import { auth } from "~/auth/auth";
+import { createResolvedScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
 import { testabase } from "~test/testabase";
-import {
-	createResolvedScenarioFx,
-	withRuntimeFx,
-} from "~test/fixture/transactionFixture";
 
 describe("transactionCloseFx (buyer)", () => {
 	it("resolved → closed: status changes and status-closed entry is created", async () => {
@@ -14,10 +11,18 @@ describe("transactionCloseFx (buyer)", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@buyer-close.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@buyer-close.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 		const { user: buyer } = await api.signUpEmail({
-			body: { email: "buyer@buyer-close.cz", name: "Buyer", password: "12345678" },
+			body: {
+				email: "buyer@buyer-close.cz",
+				name: "Buyer",
+				password: "12345678",
+			},
 		});
 
 		const { transactionId } = await createResolvedScenarioFx({
@@ -27,7 +32,10 @@ describe("transactionCloseFx (buyer)", () => {
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		await Effect.gen(function* () {
-			yield* transactionCloseFx({ transactionId, userId: buyer.id });
+			yield* transactionCloseFx({
+				transactionId,
+				userId: buyer.id,
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		const { status } = await database.kysely
@@ -54,10 +62,18 @@ describe("transactionCloseFx (buyer)", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@buyer-double-close.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@buyer-double-close.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 		const { user: buyer } = await api.signUpEmail({
-			body: { email: "buyer@buyer-double-close.cz", name: "Buyer", password: "12345678" },
+			body: {
+				email: "buyer@buyer-double-close.cz",
+				name: "Buyer",
+				password: "12345678",
+			},
 		});
 
 		const { transactionId } = await createResolvedScenarioFx({
@@ -67,12 +83,18 @@ describe("transactionCloseFx (buyer)", () => {
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		await Effect.gen(function* () {
-			yield* transactionCloseFx({ transactionId, userId: buyer.id });
+			yield* transactionCloseFx({
+				transactionId,
+				userId: buyer.id,
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		await expect(
 			Effect.gen(function* () {
-				yield* transactionCloseFx({ transactionId, userId: buyer.id });
+				yield* transactionCloseFx({
+					transactionId,
+					userId: buyer.id,
+				});
 			}).pipe(withRuntimeFx(database), Effect.runPromise),
 		).rejects.toThrow();
 	});

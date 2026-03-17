@@ -45,10 +45,6 @@ Scenario authors should use the real repository entry points that already exist:
   - App: `http://localhost:3031`
   - API: `http://localhost:3032`
   - OpenAPI docs: `http://localhost:3032/docs`
-- Domain guidance for agent reasoning:
-  - `MASTER.md`
-  - `apps/server/public/mcp/guide/*`
-  - `apps/server/public/mcp/profile/*`
 
 Use those references when they reduce ambiguity. Do not dump irrelevant repo context into a scenario.
 

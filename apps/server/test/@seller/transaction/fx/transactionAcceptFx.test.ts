@@ -2,11 +2,8 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionAcceptFx } from "~/@seller/transaction/fx/transactionAcceptFx";
 import { auth } from "~/auth/auth";
+import { createPendingScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
 import { testabase } from "~test/testabase";
-import {
-	createPendingScenarioFx,
-	withRuntimeFx,
-} from "~test/fixture/transactionFixture";
 
 describe("transactionAcceptFx", () => {
 	it("pending → open: status changes and status-open entry is created", async () => {
@@ -14,16 +11,24 @@ describe("transactionAcceptFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@accept-test.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@accept-test.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 		const { user: buyer } = await api.signUpEmail({
-			body: { email: "buyer@accept-test.cz", name: "Buyer", password: "12345678" },
+			body: {
+				email: "buyer@accept-test.cz",
+				name: "Buyer",
+				password: "12345678",
+			},
 		});
 
-		await createPendingScenarioFx({ sellerId: seller.id, buyerId: buyer.id }).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
+		await createPendingScenarioFx({
+			sellerId: seller.id,
+			buyerId: buyer.id,
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		const tx = await database.kysely
 			.selectFrom("transaction")
@@ -32,7 +37,10 @@ describe("transactionAcceptFx", () => {
 			.executeTakeFirstOrThrow();
 
 		await Effect.gen(function* () {
-			yield* transactionAcceptFx({ transactionId: tx.id, userId: seller.id });
+			yield* transactionAcceptFx({
+				transactionId: tx.id,
+				userId: seller.id,
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		const { status } = await database.kysely
@@ -59,16 +67,24 @@ describe("transactionAcceptFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@accept-invalid.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@accept-invalid.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 		const { user: buyer } = await api.signUpEmail({
-			body: { email: "buyer@accept-invalid.cz", name: "Buyer", password: "12345678" },
+			body: {
+				email: "buyer@accept-invalid.cz",
+				name: "Buyer",
+				password: "12345678",
+			},
 		});
 
-		await createPendingScenarioFx({ sellerId: seller.id, buyerId: buyer.id }).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
+		await createPendingScenarioFx({
+			sellerId: seller.id,
+			buyerId: buyer.id,
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		const tx = await database.kysely
 			.selectFrom("transaction")
@@ -78,7 +94,10 @@ describe("transactionAcceptFx", () => {
 
 		await expect(
 			Effect.gen(function* () {
-				yield* transactionAcceptFx({ transactionId: tx.id, userId: buyer.id });
+				yield* transactionAcceptFx({
+					transactionId: tx.id,
+					userId: buyer.id,
+				});
 			}).pipe(withRuntimeFx(database), Effect.runPromise),
 		).rejects.toThrow();
 	});

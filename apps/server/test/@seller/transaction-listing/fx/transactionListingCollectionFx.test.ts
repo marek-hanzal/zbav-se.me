@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionListingCollectionFx } from "~/@seller/transaction-listing/fx/transactionListingCollectionFx";
 import { transactionRejectFx } from "~/@seller/transaction/fx/transactionRejectFx";
+import { transactionListingCollectionFx } from "~/@seller/transaction-listing/fx/transactionListingCollectionFx";
 import { inboxArchiveFx } from "~/@user/inbox/fx/inboxArchiveFx";
 import { auth } from "~/auth/auth";
-import { testabase } from "~test/testabase";
 import {
 	createListingFx,
 	createOpenScenarioFx,
@@ -12,6 +11,7 @@ import {
 	createResolvedScenarioFx,
 	withRuntimeFx,
 } from "~test/fixture/transactionFixture";
+import { testabase } from "~test/testabase";
 
 describe("transactionListingCollectionFx (seller dashboard)", () => {
 	it("listing without any transaction does not appear in the collection", async () => {
@@ -19,7 +19,11 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@txlisting-no-tx.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@txlisting-no-tx.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 
 		const listing = await createListingFx(seller.id).pipe(
@@ -29,7 +33,9 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 
 		const collection = await Effect.gen(function* () {
 			return yield* transactionListingCollectionFx({
-				scope: { userId: seller.id },
+				scope: {
+					userId: seller.id,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -42,10 +48,18 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@txlisting-pending.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@txlisting-pending.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 		const { user: buyer } = await api.signUpEmail({
-			body: { email: "buyer@txlisting-pending.cz", name: "Buyer", password: "12345678" },
+			body: {
+				email: "buyer@txlisting-pending.cz",
+				name: "Buyer",
+				password: "12345678",
+			},
 		});
 
 		const { listingId } = await createPendingScenarioFx({
@@ -55,7 +69,9 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 
 		const collection = await Effect.gen(function* () {
 			return yield* transactionListingCollectionFx({
-				scope: { userId: seller.id },
+				scope: {
+					userId: seller.id,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -101,7 +117,9 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 
 		const seller1Collection = await Effect.gen(function* () {
 			return yield* transactionListingCollectionFx({
-				scope: { userId: seller1.id },
+				scope: {
+					userId: seller1.id,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -137,8 +155,12 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 
 		const collection = await Effect.gen(function* () {
 			return yield* transactionListingCollectionFx({
-				scope: { userId: seller.id },
-				where: { active: true },
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					active: true,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -172,8 +194,12 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 		// Verify it appears as active before archiving
 		const before = await Effect.gen(function* () {
 			return yield* transactionListingCollectionFx({
-				scope: { userId: seller.id },
-				where: { active: true },
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					active: true,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -182,16 +208,25 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 		// Seller archives the inbox for this listing
 		await Effect.gen(function* () {
 			yield* inboxArchiveFx({
-				scope: { userId: seller.id },
-				where: { reference: listingId, family: "transaction" },
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					reference: listingId,
+					family: "transaction",
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		// Now it should NOT appear as active
 		const after = await Effect.gen(function* () {
 			return yield* transactionListingCollectionFx({
-				scope: { userId: seller.id },
-				where: { active: true },
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					active: true,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -231,8 +266,12 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 		// Not terminal yet (pending is non-terminal)
 		const notTerminal = await Effect.gen(function* () {
 			return yield* transactionListingCollectionFx({
-				scope: { userId: seller.id },
-				where: { terminal: true },
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					terminal: true,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -240,13 +279,20 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 
 		// Reject → terminal status
 		await Effect.gen(function* () {
-			yield* transactionRejectFx({ transactionId: tx.id, userId: seller.id });
+			yield* transactionRejectFx({
+				transactionId: tx.id,
+				userId: seller.id,
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		const terminal = await Effect.gen(function* () {
 			return yield* transactionListingCollectionFx({
-				scope: { userId: seller.id },
-				where: { terminal: true },
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					terminal: true,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -281,8 +327,12 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 		// "open" is a non-terminal status
 		const collection = await Effect.gen(function* () {
 			return yield* transactionListingCollectionFx({
-				scope: { userId: seller.id },
-				where: { terminal: false },
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					terminal: false,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
@@ -319,8 +369,12 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 		// (pending/open/resolved/dispute are non-terminal per the query builder)
 		const collection = await Effect.gen(function* () {
 			return yield* transactionListingCollectionFx({
-				scope: { userId: seller.id },
-				where: { terminal: false },
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					terminal: false,
+				},
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 

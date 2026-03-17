@@ -1,13 +1,10 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { feedCreateFx } from "~/@buyer/feed/fx/feedCreateFx";
 import { favouriteToggleFx } from "~/@buyer/favourite/fx/favouriteToggleFx";
+import { feedCreateFx } from "~/@buyer/feed/fx/feedCreateFx";
 import { auth } from "~/auth/auth";
+import { createListingFx, withRuntimeFx } from "~test/fixture/transactionFixture";
 import { testabase } from "~test/testabase";
-import {
-	createListingFx,
-	withRuntimeFx,
-} from "~test/fixture/transactionFixture";
 
 describe("favouriteToggleFx", () => {
 	it("toggle on: creates favourite, listing_event and seller inbox", async () => {
@@ -15,10 +12,18 @@ describe("favouriteToggleFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@fav-toggle-on.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@fav-toggle-on.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 		const { user: buyer } = await api.signUpEmail({
-			body: { email: "buyer@fav-toggle-on.cz", name: "Buyer", password: "12345678" },
+			body: {
+				email: "buyer@fav-toggle-on.cz",
+				name: "Buyer",
+				password: "12345678",
+			},
 		});
 
 		const listing = await createListingFx(seller.id).pipe(
@@ -47,7 +52,11 @@ describe("favouriteToggleFx", () => {
 		// Favourite record was created
 		const favourite = await database.kysely
 			.selectFrom("favourite")
-			.select(["listingId", "userId", "feedId"])
+			.select([
+				"listingId",
+				"userId",
+				"feedId",
+			])
 			.where("listingId", "=", listing.id)
 			.where("userId", "=", buyer.id)
 			.executeTakeFirst();
@@ -67,7 +76,10 @@ describe("favouriteToggleFx", () => {
 		// Seller received an inbox item of type "favourite"
 		const inbox = await database.kysely
 			.selectFrom("inbox")
-			.select(["type", "family"])
+			.select([
+				"type",
+				"family",
+			])
 			.where("userId", "=", seller.id)
 			.where("type", "=", "favourite")
 			.executeTakeFirst();
@@ -81,10 +93,18 @@ describe("favouriteToggleFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@fav-toggle-off.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@fav-toggle-off.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 		const { user: buyer } = await api.signUpEmail({
-			body: { email: "buyer@fav-toggle-off.cz", name: "Buyer", password: "12345678" },
+			body: {
+				email: "buyer@fav-toggle-off.cz",
+				name: "Buyer",
+				password: "12345678",
+			},
 		});
 
 		const listing = await createListingFx(seller.id).pipe(
@@ -158,7 +178,11 @@ describe("favouriteToggleFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@fav-own.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@fav-own.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 
 		const listing = await createListingFx(seller.id).pipe(
@@ -192,10 +216,18 @@ describe("favouriteToggleFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@fav-wrong-feed.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@fav-wrong-feed.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 		const { user: buyer } = await api.signUpEmail({
-			body: { email: "buyer@fav-wrong-feed.cz", name: "Buyer", password: "12345678" },
+			body: {
+				email: "buyer@fav-wrong-feed.cz",
+				name: "Buyer",
+				password: "12345678",
+			},
 		});
 		const { user: other } = await api.signUpEmail({
 			body: {

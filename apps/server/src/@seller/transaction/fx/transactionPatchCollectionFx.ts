@@ -49,7 +49,9 @@ export const transactionPatchCollectionFx = Effect.fn("transactionPatchCollectio
 					.set({
 						...patch,
 						updatedAt: now,
-						...(patch.status !== undefined && { statusUpdatedAt: now }),
+						...(patch.status !== undefined && {
+							statusUpdatedAt: now,
+						}),
 					})
 					.where("id", "in", selectIds)
 					.returning("id")

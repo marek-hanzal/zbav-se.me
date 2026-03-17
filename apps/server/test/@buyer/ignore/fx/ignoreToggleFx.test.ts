@@ -1,25 +1,25 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { flagToggleFx } from "~/@buyer/flag/fx/flagToggleFx";
+import { ignoreToggleFx } from "~/@buyer/ignore/fx/ignoreToggleFx";
 import { auth } from "~/auth/auth";
 import { createListingFx, withRuntimeFx } from "~test/fixture/transactionFixture";
 import { testabase } from "~test/testabase";
 
-describe("flagToggleFx", () => {
-	it("toggle on: creates flag record and listing_event", async () => {
-		const database = await testabase("flagToggle-on");
+describe("ignoreToggleFx", () => {
+	it("toggle on: creates ignore record, listing_event and seller inbox", async () => {
+		const database = await testabase("ignoreToggle-on");
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
 			body: {
-				email: "seller@flag-toggle-on.cz",
+				email: "seller@ignore-toggle-on.cz",
 				name: "Seller",
 				password: "12345678",
 			},
 		});
 		const { user: buyer } = await api.signUpEmail({
 			body: {
-				email: "buyer@flag-toggle-on.cz",
+				email: "buyer@ignore-toggle-on.cz",
 				name: "Buyer",
 				password: "12345678",
 			},
@@ -31,16 +31,16 @@ describe("flagToggleFx", () => {
 		);
 
 		await Effect.gen(function* () {
-			yield* flagToggleFx({
+			yield* ignoreToggleFx({
 				userId: buyer.id,
 				listingId: listing.id,
 				toggle: true,
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		// Flag record was created
-		const flag = await database.kysely
-			.selectFrom("flag")
+		// Ignore record was created
+		const ignore = await database.kysely
+			.selectFrom("ignore")
 			.select([
 				"listingId",
 				"userId",
@@ -49,43 +49,43 @@ describe("flagToggleFx", () => {
 			.where("userId", "=", buyer.id)
 			.executeTakeFirst();
 
-		expect(flag).toBeDefined();
+		expect(ignore).toBeDefined();
 
-		// listing_event "flag" was created
+		// listing_event "ignore" was created
 		const events = await database.kysely
 			.selectFrom("listing_event")
 			.select("event")
 			.where("listingId", "=", listing.id)
 			.execute();
 
-		expect(events.map((e) => e.event)).toContain("flag");
+		expect(events.map((e) => e.event)).toContain("ignore");
 
-		// Flag creates inbox for seller (type "flag", priority "common")
+		// Ignore creates inbox for seller with type "ignore"
 		const sellerInbox = await database.kysely
 			.selectFrom("inbox")
 			.select("type")
 			.where("userId", "=", seller.id)
-			.where("type", "=", "flag")
+			.where("type", "=", "ignore")
 			.executeTakeFirst();
 
 		expect(sellerInbox).toBeDefined();
-		expect(sellerInbox?.type).toBe("flag");
+		expect(sellerInbox?.type).toBe("ignore");
 	});
 
-	it("toggle off: deletes flag record and creates unflag event", async () => {
-		const database = await testabase("flagToggle-off");
+	it("toggle off: deletes ignore record, creates unignore event and seller inbox", async () => {
+		const database = await testabase("ignoreToggle-off");
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
 			body: {
-				email: "seller@flag-toggle-off.cz",
+				email: "seller@ignore-toggle-off.cz",
 				name: "Seller",
 				password: "12345678",
 			},
 		});
 		const { user: buyer } = await api.signUpEmail({
 			body: {
-				email: "buyer@flag-toggle-off.cz",
+				email: "buyer@ignore-toggle-off.cz",
 				name: "Buyer",
 				password: "12345678",
 			},
@@ -96,33 +96,33 @@ describe("flagToggleFx", () => {
 			Effect.runPromise,
 		);
 
-		// First flag the listing
+		// First ignore the listing
 		await Effect.gen(function* () {
-			yield* flagToggleFx({
+			yield* ignoreToggleFx({
 				userId: buyer.id,
 				listingId: listing.id,
 				toggle: true,
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		// Then unflag it
+		// Then unignore it
 		await Effect.gen(function* () {
-			yield* flagToggleFx({
+			yield* ignoreToggleFx({
 				userId: buyer.id,
 				listingId: listing.id,
 				toggle: false,
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		// Flag record was deleted
-		const flag = await database.kysely
-			.selectFrom("flag")
+		// Ignore record was deleted
+		const ignore = await database.kysely
+			.selectFrom("ignore")
 			.select("id")
 			.where("listingId", "=", listing.id)
 			.where("userId", "=", buyer.id)
 			.executeTakeFirst();
 
-		expect(flag).toBeUndefined();
+		expect(ignore).toBeUndefined();
 
 		// Both events were tracked
 		const events = await database.kysely
@@ -132,27 +132,27 @@ describe("flagToggleFx", () => {
 			.execute();
 
 		const kinds = events.map((e) => e.event);
-		expect(kinds).toContain("flag");
-		expect(kinds).toContain("unflag");
+		expect(kinds).toContain("ignore");
+		expect(kinds).toContain("unignore");
 
-		// Unflag creates inbox for seller with type "unflag"
-		const unflagInbox = await database.kysely
+		// Unignore creates inbox for seller with type "unignore"
+		const unignoreInbox = await database.kysely
 			.selectFrom("inbox")
 			.select("type")
 			.where("userId", "=", seller.id)
-			.where("type", "=", "unflag")
+			.where("type", "=", "unignore")
 			.executeTakeFirst();
 
-		expect(unflagInbox).toBeDefined();
+		expect(unignoreInbox).toBeDefined();
 	});
 
-	it("invalid: seller cannot flag own listing", async () => {
-		const database = await testabase("flagToggle-own-listing");
+	it("invalid: seller cannot ignore own listing", async () => {
+		const database = await testabase("ignoreToggle-own-listing");
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
 			body: {
-				email: "seller@flag-own.cz",
+				email: "seller@ignore-own.cz",
 				name: "Seller",
 				password: "12345678",
 			},
@@ -165,53 +165,8 @@ describe("flagToggleFx", () => {
 
 		await expect(
 			Effect.gen(function* () {
-				yield* flagToggleFx({
+				yield* ignoreToggleFx({
 					userId: seller.id,
-					listingId: listing.id,
-					toggle: true,
-				});
-			}).pipe(withRuntimeFx(database), Effect.runPromise),
-		).rejects.toThrow();
-	});
-
-	it("invalid: cannot flag an already-flagged listing (conflict on insert)", async () => {
-		const database = await testabase("flagToggle-duplicate");
-		const { api } = auth(() => database.dialect);
-
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@flag-duplicate.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@flag-duplicate.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
-
-		const listing = await createListingFx(seller.id).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
-
-		// First flag succeeds
-		await Effect.gen(function* () {
-			yield* flagToggleFx({
-				userId: buyer.id,
-				listingId: listing.id,
-				toggle: true,
-			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		// Second flag throws because doNothing causes executeTakeFirstOrThrow to fail
-		await expect(
-			Effect.gen(function* () {
-				yield* flagToggleFx({
-					userId: buyer.id,
 					listingId: listing.id,
 					toggle: true,
 				});

@@ -4,12 +4,12 @@ import { transactionCreateFx } from "~/@buyer/transaction/fx/transactionCreateFx
 import { transactionDisputeFx } from "~/@buyer/transaction/fx/transactionDisputeFx";
 import { transactionResolveFx } from "~/@seller/transaction/fx/transactionResolveFx";
 import { auth } from "~/auth/auth";
-import { testabase } from "~test/testabase";
 import {
 	createListingFx,
 	createResolvedScenarioFx,
 	withRuntimeFx,
 } from "~test/fixture/transactionFixture";
+import { testabase } from "~test/testabase";
 
 describe("transactionDisputeFx (buyer)", () => {
 	it("resolved → dispute: status changes and status-dispute-buyer entry is created", async () => {
@@ -17,10 +17,18 @@ describe("transactionDisputeFx (buyer)", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@buyer-dispute.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@buyer-dispute.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 		const { user: buyer } = await api.signUpEmail({
-			body: { email: "buyer@buyer-dispute.cz", name: "Buyer", password: "12345678" },
+			body: {
+				email: "buyer@buyer-dispute.cz",
+				name: "Buyer",
+				password: "12345678",
+			},
 		});
 
 		const { transactionId } = await createResolvedScenarioFx({
@@ -30,7 +38,10 @@ describe("transactionDisputeFx (buyer)", () => {
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		await Effect.gen(function* () {
-			yield* transactionDisputeFx({ transactionId, userId: buyer.id });
+			yield* transactionDisputeFx({
+				transactionId,
+				userId: buyer.id,
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		const { status } = await database.kysely
@@ -58,10 +69,18 @@ describe("transactionDisputeFx (buyer)", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@dispute-re-resolve.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@dispute-re-resolve.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 		const { user: buyer } = await api.signUpEmail({
-			body: { email: "buyer@dispute-re-resolve.cz", name: "Buyer", password: "12345678" },
+			body: {
+				email: "buyer@dispute-re-resolve.cz",
+				name: "Buyer",
+				password: "12345678",
+			},
 		});
 
 		const { transactionId } = await createResolvedScenarioFx({
@@ -72,12 +91,18 @@ describe("transactionDisputeFx (buyer)", () => {
 
 		// Buyer opens dispute
 		await Effect.gen(function* () {
-			yield* transactionDisputeFx({ transactionId, userId: buyer.id });
+			yield* transactionDisputeFx({
+				transactionId,
+				userId: buyer.id,
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		// Seller re-resolves the dispute
 		await Effect.gen(function* () {
-			yield* transactionResolveFx({ transactionId, userId: seller.id });
+			yield* transactionResolveFx({
+				transactionId,
+				userId: seller.id,
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		const { status } = await database.kysely
@@ -106,10 +131,18 @@ describe("transactionDisputeFx (buyer)", () => {
 		const { api } = auth(() => database.dialect);
 
 		const { user: seller } = await api.signUpEmail({
-			body: { email: "seller@dispute-invalid.cz", name: "Seller", password: "12345678" },
+			body: {
+				email: "seller@dispute-invalid.cz",
+				name: "Seller",
+				password: "12345678",
+			},
 		});
 		const { user: buyer } = await api.signUpEmail({
-			body: { email: "buyer@dispute-invalid.cz", name: "Buyer", password: "12345678" },
+			body: {
+				email: "buyer@dispute-invalid.cz",
+				name: "Buyer",
+				password: "12345678",
+			},
 		});
 
 		await Effect.gen(function* () {
@@ -128,7 +161,10 @@ describe("transactionDisputeFx (buyer)", () => {
 
 		await expect(
 			Effect.gen(function* () {
-				yield* transactionDisputeFx({ transactionId: tx.id, userId: buyer.id });
+				yield* transactionDisputeFx({
+					transactionId: tx.id,
+					userId: buyer.id,
+				});
 			}).pipe(withRuntimeFx(database), Effect.runPromise),
 		).rejects.toThrow();
 	});
