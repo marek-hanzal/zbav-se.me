@@ -1,10 +1,14 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { transactionFetchFx } from "~/@seller/transaction/fx/transactionFetchFx";
+import { transactionPatchCollectionFx } from "~/@seller/transaction/fx/transactionPatchCollectionFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { transactionResolveFx as resolveTransactionFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusMessageFx } from "~/@user/transaction/fx/transactionStatusMessageFx";
 import { transactionUpdateStatusFx } from "~/@user/transaction/fx/transactionUpdateStatusFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace transactionResolveFx {
@@ -26,6 +30,29 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 				message: "You are not allowed to resolve this listing transaction",
 			});
 
+			/**
+			 * Order is important:
+			 * - in here we'll mark all transactions on listing as "sold" (include current one)
+			 * - later we'll properly update "current" transaction to "resolved" so the flow keeps properly going on
+			 */
+			yield* transactionPatchCollectionFx({
+				patch: {
+					status: "sold",
+				},
+				query: {
+					filter: {
+						listingId: transaction.listingId,
+						statusIn: [
+							"pending",
+							"open",
+						],
+					},
+				},
+				scope: {
+					userId,
+				},
+			});
+
 			yield* transactionUpdateStatusFx({
 				transactionId: transaction.id,
 				status: transaction.status,
@@ -39,6 +66,22 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 				target: "seller",
 				userId,
 			});
+
+			// Mark the listing itself as "sold"
+			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
+			const now = dateContext.now().toJSDate();
+
+			yield* tryDbFx(async () =>
+				kysely
+					.updateTable("listing")
+					.set({
+						status: "sold",
+						updatedAt: now,
+					})
+					.where("id", "=", transaction.listingId)
+					.executeTakeFirstOrThrow(),
+			);
 
 			yield* inboxCreateFx({
 				userId: transaction.buyerId,

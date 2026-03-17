@@ -30,7 +30,6 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 	// Status filter is always applied — buyers see only "live" and "sold" listings
 	query = query.where("l.status", "in", [
 		"live",
-		"sold",
 	] as const) as TSelect;
 
 	if (!where) {
