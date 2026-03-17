@@ -1,9 +1,23 @@
+import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
+import type { ListingStatusEnumSchema } from "~/database/@enum/ListingStatusEnumSchema";
 
 export const ListingMigration: Migration = {
 	async up(db) {
 		// Ensure pgvector extension (safe if already installed)
 		await sql`CREATE EXTENSION IF NOT EXISTS vector;`.execute(db);
+
+		await db.schema
+			.createType("listing_status_enum")
+			.asEnum(
+				toEnumGuard<ListingStatusEnumSchema.Type>()([
+					"live",
+					"sold",
+					"on-hold",
+					"banned",
+				]),
+			)
+			.execute();
 
 		await db.schema
 			.createTable("listing")
@@ -17,6 +31,7 @@ export const ListingMigration: Migration = {
 			.addColumn("age", "integer")
 			.addColumn("delivery", sql`listing_delivery_enum[]`)
 			.addColumn("warranty", sql`listing_warranty_enum`)
+			.addColumn("status", sql`listing_status_enum`)
 			.addColumn("restriction", sql`listing_restriction_enum`, (col) => col.notNull())
 			.addColumn("locationId", "text", (col) => col.notNull())
 			.addColumn("categoryId", "text", (col) => col.notNull())
@@ -149,6 +164,12 @@ export const ListingMigration: Migration = {
 			.createIndex("listing_[expiresAt]_idx")
 			.on("listing")
 			.column("expiresAt")
+			.execute();
+
+		await db.schema
+			.createIndex("listing_[status]_idx")
+			.on("listing")
+			.column("status")
 			.execute();
 
 		await db.schema

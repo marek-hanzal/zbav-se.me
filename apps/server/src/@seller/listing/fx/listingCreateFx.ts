@@ -65,6 +65,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						createdAt: now.toJSDate(),
 						updatedAt: now.toJSDate(),
 						currency: "CZK",
+						status: "live",
 						...data,
 						titleVec: pgvector.toSql(
 							embedMinHash({
