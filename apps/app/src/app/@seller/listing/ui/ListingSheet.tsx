@@ -64,6 +64,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ _suspense, listing, state
 
 	return (
 		<SheetView<ListingSheet.View>
+			data-ui={"ListingSheet"}
 			isOpen={state.value}
 			onClose={() => {
 				state.set(false);

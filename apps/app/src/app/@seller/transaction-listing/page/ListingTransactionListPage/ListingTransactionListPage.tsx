@@ -24,7 +24,7 @@ export const ListingTransactionListPage: FC<ListingTransactionListPage.Props> = 
 
 	return (
 		<TitleContainer
-			data-ui="ListingTransactionList[TitleContainer]"
+			data-ui="ListingTransactionListPage"
 			textTitle={translator.text("Messages (title)")}
 			left={
 				<BackHomeButton

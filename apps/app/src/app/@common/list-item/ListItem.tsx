@@ -52,10 +52,10 @@ export const ListItem: FC<ListItem.Props> = ({
 
 	return (
 		<Group
-			data-ui={"ListItem[Group]"}
+			data-ui={"ListItem"}
 			className={[
-				"min-h-24",
-				"h-24",
+				"min-h-26",
+				"h-26",
 				"md:h-28",
 				"shrink-0",
 				"relative",
@@ -88,6 +88,7 @@ export const ListItem: FC<ListItem.Props> = ({
 						justify: "space-between",
 						height: "full",
 						inner: "xs",
+						width: "full",
 					}}
 				>
 					{title}

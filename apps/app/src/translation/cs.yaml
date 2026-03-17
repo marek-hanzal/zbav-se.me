@@ -1500,7 +1500,9 @@ transaction - seller - status-open:
     static: true
 transaction - seller - status-pending:
     value: |
-        **Prodejce čeká na tvoje potvrzení**
+        **Kupující čeká na tvoje potvrzení**
+
+        _V tento okamžik můžeš bezpečně odmítnout, pokud je třeba._
     static: true
 transaction - seller - status-rejected-buyer:
     value: |

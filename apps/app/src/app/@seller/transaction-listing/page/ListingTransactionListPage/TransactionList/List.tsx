@@ -13,6 +13,7 @@ export namespace List {
 export const List: FC<List.Props> = ({ _suspense, transactionIds, ui, ...props }) => {
 	return (
 		<Container
+			data-ui={"List"}
 			ui={{
 				layout: "vertical-flex",
 				gap: "default",

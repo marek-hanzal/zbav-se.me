@@ -113,7 +113,9 @@ export const Transaction: FC<Transaction.Props> = ({
 				{transaction.status === "pending" ? (
 					<Container
 						ui={{
+							flow: "vertical",
 							inner: "default",
+							gap: "default",
 						}}
 					>
 						<PendingMessage

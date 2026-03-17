@@ -1,14 +1,13 @@
 import { Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { tvc } from "@use-pico/cls";
-import type { FC, ReactNode } from "react";
+import type { FC } from "react";
 
 export namespace TypoIcon {
 	export interface Props extends Container.Props {
 		icon: Icon.Type;
 		iconProps?: Icon.PropsEx;
 		flip?: boolean;
-		children?: ReactNode;
 	}
 }
 

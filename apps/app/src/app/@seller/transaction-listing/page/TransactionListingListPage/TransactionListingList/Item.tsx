@@ -3,6 +3,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
@@ -20,124 +21,118 @@ export namespace Item {
 	}
 }
 
-export const Item = withFallback(
-	({ _suspense, transactionListingId, ui, className, ...props }: Item.Props) => {
-		const locale = useLocale();
-		const { data: transactionListing } =
-			withTransactionListingQuery.useFetchQuery(transactionListingId);
-		const hero = useUpload(transactionListing.gallery.items);
-		const unreadCount = transactionListing.unreadCount;
-		const isUnread = unreadCount > 0;
+export const Item = withFallback(({ _suspense, transactionListingId, ...props }: Item.Props) => {
+	const locale = useLocale();
+	const { data: transactionListing } =
+		withTransactionListingQuery.useFetchQuery(transactionListingId);
+	const hero = useUpload(transactionListing.gallery.items);
+	const unreadCount = transactionListing.unreadCount;
+	const isUnread = unreadCount > 0;
 
-		return (
-			<LinkTo
-				to={"/$locale/seller/transaction/$listingId/list"}
-				params={{
-					locale,
-					listingId: transactionListing.id,
-				}}
-			>
-				<ListItem
-					data-ui={"TransactionListingList[Item]"}
-					hero={
-						<Container
-							data-ui="TransactionListingList[Hero]"
-							ui={{
-								position: "relative",
-								height: "full",
-							}}
-						>
-							<Image src={hero.url} />
+	return (
+		<LinkTo
+			data-ui={"Item"}
+			to={"/$locale/seller/transaction/$listingId/list"}
+			params={{
+				locale,
+				listingId: transactionListing.id,
+			}}
+		>
+			<ListItem
+				hero={
+					<Container
+						ui={{
+							position: "relative",
+							height: "full",
+						}}
+					>
+						<Image src={hero.url} />
 
-							{isUnread ? (
-								<Badge
-									data-ui="TransactionListingList[Badge]"
-									ui={{
-										snapTo: "bottom-left",
-										tone: "secondary",
-										theme: "light",
-										badge: "xs",
-										font: "bold",
-										opacity: "8",
-									}}
-								>
-									{unreadCount > 9
-										? "9+"
-										: toLocaleNumber({
-												locale,
-												number: unreadCount,
-											})}
-								</Badge>
-							) : null}
-						</Container>
-					}
-					title={
+						{isUnread ? (
+							<Badge
+								ui={{
+									snapTo: "bottom-left",
+									tone: "secondary",
+									theme: "light",
+									badge: "xs",
+									font: "bold",
+									opacity: "8",
+									text: "xs",
+								}}
+							>
+								{unreadCount > 9
+									? "9+"
+									: toLocaleNumber({
+											locale,
+											number: unreadCount,
+										})}
+							</Badge>
+						) : null}
+					</Container>
+				}
+				title={
+					<Container
+						ui={{
+							flow: "vertical",
+							width: "full",
+						}}
+					>
 						<Typo
 							label={transactionListing.title}
 							ui={{
 								tone: "neutral",
 								theme: "light",
 								color: "lead",
-								font: isUnread ? "bold" : "normal",
 								display: "block",
 								width: "full",
+								text: "sm",
 							}}
-							className={[
-								"block",
-								"w-full",
-								"max-w-full",
-								"min-w-0",
-								"truncate",
-							]}
 						/>
-					}
-					bottom={
-						<Container
-							ui={{
-								flow: "vertical",
-								width: "full",
-								items: "start",
-							}}
-						>
-							<Typo
-								label={toActivityLabel({
-									entry: transactionListing.entry,
-								})}
-								ui={{
-									text: "sm",
-									tone: "neutral",
-									theme: "light",
-									font: "normal",
-									color: "text",
-								}}
-								className={[
-									"block",
-									"min-w-0",
-									"max-w-full",
-									"flex-1",
-									"truncate",
-								]}
-							/>
 
-							<Typo
-								label={toTimeDiff({
-									locale,
-									time: transactionListing.lastAt,
-								})}
-								ui={{
-									text: "xs",
-									opacity: "7",
-								}}
-							/>
-						</Container>
-					}
-					ui={ui}
-					className={className}
-					data-id={transactionListing.id}
-					{...props}
-				/>
-			</LinkTo>
-		);
-	},
-	ListItemPending,
-);
+						<Typo
+							label={toActivityLabel({
+								entry: transactionListing.entry,
+							})}
+							ui={{
+								text: "xs",
+								tone: "neutral",
+								theme: "light",
+								font: "normal",
+								color: "text",
+								opacity: "6",
+							}}
+						/>
+					</Container>
+				}
+				bottom={
+					<Container
+						ui={{
+							tone: "neutral",
+							theme: "light",
+							color: "text",
+							flow: "horizontal",
+							items: "center",
+							justify: "space-between",
+							text: "sm",
+							width: "full",
+						}}
+					>
+						<div />
+
+						<Tx
+							label={toTimeDiff({
+								locale,
+								time: transactionListing.entry.createdAt,
+							})}
+							ui={{
+								opacity: "6",
+							}}
+						/>
+					</Container>
+				}
+				data-id={transactionListing.id}
+				{...props}
+			/>
+		</LinkTo>
+	);
+}, ListItemPending);

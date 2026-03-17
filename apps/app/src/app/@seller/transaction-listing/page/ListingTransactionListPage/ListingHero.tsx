@@ -6,6 +6,7 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
+import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { ListingSheet } from "~/app/@seller/listing/~public/ListingSheet";
 
 export namespace ListingHero {
@@ -22,7 +23,7 @@ export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ui, .
 	return (
 		<>
 			<Container
-				data-ui="ListingHero[Container]"
+				data-ui="ListingHero"
 				ui={{
 					position: "relative",
 					height: "content",
@@ -34,25 +35,34 @@ export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ui, .
 				{...props}
 			>
 				<HeroImage
-					data-ui="ListingHero-[Image]"
 					src={hero.url}
 					alt={`Hero image for listing ${listing.id}`}
 					className={"h-42"}
 				/>
 
+				<ListingPrice
+					price={listing.price}
+					priceType={listing.priceType}
+					currency={listing.currency}
+					ui={{
+						tone: "neutral",
+						theme: "light",
+						snapTo: "top-center",
+					}}
+				/>
+
 				<Container
-					data-ui="ListingHero-[TitleOverlay]"
 					className={"pointer-events-none"}
 					ui={{
 						snapTo: "bottom-center",
-						width: "full",
-						inner: "sm",
+						inner: "default",
 						tone: "neutral",
 						theme: "light",
 						background: "default",
 						opacity: "8",
 						items: "center",
 						zIndex: true,
+						width: "full",
 					}}
 				>
 					<Typo

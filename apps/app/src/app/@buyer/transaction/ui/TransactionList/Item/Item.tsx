@@ -2,10 +2,11 @@ import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
+import { toTimeDiff } from "@use-pico/common/time";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
-import { match } from "ts-pattern";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListItem } from "~/app/@common/list-item/ListItem";
 import { ListItemPending } from "~/app/@common/list-item/ListItemPending";
@@ -23,6 +24,7 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 
 	return (
 		<LinkTo
+			data-ui={"Item"}
 			data-action={"open transaction detail"}
 			to="/$locale/buyer/transaction/$transactionId/detail"
 			params={{
@@ -31,69 +33,72 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 			}}
 		>
 			<ListItem
-				data-ui={"TransactionItem[Item]"}
 				hero={hero}
 				title={
-					<Tx
-						label={transaction.title}
+					<Container
 						ui={{
-							font: "bold",
-							display: "block",
+							flow: "vertical",
 							width: "full",
-							truncate: true,
 						}}
-						className={[
-							"block",
-							"w-full",
-							"max-w-full",
-							"min-w-0",
-						]}
-					/>
+					>
+						<Tx
+							label={transaction.title}
+							ui={{
+								tone: "neutral",
+								theme: "light",
+								color: "text",
+								text: "sm",
+								width: "full",
+								truncate: true,
+							}}
+						/>
+
+						<Tx
+							label={transaction.location.address}
+							ui={{
+								tone: "neutral",
+								theme: "light",
+								color: "text",
+								text: "xs",
+								width: "full",
+								truncate: true,
+								opacity: "6",
+							}}
+						/>
+					</Container>
 				}
 				bottom={
-					<Tx
-						label={transaction.location.address}
+					<Container
 						ui={{
+							tone: "neutral",
+							theme: "light",
+							color: "text",
+							flow: "horizontal",
+							items: "center",
+							justify: "space-between",
 							text: "sm",
-							opacity: "6",
-							display: "block",
 							width: "full",
-							truncate: true,
 						}}
-						className={[
-							"block",
-							"w-full",
-							"max-w-full",
-							"min-w-0",
-						]}
-					/>
+					>
+						<PriceInline
+							price={transaction.price}
+							locale={locale}
+							currency={transaction.currency}
+						/>
+
+						<Tx
+							label={toTimeDiff({
+								locale,
+								time: transaction.entry.createdAt,
+							})}
+							ui={{
+								opacity: "6",
+							}}
+						/>
+					</Container>
 				}
 				{...props}
-			>
-				{match(transaction.status)
-					.with("rejected", "sold", "expired", "success", "closed", () => {
-						return (
-							<Container
-								data-ui="TransactionItem-[Overlay]"
-								ui={{
-									tone: "neutral",
-									theme: "light",
-									background: "default",
-									opacity: "8",
-									round: "default",
-								}}
-								className={[
-									"absolute",
-									"inset-0",
-								]}
-							/>
-						);
-					})
-					.with("open", "pending", "resolved", "dispute", () => {
-						return null;
-					})
-					.exhaustive()}
-			</ListItem>
+			/>
 		</LinkTo>
 	);
 }, ListItemPending);

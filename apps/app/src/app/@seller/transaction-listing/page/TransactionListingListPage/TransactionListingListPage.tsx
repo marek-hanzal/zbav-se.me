@@ -98,7 +98,7 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 						}}
 						refetchInterval={refetchInterval}
 						typoUi={{
-							tone: "primary",
+							tone: "neutral",
 							theme: "light",
 						}}
 					/>

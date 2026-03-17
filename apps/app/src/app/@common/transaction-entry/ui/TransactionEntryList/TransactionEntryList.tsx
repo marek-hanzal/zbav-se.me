@@ -53,7 +53,7 @@ export const TransactionEntryList: FC<TransactionEntryList.Props> = ({
 
 	return (
 		<Container
-			data-ui="MessageList-[Container]"
+			data-ui="TransactionEntryList"
 			ref={contentRef}
 			ui={{
 				flow: "vertical",

@@ -55,7 +55,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						tTransactionStatusEnum.pending,
 					],
 					typoUi: {
-						tone: "brand",
+						tone: "neutral",
 						theme: "light",
 					},
 				},
@@ -101,9 +101,12 @@ export const TransactionList: FC<TransactionList.Props> = ({
 
 	return (
 		<Container
+			data-ui={"TransactionList"}
 			ui={{
 				scroll: "vertical",
 				height: "full",
+				layout: "vertical-flex",
+				gap: "2xl",
 				...ui,
 			}}
 			{...props}
@@ -120,34 +123,21 @@ export const TransactionList: FC<TransactionList.Props> = ({
 					},
 				]}
 			>
-				<Container
-					ui={{
-						layout: "vertical-flex",
-						gap: "2xl",
-					}}
-				>
-					{groups.map(({ statuses, label, ...props }) => {
-						return (
-							<ListGroup
-								key={statuses.join(":")}
-								_suspense={_suspense}
-								label={label}
-								filter={{
-									listingId,
-									...(statuses.length === 1
-										? {
-												status: statuses[0],
-											}
-										: {
-												statusIn: statuses,
-											}),
-								}}
-								refetchInterval={refetchInterval}
-								{...props}
-							/>
-						);
-					})}
-				</Container>
+				{groups.map(({ statuses, label, ...props }) => {
+					return (
+						<ListGroup
+							key={statuses.join(":")}
+							_suspense={_suspense}
+							label={label}
+							filter={{
+								listingId,
+								statusIn: statuses,
+							}}
+							refetchInterval={refetchInterval}
+							{...props}
+						/>
+					);
+				})}
 			</EmptyState>
 		</Container>
 	);

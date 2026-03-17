@@ -11,6 +11,7 @@ export namespace TransactionList {
 export const TransactionList: FC<TransactionList.Props> = ({ transactionIds, ui, ...props }) => {
 	return (
 		<Container
+			data-ui={"TransactionList"}
 			ui={{
 				layout: "vertical-flex",
 				gap: "default",

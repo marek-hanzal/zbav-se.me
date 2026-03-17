@@ -49,6 +49,7 @@ export const ListGroup: FC<ListGroup.Props> = ({
 
 	return (
 		<Container
+			data-ui={"ListGroup"}
 			ui={{
 				layout: "vertical-flex",
 				gap: "default",
@@ -59,9 +60,11 @@ export const ListGroup: FC<ListGroup.Props> = ({
 			<Typo
 				label={label}
 				ui={{
-					text: "sm",
+					tone: "neutral",
+					theme: "light",
+					text: "lg",
 					font: "bold",
-					color: "lead",
+					color: "text",
 					...typoUi,
 				}}
 				className={"text-center"}
