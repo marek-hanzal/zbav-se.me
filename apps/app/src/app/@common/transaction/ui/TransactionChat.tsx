@@ -8,8 +8,6 @@ import { useCallback } from "react";
 import { match } from "ts-pattern";
 
 export namespace TransactionChat {
-	export type Mode = "chat" | "readonly";
-
 	export interface Hooks {
 		onPostMutation?(): Promise<void>;
 	}
@@ -30,7 +28,6 @@ export namespace TransactionChat {
 	export interface Props extends Container.Props {
 		hooks?: Hooks;
 		left?: ReactNode;
-		mode: Mode;
 		text: Text;
 		transaction: Transaction;
 	}
@@ -39,7 +36,6 @@ export namespace TransactionChat {
 export const TransactionChat: FC<TransactionChat.Props> = ({
 	hooks,
 	left,
-	mode,
 	text,
 	transaction,
 	ui,
@@ -73,7 +69,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 
 	return (
 		<Container
-			data-ui="TransactionChat[Container]"
+			data-ui="TransactionChat"
 			ui={{
 				layout: "vertical-flex",
 				width: "full",
@@ -82,6 +78,28 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 			{...props}
 		>
 			{match(transaction.status)
+				.with("pending", () => {
+					return (
+						<Container
+							ui={{
+								layout: "horizontal-flex",
+								items: "center",
+								gap: "md",
+								width: "full",
+							}}
+						>
+							<Tx
+								label={text.pending}
+								ui={{
+									width: "full",
+									text: "sm",
+									opacity: "6",
+								}}
+								className="text-center"
+							/>
+						</Container>
+					);
+				})
 				.with("open", () => {
 					return (
 						<ChatInput
@@ -93,16 +111,8 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 					);
 				})
 				.with("resolved", () => {
-					return mode === "chat" ? (
-						<ChatInput
-							onSubmit={submit}
-							placeholder={text.resolved}
-							loading={messageMutation.isPending}
-							left={left}
-						/>
-					) : (
+					return (
 						<Container
-							data-ui={"TransactionChat[Readonly.resolved]"}
 							ui={{
 								layout: "horizontal-flex",
 								items: "center",
@@ -114,31 +124,6 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 
 							<Tx
 								label={text.resolved}
-								ui={{
-									width: "full",
-									text: "sm",
-									opacity: "6",
-								}}
-								className="text-center"
-							/>
-						</Container>
-					);
-				})
-				.with("pending", () => {
-					return (
-						<Container
-							data-ui={"TransactionChat[Readonly.pending]"}
-							ui={{
-								layout: "horizontal-flex",
-								items: "center",
-								gap: "md",
-								width: "full",
-							}}
-						>
-							{left}
-
-							<Tx
-								label={text.pending}
 								ui={{
 									width: "full",
 									text: "sm",

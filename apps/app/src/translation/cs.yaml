@@ -47,6 +47,9 @@
 069a14aec9bb4a553c78c2032f6e521d3b8dccbbb4cfac68e67fa1c1:
     ref: Listing - Pros (title)
     value: Co chci vyzdvihnout
+08f72ffcbaab104481353781fb5142ff29a99fb6dff9f34a65d0c991:
+    ref: Gallery (title)
+    value: Fotky
 0931bae674f385d4352f8bb5199e1d2390a7e0008f4c93551330702f:
     ref: No listings with transactions (message)
     value: Zatím tu nejsou žádné inzeráty se zprávami.
@@ -1423,6 +1426,12 @@ seller - Transaction successful (message):
 
         Dál už tu nic není.
     static: true
+transaction - buyer - status-closed:
+    value: |
+        **Hotovo**
+
+        _Tady už je všechno vyřešeno, můžete jít dál._
+    static: true
 transaction - buyer - status-dispute-seller:
     value: >
         **Je potřeba tvoje pozornost**
@@ -1443,6 +1452,16 @@ transaction - buyer - status-pending:
 
         _Alespoň budeš mít jasno, zda o obchod má zájem, buď prosím trpělivý._
     static: true
+transaction - buyer - status-rejected-buyer:
+    value: >
+        **Odmítl jsi prodejce**
+
+
+        Tato akce se promítne do statistik, které prodejce může vidět; výjimečné
+        zavření
+
+        nemá větší vliv, nedělej to ale pravidelně.
+    static: true
 transaction - buyer - status-rejected-seller:
     value: |
         **Dneska to nevyšlo**
@@ -1461,6 +1480,12 @@ transaction - buyer - status-success:
 
         _Úspěšně jsi uzavřel obchod, dál už tady nic není._
     static: true
+transaction - seller - status-closed:
+    value: |
+        **Hotovo**
+
+        _Tady už je všechno vyřešeno, můžete jít dál._
+    static: true
 transaction - seller - status-dispute-seller:
     value: |
         **Otevřel jsi řešení problému**
@@ -1476,6 +1501,12 @@ transaction - seller - status-open:
 transaction - seller - status-pending:
     value: |
         **Prodejce čeká na tvoje potvrzení**
+    static: true
+transaction - seller - status-rejected-buyer:
+    value: |
+        **Kupující odmítl**
+
+        _Tady už je všechno vyřešeno, můžete jít dál._
     static: true
 transaction - seller - status-rejected-seller:
     value: |
@@ -1494,16 +1525,4 @@ transaction - seller - status-success:
         **Paráda!**
 
         _Kupující je spokojený, obchod byl úspěšně uzavřen!_
-    static: true
-transaction - seller - status-closed:
-    value: |
-        **Hotovo**
-
-        _Tady už je všechno vyřešeno, můžete jít dál._
-    static: true
-transaction - buyer - status-closed:
-    value: |
-        **Hotovo**
-
-        _Tady už je všechno vyřešeno, můžete jít dál._
     static: true

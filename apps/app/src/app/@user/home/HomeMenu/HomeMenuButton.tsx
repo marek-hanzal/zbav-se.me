@@ -29,7 +29,7 @@ export const HomeMenuButton: FC<HomeMenuButton.Props> = () => {
 				shadow: true,
 				border: true,
 				inner: "md",
-				opacity: "7",
+				opacity: "8",
 			}}
 		/>
 	);
