@@ -35,7 +35,7 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 			 * - in here we'll mark all transactions on listing as "sold" (include current one)
 			 * - later we'll properly update "current" transaction to "resolved" so the flow keeps properly going on
 			 */
-			yield* transactionPatchCollectionFx({
+			const sold = yield* transactionPatchCollectionFx({
 				patch: {
 					status: "sold",
 				},
@@ -52,6 +52,18 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 					userId,
 				},
 			});
+
+			for (const transaction of sold) {
+				if (transaction.id === transactionId) {
+					continue;
+				}
+				yield* transactionStatusMessageFx({
+					transactionId: transaction.id,
+					request: "sold",
+					target: "buyer",
+					userId,
+				});
+			}
 
 			yield* transactionUpdateStatusFx({
 				transactionId: transaction.id,
