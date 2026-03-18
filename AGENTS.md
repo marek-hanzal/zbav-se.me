@@ -40,3 +40,10 @@ sdk, ui -> no @zbav-se.me dependencies
 
 ## Formatting baseline
 - Use `bun run format`
+
+## Tests
+- Tests may run quite long (~30s - a few minutes as Docker container may be built)
+- Run tests from project root `bun run test`
+
+## Finishing the work
+- Always run `bun run workflow:check` (expect minor reformating, Biome output and TypeScript output)

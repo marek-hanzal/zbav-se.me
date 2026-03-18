@@ -38,3 +38,6 @@
 - Use domain `db/` query builders.
 - Apply required user scoping.
 - Validate boundaries at API edge with Zod.
+
+## Effect.js
+- Methods with `*Fx` suffix should always be `yield* `
