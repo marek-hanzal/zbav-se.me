@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCloseFx } from "~/@buyer/transaction/fx/transactionCloseFx";
+import { transactionCollectionFx } from "~/@buyer/transaction/fx/transactionCollectionFx";
 import { transactionDisputeFx } from "~/@buyer/transaction/fx/transactionDisputeFx";
-import { transactionFetchFx } from "~/@buyer/transaction/fx/transactionFetchFx";
 import { transactionRejectFx } from "~/@buyer/transaction/fx/transactionRejectFx";
 import { transactionResolveFx } from "~/@seller/transaction/fx/transactionResolveFx";
 import { auth } from "~/auth/auth";
 import {
-    createPendingScenarioFx,
-    createResolvedScenarioFx,
-    withRuntimeFx
+	createPendingScenarioFx,
+	createResolvedScenarioFx,
+	withRuntimeFx,
 } from "~test/fixture/transactionFixture";
 import { testabase } from "~test/testabase";
 
@@ -69,17 +69,17 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 			expect(status).toBe("resolved");
 
 			yield* transactionCloseFx({
-                transactionId: tx.id,
-                userId: buyer.id,
-            });
+				transactionId: tx.id,
+				userId: buyer.id,
+			});
 
 			const { status: statusAfterClose } = yield* Effect.promise(async () => {
-                return database.kysely
-				.selectFrom("transaction")
-				.select("status")
-				.where("id", "=", tx.id)
-				.executeTakeFirstOrThrow()
-            });
+				return database.kysely
+					.selectFrom("transaction")
+					.select("status")
+					.where("id", "=", tx.id)
+					.executeTakeFirstOrThrow();
+			});
 
 			expect(statusAfterClose).toBe("closed");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
@@ -129,7 +129,7 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				userId: seller.id,
 			});
 
-			yield* expect(
+			expect(
 				Effect.gen(function* () {
 					yield* transactionRejectFx({
 						transactionId: tx.id,
@@ -263,7 +263,10 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 			const entries = yield* Effect.promise(async () => {
 				return database.kysely
 					.selectFrom("transaction_entry")
-					.select(["kind", "createdAt"])
+					.select([
+						"kind",
+						"createdAt",
+					])
 					.where("transactionId", "=", tx.id)
 					.orderBy("createdAt", "asc")
 					.execute();
@@ -308,7 +311,7 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				database,
 			});
 
-			yield* expect(
+			expect(
 				Effect.gen(function* () {
 					yield* transactionCloseFx({
 						transactionId,
@@ -382,19 +385,17 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				userId: seller.id,
 			});
 
-			const result = yield* Effect.promise(async () => {
-				return transactionFetchFx({
-					where: {
-						userId: buyer.id,
-					},
-					scope: {
-						userId: buyer.id,
-					},
-				}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const result = yield* transactionCollectionFx({
+				where: {
+					userId: buyer.id,
+				},
+				scope: {
+					userId: buyer.id,
+				},
 			});
 
-			expect(result.data).toHaveLength(2);
-			const transactionIds = result.data.map((t) => t.id);
+			expect(result).toHaveLength(2);
+			const transactionIds = result.map((t) => t.id);
 			expect(transactionIds).toContain(tx1.id);
 			expect(transactionIds).toContain(tx2.id);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
@@ -435,15 +436,13 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				buyerId: buyer.id,
 			});
 
-			const { count: countBefore } = yield* Effect.promise(async () => {
-				return transactionFetchFx({
-					where: {
-						userId: buyer.id,
-					},
-					scope: {
-						userId: buyer.id,
-					},
-				}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const countBefore = yield* transactionCollectionFx({
+				where: {
+					userId: buyer.id,
+				},
+				scope: {
+					userId: buyer.id,
+				},
 			});
 
 			expect(countBefore).toBe(2);
@@ -476,18 +475,16 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				userId: seller.id,
 			});
 
-			const { count: countAfter } = yield* Effect.promise(async () => {
-				return transactionFetchFx({
-					where: {
-						userId: buyer.id,
-					},
-					scope: {
-						userId: buyer.id,
-					},
-				}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const countAfter = yield* transactionCollectionFx({
+				where: {
+					userId: buyer.id,
+				},
+				scope: {
+					userId: buyer.id,
+				},
 			});
 
 			expect(countAfter).toBe(2);
-		}.pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
