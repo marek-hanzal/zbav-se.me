@@ -8,87 +8,101 @@ import { testabase } from "~test/testabase";
 describe("transactionSuccessFx (buyer)", () => {
 	it("resolved → success: status changes and status-success entry is created", async () => {
 		const database = await testabase("buyerSuccessFx-resolved-to-success");
-		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@buyer-success.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@buyer-success.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { api } = auth(() => database.dialect);
 
-		const { transactionId } = await createResolvedScenarioFx({
-			sellerId: seller.id,
-			buyerId: buyer.id,
-			database,
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@buyer-success.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@buyer-success.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		await Effect.gen(function* () {
+			const { transactionId } = yield* createResolvedScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+				database,
+			});
+
 			yield* transactionSuccessFx({
 				transactionId,
 				userId: buyer.id,
 			});
+
+			const { status } = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction")
+					.select("status")
+					.where("id", "=", transactionId)
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(status).toBe("success");
+
+			const entries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select("kind")
+					.where("transactionId", "=", transactionId)
+					.execute(),
+			);
+
+			const kinds = entries.map((e) => e.kind);
+			expect(kinds).toContain("status-resolved");
+			expect(kinds).toContain("status-success");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		const { status } = await database.kysely
-			.selectFrom("transaction")
-			.select("status")
-			.where("id", "=", transactionId)
-			.executeTakeFirstOrThrow();
-
-		expect(status).toBe("success");
-
-		const entries = await database.kysely
-			.selectFrom("transaction_entry")
-			.select("kind")
-			.where("transactionId", "=", transactionId)
-			.execute();
-
-		const kinds = entries.map((e) => e.kind);
-		expect(kinds).toContain("status-resolved");
-		expect(kinds).toContain("status-success");
 	});
 
 	it("invalid: seller cannot confirm success", async () => {
 		const database = await testabase("buyerSuccessFx-seller-cannot-confirm");
-		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@buyer-success-invalid.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@buyer-success-invalid.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { api } = auth(() => database.dialect);
 
-		const { transactionId } = await createResolvedScenarioFx({
-			sellerId: seller.id,
-			buyerId: buyer.id,
-			database,
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@buyer-success-invalid.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@buyer-success-invalid.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		await expect(
-			Effect.gen(function* () {
-				yield* transactionSuccessFx({
+			const { transactionId } = yield* createResolvedScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+				database,
+			});
+
+			expect(
+				transactionSuccessFx({
 					transactionId,
 					userId: seller.id,
-				});
-			}).pipe(withRuntimeFx(database), Effect.runPromise),
-		).rejects.toThrow();
+				}).pipe(withRuntimeFx(database), Effect.runPromise),
+			).rejects.toThrow();
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

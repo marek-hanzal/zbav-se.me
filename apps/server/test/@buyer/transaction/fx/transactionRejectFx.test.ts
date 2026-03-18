@@ -12,109 +12,129 @@ import { testabase } from "~test/testabase";
 describe("transactionRejectFx (buyer)", () => {
 	it("pending → rejected: status changes and status-rejected-buyer entry is created", async () => {
 		const database = await testabase("buyerRejectFx-pending");
-		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@buyer-reject-pending.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@buyer-reject-pending.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { api } = auth(() => database.dialect);
 
-		await createPendingScenarioFx({
-			sellerId: seller.id,
-			buyerId: buyer.id,
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@buyer-reject-pending.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@buyer-reject-pending.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const tx = await database.kysely
-			.selectFrom("transaction")
-			.select("id")
-			.where("userId", "=", buyer.id)
-			.executeTakeFirstOrThrow();
+			yield* createPendingScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+			});
 
-		await Effect.gen(function* () {
+			const tx = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction")
+					.select("id")
+					.where("userId", "=", buyer.id)
+					.executeTakeFirstOrThrow(),
+			);
+
 			yield* transactionRejectFx({
 				transactionId: tx.id,
 				userId: buyer.id,
 			});
+
+			const { status } = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction")
+					.select("status")
+					.where("id", "=", tx.id)
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(status).toBe("rejected");
+
+			const entries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select("kind")
+					.where("transactionId", "=", tx.id)
+					.execute(),
+			);
+
+			const kinds = entries.map((e) => e.kind);
+			expect(kinds).toContain("status-pending");
+			expect(kinds).toContain("status-rejected-buyer");
+			expect(kinds).not.toContain("status-rejected-seller");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		const { status } = await database.kysely
-			.selectFrom("transaction")
-			.select("status")
-			.where("id", "=", tx.id)
-			.executeTakeFirstOrThrow();
-
-		expect(status).toBe("rejected");
-
-		const entries = await database.kysely
-			.selectFrom("transaction_entry")
-			.select("kind")
-			.where("transactionId", "=", tx.id)
-			.execute();
-
-		const kinds = entries.map((e) => e.kind);
-		expect(kinds).toContain("status-pending");
-		expect(kinds).toContain("status-rejected-buyer");
-		expect(kinds).not.toContain("status-rejected-seller");
 	});
 
 	it("open → rejected: status changes and status-rejected-buyer entry is created", async () => {
 		const database = await testabase("buyerRejectFx-open");
-		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@buyer-reject-open.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@buyer-reject-open.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { api } = auth(() => database.dialect);
 
-		const { transactionId } = await createOpenScenarioFx({
-			sellerId: seller.id,
-			buyerId: buyer.id,
-			database,
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@buyer-reject-open.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@buyer-reject-open.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		await Effect.gen(function* () {
+			const { transactionId } = yield* createOpenScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+				database,
+			});
+
 			yield* transactionRejectFx({
 				transactionId,
 				userId: buyer.id,
 			});
+
+			const { status } = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction")
+					.select("status")
+					.where("id", "=", transactionId)
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(status).toBe("rejected");
+
+			const entries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select("kind")
+					.where("transactionId", "=", transactionId)
+					.execute(),
+			);
+
+			const kinds = entries.map((e) => e.kind);
+			expect(kinds).toContain("status-rejected-buyer");
+			expect(kinds).not.toContain("status-rejected-seller");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		const { status } = await database.kysely
-			.selectFrom("transaction")
-			.select("status")
-			.where("id", "=", transactionId)
-			.executeTakeFirstOrThrow();
-
-		expect(status).toBe("rejected");
-
-		const entries = await database.kysely
-			.selectFrom("transaction_entry")
-			.select("kind")
-			.where("transactionId", "=", transactionId)
-			.execute();
-
-		const kinds = entries.map((e) => e.kind);
-		expect(kinds).toContain("status-rejected-buyer");
-		expect(kinds).not.toContain("status-rejected-seller");
 	});
 });
