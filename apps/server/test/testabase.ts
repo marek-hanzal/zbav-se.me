@@ -21,6 +21,11 @@ export const testabase = async (id: string = genId()) => {
 			),
 		);
 
+		// Drop database if it already exists to prevent conflicts
+		yield* Effect.promise(async () =>
+			sql`DROP DATABASE IF EXISTS ${sql.ref(db)}`.execute(kysely),
+		);
+
 		yield* Effect.promise(async () =>
 			sql`CREATE DATABASE ${sql.ref(db)} TEMPLATE test OWNER test`.execute(kysely),
 		);

@@ -13,6 +13,7 @@ type SetupResult = (() => Promise<void>) | void;
 
 const IMAGE = "zbav-se.me:postgres";
 const CONTAINER_NAME = "zbav-seme-test-postgres";
+export const VOLUME_NAME = "zbav-seme-test-postgres-data";
 
 const DATABASE_PORT = 55432;
 const DATABASE_URL = `postgresql://test:test@127.0.0.1:${DATABASE_PORT}`;
@@ -123,7 +124,8 @@ export default async function globalSetup(): Promise<SetupResult> {
 			"-d",
 			"--name",
 			CONTAINER_NAME,
-			"--rm",
+			"-v",
+			`${VOLUME_NAME}:/var/lib/postgresql/data`,
 			"-e",
 			"POSTGRES_USER=test",
 			"-e",
@@ -159,4 +161,27 @@ export default async function globalSetup(): Promise<SetupResult> {
 		),
 		Effect.runPromise,
 	);
+
+	return async function teardown() {
+		console.log("TEARDOWN: Starting cleanup...");
+		try {
+			const proc = Bun.spawn([
+				"docker",
+				"rm",
+				"-f",
+				CONTAINER_NAME,
+			]);
+			await proc.exited;
+			const volProc = Bun.spawn([
+				"docker",
+				"volume",
+				"rm",
+				VOLUME_NAME,
+			]);
+			await volProc.exited;
+			console.log("TEARDOWN: Done");
+		} catch (e) {
+			console.error("TEARDOWN: Failed to remove container:", e);
+		}
+	};
 }

@@ -1,0 +1,20 @@
+{
+	"$schema": "https://opencode.ai/config.json",
+	"provider": {
+		"lmstudio": {
+			"npm": "@ai-sdk/openai-compatible",
+			"name": "Obsidian LLM",
+			"options": {
+				"baseURL": "http://127.0.0.1:1234/v1"
+			},
+			"models": {
+				"unsloth/glm-4.7-flash": {
+					"name": "GLM 4.7 - Flash (8bit)"
+				},
+				"zai-org/glm-4.7-flash": {
+					"name": "GLM 4.7 - Flash (Reasoning)"
+				}
+			}
+		}
+	}
+}
