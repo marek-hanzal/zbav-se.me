@@ -2,8 +2,10 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCloseFx } from "~/@buyer/transaction/fx/transactionCloseFx";
 import { transactionCollectionFx } from "~/@buyer/transaction/fx/transactionCollectionFx";
+import { transactionCountFx } from "~/@buyer/transaction/fx/transactionCountFx";
 import { transactionDisputeFx } from "~/@buyer/transaction/fx/transactionDisputeFx";
 import { transactionRejectFx } from "~/@buyer/transaction/fx/transactionRejectFx";
+import { transactionAcceptFx } from "~/@seller/transaction/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/@seller/transaction/fx/transactionResolveFx";
 import { auth } from "~/auth/auth";
 import {
@@ -51,6 +53,11 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 					.where("listingId", "=", listingId)
 					.where("userId", "=", buyer.id)
 					.executeTakeFirstOrThrow();
+			});
+
+			yield* transactionAcceptFx({
+				transactionId: tx.id,
+				userId: seller.id,
 			});
 
 			yield* transactionResolveFx({
@@ -124,17 +131,20 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 					.executeTakeFirstOrThrow();
 			});
 
+			yield* transactionAcceptFx({
+				transactionId: tx.id,
+				userId: seller.id,
+			});
+
 			yield* transactionResolveFx({
 				transactionId: tx.id,
 				userId: seller.id,
 			});
 
 			expect(
-				Effect.gen(function* () {
-					yield* transactionRejectFx({
-						transactionId: tx.id,
-						userId: buyer.id,
-					});
+				transactionRejectFx({
+					transactionId: tx.id,
+					userId: buyer.id,
 				}).pipe(withRuntimeFx(database), Effect.runPromise),
 			).rejects.toThrow();
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
@@ -179,6 +189,16 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 					.executeTakeFirstOrThrow();
 			});
 
+			yield* transactionAcceptFx({
+				transactionId: tx.id,
+				userId: seller.id,
+			});
+
+			yield* transactionResolveFx({
+				transactionId: tx.id,
+				userId: seller.id,
+			});
+
 			yield* transactionDisputeFx({
 				transactionId: tx.id,
 				userId: buyer.id,
@@ -207,7 +227,7 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 					.executeTakeFirstOrThrow();
 			});
 
-			expect(statusAfterResolve).toBe("closed");
+			expect(statusAfterResolve).toBe("resolved");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 
@@ -250,6 +270,11 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 					.executeTakeFirstOrThrow();
 			});
 
+			yield* transactionAcceptFx({
+				transactionId: tx.id,
+				userId: seller.id,
+			});
+
 			yield* transactionResolveFx({
 				transactionId: tx.id,
 				userId: seller.id,
@@ -281,7 +306,7 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 	});
 
 	it("invalid: cannot close already-closed transaction", async () => {
-		const database = await testabase("buyerCloseFx-double-close");
+		const database = await testabase("buyerCloseFx-double-close-edge");
 
 		return Effect.gen(function* () {
 			const { api } = auth(() => database.dialect);
@@ -311,12 +336,15 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				database,
 			});
 
+			yield* transactionCloseFx({
+				transactionId,
+				userId: buyer.id,
+			});
+
 			expect(
-				Effect.gen(function* () {
-					yield* transactionCloseFx({
-						transactionId,
-						userId: buyer.id,
-					});
+				transactionCloseFx({
+					transactionId,
+					userId: buyer.id,
 				}).pipe(withRuntimeFx(database), Effect.runPromise),
 			).rejects.toThrow();
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
@@ -373,6 +401,16 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 					.where("listingId", "=", listingId2)
 					.where("userId", "=", buyer.id)
 					.executeTakeFirstOrThrow();
+			});
+
+			yield* transactionAcceptFx({
+				transactionId: tx1.id,
+				userId: seller.id,
+			});
+
+			yield* transactionAcceptFx({
+				transactionId: tx2.id,
+				userId: seller.id,
 			});
 
 			yield* transactionResolveFx({
@@ -436,7 +474,7 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				buyerId: buyer.id,
 			});
 
-			const countBefore = yield* transactionCollectionFx({
+			const countBefore = yield* transactionCountFx({
 				where: {
 					userId: buyer.id,
 				},
@@ -445,7 +483,7 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				},
 			});
 
-			expect(countBefore).toBe(2);
+			expect(countBefore.where).toBe(2);
 
 			const tx1 = yield* Effect.promise(() => {
 				return database.kysely
@@ -465,6 +503,16 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 					.executeTakeFirstOrThrow();
 			});
 
+			yield* transactionAcceptFx({
+				transactionId: tx1.id,
+				userId: seller.id,
+			});
+
+			yield* transactionAcceptFx({
+				transactionId: tx2.id,
+				userId: seller.id,
+			});
+
 			yield* transactionResolveFx({
 				transactionId: tx1.id,
 				userId: seller.id,
@@ -475,7 +523,7 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				userId: seller.id,
 			});
 
-			const countAfter = yield* transactionCollectionFx({
+			const countAfter = yield* transactionCountFx({
 				where: {
 					userId: buyer.id,
 				},
@@ -484,7 +532,7 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				},
 			});
 
-			expect(countAfter).toBe(2);
+			expect(countAfter.where).toBe(2);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
