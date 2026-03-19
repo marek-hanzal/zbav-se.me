@@ -164,15 +164,15 @@ describe("ignoreToggleFx", () => {
 
 			const listing = yield* createListingFx(seller.id);
 
-			yield* Effect.promise(async () => {
-				await expect(
-					ignoreToggleFx({
-						userId: seller.id,
-						listingId: listing.id,
-						toggle: true,
-					}).pipe(withRuntimeFx(database), Effect.runPromise),
-				).rejects.toThrow();
-			});
+			const result = yield* Effect.either(
+				ignoreToggleFx({
+					userId: seller.id,
+					listingId: listing.id,
+					toggle: true,
+				}),
+			);
+
+			expect(result._tag).toBe("Left");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

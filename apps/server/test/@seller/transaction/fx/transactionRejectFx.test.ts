@@ -181,14 +181,14 @@ describe("transactionRejectFx (seller)", () => {
 				userId: seller.id,
 			});
 
-			yield* Effect.promise(async () => {
-				await expect(
-					transactionRejectFx({
-						transactionId: tx.id,
-						userId: seller.id,
-					}).pipe(withRuntimeFx(database), Effect.runPromise),
-				).rejects.toThrow();
-			});
+			const result = yield* Effect.either(
+				transactionRejectFx({
+					transactionId: tx.id,
+					userId: seller.id,
+				}),
+			);
+
+			expect(result._tag).toBe("Left");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

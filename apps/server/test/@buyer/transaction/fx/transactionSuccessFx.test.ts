@@ -97,14 +97,14 @@ describe("transactionSuccessFx (buyer)", () => {
 				database,
 			});
 
-			yield* Effect.promise(async () => {
-				await expect(
-					await transactionSuccessFx({
-						transactionId,
-						userId: seller.id,
-					}).pipe(withRuntimeFx(database), Effect.runPromise),
-				).rejects.toThrow();
-			});
+			const result = yield* Effect.either(
+				transactionSuccessFx({
+					transactionId,
+					userId: seller.id,
+				}),
+			);
+
+			expect(result._tag).toBe("Left");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

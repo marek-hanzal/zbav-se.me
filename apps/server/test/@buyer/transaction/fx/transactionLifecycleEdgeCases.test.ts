@@ -9,9 +9,9 @@ import { transactionAcceptFx } from "~/@seller/transaction/fx/transactionAcceptF
 import { transactionResolveFx } from "~/@seller/transaction/fx/transactionResolveFx";
 import { auth } from "~/auth/auth";
 import {
-	createPendingScenarioFx,
-	createResolvedScenarioFx,
-	withRuntimeFx,
+    createPendingScenarioFx,
+    createResolvedScenarioFx,
+    withRuntimeFx,
 } from "~test/fixture/transactionFixture";
 import { testabase } from "~test/testabase";
 
@@ -141,14 +141,14 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				userId: seller.id,
 			});
 
-			yield* Effect.promise(async () => {
-				await expect(
-					transactionRejectFx({
-						transactionId: tx.id,
-						userId: buyer.id,
-					}).pipe(withRuntimeFx(database), Effect.runPromise),
-				).rejects.toThrow();
-			});
+			const result = yield* Effect.either(
+				transactionRejectFx({
+					transactionId: tx.id,
+					userId: buyer.id,
+				})
+			);
+
+			expect(result._tag).toBe("Left");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 
@@ -343,14 +343,14 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				userId: buyer.id,
 			});
 
-			yield* Effect.promise(async () => {
-				await expect(
-					transactionCloseFx({
-						transactionId,
-						userId: buyer.id,
-					}).pipe(withRuntimeFx(database), Effect.runPromise),
-				).rejects.toThrow();
-			});
+			const result = yield* Effect.either(
+				transactionCloseFx({
+					transactionId,
+					userId: buyer.id,
+				}),
+			);
+
+			expect(result._tag).toBe("Left");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 

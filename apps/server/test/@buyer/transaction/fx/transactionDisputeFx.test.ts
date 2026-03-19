@@ -178,14 +178,15 @@ describe("transactionDisputeFx (buyer)", () => {
 					.executeTakeFirstOrThrow(),
 			);
 
-			yield* Effect.promise(async () =>
-				expect(
-					await transactionDisputeFx({
-						transactionId: tx.id,
-						userId: buyer.id,
-					}).pipe(withRuntimeFx(database), Effect.runPromise),
-				).rejects.toThrow(),
+			const result = yield* Effect.either(
+				transactionDisputeFx({
+					transactionId: tx.id,
+					userId: buyer.id,
+				}),
+				
 			);
+
+			expect(result._tag).toBe("Left");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

@@ -111,14 +111,14 @@ describe("transactionAcceptFx", () => {
 					.executeTakeFirstOrThrow(),
 			);
 
-			yield* Effect.promise(async () => {
-				await expect(
-					transactionAcceptFx({
-						transactionId: tx.id,
-						userId: buyer.id,
-					}).pipe(withRuntimeFx(database), Effect.runPromise),
-				).rejects.toThrow();
-			});
+			const result = yield* Effect.either(
+				transactionAcceptFx({
+					transactionId: tx.id,
+					userId: buyer.id,
+				}),
+			);
+
+			expect(result._tag).toBe("Left");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
