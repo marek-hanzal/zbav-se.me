@@ -112,10 +112,10 @@ describe("transactionAcceptFx", () => {
 			);
 
 			expect(
-				yield* transactionAcceptFx({
+				transactionAcceptFx({
 					transactionId: tx.id,
 					userId: buyer.id,
-				}),
+				}).pipe(withRuntimeFx(database), Effect.runPromise),
 			).rejects.toThrow();
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
