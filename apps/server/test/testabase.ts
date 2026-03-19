@@ -15,7 +15,7 @@ export const testabase = async (id: string = genId()) => {
 				new PostgresDialect({
 					pool: new Pool({
 						connectionString: `${process.env.SERVER_DATABASE_URL}/postgres`,
-						max: 3,
+						max: 1,
 					}),
 				}),
 			),
@@ -38,7 +38,7 @@ export const testabase = async (id: string = genId()) => {
 				new PostgresDialect({
 					pool: new Pool({
 						connectionString: `${process.env.SERVER_DATABASE_URL}/${db}`,
-						max: 3,
+						max: 1,
 					}),
 				}),
 			),

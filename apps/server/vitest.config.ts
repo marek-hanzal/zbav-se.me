@@ -35,6 +35,11 @@ export default defineConfig({
 		sequence: {
 			shuffle: false,
 		},
+		pool: "forks",
+		maxConcurrency: 4,
+		//
+		maxWorkers: 8,
+		//
 		coverage: {
 			enabled: false,
 		},
