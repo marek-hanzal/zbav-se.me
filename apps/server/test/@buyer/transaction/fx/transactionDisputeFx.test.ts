@@ -178,12 +178,14 @@ describe("transactionDisputeFx (buyer)", () => {
 					.executeTakeFirstOrThrow(),
 			);
 
-			expect(
-				transactionDisputeFx({
-					transactionId: tx.id,
-					userId: buyer.id,
-				}).pipe(withRuntimeFx(database), Effect.runPromise),
-			).rejects.toThrow();
+			yield* Effect.promise(async () =>
+				expect(
+					await transactionDisputeFx({
+						transactionId: tx.id,
+						userId: buyer.id,
+					}).pipe(withRuntimeFx(database), Effect.runPromise),
+				).rejects.toThrow(),
+			);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

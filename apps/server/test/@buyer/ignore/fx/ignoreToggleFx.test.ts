@@ -148,29 +148,31 @@ describe("ignoreToggleFx", () => {
 
 	it("invalid: seller cannot ignore own listing", async () => {
 		const database = await testabase("ignoreToggle-own-listing");
-		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@ignore-own.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { api } = auth(() => database.dialect);
 
-		const listing = await createListingFx(seller.id).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
+			const { user: seller } = yield* Effect.promise(async () =>
+				api.signUpEmail({
+					body: {
+						email: "seller@ignore-own.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
 
-		await expect(
-			Effect.gen(function* () {
-				yield* ignoreToggleFx({
-					userId: seller.id,
-					listingId: listing.id,
-					toggle: true,
-				});
-			}).pipe(withRuntimeFx(database), Effect.runPromise),
-		).rejects.toThrow();
+			const listing = yield* createListingFx(seller.id);
+
+			yield* Effect.promise(async () => {
+				await expect(
+					ignoreToggleFx({
+						userId: seller.id,
+						listingId: listing.id,
+						toggle: true,
+					}).pipe(withRuntimeFx(database), Effect.runPromise),
+				).rejects.toThrow();
+			});
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

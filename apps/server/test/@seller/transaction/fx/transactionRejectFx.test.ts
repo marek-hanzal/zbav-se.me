@@ -181,12 +181,14 @@ describe("transactionRejectFx (seller)", () => {
 				userId: seller.id,
 			});
 
-			expect(
-				transactionRejectFx({
-					transactionId: tx.id,
-					userId: seller.id,
-				}).pipe(withRuntimeFx(database), Effect.runPromise),
-			).rejects.toThrow();
+			yield* Effect.promise(async () => {
+				await expect(
+					transactionRejectFx({
+						transactionId: tx.id,
+						userId: seller.id,
+					}).pipe(withRuntimeFx(database), Effect.runPromise),
+				).rejects.toThrow();
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

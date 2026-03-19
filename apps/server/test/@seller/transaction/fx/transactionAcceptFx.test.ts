@@ -111,12 +111,14 @@ describe("transactionAcceptFx", () => {
 					.executeTakeFirstOrThrow(),
 			);
 
-			expect(
-				transactionAcceptFx({
-					transactionId: tx.id,
-					userId: buyer.id,
-				}).pipe(withRuntimeFx(database), Effect.runPromise),
-			).rejects.toThrow();
+			yield* Effect.promise(async () => {
+				await expect(
+					transactionAcceptFx({
+						transactionId: tx.id,
+						userId: buyer.id,
+					}).pipe(withRuntimeFx(database), Effect.runPromise),
+				).rejects.toThrow();
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

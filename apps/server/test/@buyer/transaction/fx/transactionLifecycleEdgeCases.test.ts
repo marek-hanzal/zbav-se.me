@@ -141,12 +141,14 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				userId: seller.id,
 			});
 
-			expect(
-				transactionRejectFx({
-					transactionId: tx.id,
-					userId: buyer.id,
-				}).pipe(withRuntimeFx(database), Effect.runPromise),
-			).rejects.toThrow();
+			yield* Effect.promise(async () => {
+				await expect(
+					transactionRejectFx({
+						transactionId: tx.id,
+						userId: buyer.id,
+					}).pipe(withRuntimeFx(database), Effect.runPromise),
+				).rejects.toThrow();
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 
@@ -341,12 +343,14 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				userId: buyer.id,
 			});
 
-			expect(
-				transactionCloseFx({
-					transactionId,
-					userId: buyer.id,
-				}).pipe(withRuntimeFx(database), Effect.runPromise),
-			).rejects.toThrow();
+			yield* Effect.promise(async () => {
+				await expect(
+					transactionCloseFx({
+						transactionId,
+						userId: buyer.id,
+					}).pipe(withRuntimeFx(database), Effect.runPromise),
+				).rejects.toThrow();
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 
