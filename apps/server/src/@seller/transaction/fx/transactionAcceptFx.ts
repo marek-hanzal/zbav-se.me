@@ -6,6 +6,7 @@ import { transactionStatusMessageFx } from "~/@user/transaction/fx/transactionSt
 import { transactionUpdateStatusFx } from "~/@user/transaction/fx/transactionUpdateStatusFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionAcceptFx {
 	export interface Props {
@@ -25,6 +26,12 @@ export const transactionAcceptFx = Effect.fn("transactionAcceptFx")(function* ({
 				transactionId,
 				message: "You are not allowed to accept this listing transaction",
 			});
+
+			if (transaction.buyerId === userId) {
+				return yield* new InvalidRequestErrorFx({
+					message: "Buyer cannot accept their own transaction",
+				});
+			}
 
 			yield* transactionUpdateStatusFx({
 				transactionId: transaction.id,
