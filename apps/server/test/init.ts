@@ -116,6 +116,7 @@ export default async function globalSetup(): Promise<SetupResult> {
 	})();
 
 	if (!imageExists) {
+		console.log("Building Postgres image");
 		sh(
 			[
 				"docker",
