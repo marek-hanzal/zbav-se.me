@@ -98,17 +98,36 @@ export default async function globalSetup(): Promise<SetupResult> {
 		"Docker is not available",
 	);
 
-	sh(
-		[
-			"docker",
-			"build",
-			"--platform=linux/amd64",
-			"-t",
-			IMAGE,
-			".",
-		],
-		`Failed to build image "${IMAGE}"`,
-	);
+	const imageExists = (() => {
+		try {
+			const { stdout } = sh(
+				[
+					"docker",
+					"image",
+					"inspect",
+					IMAGE,
+				],
+				"",
+			);
+			return stdout.length > 0;
+		} catch {
+			return false;
+		}
+	})();
+
+	if (!imageExists) {
+		sh(
+			[
+				"docker",
+				"build",
+				"--platform=linux/amd64",
+				"-t",
+				IMAGE,
+				".",
+			],
+			`Failed to build image "${IMAGE}"`,
+		);
+	}
 
 	shQuiet([
 		"docker",
