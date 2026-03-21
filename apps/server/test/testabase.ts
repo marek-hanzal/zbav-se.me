@@ -1,37 +1,42 @@
-import { DialectContextFx, MigrationContextFx, withDatabaseFx } from "@use-pico/common/database";
+import { DialectContextFx } from "@use-pico/common/database";
 import { genId } from "@use-pico/common/gen-id";
-import { clonePostgresTemplateDatabase } from "@zbav-se.me/test/postgres";
 import { Effect } from "effect";
-import { PostgresDialect } from "kysely";
+import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
-import type { Database } from "~/database/Database";
-
-const DATABASE_BASE_URL = "postgresql://test:test@127.0.0.1:55432";
+import { database } from "~/database/kysely";
 
 export const testabase = async (id: string = genId()) => {
-	const clonedDatabase = await clonePostgresTemplateDatabase({
-		baseUrl: DATABASE_BASE_URL,
-		databaseName: id,
-		templateDatabaseName: "test",
-		user: "test",
-	});
+	const db = id;
 
-	return withDatabaseFx<Database>({
-		async onPreMigration() {
-			//
-		},
-	})
-		.pipe(Effect.provideService(MigrationContextFx, {}))
-		.pipe(
+	return Effect.gen(function* () {
+		const { kysely } = yield* database.pipe(
 			Effect.provideService(
 				DialectContextFx,
 				new PostgresDialect({
 					pool: new Pool({
-						connectionString: clonedDatabase.databaseUrl,
-						max: 1,
+						connectionString: `${process.env.SERVER_DATABASE_URL}/postgres`,
+						max: 3,
 					}),
 				}),
 			),
-		)
-		.pipe(Effect.runPromise);
+		);
+
+		yield* Effect.promise(async () =>
+			sql`CREATE DATABASE ${sql.ref(db)} TEMPLATE test OWNER test`.execute(kysely),
+		);
+
+		yield* Effect.promise(async () => kysely.destroy());
+
+		return yield* database.pipe(
+			Effect.provideService(
+				DialectContextFx,
+				new PostgresDialect({
+					pool: new Pool({
+						connectionString: `${process.env.SERVER_DATABASE_URL}/${db}`,
+						max: 3,
+					}),
+				}),
+			),
+		);
+	}).pipe(Effect.runPromise);
 };
