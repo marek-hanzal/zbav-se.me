@@ -10,7 +10,6 @@ export const withOriginEndpointFx = Effect.fn("withOriginEndpointFx")(function* 
 
 		return c.json({
 			origin: [
-				viteConfig.VITE_WEB_ORIGIN,
 				viteConfig.VITE_APP_ORIGIN,
 			],
 		});

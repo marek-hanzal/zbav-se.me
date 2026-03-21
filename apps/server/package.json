@@ -4,11 +4,11 @@
 	"type": "module",
 	"scripts": {
 		"dev": "run-p dev:*",
-		"dev:nitro": "PORT=3032 nitro dev --host 0.0.0.0",
+		"dev:nitro": "PORT=3031 nitro dev --host 0.0.0.0",
 		"dev:mcp": "DANGEROUSLY_OMIT_AUTH=true bunx @modelcontextprotocol/inspector",
 		"build": "nitro build && bun ./cli/size.ts",
 		"build:preview": "nitro build --preset=node_server && bun ./cli/size.ts",
-		"preview": "PORT=${SERVER_PORT:-3032} node .output/server/index.mjs",
+		"preview": "PORT=${SERVER_PORT:-3031} node .output/server/index.mjs",
 		"seed:core": "bun ./cli/seed-core.ts",
 		"seed:interaction": "bun ./cli/seed-interaction.ts",
 		"typecheck": "tsc --noEmit",

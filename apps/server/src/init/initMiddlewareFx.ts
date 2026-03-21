@@ -63,7 +63,6 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 	root.use(
 		cors({
 			origin: [
-				viteConfig.VITE_WEB_ORIGIN,
 				viteConfig.VITE_APP_ORIGIN,
 			],
 			allowHeaders: [

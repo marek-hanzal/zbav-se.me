@@ -53,10 +53,10 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 				},
 			}),
 			mcp({
-				loginPage: `${viteConfig.VITE_WEB_ORIGIN}/redirect/oath`,
+				loginPage: `${viteConfig.VITE_APP_ORIGIN}/redirect/oath`,
 				resource: new URL("/api/mcp", viteConfig.VITE_SERVER_API).toString(),
 				oidcConfig: {
-					loginPage: `${viteConfig.VITE_WEB_ORIGIN}/redirect/oath`,
+					loginPage: `${viteConfig.VITE_APP_ORIGIN}/redirect/oath`,
 					metadata: {
 						issuer: viteConfig.VITE_SERVER_API,
 					},
@@ -91,7 +91,6 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 			}),
 		],
 		trustedOrigins: [
-			viteConfig.VITE_WEB_ORIGIN,
 			viteConfig.VITE_APP_ORIGIN,
 		],
 		rateLimit: {
