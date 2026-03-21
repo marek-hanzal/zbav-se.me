@@ -1,42 +1,17 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
-import { linkTo } from "@use-pico/common/link-to";
-import { withSessionQuery } from "~/app/@common/auth/query/withSessionQuery";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { LocalePage } from "~/app/@common/locale/~public/LocalePage";
 
 export const Route = createFileRoute("/$locale")({
-	ssr: false,
-	async loader({ params: { locale }, context: { queryClient } }) {
-		const sessionQuery = await withSessionQuery
-			.ensure(queryClient, undefined, {
-				staleTime: 0,
-				gcTime: 0,
-				throwOnError: true,
-			})
-			.catch(() => undefined);
-
-		if (!sessionQuery?.data?.user) {
-			throw redirect({
-				href: linkTo({
-					base: import.meta.env.VITE_WEB_ORIGIN,
-					href: "/redirect/login",
-					query: {
-						locale,
-					},
-				}),
-				statusCode: 302,
-			});
-		}
-
+	// ssr: false,
+	async loader({ params: { locale } }) {
 		try {
 			return {
 				translations: (await import(`../translation/${locale}.yaml`)).default,
-				user: sessionQuery.data.user,
 			} as const;
 		} catch {
 			console.warn(`Locale [${locale}] not found, using default locale`);
 			return {
 				translations: (await import(`../translation/cs.yaml`)).default,
-				user: sessionQuery.data.user,
 			} as const;
 		}
 	},

@@ -1,8 +1,8 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { withSessionQuery } from "~/app/@common/auth/query/withSessionQuery";
 
 export const Route = createFileRoute("/$locale/app")({
-	ssr: false,
+	// ssr: false,
 	async loader({ context: { queryClient }, params: { locale } }) {
 		const sessionQuery = await withSessionQuery
 			.ensure(queryClient, undefined, {
@@ -24,8 +24,5 @@ export const Route = createFileRoute("/$locale/app")({
 		return {
 			user: sessionQuery.data.user,
 		} as const;
-	},
-	component() {
-		return <Outlet />;
 	},
 });

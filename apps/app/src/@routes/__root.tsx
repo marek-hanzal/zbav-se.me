@@ -1,13 +1,8 @@
 import type { QueryClient } from "@tanstack/react-query";
-import {
-	createRootRouteWithContext,
-	HeadContent,
-	Outlet,
-	Scripts,
-	useParams,
-} from "@tanstack/react-router";
+import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 import { uiContainer } from "@use-pico/client/ui/container";
 import { Toaster } from "sonner";
+import { getLocaleFn } from "~/app/@common/locale/getLocaleFn";
 import styles from "~/assets/style.css?url";
 
 export const Route = createRootRouteWithContext<{
@@ -38,10 +33,13 @@ export const Route = createRootRouteWithContext<{
 			},
 		],
 	}),
+	async loader() {
+		return {
+			locale: await getLocaleFn(),
+		};
+	},
 	shellComponent() {
-		const { locale } = useParams({
-			from: "/$locale",
-		});
+		const { locale } = Route.useLoaderData();
 
 		return (
 			<html
