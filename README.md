@@ -30,7 +30,7 @@ cp .env.example .env.local
 ### Run everything
 
 ```bash
-sudo portless proxy start --https --port 443
+portless proxy start --https
 bun run dev
 ```
 
@@ -55,11 +55,11 @@ The local Postgres Docker image is tagged as `zbav-se.me:postgres` so Docker Com
 
 ## Dev URLs
 
-- App: <https://zbav-se.me.localhost>
-- API: <https://api.zbav-se.me.localhost>
-- OpenAPI JSON: <https://api.zbav-se.me.localhost/v3/api-docs>
+- App: <https://zbav-se.me.localhost:1355>
+- API: <https://api.zbav-se.me.localhost:1355>
+- OpenAPI JSON: <https://api.zbav-se.me.localhost:1355/v3/api-docs>
 
-The app and server scripts stay as plain `portless ...` commands. The shared proxy must listen on `443`, so start it with `sudo portless proxy start --https --port 443` before `bun run dev`. That gives us clean HTTPS `.localhost` URLs without an explicit port.
+The app and server scripts stay as plain `portless ...` commands. In the simplified non-root setup, start the shared HTTPS proxy with `portless proxy start --https`, then run `bun run dev`. Portless uses its default user-level state and serves the `.localhost` URLs on port `1355`.
 
 ## Architecture at a glance
 
@@ -93,7 +93,7 @@ bun run typecheck
 
 Shared MCP server template is in [`mcp.json`](./mcp.json).
 
-- Endpoint: `https://api.zbav-se.me.localhost/api/mcp`
+- Endpoint: `https://api.zbav-se.me.localhost:1355/api/mcp`
 - Auth env var: `MCP_BEARER_TOKEN`
 - Transport: `streamable_http`
 
