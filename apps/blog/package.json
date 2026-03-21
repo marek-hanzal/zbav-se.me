@@ -25,13 +25,13 @@
 		"@docusaurus/module-type-aliases": "3.9.2",
 		"@docusaurus/tsconfig": "3.9.2",
 		"@docusaurus/types": "3.9.2",
-		"@tailwindcss/postcss": "4.2.1",
+		"@tailwindcss/postcss": "4.2.2",
 		"@types/react": "19.2.14",
-		"@typescript/native-preview": "7.0.0-dev.20260317.1",
+		"@typescript/native-preview": "7.0.0-dev.20260321.1",
 		"autoprefixer": "10.4.27",
-		"knip": "5.87.0",
+		"knip": "6.0.1",
 		"postcss": "8.5.8",
-		"tailwindcss": "4.2.1",
+		"tailwindcss": "4.2.2",
 		"typescript": "beta"
 	},
 	"browserslist": {

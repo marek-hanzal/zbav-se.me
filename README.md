@@ -9,6 +9,7 @@ This repo stays public for transparency and learning, but it is **not open sourc
 - `apps/app` - main marketplace app (buyer + seller flows)
 - `apps/web` - public website and legal pages
 - `apps/server` - API backend
+- `apps/e2e` - Playwright end-to-end test workspace
 - `apps/blog` - product/dev blog
 - `packages/@zbav-se.me/*` - shared domain/UI/SDK packages
 - `packages/@use-pico/*` - internal framework utilities
