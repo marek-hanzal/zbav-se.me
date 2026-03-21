@@ -12,7 +12,9 @@
 		"lint": "biome check --write .",
 		"knip": "turbo run knip --concurrency=1",
 		"typecheck": "turbo run typecheck --parallel",
-		"test": "dotenv -c development -- turbo run test --parallel",
+		"test": "run-s test:vitest test:e2e",
+		"test:vitest": "dotenv -c development -- turbo run test --parallel",
+		"test:e2e": "dotenv -c development -- playwright test",
 		"seed:core": "dotenv -c development -- bun --cwd ./apps/server ./cli/seed-core.ts",
 		"seed:interaction": "dotenv -c development -- bun --cwd ./apps/server ./cli/seed-interaction.ts",
 		"update": "bun update",
@@ -25,6 +27,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.7",
+		"@playwright/test": "1.55.0",
 		"@types/node": "25.5.0",
 		"dotenv-cli": "11.0.0",
 		"npm-run-all2": "8.0.4",

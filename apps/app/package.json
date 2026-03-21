@@ -5,8 +5,9 @@
 	"type": "module",
 	"scripts": {
 		"build": "vite build",
+		"build:preview": "NITRO_PRESET=node_server vite build --mode production",
 		"dev": "vite",
-		"preview": "NITRO_PRESET=node_server vite build --mode production && PORT=3031 node .output/server/index.mjs",
+		"preview": "PORT=3031 node .output/server/index.mjs",
 		"translations": "bun ./cli/translations.ts",
 		"typecheck": "tsc --noEmit",
 		"knip": "knip --include dependencies --no-config-hints"

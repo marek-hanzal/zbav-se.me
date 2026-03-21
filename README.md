@@ -47,7 +47,7 @@ bun run test
 bun run workflow:check
 ```
 
-`bun run preview` first prepares production builds for `app`, `web`, and `server`, then starts all three services from their built outputs.
+`bun run preview` is managed by Turbo. Each app builds its own production preview output first and then starts from that built output.
 
 `bun run test` runs the existing Vitest suites first and then executes the root Playwright smoke suite against the production preview stack.
 
