@@ -15,7 +15,7 @@ export default defineConfig({
 	},
 	webServer: {
 		command: "bun run preview",
-		url: "http://127.0.0.1:3030/cs/login",
+		url: "http://127.0.0.1:3030/cs",
 		reuseExistingServer: !process.env.CI,
 		timeout: 180_000,
 	},

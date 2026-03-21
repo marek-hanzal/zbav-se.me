@@ -38,7 +38,7 @@ export default defineConfig({
 		pool: "forks",
 		maxConcurrency: 4,
 		//
-		maxWorkers: 12,
+		maxWorkers: 8,
 		//
 		coverage: {
 			enabled: false,
