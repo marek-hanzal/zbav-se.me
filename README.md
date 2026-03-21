@@ -24,13 +24,13 @@ This repo stays public for transparency and learning, but it is **not open sourc
 ```bash
 bun install
 npm install -g portless
-sudo portless proxy start --https
 cp .env.example .env.local
 ```
 
 ### Run everything
 
 ```bash
+sudo portless proxy start --https --port 443
 bun run dev
 ```
 
@@ -59,7 +59,7 @@ The local Postgres Docker image is tagged as `zbav-se.me:postgres` so Docker Com
 - API: <https://api.zbav-se.me.localhost>
 - OpenAPI JSON: <https://api.zbav-se.me.localhost/v3/api-docs>
 
-The app and server scripts stay as plain `portless ...` commands. To get clean HTTPS URLs without ports, start the shared proxy once with `sudo portless proxy start --https --port 443` and let the app scripts reuse it.
+The app and server scripts stay as plain `portless ...` commands. The shared proxy must listen on `443`, so start it with `sudo portless proxy start --https --port 443` before `bun run dev`. That gives us clean HTTPS `.localhost` URLs without an explicit port.
 
 ## Architecture at a glance
 
