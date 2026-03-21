@@ -209,4 +209,14 @@ export default async function globalSetup(): Promise<SetupResult> {
 		),
 		Effect.runPromise,
 	);
+
+	return async () => {
+		shQuiet([
+			"docker",
+			"rm",
+			"-f",
+			"-v",
+			CONTAINER_NAME,
+		]);
+	};
 }
