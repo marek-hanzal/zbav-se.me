@@ -184,7 +184,7 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 		yield* RoutesContextFx;
 
 	const viteConfig = ServerViteSchema.parse(process.env);
-	const apiBase = viteConfig.VITE_SERVER_API.replace(/\/$/, "");
+	const url = viteConfig.VITE_SERVER_API.replace(/\/$/, "");
 
 	root.get(
 		"/",
@@ -193,27 +193,27 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 			pageTitle: "zbav.se.me API",
 			sources: [
 				{
-					url: `${docsUrl}/public`,
+					url: new URL(`${docsUrl}/public`, url).toString(),
 					title: "Public",
 				},
 				{
-					url: `${docsUrl}/session`,
+					url: new URL(`${docsUrl}/session`, url).toString(),
 					title: "Session",
 				},
 				{
-					url: `${docsUrl}/user`,
+					url: new URL(`${docsUrl}/user`, url).toString(),
 					title: "User",
 				},
 				{
-					url: `${docsUrl}/seller`,
+					url: new URL(`${docsUrl}/seller`, url).toString(),
 					title: "Seller",
 				},
 				{
-					url: `${docsUrl}/buyer`,
+					url: new URL(`${docsUrl}/buyer`, url).toString(),
 					title: "Buyer",
 				},
 				{
-					url: "/api/auth/open-api/generate-schema",
+					url: new URL("/api/auth/open-api/generate-schema", url).toString(),
 					title: "Auth",
 				},
 			],
@@ -250,7 +250,7 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 			tags: undefined,
 			servers: [
 				{
-					url: apiBase,
+					url: url,
 				},
 			],
 		});
@@ -343,7 +343,7 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 		},
 		servers: [
 			{
-				url: apiBase,
+				url: url,
 			},
 		],
 		...cookieAuth,
