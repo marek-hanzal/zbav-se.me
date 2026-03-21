@@ -8,7 +8,6 @@ This repo stays public for transparency and learning, but it is **not open sourc
 
 - `apps/app` - unified frontend app (public site, auth, buyer + seller flows)
 - `apps/server` - API backend
-- `apps/e2e` - Playwright end-to-end test workspace
 - `packages/@zbav-se.me/*` - shared domain/UI/SDK packages
 - `packages/@use-pico/*` - internal framework utilities
 
@@ -48,7 +47,7 @@ bun run workflow:check
 
 `bun run preview` is managed by Turbo. The frontend app and server build their production preview outputs first and then start from those built outputs.
 
-`bun run test` runs the existing Vitest suites first and then executes the root Playwright smoke suite against the production preview stack.
+`bun run test` runs the existing Vitest suites.
 
 ## Dev URLs
 
