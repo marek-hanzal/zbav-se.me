@@ -3,8 +3,9 @@ import { describe, expect, it } from "vitest";
 import { favouriteToggleFx } from "~/@buyer/favourite/fx/favouriteToggleFx";
 import { feedCreateFx } from "~/@buyer/feed/fx/feedCreateFx";
 import { auth } from "~/auth/auth";
-import { createListingFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createListingFx } from "~/test/utils/createListingFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("favouriteToggleFx", () => {
 	it("toggle off: deletes favourite, creates unfavourite event and inbox", async () => {

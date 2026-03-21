@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { inboxCollectionFx } from "~/@user/inbox/fx/inboxCollectionFx";
 import { auth } from "~/auth/auth";
-import { withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("inbox deduplication (PARTITION BY transactionId)", () => {
 	it("multiple buyer-message entries for same transactionId collapse into one (latest)", async () => {

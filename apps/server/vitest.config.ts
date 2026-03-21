@@ -13,10 +13,16 @@ export default defineConfig({
 	},
 	cacheDir: "./node_modules/.vite",
 	resolve: {
-		alias: {
-			"~": resolve(__dirname, "./src"),
-			"~test": resolve(__dirname, "./test"),
-		},
+		alias: [
+			{
+				find: /^~\/test\//,
+				replacement: `${resolve(__dirname, "./test")}/`,
+			},
+			{
+				find: /^~\//,
+				replacement: `${resolve(__dirname, "./src")}/`,
+			},
+		],
 	},
 	test: {
 		globalSetup: [

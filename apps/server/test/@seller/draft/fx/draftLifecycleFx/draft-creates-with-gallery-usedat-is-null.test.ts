@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { draftCreateFx } from "~/@seller/draft/fx/draftCreateFx";
 import { auth } from "~/auth/auth";
-import { withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("draft lifecycle", () => {
 	it("draft creates with gallery, usedAt is null", async () => {

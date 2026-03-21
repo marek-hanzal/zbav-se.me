@@ -2,8 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/@buyer/listing/fx/listingCollectionFx";
 import { auth } from "~/auth/auth";
-import { createResolvedScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createResolvedScenarioFx } from "~/test/utils/createResolvedScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("listingCollectionFx (buyer) — listing status visibility", () => {
 	it("sold listing is NOT visible to buyer (only live listings shown)", async () => {

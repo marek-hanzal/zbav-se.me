@@ -5,15 +5,15 @@ import { auth } from "~/auth/auth";
 import type { InboxPriorityEnumSchema } from "~/database/@enum/InboxPriorityEnumSchema";
 import type { InboxTypeEnumSchema } from "~/database/@enum/InboxTypeEnumSchema";
 import type { InboxTableSchema } from "~/database/@table/InboxTableSchema/InboxTableSchema";
-import { withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 /**
  * Inserts inbox rows directly into the DB — bypasses inboxCreateFx so tests
  * are not coupled to the full transaction/listing lifecycle.
  */
 const seedInbox = async (
-	database: Awaited<ReturnType<typeof import("~test/testabase").testabase>>,
+	database: Awaited<ReturnType<typeof import("~/test/testabase").testabase>>,
 	rows: Array<
 		Pick<InboxTableSchema.Type, "family" | "payload"> & {
 			id: string;

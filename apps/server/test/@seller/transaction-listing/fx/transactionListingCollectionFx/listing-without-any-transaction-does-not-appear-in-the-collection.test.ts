@@ -2,8 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionListingCollectionFx } from "~/@seller/transaction-listing/fx/transactionListingCollectionFx";
 import { auth } from "~/auth/auth";
-import { createListingFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createListingFx } from "~/test/utils/createListingFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionListingCollectionFx (seller dashboard)", () => {
 	it("listing without any transaction does not appear in the collection", async () => {

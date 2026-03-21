@@ -3,8 +3,9 @@ import { describe, expect, it } from "vitest";
 import { transactionDisputeFx } from "~/@buyer/transaction/fx/transactionDisputeFx";
 import { transactionResolveFx } from "~/@seller/transaction/fx/transactionResolveFx";
 import { auth } from "~/auth/auth";
-import { createResolvedScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createResolvedScenarioFx } from "~/test/utils/createResolvedScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionDisputeFx (buyer)", () => {
 	it("dispute → resolved: seller re-resolves dispute and status-resolved entry is created", async () => {

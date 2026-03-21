@@ -4,8 +4,9 @@ import { transactionRejectFx } from "~/@buyer/transaction/fx/transactionRejectFx
 import { transactionAcceptFx } from "~/@seller/transaction/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/@seller/transaction/fx/transactionResolveFx";
 import { auth } from "~/auth/auth";
-import { createPendingScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionLifecycleEdgeCases (buyer)", () => {
 	it("concurrent: buyer rejects while seller is resolving", async () => {

@@ -2,8 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionAcceptFx } from "~/@seller/transaction/fx/transactionAcceptFx";
 import { auth } from "~/auth/auth";
-import { createPendingScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionAcceptFx", () => {
 	it("pending → open: status changes and status-open entry is created", async () => {

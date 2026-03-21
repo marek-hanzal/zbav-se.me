@@ -2,8 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { flagToggleFx } from "~/@buyer/flag/fx/flagToggleFx";
 import { auth } from "~/auth/auth";
-import { createListingFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createListingFx } from "~/test/utils/createListingFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("flagToggleFx", () => {
 	it("invalid: seller cannot flag own listing", async () => {

@@ -2,8 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionSuccessFx } from "~/@buyer/transaction/fx/transactionSuccessFx";
 import { auth } from "~/auth/auth";
-import { createResolvedScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createResolvedScenarioFx } from "~/test/utils/createResolvedScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionSuccessFx (buyer)", () => {
 	it("resolved → success: status changes and status-success entry is created", async () => {

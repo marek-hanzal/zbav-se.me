@@ -4,7 +4,7 @@ import { withInboxQueryBuilderFx } from "~/@user/inbox/db/withInboxQueryBuilderF
 import { withInboxSelectFx } from "~/@user/inbox/db/withInboxSelectFx";
 import { auth } from "~/auth/auth";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
 
 describe("inbox family", () => {
 	it("filters inbox rows by family", async () => {

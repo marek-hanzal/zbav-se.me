@@ -6,8 +6,8 @@
 	"scripts": {
 		"build": "vite build",
 		"build:preview": "NITRO_PRESET=node_server vite build --mode production",
-		"dev": "vite",
-		"preview": "PORT=${APP_PORT:-3030} node .output/server/index.mjs",
+		"dev": "portless zbav-se.me vite",
+		"preview": "portless zbav-se.me node .output/server/index.mjs",
 		"translations": "bun ./cli/translations.ts",
 		"typecheck": "tsc --noEmit",
 		"knip": "knip --include dependencies --no-config-hints"

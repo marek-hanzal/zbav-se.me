@@ -44,6 +44,24 @@ function shQuiet(cmd: string[]) {
 	});
 }
 
+function imageExists(image: string) {
+	try {
+		const { stdout } = sh(
+			[
+				"docker",
+				"image",
+				"inspect",
+				image,
+			],
+			"",
+		);
+
+		return stdout.length > 0;
+	} catch {
+		return false;
+	}
+}
+
 function sleep(ms: number) {
 	return new Promise((r) => setTimeout(r, ms));
 }
@@ -97,17 +115,19 @@ export default async function globalSetup(): Promise<SetupResult> {
 		"Docker is not available",
 	);
 
-	sh(
-		[
-			"docker",
-			"build",
-			"--platform=linux/amd64",
-			"-t",
-			IMAGE,
-			".",
-		],
-		`Failed to build image "${IMAGE}"`,
-	);
+	if (!imageExists(IMAGE)) {
+		sh(
+			[
+				"docker",
+				"build",
+				"--platform=linux/amd64",
+				"-t",
+				IMAGE,
+				".",
+			],
+			`Failed to build image "${IMAGE}"`,
+		);
+	}
 
 	shQuiet([
 		"docker",

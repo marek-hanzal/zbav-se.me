@@ -2,8 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCloseFx } from "~/@buyer/transaction/fx/transactionCloseFx";
 import { auth } from "~/auth/auth";
-import { createResolvedScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createResolvedScenarioFx } from "~/test/utils/createResolvedScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionCloseFx (buyer)", () => {
 	it("resolved → closed: status changes and status-closed entry is created", async () => {

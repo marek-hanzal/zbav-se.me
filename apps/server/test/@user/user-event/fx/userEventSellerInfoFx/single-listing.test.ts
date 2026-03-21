@@ -11,8 +11,7 @@ import { auth } from "~/auth/auth";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
-import { testabase } from "~test/testabase";
-import { withTestRuntimeFx } from "~test/withTestRuntimeFx";
+import { testabase } from "~/test/testabase";
 
 describe("userEventSellerInfoFx", () => {
 	it("Single listing returns nothing", async () => {
@@ -76,7 +75,6 @@ describe("userEventSellerInfoFx", () => {
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
-			withTestRuntimeFx,
 			withLocationFx({
 				api: "https://api.geoapify.com",
 				autocomplete: "/v1/geocode/autocomplete",

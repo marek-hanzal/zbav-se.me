@@ -23,6 +23,8 @@ This repo stays public for transparency and learning, but it is **not open sourc
 
 ```bash
 bun install
+npm install -g portless
+sudo portless proxy start --https
 cp .env.example .env.local
 ```
 
@@ -49,11 +51,15 @@ bun run workflow:check
 
 `bun run test` runs the existing Vitest suites.
 
+The local Postgres Docker image is tagged as `zbav-se.me:postgres` so Docker Compose and test setup reuse the same build cache and image name.
+
 ## Dev URLs
 
-- App: <http://localhost:3030>
-- API: <http://localhost:3031>
-- OpenAPI JSON: <http://localhost:3031/v3/api-docs>
+- App: <https://zbav-se.me.localhost>
+- API: <https://api.zbav-se.me.localhost>
+- OpenAPI JSON: <https://api.zbav-se.me.localhost/v3/api-docs>
+
+The app and server scripts stay as plain `portless ...` commands. To get clean HTTPS URLs without ports, start the shared proxy once with `sudo portless proxy start --https --port 443` and let the app scripts reuse it.
 
 ## Architecture at a glance
 
@@ -87,7 +93,7 @@ bun run typecheck
 
 Shared MCP server template is in [`mcp.json`](./mcp.json).
 
-- Endpoint: `http://obsidian-ii.local:3031/api/mcp`
+- Endpoint: `https://api.zbav-se.me.localhost/api/mcp`
 - Auth env var: `MCP_BEARER_TOKEN`
 - Transport: `streamable_http`
 

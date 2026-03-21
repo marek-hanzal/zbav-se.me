@@ -2,8 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionListingCollectionFx } from "~/@seller/transaction-listing/fx/transactionListingCollectionFx";
 import { auth } from "~/auth/auth";
-import { createResolvedScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createResolvedScenarioFx } from "~/test/utils/createResolvedScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionListingCollectionFx (seller dashboard)", () => {
 	it("resolved listing has terminal: true — all transactions sold or resolved", async () => {

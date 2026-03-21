@@ -13,8 +13,7 @@ import { auth } from "~/auth/auth";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
-import { testabase } from "~test/testabase";
-import { withTestRuntimeFx } from "~test/withTestRuntimeFx";
+import { testabase } from "~/test/testabase";
 
 interface ListingFixture {
 	listingId: string;
@@ -29,7 +28,6 @@ const withInboxRuntimeFx = (database: Awaited<ReturnType<typeof testabase>>) => 
 		eff.pipe(
 			withKyselyFx(database),
 			withDateFx,
-			withTestRuntimeFx,
 			withTransactionContextFx(),
 			withLocationFx({
 				api: "https://api.geoapify.com",

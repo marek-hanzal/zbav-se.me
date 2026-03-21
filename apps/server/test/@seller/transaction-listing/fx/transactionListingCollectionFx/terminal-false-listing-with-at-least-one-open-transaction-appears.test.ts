@@ -2,8 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionListingCollectionFx } from "~/@seller/transaction-listing/fx/transactionListingCollectionFx";
 import { auth } from "~/auth/auth";
-import { createOpenScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createOpenScenarioFx } from "~/test/utils/createOpenScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionListingCollectionFx (seller dashboard)", () => {
 	it("terminal: false — listing with at least one open transaction appears", async () => {

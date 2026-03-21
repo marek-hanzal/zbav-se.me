@@ -1,8 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { auth } from "~/auth/auth";
-import { createOpenScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createOpenScenarioFx } from "~/test/utils/createOpenScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionEntryCleanupSensitiveFx", () => {
 	it("does not delete entries when status is non-terminal (open)", async () => {

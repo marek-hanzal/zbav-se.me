@@ -2,8 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionRejectFx } from "~/@seller/transaction/fx/transactionRejectFx";
 import { auth } from "~/auth/auth";
-import { createPendingScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionRejectFx (seller)", () => {
 	it("pending → rejected: status changes and status-rejected-seller entry is created", async () => {

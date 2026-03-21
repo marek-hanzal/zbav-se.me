@@ -2,8 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionRejectFx } from "~/@seller/transaction/fx/transactionRejectFx";
 import { auth } from "~/auth/auth";
-import { createOpenScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createOpenScenarioFx } from "~/test/utils/createOpenScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionEntryCleanupSensitiveFx", () => {
 	it("deletes location/package/personal entries on rejection, keeps text and status entries", async () => {

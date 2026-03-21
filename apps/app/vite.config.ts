@@ -48,8 +48,6 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 		},
 		server: {
 			host: true,
-			strictPort: true,
-			port: 3030,
 			allowedHosts: true,
 		},
 		build: {

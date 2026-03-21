@@ -7,8 +7,7 @@ import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { auth } from "~/auth/auth";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { testabase } from "~test/testabase";
-import { withTestRuntimeFx } from "~test/withTestRuntimeFx";
+import { testabase } from "~/test/testabase";
 
 describe("userEventSellerInfoFx", () => {
 	it("Load calculation - high bucket with 4+ active transactions", async () => {
@@ -57,7 +56,7 @@ describe("userEventSellerInfoFx", () => {
 			return yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, withTestRuntimeFx, Effect.runPromise);
+		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
 		expect(result).not.toBeNull();
 		if (!result) return;

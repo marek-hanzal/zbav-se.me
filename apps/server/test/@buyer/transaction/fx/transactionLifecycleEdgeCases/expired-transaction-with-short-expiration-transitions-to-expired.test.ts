@@ -4,8 +4,9 @@ import { transactionCloseFx } from "~/@buyer/transaction/fx/transactionCloseFx";
 import { transactionAcceptFx } from "~/@seller/transaction/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/@seller/transaction/fx/transactionResolveFx";
 import { auth } from "~/auth/auth";
-import { createPendingScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionLifecycleEdgeCases (buyer)", () => {
 	it("expired: transaction with short expiration transitions to expired", async () => {

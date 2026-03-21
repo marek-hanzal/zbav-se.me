@@ -2,8 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { ignoreToggleFx } from "~/@buyer/ignore/fx/ignoreToggleFx";
 import { auth } from "~/auth/auth";
-import { createListingFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createListingFx } from "~/test/utils/createListingFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("ignoreToggleFx", () => {
 	it("toggle on: creates ignore record, listing_event and seller inbox", async () => {

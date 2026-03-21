@@ -48,7 +48,6 @@ env:
 
     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
-    VERCEL_WEB_PROJECT_ID: ${{ vars.VERCEL_WEB_PROJECT_ID }}
     VERCEL_APP_PROJECT_ID: ${{ vars.VERCEL_APP_PROJECT_ID }}
     VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
 
@@ -78,8 +77,6 @@ env:
         SERVER_S3_SECRET
         SERVER_AXIOM_TOKEN
         SERVER_AXIOM_DATASET
-        SERVER_UPSTASH_REDIS_TOKEN
-        SERVER_UPSTASH_REDIS_URL
         VITE_ORIGIN
         VITE_SERVER_API
 
@@ -117,8 +114,6 @@ jobs:
                   check_var SERVER_BETTER_AUTH_SECRET
                   check_var SERVER_GEOAPIFY_TOKEN
                   check_var SERVER_JWT_SECRET
-                  check_var SERVER_UPSTASH_REDIS_TOKEN
-                  check_var SERVER_UPSTASH_REDIS_URL
                   check_var SERVER_CONTENT_CDN
                   check_var SERVER_GITHUB
 
@@ -242,10 +237,7 @@ jobs:
             - name: Build
               run: bun run build
 
-              #
-
-              # Store the app prebuilt output for deployment and CDN sync.
-              #            - name: Cache save (app prebuilt)
+            - name: Cache save (app prebuilt)
               uses: actions/cache/save@v5.0.3
               with:
                   path: apps/app/.vercel/output
@@ -288,9 +280,6 @@ jobs:
                     --prod --yes \
                     --token "$VERCEL_TOKEN"
 
-    #
-    # Deploy the frontend after the backend is already live.
-    #
     vercel-app:
         name: Deploy app to Vercel
         runs-on: ubuntu-latest
@@ -326,9 +315,6 @@ jobs:
                     --prod --yes \
                     --token "$VERCEL_TOKEN"
 
-    #
-    # Sync frontend static assets to Bunny CDN.
-    #
     bunny-cdn-app:
         name: Update CDN (app)
         runs-on: ubuntu-latest

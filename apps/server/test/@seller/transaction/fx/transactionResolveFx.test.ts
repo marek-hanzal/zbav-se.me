@@ -1,41 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCreateFx } from "~/@buyer/transaction/fx/transactionCreateFx";
-import { withTransactionContextFx } from "~/@common/transaction/context/withTransactionContextFx";
-import { withUploadFx } from "~/@common/upload/context/withUploadFx";
 import { listingCreateFx } from "~/@seller/listing/fx/listingCreateFx";
 import { transactionAcceptFx } from "~/@seller/transaction/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/@seller/transaction/fx/transactionResolveFx";
 import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
-import { withLocationFx } from "~/@session/location/fx/withLocationFx";
 import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
 import { auth } from "~/auth/auth";
-import { withDateFx } from "~/database/fx/withDateFx";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
-import { testabase } from "~test/testabase";
-import { withTestRuntimeFx } from "~test/withTestRuntimeFx";
-
-const withRuntimeFx = (database: Awaited<ReturnType<typeof testabase>>) => {
-	const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
-
-	return <A, E, R>(eff: Effect.Effect<A, E, R>) =>
-		eff.pipe(
-			withKyselyFx(database),
-			withDateFx,
-			withTestRuntimeFx,
-			withTransactionContextFx(),
-			withLocationFx({
-				api: "https://api.geoapify.com",
-				autocomplete: "/v1/geocode/autocomplete",
-				geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
-			}),
-			withUploadFx({
-				cdn: "https://cdn.zbav-se.me",
-			}),
-		);
-};
+import { testabase } from "~/test/testabase";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 const createListingFx = (sellerId: string) =>
 	Effect.gen(function* () {
@@ -116,16 +90,15 @@ describe("transactionResolveFx — sold behavior", () => {
 
 			expect(listing.status).toBe("live");
 
-			yield* Effect.gen(function* () {
-				yield* transactionCreateFx({
-					listingId: listing.id,
-					userId: buyerB.id,
-				});
-				yield* transactionCreateFx({
-					listingId: listing.id,
-					userId: buyerC.id,
-				});
-			}).pipe(withRuntimeFx(database));
+			yield* transactionCreateFx({
+				listingId: listing.id,
+				userId: buyerB.id,
+			});
+
+			yield* transactionCreateFx({
+				listingId: listing.id,
+				userId: buyerC.id,
+			});
 
 			const [txB, txC] = yield* Effect.promise(() =>
 				Promise.all([

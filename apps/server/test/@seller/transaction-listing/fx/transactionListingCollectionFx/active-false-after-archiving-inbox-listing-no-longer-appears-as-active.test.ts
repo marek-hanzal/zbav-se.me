@@ -3,8 +3,9 @@ import { describe, expect, it } from "vitest";
 import { transactionListingCollectionFx } from "~/@seller/transaction-listing/fx/transactionListingCollectionFx";
 import { inboxArchiveFx } from "~/@user/inbox/fx/inboxArchiveFx";
 import { auth } from "~/auth/auth";
-import { createPendingScenarioFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionListingCollectionFx (seller dashboard)", () => {
 	it("active: false — after archiving inbox, listing no longer appears as active", async () => {

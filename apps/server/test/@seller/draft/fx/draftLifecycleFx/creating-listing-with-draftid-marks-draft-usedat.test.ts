@@ -6,8 +6,8 @@ import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
 import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
 import { auth } from "~/auth/auth";
-import { withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("draft lifecycle", () => {
 	it("creating listing with draftId marks draft.usedAt", async () => {

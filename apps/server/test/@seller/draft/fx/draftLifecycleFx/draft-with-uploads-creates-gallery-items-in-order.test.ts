@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { draftCreateFx } from "~/@seller/draft/fx/draftCreateFx";
 import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
 import { auth } from "~/auth/auth";
-import { withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("draft lifecycle", () => {
 	it("draft with uploads creates gallery items in order", async () => {

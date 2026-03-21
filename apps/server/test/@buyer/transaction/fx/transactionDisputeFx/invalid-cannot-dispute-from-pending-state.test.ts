@@ -3,8 +3,9 @@ import { describe, expect, it } from "vitest";
 import { transactionCreateFx } from "~/@buyer/transaction/fx/transactionCreateFx";
 import { transactionDisputeFx } from "~/@buyer/transaction/fx/transactionDisputeFx";
 import { auth } from "~/auth/auth";
-import { createListingFx, withRuntimeFx } from "~test/fixture/transactionFixture";
-import { testabase } from "~test/testabase";
+import { testabase } from "~/test/testabase";
+import { createListingFx } from "~/test/utils/createListingFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionDisputeFx (buyer)", () => {
 	it("invalid: cannot dispute from pending state", async () => {
