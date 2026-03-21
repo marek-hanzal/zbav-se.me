@@ -25,7 +25,7 @@ export const MyListingsLink = withFallback(
 					className: [],
 				})}
 				icon={MyListingsIcon}
-				to="/$locale/seller/listing/my"
+				to="/$locale/app/seller/listing/my"
 				params={{
 					locale,
 				}}
@@ -69,7 +69,7 @@ export const MyListingsLink = withFallback(
 					className: [],
 				})}
 				icon={MyListingsIcon}
-				to="/$locale/seller/listing/my"
+				to="/$locale/app/seller/listing/my"
 				params={{
 					locale,
 				}}

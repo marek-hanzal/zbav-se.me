@@ -18,7 +18,7 @@ export const FavouriteListPage: FC<FavouriteListPage.Props> = (props) => {
 			textTitle={translator.text("Your favourites (title)")}
 			left={
 				<BackHomeButton
-					to="/$locale/home"
+					to="/$locale/app/home"
 					params={{
 						locale,
 					}}

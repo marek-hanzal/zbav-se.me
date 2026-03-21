@@ -53,12 +53,12 @@ export const DraftLink = withFallback(
 						? "icon-[solar--bill-check-linear]"
 						: "icon-[solar--bill-list-linear]"
 				}
-				to="/$locale/seller/draft/resolve"
+				to="/$locale/app/seller/draft/resolve"
 				params={{
 					locale,
 				}}
 				{...(matchRoute({
-					to: "/$locale/seller/draft/$id/edit",
+					to: "/$locale/app/seller/draft/$id/edit",
 				})
 					? uiMenuButton({
 							ui: {
@@ -98,7 +98,7 @@ export const DraftLink = withFallback(
 					className: [],
 				})}
 				icon={DraftIcon}
-				to="/$locale/seller/draft/resolve"
+				to="/$locale/app/seller/draft/resolve"
 				params={{
 					locale,
 				}}

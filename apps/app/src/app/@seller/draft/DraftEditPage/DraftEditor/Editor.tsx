@@ -25,7 +25,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draft, locale, onView }) =
 			textTitle={translator.text("Draft edit (title)")}
 			left={
 				<BackHomeButton
-					to="/$locale/seller/draft/list"
+					to="/$locale/app/seller/draft/list"
 					params={{
 						locale,
 					}}

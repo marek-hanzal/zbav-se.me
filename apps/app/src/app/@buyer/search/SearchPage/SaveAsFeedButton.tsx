@@ -39,7 +39,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 		async onPostMutation() {
 			setIsOpen(false);
 			await navigate({
-				to: "/$locale/buyer/feed/list",
+				to: "/$locale/app/buyer/feed/list",
 				params: {
 					locale,
 				},

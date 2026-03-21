@@ -23,7 +23,7 @@ export const ShopPage: FC<ShopPage.Props> = (props) => {
 			textTitle={translator.text("Shop (title)")}
 			left={
 				<BackHomeButton
-					to="/$locale/home"
+					to="/$locale/app/home"
 					params={{
 						locale,
 					}}

@@ -25,7 +25,7 @@ export const SearchLink = withFallback(
 					className: [],
 				})}
 				icon={FindListingsIcon}
-				to="/$locale/buyer/search"
+				to="/$locale/app/buyer/search"
 				params={{
 					locale,
 				}}
@@ -69,7 +69,7 @@ export const SearchLink = withFallback(
 					className: [],
 				})}
 				icon={FindListingsIcon}
-				to="/$locale/buyer/search"
+				to="/$locale/app/buyer/search"
 				params={{
 					locale,
 				}}

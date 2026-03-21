@@ -24,6 +24,7 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 
 	const betterAuthConfig = ServerBetterAuthSchema.parse(process.env);
 	const viteConfig = ServerViteSchema.parse(process.env);
+	const { hostname: originHost } = new URL(viteConfig.VITE_ORIGIN);
 
 	/**
 	 * Necessary - resolves circular dependency
@@ -42,21 +43,21 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 		secret: betterAuthConfig.SERVER_BETTER_AUTH_SECRET,
 		plugins: [
 			passkey({
-				rpID: viteConfig.VITE_DOMAIN,
-				rpName: viteConfig.VITE_DOMAIN,
+				rpID: originHost,
+				rpName: originHost,
 			}),
 			anonymous({
-				emailDomainName: viteConfig.VITE_DOMAIN,
+				emailDomainName: originHost,
 				generateName: () => genId(),
 				async onLinkAccount() {
 					//
 				},
 			}),
 			mcp({
-				loginPage: `${viteConfig.VITE_APP_ORIGIN}/redirect/oath`,
+				loginPage: `${viteConfig.VITE_ORIGIN}/redirect/oath`,
 				resource: new URL("/api/mcp", viteConfig.VITE_SERVER_API).toString(),
 				oidcConfig: {
-					loginPage: `${viteConfig.VITE_APP_ORIGIN}/redirect/oath`,
+					loginPage: `${viteConfig.VITE_ORIGIN}/redirect/oath`,
 					metadata: {
 						issuer: viteConfig.VITE_SERVER_API,
 					},
@@ -91,7 +92,7 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 			}),
 		],
 		trustedOrigins: [
-			viteConfig.VITE_APP_ORIGIN,
+			viteConfig.VITE_ORIGIN,
 		],
 		rateLimit: {
 			window: 10,
@@ -103,7 +104,7 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 		advanced: {
 			crossSubDomainCookies: {
 				enabled: true,
-				domain: viteConfig.VITE_DOMAIN,
+				domain: originHost,
 			},
 			database: {
 				generateId: () => genId(),

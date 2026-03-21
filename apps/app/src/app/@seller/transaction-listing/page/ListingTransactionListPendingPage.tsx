@@ -21,7 +21,7 @@ export const ListingTransactionListPendingPage: FC<ListingTransactionListPending
 			textTitle={translator.text("Messages (title)")}
 			left={
 				<BackHomeButton
-					to="/$locale/seller/transaction/list"
+					to="/$locale/app/seller/transaction/list"
 					params={{
 						locale,
 					}}

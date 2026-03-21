@@ -21,7 +21,7 @@ export const InboxListPage: FC<InboxListPage.Props> = ({ priority, ...props }) =
 			textTitle={translator.text("Inbox (title)")}
 			left={
 				<BackHomeButton
-					to="/$locale/home"
+					to="/$locale/app/home"
 					params={{
 						locale,
 					}}

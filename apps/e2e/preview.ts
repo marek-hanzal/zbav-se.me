@@ -1,3 +1,4 @@
+import { spawn } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { withPostgresTestDatabase } from "@zbav-se.me/test/postgres";
@@ -9,8 +10,6 @@ import {
 	DATABASE_PORT,
 	DATABASE_VOLUME_NAME,
 	SERVER_PORT,
-	WEB_ORIGIN,
-	WEB_PORT,
 } from "./config";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -32,9 +31,9 @@ const setup = await withPostgresTestDatabase({
 });
 const clonedDatabase = await setup.cloneDatabase(databaseId);
 
-const previewProc = Bun.spawn(
+const previewProc = spawn(
+	"bun",
 	[
-		"bun",
 		"x",
 		"turbo",
 		"run",
@@ -48,14 +47,28 @@ const previewProc = Bun.spawn(
 			APP_PORT: String(APP_PORT),
 			SERVER_DATABASE_URL: clonedDatabase.databaseUrl,
 			SERVER_PORT: String(SERVER_PORT),
-			VITE_APP_ORIGIN: APP_ORIGIN,
-			VITE_WEB_ORIGIN: WEB_ORIGIN,
-			WEB_PORT: String(WEB_PORT),
+			VITE_ORIGIN: APP_ORIGIN,
 		},
-		stdout: "inherit",
-		stderr: "inherit",
+		stdio: "inherit",
 	},
 );
+
+const previewExited = new Promise<number>((resolve, reject) => {
+	previewProc.once("error", reject);
+	previewProc.once("exit", (code, signal) => {
+		if (typeof code === "number") {
+			resolve(code);
+			return;
+		}
+
+		if (signal) {
+			resolve(1);
+			return;
+		}
+
+		resolve(0);
+	});
+});
 
 let cleaningUp = false;
 
@@ -67,7 +80,7 @@ const cleanup = async () => {
 	cleaningUp = true;
 
 	previewProc.kill("SIGINT");
-	await previewProc.exited.catch(() => undefined);
+	await previewExited.catch(() => undefined);
 	await clonedDatabase.drop().catch(() => undefined);
 	await setup.teardown().catch(() => undefined);
 };
@@ -80,7 +93,7 @@ process.on("SIGTERM", () => {
 	void cleanup().finally(() => process.exit(143));
 });
 
-const exitCode = await previewProc.exited;
+const exitCode = await previewExited;
 
 await clonedDatabase.drop();
 await setup.teardown();

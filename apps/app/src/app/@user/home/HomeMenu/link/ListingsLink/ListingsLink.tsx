@@ -24,7 +24,7 @@ export const ListingsLink = withFallback(
 					className: [],
 				})}
 				icon={CartIcon}
-				to="/$locale/buyer/feed/default"
+				to="/$locale/app/buyer/feed/default"
 				params={{
 					locale,
 				}}
@@ -54,7 +54,7 @@ export const ListingsLink = withFallback(
 					className: [],
 				})}
 				icon={CartIcon}
-				to="/$locale/buyer/feed/default"
+				to="/$locale/app/buyer/feed/default"
 				params={{
 					locale,
 				}}

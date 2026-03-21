@@ -12,28 +12,35 @@ import { Route as rootRouteImport } from './@routes/__root'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
-import { Route as RedirectWelcomeRouteImport } from './@routes/redirect/welcome'
-import { Route as RedirectHomeRouteImport } from './@routes/redirect/home'
-import { Route as LocaleWelcomeRouteImport } from './@routes/$locale/welcome'
-import { Route as LocaleUserRouteImport } from './@routes/$locale/user'
-import { Route as LocaleShopRouteImport } from './@routes/$locale/shop'
-import { Route as LocaleHomeRouteImport } from './@routes/$locale/home'
-import { Route as LocaleInboxPriorityRouteImport } from './@routes/$locale/inbox/$priority'
-import { Route as LocaleBuyerSearchRouteImport } from './@routes/$locale/buyer/search'
-import { Route as LocaleSellerTransactionListRouteImport } from './@routes/$locale/seller/transaction/list'
-import { Route as LocaleSellerListingMyRouteImport } from './@routes/$locale/seller/listing/my'
-import { Route as LocaleSellerDraftResolveRouteImport } from './@routes/$locale/seller/draft/resolve'
-import { Route as LocaleSellerDraftListRouteImport } from './@routes/$locale/seller/draft/list'
-import { Route as LocaleBuyerTransactionListRouteImport } from './@routes/$locale/buyer/transaction/list'
-import { Route as LocaleBuyerFeedListRouteImport } from './@routes/$locale/buyer/feed/list'
-import { Route as LocaleBuyerFeedDefaultRouteImport } from './@routes/$locale/buyer/feed/default'
-import { Route as LocaleBuyerFavouriteListRouteImport } from './@routes/$locale/buyer/favourite/list'
-import { Route as LocaleSellerTransactionTransactionIdDetailRouteImport } from './@routes/$locale/seller/transaction/$transactionId/detail'
-import { Route as LocaleSellerTransactionListingIdListRouteImport } from './@routes/$locale/seller/transaction/$listingId/list'
-import { Route as LocaleSellerDraftIdEditRouteImport } from './@routes/$locale/seller/draft/$id/edit'
-import { Route as LocaleBuyerTransactionTransactionIdDetailRouteImport } from './@routes/$locale/buyer/transaction/$transactionId/detail'
-import { Route as LocaleBuyerFeedIdListRouteImport } from './@routes/$locale/buyer/feed/$id/list'
-import { Route as LocaleBuyerFeedIdFavouriteListRouteImport } from './@routes/$locale/buyer/feed/$id/favourite/list'
+import { Route as RedirectOathRouteImport } from './@routes/redirect/oath'
+import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
+import { Route as LocaleSignUpRouteImport } from './@routes/$locale/sign-up'
+import { Route as LocaleSignInRouteImport } from './@routes/$locale/sign-in'
+import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
+import { Route as LocaleOathRouteImport } from './@routes/$locale/oath'
+import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
+import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
+import { Route as LocaleAppIndexRouteImport } from './@routes/$locale/app/index'
+import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welcome'
+import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
+import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
+import { Route as LocaleAppHomeRouteImport } from './@routes/$locale/app/home'
+import { Route as LocaleAppInboxPriorityRouteImport } from './@routes/$locale/app/inbox/$priority'
+import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
+import { Route as LocaleAppSellerTransactionListRouteImport } from './@routes/$locale/app/seller/transaction/list'
+import { Route as LocaleAppSellerListingMyRouteImport } from './@routes/$locale/app/seller/listing/my'
+import { Route as LocaleAppSellerDraftResolveRouteImport } from './@routes/$locale/app/seller/draft/resolve'
+import { Route as LocaleAppSellerDraftListRouteImport } from './@routes/$locale/app/seller/draft/list'
+import { Route as LocaleAppBuyerTransactionListRouteImport } from './@routes/$locale/app/buyer/transaction/list'
+import { Route as LocaleAppBuyerFeedListRouteImport } from './@routes/$locale/app/buyer/feed/list'
+import { Route as LocaleAppBuyerFeedDefaultRouteImport } from './@routes/$locale/app/buyer/feed/default'
+import { Route as LocaleAppBuyerFavouriteListRouteImport } from './@routes/$locale/app/buyer/favourite/list'
+import { Route as LocaleAppSellerTransactionTransactionIdDetailRouteImport } from './@routes/$locale/app/seller/transaction/$transactionId/detail'
+import { Route as LocaleAppSellerTransactionListingIdListRouteImport } from './@routes/$locale/app/seller/transaction/$listingId/list'
+import { Route as LocaleAppSellerDraftIdEditRouteImport } from './@routes/$locale/app/seller/draft/$id/edit'
+import { Route as LocaleAppBuyerTransactionTransactionIdDetailRouteImport } from './@routes/$locale/app/buyer/transaction/$transactionId/detail'
+import { Route as LocaleAppBuyerFeedIdListRouteImport } from './@routes/$locale/app/buyer/feed/$id/list'
+import { Route as LocaleAppBuyerFeedIdFavouriteListRouteImport } from './@routes/$locale/app/buyer/feed/$id/favourite/list'
 
 const LocaleRoute = LocaleRouteImport.update({
   id: '/$locale',
@@ -50,294 +57,373 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleRoute,
 } as any)
-const RedirectWelcomeRoute = RedirectWelcomeRouteImport.update({
-  id: '/redirect/welcome',
-  path: '/redirect/welcome',
+const RedirectOathRoute = RedirectOathRouteImport.update({
+  id: '/redirect/oath',
+  path: '/redirect/oath',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RedirectHomeRoute = RedirectHomeRouteImport.update({
-  id: '/redirect/home',
-  path: '/redirect/home',
-  getParentRoute: () => rootRouteImport,
+const LocaleTosRoute = LocaleTosRouteImport.update({
+  id: '/tos',
+  path: '/tos',
+  getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleWelcomeRoute = LocaleWelcomeRouteImport.update({
+const LocaleSignUpRoute = LocaleSignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleSignInRoute = LocaleSignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocalePrivacyRoute = LocalePrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleOathRoute = LocaleOathRouteImport.update({
+  id: '/oath',
+  path: '/oath',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleLandingRoute = LocaleLandingRouteImport.update({
+  id: '/landing',
+  path: '/landing',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleAppRoute = LocaleAppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleAppIndexRoute = LocaleAppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
+const LocaleAppWelcomeRoute = LocaleAppWelcomeRouteImport.update({
   id: '/welcome',
   path: '/welcome',
-  getParentRoute: () => LocaleRoute,
+  getParentRoute: () => LocaleAppRoute,
 } as any)
-const LocaleUserRoute = LocaleUserRouteImport.update({
+const LocaleAppUserRoute = LocaleAppUserRouteImport.update({
   id: '/user',
   path: '/user',
-  getParentRoute: () => LocaleRoute,
+  getParentRoute: () => LocaleAppRoute,
 } as any)
-const LocaleShopRoute = LocaleShopRouteImport.update({
+const LocaleAppShopRoute = LocaleAppShopRouteImport.update({
   id: '/shop',
   path: '/shop',
-  getParentRoute: () => LocaleRoute,
+  getParentRoute: () => LocaleAppRoute,
 } as any)
-const LocaleHomeRoute = LocaleHomeRouteImport.update({
+const LocaleAppHomeRoute = LocaleAppHomeRouteImport.update({
   id: '/home',
   path: '/home',
-  getParentRoute: () => LocaleRoute,
+  getParentRoute: () => LocaleAppRoute,
 } as any)
-const LocaleInboxPriorityRoute = LocaleInboxPriorityRouteImport.update({
+const LocaleAppInboxPriorityRoute = LocaleAppInboxPriorityRouteImport.update({
   id: '/inbox/$priority',
   path: '/inbox/$priority',
-  getParentRoute: () => LocaleRoute,
+  getParentRoute: () => LocaleAppRoute,
 } as any)
-const LocaleBuyerSearchRoute = LocaleBuyerSearchRouteImport.update({
+const LocaleAppBuyerSearchRoute = LocaleAppBuyerSearchRouteImport.update({
   id: '/buyer/search',
   path: '/buyer/search',
-  getParentRoute: () => LocaleRoute,
+  getParentRoute: () => LocaleAppRoute,
 } as any)
-const LocaleSellerTransactionListRoute =
-  LocaleSellerTransactionListRouteImport.update({
+const LocaleAppSellerTransactionListRoute =
+  LocaleAppSellerTransactionListRouteImport.update({
     id: '/seller/transaction/list',
     path: '/seller/transaction/list',
-    getParentRoute: () => LocaleRoute,
+    getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleSellerListingMyRoute = LocaleSellerListingMyRouteImport.update({
-  id: '/seller/listing/my',
-  path: '/seller/listing/my',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleSellerDraftResolveRoute =
-  LocaleSellerDraftResolveRouteImport.update({
+const LocaleAppSellerListingMyRoute =
+  LocaleAppSellerListingMyRouteImport.update({
+    id: '/seller/listing/my',
+    path: '/seller/listing/my',
+    getParentRoute: () => LocaleAppRoute,
+  } as any)
+const LocaleAppSellerDraftResolveRoute =
+  LocaleAppSellerDraftResolveRouteImport.update({
     id: '/seller/draft/resolve',
     path: '/seller/draft/resolve',
-    getParentRoute: () => LocaleRoute,
+    getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleSellerDraftListRoute = LocaleSellerDraftListRouteImport.update({
-  id: '/seller/draft/list',
-  path: '/seller/draft/list',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleBuyerTransactionListRoute =
-  LocaleBuyerTransactionListRouteImport.update({
+const LocaleAppSellerDraftListRoute =
+  LocaleAppSellerDraftListRouteImport.update({
+    id: '/seller/draft/list',
+    path: '/seller/draft/list',
+    getParentRoute: () => LocaleAppRoute,
+  } as any)
+const LocaleAppBuyerTransactionListRoute =
+  LocaleAppBuyerTransactionListRouteImport.update({
     id: '/buyer/transaction/list',
     path: '/buyer/transaction/list',
-    getParentRoute: () => LocaleRoute,
+    getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleBuyerFeedListRoute = LocaleBuyerFeedListRouteImport.update({
+const LocaleAppBuyerFeedListRoute = LocaleAppBuyerFeedListRouteImport.update({
   id: '/buyer/feed/list',
   path: '/buyer/feed/list',
-  getParentRoute: () => LocaleRoute,
+  getParentRoute: () => LocaleAppRoute,
 } as any)
-const LocaleBuyerFeedDefaultRoute = LocaleBuyerFeedDefaultRouteImport.update({
-  id: '/buyer/feed/default',
-  path: '/buyer/feed/default',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleBuyerFavouriteListRoute =
-  LocaleBuyerFavouriteListRouteImport.update({
+const LocaleAppBuyerFeedDefaultRoute =
+  LocaleAppBuyerFeedDefaultRouteImport.update({
+    id: '/buyer/feed/default',
+    path: '/buyer/feed/default',
+    getParentRoute: () => LocaleAppRoute,
+  } as any)
+const LocaleAppBuyerFavouriteListRoute =
+  LocaleAppBuyerFavouriteListRouteImport.update({
     id: '/buyer/favourite/list',
     path: '/buyer/favourite/list',
-    getParentRoute: () => LocaleRoute,
+    getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleSellerTransactionTransactionIdDetailRoute =
-  LocaleSellerTransactionTransactionIdDetailRouteImport.update({
+const LocaleAppSellerTransactionTransactionIdDetailRoute =
+  LocaleAppSellerTransactionTransactionIdDetailRouteImport.update({
     id: '/seller/transaction/$transactionId/detail',
     path: '/seller/transaction/$transactionId/detail',
-    getParentRoute: () => LocaleRoute,
+    getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleSellerTransactionListingIdListRoute =
-  LocaleSellerTransactionListingIdListRouteImport.update({
+const LocaleAppSellerTransactionListingIdListRoute =
+  LocaleAppSellerTransactionListingIdListRouteImport.update({
     id: '/seller/transaction/$listingId/list',
     path: '/seller/transaction/$listingId/list',
-    getParentRoute: () => LocaleRoute,
+    getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleSellerDraftIdEditRoute = LocaleSellerDraftIdEditRouteImport.update({
-  id: '/seller/draft/$id/edit',
-  path: '/seller/draft/$id/edit',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleBuyerTransactionTransactionIdDetailRoute =
-  LocaleBuyerTransactionTransactionIdDetailRouteImport.update({
+const LocaleAppSellerDraftIdEditRoute =
+  LocaleAppSellerDraftIdEditRouteImport.update({
+    id: '/seller/draft/$id/edit',
+    path: '/seller/draft/$id/edit',
+    getParentRoute: () => LocaleAppRoute,
+  } as any)
+const LocaleAppBuyerTransactionTransactionIdDetailRoute =
+  LocaleAppBuyerTransactionTransactionIdDetailRouteImport.update({
     id: '/buyer/transaction/$transactionId/detail',
     path: '/buyer/transaction/$transactionId/detail',
-    getParentRoute: () => LocaleRoute,
+    getParentRoute: () => LocaleAppRoute,
   } as any)
-const LocaleBuyerFeedIdListRoute = LocaleBuyerFeedIdListRouteImport.update({
-  id: '/buyer/feed/$id/list',
-  path: '/buyer/feed/$id/list',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleBuyerFeedIdFavouriteListRoute =
-  LocaleBuyerFeedIdFavouriteListRouteImport.update({
+const LocaleAppBuyerFeedIdListRoute =
+  LocaleAppBuyerFeedIdListRouteImport.update({
+    id: '/buyer/feed/$id/list',
+    path: '/buyer/feed/$id/list',
+    getParentRoute: () => LocaleAppRoute,
+  } as any)
+const LocaleAppBuyerFeedIdFavouriteListRoute =
+  LocaleAppBuyerFeedIdFavouriteListRouteImport.update({
     id: '/buyer/feed/$id/favourite/list',
     path: '/buyer/feed/$id/favourite/list',
-    getParentRoute: () => LocaleRoute,
+    getParentRoute: () => LocaleAppRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
-  '/$locale/home': typeof LocaleHomeRoute
-  '/$locale/shop': typeof LocaleShopRoute
-  '/$locale/user': typeof LocaleUserRoute
-  '/$locale/welcome': typeof LocaleWelcomeRoute
-  '/redirect/home': typeof RedirectHomeRoute
-  '/redirect/welcome': typeof RedirectWelcomeRoute
+  '/$locale/app': typeof LocaleAppRouteWithChildren
+  '/$locale/landing': typeof LocaleLandingRoute
+  '/$locale/oath': typeof LocaleOathRoute
+  '/$locale/privacy': typeof LocalePrivacyRoute
+  '/$locale/sign-in': typeof LocaleSignInRoute
+  '/$locale/sign-up': typeof LocaleSignUpRoute
+  '/$locale/tos': typeof LocaleTosRoute
+  '/redirect/oath': typeof RedirectOathRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/buyer/search': typeof LocaleBuyerSearchRoute
-  '/$locale/inbox/$priority': typeof LocaleInboxPriorityRoute
-  '/$locale/buyer/favourite/list': typeof LocaleBuyerFavouriteListRoute
-  '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
-  '/$locale/buyer/feed/list': typeof LocaleBuyerFeedListRoute
-  '/$locale/buyer/transaction/list': typeof LocaleBuyerTransactionListRoute
-  '/$locale/seller/draft/list': typeof LocaleSellerDraftListRoute
-  '/$locale/seller/draft/resolve': typeof LocaleSellerDraftResolveRoute
-  '/$locale/seller/listing/my': typeof LocaleSellerListingMyRoute
-  '/$locale/seller/transaction/list': typeof LocaleSellerTransactionListRoute
-  '/$locale/buyer/feed/$id/list': typeof LocaleBuyerFeedIdListRoute
-  '/$locale/buyer/transaction/$transactionId/detail': typeof LocaleBuyerTransactionTransactionIdDetailRoute
-  '/$locale/seller/draft/$id/edit': typeof LocaleSellerDraftIdEditRoute
-  '/$locale/seller/transaction/$listingId/list': typeof LocaleSellerTransactionListingIdListRoute
-  '/$locale/seller/transaction/$transactionId/detail': typeof LocaleSellerTransactionTransactionIdDetailRoute
-  '/$locale/buyer/feed/$id/favourite/list': typeof LocaleBuyerFeedIdFavouriteListRoute
+  '/$locale/app/home': typeof LocaleAppHomeRoute
+  '/$locale/app/shop': typeof LocaleAppShopRoute
+  '/$locale/app/user': typeof LocaleAppUserRoute
+  '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/$locale/app/': typeof LocaleAppIndexRoute
+  '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
+  '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
+  '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
+  '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
+  '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
+  '/$locale/app/buyer/transaction/list': typeof LocaleAppBuyerTransactionListRoute
+  '/$locale/app/seller/draft/list': typeof LocaleAppSellerDraftListRoute
+  '/$locale/app/seller/draft/resolve': typeof LocaleAppSellerDraftResolveRoute
+  '/$locale/app/seller/listing/my': typeof LocaleAppSellerListingMyRoute
+  '/$locale/app/seller/transaction/list': typeof LocaleAppSellerTransactionListRoute
+  '/$locale/app/buyer/feed/$id/list': typeof LocaleAppBuyerFeedIdListRoute
+  '/$locale/app/buyer/transaction/$transactionId/detail': typeof LocaleAppBuyerTransactionTransactionIdDetailRoute
+  '/$locale/app/seller/draft/$id/edit': typeof LocaleAppSellerDraftIdEditRoute
+  '/$locale/app/seller/transaction/$listingId/list': typeof LocaleAppSellerTransactionListingIdListRoute
+  '/$locale/app/seller/transaction/$transactionId/detail': typeof LocaleAppSellerTransactionTransactionIdDetailRoute
+  '/$locale/app/buyer/feed/$id/favourite/list': typeof LocaleAppBuyerFeedIdFavouriteListRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$locale/home': typeof LocaleHomeRoute
-  '/$locale/shop': typeof LocaleShopRoute
-  '/$locale/user': typeof LocaleUserRoute
-  '/$locale/welcome': typeof LocaleWelcomeRoute
-  '/redirect/home': typeof RedirectHomeRoute
-  '/redirect/welcome': typeof RedirectWelcomeRoute
+  '/$locale/landing': typeof LocaleLandingRoute
+  '/$locale/oath': typeof LocaleOathRoute
+  '/$locale/privacy': typeof LocalePrivacyRoute
+  '/$locale/sign-in': typeof LocaleSignInRoute
+  '/$locale/sign-up': typeof LocaleSignUpRoute
+  '/$locale/tos': typeof LocaleTosRoute
+  '/redirect/oath': typeof RedirectOathRoute
   '/$locale': typeof LocaleIndexRoute
-  '/$locale/buyer/search': typeof LocaleBuyerSearchRoute
-  '/$locale/inbox/$priority': typeof LocaleInboxPriorityRoute
-  '/$locale/buyer/favourite/list': typeof LocaleBuyerFavouriteListRoute
-  '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
-  '/$locale/buyer/feed/list': typeof LocaleBuyerFeedListRoute
-  '/$locale/buyer/transaction/list': typeof LocaleBuyerTransactionListRoute
-  '/$locale/seller/draft/list': typeof LocaleSellerDraftListRoute
-  '/$locale/seller/draft/resolve': typeof LocaleSellerDraftResolveRoute
-  '/$locale/seller/listing/my': typeof LocaleSellerListingMyRoute
-  '/$locale/seller/transaction/list': typeof LocaleSellerTransactionListRoute
-  '/$locale/buyer/feed/$id/list': typeof LocaleBuyerFeedIdListRoute
-  '/$locale/buyer/transaction/$transactionId/detail': typeof LocaleBuyerTransactionTransactionIdDetailRoute
-  '/$locale/seller/draft/$id/edit': typeof LocaleSellerDraftIdEditRoute
-  '/$locale/seller/transaction/$listingId/list': typeof LocaleSellerTransactionListingIdListRoute
-  '/$locale/seller/transaction/$transactionId/detail': typeof LocaleSellerTransactionTransactionIdDetailRoute
-  '/$locale/buyer/feed/$id/favourite/list': typeof LocaleBuyerFeedIdFavouriteListRoute
+  '/$locale/app/home': typeof LocaleAppHomeRoute
+  '/$locale/app/shop': typeof LocaleAppShopRoute
+  '/$locale/app/user': typeof LocaleAppUserRoute
+  '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/$locale/app': typeof LocaleAppIndexRoute
+  '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
+  '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
+  '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
+  '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
+  '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
+  '/$locale/app/buyer/transaction/list': typeof LocaleAppBuyerTransactionListRoute
+  '/$locale/app/seller/draft/list': typeof LocaleAppSellerDraftListRoute
+  '/$locale/app/seller/draft/resolve': typeof LocaleAppSellerDraftResolveRoute
+  '/$locale/app/seller/listing/my': typeof LocaleAppSellerListingMyRoute
+  '/$locale/app/seller/transaction/list': typeof LocaleAppSellerTransactionListRoute
+  '/$locale/app/buyer/feed/$id/list': typeof LocaleAppBuyerFeedIdListRoute
+  '/$locale/app/buyer/transaction/$transactionId/detail': typeof LocaleAppBuyerTransactionTransactionIdDetailRoute
+  '/$locale/app/seller/draft/$id/edit': typeof LocaleAppSellerDraftIdEditRoute
+  '/$locale/app/seller/transaction/$listingId/list': typeof LocaleAppSellerTransactionListingIdListRoute
+  '/$locale/app/seller/transaction/$transactionId/detail': typeof LocaleAppSellerTransactionTransactionIdDetailRoute
+  '/$locale/app/buyer/feed/$id/favourite/list': typeof LocaleAppBuyerFeedIdFavouriteListRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
-  '/$locale/home': typeof LocaleHomeRoute
-  '/$locale/shop': typeof LocaleShopRoute
-  '/$locale/user': typeof LocaleUserRoute
-  '/$locale/welcome': typeof LocaleWelcomeRoute
-  '/redirect/home': typeof RedirectHomeRoute
-  '/redirect/welcome': typeof RedirectWelcomeRoute
+  '/$locale/app': typeof LocaleAppRouteWithChildren
+  '/$locale/landing': typeof LocaleLandingRoute
+  '/$locale/oath': typeof LocaleOathRoute
+  '/$locale/privacy': typeof LocalePrivacyRoute
+  '/$locale/sign-in': typeof LocaleSignInRoute
+  '/$locale/sign-up': typeof LocaleSignUpRoute
+  '/$locale/tos': typeof LocaleTosRoute
+  '/redirect/oath': typeof RedirectOathRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/buyer/search': typeof LocaleBuyerSearchRoute
-  '/$locale/inbox/$priority': typeof LocaleInboxPriorityRoute
-  '/$locale/buyer/favourite/list': typeof LocaleBuyerFavouriteListRoute
-  '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
-  '/$locale/buyer/feed/list': typeof LocaleBuyerFeedListRoute
-  '/$locale/buyer/transaction/list': typeof LocaleBuyerTransactionListRoute
-  '/$locale/seller/draft/list': typeof LocaleSellerDraftListRoute
-  '/$locale/seller/draft/resolve': typeof LocaleSellerDraftResolveRoute
-  '/$locale/seller/listing/my': typeof LocaleSellerListingMyRoute
-  '/$locale/seller/transaction/list': typeof LocaleSellerTransactionListRoute
-  '/$locale/buyer/feed/$id/list': typeof LocaleBuyerFeedIdListRoute
-  '/$locale/buyer/transaction/$transactionId/detail': typeof LocaleBuyerTransactionTransactionIdDetailRoute
-  '/$locale/seller/draft/$id/edit': typeof LocaleSellerDraftIdEditRoute
-  '/$locale/seller/transaction/$listingId/list': typeof LocaleSellerTransactionListingIdListRoute
-  '/$locale/seller/transaction/$transactionId/detail': typeof LocaleSellerTransactionTransactionIdDetailRoute
-  '/$locale/buyer/feed/$id/favourite/list': typeof LocaleBuyerFeedIdFavouriteListRoute
+  '/$locale/app/home': typeof LocaleAppHomeRoute
+  '/$locale/app/shop': typeof LocaleAppShopRoute
+  '/$locale/app/user': typeof LocaleAppUserRoute
+  '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/$locale/app/': typeof LocaleAppIndexRoute
+  '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
+  '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
+  '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
+  '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
+  '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
+  '/$locale/app/buyer/transaction/list': typeof LocaleAppBuyerTransactionListRoute
+  '/$locale/app/seller/draft/list': typeof LocaleAppSellerDraftListRoute
+  '/$locale/app/seller/draft/resolve': typeof LocaleAppSellerDraftResolveRoute
+  '/$locale/app/seller/listing/my': typeof LocaleAppSellerListingMyRoute
+  '/$locale/app/seller/transaction/list': typeof LocaleAppSellerTransactionListRoute
+  '/$locale/app/buyer/feed/$id/list': typeof LocaleAppBuyerFeedIdListRoute
+  '/$locale/app/buyer/transaction/$transactionId/detail': typeof LocaleAppBuyerTransactionTransactionIdDetailRoute
+  '/$locale/app/seller/draft/$id/edit': typeof LocaleAppSellerDraftIdEditRoute
+  '/$locale/app/seller/transaction/$listingId/list': typeof LocaleAppSellerTransactionListingIdListRoute
+  '/$locale/app/seller/transaction/$transactionId/detail': typeof LocaleAppSellerTransactionTransactionIdDetailRoute
+  '/$locale/app/buyer/feed/$id/favourite/list': typeof LocaleAppBuyerFeedIdFavouriteListRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/$locale'
-    | '/$locale/home'
-    | '/$locale/shop'
-    | '/$locale/user'
-    | '/$locale/welcome'
-    | '/redirect/home'
-    | '/redirect/welcome'
+    | '/$locale/app'
+    | '/$locale/landing'
+    | '/$locale/oath'
+    | '/$locale/privacy'
+    | '/$locale/sign-in'
+    | '/$locale/sign-up'
+    | '/$locale/tos'
+    | '/redirect/oath'
     | '/$locale/'
-    | '/$locale/buyer/search'
-    | '/$locale/inbox/$priority'
-    | '/$locale/buyer/favourite/list'
-    | '/$locale/buyer/feed/default'
-    | '/$locale/buyer/feed/list'
-    | '/$locale/buyer/transaction/list'
-    | '/$locale/seller/draft/list'
-    | '/$locale/seller/draft/resolve'
-    | '/$locale/seller/listing/my'
-    | '/$locale/seller/transaction/list'
-    | '/$locale/buyer/feed/$id/list'
-    | '/$locale/buyer/transaction/$transactionId/detail'
-    | '/$locale/seller/draft/$id/edit'
-    | '/$locale/seller/transaction/$listingId/list'
-    | '/$locale/seller/transaction/$transactionId/detail'
-    | '/$locale/buyer/feed/$id/favourite/list'
+    | '/$locale/app/home'
+    | '/$locale/app/shop'
+    | '/$locale/app/user'
+    | '/$locale/app/welcome'
+    | '/$locale/app/'
+    | '/$locale/app/buyer/search'
+    | '/$locale/app/inbox/$priority'
+    | '/$locale/app/buyer/favourite/list'
+    | '/$locale/app/buyer/feed/default'
+    | '/$locale/app/buyer/feed/list'
+    | '/$locale/app/buyer/transaction/list'
+    | '/$locale/app/seller/draft/list'
+    | '/$locale/app/seller/draft/resolve'
+    | '/$locale/app/seller/listing/my'
+    | '/$locale/app/seller/transaction/list'
+    | '/$locale/app/buyer/feed/$id/list'
+    | '/$locale/app/buyer/transaction/$transactionId/detail'
+    | '/$locale/app/seller/draft/$id/edit'
+    | '/$locale/app/seller/transaction/$listingId/list'
+    | '/$locale/app/seller/transaction/$transactionId/detail'
+    | '/$locale/app/buyer/feed/$id/favourite/list'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/$locale/home'
-    | '/$locale/shop'
-    | '/$locale/user'
-    | '/$locale/welcome'
-    | '/redirect/home'
-    | '/redirect/welcome'
+    | '/$locale/landing'
+    | '/$locale/oath'
+    | '/$locale/privacy'
+    | '/$locale/sign-in'
+    | '/$locale/sign-up'
+    | '/$locale/tos'
+    | '/redirect/oath'
     | '/$locale'
-    | '/$locale/buyer/search'
-    | '/$locale/inbox/$priority'
-    | '/$locale/buyer/favourite/list'
-    | '/$locale/buyer/feed/default'
-    | '/$locale/buyer/feed/list'
-    | '/$locale/buyer/transaction/list'
-    | '/$locale/seller/draft/list'
-    | '/$locale/seller/draft/resolve'
-    | '/$locale/seller/listing/my'
-    | '/$locale/seller/transaction/list'
-    | '/$locale/buyer/feed/$id/list'
-    | '/$locale/buyer/transaction/$transactionId/detail'
-    | '/$locale/seller/draft/$id/edit'
-    | '/$locale/seller/transaction/$listingId/list'
-    | '/$locale/seller/transaction/$transactionId/detail'
-    | '/$locale/buyer/feed/$id/favourite/list'
+    | '/$locale/app/home'
+    | '/$locale/app/shop'
+    | '/$locale/app/user'
+    | '/$locale/app/welcome'
+    | '/$locale/app'
+    | '/$locale/app/buyer/search'
+    | '/$locale/app/inbox/$priority'
+    | '/$locale/app/buyer/favourite/list'
+    | '/$locale/app/buyer/feed/default'
+    | '/$locale/app/buyer/feed/list'
+    | '/$locale/app/buyer/transaction/list'
+    | '/$locale/app/seller/draft/list'
+    | '/$locale/app/seller/draft/resolve'
+    | '/$locale/app/seller/listing/my'
+    | '/$locale/app/seller/transaction/list'
+    | '/$locale/app/buyer/feed/$id/list'
+    | '/$locale/app/buyer/transaction/$transactionId/detail'
+    | '/$locale/app/seller/draft/$id/edit'
+    | '/$locale/app/seller/transaction/$listingId/list'
+    | '/$locale/app/seller/transaction/$transactionId/detail'
+    | '/$locale/app/buyer/feed/$id/favourite/list'
   id:
     | '__root__'
     | '/'
     | '/$locale'
-    | '/$locale/home'
-    | '/$locale/shop'
-    | '/$locale/user'
-    | '/$locale/welcome'
-    | '/redirect/home'
-    | '/redirect/welcome'
+    | '/$locale/app'
+    | '/$locale/landing'
+    | '/$locale/oath'
+    | '/$locale/privacy'
+    | '/$locale/sign-in'
+    | '/$locale/sign-up'
+    | '/$locale/tos'
+    | '/redirect/oath'
     | '/$locale/'
-    | '/$locale/buyer/search'
-    | '/$locale/inbox/$priority'
-    | '/$locale/buyer/favourite/list'
-    | '/$locale/buyer/feed/default'
-    | '/$locale/buyer/feed/list'
-    | '/$locale/buyer/transaction/list'
-    | '/$locale/seller/draft/list'
-    | '/$locale/seller/draft/resolve'
-    | '/$locale/seller/listing/my'
-    | '/$locale/seller/transaction/list'
-    | '/$locale/buyer/feed/$id/list'
-    | '/$locale/buyer/transaction/$transactionId/detail'
-    | '/$locale/seller/draft/$id/edit'
-    | '/$locale/seller/transaction/$listingId/list'
-    | '/$locale/seller/transaction/$transactionId/detail'
-    | '/$locale/buyer/feed/$id/favourite/list'
+    | '/$locale/app/home'
+    | '/$locale/app/shop'
+    | '/$locale/app/user'
+    | '/$locale/app/welcome'
+    | '/$locale/app/'
+    | '/$locale/app/buyer/search'
+    | '/$locale/app/inbox/$priority'
+    | '/$locale/app/buyer/favourite/list'
+    | '/$locale/app/buyer/feed/default'
+    | '/$locale/app/buyer/feed/list'
+    | '/$locale/app/buyer/transaction/list'
+    | '/$locale/app/seller/draft/list'
+    | '/$locale/app/seller/draft/resolve'
+    | '/$locale/app/seller/listing/my'
+    | '/$locale/app/seller/transaction/list'
+    | '/$locale/app/buyer/feed/$id/list'
+    | '/$locale/app/buyer/transaction/$transactionId/detail'
+    | '/$locale/app/seller/draft/$id/edit'
+    | '/$locale/app/seller/transaction/$listingId/list'
+    | '/$locale/app/seller/transaction/$transactionId/detail'
+    | '/$locale/app/buyer/feed/$id/favourite/list'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LocaleRoute: typeof LocaleRouteWithChildren
-  RedirectHomeRoute: typeof RedirectHomeRoute
-  RedirectWelcomeRoute: typeof RedirectWelcomeRoute
+  RedirectOathRoute: typeof RedirectOathRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -363,212 +449,288 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/redirect/welcome': {
-      id: '/redirect/welcome'
-      path: '/redirect/welcome'
-      fullPath: '/redirect/welcome'
-      preLoaderRoute: typeof RedirectWelcomeRouteImport
+    '/redirect/oath': {
+      id: '/redirect/oath'
+      path: '/redirect/oath'
+      fullPath: '/redirect/oath'
+      preLoaderRoute: typeof RedirectOathRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/redirect/home': {
-      id: '/redirect/home'
-      path: '/redirect/home'
-      fullPath: '/redirect/home'
-      preLoaderRoute: typeof RedirectHomeRouteImport
-      parentRoute: typeof rootRouteImport
+    '/$locale/tos': {
+      id: '/$locale/tos'
+      path: '/tos'
+      fullPath: '/$locale/tos'
+      preLoaderRoute: typeof LocaleTosRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/$locale/welcome': {
-      id: '/$locale/welcome'
+    '/$locale/sign-up': {
+      id: '/$locale/sign-up'
+      path: '/sign-up'
+      fullPath: '/$locale/sign-up'
+      preLoaderRoute: typeof LocaleSignUpRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/sign-in': {
+      id: '/$locale/sign-in'
+      path: '/sign-in'
+      fullPath: '/$locale/sign-in'
+      preLoaderRoute: typeof LocaleSignInRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/privacy': {
+      id: '/$locale/privacy'
+      path: '/privacy'
+      fullPath: '/$locale/privacy'
+      preLoaderRoute: typeof LocalePrivacyRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/oath': {
+      id: '/$locale/oath'
+      path: '/oath'
+      fullPath: '/$locale/oath'
+      preLoaderRoute: typeof LocaleOathRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/landing': {
+      id: '/$locale/landing'
+      path: '/landing'
+      fullPath: '/$locale/landing'
+      preLoaderRoute: typeof LocaleLandingRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/app': {
+      id: '/$locale/app'
+      path: '/app'
+      fullPath: '/$locale/app'
+      preLoaderRoute: typeof LocaleAppRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/app/': {
+      id: '/$locale/app/'
+      path: '/'
+      fullPath: '/$locale/app/'
+      preLoaderRoute: typeof LocaleAppIndexRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/welcome': {
+      id: '/$locale/app/welcome'
       path: '/welcome'
-      fullPath: '/$locale/welcome'
-      preLoaderRoute: typeof LocaleWelcomeRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/welcome'
+      preLoaderRoute: typeof LocaleAppWelcomeRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/user': {
-      id: '/$locale/user'
+    '/$locale/app/user': {
+      id: '/$locale/app/user'
       path: '/user'
-      fullPath: '/$locale/user'
-      preLoaderRoute: typeof LocaleUserRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/user'
+      preLoaderRoute: typeof LocaleAppUserRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/shop': {
-      id: '/$locale/shop'
+    '/$locale/app/shop': {
+      id: '/$locale/app/shop'
       path: '/shop'
-      fullPath: '/$locale/shop'
-      preLoaderRoute: typeof LocaleShopRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/shop'
+      preLoaderRoute: typeof LocaleAppShopRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/home': {
-      id: '/$locale/home'
+    '/$locale/app/home': {
+      id: '/$locale/app/home'
       path: '/home'
-      fullPath: '/$locale/home'
-      preLoaderRoute: typeof LocaleHomeRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/home'
+      preLoaderRoute: typeof LocaleAppHomeRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/inbox/$priority': {
-      id: '/$locale/inbox/$priority'
+    '/$locale/app/inbox/$priority': {
+      id: '/$locale/app/inbox/$priority'
       path: '/inbox/$priority'
-      fullPath: '/$locale/inbox/$priority'
-      preLoaderRoute: typeof LocaleInboxPriorityRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/inbox/$priority'
+      preLoaderRoute: typeof LocaleAppInboxPriorityRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/buyer/search': {
-      id: '/$locale/buyer/search'
+    '/$locale/app/buyer/search': {
+      id: '/$locale/app/buyer/search'
       path: '/buyer/search'
-      fullPath: '/$locale/buyer/search'
-      preLoaderRoute: typeof LocaleBuyerSearchRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/buyer/search'
+      preLoaderRoute: typeof LocaleAppBuyerSearchRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/seller/transaction/list': {
-      id: '/$locale/seller/transaction/list'
+    '/$locale/app/seller/transaction/list': {
+      id: '/$locale/app/seller/transaction/list'
       path: '/seller/transaction/list'
-      fullPath: '/$locale/seller/transaction/list'
-      preLoaderRoute: typeof LocaleSellerTransactionListRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/seller/transaction/list'
+      preLoaderRoute: typeof LocaleAppSellerTransactionListRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/seller/listing/my': {
-      id: '/$locale/seller/listing/my'
+    '/$locale/app/seller/listing/my': {
+      id: '/$locale/app/seller/listing/my'
       path: '/seller/listing/my'
-      fullPath: '/$locale/seller/listing/my'
-      preLoaderRoute: typeof LocaleSellerListingMyRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/seller/listing/my'
+      preLoaderRoute: typeof LocaleAppSellerListingMyRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/seller/draft/resolve': {
-      id: '/$locale/seller/draft/resolve'
+    '/$locale/app/seller/draft/resolve': {
+      id: '/$locale/app/seller/draft/resolve'
       path: '/seller/draft/resolve'
-      fullPath: '/$locale/seller/draft/resolve'
-      preLoaderRoute: typeof LocaleSellerDraftResolveRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/seller/draft/resolve'
+      preLoaderRoute: typeof LocaleAppSellerDraftResolveRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/seller/draft/list': {
-      id: '/$locale/seller/draft/list'
+    '/$locale/app/seller/draft/list': {
+      id: '/$locale/app/seller/draft/list'
       path: '/seller/draft/list'
-      fullPath: '/$locale/seller/draft/list'
-      preLoaderRoute: typeof LocaleSellerDraftListRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/seller/draft/list'
+      preLoaderRoute: typeof LocaleAppSellerDraftListRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/buyer/transaction/list': {
-      id: '/$locale/buyer/transaction/list'
+    '/$locale/app/buyer/transaction/list': {
+      id: '/$locale/app/buyer/transaction/list'
       path: '/buyer/transaction/list'
-      fullPath: '/$locale/buyer/transaction/list'
-      preLoaderRoute: typeof LocaleBuyerTransactionListRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/buyer/transaction/list'
+      preLoaderRoute: typeof LocaleAppBuyerTransactionListRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/buyer/feed/list': {
-      id: '/$locale/buyer/feed/list'
+    '/$locale/app/buyer/feed/list': {
+      id: '/$locale/app/buyer/feed/list'
       path: '/buyer/feed/list'
-      fullPath: '/$locale/buyer/feed/list'
-      preLoaderRoute: typeof LocaleBuyerFeedListRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/buyer/feed/list'
+      preLoaderRoute: typeof LocaleAppBuyerFeedListRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/buyer/feed/default': {
-      id: '/$locale/buyer/feed/default'
+    '/$locale/app/buyer/feed/default': {
+      id: '/$locale/app/buyer/feed/default'
       path: '/buyer/feed/default'
-      fullPath: '/$locale/buyer/feed/default'
-      preLoaderRoute: typeof LocaleBuyerFeedDefaultRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/buyer/feed/default'
+      preLoaderRoute: typeof LocaleAppBuyerFeedDefaultRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/buyer/favourite/list': {
-      id: '/$locale/buyer/favourite/list'
+    '/$locale/app/buyer/favourite/list': {
+      id: '/$locale/app/buyer/favourite/list'
       path: '/buyer/favourite/list'
-      fullPath: '/$locale/buyer/favourite/list'
-      preLoaderRoute: typeof LocaleBuyerFavouriteListRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/buyer/favourite/list'
+      preLoaderRoute: typeof LocaleAppBuyerFavouriteListRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/seller/transaction/$transactionId/detail': {
-      id: '/$locale/seller/transaction/$transactionId/detail'
+    '/$locale/app/seller/transaction/$transactionId/detail': {
+      id: '/$locale/app/seller/transaction/$transactionId/detail'
       path: '/seller/transaction/$transactionId/detail'
-      fullPath: '/$locale/seller/transaction/$transactionId/detail'
-      preLoaderRoute: typeof LocaleSellerTransactionTransactionIdDetailRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/seller/transaction/$transactionId/detail'
+      preLoaderRoute: typeof LocaleAppSellerTransactionTransactionIdDetailRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/seller/transaction/$listingId/list': {
-      id: '/$locale/seller/transaction/$listingId/list'
+    '/$locale/app/seller/transaction/$listingId/list': {
+      id: '/$locale/app/seller/transaction/$listingId/list'
       path: '/seller/transaction/$listingId/list'
-      fullPath: '/$locale/seller/transaction/$listingId/list'
-      preLoaderRoute: typeof LocaleSellerTransactionListingIdListRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/seller/transaction/$listingId/list'
+      preLoaderRoute: typeof LocaleAppSellerTransactionListingIdListRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/seller/draft/$id/edit': {
-      id: '/$locale/seller/draft/$id/edit'
+    '/$locale/app/seller/draft/$id/edit': {
+      id: '/$locale/app/seller/draft/$id/edit'
       path: '/seller/draft/$id/edit'
-      fullPath: '/$locale/seller/draft/$id/edit'
-      preLoaderRoute: typeof LocaleSellerDraftIdEditRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/seller/draft/$id/edit'
+      preLoaderRoute: typeof LocaleAppSellerDraftIdEditRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/buyer/transaction/$transactionId/detail': {
-      id: '/$locale/buyer/transaction/$transactionId/detail'
+    '/$locale/app/buyer/transaction/$transactionId/detail': {
+      id: '/$locale/app/buyer/transaction/$transactionId/detail'
       path: '/buyer/transaction/$transactionId/detail'
-      fullPath: '/$locale/buyer/transaction/$transactionId/detail'
-      preLoaderRoute: typeof LocaleBuyerTransactionTransactionIdDetailRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/buyer/transaction/$transactionId/detail'
+      preLoaderRoute: typeof LocaleAppBuyerTransactionTransactionIdDetailRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/buyer/feed/$id/list': {
-      id: '/$locale/buyer/feed/$id/list'
+    '/$locale/app/buyer/feed/$id/list': {
+      id: '/$locale/app/buyer/feed/$id/list'
       path: '/buyer/feed/$id/list'
-      fullPath: '/$locale/buyer/feed/$id/list'
-      preLoaderRoute: typeof LocaleBuyerFeedIdListRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/buyer/feed/$id/list'
+      preLoaderRoute: typeof LocaleAppBuyerFeedIdListRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/buyer/feed/$id/favourite/list': {
-      id: '/$locale/buyer/feed/$id/favourite/list'
+    '/$locale/app/buyer/feed/$id/favourite/list': {
+      id: '/$locale/app/buyer/feed/$id/favourite/list'
       path: '/buyer/feed/$id/favourite/list'
-      fullPath: '/$locale/buyer/feed/$id/favourite/list'
-      preLoaderRoute: typeof LocaleBuyerFeedIdFavouriteListRouteImport
-      parentRoute: typeof LocaleRoute
+      fullPath: '/$locale/app/buyer/feed/$id/favourite/list'
+      preLoaderRoute: typeof LocaleAppBuyerFeedIdFavouriteListRouteImport
+      parentRoute: typeof LocaleAppRoute
     }
   }
 }
 
+interface LocaleAppRouteChildren {
+  LocaleAppHomeRoute: typeof LocaleAppHomeRoute
+  LocaleAppShopRoute: typeof LocaleAppShopRoute
+  LocaleAppUserRoute: typeof LocaleAppUserRoute
+  LocaleAppWelcomeRoute: typeof LocaleAppWelcomeRoute
+  LocaleAppIndexRoute: typeof LocaleAppIndexRoute
+  LocaleAppBuyerSearchRoute: typeof LocaleAppBuyerSearchRoute
+  LocaleAppInboxPriorityRoute: typeof LocaleAppInboxPriorityRoute
+  LocaleAppBuyerFavouriteListRoute: typeof LocaleAppBuyerFavouriteListRoute
+  LocaleAppBuyerFeedDefaultRoute: typeof LocaleAppBuyerFeedDefaultRoute
+  LocaleAppBuyerFeedListRoute: typeof LocaleAppBuyerFeedListRoute
+  LocaleAppBuyerTransactionListRoute: typeof LocaleAppBuyerTransactionListRoute
+  LocaleAppSellerDraftListRoute: typeof LocaleAppSellerDraftListRoute
+  LocaleAppSellerDraftResolveRoute: typeof LocaleAppSellerDraftResolveRoute
+  LocaleAppSellerListingMyRoute: typeof LocaleAppSellerListingMyRoute
+  LocaleAppSellerTransactionListRoute: typeof LocaleAppSellerTransactionListRoute
+  LocaleAppBuyerFeedIdListRoute: typeof LocaleAppBuyerFeedIdListRoute
+  LocaleAppBuyerTransactionTransactionIdDetailRoute: typeof LocaleAppBuyerTransactionTransactionIdDetailRoute
+  LocaleAppSellerDraftIdEditRoute: typeof LocaleAppSellerDraftIdEditRoute
+  LocaleAppSellerTransactionListingIdListRoute: typeof LocaleAppSellerTransactionListingIdListRoute
+  LocaleAppSellerTransactionTransactionIdDetailRoute: typeof LocaleAppSellerTransactionTransactionIdDetailRoute
+  LocaleAppBuyerFeedIdFavouriteListRoute: typeof LocaleAppBuyerFeedIdFavouriteListRoute
+}
+
+const LocaleAppRouteChildren: LocaleAppRouteChildren = {
+  LocaleAppHomeRoute: LocaleAppHomeRoute,
+  LocaleAppShopRoute: LocaleAppShopRoute,
+  LocaleAppUserRoute: LocaleAppUserRoute,
+  LocaleAppWelcomeRoute: LocaleAppWelcomeRoute,
+  LocaleAppIndexRoute: LocaleAppIndexRoute,
+  LocaleAppBuyerSearchRoute: LocaleAppBuyerSearchRoute,
+  LocaleAppInboxPriorityRoute: LocaleAppInboxPriorityRoute,
+  LocaleAppBuyerFavouriteListRoute: LocaleAppBuyerFavouriteListRoute,
+  LocaleAppBuyerFeedDefaultRoute: LocaleAppBuyerFeedDefaultRoute,
+  LocaleAppBuyerFeedListRoute: LocaleAppBuyerFeedListRoute,
+  LocaleAppBuyerTransactionListRoute: LocaleAppBuyerTransactionListRoute,
+  LocaleAppSellerDraftListRoute: LocaleAppSellerDraftListRoute,
+  LocaleAppSellerDraftResolveRoute: LocaleAppSellerDraftResolveRoute,
+  LocaleAppSellerListingMyRoute: LocaleAppSellerListingMyRoute,
+  LocaleAppSellerTransactionListRoute: LocaleAppSellerTransactionListRoute,
+  LocaleAppBuyerFeedIdListRoute: LocaleAppBuyerFeedIdListRoute,
+  LocaleAppBuyerTransactionTransactionIdDetailRoute:
+    LocaleAppBuyerTransactionTransactionIdDetailRoute,
+  LocaleAppSellerDraftIdEditRoute: LocaleAppSellerDraftIdEditRoute,
+  LocaleAppSellerTransactionListingIdListRoute:
+    LocaleAppSellerTransactionListingIdListRoute,
+  LocaleAppSellerTransactionTransactionIdDetailRoute:
+    LocaleAppSellerTransactionTransactionIdDetailRoute,
+  LocaleAppBuyerFeedIdFavouriteListRoute:
+    LocaleAppBuyerFeedIdFavouriteListRoute,
+}
+
+const LocaleAppRouteWithChildren = LocaleAppRoute._addFileChildren(
+  LocaleAppRouteChildren,
+)
+
 interface LocaleRouteChildren {
-  LocaleHomeRoute: typeof LocaleHomeRoute
-  LocaleShopRoute: typeof LocaleShopRoute
-  LocaleUserRoute: typeof LocaleUserRoute
-  LocaleWelcomeRoute: typeof LocaleWelcomeRoute
+  LocaleAppRoute: typeof LocaleAppRouteWithChildren
+  LocaleLandingRoute: typeof LocaleLandingRoute
+  LocaleOathRoute: typeof LocaleOathRoute
+  LocalePrivacyRoute: typeof LocalePrivacyRoute
+  LocaleSignInRoute: typeof LocaleSignInRoute
+  LocaleSignUpRoute: typeof LocaleSignUpRoute
+  LocaleTosRoute: typeof LocaleTosRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
-  LocaleBuyerSearchRoute: typeof LocaleBuyerSearchRoute
-  LocaleInboxPriorityRoute: typeof LocaleInboxPriorityRoute
-  LocaleBuyerFavouriteListRoute: typeof LocaleBuyerFavouriteListRoute
-  LocaleBuyerFeedDefaultRoute: typeof LocaleBuyerFeedDefaultRoute
-  LocaleBuyerFeedListRoute: typeof LocaleBuyerFeedListRoute
-  LocaleBuyerTransactionListRoute: typeof LocaleBuyerTransactionListRoute
-  LocaleSellerDraftListRoute: typeof LocaleSellerDraftListRoute
-  LocaleSellerDraftResolveRoute: typeof LocaleSellerDraftResolveRoute
-  LocaleSellerListingMyRoute: typeof LocaleSellerListingMyRoute
-  LocaleSellerTransactionListRoute: typeof LocaleSellerTransactionListRoute
-  LocaleBuyerFeedIdListRoute: typeof LocaleBuyerFeedIdListRoute
-  LocaleBuyerTransactionTransactionIdDetailRoute: typeof LocaleBuyerTransactionTransactionIdDetailRoute
-  LocaleSellerDraftIdEditRoute: typeof LocaleSellerDraftIdEditRoute
-  LocaleSellerTransactionListingIdListRoute: typeof LocaleSellerTransactionListingIdListRoute
-  LocaleSellerTransactionTransactionIdDetailRoute: typeof LocaleSellerTransactionTransactionIdDetailRoute
-  LocaleBuyerFeedIdFavouriteListRoute: typeof LocaleBuyerFeedIdFavouriteListRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
-  LocaleHomeRoute: LocaleHomeRoute,
-  LocaleShopRoute: LocaleShopRoute,
-  LocaleUserRoute: LocaleUserRoute,
-  LocaleWelcomeRoute: LocaleWelcomeRoute,
+  LocaleAppRoute: LocaleAppRouteWithChildren,
+  LocaleLandingRoute: LocaleLandingRoute,
+  LocaleOathRoute: LocaleOathRoute,
+  LocalePrivacyRoute: LocalePrivacyRoute,
+  LocaleSignInRoute: LocaleSignInRoute,
+  LocaleSignUpRoute: LocaleSignUpRoute,
+  LocaleTosRoute: LocaleTosRoute,
   LocaleIndexRoute: LocaleIndexRoute,
-  LocaleBuyerSearchRoute: LocaleBuyerSearchRoute,
-  LocaleInboxPriorityRoute: LocaleInboxPriorityRoute,
-  LocaleBuyerFavouriteListRoute: LocaleBuyerFavouriteListRoute,
-  LocaleBuyerFeedDefaultRoute: LocaleBuyerFeedDefaultRoute,
-  LocaleBuyerFeedListRoute: LocaleBuyerFeedListRoute,
-  LocaleBuyerTransactionListRoute: LocaleBuyerTransactionListRoute,
-  LocaleSellerDraftListRoute: LocaleSellerDraftListRoute,
-  LocaleSellerDraftResolveRoute: LocaleSellerDraftResolveRoute,
-  LocaleSellerListingMyRoute: LocaleSellerListingMyRoute,
-  LocaleSellerTransactionListRoute: LocaleSellerTransactionListRoute,
-  LocaleBuyerFeedIdListRoute: LocaleBuyerFeedIdListRoute,
-  LocaleBuyerTransactionTransactionIdDetailRoute:
-    LocaleBuyerTransactionTransactionIdDetailRoute,
-  LocaleSellerDraftIdEditRoute: LocaleSellerDraftIdEditRoute,
-  LocaleSellerTransactionListingIdListRoute:
-    LocaleSellerTransactionListingIdListRoute,
-  LocaleSellerTransactionTransactionIdDetailRoute:
-    LocaleSellerTransactionTransactionIdDetailRoute,
-  LocaleBuyerFeedIdFavouriteListRoute: LocaleBuyerFeedIdFavouriteListRoute,
 }
 
 const LocaleRouteWithChildren =
@@ -577,8 +739,7 @@ const LocaleRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LocaleRoute: LocaleRouteWithChildren,
-  RedirectHomeRoute: RedirectHomeRoute,
-  RedirectWelcomeRoute: RedirectWelcomeRoute,
+  RedirectOathRoute: RedirectOathRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

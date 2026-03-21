@@ -21,7 +21,7 @@ export const UserPagePending: FC<UserPagePending.Props> = ({ ui, ...props }) => 
 			textTitle={translator.text("User profile (title)")}
 			left={
 				<BackHomeButton
-					to="/$locale/home"
+					to="/$locale/app/home"
 					params={{
 						locale,
 					}}

@@ -117,7 +117,7 @@ export const ListingList = withFallback(
 							<>
 								<LinkTo
 									icon={ChevronLeftIcon}
-									to={"/$locale/home"}
+									to={"/$locale/app/home"}
 									params={{
 										locale,
 									}}
@@ -128,7 +128,7 @@ export const ListingList = withFallback(
 								<LinkTo
 									icon={ChevronRightIcon}
 									iconPosition={"right"}
-									to={"/$locale/buyer/feed/list"}
+									to={"/$locale/app/buyer/feed/list"}
 									params={{
 										locale,
 									}}

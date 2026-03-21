@@ -17,10 +17,9 @@ env:
     # -------------------------------
     # Common env. variables
     # -------------------------------
-    VITE_DOMAIN: ${{ vars.VITE_DOMAIN }}
     VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
     VITE_APP_ASSETS: ${{ vars.VITE_APP_ASSETS }}
-    VITE_APP_ORIGIN: ${{ vars.VITE_APP_ORIGIN }}
+    VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
     NODE_OPTIONS: --max-old-space-size=1300
 
     # -------------------------------
@@ -60,9 +59,8 @@ env:
     # -------------------------------
     APP_ENV_KEYS: |
         VITE_APP_ASSETS
-        VITE_APP_ORIGIN
+        VITE_ORIGIN
         VITE_SERVER_API
-        VITE_DOMAIN
 
     # -------------------------------
     # Server environment variables list (multiline)
@@ -82,8 +80,7 @@ env:
         SERVER_AXIOM_DATASET
         SERVER_UPSTASH_REDIS_TOKEN
         SERVER_UPSTASH_REDIS_URL
-        VITE_APP_ORIGIN
-        VITE_DOMAIN
+        VITE_ORIGIN
         VITE_SERVER_API
 
 jobs:
@@ -106,10 +103,9 @@ jobs:
                   }
 
                   # Common env. variables
-                  check_var VITE_DOMAIN
                   check_var VITE_SERVER_API
                   check_var VITE_APP_ASSETS
-                  check_var VITE_APP_ORIGIN
+                  check_var VITE_ORIGIN
 
                   # Server env. variables
                   check_var SERVER_S3_API

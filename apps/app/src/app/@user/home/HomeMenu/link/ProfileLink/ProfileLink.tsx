@@ -24,7 +24,7 @@ export const ProfileLink = withFallback(
 					className: [],
 				})}
 				icon={UserIcon}
-				to="/$locale/user"
+				to="/$locale/app/user"
 				params={{
 					locale,
 				}}
@@ -68,7 +68,7 @@ export const ProfileLink = withFallback(
 					className: [],
 				})}
 				icon={UserIcon}
-				to="/$locale/user"
+				to="/$locale/app/user"
 				params={{
 					locale,
 				}}

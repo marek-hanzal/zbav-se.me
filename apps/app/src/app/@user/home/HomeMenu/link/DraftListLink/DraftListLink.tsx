@@ -25,7 +25,7 @@ export const DraftListLink = withFallback(
 					className: [],
 				})}
 				icon={DraftIcon}
-				to="/$locale/seller/draft/list"
+				to="/$locale/app/seller/draft/list"
 				params={{
 					locale,
 				}}
@@ -69,7 +69,7 @@ export const DraftListLink = withFallback(
 					className: [],
 				})}
 				icon={DraftIcon}
-				to="/$locale/seller/draft/list"
+				to="/$locale/app/seller/draft/list"
 				params={{
 					locale,
 				}}

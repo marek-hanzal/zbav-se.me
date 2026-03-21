@@ -15,7 +15,7 @@ export const HomeMenuButton: FC<HomeMenuButton.Props> = () => {
 			data-ui={"HomeMenuButton"}
 			data-action={"go home"}
 			icon={HomeIcon}
-			to={"/$locale/home"}
+			to={"/$locale/app/home"}
 			params={{
 				locale,
 			}}

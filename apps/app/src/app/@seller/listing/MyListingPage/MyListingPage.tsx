@@ -26,7 +26,7 @@ export const MyListingPage: FC<MyListingPage.Props> = (props) => {
 			textTitle={translator.text("My listings (title)")}
 			left={
 				<BackHomeButton
-					to="/$locale/home"
+					to="/$locale/app/home"
 					params={{
 						locale,
 					}}

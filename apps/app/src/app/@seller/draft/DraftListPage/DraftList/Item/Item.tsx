@@ -30,7 +30,7 @@ export const Item = withFallback(
 
 		return (
 			<LinkTo
-				to={"/$locale/seller/draft/$id/edit"}
+				to={"/$locale/app/seller/draft/$id/edit"}
 				params={{
 					locale,
 					id: draft.id,

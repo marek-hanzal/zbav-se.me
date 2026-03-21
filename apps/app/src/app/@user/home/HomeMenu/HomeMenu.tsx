@@ -38,7 +38,7 @@ export namespace HomeMenu {
 export const HomeMenu = withFallback(({ _suspense, ui, onLinkClick, ...props }: HomeMenu.Props) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const isHome = useMatchRoute()({
-		to: "/$locale/home",
+		to: "/$locale/app/home",
 	});
 
 	return (

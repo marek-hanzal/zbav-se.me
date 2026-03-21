@@ -24,7 +24,7 @@ export const FeedLink = withFallback(
 					className: [],
 				})}
 				icon={"icon-[solar--archive-up-minimlistic-linear]"}
-				to="/$locale/buyer/feed/list"
+				to="/$locale/app/buyer/feed/list"
 				params={{
 					locale,
 				}}
@@ -68,7 +68,7 @@ export const FeedLink = withFallback(
 					className: [],
 				})}
 				icon={"icon-[solar--archive-up-minimlistic-linear]"}
-				to="/$locale/buyer/feed/list"
+				to="/$locale/app/buyer/feed/list"
 				params={{
 					locale,
 				}}

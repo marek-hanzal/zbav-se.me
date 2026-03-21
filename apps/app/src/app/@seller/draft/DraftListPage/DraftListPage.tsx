@@ -26,7 +26,7 @@ export const DraftListPage: FC<DraftListPage.Props> = (props) => {
 			textTitle={translator.text("Draft list (title)")}
 			left={
 				<BackHomeButton
-					to="/$locale/home"
+					to="/$locale/app/home"
 					params={{
 						locale,
 					}}

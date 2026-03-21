@@ -239,7 +239,7 @@ export const DraftEditor = withFallback(
 				textTitle={translator.text("Draft edit (title)")}
 				left={
 					<BackHomeButton
-						to="/$locale/seller/draft/list"
+						to="/$locale/app/seller/draft/list"
 						params={{
 							locale,
 						}}

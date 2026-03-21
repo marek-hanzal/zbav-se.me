@@ -11,7 +11,7 @@
 		"knip": "knip --include dependencies --no-config-hints"
 	},
 	"dependencies": {
-		"@tanstack/react-query": "5.94.4",
+		"@tanstack/react-query": "5.94.5",
 		"@tanstack/react-router": "1.168.1",
 		"@types/luxon": "3.7.1",
 		"@use-pico/cls": "workspace:*",

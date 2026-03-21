@@ -28,7 +28,7 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 	const deleteMutation = withDraftQuery.useDeleteMutation({
 		async onPostMutation() {
 			await navigate({
-				to: "/$locale/home",
+				to: "/$locale/app/home",
 				params: {
 					locale,
 				},

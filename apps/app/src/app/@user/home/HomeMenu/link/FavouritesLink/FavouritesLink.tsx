@@ -25,7 +25,7 @@ export const FavouritesLink = withFallback(
 					className: [],
 				})}
 				icon={FavouriteIcon}
-				to="/$locale/buyer/favourite/list"
+				to="/$locale/app/buyer/favourite/list"
 				params={{
 					locale,
 				}}
@@ -69,7 +69,7 @@ export const FavouritesLink = withFallback(
 					className: [],
 				})}
 				icon={FavouriteIcon}
-				to="/$locale/buyer/favourite/list"
+				to="/$locale/app/buyer/favourite/list"
 				params={{
 					locale,
 				}}

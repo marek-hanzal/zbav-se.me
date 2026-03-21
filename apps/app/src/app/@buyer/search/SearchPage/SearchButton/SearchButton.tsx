@@ -27,7 +27,7 @@ export const SearchButton = withFallback(
 		return (
 			<LinkTo
 				data-ui={"SearchButton[LinkTo]"}
-				to="/$locale/buyer/feed/$id/list"
+				to="/$locale/app/buyer/feed/$id/list"
 				params={{
 					locale,
 					id: feedId,
@@ -110,7 +110,7 @@ export const SearchButton = withFallback(
 		return (
 			<LinkTo
 				data-ui={"SearchButton[LinkTo.pending]"}
-				to="/$locale/buyer/feed/$id/list"
+				to="/$locale/app/buyer/feed/$id/list"
 				params={{
 					locale,
 					id: feedId,

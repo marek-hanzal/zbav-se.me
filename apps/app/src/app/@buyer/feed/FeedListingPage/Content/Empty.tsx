@@ -25,7 +25,7 @@ export const Empty: FC<Empty.Props> = () => {
 					<LinkTo
 						data-action={"go home"}
 						icon={ChevronLeftIcon}
-						to={"/$locale/home"}
+						to={"/$locale/app/home"}
 						params={{
 							locale,
 						}}
@@ -41,7 +41,7 @@ export const Empty: FC<Empty.Props> = () => {
 						data-action={"create listing"}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
-						to={"/$locale/seller/draft/resolve"}
+						to={"/$locale/app/seller/draft/resolve"}
 						params={{
 							locale,
 						}}

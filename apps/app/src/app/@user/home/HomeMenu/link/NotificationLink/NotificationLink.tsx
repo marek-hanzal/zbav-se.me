@@ -42,7 +42,7 @@ export const NotificationLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open notifications"}
-				to={"/$locale/inbox/$priority"}
+				to={"/$locale/app/inbox/$priority"}
 				icon={NotificationIcon}
 				iconProps={iconProps}
 				onClick={onLinkClick}
@@ -119,7 +119,7 @@ export const NotificationLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open notifications"}
-				to={"/$locale/inbox/$priority"}
+				to={"/$locale/app/inbox/$priority"}
 				icon={NotificationIcon}
 				iconProps={iconProps}
 				onClick={onLinkClick}

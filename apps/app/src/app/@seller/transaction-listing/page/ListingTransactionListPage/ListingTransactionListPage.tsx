@@ -28,7 +28,7 @@ export const ListingTransactionListPage: FC<ListingTransactionListPage.Props> = 
 			textTitle={translator.text("Messages (title)")}
 			left={
 				<BackHomeButton
-					to="/$locale/seller/transaction/list"
+					to="/$locale/app/seller/transaction/list"
 					params={{
 						locale,
 					}}

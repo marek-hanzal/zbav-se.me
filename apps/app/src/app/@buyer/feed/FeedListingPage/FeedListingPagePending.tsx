@@ -25,7 +25,7 @@ export const FeedListingPagePending: FC<FeedListingPagePending.Props> = (props) 
 					})}
 					data-action={"go home"}
 					icon={ArrowLeftIcon}
-					to={"/$locale/home"}
+					to={"/$locale/app/home"}
 					params={{
 						locale,
 					}}

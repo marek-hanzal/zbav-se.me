@@ -1,15 +1,15 @@
 import { expect, test } from "@playwright/test";
-import { APP_ORIGIN, SERVER_ORIGIN, WEB_ORIGIN } from "./config";
+import { APP_ORIGIN, SERVER_ORIGIN } from "./config";
 
-test("web login page loads from production preview", async ({ page }) => {
-	await page.goto(`${WEB_ORIGIN}/cs/login`);
+test("sign-in page loads from production preview", async ({ page }) => {
+	await page.goto(`${APP_ORIGIN}/cs/sign-in`);
 
 	await expect(page.locator('[data-ui="/login[Container]"]')).toBeVisible();
 	await expect(page).toHaveTitle("Zbav se mě!");
 });
 
 test("app responds from isolated production preview", async ({ request }) => {
-	const response = await request.get(`${APP_ORIGIN}/cs/home`);
+	const response = await request.get(`${APP_ORIGIN}/cs/app/home`);
 
 	expect(response.ok()).toBeTruthy();
 });

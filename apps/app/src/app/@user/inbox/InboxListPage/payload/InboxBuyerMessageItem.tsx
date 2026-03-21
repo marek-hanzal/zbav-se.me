@@ -29,7 +29,7 @@ export const InboxBuyerMessageItem: FC<InboxBuyerMessageItem.Props> = ({ item })
 
 	return (
 		<LinkTo
-			to="/$locale/seller/transaction/$transactionId/detail"
+			to="/$locale/app/seller/transaction/$transactionId/detail"
 			params={{
 				locale,
 				transactionId: transaction.id,

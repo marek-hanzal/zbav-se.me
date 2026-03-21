@@ -2,11 +2,8 @@ import z from "zod";
 
 export const ServerViteSchema = z
 	.looseObject({
-		VITE_DOMAIN: z.string().min(1, "Domain is required"),
-		VITE_APP_ORIGIN: z
-			.string()
-			.min(1, "App domain ORIGIN is required (used for CORS and auth)"),
-		VITE_SERVER_API: z.url(),
+		VITE_ORIGIN: z.url("App origin is required (e.g. 'https://example.com')"),
+		VITE_SERVER_API: z.url("Server API url is required (e.g. 'https://api.example.com')"),
 	})
 	.strip();
 

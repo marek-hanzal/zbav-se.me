@@ -25,7 +25,7 @@ export const CreateListingButton: FC<CreateListingButton.Props> = ({
 	const listingCreateMutation = withListingQuery.useCreateMutation({
 		async onPostMutation() {
 			await navigate({
-				to: "/$locale/seller/listing/my",
+				to: "/$locale/app/seller/listing/my",
 				params: {
 					locale,
 				},

@@ -20,7 +20,7 @@ export const ResetButton: FC<ResetButton.Props> = ({ feedId, ui, className, ...p
 	const createMutation = withFeedQuery.useCreateMutation({
 		async onPostMutation() {
 			await navigate({
-				to: "/$locale/buyer/search",
+				to: "/$locale/app/buyer/search",
 				params: {
 					locale,
 				},

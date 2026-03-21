@@ -32,7 +32,7 @@ export const UserPage: FC<UserPage.Props> = ({ ui, ...props }) => {
 			textTitle={translator.text("User profile (title)")}
 			left={
 				<BackHomeButton
-					to="/$locale/home"
+					to="/$locale/app/home"
 					params={{
 						locale,
 					}}

@@ -25,7 +25,7 @@ export const HomeLink = withFallback(
 					className: [],
 				})}
 				icon={HomeIcon}
-				to="/$locale/home"
+				to="/$locale/app/home"
 				params={{
 					locale,
 				}}
@@ -55,7 +55,7 @@ export const HomeLink = withFallback(
 					className: [],
 				})}
 				icon={HomeIcon}
-				to="/$locale/home"
+				to="/$locale/app/home"
 				params={{
 					locale,
 				}}

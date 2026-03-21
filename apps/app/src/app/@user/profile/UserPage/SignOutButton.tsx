@@ -2,7 +2,6 @@ import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import { linkTo } from "@use-pico/common/link-to";
 import { LockIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { withSignOutMutation } from "~/app/@common/auth/mutation/withSignOutMutation";
@@ -23,13 +22,10 @@ export const SignOutButton: FC<SignOutButton.Props> = ({ ui, ...props }) => {
 	const signOutMutation = withSignOutMutation.useMutation({
 		async onPostMutation() {
 			return navigate({
-				href: linkTo({
-					base: import.meta.env.VITE_WEB_ORIGIN,
-					href: "/redirect/landing",
-					query: {
-						locale,
-					},
-				}),
+				to: "/$locale/landing",
+				params: {
+					locale,
+				},
 			});
 		},
 	});

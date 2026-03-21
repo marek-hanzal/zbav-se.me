@@ -42,7 +42,7 @@ export const Item = withFallback(
 				<LinkTo
 					data-action={"open feed listings"}
 					data-ui={"FeedList-[LinkTo.header]"}
-					to={"/$locale/buyer/feed/$id/list"}
+					to={"/$locale/app/buyer/feed/$id/list"}
 					params={{
 						locale,
 						id: feedId,

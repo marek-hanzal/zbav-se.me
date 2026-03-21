@@ -42,7 +42,7 @@ export const ActionSection: FC<ActionSection.Props> = ({ draft }) => {
 				/>
 
 				<LinkTo
-					to={"/$locale/home"}
+					to={"/$locale/app/home"}
 					params={{
 						locale,
 					}}

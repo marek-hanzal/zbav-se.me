@@ -48,7 +48,7 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 							data-action={"create first listing"}
 							icon={ChevronRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/seller/draft/resolve"}
+							to={"/$locale/app/seller/draft/resolve"}
 							params={{
 								locale,
 							}}
@@ -70,7 +70,7 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 							data-action={"go home"}
 							icon={ChevronRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/home"}
+							to={"/$locale/app/home"}
 							params={{
 								locale,
 							}}

@@ -44,7 +44,7 @@ export const FeedListingPage: FC<FeedListingPage.Props> = ({
 					})}
 					data-action={"go home"}
 					icon={ArrowLeftIcon}
-					to={"/$locale/home"}
+					to={"/$locale/app/home"}
 					params={{
 						locale,
 					}}

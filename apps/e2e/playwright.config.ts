@@ -1,5 +1,5 @@
 import { defineConfig } from "@playwright/test";
-import { WEB_ORIGIN } from "./config";
+import { APP_ORIGIN } from "./config";
 
 export default defineConfig({
 	testDir: ".",
@@ -19,7 +19,7 @@ export default defineConfig({
 	},
 	webServer: {
 		command: "dotenv -c development -- bun ./preview.ts",
-		url: `${WEB_ORIGIN}/cs`,
+		url: `${APP_ORIGIN}/cs`,
 		reuseExistingServer: false,
 		timeout: 180_000,
 	},

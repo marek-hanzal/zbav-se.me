@@ -21,7 +21,7 @@ export const SearchPagePending: FC<SearchPagePending.Props> = ({ ui, ...props })
 			textTitle={translator.text("Search (title)")}
 			left={
 				<BackHomeButton
-					to="/$locale/home"
+					to="/$locale/app/home"
 					params={{
 						locale,
 					}}

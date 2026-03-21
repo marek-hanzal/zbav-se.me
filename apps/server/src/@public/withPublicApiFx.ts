@@ -8,7 +8,6 @@ import { withHealthApiFx } from "~/@public/health/withHealthApiFx";
 import { withJanitorApiFx } from "~/@public/janitor/withJanitorApiFx";
 import { withMigrationApiFx } from "~/@public/migration/withMigrationApiFx";
 import { withOpenApiApiFx } from "~/@public/open-api/withOpenApiApiFx";
-import { withOriginApiFx } from "~/@public/origin/withOriginApiFx";
 import { withSchemaApiFx } from "~/@public/schema/withSchemaApiFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 
@@ -26,7 +25,6 @@ export const withPublicApiFx = Effect.fn("withPublicApiFx")(function* () {
 		withJanitorApiFx(),
 		withMigrationApiFx(),
 		withOpenApiApiFx(),
-		withOriginApiFx(),
 	]);
 
 	root.route("/api/public", publicHono);

@@ -32,7 +32,7 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 	return (
 		<LinkTo
 			data-ui={"Item"}
-			to={"/$locale/seller/transaction/$listingId/list"}
+			to={"/$locale/app/seller/transaction/$listingId/list"}
 			params={{
 				locale,
 				listingId: transactionListing.id,

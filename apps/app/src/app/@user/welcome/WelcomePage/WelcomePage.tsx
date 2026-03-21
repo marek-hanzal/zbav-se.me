@@ -43,7 +43,7 @@ export const WelcomePage: FC<WelcomePage.Props> = ({ ui, ...props }) => {
 					<LinkTo
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
-						to={"/$locale/home"}
+						to={"/$locale/app/home"}
 						params={{
 							locale,
 						}}

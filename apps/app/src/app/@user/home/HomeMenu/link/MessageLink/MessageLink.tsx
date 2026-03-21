@@ -48,7 +48,7 @@ export const MessageLink = withFallback(
 				>
 					<LinkTo
 						data-action={"open seller messages"}
-						to={"/$locale/seller/transaction/list"}
+						to={"/$locale/app/seller/transaction/list"}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
 						params={{
@@ -81,7 +81,7 @@ export const MessageLink = withFallback(
 
 					<LinkTo
 						data-action={"open buyer messages"}
-						to={"/$locale/buyer/transaction/list"}
+						to={"/$locale/app/buyer/transaction/list"}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
 						params={{
@@ -147,7 +147,7 @@ export const MessageLink = withFallback(
 				>
 					<LinkTo
 						data-action={"open seller messages"}
-						to={"/$locale/seller/transaction/list"}
+						to={"/$locale/app/seller/transaction/list"}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
 						params={{
@@ -180,7 +180,7 @@ export const MessageLink = withFallback(
 
 					<LinkTo
 						data-action={"open buyer messages"}
-						to={"/$locale/buyer/transaction/list"}
+						to={"/$locale/app/buyer/transaction/list"}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
 						params={{

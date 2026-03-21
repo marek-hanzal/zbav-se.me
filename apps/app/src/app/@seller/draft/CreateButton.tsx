@@ -18,7 +18,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ ...props }) => {
 	const draftCreateMutation = withDraftQuery.useCreateMutation({
 		async onPostMutation({ result }) {
 			await navigate({
-				to: "/$locale/seller/draft/$id/edit",
+				to: "/$locale/app/seller/draft/$id/edit",
 				params: {
 					locale,
 					id: result.id,

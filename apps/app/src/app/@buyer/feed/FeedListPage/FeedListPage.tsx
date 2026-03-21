@@ -27,7 +27,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ ui, ...props }) => {
 			textTitle={translator.text("Feed select (title)")}
 			left={
 				<BackHomeButton
-					to="/$locale/home"
+					to="/$locale/app/home"
 					params={{
 						locale,
 					}}

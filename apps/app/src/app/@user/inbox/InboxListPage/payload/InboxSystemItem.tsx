@@ -31,7 +31,7 @@ export const InboxSystemItem: FC<InboxSystemItem.Props> = ({ item }) => {
 					"buyer",
 					() =>
 						({
-							to: "/$locale/buyer/transaction/$transactionId/detail",
+							to: "/$locale/app/buyer/transaction/$transactionId/detail",
 							params: {
 								locale,
 								transactionId: item.payload.transactionId,
@@ -42,7 +42,7 @@ export const InboxSystemItem: FC<InboxSystemItem.Props> = ({ item }) => {
 					"seller",
 					() =>
 						({
-							to: "/$locale/seller/transaction/$transactionId/detail",
+							to: "/$locale/app/seller/transaction/$transactionId/detail",
 							params: {
 								locale,
 								transactionId: item.payload.transactionId,

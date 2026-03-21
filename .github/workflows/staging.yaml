@@ -17,10 +17,9 @@ env:
     # -------------------------------
     # Common env. variables
     # -------------------------------
-    VITE_DOMAIN: ${{ vars.VITE_DOMAIN }}
     VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
     VITE_APP_ASSETS: ${{ vars.VITE_APP_ASSETS }}
-    VITE_APP_ORIGIN: ${{ vars.VITE_APP_ORIGIN }}
+    VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
     NODE_OPTIONS: --max-old-space-size=1300
 
     # -------------------------------
