@@ -1,3 +1,4 @@
+import { createIsomorphicFn } from "@tanstack/react-start";
 import { withEntityQuery } from "@use-pico/client/query";
 import { withApi } from "@use-pico/common/api";
 import {
@@ -13,6 +14,27 @@ import {
 	type tDraftPatch,
 	type tDraftQuery,
 } from "../../../api/seller";
+
+const collectionFn = createIsomorphicFn()
+	.client(async (data: tDraftQuery) => {
+		return withApi(
+			apiDraftCollection({
+				body: data,
+			}),
+		);
+	})
+	.server(async (data: tDraftQuery) => {
+		const { getRequestHeaders } = await import("@tanstack/react-start/server");
+
+		return withApi(
+			apiDraftCollection({
+				body: data,
+				headers: {
+					Cookie: getRequestHeaders().get("cookie"),
+				},
+			}),
+		);
+	});
 
 export const withDraftQuery = withEntityQuery<
 	tDraft,
@@ -39,11 +61,7 @@ export const withDraftQuery = withEntityQuery<
 		);
 	},
 	async collectionFn(data) {
-		return withApi(
-			apiDraftCollection({
-				body: data,
-			}),
-		);
+		return collectionFn(data);
 	},
 	async countFn(data) {
 		return withApi(

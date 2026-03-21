@@ -1,3 +1,4 @@
+import { createIsomorphicFn } from "@tanstack/react-start";
 import { withEntityQuery } from "@use-pico/client/query";
 import { withApi } from "@use-pico/common/api";
 import {
@@ -12,6 +13,30 @@ import {
 	type tInboxPatchCollection,
 	type tInboxQuery,
 } from "../../../api/user";
+
+const countFn = createIsomorphicFn()
+	.client(async (data: tInboxCountQuery) => {
+		return withApi(
+			apiInboxCount({
+				body: data,
+			}),
+		);
+	})
+	.server(async (data: tInboxCountQuery) => {
+		const { getRequestHeaders } = await import("@tanstack/react-start/server");
+		const cookie = getRequestHeaders().get("cookie");
+
+		return withApi(
+			apiInboxCount({
+				body: data,
+				headers: cookie
+					? {
+							Cookie: cookie,
+						}
+					: undefined,
+			}),
+		);
+	});
 
 export const withInboxQuery = withEntityQuery<
 	tInbox,
@@ -46,11 +71,7 @@ export const withInboxQuery = withEntityQuery<
 		);
 	},
 	async countFn(data) {
-		return withApi(
-			apiInboxCount({
-				body: data,
-			}),
-		);
+		return countFn(data);
 	},
 	async createFn(_data) {
 		throw new Error("Inbox create is not supported.");

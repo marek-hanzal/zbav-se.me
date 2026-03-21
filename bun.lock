@@ -228,6 +228,7 @@
       "name": "@zbav-se.me/sdk",
       "dependencies": {
         "@tanstack/react-query": "5.94.5",
+        "@tanstack/react-start": "1.167.2",
         "@use-pico/client": "workspace:*",
         "@use-pico/common": "workspace:*",
         "axios": "1.13.6",
