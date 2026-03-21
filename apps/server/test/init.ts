@@ -8,6 +8,7 @@ import { database } from "~/database/kysely";
 
 type SetupResult = (() => Promise<void>) | void;
 type ContainerState = {
+	health: string | null;
 	image: string;
 	running: boolean;
 };
@@ -62,6 +63,16 @@ function shOptional(cmd: string[]) {
 	};
 }
 
+function containerLogs(name: string) {
+	return (
+		shOptional([
+			"docker",
+			"logs",
+			name,
+		])?.stdout ?? ""
+	);
+}
+
 function imageExists(image: string) {
 	try {
 		const { stdout } = sh(
@@ -84,8 +95,10 @@ function sleep(ms: number) {
 	return new Promise((r) => setTimeout(r, ms));
 }
 
-async function waitForPostgresConnect(dsn: string, timeoutMs = 10_000) {
+async function waitForPostgresConnect(dsn: string, timeoutMs = 20_000) {
 	const started = Date.now();
+	let lastError = "unknown";
+
 	while (Date.now() - started < timeoutMs) {
 		try {
 			const client = new Client({
@@ -96,11 +109,41 @@ async function waitForPostgresConnect(dsn: string, timeoutMs = 10_000) {
 			await client.query("select 1");
 			await client.end();
 			return;
-		} catch {
-			await sleep(100);
+		} catch (error) {
+			lastError = error instanceof Error ? error.message : String(error);
+			await sleep(200);
 		}
 	}
-	throw new Error(`Postgres not accepting connections: ${dsn}`);
+	throw new Error(`Postgres not accepting connections: ${dsn}\n${lastError}`);
+}
+
+async function waitForContainerHealthy(name: string, timeoutMs = 20_000) {
+	const started = Date.now();
+
+	while (Date.now() - started < timeoutMs) {
+		const state = inspectContainer(name);
+
+		if (!state?.running) {
+			break;
+		}
+
+		if (state.health === null || state.health === "healthy") {
+			return;
+		}
+
+		await sleep(200);
+	}
+
+	const logs = containerLogs(name);
+
+	throw new Error(
+		[
+			`Postgres container "${name}" did not become healthy in time.`,
+			logs && `Container logs:\n${logs}`,
+		]
+			.filter(Boolean)
+			.join("\n\n"),
+	);
 }
 
 function inspectContainer(name: string): ContainerState | null {
@@ -109,16 +152,17 @@ function inspectContainer(name: string): ContainerState | null {
 		"inspect",
 		name,
 		"--format",
-		"{{.Config.Image}}\t{{.State.Running}}",
+		"{{.Config.Image}}\t{{.State.Running}}\t{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}",
 	]);
 
 	if (!result) {
 		return null;
 	}
 
-	const [image = "", running = "false"] = result.stdout.split("\t");
+	const [image = "", running = "false", health = "none"] = result.stdout.split("\t");
 
 	return {
+		health: health === "none" ? null : health,
 		image,
 		running: running === "true",
 	};
@@ -149,6 +193,16 @@ async function ensurePostgresContainer() {
 			"--name",
 			CONTAINER_NAME,
 			"--rm",
+			"--health-cmd",
+			"pg_isready -U test -d test",
+			"--health-interval",
+			"1s",
+			"--health-timeout",
+			"2s",
+			"--health-retries",
+			"20",
+			"--health-start-period",
+			"1s",
 			"-e",
 			"POSTGRES_USER=test",
 			"-e",
@@ -162,6 +216,7 @@ async function ensurePostgresContainer() {
 		"Failed to start Postgres container (port busy?)",
 	);
 
+	await waitForContainerHealthy(CONTAINER_NAME);
 	await waitForPostgresConnect(`${DATABASE_URL}/test`);
 }
 
