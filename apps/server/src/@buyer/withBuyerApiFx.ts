@@ -9,29 +9,15 @@ import { withListingApiFx } from "~/@buyer/listing/withListingApiFx";
 import { withListingEventApiFx } from "~/@buyer/listing-event/withListingEventApiFx";
 import { withThumbApiFx } from "~/@buyer/thumb/withThumbApiFx";
 import { withTransactionApiFx } from "~/@buyer/transaction/withTransactionApiFx";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { UnauthorizedNotice } from "~/@common/notice/UnauthorizedNotice";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 
 export const withBuyerApiFx = Effect.fn("withBuyerApiFx")(function* () {
 	const { root, buyerHono } = yield* RoutesContextFx;
-	const kysely = yield* KyselyContextFx;
-
-	buyerHono.use(async (c, next) => {
-		c.set("kysely", kysely);
-		return next();
-	});
 
 	root.use("/api/buyer/*", async (c, next) => {
-		const user = c.get("user");
-
-		if (!user) {
-			return c.json(
-				{
-					type: "error",
-					message: "Shooooo! Shooo!",
-				},
-				401,
-			);
+		if (!c.get("user")) {
+			return c.json(UnauthorizedNotice, 401);
 		}
 		return next();
 	});

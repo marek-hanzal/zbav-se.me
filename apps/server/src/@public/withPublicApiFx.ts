@@ -10,17 +10,10 @@ import { withMigrationApiFx } from "~/@public/migration/withMigrationApiFx";
 import { withOpenApiApiFx } from "~/@public/open-api/withOpenApiApiFx";
 import { withOriginApiFx } from "~/@public/origin/withOriginApiFx";
 import { withSchemaApiFx } from "~/@public/schema/withSchemaApiFx";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 
 export const withPublicApiFx = Effect.fn("withPublicApiFx")(function* () {
 	const { root, publicHono } = yield* RoutesContextFx;
-	const kysely = yield* KyselyContextFx;
-
-	publicHono.use(async (c, next) => {
-		c.set("kysely", kysely);
-		return next();
-	});
 
 	yield* Effect.all([
 		withAuthApiFx(),
