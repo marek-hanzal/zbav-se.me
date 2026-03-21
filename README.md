@@ -47,12 +47,16 @@ bun run test
 bun run workflow:check
 ```
 
+`bun run preview` first prepares production builds for `app`, `web`, and `server`, then starts all three services from their built outputs.
+
+`bun run test` runs the existing Vitest suites first and then executes the root Playwright smoke suite against the production preview stack.
+
 ## Dev URLs
 
 - Web: <http://localhost:3030>
 - App: <http://localhost:3031>
 - API: <http://localhost:3032>
-- OpenAPI docs: <http://localhost:3032/docs>
+- OpenAPI JSON: <http://localhost:3032/v3/api-docs>
 - Blog: <http://localhost:4090>
 
 ## Architecture at a glance

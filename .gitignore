@@ -4,8 +4,9 @@
 .turbo
 .vscode/chrome-debug-profile
 *.log
-lib
 dist
+lib
 node_modules
 temp
+test-results
 tsconfig.tsbuildinfo
