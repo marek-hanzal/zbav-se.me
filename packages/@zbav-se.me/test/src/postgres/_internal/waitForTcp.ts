@@ -1,11 +1,7 @@
 import net from "node:net";
 import { sleep } from "./sleep";
 
-export const waitForTcp = async (
-	host: string,
-	port: number,
-	timeoutMs = 20_000,
-) => {
+export const waitForTcp = async (host: string, port: number, timeoutMs = 20_000) => {
 	const startedAt = Date.now();
 
 	while (Date.now() - startedAt < timeoutMs) {

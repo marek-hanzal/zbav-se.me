@@ -1,5 +1,5 @@
-import { dropPostgresDatabase } from "./_internal/dropPostgresDatabase";
 import { Client } from "pg";
+import { dropPostgresDatabase } from "./_internal/dropPostgresDatabase";
 import type { PostgresTestDatabase } from "./PostgresTestDatabase";
 
 export const clonePostgresTemplateDatabase = async (

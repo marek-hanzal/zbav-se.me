@@ -1,9 +1,6 @@
 import { Client } from "pg";
 
-export const dropPostgresDatabase = async (
-	baseUrl: string,
-	databaseName: string,
-) => {
+export const dropPostgresDatabase = async (baseUrl: string, databaseName: string) => {
 	const client = new Client({
 		connectionString: `${baseUrl}/postgres`,
 	});

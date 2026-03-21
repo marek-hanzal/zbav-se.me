@@ -9,6 +9,7 @@
 		"knip": "knip --include dependencies --no-config-hints"
 	},
 	"dependencies": {
+		"@tanstack/react-query": "5.94.4",
 		"@use-pico/client": "workspace:*",
 		"@use-pico/common": "workspace:*",
 		"axios": "1.13.6",

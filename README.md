@@ -6,11 +6,9 @@ This repo stays public for transparency and learning, but it is **not open sourc
 
 ## What is here
 
-- `apps/app` - main marketplace app (buyer + seller flows)
-- `apps/web` - public website and legal pages
+- `apps/app` - unified frontend app (public site, auth, buyer + seller flows)
 - `apps/server` - API backend
 - `apps/e2e` - Playwright end-to-end test workspace
-- `apps/blog` - product/dev blog
 - `packages/@zbav-se.me/*` - shared domain/UI/SDK packages
 - `packages/@use-pico/*` - internal framework utilities
 
@@ -48,17 +46,15 @@ bun run test
 bun run workflow:check
 ```
 
-`bun run preview` is managed by Turbo. Each app builds its own production preview output first and then starts from that built output.
+`bun run preview` is managed by Turbo. The frontend app and server build their production preview outputs first and then start from those built outputs.
 
 `bun run test` runs the existing Vitest suites first and then executes the root Playwright smoke suite against the production preview stack.
 
 ## Dev URLs
 
-- Web: <http://localhost:3030>
-- App: <http://localhost:3031>
-- API: <http://localhost:3032>
-- OpenAPI JSON: <http://localhost:3032/v3/api-docs>
-- Blog: <http://localhost:4090>
+- App: <http://localhost:3030>
+- API: <http://localhost:3031>
+- OpenAPI JSON: <http://localhost:3031/v3/api-docs>
 
 ## Architecture at a glance
 
@@ -66,7 +62,6 @@ Dependency boundaries are strict:
 
 ```txt
 apps/app -> buyer, seller, common, sdk, ui
-apps/web -> ui
 apps/server -> common only
 buyer, seller -> common, sdk, ui
 common -> sdk, ui
@@ -93,7 +88,7 @@ bun run typecheck
 
 Shared MCP server template is in [`mcp.json`](./mcp.json).
 
-- Endpoint: `http://obsidian-ii.local:3032/api/mcp`
+- Endpoint: `http://obsidian-ii.local:3031/api/mcp`
 - Auth env var: `MCP_BEARER_TOKEN`
 - Transport: `streamable_http`
 

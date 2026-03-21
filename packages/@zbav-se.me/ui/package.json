@@ -9,6 +9,7 @@
 	},
 	"dependencies": {
 		"@tanstack/react-form": "1.28.5",
+		"@tanstack/react-query": "5.94.4",
 		"@use-pico/client": "workspace:*",
 		"@use-pico/cls": "workspace:*",
 		"@use-pico/common": "workspace:*",

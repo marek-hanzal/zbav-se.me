@@ -1,13 +1,10 @@
-import type { UseMutationResult } from "@tanstack/react-query";
 import { cleanOf } from "@use-pico/common/clean-of";
 import { mapEmptyToNull } from "@use-pico/common/map";
 
 export namespace onSubmit {
-	export type Mutation<TValues extends object, TOutput = any> = UseMutationResult<
-		TOutput,
-		any,
-		TValues
-	>;
+	export interface Mutation<TValues extends object, TOutput = any> {
+		mutateAsync(variables: TValues): Promise<TOutput>;
+	}
 
 	export namespace Map {
 		export interface Props<TValues extends object, TData extends object> {

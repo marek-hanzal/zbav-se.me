@@ -1,10 +1,7 @@
 import { Client } from "pg";
 import { sleep } from "./sleep";
 
-export const waitForPostgresConnect = async (
-	dsn: string,
-	timeoutMs = 30_000,
-) => {
+export const waitForPostgresConnect = async (dsn: string, timeoutMs = 30_000) => {
 	const startedAt = Date.now();
 
 	while (Date.now() - startedAt < timeoutMs) {

@@ -1,6 +1,9 @@
 {
 	"extends": "@use-pico/tsconfig/common.json",
 	"compilerOptions": {
+		"customConditions": [
+			"@tanstack/custom-condition"
+		],
 		"rootDir": "src"
 	},
 	"include": [

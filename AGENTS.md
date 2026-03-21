@@ -4,7 +4,6 @@
 - Shared implementation policy: this file.
 - App-specific overlays:
   - `apps/app/AGENTS.md`
-  - `apps/web/AGENTS.md`
   - `apps/server/AGENTS.md`
 
 ## Global rules (hard)
@@ -23,7 +22,6 @@
 ## Monorepo dependency boundaries (hard)
 ```txt
 apps/app -> buyer, seller, common, sdk, ui
-apps/web -> ui
 apps/server -> common only (no @zbav-se.me domain packages)
 buyer, seller -> common, sdk, ui
 common -> sdk, ui
