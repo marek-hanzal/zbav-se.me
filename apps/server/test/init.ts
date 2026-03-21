@@ -1,4 +1,3 @@
-import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { DialectContextFx } from "@use-pico/common/database";
 import { Effect } from "effect";
@@ -19,6 +18,18 @@ const CONTAINER_NAME = "zbav-seme-test-postgres";
 const DATABASE_PORT = 55432;
 const DATABASE_URL = `postgresql://test:test@127.0.0.1:${DATABASE_PORT}`;
 const REPO_ROOT = fileURLToPath(new URL("../../..", import.meta.url));
+const POSTGRES_TEST_ARGS = [
+	"-c",
+	"fsync=off",
+	"-c",
+	"synchronous_commit=off",
+	"-c",
+	"full_page_writes=off",
+	"-c",
+	"shared_buffers=128MB",
+	"-c",
+	"max_connections=40",
+] as const;
 
 function sh(cmd: string[], hint: string) {
 	const proc = Bun.spawnSync({
@@ -95,7 +106,7 @@ function sleep(ms: number) {
 	return new Promise((r) => setTimeout(r, ms));
 }
 
-async function waitForPostgresConnect(dsn: string, timeoutMs = 20_000) {
+async function waitForPostgresConnect(dsn: string, timeoutMs = 15_000) {
 	const started = Date.now();
 	let lastError = "unknown";
 
@@ -103,7 +114,7 @@ async function waitForPostgresConnect(dsn: string, timeoutMs = 20_000) {
 		try {
 			const client = new Client({
 				connectionString: dsn,
-				connectionTimeoutMillis: 1_000,
+				connectionTimeoutMillis: 250,
 			});
 			await client.connect();
 			await client.query("select 1");
@@ -111,13 +122,13 @@ async function waitForPostgresConnect(dsn: string, timeoutMs = 20_000) {
 			return;
 		} catch (error) {
 			lastError = error instanceof Error ? error.message : String(error);
-			await sleep(200);
+			await sleep(75);
 		}
 	}
 	throw new Error(`Postgres not accepting connections: ${dsn}\n${lastError}`);
 }
 
-async function waitForContainerHealthy(name: string, timeoutMs = 20_000) {
+async function waitForContainerHealthy(name: string, timeoutMs = 15_000) {
 	const started = Date.now();
 
 	while (Date.now() - started < timeoutMs) {
@@ -131,7 +142,7 @@ async function waitForContainerHealthy(name: string, timeoutMs = 20_000) {
 			return;
 		}
 
-		await sleep(200);
+		await sleep(75);
 	}
 
 	const logs = containerLogs(name);
@@ -193,16 +204,18 @@ async function ensurePostgresContainer() {
 			"--name",
 			CONTAINER_NAME,
 			"--rm",
+			"--tmpfs",
+			"/var/lib/postgresql/data:rw",
 			"--health-cmd",
 			"pg_isready -U test -d test",
 			"--health-interval",
-			"1s",
+			"500ms",
 			"--health-timeout",
 			"2s",
 			"--health-retries",
 			"20",
 			"--health-start-period",
-			"1s",
+			"500ms",
 			"-e",
 			"POSTGRES_USER=test",
 			"-e",
@@ -212,6 +225,7 @@ async function ensurePostgresContainer() {
 			"-p",
 			`127.0.0.1:${DATABASE_PORT}:5432`,
 			IMAGE,
+			...POSTGRES_TEST_ARGS,
 		],
 		"Failed to start Postgres container (port busy?)",
 	);
