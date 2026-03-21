@@ -3,6 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
+import { onTestFinished } from "vitest";
 import { database } from "~/database/kysely";
 
 export const testabase = async (id: string = genId()) => {
@@ -31,7 +32,7 @@ export const testabase = async (id: string = genId()) => {
 
 		yield* Effect.promise(async () => kysely.destroy());
 
-		return yield* database.pipe(
+		const instance = yield* database.pipe(
 			Effect.provideService(
 				DialectContextFx,
 				new PostgresDialect({
@@ -42,5 +43,11 @@ export const testabase = async (id: string = genId()) => {
 				}),
 			),
 		);
+
+		onTestFinished(async () => {
+			await instance.kysely.destroy();
+		});
+
+		return instance;
 	}).pipe(Effect.runPromise);
 };
