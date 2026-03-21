@@ -1,54 +1,37 @@
 import { DialectContextFx, MigrationContextFx, withDatabaseFx } from "@use-pico/common/database";
 import { genId } from "@use-pico/common/gen-id";
+import { clonePostgresTemplateDatabase } from "@zbav-se.me/test/postgres";
 import { Effect } from "effect";
-import { PostgresDialect, sql } from "kysely";
+import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
 import type { Database } from "~/database/Database";
-import { database } from "~/database/kysely";
+
+const DATABASE_BASE_URL = "postgresql://test:test@127.0.0.1:55432";
 
 export const testabase = async (id: string = genId()) => {
-	const db = id;
+	const clonedDatabase = await clonePostgresTemplateDatabase({
+		baseUrl: DATABASE_BASE_URL,
+		databaseName: id,
+		templateDatabaseName: "test",
+		user: "test",
+	});
 
-	return Effect.gen(function* () {
-		const { kysely } = yield* database.pipe(
+	return withDatabaseFx<Database>({
+		async onPreMigration() {
+			//
+		},
+	})
+		.pipe(Effect.provideService(MigrationContextFx, {}))
+		.pipe(
 			Effect.provideService(
 				DialectContextFx,
 				new PostgresDialect({
 					pool: new Pool({
-						connectionString: `${process.env.SERVER_DATABASE_URL}/postgres`,
+						connectionString: clonedDatabase.databaseUrl,
 						max: 1,
 					}),
 				}),
 			),
-		);
-
-		// Drop database if it already exists to prevent conflicts
-		yield* Effect.promise(async () =>
-			sql`DROP DATABASE IF EXISTS ${sql.ref(db)}`.execute(kysely),
-		);
-
-		yield* Effect.promise(async () =>
-			sql`CREATE DATABASE ${sql.ref(db)} TEMPLATE test OWNER test`.execute(kysely),
-		);
-
-		yield* Effect.promise(async () => kysely.destroy());
-
-		return yield* withDatabaseFx<Database>({
-			async onPreMigration() {
-				//
-			},
-		})
-			.pipe(Effect.provideService(MigrationContextFx, {}))
-			.pipe(
-				Effect.provideService(
-					DialectContextFx,
-					new PostgresDialect({
-						pool: new Pool({
-							connectionString: `${process.env.SERVER_DATABASE_URL}/${db}`,
-							max: 1,
-						}),
-					}),
-				),
-			);
-	}).pipe(Effect.runPromise);
+		)
+		.pipe(Effect.runPromise);
 };
