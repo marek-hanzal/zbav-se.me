@@ -16,6 +16,7 @@
 		"test:vitest": "dotenv -c development -- turbo run test --parallel",
 		"seed:core": "dotenv -c development -- bun --cwd ./apps/server ./cli/seed-core.ts",
 		"seed:interaction": "dotenv -c development -- bun --cwd ./apps/server ./cli/seed-interaction.ts",
+		"env:sync": "bun ./cli/env-sync.ts",
 		"update": "bun update",
 		"sp:fix": "bun x syncpack fix",
 		"sp:format": "bun x syncpack format",
