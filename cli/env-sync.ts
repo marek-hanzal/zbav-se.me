@@ -3,18 +3,12 @@ import path from "node:path";
 import process from "node:process";
 
 type EnvMap = Record<string, string>;
-type Section = "variables" | "secrets";
 
 interface ParsedEnvFile {
 	environment: string;
 	filePath: string;
 	variables: EnvMap;
 	secrets: EnvMap;
-}
-
-interface ParsedEntry {
-	key: string;
-	value: string;
 }
 
 const REPO = "marek-hanzal/zbav-se.me";
@@ -66,13 +60,13 @@ function printUsage(reason?: string, exitCode = 1): never {
 	console.error("Examples:");
 	console.error("  bun run env:sync staging");
 	console.error("  bun run env:sync production");
-	console.error("  bun run env:sync staging.yaml");
+	console.error("  bun run env:sync staging.json");
 
 	process.exit(exitCode);
 }
 
 function resolveEnvFilePath(input: string) {
-	const fileName = input.endsWith(".yaml") ? input : `${input}.yaml`;
+	const fileName = input.endsWith(".json") ? input : `${input}.json`;
 	const absolutePath = path.resolve(process.cwd(), ENV_DIRECTORY, fileName);
 
 	if (!existsSync(absolutePath)) {
@@ -84,85 +78,34 @@ function resolveEnvFilePath(input: string) {
 
 function parseEnvFile(filePath: string): ParsedEnvFile {
 	const source = readFileSync(filePath, "utf8");
-	const variables: EnvMap = {};
-	const secrets: EnvMap = {};
-	let section: Section | null = null;
-
-	for (const rawLine of source.split("\n")) {
-		const trimmedLine = rawLine.trim();
-
-		if (!trimmedLine || trimmedLine.startsWith("#")) {
-			continue;
-		}
-
-		if (!rawLine.startsWith(" ")) {
-			section = toSection(trimmedLine);
-			continue;
-		}
-
-		if (!section) {
-			continue;
-		}
-
-		const parsedEntry = parseEntry(trimmedLine);
-
-		if (!parsedEntry) {
-			continue;
-		}
-
-		if (section === "variables") {
-			variables[parsedEntry.key] = parsedEntry.value;
-			continue;
-		}
-
-		secrets[parsedEntry.key] = parsedEntry.value;
-	}
+	const parsed = JSON.parse(source) as Partial<Pick<ParsedEnvFile, "variables" | "secrets">>;
+	const variables = withEnvMap(parsed.variables);
+	const secrets = withEnvMap(parsed.secrets);
 
 	return {
-		environment: path.basename(filePath, ".yaml"),
+		environment: path.basename(filePath, ".json"),
 		filePath,
 		variables,
 		secrets,
 	};
 }
 
-function toSection(line: string): Section | null {
-	switch (line) {
-		case "variables:":
-			return "variables";
-		case "secrets:":
-			return "secrets";
-		default:
-			return null;
-	}
-}
-
-function parseEntry(line: string): ParsedEntry | null {
-	const separatorIndex = line.indexOf(":");
-
-	if (separatorIndex === -1) {
-		return null;
+function withEnvMap(source: unknown): EnvMap {
+	if (!source || typeof source !== "object" || Array.isArray(source)) {
+		return {};
 	}
 
-	const key = line.slice(0, separatorIndex).trim();
-	const rawValue = line.slice(separatorIndex + 1).trim();
+	const envMap: EnvMap = {};
 
-	if (!key) {
-		return null;
+	for (const [key, value] of Object.entries(source)) {
+		if (typeof value !== "string") {
+			throw new Error(`Invalid env value for ${key}. Expected a string.`);
+		}
+
+		envMap[key] = value;
 	}
 
-	return {
-		key,
-		value: unwrapQuotedValue(rawValue),
-	};
-}
-
-function unwrapQuotedValue(value: string) {
-	if (value.startsWith('"') && value.endsWith('"')) {
-		return value.slice(1, -1);
-	}
-
-	return value;
+	return envMap;
 }
 
 function deleteRepoLevelKeys() {

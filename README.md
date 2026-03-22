@@ -67,7 +67,7 @@ The app and server scripts stay as plain `portless ...` commands. In the simplif
 
 This README is the shared source of truth for environment variable naming and intent in `apps/app` and `apps/server`.
 GitHub Actions environments are the source of truth only for which values are currently configured.
-Local sync source files live in `@env/*.yaml` and can be applied with `bun run env:sync <environment>`.
+Local sync source files live in `@env/*.json` and can be applied with `bun run env:sync <environment>`.
 
 ### apps/app
 
