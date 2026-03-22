@@ -70,37 +70,37 @@ GitHub Actions environments are the source of truth only for which values are cu
 
 ### apps/app
 
-| group | VALUE | secret/variable | comment |
-| --- | --- | --- | --- |
-| origins | `VITE_SERVER_API` | variable | Public API base URL used by the frontend auth and API clients. |
-| assets | `VITE_APP_ASSETS` | variable | Public asset base URL used by the Vite production build for emitted static assets. |
-| build | `NITRO_PRESET` | variable | Optional Nitro deployment preset override for production builds. Falls back to `vercel` when not set. |
+| group | VALUE | Required | secret/variable | comment |
+| --- | --- | --- | --- | --- |
+| origins | `VITE_SERVER_API` | yes | variable | Public API base URL used by the frontend auth and API clients. |
+| assets | `VITE_APP_ASSETS` | optional | variable | Public asset base URL used by the Vite production build for emitted static assets. |
+| build | `NITRO_PRESET` | default: `vercel` | variable | Optional Nitro deployment preset override for production builds. |
 
 ### apps/server
 
-| group | VALUE | secret/variable | comment |
-| --- | --- | --- | --- |
-| origins | `VITE_ORIGIN` | variable | Canonical frontend origin used for CORS, trusted origins, and auth redirect URLs. |
-| origins | `VITE_SERVER_API` | variable | Canonical API base URL used by auth configuration and generated OpenAPI metadata. |
-| auth | `SERVER_BETTER_AUTH_SECRET` | secret | Signing and encryption secret used by Better Auth. |
-| auth | `SERVER_JWT_SECRET` | secret | Secret used for JWT signing and verification. |
-| database | `SERVER_DATABASE_URL` | secret | Postgres connection string used by the server runtime and seed flows. |
-| s3 | `SERVER_S3_API` | variable | S3-compatible endpoint used for uploads, presigning, and cleanup jobs. |
-| s3 | `SERVER_S3_BUCKET` | variable | Bucket name used for uploaded content storage. |
-| s3 | `SERVER_S3_KEY` | secret | Access key ID for the S3-compatible storage provider. |
-| s3 | `SERVER_S3_SECRET` | secret | Secret access key for the S3-compatible storage provider. |
-| cdn | `SERVER_CONTENT_CDN` | variable | Public CDN base URL returned for uploaded content and generated file links. |
-| external-api | `SERVER_GEOAPIFY_TOKEN` | secret | Geoapify API token used for location autocomplete and related geodata lookups. |
-| external-api | `SERVER_GITHUB` | secret | GitHub token used by the server-side GitHub integration. |
-| seed | `SEED_CORE_CONCURRENCY` | variable | Optional shared concurrency override for seed jobs that use the generic seed concurrency helper. |
-| seed | `SEED_INTERACTION_BATCH_SIZE` | variable | Optional batch size override for generated interaction seed writes. |
-| seed | `SEED_INTERACTION_CONCURRENCY` | variable | Optional concurrency override for interaction seed generation. |
-| seed | `SEED_INTERACTION_SCENARIO_GAP_MINUTES` | variable | Optional override for the time gap between generated interaction scenarios. |
-| seed | `SEED_INTERACTION_THUMB_BATCH_SIZE` | variable | Optional batch size override for bulk thumb seed inserts. |
-| seed | `SEED_INTERACTION_THUMB_CONCURRENCY` | variable | Optional concurrency override for thumb seed insert workers. |
-| seed | `SEED_LOCATION_CYCLES` | variable | Optional override for how many extra location seeding cycles should run. |
-| debug | `SERVER_DEBUG_DELAY_MS` | variable | Optional artificial middleware delay in milliseconds for debugging slow flows locally. |
-| debug | `NO_COLOR` | variable | Standard terminal flag that disables ANSI colors in CLI and seed output. |
+| group | VALUE | Required | secret/variable | comment |
+| --- | --- | --- | --- | --- |
+| origins | `VITE_ORIGIN` | yes | variable | Canonical frontend origin used for CORS, trusted origins, and auth redirect URLs. |
+| origins | `VITE_SERVER_API` | yes | variable | Canonical API base URL used by auth configuration and generated OpenAPI metadata. |
+| auth | `SERVER_BETTER_AUTH_SECRET` | yes | secret | Signing and encryption secret used by Better Auth. |
+| auth | `SERVER_JWT_SECRET` | yes | secret | Secret used for JWT signing and verification. |
+| database | `SERVER_DATABASE_URL` | yes | secret | Postgres connection string used by the server runtime and seed flows. |
+| s3 | `SERVER_S3_API` | yes | variable | S3-compatible endpoint used for uploads, presigning, and cleanup jobs. |
+| s3 | `SERVER_S3_BUCKET` | yes | variable | Bucket name used for uploaded content storage. |
+| s3 | `SERVER_S3_KEY` | yes | secret | Access key ID for the S3-compatible storage provider. |
+| s3 | `SERVER_S3_SECRET` | yes | secret | Secret access key for the S3-compatible storage provider. |
+| cdn | `SERVER_CONTENT_CDN` | yes | variable | Public CDN base URL returned for uploaded content and generated file links. |
+| external-api | `SERVER_GEOAPIFY_TOKEN` | yes | secret | Geoapify API token used for location autocomplete and related geodata lookups. |
+| external-api | `SERVER_GITHUB` | yes | secret | GitHub token used by the server-side GitHub integration. |
+| seed | `SEED_CORE_CONCURRENCY` | optional | variable | Optional shared concurrency override for seed jobs that use the generic seed concurrency helper. |
+| seed | `SEED_INTERACTION_BATCH_SIZE` | default: `25` | variable | Optional batch size override for generated interaction seed writes. |
+| seed | `SEED_INTERACTION_CONCURRENCY` | default: `6` | variable | Optional concurrency override for interaction seed generation. |
+| seed | `SEED_INTERACTION_SCENARIO_GAP_MINUTES` | default: `3` | variable | Optional override for the time gap between generated interaction scenarios. |
+| seed | `SEED_INTERACTION_THUMB_BATCH_SIZE` | default: `100` | variable | Optional batch size override for bulk thumb seed inserts. |
+| seed | `SEED_INTERACTION_THUMB_CONCURRENCY` | default: `12` | variable | Optional concurrency override for thumb seed insert workers. |
+| seed | `SEED_LOCATION_CYCLES` | default: `0` | variable | Optional override for how many extra location seeding cycles should run. |
+| debug | `SERVER_DEBUG_DELAY_MS` | default: `0` | variable | Optional artificial middleware delay in milliseconds for debugging slow flows locally. |
+| debug | `NO_COLOR` | optional | variable | Standard terminal flag that disables ANSI colors in CLI and seed output when present. |
 
 ## Architecture at a glance
 
