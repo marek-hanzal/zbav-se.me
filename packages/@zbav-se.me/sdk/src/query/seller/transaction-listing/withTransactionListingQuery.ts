@@ -1,4 +1,5 @@
 import { withEntityQuery } from "@use-pico/client/query";
+import { isomorphicFn } from "@use-pico/client/utils";
 import { withApi } from "@use-pico/common/api";
 import {
 	apiTransactionListingCollection,
@@ -26,27 +27,36 @@ export const withTransactionListingQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data) {
-		return withApi(
-			apiTransactionListingFetch({
-				body: data,
-			}),
-		);
-	},
-	async collectionFn(data) {
-		return withApi(
-			apiTransactionListingCollection({
-				body: data,
-			}),
-		);
-	},
-	async countFn(data) {
-		return withApi(
-			apiTransactionListingCount({
-				body: data,
-			}),
-		);
-	},
+	fetchFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiTransactionListingFetch({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
+	collectionFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiTransactionListingCollection({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
+	countFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiTransactionListingCount({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
 	async createFn(_data) {
 		throw new Error("Transaction listing create is not supported.");
 	},

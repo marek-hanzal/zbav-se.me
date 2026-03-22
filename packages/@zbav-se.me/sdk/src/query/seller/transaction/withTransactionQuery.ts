@@ -1,4 +1,5 @@
 import { withEntityQuery } from "@use-pico/client/query";
+import { isomorphicFn } from "@use-pico/client/utils";
 import { withApi } from "@use-pico/common/api";
 import {
 	apiTransactionCollection,
@@ -26,27 +27,36 @@ export const withTransactionQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data) {
-		return withApi(
-			apiTransactionFetch({
-				body: data,
-			}),
-		);
-	},
-	async collectionFn(data) {
-		return withApi(
-			apiTransactionCollection({
-				body: data,
-			}),
-		);
-	},
-	async countFn(data) {
-		return withApi(
-			apiTransactionCount({
-				body: data,
-			}),
-		);
-	},
+	fetchFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiTransactionFetch({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
+	collectionFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiTransactionCollection({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
+	countFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiTransactionCount({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
 	async createFn(_data) {
 		throw new Error("Transaction create is not supported.");
 	},

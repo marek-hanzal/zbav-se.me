@@ -1,4 +1,6 @@
 import { withQuery } from "@use-pico/client/query";
+import { isomorphicFn } from "@use-pico/client/utils";
+import { withApi } from "@use-pico/common/api";
 import { apiUploadFetch } from "../../../api/user/sdk.gen";
 import type { tApiUploadFetchResponse, tUploadQuery } from "../../../api/user/types.gen";
 
@@ -10,10 +12,14 @@ export const withUploadFetchQuery = withQuery<tUploadQuery, tApiUploadFetchRespo
 			variables,
 		];
 	},
-	async queryFn(body) {
-		return apiUploadFetch({
-			body,
-			throwOnError: true,
-		}).then((res) => res.data);
-	},
+	queryFn: isomorphicFn({
+		requestFn(body, headers) {
+			return withApi(
+				apiUploadFetch({
+					body,
+					headers,
+				}),
+			);
+		},
+	}),
 });

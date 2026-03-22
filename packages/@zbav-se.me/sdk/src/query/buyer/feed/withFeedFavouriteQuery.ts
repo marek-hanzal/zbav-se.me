@@ -1,4 +1,5 @@
 import { withEntityQuery } from "@use-pico/client/query";
+import { isomorphicFn } from "@use-pico/client/utils";
 import { withApi } from "@use-pico/common/api";
 import {
 	apiFeedFavouriteCollection,
@@ -26,27 +27,36 @@ export const withFeedFavouriteQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data) {
-		return withApi(
-			apiFeedFavouriteFetch({
-				body: data,
-			}),
-		);
-	},
-	async collectionFn(data) {
-		return withApi(
-			apiFeedFavouriteCollection({
-				body: data,
-			}),
-		);
-	},
-	async countFn(data) {
-		return withApi(
-			apiFeedFavouriteCount({
-				body: data,
-			}),
-		);
-	},
+	fetchFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiFeedFavouriteFetch({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
+	collectionFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiFeedFavouriteCollection({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
+	countFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiFeedFavouriteCount({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
 	async createFn(_data) {
 		throw new Error("Feed favourite create is not supported.");
 	},

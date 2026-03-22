@@ -1,4 +1,6 @@
 import { withQuery } from "@use-pico/client/query";
+import { isomorphicFn } from "@use-pico/client/utils";
+import { withApi } from "@use-pico/common/api";
 import { apiListingSellerInfo } from "../../../api/buyer/sdk.gen";
 import type {
 	tApiListingSellerInfoRequest,
@@ -16,10 +18,14 @@ export const withListingSellerInfoQuery = withQuery<
 			variables,
 		];
 	},
-	async queryFn(path) {
-		return apiListingSellerInfo({
-			path,
-			throwOnError: true,
-		}).then((res) => res.data);
-	},
+	queryFn: isomorphicFn({
+		requestFn(path, headers) {
+			return withApi(
+				apiListingSellerInfo({
+					path,
+					headers,
+				}),
+			);
+		},
+	}),
 });

@@ -1,4 +1,5 @@
 import { withEntityQuery } from "@use-pico/client/query";
+import { isomorphicFn } from "@use-pico/client/utils";
 import { withApi } from "@use-pico/common/api";
 import {
 	apiFeedCollection,
@@ -31,48 +32,66 @@ export const withFeedQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data) {
-		return withApi(
-			apiFeedFetch({
-				body: data,
-			}),
-		);
-	},
-	async collectionFn(data) {
-		return withApi(
-			apiFeedCollection({
-				body: data,
-			}),
-		);
-	},
-	async countFn(data) {
-		return withApi(
-			apiFeedCount({
-				body: data,
-			}),
-		);
-	},
-	async createFn(data) {
-		return withApi(
-			apiFeedCreate({
-				body: data,
-			}),
-		);
-	},
-	async deleteFn(data) {
-		return withApi(
-			apiFeedDelete({
-				body: data,
-			}),
-		);
-	},
-	async patchFn(data) {
-		return withApi(
-			apiFeedPatch({
-				body: data,
-			}),
-		);
-	},
+	fetchFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiFeedFetch({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
+	collectionFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiFeedCollection({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
+	countFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiFeedCount({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
+	createFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiFeedCreate({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
+	deleteFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiFeedDelete({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
+	patchFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiFeedPatch({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
 	async patchCollectionFn(_data) {
 		throw new Error("Feed collection patch is not supported.");
 	},

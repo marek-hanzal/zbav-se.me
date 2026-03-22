@@ -1,4 +1,6 @@
 import { withQuery } from "@use-pico/client/query";
+import { isomorphicFn } from "@use-pico/client/utils";
+import { withApi } from "@use-pico/common/api";
 import { apiTransactionCount } from "../../../api/buyer/sdk.gen";
 import type {
 	tApiTransactionCountResponse,
@@ -16,10 +18,14 @@ export const withTransactionCountQuery = withQuery<
 			data,
 		];
 	},
-	async queryFn(body) {
-		return apiTransactionCount({
-			body,
-			throwOnError: true,
-		}).then((res) => res.data);
-	},
+	queryFn: isomorphicFn({
+		requestFn(body, headers) {
+			return withApi(
+				apiTransactionCount({
+					body,
+					headers,
+				}),
+			);
+		},
+	}),
 });

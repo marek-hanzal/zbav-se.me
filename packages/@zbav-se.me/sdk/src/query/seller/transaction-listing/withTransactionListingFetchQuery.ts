@@ -1,4 +1,6 @@
 import { withQuery } from "@use-pico/client/query";
+import { isomorphicFn } from "@use-pico/client/utils";
+import { withApi } from "@use-pico/common/api";
 import { apiTransactionListingFetch } from "../../../api/seller/sdk.gen";
 import type {
 	tApiTransactionListingFetchResponse,
@@ -16,10 +18,14 @@ export const withTransactionListingFetchQuery = withQuery<
 			data,
 		];
 	},
-	async queryFn(body) {
-		return apiTransactionListingFetch({
-			body,
-			throwOnError: true,
-		}).then((res) => res.data);
-	},
+	queryFn: isomorphicFn({
+		requestFn(body, headers) {
+			return withApi(
+				apiTransactionListingFetch({
+					body,
+					headers,
+				}),
+			);
+		},
+	}),
 });

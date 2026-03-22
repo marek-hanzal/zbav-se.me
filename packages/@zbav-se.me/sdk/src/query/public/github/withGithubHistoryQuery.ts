@@ -1,4 +1,6 @@
 import { withQuery } from "@use-pico/client/query";
+import { isomorphicFn } from "@use-pico/client/utils";
+import { withApi } from "@use-pico/common/api";
 import { apiGithubHistory } from "../../../api/public/sdk.gen";
 import type {
 	tApiGithubHistoryRequest,
@@ -10,20 +12,20 @@ export const withGithubHistoryQuery = withQuery<
 	tApiGithubHistoryResponse[200]
 >({
 	keys(data) {
-		const weeks = data?.weeks ?? 12;
 		return [
 			"github",
 			"history",
-			weeks,
+			data,
 		];
 	},
-	async queryFn(data) {
-		const weeks = data?.weeks ?? 12;
-		return apiGithubHistory({
-			query: {
-				weeks,
-			},
-			throwOnError: true,
-		}).then((res) => res.data);
-	},
+	queryFn: isomorphicFn({
+		requestFn(data, headers) {
+			return withApi(
+				apiGithubHistory({
+					query: data,
+					headers,
+				}),
+			);
+		},
+	}),
 });

@@ -1,4 +1,6 @@
 import { withQuery } from "@use-pico/client/query";
+import { isomorphicFn } from "@use-pico/client/utils";
+import { withApi } from "@use-pico/common/api";
 import { apiCategoryCollection } from "../../../api/session/sdk.gen";
 import type {
 	tApiCategoryCollectionResponse,
@@ -16,10 +18,14 @@ export const withCategoryCollectionQuery = withQuery<
 			data,
 		];
 	},
-	async queryFn(body) {
-		return apiCategoryCollection({
-			body,
-			throwOnError: true,
-		}).then((res) => res.data);
-	},
+	queryFn: isomorphicFn({
+		requestFn(body, headers) {
+			return withApi(
+				apiCategoryCollection({
+					body,
+					headers,
+				}),
+			);
+		},
+	}),
 });

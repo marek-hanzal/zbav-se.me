@@ -1,4 +1,5 @@
 import { withEntityQuery } from "@use-pico/client/query";
+import { isomorphicFn } from "@use-pico/client/utils";
 import { withApi } from "@use-pico/common/api";
 import {
 	apiCategoryCollection,
@@ -26,27 +27,36 @@ export const withCategoryQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data) {
-		return withApi(
-			apiCategoryFetch({
-				body: data,
-			}),
-		);
-	},
-	async collectionFn(data) {
-		return withApi(
-			apiCategoryCollection({
-				body: data,
-			}),
-		);
-	},
-	async countFn(data) {
-		return withApi(
-			apiCategoryCount({
-				body: data,
-			}),
-		);
-	},
+	fetchFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiCategoryFetch({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
+	collectionFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiCategoryCollection({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
+	countFn: isomorphicFn({
+		requestFn(request, headers) {
+			return withApi(
+				apiCategoryCount({
+					body: request,
+					headers,
+				}),
+			);
+		},
+	}),
 	async createFn(_data) {
 		throw new Error("Category create is not supported.");
 	},

@@ -1,4 +1,6 @@
 import { withQuery } from "@use-pico/client/query";
+import { isomorphicFn } from "@use-pico/client/utils";
+import { withApi } from "@use-pico/common/api";
 import {
 	apiTransactionBuyerInfo,
 	type tApiTransactionBuyerInfoRequest,
@@ -16,10 +18,14 @@ export const withTransactionBuyerInfoQuery = withQuery<
 			variables,
 		];
 	},
-	async queryFn(body) {
-		return apiTransactionBuyerInfo({
-			body,
-			throwOnError: true,
-		}).then((res) => res.data);
-	},
+	queryFn: isomorphicFn({
+		requestFn(body, headers) {
+			return withApi(
+				apiTransactionBuyerInfo({
+					body,
+					headers,
+				}),
+			);
+		},
+	}),
 });
