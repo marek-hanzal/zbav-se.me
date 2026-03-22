@@ -14,7 +14,7 @@ permissions:
 
 env:
     #     FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-    #     VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
+    VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
     #     VITE_APP_ASSETS: ${{ vars.VITE_APP_ASSETS }}
     VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
     #     NODE_OPTIONS: --max-old-space-size=1300
