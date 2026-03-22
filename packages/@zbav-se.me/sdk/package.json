@@ -10,7 +10,7 @@
 	},
 	"dependencies": {
 		"@tanstack/react-query": "5.94.5",
-		"@tanstack/react-start": "1.167.2",
+		"@tanstack/react-start": "1.167.3",
 		"@use-pico/client": "workspace:*",
 		"@use-pico/common": "workspace:*",
 		"axios": "1.13.6",
@@ -19,7 +19,7 @@
 	"devDependencies": {
 		"@hey-api/openapi-ts": "0.94.4",
 		"@types/node": "25.5.0",
-		"@typescript/native-preview": "7.0.0-dev.20260321.1",
+		"@typescript/native-preview": "7.0.0-dev.20260322.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"knip": "6.0.1",
 		"typescript": "beta",
