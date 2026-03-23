@@ -121,7 +121,12 @@ function sleep(ms: number) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function retry(fn: () => Promise<boolean> | boolean, timeoutMs: number, hint: string, delayMs = 100) {
+async function retry(
+	fn: () => Promise<boolean> | boolean,
+	timeoutMs: number,
+	hint: string,
+	delayMs = 100,
+) {
 	const startedAt = Date.now();
 
 	while (Date.now() - startedAt < timeoutMs) {
@@ -415,10 +420,13 @@ async function main() {
 	const env = e2eEnv();
 
 	try {
-		run([
-			"docker",
-			"version",
-		], "Docker is not available");
+		run(
+			[
+				"docker",
+				"version",
+			],
+			"Docker is not available",
+		);
 		exec([
 			"docker",
 			"volume",
@@ -471,7 +479,10 @@ async function main() {
 		await waitForDatabase(config.postgres.testDatabase);
 		buildPreviewApps(env);
 		startPreviewApps(env);
-		await waitForHttp(`${config.urls.api}/api/public/health`, "Preview API did not become ready in time");
+		await waitForHttp(
+			`${config.urls.api}/api/public/health`,
+			"Preview API did not become ready in time",
+		);
 		await runMigration(env);
 		await waitForHttp(config.urls.app, "Preview app did not become ready in time");
 
