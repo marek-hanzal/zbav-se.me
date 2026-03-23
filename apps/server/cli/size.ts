@@ -8,7 +8,10 @@ type Row = {
 };
 
 const CONFIG = {
-	root: ".vercel",
+	roots: [
+		".vercel",
+		".output/server",
+	],
 	reportNdjson: "bundle.size.ndjson",
 } as const;
 
@@ -71,18 +74,30 @@ async function ensureReportFiles() {
 	}
 }
 
+async function resolveRoot() {
+	for (const root of CONFIG.roots) {
+		if (await exists(root)) {
+			return root;
+		}
+	}
+
+	return null;
+}
+
 function fmt(n: number) {
 	const mb = (n / (1024 * 1024)).toFixed(2);
 	return `${mb} MB`;
 }
 
 async function main() {
-	if (!(await exists(CONFIG.root))) {
-		console.error(`Missing ${CONFIG.root}/ — build/export first.`);
+	const root = await resolveRoot();
+
+	if (!root) {
+		console.error(`Missing build output (${CONFIG.roots.join(", ")}) — build/export first.`);
 		process.exit(2);
 	}
 
-	const { files, bytes } = await countAllBytes(CONFIG.root);
+	const { files, bytes } = await countAllBytes(root);
 	const row: Row = {
 		stamp: nowIso(),
 		files,
@@ -97,7 +112,7 @@ async function main() {
 		"utf8",
 	);
 
-	console.log(`\t Bundle size – files=${files} size=${fmt(bytes)}`);
+	console.log(`\t Bundle size (${root}) – files=${files} size=${fmt(bytes)}`);
 }
 
 main().catch((e) => {
