@@ -69,6 +69,15 @@ This README is the shared source of truth for environment variable naming and in
 GitHub Actions environments are the source of truth only for which values are currently configured.
 Local sync source files live in `@env/*.json` and can be applied with `bun run env:sync <environment>`.
 
+### GitHub Actions only
+
+| group | VALUE | Required | secret/variable | comment |
+| --- | --- | --- | --- | --- |
+| bunny | `BUNNY_HOST` | yes | variable | Bunny SFTP hostname used by deploy workflows for CDN asset sync. |
+| bunny | `BUNNY_USER` | yes | variable | Bunny SFTP username used by deploy workflows for CDN asset sync. |
+| bunny | `BUNNY_PASSWORD` | yes | secret | Password for Bunny SFTP access used by deploy workflows to upload app assets. |
+| bunny | `BUNNY_TOKEN` | optional | secret | Bunny API token used for access to the Bunny HTTP API. It is not the SFTP password. |
+
 ### apps/app
 
 | group | VALUE | Required | secret/variable | comment |
