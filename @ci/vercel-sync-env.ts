@@ -18,6 +18,10 @@ namespace VercelSyncEnv {
 		target?: string[];
 	}
 
+	export interface ProjectEnvListResponse {
+		envs?: ProjectEnv[];
+	}
+
 	export interface CreateEnvRequestItem {
 		key: string;
 		target: Target[];
@@ -150,7 +154,8 @@ const fetchExistingEnvs = async (
 		);
 	}
 
-	return (await response.json()) as VercelSyncEnv.ProjectEnv[];
+	const body = (await response.json()) as VercelSyncEnv.ProjectEnvListResponse;
+	return body.envs ?? [];
 };
 
 const deleteExistingEnvs = async (config: VercelSyncEnv.Config, ids: string[]): Promise<void> => {
