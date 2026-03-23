@@ -1,11 +1,12 @@
 import { testabase as coolTestabase } from "@use-pico/server/testabase";
-import { onTestFinished } from "vitest";
-import { database } from "~/database/kysely";
+import { database } from "@zbav-se.me/server/database";
 
 export const testabase = (name: string) => {
 	return coolTestabase({
 		databaseFx: database,
 		name,
-		onTestFinished,
+		onTestFinished(callbackFn) {
+			//
+		},
 	});
 };

@@ -3,7 +3,6 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
-import { onTestFinished } from "vitest";
 
 export namespace testabase {
 	export interface Props<
@@ -12,6 +11,7 @@ export namespace testabase {
 		databaseFx: TDatabaseFx;
 		template?: string;
 		name?: string;
+		onTestFinished(callbackFn: () => Promise<any>): void;
 	}
 }
 
@@ -21,6 +21,7 @@ export const testabase = async <
 	databaseFx,
 	template = "test",
 	name = genId(),
+	onTestFinished,
 }: testabase.Props<TDatabaseFx>) => {
 	return Effect.gen(function* () {
 		const { kysely } = yield* databaseFx.pipe(
