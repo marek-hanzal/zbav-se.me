@@ -98,5 +98,5 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <TDatabase>(
 
 			return results;
 		},
-	};
+	} satisfies withDatabaseFx.Instance<TDatabase>;
 });
