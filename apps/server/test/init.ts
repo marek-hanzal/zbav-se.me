@@ -16,18 +16,6 @@ const CONTAINER_NAME = "zbav-seme-test-postgres";
 
 const DATABASE_PORT = 55432;
 const DATABASE_URL = `postgresql://test:test@127.0.0.1:${DATABASE_PORT}`;
-const POSTGRES_TEST_ARGS = [
-	"-c",
-	"fsync=off",
-	"-c",
-	"synchronous_commit=off",
-	"-c",
-	"full_page_writes=off",
-	"-c",
-	"shared_buffers=128MB",
-	"-c",
-	"max_connections=40",
-] as const;
 
 function sh(cmd: string[], hint: string) {
 	const proc = Bun.spawnSync({
@@ -181,8 +169,8 @@ async function ensurePostgresContainer() {
 			"--name",
 			CONTAINER_NAME,
 			"--rm",
-			"--tmpfs",
-			"/var/lib/postgresql/data:rw",
+			// "--tmpfs",
+			// "/var/lib/postgresql/data:rw",
 			"--health-cmd",
 			"pg_isready -U test -d test",
 			"--health-interval",
@@ -202,7 +190,18 @@ async function ensurePostgresContainer() {
 			"-p",
 			`127.0.0.1:${DATABASE_PORT}:5432`,
 			IMAGE,
-			...POSTGRES_TEST_ARGS,
+			...[
+				"-c",
+				"fsync=off",
+				"-c",
+				"synchronous_commit=off",
+				"-c",
+				"full_page_writes=off",
+				"-c",
+				"shared_buffers=128MB",
+				"-c",
+				"max_connections=40",
+			],
 		],
 		"Failed to start Postgres container (port busy?)",
 	);
