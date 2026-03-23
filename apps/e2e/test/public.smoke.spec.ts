@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("redirects anonymous visitor to the mobile sign-in page", async ({ page }) => {
 	await page.goto("/");
 
-	await expect(page).toHaveURL(/\/[a-z]{2}\/sign-in$/);
+	await expect(page).toHaveURL(/\/cs\/sign-in$/);
 	await expect(page.locator('[data-ui="/login[Container]"]')).toBeVisible();
 });
 
