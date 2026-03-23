@@ -249,6 +249,17 @@ export const withEntityQuery = <
 		return item;
 	}
 
+	async function $seedFn(queryClient: QueryClient, item: TEntity) {
+		const request = toIdKey(item.id);
+
+		return queryClient.fetchQuery({
+			queryKey: $keys("fetch", request),
+			queryFn: async () => item,
+			initialData: item,
+			staleTime: 0,
+		});
+	}
+
 	/**
 	 * Hook form of {@link $updateFn} for component code paths.
 	 *
@@ -388,11 +399,15 @@ export const withEntityQuery = <
 	async function $collectionFn(queryClient: QueryClient, data: TCollectionRequest) {
 		const result = await collectionFn(data);
 
-		return notifyManager.batch(() =>
-			result.map((item) => {
-				return $updateFn(queryClient, item).id;
-			}),
-		);
+		await notifyManager.batch(async () => {
+			await Promise.all(
+				result.map((item) => {
+					return $seedFn(queryClient, item);
+				}),
+			);
+		});
+
+		return result.map((item) => item.id);
 	}
 
 	function ensureCollectionQuery(

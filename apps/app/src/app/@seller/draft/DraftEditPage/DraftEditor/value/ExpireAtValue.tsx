@@ -18,7 +18,7 @@ export const ExpireAtValue: FC<ExpireAtValue.Props> = ({ expiresAt, ...props }) 
 	const hasExpiresAt = expiresAt != null;
 	return (
 		<LabelValue
-			data-ui={"ExpireAtValue[LabelValue]"}
+			data-ui={"ExpireAtValue"}
 			textLabel={translator.text("Expire (title)")}
 			textValue={hasExpiresAt ? translator.text(`Expire in ${expiresAt}`) : null}
 			textEmpty={translator.text("Expiration date not set")}

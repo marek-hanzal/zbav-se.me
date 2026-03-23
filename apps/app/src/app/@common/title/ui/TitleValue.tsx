@@ -17,7 +17,7 @@ export const TitleValue: FC<TitleValue.Props> = ({ title, ...props }) => {
 	const hasTitle = title != null && title !== "";
 	return (
 		<LabelValue
-			data-ui={"TitleValue[LabelValue]"}
+			data-ui={"TitleValue"}
 			textValue={hasTitle ? title : null}
 			{...props}
 		/>

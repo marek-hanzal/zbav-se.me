@@ -47,6 +47,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 
 			<Group>
 				<TitleValue
+					data-action={"set listing title"}
 					title={draft.title}
 					textLabel={translator.text("Listing title (label)")}
 					textEmpty={translator.text("Listing title not filled")}
@@ -60,6 +61,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 				/>
 
 				<CategoryValue
+					data-action={"select listing category"}
 					_suspense={"I know"}
 					categoryId={draft.categoryId}
 					action={<ChevronAction />}
@@ -72,6 +74,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 				/>
 
 				<LocationValue
+					data-ui={"select listing location"}
 					_suspense={"I know"}
 					locationId={draft.locationId}
 					textLabel={translator.text("Listing location (label)")}
@@ -89,6 +92,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 
 			<Group>
 				<PriceValue
+					data-ui={"set listing price"}
 					price={draft.price}
 					currency={draft.currency}
 					action={<ChevronAction />}
@@ -101,6 +105,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 				/>
 
 				<PriceTypeValue
+					data-ui={"set listing price type"}
 					priceType={draft.priceType}
 					action={<ChevronAction />}
 					onClick={() => onView("priceType")}
@@ -114,6 +119,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 
 			<Group>
 				<ExpireAtValue
+					data-ui={"set listing expiration date"}
 					expiresAt={draft.expiresAt}
 					action={<ChevronAction />}
 					onClick={() => onView("expireAt")}
@@ -127,6 +133,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 
 			<Group>
 				<RestrictionValue
+					data-ui={"set listing restriction"}
 					restriction={draft.restriction}
 					action={<ChevronAction />}
 					onClick={() => onView("restriction")}

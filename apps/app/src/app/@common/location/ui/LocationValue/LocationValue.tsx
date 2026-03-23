@@ -20,7 +20,7 @@ export const LocationValue = withFallback(
 		if (!locationId) {
 			return (
 				<LabelValue
-					data-ui={"LocationValue[LabelValue.empty]"}
+					data-ui={"LocationValue"}
 					{...props}
 					textValue={null}
 				/>
@@ -35,6 +35,7 @@ export const LocationValue = withFallback(
 
 		return (
 			<LabelValue
+				data-ui={"LocationValue"}
 				{...props}
 				textValue={data.address}
 			/>
@@ -43,6 +44,7 @@ export const LocationValue = withFallback(
 	({ ...props }: Omit<LocationValue.Props, "_suspense">) => {
 		return (
 			<LabelValue
+				data-ui={"LocationValue"}
 				textValue={
 					<SpinnerContainer
 						type="icon"

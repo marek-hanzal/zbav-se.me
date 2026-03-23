@@ -23,7 +23,7 @@ export const PriceValue: FC<PriceValue.Props> = ({ price, currency, ...props }) 
 	const hasPrice = price != null && currency != null;
 	return (
 		<LabelValue
-			data-ui={"PriceValue[LabelValue]"}
+			data-ui={"PriceValue"}
 			textLabel={translator.text("Price (title)")}
 			textValue={
 				hasPrice ? (

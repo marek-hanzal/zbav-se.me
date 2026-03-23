@@ -19,7 +19,7 @@ export namespace RestrictionValue {
 export const RestrictionValue: FC<RestrictionValue.Props> = ({ restriction, ...props }) => {
 	return (
 		<LabelValue
-			data-ui={"RestrictionValue[LabelValue]"}
+			data-ui={"RestrictionValue"}
 			textLabel={translator.text("Listing restriction (label)")}
 			textValue={restriction ? <Tx label={`Listing restriction - ${restriction}`} /> : null}
 			textEmpty={translator.text("Restriction not selected")}
