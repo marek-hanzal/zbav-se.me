@@ -166,6 +166,13 @@ async function readStream(stream: ReadableStream<Uint8Array> | null | undefined)
 	return stream ? (await new Response(stream).text()).trim() : "";
 }
 
+async function waitForExit(proc: Spawned, timeoutMs: number) {
+	return await Promise.race([
+		proc.exited.then(() => true),
+		sleep(timeoutMs).then(() => false),
+	]);
+}
+
 async function previewLogs() {
 	const logs = await Promise.all(
 		previews.map(async ({ name, proc }) => {
@@ -378,6 +385,8 @@ async function stopPreviewApps() {
 			}
 		}
 
+		await waitForExit(proc, config.timeouts.stop);
+
 		try {
 			await proc.stdout?.cancel();
 			await proc.stderr?.cancel();
@@ -385,8 +394,6 @@ async function stopPreviewApps() {
 			//
 		}
 	}
-
-	await sleep(config.timeouts.stop);
 }
 
 async function cleanup() {
