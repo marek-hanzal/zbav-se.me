@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { DateTime } from "luxon";
+import { DraftEditor } from "~/app/@seller/draft/DraftEditPage/DraftEditor";
 
 export const Route = createFileRoute("/$locale/app/seller/draft/resolve")({
 	async loader({ context: { queryClient }, params: { locale } }) {
@@ -40,5 +40,5 @@ export const Route = createFileRoute("/$locale/app/seller/draft/resolve")({
 			},
 		});
 	},
-	pendingComponent: SpinnerContainer,
+	pendingComponent: DraftEditor.Fallback,
 });
