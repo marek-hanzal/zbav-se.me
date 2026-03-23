@@ -21,6 +21,7 @@
 		"@modelcontextprotocol/sdk": "1.27.1",
 		"@scalar/hono-api-reference": "0.10.4",
 		"@use-pico/common": "workspace:*",
+		"@use-pico/server": "workspace:*",
 		"better-auth": "1.5.6",
 		"cac": "7.0.0",
 		"effect": "3.21.0",
