@@ -1,87 +1,198 @@
-const IMAGE = "nhost/postgres:17-20260320-1";
-const CONTAINER_NAME = "zbav-seme-e2e-postgres";
-const VOLUME_NAME = "zbav-seme-e2e-postgres-data";
-const SEED_DATABASE = "e2e_seed";
-const TEST_DATABASE = "e2e";
-const DATABASE_PORT = 56432;
-const DATABASE_USER = "postgres";
-const DATABASE_PASSWORD = "e2e";
-const DATABASE_HOST_URL = `postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@127.0.0.1:${DATABASE_PORT}`;
-const DATABASE_URL = `${DATABASE_HOST_URL}/${TEST_DATABASE}`;
-const APP_URL = "http://zbav-se.me.localhost:1355";
-const API_URL = "http://api.zbav-se.me.localhost:1355";
-const PREVIEW_READY_TIMEOUT_MS = 120_000;
-const PREVIEW_STOP_TIMEOUT_MS = 10_000;
-const ROOT_DIR = new URL("../", import.meta.url).pathname;
-const DOTENV_BIN = new URL("../node_modules/.bin/dotenv", import.meta.url).pathname;
-const APP_DIR = new URL("../apps/app", import.meta.url).pathname;
-const SERVER_DIR = new URL("../apps/server", import.meta.url).pathname;
-const E2E_DIR = new URL("../apps/e2e", import.meta.url).pathname;
+const config = {
+	rootDir: new URL("../", import.meta.url).pathname,
+	dotenvBin: new URL("../node_modules/.bin/dotenv", import.meta.url).pathname,
+	directories: {
+		app: new URL("../apps/app", import.meta.url).pathname,
+		server: new URL("../apps/server", import.meta.url).pathname,
+		e2e: new URL("../apps/e2e", import.meta.url).pathname,
+	},
+	postgres: {
+		image: "nhost/postgres:17-20260320-1",
+		container: "zbav-seme-e2e-postgres",
+		volume: "zbav-seme-e2e-postgres-data",
+		host: "127.0.0.1",
+		port: 56432,
+		user: "postgres",
+		password: "e2e",
+		seedDatabase: "e2e_seed",
+		testDatabase: "e2e",
+	},
+	urls: {
+		app: "http://zbav-se.me.localhost:1355",
+		api: "http://api.zbav-se.me.localhost:1355",
+	},
+	timeouts: {
+		ready: 120_000,
+		stop: 10_000,
+		short: 15_000,
+		migration: 30_000,
+	},
+	previews: [
+		{
+			name: "server-preview",
+			cwd: new URL("../apps/server", import.meta.url).pathname,
+			cmd: [
+				"portless",
+				"--force",
+				"api.zbav-se.me",
+				"node",
+				".output/server/index.mjs",
+			],
+		},
+		{
+			name: "app-preview",
+			cwd: new URL("../apps/app", import.meta.url).pathname,
+			cmd: [
+				"portless",
+				"--force",
+				"zbav-se.me",
+				"node",
+				".output/server/index.mjs",
+			],
+		},
+	],
+	builds: [
+		{
+			name: "preview server",
+			cwd: new URL("../apps/server", import.meta.url).pathname,
+		},
+		{
+			name: "preview app",
+			cwd: new URL("../apps/app", import.meta.url).pathname,
+		},
+	],
+};
 
 type Spawned = ReturnType<typeof Bun.spawn>;
 type PreviewProcess = {
 	name: string;
 	proc: Spawned;
 };
+type CmdOptions = {
+	cwd?: string;
+	env?: NodeJS.ProcessEnv;
+};
+
+const databaseHostUrl = `postgresql://${config.postgres.user}:${config.postgres.password}@${config.postgres.host}:${config.postgres.port}`;
+const databaseUrl = `${databaseHostUrl}/${config.postgres.testDatabase}`;
 
 let previews: PreviewProcess[] = [];
 let cleaningUp = false;
 
-function withCommandOutput(proc: ReturnType<typeof Bun.spawnSync>) {
-	const stdout = proc.stdout ? new TextDecoder().decode(proc.stdout).trim() : "";
-	const stderr = proc.stderr ? new TextDecoder().decode(proc.stderr).trim() : "";
-
-	return {
-		stdout,
-		stderr,
-	};
+function decode(stream?: Uint8Array<ArrayBufferLike> | null) {
+	return stream ? new TextDecoder().decode(stream).trim() : "";
 }
 
-function run(cmd: string[], hint: string, env: NodeJS.ProcessEnv = process.env, cwd = ROOT_DIR) {
+function exec(cmd: string[], options: CmdOptions = {}) {
 	const proc = Bun.spawnSync({
 		cmd,
-		env,
-		cwd,
+		cwd: options.cwd ?? config.rootDir,
+		env: options.env ?? process.env,
 		stdout: "pipe",
 		stderr: "pipe",
 	});
-	const { stdout, stderr } = withCommandOutput(proc);
 
-	if (proc.exitCode !== 0) {
+	return {
+		exitCode: proc.exitCode,
+		stdout: decode(proc.stdout),
+		stderr: decode(proc.stderr),
+	};
+}
+
+function run(cmd: string[], hint: string, options: CmdOptions = {}) {
+	const result = exec(cmd, options);
+
+	if (result.exitCode !== 0) {
 		throw new Error(
 			[
 				hint,
-				stderr,
-				stdout,
+				result.stderr,
+				result.stdout,
 			]
 				.filter(Boolean)
 				.join("\n\n"),
 		);
 	}
 
-	return {
-		stdout,
-	};
-}
-
-function runOptional(cmd: string[], env: NodeJS.ProcessEnv = process.env, cwd = ROOT_DIR) {
-	const proc = Bun.spawnSync({
-		cmd,
-		env,
-		cwd,
-		stdout: "pipe",
-		stderr: "pipe",
-	});
-
-	if (proc.exitCode !== 0) {
-		return null;
-	}
-
-	return withCommandOutput(proc);
+	return result;
 }
 
 function sleep(ms: number) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function retry(fn: () => Promise<boolean> | boolean, timeoutMs: number, hint: string, delayMs = 100) {
+	const startedAt = Date.now();
+
+	while (Date.now() - startedAt < timeoutMs) {
+		if (await fn()) {
+			return;
+		}
+
+		await sleep(delayMs);
+	}
+
+	throw new Error(hint);
+}
+
+function dockerExec(...args: string[]) {
+	return exec([
+		"docker",
+		"exec",
+		config.postgres.container,
+		...args,
+	]);
+}
+
+function psql(database: string, sql: string, hint: string) {
+	run(
+		[
+			"docker",
+			"exec",
+			config.postgres.container,
+			"psql",
+			"-U",
+			config.postgres.user,
+			"-d",
+			database,
+			"-c",
+			sql,
+		],
+		hint,
+	);
+}
+
+function processTree(pid: number, visited = new Set<number>()) {
+	if (visited.has(pid)) {
+		return [];
+	}
+
+	visited.add(pid);
+
+	const children = exec([
+		"pgrep",
+		"-P",
+		String(pid),
+	]).stdout
+		.split("\n")
+		.map((value) => Number(value.trim()))
+		.filter((value) => Number.isInteger(value))
+		.flatMap((childPid) => processTree(childPid, visited));
+
+	return [
+		...children,
+		pid,
+	];
+}
+
+function killTree(pid: number, signal: "SIGTERM" | "SIGKILL") {
+	for (const targetPid of processTree(pid)) {
+		exec([
+			"kill",
+			`-${signal}`,
+			String(targetPid),
+		]);
+	}
 }
 
 async function waitForExit(proc: Spawned, timeoutMs: number) {
@@ -91,448 +202,213 @@ async function waitForExit(proc: Spawned, timeoutMs: number) {
 	]);
 }
 
-async function readProcessOutput(stream: ReadableStream<Uint8Array> | null | undefined) {
-	if (!stream) {
-		return "";
-	}
-
-	return (await new Response(stream).text()).trim();
+async function readStream(stream: ReadableStream<Uint8Array> | null | undefined) {
+	return stream ? (await new Response(stream).text()).trim() : "";
 }
 
-async function formatPreviewLogs() {
-	const chunks = await Promise.all(
+async function previewLogs() {
+	const logs = await Promise.all(
 		previews.map(async ({ name, proc }) => {
-			const stdout = await readProcessOutput(proc.stdout);
-			const stderr = await readProcessOutput(proc.stderr);
-
 			const output = [
-				stderr,
-				stdout,
+				await readStream(proc.stderr),
+				await readStream(proc.stdout),
 			]
 				.filter(Boolean)
-				.join("\n\n")
-				.trim();
+				.join("\n\n");
 
-			if (!output) {
-				return "";
-			}
-
-			return [
-				`[${name}]`,
-				output,
-			].join("\n");
+			return output
+				? [
+						`[${name}]`,
+						output,
+					].join("\n")
+				: "";
 		}),
 	);
 
-	return chunks.filter(Boolean).join("\n\n");
+	return logs.filter(Boolean).join("\n\n");
 }
 
-function listChildPids(pid: number) {
-	const result = runOptional([
-		"pgrep",
-		"-P",
-		String(pid),
-	]);
-
-	if (!result?.stdout) {
-		return [];
-	}
-
-	return result.stdout
-		.split("\n")
-		.map((value) => Number(value.trim()))
-		.filter((value) => Number.isInteger(value));
+function e2eEnv(): NodeJS.ProcessEnv {
+	return {
+		...process.env,
+		SERVER_DATABASE_URL: databaseUrl,
+		VITE_ORIGIN: config.urls.app,
+		VITE_SERVER_API: config.urls.api,
+		VITE_APP_ASSETS: "/",
+		E2E_APP_URL: config.urls.app,
+		E2E_API_URL: config.urls.api,
+	};
 }
 
-function listProcessTree(rootPid: number) {
-	const queue = [
-		rootPid,
-	];
-	const visited = new Set<number>();
-	const ordered: number[] = [];
-
-	while (queue.length > 0) {
-		const pid = queue.shift();
-
-		if (!pid || visited.has(pid)) {
-			continue;
-		}
-
-		visited.add(pid);
-		ordered.push(pid);
-
-		for (const childPid of listChildPids(pid)) {
-			queue.push(childPid);
-		}
-	}
-
-	return ordered.reverse();
-}
-
-function killProcessTree(pid: number, signal: "SIGTERM" | "SIGKILL") {
-	for (const targetPid of listProcessTree(pid)) {
-		runOptional([
-			"kill",
-			`-${signal}`,
-			String(targetPid),
-		]);
-	}
-}
-
-async function waitForPostgres(timeoutMs = 15_000) {
-	const startedAt = Date.now();
-
-	while (Date.now() - startedAt < timeoutMs) {
-		const result = runOptional([
-			"docker",
-			"exec",
-			CONTAINER_NAME,
-			"pg_isready",
-			"-U",
-			DATABASE_USER,
-			"-d",
-			SEED_DATABASE,
-		]);
-
-		if (result?.stdout.includes("accepting connections")) {
-			return;
-		}
-
-		await sleep(100);
-	}
-
-	throw new Error("E2E Postgres container did not become ready in time");
-}
-
-async function waitForDatabase(database: string, timeoutMs = 15_000) {
-	const startedAt = Date.now();
-
-	while (Date.now() - startedAt < timeoutMs) {
-		const result = runOptional([
-			"docker",
-			"exec",
-			CONTAINER_NAME,
-			"psql",
-			"-U",
-			DATABASE_USER,
-			"-d",
-			database,
-			"-c",
-			"SELECT 1;",
-		]);
-
-		if (result?.stdout.includes("1 row")) {
-			return;
-		}
-
-		await sleep(100);
-	}
-
-	throw new Error(`Database "${database}" did not become ready in time`);
-}
-
-function ensureDocker() {
-	run(
-		[
-			"docker",
-			"version",
-		],
-		"Docker is not available",
+async function waitForPostgres() {
+	await retry(
+		() =>
+			dockerExec(
+				"pg_isready",
+				"-U",
+				config.postgres.user,
+				"-d",
+				config.postgres.seedDatabase,
+			).stdout.includes("accepting connections"),
+		config.timeouts.short,
+		"E2E Postgres container did not become ready in time",
 	);
 }
 
-function ensureE2eVolume() {
-	runOptional([
-		"docker",
-		"volume",
-		"rm",
-		"-f",
-		VOLUME_NAME,
-	]);
-
-	run(
-		[
-			"docker",
-			"volume",
-			"create",
-			VOLUME_NAME,
-		],
-		"Failed to create the dedicated E2E Docker volume",
+async function waitForDatabase(database: string) {
+	await retry(
+		() =>
+			dockerExec(
+				"psql",
+				"-U",
+				config.postgres.user,
+				"-d",
+				database,
+				"-c",
+				"SELECT 1;",
+			).stdout.includes("1 row"),
+		config.timeouts.short,
+		`Database "${database}" did not become ready in time`,
 	);
 }
 
-function replacePostgresContainer() {
-	runOptional([
-		"docker",
-		"rm",
-		"-f",
-		CONTAINER_NAME,
-	]);
-
-	run(
+function resetDatabase() {
+	psql(
+		config.postgres.seedDatabase,
 		[
-			"docker",
-			"run",
-			"-d",
-			"--name",
-			CONTAINER_NAME,
-			"--restart",
-			"unless-stopped",
-			"-v",
-			`${VOLUME_NAME}:/var/lib/postgresql/data`,
-			"-e",
-			`POSTGRES_USER=${DATABASE_USER}`,
-			"-e",
-			`POSTGRES_PASSWORD=${DATABASE_PASSWORD}`,
-			"-e",
-			`POSTGRES_DB=${SEED_DATABASE}`,
-			"-p",
-			`127.0.0.1:${DATABASE_PORT}:5432`,
-			IMAGE,
-		],
-		"Failed to start the dedicated E2E Postgres container",
-	);
-}
-
-function ensureE2eDatabase() {
-	run(
-		[
-			"docker",
-			"exec",
-			CONTAINER_NAME,
-			"psql",
-			"-U",
-			DATABASE_USER,
-			"-d",
-			SEED_DATABASE,
-			"-c",
-			[
-				"SELECT pg_terminate_backend(pid)",
-				"FROM pg_stat_activity",
-				`WHERE datname = '${TEST_DATABASE}'`,
-				"AND pid <> pg_backend_pid();",
-			].join(" "),
-		],
+			"SELECT pg_terminate_backend(pid)",
+			"FROM pg_stat_activity",
+			`WHERE datname = '${config.postgres.testDatabase}'`,
+			"AND pid <> pg_backend_pid();",
+		].join(" "),
 		"Failed to terminate existing E2E database connections",
 	);
-
-	run(
-		[
-			"docker",
-			"exec",
-			CONTAINER_NAME,
-			"psql",
-			"-U",
-			DATABASE_USER,
-			"-d",
-			SEED_DATABASE,
-			"-c",
-			`DROP DATABASE IF EXISTS ${TEST_DATABASE};`,
-		],
+	psql(
+		config.postgres.seedDatabase,
+		`DROP DATABASE IF EXISTS ${config.postgres.testDatabase};`,
 		"Failed to drop the E2E database",
 	);
-
-	run(
-		[
-			"docker",
-			"exec",
-			CONTAINER_NAME,
-			"psql",
-			"-U",
-			DATABASE_USER,
-			"-d",
-			SEED_DATABASE,
-			"-c",
-			`CREATE DATABASE ${TEST_DATABASE} OWNER ${DATABASE_USER};`,
-		],
+	psql(
+		config.postgres.seedDatabase,
+		`CREATE DATABASE ${config.postgres.testDatabase} OWNER ${config.postgres.user};`,
 		"Failed to create the E2E database",
 	);
 }
 
-function withE2eEnv(): NodeJS.ProcessEnv {
-	return {
-		...process.env,
-		SERVER_DATABASE_URL: DATABASE_URL,
-		VITE_ORIGIN: APP_URL,
-		VITE_SERVER_API: API_URL,
-		VITE_APP_ASSETS: "/",
-		E2E_APP_URL: APP_URL,
-		E2E_API_URL: API_URL,
-	};
-}
-
 async function waitForHttp(url: string, hint: string) {
-	const startedAt = Date.now();
-
-	while (Date.now() - startedAt < PREVIEW_READY_TIMEOUT_MS) {
-		const result = runOptional([
-			"curl",
-			"-fsS",
-			"-o",
-			"/dev/null",
-			"-L",
-			url,
-		]);
-
-		if (result) {
-			return;
-		}
-
-		await sleep(250);
-	}
-
-	throw new Error(hint);
+	await retry(
+		() =>
+			exec([
+				"curl",
+				"-fsS",
+				"-o",
+				"/dev/null",
+				"-L",
+				url,
+			]).exitCode === 0,
+		config.timeouts.ready,
+		hint,
+		250,
+	);
 }
 
-async function runMigration(env: NodeJS.ProcessEnv, timeoutMs = 30_000) {
-	const startedAt = Date.now();
+async function runMigration(env: NodeJS.ProcessEnv) {
 	let lastError = "Unknown migration error";
 
-	while (Date.now() - startedAt < timeoutMs) {
-		const proc = Bun.spawnSync({
-			cmd: [
-				"curl",
-				"-sS",
-				"-X",
-				"POST",
-				"-w",
-				"\\n%{http_code}",
-				`${API_URL}/api/public/migration/run`,
-			],
-			env,
-			stdout: "pipe",
-			stderr: "pipe",
-		});
-		const { stdout, stderr } = withCommandOutput(proc);
-		const lines = stdout.split("\n");
-		const status = lines.pop()?.trim();
-		const body = lines.join("\n").trim();
+	await retry(
+		() => {
+			const result = exec(
+				[
+					"curl",
+					"-sS",
+					"-X",
+					"POST",
+					"-w",
+					"\\n%{http_code}",
+					`${config.urls.api}/api/public/migration/run`,
+				],
+				{
+					env,
+				},
+			);
+			const lines = result.stdout.split("\n");
+			const status = lines.pop()?.trim();
+			const body = lines.join("\n").trim();
 
-		if (proc.exitCode === 0 && status === "200") {
-			return;
-		}
+			if (result.exitCode === 0 && status === "200") {
+				return true;
+			}
 
-		lastError = [
-			stderr,
-			body,
-			status ? `HTTP ${status}` : "",
-		]
-			.filter(Boolean)
-			.join("\n\n");
-		await sleep(250);
-	}
+			lastError = [
+				result.stderr,
+				body,
+				status ? `HTTP ${status}` : "",
+			]
+				.filter(Boolean)
+				.join("\n\n");
 
-	throw new Error(
+			return false;
+		},
+		config.timeouts.migration,
 		[
 			"Failed to run server migrations for the E2E database",
 			lastError,
 		]
 			.filter(Boolean)
 			.join("\n\n"),
+		250,
 	);
 }
 
 function buildPreviewApps(env: NodeJS.ProcessEnv) {
-	run(
-		[
-			DOTENV_BIN,
-			"-c",
-			"development",
-			"--",
-			"bun",
-			"run",
-			"build:preview",
-		],
-		"Failed to build the preview server",
-		env,
-		SERVER_DIR,
-	);
-
-	run(
-		[
-			DOTENV_BIN,
-			"-c",
-			"development",
-			"--",
-			"bun",
-			"run",
-			"build:preview",
-		],
-		"Failed to build the preview app",
-		env,
-		APP_DIR,
-	);
+	for (const build of config.builds) {
+		run(
+			[
+				config.dotenvBin,
+				"-c",
+				"development",
+				"--",
+				"bun",
+				"run",
+				"build:preview",
+			],
+			`Failed to build the ${build.name}`,
+			{
+				cwd: build.cwd,
+				env,
+			},
+		);
+	}
 }
 
 function startPreviewApps(env: NodeJS.ProcessEnv) {
-	previews = [
-		{
-			name: "server-preview",
-			proc: Bun.spawn(
-				[
-					DOTENV_BIN,
-					"-c",
-					"development",
-					"--",
-					"portless",
-					"--force",
-					"api.zbav-se.me",
-					"node",
-					".output/server/index.mjs",
-				],
-				{
-					cwd: SERVER_DIR,
-					env,
-					stdout: "pipe",
-					stderr: "pipe",
-				},
-			),
-		},
-		{
-			name: "app-preview",
-			proc: Bun.spawn(
-				[
-					DOTENV_BIN,
-					"-c",
-					"development",
-					"--",
-					"portless",
-					"--force",
-					"zbav-se.me",
-					"node",
-					".output/server/index.mjs",
-				],
-				{
-					cwd: APP_DIR,
-					env,
-					stdout: "pipe",
-					stderr: "pipe",
-				},
-			),
-		},
-	];
+	previews = config.previews.map((preview) => ({
+		name: preview.name,
+		proc: Bun.spawn(
+			[
+				config.dotenvBin,
+				"-c",
+				"development",
+				"--",
+				...preview.cmd,
+			],
+			{
+				cwd: preview.cwd,
+				env,
+				stdout: "pipe",
+				stderr: "pipe",
+			},
+		),
+	}));
 }
 
 async function stopPreviewApps() {
-	if (previews.length === 0) {
-		return;
-	}
+	const running = previews;
+	previews = [];
 
-	try {
-		for (const { proc } of previews) {
-			killProcessTree(proc.pid, "SIGTERM");
-		}
-
-		for (const { proc } of previews) {
-			if (!(await waitForExit(proc, PREVIEW_STOP_TIMEOUT_MS))) {
-				killProcessTree(proc.pid, "SIGKILL");
-				await waitForExit(proc, 1_000);
-			}
-		}
-	} catch {
-		//
-	} finally {
-		previews = [];
+	for (const { proc } of running) {
+		killTree(proc.pid, "SIGKILL");
+		await waitForExit(proc, config.timeouts.stop);
 	}
 }
 
@@ -542,73 +418,109 @@ async function cleanup() {
 	}
 
 	cleaningUp = true;
-
 	await stopPreviewApps();
-	runOptional([
+	exec([
 		"docker",
 		"rm",
 		"-f",
-		CONTAINER_NAME,
+		config.postgres.container,
 	]);
 }
 
-const env = withE2eEnv();
+async function main() {
+	const env = e2eEnv();
 
-for (const signal of [
-	"SIGINT",
-	"SIGTERM",
-	"SIGHUP",
-] as const) {
-	process.on(signal, () => {
-		void cleanup().finally(() => {
-			process.exit(1);
+	try {
+		run([
+			"docker",
+			"version",
+		], "Docker is not available");
+		exec([
+			"docker",
+			"volume",
+			"rm",
+			"-f",
+			config.postgres.volume,
+		]);
+		run(
+			[
+				"docker",
+				"volume",
+				"create",
+				config.postgres.volume,
+			],
+			"Failed to create the dedicated E2E Docker volume",
+		);
+		exec([
+			"docker",
+			"rm",
+			"-f",
+			config.postgres.container,
+		]);
+		run(
+			[
+				"docker",
+				"run",
+				"-d",
+				"--name",
+				config.postgres.container,
+				"--restart",
+				"unless-stopped",
+				"-v",
+				`${config.postgres.volume}:/var/lib/postgresql/data`,
+				"-e",
+				`POSTGRES_USER=${config.postgres.user}`,
+				"-e",
+				`POSTGRES_PASSWORD=${config.postgres.password}`,
+				"-e",
+				`POSTGRES_DB=${config.postgres.seedDatabase}`,
+				"-p",
+				`${config.postgres.host}:${config.postgres.port}:5432`,
+				config.postgres.image,
+			],
+			"Failed to start the dedicated E2E Postgres container",
+		);
+
+		await waitForPostgres();
+		await waitForDatabase(config.postgres.seedDatabase);
+		resetDatabase();
+		await waitForDatabase(config.postgres.testDatabase);
+		buildPreviewApps(env);
+		startPreviewApps(env);
+		await waitForHttp(`${config.urls.api}/api/public/health`, "Preview API did not become ready in time");
+		await runMigration(env);
+		await waitForHttp(config.urls.app, "Preview app did not become ready in time");
+
+		const tests = Bun.spawnSync({
+			cmd: [
+				"bun",
+				"run",
+				"e2e",
+			],
+			cwd: config.directories.e2e,
+			env,
+			stdout: "inherit",
+			stderr: "inherit",
 		});
-	});
-}
 
-try {
-	ensureDocker();
-	ensureE2eVolume();
-	replacePostgresContainer();
-	await waitForPostgres();
-	await waitForDatabase(SEED_DATABASE);
-	ensureE2eDatabase();
-	await waitForDatabase(TEST_DATABASE);
-	buildPreviewApps(env);
+		if (tests.exitCode !== 0) {
+			process.exitCode = tests.exitCode;
+		}
+	} catch (error) {
+		const logs = await previewLogs();
 
-	startPreviewApps(env);
-
-	await waitForHttp(`${API_URL}/api/public/health`, "Preview API did not become ready in time");
-	await runMigration(env);
-	await waitForHttp(APP_URL, "Preview app did not become ready in time");
-
-	const tests = Bun.spawnSync({
-		cmd: [
-			"bun",
-			"run",
-			"e2e",
-		],
-		cwd: E2E_DIR,
-		env,
-		stdout: "inherit",
-		stderr: "inherit",
-	});
-
-	if (tests.exitCode !== 0) {
-		process.exitCode = tests.exitCode;
+		console.error(
+			[
+				error instanceof Error ? error.message : String(error),
+				logs ? `Preview logs:\n${logs}` : "",
+			]
+				.filter(Boolean)
+				.join("\n\n"),
+		);
+		process.exitCode = 1;
+	} finally {
+		await cleanup();
 	}
-} catch (error) {
-	const previewLogs = await formatPreviewLogs();
-	console.error(
-		[
-			error instanceof Error ? error.message : String(error),
-			previewLogs ? `Preview logs:\n${previewLogs}` : "",
-		]
-			.filter(Boolean)
-			.join("\n\n"),
-	);
-	process.exitCode = 1;
-} finally {
-	await cleanup();
-	process.exit(process.exitCode ?? 0);
 }
+
+await main();
