@@ -144,23 +144,11 @@ jobs:
 
             - name: Upsert app env
               env:
-                  VERCEL_PROJECT_ID: ${{ env.VERCEL_APP_PROJECT_ID }}
                   KEYS: ${{ env.APP_ENV_KEYS }}
+                  TARGET: production
+                  VERCEL_PROJECT_ID: ${{ env.VERCEL_APP_PROJECT_ID }}
               run: |
-                  set -euo pipefail
-                  while IFS= read -r KEY; do
-                    [ -z "${KEY// }" ] && continue
-                    case "$KEY" in \#*) continue ;; esac
-
-                    VAL="${!KEY:-}"
-                    if [ -z "$VAL" ]; then
-                      echo "Error: Environment variable '$KEY' is not set"
-                      exit 1
-                    fi
-                    echo "Setting $KEY..."
-                    bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
-                    printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
-                  done <<< "$KEYS"
+                  bun ./@ci/vercel-sync-env.ts
 
     vercel-env-server:
         name: "Server: Sync env. variables"
@@ -190,24 +178,20 @@ jobs:
 
             - name: Upsert server env
               env:
-                  VERCEL_PROJECT_ID: ${{ env.VERCEL_SERVER_PROJECT_ID }}
                   SERVER_DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
                   KEYS: ${{ env.SERVER_ENV_KEYS }}
+                  SENSITIVE_KEYS: |
+                      SERVER_BETTER_AUTH_SECRET
+                      SERVER_DATABASE_URL
+                      SERVER_GEOAPIFY_TOKEN
+                      SERVER_GITHUB
+                      SERVER_JWT_SECRET
+                      SERVER_S3_KEY
+                      SERVER_S3_SECRET
+                  TARGET: production
+                  VERCEL_PROJECT_ID: ${{ env.VERCEL_SERVER_PROJECT_ID }}
               run: |
-                  set -euo pipefail
-                  while IFS= read -r KEY; do
-                    [ -z "${KEY// }" ] && continue
-                    case "$KEY" in \#*) continue ;; esac
-
-                    VAL="${!KEY:-}"
-                    if [ -z "$VAL" ]; then
-                      echo "Error: Environment variable '$KEY' is not set"
-                      exit 1
-                    fi
-                    echo "Setting $KEY..."
-                    bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
-                    printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
-                  done <<< "$KEYS"
+                  bun ./@ci/vercel-sync-env.ts
 
     build:
         name: Build
