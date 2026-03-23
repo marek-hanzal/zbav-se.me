@@ -35,7 +35,7 @@ export const NotificationLink = withFallback(
 				},
 			},
 			{
-				refetchInterval: 2_500,
+				refetchInterval: 5_000,
 			},
 		);
 
