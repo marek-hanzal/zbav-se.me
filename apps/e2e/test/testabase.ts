@@ -1,9 +1,13 @@
+import { MigrationContextFx, withDatabaseFx } from "@use-pico/common/database";
 import { testabase as coolTestabase } from "@use-pico/server/testabase";
-import { database } from "@zbav-se.me/server/database";
+import type { Database } from "@zbav-se.me/server/database";
+import { Effect } from "effect";
 
 export const testabase = (name: string) => {
 	return coolTestabase({
-		databaseFx: database,
+		databaseFx: withDatabaseFx<Database>({}).pipe(
+			Effect.provideService(MigrationContextFx, {}),
+		),
 		name,
 		onTestFinished(callbackFn) {
 			//

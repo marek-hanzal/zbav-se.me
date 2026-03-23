@@ -1,6 +1,9 @@
 import { expect, test } from "./test";
+import { testabase } from "./testabase";
 
 test("redirects anonymous visitor to the mobile sign-in page", async ({ page }) => {
+	const database = await testabase("just-test");
+
 	await page.goto("/");
 
 	await expect(page).toHaveURL(/\/cs\/sign-in$/);

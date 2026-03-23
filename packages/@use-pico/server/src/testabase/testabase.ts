@@ -5,31 +5,32 @@ import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
 
 export namespace testabase {
-	export interface Props<
-		out TDatabaseFx extends Effect.Effect<withDatabaseFx.Instance, any, DialectContextFx>,
-	> {
-		databaseFx: TDatabaseFx;
+	export interface Props<in out TDatabase> {
+		databaseFx: Effect.Effect<withDatabaseFx.Instance<TDatabase>, never, DialectContextFx>;
+		/**
+		 * Root (admin) database name
+		 */
+		root?: string;
 		template?: string;
 		name?: string;
 		onTestFinished(callbackFn: () => Promise<any>): void;
 	}
 }
 
-export const testabase = async <
-	const TDatabaseFx extends Effect.Effect<withDatabaseFx.Instance, any, DialectContextFx>,
->({
+export const testabase = async <const TDatabase>({
 	databaseFx,
+	root = "postgres",
 	template = "test",
 	name = genId(),
 	onTestFinished,
-}: testabase.Props<TDatabaseFx>) => {
+}: testabase.Props<TDatabase>) => {
 	return Effect.gen(function* () {
 		const { kysely } = yield* databaseFx.pipe(
 			Effect.provideService(
 				DialectContextFx,
 				new PostgresDialect({
 					pool: new Pool({
-						connectionString: `${process.env.SERVER_DATABASE_URL}/postgres`,
+						connectionString: `${process.env.SERVER_DATABASE_URL}/${root}`,
 						max: 1,
 					}),
 				}),

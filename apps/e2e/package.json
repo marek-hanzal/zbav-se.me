@@ -8,7 +8,10 @@
 	"devDependencies": {
 		"@playwright/test": "1.58.2",
 		"@types/node": "25.5.0",
-		"@zbav-se.me/server": "workspace:*"
+		"@use-pico/common": "workspace:*",
+		"@use-pico/server": "workspace:*",
+		"@zbav-se.me/server": "workspace:*",
+		"effect": "3.21.0"
 	},
 	"private": true
 }
