@@ -1,0 +1,13 @@
+{
+	"name": "@zbav-se.me/e2e",
+	"version": "workspace:*",
+	"type": "module",
+	"scripts": {
+		"e2e": "playwright test"
+	},
+	"devDependencies": {
+		"@playwright/test": "1.58.2",
+		"@types/node": "25.5.0"
+	},
+	"private": true
+}

@@ -59,5 +59,23 @@ jobs:
             - name: Install dependencies
               run: bun install
 
+            - name: Install portless
+              run: bun install -g portless
+
+            - name: Install Playwright browsers
+              run: |
+                  cd apps/e2e
+                  bunx playwright install --with-deps chromium
+
             - name: Test
               run: bun run test
+
+            - name: Upload Playwright artifacts
+              if: failure()
+              uses: actions/upload-artifact@v4.6.2
+              with:
+                  name: playwright-artifacts
+                  if-no-files-found: ignore
+                  path: |
+                      apps/e2e/playwright-report
+                      apps/e2e/test-results
