@@ -12,6 +12,8 @@ permissions:
     contents: read
 
 env:
+    FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     # -------------------------------
     # Common env. variables
     # -------------------------------
@@ -37,7 +39,7 @@ env:
     # -------------------------------
     BUNNY_HOST: ${{ vars.BUNNY_HOST }}
     BUNNY_USER: ${{ vars.BUNNY_USER }}
-    BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
+    BUNNY_PASSWORD: ${{ secrets.BUNNY_PASSWORD }}
 
     NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
     NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
@@ -111,7 +113,7 @@ jobs:
 
                   # Local (GHA only)
                   check_var BUNNY_HOST
-                  check_var BUNNY_TOKEN
+                  check_var BUNNY_PASSWORD
                   check_var BUNNY_USER
 
                   check_var NEON_API_KEY
@@ -324,7 +326,7 @@ jobs:
               run: |
                   set -euo pipefail
                   CONF="${GITHUB_WORKSPACE}/rclone.conf"
-                  OBF=$(docker run --rm rclone/rclone:1.73.2 obscure "${BUNNY_TOKEN}")
+                  OBF=$(docker run --rm rclone/rclone:1.73.2 obscure "${BUNNY_PASSWORD}")
                   cat > "$CONF" <<EOF
                   [bunny]
                   type = sftp
