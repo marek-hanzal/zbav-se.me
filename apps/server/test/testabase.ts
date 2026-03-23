@@ -27,7 +27,7 @@ export const testabase = async (id: string = genId()) => {
 		);
 
 		yield* Effect.promise(async () =>
-			sql`CREATE DATABASE ${sql.ref(db)} TEMPLATE test OWNER test`.execute(kysely),
+			sql`CREATE DATABASE ${sql.ref(db)} TEMPLATE test`.execute(kysely),
 		);
 
 		yield* Effect.promise(async () => kysely.destroy());

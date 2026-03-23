@@ -1,4 +1,3 @@
-import { fileURLToPath } from "node:url";
 import { DialectContextFx } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
@@ -6,35 +5,18 @@ import { Client, Pool } from "pg";
 import { database } from "~/database/kysely";
 
 type SetupResult = (() => Promise<void>) | void;
-type ContainerState = {
-	health: string | null;
-	image: string;
-	running: boolean;
-};
 
-const IMAGE = "zbav-se.me:postgres";
+const IMAGE = "nhost/postgres:17-20260320-1";
 const CONTAINER_NAME = "zbav-seme-test-postgres";
+const SEED_DATABASE = "dummy";
+const TEST_DATABASE = "test";
 
 const DATABASE_PORT = 55432;
-const DATABASE_URL = `postgresql://test:test@127.0.0.1:${DATABASE_PORT}`;
-const REPO_ROOT = fileURLToPath(new URL("../../..", import.meta.url));
-const POSTGRES_TEST_ARGS = [
-	"-c",
-	"fsync=off",
-	"-c",
-	"synchronous_commit=off",
-	"-c",
-	"full_page_writes=off",
-	"-c",
-	"shared_buffers=128MB",
-	"-c",
-	"max_connections=40",
-] as const;
+const DATABASE_URL = `postgresql://postgres:test@127.0.0.1:${DATABASE_PORT}`;
 
 function sh(cmd: string[], hint: string) {
 	const proc = Bun.spawnSync({
 		cmd,
-		cwd: REPO_ROOT,
 		stdout: "pipe",
 		stderr: "pipe",
 	});
@@ -51,7 +33,6 @@ function sh(cmd: string[], hint: string) {
 function shQuiet(cmd: string[]) {
 	Bun.spawnSync({
 		cmd,
-		cwd: REPO_ROOT,
 		stdout: "ignore",
 		stderr: "ignore",
 	});
@@ -60,7 +41,6 @@ function shQuiet(cmd: string[]) {
 function shOptional(cmd: string[]) {
 	const proc = Bun.spawnSync({
 		cmd,
-		cwd: REPO_ROOT,
 		stdout: "pipe",
 		stderr: "pipe",
 	});
@@ -72,34 +52,6 @@ function shOptional(cmd: string[]) {
 	return {
 		stdout: new TextDecoder().decode(proc.stdout).trim(),
 	};
-}
-
-function containerLogs(name: string) {
-	return (
-		shOptional([
-			"docker",
-			"logs",
-			name,
-		])?.stdout ?? ""
-	);
-}
-
-function imageExists(image: string) {
-	try {
-		const { stdout } = sh(
-			[
-				"docker",
-				"image",
-				"inspect",
-				image,
-			],
-			"",
-		);
-
-		return stdout.length > 0;
-	} catch {
-		return false;
-	}
 }
 
 function sleep(ms: number) {
@@ -128,73 +80,39 @@ async function waitForPostgresConnect(dsn: string, timeoutMs = 15_000) {
 	throw new Error(`Postgres not accepting connections: ${dsn}\n${lastError}`);
 }
 
-async function waitForContainerHealthy(name: string, timeoutMs = 15_000) {
-	const started = Date.now();
+async function ensureTestDatabase() {
+	const client = new Client({
+		connectionString: `${DATABASE_URL}/${SEED_DATABASE}`,
+	});
 
-	while (Date.now() - started < timeoutMs) {
-		const state = inspectContainer(name);
+	await client.connect();
 
-		if (!state?.running) {
-			break;
-		}
-
-		if (state.health === null || state.health === "healthy") {
-			return;
-		}
-
-		await sleep(75);
+	try {
+		await client.query(
+			`
+				SELECT pg_terminate_backend(pid)
+				FROM pg_stat_activity
+				WHERE datname = $1
+					AND pid <> pg_backend_pid()
+			`,
+			[
+				TEST_DATABASE,
+			],
+		);
+		await client.query(`DROP DATABASE IF EXISTS ${TEST_DATABASE}`);
+		await client.query(`CREATE DATABASE ${TEST_DATABASE} OWNER postgres`);
+	} finally {
+		await client.end();
 	}
-
-	const logs = containerLogs(name);
-
-	throw new Error(
-		[
-			`Postgres container "${name}" did not become healthy in time.`,
-			logs && `Container logs:\n${logs}`,
-		]
-			.filter(Boolean)
-			.join("\n\n"),
-	);
-}
-
-function inspectContainer(name: string): ContainerState | null {
-	const result = shOptional([
-		"docker",
-		"inspect",
-		name,
-		"--format",
-		"{{.Config.Image}}\t{{.State.Running}}\t{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}",
-	]);
-
-	if (!result) {
-		return null;
-	}
-
-	const [image = "", running = "false", health = "none"] = result.stdout.split("\t");
-
-	return {
-		health: health === "none" ? null : health,
-		image,
-		running: running === "true",
-	};
 }
 
 async function ensurePostgresContainer() {
-	const existing = inspectContainer(CONTAINER_NAME);
-
-	if (existing?.running && existing.image === IMAGE) {
-		await waitForPostgresConnect(`${DATABASE_URL}/test`);
-		return;
-	}
-
-	if (existing) {
-		shQuiet([
-			"docker",
-			"rm",
-			"-f",
-			CONTAINER_NAME,
-		]);
-	}
+	shQuiet([
+		"docker",
+		"rm",
+		"-f",
+		CONTAINER_NAME,
+	]);
 
 	sh(
 		[
@@ -205,33 +123,38 @@ async function ensurePostgresContainer() {
 			CONTAINER_NAME,
 			"--rm",
 			"--tmpfs",
-			"/var/lib/postgresql/data:rw",
-			"--health-cmd",
-			"pg_isready -U test -d test",
-			"--health-interval",
-			"500ms",
-			"--health-timeout",
-			"2s",
-			"--health-retries",
-			"20",
-			"--health-start-period",
-			"500ms",
+			"/var/lib/postgresql/data:rw,uid=999,gid=999,mode=0700",
 			"-e",
-			"POSTGRES_USER=test",
+			"POSTGRES_USER=postgres",
 			"-e",
 			"POSTGRES_PASSWORD=test",
 			"-e",
-			"POSTGRES_DB=test",
+			`POSTGRES_DB=${SEED_DATABASE}`,
 			"-p",
 			`127.0.0.1:${DATABASE_PORT}:5432`,
 			IMAGE,
-			...POSTGRES_TEST_ARGS,
 		],
 		"Failed to start Postgres container (port busy?)",
 	);
 
-	await waitForContainerHealthy(CONTAINER_NAME);
-	await waitForPostgresConnect(`${DATABASE_URL}/test`);
+	try {
+		await waitForPostgresConnect(`${DATABASE_URL}/${SEED_DATABASE}`);
+	} catch (error) {
+		const logs = shOptional([
+			"docker",
+			"logs",
+			CONTAINER_NAME,
+		])?.stdout;
+
+		throw new Error(
+			[
+				error instanceof Error ? error.message : String(error),
+				logs ? `Container logs:\n${logs}` : "",
+			]
+				.filter(Boolean)
+				.join("\n\n"),
+		);
+	}
 }
 
 export default async function globalSetup(): Promise<SetupResult> {
@@ -243,21 +166,8 @@ export default async function globalSetup(): Promise<SetupResult> {
 		"Docker is not available",
 	);
 
-	if (!imageExists(IMAGE)) {
-		sh(
-			[
-				"docker",
-				"build",
-				"--platform=linux/amd64",
-				"-t",
-				IMAGE,
-				".",
-			],
-			`Failed to build image "${IMAGE}"`,
-		);
-	}
-
 	await ensurePostgresContainer();
+	await ensureTestDatabase();
 
 	process.env.SERVER_DATABASE_URL = DATABASE_URL;
 
@@ -272,7 +182,7 @@ export default async function globalSetup(): Promise<SetupResult> {
 			DialectContextFx,
 			new PostgresDialect({
 				pool: new Pool({
-					connectionString: `${DATABASE_URL}/test`,
+					connectionString: `${DATABASE_URL}/${TEST_DATABASE}`,
 				}),
 			}),
 		),
