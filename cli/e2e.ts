@@ -162,39 +162,6 @@ function psql(database: string, sql: string, hint: string) {
 	);
 }
 
-function processTree(pid: number, visited = new Set<number>()) {
-	if (visited.has(pid)) {
-		return [];
-	}
-
-	visited.add(pid);
-
-	const children = exec([
-		"pgrep",
-		"-P",
-		String(pid),
-	]).stdout
-		.split("\n")
-		.map((value) => Number(value.trim()))
-		.filter((value) => Number.isInteger(value))
-		.flatMap((childPid) => processTree(childPid, visited));
-
-	return [
-		...children,
-		pid,
-	];
-}
-
-function killTree(pid: number, signal: "SIGTERM" | "SIGKILL") {
-	for (const targetPid of processTree(pid)) {
-		exec([
-			"kill",
-			`-${signal}`,
-			String(targetPid),
-		]);
-	}
-}
-
 async function waitForExit(proc: Spawned, timeoutMs: number) {
 	return await Promise.race([
 		proc.exited.then(() => true),
@@ -406,8 +373,21 @@ async function stopPreviewApps() {
 	const running = previews;
 	previews = [];
 
+	for (const preview of config.previews) {
+		exec([
+			"pkill",
+			"-f",
+			preview.cmd.join(" "),
+		]);
+	}
+
 	for (const { proc } of running) {
-		killTree(proc.pid, "SIGKILL");
+		try {
+			proc.kill("SIGKILL");
+		} catch {
+			//
+		}
+
 		await waitForExit(proc, config.timeouts.stop);
 	}
 }
