@@ -13,25 +13,11 @@ permissions:
     contents: read
 
 env:
-    #     FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
-    #     VITE_APP_ASSETS: ${{ vars.VITE_APP_ASSETS }}
     VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
     NODE_OPTIONS: --max-old-space-size=1300
-    #     SERVER_S3_API: ${{ vars.SERVER_S3_API }}
-    #     SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
-    #     SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
-    #     SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
     SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
     SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
-#     SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
-#     SERVER_CONTENT_CDN: ${{ vars.SERVER_CONTENT_CDN }}
-#     SERVER_GITHUB: ${{ secrets.SERVER_GITHUB }}
-#     BUNNY_HOST: ${{ vars.BUNNY_HOST }}
-#     BUNNY_USER: ${{ vars.BUNNY_USER }}
-#     BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
-#     NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
-#     NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
 
 jobs:
     check:
