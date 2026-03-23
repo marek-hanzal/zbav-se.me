@@ -6,7 +6,6 @@ const TEST_DATABASE = "e2e";
 const DATABASE_PORT = 56432;
 const DATABASE_USER = "postgres";
 const DATABASE_PASSWORD = "e2e";
-const POSTGRES_DATABASE = "postgres";
 const DATABASE_HOST_URL = `postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@127.0.0.1:${DATABASE_PORT}`;
 const DATABASE_URL = `${DATABASE_HOST_URL}/${TEST_DATABASE}`;
 const APP_URL = "http://zbav-se.me.localhost:1355";
@@ -85,7 +84,7 @@ async function waitForPostgres(timeoutMs = 15_000) {
 			"-U",
 			DATABASE_USER,
 			"-d",
-			POSTGRES_DATABASE,
+			SEED_DATABASE,
 		]);
 
 		if (result?.stdout.includes("accepting connections")) {
@@ -179,7 +178,7 @@ function replacePostgresContainer() {
 			"-e",
 			`POSTGRES_PASSWORD=${DATABASE_PASSWORD}`,
 			"-e",
-			`POSTGRES_DB=${POSTGRES_DATABASE}`,
+			`POSTGRES_DB=${SEED_DATABASE}`,
 			"-p",
 			`127.0.0.1:${DATABASE_PORT}:5432`,
 			IMAGE,
@@ -198,12 +197,12 @@ function ensureE2eDatabase() {
 			"-U",
 			DATABASE_USER,
 			"-d",
-			POSTGRES_DATABASE,
+			SEED_DATABASE,
 			"-c",
 			[
 				"SELECT pg_terminate_backend(pid)",
 				"FROM pg_stat_activity",
-				`WHERE datname IN ('${SEED_DATABASE}', '${TEST_DATABASE}')`,
+				`WHERE datname = '${TEST_DATABASE}'`,
 				"AND pid <> pg_backend_pid();",
 			].join(" "),
 		],
@@ -219,7 +218,7 @@ function ensureE2eDatabase() {
 			"-U",
 			DATABASE_USER,
 			"-d",
-			POSTGRES_DATABASE,
+			SEED_DATABASE,
 			"-c",
 			`DROP DATABASE IF EXISTS ${TEST_DATABASE};`,
 		],
@@ -235,39 +234,7 @@ function ensureE2eDatabase() {
 			"-U",
 			DATABASE_USER,
 			"-d",
-			POSTGRES_DATABASE,
-			"-c",
-			`DROP DATABASE IF EXISTS ${SEED_DATABASE};`,
-		],
-		"Failed to drop the E2E seed database",
-	);
-
-	run(
-		[
-			"docker",
-			"exec",
-			CONTAINER_NAME,
-			"psql",
-			"-U",
-			DATABASE_USER,
-			"-d",
-			POSTGRES_DATABASE,
-			"-c",
-			`CREATE DATABASE ${SEED_DATABASE} OWNER ${DATABASE_USER};`,
-		],
-		"Failed to create the E2E seed database",
-	);
-
-	run(
-		[
-			"docker",
-			"exec",
-			CONTAINER_NAME,
-			"psql",
-			"-U",
-			DATABASE_USER,
-			"-d",
-			POSTGRES_DATABASE,
+			SEED_DATABASE,
 			"-c",
 			`CREATE DATABASE ${TEST_DATABASE} OWNER ${DATABASE_USER};`,
 		],
@@ -406,6 +373,7 @@ try {
 	ensureE2eVolume();
 	replacePostgresContainer();
 	await waitForPostgres();
+	await waitForDatabase(SEED_DATABASE);
 	ensureE2eDatabase();
 	await waitForDatabase(TEST_DATABASE);
 
