@@ -25,7 +25,7 @@ const icon: uiIcon.Ui = {
 
 export namespace HomeMenu {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		onLinkClick?: () => void;
+		onLinkClick?(): void;
 	}
 }
 

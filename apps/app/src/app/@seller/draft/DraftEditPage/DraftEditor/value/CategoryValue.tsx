@@ -19,7 +19,7 @@ export namespace CategoryValue {
 export const CategoryValue: FC<CategoryValue.Props> = ({ _suspense, categoryId, ...props }) => {
 	return (
 		<LabelValue
-			data-ui={"CategoryValue[LabelValue]"}
+			data-ui={"CategoryValue"}
 			textLabel={translator.text("Listing category (label)")}
 			textValue={
 				categoryId ? (
