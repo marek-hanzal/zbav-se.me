@@ -379,7 +379,7 @@ try {
 
 	preview = Bun.spawn(
 		[
-			"zsh",
+			"bash",
 			"-lc",
 			"trap 'kill 0' TERM INT EXIT; bun run preview",
 		],
@@ -396,7 +396,7 @@ try {
 
 	const tests = Bun.spawnSync({
 		cmd: [
-			"zsh",
+			"bash",
 			"-lc",
 			"cd apps/e2e && bun run e2e",
 		],
