@@ -40,6 +40,7 @@ env:
     BUNNY_HOST: ${{ vars.BUNNY_HOST }}
     BUNNY_USER: ${{ vars.BUNNY_USER }}
     BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
+    BUNNY_PASSWORD: ${{ secrets.BUNNY_PASSWORD }}
 
     NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
     NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
