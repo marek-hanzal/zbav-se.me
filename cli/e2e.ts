@@ -23,7 +23,7 @@ const config = {
 	},
 	timeouts: {
 		ready: 120_000,
-		stop: 10_000,
+		stop: 250,
 		short: 15_000,
 		migration: 30_000,
 	},
@@ -160,13 +160,6 @@ function psql(database: string, sql: string, hint: string) {
 		],
 		hint,
 	);
-}
-
-async function waitForExit(proc: Spawned, timeoutMs: number) {
-	return await Promise.race([
-		proc.exited.then(() => true),
-		sleep(timeoutMs).then(() => false),
-	]);
 }
 
 async function readStream(stream: ReadableStream<Uint8Array> | null | undefined) {
@@ -361,6 +354,7 @@ function startPreviewApps(env: NodeJS.ProcessEnv) {
 			],
 			{
 				cwd: preview.cwd,
+				detached: true,
 				env,
 				stdout: "pipe",
 				stderr: "pipe",
@@ -373,23 +367,26 @@ async function stopPreviewApps() {
 	const running = previews;
 	previews = [];
 
-	for (const preview of config.previews) {
-		exec([
-			"pkill",
-			"-f",
-			preview.cmd.join(" "),
-		]);
-	}
-
 	for (const { proc } of running) {
 		try {
-			proc.kill("SIGKILL");
+			process.kill(-proc.pid, "SIGKILL");
+		} catch {
+			try {
+				proc.kill("SIGKILL");
+			} catch {
+				//
+			}
+		}
+
+		try {
+			await proc.stdout?.cancel();
+			await proc.stderr?.cancel();
 		} catch {
 			//
 		}
-
-		await waitForExit(proc, config.timeouts.stop);
 	}
+
+	await sleep(config.timeouts.stop);
 }
 
 async function cleanup() {
