@@ -5,11 +5,6 @@ import { Client, Pool } from "pg";
 import { database } from "~/database/kysely";
 
 type SetupResult = (() => Promise<void>) | void;
-type ContainerState = {
-	health: string | null;
-	image: string;
-	running: boolean;
-};
 
 const IMAGE = "nhost/postgres:17-20260320-1";
 const CONTAINER_NAME = "zbav-seme-test-postgres";
@@ -59,16 +54,6 @@ function shOptional(cmd: string[]) {
 	};
 }
 
-function containerLogs(name: string) {
-	return (
-		shOptional([
-			"docker",
-			"logs",
-			name,
-		])?.stdout ?? ""
-	);
-}
-
 function sleep(ms: number) {
 	return new Promise((r) => setTimeout(r, ms));
 }
@@ -97,7 +82,7 @@ async function waitForPostgresConnect(dsn: string, timeoutMs = 15_000) {
 
 async function ensureTestDatabase() {
 	const client = new Client({
-		connectionString: `${DATABASE_URL}/postgres`,
+		connectionString: `${DATABASE_URL}/${SEED_DATABASE}`,
 	});
 
 	await client.connect();
@@ -121,101 +106,13 @@ async function ensureTestDatabase() {
 	}
 }
 
-async function sealTestDatabase() {
-	const client = new Client({
-		connectionString: `${DATABASE_URL}/postgres`,
-	});
-
-	await client.connect();
-
-	try {
-		await client.query(
-			`
-				SELECT pg_terminate_backend(pid)
-				FROM pg_stat_activity
-				WHERE datname = $1
-					AND pid <> pg_backend_pid()
-			`,
-			[
-				TEST_DATABASE,
-			],
-		);
-		await client.query(`ALTER DATABASE ${TEST_DATABASE} WITH ALLOW_CONNECTIONS false`);
-		await client.query(
-			`
-				UPDATE pg_database
-				SET datistemplate = true
-				WHERE datname = $1
-			`,
-			[
-				TEST_DATABASE,
-			],
-		);
-	} finally {
-		await client.end();
-	}
-}
-
-async function waitForContainerHealthy(name: string, timeoutMs = 15_000) {
-	const started = Date.now();
-
-	while (Date.now() - started < timeoutMs) {
-		const state = inspectContainer(name);
-
-		if (!state?.running) {
-			break;
-		}
-
-		if (state.health === null || state.health === "healthy") {
-			return;
-		}
-
-		await sleep(75);
-	}
-
-	const logs = containerLogs(name);
-
-	throw new Error(
-		[
-			`Postgres container "${name}" did not become healthy in time.`,
-			logs && `Container logs:\n${logs}`,
-		]
-			.filter(Boolean)
-			.join("\n\n"),
-	);
-}
-
-function inspectContainer(name: string): ContainerState | null {
-	const result = shOptional([
-		"docker",
-		"inspect",
-		name,
-		"--format",
-		"{{.Config.Image}}\t{{.State.Running}}\t{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}",
-	]);
-
-	if (!result) {
-		return null;
-	}
-
-	const [image = "", running = "false", health = "none"] = result.stdout.split("\t");
-
-	return {
-		health: health === "none" ? null : health,
-		image,
-		running: running === "true",
-	};
-}
-
 async function ensurePostgresContainer() {
-	if (inspectContainer(CONTAINER_NAME)) {
-		shQuiet([
-			"docker",
-			"rm",
-			"-f",
-			CONTAINER_NAME,
-		]);
-	}
+	shQuiet([
+		"docker",
+		"rm",
+		"-f",
+		CONTAINER_NAME,
+	]);
 
 	sh(
 		[
@@ -227,16 +124,6 @@ async function ensurePostgresContainer() {
 			"--rm",
 			"--tmpfs",
 			"/var/lib/postgresql/data:rw,uid=999,gid=999,mode=0700",
-			"--health-cmd",
-			"pg_isready -U postgres -d postgres",
-			"--health-interval",
-			"500ms",
-			"--health-timeout",
-			"2s",
-			"--health-retries",
-			"20",
-			"--health-start-period",
-			"500ms",
 			"-e",
 			"POSTGRES_USER=postgres",
 			"-e",
@@ -250,8 +137,24 @@ async function ensurePostgresContainer() {
 		"Failed to start Postgres container (port busy?)",
 	);
 
-	await waitForContainerHealthy(CONTAINER_NAME);
-	await waitForPostgresConnect(`${DATABASE_URL}/${SEED_DATABASE}`);
+	try {
+		await waitForPostgresConnect(`${DATABASE_URL}/${SEED_DATABASE}`);
+	} catch (error) {
+		const logs = shOptional([
+			"docker",
+			"logs",
+			CONTAINER_NAME,
+		])?.stdout;
+
+		throw new Error(
+			[
+				error instanceof Error ? error.message : String(error),
+				logs ? `Container logs:\n${logs}` : "",
+			]
+				.filter(Boolean)
+				.join("\n\n"),
+		);
+	}
 }
 
 export default async function globalSetup(): Promise<SetupResult> {
@@ -285,8 +188,6 @@ export default async function globalSetup(): Promise<SetupResult> {
 		),
 		Effect.runPromise,
 	);
-
-	await sealTestDatabase();
 
 	return async () => {
 		shQuiet([
