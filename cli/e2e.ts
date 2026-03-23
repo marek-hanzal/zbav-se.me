@@ -11,10 +11,20 @@ const DATABASE_URL = `${DATABASE_HOST_URL}/${TEST_DATABASE}`;
 const APP_URL = "http://zbav-se.me.localhost:1355";
 const API_URL = "http://api.zbav-se.me.localhost:1355";
 const PREVIEW_READY_TIMEOUT_MS = 120_000;
+const PREVIEW_STOP_TIMEOUT_MS = 10_000;
+const ROOT_DIR = new URL("../", import.meta.url).pathname;
+const DOTENV_BIN = new URL("../node_modules/.bin/dotenv", import.meta.url).pathname;
+const APP_DIR = new URL("../apps/app", import.meta.url).pathname;
+const SERVER_DIR = new URL("../apps/server", import.meta.url).pathname;
+const E2E_DIR = new URL("../apps/e2e", import.meta.url).pathname;
 
 type Spawned = ReturnType<typeof Bun.spawn>;
+type PreviewProcess = {
+	name: string;
+	proc: Spawned;
+};
 
-let preview: Spawned | null = null;
+let previews: PreviewProcess[] = [];
 let cleaningUp = false;
 
 function withCommandOutput(proc: ReturnType<typeof Bun.spawnSync>) {
@@ -27,10 +37,11 @@ function withCommandOutput(proc: ReturnType<typeof Bun.spawnSync>) {
 	};
 }
 
-function run(cmd: string[], hint: string, env: NodeJS.ProcessEnv = process.env) {
+function run(cmd: string[], hint: string, env: NodeJS.ProcessEnv = process.env, cwd = ROOT_DIR) {
 	const proc = Bun.spawnSync({
 		cmd,
 		env,
+		cwd,
 		stdout: "pipe",
 		stderr: "pipe",
 	});
@@ -53,10 +64,11 @@ function run(cmd: string[], hint: string, env: NodeJS.ProcessEnv = process.env) 
 	};
 }
 
-function runOptional(cmd: string[], env: NodeJS.ProcessEnv = process.env) {
+function runOptional(cmd: string[], env: NodeJS.ProcessEnv = process.env, cwd = ROOT_DIR) {
 	const proc = Bun.spawnSync({
 		cmd,
 		env,
+		cwd,
 		stdout: "pipe",
 		stderr: "pipe",
 	});
@@ -70,6 +82,101 @@ function runOptional(cmd: string[], env: NodeJS.ProcessEnv = process.env) {
 
 function sleep(ms: number) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function waitForExit(proc: Spawned, timeoutMs: number) {
+	return await Promise.race([
+		proc.exited.then(() => true),
+		sleep(timeoutMs).then(() => false),
+	]);
+}
+
+async function readProcessOutput(stream: ReadableStream<Uint8Array> | null | undefined) {
+	if (!stream) {
+		return "";
+	}
+
+	return (await new Response(stream).text()).trim();
+}
+
+async function formatPreviewLogs() {
+	const chunks = await Promise.all(
+		previews.map(async ({ name, proc }) => {
+			const stdout = await readProcessOutput(proc.stdout);
+			const stderr = await readProcessOutput(proc.stderr);
+
+			const output = [
+				stderr,
+				stdout,
+			]
+				.filter(Boolean)
+				.join("\n\n")
+				.trim();
+
+			if (!output) {
+				return "";
+			}
+
+			return [
+				`[${name}]`,
+				output,
+			].join("\n");
+		}),
+	);
+
+	return chunks.filter(Boolean).join("\n\n");
+}
+
+function listChildPids(pid: number) {
+	const result = runOptional([
+		"pgrep",
+		"-P",
+		String(pid),
+	]);
+
+	if (!result?.stdout) {
+		return [];
+	}
+
+	return result.stdout
+		.split("\n")
+		.map((value) => Number(value.trim()))
+		.filter((value) => Number.isInteger(value));
+}
+
+function listProcessTree(rootPid: number) {
+	const queue = [
+		rootPid,
+	];
+	const visited = new Set<number>();
+	const ordered: number[] = [];
+
+	while (queue.length > 0) {
+		const pid = queue.shift();
+
+		if (!pid || visited.has(pid)) {
+			continue;
+		}
+
+		visited.add(pid);
+		ordered.push(pid);
+
+		for (const childPid of listChildPids(pid)) {
+			queue.push(childPid);
+		}
+	}
+
+	return ordered.reverse();
+}
+
+function killProcessTree(pid: number, signal: "SIGTERM" | "SIGKILL") {
+	for (const targetPid of listProcessTree(pid)) {
+		runOptional([
+			"kill",
+			`-${signal}`,
+			String(targetPid),
+		]);
+	}
 }
 
 async function waitForPostgres(timeoutMs = 15_000) {
@@ -325,16 +432,107 @@ async function runMigration(env: NodeJS.ProcessEnv, timeoutMs = 30_000) {
 	);
 }
 
-async function stopPreview() {
-	if (!preview) {
+function buildPreviewApps(env: NodeJS.ProcessEnv) {
+	run(
+		[
+			DOTENV_BIN,
+			"-c",
+			"development",
+			"--",
+			"bun",
+			"run",
+			"build:preview",
+		],
+		"Failed to build the preview server",
+		env,
+		SERVER_DIR,
+	);
+
+	run(
+		[
+			DOTENV_BIN,
+			"-c",
+			"development",
+			"--",
+			"bun",
+			"run",
+			"build:preview",
+		],
+		"Failed to build the preview app",
+		env,
+		APP_DIR,
+	);
+}
+
+function startPreviewApps(env: NodeJS.ProcessEnv) {
+	previews = [
+		{
+			name: "server-preview",
+			proc: Bun.spawn(
+				[
+					DOTENV_BIN,
+					"-c",
+					"development",
+					"--",
+					"portless",
+					"--force",
+					"api.zbav-se.me",
+					"node",
+					".output/server/index.mjs",
+				],
+				{
+					cwd: SERVER_DIR,
+					env,
+					stdout: "pipe",
+					stderr: "pipe",
+				},
+			),
+		},
+		{
+			name: "app-preview",
+			proc: Bun.spawn(
+				[
+					DOTENV_BIN,
+					"-c",
+					"development",
+					"--",
+					"portless",
+					"--force",
+					"zbav-se.me",
+					"node",
+					".output/server/index.mjs",
+				],
+				{
+					cwd: APP_DIR,
+					env,
+					stdout: "pipe",
+					stderr: "pipe",
+				},
+			),
+		},
+	];
+}
+
+async function stopPreviewApps() {
+	if (previews.length === 0) {
 		return;
 	}
 
 	try {
-		preview.kill();
-		await sleep(500);
+		for (const { proc } of previews) {
+			killProcessTree(proc.pid, "SIGTERM");
+		}
+
+		for (const { proc } of previews) {
+			if (!(await waitForExit(proc, PREVIEW_STOP_TIMEOUT_MS))) {
+				killProcessTree(proc.pid, "SIGKILL");
+				await waitForExit(proc, 1_000);
+			}
+		}
 	} catch {
 		//
+	} finally {
+		previews = [];
 	}
 }
 
@@ -345,7 +543,7 @@ async function cleanup() {
 
 	cleaningUp = true;
 
-	await stopPreview();
+	await stopPreviewApps();
 	runOptional([
 		"docker",
 		"rm",
@@ -376,19 +574,9 @@ try {
 	await waitForDatabase(SEED_DATABASE);
 	ensureE2eDatabase();
 	await waitForDatabase(TEST_DATABASE);
+	buildPreviewApps(env);
 
-	preview = Bun.spawn(
-		[
-			"bash",
-			"-lc",
-			"trap 'kill 0' TERM INT EXIT; bun run preview",
-		],
-		{
-			env,
-			stdout: "inherit",
-			stderr: "inherit",
-		},
-	);
+	startPreviewApps(env);
 
 	await waitForHttp(`${API_URL}/api/public/health`, "Preview API did not become ready in time");
 	await runMigration(env);
@@ -396,10 +584,11 @@ try {
 
 	const tests = Bun.spawnSync({
 		cmd: [
-			"bash",
-			"-lc",
-			"cd apps/e2e && bun run e2e",
+			"bun",
+			"run",
+			"e2e",
 		],
+		cwd: E2E_DIR,
 		env,
 		stdout: "inherit",
 		stderr: "inherit",
@@ -409,7 +598,15 @@ try {
 		process.exitCode = tests.exitCode;
 	}
 } catch (error) {
-	console.error(error instanceof Error ? error.message : String(error));
+	const previewLogs = await formatPreviewLogs();
+	console.error(
+		[
+			error instanceof Error ? error.message : String(error),
+			previewLogs ? `Preview logs:\n${previewLogs}` : "",
+		]
+			.filter(Boolean)
+			.join("\n\n"),
+	);
 	process.exitCode = 1;
 } finally {
 	await cleanup();
