@@ -1,4 +1,3 @@
-import { fileURLToPath } from "node:url";
 import { DialectContextFx } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
@@ -12,12 +11,11 @@ type ContainerState = {
 	running: boolean;
 };
 
-const IMAGE = "zbav-se.me:postgres";
+const IMAGE = "nhost/postgres:17-20260320-1";
 const CONTAINER_NAME = "zbav-seme-test-postgres";
 
 const DATABASE_PORT = 55432;
 const DATABASE_URL = `postgresql://test:test@127.0.0.1:${DATABASE_PORT}`;
-const REPO_ROOT = fileURLToPath(new URL("../../..", import.meta.url));
 const POSTGRES_TEST_ARGS = [
 	"-c",
 	"fsync=off",
@@ -34,7 +32,6 @@ const POSTGRES_TEST_ARGS = [
 function sh(cmd: string[], hint: string) {
 	const proc = Bun.spawnSync({
 		cmd,
-		cwd: REPO_ROOT,
 		stdout: "pipe",
 		stderr: "pipe",
 	});
@@ -51,7 +48,6 @@ function sh(cmd: string[], hint: string) {
 function shQuiet(cmd: string[]) {
 	Bun.spawnSync({
 		cmd,
-		cwd: REPO_ROOT,
 		stdout: "ignore",
 		stderr: "ignore",
 	});
@@ -60,7 +56,6 @@ function shQuiet(cmd: string[]) {
 function shOptional(cmd: string[]) {
 	const proc = Bun.spawnSync({
 		cmd,
-		cwd: REPO_ROOT,
 		stdout: "pipe",
 		stderr: "pipe",
 	});
@@ -82,24 +77,6 @@ function containerLogs(name: string) {
 			name,
 		])?.stdout ?? ""
 	);
-}
-
-function imageExists(image: string) {
-	try {
-		const { stdout } = sh(
-			[
-				"docker",
-				"image",
-				"inspect",
-				image,
-			],
-			"",
-		);
-
-		return stdout.length > 0;
-	} catch {
-		return false;
-	}
 }
 
 function sleep(ms: number) {
@@ -242,20 +219,6 @@ export default async function globalSetup(): Promise<SetupResult> {
 		],
 		"Docker is not available",
 	);
-
-	if (!imageExists(IMAGE)) {
-		sh(
-			[
-				"docker",
-				"build",
-				"--platform=linux/amd64",
-				"-t",
-				IMAGE,
-				".",
-			],
-			`Failed to build image "${IMAGE}"`,
-		);
-	}
 
 	await ensurePostgresContainer();
 
