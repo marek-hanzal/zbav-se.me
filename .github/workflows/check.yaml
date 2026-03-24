@@ -85,89 +85,15 @@ jobs:
             - name: Install dependencies
               run: bun install
 
-            - name: Run portless and e2e chain
+            - name: Run e2e
               run: |
                   set -euo pipefail
 
                   export PORTLESS_STATE_DIR="$RUNNER_TEMP/portless"
 
                   bun install -g portless
-
                   mkdir -p "$PORTLESS_STATE_DIR"
                   portless proxy start --https
-                  sudo env PORTLESS_STATE_DIR="$PORTLESS_STATE_DIR" "$(command -v portless)" trust
-                  test -f "$PORTLESS_STATE_DIR/ca.pem"
-                  export NODE_EXTRA_CA_CERTS="$PORTLESS_STATE_DIR/ca.pem"
-                  export SSL_CERT_FILE="$PORTLESS_STATE_DIR/ca.pem"
-                  curl -skI https://127.0.0.1:1355 >/dev/null
-
-                  mkdir -p "$RUNNER_TEMP/e2e-debug"
-
-                  nohup bun run --cwd ./apps/server e2e >"$RUNNER_TEMP/e2e-debug/server.log" 2>&1 &
-                  server_pid=$!
-                  nohup bun run --cwd ./apps/app e2e >"$RUNNER_TEMP/e2e-debug/app.log" 2>&1 &
-                  app_pid=$!
-                  backend_ready=0
-                  frontend_ready=0
-
-                  echo "server_pid=$server_pid"
-                  echo "app_pid=$app_pid"
-
-                  for _ in $(seq 1 60); do
-                      routes_output="$(portless list)"
-
-                      if curl -skI https://api.zbav-se.me.localhost:1355/api/public/health >/dev/null && grep -q "https://api.zbav-se.me.localhost:1355" <<<"$routes_output"; then
-                          backend_ready=1
-                      fi
-
-                      if curl -skI https://zbav-se.me.localhost:1355 >/dev/null && grep -q "https://zbav-se.me.localhost:1355" <<<"$routes_output"; then
-                          frontend_ready=1
-                      fi
-
-                      if [ "$backend_ready" -eq 1 ] && [ "$frontend_ready" -eq 1 ]; then
-                          echo "Frontend and backend are reachable through portless"
-                          echo "$routes_output"
-                          break
-                      fi
-
-                      if ! kill -0 "$server_pid" 2>/dev/null; then
-                          echo "::group::server.log"
-                          cat "$RUNNER_TEMP/e2e-debug/server.log"
-                          echo "::endgroup::"
-                          exit 1
-                      fi
-
-                      if ! kill -0 "$app_pid" 2>/dev/null; then
-                          echo "::group::app.log"
-                          cat "$RUNNER_TEMP/e2e-debug/app.log"
-                          echo "::endgroup::"
-                          exit 1
-                      fi
-
-                      echo "$routes_output"
-                      sleep 1
-                  done
-
-                  if [ "$backend_ready" -ne 1 ] || [ "$frontend_ready" -ne 1 ]; then
-                      echo "::group::portless list"
-                      portless list
-                      echo "::endgroup::"
-
-                      echo "backend_ready=$backend_ready"
-                      echo "frontend_ready=$frontend_ready"
-
-                      echo "::group::server.log"
-                      cat "$RUNNER_TEMP/e2e-debug/server.log"
-                      echo "::endgroup::"
-
-                      echo "::group::app.log"
-                      cat "$RUNNER_TEMP/e2e-debug/app.log"
-                      echo "::endgroup::"
-
-                      exit 1
-                  fi
-
-                  cd apps/e2e
                   bunx playwright install --with-deps chromium
                   bun run e2e
 
