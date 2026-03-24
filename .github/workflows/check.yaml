@@ -94,6 +94,8 @@ jobs:
                   bun install -g portless
                   mkdir -p "$PORTLESS_STATE_DIR"
                   portless proxy start --https
+                  export NODE_EXTRA_CA_CERTS="$PORTLESS_STATE_DIR/ca.pem"
+                  export SSL_CERT_FILE="$PORTLESS_STATE_DIR/ca.pem"
                   bunx playwright install --with-deps chromium
                   bun run e2e
 
