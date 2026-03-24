@@ -96,6 +96,9 @@ jobs:
                   mkdir -p "$PORTLESS_STATE_DIR"
                   portless proxy start --https
                   sudo env PORTLESS_STATE_DIR="$PORTLESS_STATE_DIR" "$(command -v portless)" trust
+                  test -f "$PORTLESS_STATE_DIR/ca.pem"
+                  export NODE_EXTRA_CA_CERTS="$PORTLESS_STATE_DIR/ca.pem"
+                  export SSL_CERT_FILE="$PORTLESS_STATE_DIR/ca.pem"
                   curl -skI https://127.0.0.1:1355 >/dev/null
 
                   mkdir -p "$RUNNER_TEMP/e2e-debug"
