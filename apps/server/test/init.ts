@@ -106,7 +106,7 @@ export default async function globalSetup() {
 			yield* Effect.promise(async () => {
 				await migrate();
 
-				sql`ALTER DATABASE test WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
+				await sql`ALTER DATABASE test WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
 					kysely,
 				);
 
