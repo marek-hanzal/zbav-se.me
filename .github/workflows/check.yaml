@@ -87,15 +87,21 @@ jobs:
             - name: Install dependencies
               run: bun install
 
-            - name: Run e2e
+            - name: Install portless
+              run: bun install -g portless
+
+            - name: Start portless proxy
               run: |
                   set -euo pipefail
 
-                  bun install -g portless
                   mkdir -p "$PORTLESS_STATE_DIR"
                   portless proxy start --https
-                  bunx playwright install --with-deps chromium
-                  bun run e2e
+
+            - name: Install Playwright browsers
+              run: bunx playwright install --with-deps chromium
+
+            - name: Run Playwright
+              run: bun run e2e
 
             - name: Upload Playwright artifacts
               if: always()
