@@ -85,18 +85,14 @@ jobs:
             - name: Install dependencies
               run: bun install
 
-            - name: Install portless
-              run: bun install -g portless
-
-            - name: Start and verify portless proxy
-              run: |
-                  portless proxy start --https
-                  portless list
-                  curl -skI https://127.0.0.1:1355 >/dev/null
-
-            - name: Start app and server for debug
+            - name: Run portless and e2e chain
               run: |
                   set -euo pipefail
+
+                  bun install -g portless
+
+                  portless proxy start --https
+                  curl -skI https://127.0.0.1:1355 >/dev/null
 
                   mkdir -p "$RUNNER_TEMP/e2e-debug"
 
@@ -104,6 +100,7 @@ jobs:
                   server_pid=$!
                   nohup bun run --cwd ./apps/app e2e >"$RUNNER_TEMP/e2e-debug/app.log" 2>&1 &
                   app_pid=$!
+                  ready=0
 
                   echo "server_pid=$server_pid"
                   echo "app_pid=$app_pid"
@@ -114,7 +111,8 @@ jobs:
                       if curl -skI https://api.zbav-se.me.localhost:1355/api/public/health >/dev/null && curl -skI https://zbav-se.me.localhost:1355 >/dev/null && ! grep -q "No active routes." <<<"$routes_output"; then
                           echo "Frontend and backend are reachable through portless"
                           echo "$routes_output"
-                          exit 0
+                          ready=1
+                          break
                       fi
 
                       if ! kill -0 "$server_pid" 2>/dev/null; then
@@ -135,27 +133,25 @@ jobs:
                       sleep 1
                   done
 
-                  echo "::group::portless list"
-                  portless list
-                  echo "::endgroup::"
+                  if [ "$ready" -ne 1 ]; then
+                      echo "::group::portless list"
+                      portless list
+                      echo "::endgroup::"
 
-                  echo "::group::server.log"
-                  cat "$RUNNER_TEMP/e2e-debug/server.log"
-                  echo "::endgroup::"
+                      echo "::group::server.log"
+                      cat "$RUNNER_TEMP/e2e-debug/server.log"
+                      echo "::endgroup::"
 
-                  echo "::group::app.log"
-                  cat "$RUNNER_TEMP/e2e-debug/app.log"
-                  echo "::endgroup::"
+                      echo "::group::app.log"
+                      cat "$RUNNER_TEMP/e2e-debug/app.log"
+                      echo "::endgroup::"
 
-                  exit 1
+                      exit 1
+                  fi
 
-            - name: Install Playwright browsers
-              run: |
                   cd apps/e2e
                   bunx playwright install --with-deps chromium
-
-            - name: e2e
-              run: bun run e2e
+                  bun run e2e
 
             - name: Upload Playwright artifacts
               if: always()
