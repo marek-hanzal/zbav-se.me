@@ -70,9 +70,9 @@ jobs:
         runs-on: ubuntu-latest
         environment: staging
         env:
-            PORTLESS_STATE_DIR: ${{ runner.temp }}/portless
-            NODE_EXTRA_CA_CERTS: ${{ runner.temp }}/portless/ca.pem
-            SSL_CERT_FILE: ${{ runner.temp }}/portless/ca.pem
+            PORTLESS_STATE_DIR: /tmp/portless
+            NODE_EXTRA_CA_CERTS: /tmp/portless/ca.pem
+            SSL_CERT_FILE: /tmp/portless/ca.pem
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -87,21 +87,15 @@ jobs:
             - name: Install dependencies
               run: bun install
 
-            - name: Install portless
-              run: bun install -g portless
-
-            - name: Start portless proxy
+            - name: Run e2e
               run: |
                   set -euo pipefail
 
+                  bun install -g portless
                   mkdir -p "$PORTLESS_STATE_DIR"
                   portless proxy start --https
-
-            - name: Install Playwright browsers
-              run: bunx playwright install --with-deps chromium
-
-            - name: Run Playwright
-              run: bun run e2e
+                  bunx playwright install --with-deps chromium
+                  bun run e2e
 
             - name: Upload Playwright artifacts
               if: always()
