@@ -20,11 +20,7 @@ test("navigates between public auth screens on mobile", async ({ page }) => {
 });
 
 test("serves the public health endpoint from the preview API", async ({ request }) => {
-	const apiUrl = process.env.E2E_API_URL;
-
-	if (!apiUrl) {
-		throw new Error("E2E_API_URL is required");
-	}
+	const apiUrl = process.env.VITE_SERVER_API;
 
 	const response = await request.get(`${apiUrl}/api/public/health`);
 

@@ -39,9 +39,11 @@ export const testabase = async <const TDatabase>({
 
 		yield* Effect.promise(async () => {
 			await sql`DROP DATABASE IF EXISTS ${sql.ref(name)}`.execute(kysely);
+
 			await sql`CREATE DATABASE ${sql.ref(name)} TEMPLATE ${sql.ref(template)}`.execute(
 				kysely,
 			);
+
 			await kysely.destroy();
 		});
 

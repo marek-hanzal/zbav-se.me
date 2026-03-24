@@ -1,7 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const baseURL = process.env.E2E_APP_URL ?? "http://zbav-se.me.localhost:1355";
-
 export default defineConfig({
 	testDir: "./test",
 	outputDir: "./test-results",
@@ -23,7 +21,7 @@ export default defineConfig({
 				],
 			],
 	use: {
-		baseURL,
+		baseURL: process.env.VITE_ORIGIN,
 		locale: "cs-CZ",
 		trace: "retain-on-failure",
 		screenshot: "on",
