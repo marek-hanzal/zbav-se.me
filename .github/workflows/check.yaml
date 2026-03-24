@@ -103,7 +103,8 @@ jobs:
                   server_pid=$!
                   nohup bun run --cwd ./apps/app e2e >"$RUNNER_TEMP/e2e-debug/app.log" 2>&1 &
                   app_pid=$!
-                  ready=0
+                  backend_ready=0
+                  frontend_ready=0
 
                   echo "server_pid=$server_pid"
                   echo "app_pid=$app_pid"
@@ -111,10 +112,17 @@ jobs:
                   for _ in $(seq 1 60); do
                       routes_output="$(portless list)"
 
-                      if curl -skI https://api.zbav-se.me.localhost:1355/api/public/health >/dev/null && curl -skI https://zbav-se.me.localhost:1355 >/dev/null && ! grep -q "No active routes." <<<"$routes_output"; then
+                      if curl -skI https://api.zbav-se.me.localhost:1355/api/public/health >/dev/null && grep -q "https://api.zbav-se.me.localhost:1355" <<<"$routes_output"; then
+                          backend_ready=1
+                      fi
+
+                      if curl -skI https://zbav-se.me.localhost:1355 >/dev/null && grep -q "https://zbav-se.me.localhost:1355" <<<"$routes_output"; then
+                          frontend_ready=1
+                      fi
+
+                      if [ "$backend_ready" -eq 1 ] && [ "$frontend_ready" -eq 1 ]; then
                           echo "Frontend and backend are reachable through portless"
                           echo "$routes_output"
-                          ready=1
                           break
                       fi
 
@@ -136,10 +144,13 @@ jobs:
                       sleep 1
                   done
 
-                  if [ "$ready" -ne 1 ]; then
+                  if [ "$backend_ready" -ne 1 ] || [ "$frontend_ready" -ne 1 ]; then
                       echo "::group::portless list"
                       portless list
                       echo "::endgroup::"
+
+                      echo "backend_ready=$backend_ready"
+                      echo "frontend_ready=$frontend_ready"
 
                       echo "::group::server.log"
                       cat "$RUNNER_TEMP/e2e-debug/server.log"
