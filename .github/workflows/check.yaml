@@ -91,11 +91,7 @@ jobs:
               run: bun install -g portless
 
             - name: Start portless proxy
-              run: |
-                  set -euo pipefail
-
-                  mkdir -p "$PORTLESS_STATE_DIR"
-                  portless proxy start --https
+              run: portless proxy start --https
 
             - name: Install Playwright browsers
               run: bunx playwright install --with-deps chromium
