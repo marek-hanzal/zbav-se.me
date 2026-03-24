@@ -86,18 +86,16 @@ jobs:
             - name: Install portless
               run: bun install -g portless
 
+            - name: Start and verify portless proxy
+              run: |
+                  portless proxy start --https
+                  portless list
+                  curl -skI https://127.0.0.1:1355 >/dev/null
+
             - name: Install Playwright browsers
               run: |
                   cd apps/e2e
                   bunx playwright install --with-deps chromium
-
-            - name: Start portless proxy
-              run: portless proxy start --https
-
-            - name: Verify portless proxy
-              run: |
-                  portless list
-                  curl -skI https://127.0.0.1:1355 >/dev/null
 
             - name: e2e
               run: bun run e2e
