@@ -1,8 +1,8 @@
-import { expect, test } from "./test";
 import { testabase } from "../utils/testabase";
+import { expect, test } from "./test";
 
 test("redirects anonymous visitor to the mobile sign-in page", async ({ page }) => {
-	const database = await testabase("just-test");
+	const _database = await testabase("just-test");
 
 	await page.goto("/");
 

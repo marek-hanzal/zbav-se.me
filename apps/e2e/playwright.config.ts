@@ -2,7 +2,8 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
 	testDir: "./test",
-	outputDir: "./test-results",
+	globalSetup: "./init.ts",
+	outputDir: "./results",
 	reporter: process.env.CI
 		? [
 				[

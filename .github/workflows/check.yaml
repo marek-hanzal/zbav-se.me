@@ -101,4 +101,4 @@ jobs:
                   if-no-files-found: ignore
                   path: |
                       apps/e2e/playwright-report
-                      apps/e2e/test-results
+                      apps/e2e/results
