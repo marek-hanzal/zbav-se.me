@@ -95,6 +95,7 @@ jobs:
 
                   mkdir -p "$PORTLESS_STATE_DIR"
                   portless proxy start --https
+                  sudo portless trust
                   curl -skI https://127.0.0.1:1355 >/dev/null
 
                   mkdir -p "$RUNNER_TEMP/e2e-debug"
