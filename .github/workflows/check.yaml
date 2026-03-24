@@ -109,9 +109,11 @@ jobs:
                   echo "app_pid=$app_pid"
 
                   for _ in $(seq 1 60); do
-                      if curl -skI https://api.zbav-se.me.localhost:1355/api/public/health >/dev/null && curl -skI https://zbav-se.me.localhost:1355 >/dev/null; then
+                      routes_output="$(portless list)"
+
+                      if curl -skI https://api.zbav-se.me.localhost:1355/api/public/health >/dev/null && curl -skI https://zbav-se.me.localhost:1355 >/dev/null && ! grep -q "No active routes." <<<"$routes_output"; then
                           echo "Frontend and backend are reachable through portless"
-                          portless list
+                          echo "$routes_output"
                           exit 0
                       fi
 
@@ -129,6 +131,7 @@ jobs:
                           exit 1
                       fi
 
+                      echo "$routes_output"
                       sleep 1
                   done
 
