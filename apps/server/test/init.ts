@@ -112,6 +112,23 @@ export default async function globalSetup() {
 			await kysely.destroy();
 		});
 
+		yield* Effect.gen(function* () {
+			const { kysely } = yield* database.pipe(
+				Effect.provideService(
+					DialectContextFx,
+					new PostgresDialect({
+						pool: new Pool({
+							connectionString: `${DATABASE_URL}/postgres`,
+						}),
+					}),
+				),
+			);
+
+			yield* Effect.promise(async () => {
+				await sql`CREATE DATABASE dummy TEMPLATE test;`.execute(kysely);
+			});
+		});
+
 		process.env.SERVER_DATABASE_URL = DATABASE_URL;
 
 		return async () => {
