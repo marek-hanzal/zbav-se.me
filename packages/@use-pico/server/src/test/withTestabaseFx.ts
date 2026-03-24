@@ -123,9 +123,9 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 		);
 
 		yield* Effect.promise(async () => {
-				await sql`ALTER DATABASE ${sql.ref(template)} WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
-					kysely,
-				);
+			await sql`ALTER DATABASE ${sql.ref(template)} WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
+				kysely,
+			);
 
 			await sql`
                 SELECT
@@ -138,7 +138,10 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
                     pid <> pg_backend_pid()
             `.execute(kysely);
 
-				await sql`CREATE DATABASE dummy TEMPLATE ${sql.ref(template)};`.execute(kysely);
+			/**
+			 * This just ensures early we're able to create new databases from template
+			 */
+			await sql`CREATE DATABASE dummy TEMPLATE ${sql.ref(template)};`.execute(kysely);
 
 			await kysely.destroy();
 		});
