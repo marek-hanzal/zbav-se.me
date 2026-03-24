@@ -6,18 +6,18 @@ export default defineConfig({
 	outputDir: "./results",
 	webServer: [
 		{
-			name: "Backend",
-			command: "bun run --cwd ../server e2e",
-			url: `${process.env.VITE_SERVER_API}/api/public/health`,
-			reuseExistingServer: !process.env.CI,
-			timeout: 120_000,
-		},
-		{
 			name: "Frontend",
 			command: "bun run --cwd ../app e2e",
 			url: process.env.VITE_ORIGIN,
 			reuseExistingServer: !process.env.CI,
-			timeout: 120_000,
+			timeout: 60_000,
+		},
+		{
+			name: "Backend",
+			command: "bun run --cwd ../server e2e",
+			url: `${process.env.VITE_SERVER_API}/api/public/health`,
+			reuseExistingServer: !process.env.CI,
+			timeout: 60_000,
 		},
 	],
 	reporter: process.env.CI
