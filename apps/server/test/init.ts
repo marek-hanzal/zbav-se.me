@@ -106,10 +106,6 @@ export default async function globalSetup() {
 			yield* Effect.promise(async () => {
 				await migrate();
 
-				await sql`ALTER DATABASE test WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
-					kysely,
-				);
-
 				await kysely.destroy();
 			});
 		});
@@ -127,6 +123,21 @@ export default async function globalSetup() {
 			);
 
 			yield* Effect.promise(async () => {
+				await sql`ALTER DATABASE test WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
+					kysely,
+				);
+
+				await sql`
+                    SELECT
+                        pg_terminate_backend(pid, 5000)
+				    FROM
+                        pg_stat_activity
+				    WHERE
+                        datname = ${"test"}
+					    AND
+                        pid <> pg_backend_pid()
+                `.execute(kysely);
+
 				await sql`CREATE DATABASE dummy TEMPLATE test;`.execute(kysely);
 			});
 		});
