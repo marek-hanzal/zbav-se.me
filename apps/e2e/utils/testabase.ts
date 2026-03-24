@@ -12,6 +12,7 @@ export const testabase = (name: string) => {
 		databaseFx: withDatabaseFx<Database>({}).pipe(
 			Effect.provideService(MigrationContextFx, {}),
 		),
+		template: "e2e",
 		name,
 		onTestFinished() {
 			//

@@ -1,13 +1,20 @@
-export function sh(cmd: string[], hint: string) {
-	const proc = Bun.spawnSync({
-		cmd,
-		stdout: "pipe",
-		stderr: "pipe",
-	});
-	const stdout = new TextDecoder().decode(proc.stdout).trim();
-	const stderr = new TextDecoder().decode(proc.stderr).trim();
+import { spawnSync } from "node:child_process";
 
-	if (proc.exitCode !== 0) {
+export function sh(
+	cmd: [
+		string,
+		...string[],
+	],
+	hint: string,
+) {
+	const proc = spawnSync(cmd[0], cmd.slice(1), {
+		encoding: "utf8",
+		stdio: "pipe",
+	});
+	const stdout = (proc.stdout ?? "").trim();
+	const stderr = (proc.stderr ?? "").trim();
+
+	if (proc.status !== 0) {
 		throw new Error(`${hint}\n${stderr}`.trim());
 	}
 

@@ -14,10 +14,10 @@ import { transactionDisputeFx as sellerDisputeFx } from "~/@seller/transaction/f
 import { transactionRejectFx as sellerRejectFx } from "~/@seller/transaction/fx/transactionRejectFx";
 import { transactionResolveFx } from "~/@seller/transaction/fx/transactionResolveFx";
 import { transactionEntryCreateFx } from "~/@user/transaction-entry/fx/transactionEntryCreateFx";
-import MessagePackage from "~/seed/data/message-package.json";
-import MessagePersonal from "~/seed/data/message-personal.json";
-import BuyerText from "~/seed/data/message-text-buyer.json";
-import SellerText from "~/seed/data/message-text-seller.json";
+import MessagePackage from "~/seed/data/message-package.json" with { type: "json" };
+import MessagePersonal from "~/seed/data/message-personal.json" with { type: "json" };
+import BuyerText from "~/seed/data/message-text-buyer.json" with { type: "json" };
+import SellerText from "~/seed/data/message-text-seller.json" with { type: "json" };
 import { type InteractionTimeline, withRandomInt } from "~/seed/fx/time/seedTime";
 import { withSeedNowFx } from "~/seed/fx/time/withSeedNowFx";
 

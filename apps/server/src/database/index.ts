@@ -1,2 +1,2 @@
-export { Database } from "./Database";
+export type { Database } from "./Database";
 export { database } from "./kysely";

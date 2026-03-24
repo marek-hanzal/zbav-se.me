@@ -20,7 +20,7 @@ export namespace startPostgresContainer {
 
 async function startPostgresContainer({ image, name, port, db }: startPostgresContainer.Props) {
 	rmImage({
-		image,
+		image: name,
 	});
 
 	runImage({
@@ -32,7 +32,7 @@ async function startPostgresContainer({ image, name, port, db }: startPostgresCo
 		env: {
 			POSTGRES_USER: "postgres",
 			POSTGRES_PASSWORD: "postgres",
-			POSTGRES_DB: "test",
+			POSTGRES_DB: db,
 		},
 		port: [
 			`127.0.0.1:${port}:5432`,

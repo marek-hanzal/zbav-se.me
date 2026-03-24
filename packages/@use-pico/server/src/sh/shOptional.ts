@@ -1,16 +1,22 @@
-export function shOptional(cmd: string[]) {
-	const proc = Bun.spawnSync({
-		cmd,
-		stdout: "pipe",
-		stderr: "pipe",
+import { spawnSync } from "node:child_process";
+
+export function shOptional(
+	cmd: [
+		string,
+		...string[],
+	],
+) {
+	const proc = spawnSync(cmd[0], cmd.slice(1), {
+		encoding: "utf8",
+		stdio: "pipe",
 	});
 
-	if (proc.exitCode !== 0) {
+	if (proc.status !== 0) {
 		return null;
 	}
 
 	return {
 		proc,
-		stdout: new TextDecoder().decode(proc.stdout).trim(),
+		stdout: (proc.stdout ?? "").trim(),
 	} as const;
 }
