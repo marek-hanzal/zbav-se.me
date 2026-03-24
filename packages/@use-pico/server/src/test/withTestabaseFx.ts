@@ -1,4 +1,4 @@
-import { DialectContextFx, withDatabaseFx } from "@use-pico/common/database";
+import { DialectContextFx, MigrationContextFx, withDatabaseFx } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
@@ -66,6 +66,7 @@ export namespace withTestabaseFx {
 		name: string;
 		port: number;
 		template: string;
+		databaseFx: Effect.Effect<withDatabaseFx.Instance<any>, never, DialectContextFx>;
 	}
 }
 
@@ -74,6 +75,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 	name,
 	port,
 	template,
+	databaseFx,
 }: withTestabaseFx.Props) {
 	ensureDocker();
 
@@ -89,7 +91,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 	const dsn = `postgresql://postgres:postgres@127.0.0.1:${port}`;
 
 	yield* Effect.gen(function* () {
-		const { kysely, migrate } = yield* withDatabaseFx({}).pipe(
+		const { kysely, migrate } = yield* databaseFx.pipe(
 			Effect.provideService(
 				DialectContextFx,
 				new PostgresDialect({
@@ -117,10 +119,11 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 					}),
 				}),
 			),
+			Effect.provideService(MigrationContextFx, {}),
 		);
 
 		yield* Effect.promise(async () => {
-			await sql`ALTER DATABASE ${template} WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
+			await sql`ALTER DATABASE ${sql.ref(template)} WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
 				kysely,
 			);
 
@@ -130,12 +133,12 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
                 FROM
                     pg_stat_activity
                 WHERE
-                    datname = ${template}
+                    datname = ${sql.ref(template)}
                     AND
                     pid <> pg_backend_pid()
             `.execute(kysely);
 
-			await sql`CREATE DATABASE dummy TEMPLATE ${template};`.execute(kysely);
+			await sql`CREATE DATABASE dummy TEMPLATE ${sql.ref(template)};`.execute(kysely);
 
 			await kysely.destroy();
 		});
