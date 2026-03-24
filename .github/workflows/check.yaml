@@ -86,6 +86,9 @@ jobs:
             - name: Install portless
               run: bun install -g portless
 
+            - name: Start portless proxy
+              run: portless proxy start --https
+
             - name: Install Playwright browsers
               run: |
                   cd apps/e2e
