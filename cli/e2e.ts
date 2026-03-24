@@ -1,120 +1,5 @@
-const config = {
-	rootDir: new URL("../", import.meta.url).pathname,
-	dotenvBin: new URL("../node_modules/.bin/dotenv", import.meta.url).pathname,
-	directories: {
-		app: new URL("../apps/app", import.meta.url).pathname,
-		server: new URL("../apps/server", import.meta.url).pathname,
-		e2e: new URL("../apps/e2e", import.meta.url).pathname,
-	},
-	postgres: {
-		image: "nhost/postgres:17-20260320-1",
-		container: "zbav-seme-e2e-postgres",
-		volume: "zbav-seme-e2e-postgres-data",
-		host: "127.0.0.1",
-		port: 56432,
-		user: "postgres",
-		password: "e2e",
-		seedDatabase: "e2e_seed",
-		testDatabase: "e2e",
-	},
-	urls: {
-		app: "http://zbav-se.me.localhost:1355",
-		api: "http://api.zbav-se.me.localhost:1355",
-	},
-	timeouts: {
-		ready: 120_000,
-		stop: 250,
-		short: 15_000,
-		migration: 30_000,
-	},
-	previews: [
-		{
-			name: "server-preview",
-			cwd: new URL("../apps/server", import.meta.url).pathname,
-			cmd: [
-				"portless",
-				"--force",
-				"api.zbav-se.me",
-				"node",
-				".output/server/index.mjs",
-			],
-		},
-		{
-			name: "app-preview",
-			cwd: new URL("../apps/app", import.meta.url).pathname,
-			cmd: [
-				"portless",
-				"--force",
-				"zbav-se.me",
-				"node",
-				".output/server/index.mjs",
-			],
-		},
-	],
-	builds: [
-		{
-			name: "preview server",
-			cwd: new URL("../apps/server", import.meta.url).pathname,
-		},
-		{
-			name: "preview app",
-			cwd: new URL("../apps/app", import.meta.url).pathname,
-		},
-	],
-};
-
-type Spawned = ReturnType<typeof Bun.spawn>;
-type PreviewProcess = {
-	name: string;
-	proc: Spawned;
-};
-type CmdOptions = {
-	cwd?: string;
-	env?: NodeJS.ProcessEnv;
-};
-
-const databaseHostUrl = `postgresql://${config.postgres.user}:${config.postgres.password}@${config.postgres.host}:${config.postgres.port}`;
-const databaseUrl = `${databaseHostUrl}/${config.postgres.testDatabase}`;
-
-let previews: PreviewProcess[] = [];
-let cleaningUp = false;
-
-function decode(stream?: Uint8Array<ArrayBufferLike> | null) {
-	return stream ? new TextDecoder().decode(stream).trim() : "";
-}
-
-function exec(cmd: string[], options: CmdOptions = {}) {
-	const proc = Bun.spawnSync({
-		cmd,
-		cwd: options.cwd ?? config.rootDir,
-		env: options.env ?? process.env,
-		stdout: "pipe",
-		stderr: "pipe",
-	});
-
-	return {
-		exitCode: proc.exitCode,
-		stdout: decode(proc.stdout),
-		stderr: decode(proc.stderr),
-	};
-}
-
 function run(cmd: string[], hint: string, options: CmdOptions = {}) {
-	const result = exec(cmd, options);
-
-	if (result.exitCode !== 0) {
-		throw new Error(
-			[
-				hint,
-				result.stderr,
-				result.stdout,
-			]
-				.filter(Boolean)
-				.join("\n\n"),
-		);
-	}
-
-	return result;
+	return sh(cmd, hint, options);
 }
 
 function sleep(ms: number) {
@@ -138,6 +23,10 @@ async function retry(
 	}
 
 	throw new Error(hint);
+}
+
+async function readStream(stream: ReadableStream<Uint8Array> | null | undefined) {
+	return stream ? (await new Response(stream).text()).trim() : "";
 }
 
 function dockerExec(...args: string[]) {
@@ -165,10 +54,6 @@ function psql(database: string, sql: string, hint: string) {
 		],
 		hint,
 	);
-}
-
-async function readStream(stream: ReadableStream<Uint8Array> | null | undefined) {
-	return stream ? (await new Response(stream).text()).trim() : "";
 }
 
 async function waitForExit(proc: Spawned, timeoutMs: number) {
@@ -200,37 +85,36 @@ async function previewLogs() {
 	return logs.filter(Boolean).join("\n\n");
 }
 
-function e2eEnv(): NodeJS.ProcessEnv {
+function sharedEnv(): NodeJS.ProcessEnv {
 	return {
 		...process.env,
-		SERVER_DATABASE_URL: databaseUrl,
 		VITE_ORIGIN: config.urls.app,
 		VITE_SERVER_API: config.urls.api,
 		VITE_APP_ASSETS: "/",
-		E2E_APP_URL: config.urls.app,
-		E2E_API_URL: config.urls.api,
 	};
 }
 
-async function waitForPostgres() {
-	await retry(
-		() =>
-			dockerExec(
-				"pg_isready",
-				"-U",
-				config.postgres.user,
-				"-d",
-				config.postgres.seedDatabase,
-			).stdout.includes("accepting connections"),
-		config.timeouts.short,
-		"E2E Postgres container did not become ready in time",
-	);
+function previewEnv(databaseUrl: string): NodeJS.ProcessEnv {
+	return {
+		...sharedEnv(),
+		SERVER_DATABASE_URL: databaseUrl,
+	};
 }
 
-async function waitForDatabase(database: string) {
+function playwrightEnv(): NodeJS.ProcessEnv {
+	return {
+		...sharedEnv(),
+		SERVER_DATABASE_URL: runtimeDatabaseUrl,
+	};
+}
+
+async function waitForPostgresConnect(dsn: string, timeoutMs = config.timeouts.short) {
+	const database = new URL(dsn).pathname.slice(1);
+	let lastError = `Database "${database}" did not become ready in time`;
+
 	await retry(
-		() =>
-			dockerExec(
+		() => {
+			const result = dockerExec(
 				"psql",
 				"-U",
 				config.postgres.user,
@@ -238,33 +122,131 @@ async function waitForDatabase(database: string) {
 				database,
 				"-c",
 				"SELECT 1;",
-			).stdout.includes("1 row"),
-		config.timeouts.short,
-		`Database "${database}" did not become ready in time`,
+			);
+
+			if (result.stdout.includes("1 row")) {
+				return true;
+			}
+
+			lastError = [
+				result.stderr,
+				result.stdout,
+			]
+				.filter(Boolean)
+				.join("\n\n");
+
+			return false;
+		},
+		timeoutMs,
+		[
+			`Postgres not accepting connections: ${dsn}`,
+			lastError,
+		]
+			.filter(Boolean)
+			.join("\n\n"),
+		75,
 	);
 }
 
-function resetDatabase() {
+function prepareTemplateDatabase() {
 	psql(
-		config.postgres.seedDatabase,
+		config.postgres.rootDatabase,
 		[
 			"SELECT pg_terminate_backend(pid)",
 			"FROM pg_stat_activity",
-			`WHERE datname = '${config.postgres.testDatabase}'`,
+			`WHERE datname IN ('${config.postgres.runtimeDatabase}', '${config.postgres.templateDatabase}')`,
 			"AND pid <> pg_backend_pid();",
 		].join(" "),
 		"Failed to terminate existing E2E database connections",
 	);
 	psql(
-		config.postgres.seedDatabase,
-		`DROP DATABASE IF EXISTS ${config.postgres.testDatabase};`,
-		"Failed to drop the E2E database",
+		config.postgres.rootDatabase,
+		`DROP DATABASE IF EXISTS ${config.postgres.runtimeDatabase};`,
+		"Failed to drop the E2E runtime database",
 	);
 	psql(
-		config.postgres.seedDatabase,
-		`CREATE DATABASE ${config.postgres.testDatabase} OWNER ${config.postgres.user};`,
-		"Failed to create the E2E database",
+		config.postgres.rootDatabase,
+		`DROP DATABASE IF EXISTS ${config.postgres.templateDatabase};`,
+		"Failed to drop the E2E template database",
 	);
+	psql(
+		config.postgres.rootDatabase,
+		`CREATE DATABASE ${config.postgres.templateDatabase} OWNER ${config.postgres.user};`,
+		"Failed to create the E2E template database",
+	);
+}
+
+function cloneRuntimeDatabase() {
+	psql(
+		config.postgres.rootDatabase,
+		[
+			"SELECT pg_terminate_backend(pid)",
+			"FROM pg_stat_activity",
+			`WHERE datname = '${config.postgres.templateDatabase}'`,
+			"AND pid <> pg_backend_pid();",
+		].join(" "),
+		"Failed to terminate template database connections",
+	);
+	psql(
+		config.postgres.rootDatabase,
+		[
+			`CREATE DATABASE ${config.postgres.runtimeDatabase}`,
+			`TEMPLATE ${config.postgres.templateDatabase}`,
+			`OWNER ${config.postgres.user};`,
+		].join(" "),
+		"Failed to clone the E2E runtime database from template",
+	);
+}
+
+async function ensurePostgresContainer() {
+	shQuiet([
+		"docker",
+		"rm",
+		"-f",
+		config.postgres.container,
+	]);
+
+	run(
+		[
+			"docker",
+			"run",
+			"-d",
+			"--name",
+			config.postgres.container,
+			"--rm",
+			"--tmpfs",
+			"/var/lib/postgresql/data:rw,uid=999,gid=999,mode=0700",
+			"-e",
+			`POSTGRES_USER=${config.postgres.user}`,
+			"-e",
+			`POSTGRES_PASSWORD=${config.postgres.password}`,
+			"-e",
+			`POSTGRES_DB=${config.postgres.rootDatabase}`,
+			"-p",
+			`${config.postgres.host}:${config.postgres.port}:5432`,
+			config.postgres.image,
+		],
+		"Failed to start the dedicated E2E Postgres container",
+	);
+
+	try {
+		await waitForPostgresConnect(`${databaseHostUrl}/${config.postgres.rootDatabase}`);
+	} catch (error) {
+		const logs = shOptional([
+			"docker",
+			"logs",
+			config.postgres.container,
+		])?.stdout;
+
+		throw new Error(
+			[
+				error instanceof Error ? error.message : String(error),
+				logs ? `Container logs:\n${logs}` : "",
+			]
+				.filter(Boolean)
+				.join("\n\n"),
+		);
+	}
 }
 
 async function waitForHttp(url: string, hint: string) {
@@ -323,7 +305,7 @@ async function runMigration(env: NodeJS.ProcessEnv) {
 		},
 		config.timeouts.migration,
 		[
-			"Failed to run server migrations for the E2E database",
+			"Failed to run server migrations for the E2E template database",
 			lastError,
 		]
 			.filter(Boolean)
@@ -417,7 +399,9 @@ async function cleanup() {
 }
 
 async function main() {
-	const env = e2eEnv();
+	const templateEnv = previewEnv(templateDatabaseUrl);
+	const runtimeEnv = previewEnv(runtimeDatabaseUrl);
+	const testEnv = playwrightEnv();
 
 	try {
 		run(
@@ -427,63 +411,24 @@ async function main() {
 			],
 			"Docker is not available",
 		);
-		exec([
-			"docker",
-			"volume",
-			"rm",
-			"-f",
-			config.postgres.volume,
-		]);
-		run(
-			[
-				"docker",
-				"volume",
-				"create",
-				config.postgres.volume,
-			],
-			"Failed to create the dedicated E2E Docker volume",
+		await ensurePostgresContainer();
+		prepareTemplateDatabase();
+		await waitForPostgresConnect(templateDatabaseUrl);
+		buildPreviewApps(templateEnv);
+		startPreviewApps(templateEnv);
+		await waitForHttp(
+			`${config.urls.api}/api/public/health`,
+			"Template preview API did not become ready in time",
 		);
-		exec([
-			"docker",
-			"rm",
-			"-f",
-			config.postgres.container,
-		]);
-		run(
-			[
-				"docker",
-				"run",
-				"-d",
-				"--name",
-				config.postgres.container,
-				"--restart",
-				"unless-stopped",
-				"-v",
-				`${config.postgres.volume}:/var/lib/postgresql/data`,
-				"-e",
-				`POSTGRES_USER=${config.postgres.user}`,
-				"-e",
-				`POSTGRES_PASSWORD=${config.postgres.password}`,
-				"-e",
-				`POSTGRES_DB=${config.postgres.seedDatabase}`,
-				"-p",
-				`${config.postgres.host}:${config.postgres.port}:5432`,
-				config.postgres.image,
-			],
-			"Failed to start the dedicated E2E Postgres container",
-		);
-
-		await waitForPostgres();
-		await waitForDatabase(config.postgres.seedDatabase);
-		resetDatabase();
-		await waitForDatabase(config.postgres.testDatabase);
-		buildPreviewApps(env);
-		startPreviewApps(env);
+		await runMigration(templateEnv);
+		await stopPreviewApps();
+		cloneRuntimeDatabase();
+		await waitForPostgresConnect(runtimeDatabaseUrl);
+		startPreviewApps(runtimeEnv);
 		await waitForHttp(
 			`${config.urls.api}/api/public/health`,
 			"Preview API did not become ready in time",
 		);
-		await runMigration(env);
 		await waitForHttp(config.urls.app, "Preview app did not become ready in time");
 
 		const tests = Bun.spawnSync({
@@ -493,7 +438,7 @@ async function main() {
 				"e2e",
 			],
 			cwd: config.directories.e2e,
-			env,
+			env: testEnv,
 			stdout: "inherit",
 			stderr: "inherit",
 		});
