@@ -3,8 +3,8 @@ import { test as base, expect } from "@playwright/test";
 
 async function waitForViewTransitions(page: Page) {
 	await page.waitForFunction(
-		() =>
-			document.getAnimations().every((animation) => {
+		() => {
+			return document.getAnimations().every((animation) => {
 				const effect = animation.effect;
 
 				if (!(effect instanceof KeyframeEffect)) {
@@ -16,7 +16,8 @@ async function waitForViewTransitions(page: Page) {
 				return (
 					!pseudoElement.includes("view-transition") || animation.playState === "finished"
 				);
-			}),
+			});
+		},
 		{
 			timeout: 5_000,
 		},
