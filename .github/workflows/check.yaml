@@ -71,7 +71,6 @@ jobs:
         environment: staging
         env:
             E2E_REUSE_EXISTING_SERVER: "1"
-            PORTLESS_STATE_DIR: ${{ runner.temp }}/portless
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -89,6 +88,8 @@ jobs:
             - name: Run portless and e2e chain
               run: |
                   set -euo pipefail
+
+                  export PORTLESS_STATE_DIR="$RUNNER_TEMP/portless"
 
                   bun install -g portless
 
