@@ -87,7 +87,7 @@ export default async function globalSetup() {
 	return Effect.gen(function* () {
 		const { kysely, migrate } = yield* database;
 
-		process.env.SERVER_DATABASE_URL = `${DATABASE_URL}/test`;
+		process.env.SERVER_DATABASE_URL = DATABASE_URL;
 
 		yield* Effect.promise(async () => {
 			ensureDocker();
