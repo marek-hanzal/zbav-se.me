@@ -5,11 +5,15 @@ import { Effect } from "effect";
 
 export const testabase = (name: string) => {
 	return coolTestabase({
+		/**
+		 * We should have already ensure we've template database prepared, thus it's no longer
+		 * needed to have migrations in the stack.
+		 */
 		databaseFx: withDatabaseFx<Database>({}).pipe(
 			Effect.provideService(MigrationContextFx, {}),
 		),
 		name,
-		onTestFinished(callbackFn) {
+		onTestFinished() {
 			//
 		},
 	});
