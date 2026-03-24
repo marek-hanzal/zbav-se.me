@@ -4,58 +4,58 @@ import { waitForConnect } from "@use-pico/server/pg";
 import { shOptional } from "@use-pico/server/sh";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
-import { Client, Pool } from "pg";
+import { Pool } from "pg";
 import { database } from "~/database/kysely";
 
-const IMAGE = "nhost/postgres:17-20260320-1";
-const CONTAINER_NAME = "zbav-seme-test-postgres";
-const SEED_DATABASE = "dummy";
-const TEST_DATABASE = "test";
+const config = {
+	image: "nhost/postgres:17-20260320-1",
+	name: "zbav-seme-test-postgres",
+} as const;
 
 const DATABASE_PORT = 55432;
-const DATABASE_URL = `postgresql://postgres:test@127.0.0.1:${DATABASE_PORT}`;
+const DATABASE_URL = `postgresql://postgres:postgres@127.0.0.1:${DATABASE_PORT}`;
 
-async function ensureTestDatabase() {
-	const client = new Client({
-		connectionString: `${DATABASE_URL}/${SEED_DATABASE}`,
-	});
+// async function ensureTestDatabase() {
+// 	const client = new Client({
+// 		connectionString: `${DATABASE_URL}/${SEED_DATABASE}`,
+// 	});
 
-	await client.connect();
+// 	await client.connect();
 
-	try {
-		await client.query(
-			`
-				SELECT pg_terminate_backend(pid)
-				FROM pg_stat_activity
-				WHERE datname = $1
-					AND pid <> pg_backend_pid()
-			`,
-			[
-				TEST_DATABASE,
-			],
-		);
-		await client.query(`DROP DATABASE IF EXISTS ${TEST_DATABASE}`);
-		await client.query(`CREATE DATABASE ${TEST_DATABASE} OWNER postgres`);
-	} finally {
-		await client.end();
-	}
-}
+// 	try {
+// 		await client.query(
+// 			`
+// 				SELECT pg_terminate_backend(pid)
+// 				FROM pg_stat_activity
+// 				WHERE datname = $1
+// 					AND pid <> pg_backend_pid()
+// 			`,
+// 			[
+// 				TEST_DATABASE,
+// 			],
+// 		);
+// 		await client.query(`DROP DATABASE IF EXISTS ${TEST_DATABASE}`);
+// 		await client.query(`CREATE DATABASE ${TEST_DATABASE} OWNER postgres`);
+// 	} finally {
+// 		await client.end();
+// 	}
+// }
 
-async function ensurePostgresContainer() {
+async function startPostgresContainer() {
 	rmImage({
-		image: CONTAINER_NAME,
+		image: config.image,
 	});
 
 	runImage({
-		image: IMAGE,
-		name: CONTAINER_NAME,
+		image: config.image,
+		name: config.name,
 		props: {
 			"--tmpfs": "/var/lib/postgresql/data:rw,uid=999,gid=999,mode=0700",
 		},
 		env: {
 			POSTGRES_USER: "postgres",
-			POSTGRES_PASSWORD: "test",
-			POSTGRES_DB: SEED_DATABASE,
+			POSTGRES_PASSWORD: "postgres",
+			POSTGRES_DB: "test",
 		},
 		port: [
 			`127.0.0.1:${DATABASE_PORT}:5432`,
@@ -64,12 +64,12 @@ async function ensurePostgresContainer() {
 	});
 
 	try {
-		await waitForConnect(`${DATABASE_URL}/${SEED_DATABASE}`);
+		await waitForConnect(`${DATABASE_URL}/test`);
 	} catch (error) {
 		const logs = shOptional([
 			"docker",
 			"logs",
-			CONTAINER_NAME,
+			config.name,
 		])?.stdout;
 
 		throw new Error(
@@ -84,26 +84,24 @@ async function ensurePostgresContainer() {
 }
 
 export default async function globalSetup() {
-	await Effect.gen(function* () {
+	return Effect.gen(function* () {
 		const { kysely, migrate } = yield* database;
 
-		ensureDocker();
+		process.env.SERVER_DATABASE_URL = `${DATABASE_URL}/test`;
 
 		yield* Effect.promise(async () => {
-			await ensurePostgresContainer();
-			await ensureTestDatabase();
-		});
+			ensureDocker();
 
-		process.env.SERVER_DATABASE_URL = DATABASE_URL;
+			await startPostgresContainer();
 
-		yield* Effect.promise(async () => {
 			await migrate();
-			return kysely.destroy();
+
+			await kysely.destroy();
 		});
 
 		return async () => {
 			rmImage({
-				image: CONTAINER_NAME,
+				image: config.name,
 			});
 		};
 	}).pipe(
@@ -111,7 +109,7 @@ export default async function globalSetup() {
 			DialectContextFx,
 			new PostgresDialect({
 				pool: new Pool({
-					connectionString: `${DATABASE_URL}/${TEST_DATABASE}`,
+					connectionString: `${DATABASE_URL}/test`,
 				}),
 			}),
 		),
