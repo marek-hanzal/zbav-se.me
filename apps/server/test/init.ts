@@ -1,10 +1,10 @@
 import { DialectContextFx } from "@use-pico/common/database";
 import { ensureDocker, rmImage, runImage } from "@use-pico/server/docker";
-import { waitForConnect } from "@use-pico/server/pg";
+import { terminateClientBackends, waitForConnect } from "@use-pico/server/pg";
 import { shOptional } from "@use-pico/server/sh";
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
-import { Client, Pool } from "pg";
+import { Pool } from "pg";
 import { database } from "~/database/kysely";
 
 const config = {
@@ -14,28 +14,6 @@ const config = {
 
 const DATABASE_PORT = 55432;
 const DATABASE_URL = `postgresql://postgres:postgres@127.0.0.1:${DATABASE_PORT}`;
-
-async function terminateClientBackends() {
-	const client = new Client({
-		connectionString: `${DATABASE_URL}/postgres`,
-	});
-
-	await client.connect();
-
-	try {
-		await client.query(`
-			SELECT
-				pg_terminate_backend(pid, 500)
-			FROM
-				pg_stat_activity
-			WHERE
-				pid <> pg_backend_pid()
-				AND backend_type = 'client backend'
-		`);
-	} finally {
-		await client.end();
-	}
-}
 
 async function startPostgresContainer() {
 	rmImage({
@@ -141,7 +119,7 @@ export default async function globalSetup() {
 		process.env.SERVER_DATABASE_URL = DATABASE_URL;
 
 		return async () => {
-			await terminateClientBackends();
+			await terminateClientBackends(`${DATABASE_URL}/postgres`);
 			rmImage({
 				image: config.name,
 			});
