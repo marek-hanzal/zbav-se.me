@@ -91,25 +91,27 @@ export default async function globalSetup() {
 			await startPostgresContainer();
 		});
 
-		const { kysely, migrate } = yield* database.pipe(
-			Effect.provideService(
-				DialectContextFx,
-				new PostgresDialect({
-					pool: new Pool({
-						connectionString: `${DATABASE_URL}/test`,
+		yield* Effect.gen(function* () {
+			const { kysely, migrate } = yield* database.pipe(
+				Effect.provideService(
+					DialectContextFx,
+					new PostgresDialect({
+						pool: new Pool({
+							connectionString: `${DATABASE_URL}/test`,
+						}),
 					}),
-				}),
-			),
-		);
-
-		yield* Effect.promise(async () => {
-			await migrate();
-
-			sql`ALTER DATABASE test WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
-				kysely,
+				),
 			);
 
-			await kysely.destroy();
+			yield* Effect.promise(async () => {
+				await migrate();
+
+				sql`ALTER DATABASE test WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
+					kysely,
+				);
+
+				await kysely.destroy();
+			});
 		});
 
 		yield* Effect.gen(function* () {
