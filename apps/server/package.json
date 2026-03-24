@@ -9,7 +9,7 @@
 		"build": "nitro build",
 		"build:preview": "nitro build --preset=node_server",
 		"preview": "portless --force api.zbav-se.me node .output/server/index.mjs",
-		"e2e": "preview",
+		"e2e": "bun run preview",
 		"seed:core": "bun ./cli/seed-core.ts",
 		"seed:interaction": "bun ./cli/seed-interaction.ts",
 		"typecheck": "tsc --noEmit",
