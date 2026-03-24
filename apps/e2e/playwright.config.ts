@@ -1,5 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const reuseExistingServer = process.env.E2E_REUSE_EXISTING_SERVER === "1" || !process.env.CI;
+
 export default defineConfig({
 	testDir: "./test",
 	globalSetup: "./init.ts",
@@ -9,14 +11,14 @@ export default defineConfig({
 			name: "Frontend",
 			command: "bun run --cwd ../app e2e",
 			url: process.env.VITE_ORIGIN,
-			reuseExistingServer: !process.env.CI,
+			reuseExistingServer,
 			timeout: 60_000,
 		},
 		{
 			name: "Backend",
 			command: "bun run --cwd ../server e2e",
 			url: `${process.env.VITE_SERVER_API}/api/public/health`,
-			reuseExistingServer: !process.env.CI,
+			reuseExistingServer,
 			timeout: 60_000,
 		},
 	],

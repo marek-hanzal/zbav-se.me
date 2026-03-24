@@ -69,6 +69,8 @@ jobs:
         name: e2e
         runs-on: ubuntu-latest
         environment: staging
+        env:
+            E2E_REUSE_EXISTING_SERVER: "1"
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -91,6 +93,58 @@ jobs:
                   portless proxy start --https
                   portless list
                   curl -skI https://127.0.0.1:1355 >/dev/null
+
+            - name: Start app and server for debug
+              run: |
+                  set -euo pipefail
+
+                  mkdir -p "$RUNNER_TEMP/e2e-debug"
+
+                  nohup bun run --cwd ./apps/server e2e >"$RUNNER_TEMP/e2e-debug/server.log" 2>&1 &
+                  server_pid=$!
+                  nohup bun run --cwd ./apps/app e2e >"$RUNNER_TEMP/e2e-debug/app.log" 2>&1 &
+                  app_pid=$!
+
+                  echo "server_pid=$server_pid"
+                  echo "app_pid=$app_pid"
+
+                  for _ in $(seq 1 60); do
+                      if curl -skI https://api.zbav-se.me.localhost:1355/api/public/health >/dev/null && curl -skI https://zbav-se.me.localhost:1355 >/dev/null; then
+                          echo "Frontend and backend are reachable through portless"
+                          portless list
+                          exit 0
+                      fi
+
+                      if ! kill -0 "$server_pid" 2>/dev/null; then
+                          echo "::group::server.log"
+                          cat "$RUNNER_TEMP/e2e-debug/server.log"
+                          echo "::endgroup::"
+                          exit 1
+                      fi
+
+                      if ! kill -0 "$app_pid" 2>/dev/null; then
+                          echo "::group::app.log"
+                          cat "$RUNNER_TEMP/e2e-debug/app.log"
+                          echo "::endgroup::"
+                          exit 1
+                      fi
+
+                      sleep 1
+                  done
+
+                  echo "::group::portless list"
+                  portless list
+                  echo "::endgroup::"
+
+                  echo "::group::server.log"
+                  cat "$RUNNER_TEMP/e2e-debug/server.log"
+                  echo "::endgroup::"
+
+                  echo "::group::app.log"
+                  cat "$RUNNER_TEMP/e2e-debug/app.log"
+                  echo "::endgroup::"
+
+                  exit 1
 
             - name: Install Playwright browsers
               run: |
