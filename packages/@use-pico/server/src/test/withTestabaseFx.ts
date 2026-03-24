@@ -14,10 +14,11 @@ export namespace startPostgresContainer {
 		image: string;
 		name: string;
 		port: number;
+		db: string;
 	}
 }
 
-async function startPostgresContainer({ image, name, port }: startPostgresContainer.Props) {
+async function startPostgresContainer({ image, name, port, db }: startPostgresContainer.Props) {
 	rmImage({
 		image,
 	});
@@ -40,7 +41,7 @@ async function startPostgresContainer({ image, name, port }: startPostgresContai
 	});
 
 	try {
-		await waitForConnect(`postgresql://postgres:postgres@127.0.0.1:${port}/postgres`);
+		await waitForConnect(`postgresql://postgres:postgres@127.0.0.1:${port}/${db}`);
 	} catch (error) {
 		const logs = shOptional([
 			"docker",
@@ -64,6 +65,7 @@ export namespace withTestabaseFx {
 		image: string;
 		name: string;
 		port: number;
+		template: string;
 	}
 }
 
@@ -71,6 +73,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 	image,
 	name,
 	port,
+	template,
 }: withTestabaseFx.Props) {
 	ensureDocker();
 
@@ -79,6 +82,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 			image,
 			name,
 			port,
+			db: template,
 		});
 	});
 
@@ -90,7 +94,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 				DialectContextFx,
 				new PostgresDialect({
 					pool: new Pool({
-						connectionString: `${dsn}/test`,
+						connectionString: `${dsn}/${template}`,
 					}),
 				}),
 			),
@@ -116,7 +120,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 		);
 
 		yield* Effect.promise(async () => {
-			await sql`ALTER DATABASE test WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
+			await sql`ALTER DATABASE ${template} WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
 				kysely,
 			);
 
@@ -126,12 +130,12 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
                 FROM
                     pg_stat_activity
                 WHERE
-                    datname = ${"test"}
+                    datname = ${template}
                     AND
                     pid <> pg_backend_pid()
             `.execute(kysely);
 
-			await sql`CREATE DATABASE dummy TEMPLATE test;`.execute(kysely);
+			await sql`CREATE DATABASE dummy TEMPLATE ${template};`.execute(kysely);
 
 			await kysely.destroy();
 		});
