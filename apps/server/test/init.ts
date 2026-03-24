@@ -1,11 +1,10 @@
 import { DialectContextFx } from "@use-pico/common/database";
-import { sleep } from "@use-pico/common/sleep";
 import { ensureDocker, rmImage, runImage } from "@use-pico/server/docker";
 import { waitForConnect } from "@use-pico/server/pg";
 import { shOptional } from "@use-pico/server/sh";
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
-import { Pool } from "pg";
+import { Client, Pool } from "pg";
 import { database } from "~/database/kysely";
 
 const config = {
@@ -16,31 +15,27 @@ const config = {
 const DATABASE_PORT = 55432;
 const DATABASE_URL = `postgresql://postgres:postgres@127.0.0.1:${DATABASE_PORT}`;
 
-// async function ensureTestDatabase() {
-// 	const client = new Client({
-// 		connectionString: `${DATABASE_URL}/${SEED_DATABASE}`,
-// 	});
+async function terminateClientBackends() {
+	const client = new Client({
+		connectionString: `${DATABASE_URL}/postgres`,
+	});
 
-// 	await client.connect();
+	await client.connect();
 
-// 	try {
-// 		await client.query(
-// 			`
-// 				SELECT pg_terminate_backend(pid)
-// 				FROM pg_stat_activity
-// 				WHERE datname = $1
-// 					AND pid <> pg_backend_pid()
-// 			`,
-// 			[
-// 				TEST_DATABASE,
-// 			],
-// 		);
-// 		await client.query(`DROP DATABASE IF EXISTS ${TEST_DATABASE}`);
-// 		await client.query(`CREATE DATABASE ${TEST_DATABASE} OWNER postgres`);
-// 	} finally {
-// 		await client.end();
-// 	}
-// }
+	try {
+		await client.query(`
+			SELECT
+				pg_terminate_backend(pid)
+			FROM
+				pg_stat_activity
+			WHERE
+				pid <> pg_backend_pid()
+				AND backend_type = 'client backend'
+		`);
+	} finally {
+		await client.end();
+	}
+}
 
 async function startPostgresContainer() {
 	rmImage({
@@ -146,7 +141,7 @@ export default async function globalSetup() {
 		process.env.SERVER_DATABASE_URL = DATABASE_URL;
 
 		return async () => {
-			// await sleep(250);
+			await terminateClientBackends();
 			rmImage({
 				image: config.name,
 			});
