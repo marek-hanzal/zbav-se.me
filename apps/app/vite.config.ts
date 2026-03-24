@@ -2,12 +2,11 @@ import path from "node:path";
 import ViteYaml from "@modyfi/vite-plugin-yaml";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
-import { assetSizePlugin } from "@use-pico/vite-asset-size";
 import react from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
-export default defineConfig(({ isSsrBuild, mode }) => {
+export default defineConfig(({ mode }) => {
 	const isProduction = mode === "production";
 
 	return {
@@ -28,9 +27,9 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			react({}),
 			tailwindcss(),
 			ViteYaml(),
-			assetSizePlugin({
-				ssr: !!isSsrBuild,
-			}),
+			// assetSizePlugin({
+			// 	ssr: !!isSsrBuild,
+			// }),
 			isProduction
 				? nitro({
 						preset: process.env.NITRO_PRESET || "vercel",

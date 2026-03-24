@@ -4,12 +4,12 @@ import { DialectContextFx } from "./DialectContextFx";
 import { MigrationContextFx } from "./MigrationContextFx";
 
 export namespace withDatabaseFx {
-	export interface Event<TDatabase> {
+	export interface Event<in out TDatabase> {
 		dialect: Dialect;
 		kysely: Kysely<TDatabase>;
 	}
 
-	export interface Props<TDatabase> {
+	export interface Props<in out TDatabase> {
 		/**
 		 * Called before the migration is executed.
 		 */
@@ -17,14 +17,14 @@ export namespace withDatabaseFx {
 		onPostMigration?(event: withDatabaseFx.Event<TDatabase>): Promise<void>;
 	}
 
-	export interface Instance<DB = any> {
+	export interface Instance<in out DB> {
 		dialect: Dialect;
 		kysely: Kysely<DB>;
 		migrate(): Promise<MigrationResult[] | undefined>;
 	}
 }
 
-export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <TDatabase>({
+export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TDatabase>({
 	onPreMigration,
 	onPostMigration,
 }: withDatabaseFx.Props<TDatabase>) {
@@ -98,5 +98,5 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <TDatabase>(
 
 			return results;
 		},
-	};
+	} satisfies withDatabaseFx.Instance<TDatabase>;
 });

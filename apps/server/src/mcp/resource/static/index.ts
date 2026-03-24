@@ -2,156 +2,408 @@ import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
 import type { StaticResourceDocument } from "~/mcp/resource/static/StaticResourceDocument";
 import { withStaticResourceDefinition } from "~/mcp/resource/static/withStaticResourceDefinition";
-import EntityCategoryJson from "../../../../public/mcp/entity/category.json";
-import EntityDraftJson from "../../../../public/mcp/entity/draft.json";
-import EntityGalleryJson from "../../../../public/mcp/entity/gallery.json";
-import EntityListingJson from "../../../../public/mcp/entity/listing.json";
-import EntityLocationJson from "../../../../public/mcp/entity/location.json";
-import EntityUploadJson from "../../../../public/mcp/entity/upload.json";
-import FieldCategoryCategoryJson from "../../../../public/mcp/field/category-category.json";
-import FieldCategoryFilterFulltextJson from "../../../../public/mcp/field/category-filter-fulltext.json";
-import FieldCategoryGroupJson from "../../../../public/mcp/field/category-group.json";
-import FieldCategoryIdJson from "../../../../public/mcp/field/category-id.json";
-import FieldCategoryIdInJson from "../../../../public/mcp/field/category-id-in.json";
-import FieldCategoryLocaleJson from "../../../../public/mcp/field/category-locale.json";
-import FieldCategoryLocaleInJson from "../../../../public/mcp/field/category-locale-in.json";
-import FieldCategorySlugJson from "../../../../public/mcp/field/category-slug.json";
-import FieldCategorySortJson from "../../../../public/mcp/field/category-sort.json";
-import FieldCountFilterJson from "../../../../public/mcp/field/count-filter.json";
-import FieldCountIsEmptyJson from "../../../../public/mcp/field/count-is-empty.json";
-import FieldCountIsFilterEmptyJson from "../../../../public/mcp/field/count-is-filter-empty.json";
-import FieldCountTotalJson from "../../../../public/mcp/field/count-total.json";
-import FieldCursorPageJson from "../../../../public/mcp/field/cursor-page.json";
-import FieldCursorSizeJson from "../../../../public/mcp/field/cursor-size.json";
-import FieldDraftAgeJson from "../../../../public/mcp/field/draft-age.json";
-import FieldDraftCategoryIdJson from "../../../../public/mcp/field/draft-category-id.json";
-import FieldDraftConditionJson from "../../../../public/mcp/field/draft-condition.json";
-import FieldDraftConsJson from "../../../../public/mcp/field/draft-cons.json";
-import FieldDraftDeliveryJson from "../../../../public/mcp/field/draft-delivery.json";
-import FieldDraftDescriptionJson from "../../../../public/mcp/field/draft-description.json";
-import FieldDraftExpiresAtJson from "../../../../public/mcp/field/draft-expires-at.json";
-import FieldDraftFilterUpdatedAtGteJson from "../../../../public/mcp/field/draft-filter-updated-at-gte.json";
-import FieldDraftFilterUpdatedAtLteJson from "../../../../public/mcp/field/draft-filter-updated-at-lte.json";
-import FieldDraftFilterUsedAtIsNullJson from "../../../../public/mcp/field/draft-filter-used-at-is-null.json";
-import FieldDraftGalleryJson from "../../../../public/mcp/field/draft-gallery.json";
-import FieldDraftIdJson from "../../../../public/mcp/field/draft-id.json";
-import FieldDraftLocationIdJson from "../../../../public/mcp/field/draft-location-id.json";
-import FieldDraftPriceJson from "../../../../public/mcp/field/draft-price.json";
-import FieldDraftPriceTypeJson from "../../../../public/mcp/field/draft-price-type.json";
-import FieldDraftProsJson from "../../../../public/mcp/field/draft-pros.json";
-import FieldDraftRestrictionJson from "../../../../public/mcp/field/draft-restriction.json";
-import FieldDraftSortFieldJson from "../../../../public/mcp/field/draft-sort-field.json";
-import FieldDraftTitleJson from "../../../../public/mcp/field/draft-title.json";
-import FieldDraftUploadIdsJson from "../../../../public/mcp/field/draft-upload-ids.json";
-import FieldDraftUsedAtJson from "../../../../public/mcp/field/draft-used-at.json";
-import FieldDraftWarrantyJson from "../../../../public/mcp/field/draft-warranty.json";
-import FieldFilterAgeInJson from "../../../../public/mcp/field/filter-age-in.json";
-import FieldFilterAgeMaxJson from "../../../../public/mcp/field/filter-age-max.json";
-import FieldFilterAgeMinJson from "../../../../public/mcp/field/filter-age-min.json";
-import FieldFilterCategoryIdJson from "../../../../public/mcp/field/filter-category-id.json";
-import FieldFilterCategoryIdInJson from "../../../../public/mcp/field/filter-category-id-in.json";
-import FieldFilterConditionInJson from "../../../../public/mcp/field/filter-condition-in.json";
-import FieldFilterConditionMaxJson from "../../../../public/mcp/field/filter-condition-max.json";
-import FieldFilterConditionMinJson from "../../../../public/mcp/field/filter-condition-min.json";
-import FieldFilterCurrencyJson from "../../../../public/mcp/field/filter-currency.json";
-import FieldFilterCurrencyInJson from "../../../../public/mcp/field/filter-currency-in.json";
-import FieldFilterDeliveryInJson from "../../../../public/mcp/field/filter-delivery-in.json";
-import FieldFilterExpiresAtAfterJson from "../../../../public/mcp/field/filter-expires-at-after.json";
-import FieldFilterExpiresAtBeforeJson from "../../../../public/mcp/field/filter-expires-at-before.json";
-import FieldFilterFeedIdJson from "../../../../public/mcp/field/filter-feed-id.json";
-import FieldFilterFeedIdInJson from "../../../../public/mcp/field/filter-feed-id-in.json";
-import FieldFilterFulltextJson from "../../../../public/mcp/field/filter-fulltext.json";
-import FieldFilterIdJson from "../../../../public/mcp/field/filter-id.json";
-import FieldFilterIdInJson from "../../../../public/mcp/field/filter-id-in.json";
-import FieldFilterIsFavouriteJson from "../../../../public/mcp/field/filter-is-favourite.json";
-import FieldFilterMyJson from "../../../../public/mcp/field/filter-my.json";
-import FieldFilterPriceMaxJson from "../../../../public/mcp/field/filter-price-max.json";
-import FieldFilterPriceMinJson from "../../../../public/mcp/field/filter-price-min.json";
-import FieldFilterRangeJson from "../../../../public/mcp/field/filter-range.json";
-import FieldFilterTitleJson from "../../../../public/mcp/field/filter-title.json";
-import FieldFilterTransactionJson from "../../../../public/mcp/field/filter-transaction.json";
-import FieldFilterUserIdJson from "../../../../public/mcp/field/filter-user-id.json";
-import FieldFilterWarrantyInJson from "../../../../public/mcp/field/filter-warranty-in.json";
-import FieldFilterWithIgnoredJson from "../../../../public/mcp/field/filter-with-ignored.json";
-import FieldFilterWithOwnJson from "../../../../public/mcp/field/filter-with-own.json";
-import FieldListingAgeJson from "../../../../public/mcp/field/listing-age.json";
-import FieldListingCategoryJson from "../../../../public/mcp/field/listing-category.json";
-import FieldListingConditionJson from "../../../../public/mcp/field/listing-condition.json";
-import FieldListingDeliveryJson from "../../../../public/mcp/field/listing-delivery.json";
-import FieldListingDistanceJson from "../../../../public/mcp/field/listing-distance.json";
-import FieldListingDraftIdJson from "../../../../public/mcp/field/listing-draft-id.json";
-import FieldListingGalleryJson from "../../../../public/mcp/field/listing-gallery.json";
-import FieldListingHasFlagJson from "../../../../public/mcp/field/listing-has-flag.json";
-import FieldListingIsFavouriteJson from "../../../../public/mcp/field/listing-is-favourite.json";
-import FieldListingIsIgnoredJson from "../../../../public/mcp/field/listing-is-ignored.json";
-import FieldListingLocationJson from "../../../../public/mcp/field/listing-location.json";
-import FieldListingMyJson from "../../../../public/mcp/field/listing-my.json";
-import FieldListingPriceTypeJson from "../../../../public/mcp/field/listing-price-type.json";
-import FieldListingRestrictionJson from "../../../../public/mcp/field/listing-restriction.json";
-import FieldListingThumbJson from "../../../../public/mcp/field/listing-thumb.json";
-import FieldListingTransactionIdJson from "../../../../public/mcp/field/listing-transaction-id.json";
-import FieldListingUploadIdsJson from "../../../../public/mcp/field/listing-upload-ids.json";
-import FieldListingWarrantyJson from "../../../../public/mcp/field/listing-warranty.json";
-import FieldLocationAddressJson from "../../../../public/mcp/field/location-address.json";
-import FieldLocationAutocompleteLangJson from "../../../../public/mcp/field/location-autocomplete-lang.json";
-import FieldLocationAutocompleteTextJson from "../../../../public/mcp/field/location-autocomplete-text.json";
-import FieldLocationCityJson from "../../../../public/mcp/field/location-city.json";
-import FieldLocationCodeJson from "../../../../public/mcp/field/location-code.json";
-import FieldLocationConfidenceJson from "../../../../public/mcp/field/location-confidence.json";
-import FieldLocationCountryJson from "../../../../public/mcp/field/location-country.json";
-import FieldLocationLangJson from "../../../../public/mcp/field/location-lang.json";
-import FieldLocationLatJson from "../../../../public/mcp/field/location-lat.json";
-import FieldLocationLonJson from "../../../../public/mcp/field/location-lon.json";
-import FieldLocationQueryJson from "../../../../public/mcp/field/location-query.json";
-import FieldLocationStreetJson from "../../../../public/mcp/field/location-street.json";
-import FieldLocationZipJson from "../../../../public/mcp/field/location-zip.json";
-import FieldMetaFeedIdJson from "../../../../public/mcp/field/meta-feed-id.json";
-import FieldMetaLatLonJson from "../../../../public/mcp/field/meta-lat-lon.json";
-import FieldS3CdnJson from "../../../../public/mcp/field/s3-cdn.json";
-import FieldS3ContentTypeJson from "../../../../public/mcp/field/s3-content-type.json";
-import FieldS3ExtensionJson from "../../../../public/mcp/field/s3-extension.json";
-import FieldS3PathJson from "../../../../public/mcp/field/s3-path.json";
-import FieldS3UrlJson from "../../../../public/mcp/field/s3-url.json";
-import FieldSortFieldJson from "../../../../public/mcp/field/sort-field.json";
-import FieldSortOrderJson from "../../../../public/mcp/field/sort-order.json";
-import FieldUploadIdJson from "../../../../public/mcp/field/upload-id.json";
-import FieldUploadUrlJson from "../../../../public/mcp/field/upload-url.json";
-import GuideDraftWriteFlowJson from "../../../../public/mcp/guide/draft-write-flow.json";
-import GuideFailuresJson from "../../../../public/mcp/guide/failures.json";
-import GuideListingBehaviorJson from "../../../../public/mcp/guide/listing-behavior.json";
-import GuideNamespacesJson from "../../../../public/mcp/guide/namespaces.json";
-import GuideOverviewJson from "../../../../public/mcp/guide/overview.json";
-import GuideQueryProfilesJson from "../../../../public/mcp/guide/query-profiles.json";
-import GuideRolesJson from "../../../../public/mcp/guide/roles.json";
-import GuideRulesJson from "../../../../public/mcp/guide/rules.json";
-import GuideSearchAndRankingJson from "../../../../public/mcp/guide/search-and-ranking.json";
-import ProfileBuyerSearchByCategoryJson from "../../../../public/mcp/profile/buyer-search-by-category.json";
-import ProfileBuyerSearchByDeliveryJson from "../../../../public/mcp/profile/buyer-search-by-delivery.json";
-import ProfileBuyerSearchFavouritesJson from "../../../../public/mcp/profile/buyer-search-favourites.json";
-import ProfileBuyerSearchMineJson from "../../../../public/mcp/profile/buyer-search-mine.json";
-import ProfileBuyerSearchNearbyJson from "../../../../public/mcp/profile/buyer-search-nearby.json";
-import ProfileSellerDraftCreateCompleteJson from "../../../../public/mcp/profile/seller-draft-create-complete.json";
-import ProfileSellerDraftFetchExactJson from "../../../../public/mcp/profile/seller-draft-fetch-exact.json";
-import ProfileSellerDraftGalleryReplaceJson from "../../../../public/mcp/profile/seller-draft-gallery-replace.json";
-import ProfileSellerDraftPatchProgressiveJson from "../../../../public/mcp/profile/seller-draft-patch-progressive.json";
-import ProfileSellerDraftReviewRecentJson from "../../../../public/mcp/profile/seller-draft-review-recent.json";
-import ProfileSellerDraftUnusedJson from "../../../../public/mcp/profile/seller-draft-unused.json";
-import ProfileSellerImagePrepareUploadJson from "../../../../public/mcp/profile/seller-image-upload-prepare.json";
-import ProfileSellerListingCountPublishedJson from "../../../../public/mcp/profile/seller-listing-count-published.json";
-import ProfileSellerListingPublishFromDraftJson from "../../../../public/mcp/profile/seller-listing-publish-from-draft.json";
-import ProfileSessionCategorySelectJson from "../../../../public/mcp/profile/session-category-select.json";
-import ProfileSessionLocationAutocompleteJson from "../../../../public/mcp/profile/session-location-autocomplete.json";
-import ProfileSessionLocationTranslateAddressJson from "../../../../public/mcp/profile/session-location-translate-address.json";
-import SchemaEnumAllowedContentTypeJson from "../../../../public/mcp/schema/enum/allowed-content-type.json";
-import SchemaEnumAllowedExtensionJson from "../../../../public/mcp/schema/enum/allowed-extension.json";
-import SchemaEnumCurrencyJson from "../../../../public/mcp/schema/enum/currency.json";
-import SchemaEnumListingDeliveryJson from "../../../../public/mcp/schema/enum/listing-delivery.json";
-import SchemaEnumListingExpireJson from "../../../../public/mcp/schema/enum/listing-expire.json";
-import SchemaEnumListingPriceJson from "../../../../public/mcp/schema/enum/listing-price.json";
-import SchemaEnumListingRestrictionJson from "../../../../public/mcp/schema/enum/listing-restriction.json";
-import SchemaEnumListingSortJson from "../../../../public/mcp/schema/enum/listing-sort.json";
-import SchemaEnumListingWarrantyJson from "../../../../public/mcp/schema/enum/listing-warranty.json";
-import SchemaEnumThumbJson from "../../../../public/mcp/schema/enum/thumb.json";
+import EntityCategoryJson from "../../../../public/mcp/entity/category.json" with { type: "json" };
+import EntityDraftJson from "../../../../public/mcp/entity/draft.json" with { type: "json" };
+import EntityGalleryJson from "../../../../public/mcp/entity/gallery.json" with { type: "json" };
+import EntityListingJson from "../../../../public/mcp/entity/listing.json" with { type: "json" };
+import EntityLocationJson from "../../../../public/mcp/entity/location.json" with { type: "json" };
+import EntityUploadJson from "../../../../public/mcp/entity/upload.json" with { type: "json" };
+import FieldCategoryCategoryJson from "../../../../public/mcp/field/category-category.json" with {
+	type: "json",
+};
+import FieldCategoryFilterFulltextJson from "../../../../public/mcp/field/category-filter-fulltext.json" with {
+	type: "json",
+};
+import FieldCategoryGroupJson from "../../../../public/mcp/field/category-group.json" with {
+	type: "json",
+};
+import FieldCategoryIdJson from "../../../../public/mcp/field/category-id.json" with {
+	type: "json",
+};
+import FieldCategoryIdInJson from "../../../../public/mcp/field/category-id-in.json" with {
+	type: "json",
+};
+import FieldCategoryLocaleJson from "../../../../public/mcp/field/category-locale.json" with {
+	type: "json",
+};
+import FieldCategoryLocaleInJson from "../../../../public/mcp/field/category-locale-in.json" with {
+	type: "json",
+};
+import FieldCategorySlugJson from "../../../../public/mcp/field/category-slug.json" with {
+	type: "json",
+};
+import FieldCategorySortJson from "../../../../public/mcp/field/category-sort.json" with {
+	type: "json",
+};
+import FieldCountFilterJson from "../../../../public/mcp/field/count-filter.json" with {
+	type: "json",
+};
+import FieldCountIsEmptyJson from "../../../../public/mcp/field/count-is-empty.json" with {
+	type: "json",
+};
+import FieldCountIsFilterEmptyJson from "../../../../public/mcp/field/count-is-filter-empty.json" with {
+	type: "json",
+};
+import FieldCountTotalJson from "../../../../public/mcp/field/count-total.json" with {
+	type: "json",
+};
+import FieldCursorPageJson from "../../../../public/mcp/field/cursor-page.json" with {
+	type: "json",
+};
+import FieldCursorSizeJson from "../../../../public/mcp/field/cursor-size.json" with {
+	type: "json",
+};
+import FieldDraftAgeJson from "../../../../public/mcp/field/draft-age.json" with { type: "json" };
+import FieldDraftCategoryIdJson from "../../../../public/mcp/field/draft-category-id.json" with {
+	type: "json",
+};
+import FieldDraftConditionJson from "../../../../public/mcp/field/draft-condition.json" with {
+	type: "json",
+};
+import FieldDraftConsJson from "../../../../public/mcp/field/draft-cons.json" with { type: "json" };
+import FieldDraftDeliveryJson from "../../../../public/mcp/field/draft-delivery.json" with {
+	type: "json",
+};
+import FieldDraftDescriptionJson from "../../../../public/mcp/field/draft-description.json" with {
+	type: "json",
+};
+import FieldDraftExpiresAtJson from "../../../../public/mcp/field/draft-expires-at.json" with {
+	type: "json",
+};
+import FieldDraftFilterUpdatedAtGteJson from "../../../../public/mcp/field/draft-filter-updated-at-gte.json" with {
+	type: "json",
+};
+import FieldDraftFilterUpdatedAtLteJson from "../../../../public/mcp/field/draft-filter-updated-at-lte.json" with {
+	type: "json",
+};
+import FieldDraftFilterUsedAtIsNullJson from "../../../../public/mcp/field/draft-filter-used-at-is-null.json" with {
+	type: "json",
+};
+import FieldDraftGalleryJson from "../../../../public/mcp/field/draft-gallery.json" with {
+	type: "json",
+};
+import FieldDraftIdJson from "../../../../public/mcp/field/draft-id.json" with { type: "json" };
+import FieldDraftLocationIdJson from "../../../../public/mcp/field/draft-location-id.json" with {
+	type: "json",
+};
+import FieldDraftPriceJson from "../../../../public/mcp/field/draft-price.json" with {
+	type: "json",
+};
+import FieldDraftPriceTypeJson from "../../../../public/mcp/field/draft-price-type.json" with {
+	type: "json",
+};
+import FieldDraftProsJson from "../../../../public/mcp/field/draft-pros.json" with { type: "json" };
+import FieldDraftRestrictionJson from "../../../../public/mcp/field/draft-restriction.json" with {
+	type: "json",
+};
+import FieldDraftSortFieldJson from "../../../../public/mcp/field/draft-sort-field.json" with {
+	type: "json",
+};
+import FieldDraftTitleJson from "../../../../public/mcp/field/draft-title.json" with {
+	type: "json",
+};
+import FieldDraftUploadIdsJson from "../../../../public/mcp/field/draft-upload-ids.json" with {
+	type: "json",
+};
+import FieldDraftUsedAtJson from "../../../../public/mcp/field/draft-used-at.json" with {
+	type: "json",
+};
+import FieldDraftWarrantyJson from "../../../../public/mcp/field/draft-warranty.json" with {
+	type: "json",
+};
+import FieldFilterAgeInJson from "../../../../public/mcp/field/filter-age-in.json" with {
+	type: "json",
+};
+import FieldFilterAgeMaxJson from "../../../../public/mcp/field/filter-age-max.json" with {
+	type: "json",
+};
+import FieldFilterAgeMinJson from "../../../../public/mcp/field/filter-age-min.json" with {
+	type: "json",
+};
+import FieldFilterCategoryIdJson from "../../../../public/mcp/field/filter-category-id.json" with {
+	type: "json",
+};
+import FieldFilterCategoryIdInJson from "../../../../public/mcp/field/filter-category-id-in.json" with {
+	type: "json",
+};
+import FieldFilterConditionInJson from "../../../../public/mcp/field/filter-condition-in.json" with {
+	type: "json",
+};
+import FieldFilterConditionMaxJson from "../../../../public/mcp/field/filter-condition-max.json" with {
+	type: "json",
+};
+import FieldFilterConditionMinJson from "../../../../public/mcp/field/filter-condition-min.json" with {
+	type: "json",
+};
+import FieldFilterCurrencyJson from "../../../../public/mcp/field/filter-currency.json" with {
+	type: "json",
+};
+import FieldFilterCurrencyInJson from "../../../../public/mcp/field/filter-currency-in.json" with {
+	type: "json",
+};
+import FieldFilterDeliveryInJson from "../../../../public/mcp/field/filter-delivery-in.json" with {
+	type: "json",
+};
+import FieldFilterExpiresAtAfterJson from "../../../../public/mcp/field/filter-expires-at-after.json" with {
+	type: "json",
+};
+import FieldFilterExpiresAtBeforeJson from "../../../../public/mcp/field/filter-expires-at-before.json" with {
+	type: "json",
+};
+import FieldFilterFeedIdJson from "../../../../public/mcp/field/filter-feed-id.json" with {
+	type: "json",
+};
+import FieldFilterFeedIdInJson from "../../../../public/mcp/field/filter-feed-id-in.json" with {
+	type: "json",
+};
+import FieldFilterFulltextJson from "../../../../public/mcp/field/filter-fulltext.json" with {
+	type: "json",
+};
+import FieldFilterIdJson from "../../../../public/mcp/field/filter-id.json" with { type: "json" };
+import FieldFilterIdInJson from "../../../../public/mcp/field/filter-id-in.json" with {
+	type: "json",
+};
+import FieldFilterIsFavouriteJson from "../../../../public/mcp/field/filter-is-favourite.json" with {
+	type: "json",
+};
+import FieldFilterMyJson from "../../../../public/mcp/field/filter-my.json" with { type: "json" };
+import FieldFilterPriceMaxJson from "../../../../public/mcp/field/filter-price-max.json" with {
+	type: "json",
+};
+import FieldFilterPriceMinJson from "../../../../public/mcp/field/filter-price-min.json" with {
+	type: "json",
+};
+import FieldFilterRangeJson from "../../../../public/mcp/field/filter-range.json" with {
+	type: "json",
+};
+import FieldFilterTitleJson from "../../../../public/mcp/field/filter-title.json" with {
+	type: "json",
+};
+import FieldFilterTransactionJson from "../../../../public/mcp/field/filter-transaction.json" with {
+	type: "json",
+};
+import FieldFilterUserIdJson from "../../../../public/mcp/field/filter-user-id.json" with {
+	type: "json",
+};
+import FieldFilterWarrantyInJson from "../../../../public/mcp/field/filter-warranty-in.json" with {
+	type: "json",
+};
+import FieldFilterWithIgnoredJson from "../../../../public/mcp/field/filter-with-ignored.json" with {
+	type: "json",
+};
+import FieldFilterWithOwnJson from "../../../../public/mcp/field/filter-with-own.json" with {
+	type: "json",
+};
+import FieldListingAgeJson from "../../../../public/mcp/field/listing-age.json" with {
+	type: "json",
+};
+import FieldListingCategoryJson from "../../../../public/mcp/field/listing-category.json" with {
+	type: "json",
+};
+import FieldListingConditionJson from "../../../../public/mcp/field/listing-condition.json" with {
+	type: "json",
+};
+import FieldListingDeliveryJson from "../../../../public/mcp/field/listing-delivery.json" with {
+	type: "json",
+};
+import FieldListingDistanceJson from "../../../../public/mcp/field/listing-distance.json" with {
+	type: "json",
+};
+import FieldListingDraftIdJson from "../../../../public/mcp/field/listing-draft-id.json" with {
+	type: "json",
+};
+import FieldListingGalleryJson from "../../../../public/mcp/field/listing-gallery.json" with {
+	type: "json",
+};
+import FieldListingHasFlagJson from "../../../../public/mcp/field/listing-has-flag.json" with {
+	type: "json",
+};
+import FieldListingIsFavouriteJson from "../../../../public/mcp/field/listing-is-favourite.json" with {
+	type: "json",
+};
+import FieldListingIsIgnoredJson from "../../../../public/mcp/field/listing-is-ignored.json" with {
+	type: "json",
+};
+import FieldListingLocationJson from "../../../../public/mcp/field/listing-location.json" with {
+	type: "json",
+};
+import FieldListingMyJson from "../../../../public/mcp/field/listing-my.json" with { type: "json" };
+import FieldListingPriceTypeJson from "../../../../public/mcp/field/listing-price-type.json" with {
+	type: "json",
+};
+import FieldListingRestrictionJson from "../../../../public/mcp/field/listing-restriction.json" with {
+	type: "json",
+};
+import FieldListingThumbJson from "../../../../public/mcp/field/listing-thumb.json" with {
+	type: "json",
+};
+import FieldListingTransactionIdJson from "../../../../public/mcp/field/listing-transaction-id.json" with {
+	type: "json",
+};
+import FieldListingUploadIdsJson from "../../../../public/mcp/field/listing-upload-ids.json" with {
+	type: "json",
+};
+import FieldListingWarrantyJson from "../../../../public/mcp/field/listing-warranty.json" with {
+	type: "json",
+};
+import FieldLocationAddressJson from "../../../../public/mcp/field/location-address.json" with {
+	type: "json",
+};
+import FieldLocationAutocompleteLangJson from "../../../../public/mcp/field/location-autocomplete-lang.json" with {
+	type: "json",
+};
+import FieldLocationAutocompleteTextJson from "../../../../public/mcp/field/location-autocomplete-text.json" with {
+	type: "json",
+};
+import FieldLocationCityJson from "../../../../public/mcp/field/location-city.json" with {
+	type: "json",
+};
+import FieldLocationCodeJson from "../../../../public/mcp/field/location-code.json" with {
+	type: "json",
+};
+import FieldLocationConfidenceJson from "../../../../public/mcp/field/location-confidence.json" with {
+	type: "json",
+};
+import FieldLocationCountryJson from "../../../../public/mcp/field/location-country.json" with {
+	type: "json",
+};
+import FieldLocationLangJson from "../../../../public/mcp/field/location-lang.json" with {
+	type: "json",
+};
+import FieldLocationLatJson from "../../../../public/mcp/field/location-lat.json" with {
+	type: "json",
+};
+import FieldLocationLonJson from "../../../../public/mcp/field/location-lon.json" with {
+	type: "json",
+};
+import FieldLocationQueryJson from "../../../../public/mcp/field/location-query.json" with {
+	type: "json",
+};
+import FieldLocationStreetJson from "../../../../public/mcp/field/location-street.json" with {
+	type: "json",
+};
+import FieldLocationZipJson from "../../../../public/mcp/field/location-zip.json" with {
+	type: "json",
+};
+import FieldMetaFeedIdJson from "../../../../public/mcp/field/meta-feed-id.json" with {
+	type: "json",
+};
+import FieldMetaLatLonJson from "../../../../public/mcp/field/meta-lat-lon.json" with {
+	type: "json",
+};
+import FieldS3CdnJson from "../../../../public/mcp/field/s3-cdn.json" with { type: "json" };
+import FieldS3ContentTypeJson from "../../../../public/mcp/field/s3-content-type.json" with {
+	type: "json",
+};
+import FieldS3ExtensionJson from "../../../../public/mcp/field/s3-extension.json" with {
+	type: "json",
+};
+import FieldS3PathJson from "../../../../public/mcp/field/s3-path.json" with { type: "json" };
+import FieldS3UrlJson from "../../../../public/mcp/field/s3-url.json" with { type: "json" };
+import FieldSortFieldJson from "../../../../public/mcp/field/sort-field.json" with { type: "json" };
+import FieldSortOrderJson from "../../../../public/mcp/field/sort-order.json" with { type: "json" };
+import FieldUploadIdJson from "../../../../public/mcp/field/upload-id.json" with { type: "json" };
+import FieldUploadUrlJson from "../../../../public/mcp/field/upload-url.json" with { type: "json" };
+import GuideDraftWriteFlowJson from "../../../../public/mcp/guide/draft-write-flow.json" with {
+	type: "json",
+};
+import GuideFailuresJson from "../../../../public/mcp/guide/failures.json" with { type: "json" };
+import GuideListingBehaviorJson from "../../../../public/mcp/guide/listing-behavior.json" with {
+	type: "json",
+};
+import GuideNamespacesJson from "../../../../public/mcp/guide/namespaces.json" with {
+	type: "json",
+};
+import GuideOverviewJson from "../../../../public/mcp/guide/overview.json" with { type: "json" };
+import GuideQueryProfilesJson from "../../../../public/mcp/guide/query-profiles.json" with {
+	type: "json",
+};
+import GuideRolesJson from "../../../../public/mcp/guide/roles.json" with { type: "json" };
+import GuideRulesJson from "../../../../public/mcp/guide/rules.json" with { type: "json" };
+import GuideSearchAndRankingJson from "../../../../public/mcp/guide/search-and-ranking.json" with {
+	type: "json",
+};
+import ProfileBuyerSearchByCategoryJson from "../../../../public/mcp/profile/buyer-search-by-category.json" with {
+	type: "json",
+};
+import ProfileBuyerSearchByDeliveryJson from "../../../../public/mcp/profile/buyer-search-by-delivery.json" with {
+	type: "json",
+};
+import ProfileBuyerSearchFavouritesJson from "../../../../public/mcp/profile/buyer-search-favourites.json" with {
+	type: "json",
+};
+import ProfileBuyerSearchMineJson from "../../../../public/mcp/profile/buyer-search-mine.json" with {
+	type: "json",
+};
+import ProfileBuyerSearchNearbyJson from "../../../../public/mcp/profile/buyer-search-nearby.json" with {
+	type: "json",
+};
+import ProfileSellerDraftCreateCompleteJson from "../../../../public/mcp/profile/seller-draft-create-complete.json" with {
+	type: "json",
+};
+import ProfileSellerDraftFetchExactJson from "../../../../public/mcp/profile/seller-draft-fetch-exact.json" with {
+	type: "json",
+};
+import ProfileSellerDraftGalleryReplaceJson from "../../../../public/mcp/profile/seller-draft-gallery-replace.json" with {
+	type: "json",
+};
+import ProfileSellerDraftPatchProgressiveJson from "../../../../public/mcp/profile/seller-draft-patch-progressive.json" with {
+	type: "json",
+};
+import ProfileSellerDraftReviewRecentJson from "../../../../public/mcp/profile/seller-draft-review-recent.json" with {
+	type: "json",
+};
+import ProfileSellerDraftUnusedJson from "../../../../public/mcp/profile/seller-draft-unused.json" with {
+	type: "json",
+};
+import ProfileSellerImagePrepareUploadJson from "../../../../public/mcp/profile/seller-image-upload-prepare.json" with {
+	type: "json",
+};
+import ProfileSellerListingCountPublishedJson from "../../../../public/mcp/profile/seller-listing-count-published.json" with {
+	type: "json",
+};
+import ProfileSellerListingPublishFromDraftJson from "../../../../public/mcp/profile/seller-listing-publish-from-draft.json" with {
+	type: "json",
+};
+import ProfileSessionCategorySelectJson from "../../../../public/mcp/profile/session-category-select.json" with {
+	type: "json",
+};
+import ProfileSessionLocationAutocompleteJson from "../../../../public/mcp/profile/session-location-autocomplete.json" with {
+	type: "json",
+};
+import ProfileSessionLocationTranslateAddressJson from "../../../../public/mcp/profile/session-location-translate-address.json" with {
+	type: "json",
+};
+import SchemaEnumAllowedContentTypeJson from "../../../../public/mcp/schema/enum/allowed-content-type.json" with {
+	type: "json",
+};
+import SchemaEnumAllowedExtensionJson from "../../../../public/mcp/schema/enum/allowed-extension.json" with {
+	type: "json",
+};
+import SchemaEnumCurrencyJson from "../../../../public/mcp/schema/enum/currency.json" with {
+	type: "json",
+};
+import SchemaEnumListingDeliveryJson from "../../../../public/mcp/schema/enum/listing-delivery.json" with {
+	type: "json",
+};
+import SchemaEnumListingExpireJson from "../../../../public/mcp/schema/enum/listing-expire.json" with {
+	type: "json",
+};
+import SchemaEnumListingPriceJson from "../../../../public/mcp/schema/enum/listing-price.json" with {
+	type: "json",
+};
+import SchemaEnumListingRestrictionJson from "../../../../public/mcp/schema/enum/listing-restriction.json" with {
+	type: "json",
+};
+import SchemaEnumListingSortJson from "../../../../public/mcp/schema/enum/listing-sort.json" with {
+	type: "json",
+};
+import SchemaEnumListingWarrantyJson from "../../../../public/mcp/schema/enum/listing-warranty.json" with {
+	type: "json",
+};
+import SchemaEnumThumbJson from "../../../../public/mcp/schema/enum/thumb.json" with {
+	type: "json",
+};
 
 interface StaticResourceEntry {
 	documentPath: string;

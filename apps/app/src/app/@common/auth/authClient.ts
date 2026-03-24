@@ -1,5 +1,5 @@
 import { passkeyClient } from "@better-auth/passkey/client";
-import type { auth } from "@zbav-se.me/server";
+import type { auth } from "@zbav-se.me/server/auth";
 import { anonymousClient, customSessionClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 

@@ -11,30 +11,6 @@
 			"cache": false,
 			"persistent": true
 		},
-		"preview": {
-			"dependsOn": [
-				"build:preview"
-			],
-			"cache": false,
-			"persistent": true
-		},
-		"build:preview": {
-			"dependsOn": [
-				"^build"
-			],
-			"inputs": [
-				"src/**",
-				"vite.config.ts",
-				"tsconfig.json",
-				"tailwind.config.ts",
-				"nitro.config.ts"
-			],
-			"outputs": [
-				".output/**"
-			],
-			"outputLogs": "new-only",
-			"cache": false
-		},
 		"knip": {
 			"outputs": [],
 			"outputLogs": "new-only",
@@ -81,6 +57,13 @@
 		},
 		"test": {
 			"outputs": [],
+			"outputLogs": "new-only",
+			"cache": false
+		},
+		"e2e:build": {
+			"dependsOn": [
+				"^e2e:build"
+			],
 			"outputLogs": "new-only",
 			"cache": false
 		}

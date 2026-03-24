@@ -6,9 +6,10 @@
 		"dev": "run-p dev:*",
 		"dev:nitro": "portless api.zbav-se.me nitro dev --host 0.0.0.0",
 		"dev:mcp": "DANGEROUSLY_OMIT_AUTH=true bunx @modelcontextprotocol/inspector",
-		"build": "nitro build && bun ./cli/size.ts",
-		"build:preview": "nitro build --preset=node_server && bun ./cli/size.ts",
-		"preview": "portless api.zbav-se.me node .output/server/index.mjs",
+		"build": "nitro build",
+		"e2e:build": "nitro build --preset=node_server",
+		"e2e:start": "portless --force api.zbav-se.me node .output/server/index.mjs",
+		"e2e": "run-s e2e:build e2e:start",
 		"seed:core": "bun ./cli/seed-core.ts",
 		"seed:interaction": "bun ./cli/seed-interaction.ts",
 		"typecheck": "tsc --noEmit",
@@ -16,15 +17,16 @@
 		"knip": "knip --include dependencies --no-config-hints"
 	},
 	"dependencies": {
-		"@better-auth/passkey": "1.5.5",
+		"@better-auth/passkey": "1.5.6",
 		"@hono/zod-openapi": "1.2.3",
 		"@modelcontextprotocol/sdk": "1.27.1",
 		"@scalar/hono-api-reference": "0.10.4",
 		"@use-pico/common": "workspace:*",
-		"better-auth": "1.5.5",
+		"@use-pico/server": "workspace:*",
+		"better-auth": "1.5.6",
 		"cac": "7.0.0",
 		"effect": "3.21.0",
-		"hono": "4.12.8",
+		"hono": "4.12.9",
 		"jose": "6.2.2",
 		"kysely": "0.28.14",
 		"luxon": "3.7.2",
@@ -36,23 +38,26 @@
 		"zod": "4.3.6"
 	},
 	"devDependencies": {
-		"@effect/language-service": "0.81.0",
+		"@effect/language-service": "0.83.1",
 		"@modelcontextprotocol/inspector": "0.21.1",
 		"@types/bun": "1.3.11",
 		"@types/luxon": "3.7.1",
 		"@types/node": "25.5.0",
 		"@types/pg": "8.20.0",
 		"@types/terminal-kit": "2.5.7",
-		"@typescript/native-preview": "7.0.0-dev.20260322.1",
+		"@typescript/native-preview": "7.0.0-dev.20260324.1",
 		"@use-pico/tsconfig": "5.0.0",
-		"knip": "6.0.1",
+		"knip": "6.0.4",
 		"nitro": "3.0.1-alpha.2",
 		"npm-run-all2": "8.0.4",
-		"rolldown": "1.0.0-rc.10",
+		"rolldown": "1.0.0-rc.11",
 		"typescript": "beta",
-		"vitest": "4.1.0"
+		"vitest": "4.1.1"
 	},
-	"main": "src/index.ts",
-	"types": "src/index.ts",
+	"exports": {
+		"./*": {
+			"import": "./src/*/index.ts"
+		}
+	},
 	"private": true
 }

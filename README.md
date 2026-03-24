@@ -39,21 +39,14 @@ bun run dev
 ```bash
 bun run dev
 bun run build
-bun run preview
 bun run sdk
 bun run lint
 bun run typecheck
 bun run test
+bun run e2e
+bun run workflow:test
 bun run workflow:check
 ```
-
-`bun run preview` is managed by Turbo. The frontend app and server build their production preview outputs first and then start from those built outputs.
-
-`bun run test` runs the existing Vitest suites.
-
-The local Postgres Docker image is tagged as `zbav-se.me:postgres` so Docker Compose and test setup reuse the same build cache and image name.
-The server test bootstrap also reuses a compatible running test Postgres container when available and only runs the initial schema migration when the template database has not been prepared yet.
-Root `bun run test` delegates the server suite through Turbo, but the actual `@zbav-se.me/server` test command still runs with `apps/server` as its working directory. The server test bootstrap therefore resolves the Docker build context from the test file location instead of assuming the current working directory is the repo root.
 
 ## Dev URLs
 
