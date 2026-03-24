@@ -13,7 +13,6 @@
 		"knip": "turbo run knip --concurrency=1",
 		"typecheck": "turbo run typecheck --parallel",
 		"test": "dotenv -c development -- turbo run test --parallel",
-		"e2e": "bun ./cli/e2e.ts",
 		"seed:core": "dotenv -c development -- bun --cwd ./apps/server ./cli/seed-core.ts",
 		"seed:interaction": "dotenv -c development -- bun --cwd ./apps/server ./cli/seed-interaction.ts",
 		"env:sync": "bun ./cli/env-sync.ts",
