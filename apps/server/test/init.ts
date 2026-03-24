@@ -3,7 +3,7 @@ import { ensureDocker, rmImage, runImage } from "@use-pico/server/docker";
 import { waitForConnect } from "@use-pico/server/pg";
 import { shOptional } from "@use-pico/server/sh";
 import { Effect } from "effect";
-import { PostgresDialect } from "kysely";
+import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
 import { database } from "~/database/kysely";
 
@@ -85,34 +85,39 @@ async function startPostgresContainer() {
 
 export default async function globalSetup() {
 	return Effect.gen(function* () {
-		const { kysely, migrate } = yield* database;
-
-		process.env.SERVER_DATABASE_URL = DATABASE_URL;
-
 		yield* Effect.promise(async () => {
 			ensureDocker();
 
 			await startPostgresContainer();
+		});
 
+		const { kysely, migrate } = yield* database.pipe(
+			Effect.provideService(
+				DialectContextFx,
+				new PostgresDialect({
+					pool: new Pool({
+						connectionString: `${DATABASE_URL}/test`,
+					}),
+				}),
+			),
+		);
+
+		yield* Effect.promise(async () => {
 			await migrate();
+
+			sql`ALTER DATABASE test WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
+				kysely,
+			);
 
 			await kysely.destroy();
 		});
+
+		process.env.SERVER_DATABASE_URL = DATABASE_URL;
 
 		return async () => {
 			rmImage({
 				image: config.name,
 			});
 		};
-	}).pipe(
-		Effect.provideService(
-			DialectContextFx,
-			new PostgresDialect({
-				pool: new Pool({
-					connectionString: `${DATABASE_URL}/test`,
-				}),
-			}),
-		),
-		Effect.runPromise,
-	);
+	}).pipe(Effect.runPromise);
 }

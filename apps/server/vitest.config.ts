@@ -46,7 +46,7 @@ export default defineConfig({
 		coverage: {
 			enabled: false,
 		},
-		bail: 1,
+		// bail: 1,
 		silent: false,
 		ui: false,
 	},
