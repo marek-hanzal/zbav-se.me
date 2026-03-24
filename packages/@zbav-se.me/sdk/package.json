@@ -21,7 +21,7 @@
 		"@types/node": "25.5.0",
 		"@typescript/native-preview": "7.0.0-dev.20260323.1",
 		"@use-pico/tsconfig": "5.0.0",
-		"knip": "6.0.3",
+		"knip": "6.0.4",
 		"typescript": "beta",
 		"vite": "8.0.0-beta.18"
 	},
