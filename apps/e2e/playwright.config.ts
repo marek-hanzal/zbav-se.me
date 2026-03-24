@@ -4,6 +4,20 @@ export default defineConfig({
 	testDir: "./test",
 	globalSetup: "./init.ts",
 	outputDir: "./results",
+	webServer: [
+		{
+			command: "bun run --cwd ../app e2e",
+			url: process.env.VITE_ORIGIN,
+			reuseExistingServer: !process.env.CI,
+			timeout: 180_000,
+		},
+		{
+			command: "bun run --cwd ../server e2e",
+			url: `${process.env.VITE_SERVER_API}/api/public/health`,
+			reuseExistingServer: !process.env.CI,
+			timeout: 180_000,
+		},
+	],
 	reporter: process.env.CI
 		? [
 				[
