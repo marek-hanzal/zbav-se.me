@@ -123,7 +123,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 		);
 
 		yield* Effect.promise(async () => {
-			await sql`ALTER DATABASE ${sql.ref(template)} WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
+			await sql`ALTER DATABASE ${template} WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
 				kysely,
 			);
 
@@ -133,12 +133,12 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
                 FROM
                     pg_stat_activity
                 WHERE
-                    datname = ${sql.ref(template)}
+                    datname = ${template}
                     AND
                     pid <> pg_backend_pid()
             `.execute(kysely);
 
-			await sql`CREATE DATABASE dummy TEMPLATE ${sql.ref(template)};`.execute(kysely);
+			await sql`CREATE DATABASE dummy TEMPLATE ${template};`.execute(kysely);
 
 			await kysely.destroy();
 		});
