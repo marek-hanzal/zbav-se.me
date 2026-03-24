@@ -69,8 +69,6 @@ jobs:
         name: e2e
         runs-on: ubuntu-latest
         environment: staging
-        env:
-            E2E_REUSE_EXISTING_SERVER: "1"
         steps:
             - uses: actions/checkout@v6.0.2
 
