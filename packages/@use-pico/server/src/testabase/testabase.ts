@@ -1,6 +1,5 @@
 import { DialectContextFx, type withDatabaseFx } from "@use-pico/common/database";
 import { genId } from "@use-pico/common/gen-id";
-import { sleep } from "@use-pico/common/sleep";
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
@@ -62,7 +61,6 @@ export const testabase = async <const TDatabase>({
 
 		onTestFinished(async () => {
 			await instance.kysely.destroy();
-			await sleep(250);
 		});
 
 		return instance;
