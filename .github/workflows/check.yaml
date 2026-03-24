@@ -71,6 +71,7 @@ jobs:
         environment: staging
         env:
             E2E_REUSE_EXISTING_SERVER: "1"
+            PORTLESS_STATE_DIR: ${{ runner.temp }}/portless
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -91,6 +92,7 @@ jobs:
 
                   bun install -g portless
 
+                  mkdir -p "$PORTLESS_STATE_DIR"
                   portless proxy start --https
                   curl -skI https://127.0.0.1:1355 >/dev/null
 
