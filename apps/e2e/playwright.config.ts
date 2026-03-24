@@ -9,13 +9,13 @@ export default defineConfig({
 			command: "bun run --cwd ../app e2e",
 			url: process.env.VITE_ORIGIN,
 			reuseExistingServer: !process.env.CI,
-			timeout: 180_000,
+			timeout: 10_000,
 		},
 		{
 			command: "bun run --cwd ../server e2e",
 			url: `${process.env.VITE_SERVER_API}/api/public/health`,
 			reuseExistingServer: !process.env.CI,
-			timeout: 180_000,
+			timeout: 10_000,
 		},
 	],
 	reporter: process.env.CI

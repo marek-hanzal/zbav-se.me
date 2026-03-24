@@ -5,12 +5,15 @@
 	"scripts": {
 		"e2e": "playwright test"
 	},
+	"dependencies": {
+		"@zbav-se.me/app": "workspace:*",
+		"@zbav-se.me/server": "workspace:*"
+	},
 	"devDependencies": {
 		"@playwright/test": "1.58.2",
 		"@types/node": "25.5.0",
 		"@use-pico/common": "workspace:*",
 		"@use-pico/server": "workspace:*",
-		"@zbav-se.me/server": "workspace:*",
 		"effect": "3.21.0"
 	},
 	"private": true

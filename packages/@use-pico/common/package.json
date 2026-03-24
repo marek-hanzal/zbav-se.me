@@ -33,7 +33,7 @@
 		"@rollup/plugin-node-resolve": "16.0.3",
 		"@rollup/plugin-typescript": "12.3.0",
 		"@types/node": "25.5.0",
-		"@typescript/native-preview": "7.0.0-dev.20260323.1",
+		"@typescript/native-preview": "7.0.0-dev.20260324.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"effect": "3.21.0",
 		"knip": "6.0.4",

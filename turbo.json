@@ -20,25 +20,14 @@
 		},
 		"e2e": {
 			"dependsOn": [
-				"build:preview"
+				"^build:preview"
 			],
 			"cache": false,
-			"persistent": true,
 			"outputLogs": "new-only"
 		},
 		"build:preview": {
 			"dependsOn": [
 				"^build"
-			],
-			"inputs": [
-				"src/**",
-				"vite.config.ts",
-				"tsconfig.json",
-				"tailwind.config.ts",
-				"nitro.config.ts"
-			],
-			"outputs": [
-				".output/**"
 			],
 			"outputLogs": "new-only",
 			"cache": false
