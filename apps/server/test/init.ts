@@ -25,7 +25,7 @@ async function terminateClientBackends() {
 	try {
 		await client.query(`
 			SELECT
-				pg_terminate_backend(pid)
+				pg_terminate_backend(pid, 500)
 			FROM
 				pg_stat_activity
 			WHERE
