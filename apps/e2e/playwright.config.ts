@@ -43,6 +43,7 @@ export default defineConfig({
 			],
 	use: {
 		baseURL: process.env.VITE_ORIGIN,
+		ignoreHTTPSErrors: true,
 		locale: "cs-CZ",
 		trace: "retain-on-failure",
 		screenshot: "on",
