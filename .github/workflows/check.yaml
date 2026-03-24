@@ -16,8 +16,8 @@ permissions:
 env:
     FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
-    VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
-    VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
+    VITE_ORIGIN: https://zbav-se.me.localhost:1355
+    VITE_SERVER_API: https://api.zbav-se.me.localhost:1355
     NODE_OPTIONS: --max-old-space-size=1300
     SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
     SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
