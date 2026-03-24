@@ -1,4 +1,5 @@
 import { DialectContextFx } from "@use-pico/common/database";
+import { sleep } from "@use-pico/common/sleep";
 import { ensureDocker, rmImage, runImage } from "@use-pico/server/docker";
 import { waitForConnect } from "@use-pico/server/pg";
 import { shOptional } from "@use-pico/server/sh";
@@ -145,6 +146,7 @@ export default async function globalSetup() {
 		process.env.SERVER_DATABASE_URL = DATABASE_URL;
 
 		return async () => {
+			// await sleep(250);
 			rmImage({
 				image: config.name,
 			});
