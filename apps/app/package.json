@@ -7,7 +7,7 @@
 		"build": "vite build",
 		"dev": "portless zbav-se.me vite",
 		"e2e:build": "NITRO_PRESET=node_server vite build --mode production",
-		"e2e:start": "portless --force zbav.se.me node .output/server/index.mjs",
+		"e2e:start": "portless --force zbav-se.me node .output/server/index.mjs",
 		"e2e": "run-s e2e:build e2e:start",
 		"translations": "bun ./cli/translations.ts",
 		"typecheck": "tsc --noEmit",
