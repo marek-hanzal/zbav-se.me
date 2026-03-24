@@ -11,27 +11,6 @@
 			"cache": false,
 			"persistent": true
 		},
-		"preview": {
-			"dependsOn": [
-				"build:preview"
-			],
-			"cache": false,
-			"persistent": true
-		},
-		"e2e": {
-			"dependsOn": [
-				"^build:preview"
-			],
-			"cache": false,
-			"outputLogs": "new-only"
-		},
-		"build:preview": {
-			"dependsOn": [
-				"^build"
-			],
-			"outputLogs": "new-only",
-			"cache": false
-		},
 		"knip": {
 			"outputs": [],
 			"outputLogs": "new-only",
@@ -78,6 +57,13 @@
 		},
 		"test": {
 			"outputs": [],
+			"outputLogs": "new-only",
+			"cache": false
+		},
+		"e2e:build": {
+			"dependsOn": [
+				"^e2e:build"
+			],
 			"outputLogs": "new-only",
 			"cache": false
 		}

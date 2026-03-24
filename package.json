@@ -5,8 +5,7 @@
 	"scripts": {
 		"dev": "dotenv -c development -- turbo run dev --parallel",
 		"build": "dotenv -c development -- turbo run build --parallel",
-		"preview": "dotenv -c development -- turbo run preview --parallel",
-		"e2e": "dotenv -c development -- turbo run e2e",
+		"e2e": "dotenv -c development -- bun run --cwd ./apps/e2e e2e",
 		"sdk": "dotenv -c development -- bun x turbo run sdk",
 		"translations": "turbo run translations --parallel",
 		"format": "biome format --write .",

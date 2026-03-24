@@ -5,10 +5,10 @@
 	"type": "module",
 	"scripts": {
 		"build": "vite build",
-		"build:preview": "NITRO_PRESET=node_server vite build --mode production",
 		"dev": "portless zbav-se.me vite",
-		"e2e": "bun run preview",
-		"preview": "portless --force zbav-se.me node .output/server/index.mjs",
+		"e2e:build": "NITRO_PRESET=node_server vite build --mode production",
+		"e2e:start": "portless --force zbav.se.me node .output/server/index.mjs",
+		"e2e": "run-s e2e:build e2e:start",
 		"translations": "bun ./cli/translations.ts",
 		"typecheck": "tsc --noEmit",
 		"knip": "knip --include dependencies --no-config-hints"
@@ -55,6 +55,7 @@
 		"google-fonts-helper": "3.7.3",
 		"knip": "6.0.4",
 		"nitro": "3.0.1-alpha.2",
+		"npm-run-all2": "8.0.4",
 		"tailwindcss": "4.2.2",
 		"typescript": "beta",
 		"vite": "8.0.0-beta.18"
