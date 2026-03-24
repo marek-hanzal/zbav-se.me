@@ -1,8 +1,8 @@
 import { DialectContextFx, type withDatabaseFx } from "@use-pico/common/database";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { PostgresDialect, sql } from "kysely";
-import { Pool } from "pg";
+import { PostgresDialect } from "kysely";
+import { Client, Pool } from "pg";
 
 export namespace testabase {
 	export interface Props<in out TDatabase> {
@@ -25,26 +25,22 @@ export const testabase = async <const TDatabase>({
 	onTestFinished,
 }: testabase.Props<TDatabase>) => {
 	return Effect.gen(function* () {
-		const { kysely } = yield* databaseFx.pipe(
-			Effect.provideService(
-				DialectContextFx,
-				new PostgresDialect({
-					pool: new Pool({
-						connectionString: `${process.env.SERVER_DATABASE_URL}/${root}`,
-						max: 1,
-					}),
-				}),
-			),
-		);
+		const client = new Client({
+			connectionString: `${process.env.SERVER_DATABASE_URL}/${root}`,
+			connectionTimeoutMillis: 250,
+		});
 
 		yield* Effect.promise(async () => {
-			await sql`DROP DATABASE IF EXISTS ${sql.ref(name)}`.execute(kysely);
+			await client.query(`DROP DATABASE IF EXISTS $1`, [
+				name,
+			]);
 
-			await sql`CREATE DATABASE ${sql.ref(name)} TEMPLATE ${sql.ref(template)}`.execute(
-				kysely,
-			);
+			await client.query(`CREATE DATABASE $1 TEMPLATE $2`, [
+				name,
+				template,
+			]);
 
-			await kysely.destroy();
+			await client.end();
 		});
 
 		const instance = yield* databaseFx.pipe(
