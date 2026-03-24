@@ -1,7 +1,10 @@
 {
 	"extends": "@use-pico/tsconfig/common.json",
 	"compilerOptions": {
-		"rootDir": "src"
+		"rootDir": "src",
+		"types": [
+			"bun"
+		]
 	},
 	"include": [
 		"src/**/*",
