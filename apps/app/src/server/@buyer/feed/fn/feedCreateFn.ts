@@ -37,10 +37,10 @@ export const feedCreateFn = createServerFn({
 				ZodErrorFx() {
 					throw new Error("ZodErrorFx");
 				},
-				RuntimeErrorFx(e) {
+				RuntimeErrorFx() {
 					throw new Error("RuntimeErrorFx");
 				},
-				ConflictErrorFx(e) {
+				ConflictErrorFx() {
 					throw new Error("ConflictErrorFx");
 				},
 			}),

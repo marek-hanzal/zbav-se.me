@@ -39,7 +39,7 @@ export const feedPatchFn = createServerFn({
 				ZodErrorFx() {
 					throw new Error("ZodErrorFx");
 				},
-				RuntimeErrorFx(e) {
+				RuntimeErrorFx() {
 					throw new Error("RuntimeErrorFx");
 				},
 			}),

@@ -37,7 +37,7 @@ export const feedDeleteFn = createServerFn({
 				ZodErrorFx() {
 					throw new Error("ZodErrorFx");
 				},
-				RuntimeErrorFx(e) {
+				RuntimeErrorFx() {
 					throw new Error("RuntimeErrorFx");
 				},
 			}),
