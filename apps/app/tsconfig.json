@@ -36,8 +36,7 @@
 		"incremental": true,
 		"paths": {
 			"~/*": [
-				"./src/*",
-				"../server/src/*"
+				"./src/*"
 			]
 		}
 	},

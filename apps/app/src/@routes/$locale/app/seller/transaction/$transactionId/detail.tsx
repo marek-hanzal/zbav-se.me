@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
 	TransactionDetailPage,
 	TransactionDetailPendingPage,
-} from "~/app/@seller/transaction/~public/TransactionDetailPage";
+} from "~/client/@seller/transaction/~public/TransactionDetailPage";
 
 export const Route = createFileRoute("/$locale/app/seller/transaction/$transactionId/detail")({
 	pendingComponent: TransactionDetailPendingPage,

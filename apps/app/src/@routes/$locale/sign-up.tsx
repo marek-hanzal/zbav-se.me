@@ -11,7 +11,7 @@ import { CheckIcon } from "@zbav-se.me/ui/icon";
 import { Logo } from "@zbav-se.me/ui/logo";
 import { useRef } from "react";
 import { z } from "zod";
-import { withRegisterMutation } from "~/app/@common/auth/mutation/withRegisterMutation";
+import { withRegisterMutation } from "~/client/@common/auth/mutation/withRegisterMutation";
 
 const RegisterSchema = z
 	.object({

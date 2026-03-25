@@ -14,10 +14,10 @@ import { PassKeyIcon, UnlockIcon } from "@zbav-se.me/ui/icon";
 import { Logo } from "@zbav-se.me/ui/logo";
 import { useRef } from "react";
 import { z } from "zod";
-import { authClient } from "~/app/@common/auth/authClient";
-import { withEmailSignInMutation } from "~/app/@common/auth/mutation/withEmailSignInMutation";
+import { authClient } from "~/client/@common/auth/authClient";
+import { withEmailSignInMutation } from "~/client/@common/auth/mutation/withEmailSignInMutation";
 
-const LoginSchema = z.object({
+const SignInSchema = z.object({
 	email: z.email({
 		error() {
 			return translator.text("Invalid email address");
@@ -30,7 +30,7 @@ const LoginSchema = z.object({
 	}),
 });
 
-type LoginSchema = typeof LoginSchema;
+type SignInSchema = typeof SignInSchema;
 
 export const Route = createFileRoute("/$locale/sign-in")({
 	component() {
@@ -66,9 +66,9 @@ export const Route = createFileRoute("/$locale/sign-in")({
 			defaultValues: {
 				email: "",
 				password: "",
-			} satisfies z.infer<LoginSchema>,
+			} satisfies z.infer<SignInSchema>,
 			validators: {
-				onSubmit: LoginSchema,
+				onSubmit: SignInSchema,
 			},
 			async onSubmit({ value }) {
 				return signInMutation.mutateAsync({

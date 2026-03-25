@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { zInboxPriorityEnum } from "@zbav-se.me/sdk/api/user";
-import { InboxListPage } from "~/app/@user/inbox/~public/InboxListPage";
+import { InboxListPage } from "~/client/@user/inbox/~public/InboxListPage";
 
 export const Route = createFileRoute("/$locale/app/inbox/$priority")({
 	component() {

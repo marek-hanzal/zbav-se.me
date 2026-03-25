@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './@routes/__root'
+import { Route as ApiRouteImport } from './@routes/api'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
@@ -21,6 +22,7 @@ import { Route as LocaleOathRouteImport } from './@routes/$locale/oath'
 import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
 import { Route as LocaleAppIndexRouteImport } from './@routes/$locale/app/index'
+import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
 import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welcome'
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
 import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
@@ -42,6 +44,11 @@ import { Route as LocaleAppBuyerTransactionTransactionIdDetailRouteImport } from
 import { Route as LocaleAppBuyerFeedIdListRouteImport } from './@routes/$locale/app/buyer/feed/$id/list'
 import { Route as LocaleAppBuyerFeedIdFavouriteListRouteImport } from './@routes/$locale/app/buyer/feed/$id/favourite/list'
 
+const ApiRoute = ApiRouteImport.update({
+  id: '/api',
+  path: '/api',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LocaleRoute = LocaleRouteImport.update({
   id: '/$locale',
   path: '/$locale',
@@ -101,6 +108,11 @@ const LocaleAppIndexRoute = LocaleAppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LocaleAppRoute,
+} as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/auth/$',
+  path: '/auth/$',
+  getParentRoute: () => ApiRoute,
 } as any)
 const LocaleAppWelcomeRoute = LocaleAppWelcomeRouteImport.update({
   id: '/welcome',
@@ -219,6 +231,7 @@ const LocaleAppBuyerFeedIdFavouriteListRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
+  '/api': typeof ApiRouteWithChildren
   '/$locale/app': typeof LocaleAppRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/oath': typeof LocaleOathRoute
@@ -232,6 +245,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
@@ -252,6 +266,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api': typeof ApiRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/oath': typeof LocaleOathRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
@@ -264,6 +279,7 @@ export interface FileRoutesByTo {
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/$locale/app': typeof LocaleAppIndexRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
@@ -286,6 +302,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
+  '/api': typeof ApiRouteWithChildren
   '/$locale/app': typeof LocaleAppRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/oath': typeof LocaleOathRoute
@@ -299,6 +316,7 @@ export interface FileRoutesById {
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
@@ -322,6 +340,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$locale'
+    | '/api'
     | '/$locale/app'
     | '/$locale/landing'
     | '/$locale/oath'
@@ -335,6 +354,7 @@ export interface FileRouteTypes {
     | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
+    | '/api/auth/$'
     | '/$locale/app/'
     | '/$locale/app/buyer/search'
     | '/$locale/app/inbox/$priority'
@@ -355,6 +375,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/api'
     | '/$locale/landing'
     | '/$locale/oath'
     | '/$locale/privacy'
@@ -367,6 +388,7 @@ export interface FileRouteTypes {
     | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
+    | '/api/auth/$'
     | '/$locale/app'
     | '/$locale/app/buyer/search'
     | '/$locale/app/inbox/$priority'
@@ -388,6 +410,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$locale'
+    | '/api'
     | '/$locale/app'
     | '/$locale/landing'
     | '/$locale/oath'
@@ -401,6 +424,7 @@ export interface FileRouteTypes {
     | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
+    | '/api/auth/$'
     | '/$locale/app/'
     | '/$locale/app/buyer/search'
     | '/$locale/app/inbox/$priority'
@@ -423,11 +447,19 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LocaleRoute: typeof LocaleRouteWithChildren
+  ApiRoute: typeof ApiRouteWithChildren
   RedirectOathRoute: typeof RedirectOathRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/api': {
+      id: '/api'
+      path: '/api'
+      fullPath: '/api'
+      preLoaderRoute: typeof ApiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$locale': {
       id: '/$locale'
       path: '/$locale'
@@ -511,6 +543,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/app/'
       preLoaderRoute: typeof LocaleAppIndexRouteImport
       parentRoute: typeof LocaleAppRoute
+    }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof ApiRoute
     }
     '/$locale/app/welcome': {
       id: '/$locale/app/welcome'
@@ -736,9 +775,20 @@ const LocaleRouteChildren: LocaleRouteChildren = {
 const LocaleRouteWithChildren =
   LocaleRoute._addFileChildren(LocaleRouteChildren)
 
+interface ApiRouteChildren {
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+}
+
+const ApiRouteChildren: ApiRouteChildren = {
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
+}
+
+const ApiRouteWithChildren = ApiRoute._addFileChildren(ApiRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LocaleRoute: LocaleRouteWithChildren,
+  ApiRoute: ApiRouteWithChildren,
   RedirectOathRoute: RedirectOathRoute,
 }
 export const routeTree = rootRouteImport
