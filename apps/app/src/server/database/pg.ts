@@ -1,7 +1,4 @@
-import { createRequire } from "node:module";
-
-const require = createRequire(import.meta.url);
-const pg = require("pg") as typeof import("pg");
-const { Pool, DatabaseError } = pg;
+import Pool from "pg-pool";
+import { DatabaseError } from "pg-protocol";
 
 export { DatabaseError, Pool };
