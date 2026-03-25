@@ -1,4 +1,4 @@
-import { DialectContextFx } from "@use-pico/common/database";
+import { withDialectFx } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
@@ -38,8 +38,7 @@ const app = await Effect.gen(function* () {
 
 	const databaseConfig = ServerDatabaseSchema.parse(process.env);
 	const kyselyContext = yield* database.pipe(
-		Effect.provideService(
-			DialectContextFx,
+		withDialectFx(
 			new PostgresDialect({
 				pool: new Pool({
 					connectionString: databaseConfig.SERVER_DATABASE_URL,

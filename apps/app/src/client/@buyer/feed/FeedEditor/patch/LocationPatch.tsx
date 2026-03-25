@@ -1,15 +1,15 @@
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { type FC, useState } from "react";
+import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/client/@common/location/ui/LocationSelect";
+import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 
 export namespace LocationPatch {
 	export interface Props extends Container.Props {
-		feed: tFeed;
+		feed: FeedSchema.Type;
 		onSettled?(): void;
 		onCancel(): void;
 	}

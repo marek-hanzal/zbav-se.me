@@ -19,6 +19,7 @@ export const withTransactionQuery = withEntityQuery<
 	tTransactionCountQuery,
 	never,
 	tTransactionCreate,
+	never,
 	never
 >({
 	keys: () => [

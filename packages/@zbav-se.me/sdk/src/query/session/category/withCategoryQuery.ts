@@ -17,6 +17,7 @@ export const withCategoryQuery = withEntityQuery<
 	tCategoryCountQuery,
 	never,
 	never,
+	never,
 	never
 >({
 	keys: () => [

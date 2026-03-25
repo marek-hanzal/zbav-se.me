@@ -7,9 +7,9 @@ import { TextInput } from "@use-pico/client/ui/text-input";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import { sFeedCreate } from "@zbav-se.me/sdk/api/buyer";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
+import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { getFeedDefaultCreate } from "~/client/@common/feed/service/getFeedDefaultCreate";
 

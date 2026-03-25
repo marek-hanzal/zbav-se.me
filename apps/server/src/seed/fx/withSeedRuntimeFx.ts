@@ -1,4 +1,4 @@
-import { DialectContextFx } from "@use-pico/common/database";
+import { withDialectFx } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
@@ -39,8 +39,7 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 		);
 
 		const kysely = yield* database.pipe(
-			Effect.provideService(
-				DialectContextFx,
+			withDialectFx(
 				new PostgresDialect({
 					pool,
 				}),

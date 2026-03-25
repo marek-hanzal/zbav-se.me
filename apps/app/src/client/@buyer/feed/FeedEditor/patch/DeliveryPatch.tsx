@@ -1,15 +1,16 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
-import type { tFeed, tListingDeliveryEnum } from "@zbav-se.me/sdk/api/buyer";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
+import type { tListingDeliveryEnum } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
+import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { DeliverySelect } from "~/client/@common/delivery/ui/DeliverySelect";
+import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 
 export namespace DeliveryPatch {
 	export interface Props extends Container.Props {
-		feed: tFeed;
+		feed: FeedSchema.Type;
 		onCancel(): void;
 		onSettled?(): void;
 	}

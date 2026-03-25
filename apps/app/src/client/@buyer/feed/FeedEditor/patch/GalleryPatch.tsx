@@ -1,13 +1,13 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
 import { withFeedGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/buyer/feed";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/client/@common/gallery/ui/GalleryUpload";
+import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 
 export namespace GalleryPatch {
 	export interface Props {
-		feed: tFeed;
+		feed: FeedSchema.Type;
 		onSettled?(): void;
 		onCancel(): void;
 	}

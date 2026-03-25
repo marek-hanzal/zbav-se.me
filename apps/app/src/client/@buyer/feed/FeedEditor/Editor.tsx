@@ -3,12 +3,12 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import { translator } from "@use-pico/common/translator";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { DeliveryValueList } from "~/client/@common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/client/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/client/@common/location/ui/LocationValue";
 import { TitleValue } from "~/client/@common/title/ui/TitleValue";
+import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 import type { FeedEditor } from "./FeedEditor";
 import { AgeValueList } from "./value/AgeValueList";
 import { CategoryValueList } from "./value/CategoryValueList";
@@ -22,7 +22,7 @@ export namespace Editor {
 	export type Section = "header";
 
 	export interface Props extends Omit<Container.Props, "hidden">, MarkSuspense.Props {
-		feed: tFeed;
+		feed: FeedSchema.Type;
 		onView(view: FeedEditor.View): void;
 		hidden?: readonly Section[];
 	}

@@ -1,4 +1,8 @@
-import { DialectContextFx, type withDatabaseFx } from "@use-pico/common/database";
+import {
+	type DialectContextFx,
+	type withDatabaseFx,
+	withDialectFx,
+} from "@use-pico/common/database";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
@@ -26,8 +30,7 @@ export const testabase = async <const TDatabase>({
 }: testabase.Props<TDatabase>) => {
 	return Effect.gen(function* () {
 		const { kysely } = yield* databaseFx.pipe(
-			Effect.provideService(
-				DialectContextFx,
+			withDialectFx(
 				new PostgresDialect({
 					pool: new Pool({
 						connectionString: `${process.env.SERVER_DATABASE_URL}/${root}`,
@@ -48,8 +51,7 @@ export const testabase = async <const TDatabase>({
 		});
 
 		const instance = yield* databaseFx.pipe(
-			Effect.provideService(
-				DialectContextFx,
+			withDialectFx(
 				new PostgresDialect({
 					pool: new Pool({
 						connectionString: `${process.env.SERVER_DATABASE_URL}/${name}`,

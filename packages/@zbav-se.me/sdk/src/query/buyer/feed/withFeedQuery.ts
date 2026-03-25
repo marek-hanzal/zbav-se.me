@@ -22,7 +22,8 @@ export const withFeedQuery = withEntityQuery<
 	tFeedCountQuery,
 	tFeedPatch,
 	tFeedCreate,
-	tFeedQuery
+	tFeedQuery,
+	never
 >({
 	keys: () => [
 		"feed",

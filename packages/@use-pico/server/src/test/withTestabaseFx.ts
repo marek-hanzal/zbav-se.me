@@ -1,4 +1,9 @@
-import { DialectContextFx, MigrationContextFx, withDatabaseFx } from "@use-pico/common/database";
+import {
+	type DialectContextFx,
+	MigrationContextFx,
+	withDatabaseFx,
+	withDialectFx,
+} from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
@@ -92,8 +97,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 
 	yield* Effect.gen(function* () {
 		const { kysely, migrate } = yield* databaseFx.pipe(
-			Effect.provideService(
-				DialectContextFx,
+			withDialectFx(
 				new PostgresDialect({
 					pool: new Pool({
 						connectionString: `${dsn}/${template}`,
@@ -111,8 +115,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 
 	yield* Effect.gen(function* () {
 		const { kysely } = yield* withDatabaseFx({}).pipe(
-			Effect.provideService(
-				DialectContextFx,
+			withDialectFx(
 				new PostgresDialect({
 					pool: new Pool({
 						connectionString: `${dsn}/postgres`,
