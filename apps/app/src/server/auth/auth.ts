@@ -1,4 +1,4 @@
-import { passkey } from "@better-auth/passkey";
+// import { passkey } from "@better-auth/passkey";
 import { genId } from "@use-pico/common/gen-id";
 import { betterAuth } from "better-auth";
 import { anonymous, customSession, mcp, openAPI } from "better-auth/plugins";
@@ -43,10 +43,10 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 		basePath: config.basePath ?? "/api/auth",
 		secret: betterAuthConfig.SERVER_BETTER_AUTH_SECRET,
 		plugins: [
-			passkey({
-				rpID: originHost,
-				rpName: originHost,
-			}),
+			// passkey({
+			// 	rpID: originHost,
+			// 	rpName: originHost,
+			// }),
 			anonymous({
 				emailDomainName: originHost,
 				generateName: () => genId(),

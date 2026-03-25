@@ -1,6 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
 import { ChevronRightIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -9,10 +7,8 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { linkTo } from "@use-pico/common/link-to";
 import { translator } from "@use-pico/common/translator";
 import { useAppForm } from "@zbav-se.me/ui/form";
-import { PassKeyIcon, UnlockIcon } from "@zbav-se.me/ui/icon";
 import { Logo } from "@zbav-se.me/ui/logo";
 import { z } from "zod";
-import { authClient } from "~/client/@common/auth/authClient";
 import { withEmailSignInMutation } from "~/client/@common/auth/mutation/withEmailSignInMutation";
 
 const LoginSchema = z.object({
@@ -74,12 +70,12 @@ export const OAuthLoginPage = ({ locale, query }: OAuthLoginPage.Props) => {
 		},
 	});
 
-	const passkeyMutation = useMutation({
-		async mutationFn() {
-			await authClient.signIn.passkey();
-			await withContinueOAuth(locale, query);
-		},
-	});
+	// const passkeyMutation = useMutation({
+	// 	async mutationFn() {
+	// 		await authClient.signIn.passkey();
+	// 		await withContinueOAuth(locale, query);
+	// 	},
+	// });
 
 	const form = useAppForm({
 		defaultValues: {
@@ -199,7 +195,7 @@ export const OAuthLoginPage = ({ locale, query }: OAuthLoginPage.Props) => {
 				</form>
 			</Status>
 
-			<Status
+			{/* <Status
 				icon={PassKeyIcon}
 				textTitle={translator.text("Login with passkey (title)")}
 				textMessage={translator.text("Login with passkey (message)")}
@@ -229,7 +225,7 @@ export const OAuthLoginPage = ({ locale, query }: OAuthLoginPage.Props) => {
 					width: "full",
 				}}
 				className={"text-center"}
-			/>
+			/> */}
 		</Container>
 	);
 };
