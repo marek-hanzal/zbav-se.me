@@ -2,6 +2,7 @@ import { passkey } from "@better-auth/passkey";
 import { genId } from "@use-pico/common/gen-id";
 import { betterAuth } from "better-auth";
 import { anonymous, customSession, mcp, openAPI } from "better-auth/plugins";
+import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { type Dialect, Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import type { Database } from "~/server/database/Database";
@@ -90,6 +91,7 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 					session,
 				};
 			}),
+			tanstackStartCookies(),
 		],
 		trustedOrigins: [
 			viteConfig.VITE_ORIGIN,
