@@ -14,6 +14,7 @@ import { Route as DotwellKnownRouteImport } from './@routes/[.]well-known'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
+import { Route as RedirectSignInRouteImport } from './@routes/redirect/sign-in'
 import { Route as RedirectOathRouteImport } from './@routes/redirect/oath'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleSignUpRouteImport } from './@routes/$locale/sign-up'
@@ -69,6 +70,11 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LocaleRoute,
+} as any)
+const RedirectSignInRoute = RedirectSignInRouteImport.update({
+  id: '/redirect/sign-in',
+  path: '/redirect/sign-in',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const RedirectOathRoute = RedirectOathRouteImport.update({
   id: '/redirect/oath',
@@ -247,6 +253,7 @@ export interface FileRoutesByFullPath {
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/redirect/oath': typeof RedirectOathRoute
+  '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
@@ -282,6 +289,7 @@ export interface FileRoutesByTo {
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/redirect/oath': typeof RedirectOathRoute
+  '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
@@ -320,6 +328,7 @@ export interface FileRoutesById {
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/redirect/oath': typeof RedirectOathRoute
+  '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
@@ -359,6 +368,7 @@ export interface FileRouteTypes {
     | '/$locale/sign-up'
     | '/$locale/tos'
     | '/redirect/oath'
+    | '/redirect/sign-in'
     | '/$locale/'
     | '/$locale/app/home'
     | '/$locale/app/shop'
@@ -394,6 +404,7 @@ export interface FileRouteTypes {
     | '/$locale/sign-up'
     | '/$locale/tos'
     | '/redirect/oath'
+    | '/redirect/sign-in'
     | '/$locale'
     | '/$locale/app/home'
     | '/$locale/app/shop'
@@ -431,6 +442,7 @@ export interface FileRouteTypes {
     | '/$locale/sign-up'
     | '/$locale/tos'
     | '/redirect/oath'
+    | '/redirect/sign-in'
     | '/$locale/'
     | '/$locale/app/home'
     | '/$locale/app/shop'
@@ -462,6 +474,7 @@ export interface RootRouteChildren {
   DotwellKnownRoute: typeof DotwellKnownRoute
   ApiRoute: typeof ApiRouteWithChildren
   RedirectOathRoute: typeof RedirectOathRoute
+  RedirectSignInRoute: typeof RedirectSignInRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -500,6 +513,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/'
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
+    }
+    '/redirect/sign-in': {
+      id: '/redirect/sign-in'
+      path: '/redirect/sign-in'
+      fullPath: '/redirect/sign-in'
+      preLoaderRoute: typeof RedirectSignInRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/redirect/oath': {
       id: '/redirect/oath'
@@ -811,6 +831,7 @@ const rootRouteChildren: RootRouteChildren = {
   DotwellKnownRoute: DotwellKnownRoute,
   ApiRoute: ApiRouteWithChildren,
   RedirectOathRoute: RedirectOathRoute,
+  RedirectSignInRoute: RedirectSignInRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

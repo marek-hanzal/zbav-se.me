@@ -16,7 +16,7 @@ export const Route = createFileRoute("/redirect/oath")({
 	async loader({ deps }) {
 		const locale = await getLocaleFn();
 
-		throw redirect({
+		return redirect({
 			to: "/$locale/oath",
 			params: {
 				locale,
