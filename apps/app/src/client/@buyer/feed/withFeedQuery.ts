@@ -1,5 +1,10 @@
 import { withEntityQuery } from "@use-pico/client/query";
-import { isomorphicFn } from "@use-pico/client/utils";
+import { feedCollectionFn } from "~/server/@buyer/feed/fn/feedCollectionFn";
+import { feedCountFn } from "~/server/@buyer/feed/fn/feedCountFn";
+import { feedCreateFn } from "~/server/@buyer/feed/fn/feedCreateFn";
+import { feedDeleteFn } from "~/server/@buyer/feed/fn/feedDeleteFn";
+import { feedFetchFn } from "~/server/@buyer/feed/fn/feedFetchFn";
+import { feedPatchFn } from "~/server/@buyer/feed/fn/feedPatchFn";
 import type { FeedCountQuerySchema } from "~/server/@buyer/feed/schema/FeedCountQuerySchema";
 import type { FeedCreateSchema } from "~/server/@buyer/feed/schema/FeedCreateSchema";
 import type { FeedPatchSchema } from "~/server/@buyer/feed/schema/FeedPatchSchema";
@@ -13,7 +18,7 @@ export const withFeedQuery = withEntityQuery<
 	FeedCountQuerySchema.Type,
 	FeedPatchSchema.Type,
 	FeedCreateSchema.Type,
-	FeedQuerySchema.Type,
+	FeedQuerySchema.Type
 >({
 	keys: () => [
 		"feed",
@@ -23,66 +28,36 @@ export const withFeedQuery = withEntityQuery<
 			id,
 		},
 	}),
-	fetchFn: isomorphicFn({
-		requestFn(request, headers) {
-			return withApi(
-				apiFeedFetch({
-					body: request,
-					headers,
-				}),
-			);
-		},
-	}),
-	collectionFn: isomorphicFn({
-		requestFn(request, headers) {
-			return withApi(
-				apiFeedCollection({
-					body: request,
-					headers,
-				}),
-			);
-		},
-	}),
-	countFn: isomorphicFn({
-		requestFn(request, headers) {
-			return withApi(
-				apiFeedCount({
-					body: request,
-					headers,
-				}),
-			);
-		},
-	}),
-	createFn: isomorphicFn({
-		requestFn(request, headers) {
-			return withApi(
-				apiFeedCreate({
-					body: request,
-					headers,
-				}),
-			);
-		},
-	}),
-	deleteFn: isomorphicFn({
-		requestFn(request, headers) {
-			return withApi(
-				apiFeedDelete({
-					body: request,
-					headers,
-				}),
-			);
-		},
-	}),
-	patchFn: isomorphicFn({
-		requestFn(request, headers) {
-			return withApi(
-				apiFeedPatch({
-					body: request,
-					headers,
-				}),
-			);
-		},
-	}),
+	async fetchFn(data) {
+		return feedFetchFn({
+			data,
+		});
+	},
+	async collectionFn(data) {
+		return feedCollectionFn({
+			data,
+		});
+	},
+	async countFn(data) {
+		return feedCountFn({
+			data,
+		});
+	},
+	async createFn(data) {
+		return feedCreateFn({
+			data,
+		});
+	},
+	async deleteFn(data) {
+		return feedDeleteFn({
+			data,
+		});
+	},
+	async patchFn(data) {
+		return feedPatchFn({
+			data,
+		});
+	},
 	async patchCollectionFn(_data) {
 		throw new Error("Feed collection patch is not supported.");
 	},
