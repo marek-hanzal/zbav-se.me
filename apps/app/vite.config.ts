@@ -39,9 +39,6 @@ export default defineConfig(({ mode }) => {
 		],
 		ssr: isProduction
 			? {
-					external: [
-						"pg",
-					],
 					noExternal: true,
 				}
 			: undefined,
