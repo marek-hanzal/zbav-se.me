@@ -4,6 +4,7 @@ import { favouriteDeleteFx } from "~/server/@buyer/favourite/fx/favouriteDeleteF
 import type { FavouriteToggleSchema } from "~/server/@buyer/favourite/schema/FavouriteToggleSchema";
 import { listingCheckIfOwnFx } from "~/server/@buyer/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/server/@buyer/listing/fx/listingFetchFx";
+import { listingEventCreateFx } from "~/server/@buyer/listing-event/fx/listingEventCreateFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 export namespace favouriteToggleFx {
