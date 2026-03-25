@@ -9,5 +9,5 @@ export const authClient = createAuthClient({
 		anonymousClient(),
 		customSessionClient<auth.Api>(),
 	],
-	// baseURL: import.meta.env.VITE_SERVER_API,
+	baseURL: import.meta.env.VITE_ORIGIN,
 });

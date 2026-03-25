@@ -7,9 +7,6 @@ import type { ListingWarrantyEnumSchema } from "~/server/database/@enum/ListingW
 
 export const DraftMigration: Migration = {
 	async up(db) {
-		// Ensure pgvector extension (safe if already installed)
-		await sql`CREATE EXTENSION IF NOT EXISTS vector;`.execute(db);
-
 		await db.schema
 			.createType("listing_price_enum")
 			.asEnum(
