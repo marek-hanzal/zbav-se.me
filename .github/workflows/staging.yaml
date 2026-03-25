@@ -164,6 +164,7 @@ jobs:
 
             - name: Upsert app env
               env:
+                  SERVER_DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
                   KEYS: ${{ env.APP_ENV_KEYS }}
                   #   TARGET: production
                   VERCEL_PROJECT_ID: ${{ env.VERCEL_APP_PROJECT_ID }}
