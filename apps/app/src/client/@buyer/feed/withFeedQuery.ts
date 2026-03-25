@@ -18,7 +18,8 @@ export const withFeedQuery = withEntityQuery<
 	FeedCountQuerySchema.Type,
 	FeedPatchSchema.Type,
 	FeedCreateSchema.Type,
-	FeedQuerySchema.Type
+	FeedQuerySchema.Type,
+	never
 >({
 	keys: () => [
 		"feed",

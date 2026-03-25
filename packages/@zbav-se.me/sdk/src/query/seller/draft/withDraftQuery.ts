@@ -22,7 +22,8 @@ export const withDraftQuery = withEntityQuery<
 	tDraftCountQuery,
 	tDraftPatch,
 	tDraftCreate,
-	tDraftQuery
+	tDraftQuery,
+	never
 >({
 	keys: () => [
 		"draft",

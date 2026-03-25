@@ -17,6 +17,7 @@ export const withTransactionListingQuery = withEntityQuery<
 	tTransactionListingCountQuery,
 	never,
 	never,
+	never,
 	never
 >({
 	keys: () => [

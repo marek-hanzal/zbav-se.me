@@ -17,6 +17,7 @@ export const withFeedFavouriteQuery = withEntityQuery<
 	tFeedFavouriteCountQuery,
 	never,
 	never,
+	never,
 	never
 >({
 	keys: () => [

@@ -28,7 +28,7 @@ export namespace withEntityQuery {
 		 * Both properties are optional so callers can invalidate broadly or narrowly,
 		 * depending on how specific their cache keys are.
 		 */
-		export interface Data<TFetchRequest, TCollectionRequest, TCountRequest> {
+		export interface Data<out TFetchRequest, out TCollectionRequest, out TCountRequest> {
 			fetch?: TFetchRequest;
 			collection?: TCollectionRequest;
 			count?: TCountRequest;
@@ -45,14 +45,14 @@ export namespace withEntityQuery {
 	 * - patch an entity and synchronize cache
 	 */
 	export interface Props<
-		TEntity extends EntitySchema.Type,
-		TFetchRequest,
-		TCollectionRequest,
-		TCountRequest,
-		TPatchRequest,
-		TCreateRequest,
-		TDeleteRequest,
-		TPatchCollectionRequest = never,
+		out TEntity extends EntitySchema.Type,
+		in out TFetchRequest,
+		in TCollectionRequest,
+		in TCountRequest,
+		in TPatchRequest,
+		in TCreateRequest,
+		in TDeleteRequest,
+		in TPatchCollectionRequest,
 	> {
 		/**
 		 * Base query key prefix for this entity resource.
@@ -116,14 +116,14 @@ export namespace withEntityQuery {
 			 *
 			 * Contains validated mutation input right before `mutationFn` execution.
 			 */
-			export interface Props<TVariables> {
+			export interface Props<out TVariables> {
 				variables: TVariables;
 			}
 
 			/**
 			 * Result of the callback is unused
 			 */
-			export type Fn<TVariables> = (props: Props<TVariables>) => Promise<any>;
+			export type Fn<in TVariables> = (props: Props<TVariables>) => Promise<any>;
 		}
 
 		export namespace PostMutation {
@@ -132,7 +132,7 @@ export namespace withEntityQuery {
 			 *
 			 * Contains original input and resolved server entity after cache sync.
 			 */
-			export interface Props<TVariables, TResult> {
+			export interface Props<out TVariables, out TResult> {
 				variables: TVariables;
 				result: TResult;
 			}
@@ -140,7 +140,7 @@ export namespace withEntityQuery {
 			/**
 			 * Result of the callback is unused
 			 */
-			export type Fn<TVariables, TResult> = (
+			export type Fn<in TVariables, in TResult> = (
 				props: Props<TVariables, TResult>,
 			) => Promise<any>;
 		}
@@ -194,14 +194,14 @@ export namespace withEntityQuery {
  * All query hooks in this helper use suspense via `useSuspenseQuery`.
  */
 export const withEntityQuery = <
-	TEntity extends EntitySchema.Type,
-	TFetchRequest,
-	TCollectionRequest,
-	TCountRequest,
-	TPatchRequest,
-	TCreateRequest,
-	TDeleteRequest,
-	TPatchCollectionRequest = never,
+	const TEntity extends EntitySchema.Type,
+	const TFetchRequest,
+	const TCollectionRequest,
+	const TCountRequest,
+	const TPatchRequest,
+	const TCreateRequest,
+	const TDeleteRequest,
+	const TPatchCollectionRequest,
 >({
 	keys,
 	toIdKey,
