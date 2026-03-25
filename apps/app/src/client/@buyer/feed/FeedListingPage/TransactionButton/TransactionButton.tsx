@@ -6,10 +6,10 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionCreateMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
-import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { withListingQuery } from "~/client/@buyer/listing/withListingQuery";
 
 export namespace TransactionButton {
 	export interface Props extends Button.Props {

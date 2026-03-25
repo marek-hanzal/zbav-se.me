@@ -1,8 +1,8 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
-import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { useListingEvent } from "~/client/@buyer/listing/~public/useListingEvent";
+import { withListingQuery } from "~/client/@buyer/listing/withListingQuery";
 import { HeroSection } from "./section/HeroSection";
 import { InfoSection } from "./section/InfoSection";
 

@@ -1,10 +1,11 @@
 import { DateTime, type DurationUnits, type ToRelativeOptions } from "luxon";
 import { match } from "ts-pattern";
+import { isString } from "../is-string/isString";
 
 export namespace toTimeDiff {
 	export interface Props {
 		locale: string;
-		time: string;
+		time: string | Date;
 		/**
 		 * ISO date time
 		 */
@@ -22,7 +23,9 @@ export const toTimeDiff = ({
 	opts,
 }: toTimeDiff.Props): string => {
 	const now = (source ? DateTime.fromISO(source) : DateTime.now()).setLocale(locale);
-	const target = DateTime.fromISO(time).setLocale(locale);
+	const target = (isString(time) ? DateTime.fromISO(time) : DateTime.fromJSDate(time)).setLocale(
+		locale,
+	);
 
 	if (!target.isValid) {
 		return "- invalid time -";

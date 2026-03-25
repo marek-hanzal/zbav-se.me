@@ -4,7 +4,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { withFallback } from "@use-pico/client/utils";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { translator } from "@use-pico/common/translator";
-import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
+import { withListingQuery } from "~/client/@buyer/listing/withListingQuery";
 import type { ListingQuerySchema } from "~/server/@buyer/listing/schema/ListingQuerySchema";
 
 export namespace ListingCount {

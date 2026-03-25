@@ -6,7 +6,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
 import { withFavouriteToggleMutation } from "@zbav-se.me/sdk/mutation/buyer/favourite";
 import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer/feed";
-import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
+import { withListingQuery } from "~/client/@buyer/listing/withListingQuery";
 
 export namespace FavouriteButton {
 	export interface Props extends Button.Props, MarkSuspense.Props {
