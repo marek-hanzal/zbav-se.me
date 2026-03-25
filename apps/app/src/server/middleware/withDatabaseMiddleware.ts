@@ -2,8 +2,8 @@ import { createMiddleware } from "@tanstack/react-start";
 import { withDialectFx } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
-import { Pool } from "pg";
 import { databaseFx } from "~/server/database/databaseFx";
+import { Pool } from "~/server/database/pg";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 
 let dialect: PostgresDialect | null = null;
