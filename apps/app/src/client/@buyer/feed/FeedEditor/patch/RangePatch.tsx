@@ -1,15 +1,15 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
+import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
+import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 
 export namespace RangePatch {
 	export interface Props extends Container.Props {
-		feed: tFeed;
+		feed: FeedSchema.Type;
 		onSettled?(): void;
 		onCancel(): void;
 	}

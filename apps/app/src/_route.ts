@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './@routes/__root'
 import { Route as ApiRouteImport } from './@routes/api'
+import { Route as DotwellKnownRouteImport } from './@routes/[.]well-known'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
@@ -47,6 +48,11 @@ import { Route as LocaleAppBuyerFeedIdFavouriteListRouteImport } from './@routes
 const ApiRoute = ApiRouteImport.update({
   id: '/api',
   path: '/api',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DotwellKnownRoute = DotwellKnownRouteImport.update({
+  id: '/.well-known',
+  path: '/.well-known',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LocaleRoute = LocaleRouteImport.update({
@@ -231,6 +237,7 @@ const LocaleAppBuyerFeedIdFavouriteListRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
+  '/.well-known': typeof DotwellKnownRoute
   '/api': typeof ApiRouteWithChildren
   '/$locale/app': typeof LocaleAppRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
@@ -266,6 +273,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/.well-known': typeof DotwellKnownRoute
   '/api': typeof ApiRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/oath': typeof LocaleOathRoute
@@ -302,6 +310,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
+  '/.well-known': typeof DotwellKnownRoute
   '/api': typeof ApiRouteWithChildren
   '/$locale/app': typeof LocaleAppRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
@@ -340,6 +349,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$locale'
+    | '/.well-known'
     | '/api'
     | '/$locale/app'
     | '/$locale/landing'
@@ -375,6 +385,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/.well-known'
     | '/api'
     | '/$locale/landing'
     | '/$locale/oath'
@@ -410,6 +421,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$locale'
+    | '/.well-known'
     | '/api'
     | '/$locale/app'
     | '/$locale/landing'
@@ -447,6 +459,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LocaleRoute: typeof LocaleRouteWithChildren
+  DotwellKnownRoute: typeof DotwellKnownRoute
   ApiRoute: typeof ApiRouteWithChildren
   RedirectOathRoute: typeof RedirectOathRoute
 }
@@ -458,6 +471,13 @@ declare module '@tanstack/react-router' {
       path: '/api'
       fullPath: '/api'
       preLoaderRoute: typeof ApiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.well-known': {
+      id: '/.well-known'
+      path: '/.well-known'
+      fullPath: '/.well-known'
+      preLoaderRoute: typeof DotwellKnownRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$locale': {
@@ -788,6 +808,7 @@ const ApiRouteWithChildren = ApiRoute._addFileChildren(ApiRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LocaleRoute: LocaleRouteWithChildren,
+  DotwellKnownRoute: DotwellKnownRoute,
   ApiRoute: ApiRouteWithChildren,
   RedirectOathRoute: RedirectOathRoute,
 }

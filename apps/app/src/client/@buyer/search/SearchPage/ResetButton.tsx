@@ -4,8 +4,8 @@ import { RefreshIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import type { FC } from "react";
+import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { getFeedDefaultCreate } from "~/client/@common/feed/service/getFeedDefaultCreate";
 
 export namespace ResetButton {

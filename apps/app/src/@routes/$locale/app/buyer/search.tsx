@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { translator } from "@use-pico/common/translator";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
+import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SearchPage } from "~/client/@buyer/search/~public/SearchPage";
 import { SearchPagePending } from "~/client/@buyer/search/~public/SearchPagePending";
 import { getFeedDefaultCreate } from "~/client/@common/feed/service/getFeedDefaultCreate";

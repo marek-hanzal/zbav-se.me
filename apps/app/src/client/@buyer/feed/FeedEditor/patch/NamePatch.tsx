@@ -4,14 +4,15 @@ import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { translator } from "@use-pico/common/translator";
-import { sFeedCreate, type tFeed } from "@zbav-se.me/sdk/api/buyer";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
+import { sFeedCreate } from "@zbav-se.me/sdk/api/buyer";
 import { type FC, useState } from "react";
+import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
+import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 
 export namespace NamePatch {
 	export interface Props extends Omit<Container.Props, "defaultValue"> {
-		feed: tFeed;
+		feed: FeedSchema.Type;
 		onSettled?(): void;
 		onCancel(): void;
 	}

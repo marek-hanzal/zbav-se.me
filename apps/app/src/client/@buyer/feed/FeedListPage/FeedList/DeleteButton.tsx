@@ -1,8 +1,8 @@
 import { TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import type { FC } from "react";
+import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 
 export namespace DeleteButton {
 	export interface Props extends ConfirmButton.Props {
