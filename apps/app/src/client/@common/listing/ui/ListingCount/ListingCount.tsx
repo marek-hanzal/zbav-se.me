@@ -4,12 +4,12 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { withFallback } from "@use-pico/client/utils";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { translator } from "@use-pico/common/translator";
-import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
+import type { ListingQuerySchema } from "~/server/@buyer/listing/schema/ListingQuerySchema";
 
 export namespace ListingCount {
 	export interface Props extends MarkSuspense.Props {
-		query: tListingQuery;
+		query: ListingQuerySchema.Type;
 		textEmpty?: string;
 		//
 	}

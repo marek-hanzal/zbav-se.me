@@ -14,7 +14,7 @@ const withAuthorizationToken = (headers: Headers): null | string => {
 	const authorization = headers.get("authorization");
 	const bearerPrefix = "Bearer ";
 
-	if (!authorization || !authorization.startsWith(bearerPrefix)) {
+	if (!authorization?.startsWith(bearerPrefix)) {
 		return null;
 	}
 

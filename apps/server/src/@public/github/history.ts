@@ -272,10 +272,10 @@ export const withHistoryApiFx = Effect.fn("withHistoryApiFx")(function* () {
 				const toYmd = (dt: DateTime) => dt.toUTC().toFormat("yyyy-MM-dd");
 				for (const row of commits) {
 					const dt = toUtcDateTime(row.date);
-					if (!dt || !dt.isValid) {
+					if (!dt?.isValid) {
 						continue;
 					}
-					const key = toYmd(dt); // UTC YYYY-MM-DD
+					const key = toYmd(dt);
 					countsByDay.set(key, (countsByDay.get(key) ?? 0) + 1);
 				}
 

@@ -23,7 +23,7 @@
 		"@use-pico/tsconfig": "5.0.0",
 		"knip": "6.0.5",
 		"typescript": "beta",
-		"vite": "8.0.0-beta.18"
+		"vite": "8.0.2"
 	},
 	"exports": {
 		"./api/*": {
