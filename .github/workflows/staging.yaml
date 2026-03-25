@@ -152,11 +152,29 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2.2.0
 
+            - name: Resolve staging DB URL via Neon
+              id: neon
+              uses: neondatabase/create-branch-action@v6.4.0
+              with:
+                  project_id: ${{ env.NEON_PROJECT_ID }}
+                  branch_name: staging
+                  database: neondb
+                  role: neondb_owner
+                  api_key: ${{ env.NEON_API_KEY }}
+
             - name: Upsert app env
               env:
                   KEYS: ${{ env.APP_ENV_KEYS }}
-                  TARGET: production
+                  #   TARGET: production
                   VERCEL_PROJECT_ID: ${{ env.VERCEL_APP_PROJECT_ID }}
+                  SENSITIVE_KEYS: |
+                      SERVER_BETTER_AUTH_SECRET
+                      SERVER_DATABASE_URL
+                      SERVER_GEOAPIFY_TOKEN
+                      SERVER_GITHUB
+                      SERVER_JWT_SECRET
+                      SERVER_S3_KEY
+                      SERVER_S3_SECRET
               run: |
                   bun ./@ci/vercel-sync-env.ts
 
