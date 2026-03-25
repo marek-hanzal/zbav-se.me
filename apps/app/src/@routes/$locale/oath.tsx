@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import { z } from "zod";
-import { OAuthLoginPage } from "~/app/@public/auth/OAuthLoginPage";
+import { OAuthLoginPage } from "~/client/@public/auth/OAuthLoginPage";
 
 const SearchSchema = z.record(z.string(), z.string());
 

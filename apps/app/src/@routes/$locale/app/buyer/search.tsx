@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { translator } from "@use-pico/common/translator";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
-import { SearchPage } from "~/app/@buyer/search/~public/SearchPage";
-import { SearchPagePending } from "~/app/@buyer/search/~public/SearchPagePending";
-import { getFeedDefaultCreate } from "~/app/@common/feed/service/getFeedDefaultCreate";
+import { SearchPage } from "~/client/@buyer/search/~public/SearchPage";
+import { SearchPagePending } from "~/client/@buyer/search/~public/SearchPagePending";
+import { getFeedDefaultCreate } from "~/client/@common/feed/service/getFeedDefaultCreate";
 
 export const Route = createFileRoute("/$locale/app/buyer/search")({
 	async loader({ context: { queryClient } }) {

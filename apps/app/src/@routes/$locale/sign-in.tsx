@@ -14,8 +14,8 @@ import { PassKeyIcon, UnlockIcon } from "@zbav-se.me/ui/icon";
 import { Logo } from "@zbav-se.me/ui/logo";
 import { useRef } from "react";
 import { z } from "zod";
-import { authClient } from "~/app/@common/auth/authClient";
-import { withEmailSignInMutation } from "~/app/@common/auth/mutation/withEmailSignInMutation";
+import { authClient } from "~/client/@common/auth/authClient";
+import { withEmailSignInMutation } from "~/client/@common/auth/mutation/withEmailSignInMutation";
 
 const LoginSchema = z.object({
 	email: z.email({

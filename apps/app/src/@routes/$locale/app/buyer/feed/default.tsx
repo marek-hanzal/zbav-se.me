@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
-import { getFeedDefaultCreate } from "~/app/@common/feed/service/getFeedDefaultCreate";
+import { getFeedDefaultCreate } from "~/client/@common/feed/service/getFeedDefaultCreate";
 
 export const Route = createFileRoute("/$locale/app/buyer/feed/default")({
 	/**

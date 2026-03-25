@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { DateTime } from "luxon";
-import { DraftEditor } from "~/app/@seller/draft/~public/DraftEditor";
+import { DraftEditor } from "~/client/@seller/draft/~public/DraftEditor";
 
 export const Route = createFileRoute("/$locale/app/seller/draft/resolve")({
 	async loader({ context: { queryClient }, params: { locale } }) {
