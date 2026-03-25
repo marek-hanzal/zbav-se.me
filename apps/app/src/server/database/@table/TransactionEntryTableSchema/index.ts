@@ -1,0 +1,1 @@
+export { TransactionEntryTableSchema } from "./TransactionEntryTableSchema";
