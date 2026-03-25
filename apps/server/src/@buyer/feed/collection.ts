@@ -2,15 +2,15 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { feedCollectionFx } from "~/@buyer/feed/fx/feedCollectionFx";
-import { FeedItemSchema } from "~/@buyer/feed/schema/FeedItemSchema";
 import { FeedQuerySchema } from "~/@buyer/feed/schema/FeedQuerySchema";
+import { FeedSchema } from "~/@buyer/feed/schema/FeedSchema";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-const CollectionSchema = z.array(FeedItemSchema);
+const CollectionSchema = z.array(FeedSchema);
 
 export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
 	const { buyerHono } = yield* RoutesContextFx;
