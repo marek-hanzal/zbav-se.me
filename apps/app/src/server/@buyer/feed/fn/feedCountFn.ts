@@ -16,16 +16,14 @@ export const feedCountFn = createServerFn()
 	])
 	.inputValidator(FeedCountQuerySchema)
 	.handler(async ({ data, context: { database, user } }) =>
-		Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: CountSchema,
-				dataFx: feedCountFx({
-					...data,
-					scope: {
-						userId: user.id,
-					},
-				}),
-			});
+		zodGuardFx({
+			schema: CountSchema,
+			dataFx: feedCountFx({
+				...data,
+				scope: {
+					userId: user.id,
+				},
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withCatchFx({

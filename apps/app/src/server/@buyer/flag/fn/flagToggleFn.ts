@@ -18,15 +18,13 @@ export const flagToggleFn = createServerFn({
 		withUserMiddleware,
 	])
 	.inputValidator(FlagToggleSchema)
-	.handler(async ({ data, context: { database, user } }) => {
-		return Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: ListingSchema,
-				dataFx: flagToggleFx({
-					...data,
-					userId: user.id,
-				}),
-			});
+	.handler(async ({ data, context: { database, user } }) =>
+		zodGuardFx({
+			schema: ListingSchema,
+			dataFx: flagToggleFx({
+				...data,
+				userId: user.id,
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
@@ -45,5 +43,5 @@ export const flagToggleFn = createServerFn({
 				},
 			}),
 			Effect.runPromise,
-		);
-	});
+		),
+	);

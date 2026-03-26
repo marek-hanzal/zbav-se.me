@@ -14,14 +14,12 @@ export const listingGetSellerInfoFn = createServerFn()
 		withUserMiddleware,
 	])
 	.inputValidator(EntitySchema)
-	.handler(async ({ data, context: { database } }) => {
-		return Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: SellerInfoSchema,
-				dataFx: listingGetSellerInfoFx({
-					listingId: data.id,
-				}),
-			});
+	.handler(async ({ data, context: { database } }) =>
+		zodGuardFx({
+			schema: SellerInfoSchema,
+			dataFx: listingGetSellerInfoFx({
+				listingId: data.id,
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withCatchFx({
@@ -36,5 +34,5 @@ export const listingGetSellerInfoFn = createServerFn()
 				},
 			}),
 			Effect.runPromise,
-		);
-	});
+		),
+	);

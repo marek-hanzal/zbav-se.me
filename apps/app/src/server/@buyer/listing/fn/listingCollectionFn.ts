@@ -17,15 +17,13 @@ export const listingCollectionFn = createServerFn()
 	])
 	.inputValidator(ListingQuerySchema)
 	.handler(async ({ data, context: { database, user } }) =>
-		Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: z.array(ListingSchema),
-				dataFx: listingCollectionFx({
-					...data,
-					userId: user.id,
-					scope: {},
-				}),
-			});
+		zodGuardFx({
+			schema: z.array(ListingSchema),
+			dataFx: listingCollectionFx({
+				...data,
+				userId: user.id,
+				scope: {},
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withCatchFx({

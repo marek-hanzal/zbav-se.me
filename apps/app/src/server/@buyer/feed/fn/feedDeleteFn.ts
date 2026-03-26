@@ -18,16 +18,14 @@ export const feedDeleteFn = createServerFn({
 	])
 	.inputValidator(FeedQuerySchema)
 	.handler(async ({ data, context: { database, user } }) =>
-		Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: FeedSchema,
-				dataFx: feedDeleteFx({
-					...data,
-					scope: {
-						userId: user.id,
-					},
-				}),
-			});
+		zodGuardFx({
+			schema: FeedSchema,
+			dataFx: feedDeleteFx({
+				...data,
+				scope: {
+					userId: user.id,
+				},
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withCatchFx({

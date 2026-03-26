@@ -16,15 +16,13 @@ export const listingCountFn = createServerFn()
 	])
 	.inputValidator(ListingCountQuerySchema)
 	.handler(async ({ data, context: { database, user } }) =>
-		Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: CountSchema,
-				dataFx: listingCountFx({
-					...data,
-					userId: user.id,
-					scope: {},
-				}),
-			});
+		zodGuardFx({
+			schema: CountSchema,
+			dataFx: listingCountFx({
+				...data,
+				userId: user.id,
+				scope: {},
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withCatchFx({

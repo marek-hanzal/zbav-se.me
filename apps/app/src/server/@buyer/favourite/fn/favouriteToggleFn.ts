@@ -18,15 +18,13 @@ export const favouriteToggleFn = createServerFn({
 		withUserMiddleware,
 	])
 	.inputValidator(FavouriteToggleSchema)
-	.handler(async ({ data, context: { database, user } }) => {
-		return Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: ListingSchema,
-				dataFx: favouriteToggleFx({
-					...data,
-					userId: user.id,
-				}),
-			});
+	.handler(async ({ data, context: { database, user } }) =>
+		zodGuardFx({
+			schema: ListingSchema,
+			dataFx: favouriteToggleFx({
+				...data,
+				userId: user.id,
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
@@ -45,5 +43,5 @@ export const favouriteToggleFn = createServerFn({
 				},
 			}),
 			Effect.runPromise,
-		);
-	});
+		),
+	);

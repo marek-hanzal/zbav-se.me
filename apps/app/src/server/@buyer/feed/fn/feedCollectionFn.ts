@@ -17,16 +17,14 @@ export const feedCollectionFn = createServerFn()
 	])
 	.inputValidator(FeedQuerySchema)
 	.handler(async ({ data, context: { database, user } }) =>
-		Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: z.array(FeedSchema),
-				dataFx: feedCollectionFx({
-					...data,
-					scope: {
-						userId: user.id,
-					},
-				}),
-			});
+		zodGuardFx({
+			schema: z.array(FeedSchema),
+			dataFx: feedCollectionFx({
+				...data,
+				scope: {
+					userId: user.id,
+				},
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withCatchFx({

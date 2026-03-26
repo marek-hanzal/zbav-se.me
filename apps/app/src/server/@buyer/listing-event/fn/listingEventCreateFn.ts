@@ -19,15 +19,13 @@ export const listingEventCreateFn = createServerFn({
 		withUserMiddleware,
 	])
 	.inputValidator(ListingEventCreateSchema)
-	.handler(async ({ data, context: { database, user } }) => {
-		return Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: ListingEventSchema,
-				dataFx: listingEventCreateFx({
-					...data,
-					userId: user.id,
-				}),
-			});
+	.handler(async ({ data, context: { database, user } }) =>
+		zodGuardFx({
+			schema: ListingEventSchema,
+			dataFx: listingEventCreateFx({
+				...data,
+				userId: user.id,
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
@@ -51,5 +49,5 @@ export const listingEventCreateFn = createServerFn({
 				},
 			}),
 			Effect.runPromise,
-		);
-	});
+		),
+	);

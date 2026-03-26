@@ -18,15 +18,13 @@ export const thumbCreateFn = createServerFn({
 		withUserMiddleware,
 	])
 	.inputValidator(ThumbCreateSchema)
-	.handler(async ({ data, context: { database, user } }) => {
-		return Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: ListingSchema,
-				dataFx: thumbCreateFx({
-					...data,
-					userId: user.id,
-				}),
-			});
+	.handler(async ({ data, context: { database, user } }) =>
+		zodGuardFx({
+			schema: ListingSchema,
+			dataFx: thumbCreateFx({
+				...data,
+				userId: user.id,
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
@@ -45,5 +43,5 @@ export const thumbCreateFn = createServerFn({
 				},
 			}),
 			Effect.runPromise,
-		);
-	});
+		),
+	);
