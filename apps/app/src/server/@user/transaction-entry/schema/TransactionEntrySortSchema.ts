@@ -13,6 +13,7 @@ export const TransactionEntrySortSchema = z
 			}),
 		order: OrderEnumSchema,
 	})
+	.strip()
 	.openapi("TransactionEntrySort", {
 		description: "Sort object for transaction entry collection",
 	});

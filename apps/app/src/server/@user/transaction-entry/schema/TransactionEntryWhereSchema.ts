@@ -5,6 +5,7 @@ export const TransactionEntryWhereSchema = z
 	.looseObject({
 		...TransactionEntryFilterSchema.shape,
 	})
+	.strip()
 	.openapi("TransactionEntryWhere", {
 		description: "App-level filters for transaction entry queries",
 	});

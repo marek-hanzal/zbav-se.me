@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const TransactionEntryGalleryQuerySchema = z
-	.object({
+	.looseObject({
 		where: z
 			.object({
 				transactionEntryId: z.string().openapi({
@@ -12,6 +12,7 @@ export const TransactionEntryGalleryQuerySchema = z
 				description: "Gallery lookup scoped by transaction entry identifier",
 			}),
 	})
+	.strip()
 	.openapi("TransactionEntryGalleryQuery", {
 		description: "Query object for transaction-entry gallery fetch",
 	});

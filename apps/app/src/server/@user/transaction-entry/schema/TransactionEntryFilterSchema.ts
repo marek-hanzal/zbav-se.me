@@ -16,6 +16,7 @@ export const TransactionEntryFilterSchema = z
 			description: "Matches any of the provided transaction entry kinds",
 		}),
 	})
+	.strip()
 	.openapi("TransactionEntryFilter", {
 		description: "Transaction entry collection filters",
 	});
