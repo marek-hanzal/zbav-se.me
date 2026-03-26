@@ -2,8 +2,6 @@ import { withDialectFx } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
-import { withBuyerApiFx } from "~/@buyer/withBuyerApiFx";
-import { withBuyerHono } from "~/@buyer/withBuyerHono";
 import { withPublicApiFx } from "~/@public/withPublicApiFx";
 import { withPublicHono } from "~/@public/withPublicHono";
 import { withSellerApiFx } from "~/@seller/withSellerApiFx";
@@ -51,10 +49,8 @@ const app = await Effect.gen(function* () {
 
 	yield* Effect.all([
 		withPublicApiFx(),
-		// withSessionApiFx(),
 		withUserApiFx(),
 		withSellerApiFx(),
-		withBuyerApiFx(),
 		withMcpApiFx(),
 	]).pipe(withKyselyFx(kyselyContext));
 
@@ -66,7 +62,6 @@ const app = await Effect.gen(function* () {
 		sessionHono: withSessionHono(),
 		userHono: withUserHono(),
 		sellerHono: withSellerHono(),
-		buyerHono: withBuyerHono(),
 	}),
 	Effect.runPromise,
 );
