@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { CategoryTableSchema } from "~/database/@table/CategoryTableSchema";
+import { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
 
 export const CategoryItemSchema = z
 	.looseObject({
