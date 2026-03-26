@@ -5,7 +5,7 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionRejectMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
 import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import type { TransactionMenuButton } from "~/client/@common/transaction/ui/TransactionMenuButton";
+import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
 import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";
 
 export namespace RejectButton {

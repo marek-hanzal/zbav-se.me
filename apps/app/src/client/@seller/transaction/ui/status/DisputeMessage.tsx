@@ -2,14 +2,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
-import { withTransactionEntryGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction-entry";
 import { type FC, useCallback, useState } from "react";
 import { GalleryUploadButton } from "~/client/@common/gallery/ui/GalleryUploadButton";
-import { MessageButtonUi } from "~/client/@common/transaction/ui/MessageButtonUi";
-import type { TransactionMenuButton } from "~/client/@common/transaction/ui/TransactionMenuButton";
-import { LocationButton } from "~/client/@common/transaction-entry/ui/button/LocationButton";
-import { PackageButton } from "~/client/@common/transaction-entry/ui/button/PackageButton";
-import { PersonalButton } from "~/client/@common/transaction-entry/ui/button/PersonalButton";
+import { MessageButtonUi } from "~/client/@user/transaction/ui/MessageButtonUi";
+import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
+import { LocationButton } from "~/client/@user/transaction-entry/ui/button/LocationButton";
+import { PackageButton } from "~/client/@user/transaction-entry/ui/button/PackageButton";
+import { PersonalButton } from "~/client/@user/transaction-entry/ui/button/PersonalButton";
+import { withTransactionEntryGalleryCreateMutation } from "~/client/@user/transaction-entry/withTransactionEntryGalleryCreateMutation";
 import { archiveBuyerMessageInbox } from "../../service/archiveBuyerMessageInbox";
 
 export namespace DisputeMessage {

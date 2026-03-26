@@ -3,8 +3,8 @@ import { Group } from "@use-pico/client/ui/group";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { SellerInfoButton } from "~/client/@buyer/listing/~public/SellerInfoButton";
-import { MessageButtonUi } from "~/client/@common/transaction/ui/MessageButtonUi";
-import type { TransactionMenuButton } from "~/client/@common/transaction/ui/TransactionMenuButton";
+import { MessageButtonUi } from "~/client/@user/transaction/ui/MessageButtonUi";
+import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
 import { RejectButton } from "../button/RejectButton";
 
 export namespace PendingMessage {
