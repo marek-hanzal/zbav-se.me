@@ -8,11 +8,13 @@ export const TextSchema = z
 		kind: TransactionEntryKindEnumSchema.extract([
 			"text",
 		]),
-		payload: z.looseObject({
-			text: z.string().openapi({
-				description: "Text entry body",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				text: z.string().openapi({
+					description: "Text entry body",
+				}),
+			})
+			.strip(),
 	})
 	.strip()
 	.openapi("TransactionEntryText");

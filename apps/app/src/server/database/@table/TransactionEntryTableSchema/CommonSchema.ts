@@ -18,13 +18,21 @@ export const CommonSchema = z
 		]).openapi("TransactionCommonKindEnum", {
 			description: "Common (shared) entries sharing same shape",
 		}),
-		payload: z.looseObject({
-			text: z.string().openapi({
-				description: "Translation key for the system/status timeline entry",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				text: z.string().openapi({
+					description: "Translation key for the system/status timeline entry",
+				}),
+			})
+			.strip(),
 	})
 	.strip()
 	.openapi("TransactionEntryCommon", {
 		description: "Common entry payload",
 	});
+
+export type CommonSchema = typeof CommonSchema;
+
+export namespace CommonSchema {
+	export type Type = z.infer<CommonSchema>;
+}

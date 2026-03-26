@@ -8,11 +8,13 @@ export const GallerySchema = z
 		kind: TransactionEntryKindEnumSchema.extract([
 			"gallery",
 		]),
-		payload: z.looseObject({
-			galleryId: z.string().openapi({
-				description: "Gallery identifier linked to this entry",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				galleryId: z.string().openapi({
+					description: "Gallery identifier linked to this entry",
+				}),
+			})
+			.strip(),
 	})
 	.strip()
 	.openapi("TransactionEntryGallery");

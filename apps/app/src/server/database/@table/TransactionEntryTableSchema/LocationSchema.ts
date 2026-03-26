@@ -8,11 +8,13 @@ export const LocationSchema = z
 		kind: TransactionEntryKindEnumSchema.extract([
 			"location",
 		]),
-		payload: z.looseObject({
-			locationId: z.string().openapi({
-				description: "Location identifier linked to this entry",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				locationId: z.string().openapi({
+					description: "Location identifier linked to this entry",
+				}),
+			})
+			.strip(),
 	})
 	.strip()
 	.openapi("TransactionEntryLocation");
