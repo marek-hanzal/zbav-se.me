@@ -1,5 +1,3 @@
-import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/user";
 import {
 	type ChangeEvent,
 	type KeyboardEvent,
@@ -9,6 +7,8 @@ import {
 	useState,
 } from "react";
 import type { PhotoUpload } from "~/client/@common/photo/ui/PhotoUpload";
+import { withUploadCreateMutation } from "~/client/@user/upload/withUploadCreateMutation";
+import { withUploadFetchQuery } from "~/client/@user/upload/withUploadFetchQuery";
 
 export namespace useController {
 	export interface Props {
@@ -42,7 +42,7 @@ export function useController({ value, onChange }: useController.Props): useCont
 		}
 	}, []);
 
-	const uploadMutation = withUploadMutation.useMutation({
+	const uploadMutation = withUploadCreateMutation.useMutation({
 		async onPreMutation() {
 			setProgress(0);
 

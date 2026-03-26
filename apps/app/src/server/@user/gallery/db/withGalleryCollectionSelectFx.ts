@@ -1,5 +1,6 @@
 import { Effect } from "effect";
-import { withGallerySourceSelectFx } from "~/server/@user/gallery/db/withGallerySourceSelectFx";
+import { withGallerySelectFx } from "~/server/@user/gallery/db/withGallerySelectFx";
+import type { withGallerySourceSelectFx } from "~/server/@user/gallery/db/withGallerySourceSelectFx";
 
 export namespace withGalleryCollectionSelectFx {
 	export interface Props extends withGallerySourceSelectFx.Props {
@@ -12,9 +13,7 @@ export namespace withGalleryCollectionSelectFx {
 export const withGalleryCollectionSelectFx = Effect.fn("withGalleryCollectionSelectFx")(function* ({
 	sort,
 }: withGalleryCollectionSelectFx.Props) {
-	const sourceSelect = yield* withGallerySourceSelectFx({
+	return yield* withGallerySelectFx({
 		sort,
 	});
-
-	return sourceSelect.select("gal.id");
 });

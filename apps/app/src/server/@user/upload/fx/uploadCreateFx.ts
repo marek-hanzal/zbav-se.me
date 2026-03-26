@@ -1,7 +1,7 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { UploadContextFx } from "~/server/@common/upload/context/UploadContextFx";
+import { UploadContextFx } from "~/server/@user/upload/context/UploadContextFx";
 import type { UploadCreateSchema } from "~/server/@user/upload/schema/UploadCreateSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";

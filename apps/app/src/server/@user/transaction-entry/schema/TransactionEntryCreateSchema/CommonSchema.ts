@@ -1,0 +1,28 @@
+import { z } from "zod";
+import { TransactionEntryKindEnumSchema } from "~/server/database/@enum/TransactionEntryKindEnumSchema";
+import { EntrySchema } from "./EntrySchema";
+
+export const CommonSchema = z
+	.looseObject({
+		...EntrySchema.shape,
+		/**
+		 * Take off specific schemas already handled, rest shares the same
+		 * structure, so we can make the stuff much simpler here.
+		 */
+		kind: TransactionEntryKindEnumSchema.exclude([
+			"text",
+			"gallery",
+			"location",
+			"package",
+			"personal",
+		]),
+		payload: z.looseObject({
+			text: z.string().openapi({
+				description: "Translation key for the system/status timeline entry",
+			}),
+		}),
+	})
+	.strip()
+	.openapi("TransactionEntryCommonCreate", {
+		description: "Common entry create payload",
+	});

@@ -1,1 +1,0 @@
-export { withInboxQuery } from "./withInboxQuery";

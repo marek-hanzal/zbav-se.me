@@ -7,7 +7,6 @@ import type {
 	tApiTransactionResolveResponse,
 } from "../../../api/seller/types.gen";
 import { withTransactionQuery } from "../../../query/seller/transaction";
-import { withTransactionEntryQuery } from "../../../query/user/transaction-entry";
 
 export const withTransactionResolveMutation = withMutation<
 	tApiTransactionResolveRequest,
@@ -29,10 +28,6 @@ export const withTransactionResolveMutation = withMutation<
 			async invalidate(queryClient) {
 				await withTransactionQuery.invalidator(queryClient, [
 					"fetch",
-				]);
-				await withTransactionEntryQuery.invalidator(queryClient, [
-					"collection",
-					"count",
 				]);
 			},
 		},
