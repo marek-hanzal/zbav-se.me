@@ -5,7 +5,7 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionAcceptMutation } from "@zbav-se.me/sdk/mutation/seller/transaction";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import type { TransactionMenuButton } from "~/client/@common/transaction/ui/TransactionMenuButton";
+import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
 import { archiveBuyerMessageInbox } from "../../service/archiveBuyerMessageInbox";
 
 export namespace AcceptButton {
