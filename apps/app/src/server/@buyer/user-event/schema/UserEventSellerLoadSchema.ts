@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { LoadEnumSchema } from "~/server/@common/user-event/schema/LoadEnumSchema";
+import { LoadEnumSchema } from "~/server/@user/user-event/schema/LoadEnumSchema";
 
 export const UserEventSellerLoadSchema = z
 	.looseObject({

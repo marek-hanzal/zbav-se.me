@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { withUserEventSourceSelectFx } from "~/server/@common/user-event/db/withUserEventSourceSelectFx";
+import { withUserEventSourceSelectFx } from "./withUserEventSourceSelectFx";
 
 export namespace withUserEventCollectionSelectFx {
 	export interface Props extends withUserEventSourceSelectFx.Props {
