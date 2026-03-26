@@ -1,4 +1,5 @@
 import { withMutation } from "@use-pico/client/mutation";
+import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { feedGalleryCreateFn } from "~/server/@buyer/feed-gallery/fn/feedGalleryCreateFn";
 import type { FeedGalleryCreateSchema } from "~/server/@buyer/feed-gallery/schema/FeedGalleryCreateSchema";
 import type { GallerySchema } from "~/server/@user/gallery/schema/GallerySchema";
@@ -20,5 +21,14 @@ export const withFeedGalleryCreateMutation = withMutation<
 			data,
 		});
 	},
-	invalidate: [],
+	invalidate: [
+		{
+			async invalidate(queryClient) {
+				await withFeedQuery.invalidator(queryClient, [
+					"fetch",
+					"collection",
+				]);
+			},
+		},
+	],
 });
