@@ -1,15 +1,15 @@
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
-import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/client/@common/location/ui/LocationSelect";
+import type { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
 
 export namespace Content {
 	export interface Props extends Container.Props {
 		locationIdState: StateType.State<string | undefined | null>;
-		locationState: StateType.State<tLocation | undefined>;
+		locationState: StateType.State<LocationSchema.Type | undefined>;
 		loading: boolean;
 		onSave(): void;
 		onCancel(): void;

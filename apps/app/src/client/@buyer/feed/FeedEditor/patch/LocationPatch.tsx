@@ -1,11 +1,11 @@
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { type FC, useState } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/client/@common/location/ui/LocationSelect";
 import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
+import type { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
 
 export namespace LocationPatch {
 	export interface Props extends Container.Props {
@@ -18,7 +18,7 @@ export namespace LocationPatch {
 export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
 	const [locationId, setLocationId] = useState<string | undefined | null>(feed.locationId);
-	const [location, setLocation] = useState<tLocation | undefined>(undefined);
+	const [location, setLocation] = useState<LocationSchema.Type | undefined>(undefined);
 
 	return (
 		<Container

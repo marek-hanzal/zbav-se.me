@@ -1,8 +1,8 @@
-import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import type { FC } from "react";
 import { useState } from "react";
 import type { TransactionMenuButton } from "~/client/@common/transaction/ui/TransactionMenuButton";
+import type { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
 import { Content } from "./Content";
 import { Sheet } from "./Sheet";
 import { Trigger } from "./Trigger";
@@ -23,7 +23,7 @@ export const LocationButton: FC<LocationButton.Props> = ({
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [locationId, setLocationId] = useState<string | undefined | null>(null);
-	const [location, setLocation] = useState<tLocation | undefined>(undefined);
+	const [location, setLocation] = useState<LocationSchema.Type | undefined>(undefined);
 	const mutation = withTransactionEntryQuery.useCreateMutation({
 		invalidate: [
 			"collection",

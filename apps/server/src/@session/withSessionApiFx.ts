@@ -15,7 +15,7 @@ export const withSessionApiFx = Effect.fn("withSessionApiFx")(function* () {
 	});
 
 	yield* Effect.all([
-		withLocationApiFx(),
+		// withLocationApiFx(),
 	]);
 
 	root.route("/api/session", sessionHono);
