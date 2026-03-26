@@ -3,7 +3,7 @@ import type { z } from "zod";
 import { zodFx } from "./zodFx";
 
 export namespace zodGuardFx {
-	export interface Props<TSchema extends z.ZodSchema, TDataError, TDataContext> {
+	export interface Props<out TSchema extends z.ZodSchema, out TDataError, out TDataContext> {
 		schema: TSchema;
 		dataFx: Effect.Effect<z.infer<TSchema>, TDataError, TDataContext>;
 	}
@@ -16,9 +16,9 @@ export namespace zodGuardFx {
  * still runs, but the type system guarantees the contract.
  */
 export const zodGuardFx = Effect.fn("zodGuardFx")(function* <
-	TSchema extends z.ZodSchema,
-	TDataError,
-	TDataContext,
+	const TSchema extends z.ZodSchema,
+	const TDataError,
+	const TDataContext,
 >(props: zodGuardFx.Props<TSchema, TDataError, TDataContext>) {
 	return yield* zodFx(props);
 });
