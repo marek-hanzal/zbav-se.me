@@ -3,7 +3,7 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { match } from "ts-pattern";
-import { withTransactionEntryQuery } from "~/client/@common/transaction-entry/withTransactionEntryQuery";
+import { withTransactionEntryQuery } from "~/client/@user/transaction-entry/withTransactionEntryQuery";
 import { Common } from "./type/Common";
 import { Gallery } from "./type/Gallery";
 import { Location } from "./type/Location";

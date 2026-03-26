@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ActivityEnumSchema } from "~/server/@common/user-event/schema/ActivityEnumSchema";
+import { ActivityEnumSchema } from "~/server/@user/user-event/schema/ActivityEnumSchema";
 
 export const UserEventBuyerActivitySchema = z
 	.looseObject({
