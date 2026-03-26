@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { EntitySchema, zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { transactionCloseFx } from "~/server/@buyer/transaction/fx/transactionCloseFx";
+import { transactionSuccessFx } from "~/server/@buyer/transaction/fx/transactionSuccessFx";
 import { TransactionSchema } from "~/server/@buyer/transaction/schema/TransactionSchema";
 import { withTransactionContextFx } from "~/server/@user/transaction/context/withTransactionContextFx";
 import { withDateFx } from "~/server/database/fx/withDateFx";
@@ -10,7 +10,7 @@ import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
-export const transactionCloseFn = createServerFn({
+export const transactionSuccessFn = createServerFn({
 	method: "POST",
 })
 	.middleware([
@@ -21,7 +21,7 @@ export const transactionCloseFn = createServerFn({
 	.handler(async ({ data, context: { database, user } }) => {
 		return zodGuardFx({
 			schema: TransactionSchema,
-			dataFx: transactionCloseFx({
+			dataFx: transactionSuccessFx({
 				transactionId: data.id,
 				userId: user.id,
 			}),

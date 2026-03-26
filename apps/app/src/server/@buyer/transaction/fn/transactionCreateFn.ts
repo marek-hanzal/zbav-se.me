@@ -43,9 +43,6 @@ export const transactionCreateFn = createServerFn({
 				RuntimeErrorFx() {
 					throw new Error("RuntimeError");
 				},
-				ConflictErrorFx() {
-					throw new Error("ConflictError");
-				},
 				ZodErrorFx() {
 					throw new Error("ZodError");
 				},

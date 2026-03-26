@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
-import { zodGuardFx } from "@use-pico/common/schema";
+import { EntitySchema, zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { z } from "zod";
 import { transactionDisputeFx } from "~/server/@buyer/transaction/fx/transactionDisputeFx";
 import { TransactionSchema } from "~/server/@buyer/transaction/schema/TransactionSchema";
 import { withTransactionContextFx } from "~/server/@user/transaction/context/withTransactionContextFx";
@@ -18,16 +17,12 @@ export const transactionDisputeFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(
-		z.object({
-			transactionId: z.string(),
-		}),
-	)
+	.inputValidator(EntitySchema)
 	.handler(async ({ data, context: { database, user } }) => {
 		return zodGuardFx({
 			schema: TransactionSchema,
 			dataFx: transactionDisputeFx({
-				transactionId: data.transactionId,
+				transactionId: data.id,
 				userId: user.id,
 			}),
 		}).pipe(
