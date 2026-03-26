@@ -4,11 +4,11 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import { withDraftGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/seller/draft";
-import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/client/@common/gallery/ui/GalleryUpload";
+import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 

@@ -7,11 +7,11 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import { zListingCreate } from "@zbav-se.me/sdk/api/seller";
-import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
+import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
