@@ -16,5 +16,10 @@ export const TextSchema = z
 			})
 			.strip(),
 	})
-	.strip()
-	.openapi("TransactionEntryText");
+	.strip();
+
+export type TextSchema = typeof TextSchema;
+
+export namespace TextSchema {
+	export type Type = z.infer<TextSchema>;
+}

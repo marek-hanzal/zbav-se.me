@@ -16,5 +16,10 @@ export const LocationSchema = z
 			})
 			.strip(),
 	})
-	.strip()
-	.openapi("TransactionEntryLocation");
+	.strip();
+
+export type LocationSchema = typeof LocationSchema;
+
+export namespace LocationSchema {
+	export type Type = z.infer<LocationSchema>;
+}

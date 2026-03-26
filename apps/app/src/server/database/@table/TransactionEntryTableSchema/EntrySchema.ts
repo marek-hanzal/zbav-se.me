@@ -17,3 +17,9 @@ export const EntrySchema = z
 		}),
 	})
 	.strip();
+
+export type EntrySchema = typeof EntrySchema;
+
+export namespace EntrySchema {
+	export type Type = z.infer<EntrySchema>;
+}

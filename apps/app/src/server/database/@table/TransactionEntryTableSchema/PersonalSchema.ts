@@ -25,5 +25,10 @@ export const PersonalSchema = z
 			})
 			.strip(),
 	})
-	.strip()
-	.openapi("TransactionEntryPersonal");
+	.strip();
+
+export type PersonalSchema = typeof PersonalSchema;
+
+export namespace PersonalSchema {
+	export type Type = z.infer<PersonalSchema>;
+}

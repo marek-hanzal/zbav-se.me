@@ -16,5 +16,10 @@ export const GallerySchema = z
 			})
 			.strip(),
 	})
-	.strip()
-	.openapi("TransactionEntryGallery");
+	.strip();
+
+export type GallerySchema = typeof GallerySchema;
+
+export namespace GallerySchema {
+	export type Type = z.infer<GallerySchema>;
+}

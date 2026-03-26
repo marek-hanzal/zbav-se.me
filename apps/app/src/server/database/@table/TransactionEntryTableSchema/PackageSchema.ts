@@ -19,5 +19,10 @@ export const PackageSchema = z
 			})
 			.strip(),
 	})
-	.strip()
-	.openapi("TransactionEntryPackage");
+	.strip();
+
+export type PackageSchema = typeof PackageSchema;
+
+export namespace PackageSchema {
+	export type Type = z.infer<PackageSchema>;
+}

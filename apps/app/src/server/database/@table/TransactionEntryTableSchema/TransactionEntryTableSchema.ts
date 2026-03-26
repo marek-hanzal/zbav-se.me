@@ -6,18 +6,14 @@ import { PackageSchema } from "./PackageSchema";
 import { PersonalSchema } from "./PersonalSchema";
 import { TextSchema } from "./TextSchema";
 
-export const TransactionEntryTableSchema = z
-	.discriminatedUnion("kind", [
-		TextSchema,
-		GallerySchema,
-		LocationSchema,
-		PackageSchema,
-		PersonalSchema,
-		CommonSchema,
-	])
-	.openapi("TransactionEntry", {
-		description: "Transaction timeline entry",
-	});
+export const TransactionEntryTableSchema = z.discriminatedUnion("kind", [
+	TextSchema,
+	GallerySchema,
+	LocationSchema,
+	PackageSchema,
+	PersonalSchema,
+	CommonSchema,
+]);
 
 export type TransactionEntryTableSchema = typeof TransactionEntryTableSchema;
 
