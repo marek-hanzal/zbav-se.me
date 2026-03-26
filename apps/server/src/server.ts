@@ -8,7 +8,6 @@ import { withPublicApiFx } from "~/@public/withPublicApiFx";
 import { withPublicHono } from "~/@public/withPublicHono";
 import { withSellerApiFx } from "~/@seller/withSellerApiFx";
 import { withSellerHono } from "~/@seller/withSellerHono";
-import { withSessionApiFx } from "~/@session/withSessionApiFx";
 import { withSessionHono } from "~/@session/withSessionHono";
 import { withUserApiFx } from "~/@user/withUserApiFx";
 import { withUserHono } from "~/@user/withUserHono";
@@ -52,7 +51,7 @@ const app = await Effect.gen(function* () {
 
 	yield* Effect.all([
 		withPublicApiFx(),
-		withSessionApiFx(),
+		// withSessionApiFx(),
 		withUserApiFx(),
 		withSellerApiFx(),
 		withBuyerApiFx(),
