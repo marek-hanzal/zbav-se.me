@@ -4,18 +4,19 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft, tListingWarrantyEnum } from "@zbav-se.me/sdk/api/seller";
+import type { tListingWarrantyEnum } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { WarrantySelect } from "~/client/@common/warranty/ui/WarrantySelect";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
 export namespace WarrantyPatch {
 	export interface Props extends TitleContainer.Props {
-		draft: tDraft;
+		draft: DraftSchema.Type;
 		onCancel(): void;
 		onView(view: DraftEditor.View): void;
 	}

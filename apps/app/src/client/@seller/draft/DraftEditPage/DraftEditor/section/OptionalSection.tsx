@@ -1,8 +1,8 @@
 import { Group } from "@use-pico/client/ui/group";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
 import { DeliveryValueList } from "~/client/@common/delivery/ui/DeliveryValueList";
+import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import { ChevronAction } from "../ChevronAction";
 import type { DraftEditor } from "../DraftEditor";
 import { AgeValue } from "../value/AgeValue";
@@ -14,7 +14,7 @@ import { WarrantyValue } from "../value/WarrantyValue";
 
 export namespace OptionalSection {
 	export interface Props {
-		draft: tDraft;
+		draft: DraftSchema.Type;
 		onView(view: DraftEditor.View): void;
 	}
 }

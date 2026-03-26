@@ -2,7 +2,6 @@ import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import { zListingCreate } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
@@ -10,6 +9,7 @@ import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
@@ -19,7 +19,7 @@ const PriceSchema = zListingCreate.pick({
 
 export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {
-		draft: tDraft;
+		draft: DraftSchema.Type;
 		onCancel(): void;
 		onView(view: DraftEditor.View): void;
 	}

@@ -5,18 +5,18 @@ import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import { sDraftCreate } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
 export namespace DescriptionPatch {
 	export interface Props extends TitleContainer.Props {
-		draft: tDraft;
+		draft: DraftSchema.Type;
 		onCancel(): void;
 		onView(view: DraftEditor.View): void;
 	}

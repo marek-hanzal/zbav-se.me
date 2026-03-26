@@ -4,14 +4,14 @@ import { TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 
 export namespace DeleteButton {
 	export interface Props extends ConfirmButton.Props {
-		draft: tDraft;
+		draft: DraftSchema.Type;
 	}
 }
 

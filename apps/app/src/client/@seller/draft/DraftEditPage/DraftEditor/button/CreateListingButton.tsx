@@ -2,15 +2,16 @@ import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tDraft, tListingCreate } from "@zbav-se.me/sdk/api/seller";
+import type { tListingCreate } from "@zbav-se.me/sdk/api/seller";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import { isValid } from "~/client/@common/draft/util/isValid";
+import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 
 export namespace CreateListingButton {
 	export interface Props extends Button.Props {
-		draft: tDraft;
+		draft: DraftSchema.Type;
 	}
 }
 

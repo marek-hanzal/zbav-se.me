@@ -2,11 +2,11 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Group } from "@use-pico/client/ui/group";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
 import { GalleryValue } from "~/client/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/client/@common/location/ui/LocationValue";
 import { TitleValue } from "~/client/@common/title/ui/TitleValue";
+import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import { ChevronAction } from "../ChevronAction";
 import type { DraftEditor } from "../DraftEditor";
 import { CategoryValue } from "../value/CategoryValue";
@@ -17,7 +17,7 @@ import { RestrictionValue } from "../value/RestrictionValue";
 
 export namespace RequiredSection {
 	export interface Props extends MarkSuspense.Props {
-		draft: tDraft;
+		draft: DraftSchema.Type;
 		onView(view: DraftEditor.View): void;
 	}
 }

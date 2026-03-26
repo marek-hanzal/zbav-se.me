@@ -4,18 +4,19 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft, tListingDeliveryEnum } from "@zbav-se.me/sdk/api/seller";
+import type { tListingDeliveryEnum } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { DeliverySelect } from "~/client/@common/delivery/ui/DeliverySelect";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
 export namespace DeliveryPatch {
 	export interface Props extends TitleContainer.Props {
-		draft: tDraft;
+		draft: DraftSchema.Type;
 		onCancel(): void;
 		onView(view: DraftEditor.View): void;
 	}
