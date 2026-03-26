@@ -1,11 +1,9 @@
 import { Effect } from "effect";
 import { UnauthorizedNotice } from "~/@common/notice/UnauthorizedNotice";
 import { withGalleryApiFx } from "~/@user/gallery/withGalleryApiFx";
-import { withInboxApiFx } from "~/@user/inbox/withInboxApiFx";
 import { withS3ApiFx } from "~/@user/s3/withS3ApiFx";
 import { withTransactionEntryApiFx } from "~/@user/transaction-entry/withTransactionEntryApiFx";
 import { withUploadApiFx } from "~/@user/upload/withUploadApiFx";
-import { withUserExApiFx } from "~/@user/user-ex/withUserExApiFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 
 export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
@@ -21,11 +19,11 @@ export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
 
 	yield* Effect.all([
 		withGalleryApiFx(),
-		withInboxApiFx(),
+		// withInboxApiFx(),
 		withS3ApiFx(),
 		withTransactionEntryApiFx(),
 		withUploadApiFx(),
-		withUserExApiFx(),
+		// withUserExApiFx(),
 	]);
 
 	root.route("/api/user", userHono);

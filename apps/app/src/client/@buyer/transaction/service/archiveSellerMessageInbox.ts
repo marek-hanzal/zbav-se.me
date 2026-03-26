@@ -23,7 +23,7 @@ export const archiveSellerMessageInbox = async ({
 		queryClient,
 		{
 			patch: {
-				archivedAt: new Date().toISOString(),
+				archivedAt: new Date(),
 			},
 			query: {
 				where: {
