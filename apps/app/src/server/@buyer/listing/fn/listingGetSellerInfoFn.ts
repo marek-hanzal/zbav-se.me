@@ -22,7 +22,7 @@ export const listingGetSellerInfoFn = createServerFn()
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withCatchFx({                
+			withCatchFx({
 				NotFoundErrorFx() {
 					throw new Error("NotFoundErrorFx");
 				},
