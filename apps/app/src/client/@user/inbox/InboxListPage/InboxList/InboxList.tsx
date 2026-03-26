@@ -2,15 +2,15 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { withFallback } from "@use-pico/client/utils";
-import type { zInboxPriorityEnum } from "@zbav-se.me/sdk/api/user";
 import { Suspense, useMemo } from "react";
 import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import type { InboxPriorityEnumSchema } from "~/server/database/@enum/InboxPriorityEnumSchema";
 import { InboxItem } from "../InboxItem";
 import { Empty } from "./Empty";
 
 export namespace InboxList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		priority: zInboxPriorityEnum;
+		priority: InboxPriorityEnumSchema.Type;
 		refetchInterval?: number;
 	}
 }

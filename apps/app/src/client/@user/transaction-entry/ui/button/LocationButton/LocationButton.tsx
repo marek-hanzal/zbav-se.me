@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { useState } from "react";
-import { withTransactionEntryQuery } from "~/client/@common/transaction-entry/withTransactionEntryQuery";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
+import { withTransactionEntryQuery } from "~/client/@user/transaction-entry/withTransactionEntryQuery";
 import type { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
 import { Content } from "./Content";
 import { Sheet } from "./Sheet";

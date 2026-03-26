@@ -3,16 +3,16 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tInboxFavourite } from "@zbav-se.me/sdk/api/user";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import type { FC } from "react";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import type { FavouriteSchema } from "~/server/database/@table/InboxTableSchema/FavouriteSchema";
 
 export namespace InboxFavouriteItem {
 	export interface Props {
-		item: tInboxFavourite;
+		item: FavouriteSchema.Type;
 	}
 }
 
@@ -63,7 +63,7 @@ export const InboxFavouriteItem: FC<InboxFavouriteItem.Props> = ({ item }) => {
 				}
 				patchMutation.mutate({
 					patch: {
-						archivedAt: new Date().toISOString(),
+						archivedAt: new Date(),
 					},
 					query: {
 						where: {

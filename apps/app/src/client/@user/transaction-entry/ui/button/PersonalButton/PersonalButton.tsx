@@ -5,8 +5,8 @@ import { CloseButton } from "@zbav-se.me/ui/button";
 import { EmailIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
-import { withTransactionEntryQuery } from "~/client/@common/transaction-entry/withTransactionEntryQuery";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
+import { withTransactionEntryQuery } from "~/client/@user/transaction-entry/withTransactionEntryQuery";
 import { PersonalControl } from "./PersonalControl";
 
 export namespace PersonalButton {

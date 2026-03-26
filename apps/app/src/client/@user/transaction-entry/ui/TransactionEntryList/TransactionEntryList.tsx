@@ -3,7 +3,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { type FC, type RefObject, Suspense, useRef } from "react";
-import { withTransactionEntryQuery } from "~/client/@common/transaction-entry/withTransactionEntryQuery";
+import { withTransactionEntryQuery } from "~/client/@user/transaction-entry/withTransactionEntryQuery";
 import { Item } from "./Item";
 
 export namespace TransactionEntryList {

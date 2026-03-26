@@ -63,7 +63,7 @@ export const InboxUnfavouriteItem: FC<InboxUnfavouriteItem.Props> = ({ item }) =
 				}
 				patchMutation.mutate({
 					patch: {
-						archivedAt: new Date().toISOString(),
+						archivedAt: new Date(),
 					},
 					query: {
 						where: {

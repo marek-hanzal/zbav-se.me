@@ -40,7 +40,7 @@ export const InboxBuyerMessageItem: FC<InboxBuyerMessageItem.Props> = ({ item })
 				}
 				patchMutation.mutate({
 					patch: {
-						archivedAt: new Date().toISOString(),
+						archivedAt: new Date(),
 					},
 					query: {
 						where: {
