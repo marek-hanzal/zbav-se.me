@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import { withFeedGalleryApiFx } from "~/@buyer/feed-gallery/withFeedGalleryApiFx";
 import { withTransactionApiFx } from "~/@buyer/transaction/withTransactionApiFx";
 import { UnauthorizedNotice } from "~/@common/notice/UnauthorizedNotice";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
@@ -15,15 +14,6 @@ export const withBuyerApiFx = Effect.fn("withBuyerApiFx")(function* () {
 	});
 
 	yield* Effect.all([
-		// withFavouriteApiFx(),
-		// withFeedApiFx(),
-		// withFeedFavouriteApiFx(),
-		withFeedGalleryApiFx(),
-		// withFlagApiFx(),
-		// withIgnoreApiFx(),
-		// withListingApiFx(),
-		// withListingEventApiFx(),
-		// withThumbApiFx(),
 		withTransactionApiFx(),
 	]);
 

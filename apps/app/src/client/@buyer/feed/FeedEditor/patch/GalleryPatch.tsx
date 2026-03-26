@@ -1,6 +1,8 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { Container } from "@use-pico/client/ui/container";
-import { withFeedGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/buyer/feed";
 import { type FC, useState } from "react";
+import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
+import { withFeedGalleryCreateMutation } from "~/client/@buyer/feed-gallery/withFeedGalleryCreateMutation";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/client/@common/gallery/ui/GalleryUpload";
 import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
@@ -14,6 +16,7 @@ export namespace GalleryPatch {
 }
 
 export const GalleryPatch: FC<GalleryPatch.Props> = ({ feed, onSettled, onCancel }) => {
+	const queryClient = useQueryClient();
 	const [uploadIds, setUploadIds] = useState<string[]>(
 		feed.uploadId
 			? [
@@ -22,6 +25,21 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({ feed, onSettled, onCancel
 			: [],
 	);
 	const mutation = withFeedGalleryCreateMutation.useMutation({
+		async onSuccess() {
+			await withFeedQuery.invalidator(
+				queryClient,
+				[
+					"fetch",
+				],
+				{
+					fetch: {
+						where: {
+							id: feed.id,
+						},
+					},
+				},
+			);
+		},
 		onSettled,
 	});
 
