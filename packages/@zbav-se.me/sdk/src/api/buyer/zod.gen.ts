@@ -3,6 +3,25 @@
 import * as z from 'zod';
 
 /**
+ * Current status of the listing transaction
+ */
+export const zTransactionStatusEnum = z.enum([
+    'pending',
+    'open',
+    'resolved',
+    'dispute',
+    'sold',
+    'rejected',
+    'expired',
+    'success',
+    'closed'
+]).register(z.globalRegistry, {
+    description: 'Current status of the listing transaction'
+});
+
+export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
+
+/**
  * Upload file metadata
  */
 export const zUpload = z.object({
@@ -56,68 +75,6 @@ export const zGallery = z.object({
 });
 
 export type zGallery = z.infer<typeof zGallery>;
-
-/**
- * Type of notice
- */
-export const zNoticeTypeEnum = z.enum([
-    'info',
-    'warning',
-    'error'
-]).register(z.globalRegistry, {
-    description: 'Type of notice'
-});
-
-export type zNoticeTypeEnum = z.infer<typeof zNoticeTypeEnum>;
-
-/**
- * Just a note sent from various reasons, usually when something is fucked up.
- */
-export const zNotice = z.object({
-    message: z.string().register(z.globalRegistry, {
-        description: 'Message'
-    }),
-    type: zNoticeTypeEnum
-}).register(z.globalRegistry, {
-    description: 'Just a note sent from various reasons, usually when something is fucked up.'
-});
-
-export type zNotice = z.infer<typeof zNotice>;
-
-/**
- * Request to create or update a feed gallery
- */
-export const zFeedGalleryCreate = z.object({
-    feedId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the feed to add a gallery to'
-    }),
-    uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
-        description: 'IDs of the uploads; order of uploads defines order in the gallery'
-    })
-}).register(z.globalRegistry, {
-    description: 'Request to create or update a feed gallery'
-});
-
-export type zFeedGalleryCreate = z.infer<typeof zFeedGalleryCreate>;
-
-/**
- * Current status of the listing transaction
- */
-export const zTransactionStatusEnum = z.enum([
-    'pending',
-    'open',
-    'resolved',
-    'dispute',
-    'sold',
-    'rejected',
-    'expired',
-    'success',
-    'closed'
-]).register(z.globalRegistry, {
-    description: 'Current status of the listing transaction'
-});
-
-export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
 
 /**
  * Price type of the listing
@@ -477,6 +434,33 @@ export const zTransaction = z.object({
 export type zTransaction = z.infer<typeof zTransaction>;
 
 /**
+ * Type of notice
+ */
+export const zNoticeTypeEnum = z.enum([
+    'info',
+    'warning',
+    'error'
+]).register(z.globalRegistry, {
+    description: 'Type of notice'
+});
+
+export type zNoticeTypeEnum = z.infer<typeof zNoticeTypeEnum>;
+
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export const zNotice = z.object({
+    message: z.string().register(z.globalRegistry, {
+        description: 'Message'
+    }),
+    type: zNoticeTypeEnum
+}).register(z.globalRegistry, {
+    description: 'Just a note sent from various reasons, usually when something is fucked up.'
+});
+
+export type zNotice = z.infer<typeof zNotice>;
+
+/**
  * Cursor for pagination
  */
 export const zCursor = z.object({
@@ -665,21 +649,6 @@ export const zTransactionCreate = z.object({
 });
 
 export type zTransactionCreate = z.infer<typeof zTransactionCreate>;
-
-export const zApiFeedGalleryCreateData = z.object({
-    body: zFeedGalleryCreate.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiFeedGalleryCreateRequest = z.infer<typeof zApiFeedGalleryCreateData>;
-
-/**
- * Gallery created or updated
- */
-export const zApiFeedGalleryCreateResponse = zGallery;
-
-export type zapiFeedGalleryCreateResponse = z.infer<typeof zApiFeedGalleryCreateResponse>;
 
 export const zApiTransactionCloseData = z.object({
     body: z.never().optional(),

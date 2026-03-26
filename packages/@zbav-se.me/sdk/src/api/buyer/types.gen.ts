@@ -5,96 +5,6 @@ export type clientOptions = {
 };
 
 /**
- * Gallery data with items
- */
-export type tGallery = {
-    /**
-     * ID of the gallery
-     */
-    id: string;
-    /**
-     * Gallery items sorted by sort order
-     */
-    items: Array<tGalleryItem>;
-};
-
-/**
- * Gallery item data
- */
-export type tGalleryItem = {
-    /**
-     * ID of the gallery item
-     */
-    id: string;
-    /**
-     * ID of the gallery this item belongs to
-     */
-    galleryId: string;
-    /**
-     * ID of the upload this image belongs to
-     */
-    uploadId: string;
-    /**
-     * Sort order of the image in the gallery
-     */
-    sort: number;
-    upload: tUpload;
-};
-
-/**
- * Upload file metadata
- */
-export type tUpload = {
-    /**
-     * ID of the upload
-     */
-    id: string;
-    /**
-     * Public URL to the uploaded file
-     */
-    url: string;
-};
-
-/**
- * Just a note sent from various reasons, usually when something is fucked up.
- */
-export type tNotice = {
-    /**
-     * Message
-     */
-    message: string;
-    type: tNoticeTypeEnum;
-};
-
-/**
- * Type of notice
- */
-export const tNoticeTypeEnum = {
-    info: 'info',
-    warning: 'warning',
-    error: 'error'
-} as const;
-
-/**
- * Type of notice
- */
-export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
-
-/**
- * Request to create or update a feed gallery
- */
-export type tFeedGalleryCreate = {
-    /**
-     * The ID of the feed to add a gallery to
-     */
-    feedId: string;
-    /**
-     * IDs of the uploads; order of uploads defines order in the gallery
-     */
-    uploadIds: Array<string>;
-};
-
-/**
  * Transaction data
  */
 export type tTransaction = {
@@ -161,6 +71,57 @@ export const tTransactionStatusEnum = {
  * Current status of the listing transaction
  */
 export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
+
+/**
+ * Gallery data with items
+ */
+export type tGallery = {
+    /**
+     * ID of the gallery
+     */
+    id: string;
+    /**
+     * Gallery items sorted by sort order
+     */
+    items: Array<tGalleryItem>;
+};
+
+/**
+ * Gallery item data
+ */
+export type tGalleryItem = {
+    /**
+     * ID of the gallery item
+     */
+    id: string;
+    /**
+     * ID of the gallery this item belongs to
+     */
+    galleryId: string;
+    /**
+     * ID of the upload this image belongs to
+     */
+    uploadId: string;
+    /**
+     * Sort order of the image in the gallery
+     */
+    sort: number;
+    upload: tUpload;
+};
+
+/**
+ * Upload file metadata
+ */
+export type tUpload = {
+    /**
+     * ID of the upload
+     */
+    id: string;
+    /**
+     * Public URL to the uploaded file
+     */
+    url: string;
+};
 
 /**
  * Price type of the listing
@@ -519,6 +480,31 @@ export type tLocation = {
 };
 
 /**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export type tNotice = {
+    /**
+     * Message
+     */
+    message: string;
+    type: tNoticeTypeEnum;
+};
+
+/**
+ * Type of notice
+ */
+export const tNoticeTypeEnum = {
+    info: 'info',
+    warning: 'warning',
+    error: 'error'
+} as const;
+
+/**
+ * Type of notice
+ */
+export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
+
+/**
  * Query object for transaction collection
  */
 export type tTransactionQuery = {
@@ -697,42 +683,6 @@ export type tTransactionCreate = {
      */
     listingId: string;
 };
-
-export type tApiFeedGalleryCreateRequest = {
-    /**
-     * Query object for feed gallery creation
-     */
-    body?: tFeedGalleryCreate;
-    path?: never;
-    query?: never;
-    url: '/api/buyer/feed/gallery/create';
-};
-
-export type apiFeedGalleryCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Feed not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedGalleryCreateError = apiFeedGalleryCreateErrors[keyof apiFeedGalleryCreateErrors];
-
-export type tApiFeedGalleryCreateResponse = {
-    /**
-     * Gallery created or updated
-     */
-    200: tGallery;
-};
-
-export type apiFeedGalleryCreateResponse = tApiFeedGalleryCreateResponse[keyof tApiFeedGalleryCreateResponse];
 
 export type tApiTransactionCloseRequest = {
     body?: never;

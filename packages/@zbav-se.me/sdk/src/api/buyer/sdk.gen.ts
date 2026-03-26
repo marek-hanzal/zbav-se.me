@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiFeedGalleryCreateErrors, apiTransactionCloseErrors, apiTransactionCollectionErrors, apiTransactionCountErrors, apiTransactionCreateErrors, apiTransactionDisputeErrors, apiTransactionFetchErrors, apiTransactionRejectErrors, apiTransactionSuccessErrors, tApiFeedGalleryCreateRequest, tApiFeedGalleryCreateResponse, tApiTransactionCloseRequest, tApiTransactionCloseResponse, tApiTransactionCollectionRequest, tApiTransactionCollectionResponse, tApiTransactionCountRequest, tApiTransactionCountResponse, tApiTransactionCreateRequest, tApiTransactionCreateResponse, tApiTransactionDisputeRequest, tApiTransactionDisputeResponse, tApiTransactionFetchRequest, tApiTransactionFetchResponse, tApiTransactionRejectRequest, tApiTransactionRejectResponse, tApiTransactionSuccessRequest, tApiTransactionSuccessResponse } from './types.gen';
-import { zApiFeedGalleryCreateData, zApiFeedGalleryCreateResponse, zApiTransactionCloseData, zApiTransactionCloseResponse, zApiTransactionCollectionData, zApiTransactionCollectionResponse, zApiTransactionCountData, zApiTransactionCountResponse, zApiTransactionCreateData, zApiTransactionCreateResponse, zApiTransactionDisputeData, zApiTransactionDisputeResponse, zApiTransactionFetchData, zApiTransactionFetchResponse, zApiTransactionRejectData, zApiTransactionRejectResponse, zApiTransactionSuccessData, zApiTransactionSuccessResponse } from './zod.gen';
+import type { apiTransactionCloseErrors, apiTransactionCollectionErrors, apiTransactionCountErrors, apiTransactionCreateErrors, apiTransactionDisputeErrors, apiTransactionFetchErrors, apiTransactionRejectErrors, apiTransactionSuccessErrors, tApiTransactionCloseRequest, tApiTransactionCloseResponse, tApiTransactionCollectionRequest, tApiTransactionCollectionResponse, tApiTransactionCountRequest, tApiTransactionCountResponse, tApiTransactionCreateRequest, tApiTransactionCreateResponse, tApiTransactionDisputeRequest, tApiTransactionDisputeResponse, tApiTransactionFetchRequest, tApiTransactionFetchResponse, tApiTransactionRejectRequest, tApiTransactionRejectResponse, tApiTransactionSuccessRequest, tApiTransactionSuccessResponse } from './types.gen';
+import { zApiTransactionCloseData, zApiTransactionCloseResponse, zApiTransactionCollectionData, zApiTransactionCollectionResponse, zApiTransactionCountData, zApiTransactionCountResponse, zApiTransactionCreateData, zApiTransactionCreateResponse, zApiTransactionDisputeData, zApiTransactionDisputeResponse, zApiTransactionFetchData, zApiTransactionFetchResponse, zApiTransactionRejectData, zApiTransactionRejectResponse, zApiTransactionSuccessData, zApiTransactionSuccessResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -18,23 +18,6 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      */
     meta?: Record<string, unknown>;
 };
-
-/**
- * Create or update a gallery for a feed.
- *
- * Create or update a gallery for a feed. Uses feed.id as gallery.id. If gallery doesn't exist, creates it and attaches uploads.
- */
-export const apiFeedGalleryCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedGalleryCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedGalleryCreateResponse, apiFeedGalleryCreateErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiFeedGalleryCreateData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiFeedGalleryCreateResponse.parseAsync(data),
-    url: '/api/buyer/feed/gallery/create',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
 
 /**
  * Close a listing transaction
