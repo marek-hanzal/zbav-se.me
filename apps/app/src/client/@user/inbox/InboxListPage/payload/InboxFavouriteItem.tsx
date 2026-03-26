@@ -5,10 +5,10 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tInboxFavourite } from "@zbav-se.me/sdk/api/user";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
-import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import type { FC } from "react";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
+import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
 
 export namespace InboxFavouriteItem {
 	export interface Props {

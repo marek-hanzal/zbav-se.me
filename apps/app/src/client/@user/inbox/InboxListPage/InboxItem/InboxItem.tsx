@@ -1,8 +1,8 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { withFallback } from "@use-pico/client/utils";
-import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import { match } from "ts-pattern";
 import { ListItemPending } from "~/client/@common/list-item/ListItemPending";
+import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
 import { InboxBuyerMessageItem } from "../payload/InboxBuyerMessageItem";
 import { InboxFavouriteItem } from "../payload/InboxFavouriteItem";
 import { InboxSellerMessageItem } from "../payload/InboxSellerMessageItem";

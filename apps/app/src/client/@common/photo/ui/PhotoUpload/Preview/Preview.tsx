@@ -1,8 +1,8 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
-import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
+import { withUploadFetchQuery } from "~/client/@user/upload/withUploadFetchQuery";
 
 export namespace Preview {
 	export interface Props extends MarkSuspense.Props {

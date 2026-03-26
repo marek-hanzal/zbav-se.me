@@ -7,12 +7,12 @@ import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
 import type { tInboxThumb } from "@zbav-se.me/sdk/api/user";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
-import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC } from "react";
 import { useState } from "react";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
+import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
 
 export namespace InboxThumbItem {
 	export interface Props {
