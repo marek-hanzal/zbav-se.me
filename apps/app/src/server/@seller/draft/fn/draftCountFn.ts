@@ -16,16 +16,14 @@ export const draftCountFn = createServerFn()
 	])
 	.inputValidator(DraftCountQuerySchema)
 	.handler(async ({ data, context: { database, user } }) =>
-		Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: CountSchema,
-				dataFx: draftCountFx({
-					...data,
-					scope: {
-						userId: user.id,
-					},
-				}),
-			});
+		zodGuardFx({
+			schema: CountSchema,
+			dataFx: draftCountFx({
+				...data,
+				scope: {
+					userId: user.id,
+				},
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withCatchFx({

@@ -18,15 +18,13 @@ export const draftCreateFn = createServerFn({
 		withUserMiddleware,
 	])
 	.inputValidator(DraftCreateSchema)
-	.handler(async ({ data, context: { database, user } }) => {
-		return Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: DraftSchema,
-				dataFx: draftCreateFx({
-					...data,
-					userId: user.id,
-				}),
-			});
+	.handler(async ({ data, context: { database, user } }) =>
+		zodGuardFx({
+			schema: DraftSchema,
+			dataFx: draftCreateFx({
+				...data,
+				userId: user.id,
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
@@ -42,5 +40,5 @@ export const draftCreateFn = createServerFn({
 				},
 			}),
 			Effect.runPromise,
-		);
-	});
+		),
+	);

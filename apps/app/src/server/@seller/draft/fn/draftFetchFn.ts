@@ -16,16 +16,14 @@ export const draftFetchFn = createServerFn()
 	])
 	.inputValidator(DraftQuerySchema)
 	.handler(async ({ data, context: { database, user } }) =>
-		Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: DraftSchema,
-				dataFx: draftFetchFx({
-					...data,
-					scope: {
-						userId: user.id,
-					},
-				}),
-			});
+		zodGuardFx({
+			schema: DraftSchema,
+			dataFx: draftFetchFx({
+				...data,
+				scope: {
+					userId: user.id,
+				},
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withCatchFx({

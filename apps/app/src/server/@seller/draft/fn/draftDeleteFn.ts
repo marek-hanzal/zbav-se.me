@@ -18,16 +18,14 @@ export const draftDeleteFn = createServerFn({
 	])
 	.inputValidator(DraftQuerySchema)
 	.handler(async ({ data, context: { database, user } }) =>
-		Effect.gen(function* () {
-			return yield* zodGuardFx({
-				schema: DraftSchema,
-				dataFx: draftDeleteFx({
-					...data,
-					scope: {
-						userId: user.id,
-					},
-				}),
-			});
+		zodGuardFx({
+			schema: DraftSchema,
+			dataFx: draftDeleteFx({
+				...data,
+				scope: {
+					userId: user.id,
+				},
+			}),
 		}).pipe(
 			withKyselyFx(database),
 			withCatchFx({
