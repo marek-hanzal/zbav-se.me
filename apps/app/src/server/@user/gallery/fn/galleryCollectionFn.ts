@@ -17,7 +17,7 @@ export const galleryCollectionFn = createServerFn()
 	])
 	.inputValidator(GalleryQuerySchema)
 	.handler(async ({ data, context: { database, user } }) => {
-		const result = await zodGuardFx({
+		return zodGuardFx({
 			schema: z.array(GallerySchema),
 			dataFx: galleryCollectionFx({
 				...data,
@@ -34,5 +34,4 @@ export const galleryCollectionFn = createServerFn()
 			}),
 			Effect.runPromise,
 		);
-		return result as any;
 	});

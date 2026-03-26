@@ -17,7 +17,7 @@ export const transactionEntryCollectionFn = createServerFn()
 	])
 	.inputValidator(TransactionEntryQuerySchema)
 	.handler(async ({ data, context: { database, user } }) => {
-		const result = await zodGuardFx({
+		return zodGuardFx({
 			schema: z.array(TransactionEntrySchema),
 			dataFx: transactionEntryCollectionFx({
 				...data,
@@ -32,5 +32,4 @@ export const transactionEntryCollectionFn = createServerFn()
 			}),
 			Effect.runPromise,
 		);
-		return result as any;
 	});

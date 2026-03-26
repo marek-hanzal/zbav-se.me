@@ -1,33 +1,33 @@
 import { createServerFn } from "@tanstack/react-start";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { transactionEntryFetchFx } from "~/server/@user/transaction-entry/fx/transactionEntryFetchFx";
-import { TransactionEntryQuerySchema } from "~/server/@user/transaction-entry/schema/TransactionEntryQuerySchema";
-import { TransactionEntrySchema } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema";
+import { z } from "zod";
+import { transactionCollectionFx } from "~/server/@buyer/transaction/fx/transactionCollectionFx";
+import { TransactionQuerySchema } from "~/server/@buyer/transaction/schema/TransactionQuerySchema";
+import { TransactionSchema } from "~/server/@buyer/transaction/schema/TransactionSchema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
-export const transactionEntryFetchFn = createServerFn()
+export const transactionCollectionFn = createServerFn()
 	.middleware([
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(TransactionEntryQuerySchema)
+	.inputValidator(TransactionQuerySchema)
 	.handler(async ({ data, context: { database, user } }) => {
 		return zodGuardFx({
-			schema: TransactionEntrySchema,
-			dataFx: transactionEntryFetchFx({
+			schema: z.array(TransactionSchema),
+			dataFx: transactionCollectionFx({
 				...data,
-				userId: user.id,
+				scope: {
+					userId: user.id,
+				},
 			}),
 		}).pipe(
 			withKyselyFx(database),
 			withCatchFx({
-				NotFoundErrorFx() {
-					throw new Error("NotFoundError");
-				},
 				ZodErrorFx() {
 					throw new Error("ZodError");
 				},

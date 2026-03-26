@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import { withTransactionApiFx } from "~/@buyer/transaction/withTransactionApiFx";
 import { UnauthorizedNotice } from "~/@common/notice/UnauthorizedNotice";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 
@@ -14,7 +13,7 @@ export const withBuyerApiFx = Effect.fn("withBuyerApiFx")(function* () {
 	});
 
 	yield* Effect.all([
-		withTransactionApiFx(),
+		// withTransactionApiFx(),
 	]);
 
 	root.route("/api/buyer", buyerHono);
