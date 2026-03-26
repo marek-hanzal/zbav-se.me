@@ -16,3 +16,9 @@ export const ThumbSchema = z
 	})
 	.strip()
 	.openapi("InboxThumb");
+
+export type ThumbSchema = typeof ThumbSchema;
+
+export namespace ThumbSchema {
+	export type Type = z.infer<ThumbSchema>;
+}

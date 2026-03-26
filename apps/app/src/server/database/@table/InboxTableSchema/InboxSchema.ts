@@ -26,3 +26,9 @@ export const InboxSchema = z
 		}),
 	})
 	.strip();
+
+export type InboxSchema = typeof InboxSchema;
+
+export namespace InboxSchema {
+	export type Type = z.infer<InboxSchema>;
+}

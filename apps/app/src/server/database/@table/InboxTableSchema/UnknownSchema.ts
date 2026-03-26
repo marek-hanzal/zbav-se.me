@@ -24,3 +24,9 @@ export const UnknownSchema = z
 	})
 	.strip()
 	.openapi("InboxUnknown");
+
+export type UnknownSchema = typeof UnknownSchema;
+
+export namespace UnknownSchema {
+	export type Type = z.infer<UnknownSchema>;
+}

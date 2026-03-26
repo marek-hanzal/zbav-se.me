@@ -14,3 +14,9 @@ export const IgnoreSchema = z
 	})
 	.strip()
 	.openapi("InboxIgnore");
+
+export type IgnoreSchema = typeof IgnoreSchema;
+
+export namespace IgnoreSchema {
+	export type Type = z.infer<IgnoreSchema>;
+}

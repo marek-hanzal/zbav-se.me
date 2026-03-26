@@ -5,7 +5,6 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
-import type { tInboxThumb } from "@zbav-se.me/sdk/api/user";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC } from "react";
@@ -13,10 +12,11 @@ import { useState } from "react";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import type { ThumbSchema } from "~/server/database/@table/InboxTableSchema/ThumbSchema";
 
 export namespace InboxThumbItem {
 	export interface Props {
-		item: tInboxThumb;
+		item: ThumbSchema.Type;
 	}
 }
 

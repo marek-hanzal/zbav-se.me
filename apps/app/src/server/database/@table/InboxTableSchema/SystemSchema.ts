@@ -24,3 +24,9 @@ export const SystemSchema = z
 	})
 	.strip()
 	.openapi("InboxSystem");
+
+export type SystemSchema = typeof SystemSchema;
+
+export namespace SystemSchema {
+	export type Type = z.infer<SystemSchema>;
+}

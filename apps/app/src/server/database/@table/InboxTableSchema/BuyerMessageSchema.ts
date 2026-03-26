@@ -17,3 +17,9 @@ export const BuyerMessageSchema = z
 	})
 	.strip()
 	.openapi("InboxBuyerMessage");
+
+export type BuyerMessageSchema = typeof BuyerMessageSchema;
+
+export namespace BuyerMessageSchema {
+	export type Type = z.infer<BuyerMessageSchema>;
+}

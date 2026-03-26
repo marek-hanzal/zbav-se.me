@@ -4,15 +4,15 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tInboxUnknown } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import type { UnknownSchema } from "~/server/database/@table/InboxTableSchema/UnknownSchema";
 
 export namespace InboxUnknownItem {
 	export interface Props {
-		item: tInboxUnknown;
+		item: UnknownSchema.Type;
 	}
 }
 
@@ -56,7 +56,7 @@ export const InboxUnknownItem: FC<InboxUnknownItem.Props> = ({ item }) => {
 				}
 				patchMutation.mutate({
 					patch: {
-						archivedAt: new Date().toISOString(),
+						archivedAt: new Date(),
 					},
 					query: {
 						where: {

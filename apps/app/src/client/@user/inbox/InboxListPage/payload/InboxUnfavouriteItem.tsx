@@ -3,16 +3,16 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tInboxUnfavourite } from "@zbav-se.me/sdk/api/user";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import type { FC } from "react";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import type { UnfavouriteSchema } from "~/server/database/@table/InboxTableSchema/UnfavouriteSchema";
 
 export namespace InboxUnfavouriteItem {
 	export interface Props {
-		item: tInboxUnfavourite;
+		item: UnfavouriteSchema.Type;
 	}
 }
 

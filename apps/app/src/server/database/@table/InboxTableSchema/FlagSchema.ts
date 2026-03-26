@@ -14,3 +14,9 @@ export const FlagSchema = z
 	})
 	.strip()
 	.openapi("InboxFlag");
+
+export type FlagSchema = typeof FlagSchema;
+
+export namespace FlagSchema {
+	export type Type = z.infer<FlagSchema>;
+}

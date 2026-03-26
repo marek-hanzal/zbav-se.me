@@ -24,3 +24,9 @@ export const TransactionSchema = z
 	})
 	.strip()
 	.openapi("InboxTransaction");
+
+export type TransactionSchema = typeof TransactionSchema;
+
+export namespace TransactionSchema {
+	export type Type = z.infer<TransactionSchema>;
+}

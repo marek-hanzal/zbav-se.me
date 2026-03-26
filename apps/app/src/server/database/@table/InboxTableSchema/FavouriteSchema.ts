@@ -14,3 +14,9 @@ export const FavouriteSchema = z
 	})
 	.strip()
 	.openapi("InboxFavourite");
+
+export type FavouriteSchema = typeof FavouriteSchema;
+
+export namespace FavouriteSchema {
+	export type Type = z.infer<FavouriteSchema>;
+}

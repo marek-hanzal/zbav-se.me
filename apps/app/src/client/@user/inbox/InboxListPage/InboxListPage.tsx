@@ -1,15 +1,15 @@
 import { useLocale } from "@use-pico/client/hook";
 import { translator } from "@use-pico/common/translator";
-import type { zInboxPriorityEnum } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense } from "react";
 import { BackHomeButton } from "~/client/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/client/@user/home/~public/HomeMenuButton";
+import type { InboxPriorityEnumSchema } from "~/server/database/@enum/InboxPriorityEnumSchema";
 import { InboxList } from "./InboxList";
 
 export namespace InboxListPage {
 	export interface Props extends TitleContainer.Props {
-		priority: zInboxPriorityEnum;
+		priority: InboxPriorityEnumSchema.Type;
 	}
 }
 

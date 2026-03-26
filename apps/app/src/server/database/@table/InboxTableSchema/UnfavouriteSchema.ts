@@ -14,3 +14,9 @@ export const UnfavouriteSchema = z
 	})
 	.strip()
 	.openapi("InboxUnfavourite");
+
+export type UnfavouriteSchema = typeof UnfavouriteSchema;
+
+export namespace UnfavouriteSchema {
+	export type Type = z.infer<UnfavouriteSchema>;
+}

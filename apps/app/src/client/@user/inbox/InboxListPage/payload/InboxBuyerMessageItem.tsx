@@ -4,16 +4,16 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tInboxBuyerMessage } from "@zbav-se.me/sdk/api/user";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import type { FC } from "react";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import type { BuyerMessageSchema } from "~/server/database/@table/InboxTableSchema/BuyerMessageSchema";
 
 export namespace InboxBuyerMessageItem {
 	export interface Props {
-		item: tInboxBuyerMessage;
+		item: BuyerMessageSchema.Type;
 	}
 }
 

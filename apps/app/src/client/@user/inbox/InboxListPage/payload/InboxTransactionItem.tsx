@@ -4,15 +4,15 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tInboxTransaction } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import type { TransactionSchema } from "~/server/database/@table/InboxTableSchema/TransactionSchema";
 
 export namespace InboxTransactionItem {
 	export interface Props {
-		item: tInboxTransaction;
+		item: TransactionSchema.Type;
 	}
 }
 

@@ -14,3 +14,9 @@ export const UnflagSchema = z
 	})
 	.strip()
 	.openapi("InboxUnflag");
+
+export type UnflagSchema = typeof UnflagSchema;
+
+export namespace UnflagSchema {
+	export type Type = z.infer<UnflagSchema>;
+}
