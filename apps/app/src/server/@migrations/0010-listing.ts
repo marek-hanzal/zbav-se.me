@@ -1,6 +1,6 @@
 import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
-import type { ListingStatusEnumSchema } from "~/server/database/@enum/ListingStatusEnumSchema";
+import type { ListingStatusEnumSchema } from "~/server/@seller/listing/enum/ListingStatusEnumSchema";
 
 export const ListingMigration: Migration = {
 	async up(db) {

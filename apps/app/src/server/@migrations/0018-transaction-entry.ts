@@ -1,6 +1,6 @@
 import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
-import type { TransactionEntryKindEnumSchema } from "~/server/database/@enum/TransactionEntryKindEnumSchema";
+import type { TransactionEntryKindEnumSchema } from "~/server/@user/transaction/enum/TransactionEntryKindEnumSchema";
 
 export const TransactionEntryMigration: Migration = {
 	async up(db) {

@@ -1,7 +1,7 @@
 import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
-import type { InboxPriorityEnumSchema } from "~/server/database/@enum/InboxPriorityEnumSchema";
-import type { InboxTypeEnumSchema } from "~/server/database/@enum/InboxTypeEnumSchema";
+import type { InboxPriorityEnumSchema } from "~/server/@user/inbox/enum/InboxPriorityEnumSchema";
+import type { InboxTypeEnumSchema } from "~/server/@user/inbox/enum/InboxTypeEnumSchema";
 
 export const InboxMigration: Migration = {
 	async up(db) {

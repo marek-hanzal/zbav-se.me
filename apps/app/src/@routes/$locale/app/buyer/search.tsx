@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { translator } from "@use-pico/common/translator";
+import { getFeedDefaultCreate } from "~/client/@buyer/feed/service/getFeedDefaultCreate";
 import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SearchPage } from "~/client/@buyer/search/~public/SearchPage";
 import { SearchPagePending } from "~/client/@buyer/search/~public/SearchPagePending";
-import { getFeedDefaultCreate } from "~/client/@common/feed/service/getFeedDefaultCreate";
 
 export const Route = createFileRoute("/$locale/app/buyer/search")({
 	async loader({ context: { queryClient } }) {

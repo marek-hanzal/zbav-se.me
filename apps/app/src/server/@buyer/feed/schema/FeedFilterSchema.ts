@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { DefaultFilterSchema } from "~/common/schema/DefaultFilterSchema";
-import { FeedTypeEnumSchema } from "~/server/database/@enum/FeedTypeEnumSchema";
+import { FeedTypeEnumSchema } from "~/server/@buyer/feed/enum/FeedTypeEnumSchema";
 
 export const FeedFilterSchema = z
 	.looseObject({

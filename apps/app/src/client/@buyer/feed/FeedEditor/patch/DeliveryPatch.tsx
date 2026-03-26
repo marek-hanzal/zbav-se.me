@@ -6,7 +6,7 @@ import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { DeliverySelect } from "~/client/@common/delivery/ui/DeliverySelect";
 import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
-import type { ListingDeliveryEnumSchema } from "~/server/database/@enum/ListingDeliveryEnumSchema";
+import type { ListingDeliveryEnumSchema } from "~/server/@seller/listing/enum/ListingDeliveryEnumSchema";
 
 export namespace DeliveryPatch {
 	export interface Props extends Container.Props {

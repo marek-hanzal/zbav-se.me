@@ -1,5 +1,5 @@
+import type { FeedTypeEnumSchema } from "~/server/@buyer/feed/enum/FeedTypeEnumSchema";
 import type { FeedCreateSchema } from "~/server/@buyer/feed/schema/FeedCreateSchema";
-import type { FeedTypeEnumSchema } from "~/server/database/@enum/FeedTypeEnumSchema";
 
 export const getFeedDefaultCreate = (name: string, type: FeedTypeEnumSchema.Type = "user") =>
 	({

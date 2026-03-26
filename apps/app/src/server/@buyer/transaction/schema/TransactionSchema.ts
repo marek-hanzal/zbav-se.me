@@ -3,8 +3,8 @@ import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 import { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/server/@user/gallery/schema/GallerySchema";
 import { TransactionEntrySchema } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema";
-import { ListingPriceEnumSchema } from "~/server/database/@enum/ListingPriceEnumSchema";
-import { TransactionStatusEnumSchema } from "~/server/database/@enum/TransactionStatusEnumSchema";
+import { ListingPriceEnumSchema } from "~/server/@seller/listing/enum/ListingPriceEnumSchema";
+import { TransactionStatusEnumSchema } from "~/server/@user/transaction/enum/TransactionStatusEnumSchema";
 import { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
 
 export const TransactionSchema = z

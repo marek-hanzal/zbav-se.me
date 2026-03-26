@@ -1,7 +1,7 @@
 import { useVisible } from "@use-pico/client/hook";
 import { useCallback, useEffect, useRef } from "react";
 import { withListingEventCreateMutation } from "~/client/@buyer/listing-event/withListingEventCreateMutation";
-import type { ListingEventEnumSchema } from "~/server/database/@enum/ListingEventEnumSchema";
+import type { ListingEventEnumSchema } from "~/server/@seller/listing/enum/ListingEventEnumSchema";
 
 export namespace useListingEvent {
 	export interface Props {

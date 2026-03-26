@@ -1,9 +1,9 @@
 import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
-import type { ListingDeliveryEnumSchema } from "~/server/database/@enum/ListingDeliveryEnumSchema";
-import type { ListingPriceEnumSchema } from "~/server/database/@enum/ListingPriceEnumSchema";
-import type { ListingRestrictionEnumSchema } from "~/server/database/@enum/ListingRestrictionEnumSchema";
-import type { ListingWarrantyEnumSchema } from "~/server/database/@enum/ListingWarrantyEnumSchema";
+import type { ListingDeliveryEnumSchema } from "~/server/@seller/listing/enum/ListingDeliveryEnumSchema";
+import type { ListingPriceEnumSchema } from "~/server/@seller/listing/enum/ListingPriceEnumSchema";
+import type { ListingRestrictionEnumSchema } from "~/server/@seller/listing/enum/ListingRestrictionEnumSchema";
+import type { ListingWarrantyEnumSchema } from "~/server/@seller/listing/enum/ListingWarrantyEnumSchema";
 
 export const DraftMigration: Migration = {
 	async up(db) {

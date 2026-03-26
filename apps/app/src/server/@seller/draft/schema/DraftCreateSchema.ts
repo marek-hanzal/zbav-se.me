@@ -1,10 +1,10 @@
 import { z } from "@hono/zod-openapi";
 import { ListingExpireEnumSchema } from "~/common/listing/schema/ListingExpireEnumSchema";
 import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
-import { ListingDeliveryEnumSchema } from "~/server/database/@enum/ListingDeliveryEnumSchema";
-import { ListingPriceEnumSchema } from "~/server/database/@enum/ListingPriceEnumSchema";
-import { ListingRestrictionEnumSchema } from "~/server/database/@enum/ListingRestrictionEnumSchema";
-import { ListingWarrantyEnumSchema } from "~/server/database/@enum/ListingWarrantyEnumSchema";
+import { ListingDeliveryEnumSchema } from "~/server/@seller/listing/enum/ListingDeliveryEnumSchema";
+import { ListingPriceEnumSchema } from "~/server/@seller/listing/enum/ListingPriceEnumSchema";
+import { ListingRestrictionEnumSchema } from "~/server/@seller/listing/enum/ListingRestrictionEnumSchema";
+import { ListingWarrantyEnumSchema } from "~/server/@seller/listing/enum/ListingWarrantyEnumSchema";
 
 export const DraftCreateSchema = z
 	.looseObject({
