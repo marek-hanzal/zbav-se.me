@@ -29,8 +29,6 @@
 		"@use-pico/cls": "workspace:*",
 		"@use-pico/common": "workspace:*",
 		"@use-pico/server": "workspace:*",
-		"@zbav-se.me/sdk": "workspace:*",
-		"@zbav-se.me/server": "workspace:*",
 		"@zbav-se.me/ui": "workspace:*",
 		"better-auth": "1.5.6",
 		"effect": "3.21.0",

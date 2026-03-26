@@ -12,7 +12,7 @@ export namespace PackageButton {
 	export interface Props extends Button.Props {
 		close?: TransactionMenuButton.Close;
 		transactionId: string;
-		onPostMutation?: () => Promise<void>;
+		onPostMutation?(): Promise<void>;
 	}
 }
 

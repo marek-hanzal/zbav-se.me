@@ -2,15 +2,15 @@ import { Container } from "@use-pico/client/ui/container";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
-import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { type FC, Suspense, useState } from "react";
 import { ListContainer } from "~/client/@common/location/ui/LocationSelect/ListContainer";
+import type { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
 
 export namespace LocationSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {
 		value: string | undefined | null;
 		onChange(value: string): void;
-		onLocation?(value: tLocation): void;
+		onLocation?(value: LocationSchema.Type): void;
 		onSearchChange?(value: Fulltext.Value): void;
 		textHint: string;
 		warningStatusProps?: Status.Props;
