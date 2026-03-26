@@ -27,4 +27,6 @@ export type ListingSortSchema = typeof ListingSortSchema;
 
 export namespace ListingSortSchema {
 	export type Type = z.infer<ListingSortSchema>;
+
+	export type Field = Type["field"];
 }

@@ -4,8 +4,8 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
-import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { withFavouriteToggleMutation } from "~/client/@buyer/favourite/withFavouriteToggleMutation";
+import { withFeedFavouriteQuery } from "~/client/@buyer/feed-favourite/withFeedFavouriteQuery";
 import { withListingQuery } from "~/client/@buyer/listing/withListingQuery";
 
 export namespace FavouriteButton {

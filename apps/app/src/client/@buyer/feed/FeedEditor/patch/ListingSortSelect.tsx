@@ -3,14 +3,14 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { StateType } from "@use-pico/common/type";
-import type { tListingSort, tListingSortField } from "@zbav-se.me/sdk/api/buyer";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import { type FC, useId } from "react";
+import type { ListingSortSchema } from "~/server/@buyer/listing/schema/ListingSortSchema";
 
 export namespace ListingSortSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {
 		withGeo: boolean | undefined;
-		state: StateType.Simple<tListingSort[]>;
+		state: StateType.Simple<ListingSortSchema.Type[]>;
 	}
 }
 
@@ -36,8 +36,8 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 						"price",
 						"condition",
 						withGeo ? "geo" : undefined,
-					] satisfies (tListingSortField | undefined)[]
-				).filter(Boolean) as tListingSortField[]
+					] satisfies (ListingSortSchema.Field | undefined)[]
+				).filter(Boolean) as ListingSortSchema.Field[]
 			).map((sortValue) => {
 				const current = state.value.find((s) => s.field === sortValue);
 
@@ -58,7 +58,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 									{
 										field: sortValue,
 										order: "asc",
-									} satisfies tListingSort,
+									} satisfies ListingSortSchema.Type,
 								]);
 								return;
 							}
@@ -76,7 +76,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 								next[idx] = {
 									field: cur.field,
 									order: "desc",
-								} satisfies tListingSort;
+								} satisfies ListingSortSchema.Type;
 								state.set(next);
 								return;
 							}

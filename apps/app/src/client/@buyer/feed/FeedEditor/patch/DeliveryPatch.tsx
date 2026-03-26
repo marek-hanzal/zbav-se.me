@@ -1,12 +1,12 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
-import type { tListingDeliveryEnum } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { DeliverySelect } from "~/client/@common/delivery/ui/DeliverySelect";
 import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
+import type { ListingDeliveryEnumSchema } from "~/server/database/@enum/ListingDeliveryEnumSchema";
 
 export namespace DeliveryPatch {
 	export interface Props extends Container.Props {
@@ -62,7 +62,7 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
 									filter: {
 										...feed.query?.filter,
 										deliveryIn:
-											selection.optional.multiId() as tListingDeliveryEnum[],
+											selection.optional.multiId() as ListingDeliveryEnumSchema.Type[],
 									},
 								},
 							},

@@ -1,1 +1,1 @@
-export { withFeedFavouriteQuery } from "./withFeedFavouriteQuery";
+export {};

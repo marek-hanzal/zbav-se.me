@@ -1,10 +1,16 @@
 import { withEntityQuery } from "@use-pico/client/query";
+import type { FeedQuerySchema } from "~/server/@buyer/feed/schema/FeedQuerySchema";
+import { feedFavouriteCollectionFn } from "~/server/@buyer/feed-favourite/fn/feedFavouriteCollectionFn";
+import { feedFavouriteCountFn } from "~/server/@buyer/feed-favourite/fn/feedFavouriteCountFn";
+import { feedFavouriteFetchFn } from "~/server/@buyer/feed-favourite/fn/feedFavouriteFetchFn";
+import type { FeedFavouriteCountQuerySchema } from "~/server/@buyer/feed-favourite/schema/FeedFavouriteCountQuerySchema";
+import type { FeedFavouriteSchema } from "~/server/@buyer/feed-favourite/schema/FeedFavouriteSchema";
 
 export const withFeedFavouriteQuery = withEntityQuery<
-	tFeedFavourite,
-	tFeedQuery,
-	tFeedQuery,
-	tFeedFavouriteCountQuery,
+	FeedFavouriteSchema.Type,
+	FeedQuerySchema.Type,
+	FeedQuerySchema.Type,
+	FeedFavouriteCountQuerySchema.Type,
 	never,
 	never,
 	never,
@@ -18,36 +24,21 @@ export const withFeedFavouriteQuery = withEntityQuery<
 			id,
 		},
 	}),
-	fetchFn: isomorphicFn({
-		requestFn(request, headers) {
-			return withApi(
-				apiFeedFavouriteFetch({
-					body: request,
-					headers,
-				}),
-			);
-		},
-	}),
-	collectionFn: isomorphicFn({
-		requestFn(request, headers) {
-			return withApi(
-				apiFeedFavouriteCollection({
-					body: request,
-					headers,
-				}),
-			);
-		},
-	}),
-	countFn: isomorphicFn({
-		requestFn(request, headers) {
-			return withApi(
-				apiFeedFavouriteCount({
-					body: request,
-					headers,
-				}),
-			);
-		},
-	}),
+	async fetchFn(data) {
+		return feedFavouriteFetchFn({
+			data,
+		});
+	},
+	async collectionFn(data) {
+		return feedFavouriteCollectionFn({
+			data,
+		});
+	},
+	async countFn(data) {
+		return feedFavouriteCountFn({
+			data,
+		});
+	},
 	async createFn(_data) {
 		throw new Error("Feed favourite create is not supported.");
 	},

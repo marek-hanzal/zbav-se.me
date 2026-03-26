@@ -1,7 +1,7 @@
-import { tFeedTypeEnum } from "@zbav-se.me/sdk/api/buyer";
 import type { FeedCreateSchema } from "~/server/@buyer/feed/schema/FeedCreateSchema";
+import type { FeedTypeEnumSchema } from "~/server/database/@enum/FeedTypeEnumSchema";
 
-export const getFeedDefaultCreate = (name: string, type: tFeedTypeEnum = tFeedTypeEnum.user) =>
+export const getFeedDefaultCreate = (name: string, type: FeedTypeEnumSchema.Type = "user") =>
 	({
 		type,
 		name,

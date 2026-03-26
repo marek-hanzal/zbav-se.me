@@ -1,12 +1,12 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
-import type { tListingWarrantyEnum } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { WarrantySelect } from "~/client/@common/warranty/ui/WarrantySelect";
 import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
+import type { ListingWarrantyEnumSchema } from "~/server/database/@enum/ListingWarrantyEnumSchema";
 
 export namespace WarrantyPatch {
 	export interface Props extends Container.Props {
@@ -62,7 +62,7 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({
 									filter: {
 										...feed.query?.filter,
 										warrantyIn:
-											selection.optional.multiId() as tListingWarrantyEnum[],
+											selection.optional.multiId() as ListingWarrantyEnumSchema.Type[],
 									},
 								},
 							},

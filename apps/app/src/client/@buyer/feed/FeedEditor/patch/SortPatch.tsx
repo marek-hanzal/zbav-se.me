@@ -1,9 +1,9 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tListingSort } from "@zbav-se.me/sdk/api/buyer";
 import { type FC, useState } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
+import type { ListingSortSchema } from "~/server/@buyer/listing/schema/ListingSortSchema";
 import { ListingSortSelect } from "./ListingSortSelect";
 
 export namespace SortPatch {
@@ -16,7 +16,7 @@ export namespace SortPatch {
 
 export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ui, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
-	const [sort, setSort] = useState<tListingSort[]>(feed.query?.sort ?? []);
+	const [sort, setSort] = useState<ListingSortSchema.Type[]>(feed.query?.sort ?? []);
 	const withGeo = !!feed.query?.meta?.latLon;
 
 	return (
