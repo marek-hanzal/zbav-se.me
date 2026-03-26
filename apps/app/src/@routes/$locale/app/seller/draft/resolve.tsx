@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { DateTime } from "luxon";
 import { DraftEditor } from "~/client/@seller/draft/~public/DraftEditor";
+import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
 
 export const Route = createFileRoute("/$locale/app/seller/draft/resolve")({
 	async loader({ context: { queryClient }, params: { locale } }) {
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/$locale/app/seller/draft/resolve")({
 						.minus({
 							days: 3,
 						})
-						.toISO(),
+						.toJSDate(),
 					usedAtIsNull: true,
 				},
 			})

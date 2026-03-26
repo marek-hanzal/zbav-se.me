@@ -7,11 +7,11 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
-import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import { isValid } from "~/client/@common/draft/util/isValid";
 import { useMaybeUpload } from "~/client/@common/gallery/hook/useMaybeUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
+import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
 
 export namespace Item {
 	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {

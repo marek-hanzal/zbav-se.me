@@ -2,9 +2,9 @@ import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { Icon, PlusIcon } from "@use-pico/client/icon";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import type { FC } from "react";
 import { ListItem } from "~/client/@common/list-item/ListItem";
+import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
 
 export namespace CreateButton {
 	export interface Props extends ListItem.PropsEx {
