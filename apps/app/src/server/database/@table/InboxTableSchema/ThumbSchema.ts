@@ -7,15 +7,16 @@ export const ThumbSchema = z
 		...InboxSchema.shape,
 		family: z.literal("reaction"),
 		type: z.literal("thumb"),
-		payload: z.looseObject({
-			listingId: z.string().openapi({
-				description: "Listing identifier",
-			}),
-			thumb: ThumbEnumSchema,
-		}),
+		payload: z
+			.looseObject({
+				listingId: z.string().openapi({
+					description: "Listing identifier",
+				}),
+				thumb: ThumbEnumSchema,
+			})
+			.strip(),
 	})
-	.strip()
-	.openapi("InboxThumb");
+	.strip();
 
 export type ThumbSchema = typeof ThumbSchema;
 

@@ -6,14 +6,15 @@ export const UnignoreSchema = z
 		...InboxSchema.shape,
 		family: z.literal("reaction"),
 		type: z.literal("unignore"),
-		payload: z.looseObject({
-			listingId: z.string().openapi({
-				description: "Related listing identifier",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				listingId: z.string().openapi({
+					description: "Related listing identifier",
+				}),
+			})
+			.strip(),
 	})
-	.strip()
-	.openapi("InboxUnignore");
+	.strip();
 
 export type UnignoreSchema = typeof UnignoreSchema;
 

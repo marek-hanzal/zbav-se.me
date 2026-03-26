@@ -6,17 +6,18 @@ export const BuyerMessageSchema = z
 		...InboxSchema.shape,
 		family: z.literal("transaction"),
 		type: z.literal("buyer-message"),
-		payload: z.looseObject({
-			transactionId: z.string().openapi({
-				description: "Related transaction identifier",
-			}),
-			transactionEntryId: z.string().optional().openapi({
-				description: "Related transaction entry identifier when available",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				transactionId: z.string().openapi({
+					description: "Related transaction identifier",
+				}),
+				transactionEntryId: z.string().optional().openapi({
+					description: "Related transaction entry identifier when available",
+				}),
+			})
+			.strip(),
 	})
-	.strip()
-	.openapi("InboxBuyerMessage");
+	.strip();
 
 export type BuyerMessageSchema = typeof BuyerMessageSchema;
 

@@ -7,23 +7,25 @@ export const TransactionSchema = z
 		...InboxSchema.shape,
 		family: z.literal("transaction"),
 		type: z.literal("transaction"),
-		payload: z.looseObject({
-			transactionId: z.string().openapi({
-				description: "Related transaction identifier",
-			}),
-			listingId: z.string().openapi({
-				description: "Related listing identifier for seller-scoped transaction routes",
-			}),
-			transactionEntryId: z.string().optional().openapi({
-				description: "Related transaction entry identifier when available",
-			}),
-			target: UserSideEnumSchema.openapi({
-				description: "Recipient-side transaction detail target used for deep-link routing",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				transactionId: z.string().openapi({
+					description: "Related transaction identifier",
+				}),
+				listingId: z.string().openapi({
+					description: "Related listing identifier for seller-scoped transaction routes",
+				}),
+				transactionEntryId: z.string().optional().openapi({
+					description: "Related transaction entry identifier when available",
+				}),
+				target: UserSideEnumSchema.openapi({
+					description:
+						"Recipient-side transaction detail target used for deep-link routing",
+				}),
+			})
+			.strip(),
 	})
-	.strip()
-	.openapi("InboxTransaction");
+	.strip();
 
 export type TransactionSchema = typeof TransactionSchema;
 

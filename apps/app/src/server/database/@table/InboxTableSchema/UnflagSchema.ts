@@ -6,14 +6,15 @@ export const UnflagSchema = z
 		...InboxSchema.shape,
 		family: z.literal("reaction"),
 		type: z.literal("unflag"),
-		payload: z.looseObject({
-			listingId: z.string().openapi({
-				description: "Related listing identifier",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				listingId: z.string().openapi({
+					description: "Related listing identifier",
+				}),
+			})
+			.strip(),
 	})
-	.strip()
-	.openapi("InboxUnflag");
+	.strip();
 
 export type UnflagSchema = typeof UnflagSchema;
 

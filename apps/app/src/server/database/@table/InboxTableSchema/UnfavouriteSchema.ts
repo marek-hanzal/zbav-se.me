@@ -6,14 +6,15 @@ export const UnfavouriteSchema = z
 		...InboxSchema.shape,
 		family: z.literal("reaction"),
 		type: z.literal("unfavourite"),
-		payload: z.looseObject({
-			listingId: z.string().openapi({
-				description: "Related listing identifier",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				listingId: z.string().openapi({
+					description: "Related listing identifier",
+				}),
+			})
+			.strip(),
 	})
-	.strip()
-	.openapi("InboxUnfavourite");
+	.strip();
 
 export type UnfavouriteSchema = typeof UnfavouriteSchema;
 

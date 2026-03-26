@@ -12,8 +12,7 @@ export const IgnoreSchema = z
 			}),
 		}),
 	})
-	.strip()
-	.openapi("InboxIgnore");
+	.strip();
 
 export type IgnoreSchema = typeof IgnoreSchema;
 

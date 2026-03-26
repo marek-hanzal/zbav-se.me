@@ -12,24 +12,20 @@ import { UnflagSchema } from "./UnflagSchema";
 import { UnignoreSchema } from "./UnignoreSchema";
 import { UnknownSchema } from "./UnknownSchema";
 
-export const InboxTableSchema = z
-	.discriminatedUnion("type", [
-		BuyerMessageSchema,
-		SellerMessageSchema,
-		TransactionSchema,
-		SystemSchema,
-		UnknownSchema,
-		ThumbSchema,
-		FavouriteSchema,
-		UnfavouriteSchema,
-		FlagSchema,
-		UnflagSchema,
-		IgnoreSchema,
-		UnignoreSchema,
-	])
-	.openapi("Inbox", {
-		description: "Inbox item",
-	});
+export const InboxTableSchema = z.discriminatedUnion("type", [
+	BuyerMessageSchema,
+	SellerMessageSchema,
+	TransactionSchema,
+	SystemSchema,
+	UnknownSchema,
+	ThumbSchema,
+	FavouriteSchema,
+	UnfavouriteSchema,
+	FlagSchema,
+	UnflagSchema,
+	IgnoreSchema,
+	UnignoreSchema,
+]);
 
 export type InboxTableSchema = typeof InboxTableSchema;
 

@@ -6,14 +6,15 @@ export const FlagSchema = z
 		...InboxSchema.shape,
 		family: z.literal("reaction"),
 		type: z.literal("flag"),
-		payload: z.looseObject({
-			listingId: z.string().openapi({
-				description: "Related listing identifier",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				listingId: z.string().openapi({
+					description: "Related listing identifier",
+				}),
+			})
+			.strip(),
 	})
-	.strip()
-	.openapi("InboxFlag");
+	.strip();
 
 export type FlagSchema = typeof FlagSchema;
 
