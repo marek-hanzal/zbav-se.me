@@ -1,16 +1,15 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { ValueList } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
-import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
-import type { tCategoryItem } from "@zbav-se.me/sdk/api/session";
-import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import { Suspense } from "react";
 import { CategoryInline } from "~/client/@session/category/ui/CategoryInline";
+import { withCategoryQuery } from "~/client/@session/category/withCategoryQuery";
+import type { CategorySchema } from "~/server/@session/category/schema/CategorySchema";
 
 export namespace CategoryValueList {
 	export interface Props
-		extends Omit<ValueList.Props<tCategoryItem>, "items" | "renderFn">,
+		extends Omit<ValueList.Props<CategorySchema.Type>, "items" | "renderFn">,
 			MarkSuspense.Props {
 		categoryIdIn: string[] | undefined | null;
 	}
@@ -26,7 +25,7 @@ export const CategoryValueList = withFallback(
 	({ _suspense, categoryIdIn, ...props }: CategoryValueList.Props) => {
 		if (!categoryIdIn || categoryIdIn.length === 0) {
 			return (
-				<ValueList<tCategoryItem>
+				<ValueList
 					renderFn={() => null}
 					items={[]}
 					{...props}
@@ -41,7 +40,7 @@ export const CategoryValueList = withFallback(
 		});
 
 		return (
-			<ValueList<EntitySchema.Type>
+			<ValueList
 				renderFn={(item) => (
 					<Suspense fallback={<CategoryInline.Fallback />}>
 						<CategoryInline
@@ -63,9 +62,9 @@ export const CategoryValueList = withFallback(
 			/>
 		);
 	},
-	(props: ValueList.PropsEx<tCategoryItem>) => {
+	(props: ValueList.PropsEx<CategorySchema.Type>) => {
 		return (
-			<ValueList<tCategoryItem>
+			<ValueList
 				textLabel={translator.text("Loading... (label)")}
 				textEmpty={translator.text("No categories found (label)")}
 				renderFn={() => null}

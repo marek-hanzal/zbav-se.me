@@ -3,12 +3,12 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { withTransactionQuery as withBuyerTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { withListingQuery as withSellerListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
-import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import { type FC, useEffect } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { withListingQuery as withBuyerListingQuery } from "~/client/@buyer/listing/withListingQuery";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import { withCategoryQuery } from "~/client/@session/category/withCategoryQuery";
 
 export namespace WarmupCache {
 	export interface Props extends MarkSuspense.Props {

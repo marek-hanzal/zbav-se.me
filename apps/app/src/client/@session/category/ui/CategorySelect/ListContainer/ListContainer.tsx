@@ -3,8 +3,8 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import { withFallback } from "@use-pico/client/utils";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import { Suspense, useEffect, useRef } from "react";
+import { withCategoryQuery } from "~/client/@session/category/withCategoryQuery";
 import { CategoryItem } from "../CategoryItem";
 import { Empty } from "./Data/Empty";
 

@@ -2,7 +2,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
-import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
+import { withCategoryQuery } from "~/client/@session/category/withCategoryQuery";
 
 export namespace CategoryInline {
 	export interface Props extends Container.Props, MarkSuspense.Props {
