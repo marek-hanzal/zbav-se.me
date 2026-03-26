@@ -5,11 +5,11 @@ import { median } from "@use-pico/common/median";
 import { p90 } from "@use-pico/common/p90";
 import { Effect } from "effect";
 import type { UserEventBuyerSchema } from "~/server/@buyer/user-event/schema/UserEventBuyerSchema";
-import type { ActivityEnumSchema } from "~/server/@common/user-event/schema/ActivityEnumSchema";
-import type { LoadEnumSchema } from "~/server/@common/user-event/schema/LoadEnumSchema";
 import { computeActivity } from "~/server/@user/user-event/fx/computeActivity";
 import { computeLoad } from "~/server/@user/user-event/fx/computeLoad";
 import { userEventCollectionFx } from "~/server/@user/user-event/fx/userEventCollectionFx";
+import type { ActivityEnumSchema } from "~/server/@user/user-event/schema/ActivityEnumSchema";
+import type { LoadEnumSchema } from "~/server/@user/user-event/schema/LoadEnumSchema";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 
 export namespace userEventBuyerInfoFx {

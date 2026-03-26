@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { zInboxPriorityEnum } from "@zbav-se.me/sdk/api/user";
 import { InboxListPage } from "~/client/@user/inbox/~public/InboxListPage";
+import { InboxPriorityEnumSchema } from "~/server/database/@enum/InboxPriorityEnumSchema";
 
 export const Route = createFileRoute("/$locale/app/inbox/$priority")({
 	component() {
@@ -8,7 +8,7 @@ export const Route = createFileRoute("/$locale/app/inbox/$priority")({
 
 		return (
 			<InboxListPage
-				priority={zInboxPriorityEnum.default("high").catch("high").parse(priority)}
+				priority={InboxPriorityEnumSchema.default("high").catch("high").parse(priority)}
 			/>
 		);
 	},

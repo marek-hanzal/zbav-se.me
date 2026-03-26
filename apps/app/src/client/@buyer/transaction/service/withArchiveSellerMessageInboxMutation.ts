@@ -1,15 +1,8 @@
 import { withMutation } from "@use-pico/client/mutation";
-import { withApi } from "@use-pico/common/api";
 import { tTransactionStatusEnum } from "@zbav-se.me/sdk/api/buyer";
-import {
-	apiInboxArchive,
-	type apiInboxArchiveError,
-	type tApiInboxArchiveResponse,
-	tInboxFamilyEnum,
-	tInboxTypeEnum,
-} from "@zbav-se.me/sdk/api/user";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import { inboxArchiveFn } from "~/server/@user/inbox/fn/inboxArchiveFn";
 
 const terminalStatuses: tTransactionStatusEnum[] = [
 	tTransactionStatusEnum.rejected,
@@ -29,8 +22,8 @@ export namespace withArchiveSellerMessageInboxMutation {
 
 export const withArchiveSellerMessageInboxMutation = withMutation<
 	withArchiveSellerMessageInboxMutation.Variables,
-	tApiInboxArchiveResponse[204],
-	apiInboxArchiveError
+	void,
+	Error
 >({
 	keys(variables) {
 		return [
@@ -44,21 +37,20 @@ export const withArchiveSellerMessageInboxMutation = withMutation<
 		if (!terminalStatuses.includes(status)) {
 			return;
 		}
-		return withApi(
-			apiInboxArchive({
-				body: {
-					where: {
-						archivedAtIsNull: true,
-						family: tInboxFamilyEnum.transaction,
-						type: tInboxTypeEnum["seller-message"],
-						referenceAllIn: [
-							transactionId,
-							listingId,
-						],
-					},
+
+		return inboxArchiveFn({
+			data: {
+				where: {
+					archivedAtIsNull: true,
+					family: "transaction",
+					type: "seller-message",
+					referenceAllIn: [
+						transactionId,
+						listingId,
+					],
 				},
-			}),
-		);
+			},
+		});
 	},
 	invalidate: [
 		{

@@ -1,7 +1,6 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
-import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { SellerInfoSchema } from "~/server/@buyer/listing/schema/SellerInfoSchema";
+import type { SellerInfoSchema } from "~/server/@buyer/listing/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/server/@buyer/user-event/fx/userEventSellerInfoFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
@@ -47,14 +46,11 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 		userId: userInfo.id,
 	});
 
-	return yield* zodGuardFx({
-		schema: SellerInfoSchema,
-		dataFx: Effect.succeed({
-			registered: userInfo.createdAt,
-			listings: Number(userInfo.listings),
-			events,
-		} satisfies SellerInfoSchema.Type),
-	});
+	return {
+		registered: userInfo.createdAt,
+		listings: Number(userInfo.listings),
+		events,
+	} satisfies SellerInfoSchema.Type;
 });
 
 export type listingGetSellerInfoFx = ReturnType<typeof listingGetSellerInfoFx>;

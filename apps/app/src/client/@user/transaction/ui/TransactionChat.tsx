@@ -5,7 +5,7 @@ import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC, ReactNode } from "react";
 import { useCallback } from "react";
 import { match } from "ts-pattern";
-import { withTransactionEntryQuery } from "~/client/@common/transaction-entry/withTransactionEntryQuery";
+import { withTransactionEntryQuery } from "~/client/@user/transaction-entry/withTransactionEntryQuery";
 
 export namespace TransactionChat {
 	export interface Hooks {
