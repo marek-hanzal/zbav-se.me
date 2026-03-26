@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiCategoryCollectionErrors, apiCategoryCountErrors, apiCategoryFetchErrors, apiLocationAutocompleteErrors, apiLocationFetchErrors, tApiCategoryCollectionRequest, tApiCategoryCollectionResponse, tApiCategoryCountRequest, tApiCategoryCountResponse, tApiCategoryFetchRequest, tApiCategoryFetchResponse, tApiLocationAutocompleteRequest, tApiLocationAutocompleteResponse, tApiLocationFetchRequest, tApiLocationFetchResponse } from './types.gen';
-import { zApiCategoryCollectionData, zApiCategoryCollectionResponse, zApiCategoryCountData, zApiCategoryCountResponse, zApiCategoryFetchData, zApiCategoryFetchResponse, zApiLocationAutocompleteData, zApiLocationAutocompleteResponse, zApiLocationFetchData, zApiLocationFetchResponse } from './zod.gen';
+import type { apiLocationAutocompleteErrors, apiLocationFetchErrors, tApiLocationAutocompleteRequest, tApiLocationAutocompleteResponse, tApiLocationFetchRequest, tApiLocationFetchResponse } from './types.gen';
+import { zApiLocationAutocompleteData, zApiLocationAutocompleteResponse, zApiLocationFetchData, zApiLocationFetchResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -18,57 +18,6 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      */
     meta?: Record<string, unknown>;
 };
-
-/**
- * Fetch a category based on the provided query
- *
- * Return a category based on the provided query
- */
-export const apiCategoryFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiCategoryFetchResponse, apiCategoryFetchErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiCategoryFetchData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiCategoryFetchResponse.parseAsync(data),
-    url: '/api/session/category/fetch',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Fetch a collection of categories based on the provided query
- *
- * Returns categories based on provided parameters
- */
-export const apiCategoryCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiCategoryCollectionResponse, apiCategoryCollectionErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiCategoryCollectionData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiCategoryCollectionResponse.parseAsync(data),
-    url: '/api/session/category/collection',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Count categories based on the provided query
- *
- * Returns count of categories based on provided query
- */
-export const apiCategoryCount = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiCategoryCountResponse, apiCategoryCountErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiCategoryCountData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiCategoryCountResponse.parseAsync(data),
-    url: '/api/session/category/count',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
 
 /**
  * Return a location autocomplete

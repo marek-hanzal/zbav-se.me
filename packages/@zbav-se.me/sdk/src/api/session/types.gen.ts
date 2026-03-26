@@ -5,257 +5,6 @@ export type clientOptions = {
 };
 
 /**
- * Category data
- */
-export type tCategory = {
-    /**
-     * ID of the category
-     */
-    id: string;
-    /**
-     * Group/name of the category
-     */
-    group: string;
-    /**
-     * Category name within the group
-     */
-    category: string;
-    /**
-     * Slug of the category
-     */
-    slug: string;
-    /**
-     * Sort order (position) of the category
-     */
-    sort: number;
-    /**
-     * Locale/language of the category
-     */
-    locale: string;
-};
-
-/**
- * Just a note sent from various reasons, usually when something is fucked up.
- */
-export type tNotice = {
-    /**
-     * Message
-     */
-    message: string;
-    type: tNoticeTypeEnum;
-};
-
-/**
- * Type of notice
- */
-export const tNoticeTypeEnum = {
-    info: 'info',
-    warning: 'warning',
-    error: 'error'
-} as const;
-
-/**
- * Type of notice
- */
-export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
-
-/**
- * Category query parameters
- */
-export type tCategoryQuery = {
-    cursor?: tCursor;
-    filter?: tCategoryFilter;
-    where?: tCategoryWhere;
-    sort?: Array<tCategorySort>;
-};
-
-/**
- * Cursor for pagination
- */
-export type tCursor = {
-    /**
-     * Page number (0-indexed)
-     */
-    page: number;
-    /**
-     * Page size
-     */
-    size: number;
-};
-
-/**
- * Filter object for category collection
- */
-export type tCategoryFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact group of the category
-     */
-    group?: string;
-    /**
-     * This filter matches the exact category name
-     */
-    category?: string;
-    /**
-     * This filter matches the exact locale of the category
-     */
-    locale?: string;
-    /**
-     * This filter matches categories with locales in the provided array
-     */
-    localeIn?: Array<string>;
-    /**
-     * This filter matches the exact slug of the category
-     */
-    slug?: string;
-};
-
-/**
- * App-based filters
- */
-export type tCategoryWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact group of the category
-     */
-    group?: string;
-    /**
-     * This filter matches the exact category name
-     */
-    category?: string;
-    /**
-     * This filter matches the exact locale of the category
-     */
-    locale?: string;
-    /**
-     * This filter matches categories with locales in the provided array
-     */
-    localeIn?: Array<string>;
-    /**
-     * This filter matches the exact slug of the category
-     */
-    slug?: string;
-};
-
-/**
- * Sort object for category collection
- */
-export type tCategorySort = {
-    field: tCategorySortField;
-    order: tOrderEnum;
-};
-
-/**
- * Field of the category sort
- */
-export const tCategorySortField = {
-    group: 'group',
-    category: 'category',
-    sort: 'sort'
-} as const;
-
-/**
- * Field of the category sort
- */
-export type tCategorySortField = typeof tCategorySortField[keyof typeof tCategorySortField];
-
-/**
- * Order
- */
-export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
-
-/**
- * Order
- */
-export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
-
-/**
- * Category collection item
- */
-export type tCategoryItem = {
-    /**
-     * ID of the category
-     */
-    id: string;
-    /**
-     * Group/name of the category
-     */
-    group: string;
-    /**
-     * Category name within the group
-     */
-    category: string;
-    /**
-     * Slug of the category
-     */
-    slug: string;
-    /**
-     * Sort order (position) of the category
-     */
-    sort: number;
-    /**
-     * Locale/language of the category
-     */
-    locale: string;
-};
-
-/**
- * Count data
- */
-export type tCount = {
-    /**
-     * Count of items based on provided where query.
-     */
-    where: number;
-    /**
-     * Count of items based on provided filter query.
-     */
-    filter: number;
-    /**
-     * Total count of items (no filters applied).
-     */
-    total: number;
-    /**
-     * True when total count is empty.
-     */
-    isEmpty: boolean;
-    /**
-     * True when filter count is empty while total count has data.
-     */
-    isFilterEmpty: boolean;
-};
-
-/**
- * Query object for category count
- */
-export type tCategoryCountQuery = {
-    filter?: tCategoryFilter;
-    where?: tCategoryWhere;
-};
-
-/**
  * Location data
  */
 export type tLocation = {
@@ -323,6 +72,31 @@ export type tLocation = {
 };
 
 /**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export type tNotice = {
+    /**
+     * Message
+     */
+    message: string;
+    type: tNoticeTypeEnum;
+};
+
+/**
+ * Type of notice
+ */
+export const tNoticeTypeEnum = {
+    info: 'info',
+    warning: 'warning',
+    error: 'error'
+} as const;
+
+/**
+ * Type of notice
+ */
+export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
+
+/**
  * Data for location autocomplete
  */
 export type tLocationAutocomplete = {
@@ -344,6 +118,20 @@ export type tLocationQuery = {
     filter?: tLocationFilter;
     where?: tLocationWhere;
     sort?: Array<tLocationSort>;
+};
+
+/**
+ * Cursor for pagination
+ */
+export type tCursor = {
+    /**
+     * Page number (0-indexed)
+     */
+    page: number;
+    /**
+     * Page size
+     */
+    size: number;
 };
 
 /**
@@ -445,87 +233,15 @@ export const tLocationSortField = {
  */
 export type tLocationSortField = typeof tLocationSortField[keyof typeof tLocationSortField];
 
-export type tApiCategoryFetchRequest = {
-    /**
-     * Query object for category fetch
-     */
-    body?: tCategoryQuery;
-    path?: never;
-    query?: never;
-    url: '/api/session/category/fetch';
-};
+/**
+ * Order
+ */
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
 
-export type apiCategoryFetchErrors = {
-    /**
-     * Category not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiCategoryFetchError = apiCategoryFetchErrors[keyof apiCategoryFetchErrors];
-
-export type tApiCategoryFetchResponse = {
-    /**
-     * Return a category based on the provided query
-     */
-    200: tCategory;
-};
-
-export type apiCategoryFetchResponse = tApiCategoryFetchResponse[keyof tApiCategoryFetchResponse];
-
-export type tApiCategoryCollectionRequest = {
-    body?: tCategoryQuery;
-    path?: never;
-    query?: never;
-    url: '/api/session/category/collection';
-};
-
-export type apiCategoryCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiCategoryCollectionError = apiCategoryCollectionErrors[keyof apiCategoryCollectionErrors];
-
-export type tApiCategoryCollectionResponse = {
-    /**
-     * Access collection of categories based on provided query
-     */
-    200: Array<tCategoryItem>;
-};
-
-export type apiCategoryCollectionResponse = tApiCategoryCollectionResponse[keyof tApiCategoryCollectionResponse];
-
-export type tApiCategoryCountRequest = {
-    body?: tCategoryCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/session/category/count';
-};
-
-export type apiCategoryCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiCategoryCountError = apiCategoryCountErrors[keyof apiCategoryCountErrors];
-
-export type tApiCategoryCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiCategoryCountResponse = tApiCategoryCountResponse[keyof tApiCategoryCountResponse];
+/**
+ * Order
+ */
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
 
 export type tApiLocationAutocompleteRequest = {
     /**

@@ -3,258 +3,6 @@
 import * as z from 'zod';
 
 /**
- * Category data
- */
-export const zCategory = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the category'
-    }),
-    group: z.string().register(z.globalRegistry, {
-        description: 'Group/name of the category'
-    }),
-    category: z.string().register(z.globalRegistry, {
-        description: 'Category name within the group'
-    }),
-    slug: z.string().register(z.globalRegistry, {
-        description: 'Slug of the category'
-    }),
-    sort: z.number().register(z.globalRegistry, {
-        description: 'Sort order (position) of the category'
-    }),
-    locale: z.string().register(z.globalRegistry, {
-        description: 'Locale/language of the category'
-    })
-}).register(z.globalRegistry, {
-    description: 'Category data'
-});
-
-export type zCategory = z.infer<typeof zCategory>;
-
-/**
- * Type of notice
- */
-export const zNoticeTypeEnum = z.enum([
-    'info',
-    'warning',
-    'error'
-]).register(z.globalRegistry, {
-    description: 'Type of notice'
-});
-
-export type zNoticeTypeEnum = z.infer<typeof zNoticeTypeEnum>;
-
-/**
- * Just a note sent from various reasons, usually when something is fucked up.
- */
-export const zNotice = z.object({
-    message: z.string().register(z.globalRegistry, {
-        description: 'Message'
-    }),
-    type: zNoticeTypeEnum
-}).register(z.globalRegistry, {
-    description: 'Just a note sent from various reasons, usually when something is fucked up.'
-});
-
-export type zNotice = z.infer<typeof zNotice>;
-
-/**
- * Cursor for pagination
- */
-export const zCursor = z.object({
-    page: z.number().gte(0).register(z.globalRegistry, {
-        description: 'Page number (0-indexed)'
-    }),
-    size: z.number().gte(1).lte(1000).register(z.globalRegistry, {
-        description: 'Page size'
-    })
-}).register(z.globalRegistry, {
-    description: 'Cursor for pagination'
-});
-
-export type zCursor = z.infer<typeof zCursor>;
-
-/**
- * Filter object for category collection
- */
-export const zCategoryFilter = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    }).optional(),
-    idIn: z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    }).optional(),
-    fulltext: z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    }).optional(),
-    group: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact group of the category'
-    }).optional(),
-    category: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact category name'
-    }).optional(),
-    locale: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact locale of the category'
-    }).optional(),
-    localeIn: z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches categories with locales in the provided array'
-    }).optional(),
-    slug: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact slug of the category'
-    }).optional()
-}).register(z.globalRegistry, {
-    description: 'Filter object for category collection'
-});
-
-export type zCategoryFilter = z.infer<typeof zCategoryFilter>;
-
-/**
- * App-based filters
- */
-export const zCategoryWhere = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    }).optional(),
-    idIn: z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    }).optional(),
-    fulltext: z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    }).optional(),
-    group: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact group of the category'
-    }).optional(),
-    category: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact category name'
-    }).optional(),
-    locale: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact locale of the category'
-    }).optional(),
-    localeIn: z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches categories with locales in the provided array'
-    }).optional(),
-    slug: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact slug of the category'
-    }).optional()
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zCategoryWhere = z.infer<typeof zCategoryWhere>;
-
-/**
- * Field of the category sort
- */
-export const zCategorySortField = z.enum([
-    'group',
-    'category',
-    'sort'
-]).register(z.globalRegistry, {
-    description: 'Field of the category sort'
-});
-
-export type zCategorySortField = z.infer<typeof zCategorySortField>;
-
-/**
- * Order
- */
-export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
-    description: 'Order'
-});
-
-export type zOrderEnum = z.infer<typeof zOrderEnum>;
-
-/**
- * Sort object for category collection
- */
-export const zCategorySort = z.object({
-    field: zCategorySortField,
-    order: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for category collection'
-});
-
-export type zCategorySort = z.infer<typeof zCategorySort>;
-
-/**
- * Category query parameters
- */
-export const zCategoryQuery = z.object({
-    cursor: zCursor.optional(),
-    filter: zCategoryFilter.optional(),
-    where: zCategoryWhere.optional(),
-    sort: z.array(zCategorySort).optional()
-}).register(z.globalRegistry, {
-    description: 'Category query parameters'
-});
-
-export type zCategoryQuery = z.infer<typeof zCategoryQuery>;
-
-/**
- * Category collection item
- */
-export const zCategoryItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the category'
-    }),
-    group: z.string().register(z.globalRegistry, {
-        description: 'Group/name of the category'
-    }),
-    category: z.string().register(z.globalRegistry, {
-        description: 'Category name within the group'
-    }),
-    slug: z.string().register(z.globalRegistry, {
-        description: 'Slug of the category'
-    }),
-    sort: z.number().register(z.globalRegistry, {
-        description: 'Sort order (position) of the category'
-    }),
-    locale: z.string().register(z.globalRegistry, {
-        description: 'Locale/language of the category'
-    })
-}).register(z.globalRegistry, {
-    description: 'Category collection item'
-});
-
-export type zCategoryItem = z.infer<typeof zCategoryItem>;
-
-/**
- * Count data
- */
-export const zCount = z.object({
-    where: z.number().register(z.globalRegistry, {
-        description: 'Count of items based on provided where query.'
-    }),
-    filter: z.number().register(z.globalRegistry, {
-        description: 'Count of items based on provided filter query.'
-    }),
-    total: z.number().register(z.globalRegistry, {
-        description: 'Total count of items (no filters applied).'
-    }),
-    isEmpty: z.boolean().register(z.globalRegistry, {
-        description: 'True when total count is empty.'
-    }),
-    isFilterEmpty: z.boolean().register(z.globalRegistry, {
-        description: 'True when filter count is empty while total count has data.'
-    })
-}).register(z.globalRegistry, {
-    description: 'Count data'
-});
-
-export type zCount = z.infer<typeof zCount>;
-
-/**
- * Query object for category count
- */
-export const zCategoryCountQuery = z.object({
-    filter: zCategoryFilter.optional(),
-    where: zCategoryWhere.optional()
-}).register(z.globalRegistry, {
-    description: 'Query object for category count'
-});
-
-export type zCategoryCountQuery = z.infer<typeof zCategoryCountQuery>;
-
-/**
  * Location data
  */
 export const zLocation = z.object({
@@ -299,6 +47,33 @@ export const zLocation = z.object({
 export type zLocation = z.infer<typeof zLocation>;
 
 /**
+ * Type of notice
+ */
+export const zNoticeTypeEnum = z.enum([
+    'info',
+    'warning',
+    'error'
+]).register(z.globalRegistry, {
+    description: 'Type of notice'
+});
+
+export type zNoticeTypeEnum = z.infer<typeof zNoticeTypeEnum>;
+
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export const zNotice = z.object({
+    message: z.string().register(z.globalRegistry, {
+        description: 'Message'
+    }),
+    type: zNoticeTypeEnum
+}).register(z.globalRegistry, {
+    description: 'Just a note sent from various reasons, usually when something is fucked up.'
+});
+
+export type zNotice = z.infer<typeof zNotice>;
+
+/**
  * Data for location autocomplete
  */
 export const zLocationAutocomplete = z.object({
@@ -313,6 +88,22 @@ export const zLocationAutocomplete = z.object({
 });
 
 export type zLocationAutocomplete = z.infer<typeof zLocationAutocomplete>;
+
+/**
+ * Cursor for pagination
+ */
+export const zCursor = z.object({
+    page: z.number().gte(0).register(z.globalRegistry, {
+        description: 'Page number (0-indexed)'
+    }),
+    size: z.number().gte(1).lte(1000).register(z.globalRegistry, {
+        description: 'Page size'
+    })
+}).register(z.globalRegistry, {
+    description: 'Cursor for pagination'
+});
+
+export type zCursor = z.infer<typeof zCursor>;
 
 /**
  * Data for location filter
@@ -397,6 +188,15 @@ export const zLocationSortField = z.enum([
 export type zLocationSortField = z.infer<typeof zLocationSortField>;
 
 /**
+ * Order
+ */
+export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
+    description: 'Order'
+});
+
+export type zOrderEnum = z.infer<typeof zOrderEnum>;
+
+/**
  * Data for location sort
  */
 export const zLocationSort = z.object({
@@ -421,53 +221,6 @@ export const zLocationQuery = z.object({
 });
 
 export type zLocationQuery = z.infer<typeof zLocationQuery>;
-
-export const zApiCategoryFetchData = z.object({
-    body: zCategoryQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiCategoryFetchRequest = z.infer<typeof zApiCategoryFetchData>;
-
-/**
- * Return a category based on the provided query
- */
-export const zApiCategoryFetchResponse = zCategory;
-
-export type zapiCategoryFetchResponse = z.infer<typeof zApiCategoryFetchResponse>;
-
-export const zApiCategoryCollectionData = z.object({
-    body: zCategoryQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiCategoryCollectionRequest = z.infer<typeof zApiCategoryCollectionData>;
-
-/**
- * Access collection of categories based on provided query
- */
-export const zApiCategoryCollectionResponse = z.array(zCategoryItem).register(z.globalRegistry, {
-    description: 'Access collection of categories based on provided query'
-});
-
-export type zapiCategoryCollectionResponse = z.infer<typeof zApiCategoryCollectionResponse>;
-
-export const zApiCategoryCountData = z.object({
-    body: zCategoryCountQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiCategoryCountRequest = z.infer<typeof zApiCategoryCountData>;
-
-/**
- * Return counts based on provided query
- */
-export const zApiCategoryCountResponse = zCount;
-
-export type zapiCategoryCountResponse = z.infer<typeof zApiCategoryCountResponse>;
 
 export const zApiLocationAutocompleteData = z.object({
     body: zLocationAutocomplete.optional(),

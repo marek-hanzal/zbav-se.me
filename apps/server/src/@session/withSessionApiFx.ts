@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { UnauthorizedNotice } from "~/@common/notice/UnauthorizedNotice";
-import { withCategoryApiFx } from "~/@session/category/withCategoryApiFx";
 import { withLocationApiFx } from "~/@session/location/withLocationApiFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 
@@ -16,7 +15,6 @@ export const withSessionApiFx = Effect.fn("withSessionApiFx")(function* () {
 	});
 
 	yield* Effect.all([
-		withCategoryApiFx(),
 		withLocationApiFx(),
 	]);
 
