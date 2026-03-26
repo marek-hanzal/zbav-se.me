@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiFeedFavouriteCollectionErrors, apiFeedFavouriteCountErrors, apiFeedFavouriteFetchErrors, apiFeedGalleryCreateErrors, apiTransactionCloseErrors, apiTransactionCollectionErrors, apiTransactionCountErrors, apiTransactionCreateErrors, apiTransactionDisputeErrors, apiTransactionFetchErrors, apiTransactionRejectErrors, apiTransactionSuccessErrors, tApiFeedFavouriteCollectionRequest, tApiFeedFavouriteCollectionResponse, tApiFeedFavouriteCountRequest, tApiFeedFavouriteCountResponse, tApiFeedFavouriteFetchRequest, tApiFeedFavouriteFetchResponse, tApiFeedGalleryCreateRequest, tApiFeedGalleryCreateResponse, tApiTransactionCloseRequest, tApiTransactionCloseResponse, tApiTransactionCollectionRequest, tApiTransactionCollectionResponse, tApiTransactionCountRequest, tApiTransactionCountResponse, tApiTransactionCreateRequest, tApiTransactionCreateResponse, tApiTransactionDisputeRequest, tApiTransactionDisputeResponse, tApiTransactionFetchRequest, tApiTransactionFetchResponse, tApiTransactionRejectRequest, tApiTransactionRejectResponse, tApiTransactionSuccessRequest, tApiTransactionSuccessResponse } from './types.gen';
-import { zApiFeedFavouriteCollectionData, zApiFeedFavouriteCollectionResponse, zApiFeedFavouriteCountData, zApiFeedFavouriteCountResponse, zApiFeedFavouriteFetchData, zApiFeedFavouriteFetchResponse, zApiFeedGalleryCreateData, zApiFeedGalleryCreateResponse, zApiTransactionCloseData, zApiTransactionCloseResponse, zApiTransactionCollectionData, zApiTransactionCollectionResponse, zApiTransactionCountData, zApiTransactionCountResponse, zApiTransactionCreateData, zApiTransactionCreateResponse, zApiTransactionDisputeData, zApiTransactionDisputeResponse, zApiTransactionFetchData, zApiTransactionFetchResponse, zApiTransactionRejectData, zApiTransactionRejectResponse, zApiTransactionSuccessData, zApiTransactionSuccessResponse } from './zod.gen';
+import type { apiFeedGalleryCreateErrors, apiTransactionCloseErrors, apiTransactionCollectionErrors, apiTransactionCountErrors, apiTransactionCreateErrors, apiTransactionDisputeErrors, apiTransactionFetchErrors, apiTransactionRejectErrors, apiTransactionSuccessErrors, tApiFeedGalleryCreateRequest, tApiFeedGalleryCreateResponse, tApiTransactionCloseRequest, tApiTransactionCloseResponse, tApiTransactionCollectionRequest, tApiTransactionCollectionResponse, tApiTransactionCountRequest, tApiTransactionCountResponse, tApiTransactionCreateRequest, tApiTransactionCreateResponse, tApiTransactionDisputeRequest, tApiTransactionDisputeResponse, tApiTransactionFetchRequest, tApiTransactionFetchResponse, tApiTransactionRejectRequest, tApiTransactionRejectResponse, tApiTransactionSuccessRequest, tApiTransactionSuccessResponse } from './types.gen';
+import { zApiFeedGalleryCreateData, zApiFeedGalleryCreateResponse, zApiTransactionCloseData, zApiTransactionCloseResponse, zApiTransactionCollectionData, zApiTransactionCollectionResponse, zApiTransactionCountData, zApiTransactionCountResponse, zApiTransactionCreateData, zApiTransactionCreateResponse, zApiTransactionDisputeData, zApiTransactionDisputeResponse, zApiTransactionFetchData, zApiTransactionFetchResponse, zApiTransactionRejectData, zApiTransactionRejectResponse, zApiTransactionSuccessData, zApiTransactionSuccessResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -18,57 +18,6 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      */
     meta?: Record<string, unknown>;
 };
-
-/**
- * Fetch a collection of feed items from favourites based on the provided query
- *
- * Returns feed items from favourites based on provided parameters
- */
-export const apiFeedFavouriteCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedFavouriteCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedFavouriteCollectionResponse, apiFeedFavouriteCollectionErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiFeedFavouriteCollectionData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiFeedFavouriteCollectionResponse.parseAsync(data),
-    url: '/api/buyer/feed-favourite/collection',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Fetch a feed favourite based on the provided query
- *
- * Return a feed favourite based on the provided query
- */
-export const apiFeedFavouriteFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedFavouriteFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedFavouriteFetchResponse, apiFeedFavouriteFetchErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiFeedFavouriteFetchData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiFeedFavouriteFetchResponse.parseAsync(data),
-    url: '/api/buyer/feed-favourite/fetch',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Count feed favourites based on the provided query
- *
- * Returns count of feed favourites based on provided query
- */
-export const apiFeedFavouriteCount = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedFavouriteCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedFavouriteCountResponse, apiFeedFavouriteCountErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiFeedFavouriteCountData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiFeedFavouriteCountResponse.parseAsync(data),
-    url: '/api/buyer/feed-favourite/count',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
 
 /**
  * Create or update a gallery for a feed.

@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import { withFeedFavouriteApiFx } from "~/@buyer/feed-favourite/withFeedFavouriteApiFx";
 import { withFeedGalleryApiFx } from "~/@buyer/feed-gallery/withFeedGalleryApiFx";
 import { withTransactionApiFx } from "~/@buyer/transaction/withTransactionApiFx";
 import { UnauthorizedNotice } from "~/@common/notice/UnauthorizedNotice";
@@ -18,7 +17,7 @@ export const withBuyerApiFx = Effect.fn("withBuyerApiFx")(function* () {
 	yield* Effect.all([
 		// withFavouriteApiFx(),
 		// withFeedApiFx(),
-		withFeedFavouriteApiFx(),
+		// withFeedFavouriteApiFx(),
 		withFeedGalleryApiFx(),
 		// withFlagApiFx(),
 		// withIgnoreApiFx(),

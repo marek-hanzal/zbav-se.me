@@ -5,404 +5,40 @@ export type clientOptions = {
 };
 
 /**
- * Feed favourite collection item
+ * Gallery data with items
  */
-export type tFeedFavouriteItem = {
+export type tGallery = {
     /**
-     * ID of the feed
+     * ID of the gallery
      */
     id: string;
     /**
-     * ID of the location associated with the feed
+     * Gallery items sorted by sort order
      */
-    locationId: null | string;
-    /**
-     * Hero image for this feed (usually selected from the listings in the feed)
-     */
-    uploadId: null | string;
-    type: tFeedTypeEnum;
-    /**
-     * Name of the feed
-     */
-    name: string;
-    query: tListingQuery;
-    /**
-     * Hero banner for this feed
-     */
-    upload: null | tUpload;
-    /**
-     * Number of items in favourites for this feed
-     */
-    count: number;
+    items: Array<tGalleryItem>;
 };
 
 /**
- * Type of the feed
+ * Gallery item data
  */
-export const tFeedTypeEnum = { user: 'user', search: 'search' } as const;
-
-/**
- * Type of the feed
- */
-export type tFeedTypeEnum = typeof tFeedTypeEnum[keyof typeof tFeedTypeEnum];
-
-/**
- * Query object for listing collection
- */
-export type tListingQuery = {
-    cursor?: tCursor;
-    filter?: tListingFilter;
-    where?: tListingWhere;
-    sort?: Array<tListingSort>;
-    meta?: tListingMeta;
-};
-
-/**
- * Cursor for pagination
- */
-export type tCursor = {
+export type tGalleryItem = {
     /**
-     * Page number (0-indexed)
+     * ID of the gallery item
      */
-    page: number;
+    id: string;
     /**
-     * Page size
+     * ID of the gallery this item belongs to
      */
-    size: number;
-};
-
-/**
- * User-land filters
- */
-export type tListingFilter = {
+    galleryId: string;
     /**
-     * This filter matches the exact id
+     * ID of the upload this image belongs to
      */
-    id?: string;
+    uploadId: string;
     /**
-     * This filter matches the ids
+     * Sort order of the image in the gallery
      */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * ID of the user; does not have an effect on API endpoints
-     */
-    userId?: string;
-    priceMin?: tPriceMin;
-    priceMax?: tPriceMax;
-    /**
-     * This filter matches listings with condition greater than or equal to the provided value
-     */
-    conditionMin?: number;
-    /**
-     * This filter matches listings with condition less than or equal to the provided value
-     */
-    conditionMax?: number;
-    /**
-     * This filter matches listings with conditions in the provided array
-     */
-    conditionIn?: Array<number>;
-    /**
-     * This filter matches listings with age greater than or equal to the provided value
-     */
-    ageMin?: number;
-    /**
-     * This filter matches listings with age less than or equal to the provided value
-     */
-    ageMax?: number;
-    /**
-     * This filter matches listings with ages in the provided array
-     */
-    ageIn?: Array<number>;
-    deliveryIn?: tDeliveryIn;
-    warrantyIn?: tWarrantyIn;
-    categoryId?: tCategoryId;
-    categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyEnum;
-    currencyIn?: tCurrencyIn;
-    /**
-     * This filter matches listings that expire before the provided date
-     */
-    expiresAtBefore?: string;
-    /**
-     * This filter matches listings that expire after the provided date
-     */
-    expiresAtAfter?: string;
-    /**
-     * Range (in km) around the input location to filter listings
-     */
-    range?: number;
-    /**
-     * This filter matches listings with title matching the provided value
-     */
-    title?: string;
-    /**
-     * This filter matches listings with the user's own listings
-     */
-    withOwn?: boolean;
-    /**
-     * Return exclusively user's listings when set to true
-     */
-    my?: boolean;
-    /**
-     * Include ignored listings
-     */
-    withIgnored?: boolean;
-    /**
-     * Show listing that are in the user's favourites
-     */
-    isFavourite?: boolean;
-    feedId?: tFeedId;
-    feedIdIn?: tFeedIdIn;
-    /**
-     * Show listings that are in the user's transaction
-     */
-    transaction?: boolean;
-};
-
-/**
- * Sets the minimum price for the listings
- */
-export type tPriceMin = number;
-
-/**
- * Sets the maximum price for the listings
- */
-export type tPriceMax = number;
-
-/**
- * This filter matches listings with delivery methods overlapping the provided array
- */
-export type tDeliveryIn = Array<tListingDeliveryEnum>;
-
-/**
- * Delivery method for the listing
- */
-export const tListingDeliveryEnum = {
-    personal: 'personal',
-    post: 'post',
-    package: 'package',
-    other: 'other'
-} as const;
-
-/**
- * Delivery method for the listing
- */
-export type tListingDeliveryEnum = typeof tListingDeliveryEnum[keyof typeof tListingDeliveryEnum];
-
-/**
- * This filter matches listings with warranty types in the provided array
- */
-export type tWarrantyIn = Array<tListingWarrantyEnum>;
-
-/**
- * Warranty type for the listing
- */
-export const tListingWarrantyEnum = {
-    warranty: 'warranty',
-    'no-warranty': 'no-warranty',
-    custom: 'custom'
-} as const;
-
-/**
- * Warranty type for the listing
- */
-export type tListingWarrantyEnum = typeof tListingWarrantyEnum[keyof typeof tListingWarrantyEnum];
-
-/**
- * ID of the category
- */
-export type tCategoryId = string;
-
-/**
- * Filter listings based on the provided category IDs
- */
-export type tCategoryIdIn = Array<string>;
-
-/**
- * List of available currencies
- */
-export const tCurrencyEnum = {
-    CZK: 'CZK',
-    EUR: 'EUR',
-    USD: 'USD',
-    GBP: 'GBP',
-    PLN: 'PLN',
-    HUF: 'HUF',
-    CHF: 'CHF'
-} as const;
-
-/**
- * List of available currencies
- */
-export type tCurrencyEnum = typeof tCurrencyEnum[keyof typeof tCurrencyEnum];
-
-/**
- * This filter matches listings with currency codes in the provided array
- */
-export type tCurrencyIn = Array<tCurrencyEnum>;
-
-/**
- * ID of the feed
- */
-export type tFeedId = string;
-
-/**
- * Filter listings based on the provided feed IDs
- */
-export type tFeedIdIn = Array<string>;
-
-/**
- * App-based filters
- */
-export type tListingWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * ID of the user; does not have an effect on API endpoints
-     */
-    userId?: string;
-    priceMin?: tPriceMin;
-    priceMax?: tPriceMax;
-    /**
-     * This filter matches listings with condition greater than or equal to the provided value
-     */
-    conditionMin?: number;
-    /**
-     * This filter matches listings with condition less than or equal to the provided value
-     */
-    conditionMax?: number;
-    /**
-     * This filter matches listings with conditions in the provided array
-     */
-    conditionIn?: Array<number>;
-    /**
-     * This filter matches listings with age greater than or equal to the provided value
-     */
-    ageMin?: number;
-    /**
-     * This filter matches listings with age less than or equal to the provided value
-     */
-    ageMax?: number;
-    /**
-     * This filter matches listings with ages in the provided array
-     */
-    ageIn?: Array<number>;
-    deliveryIn?: tDeliveryIn;
-    warrantyIn?: tWarrantyIn;
-    categoryId?: tCategoryId;
-    categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyEnum;
-    currencyIn?: tCurrencyIn;
-    /**
-     * This filter matches listings that expire before the provided date
-     */
-    expiresAtBefore?: string;
-    /**
-     * This filter matches listings that expire after the provided date
-     */
-    expiresAtAfter?: string;
-    /**
-     * Range (in km) around the input location to filter listings
-     */
-    range?: number;
-    /**
-     * This filter matches listings with title matching the provided value
-     */
-    title?: string;
-    /**
-     * This filter matches listings with the user's own listings
-     */
-    withOwn?: boolean;
-    /**
-     * Return exclusively user's listings when set to true
-     */
-    my?: boolean;
-    /**
-     * Include ignored listings
-     */
-    withIgnored?: boolean;
-    /**
-     * Show listing that are in the user's favourites
-     */
-    isFavourite?: boolean;
-    feedId?: tFeedId;
-    feedIdIn?: tFeedIdIn;
-    /**
-     * Show listings that are in the user's transaction
-     */
-    transaction?: boolean;
-};
-
-/**
- * Sort object for listing collection
- */
-export type tListingSort = {
-    field: tListingSortField;
-    order: tOrderEnum;
-};
-
-/**
- * Field of the listing sort
- */
-export const tListingSortField = {
-    price: 'price',
-    condition: 'condition',
-    age: 'age',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    expiresAt: 'expiresAt',
-    geo: 'geo'
-} as const;
-
-/**
- * Field of the listing sort
- */
-export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
-
-/**
- * Order
- */
-export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
-
-/**
- * Order
- */
-export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
-
-/**
- * Meta data for listing collection
- */
-export type tListingMeta = {
-    latLon?: tLatLon;
-    feedId?: tFeedId & unknown;
-};
-
-/**
- * Latitude and longitude coordinates
- */
-export type tLatLon = {
-    /**
-     * Latitude coordinate
-     */
-    lat: number;
-    /**
-     * Longitude coordinate
-     */
-    lon: number;
+    sort: number;
+    upload: tUpload;
 };
 
 /**
@@ -443,183 +79,6 @@ export const tNoticeTypeEnum = {
  * Type of notice
  */
 export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
-
-/**
- * Query object for feed collection
- */
-export type tFeedQuery = {
-    cursor?: tCursor;
-    filter?: tFeedFilter;
-    where?: tFeedWhere;
-    sort?: Array<tFeedSort>;
-};
-
-/**
- * Filter object for feed collection
- */
-export type tFeedFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * Exact user id
-     */
-    userId?: string;
-    type?: tFeedTypeEnum & unknown;
-};
-
-/**
- * App-based filters
- */
-export type tFeedWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * Exact user id
-     */
-    userId?: string;
-    type?: tFeedTypeEnum & unknown;
-};
-
-/**
- * Sort object for feed collection
- */
-export type tFeedSort = {
-    field: tFeedSortField;
-    order: tOrderEnum;
-};
-
-/**
- * Field of the feed sort
- */
-export const tFeedSortField = { createdAt: 'createdAt', updatedAt: 'updatedAt' } as const;
-
-/**
- * Field of the feed sort
- */
-export type tFeedSortField = typeof tFeedSortField[keyof typeof tFeedSortField];
-
-/**
- * Feed data from favourites
- */
-export type tFeedFavourite = {
-    /**
-     * ID of the feed
-     */
-    id: string;
-    /**
-     * ID of the location associated with the feed
-     */
-    locationId: null | string;
-    /**
-     * Hero image for this feed (usually selected from the listings in the feed)
-     */
-    uploadId: null | string;
-    type: tFeedTypeEnum;
-    /**
-     * Name of the feed
-     */
-    name: string;
-    query: tListingQuery;
-    /**
-     * Hero banner for this feed
-     */
-    upload: null | tUpload;
-    /**
-     * Number of items in favourites for this feed
-     */
-    count: number;
-};
-
-/**
- * Count data
- */
-export type tCount = {
-    /**
-     * Count of items based on provided where query.
-     */
-    where: number;
-    /**
-     * Count of items based on provided filter query.
-     */
-    filter: number;
-    /**
-     * Total count of items (no filters applied).
-     */
-    total: number;
-    /**
-     * True when total count is empty.
-     */
-    isEmpty: boolean;
-    /**
-     * True when filter count is empty while total count has data.
-     */
-    isFilterEmpty: boolean;
-};
-
-/**
- * Query object for feed favourite count
- */
-export type tFeedFavouriteCountQuery = {
-    filter?: tFeedFilter;
-    where?: tFeedWhere;
-};
-
-/**
- * Gallery data with items
- */
-export type tGallery = {
-    /**
-     * ID of the gallery
-     */
-    id: string;
-    /**
-     * Gallery items sorted by sort order
-     */
-    items: Array<tGalleryItem>;
-};
-
-/**
- * Gallery item data
- */
-export type tGalleryItem = {
-    /**
-     * ID of the gallery item
-     */
-    id: string;
-    /**
-     * ID of the gallery this item belongs to
-     */
-    galleryId: string;
-    /**
-     * ID of the upload this image belongs to
-     */
-    uploadId: string;
-    /**
-     * Sort order of the image in the gallery
-     */
-    sort: number;
-    upload: tUpload;
-};
 
 /**
  * Request to create or update a feed gallery
@@ -712,6 +171,24 @@ export const tListingPriceEnum = { closed: 'closed', open: 'open' } as const;
  * Price type of the listing
  */
 export type tListingPriceEnum = typeof tListingPriceEnum[keyof typeof tListingPriceEnum];
+
+/**
+ * List of available currencies
+ */
+export const tCurrencyEnum = {
+    CZK: 'CZK',
+    EUR: 'EUR',
+    USD: 'USD',
+    GBP: 'GBP',
+    PLN: 'PLN',
+    HUF: 'HUF',
+    CHF: 'CHF'
+} as const;
+
+/**
+ * List of available currencies
+ */
+export type tCurrencyEnum = typeof tCurrencyEnum[keyof typeof tCurrencyEnum];
 
 /**
  * Transaction timeline entry
@@ -1052,6 +529,20 @@ export type tTransactionQuery = {
 };
 
 /**
+ * Cursor for pagination
+ */
+export type tCursor = {
+    /**
+     * Page number (0-indexed)
+     */
+    page: number;
+    /**
+     * Page size
+     */
+    size: number;
+};
+
+/**
  * Filter object for transaction collection
  */
 export type tTransactionFilter = {
@@ -1154,6 +645,42 @@ export const tTransactionSortField = {
 export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tTransactionSortField];
 
 /**
+ * Order
+ */
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
+
+/**
+ * Order
+ */
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
+
+/**
+ * Count data
+ */
+export type tCount = {
+    /**
+     * Count of items based on provided where query.
+     */
+    where: number;
+    /**
+     * Count of items based on provided filter query.
+     */
+    filter: number;
+    /**
+     * Total count of items (no filters applied).
+     */
+    total: number;
+    /**
+     * True when total count is empty.
+     */
+    isEmpty: boolean;
+    /**
+     * True when filter count is empty while total count has data.
+     */
+    isFilterEmpty: boolean;
+};
+
+/**
  * Query object for transaction count
  */
 export type tTransactionCountQuery = {
@@ -1170,88 +697,6 @@ export type tTransactionCreate = {
      */
     listingId: string;
 };
-
-export type tApiFeedFavouriteCollectionRequest = {
-    body?: tFeedQuery;
-    path?: never;
-    query?: never;
-    url: '/api/buyer/feed-favourite/collection';
-};
-
-export type apiFeedFavouriteCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedFavouriteCollectionError = apiFeedFavouriteCollectionErrors[keyof apiFeedFavouriteCollectionErrors];
-
-export type tApiFeedFavouriteCollectionResponse = {
-    /**
-     * Access collection of feed items from favourites based on provided query
-     */
-    200: Array<tFeedFavouriteItem>;
-};
-
-export type apiFeedFavouriteCollectionResponse = tApiFeedFavouriteCollectionResponse[keyof tApiFeedFavouriteCollectionResponse];
-
-export type tApiFeedFavouriteFetchRequest = {
-    /**
-     * Query object for feed favourite fetch
-     */
-    body?: tFeedQuery;
-    path?: never;
-    query?: never;
-    url: '/api/buyer/feed-favourite/fetch';
-};
-
-export type apiFeedFavouriteFetchErrors = {
-    /**
-     * Feed favourite not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedFavouriteFetchError = apiFeedFavouriteFetchErrors[keyof apiFeedFavouriteFetchErrors];
-
-export type tApiFeedFavouriteFetchResponse = {
-    /**
-     * Return a feed favourite based on the provided query
-     */
-    200: tFeedFavourite;
-};
-
-export type apiFeedFavouriteFetchResponse = tApiFeedFavouriteFetchResponse[keyof tApiFeedFavouriteFetchResponse];
-
-export type tApiFeedFavouriteCountRequest = {
-    body?: tFeedFavouriteCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/buyer/feed-favourite/count';
-};
-
-export type apiFeedFavouriteCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedFavouriteCountError = apiFeedFavouriteCountErrors[keyof apiFeedFavouriteCountErrors];
-
-export type tApiFeedFavouriteCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiFeedFavouriteCountResponse = tApiFeedFavouriteCountResponse[keyof tApiFeedFavouriteCountResponse];
 
 export type tApiFeedGalleryCreateRequest = {
     /**
