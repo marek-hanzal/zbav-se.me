@@ -39,7 +39,7 @@ export const ResetButton: FC<ResetButton.Props> = ({ feedId, ui, className, ...p
 
 	return (
 		<Button
-			data-ui={"ResetButton[Button]"}
+			data-ui={"ResetButton"}
 			onClick={() => {
 				deleteMutation.mutate({
 					where: {

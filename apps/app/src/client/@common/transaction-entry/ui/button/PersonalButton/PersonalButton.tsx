@@ -39,7 +39,7 @@ export const PersonalButton: FC<PersonalButton.Props> = ({
 	return (
 		<>
 			<Button
-				data-ui="PersonalButton[Button]"
+				data-ui="PersonalButton"
 				iconEnabled={EmailIcon}
 				onClick={() => {
 					setIsOpen(true);
@@ -62,18 +62,16 @@ export const PersonalButton: FC<PersonalButton.Props> = ({
 				})}
 			>
 				<PersonalControl
-					data-ui="PersonalButton[PersonalControl]"
 					onCancel={() => {
 						setIsOpen(false);
 					}}
-					onSave={(payload) => {
+					onSave={async (payload) => {
 						return mutation.mutateAsync({
 							transactionId,
 							kind: "personal",
 							payload,
 						});
 					}}
-					loading={mutation.isPending}
 					ui={{
 						inner: "default",
 					}}

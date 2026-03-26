@@ -3,44 +3,13 @@
 import * as z from 'zod';
 
 /**
- * Favourite collection item
+ * Type of the feed
  */
-export const zFavouriteItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the favourite'
-    })
-}).register(z.globalRegistry, {
-    description: 'Favourite collection item'
+export const zFeedTypeEnum = z.enum(['user', 'search']).register(z.globalRegistry, {
+    description: 'Type of the feed'
 });
 
-export type zFavouriteItem = z.infer<typeof zFavouriteItem>;
-
-/**
- * Type of notice
- */
-export const zNoticeTypeEnum = z.enum([
-    'info',
-    'warning',
-    'error'
-]).register(z.globalRegistry, {
-    description: 'Type of notice'
-});
-
-export type zNoticeTypeEnum = z.infer<typeof zNoticeTypeEnum>;
-
-/**
- * Just a note sent from various reasons, usually when something is fucked up.
- */
-export const zNotice = z.object({
-    message: z.string().register(z.globalRegistry, {
-        description: 'Message'
-    }),
-    type: zNoticeTypeEnum
-}).register(z.globalRegistry, {
-    description: 'Just a note sent from various reasons, usually when something is fucked up.'
-});
-
-export type zNotice = z.infer<typeof zNotice>;
+export type zFeedTypeEnum = z.infer<typeof zFeedTypeEnum>;
 
 /**
  * Cursor for pagination
@@ -54,447 +23,9 @@ export const zCursor = z.object({
     })
 }).register(z.globalRegistry, {
     description: 'Cursor for pagination'
-});
+}).default({ page: 0, size: 256 });
 
 export type zCursor = z.infer<typeof zCursor>;
-
-/**
- * Filter object for favourite collection
- */
-export const zFavouriteFilter = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    }).optional(),
-    idIn: z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    }).optional(),
-    fulltext: z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    }).optional(),
-    userId: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact userId'
-    }).optional(),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingId'
-    }).optional()
-}).register(z.globalRegistry, {
-    description: 'Filter object for favourite collection'
-});
-
-export type zFavouriteFilter = z.infer<typeof zFavouriteFilter>;
-
-/**
- * App-based filters
- */
-export const zFavouriteWhere = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    }).optional(),
-    idIn: z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    }).optional(),
-    fulltext: z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    }).optional(),
-    userId: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact userId'
-    }).optional(),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingId'
-    }).optional()
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zFavouriteWhere = z.infer<typeof zFavouriteWhere>;
-
-/**
- * Field of the favourite sort
- */
-export const zFavouriteSortField = z.enum(['createdAt']).register(z.globalRegistry, {
-    description: 'Field of the favourite sort'
-});
-
-export type zFavouriteSortField = z.infer<typeof zFavouriteSortField>;
-
-/**
- * Order
- */
-export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
-    description: 'Order'
-});
-
-export type zOrderEnum = z.infer<typeof zOrderEnum>;
-
-/**
- * Sort object for favourite collection
- */
-export const zFavouriteSort = z.object({
-    field: zFavouriteSortField,
-    order: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for favourite collection'
-});
-
-export type zFavouriteSort = z.infer<typeof zFavouriteSort>;
-
-/**
- * Query object for favourite collection
- */
-export const zFavouriteQuery = z.object({
-    cursor: zCursor.optional(),
-    filter: zFavouriteFilter.optional(),
-    where: zFavouriteWhere.optional(),
-    sort: z.array(zFavouriteSort).optional()
-}).register(z.globalRegistry, {
-    description: 'Query object for favourite collection'
-});
-
-export type zFavouriteQuery = z.infer<typeof zFavouriteQuery>;
-
-/**
- * Count data
- */
-export const zCount = z.object({
-    where: z.number().register(z.globalRegistry, {
-        description: 'Count of items based on provided where query.'
-    }),
-    filter: z.number().register(z.globalRegistry, {
-        description: 'Count of items based on provided filter query.'
-    }),
-    total: z.number().register(z.globalRegistry, {
-        description: 'Total count of items (no filters applied).'
-    }),
-    isEmpty: z.boolean().register(z.globalRegistry, {
-        description: 'True when total count is empty.'
-    }),
-    isFilterEmpty: z.boolean().register(z.globalRegistry, {
-        description: 'True when filter count is empty while total count has data.'
-    })
-}).register(z.globalRegistry, {
-    description: 'Count data'
-});
-
-export type zCount = z.infer<typeof zCount>;
-
-/**
- * Query object for favourite count
- */
-export const zFavouriteCountQuery = z.object({
-    filter: zFavouriteFilter.optional(),
-    where: zFavouriteWhere.optional()
-}).register(z.globalRegistry, {
-    description: 'Query object for favourite count'
-});
-
-export type zFavouriteCountQuery = z.infer<typeof zFavouriteCountQuery>;
-
-/**
- * Price type of the listing
- */
-export const zListingPriceEnum = z.enum(['closed', 'open']).register(z.globalRegistry, {
-    description: 'Price type of the listing'
-});
-
-export type zListingPriceEnum = z.infer<typeof zListingPriceEnum>;
-
-/**
- * List of available currencies
- */
-export const zCurrencyEnum = z.enum([
-    'CZK',
-    'EUR',
-    'USD',
-    'GBP',
-    'PLN',
-    'HUF',
-    'CHF'
-]).register(z.globalRegistry, {
-    description: 'List of available currencies'
-});
-
-export type zCurrencyEnum = z.infer<typeof zCurrencyEnum>;
-
-/**
- * Delivery method for the listing
- */
-export const zListingDeliveryEnum = z.enum([
-    'personal',
-    'post',
-    'package',
-    'other'
-]).register(z.globalRegistry, {
-    description: 'Delivery method for the listing'
-});
-
-export type zListingDeliveryEnum = z.infer<typeof zListingDeliveryEnum>;
-
-/**
- * Warranty type for the listing
- */
-export const zListingWarrantyEnum = z.enum([
-    'warranty',
-    'no-warranty',
-    'custom'
-]).register(z.globalRegistry, {
-    description: 'Warranty type for the listing'
-});
-
-export type zListingWarrantyEnum = z.infer<typeof zListingWarrantyEnum>;
-
-/**
- * Content restriction level of the listing
- */
-export const zListingRestrictionEnum = z.enum([
-    'none',
-    'adult-relaxed',
-    'adult',
-    'sensitive',
-    'restricted'
-]).register(z.globalRegistry, {
-    description: 'Content restriction level of the listing'
-});
-
-export type zListingRestrictionEnum = z.infer<typeof zListingRestrictionEnum>;
-
-/**
- * Array of pros or cons, max 5 items, each string max 72 characters
- */
-export const zProsCons = z.array(z.string().max(72)).max(5).register(z.globalRegistry, {
-    description: 'Array of pros or cons, max 5 items, each string max 72 characters'
-});
-
-export type zProsCons = z.infer<typeof zProsCons>;
-
-/**
- * Location data
- */
-export const zLocation = z.object({
-    id: z.string(),
-    query: z.string().register(z.globalRegistry, {
-        description: 'The query that was used to get the location'
-    }),
-    lang: z.string().register(z.globalRegistry, {
-        description: 'The language that was used to get the location'
-    }),
-    country: z.string().register(z.globalRegistry, {
-        description: 'The country that the location is in'
-    }),
-    code: z.string().register(z.globalRegistry, {
-        description: 'Country code'
-    }),
-    county: z.string().nullable(),
-    municipality: z.string().nullable(),
-    state: z.string().nullable(),
-    address: z.string().register(z.globalRegistry, {
-        description: 'Full address preview of a location'
-    }),
-    city: z.string().nullable(),
-    street: z.string().nullable(),
-    zip: z.string().nullable(),
-    confidence: z.number().register(z.globalRegistry, {
-        description: 'Confidence score of the location (based on query)'
-    }),
-    hash: z.string().register(z.globalRegistry, {
-        description: 'Used to uniquely identify this location entry'
-    }),
-    lat: z.number().register(z.globalRegistry, {
-        description: 'Latitude of the location'
-    }),
-    lon: z.number().register(z.globalRegistry, {
-        description: 'Longitude of the location'
-    })
-}).register(z.globalRegistry, {
-    description: 'Location data'
-});
-
-export type zLocation = z.infer<typeof zLocation>;
-
-/**
- * Category data
- */
-export const zCategory = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the category'
-    }),
-    group: z.string().register(z.globalRegistry, {
-        description: 'Group/name of the category'
-    }),
-    category: z.string().register(z.globalRegistry, {
-        description: 'Category name within the group'
-    }),
-    slug: z.string().register(z.globalRegistry, {
-        description: 'Slug of the category'
-    }),
-    sort: z.number().register(z.globalRegistry, {
-        description: 'Sort order (position) of the category'
-    }),
-    locale: z.string().register(z.globalRegistry, {
-        description: 'Locale/language of the category'
-    })
-}).register(z.globalRegistry, {
-    description: 'Category data'
-});
-
-export type zCategory = z.infer<typeof zCategory>;
-
-/**
- * Upload file metadata
- */
-export const zUpload = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the upload'
-    }),
-    url: z.url().register(z.globalRegistry, {
-        description: 'Public URL to the uploaded file'
-    })
-}).register(z.globalRegistry, {
-    description: 'Upload file metadata'
-});
-
-export type zUpload = z.infer<typeof zUpload>;
-
-/**
- * Gallery item data
- */
-export const zGalleryItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery item'
-    }),
-    galleryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery this item belongs to'
-    }),
-    uploadId: z.string().register(z.globalRegistry, {
-        description: 'ID of the upload this image belongs to'
-    }),
-    sort: z.number().register(z.globalRegistry, {
-        description: 'Sort order of the image in the gallery'
-    }),
-    upload: zUpload
-}).register(z.globalRegistry, {
-    description: 'Gallery item data'
-});
-
-export type zGalleryItem = z.infer<typeof zGalleryItem>;
-
-/**
- * Listing gallery images
- */
-export const zGallery = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery'
-    }),
-    items: z.array(zGalleryItem).register(z.globalRegistry, {
-        description: 'Gallery items sorted by sort order'
-    })
-}).register(z.globalRegistry, {
-    description: 'Listing gallery images'
-});
-
-export type zGallery = z.infer<typeof zGallery>;
-
-/**
- * Type of thumb
- */
-export const zThumbEnum = z.enum(['like', 'dislike']).register(z.globalRegistry, {
-    description: 'Type of thumb'
-});
-
-export type zThumbEnum = z.infer<typeof zThumbEnum>;
-
-/**
- * Listing data
- */
-export const zListing = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    }),
-    price: z.number().register(z.globalRegistry, {
-        description: 'Price of the listing'
-    }),
-    priceType: zListingPriceEnum,
-    currency: zCurrencyEnum,
-    condition: z.number().nullable(),
-    age: z.number().nullable(),
-    delivery: z.array(zListingDeliveryEnum).nullable(),
-    warranty: zListingWarrantyEnum.nullable(),
-    restriction: zListingRestrictionEnum,
-    locationId: z.string().register(z.globalRegistry, {
-        description: 'ID of the location'
-    }),
-    categoryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the category'
-    }),
-    galleryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery'
-    }),
-    draftId: z.string().nullable(),
-    expiresAt: z.string().register(z.globalRegistry, {
-        description: 'Expiration timestamp'
-    }),
-    title: z.string().register(z.globalRegistry, {
-        description: 'Title of the item'
-    }),
-    description: z.string().nullable(),
-    pros: zProsCons.nullable(),
-    cons: zProsCons.nullable(),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    updatedAt: z.string().register(z.globalRegistry, {
-        description: 'Last update timestamp'
-    }),
-    location: zLocation,
-    category: zCategory,
-    distance: z.number().nullable(),
-    gallery: zGallery,
-    my: z.boolean().register(z.globalRegistry, {
-        description: 'Whether the listing belongs to the current user'
-    }),
-    isFavourite: z.boolean().register(z.globalRegistry, {
-        description: 'Whether the user has this listing in favourites'
-    }),
-    isIgnored: z.boolean().register(z.globalRegistry, {
-        description: 'Whether the user ignored this listing'
-    }),
-    hasFlag: z.boolean().register(z.globalRegistry, {
-        description: 'Whether the user flagged this listing'
-    }),
-    transactionId: z.string().nullable(),
-    thumb: zThumbEnum.nullable()
-}).register(z.globalRegistry, {
-    description: 'Listing data'
-});
-
-export type zListing = z.infer<typeof zListing>;
-
-/**
- * Data for toggling a listing in favourites
- */
-export const zFavouriteToggle = z.object({
-    toggle: z.boolean().register(z.globalRegistry, {
-        description: 'Whether to add (true) or remove (false) the listing from favourites'
-    }),
-    feedId: z.string().register(z.globalRegistry, {
-        description: 'Feed this listing belongs to'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing to toggle'
-    })
-}).register(z.globalRegistry, {
-    description: 'Data for toggling a listing in favourites'
-});
-
-export type zFavouriteToggle = z.infer<typeof zFavouriteToggle>;
-
-/**
- * Type of the feed
- */
-export const zFeedTypeEnum = z.enum(['user', 'search']).register(z.globalRegistry, {
-    description: 'Type of the feed'
-});
-
-export type zFeedTypeEnum = z.infer<typeof zFeedTypeEnum>;
 
 /**
  * Sets the minimum price for the listings
@@ -515,6 +46,20 @@ export const zPriceMax = z.number().gte(0).register(z.globalRegistry, {
 export type zPriceMax = z.infer<typeof zPriceMax>;
 
 /**
+ * Delivery method for the listing
+ */
+export const zListingDeliveryEnum = z.enum([
+    'personal',
+    'post',
+    'package',
+    'other'
+]).register(z.globalRegistry, {
+    description: 'Delivery method for the listing'
+});
+
+export type zListingDeliveryEnum = z.infer<typeof zListingDeliveryEnum>;
+
+/**
  * This filter matches listings with delivery methods overlapping the provided array
  */
 export const zDeliveryIn = z.array(zListingDeliveryEnum).register(z.globalRegistry, {
@@ -522,6 +67,19 @@ export const zDeliveryIn = z.array(zListingDeliveryEnum).register(z.globalRegist
 });
 
 export type zDeliveryIn = z.infer<typeof zDeliveryIn>;
+
+/**
+ * Warranty type for the listing
+ */
+export const zListingWarrantyEnum = z.enum([
+    'warranty',
+    'no-warranty',
+    'custom'
+]).register(z.globalRegistry, {
+    description: 'Warranty type for the listing'
+});
+
+export type zListingWarrantyEnum = z.infer<typeof zListingWarrantyEnum>;
 
 /**
  * This filter matches listings with warranty types in the provided array
@@ -549,6 +107,23 @@ export const zCategoryIdIn = z.array(z.string().min(1)).register(z.globalRegistr
 });
 
 export type zCategoryIdIn = z.infer<typeof zCategoryIdIn>;
+
+/**
+ * List of available currencies
+ */
+export const zCurrencyEnum = z.enum([
+    'CZK',
+    'EUR',
+    'USD',
+    'GBP',
+    'PLN',
+    'HUF',
+    'CHF'
+]).register(z.globalRegistry, {
+    description: 'List of available currencies'
+});
+
+export type zCurrencyEnum = z.infer<typeof zCurrencyEnum>;
 
 /**
  * This filter matches listings with currency codes in the provided array
@@ -749,6 +324,15 @@ export const zListingSortField = z.enum([
 export type zListingSortField = z.infer<typeof zListingSortField>;
 
 /**
+ * Order
+ */
+export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
+    description: 'Order'
+});
+
+export type zOrderEnum = z.infer<typeof zOrderEnum>;
+
+/**
  * Sort object for listing collection
  */
 export const zListingSort = z.object({
@@ -806,9 +390,25 @@ export const zListingQuery = z.object({
 export type zListingQuery = z.infer<typeof zListingQuery>;
 
 /**
- * Feed data
+ * Upload file metadata
  */
-export const zFeed = z.object({
+export const zUpload = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the upload'
+    }),
+    url: z.url().register(z.globalRegistry, {
+        description: 'Public URL to the uploaded file'
+    })
+}).register(z.globalRegistry, {
+    description: 'Upload file metadata'
+});
+
+export type zUpload = z.infer<typeof zUpload>;
+
+/**
+ * Feed favourite collection item
+ */
+export const zFeedFavouriteItem = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the feed'
     }),
@@ -819,28 +419,42 @@ export const zFeed = z.object({
         description: 'Name of the feed'
     }),
     query: zListingQuery,
-    upload: zUpload.nullable()
+    upload: zUpload.nullable(),
+    count: z.number().register(z.globalRegistry, {
+        description: 'Number of items in favourites for this feed'
+    })
 }).register(z.globalRegistry, {
-    description: 'Feed data'
+    description: 'Feed favourite collection item'
 });
 
-export type zFeed = z.infer<typeof zFeed>;
+export type zFeedFavouriteItem = z.infer<typeof zFeedFavouriteItem>;
 
 /**
- * Data for creating a new feed
+ * Type of notice
  */
-export const zFeedCreate = z.object({
-    type: zFeedTypeEnum,
-    name: z.string().min(1).register(z.globalRegistry, {
-        description: 'Name of the feed'
-    }),
-    locationId: z.string().nullish(),
-    query: zListingQuery
-}).register(z.globalRegistry, {
-    description: 'Data for creating a new feed'
+export const zNoticeTypeEnum = z.enum([
+    'info',
+    'warning',
+    'error'
+]).register(z.globalRegistry, {
+    description: 'Type of notice'
 });
 
-export type zFeedCreate = z.infer<typeof zFeedCreate>;
+export type zNoticeTypeEnum = z.infer<typeof zNoticeTypeEnum>;
+
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export const zNotice = z.object({
+    message: z.string().register(z.globalRegistry, {
+        description: 'Message'
+    }),
+    type: zNoticeTypeEnum
+}).register(z.globalRegistry, {
+    description: 'Just a note sent from various reasons, usually when something is fucked up.'
+});
+
+export type zNotice = z.infer<typeof zNotice>;
 
 /**
  * Filter object for feed collection
@@ -928,88 +542,6 @@ export const zFeedQuery = z.object({
 export type zFeedQuery = z.infer<typeof zFeedQuery>;
 
 /**
- * Data for updating an existing feed
- */
-export const zFeedPatch = z.object({
-    patch: z.object({
-        id: z.string().register(z.globalRegistry, {
-            description: 'ID of the feed'
-        }).optional(),
-        locationId: z.string().nullish(),
-        uploadId: z.string().nullish(),
-        type: zFeedTypeEnum.optional(),
-        name: z.string().register(z.globalRegistry, {
-            description: 'Name of the feed'
-        }).optional(),
-        query: zListingQuery.optional()
-    }).register(z.globalRegistry, {
-        description: 'Fields to update (all optional)'
-    }),
-    query: zFeedQuery
-}).register(z.globalRegistry, {
-    description: 'Data for updating an existing feed'
-});
-
-export type zFeedPatch = z.infer<typeof zFeedPatch>;
-
-/**
- * Feed collection item
- */
-export const zFeedItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the feed'
-    }),
-    locationId: z.string().nullable(),
-    uploadId: z.string().nullable(),
-    type: zFeedTypeEnum,
-    name: z.string().register(z.globalRegistry, {
-        description: 'Name of the feed'
-    }),
-    query: zListingQuery,
-    upload: zUpload.nullable()
-}).register(z.globalRegistry, {
-    description: 'Feed collection item'
-});
-
-export type zFeedItem = z.infer<typeof zFeedItem>;
-
-/**
- * Query object for feed count
- */
-export const zFeedCountQuery = z.object({
-    filter: zFeedFilter.optional(),
-    where: zFeedWhere.optional()
-}).register(z.globalRegistry, {
-    description: 'Query object for feed count'
-});
-
-export type zFeedCountQuery = z.infer<typeof zFeedCountQuery>;
-
-/**
- * Feed favourite collection item
- */
-export const zFeedFavouriteItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the feed'
-    }),
-    locationId: z.string().nullable(),
-    uploadId: z.string().nullable(),
-    type: zFeedTypeEnum,
-    name: z.string().register(z.globalRegistry, {
-        description: 'Name of the feed'
-    }),
-    query: zListingQuery,
-    upload: zUpload.nullable(),
-    count: z.number().register(z.globalRegistry, {
-        description: 'Number of items in favourites for this feed'
-    })
-}).register(z.globalRegistry, {
-    description: 'Feed favourite collection item'
-});
-
-export type zFeedFavouriteItem = z.infer<typeof zFeedFavouriteItem>;
-
-/**
  * Feed data from favourites
  */
 export const zFeedFavourite = z.object({
@@ -1034,6 +566,31 @@ export const zFeedFavourite = z.object({
 export type zFeedFavourite = z.infer<typeof zFeedFavourite>;
 
 /**
+ * Count data
+ */
+export const zCount = z.object({
+    where: z.number().register(z.globalRegistry, {
+        description: 'Count of items based on provided where query.'
+    }),
+    filter: z.number().register(z.globalRegistry, {
+        description: 'Count of items based on provided filter query.'
+    }),
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total count of items (no filters applied).'
+    }),
+    isEmpty: z.boolean().register(z.globalRegistry, {
+        description: 'True when total count is empty.'
+    }),
+    isFilterEmpty: z.boolean().register(z.globalRegistry, {
+        description: 'True when filter count is empty while total count has data.'
+    })
+}).register(z.globalRegistry, {
+    description: 'Count data'
+});
+
+export type zCount = z.infer<typeof zCount>;
+
+/**
  * Query object for feed favourite count
  */
 export const zFeedFavouriteCountQuery = z.object({
@@ -1044,6 +601,45 @@ export const zFeedFavouriteCountQuery = z.object({
 });
 
 export type zFeedFavouriteCountQuery = z.infer<typeof zFeedFavouriteCountQuery>;
+
+/**
+ * Gallery item data
+ */
+export const zGalleryItem = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery item'
+    }),
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery this item belongs to'
+    }),
+    uploadId: z.string().register(z.globalRegistry, {
+        description: 'ID of the upload this image belongs to'
+    }),
+    sort: z.number().register(z.globalRegistry, {
+        description: 'Sort order of the image in the gallery'
+    }),
+    upload: zUpload
+}).register(z.globalRegistry, {
+    description: 'Gallery item data'
+});
+
+export type zGalleryItem = z.infer<typeof zGalleryItem>;
+
+/**
+ * Gallery data with items
+ */
+export const zGallery = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    items: z.array(zGalleryItem).register(z.globalRegistry, {
+        description: 'Gallery items sorted by sort order'
+    })
+}).register(z.globalRegistry, {
+    description: 'Gallery data with items'
+});
+
+export type zGallery = z.infer<typeof zGallery>;
 
 /**
  * Request to create or update a feed gallery
@@ -1060,558 +656,6 @@ export const zFeedGalleryCreate = z.object({
 });
 
 export type zFeedGalleryCreate = z.infer<typeof zFeedGalleryCreate>;
-
-/**
- * Flag collection item
- */
-export const zFlagItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the flag'
-    })
-}).register(z.globalRegistry, {
-    description: 'Flag collection item'
-});
-
-export type zFlagItem = z.infer<typeof zFlagItem>;
-
-/**
- * App-based filters
- */
-export const zFlagWhere = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    }).optional(),
-    idIn: z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    }).optional(),
-    fulltext: z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    }).optional(),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingId'
-    }).optional()
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zFlagWhere = z.infer<typeof zFlagWhere>;
-
-/**
- * Field of the flag sort
- */
-export const zFlagSortField = z.enum(['createdAt']).register(z.globalRegistry, {
-    description: 'Field of the flag sort'
-});
-
-export type zFlagSortField = z.infer<typeof zFlagSortField>;
-
-/**
- * Sort object for flag collection
- */
-export const zFlagSort = z.object({
-    field: zFlagSortField,
-    order: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for flag collection'
-});
-
-export type zFlagSort = z.infer<typeof zFlagSort>;
-
-/**
- * Query object for flag collection
- */
-export const zFlagQuery = z.object({
-    cursor: zCursor.optional(),
-    filter: z.object({
-        id: z.string().register(z.globalRegistry, {
-            description: 'This filter matches the exact id'
-        }).optional(),
-        idIn: z.array(z.string()).register(z.globalRegistry, {
-            description: 'This filter matches the ids'
-        }).optional(),
-        fulltext: z.string().register(z.globalRegistry, {
-            description: 'Runs fulltext on the collection/query.'
-        }).optional(),
-        listingId: z.string().register(z.globalRegistry, {
-            description: 'This filter matches the exact listingId'
-        }).optional()
-    }).optional(),
-    where: zFlagWhere.optional(),
-    sort: z.array(zFlagSort).optional()
-}).register(z.globalRegistry, {
-    description: 'Query object for flag collection'
-});
-
-export type zFlagQuery = z.infer<typeof zFlagQuery>;
-
-/**
- * App-based filters
- */
-export const zFlagCountWhere = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    }).optional(),
-    idIn: z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    }).optional(),
-    fulltext: z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    }).optional(),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingId'
-    }).optional()
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zFlagCountWhere = z.infer<typeof zFlagCountWhere>;
-
-/**
- * Query object for flag count
- */
-export const zFlagCountQuery = z.object({
-    filter: z.object({
-        id: z.string().register(z.globalRegistry, {
-            description: 'This filter matches the exact id'
-        }).optional(),
-        idIn: z.array(z.string()).register(z.globalRegistry, {
-            description: 'This filter matches the ids'
-        }).optional(),
-        fulltext: z.string().register(z.globalRegistry, {
-            description: 'Runs fulltext on the collection/query.'
-        }).optional(),
-        listingId: z.string().register(z.globalRegistry, {
-            description: 'This filter matches the exact listingId'
-        }).optional()
-    }).optional(),
-    where: zFlagCountWhere.optional()
-}).register(z.globalRegistry, {
-    description: 'Query object for flag count'
-});
-
-export type zFlagCountQuery = z.infer<typeof zFlagCountQuery>;
-
-/**
- * Data for toggling a flag on a listing
- */
-export const zFlagToggle = z.object({
-    toggle: z.boolean().register(z.globalRegistry, {
-        description: 'Whether to add (true) or remove (false) the flag on the listing'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing to toggle'
-    })
-}).register(z.globalRegistry, {
-    description: 'Data for toggling a flag on a listing'
-});
-
-export type zFlagToggle = z.infer<typeof zFlagToggle>;
-
-/**
- * Ignore collection item
- */
-export const zIgnoreItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the ignore'
-    })
-}).register(z.globalRegistry, {
-    description: 'Ignore collection item'
-});
-
-export type zIgnoreItem = z.infer<typeof zIgnoreItem>;
-
-/**
- * Filter object for ignore collection
- */
-export const zIgnoreFilter = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    }).optional(),
-    idIn: z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    }).optional(),
-    fulltext: z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    }).optional(),
-    userId: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact userId'
-    }).optional(),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingId'
-    }).optional()
-}).register(z.globalRegistry, {
-    description: 'Filter object for ignore collection'
-});
-
-export type zIgnoreFilter = z.infer<typeof zIgnoreFilter>;
-
-/**
- * App-based filters
- */
-export const zIgnoreWhere = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    }).optional(),
-    idIn: z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    }).optional(),
-    fulltext: z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    }).optional(),
-    userId: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact userId'
-    }).optional(),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingId'
-    }).optional()
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zIgnoreWhere = z.infer<typeof zIgnoreWhere>;
-
-/**
- * Field of the ignore sort
- */
-export const zIgnoreSortField = z.enum(['createdAt']).register(z.globalRegistry, {
-    description: 'Field of the ignore sort'
-});
-
-export type zIgnoreSortField = z.infer<typeof zIgnoreSortField>;
-
-/**
- * Sort object for ignore collection
- */
-export const zIgnoreSort = z.object({
-    field: zIgnoreSortField,
-    order: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for ignore collection'
-});
-
-export type zIgnoreSort = z.infer<typeof zIgnoreSort>;
-
-/**
- * Query object for ignore collection
- */
-export const zIgnoreQuery = z.object({
-    cursor: zCursor.optional(),
-    filter: zIgnoreFilter.optional(),
-    where: zIgnoreWhere.optional(),
-    sort: z.array(zIgnoreSort).optional()
-}).register(z.globalRegistry, {
-    description: 'Query object for ignore collection'
-});
-
-export type zIgnoreQuery = z.infer<typeof zIgnoreQuery>;
-
-/**
- * Query object for ignore count
- */
-export const zIgnoreCountQuery = z.object({
-    filter: zIgnoreFilter.optional(),
-    where: zIgnoreWhere.optional()
-}).register(z.globalRegistry, {
-    description: 'Query object for ignore count'
-});
-
-export type zIgnoreCountQuery = z.infer<typeof zIgnoreCountQuery>;
-
-/**
- * Data for toggling a listing in ignore list
- */
-export const zIgnoreToggle = z.object({
-    toggle: z.boolean().register(z.globalRegistry, {
-        description: 'Whether to add (true) or remove (false) the listing from ignore list'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing to toggle'
-    })
-}).register(z.globalRegistry, {
-    description: 'Data for toggling a listing in ignore list'
-});
-
-export type zIgnoreToggle = z.infer<typeof zIgnoreToggle>;
-
-/**
- * Query object for listing count
- */
-export const zListingCountQuery = z.object({
-    filter: zListingFilter.optional(),
-    where: zListingWhere.optional(),
-    meta: zListingMeta.optional()
-}).register(z.globalRegistry, {
-    description: 'Query object for listing count'
-});
-
-export type zListingCountQuery = z.infer<typeof zListingCountQuery>;
-
-/**
- * Initial reaction by seller on transaction created by buyer.
- */
-export const zUserEventSellerReaction = z.object({
-    total: z.number().register(z.globalRegistry, {
-        description: 'Total number of samples (transactions)'
-    }),
-    reactions: z.number().register(z.globalRegistry, {
-        description: 'Total number of reactions'
-    }),
-    terminal: z.number().register(z.globalRegistry, {
-        description: 'Total number of terminal reactions (usually from the other side)'
-    }),
-    percent: z.number().register(z.globalRegistry, {
-        description: 'Percentage of reactions (reactions + terminal) / total'
-    }),
-    medianMs: z.number().register(z.globalRegistry, {
-        description: 'Median milliseconds between transaction creation and reaction'
-    }),
-    p90Ms: z.number().register(z.globalRegistry, {
-        description: '90th percentile milliseconds between transaction creation and reaction'
-    })
-}).register(z.globalRegistry, {
-    description: 'Initial reaction by seller on transaction created by buyer.'
-});
-
-export type zUserEventSellerReaction = z.infer<typeof zUserEventSellerReaction>;
-
-/**
- * This metric describes if the user rejects transactions without any interaction (no messages between create and reject)
- */
-export const zUserEventSellerRejected = z.object({
-    total: z.number().register(z.globalRegistry, {
-        description: 'Total number of samples (transactions)'
-    }),
-    rejected: z.number().register(z.globalRegistry, {
-        description: 'Total number of rejected transactions'
-    }),
-    percent: z.number().register(z.globalRegistry, {
-        description: 'Percentage of rejected transactions (rejected / total)'
-    }),
-    medianMs: z.number().register(z.globalRegistry, {
-        description: 'Median milliseconds between transaction creation and rejection'
-    }),
-    p90Ms: z.number().register(z.globalRegistry, {
-        description: '90th percentile milliseconds between transaction creation and rejection'
-    })
-}).register(z.globalRegistry, {
-    description: 'This metric describes if the user rejects transactions without any interaction (no messages between create and reject)'
-});
-
-export type zUserEventSellerRejected = z.infer<typeof zUserEventSellerRejected>;
-
-/**
- * This metric describes if the user resolves transactions (success/closed)
- */
-export const zUserEventSellerResolved = z.object({
-    total: z.number().register(z.globalRegistry, {
-        description: 'Total number of samples (transactions)'
-    }),
-    resolved: z.number().register(z.globalRegistry, {
-        description: 'Total number of resolved transactions (success, closed)'
-    }),
-    terminal: z.number().register(z.globalRegistry, {
-        description: 'Total number of terminal transactions (usually from the other side)'
-    }),
-    percent: z.number().register(z.globalRegistry, {
-        description: 'Percentage of resolved transactions (resolved / total)'
-    }),
-    medianMs: z.number().register(z.globalRegistry, {
-        description: 'Median milliseconds until the transaction gets resolved'
-    }),
-    p90Ms: z.number().register(z.globalRegistry, {
-        description: '90th percentile milliseconds until the transaction gets resolved'
-    })
-}).register(z.globalRegistry, {
-    description: 'This metric describes if the user resolves transactions (success/closed)'
-});
-
-export type zUserEventSellerResolved = z.infer<typeof zUserEventSellerResolved>;
-
-/**
- * This metric describes if the user is used to expire transactions (no user's messages)
- */
-export const zUserEventSellerExpired = z.object({
-    total: z.number().register(z.globalRegistry, {
-        description: 'Total number of samples (transactions)'
-    }),
-    expired: z.number().register(z.globalRegistry, {
-        description: 'Total number of expired transactions'
-    }),
-    percent: z.number().register(z.globalRegistry, {
-        description: 'Percentage of expired transactions (expired / total)'
-    })
-}).register(z.globalRegistry, {
-    description: 'This metric describes if the user is used to expire transactions (no user\'s messages)'
-});
-
-export type zUserEventSellerExpired = z.infer<typeof zUserEventSellerExpired>;
-
-/**
- * Load type of the seller
- */
-export const zLoadEnum = z.enum([
-    'low',
-    'medium',
-    'high'
-]).register(z.globalRegistry, {
-    description: 'Load type of the seller'
-});
-
-export type zLoadEnum = z.infer<typeof zLoadEnum>;
-
-/**
- * Masks number of transactions of the seller, basically it tells, how busy seller is.
- */
-export const zUserEventSellerLoad = z.object({
-    bucket: zLoadEnum
-}).register(z.globalRegistry, {
-    description: 'Masks number of transactions of the seller, basically it tells, how busy seller is.'
-});
-
-export type zUserEventSellerLoad = z.infer<typeof zUserEventSellerLoad>;
-
-/**
- * Activity type of the seller
- */
-export const zActivityEnum = z.enum([
-    'low',
-    'medium',
-    'high'
-]).register(z.globalRegistry, {
-    description: 'Activity type of the seller'
-});
-
-export type zActivityEnum = z.infer<typeof zActivityEnum>;
-
-/**
- * This metric describes the approx activity of the user
- */
-export const zUserEventSellerActivity = z.object({
-    bucket: zActivityEnum
-}).register(z.globalRegistry, {
-    description: 'This metric describes the approx activity of the user'
-});
-
-export type zUserEventSellerActivity = z.infer<typeof zUserEventSellerActivity>;
-
-/**
- * This metric describes the score of the user
- */
-export const zUserEventSellerScore = z.object({
-    score: z.number().register(z.globalRegistry, {
-        description: 'Low-level score value, usually not presented in UI'
-    }),
-    rank: z.number().register(z.globalRegistry, {
-        description: 'Rank computed from the score (A-F, 1-6)'
-    })
-}).register(z.globalRegistry, {
-    description: 'This metric describes the score of the user'
-});
-
-export type zUserEventSellerScore = z.infer<typeof zUserEventSellerScore>;
-
-/**
- * Seller info for the user event
- */
-export const zUserEventSeller = z.object({
-    reaction: zUserEventSellerReaction,
-    rejected: zUserEventSellerRejected,
-    resolved: zUserEventSellerResolved,
-    expired: zUserEventSellerExpired,
-    load: zUserEventSellerLoad,
-    activity: zUserEventSellerActivity,
-    score: zUserEventSellerScore
-}).register(z.globalRegistry, {
-    description: 'Seller info for the user event'
-});
-
-export type zUserEventSeller = z.infer<typeof zUserEventSeller>;
-
-/**
- * Seller info for the listing
- */
-export const zSellerInfo = z.object({
-    registered: z.string().register(z.globalRegistry, {
-        description: 'Registration date'
-    }),
-    listings: z.number().register(z.globalRegistry, {
-        description: 'Number of listings'
-    }),
-    events: zUserEventSeller.nullable()
-}).register(z.globalRegistry, {
-    description: 'Seller info for the listing'
-});
-
-export type zSellerInfo = z.infer<typeof zSellerInfo>;
-
-/**
- * Type of listing event
- */
-export const zListingEventEnum = z.enum([
-    'impression',
-    'view',
-    'ignore',
-    'unignore',
-    'flag',
-    'unflag',
-    'transaction',
-    'favourite',
-    'unfavourite',
-    'like',
-    'dislike'
-]).register(z.globalRegistry, {
-    description: 'Type of listing event'
-});
-
-export type zListingEventEnum = z.infer<typeof zListingEventEnum>;
-
-/**
- * Listing event data
- */
-export const zListingEvent = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the event'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    }),
-    event: zListingEventEnum,
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    })
-}).register(z.globalRegistry, {
-    description: 'Listing event data'
-});
-
-export type zListingEvent = z.infer<typeof zListingEvent>;
-
-/**
- * Data for creating a new listing event
- */
-export const zListingEventCreate = z.object({
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    }),
-    event: zListingEventEnum
-}).register(z.globalRegistry, {
-    description: 'Data for creating a new listing event'
-});
-
-export type zListingEventCreate = z.infer<typeof zListingEventCreate>;
-
-/**
- * Data for creating a new thumb
- */
-export const zThumbCreate = z.object({
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    }),
-    type: zThumbEnum
-}).register(z.globalRegistry, {
-    description: 'Data for creating a new thumb'
-});
-
-export type zThumbCreate = z.infer<typeof zThumbCreate>;
 
 /**
  * Current status of the listing transaction
@@ -1631,6 +675,15 @@ export const zTransactionStatusEnum = z.enum([
 });
 
 export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
+
+/**
+ * Price type of the listing
+ */
+export const zListingPriceEnum = z.enum(['closed', 'open']).register(z.globalRegistry, {
+    description: 'Price type of the listing'
+});
+
+export type zListingPriceEnum = z.infer<typeof zListingPriceEnum>;
 
 /**
  * Direction of the transaction entry from the current viewer perspective
@@ -1877,6 +930,50 @@ export const zTransactionEntry = z.union([
 export type zTransactionEntry = z.infer<typeof zTransactionEntry>;
 
 /**
+ * Location data
+ */
+export const zLocation = z.object({
+    id: z.string(),
+    query: z.string().register(z.globalRegistry, {
+        description: 'The query that was used to get the location'
+    }),
+    lang: z.string().register(z.globalRegistry, {
+        description: 'The language that was used to get the location'
+    }),
+    country: z.string().register(z.globalRegistry, {
+        description: 'The country that the location is in'
+    }),
+    code: z.string().register(z.globalRegistry, {
+        description: 'Country code'
+    }),
+    county: z.string().nullable(),
+    municipality: z.string().nullable(),
+    state: z.string().nullable(),
+    address: z.string().register(z.globalRegistry, {
+        description: 'Full address preview of a location'
+    }),
+    city: z.string().nullable(),
+    street: z.string().nullable(),
+    zip: z.string().nullable(),
+    confidence: z.number().register(z.globalRegistry, {
+        description: 'Confidence score of the location (based on query)'
+    }),
+    hash: z.string().register(z.globalRegistry, {
+        description: 'Used to uniquely identify this location entry'
+    }),
+    lat: z.number().register(z.globalRegistry, {
+        description: 'Latitude of the location'
+    }),
+    lon: z.number().register(z.globalRegistry, {
+        description: 'Longitude of the location'
+    })
+}).register(z.globalRegistry, {
+    description: 'Location data'
+});
+
+export type zLocation = z.infer<typeof zLocation>;
+
+/**
  * Transaction data
  */
 export const zTransaction = z.object({
@@ -1902,9 +999,7 @@ export const zTransaction = z.object({
     title: z.string().register(z.globalRegistry, {
         description: 'Transaction title'
     }),
-    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
-        description: 'Gallery data with items'
-    })),
+    gallery: zGallery,
     price: z.number().register(z.globalRegistry, {
         description: 'Price of the listing'
     }),
@@ -2061,145 +1156,6 @@ export const zTransactionCreate = z.object({
 
 export type zTransactionCreate = z.infer<typeof zTransactionCreate>;
 
-export const zApiFavouriteCollectionData = z.object({
-    body: zFavouriteQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiFavouriteCollectionRequest = z.infer<typeof zApiFavouriteCollectionData>;
-
-/**
- * Access collection of favourite items based on provided query
- */
-export const zApiFavouriteCollectionResponse = z.array(zFavouriteItem).register(z.globalRegistry, {
-    description: 'Access collection of favourite items based on provided query'
-});
-
-export type zapiFavouriteCollectionResponse = z.infer<typeof zApiFavouriteCollectionResponse>;
-
-export const zApiFavouriteCountData = z.object({
-    body: zFavouriteCountQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiFavouriteCountRequest = z.infer<typeof zApiFavouriteCountData>;
-
-/**
- * Return counts based on provided query
- */
-export const zApiFavouriteCountResponse = zCount;
-
-export type zapiFavouriteCountResponse = z.infer<typeof zApiFavouriteCountResponse>;
-
-export const zApiFavouriteToggleData = z.object({
-    body: zFavouriteToggle.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiFavouriteToggleRequest = z.infer<typeof zApiFavouriteToggleData>;
-
-/**
- * Nothing to say, we're just happy
- */
-export const zApiFavouriteToggleResponse = zListing;
-
-export type zapiFavouriteToggleResponse = z.infer<typeof zApiFavouriteToggleResponse>;
-
-export const zApiFeedCreateData = z.object({
-    body: zFeedCreate.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiFeedCreateRequest = z.infer<typeof zApiFeedCreateData>;
-
-/**
- * The created feed item
- */
-export const zApiFeedCreateResponse = zFeed;
-
-export type zapiFeedCreateResponse = z.infer<typeof zApiFeedCreateResponse>;
-
-export const zApiFeedPatchData = z.object({
-    body: zFeedPatch.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiFeedPatchRequest = z.infer<typeof zApiFeedPatchData>;
-
-/**
- * The updated feed item
- */
-export const zApiFeedPatchResponse = zFeed;
-
-export type zapiFeedPatchResponse = z.infer<typeof zApiFeedPatchResponse>;
-
-export const zApiFeedFetchData = z.object({
-    body: zFeedQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiFeedFetchRequest = z.infer<typeof zApiFeedFetchData>;
-
-/**
- * Return a feed item based on the provided query
- */
-export const zApiFeedFetchResponse = zFeed;
-
-export type zapiFeedFetchResponse = z.infer<typeof zApiFeedFetchResponse>;
-
-export const zApiFeedCollectionData = z.object({
-    body: zFeedQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiFeedCollectionRequest = z.infer<typeof zApiFeedCollectionData>;
-
-/**
- * Access collection of feed items based on provided query
- */
-export const zApiFeedCollectionResponse = z.array(zFeedItem).register(z.globalRegistry, {
-    description: 'Access collection of feed items based on provided query'
-});
-
-export type zapiFeedCollectionResponse = z.infer<typeof zApiFeedCollectionResponse>;
-
-export const zApiFeedCountData = z.object({
-    body: zFeedCountQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiFeedCountRequest = z.infer<typeof zApiFeedCountData>;
-
-/**
- * Return counts based on provided query
- */
-export const zApiFeedCountResponse = zCount;
-
-export type zapiFeedCountResponse = z.infer<typeof zApiFeedCountResponse>;
-
-export const zApiFeedDeleteData = z.object({
-    body: zFeedQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiFeedDeleteRequest = z.infer<typeof zApiFeedDeleteData>;
-
-/**
- * The deleted feed item
- */
-export const zApiFeedDeleteResponse = zFeed;
-
-export type zapiFeedDeleteResponse = z.infer<typeof zApiFeedDeleteResponse>;
-
 export const zApiFeedFavouriteCollectionData = z.object({
     body: zFeedQuery.optional(),
     path: z.never().optional(),
@@ -2258,201 +1214,9 @@ export type zapiFeedGalleryCreateRequest = z.infer<typeof zApiFeedGalleryCreateD
 /**
  * Gallery created or updated
  */
-export const zApiFeedGalleryCreateResponse = zGallery.and(z.unknown().register(z.globalRegistry, {
-    description: 'Gallery data with items'
-}));
+export const zApiFeedGalleryCreateResponse = zGallery;
 
 export type zapiFeedGalleryCreateResponse = z.infer<typeof zApiFeedGalleryCreateResponse>;
-
-export const zApiFlagCollectionData = z.object({
-    body: zFlagQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiFlagCollectionRequest = z.infer<typeof zApiFlagCollectionData>;
-
-/**
- * Access collection of flag items based on provided query
- */
-export const zApiFlagCollectionResponse = z.array(zFlagItem).register(z.globalRegistry, {
-    description: 'Access collection of flag items based on provided query'
-});
-
-export type zapiFlagCollectionResponse = z.infer<typeof zApiFlagCollectionResponse>;
-
-export const zApiFlagCountData = z.object({
-    body: zFlagCountQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiFlagCountRequest = z.infer<typeof zApiFlagCountData>;
-
-/**
- * Return counts based on provided query
- */
-export const zApiFlagCountResponse = zCount;
-
-export type zapiFlagCountResponse = z.infer<typeof zApiFlagCountResponse>;
-
-export const zApiFlagToggleData = z.object({
-    body: zFlagToggle.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiFlagToggleRequest = z.infer<typeof zApiFlagToggleData>;
-
-/**
- * Nothing to say, we're just happy
- */
-export const zApiFlagToggleResponse = zListing;
-
-export type zapiFlagToggleResponse = z.infer<typeof zApiFlagToggleResponse>;
-
-export const zApiIgnoreCollectionData = z.object({
-    body: zIgnoreQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiIgnoreCollectionRequest = z.infer<typeof zApiIgnoreCollectionData>;
-
-/**
- * Access collection of ignore items based on provided query
- */
-export const zApiIgnoreCollectionResponse = z.array(zIgnoreItem).register(z.globalRegistry, {
-    description: 'Access collection of ignore items based on provided query'
-});
-
-export type zapiIgnoreCollectionResponse = z.infer<typeof zApiIgnoreCollectionResponse>;
-
-export const zApiIgnoreCountData = z.object({
-    body: zIgnoreCountQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiIgnoreCountRequest = z.infer<typeof zApiIgnoreCountData>;
-
-/**
- * Return counts based on provided query
- */
-export const zApiIgnoreCountResponse = zCount;
-
-export type zapiIgnoreCountResponse = z.infer<typeof zApiIgnoreCountResponse>;
-
-export const zApiIgnoreToggleData = z.object({
-    body: zIgnoreToggle.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiIgnoreToggleRequest = z.infer<typeof zApiIgnoreToggleData>;
-
-/**
- * Nothing to say, we're just happy
- */
-export const zApiIgnoreToggleResponse = zListing;
-
-export type zapiIgnoreToggleResponse = z.infer<typeof zApiIgnoreToggleResponse>;
-
-export const zApiListingCollectionData = z.object({
-    body: zListingQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiListingCollectionRequest = z.infer<typeof zApiListingCollectionData>;
-
-/**
- * Access collection of listings based on provided query
- */
-export const zApiListingCollectionResponse = z.array(zListing).register(z.globalRegistry, {
-    description: 'Access collection of listings based on provided query'
-});
-
-export type zapiListingCollectionResponse = z.infer<typeof zApiListingCollectionResponse>;
-
-export const zApiListingCountData = z.object({
-    body: zListingCountQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiListingCountRequest = z.infer<typeof zApiListingCountData>;
-
-/**
- * Return counts based on provided query
- */
-export const zApiListingCountResponse = zCount;
-
-export type zapiListingCountResponse = z.infer<typeof zApiListingCountResponse>;
-
-export const zApiListingFetchData = z.object({
-    body: zListingQuery.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiListingFetchRequest = z.infer<typeof zApiListingFetchData>;
-
-/**
- * Return a listing based on the provided query
- */
-export const zApiListingFetchResponse = zListing;
-
-export type zapiListingFetchResponse = z.infer<typeof zApiListingFetchResponse>;
-
-export const zApiListingSellerInfoData = z.object({
-    body: z.never().optional(),
-    path: z.object({
-        listingId: z.string().register(z.globalRegistry, {
-            description: 'ID of the listing'
-        })
-    }),
-    query: z.never().optional()
-});
-
-export type zapiListingSellerInfoRequest = z.infer<typeof zApiListingSellerInfoData>;
-
-/**
- * Seller info
- */
-export const zApiListingSellerInfoResponse = zSellerInfo;
-
-export type zapiListingSellerInfoResponse = z.infer<typeof zApiListingSellerInfoResponse>;
-
-export const zApiListingEventCreateData = z.object({
-    body: zListingEventCreate.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiListingEventCreateRequest = z.infer<typeof zApiListingEventCreateData>;
-
-/**
- * The listing event was created
- */
-export const zApiListingEventCreateResponse = zListingEvent;
-
-export type zapiListingEventCreateResponse = z.infer<typeof zApiListingEventCreateResponse>;
-
-export const zApiThumbCreateData = z.object({
-    body: zThumbCreate.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiThumbCreateRequest = z.infer<typeof zApiThumbCreateData>;
-
-/**
- * The thumb was created and the updated listing is returned
- */
-export const zApiThumbCreateResponse = zListing;
-
-export type zapiThumbCreateResponse = z.infer<typeof zApiThumbCreateResponse>;
 
 export const zApiTransactionCloseData = z.object({
     body: z.never().optional(),

@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { InboxFamilyEnumSchema } from "~/@user/inbox/schema/InboxFamilyEnumSchema";
-import { InboxPriorityEnumSchema } from "~/database/@enum/InboxPriorityEnumSchema";
+import { InboxFamilyEnumSchema } from "~/server/database/@enum/InboxFamilyEnumSchema";
+import { InboxPriorityEnumSchema } from "~/server/database/@enum/InboxPriorityEnumSchema";
 
 export const InboxSchema = z
 	.looseObject({
@@ -15,3 +15,9 @@ export const InboxSchema = z
 	})
 	.strip()
 	.openapi("InboxCreateBase");
+
+export type InboxSchema = typeof InboxSchema;
+
+export namespace InboxSchema {
+	export type Type = z.infer<InboxSchema>;
+}

@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { UserSideEnumSchema } from "~/database/@enum/UserSideEnumSchema";
+import { UserSideEnumSchema } from "~/server/database/@enum/UserSideEnumSchema";
 import { InboxSchema } from "./InboxSchema";
 
 export const TransactionSchema = z
@@ -24,3 +24,9 @@ export const TransactionSchema = z
 	})
 	.strip()
 	.openapi("InboxTransactionCreate");
+
+export type TransactionSchema = typeof TransactionSchema;
+
+export namespace TransactionSchema {
+	export type Type = z.infer<TransactionSchema>;
+}

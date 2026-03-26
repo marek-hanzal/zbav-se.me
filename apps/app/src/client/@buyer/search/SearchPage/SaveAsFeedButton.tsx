@@ -11,11 +11,16 @@ import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { sFeedCreate } from "@zbav-se.me/sdk/api/buyer";
+import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { useState } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
+import { FeedCreateSchema } from "~/server/@buyer/feed/schema/FeedCreateSchema";
+
+const FormSchema = FeedCreateSchema.pick({
+	name: true,
+});
 
 export namespace SaveAsFeedButton {
 	export interface Props extends Button.Props, MarkSuspense.Props {
@@ -50,8 +55,21 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 			"count",
 		],
 	});
-
-	const invalid = !name || name.length < sFeedCreate.properties.name.minLength;
+	const form = useAppForm({
+		defaultValues: {
+			name: feed.name,
+		},
+		validators: {
+			onMount: FormSchema,
+			onSubmit: FormSchema,
+		},
+		async onSubmit({ value }) {
+			return createMutation.mutateAsync({
+				...feed,
+				...value,
+			});
+		},
+	});
 
 	return (
 		<>
@@ -90,68 +108,88 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 					title: "Create new feed (title)",
 				})}
 			>
-				<Container
-					data-ui={"SaveAsFeedButton[Container]"}
-					ui={{
-						layout: "vertical-content-footer",
-						height: "full",
-						width: "full",
-						inner: "default",
+				<form
+					onSubmit={(e) => {
+						e.preventDefault();
+						form.handleSubmit();
 					}}
 				>
 					<Container
 						ui={{
-							layout: "vertical-centered",
+							layout: "vertical-content-footer",
 							height: "full",
+							width: "full",
+							inner: "default",
 						}}
 					>
-						<Status
-							textTitle={translator.text("Feed name (title)")}
-							action={
-								<FormField>
-									{(fieldProps) => (
-										<TextInput
-											value={name}
-											onChange={(e) => {
-												setName(e.target.value);
-											}}
-											placeholder={translator.text("Feed name (placeholder)")}
-											autoFocus
-											minLength={sFeedCreate.properties.name.minLength}
-											{...fieldProps}
-										/>
-									)}
-								</FormField>
-							}
+						<Container
 							ui={{
-								text: "md",
-								inner: "4xl",
+								layout: "vertical-centered",
+								height: "full",
 							}}
 						>
-							<Mx
-								label={translator.text("Feed name (required)")}
+							<Status
+								textTitle={translator.text("Feed name (title)")}
+								action={
+									<form.AppField name={"name"}>
+										{(field) => (
+											<FormField
+												id={field.name}
+												name={field.name}
+												meta={field.state.meta}
+												required
+											>
+												{(props) => (
+													<TextInput
+														value={name}
+														onChange={(e) => {
+															setName(e.target.value);
+														}}
+														placeholder={translator.text(
+															"Feed name (placeholder)",
+														)}
+														autoFocus
+														{...props}
+													/>
+												)}
+											</FormField>
+										)}
+									</form.AppField>
+								}
 								ui={{
-									tone: "neutral",
-									theme: "light",
+									text: "md",
+									inner: "4xl",
 								}}
-							/>
-						</Status>
-					</Container>
+							>
+								<Mx
+									label={translator.text("Feed name (required)")}
+									ui={{
+										tone: "neutral",
+										theme: "light",
+									}}
+								/>
+							</Status>
+						</Container>
 
-					<SaveContainer
-						onCancel={() => setIsOpen(false)}
-						onSave={() => {
-							createMutation.mutate({
-								type: "user",
-								name,
-								locationId: feed.locationId,
-								query: feed.query,
-							});
-						}}
-						loading={createMutation.isPending}
-						disabled={invalid || createMutation.isPending}
-					/>
-				</Container>
+						<form.Subscribe
+							selector={(state) => ({
+								isValid: state.isValid,
+								isSubmitting: state.isSubmitting,
+							})}
+						>
+							{({ isValid, isSubmitting }) => (
+								<SaveContainer
+									onCancel={() => setIsOpen(false)}
+									onSave={() => {
+										form.handleSubmit();
+									}}
+									loading={isSubmitting}
+									disabled={!isValid}
+								/>
+							)}
+						</form.Subscribe>
+					</Container>
+				</form>
 			</BottomSheet>
 		</>
 	);

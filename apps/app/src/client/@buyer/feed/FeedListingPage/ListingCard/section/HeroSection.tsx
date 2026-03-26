@@ -1,18 +1,18 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
-import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/client/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/client/@common/location/ui/LocationBadge";
+import type { ListingSchema } from "~/server/@buyer/listing/schema/ListingSchema";
 import { FavouriteButton } from "../../FavouriteButton";
 import { TransactionButton } from "../../TransactionButton";
 
 export namespace HeroSection {
 	export interface Props extends MarkSuspense.Props {
 		feedId: string;
-		listing: tListing;
+		listing: ListingSchema.Type;
 		onView(view: "gallery"): void;
 	}
 }

@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "run-p dev:*",
 		"dev:nitro": "portless api.zbav-se.me nitro dev --host 0.0.0.0",
-		"dev:mcp": "DANGEROUSLY_OMIT_AUTH=true bunx @modelcontextprotocol/inspector",
+		"no:dev:mcp": "DANGEROUSLY_OMIT_AUTH=true bunx @modelcontextprotocol/inspector",
 		"build": "nitro build",
 		"e2e:build": "nitro build --preset=node_server",
 		"e2e:start": "portless --force api.zbav-se.me node .output/server/index.mjs",

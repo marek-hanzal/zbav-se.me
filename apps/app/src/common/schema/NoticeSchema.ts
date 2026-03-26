@@ -1,0 +1,20 @@
+import { z } from "@hono/zod-openapi";
+import { NoticeTypeEnumSchema } from "./NoticeTypeEnumSchema";
+
+export const NoticeSchema = z
+	.looseObject({
+		message: z.string().openapi({
+			description: "Message",
+		}),
+		type: NoticeTypeEnumSchema,
+	})
+	.strip()
+	.openapi("Notice", {
+		description: "Just a note sent from various reasons, usually when something is fucked up.",
+	});
+
+export type NoticeSchema = typeof NoticeSchema;
+
+export namespace NoticeSchema {
+	export type Type = z.infer<NoticeSchema>;
+}

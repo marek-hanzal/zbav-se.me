@@ -6,12 +6,17 @@ import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
-import { sFeedCreate } from "@zbav-se.me/sdk/api/buyer";
 import { CloseButton } from "@zbav-se.me/ui/button";
-import { type FC, useState } from "react";
+import { useAppForm } from "@zbav-se.me/ui/form";
+import type { FC } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { getFeedDefaultCreate } from "~/client/@common/feed/service/getFeedDefaultCreate";
+import { FeedCreateSchema } from "~/server/@buyer/feed/schema/FeedCreateSchema";
+
+const FormSchema = FeedCreateSchema.pick({
+	name: true,
+});
 
 export namespace CreateSheet {
 	export interface Props extends BottomSheet.PropsEx {
@@ -20,19 +25,27 @@ export namespace CreateSheet {
 }
 
 export const CreateSheet: FC<CreateSheet.Props> = ({ state, ...props }) => {
-	const [name, setName] = useState("");
 	const feedCreateMutation = withFeedQuery.useCreateMutation({
 		onSettled() {
 			state.set(false);
-			setName("");
 		},
 		invalidate: [
 			"collection",
 			"count",
 		],
 	});
-
-	const invalid = !name || name.length < sFeedCreate.properties.name.minLength;
+	const form = useAppForm({
+		defaultValues: {
+			name: "",
+		},
+		validators: {
+			onMount: FormSchema,
+			onSubmit: FormSchema,
+		},
+		async onSubmit({ value: { name } }) {
+			return feedCreateMutation.mutateAsync(getFeedDefaultCreate(name));
+		},
+	});
 
 	return (
 		<BottomSheet
@@ -50,65 +63,92 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ state, ...props }) => {
 			})}
 			{...props}
 		>
-			<Container
-				data-ui={"CreateButton[TextInputContainer]"}
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					inner: "default",
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					form.handleSubmit();
 				}}
 			>
 				<Container
+					data-ui={"CreateButton[TextInputContainer]"}
 					ui={{
-						layout: "vertical-centered",
+						layout: "vertical-content-footer",
 						height: "full",
+						width: "full",
+						inner: "default",
 					}}
 				>
-					<Status
-						textTitle={translator.text("Feed name (title)")}
-						action={
-							<FormField>
-								{(props) => (
-									<TextInput
-										value={name}
-										onChange={(e) => {
-											setName(e.target.value);
-										}}
-										placeholder={translator.text("Feed name (placeholder)")}
-										autoFocus
-										minLength={sFeedCreate.properties.name.minLength}
-										{...props}
-									/>
-								)}
-							</FormField>
-						}
+					<Container
 						ui={{
-							text: "md",
-							inner: "4xl",
+							layout: "vertical-centered",
+							height: "full",
 						}}
 					>
-						<Mx
-							label={translator.text("Feed name (required)")}
+						<Status
+							textTitle={translator.text("Feed name (title)")}
+							action={
+								<form.AppField name={"name"}>
+									{(field) => (
+										<FormField
+											id={field.name}
+											name={field.name}
+											meta={field.state.meta}
+											required
+										>
+											{(props) => (
+												<TextInput
+													value={field.state.value ?? ""}
+													onBlur={field.handleBlur}
+													onChange={(e) =>
+														field.handleChange(e.target.value)
+													}
+													placeholder={translator.text(
+														"Feed name (placeholder)",
+													)}
+													autoFocus
+													{...props}
+												/>
+											)}
+										</FormField>
+									)}
+								</form.AppField>
+							}
 							ui={{
-								tone: "neutral",
-								theme: "light",
+								text: "md",
+								inner: "4xl",
 							}}
-						/>
-					</Status>
-				</Container>
+						>
+							<Mx
+								label={translator.text("Feed name (required)")}
+								ui={{
+									tone: "neutral",
+									theme: "light",
+								}}
+							/>
+						</Status>
+					</Container>
 
-				<SaveContainer
-					onCancel={() => {
-						state.set(false);
-					}}
-					onSave={() => {
-						feedCreateMutation.mutate(getFeedDefaultCreate(name));
-					}}
-					loading={feedCreateMutation.isPending}
-					disabled={invalid || feedCreateMutation.isPending}
-				/>
-			</Container>
+					<form.Subscribe
+						selector={(state) => ({
+							isValid: state.isValid,
+							isSubmitting: state.isSubmitting,
+						})}
+					>
+						{({ isValid, isSubmitting }) => (
+							<SaveContainer
+								onCancel={() => {
+									state.set(false);
+								}}
+								onSave={() => {
+									form.handleSubmit();
+								}}
+								loading={isSubmitting}
+								disabled={!isValid}
+							/>
+						)}
+					</form.Subscribe>
+				</Container>
+			</form>
 		</BottomSheet>
 	);
 };

@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
-import { InboxFilterSchema } from "~/@user/inbox/schema/InboxFilterSchema";
-import { InboxSortSchema } from "~/@user/inbox/schema/InboxSortSchema";
-import { InboxWhereSchema } from "~/@user/inbox/schema/InboxWhereSchema";
-import { CursorSchema } from "~/schema/CursorSchema";
+import { CursorSchema } from "~/common/schema/CursorSchema";
+import { InboxFilterSchema } from "~/server/@user/inbox/schema/InboxFilterSchema";
+import { InboxSortSchema } from "~/server/@user/inbox/schema/InboxSortSchema";
+import { InboxWhereSchema } from "~/server/@user/inbox/schema/InboxWhereSchema";
 
 export const InboxQuerySchema = z
 	.looseObject({

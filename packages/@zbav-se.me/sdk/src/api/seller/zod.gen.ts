@@ -546,6 +546,20 @@ export const zDraftGalleryCreate = z.object({
 export type zDraftGalleryCreate = z.infer<typeof zDraftGalleryCreate>;
 
 /**
+ * Status of the listing
+ */
+export const zListingStatusEnum = z.enum([
+    'live',
+    'sold',
+    'on-hold',
+    'banned'
+]).register(z.globalRegistry, {
+    description: 'Status of the listing'
+});
+
+export type zListingStatusEnum = z.infer<typeof zListingStatusEnum>;
+
+/**
  * Listing data
  */
 export const zListing = z.object({
@@ -561,6 +575,7 @@ export const zListing = z.object({
     age: z.number().nullable(),
     delivery: z.array(zListingDeliveryEnum).nullable(),
     warranty: zListingWarrantyEnum.nullable(),
+    status: zListingStatusEnum,
     restriction: zListingRestrictionEnum,
     locationId: z.string().register(z.globalRegistry, {
         description: 'ID of the location'

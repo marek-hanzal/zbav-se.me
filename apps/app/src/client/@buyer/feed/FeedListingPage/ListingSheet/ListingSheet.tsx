@@ -2,11 +2,11 @@ import { CloseIcon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
-import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, type PropsWithChildren, Suspense, useCallback, useMemo, useState } from "react";
 import { SellerInfo } from "~/client/@buyer/listing/~public/SellerInfo";
 import { GalleryPreview } from "~/client/@common/gallery/ui/GalleryPreview";
+import type { ListingSchema } from "~/server/@buyer/listing/schema/ListingSchema";
 import { ListingCard } from "../ListingCard";
 
 export namespace ListingSheet {
@@ -14,7 +14,7 @@ export namespace ListingSheet {
 
 	export interface Props extends PropsWithChildren, SheetView.PropsEx<View> {
 		feedId: string;
-		listing: tListing;
+		listing: ListingSchema.Type;
 	}
 }
 

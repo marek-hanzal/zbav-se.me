@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { InboxQuerySchema } from "~/@user/inbox/schema/InboxQuerySchema";
+import { InboxQuerySchema } from "~/server/@user/inbox/schema/InboxQuerySchema";
 
 export const InboxPatchSchema = z
 	.looseObject({

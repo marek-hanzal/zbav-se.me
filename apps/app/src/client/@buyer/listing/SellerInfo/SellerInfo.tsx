@@ -4,8 +4,8 @@ import { Group } from "@use-pico/client/ui/group";
 import { Status } from "@use-pico/client/ui/status";
 import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
-import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
+import { withListingSellerInfoQuery } from "~/client/@buyer/listing/withListingSellerInfoQuery";
 import { Header } from "./Header";
 import { Score } from "./Score";
 
@@ -24,7 +24,7 @@ export namespace SellerInfo {
 export const SellerInfo = withFallback(
 	({ _suspense, listingId, ui, ...props }: SellerInfo.Props) => {
 		const { data: sellerInfo } = withListingSellerInfoQuery.useSuspenseQuery({
-			listingId,
+			id: listingId,
 		});
 
 		return (

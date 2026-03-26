@@ -70,5 +70,29 @@ export const InboxItem = withFallback(({ _suspense, inboxId }: InboxItem.Props) 
 			},
 			(item) => <InboxUnfavouriteItem item={item} />,
 		)
+		.with(
+			{
+				type: "flag",
+			},
+			() => "flag - not yet",
+		)
+		.with(
+			{
+				type: "unflag",
+			},
+			() => "unflag - not yet",
+		)
+		.with(
+			{
+				type: "ignore",
+			},
+			() => "ignore - not yet",
+		)
+		.with(
+			{
+				type: "unignore",
+			},
+			() => "unignore - not yet",
+		)
 		.exhaustive();
 }, ListItemPending);

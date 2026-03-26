@@ -4,16 +4,16 @@ import { ChevronRightIcon } from "@use-pico/client/icon";
 import { Button, uiButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionCreateMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { withListingQuery } from "~/client/@buyer/listing/withListingQuery";
+import type { ListingSchema } from "~/server/@buyer/listing/schema/ListingSchema";
 
 export namespace TransactionButton {
 	export interface Props extends Button.Props {
-		listing: tListing;
+		listing: ListingSchema.Type;
 	}
 }
 

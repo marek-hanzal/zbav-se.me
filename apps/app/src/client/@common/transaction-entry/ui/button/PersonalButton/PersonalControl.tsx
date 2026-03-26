@@ -22,17 +22,10 @@ export namespace PersonalControl {
 	export interface Props extends Container.Props {
 		onCancel(): void;
 		onSave(props: PersonalSchema.Type): Promise<any>;
-		loading: boolean;
 	}
 }
 
-export const PersonalControl: FC<PersonalControl.Props> = ({
-	onCancel,
-	onSave,
-	loading,
-	ui,
-	...props
-}) => {
+export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, ui, ...props }) => {
 	const form = useAppForm({
 		defaultValues: {
 			name: "",
@@ -49,40 +42,39 @@ export const PersonalControl: FC<PersonalControl.Props> = ({
 	});
 
 	return (
-		<Container
-			data-ui="PersonalControl[Container]"
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				inner: "default",
-				...ui,
+		<form
+			data-ui="PersonalControl"
+			onSubmit={(e) => {
+				e.preventDefault();
+				form.handleSubmit();
 			}}
-			{...props}
 		>
 			<Container
 				ui={{
-					scroll: "vertical",
+					layout: "vertical-content-footer",
 					height: "full",
+					inner: "default",
+					...ui,
 				}}
+				{...props}
 			>
-				<Status
-					icon={WarningIcon}
-					textTitle={translator.text("Personal - Warning (title)")}
-					textMessage={translator.text("Personal - Warning (message)")}
-					{...uiWarningStatus({
-						className: [
-							"text-left",
-						],
-					})}
-				/>
-
-				<form
-					onSubmit={(e) => {
-						e.preventDefault();
-						e.stopPropagation();
-						form.handleSubmit();
+				<Container
+					ui={{
+						scroll: "vertical",
+						height: "full",
 					}}
 				>
+					<Status
+						icon={WarningIcon}
+						textTitle={translator.text("Personal - Warning (title)")}
+						textMessage={translator.text("Personal - Warning (message)")}
+						{...uiWarningStatus({
+							className: [
+								"text-left",
+							],
+						})}
+					/>
+
 					<Container
 						ui={{
 							layout: "vertical-flex",
@@ -190,17 +182,26 @@ export const PersonalControl: FC<PersonalControl.Props> = ({
 							)}
 						</form.AppField>
 					</Container>
-				</form>
-			</Container>
+				</Container>
 
-			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
-					form.handleSubmit();
-				}}
-				loading={loading}
-				disabled={!form.state.isValid}
-			/>
-		</Container>
+				<form.Subscribe
+					selector={(state) => ({
+						isValid: state.isValid,
+						isSubmitting: state.isSubmitting,
+					})}
+				>
+					{({ isValid, isSubmitting }) => (
+						<SaveContainer
+							onCancel={onCancel}
+							onSave={() => {
+								form.handleSubmit();
+							}}
+							loading={isSubmitting}
+							disabled={!isValid}
+						/>
+					)}
+				</form.Subscribe>
+			</Container>
+		</form>
 	);
 };

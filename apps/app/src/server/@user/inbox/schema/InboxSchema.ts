@@ -1,5 +1,5 @@
 import type { z } from "@hono/zod-openapi";
-import { InboxTableSchema } from "~/database/@table/InboxTableSchema";
+import { InboxTableSchema } from "~/server/database/@table/InboxTableSchema";
 
 export const InboxSchema = InboxTableSchema.openapi("Inbox", {
 	description: "Inbox item",

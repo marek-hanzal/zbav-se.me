@@ -1069,6 +1069,9 @@ export const sListing = {
                 }
             ]
         },
+        status: {
+            $ref: '#/components/schemas/ListingStatusEnum'
+        },
         restriction: {
             $ref: '#/components/schemas/ListingRestrictionEnum'
         },
@@ -1157,6 +1160,7 @@ export const sListing = {
         'age',
         'delivery',
         'warranty',
+        'status',
         'restriction',
         'locationId',
         'categoryId',
@@ -1172,6 +1176,16 @@ export const sListing = {
         'location',
         'category',
         'gallery'
+    ]
+} as const;
+
+export const sListingStatusEnum = {
+    type: 'string',
+    enum: [
+        'live',
+        'sold',
+        'on-hold',
+        'banned'
     ]
 } as const;
 

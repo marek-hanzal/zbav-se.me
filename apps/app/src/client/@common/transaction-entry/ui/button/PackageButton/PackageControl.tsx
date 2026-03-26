@@ -19,23 +19,17 @@ export namespace PackageControl {
 	export interface Props extends Container.Props {
 		onCancel(): void;
 		onSave(props: PackageSchema.Type): Promise<any>;
-		loading: boolean;
 	}
 }
 
-export const PackageControl: FC<PackageControl.Props> = ({
-	onCancel,
-	onSave,
-	loading,
-	ui,
-	...props
-}) => {
+export const PackageControl: FC<PackageControl.Props> = ({ onCancel, onSave, ui, ...props }) => {
 	const form = useAppForm({
 		defaultValues: {
 			link: "",
 			number: null as string | null,
 		} satisfies PackageSchema.Type,
 		validators: {
+			onMount: PackageSchema,
 			onSubmit: PackageSchema,
 		},
 		async onSubmit({ value }) {
@@ -44,28 +38,28 @@ export const PackageControl: FC<PackageControl.Props> = ({
 	});
 
 	return (
-		<Container
-			data-ui="PackageControl[Container]"
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				width: "full",
-				...ui,
+		<form
+			onSubmit={(e) => {
+				e.preventDefault();
+				form.handleSubmit();
 			}}
-			{...props}
 		>
 			<Container
+				data-ui="PackageControl[Container]"
 				ui={{
-					layout: "vertical-flex",
-					height: "auto",
+					layout: "vertical-content-footer",
+					height: "full",
 					width: "full",
-					gap: "lg",
+					...ui,
 				}}
+				{...props}
 			>
-				<form
-					onSubmit={(e) => {
-						e.preventDefault();
-						form.handleSubmit();
+				<Container
+					ui={{
+						layout: "vertical-flex",
+						height: "auto",
+						width: "full",
+						gap: "lg",
 					}}
 				>
 					<Container
@@ -87,13 +81,13 @@ export const PackageControl: FC<PackageControl.Props> = ({
 								>
 									{(props) => (
 										<field.TextInput
-											type="url"
-											placeholder={translator.text(
-												"Package - Link (placeholder)",
-											)}
 											value={field.state.value ?? ""}
 											onBlur={field.handleBlur}
 											onChange={(e) => field.handleChange(e.target.value)}
+											type={"url"}
+											placeholder={translator.text(
+												"Package - Link (placeholder)",
+											)}
 											{...props}
 										/>
 									)}
@@ -127,17 +121,26 @@ export const PackageControl: FC<PackageControl.Props> = ({
 							)}
 						</form.AppField>
 					</Container>
-				</form>
-			</Container>
+				</Container>
 
-			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
-					form.handleSubmit();
-				}}
-				loading={loading}
-				disabled={!form.state.isValid}
-			/>
-		</Container>
+				<form.Subscribe
+					selector={(state) => ({
+						isValid: state.isValid,
+						isSubmitting: state.isSubmitting,
+					})}
+				>
+					{({ isValid, isSubmitting }) => (
+						<SaveContainer
+							onCancel={onCancel}
+							onSave={() => {
+								form.handleSubmit();
+							}}
+							loading={isSubmitting}
+							disabled={!isValid}
+						/>
+					)}
+				</form.Subscribe>
+			</Container>
+		</form>
 	);
 };

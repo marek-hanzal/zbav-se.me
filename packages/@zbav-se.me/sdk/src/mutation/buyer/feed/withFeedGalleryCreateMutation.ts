@@ -6,7 +6,6 @@ import type {
 	tApiFeedGalleryCreateResponse,
 	tFeedGalleryCreate,
 } from "../../../api/buyer/types.gen";
-import { withFeedQuery } from "../../../query/buyer/feed/withFeedQuery";
 
 export const withFeedGalleryCreateMutation = withMutation<
 	tFeedGalleryCreate,
@@ -30,10 +29,10 @@ export const withFeedGalleryCreateMutation = withMutation<
 	invalidate: [
 		{
 			async invalidate(queryClient) {
-				await withFeedQuery.invalidator(queryClient, [
-					"fetch",
-					"collection",
-				]);
+				// await withFeedQuery.invalidator(queryClient, [
+				// 	"fetch",
+				// 	"collection",
+				// ]);
 			},
 		},
 	],

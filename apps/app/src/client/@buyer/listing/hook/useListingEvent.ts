@@ -1,7 +1,7 @@
 import { useVisible } from "@use-pico/client/hook";
-import type { tListingEventEnum } from "@zbav-se.me/sdk/api/buyer";
-import { withListingEventCreateMutation } from "@zbav-se.me/sdk/mutation/buyer/listing-event";
 import { useCallback, useEffect, useRef } from "react";
+import { withListingEventCreateMutation } from "~/client/@buyer/listing-event/withListingEventCreateMutation";
+import type { ListingEventEnumSchema } from "~/server/database/@enum/ListingEventEnumSchema";
 
 export namespace useListingEvent {
 	export interface Props {
@@ -10,7 +10,7 @@ export namespace useListingEvent {
 		 */
 		enabled: boolean;
 		listingId: string;
-		event: tListingEventEnum;
+		event: ListingEventEnumSchema.Type;
 		timeoutMs: number;
 	}
 }
@@ -38,7 +38,7 @@ export const useListingEvent = ({
 	});
 
 	const create = useCallback(
-		(listingId: string, event: tListingEventEnum) => {
+		(listingId: string, event: ListingEventEnumSchema.Type) => {
 			listingEventCreateMutation.mutate({
 				listingId,
 				event,

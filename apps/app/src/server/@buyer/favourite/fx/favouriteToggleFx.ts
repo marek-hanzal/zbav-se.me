@@ -5,6 +5,7 @@ import type { FavouriteToggleSchema } from "~/server/@buyer/favourite/schema/Fav
 import { listingCheckIfOwnFx } from "~/server/@buyer/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/server/@buyer/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/server/@buyer/listing-event/fx/listingEventCreateFx";
+import { inboxCreateFx } from "~/server/@user/inbox/fx/inboxCreateFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 export namespace favouriteToggleFx {

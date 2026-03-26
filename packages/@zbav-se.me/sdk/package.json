@@ -10,7 +10,7 @@
 	},
 	"dependencies": {
 		"@tanstack/react-query": "5.95.2",
-		"@tanstack/react-start": "1.167.6",
+		"@tanstack/react-start": "1.167.8",
 		"@use-pico/client": "workspace:*",
 		"@use-pico/common": "workspace:*",
 		"axios": "1.13.6",
@@ -23,7 +23,7 @@
 		"@use-pico/tsconfig": "5.0.0",
 		"knip": "6.0.5",
 		"typescript": "beta",
-		"vite": "8.0.2"
+		"vite": "8.0.3"
 	},
 	"exports": {
 		"./api/*": {

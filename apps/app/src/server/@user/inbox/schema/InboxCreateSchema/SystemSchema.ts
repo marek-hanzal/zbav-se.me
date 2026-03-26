@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { UserSideEnumSchema } from "~/database/@enum/UserSideEnumSchema";
+import { UserSideEnumSchema } from "~/server/database/@enum/UserSideEnumSchema";
 import { InboxSchema } from "./InboxSchema";
 
 export const SystemSchema = z
@@ -24,3 +24,9 @@ export const SystemSchema = z
 	})
 	.strip()
 	.openapi("InboxSystemCreate");
+
+export type SystemSchema = typeof SystemSchema;
+
+export namespace SystemSchema {
+	export type Type = z.infer<SystemSchema>;
+}

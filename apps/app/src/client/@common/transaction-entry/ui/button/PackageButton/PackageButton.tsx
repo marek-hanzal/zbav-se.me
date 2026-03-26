@@ -64,14 +64,13 @@ export const PackageButton: FC<PackageButton.Props> = ({
 					onCancel={() => {
 						setIsOpen(false);
 					}}
-					onSave={(payload) => {
+					onSave={async (payload) => {
 						return mutation.mutateAsync({
 							transactionId,
 							kind: "package",
 							payload,
 						});
 					}}
-					loading={mutation.isPending}
 					ui={{
 						inner: "default",
 					}}

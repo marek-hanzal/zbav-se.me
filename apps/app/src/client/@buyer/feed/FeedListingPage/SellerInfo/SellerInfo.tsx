@@ -3,7 +3,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
-import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/buyer/listing";
+import { withListingSellerInfoQuery } from "~/client/@buyer/listing/withListingSellerInfoQuery";
 import { RatingIcon } from "~/client/@common/score/ui/RatingIcon";
 
 export namespace SellerInfo {
@@ -16,7 +16,7 @@ export namespace SellerInfo {
 export const SellerInfo = withFallback(
 	({ _suspense, listingId, onView }: SellerInfo.Props) => {
 		const { data: sellerInfo } = withListingSellerInfoQuery.useSuspenseQuery({
-			listingId,
+			id: listingId,
 		});
 
 		return (

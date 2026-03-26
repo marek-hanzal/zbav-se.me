@@ -1,4 +1,5 @@
-import { type tFeedCreate, tFeedTypeEnum } from "@zbav-se.me/sdk/api/buyer";
+import { tFeedTypeEnum } from "@zbav-se.me/sdk/api/buyer";
+import type { FeedCreateSchema } from "~/server/@buyer/feed/schema/FeedCreateSchema";
 
 export const getFeedDefaultCreate = (name: string, type: tFeedTypeEnum = tFeedTypeEnum.user) =>
 	({
@@ -27,4 +28,4 @@ export const getFeedDefaultCreate = (name: string, type: tFeedTypeEnum = tFeedTy
 				},
 			],
 		},
-	}) satisfies tFeedCreate;
+	}) satisfies FeedCreateSchema.Type;

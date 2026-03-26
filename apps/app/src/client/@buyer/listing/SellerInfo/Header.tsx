@@ -4,12 +4,12 @@ import { Group } from "@use-pico/client/ui/group";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { translator } from "@use-pico/common/translator";
-import type { tSellerInfo } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
+import type { SellerInfoSchema } from "~/server/@buyer/listing/schema/SellerInfoSchema";
 
 export namespace Header {
 	export interface Props {
-		sellerInfo: tSellerInfo;
+		sellerInfo: SellerInfoSchema.Type;
 	}
 }
 

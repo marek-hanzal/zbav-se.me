@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
-import { OrderEnumSchema } from "~/schema/OrderEnumSchema";
+import { OrderEnumSchema } from "~/common/schema/OrderEnumSchema";
 
 export const InboxSortSchema = z
-	.object({
+	.looseObject({
 		field: z
 			.enum([
 				"timestamp",
@@ -14,6 +14,7 @@ export const InboxSortSchema = z
 			}),
 		order: OrderEnumSchema,
 	})
+	.strip()
 	.openapi("InboxSort", {
 		description: "Sort object for inbox collection",
 	});

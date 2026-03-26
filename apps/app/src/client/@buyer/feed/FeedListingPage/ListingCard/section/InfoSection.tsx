@@ -5,14 +5,14 @@ import { Markdown } from "@use-pico/client/ui/markdown";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
-import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { CategoryInline } from "~/client/@session/category/ui/CategoryInline";
+import type { ListingSchema } from "~/server/@buyer/listing/schema/ListingSchema";
 import { SellerInfo } from "../../SellerInfo";
 
 export namespace InfoSection {
 	export interface Props extends MarkSuspense.Props {
-		listing: tListing;
+		listing: ListingSchema.Type;
 		onView(view: "seller-info"): void;
 	}
 }

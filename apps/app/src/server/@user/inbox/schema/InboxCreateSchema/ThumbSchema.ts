@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ThumbEnumSchema } from "~/database/@enum/ThumbEnumSchema";
+import { ThumbEnumSchema } from "~/server/database/@enum/ThumbEnumSchema";
 import { InboxSchema } from "./InboxSchema";
 
 export const ThumbSchema = z
@@ -16,3 +16,9 @@ export const ThumbSchema = z
 	})
 	.strip()
 	.openapi("InboxThumbCreate");
+
+export type ThumbSchema = typeof ThumbSchema;
+
+export namespace ThumbSchema {
+	export type Type = z.infer<ThumbSchema>;
+}

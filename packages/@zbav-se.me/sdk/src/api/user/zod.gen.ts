@@ -245,7 +245,11 @@ export const zInboxTypeEnum = z.enum([
     'unknown',
     'thumb',
     'favourite',
-    'unfavourite'
+    'unfavourite',
+    'flag',
+    'unflag',
+    'ignore',
+    'unignore'
 ]).register(z.globalRegistry, {
     description: 'Inbox type'
 });
@@ -640,6 +644,110 @@ export const zInboxUnfavourite = z.object({
 
 export type zInboxUnfavourite = z.infer<typeof zInboxUnfavourite>;
 
+export const zInboxFlag = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Inbox identifier'
+    }),
+    userId: z.string().register(z.globalRegistry, {
+        description: 'Recipient user identifier'
+    }),
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
+    }),
+    timestamp: z.string().register(z.globalRegistry, {
+        description: 'Inbox event timestamp'
+    }),
+    family: z.enum(['reaction']),
+    priority: zInboxPriorityEnum,
+    archivedAt: z.iso.datetime().nullable(),
+    type: z.enum(['flag']),
+    payload: z.object({
+        listingId: z.string().register(z.globalRegistry, {
+            description: 'Related listing identifier'
+        })
+    })
+});
+
+export type zInboxFlag = z.infer<typeof zInboxFlag>;
+
+export const zInboxUnflag = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Inbox identifier'
+    }),
+    userId: z.string().register(z.globalRegistry, {
+        description: 'Recipient user identifier'
+    }),
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
+    }),
+    timestamp: z.string().register(z.globalRegistry, {
+        description: 'Inbox event timestamp'
+    }),
+    family: z.enum(['reaction']),
+    priority: zInboxPriorityEnum,
+    archivedAt: z.iso.datetime().nullable(),
+    type: z.enum(['unflag']),
+    payload: z.object({
+        listingId: z.string().register(z.globalRegistry, {
+            description: 'Related listing identifier'
+        })
+    })
+});
+
+export type zInboxUnflag = z.infer<typeof zInboxUnflag>;
+
+export const zInboxIgnore = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Inbox identifier'
+    }),
+    userId: z.string().register(z.globalRegistry, {
+        description: 'Recipient user identifier'
+    }),
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
+    }),
+    timestamp: z.string().register(z.globalRegistry, {
+        description: 'Inbox event timestamp'
+    }),
+    family: z.enum(['reaction']),
+    priority: zInboxPriorityEnum,
+    archivedAt: z.iso.datetime().nullable(),
+    type: z.enum(['ignore']),
+    payload: z.object({
+        listingId: z.string().register(z.globalRegistry, {
+            description: 'Related listing identifier'
+        })
+    })
+});
+
+export type zInboxIgnore = z.infer<typeof zInboxIgnore>;
+
+export const zInboxUnignore = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Inbox identifier'
+    }),
+    userId: z.string().register(z.globalRegistry, {
+        description: 'Recipient user identifier'
+    }),
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
+    }),
+    timestamp: z.string().register(z.globalRegistry, {
+        description: 'Inbox event timestamp'
+    }),
+    family: z.enum(['reaction']),
+    priority: zInboxPriorityEnum,
+    archivedAt: z.iso.datetime().nullable(),
+    type: z.enum(['unignore']),
+    payload: z.object({
+        listingId: z.string().register(z.globalRegistry, {
+            description: 'Related listing identifier'
+        })
+    })
+});
+
+export type zInboxUnignore = z.infer<typeof zInboxUnignore>;
+
 /**
  * Inbox item
  */
@@ -667,7 +775,19 @@ export const zInbox = z.union([
     }).and(zInboxFavourite),
     z.object({
         type: z.literal('unfavourite')
-    }).and(zInboxUnfavourite)
+    }).and(zInboxUnfavourite),
+    z.object({
+        type: z.literal('flag')
+    }).and(zInboxFlag),
+    z.object({
+        type: z.literal('unflag')
+    }).and(zInboxUnflag),
+    z.object({
+        type: z.literal('ignore')
+    }).and(zInboxIgnore),
+    z.object({
+        type: z.literal('unignore')
+    }).and(zInboxUnignore)
 ]);
 
 export type zInbox = z.infer<typeof zInbox>;

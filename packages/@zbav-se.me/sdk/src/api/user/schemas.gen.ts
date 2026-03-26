@@ -337,7 +337,11 @@ export const sInboxTypeEnum = {
         'unknown',
         'thumb',
         'favourite',
-        'unfavourite'
+        'unfavourite',
+        'flag',
+        'unflag',
+        'ignore',
+        'unignore'
     ]
 } as const;
 
@@ -455,6 +459,18 @@ export const sInbox = {
         },
         {
             $ref: '#/components/schemas/InboxUnfavourite'
+        },
+        {
+            $ref: '#/components/schemas/InboxFlag'
+        },
+        {
+            $ref: '#/components/schemas/InboxUnflag'
+        },
+        {
+            $ref: '#/components/schemas/InboxIgnore'
+        },
+        {
+            $ref: '#/components/schemas/InboxUnignore'
         }
     ],
     discriminator: {
@@ -467,7 +483,11 @@ export const sInbox = {
             unknown: '#/components/schemas/InboxUnknown',
             thumb: '#/components/schemas/InboxThumb',
             favourite: '#/components/schemas/InboxFavourite',
-            unfavourite: '#/components/schemas/InboxUnfavourite'
+            unfavourite: '#/components/schemas/InboxUnfavourite',
+            flag: '#/components/schemas/InboxFlag',
+            unflag: '#/components/schemas/InboxUnflag',
+            ignore: '#/components/schemas/InboxIgnore',
+            unignore: '#/components/schemas/InboxUnignore'
         }
     }
 } as const;
@@ -1031,6 +1051,270 @@ export const sInboxUnfavourite = {
             type: 'string',
             enum: [
                 'unfavourite'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                listingId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'listingId'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'id',
+        'userId',
+        'reference',
+        'timestamp',
+        'family',
+        'priority',
+        'archivedAt',
+        'type',
+        'payload'
+    ]
+} as const;
+
+export const sInboxFlag = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        reference: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        timestamp: {
+            type: 'string'
+        },
+        family: {
+            type: 'string',
+            enum: [
+                'reaction'
+            ]
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAt: {
+            type: [
+                'string',
+                'null'
+            ],
+            format: 'date-time'
+        },
+        type: {
+            type: 'string',
+            enum: [
+                'flag'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                listingId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'listingId'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'id',
+        'userId',
+        'reference',
+        'timestamp',
+        'family',
+        'priority',
+        'archivedAt',
+        'type',
+        'payload'
+    ]
+} as const;
+
+export const sInboxUnflag = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        reference: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        timestamp: {
+            type: 'string'
+        },
+        family: {
+            type: 'string',
+            enum: [
+                'reaction'
+            ]
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAt: {
+            type: [
+                'string',
+                'null'
+            ],
+            format: 'date-time'
+        },
+        type: {
+            type: 'string',
+            enum: [
+                'unflag'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                listingId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'listingId'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'id',
+        'userId',
+        'reference',
+        'timestamp',
+        'family',
+        'priority',
+        'archivedAt',
+        'type',
+        'payload'
+    ]
+} as const;
+
+export const sInboxIgnore = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        reference: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        timestamp: {
+            type: 'string'
+        },
+        family: {
+            type: 'string',
+            enum: [
+                'reaction'
+            ]
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAt: {
+            type: [
+                'string',
+                'null'
+            ],
+            format: 'date-time'
+        },
+        type: {
+            type: 'string',
+            enum: [
+                'ignore'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                listingId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'listingId'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'id',
+        'userId',
+        'reference',
+        'timestamp',
+        'family',
+        'priority',
+        'archivedAt',
+        'type',
+        'payload'
+    ]
+} as const;
+
+export const sInboxUnignore = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        reference: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        timestamp: {
+            type: 'string'
+        },
+        family: {
+            type: 'string',
+            enum: [
+                'reaction'
+            ]
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAt: {
+            type: [
+                'string',
+                'null'
+            ],
+            format: 'date-time'
+        },
+        type: {
+            type: 'string',
+            enum: [
+                'unignore'
             ]
         },
         payload: {
