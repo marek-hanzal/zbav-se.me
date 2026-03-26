@@ -1,7 +1,7 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { LabelValue, SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
-import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
+import { withLocationFetchQuery } from "~/client/@session/location/withLocationFetchQuery";
 
 export namespace LocationValue {
 	export interface Props extends LabelValue.PropsEx, MarkSuspense.Props {

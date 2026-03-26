@@ -6,7 +6,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tTransactionEntryPersonal } from "@zbav-se.me/sdk/api/user";
-import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
+import { withLocationFetchQuery } from "~/client/@session/location/withLocationFetchQuery";
 import { TypeContainer } from "../TypeContainer";
 
 export namespace Personal {

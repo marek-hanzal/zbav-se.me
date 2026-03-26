@@ -3,9 +3,9 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import { withFallback } from "@use-pico/client/utils";
-import type { tLocation } from "@zbav-se.me/sdk/api/session";
-import { withLocationAutocompleteQuery } from "@zbav-se.me/sdk/query/session";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
+import { withLocationAutocompleteQuery } from "~/client/@session/location/withLocationAutocompleteQuery";
+import type { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
 import { Empty } from "./Data/Empty";
 import { Default } from "./Default";
 
@@ -16,7 +16,7 @@ export namespace ListContainer {
 		search: Fulltext.Value;
 		value: string | undefined | null;
 		onChange(value: string): void;
-		onLocation?(value: tLocation): void;
+		onLocation?(value: LocationSchema.Type): void;
 	}
 }
 
