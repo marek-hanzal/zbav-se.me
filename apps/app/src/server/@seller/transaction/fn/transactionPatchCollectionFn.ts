@@ -1,0 +1,49 @@
+import { createServerFn } from "@tanstack/react-start";
+import { zodGuardFx } from "@use-pico/common/schema";
+import { Effect } from "effect";
+import { z } from "zod";
+import { transactionPatchCollectionFx } from "~/server/@seller/transaction/fx/transactionPatchCollectionFx";
+import { TransactionPatchCollectionSchema } from "~/server/@seller/transaction/schema/TransactionPatchCollectionSchema";
+import { TransactionSchema } from "~/server/@seller/transaction/schema/TransactionSchema";
+import { withTransactionContextFx } from "~/server/@user/transaction/context/withTransactionContextFx";
+import { withDateFx } from "~/server/database/fx/withDateFx";
+import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { withCatchFx } from "~/server/effect/withCatchFx";
+import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
+import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export const transactionPatchCollectionFn = createServerFn({
+	method: "POST",
+})
+	.middleware([
+		withDatabaseMiddleware,
+		withUserMiddleware,
+	])
+	.inputValidator(TransactionPatchCollectionSchema)
+	.handler(async ({ data, context: { database, user } }) => {
+		return zodGuardFx({
+			schema: z.array(TransactionSchema),
+			dataFx: transactionPatchCollectionFx({
+				...data,
+				scope: {
+					userId: user.id,
+				},
+			}),
+		}).pipe(
+			withKyselyFx(database),
+			withDateFx,
+			withTransactionContextFx({
+				expires: 3,
+				extend: 1,
+			}),
+			withCatchFx({
+				ZodErrorFx() {
+					throw new Error("ZodError");
+				},
+				RuntimeErrorFx() {
+					throw new Error("RuntimeError");
+				},
+			}),
+			Effect.runPromise,
+		);
+	});

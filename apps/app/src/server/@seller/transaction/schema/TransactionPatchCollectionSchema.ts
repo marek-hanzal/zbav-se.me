@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionQuerySchema } from "~/server/@buyer/transaction/schema/TransactionQuerySchema";
+import { TransactionQuerySchema } from "~/server/@seller/transaction/schema/TransactionQuerySchema";
 import { TransactionStatusEnumSchema } from "~/server/database/@enum/TransactionStatusEnumSchema";
 
 export const TransactionPatchCollectionSchema = z

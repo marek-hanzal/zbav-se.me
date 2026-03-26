@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionQuerySchema } from "~/server/@buyer/transaction/schema/TransactionQuerySchema";
+import { TransactionQuerySchema } from "~/server/@seller/transaction/schema/TransactionQuerySchema";
 import { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
 
 export const TransactionPatchSchema = z

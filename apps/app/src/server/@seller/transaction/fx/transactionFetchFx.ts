@@ -1,9 +1,9 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import type { TransactionFilterSchema } from "~/server/@buyer/transaction/schema/TransactionFilterSchema";
-import type { TransactionQuerySchema } from "~/server/@buyer/transaction/schema/TransactionQuerySchema";
 import { withTransactionQueryBuilderFx } from "~/server/@seller/transaction/db/withTransactionQueryBuilderFx";
 import { withTransactionSelectFx } from "~/server/@seller/transaction/db/withTransactionSelectFx";
+import type { TransactionFilterSchema } from "~/server/@seller/transaction/schema/TransactionFilterSchema";
+import type { TransactionQuerySchema } from "~/server/@seller/transaction/schema/TransactionQuerySchema";
 
 export namespace transactionFetchFx {
 	export interface Props extends TransactionQuerySchema.Type {
