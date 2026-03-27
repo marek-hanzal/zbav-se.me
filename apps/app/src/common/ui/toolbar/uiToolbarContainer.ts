@@ -1,5 +1,5 @@
 import type { uiContainer } from "@use-pico/client/ui/container";
-import { ui as coolUi } from "@use-pico/cls";
+import { ui as coolUi } from "@/lib/cls";
 
 export namespace uiToolbarContainer {
 	export interface Ui extends uiContainer.Ui {

@@ -1,5 +1,5 @@
 import { uiStatus } from "@use-pico/client/ui/status";
-import type { ui as coolUi } from "@use-pico/cls";
+import type { ui as coolUi } from "@/lib/cls";
 
 export namespace uiWarningStatus {
 	export interface Ui extends uiStatus.Ui {

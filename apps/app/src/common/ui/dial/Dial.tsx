@@ -1,7 +1,7 @@
 import { Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
-import { tvc } from "@use-pico/cls";
 import type { FC } from "react";
+import { tvc } from "../../../../@lib/cls";
 import { BackspaceIcon } from "../icon/BackspaceIcon";
 import { ClearIcon } from "../icon/ClearIcon";
 import { Item } from "./Item";

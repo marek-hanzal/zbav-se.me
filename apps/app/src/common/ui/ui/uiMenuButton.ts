@@ -1,5 +1,5 @@
 import { uiButton } from "@use-pico/client/ui/button";
-import type { ui as coolUi } from "@use-pico/cls";
+import type { ui as coolUi } from "@/lib/cls";
 
 export namespace uiMenuButton {
 	export interface Ui extends uiButton.Ui {
