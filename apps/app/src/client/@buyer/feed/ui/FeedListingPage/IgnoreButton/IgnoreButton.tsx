@@ -3,7 +3,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
-import { withIgnoreToggleMutation } from "~/client/@buyer/ignore/withIgnoreToggleMutation";
+import { withIgnoreToggleMutation } from "~/client/@buyer/ignore/mutation/withIgnoreToggleMutation";
 import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 
 export namespace IgnoreButton {

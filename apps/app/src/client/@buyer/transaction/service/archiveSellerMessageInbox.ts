@@ -1,6 +1,6 @@
 import type { QueryClient } from "@tanstack/react-query";
-import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
-import { withTransactionQuery } from "../withTransactionQuery";
+import { withInboxQuery } from "~/client/@user/inbox/query/withInboxQuery";
+import { withTransactionQuery } from "../query/withTransactionQuery";
 
 export namespace archiveSellerMessageInbox {
 	export interface Props {

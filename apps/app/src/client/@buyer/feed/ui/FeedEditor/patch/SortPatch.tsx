@@ -1,6 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import { type FC, useState } from "react";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 import type { ListingSortSchema } from "~/server/@buyer/listing/schema/ListingSortSchema";

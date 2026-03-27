@@ -5,7 +5,7 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { withFallback } from "@use-pico/client/utils";
 import { type Ref, useMemo, useState } from "react";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 import { FeedEditorSheet } from "../../FeedEditor/FeedEditorSheet";
 import { ListingList } from "../ListingList";

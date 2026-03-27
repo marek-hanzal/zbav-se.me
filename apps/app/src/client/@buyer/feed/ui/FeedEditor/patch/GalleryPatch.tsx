@@ -1,8 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Container } from "@use-pico/client/ui/container";
 import { type FC, useState } from "react";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
-import { withFeedGalleryCreateMutation } from "~/client/@buyer/feed-gallery/withFeedGalleryCreateMutation";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
+import { withFeedGalleryCreateMutation } from "~/client/@buyer/feed-gallery/mutation/withFeedGalleryCreateMutation";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/client/@common/gallery/ui/GalleryUpload";
 import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";

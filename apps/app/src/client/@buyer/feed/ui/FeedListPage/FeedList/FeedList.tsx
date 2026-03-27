@@ -3,7 +3,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { withFallback } from "@use-pico/client/utils";
 import { Suspense, useMemo } from "react";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { CreateButton } from "./CreateButton";
 import { Empty } from "./Empty";
 import { Item } from "./Item";

@@ -2,7 +2,7 @@ import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { AgeSelection } from "~/client/@common/age/ui/AgeSelection";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";

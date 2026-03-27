@@ -1,14 +1,14 @@
 import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { type FC, useEffect } from "react";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { withListingQuery as withBuyerListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
-import { withTransactionQuery as withBuyerTransactionQuery } from "~/client/@buyer/transaction/withTransactionQuery";
+import { withTransactionQuery as withBuyerTransactionQuery } from "~/client/@buyer/transaction/query/withTransactionQuery";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
 import { withListingQuery as withSellerListingQuery } from "~/client/@seller/listing/query/withListingQuery";
 import { withTransactionListingQuery } from "~/client/@seller/transaction-listing/query/withTransactionListingQuery";
 import { withCategoryQuery } from "~/client/@session/category/withCategoryQuery";
-import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import { withInboxQuery } from "~/client/@user/inbox/query/withInboxQuery";
 
 export namespace WarmupCache {
 	export interface Props extends MarkSuspense.Props {

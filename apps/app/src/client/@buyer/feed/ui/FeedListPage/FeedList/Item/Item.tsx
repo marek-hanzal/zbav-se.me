@@ -10,7 +10,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
 import { Suspense, useState } from "react";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import { ListingCount } from "~/client/@common/listing/ui/ListingCount";
 import { FeedEditorSheet } from "../../../FeedEditor/FeedEditorSheet";

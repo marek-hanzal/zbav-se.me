@@ -5,8 +5,8 @@ import { FlagIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
 import type { TransactionSchema } from "~/server/@buyer/transaction/schema/TransactionSchema";
+import { withTransactionDisputeMutation } from "../../mutation/withTransactionDisputeMutation";
 import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";
-import { withTransactionDisputeMutation } from "../../withTransactionDisputeMutation";
 
 export namespace DisputeButton {
 	export interface Props extends ConfirmButton.Props {

@@ -1,7 +1,7 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { transactionEntryCreateFn } from "~/server/@user/transaction-entry/fn/transactionEntryCreateFn";
 import type { TransactionEntrySchema } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema";
-import { withTransactionEntryQuery } from "./withTransactionEntryQuery";
+import { withTransactionEntryQuery } from "../query/withTransactionEntryQuery";
 
 export namespace withTransactionEntryGalleryCreateMutation {
 	export interface Props {

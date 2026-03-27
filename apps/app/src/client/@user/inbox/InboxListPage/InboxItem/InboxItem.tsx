@@ -2,7 +2,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { withFallback } from "@use-pico/client/utils";
 import { match } from "ts-pattern";
 import { ListItemPending } from "~/client/@common/list-item/ListItemPending";
-import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import { withInboxQuery } from "~/client/@user/inbox/query/withInboxQuery";
 import { InboxBuyerMessageItem } from "../payload/InboxBuyerMessageItem";
 import { InboxFavouriteItem } from "../payload/InboxFavouriteItem";
 import { InboxSellerMessageItem } from "../payload/InboxSellerMessageItem";

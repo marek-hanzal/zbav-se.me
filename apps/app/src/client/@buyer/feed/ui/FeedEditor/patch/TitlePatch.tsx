@@ -5,7 +5,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { translator } from "@use-pico/common/translator";
 import { type FC, useState } from "react";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 

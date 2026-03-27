@@ -7,7 +7,7 @@ import type { FC } from "react";
 import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
-import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import { withInboxQuery } from "~/client/@user/inbox/query/withInboxQuery";
 import type { FavouriteSchema } from "~/server/database/@table/InboxTableSchema/FavouriteSchema";
 
 export namespace InboxFavouriteItem {

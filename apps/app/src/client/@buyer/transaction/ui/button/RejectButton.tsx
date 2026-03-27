@@ -5,8 +5,8 @@ import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
 import type { TransactionSchema } from "~/server/@buyer/transaction/schema/TransactionSchema";
+import { withTransactionRejectMutation } from "../../mutation/withTransactionRejectMutation";
 import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";
-import { withTransactionRejectMutation } from "../../withTransactionRejectMutation";
 
 export namespace RejectButton {
 	export interface Props extends Partial<ConfirmButton.Props> {

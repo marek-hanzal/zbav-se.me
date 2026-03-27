@@ -1,10 +1,10 @@
 import { withMutation } from "@use-pico/client/mutation";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { transactionDisputeFn } from "~/server/@buyer/transaction/fn/transactionDisputeFn";
+import { transactionRejectFn } from "~/server/@buyer/transaction/fn/transactionRejectFn";
 import type { TransactionSchema } from "~/server/@buyer/transaction/schema/TransactionSchema";
-import { withTransactionQuery } from "./withTransactionQuery";
+import { withTransactionQuery } from "../query/withTransactionQuery";
 
-export const withTransactionDisputeMutation = withMutation<
+export const withTransactionRejectMutation = withMutation<
 	EntitySchema.Type,
 	TransactionSchema.Type,
 	Error
@@ -13,11 +13,11 @@ export const withTransactionDisputeMutation = withMutation<
 		return [
 			"buyer",
 			"transaction",
-			"dispute",
+			"reject",
 		];
 	},
 	async mutationFn(variables) {
-		return transactionDisputeFn({
+		return transactionRejectFn({
 			data: variables,
 		});
 	},

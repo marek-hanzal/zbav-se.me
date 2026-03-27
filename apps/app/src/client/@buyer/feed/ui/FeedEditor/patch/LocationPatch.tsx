@@ -1,7 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import { type FC, useState } from "react";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/client/@common/location/ui/LocationSelect";
 import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";

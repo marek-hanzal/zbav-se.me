@@ -3,7 +3,7 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { View } from "@use-pico/client/ui/view";
 import { withFallback } from "@use-pico/client/utils";
 import { type PropsWithChildren, useCallback, useMemo, useState } from "react";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { Editor } from "./Editor";
 import { AgePatch } from "./patch/AgePatch";
 import { CategoryPatch } from "./patch/CategoryPatch";

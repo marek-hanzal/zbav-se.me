@@ -7,7 +7,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 
 export namespace SearchButton {

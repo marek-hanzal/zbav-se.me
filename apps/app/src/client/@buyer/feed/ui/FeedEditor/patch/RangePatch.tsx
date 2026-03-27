@@ -3,7 +3,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 

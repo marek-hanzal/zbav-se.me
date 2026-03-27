@@ -5,7 +5,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
 import { useState } from "react";
-import { withFlagToggleMutation } from "~/client/@buyer/flag/withFlagToggleMutation";
+import { withFlagToggleMutation } from "~/client/@buyer/flag/mutation/withFlagToggleMutation";
 import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 
 export namespace FlagButton {

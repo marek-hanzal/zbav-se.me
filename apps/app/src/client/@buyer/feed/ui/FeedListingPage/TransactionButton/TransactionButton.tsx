@@ -7,7 +7,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
-import { withTransactionQuery } from "~/client/@buyer/transaction/withTransactionQuery";
+import { withTransactionQuery } from "~/client/@buyer/transaction/query/withTransactionQuery";
 import type { ListingSchema } from "~/server/@buyer/listing/schema/ListingSchema";
 
 export namespace TransactionButton {

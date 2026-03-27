@@ -4,8 +4,8 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
-import { withFavouriteToggleMutation } from "~/client/@buyer/favourite/withFavouriteToggleMutation";
-import { withFeedFavouriteQuery } from "~/client/@buyer/feed-favourite/withFeedFavouriteQuery";
+import { withFavouriteToggleMutation } from "~/client/@buyer/favourite/mutation/withFavouriteToggleMutation";
+import { withFeedFavouriteQuery } from "~/client/@buyer/feed-favourite/query/withFeedFavouriteQuery";
 import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 
 export namespace FavouriteButton {

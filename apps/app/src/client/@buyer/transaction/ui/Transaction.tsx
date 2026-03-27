@@ -11,9 +11,9 @@ import { TransactionChat } from "~/client/@user/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/client/@user/transaction-entry/ui/TransactionEntryList";
 import { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
+import { withTransactionQuery } from "../query/withTransactionQuery";
 import { archiveSellerMessageInbox } from "../service/archiveSellerMessageInbox";
 import { withArchiveSellerMessageInboxMutation } from "../service/withArchiveSellerMessageInboxMutation";
-import { withTransactionQuery } from "../withTransactionQuery";
 import { PendingMessage } from "./status/PendingMessage";
 import { TransactionMenu } from "./TransactionMenu";
 

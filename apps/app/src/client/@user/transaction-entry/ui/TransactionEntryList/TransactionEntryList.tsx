@@ -2,7 +2,7 @@ import { useAutoScroll } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { type FC, type RefObject, Suspense, useRef } from "react";
-import { withTransactionEntryQuery } from "~/client/@user/transaction-entry/withTransactionEntryQuery";
+import { withTransactionEntryQuery } from "~/client/@user/transaction-entry/query/withTransactionEntryQuery";
 import type { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
 import { Item } from "./Item";
 

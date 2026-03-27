@@ -6,7 +6,7 @@ import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
-import { withTransactionQuery } from "~/client/@buyer/transaction/withTransactionQuery";
+import { withTransactionQuery } from "~/client/@buyer/transaction/query/withTransactionQuery";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import { ListItemPending } from "~/client/@common/list-item/ListItemPending";

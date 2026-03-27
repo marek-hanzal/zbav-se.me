@@ -14,7 +14,7 @@ import { translator } from "@use-pico/common/translator";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { useState } from "react";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { FeedCreateSchema } from "~/server/@buyer/feed/schema/FeedCreateSchema";
 

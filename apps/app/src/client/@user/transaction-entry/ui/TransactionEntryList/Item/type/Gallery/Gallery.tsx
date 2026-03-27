@@ -9,7 +9,7 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { useState } from "react";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { GalleryPreviewSheet } from "~/client/@common/gallery/ui/GalleryPreviewSheet";
-import { withTransactionEntryGalleryFetchQuery } from "~/client/@user/transaction-entry/withTransactionEntryGalleryFetchQuery";
+import { withTransactionEntryGalleryFetchQuery } from "~/client/@user/transaction-entry/query/withTransactionEntryGalleryFetchQuery";
 import type { TransactionEntryGallery } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema/GallerySchema";
 import { TypeContainer } from "../TypeContainer";
 

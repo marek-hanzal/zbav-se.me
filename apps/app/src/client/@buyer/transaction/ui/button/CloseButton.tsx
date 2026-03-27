@@ -5,8 +5,8 @@ import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
 import type { TransactionSchema } from "~/server/@buyer/transaction/schema/TransactionSchema";
+import { withTransactionCloseMutation } from "../../mutation/withTransactionCloseMutation";
 import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";
-import { withTransactionCloseMutation } from "../../withTransactionCloseMutation";
 
 export namespace CloseButton {
 	export interface Props extends Button.Props {

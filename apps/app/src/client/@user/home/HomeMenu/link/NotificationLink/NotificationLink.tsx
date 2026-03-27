@@ -15,7 +15,7 @@ import { withFallback } from "@use-pico/client/utils";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
-import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import { withInboxQuery } from "~/client/@user/inbox/query/withInboxQuery";
 
 export namespace NotificationLink {
 	export interface Props extends MarkSuspense.Props {

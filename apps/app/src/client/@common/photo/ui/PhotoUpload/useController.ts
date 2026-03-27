@@ -7,8 +7,8 @@ import {
 	useState,
 } from "react";
 import type { PhotoUpload } from "~/client/@common/photo/ui/PhotoUpload";
-import { withUploadFetchQuery } from "~/client/@user/upload/withUploadFetchQuery";
-import { withUploadMutation } from "~/client/@user/upload/withUploadMutation";
+import { withUploadMutation } from "~/client/@user/upload/mutation/withUploadMutation";
+import { withUploadFetchQuery } from "~/client/@user/upload/query/withUploadFetchQuery";
 
 export namespace useController {
 	export interface Props {

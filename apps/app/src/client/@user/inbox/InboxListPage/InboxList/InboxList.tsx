@@ -3,7 +3,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { withFallback } from "@use-pico/client/utils";
 import { Suspense, useMemo } from "react";
-import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import { withInboxQuery } from "~/client/@user/inbox/query/withInboxQuery";
 import type { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
 import { InboxItem } from "../InboxItem";
 import { Empty } from "./Empty";

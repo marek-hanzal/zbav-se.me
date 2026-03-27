@@ -9,8 +9,8 @@ import type { StateType } from "@use-pico/common/type";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
+import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { getFeedDefaultCreate } from "~/client/@buyer/feed/service/getFeedDefaultCreate";
-import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { FeedCreateSchema } from "~/server/@buyer/feed/schema/FeedCreateSchema";
 

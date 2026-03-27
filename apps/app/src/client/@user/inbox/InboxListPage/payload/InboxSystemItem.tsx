@@ -7,7 +7,7 @@ import { toTimeDiff } from "@use-pico/common/time";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { ListItem } from "~/client/@common/list-item/ListItem";
-import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import { withInboxQuery } from "~/client/@user/inbox/query/withInboxQuery";
 import type { SystemSchema } from "~/server/database/@table/InboxTableSchema/SystemSchema";
 
 export namespace InboxSystemItem {

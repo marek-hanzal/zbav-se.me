@@ -5,7 +5,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { FC } from "react";
-import { withTransactionQuery } from "~/client/@buyer/transaction/withTransactionQuery";
+import { withTransactionQuery } from "~/client/@buyer/transaction/query/withTransactionQuery";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import type { SellerMessageSchema } from "~/server/database/@table/InboxTableSchema/SellerMessageSchema";

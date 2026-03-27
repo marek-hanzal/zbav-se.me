@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { type FC, useId } from "react";
 import { HistoryItem } from "~/client/@public/history/HistoryItem";
-import { withGithubHistoryQuery } from "~/client/@public/history/withGithubHistoryQuery";
+import { withGithubHistoryQuery } from "~/client/@public/history/query/withGithubHistoryQuery";
 
 const DEFAULT_PALETTE = [
 	"bg-slate-50 text-slate-900 border-slate-100",

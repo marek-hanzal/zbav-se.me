@@ -4,7 +4,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
 import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
-import { withThumbCreateMutation } from "~/client/@buyer/thumb/withThumbCreateMutation";
+import { withThumbCreateMutation } from "~/client/@buyer/thumb/mutation/withThumbCreateMutation";
 
 export namespace ThumbDislikeButton {
 	export interface Props extends Button.Props, MarkSuspense.Props {
