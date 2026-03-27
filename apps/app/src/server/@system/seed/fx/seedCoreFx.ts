@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { userExPatchFx } from "~/client/@user/user-ex/server/fx/userExPatchFx";
+import { userExPatchFx } from "~/@user/user-ex/server/fx/userExPatchFx";
 import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";
 import LocationQueries from "~/server/@system/seed/data/location.json" with { type: "json" };
 import { seedCoreFeedFx } from "~/server/@system/seed/fx/core/seedCoreFeedFx";

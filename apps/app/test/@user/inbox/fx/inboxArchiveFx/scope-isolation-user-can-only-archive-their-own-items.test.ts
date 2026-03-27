@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { inboxArchiveFx } from "~/client/@user/inbox/server/fx/inboxArchiveFx";
+import { inboxArchiveFx } from "~/@user/inbox/server/fx/inboxArchiveFx";
 import type { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
 import type { InboxTypeEnumSchema } from "~/common/inbox/enum/InboxTypeEnumSchema";
 import { auth } from "~/server/auth/auth";

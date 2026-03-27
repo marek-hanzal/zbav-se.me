@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { getSessionFn } from "~/client/@common/auth/getSessionFn";
-import { getLocaleFn } from "~/client/@common/locale/getLocaleFn";
+import { getSessionFn } from "~/@common/auth/getSessionFn";
+import { getLocaleFn } from "~/@common/locale/getLocaleFn";
 
 export const Route = createFileRoute("/")({
 	async loader() {

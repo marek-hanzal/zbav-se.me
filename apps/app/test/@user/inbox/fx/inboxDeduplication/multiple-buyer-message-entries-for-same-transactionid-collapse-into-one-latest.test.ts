@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { inboxCollectionFx } from "~/client/@user/inbox/server/fx/inboxCollectionFx";
+import { inboxCollectionFx } from "~/@user/inbox/server/fx/inboxCollectionFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";

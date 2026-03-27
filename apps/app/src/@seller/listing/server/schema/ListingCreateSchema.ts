@@ -1,0 +1,65 @@
+import { z } from "zod";
+import { ProsConsSchema } from "~/@seller/listing/server/schema/ProsConsSchema";
+import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
+import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
+import { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
+import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+
+export const ListingCreateSchema = z
+	.looseObject({
+		price: z.coerce.number().meta({
+			description: "Price of the listing",
+			type: "number",
+		}),
+		priceType: ListingPriceEnumSchema,
+		condition: z.number().nullable().meta({
+			description: "Condition of the item (0-based index)",
+		}),
+		age: z.number().nullable().meta({
+			description: "Age of the item (0-based index)",
+		}),
+		delivery: z.array(ListingDeliveryEnumSchema).nullish().meta({
+			description: "Delivery methods for the listing",
+		}),
+		warranty: ListingWarrantyEnumSchema.nullish().meta({
+			description: "Warranty type for the listing",
+		}),
+		restriction: ListingRestrictionEnumSchema,
+		draftId: z.string().optional().meta({
+			description: "ID of the draft",
+		}),
+		locationId: z.string().meta({
+			description: "ID of the location",
+		}),
+		categoryId: z.string().meta({
+			description: "ID of the category",
+		}),
+		expiresAt: ListingExpireEnumSchema,
+		title: z.string().min(5).max(72).meta({
+			description: "Title of the item",
+		}),
+		description: z.string().max(2048).nullish().meta({
+			description: "Description of the item",
+		}),
+		pros: ProsConsSchema.nullish().meta({
+			description: "Pros of the item",
+		}),
+		cons: ProsConsSchema.nullish().meta({
+			description: "Cons of the item",
+		}),
+		uploadIds: z.array(z.string()).min(1, "At least one upload is required").meta({
+			description: "IDs of the uploads; order of uploads defines order in the gallery",
+		}),
+	})
+	.strip()
+	.meta({
+		id: "ListingCreate",
+		description: "Data for creating a new listing",
+	});
+
+export type ListingCreateSchema = typeof ListingCreateSchema;
+
+export namespace ListingCreateSchema {
+	export type Type = z.infer<ListingCreateSchema>;
+}

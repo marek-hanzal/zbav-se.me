@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { UserEventEnumSchema } from "~/client/@user/user-event/server/schema/UserEventEnumSchema";
-import { UserEventSourceEnumSchema } from "~/client/@user/user-event/server/schema/UserEventSourceEnumSchema";
+import { UserEventEnumSchema } from "~/@user/user-event/server/schema/UserEventEnumSchema";
+import { UserEventSourceEnumSchema } from "~/@user/user-event/server/schema/UserEventSourceEnumSchema";
 import { UserEventScopeEnumSchema } from "~/common/user-event/enum/UserEventScopeEnumSchema";
 
 export const UserEventTableSchema = z

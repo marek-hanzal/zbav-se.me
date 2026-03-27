@@ -1,8 +1,8 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import type { DraftCreateSchema } from "~/client/@seller/draft/server/schema/DraftCreateSchema";
-import { galleryInsertFx } from "~/client/@user/gallery/server/fx/galleryInsertFx";
+import type { DraftCreateSchema } from "~/@seller/draft/server/schema/DraftCreateSchema";
+import { galleryInsertFx } from "~/@user/gallery/server/fx/galleryInsertFx";
 import { seedGalleryItemBulkInsertFx } from "~/server/@system/seed/fx/core/seedGalleryItemBulkInsertFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";

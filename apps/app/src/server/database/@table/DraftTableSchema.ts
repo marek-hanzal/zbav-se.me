@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ProsConsSchema } from "~/client/@seller/listing/server/schema/ProsConsSchema";
+import { ProsConsSchema } from "~/@seller/listing/server/schema/ProsConsSchema";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";

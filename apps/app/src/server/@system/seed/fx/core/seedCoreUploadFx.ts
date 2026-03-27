@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { uploadCreateFx } from "~/client/@user/upload/server/fx/uploadCreateFx";
+import { uploadCreateFx } from "~/@user/upload/server/fx/uploadCreateFx";
 import { S3ContextFx } from "~/server/@common/s3/context/S3ContextFx";
 import { s3ClientFx } from "~/server/@common/s3/fx/s3ClientFx";
 import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";

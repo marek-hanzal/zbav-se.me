@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { listingCreateFx } from "~/client/@seller/listing/server/fx/listingCreateFx";
-import { categoryFetchFx } from "~/client/@session/category/server/fx/categoryFetchFx";
-import { locationAutocompleteFx } from "~/client/@session/location/server/fx/locationAutocompleteFx";
-import { uploadCreateFx } from "~/client/@user/upload/server/fx/uploadCreateFx";
+import { listingCreateFx } from "~/@seller/listing/server/fx/listingCreateFx";
+import { categoryFetchFx } from "~/@session/category/server/fx/categoryFetchFx";
+import { locationAutocompleteFx } from "~/@session/location/server/fx/locationAutocompleteFx";
+import { uploadCreateFx } from "~/@user/upload/server/fx/uploadCreateFx";
 
 export const createListingFx = (sellerId: string) =>
 	Effect.gen(function* () {

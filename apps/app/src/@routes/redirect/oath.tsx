@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { z } from "zod";
-import { getLocaleFn } from "~/client/@common/locale/getLocaleFn";
+import { getLocaleFn } from "~/@common/locale/getLocaleFn";
 
 const SearchSchema = z.record(z.string(), z.string());
 
