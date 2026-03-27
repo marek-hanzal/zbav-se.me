@@ -20,6 +20,7 @@ import MessagePersonal from "~/server/@system/seed/data/message-personal.json" w
 import BuyerText from "~/server/@system/seed/data/message-text-buyer.json" with { type: "json" };
 import SellerText from "~/server/@system/seed/data/message-text-seller.json" with { type: "json" };
 import { type InteractionTimeline, withRandomInt } from "~/server/@system/seed/fx/time/seedTime";
+import { withSeedNowFx } from "~/server/@system/seed/fx/time/withSeedNowFx";
 import { transactionEntryCreateFx } from "~/server/@user/transaction-entry/fx/transactionEntryCreateFx";
 
 type InteractionVariant =
