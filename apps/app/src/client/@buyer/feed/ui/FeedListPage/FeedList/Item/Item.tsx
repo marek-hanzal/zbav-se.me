@@ -13,7 +13,7 @@ import { Suspense, useState } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import { ListingCount } from "~/client/@common/listing/ui/ListingCount";
-import { FeedEditorSheet } from "../../../FeedEditor/FeedEditorSheet";
+import { FeedEditorSheet } from "../../../../FeedEditor/FeedEditorSheet";
 import { DeleteButton } from "../DeleteButton";
 
 export namespace Item {

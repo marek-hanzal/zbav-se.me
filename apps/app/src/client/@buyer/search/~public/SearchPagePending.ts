@@ -1,1 +1,1 @@
-export { SearchPagePending } from "../SearchPage/SearchPagePending";
+export { SearchPagePending } from "../ui/SearchPage/SearchPagePending";
