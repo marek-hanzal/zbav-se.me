@@ -7,8 +7,8 @@ import {
 	useState,
 } from "react";
 import type { PhotoUpload } from "~/client/@common/photo/ui/PhotoUpload";
-import { withUploadCreateMutation } from "~/client/@user/upload/withUploadCreateMutation";
 import { withUploadFetchQuery } from "~/client/@user/upload/withUploadFetchQuery";
+import { withUploadMutation } from "~/client/@user/upload/withUploadMutation";
 
 export namespace useController {
 	export interface Props {
@@ -42,7 +42,7 @@ export function useController({ value, onChange }: useController.Props): useCont
 		}
 	}, []);
 
-	const uploadMutation = withUploadCreateMutation.useMutation({
+	const uploadMutation = withUploadMutation.useMutation({
 		async onPreMutation() {
 			setProgress(0);
 
