@@ -36,7 +36,6 @@ describe("listingCollectionFx (seller)", () => {
 			const listing2 = yield* createListingFx(seller2.id);
 
 			const collection = yield* listingCollectionFx({
-				userId: seller1.id,
 				scope: {
 					userId: seller1.id,
 				},

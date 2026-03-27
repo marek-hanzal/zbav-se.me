@@ -22,16 +22,13 @@ export const transactionDisputeFn = createServerFn({
 		return zodGuardFx({
 			schema: TransactionSchema,
 			dataFx: transactionDisputeFx({
-				transactionId: data.transactionId,
+				transactionId: data.id,
 				userId: user.id,
 			}),
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
-			withTransactionContextFx({
-				expires: 3,
-				extend: 1,
-			}),
+			withTransactionContextFx(),
 			withCatchFx({
 				NotFoundErrorFx() {
 					throw new Error("NotFoundError");
