@@ -27,10 +27,7 @@ const withInboxRuntimeFx = (database: Awaited<ReturnType<typeof testabase>>) => 
 		eff.pipe(
 			withKyselyFx(database),
 			withDateFx,
-			withTransactionContextFx({
-				expires: 3,
-				extend: 3,
-			}),
+			withTransactionContextFx(),
 			withLocationFx({
 				api: "https://api.geoapify.com",
 				autocomplete: "/v1/geocode/autocomplete",
