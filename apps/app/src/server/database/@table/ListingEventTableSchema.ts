@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ListingEventEnumSchema } from "~/common/listing/enum/ListingEventEnumSchema";
+import { ListingEventEnumSchema } from "~/@common/listing/enum/ListingEventEnumSchema";
 
 export const ListingEventTableSchema = z
 	.looseObject({

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
+import { UserSideEnumSchema } from "~/@common/user-event/enum/UserSideEnumSchema";
 
 export const UserExTableSchema = z
 	.looseObject({

@@ -3,7 +3,7 @@ import { LabelValue } from "@use-pico/client/ui/container";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
-import type { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
+import type { CurrencyEnumSchema } from "~/@common/schema/CurrencyEnumSchema";
 
 export namespace PriceValue {
 	export interface Props extends LabelValue.PropsEx {

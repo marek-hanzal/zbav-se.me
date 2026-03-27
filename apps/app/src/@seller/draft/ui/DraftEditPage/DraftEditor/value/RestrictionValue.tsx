@@ -2,7 +2,7 @@ import { LabelValue } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
-import type { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
+import type { ListingRestrictionEnumSchema } from "~/@common/listing/enum/ListingRestrictionEnumSchema";
 
 export namespace RestrictionValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {

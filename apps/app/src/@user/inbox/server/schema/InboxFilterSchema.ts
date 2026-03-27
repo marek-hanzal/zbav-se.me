@@ -1,8 +1,8 @@
 import { FilterSchema } from "@use-pico/common/schema";
 import { z } from "zod";
-import { InboxFamilyEnumSchema } from "~/common/inbox/enum/InboxFamilyEnumSchema";
-import { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
-import { InboxTypeEnumSchema } from "~/common/inbox/enum/InboxTypeEnumSchema";
+import { InboxFamilyEnumSchema } from "~/@common/inbox/enum/InboxFamilyEnumSchema";
+import { InboxPriorityEnumSchema } from "~/@common/inbox/enum/InboxPriorityEnumSchema";
+import { InboxTypeEnumSchema } from "~/@common/inbox/enum/InboxTypeEnumSchema";
 
 export const InboxFilterSchema = z
 	.looseObject({

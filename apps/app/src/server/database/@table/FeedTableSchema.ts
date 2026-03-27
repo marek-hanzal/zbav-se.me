@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FeedTypeEnumSchema } from "~/common/feed/enum/FeedTypeEnumSchema";
+import { FeedTypeEnumSchema } from "~/@common/feed/enum/FeedTypeEnumSchema";
 
 export const FeedTableSchema = z
 	.looseObject({

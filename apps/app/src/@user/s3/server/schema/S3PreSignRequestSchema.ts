@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { AllowedContentTypesEnumSchema } from "~/common/schema/AllowedContentTypesEnumSchema";
-import { AllowedExtensionsEnumSchema } from "~/common/schema/AllowedExtensionsEnumSchema";
+import { AllowedContentTypesEnumSchema } from "~/@common/schema/AllowedContentTypesEnumSchema";
+import { AllowedExtensionsEnumSchema } from "~/@common/schema/AllowedExtensionsEnumSchema";
 
 export const S3PreSignRequestSchema = z
 	.looseObject({

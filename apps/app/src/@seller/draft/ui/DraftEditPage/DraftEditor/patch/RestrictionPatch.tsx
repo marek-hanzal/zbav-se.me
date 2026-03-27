@@ -8,11 +8,11 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/@common/container/ui/SaveContainer";
+import type { ListingRestrictionEnumSchema } from "~/@common/listing/enum/ListingRestrictionEnumSchema";
 import { RestrictionSelect } from "~/@common/restriction/ui/RestrictionSelect";
 import { withDraftQuery } from "~/@seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/@seller/draft/server/schema/DraftSchema";
 import { ListingCreateSchema } from "~/@seller/listing/server/schema/ListingCreateSchema";
-import type { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 

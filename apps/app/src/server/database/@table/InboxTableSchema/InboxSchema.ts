@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { InboxFamilyEnumSchema } from "~/common/inbox/enum/InboxFamilyEnumSchema";
-import { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
+import { InboxFamilyEnumSchema } from "~/@common/inbox/enum/InboxFamilyEnumSchema";
+import { InboxPriorityEnumSchema } from "~/@common/inbox/enum/InboxPriorityEnumSchema";
 
 export const InboxSchema = z
 	.looseObject({

@@ -1,7 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { FC, ReactNode } from "react";
 import { match } from "ts-pattern";
-import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
+import type { TransactionStatusEnumSchema } from "~/@common/user-transaction/enum/TransactionStatusEnumSchema";
 
 export namespace TransactionMessage {
 	export interface Props extends Container.Props {

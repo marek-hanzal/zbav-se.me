@@ -5,7 +5,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
-import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import { ListingWarrantyEnumSchema } from "~/@common/listing/enum/ListingWarrantyEnumSchema";
 
 export namespace WarrantySelect {
 	export interface Props extends Container.Props {

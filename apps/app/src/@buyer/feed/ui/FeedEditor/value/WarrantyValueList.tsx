@@ -1,7 +1,7 @@
 import { ValueList } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
-import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import type { ListingWarrantyEnumSchema } from "~/@common/listing/enum/ListingWarrantyEnumSchema";
 
 export namespace WarrantyValueList {
 	export interface Item {

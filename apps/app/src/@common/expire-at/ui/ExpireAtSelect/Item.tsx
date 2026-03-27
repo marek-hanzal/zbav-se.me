@@ -5,7 +5,7 @@ import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import { DateTime } from "luxon";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import type { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
+import type { ListingExpireEnumSchema } from "~/@common/listing/enum/ListingExpireEnumSchema";
 
 export namespace Item {
 	export interface Props {

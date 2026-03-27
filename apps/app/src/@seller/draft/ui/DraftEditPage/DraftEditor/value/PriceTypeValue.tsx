@@ -1,7 +1,7 @@
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
-import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
+import type { ListingPriceEnumSchema } from "~/@common/listing/enum/ListingPriceEnumSchema";
 
 export namespace PriceTypeValue {
 	export interface Props extends LabelValue.PropsEx {

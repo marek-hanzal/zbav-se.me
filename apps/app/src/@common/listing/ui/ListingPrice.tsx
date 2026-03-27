@@ -4,7 +4,7 @@ import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
+import type { ListingPriceEnumSchema } from "~/@common/listing/enum/ListingPriceEnumSchema";
 
 export namespace ListingPrice {
 	export interface Props extends Badge.Props {

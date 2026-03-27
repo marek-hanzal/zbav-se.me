@@ -1,8 +1,8 @@
 import { z } from "zod";
+import { ThumbEnumSchema } from "~/@common/listing/enum/ThumbEnumSchema";
 import { CategorySchema } from "~/@session/category/server/schema/CategorySchema";
 import { LocationSchema } from "~/@session/location/server/schema/LocationSchema";
 import { GallerySchema } from "~/@user/gallery/server/schema/GallerySchema";
-import { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 
 export const ListingSchema = z

@@ -8,11 +8,11 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/@common/container/ui/SaveContainer";
+import type { ListingPriceEnumSchema } from "~/@common/listing/enum/ListingPriceEnumSchema";
 import { PriceTypeSelect } from "~/@common/price-type/ui/PriceTypeSelect";
 import { withDraftQuery } from "~/@seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/@seller/draft/server/schema/DraftSchema";
 import { ListingCreateSchema } from "~/@seller/listing/server/schema/ListingCreateSchema";
-import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 

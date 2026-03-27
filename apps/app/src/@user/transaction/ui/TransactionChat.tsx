@@ -4,8 +4,8 @@ import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC, ReactNode } from "react";
 import { useCallback } from "react";
 import { match } from "ts-pattern";
+import type { TransactionStatusEnumSchema } from "~/@common/user-transaction/enum/TransactionStatusEnumSchema";
 import { withTransactionEntryQuery } from "~/@user/transaction-entry/query/withTransactionEntryQuery";
-import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 
 export namespace TransactionChat {
 	export interface Hooks {

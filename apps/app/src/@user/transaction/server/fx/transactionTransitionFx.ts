@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import type { TransactionEntryKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
-import type { TransactionSideEnumSchema } from "~/common/user-transaction/enum/TransactionSideEnumSchema";
-import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
+import type { TransactionEntryKindEnumSchema } from "~/@common/user-transaction/enum/TransactionEntryKindEnumSchema";
+import type { TransactionSideEnumSchema } from "~/@common/user-transaction/enum/TransactionSideEnumSchema";
+import type { TransactionStatusEnumSchema } from "~/@common/user-transaction/enum/TransactionStatusEnumSchema";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 
 /**

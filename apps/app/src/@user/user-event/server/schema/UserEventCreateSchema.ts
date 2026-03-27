@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { UserEventScopeEnumSchema } from "~/common/user-event/enum/UserEventScopeEnumSchema";
+import { UserEventScopeEnumSchema } from "~/@common/user-event/enum/UserEventScopeEnumSchema";
 import { UserEventEnumSchema } from "./UserEventEnumSchema";
 import { UserEventSourceEnumSchema } from "./UserEventSourceEnumSchema";
 

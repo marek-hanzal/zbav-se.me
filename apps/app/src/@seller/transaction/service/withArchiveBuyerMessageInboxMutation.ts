@@ -1,8 +1,8 @@
 import { withMutation } from "@use-pico/client/mutation";
+import { TransactionStatusEnumSchema } from "~/@common/user-transaction/enum/TransactionStatusEnumSchema";
 import { withTransactionListingQuery } from "~/@seller/transaction-listing/query/withTransactionListingQuery";
 import { withInboxQuery } from "~/@user/inbox/query/withInboxQuery";
 import { inboxArchiveFn } from "~/@user/inbox/server/fn/inboxArchiveFn";
-import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { withTransactionQuery } from "../query/withTransactionQuery";
 
 const terminalStatuses: TransactionStatusEnumSchema.Type[] = [

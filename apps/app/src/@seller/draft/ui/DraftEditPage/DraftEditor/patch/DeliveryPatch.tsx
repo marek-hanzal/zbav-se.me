@@ -8,9 +8,9 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/@common/container/ui/SaveContainer";
 import { DeliverySelect } from "~/@common/delivery/ui/DeliverySelect";
+import type { ListingDeliveryEnumSchema } from "~/@common/listing/enum/ListingDeliveryEnumSchema";
 import { withDraftQuery } from "~/@seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/@seller/draft/server/schema/DraftSchema";
-import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 

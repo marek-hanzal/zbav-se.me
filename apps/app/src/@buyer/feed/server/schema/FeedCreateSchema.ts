@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { ListingQuerySchema } from "~/@buyer/listing/server/schema/ListingQuerySchema";
-import { FeedTypeEnumSchema } from "~/common/feed/enum/FeedTypeEnumSchema";
+import { FeedTypeEnumSchema } from "~/@common/feed/enum/FeedTypeEnumSchema";
 
 export const FeedCreateSchema = z
 	.looseObject({

@@ -5,8 +5,8 @@ import type { FC } from "react";
 import { withFeedQuery } from "~/@buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/@buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/@common/container/ui/SaveContainer";
+import type { ListingWarrantyEnumSchema } from "~/@common/listing/enum/ListingWarrantyEnumSchema";
 import { WarrantySelect } from "~/@common/warranty/ui/WarrantySelect";
-import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 
 export namespace WarrantyPatch {
 	export interface Props extends Container.Props {

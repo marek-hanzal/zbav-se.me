@@ -1,8 +1,8 @@
 import { FilterSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { UserEventScopeEnumSchema } from "~/@common/user-event/enum/UserEventScopeEnumSchema";
 import { UserEventEnumSchema } from "~/@user/user-event/server/schema/UserEventEnumSchema";
 import { UserEventSourceEnumSchema } from "~/@user/user-event/server/schema/UserEventSourceEnumSchema";
-import { UserEventScopeEnumSchema } from "~/common/user-event/enum/UserEventScopeEnumSchema";
 
 export const UserEventFilterSchema = z
 	.looseObject({

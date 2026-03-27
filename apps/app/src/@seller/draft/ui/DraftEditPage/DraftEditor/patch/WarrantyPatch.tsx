@@ -7,10 +7,10 @@ import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/@common/container/ui/SaveContainer";
+import type { ListingWarrantyEnumSchema } from "~/@common/listing/enum/ListingWarrantyEnumSchema";
 import { WarrantySelect } from "~/@common/warranty/ui/WarrantySelect";
 import { withDraftQuery } from "~/@seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/@seller/draft/server/schema/DraftSchema";
-import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 

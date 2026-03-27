@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { TransactionSideEnumSchema } from "~/common/user-transaction/enum/TransactionSideEnumSchema";
+import { TransactionSideEnumSchema } from "~/@common/user-transaction/enum/TransactionSideEnumSchema";
 
 export const TransactionUserTableSchema = z
 	.looseObject({
