@@ -3,10 +3,10 @@ import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { FC } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
+import type { FeedSchema } from "~/client/@buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { WarrantySelect } from "~/client/@common/warranty/ui/WarrantySelect";
 import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
-import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 
 export namespace WarrantyPatch {
 	export interface Props extends Container.Props {

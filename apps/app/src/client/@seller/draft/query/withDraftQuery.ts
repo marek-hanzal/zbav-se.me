@@ -1,15 +1,15 @@
 import { withEntityQuery } from "@use-pico/client/query";
-import { draftCollectionFn } from "~/server/@seller/draft/fn/draftCollectionFn";
-import { draftCountFn } from "~/server/@seller/draft/fn/draftCountFn";
-import { draftCreateFn } from "~/server/@seller/draft/fn/draftCreateFn";
-import { draftDeleteFn } from "~/server/@seller/draft/fn/draftDeleteFn";
-import { draftFetchFn } from "~/server/@seller/draft/fn/draftFetchFn";
-import { draftPatchFn } from "~/server/@seller/draft/fn/draftPatchFn";
-import type { DraftCountQuerySchema } from "~/server/@seller/draft/schema/DraftCountQuerySchema";
-import type { DraftCreateSchema } from "~/server/@seller/draft/schema/DraftCreateSchema";
-import type { DraftPatchSchema } from "~/server/@seller/draft/schema/DraftPatchSchema";
-import type { DraftQuerySchema } from "~/server/@seller/draft/schema/DraftQuerySchema";
-import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
+import { draftCollectionFn } from "~/client/@seller/draft/server/fn/draftCollectionFn";
+import { draftCountFn } from "~/client/@seller/draft/server/fn/draftCountFn";
+import { draftCreateFn } from "~/client/@seller/draft/server/fn/draftCreateFn";
+import { draftDeleteFn } from "~/client/@seller/draft/server/fn/draftDeleteFn";
+import { draftFetchFn } from "~/client/@seller/draft/server/fn/draftFetchFn";
+import { draftPatchFn } from "~/client/@seller/draft/server/fn/draftPatchFn";
+import type { DraftCountQuerySchema } from "~/client/@seller/draft/server/schema/DraftCountQuerySchema";
+import type { DraftCreateSchema } from "~/client/@seller/draft/server/schema/DraftCreateSchema";
+import type { DraftPatchSchema } from "~/client/@seller/draft/server/schema/DraftPatchSchema";
+import type { DraftQuerySchema } from "~/client/@seller/draft/server/schema/DraftQuerySchema";
+import type { DraftSchema } from "~/client/@seller/draft/server/schema/DraftSchema";
 
 export const withDraftQuery = withEntityQuery<
 	DraftSchema.Type,

@@ -10,9 +10,9 @@ import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { PriceTypeSelect } from "~/client/@common/price-type/ui/PriceTypeSelect";
 import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
+import type { DraftSchema } from "~/client/@seller/draft/server/schema/DraftSchema";
+import { ListingCreateSchema } from "~/client/@seller/listing/server/schema/ListingCreateSchema";
 import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
-import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
-import { ListingCreateSchema } from "~/server/@seller/listing/schema/ListingCreateSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 

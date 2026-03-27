@@ -5,8 +5,8 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import { isValid } from "~/client/@common/draft/util/isValid";
+import type { DraftSchema } from "~/client/@seller/draft/server/schema/DraftSchema";
 import { withListingQuery } from "~/client/@seller/listing/query/withListingQuery";
-import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 
 export namespace CreateListingButton {
 	export interface Props extends Button.Props {

@@ -7,7 +7,7 @@ import { translator } from "@use-pico/common/translator";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
-import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
+import type { DraftSchema } from "~/client/@seller/draft/server/schema/DraftSchema";
 
 export namespace DeleteButton {
 	export interface Props extends ConfirmButton.Props {

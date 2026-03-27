@@ -7,7 +7,7 @@ import type { StateType } from "@use-pico/common/type";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useMemo, useState } from "react";
 import { GalleryPreview } from "~/client/@common/gallery/ui/GalleryPreview";
-import type { ListingSchema } from "~/server/@seller/listing/schema/ListingSchema";
+import type { ListingSchema } from "~/client/@seller/listing/server/schema/ListingSchema";
 import { ListingCard } from "./ListingCard";
 
 export namespace ListingSheet {

@@ -5,8 +5,8 @@ import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, type PropsWithChildren, Suspense, useCallback, useMemo, useState } from "react";
 import { SellerInfo } from "~/client/@buyer/listing/~public/SellerInfo";
+import type { ListingSchema } from "~/client/@buyer/listing/server/schema/ListingSchema";
 import { GalleryPreview } from "~/client/@common/gallery/ui/GalleryPreview";
-import type { ListingSchema } from "~/server/@buyer/listing/schema/ListingSchema";
 import { ListingCard } from "../ListingCard";
 
 export namespace ListingSheet {

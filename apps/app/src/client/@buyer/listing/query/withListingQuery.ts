@@ -1,10 +1,10 @@
 import { withEntityQuery } from "@use-pico/client/query";
-import { listingCollectionFn } from "~/server/@buyer/listing/fn/listingCollectionFn";
-import { listingCountFn } from "~/server/@buyer/listing/fn/listingCountFn";
-import { listingFetchFn } from "~/server/@buyer/listing/fn/listingFetchFn";
-import type { ListingCountQuerySchema } from "~/server/@buyer/listing/schema/ListingCountQuerySchema";
-import type { ListingQuerySchema } from "~/server/@buyer/listing/schema/ListingQuerySchema";
-import type { ListingSchema } from "~/server/@buyer/listing/schema/ListingSchema";
+import { listingCollectionFn } from "~/client/@buyer/listing/server/fn/listingCollectionFn";
+import { listingCountFn } from "~/client/@buyer/listing/server/fn/listingCountFn";
+import { listingFetchFn } from "~/client/@buyer/listing/server/fn/listingFetchFn";
+import type { ListingCountQuerySchema } from "~/client/@buyer/listing/server/schema/ListingCountQuerySchema";
+import type { ListingQuerySchema } from "~/client/@buyer/listing/server/schema/ListingQuerySchema";
+import type { ListingSchema } from "~/client/@buyer/listing/server/schema/ListingSchema";
 
 export const withListingQuery = withEntityQuery<
 	ListingSchema.Type,

@@ -4,7 +4,7 @@ import type { StateType } from "@use-pico/common/type";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/client/@common/location/ui/LocationSelect";
-import type { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
+import type { LocationSchema } from "~/client/@session/location/server/schema/LocationSchema";
 
 export namespace Content {
 	export interface Props extends Container.Props {

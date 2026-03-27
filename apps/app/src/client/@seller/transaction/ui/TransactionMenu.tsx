@@ -1,9 +1,9 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { FC } from "react";
+import type { TransactionSchema } from "~/client/@seller/transaction/server/schema/TransactionSchema";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
 import { TransactionMessage } from "~/client/@user/transaction/ui/TransactionMessage";
 import { TransactionToolbar } from "~/client/@user/transaction/ui/TransactionToolbar";
-import type { TransactionSchema } from "~/server/@seller/transaction/schema/TransactionSchema";
 import { DisputeMessage } from "./status/DisputeMessage";
 import { DisputeToolbar } from "./status/DisputeToolbar";
 import { OpenMessage } from "./status/OpenMessage";

@@ -4,8 +4,8 @@ import { translator } from "@use-pico/common/translator";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
+import type { FeedSchema } from "~/client/@buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
-import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 
 export namespace RangePatch {
 	export interface Props extends Container.Props {

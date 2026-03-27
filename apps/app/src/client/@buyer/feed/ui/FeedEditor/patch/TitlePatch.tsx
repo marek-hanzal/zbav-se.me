@@ -6,8 +6,8 @@ import { TextInput } from "@use-pico/client/ui/text-input";
 import { translator } from "@use-pico/common/translator";
 import { type FC, useState } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
+import type { FeedSchema } from "~/client/@buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
-import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 
 export namespace TitlePatch {
 	export interface Props extends Omit<Container.Props, "defaultValue"> {

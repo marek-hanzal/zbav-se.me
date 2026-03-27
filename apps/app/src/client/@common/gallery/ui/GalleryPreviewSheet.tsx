@@ -3,7 +3,7 @@ import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC } from "react";
 import { GalleryPreview } from "~/client/@common/gallery/ui/GalleryPreview";
-import type { UploadSchema } from "~/server/@user/upload/schema/UploadSchema";
+import type { UploadSchema } from "~/client/@user/upload/server/schema/UploadSchema";
 
 export namespace GalleryPreviewSheet {
 	export interface Props extends BottomSheet.Props {

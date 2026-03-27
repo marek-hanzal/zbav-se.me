@@ -2,7 +2,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef } from "react";
-import type { UploadSchema } from "~/server/@user/upload/schema/UploadSchema";
+import type { UploadSchema } from "~/client/@user/upload/server/schema/UploadSchema";
 
 export namespace GalleryPreview {
 	export interface Props extends Container.Props {

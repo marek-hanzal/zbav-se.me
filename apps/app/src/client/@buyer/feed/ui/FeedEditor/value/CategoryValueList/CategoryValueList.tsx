@@ -3,9 +3,9 @@ import { ValueList } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
 import { Suspense } from "react";
+import type { CategorySchema } from "~/client/@session/category/server/schema/CategorySchema";
 import { CategoryInline } from "~/client/@session/category/ui/CategoryInline";
 import { withCategoryQuery } from "~/client/@session/category/withCategoryQuery";
-import type { CategorySchema } from "~/server/@session/category/schema/CategorySchema";
 
 export namespace CategoryValueList {
 	export interface Props

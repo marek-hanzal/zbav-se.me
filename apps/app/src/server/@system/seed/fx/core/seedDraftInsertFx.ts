@@ -1,9 +1,9 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import type { DraftCreateSchema } from "~/server/@seller/draft/schema/DraftCreateSchema";
+import type { DraftCreateSchema } from "~/client/@seller/draft/server/schema/DraftCreateSchema";
+import { galleryInsertFx } from "~/client/@user/gallery/server/fx/galleryInsertFx";
 import { seedGalleryItemBulkInsertFx } from "~/server/@system/seed/fx/core/seedGalleryItemBulkInsertFx";
-import { galleryInsertFx } from "~/server/@user/gallery/fx/galleryInsertFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 

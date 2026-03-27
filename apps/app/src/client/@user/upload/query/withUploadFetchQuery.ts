@@ -1,7 +1,7 @@
 import { withQuery } from "@use-pico/client/query";
-import { uploadFetchFn } from "~/server/@user/upload/fn/uploadFetchFn";
-import type { UploadQuerySchema } from "~/server/@user/upload/schema/UploadQuerySchema";
-import type { UploadSchema } from "~/server/@user/upload/schema/UploadSchema";
+import { uploadFetchFn } from "~/client/@user/upload/server/fn/uploadFetchFn";
+import type { UploadQuerySchema } from "~/client/@user/upload/server/schema/UploadQuerySchema";
+import type { UploadSchema } from "~/client/@user/upload/server/schema/UploadSchema";
 
 export const withUploadFetchQuery = withQuery<UploadQuerySchema.Type, UploadSchema.Type>({
 	keys(data) {

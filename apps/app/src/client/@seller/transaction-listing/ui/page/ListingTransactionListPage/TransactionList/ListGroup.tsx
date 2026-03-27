@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Typo, type uiTypo } from "@use-pico/client/ui/typo";
 import type { FC } from "react";
 import { withTransactionQuery } from "~/client/@seller/transaction/query/withTransactionQuery";
-import type { TransactionFilterSchema } from "~/server/@seller/transaction/schema/TransactionFilterSchema";
+import type { TransactionFilterSchema } from "~/client/@seller/transaction/server/schema/TransactionFilterSchema";
 import { List } from "./List";
 
 export namespace ListGroup {

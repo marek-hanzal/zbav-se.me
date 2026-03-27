@@ -1,8 +1,8 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
-import { feedGalleryCreateFn } from "~/server/@buyer/feed-gallery/fn/feedGalleryCreateFn";
-import type { FeedGalleryCreateSchema } from "~/server/@buyer/feed-gallery/schema/FeedGalleryCreateSchema";
-import type { GallerySchema } from "~/server/@user/gallery/schema/GallerySchema";
+import { feedGalleryCreateFn } from "~/client/@buyer/feed-gallery/server/fn/feedGalleryCreateFn";
+import type { FeedGalleryCreateSchema } from "~/client/@buyer/feed-gallery/server/schema/FeedGalleryCreateSchema";
+import type { GallerySchema } from "~/client/@user/gallery/server/schema/GallerySchema";
 
 export const withFeedGalleryCreateMutation = withMutation<
 	FeedGalleryCreateSchema.Type,

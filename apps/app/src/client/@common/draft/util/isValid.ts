@@ -1,5 +1,5 @@
-import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
-import { ListingCreateSchema } from "~/server/@seller/listing/schema/ListingCreateSchema";
+import type { DraftSchema } from "~/client/@seller/draft/server/schema/DraftSchema";
+import { ListingCreateSchema } from "~/client/@seller/listing/server/schema/ListingCreateSchema";
 
 export const isValid = (draft: DraftSchema.Type) => {
 	const data = {

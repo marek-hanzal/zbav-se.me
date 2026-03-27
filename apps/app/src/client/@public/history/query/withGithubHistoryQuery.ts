@@ -1,6 +1,6 @@
 import { withQuery } from "@use-pico/client/query";
-import { historyFn } from "~/server/@public/github/fn/historyFn";
-import type { GitHubHistorySchema } from "~/server/@public/github/schema/GitHubHistorySchema";
+import { historyFn } from "~/client/@public/github/server/fn/historyFn";
+import type { GitHubHistorySchema } from "~/client/@public/github/server/schema/GitHubHistorySchema";
 
 type GithubHistoryQuery = {
 	weeks: number;

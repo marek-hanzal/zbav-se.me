@@ -4,8 +4,8 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import { withFallback } from "@use-pico/client/utils";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
+import type { LocationSchema } from "~/client/@session/location/server/schema/LocationSchema";
 import { withLocationAutocompleteQuery } from "~/client/@session/location/withLocationAutocompleteQuery";
-import type { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
 import { Empty } from "./Data/Empty";
 import { Default } from "./Default";
 

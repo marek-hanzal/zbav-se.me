@@ -1,8 +1,8 @@
 import { withMutation } from "@use-pico/client/mutation";
 import type { EntitySchema } from "@use-pico/common/schema";
+import { transactionDisputeFn } from "~/client/@seller/transaction/server/fn/transactionDisputeFn";
+import type { TransactionSchema } from "~/client/@seller/transaction/server/schema/TransactionSchema";
 import { withTransactionListingQuery } from "~/client/@seller/transaction-listing/query/withTransactionListingQuery";
-import { transactionDisputeFn } from "~/server/@seller/transaction/fn/transactionDisputeFn";
-import type { TransactionSchema } from "~/server/@seller/transaction/schema/TransactionSchema";
 import { withTransactionQuery } from "../query/withTransactionQuery";
 
 export const withTransactionDisputeMutation = withMutation<

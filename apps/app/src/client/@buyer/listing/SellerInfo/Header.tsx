@@ -5,7 +5,7 @@ import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
-import type { SellerInfoSchema } from "~/server/@buyer/listing/schema/SellerInfoSchema";
+import type { SellerInfoSchema } from "~/client/@buyer/listing/server/schema/SellerInfoSchema";
 
 export namespace Header {
 	export interface Props {

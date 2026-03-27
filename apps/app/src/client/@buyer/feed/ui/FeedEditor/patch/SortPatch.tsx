@@ -1,9 +1,9 @@
 import { Container } from "@use-pico/client/ui/container";
 import { type FC, useState } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
+import type { FeedSchema } from "~/client/@buyer/feed/server/schema/FeedSchema";
+import type { ListingSortSchema } from "~/client/@buyer/listing/server/schema/ListingSortSchema";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
-import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
-import type { ListingSortSchema } from "~/server/@buyer/listing/schema/ListingSortSchema";
 import { ListingSortSelect } from "./ListingSortSelect";
 
 export namespace SortPatch {

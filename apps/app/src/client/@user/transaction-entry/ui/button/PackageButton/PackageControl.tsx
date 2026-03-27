@@ -5,7 +5,7 @@ import { translator } from "@use-pico/common/translator";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
-import { PackageSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryCreateSchema/PackageSchema";
+import { PackageSchema } from "~/client/@user/transaction-entry/server/schema/TransactionEntryCreateSchema/PackageSchema";
 
 export namespace PackageControl {
 	export interface Props extends Container.Props {

@@ -3,9 +3,9 @@ import { Container } from "@use-pico/client/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
+import type { FeedSchema } from "~/client/@buyer/feed/server/schema/FeedSchema";
 import { ConditionSelect } from "~/client/@common/condition/ui/ConditionSelect";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
-import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 
 export namespace ConditionPatch {
 	export interface Props extends Container.Props {

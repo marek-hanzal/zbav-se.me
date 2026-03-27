@@ -1,5 +1,5 @@
-import type { GalleryItemSchema } from "~/server/@user/gallery-item/schema/GalleryItemSchema";
-import type { UploadSchema } from "~/server/@user/upload/schema/UploadSchema";
+import type { GalleryItemSchema } from "~/client/@user/gallery-item/server/schema/GalleryItemSchema";
+import type { UploadSchema } from "~/client/@user/upload/server/schema/UploadSchema";
 
 export const useMaybeUpload = (items: GalleryItemSchema.Type[]): UploadSchema.Type | undefined => {
 	const [upload] = items.map((item) => item.upload);

@@ -7,7 +7,7 @@ import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import type { TransactionEntryPackage } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema/PackageSchema";
+import type { TransactionEntryPackage } from "~/client/@user/transaction-entry/server/schema/TransactionEntrySchema/PackageSchema";
 import { TypeContainer } from "../TypeContainer";
 
 export namespace Package {

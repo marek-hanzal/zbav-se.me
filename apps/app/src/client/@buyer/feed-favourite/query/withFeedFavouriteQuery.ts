@@ -1,10 +1,10 @@
 import { withEntityQuery } from "@use-pico/client/query";
-import type { FeedQuerySchema } from "~/server/@buyer/feed/schema/FeedQuerySchema";
-import { feedFavouriteCollectionFn } from "~/server/@buyer/feed-favourite/fn/feedFavouriteCollectionFn";
-import { feedFavouriteCountFn } from "~/server/@buyer/feed-favourite/fn/feedFavouriteCountFn";
-import { feedFavouriteFetchFn } from "~/server/@buyer/feed-favourite/fn/feedFavouriteFetchFn";
-import type { FeedFavouriteCountQuerySchema } from "~/server/@buyer/feed-favourite/schema/FeedFavouriteCountQuerySchema";
-import type { FeedFavouriteSchema } from "~/server/@buyer/feed-favourite/schema/FeedFavouriteSchema";
+import type { FeedQuerySchema } from "~/client/@buyer/feed/server/schema/FeedQuerySchema";
+import { feedFavouriteCollectionFn } from "~/client/@buyer/feed-favourite/server/fn/feedFavouriteCollectionFn";
+import { feedFavouriteCountFn } from "~/client/@buyer/feed-favourite/server/fn/feedFavouriteCountFn";
+import { feedFavouriteFetchFn } from "~/client/@buyer/feed-favourite/server/fn/feedFavouriteFetchFn";
+import type { FeedFavouriteCountQuerySchema } from "~/client/@buyer/feed-favourite/server/schema/FeedFavouriteCountQuerySchema";
+import type { FeedFavouriteSchema } from "~/client/@buyer/feed-favourite/server/schema/FeedFavouriteSchema";
 
 export const withFeedFavouriteQuery = withEntityQuery<
 	FeedFavouriteSchema.Type,

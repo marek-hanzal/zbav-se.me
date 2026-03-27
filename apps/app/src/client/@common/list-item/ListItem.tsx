@@ -2,7 +2,7 @@ import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import type { FC, ReactNode } from "react";
-import { UploadSchema } from "~/server/@user/upload/schema/UploadSchema";
+import { UploadSchema } from "~/client/@user/upload/server/schema/UploadSchema";
 import { Image } from "./Image";
 
 export namespace ListItem {

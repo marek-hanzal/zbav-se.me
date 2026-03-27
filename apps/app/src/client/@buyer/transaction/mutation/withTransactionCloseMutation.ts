@@ -1,7 +1,7 @@
 import { withMutation } from "@use-pico/client/mutation";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { transactionCloseFn } from "~/server/@buyer/transaction/fn/transactionCloseFn";
-import type { TransactionSchema } from "~/server/@buyer/transaction/schema/TransactionSchema";
+import { transactionCloseFn } from "~/client/@buyer/transaction/server/fn/transactionCloseFn";
+import type { TransactionSchema } from "~/client/@buyer/transaction/server/schema/TransactionSchema";
 import { withTransactionQuery } from "../query/withTransactionQuery";
 
 export const withTransactionCloseMutation = withMutation<

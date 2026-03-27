@@ -1,10 +1,10 @@
 import { withEntityQuery } from "@use-pico/client/query";
-import { categoryCollectionFn } from "~/server/@session/category/fn/categoryCollectionFn";
-import { categoryCountFn } from "~/server/@session/category/fn/categoryCountFn";
-import { categoryFetchFn } from "~/server/@session/category/fn/categoryFetchFn";
-import type { CategoryCountQuerySchema } from "~/server/@session/category/schema/CategoryCountQuerySchema";
-import type { CategoryQuerySchema } from "~/server/@session/category/schema/CategoryQuerySchema";
-import type { CategorySchema } from "~/server/@session/category/schema/CategorySchema";
+import { categoryCollectionFn } from "~/client/@session/category/server/fn/categoryCollectionFn";
+import { categoryCountFn } from "~/client/@session/category/server/fn/categoryCountFn";
+import { categoryFetchFn } from "~/client/@session/category/server/fn/categoryFetchFn";
+import type { CategoryCountQuerySchema } from "~/client/@session/category/server/schema/CategoryCountQuerySchema";
+import type { CategoryQuerySchema } from "~/client/@session/category/server/schema/CategoryQuerySchema";
+import type { CategorySchema } from "~/client/@session/category/server/schema/CategorySchema";
 
 export const withCategoryQuery = withEntityQuery<
 	CategorySchema.Type,

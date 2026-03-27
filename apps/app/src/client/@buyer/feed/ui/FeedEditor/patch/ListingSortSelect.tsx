@@ -5,7 +5,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import type { StateType } from "@use-pico/common/type";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import { type FC, useId } from "react";
-import type { ListingSortSchema } from "~/server/@buyer/listing/schema/ListingSortSchema";
+import type { ListingSortSchema } from "~/client/@buyer/listing/server/schema/ListingSortSchema";
 
 export namespace ListingSortSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {

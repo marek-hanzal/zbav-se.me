@@ -9,8 +9,8 @@ import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { DeliverySelect } from "~/client/@common/delivery/ui/DeliverySelect";
 import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
+import type { DraftSchema } from "~/client/@seller/draft/server/schema/DraftSchema";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
-import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 

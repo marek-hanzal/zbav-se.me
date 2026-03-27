@@ -7,9 +7,9 @@ import { translator } from "@use-pico/common/translator";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
+import { FeedCreateSchema } from "~/client/@buyer/feed/server/schema/FeedCreateSchema";
+import type { FeedSchema } from "~/client/@buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
-import { FeedCreateSchema } from "~/server/@buyer/feed/schema/FeedCreateSchema";
-import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 
 const FormSchema = FeedCreateSchema.pick({
 	name: true,

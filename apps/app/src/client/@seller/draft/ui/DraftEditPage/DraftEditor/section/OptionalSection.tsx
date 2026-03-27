@@ -2,7 +2,7 @@ import { Group } from "@use-pico/client/ui/group";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
 import { DeliveryValueList } from "~/client/@common/delivery/ui/DeliveryValueList";
-import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
+import type { DraftSchema } from "~/client/@seller/draft/server/schema/DraftSchema";
 import { ChevronAction } from "../ChevronAction";
 import type { DraftEditor } from "../DraftEditor";
 import { AgeValue } from "../value/AgeValue";

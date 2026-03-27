@@ -1,7 +1,7 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { favouriteToggleFn } from "~/client/@buyer/favourite/server/fn/favouriteToggleFn";
 import type { FavouriteToggleSchema } from "~/client/@buyer/favourite/server/schema/FavouriteToggleSchema";
-import type { ListingSchema } from "~/server/@buyer/listing/schema/ListingSchema";
+import type { ListingSchema } from "~/client/@buyer/listing/server/schema/ListingSchema";
 
 export const withFavouriteToggleMutation = withMutation<
 	FavouriteToggleSchema.Type,

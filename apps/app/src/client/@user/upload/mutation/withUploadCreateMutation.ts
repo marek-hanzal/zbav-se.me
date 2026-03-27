@@ -1,7 +1,7 @@
 import { withMutation } from "@use-pico/client/mutation";
-import { uploadCreateFn } from "~/server/@user/upload/fn/uploadCreateFn";
-import type { UploadCreateSchema } from "~/server/@user/upload/schema/UploadCreateSchema";
-import type { UploadSchema } from "~/server/@user/upload/schema/UploadSchema";
+import { uploadCreateFn } from "~/client/@user/upload/server/fn/uploadCreateFn";
+import type { UploadCreateSchema } from "~/client/@user/upload/server/schema/UploadCreateSchema";
+import type { UploadSchema } from "~/client/@user/upload/server/schema/UploadSchema";
 
 export const withUploadCreateMutation = withMutation<
 	UploadCreateSchema.Type,

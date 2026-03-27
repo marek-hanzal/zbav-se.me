@@ -1,15 +1,15 @@
 import { withEntityQuery } from "@use-pico/client/query";
-import { feedCollectionFn } from "~/server/@buyer/feed/fn/feedCollectionFn";
-import { feedCountFn } from "~/server/@buyer/feed/fn/feedCountFn";
-import { feedCreateFn } from "~/server/@buyer/feed/fn/feedCreateFn";
-import { feedDeleteFn } from "~/server/@buyer/feed/fn/feedDeleteFn";
-import { feedFetchFn } from "~/server/@buyer/feed/fn/feedFetchFn";
-import { feedPatchFn } from "~/server/@buyer/feed/fn/feedPatchFn";
-import type { FeedCountQuerySchema } from "~/server/@buyer/feed/schema/FeedCountQuerySchema";
-import type { FeedCreateSchema } from "~/server/@buyer/feed/schema/FeedCreateSchema";
-import type { FeedPatchSchema } from "~/server/@buyer/feed/schema/FeedPatchSchema";
-import type { FeedQuerySchema } from "~/server/@buyer/feed/schema/FeedQuerySchema";
-import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
+import { feedCollectionFn } from "~/client/@buyer/feed/server/fn/feedCollectionFn";
+import { feedCountFn } from "~/client/@buyer/feed/server/fn/feedCountFn";
+import { feedCreateFn } from "~/client/@buyer/feed/server/fn/feedCreateFn";
+import { feedDeleteFn } from "~/client/@buyer/feed/server/fn/feedDeleteFn";
+import { feedFetchFn } from "~/client/@buyer/feed/server/fn/feedFetchFn";
+import { feedPatchFn } from "~/client/@buyer/feed/server/fn/feedPatchFn";
+import type { FeedCountQuerySchema } from "~/client/@buyer/feed/server/schema/FeedCountQuerySchema";
+import type { FeedCreateSchema } from "~/client/@buyer/feed/server/schema/FeedCreateSchema";
+import type { FeedPatchSchema } from "~/client/@buyer/feed/server/schema/FeedPatchSchema";
+import type { FeedQuerySchema } from "~/client/@buyer/feed/server/schema/FeedQuerySchema";
+import type { FeedSchema } from "~/client/@buyer/feed/server/schema/FeedSchema";
 
 export const withFeedQuery = withEntityQuery<
 	FeedSchema.Type,

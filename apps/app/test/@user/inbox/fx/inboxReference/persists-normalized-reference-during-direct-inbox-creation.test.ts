@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCreateFx } from "~/server/@seller/listing/fx/listingCreateFx";
-import { categoryFetchFx } from "~/server/@session/category/fx/categoryFetchFx";
-import { locationAutocompleteFx } from "~/server/@session/location/fx/locationAutocompleteFx";
-import { inboxCreateFx } from "~/server/@user/inbox/fx/inboxCreateFx";
-import { uploadCreateFx } from "~/server/@user/upload/fx/uploadCreateFx";
+import { listingCreateFx } from "~/client/@seller/listing/server/fx/listingCreateFx";
+import { categoryFetchFx } from "~/client/@session/category/server/fx/categoryFetchFx";
+import { locationAutocompleteFx } from "~/client/@session/location/server/fx/locationAutocompleteFx";
+import { inboxCreateFx } from "~/client/@user/inbox/server/fx/inboxCreateFx";
+import { uploadCreateFx } from "~/client/@user/upload/server/fx/uploadCreateFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";

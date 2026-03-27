@@ -3,7 +3,7 @@ import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { favouriteToggleFx } from "~/client/@buyer/favourite/server/fx/favouriteToggleFx";
 import { FavouriteToggleSchema } from "~/client/@buyer/favourite/server/schema/FavouriteToggleSchema";
-import { ListingSchema } from "~/server/@buyer/listing/schema/ListingSchema";
+import { ListingSchema } from "~/client/@buyer/listing/server/schema/ListingSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withCatchFx } from "~/server/effect/withCatchFx";

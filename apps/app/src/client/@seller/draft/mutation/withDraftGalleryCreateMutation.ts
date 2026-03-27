@@ -1,7 +1,7 @@
 import { withMutation } from "@use-pico/client/mutation";
-import { draftGalleryCreateFn } from "~/server/@seller/draft-gallery/fn/draftGalleryCreateFn";
-import type { DraftGalleryCreateSchema } from "~/server/@seller/draft-gallery/schema/DraftGalleryCreateSchema";
-import type { GallerySchema } from "~/server/@user/gallery/schema/GallerySchema";
+import { draftGalleryCreateFn } from "~/client/@seller/draft-gallery/server/fn/draftGalleryCreateFn";
+import type { DraftGalleryCreateSchema } from "~/client/@seller/draft-gallery/server/schema/DraftGalleryCreateSchema";
+import type { GallerySchema } from "~/client/@user/gallery/server/schema/GallerySchema";
 import { withDraftQuery } from "../query/withDraftQuery";
 
 export const withDraftGalleryCreateMutation = withMutation<

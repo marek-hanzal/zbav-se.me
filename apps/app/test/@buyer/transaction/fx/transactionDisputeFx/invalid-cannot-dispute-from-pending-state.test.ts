@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCreateFx } from "~/server/@buyer/transaction/fx/transactionCreateFx";
-import { transactionDisputeFx } from "~/server/@buyer/transaction/fx/transactionDisputeFx";
+import { transactionCreateFx } from "~/client/@buyer/transaction/server/fx/transactionCreateFx";
+import { transactionDisputeFx } from "~/client/@buyer/transaction/server/fx/transactionDisputeFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createListingFx } from "~/test/utils/createListingFx";

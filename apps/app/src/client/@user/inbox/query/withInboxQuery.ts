@@ -1,14 +1,14 @@
 import { withEntityQuery } from "@use-pico/client/query";
-import { inboxCollectionFn } from "~/server/@user/inbox/fn/inboxCollectionFn";
-import { inboxCountFn } from "~/server/@user/inbox/fn/inboxCountFn";
-import { inboxFetchFn } from "~/server/@user/inbox/fn/inboxFetchFn";
-import { inboxPatchCollectionFn } from "~/server/@user/inbox/fn/inboxPatchCollectionFn";
-import { inboxPatchFn } from "~/server/@user/inbox/fn/inboxPatchFn";
-import type { InboxCountQuerySchema } from "~/server/@user/inbox/schema/InboxCountQuerySchema";
-import type { InboxPatchCollectionSchema } from "~/server/@user/inbox/schema/InboxPatchCollectionSchema";
-import type { InboxPatchSchema } from "~/server/@user/inbox/schema/InboxPatchSchema";
-import type { InboxQuerySchema } from "~/server/@user/inbox/schema/InboxQuerySchema";
-import type { InboxSchema } from "~/server/@user/inbox/schema/InboxSchema";
+import { inboxCollectionFn } from "~/client/@user/inbox/server/fn/inboxCollectionFn";
+import { inboxCountFn } from "~/client/@user/inbox/server/fn/inboxCountFn";
+import { inboxFetchFn } from "~/client/@user/inbox/server/fn/inboxFetchFn";
+import { inboxPatchCollectionFn } from "~/client/@user/inbox/server/fn/inboxPatchCollectionFn";
+import { inboxPatchFn } from "~/client/@user/inbox/server/fn/inboxPatchFn";
+import type { InboxCountQuerySchema } from "~/client/@user/inbox/server/schema/InboxCountQuerySchema";
+import type { InboxPatchCollectionSchema } from "~/client/@user/inbox/server/schema/InboxPatchCollectionSchema";
+import type { InboxPatchSchema } from "~/client/@user/inbox/server/schema/InboxPatchSchema";
+import type { InboxQuerySchema } from "~/client/@user/inbox/server/schema/InboxQuerySchema";
+import type { InboxSchema } from "~/client/@user/inbox/server/schema/InboxSchema";
 
 export const withInboxQuery = withEntityQuery<
 	InboxSchema.Type,

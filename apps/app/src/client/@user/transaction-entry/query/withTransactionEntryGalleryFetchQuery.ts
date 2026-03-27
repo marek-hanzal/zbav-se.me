@@ -1,7 +1,7 @@
 import { withQuery } from "@use-pico/client/query";
-import type { GallerySchema } from "~/server/@user/gallery/schema/GallerySchema";
-import { transactionEntryGalleryFetchFn } from "~/server/@user/transaction-entry/fn/transactionEntryGalleryFetchFn";
-import type { TransactionEntryGalleryQuerySchema } from "~/server/@user/transaction-entry/schema/TransactionEntryGalleryQuerySchema";
+import type { GallerySchema } from "~/client/@user/gallery/server/schema/GallerySchema";
+import { transactionEntryGalleryFetchFn } from "~/client/@user/transaction-entry/server/fn/transactionEntryGalleryFetchFn";
+import type { TransactionEntryGalleryQuerySchema } from "~/client/@user/transaction-entry/server/schema/TransactionEntryGalleryQuerySchema";
 
 export const withTransactionEntryGalleryFetchQuery = withQuery<
 	TransactionEntryGalleryQuerySchema.Type,

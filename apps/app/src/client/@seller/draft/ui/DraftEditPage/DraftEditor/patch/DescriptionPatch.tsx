@@ -9,7 +9,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
-import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
+import type { DraftSchema } from "~/client/@seller/draft/server/schema/DraftSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 

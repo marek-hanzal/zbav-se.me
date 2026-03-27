@@ -3,7 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { favouriteFetchFx } from "~/client/@buyer/favourite/server/fx/favouriteFetchFx";
 import type { FavouriteCreateSchema } from "~/client/@buyer/favourite/server/schema/FavouriteCreateSchema";
-import { feedFetchFx } from "~/server/@buyer/feed/fx/feedFetchFx";
+import { feedFetchFx } from "~/client/@buyer/feed/server/fx/feedFetchFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 

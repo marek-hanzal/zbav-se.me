@@ -9,7 +9,7 @@ import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/client/@common/location/ui/LocationSelect";
-import { PersonalSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryCreateSchema/PersonalSchema";
+import { PersonalSchema } from "~/client/@user/transaction-entry/server/schema/TransactionEntryCreateSchema/PersonalSchema";
 
 export namespace PersonalControl {
 	export interface Props extends Container.Props {

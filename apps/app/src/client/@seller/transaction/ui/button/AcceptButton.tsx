@@ -3,8 +3,8 @@ import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import type { TransactionSchema } from "~/client/@seller/transaction/server/schema/TransactionSchema";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
-import type { TransactionSchema } from "~/server/@seller/transaction/schema/TransactionSchema";
 import { withTransactionAcceptMutation } from "../../mutation/withTransactionAcceptMutation";
 import { archiveBuyerMessageInbox } from "../../service/archiveBuyerMessageInbox";
 

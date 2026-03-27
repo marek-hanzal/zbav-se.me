@@ -6,8 +6,8 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import type { ListingSchema } from "~/client/@buyer/listing/server/schema/ListingSchema";
 import { CategoryInline } from "~/client/@session/category/ui/CategoryInline";
-import type { ListingSchema } from "~/server/@buyer/listing/schema/ListingSchema";
 import { SellerInfo } from "../../SellerInfo";
 
 export namespace InfoSection {

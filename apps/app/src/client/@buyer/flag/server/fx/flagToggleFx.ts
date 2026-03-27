@@ -1,0 +1,106 @@
+import { Effect } from "effect";
+import { flagCreateFx } from "~/client/@buyer/flag/server/fx/flagCreateFx";
+import { flagDeleteFx } from "~/client/@buyer/flag/server/fx/flagDeleteFx";
+import type { FlagToggleSchema } from "~/client/@buyer/flag/server/schema/FlagToggleSchema";
+import { listingCheckIfOwnFx } from "~/client/@buyer/listing/server/fx/listingCheckIfOwnFx";
+import { listingFetchFx } from "~/client/@buyer/listing/server/fx/listingFetchFx";
+import { listingEventCreateFx } from "~/client/@buyer/listing-event/server/fx/listingEventCreateFx";
+import { inboxCreateFx } from "~/client/@user/inbox/server/fx/inboxCreateFx";
+import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+
+export namespace flagToggleFx {
+	export interface Props extends FlagToggleSchema.Type {
+		userId: string;
+	}
+}
+
+export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
+	userId,
+	toggle,
+	listingId,
+}: flagToggleFx.Props) {
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const listingUserId = yield* listingCheckIfOwnFx({
+				userId,
+				listingId,
+				message: "You cannot flag your own listing",
+			});
+
+			return yield* Effect.if(toggle, {
+				onTrue() {
+					return Effect.gen(function* () {
+						yield* flagCreateFx({
+							userId,
+							listingId,
+						});
+
+						yield* listingEventCreateFx({
+							userId,
+							listingId,
+							event: "flag",
+						}).pipe(Effect.ignore);
+
+						yield* inboxCreateFx({
+							userId: listingUserId,
+							reference: [
+								listingId,
+							],
+							family: "reaction",
+							type: "flag",
+							payload: {
+								listingId,
+							},
+							priority: "common",
+						});
+
+						return yield* listingFetchFx({
+							userId,
+							where: {
+								id: listingId,
+							},
+							scope: {},
+						});
+					});
+				},
+				onFalse() {
+					return Effect.gen(function* () {
+						yield* flagDeleteFx({
+							userId,
+							listingId,
+						});
+
+						yield* listingEventCreateFx({
+							userId,
+							listingId,
+							event: "unflag",
+						}).pipe(Effect.ignore);
+
+						yield* inboxCreateFx({
+							userId: listingUserId,
+							reference: [
+								listingId,
+							],
+							family: "reaction",
+							type: "unflag",
+							payload: {
+								listingId,
+							},
+							priority: "common",
+						});
+
+						return yield* listingFetchFx({
+							userId,
+							where: {
+								id: listingId,
+							},
+							scope: {},
+						});
+					});
+				},
+			});
+		}),
+	);
+});
+
+export type flagToggleFx = ReturnType<typeof flagToggleFx>;

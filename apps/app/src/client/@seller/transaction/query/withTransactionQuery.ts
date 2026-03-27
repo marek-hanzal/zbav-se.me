@@ -1,10 +1,10 @@
 import { withEntityQuery } from "@use-pico/client/query";
-import { transactionCollectionFn } from "~/server/@seller/transaction/fn/transactionCollectionFn";
-import { transactionCountFn } from "~/server/@seller/transaction/fn/transactionCountFn";
-import { transactionFetchFn } from "~/server/@seller/transaction/fn/transactionFetchFn";
-import type { TransactionCountQuerySchema } from "~/server/@seller/transaction/schema/TransactionCountQuerySchema";
-import type { TransactionQuerySchema } from "~/server/@seller/transaction/schema/TransactionQuerySchema";
-import type { TransactionSchema } from "~/server/@seller/transaction/schema/TransactionSchema";
+import { transactionCollectionFn } from "~/client/@seller/transaction/server/fn/transactionCollectionFn";
+import { transactionCountFn } from "~/client/@seller/transaction/server/fn/transactionCountFn";
+import { transactionFetchFn } from "~/client/@seller/transaction/server/fn/transactionFetchFn";
+import type { TransactionCountQuerySchema } from "~/client/@seller/transaction/server/schema/TransactionCountQuerySchema";
+import type { TransactionQuerySchema } from "~/client/@seller/transaction/server/schema/TransactionQuerySchema";
+import type { TransactionSchema } from "~/client/@seller/transaction/server/schema/TransactionSchema";
 
 export const withTransactionQuery = withEntityQuery<
 	TransactionSchema.Type,

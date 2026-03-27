@@ -9,8 +9,8 @@ import type { FC } from "react";
 import { ConditionIcon } from "~/client/@common/condition/ui/ConditionIcon";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/client/@common/listing/ui/ListingPrice";
+import type { ListingSchema } from "~/client/@seller/listing/server/schema/ListingSchema";
 import { CategoryInline } from "~/client/@session/category/ui/CategoryInline";
-import type { ListingSchema } from "~/server/@seller/listing/schema/ListingSchema";
 
 export namespace ListingCard {
 	export interface Hooks {

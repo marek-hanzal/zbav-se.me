@@ -3,7 +3,7 @@ import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { FC } from "react";
-import type { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
+import type { LocationSchema } from "~/client/@session/location/server/schema/LocationSchema";
 
 export namespace LocationBadge {
 	export interface Props extends Badge.Props {

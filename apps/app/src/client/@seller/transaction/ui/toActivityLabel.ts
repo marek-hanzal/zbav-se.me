@@ -1,7 +1,7 @@
 import { translator } from "@use-pico/common/translator";
 import { match } from "ts-pattern";
-import type { TransactionEntrySchema } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema";
-import { TransactionEntryText } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema/TextSchema";
+import type { TransactionEntrySchema } from "~/client/@user/transaction-entry/server/schema/TransactionEntrySchema";
+import { TransactionEntryText } from "~/client/@user/transaction-entry/server/schema/TransactionEntrySchema/TextSchema";
 import { toStatusLabel } from "./toStatusLabel";
 
 export namespace toActivityLabel {

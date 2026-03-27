@@ -3,9 +3,9 @@ import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { FC } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
+import type { FeedSchema } from "~/client/@buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { CategorySelect } from "~/client/@session/category/ui/CategorySelect";
-import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 
 export namespace CategoryPatch {
 	export interface Props extends Container.Props {

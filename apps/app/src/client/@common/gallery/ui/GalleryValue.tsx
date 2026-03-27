@@ -3,7 +3,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
-import type { UploadSchema } from "~/server/@user/upload/schema/UploadSchema";
+import type { UploadSchema } from "~/client/@user/upload/server/schema/UploadSchema";
 
 export namespace GalleryValue {
 	export interface Props extends Container.Props {

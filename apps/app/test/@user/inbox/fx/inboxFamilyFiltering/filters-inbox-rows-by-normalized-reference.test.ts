@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withInboxQueryBuilderFx } from "~/server/@user/inbox/db/withInboxQueryBuilderFx";
-import { withInboxSelectFx } from "~/server/@user/inbox/db/withInboxSelectFx";
+import { withInboxQueryBuilderFx } from "~/client/@user/inbox/server/db/withInboxQueryBuilderFx";
+import { withInboxSelectFx } from "~/client/@user/inbox/server/db/withInboxSelectFx";
 import { auth } from "~/server/auth/auth";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";

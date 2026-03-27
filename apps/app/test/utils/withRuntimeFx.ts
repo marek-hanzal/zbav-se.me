@@ -1,7 +1,7 @@
 import type { Effect } from "effect";
-import { withLocationFx } from "~/server/@session/location/fx/withLocationFx";
-import { withTransactionContextFx } from "~/server/@user/transaction/context/withTransactionContextFx";
-import { withUploadFx } from "~/server/@user/upload/context/withUploadFx";
+import { withLocationFx } from "~/client/@session/location/server/fx/withLocationFx";
+import { withTransactionContextFx } from "~/client/@user/transaction/server/context/withTransactionContextFx";
+import { withUploadFx } from "~/client/@user/upload/server/context/withUploadFx";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";

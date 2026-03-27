@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { useState } from "react";
+import type { LocationSchema } from "~/client/@session/location/server/schema/LocationSchema";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
 import { withTransactionEntryQuery } from "~/client/@user/transaction-entry/query/withTransactionEntryQuery";
-import type { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
 import { Content } from "./Content";
 import { Sheet } from "./Sheet";
 import { Trigger } from "./Trigger";

@@ -1,12 +1,12 @@
 import { withEntityQuery } from "@use-pico/client/query";
-import { transactionEntryCollectionFn } from "~/server/@user/transaction-entry/fn/transactionEntryCollectionFn";
-import { transactionEntryCountFn } from "~/server/@user/transaction-entry/fn/transactionEntryCountFn";
-import { transactionEntryCreateFn } from "~/server/@user/transaction-entry/fn/transactionEntryCreateFn";
-import { transactionEntryFetchFn } from "~/server/@user/transaction-entry/fn/transactionEntryFetchFn";
-import type { TransactionEntryCountQuerySchema } from "~/server/@user/transaction-entry/schema/TransactionEntryCountQuerySchema";
-import type { TransactionEntryCreateSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryCreateSchema";
-import type { TransactionEntryQuerySchema } from "~/server/@user/transaction-entry/schema/TransactionEntryQuerySchema";
-import type { TransactionEntrySchema } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema";
+import { transactionEntryCollectionFn } from "~/client/@user/transaction-entry/server/fn/transactionEntryCollectionFn";
+import { transactionEntryCountFn } from "~/client/@user/transaction-entry/server/fn/transactionEntryCountFn";
+import { transactionEntryCreateFn } from "~/client/@user/transaction-entry/server/fn/transactionEntryCreateFn";
+import { transactionEntryFetchFn } from "~/client/@user/transaction-entry/server/fn/transactionEntryFetchFn";
+import type { TransactionEntryCountQuerySchema } from "~/client/@user/transaction-entry/server/schema/TransactionEntryCountQuerySchema";
+import type { TransactionEntryCreateSchema } from "~/client/@user/transaction-entry/server/schema/TransactionEntryCreateSchema";
+import type { TransactionEntryQuerySchema } from "~/client/@user/transaction-entry/server/schema/TransactionEntryQuerySchema";
+import type { TransactionEntrySchema } from "~/client/@user/transaction-entry/server/schema/TransactionEntrySchema";
 
 export const withTransactionEntryQuery = withEntityQuery<
 	TransactionEntrySchema.Type,

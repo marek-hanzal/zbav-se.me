@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { flagToggleFx } from "~/server/@buyer/flag/fx/flagToggleFx";
+import { flagToggleFx } from "~/client/@buyer/flag/server/fx/flagToggleFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createListingFx } from "~/test/utils/createListingFx";

@@ -2,9 +2,9 @@ import type { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import type { FC } from "react";
 import { SellerInfoButton } from "~/client/@buyer/listing/~public/SellerInfoButton";
+import type { TransactionSchema } from "~/client/@buyer/transaction/server/schema/TransactionSchema";
 import { MessageButtonUi } from "~/client/@user/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
-import type { TransactionSchema } from "~/server/@buyer/transaction/schema/TransactionSchema";
 import { RejectButton } from "../button/RejectButton";
 
 export namespace PendingMessage {

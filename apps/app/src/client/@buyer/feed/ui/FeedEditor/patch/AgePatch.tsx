@@ -3,9 +3,9 @@ import { Container } from "@use-pico/client/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
+import type { FeedSchema } from "~/client/@buyer/feed/server/schema/FeedSchema";
 import { AgeSelection } from "~/client/@common/age/ui/AgeSelection";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
-import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 
 export namespace AgePatch {
 	export interface Props extends Container.Props {

@@ -5,7 +5,7 @@ import { withFallback } from "@use-pico/client/utils";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { translator } from "@use-pico/common/translator";
 import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
-import type { ListingQuerySchema } from "~/server/@buyer/listing/schema/ListingQuerySchema";
+import type { ListingQuerySchema } from "~/client/@buyer/listing/server/schema/ListingQuerySchema";
 
 export namespace ListingCount {
 	export interface Props extends MarkSuspense.Props {

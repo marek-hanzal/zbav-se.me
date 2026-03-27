@@ -6,7 +6,7 @@ import type { FC } from "react";
 import { GalleryValue } from "~/client/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/client/@common/location/ui/LocationValue";
 import { TitleValue } from "~/client/@common/title/ui/TitleValue";
-import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
+import type { DraftSchema } from "~/client/@seller/draft/server/schema/DraftSchema";
 import { ChevronAction } from "../ChevronAction";
 import type { DraftEditor } from "../DraftEditor";
 import { CategoryValue } from "../value/CategoryValue";

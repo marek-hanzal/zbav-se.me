@@ -4,7 +4,7 @@ import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
-import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
+import type { DraftSchema } from "~/client/@seller/draft/server/schema/DraftSchema";
 import { CreateListingButton } from "../button/CreateListingButton";
 import { DeleteButton } from "../button/DeleteButton";
 

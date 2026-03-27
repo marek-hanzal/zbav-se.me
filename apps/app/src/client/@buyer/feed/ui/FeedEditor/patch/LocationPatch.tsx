@@ -2,10 +2,10 @@ import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import { type FC, useState } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
+import type { FeedSchema } from "~/client/@buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/client/@common/location/ui/LocationSelect";
-import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
-import type { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
+import type { LocationSchema } from "~/client/@session/location/server/schema/LocationSchema";
 
 export namespace LocationPatch {
 	export interface Props extends Container.Props {

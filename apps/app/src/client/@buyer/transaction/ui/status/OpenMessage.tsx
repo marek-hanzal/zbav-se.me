@@ -3,13 +3,13 @@ import type { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import { type FC, useCallback, useState } from "react";
 import { SellerInfoButton } from "~/client/@buyer/listing/~public/SellerInfoButton";
+import type { TransactionSchema } from "~/client/@buyer/transaction/server/schema/TransactionSchema";
 import { GalleryUploadButton } from "~/client/@common/gallery/ui/GalleryUploadButton";
 import { MessageButtonUi } from "~/client/@user/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
 import { withTransactionEntryGalleryCreateMutation } from "~/client/@user/transaction-entry/mutation/withTransactionEntryGalleryCreateMutation";
 import { LocationButton } from "~/client/@user/transaction-entry/ui/button/LocationButton";
 import { PersonalButton } from "~/client/@user/transaction-entry/ui/button/PersonalButton";
-import type { TransactionSchema } from "~/server/@buyer/transaction/schema/TransactionSchema";
 import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";
 
 export namespace OpenMessage {

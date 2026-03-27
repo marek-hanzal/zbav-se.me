@@ -8,7 +8,7 @@ import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/client/@common/gallery/ui/GalleryUpload";
 import { withDraftGalleryCreateMutation } from "~/client/@seller/draft/mutation/withDraftGalleryCreateMutation";
 import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
-import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
+import type { DraftSchema } from "~/client/@seller/draft/server/schema/DraftSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 

@@ -1,7 +1,7 @@
 import { withMutation } from "@use-pico/client/mutation";
-import { flagToggleFn } from "~/server/@buyer/flag/fn/flagToggleFn";
-import type { FlagToggleSchema } from "~/server/@buyer/flag/schema/FlagToggleSchema";
-import type { ListingSchema } from "~/server/@buyer/listing/schema/ListingSchema";
+import { flagToggleFn } from "~/client/@buyer/flag/server/fn/flagToggleFn";
+import type { FlagToggleSchema } from "~/client/@buyer/flag/server/schema/FlagToggleSchema";
+import type { ListingSchema } from "~/client/@buyer/listing/server/schema/ListingSchema";
 
 export const withFlagToggleMutation = withMutation<
 	FlagToggleSchema.Type,

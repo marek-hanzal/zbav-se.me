@@ -7,8 +7,8 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
+import type { ListingSchema } from "~/client/@buyer/listing/server/schema/ListingSchema";
 import { withTransactionQuery } from "~/client/@buyer/transaction/query/withTransactionQuery";
-import type { ListingSchema } from "~/server/@buyer/listing/schema/ListingSchema";
 
 export namespace TransactionButton {
 	export interface Props extends Button.Props {
