@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { transactionAcceptFx } from "~/@seller/transaction/fx/transactionAcceptFx";
+import { transactionAcceptFx } from "~/server/@seller/transaction/fx/transactionAcceptFx";
 import type { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
 
@@ -18,14 +18,14 @@ export const createOpenScenarioFx = ({ sellerId, buyerId, database }: CreateOpen
 			buyerId,
 		});
 
-		const transaction = yield* Effect.promise(() =>
-			database.kysely
+		const transaction = yield* Effect.promise(() => {
+			return database.kysely
 				.selectFrom("transaction")
 				.select("id")
 				.where("listingId", "=", listingId)
 				.where("userId", "=", buyerId)
-				.executeTakeFirstOrThrow(),
-		);
+				.executeTakeFirstOrThrow();
+		});
 
 		yield* transactionAcceptFx({
 			transactionId: transaction.id,

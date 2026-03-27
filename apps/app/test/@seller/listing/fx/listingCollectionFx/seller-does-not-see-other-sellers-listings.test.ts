@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCollectionFx } from "~/@seller/listing/fx/listingCollectionFx";
-import { auth } from "~/auth/auth";
+import { listingCollectionFx } from "~/server/@buyer/listing/fx/listingCollectionFx";
+import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createListingFx } from "~/test/utils/createListingFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
@@ -9,42 +9,42 @@ import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 describe("listingCollectionFx (seller)", () => {
 	it("seller does not see other sellers' listings", async () => {
 		const database = await testabase("sellerListing-isolation");
-		const { api } = auth(() => database.dialect);
 
-		const { user: seller1 } = await api.signUpEmail({
-			body: {
-				email: "seller1@seller-listing-iso.cz",
-				name: "Seller1",
-				password: "12345678",
-			},
-		});
-		const { user: seller2 } = await api.signUpEmail({
-			body: {
-				email: "seller2@seller-listing-iso.cz",
-				name: "Seller2",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { api } = auth(() => database.dialect);
 
-		const listing1 = await createListingFx(seller1.id).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
-		const listing2 = await createListingFx(seller2.id).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
+			const { user: seller1 } = yield* Effect.promise(async () => {
+				return api.signUpEmail({
+					body: {
+						email: "seller1@seller-listing-iso.cz",
+						name: "Seller1",
+						password: "12345678",
+					},
+				});
+			});
+			const { user: seller2 } = yield* Effect.promise(async () => {
+				return api.signUpEmail({
+					body: {
+						email: "seller2@seller-listing-iso.cz",
+						name: "Seller2",
+						password: "12345678",
+					},
+				});
+			});
 
-		const collection = await Effect.gen(function* () {
-			return yield* listingCollectionFx({
+			const listing1 = yield* createListingFx(seller1.id);
+			const listing2 = yield* createListingFx(seller2.id);
+
+			const collection = yield* listingCollectionFx({
+				userId: seller1.id,
 				scope: {
 					userId: seller1.id,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		const ids = collection.map((l) => l.id);
-		expect(ids).toContain(listing1.id);
-		expect(ids).not.toContain(listing2.id);
+			const ids = collection.map((l) => l.id);
+			expect(ids).toContain(listing1.id);
+			expect(ids).not.toContain(listing2.id);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

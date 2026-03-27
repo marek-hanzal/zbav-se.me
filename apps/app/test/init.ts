@@ -1,6 +1,6 @@
 import { withTestabaseFx } from "@use-pico/server/test";
 import { Effect } from "effect";
-import { database } from "~/database";
+import { databaseFx } from "~/server/database/databaseFx";
 
 export default async function globalSetup() {
 	return withTestabaseFx({
@@ -8,6 +8,6 @@ export default async function globalSetup() {
 		name: "zbav-seme-test-postgres",
 		port: 55432,
 		template: "test",
-		databaseFx: database,
+		databaseFx,
 	}).pipe(Effect.runPromise);
 }
