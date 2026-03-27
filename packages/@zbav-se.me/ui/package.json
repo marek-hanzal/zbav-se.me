@@ -18,9 +18,9 @@
 	"devDependencies": {
 		"@types/node": "25.5.0",
 		"@types/react": "19.2.14",
-		"@typescript/native-preview": "7.0.0-dev.20260325.1",
+		"@typescript/native-preview": "7.0.0-dev.20260327.2",
 		"@use-pico/tsconfig": "5.0.0",
-		"knip": "6.0.5",
+		"knip": "6.0.6",
 		"typescript": "beta"
 	},
 	"exports": {

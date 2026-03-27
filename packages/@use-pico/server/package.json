@@ -17,10 +17,12 @@
 		"@use-pico/common": "workspace:*",
 		"cli-progress": "3.12.0",
 		"effect": "3.21.0",
+		"jose": "6.2.2",
 		"kysely": "0.28.14",
 		"pg": "8.20.0",
 		"timer-node": "5.0.9",
-		"yaml": "2.8.3"
+		"yaml": "2.8.3",
+		"zod": "4.3.6"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "29.0.2",
@@ -30,15 +32,15 @@
 		"@types/node": "25.5.0",
 		"@types/pg": "8.20.0",
 		"@types/react": "19.2.14",
-		"@typescript/native-preview": "7.0.0-dev.20260325.1",
+		"@typescript/native-preview": "7.0.0-dev.20260327.2",
 		"@use-pico/tsconfig": "5.0.0",
-		"knip": "6.0.5",
+		"knip": "6.0.6",
 		"npm-run-all2": "8.0.4",
 		"react": "19.2.4",
 		"rollup": "4.60.0",
 		"rollup-plugin-dts": "6.4.1",
 		"typescript": "beta",
-		"vitest": "4.1.1"
+		"vitest": "4.1.2"
 	},
 	"files": [
 		"src"

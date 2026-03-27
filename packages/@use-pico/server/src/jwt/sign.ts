@@ -1,10 +1,9 @@
 import { genId } from "@use-pico/common/gen-id";
 import { SignJWT } from "jose";
 import type z from "zod";
-import type { JwtPayloadSchema } from "~/schema/JwtPayloadSchema";
 
 export namespace sign {
-	export interface Props<TSchema extends JwtPayloadSchema> {
+	export interface Props<out TSchema extends z.ZodObject> {
 		schema: TSchema;
 		issuer: string;
 		userId: string;
@@ -17,7 +16,7 @@ export namespace sign {
 	}
 }
 
-export const sign = <TSchema extends JwtPayloadSchema>({
+export const sign = <const TSchema extends z.ZodObject>({
 	schema: _,
 	issuer,
 	userId,

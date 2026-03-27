@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
-import { DefaultFilterSchema } from "~/common/schema/DefaultFilterSchema";
 import { InboxFamilyEnumSchema } from "~/common/inbox/enum/InboxFamilyEnumSchema";
 import { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
 import { InboxTypeEnumSchema } from "~/common/inbox/enum/InboxTypeEnumSchema";
+import { DefaultFilterSchema } from "~/common/schema/DefaultFilterSchema";
 
 export const InboxFilterSchema = z
 	.looseObject({

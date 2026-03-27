@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { cac } from "cac";
 import { Effect } from "effect";
-import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
+import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 
 export const SeedArgsSchema = z.object({
 	count: z.coerce.number().int().positive(),
@@ -35,21 +35,23 @@ export const parseSeedArgsFx = Effect.fn("parseSeedArgsFx")(function* (input: {
 	);
 
 	if (parsedCli.options.help) {
-		return (yield* Effect.sync(() => {
+		return yield* Effect.sync(() => {
 			process.exit(0);
-		})) as never;
+		});
 	}
 
 	return yield* Effect.try({
-		try: () =>
-			SeedArgsSchema.parse({
+		try: () => {
+			return SeedArgsSchema.parse({
 				count: parsedCli.options.count,
 				user: parsedCli.options.user,
-			}),
-		catch: () =>
-			new InvalidRequestErrorFx({
+			});
+		},
+		catch: () => {
+			return new InvalidRequestErrorFx({
 				message: "Invalid arguments. Required: --count <positive-int> --user <email>",
-			}),
+			});
+		},
 	});
 });
 

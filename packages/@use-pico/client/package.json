@@ -12,8 +12,8 @@
 	},
 	"dependencies": {
 		"@tanstack/react-query": "5.95.2",
-		"@tanstack/react-router": "1.168.4",
-		"@tanstack/react-start": "1.167.8",
+		"@tanstack/react-router": "1.168.7",
+		"@tanstack/react-start": "1.167.12",
 		"@types/luxon": "3.7.1",
 		"@use-pico/cls": "workspace:*",
 		"@use-pico/common": "workspace:*",
@@ -34,9 +34,9 @@
 		"@rollup/plugin-typescript": "12.3.0",
 		"@types/node": "25.5.0",
 		"@types/react": "19.2.14",
-		"@typescript/native-preview": "7.0.0-dev.20260325.1",
+		"@typescript/native-preview": "7.0.0-dev.20260327.2",
 		"@use-pico/tsconfig": "5.0.0",
-		"knip": "6.0.5",
+		"knip": "6.0.6",
 		"rollup": "4.60.0",
 		"rollup-plugin-dts": "6.4.1",
 		"typescript": "beta"
