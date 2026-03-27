@@ -1,1 +1,1 @@
-export { DraftListPage } from "../DraftListPage";
+export { DraftListPage } from "../ui/DraftListPage";

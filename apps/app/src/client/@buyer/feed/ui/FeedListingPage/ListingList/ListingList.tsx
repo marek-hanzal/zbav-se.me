@@ -16,7 +16,7 @@ import { DeadEndIcon } from "@zbav-se.me/ui/icon";
 import { uiCtaLinkButton } from "@zbav-se.me/ui/ui";
 import { type Ref, Suspense, useCallback, useEffect, useRef } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
-import { withListingQuery } from "~/client/@buyer/listing/withListingQuery";
+import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 import { EmptyStatus } from "~/client/@common/status/ui/EmptyStatus";
 import { Item } from "./Item";
 

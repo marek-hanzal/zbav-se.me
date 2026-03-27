@@ -1,1 +1,1 @@
-export { MyListingPage } from "../MyListingPage";
+export { MyListingPage } from "../ui/MyListingPage";

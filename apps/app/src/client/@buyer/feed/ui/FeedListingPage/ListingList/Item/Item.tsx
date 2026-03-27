@@ -5,7 +5,7 @@ import { withFallback } from "@use-pico/client/utils";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { Suspense, useState } from "react";
 import { useListingEvent } from "~/client/@buyer/listing/~public/useListingEvent";
-import { withListingQuery } from "~/client/@buyer/listing/withListingQuery";
+import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/client/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/client/@common/location/ui/LocationBadge";

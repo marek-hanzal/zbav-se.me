@@ -4,7 +4,7 @@ import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
 import { withIgnoreToggleMutation } from "~/client/@buyer/ignore/withIgnoreToggleMutation";
-import { withListingQuery } from "~/client/@buyer/listing/withListingQuery";
+import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 
 export namespace IgnoreButton {
 	export interface Props extends ConfirmButton.Props, MarkSuspense.Props {

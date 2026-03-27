@@ -1,1 +1,1 @@
-export { ListingTransactionListPage } from "../page/ListingTransactionListPage";
+export { ListingTransactionListPage } from "../ui/page/ListingTransactionListPage";

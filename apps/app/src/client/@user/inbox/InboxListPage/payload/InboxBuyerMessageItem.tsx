@@ -7,7 +7,7 @@ import { toTimeDiff } from "@use-pico/common/time";
 import type { FC } from "react";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
-import { withTransactionQuery } from "~/client/@seller/transaction/withTransactionQuery";
+import { withTransactionQuery } from "~/client/@seller/transaction/query/withTransactionQuery";
 import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
 import type { BuyerMessageSchema } from "~/server/database/@table/InboxTableSchema/BuyerMessageSchema";
 

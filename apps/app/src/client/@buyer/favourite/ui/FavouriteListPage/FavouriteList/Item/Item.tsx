@@ -4,7 +4,7 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
-import { withListingQuery } from "~/client/@buyer/listing/withListingQuery";
+import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 

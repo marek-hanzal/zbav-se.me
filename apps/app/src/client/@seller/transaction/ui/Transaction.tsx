@@ -9,9 +9,9 @@ import { ListingPrice } from "~/client/@common/listing/ui/ListingPrice";
 import { TransactionChat } from "~/client/@user/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/client/@user/transaction-entry/ui/TransactionEntryList";
+import { withTransactionQuery } from "../query/withTransactionQuery";
 import { archiveBuyerMessageInbox } from "../service/archiveBuyerMessageInbox";
 import { withArchiveBuyerMessageInboxMutation } from "../service/withArchiveBuyerMessageInboxMutation";
-import { withTransactionQuery } from "../withTransactionQuery";
 import { PendingMessage } from "./status/PendingMessage";
 import { TransactionMenu } from "./TransactionMenu";
 

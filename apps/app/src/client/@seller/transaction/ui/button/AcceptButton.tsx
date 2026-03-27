@@ -5,8 +5,8 @@ import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
 import type { TransactionSchema } from "~/server/@seller/transaction/schema/TransactionSchema";
+import { withTransactionAcceptMutation } from "../../mutation/withTransactionAcceptMutation";
 import { archiveBuyerMessageInbox } from "../../service/archiveBuyerMessageInbox";
-import { withTransactionAcceptMutation } from "../../withTransactionAcceptMutation";
 
 export namespace AcceptButton {
 	export interface Props extends Button.Props {

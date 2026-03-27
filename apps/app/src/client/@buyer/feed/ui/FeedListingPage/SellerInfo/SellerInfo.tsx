@@ -3,7 +3,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
-import { withListingSellerInfoQuery } from "~/client/@buyer/listing/withListingSellerInfoQuery";
+import { withListingSellerInfoQuery } from "~/client/@buyer/listing/query/withListingSellerInfoQuery";
 import { RatingIcon } from "~/client/@common/score/ui/RatingIcon";
 
 export namespace SellerInfo {

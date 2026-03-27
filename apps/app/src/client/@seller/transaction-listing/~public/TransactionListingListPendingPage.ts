@@ -1,1 +1,1 @@
-export { TransactionListingListPendingPage } from "../page/TransactionListingListPendingPage";
+export { TransactionListingListPendingPage } from "../ui/page/TransactionListingListPendingPage";

@@ -5,7 +5,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
-import { withListingSellerInfoQuery } from "~/client/@buyer/listing/withListingSellerInfoQuery";
+import { withListingSellerInfoQuery } from "~/client/@buyer/listing/query/withListingSellerInfoQuery";
 import { Header } from "./Header";
 import { Score } from "./Score";
 

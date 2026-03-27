@@ -8,7 +8,7 @@ import { withFallback } from "@use-pico/client/utils";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
-import { withListingQuery } from "~/client/@buyer/listing/withListingQuery";
+import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 
 export namespace SearchButton {
 	export interface Props extends uiLinkTo.Component<{}>, MarkSuspense.Props {

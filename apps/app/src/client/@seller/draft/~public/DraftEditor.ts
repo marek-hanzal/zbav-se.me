@@ -1,1 +1,1 @@
-export { DraftEditor } from "../DraftEditPage/DraftEditor";
+export { DraftEditor } from "../ui/DraftEditPage/DraftEditor";

@@ -8,7 +8,7 @@ import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC } from "react";
 import { useState } from "react";
-import { withListingQuery } from "~/client/@buyer/listing/withListingQuery";
+import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
