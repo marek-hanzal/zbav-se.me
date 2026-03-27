@@ -6,11 +6,13 @@ export const IgnoreSchema = z
 		...InboxSchema.shape,
 		family: z.literal("reaction"),
 		type: z.literal("ignore"),
-		payload: z.looseObject({
-			listingId: z.string().openapi({
-				description: "Related listing identifier",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				listingId: z.string().openapi({
+					description: "Related listing identifier",
+				}),
+			})
+			.strip(),
 	})
 	.strip();
 

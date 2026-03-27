@@ -16,14 +16,9 @@ export const DraftTableSchema = z
 			description: "ID of the user who created the draft",
 		}),
 		//
-		price: z
-			.union([
-				z.null(),
-				z.coerce.number(),
-			])
-			.openapi({
-				description: "Price of the draft",
-			}),
+		price: z.coerce.number().nullable().openapi({
+			description: "Price of the draft",
+		}),
 		priceType: z
 			.union([
 				z.null(),

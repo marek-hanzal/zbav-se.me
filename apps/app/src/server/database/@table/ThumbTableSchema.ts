@@ -1,24 +1,26 @@
 import { z } from "@hono/zod-openapi";
 import { ThumbEnumSchema } from "~/server/database/@enum/ThumbEnumSchema";
 
-export const ThumbTableSchema = z.object({
-	id: z.string().openapi({
-		description: "ID of the thumb entry",
-	}),
-	userId: z.string().openapi({
-		description: "ID of the user who provided the thumb",
-	}),
-	listingId: z.string().openapi({
-		description: "ID of the listing",
-	}),
-	type: ThumbEnumSchema.openapi({
-		description: "Type of thumb",
-	}),
-	createdAt: z.coerce.date().openapi({
-		description: "Creation timestamp",
-		type: "string",
-	}),
-});
+export const ThumbTableSchema = z
+	.looseObject({
+		id: z.string().openapi({
+			description: "ID of the thumb entry",
+		}),
+		userId: z.string().openapi({
+			description: "ID of the user who provided the thumb",
+		}),
+		listingId: z.string().openapi({
+			description: "ID of the listing",
+		}),
+		type: ThumbEnumSchema.openapi({
+			description: "Type of thumb",
+		}),
+		createdAt: z.coerce.date().openapi({
+			description: "Creation timestamp",
+			type: "string",
+		}),
+	})
+	.strip();
 
 export type ThumbTableSchema = typeof ThumbTableSchema;
 
