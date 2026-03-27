@@ -21,6 +21,7 @@
         "@tanstack/query-async-storage-persister": "5.95.2",
         "@tanstack/query-core": "5.95.2",
         "@tanstack/query-persist-client-core": "5.95.2",
+        "@tanstack/react-form": "^1.28.5",
         "@tanstack/react-query": "5.95.2",
         "@tanstack/react-query-persist-client": "5.95.2",
         "@tanstack/react-router": "1.168.7",
@@ -30,7 +31,6 @@
         "@use-pico/cls": "workspace:*",
         "@use-pico/common": "workspace:*",
         "@use-pico/server": "workspace:*",
-        "@zbav-se.me/ui": "workspace:*",
         "axios": "1.13.6",
         "better-auth": "1.5.6",
         "effect": "3.21.0",
@@ -206,25 +206,6 @@
         "rollup-plugin-dts": "6.4.1",
         "typescript": "beta",
         "vitest": "4.1.2",
-      },
-    },
-    "packages/@zbav-se.me/ui": {
-      "name": "@zbav-se.me/ui",
-      "dependencies": {
-        "@tanstack/react-form": "1.28.5",
-        "@tanstack/react-query": "5.95.2",
-        "@use-pico/client": "workspace:*",
-        "@use-pico/cls": "workspace:*",
-        "@use-pico/common": "workspace:*",
-        "react": "19.2.4",
-      },
-      "devDependencies": {
-        "@types/node": "25.5.0",
-        "@types/react": "19.2.14",
-        "@typescript/native-preview": "7.0.0-dev.20260327.2",
-        "@use-pico/tsconfig": "5.0.0",
-        "knip": "6.0.6",
-        "typescript": "beta",
       },
     },
   },
@@ -910,8 +891,6 @@
     "@vitest/utils": ["@vitest/utils@4.1.2", "", { "dependencies": { "@vitest/pretty-format": "4.1.2", "convert-source-map": "^2.0.0", "tinyrainbow": "^3.1.0" } }, "sha512-xw2/TiX82lQHA06cgbqRKFb5lCAy3axQ4H4SoUFhUsg+wztiet+co86IAMDtF6Vm1hc7J6j09oh/rgDn+JdKIQ=="],
 
     "@zbav-se.me/app": ["@zbav-se.me/app@workspace:apps/app"],
-
-    "@zbav-se.me/ui": ["@zbav-se.me/ui@workspace:packages/@zbav-se.me/ui"],
 
     "acorn": ["acorn@8.16.0", "", { "bin": { "acorn": "bin/acorn" } }, "sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw=="],
 
