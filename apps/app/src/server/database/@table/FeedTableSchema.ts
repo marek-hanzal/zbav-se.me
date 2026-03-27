@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { FeedTypeEnumSchema } from "~/server/database/@enum/FeedTypeEnumSchema";
+import { FeedTypeEnumSchema } from "~/common/feed/enum/FeedTypeEnumSchema";
 
 export const FeedTableSchema = z.object({
 	id: z.string().openapi({

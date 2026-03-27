@@ -5,8 +5,8 @@ import type { FC } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { DeliverySelect } from "~/client/@common/delivery/ui/DeliverySelect";
+import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import type { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
-import type { ListingDeliveryEnumSchema } from "~/server/@seller/listing/enum/ListingDeliveryEnumSchema";
 
 export namespace DeliveryPatch {
 	export interface Props extends Container.Props {

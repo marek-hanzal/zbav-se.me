@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { UserEventEnumSchema } from "~/server/database/@enum/UserEventEnumSchema";
-import { UserEventScopeEnumSchema } from "~/server/database/@enum/UserEventScopeEnumSchema";
+import { UserEventScopeEnumSchema } from "~/common/user-event/enum/UserEventScopeEnumSchema";
 import { UserEventSourceEnumSchema } from "~/server/database/@enum/UserEventSourceEnumSchema";
 
 export const UserEventTableSchema = z.object({

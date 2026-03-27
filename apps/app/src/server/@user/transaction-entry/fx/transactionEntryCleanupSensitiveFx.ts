@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { Transitions } from "~/server/@user/transaction/fx/transactionTransitionFx";
-import type { TransactionStatusEnumSchema } from "~/server/database/@enum/TransactionStatusEnumSchema";
+import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 

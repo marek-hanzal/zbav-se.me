@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingEventEnumSchema } from "~/server/database/@enum/ListingEventEnumSchema";
+import { ListingEventEnumSchema } from "~/common/listing/enum/ListingEventEnumSchema";
 
 export const ListingEventTableSchema = z.object({
 	id: z.string().openapi({

@@ -1,8 +1,8 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import type { TransactionSideEnumSchema } from "~/server/database/@enum/TransactionSideEnumSchema";
-import type { TransactionStatusEnumSchema } from "~/server/database/@enum/TransactionStatusEnumSchema";
+import type { TransactionSideEnumSchema } from "~/common/user-transaction/enum/TransactionSideEnumSchema";
+import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import type { TransactionEntryTableSchema } from "~/server/database/@table/TransactionEntryTableSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";

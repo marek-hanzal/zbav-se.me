@@ -1,12 +1,12 @@
 import { z } from "@hono/zod-openapi";
-import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
+import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
+import { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
+import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
+import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 import { VectorSchema } from "~/common/schema/VectorSchema";
-import { ListingDeliveryEnumSchema } from "~/server/database/@enum/ListingDeliveryEnumSchema";
-import { ListingPriceEnumSchema } from "~/server/database/@enum/ListingPriceEnumSchema";
-import { ListingRestrictionEnumSchema } from "~/server/database/@enum/ListingRestrictionEnumSchema";
-import { ListingStatusEnumSchema } from "~/server/database/@enum/ListingStatusEnumSchema";
-import { ListingWarrantyEnumSchema } from "~/server/database/@enum/ListingWarrantyEnumSchema";
+import { ProsConsSchema } from "~/server/@seller/listing/schema/ProsConsSchema";
 
 export const ListingTableSchema = z
 	.looseObject({

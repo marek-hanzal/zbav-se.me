@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
+import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 import { DefaultFilterSchema } from "~/common/schema/DefaultFilterSchema";
 import { PriceSchema } from "~/common/schema/PriceSchema";
-import { ListingDeliveryEnumSchema } from "~/server/database/@enum/ListingDeliveryEnumSchema";
-import { ListingWarrantyEnumSchema } from "~/server/database/@enum/ListingWarrantyEnumSchema";
 
 export const ListingFilterSchema = z
 	.looseObject({

@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { FeedTypeEnumSchema } from "~/server/@buyer/feed/enum/FeedTypeEnumSchema";
+import { FeedTypeEnumSchema } from "~/common/feed/enum/FeedTypeEnumSchema";
 import { ListingQuerySchema } from "~/server/@buyer/listing/schema/ListingQuerySchema";
 
 export const FeedCreateSchema = z

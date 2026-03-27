@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { DefaultFilterSchema } from "~/common/schema/DefaultFilterSchema";
-import { TransactionEntryKindEnumSchema } from "~/server/database/@enum/TransactionEntryKindEnumSchema";
+import { TransactionEntryKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
 
 export const TransactionEntryFilterSchema = z
 	.looseObject({

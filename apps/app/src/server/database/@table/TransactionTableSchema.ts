@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionStatusEnumSchema } from "~/server/database/@enum/TransactionStatusEnumSchema";
+import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 
 export const TransactionTableSchema = z
 	.looseObject({
