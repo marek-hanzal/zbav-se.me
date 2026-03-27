@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
 import { transactionCreateFx } from "~/server/@buyer/transaction/fx/transactionCreateFx";
 import { listingCreateFx } from "~/server/@seller/listing/fx/listingCreateFx";
 import { categoryFetchFx } from "~/server/@session/category/fx/categoryFetchFx";
@@ -12,6 +11,7 @@ import { uploadCreateFx } from "~/server/@user/upload/fx/uploadCreateFx";
 import { auth } from "~/server/auth/auth";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
 import { testabase } from "~/test/testabase";
 
 interface ListingFixture {
@@ -27,7 +27,10 @@ const withInboxRuntimeFx = (database: Awaited<ReturnType<typeof testabase>>) => 
 		eff.pipe(
 			withKyselyFx(database),
 			withDateFx,
-			withTransactionContextFx(),
+			withTransactionContextFx({
+				expires: 3,
+				extend: 3,
+			}),
 			withLocationFx({
 				api: "https://api.geoapify.com",
 				autocomplete: "/v1/geocode/autocomplete",

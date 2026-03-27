@@ -1,8 +1,14 @@
 import { Effect } from "effect";
-import { type TransactionContext, TransactionContextFx } from "./TransactionContextFx";
+import { TransactionContextFx } from "./TransactionContextFx";
 
-export function withTransactionContextFx(context: TransactionContext) {
+// export function withTransactionContextFx(context: TransactionContext) {
+export function withTransactionContextFx() {
 	return <A, E, R>(eff: Effect.Effect<A, E, R>) => {
-		return eff.pipe(Effect.provideService(TransactionContextFx, context));
+		return eff.pipe(
+			Effect.provideService(TransactionContextFx, {
+				expires: 3,
+				extend: 3,
+			}),
+		);
 	};
 }
