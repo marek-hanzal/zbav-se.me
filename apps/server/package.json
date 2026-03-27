@@ -3,7 +3,7 @@
 	"version": "workspace:*",
 	"type": "module",
 	"scripts": {
-		"dev": "run-p dev:*",
+		"no:dev": "run-p dev:*",
 		"dev:nitro": "portless api.zbav-se.me nitro dev --host 0.0.0.0",
 		"no:dev:mcp": "DANGEROUSLY_OMIT_AUTH=true bunx @modelcontextprotocol/inspector",
 		"build": "nitro build",

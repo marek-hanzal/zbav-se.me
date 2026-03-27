@@ -16,6 +16,7 @@ import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
 import { Route as RedirectSignInRouteImport } from './@routes/redirect/sign-in'
 import { Route as RedirectOathRouteImport } from './@routes/redirect/oath'
+import { Route as ApiCronRouteImport } from './@routes/api/$cron'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleSignUpRouteImport } from './@routes/$locale/sign-up'
 import { Route as LocaleSignInRouteImport } from './@routes/$locale/sign-in'
@@ -80,6 +81,11 @@ const RedirectOathRoute = RedirectOathRouteImport.update({
   id: '/redirect/oath',
   path: '/redirect/oath',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCronRoute = ApiCronRouteImport.update({
+  id: '/$cron',
+  path: '/$cron',
+  getParentRoute: () => ApiRoute,
 } as any)
 const LocaleTosRoute = LocaleTosRouteImport.update({
   id: '/tos',
@@ -252,6 +258,7 @@ export interface FileRoutesByFullPath {
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
+  '/api/$cron': typeof ApiCronRoute
   '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
@@ -288,6 +295,7 @@ export interface FileRoutesByTo {
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
+  '/api/$cron': typeof ApiCronRoute
   '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale': typeof LocaleIndexRoute
@@ -327,6 +335,7 @@ export interface FileRoutesById {
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
+  '/api/$cron': typeof ApiCronRoute
   '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
@@ -367,6 +376,7 @@ export interface FileRouteTypes {
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
+    | '/api/$cron'
     | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale/'
@@ -403,6 +413,7 @@ export interface FileRouteTypes {
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
+    | '/api/$cron'
     | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale'
@@ -441,6 +452,7 @@ export interface FileRouteTypes {
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
+    | '/api/$cron'
     | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale/'
@@ -527,6 +539,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/redirect/oath'
       preLoaderRoute: typeof RedirectOathRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/api/$cron': {
+      id: '/api/$cron'
+      path: '/$cron'
+      fullPath: '/api/$cron'
+      preLoaderRoute: typeof ApiCronRouteImport
+      parentRoute: typeof ApiRoute
     }
     '/$locale/tos': {
       id: '/$locale/tos'
@@ -816,10 +835,12 @@ const LocaleRouteWithChildren =
   LocaleRoute._addFileChildren(LocaleRouteChildren)
 
 interface ApiRouteChildren {
+  ApiCronRoute: typeof ApiCronRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 const ApiRouteChildren: ApiRouteChildren = {
+  ApiCronRoute: ApiCronRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 
