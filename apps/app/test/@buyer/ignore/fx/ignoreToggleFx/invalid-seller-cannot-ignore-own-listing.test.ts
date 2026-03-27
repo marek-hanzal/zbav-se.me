@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { ignoreToggleFx } from "~/@buyer/ignore/server/fx/ignoreToggleFx";
+import { ignoreToggleFx } from "~/buyer/ignore/server/fx/ignoreToggleFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createListingFx } from "~/test/utils/createListingFx";

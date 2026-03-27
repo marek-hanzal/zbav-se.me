@@ -1,12 +1,12 @@
 import { rangedom, sample } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
-import { galleryInsertFx } from "~/@user/gallery/server/fx/galleryInsertFx";
 import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";
 import { withSeedConcurrency } from "~/server/@system/seed/fx/core/seedConcurrency";
 import { seedGalleryItemBulkInsertFx } from "~/server/@system/seed/fx/core/seedGalleryItemBulkInsertFx";
 import { withRandomPastDate } from "~/server/@system/seed/fx/time/seedTime";
 import { withSeedNowFx } from "~/server/@system/seed/fx/time/withSeedNowFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 
 const GALLERY_SEED_CONCURRENCY = withSeedConcurrency("SEED_GALLERY_CONCURRENCY");
 const GALLERY_TX_CHUNK_SIZE = 25;

@@ -1,0 +1,22 @@
+import { z } from "zod";
+import { LatLonSchema } from "~/common/schema/LatLonSchema";
+
+export const ListingMetaSchema = z
+	.looseObject({
+		latLon: LatLonSchema.optional(),
+		feedId: z.string().min(1, "Feed ID is required").optional().meta({
+			id: "FeedId",
+			description: "Reference feed to do counts e.g. like is in favourites",
+		}),
+	})
+	.strip()
+	.meta({
+		id: "ListingMeta",
+		description: "Meta data for listing collection",
+	});
+
+export type ListingMetaSchema = typeof ListingMetaSchema;
+
+export namespace ListingMetaSchema {
+	export type Type = z.infer<ListingMetaSchema>;
+}

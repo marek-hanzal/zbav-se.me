@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { favouriteToggleFx } from "~/@buyer/favourite/server/fx/favouriteToggleFx";
-import { feedCreateFx } from "~/@buyer/feed/server/fx/feedCreateFx";
+import { favouriteToggleFx } from "~/buyer/favourite/server/fx/favouriteToggleFx";
+import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createListingFx } from "~/test/utils/createListingFx";

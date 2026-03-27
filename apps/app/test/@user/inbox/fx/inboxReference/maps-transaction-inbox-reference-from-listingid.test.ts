@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCreateFx } from "~/@buyer/transaction/server/fx/transactionCreateFx";
-import { listingCreateFx } from "~/@seller/listing/server/fx/listingCreateFx";
-import { categoryFetchFx } from "~/@session/category/server/fx/categoryFetchFx";
-import { locationAutocompleteFx } from "~/@session/location/server/fx/locationAutocompleteFx";
-import { uploadCreateFx } from "~/@user/upload/server/fx/uploadCreateFx";
+import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
+import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import { auth } from "~/server/auth/auth";
+import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
+import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
 import { testabase } from "~/test/testabase";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 interface ListingFixture {
 	listingId: string;

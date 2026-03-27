@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { inboxCollectionFx } from "~/@user/inbox/server/fx/inboxCollectionFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
 
 describe("inbox deduplication (PARTITION BY transactionId)", () => {
 	it("buyer-message and seller-message for different transactions are NOT deduplicated together", async () => {

@@ -1,17 +1,17 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { userEventSellerInfoFx } from "~/@buyer/user-event/server/fx/userEventSellerInfoFx";
-import { listingCreateFx } from "~/@seller/listing/server/fx/listingCreateFx";
-import { categoryFetchFx } from "~/@session/category/server/fx/categoryFetchFx";
-import { locationAutocompleteFx } from "~/@session/location/server/fx/locationAutocompleteFx";
-import { withLocationFx } from "~/@session/location/server/fx/withLocationFx";
-import { withUploadFx } from "~/@user/upload/server/context/withUploadFx";
-import { uploadCreateFx } from "~/@user/upload/server/fx/uploadCreateFx";
+import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
+import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import { auth } from "~/server/auth/auth";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
+import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
+import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
+import { withLocationFx } from "~/session/location/server/fx/withLocationFx";
 import { testabase } from "~/test/testabase";
+import { withUploadFx } from "~/user/upload/server/context/withUploadFx";
+import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Single listing returns nothing", async () => {

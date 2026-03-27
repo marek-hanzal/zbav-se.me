@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ThumbEnumSchema } from "~/@common/listing/enum/ThumbEnumSchema";
+import { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 import { InboxSchema } from "./InboxSchema";
 
 export const ThumbSchema = z

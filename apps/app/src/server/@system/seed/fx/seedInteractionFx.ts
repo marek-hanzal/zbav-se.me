@@ -2,8 +2,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { list } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { feedCreateFx } from "~/@buyer/feed/server/fx/feedCreateFx";
-import { userExPatchFx } from "~/@user/user-ex/server/fx/userExPatchFx";
+import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";
 import { ensureSeedUserFx } from "~/server/@system/seed/fx/ensureSeedUserFx";
 import { seedInteractionScenarioFx } from "~/server/@system/seed/fx/interaction/seedInteractionScenarioFx";
@@ -18,6 +17,7 @@ import { withInteractionTimeline } from "~/server/@system/seed/fx/time/seedTime"
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
+import { userExPatchFx } from "~/user/user-ex/server/fx/userExPatchFx";
 
 const INTERACTION_SEED_CONCURRENCY = Number(process.env.SEED_INTERACTION_CONCURRENCY ?? 6);
 const INTERACTION_BATCH_SIZE = Number(process.env.SEED_INTERACTION_BATCH_SIZE ?? 25);

@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { draftCreateFx } from "~/@seller/draft/server/fx/draftCreateFx";
-import { uploadCreateFx } from "~/@user/upload/server/fx/uploadCreateFx";
+import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 describe("draft lifecycle", () => {
 	it("draft with uploads creates gallery items in order", async () => {

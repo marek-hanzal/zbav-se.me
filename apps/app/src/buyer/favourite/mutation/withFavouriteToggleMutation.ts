@@ -1,0 +1,24 @@
+import { withMutation } from "@use-pico/client/mutation";
+import { favouriteToggleFn } from "~/buyer/favourite/server/fn/favouriteToggleFn";
+import type { FavouriteToggleSchema } from "~/buyer/favourite/server/schema/FavouriteToggleSchema";
+import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
+
+export const withFavouriteToggleMutation = withMutation<
+	FavouriteToggleSchema.Type,
+	ListingSchema.Type,
+	Error
+>({
+	keys(variables) {
+		return [
+			"favourite",
+			"toggle",
+			variables,
+		];
+	},
+	async mutationFn(data) {
+		return favouriteToggleFn({
+			data,
+		});
+	},
+	invalidate: [],
+});

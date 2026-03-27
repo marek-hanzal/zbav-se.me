@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { TransactionStatusEnumSchema } from "~/@common/user-transaction/enum/TransactionStatusEnumSchema";
+import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 
 export const TransactionTableSchema = z
 	.looseObject({

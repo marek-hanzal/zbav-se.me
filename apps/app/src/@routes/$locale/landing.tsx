@@ -9,9 +9,9 @@ import { translator } from "@use-pico/common/translator";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { Logo } from "@zbav-se.me/ui/logo";
 import { Suspense } from "react";
-import { History } from "~/@public/ui/History";
-import { HistoryPending } from "~/@public/ui/HistoryPending";
 import face from "~/assets/face.webp";
+import { History } from "~/public/ui/History";
+import { HistoryPending } from "~/public/ui/HistoryPending";
 
 export const Route = createFileRoute("/$locale/landing")({
 	component() {

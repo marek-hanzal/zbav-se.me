@@ -1,0 +1,85 @@
+import { Container } from "@use-pico/client/ui/container";
+import type { FC } from "react";
+import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
+import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
+import { TransactionMessage } from "~/user/transaction/ui/TransactionMessage";
+import { TransactionToolbar } from "~/user/transaction/ui/TransactionToolbar";
+import { DisputeMessage } from "./status/DisputeMessage";
+import { DisputeToolbar } from "./status/DisputeToolbar";
+import { OpenMessage } from "./status/OpenMessage";
+import { OpenToolbar } from "./status/OpenToolbar";
+import { PendingMessage } from "./status/PendingMessage";
+import { ResolvedToolbar } from "./status/ResolvedToolbar";
+
+export namespace TransactionMenu {
+	export interface Props extends Container.Props {
+		close: TransactionMenuButton.Close;
+		transaction: TransactionSchema.Type;
+	}
+}
+
+export const TransactionMenu: FC<TransactionMenu.Props> = ({
+	close,
+	transaction,
+	ui,
+	...props
+}) => {
+	return (
+		<Container
+			data-ui={"TransactionMenu[Container]"}
+			data-transaction={transaction.status}
+			ui={{
+				flow: "vertical",
+				gap: "md",
+				width: "full",
+				inner: "default",
+				...ui,
+			}}
+			{...props}
+		>
+			<TransactionMessage
+				status={transaction.status}
+				pending={
+					<PendingMessage
+						close={close}
+						transaction={transaction}
+					/>
+				}
+				open={
+					<OpenMessage
+						close={close}
+						transaction={transaction}
+					/>
+				}
+				dispute={
+					<DisputeMessage
+						close={close}
+						transaction={transaction}
+					/>
+				}
+			/>
+
+			<TransactionToolbar
+				status={transaction.status}
+				open={
+					<OpenToolbar
+						close={close}
+						transaction={transaction}
+					/>
+				}
+				resolved={
+					<ResolvedToolbar
+						close={close}
+						transaction={transaction}
+					/>
+				}
+				dispute={
+					<DisputeToolbar
+						close={close}
+						transaction={transaction}
+					/>
+				}
+			/>
+		</Container>
+	);
+};

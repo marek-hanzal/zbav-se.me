@@ -1,7 +1,7 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import type { FeedCreateSchema } from "~/@buyer/feed/server/schema/FeedCreateSchema";
+import type { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 

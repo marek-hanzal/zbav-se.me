@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { transactionAcceptFx } from "~/@seller/transaction/server/fx/transactionAcceptFx";
+import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import type { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
 

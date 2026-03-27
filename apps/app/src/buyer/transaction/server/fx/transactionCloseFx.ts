@@ -1,0 +1,78 @@
+import { Effect } from "effect";
+import { transactionFetchFx } from "~/buyer/transaction/server/fx/transactionFetchFx";
+import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import { inboxCreateFx } from "~/user/inbox/server/fx/inboxCreateFx";
+import { transactionResolveFx } from "~/user/transaction/server/fx/transactionResolveFx";
+import { transactionStatusMessageFx } from "~/user/transaction/server/fx/transactionStatusMessageFx";
+import { transactionUpdateStatusFx } from "~/user/transaction/server/fx/transactionUpdateStatusFx";
+import { userInteractionEventFx } from "~/user/user-event/server/fx/userInteractionEventFx";
+
+export namespace transactionCloseFx {
+	export interface Props {
+		transactionId: string;
+		userId: string;
+	}
+}
+
+export const transactionCloseFx = Effect.fn("transactionCloseFx")(function* ({
+	userId,
+	transactionId,
+}: transactionCloseFx.Props) {
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const transaction = yield* transactionResolveFx({
+				userId,
+				transactionId,
+				message: "You are not allowed to close this listing transaction",
+			});
+
+			yield* transactionUpdateStatusFx({
+				transactionId: transaction.id,
+				status: transaction.status,
+				request: "closed",
+				target: transaction.side,
+			});
+
+			yield* transactionStatusMessageFx({
+				transactionId: transaction.id,
+				request: "closed",
+				target: transaction.side,
+				userId,
+			});
+
+			yield* inboxCreateFx({
+				userId: transaction.sellerId,
+				reference: [
+					transaction.listingId,
+					transaction.id,
+				],
+				family: "transaction",
+				type: "buyer-message",
+				payload: {
+					transactionId: transaction.id,
+				},
+				priority: "high",
+			});
+
+			yield* userInteractionEventFx({
+				userId,
+				targetId: transaction.sellerId,
+				source: "transaction",
+				group: transaction.id,
+				event: "transaction.closed",
+				isTerminal: true,
+			});
+
+			return yield* transactionFetchFx({
+				where: {
+					id: transaction.id,
+				},
+				scope: {
+					userId,
+				},
+			});
+		}),
+	);
+});
+
+export type transactionCloseFx = ReturnType<typeof transactionCloseFx>;

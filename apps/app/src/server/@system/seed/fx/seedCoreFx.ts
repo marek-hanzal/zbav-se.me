@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import { userExPatchFx } from "~/@user/user-ex/server/fx/userExPatchFx";
 import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";
 import LocationQueries from "~/server/@system/seed/data/location.json" with { type: "json" };
 import { seedCoreFeedFx } from "~/server/@system/seed/fx/core/seedCoreFeedFx";
@@ -15,6 +14,7 @@ import {
 	SeedPrimaryCoreTables,
 	withSeedTableCountsFx,
 } from "~/server/@system/seed/fx/report/withSeedTableCountsFx";
+import { userExPatchFx } from "~/user/user-ex/server/fx/userExPatchFx";
 
 export namespace seedCoreFx {
 	export interface Props {

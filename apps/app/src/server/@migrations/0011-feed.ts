@@ -1,6 +1,6 @@
 import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
-import type { FeedTypeEnumSchema } from "~/@common/feed/enum/FeedTypeEnumSchema";
+import type { FeedTypeEnumSchema } from "~/common/feed/enum/FeedTypeEnumSchema";
 
 export const FeedMigration: Migration = {
 	async up(db) {

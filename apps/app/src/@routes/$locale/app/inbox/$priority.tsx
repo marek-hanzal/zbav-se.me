@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { InboxPriorityEnumSchema } from "~/@common/inbox/enum/InboxPriorityEnumSchema";
-import { InboxListPage } from "~/@user/inbox/~public/InboxListPage";
+import { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
+import { InboxListPage } from "~/user/inbox/~public/InboxListPage";
 
 export const Route = createFileRoute("/$locale/app/inbox/$priority")({
 	component() {

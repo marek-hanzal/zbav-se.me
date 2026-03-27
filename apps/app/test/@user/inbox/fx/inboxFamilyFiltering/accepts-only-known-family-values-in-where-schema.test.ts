@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { InboxWhereSchema } from "~/@user/inbox/server/schema/InboxWhereSchema";
+import { InboxWhereSchema } from "~/user/inbox/server/schema/InboxWhereSchema";
 
 describe("inbox family", () => {
 	it("accepts only known family values in where schema", () => {

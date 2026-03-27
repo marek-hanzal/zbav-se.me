@@ -2,12 +2,12 @@ import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { userEventSellerInfoFx } from "~/@buyer/user-event/server/fx/userEventSellerInfoFx";
-import { userEventCreateFx } from "~/@user/user-event/server/fx/userEventCreateFx";
+import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
+import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Seller rejects after interaction - should not count as rejected without interaction", async () => {

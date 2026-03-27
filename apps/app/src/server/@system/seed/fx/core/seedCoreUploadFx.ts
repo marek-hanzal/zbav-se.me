@@ -1,15 +1,15 @@
 import { randomUUID } from "node:crypto";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { S3ContextFx } from "~/@common/s3/server/context/S3ContextFx";
-import { s3ClientFx } from "~/@common/s3/server/fx/s3ClientFx";
-import { uploadCreateFx } from "~/@user/upload/server/fx/uploadCreateFx";
+import { S3ContextFx } from "~/common/s3/server/context/S3ContextFx";
+import { s3ClientFx } from "~/common/s3/server/fx/s3ClientFx";
 import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";
 import { withRandomPastDate } from "~/server/@system/seed/fx/time/seedTime";
 import { withSeedNowFx } from "~/server/@system/seed/fx/time/withSeedNowFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
+import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 const MAX_UPLOAD_FETCH = 128;
 const MAX_PHOTOBANK_FETCH_PER_RUN = 64;

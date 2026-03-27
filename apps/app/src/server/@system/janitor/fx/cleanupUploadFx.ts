@@ -1,7 +1,7 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { S3ContextFx } from "~/@common/s3/server/context/S3ContextFx";
-import { s3ClientFx } from "~/@common/s3/server/fx/s3ClientFx";
+import { S3ContextFx } from "~/common/s3/server/context/S3ContextFx";
+import { s3ClientFx } from "~/common/s3/server/fx/s3ClientFx";
 import type { CleanupSchema } from "~/server/@system/janitor/schema/CleanupSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
