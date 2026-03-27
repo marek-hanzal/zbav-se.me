@@ -16,6 +16,7 @@ import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
 import { Route as RedirectSignInRouteImport } from './@routes/redirect/sign-in'
 import { Route as RedirectOathRouteImport } from './@routes/redirect/oath'
+import { Route as ApiHealthRouteImport } from './@routes/api/health'
 import { Route as ApiCronRouteImport } from './@routes/api/$cron'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleSignUpRouteImport } from './@routes/$locale/sign-up'
@@ -81,6 +82,11 @@ const RedirectOathRoute = RedirectOathRouteImport.update({
   id: '/redirect/oath',
   path: '/redirect/oath',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ApiHealthRoute = ApiHealthRouteImport.update({
+  id: '/health',
+  path: '/health',
+  getParentRoute: () => ApiRoute,
 } as any)
 const ApiCronRoute = ApiCronRouteImport.update({
   id: '/$cron',
@@ -259,6 +265,7 @@ export interface FileRoutesByFullPath {
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/api/$cron': typeof ApiCronRoute
+  '/api/health': typeof ApiHealthRoute
   '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
@@ -296,6 +303,7 @@ export interface FileRoutesByTo {
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/api/$cron': typeof ApiCronRoute
+  '/api/health': typeof ApiHealthRoute
   '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale': typeof LocaleIndexRoute
@@ -336,6 +344,7 @@ export interface FileRoutesById {
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/api/$cron': typeof ApiCronRoute
+  '/api/health': typeof ApiHealthRoute
   '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
@@ -377,6 +386,7 @@ export interface FileRouteTypes {
     | '/$locale/sign-up'
     | '/$locale/tos'
     | '/api/$cron'
+    | '/api/health'
     | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale/'
@@ -414,6 +424,7 @@ export interface FileRouteTypes {
     | '/$locale/sign-up'
     | '/$locale/tos'
     | '/api/$cron'
+    | '/api/health'
     | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale'
@@ -453,6 +464,7 @@ export interface FileRouteTypes {
     | '/$locale/sign-up'
     | '/$locale/tos'
     | '/api/$cron'
+    | '/api/health'
     | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale/'
@@ -539,6 +551,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/redirect/oath'
       preLoaderRoute: typeof RedirectOathRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/api/health': {
+      id: '/api/health'
+      path: '/health'
+      fullPath: '/api/health'
+      preLoaderRoute: typeof ApiHealthRouteImport
+      parentRoute: typeof ApiRoute
     }
     '/api/$cron': {
       id: '/api/$cron'
@@ -836,11 +855,13 @@ const LocaleRouteWithChildren =
 
 interface ApiRouteChildren {
   ApiCronRoute: typeof ApiCronRoute
+  ApiHealthRoute: typeof ApiHealthRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 const ApiRouteChildren: ApiRouteChildren = {
   ApiCronRoute: ApiCronRoute,
+  ApiHealthRoute: ApiHealthRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 

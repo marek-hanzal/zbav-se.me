@@ -1,16 +1,16 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { S3ContextFx } from "~/@common/s3/context/S3ContextFx";
-import { s3ClientFx } from "~/@common/s3/fx/s3ClientFx";
-import type { CleanupSchema } from "~/@public/janitor/schema/CleanupSchema";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { tryDbFx } from "~/database/fx/tryDbFx";
+import { S3ContextFx } from "~/server/@common/s3/context/S3ContextFx";
+import { s3ClientFx } from "~/server/@common/s3/fx/s3ClientFx";
+import type { CleanupSchema } from "~/server/@system/janitor/schema/CleanupSchema";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { tryDbFx } from "~/server/database/fx/tryDbFx";
 
 export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
-
 	const { bucket } = yield* S3ContextFx;
+
 	const client = yield* s3ClientFx();
 
 	const limit = 512;
@@ -23,8 +23,8 @@ export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
 		})
 		.toJSDate();
 
-	const uploads = yield* tryDbFx(async () =>
-		kysely
+	const uploads = yield* tryDbFx(async () => {
+		return kysely
 			.selectFrom("upload as u")
 			.where("u.createdAt", "<", cutoffDate)
 			.where(({ not, exists, selectFrom }) =>
@@ -39,8 +39,8 @@ export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
 			.select([
 				"u.url",
 			])
-			.execute(),
-	);
+			.execute();
+	});
 
 	const urls = new Set(uploads.map((r) => new URL(r.url).pathname));
 
@@ -62,6 +62,7 @@ export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
 				if (!obj.name || obj.name.endsWith("/")) {
 					return;
 				}
+
 				if (!urls.has(`/${obj.name}`) && kill.length < limit) {
 					kill.push(obj.name);
 				}
