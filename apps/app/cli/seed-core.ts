@@ -26,7 +26,7 @@ const { report, runtimeMs } = await Effect.gen(function* () {
 		report,
 		runtimeMs: end - start,
 	};
-}).pipe(withSeedRuntimeFx, Effect.runPromise);
+}).pipe(withSeedRuntimeFx, Effect.scoped, Effect.runPromise);
 
 printSeedCoreReport(report);
 appendSeedBenchmarkJsonl({
