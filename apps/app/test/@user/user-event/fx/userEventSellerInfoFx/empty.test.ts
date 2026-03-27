@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { userEventSellerInfoFx } from "~/@buyer/user-event/fx/userEventSellerInfoFx";
-import { withDateFx } from "~/database/fx/withDateFx";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { userEventSellerInfoFx } from "~/server/@buyer/user-event/fx/userEventSellerInfoFx";
+import { withDateFx } from "~/server/database/fx/withDateFx";
+import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
 
 describe("userEventSellerInfoFx", () => {

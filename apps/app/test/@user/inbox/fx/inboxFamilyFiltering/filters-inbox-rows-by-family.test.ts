@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withInboxQueryBuilderFx } from "~/@user/inbox/db/withInboxQueryBuilderFx";
-import { withInboxSelectFx } from "~/@user/inbox/db/withInboxSelectFx";
-import { auth } from "~/auth/auth";
-import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withInboxQueryBuilderFx } from "~/server/@user/inbox/db/withInboxQueryBuilderFx";
+import { withInboxSelectFx } from "~/server/@user/inbox/db/withInboxSelectFx";
+import { auth } from "~/server/auth/auth";
+import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
 
 describe("inbox family", () => {

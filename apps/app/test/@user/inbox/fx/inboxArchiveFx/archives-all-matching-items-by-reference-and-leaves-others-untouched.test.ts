@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { inboxArchiveFx } from "~/@user/inbox/fx/inboxArchiveFx";
-import { auth } from "~/auth/auth";
-import type { InboxPriorityEnumSchema } from "~/database/@enum/InboxPriorityEnumSchema";
-import type { InboxTypeEnumSchema } from "~/database/@enum/InboxTypeEnumSchema";
-import type { InboxTableSchema } from "~/database/@table/InboxTableSchema/InboxTableSchema";
+import type { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
+import type { InboxTypeEnumSchema } from "~/common/inbox/enum/InboxTypeEnumSchema";
+import { inboxArchiveFx } from "~/server/@user/inbox/fx/inboxArchiveFx";
+import { auth } from "~/server/auth/auth";
+import type { InboxTableSchema } from "~/server/database/@table/InboxTableSchema";
 import { testabase } from "~/test/testabase";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
