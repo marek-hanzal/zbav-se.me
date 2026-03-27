@@ -1,10 +1,10 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import { CloseButton } from "@zbav-se.me/ui/button";
-import { EmailIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
+import { CloseButton } from "~/common/ui/button";
+import { EmailIcon } from "~/common/ui/icon";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionEntryQuery } from "~/user/transaction-entry/query/withTransactionEntryQuery";
 import { PersonalControl } from "./PersonalControl";

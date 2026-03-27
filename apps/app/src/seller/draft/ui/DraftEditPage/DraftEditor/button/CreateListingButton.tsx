@@ -2,9 +2,9 @@ import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import { isValid } from "~/common/draft/util/isValid";
+import { uiSaveButton } from "~/common/ui/ui";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 

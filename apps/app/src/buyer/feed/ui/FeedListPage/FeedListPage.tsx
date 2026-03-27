@@ -1,8 +1,8 @@
 import { useLocale } from "@use-pico/client/hook";
 import { translator } from "@use-pico/common/translator";
-import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense } from "react";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
+import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";
 import { FeedList } from "./FeedList";
 

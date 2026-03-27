@@ -1,7 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
-import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef } from "react";
+import { HeroImage } from "~/common/ui/img";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
 export namespace GalleryPreview {

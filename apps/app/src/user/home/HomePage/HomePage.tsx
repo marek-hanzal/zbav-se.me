@@ -1,6 +1,6 @@
 import { translator } from "@use-pico/common/translator";
-import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense } from "react";
+import { TitleContainer } from "~/common/ui/container";
 import { HomeMenu } from "../HomeMenu";
 
 export namespace HomePage {

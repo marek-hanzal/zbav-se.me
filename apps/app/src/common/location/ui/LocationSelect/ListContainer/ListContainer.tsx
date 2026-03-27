@@ -3,7 +3,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import { withFallback } from "@use-pico/client/utils";
-import { uiSelectButton } from "@zbav-se.me/ui/ui";
+import { uiSelectButton } from "~/common/ui/ui";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { withLocationAutocompleteQuery } from "~/session/location/withLocationAutocompleteQuery";
 import { Empty } from "./Data/Empty";

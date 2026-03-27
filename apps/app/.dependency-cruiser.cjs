@@ -3,7 +3,7 @@ module.exports = {
 	forbidden: [
 		{
 			name: "no-circular",
-			severity: "warn",
+			severity: "error",
 			comment:
 				"This dependency is part of a circular relationship. You might want to revise " +
 				"your solution (i.e. use dependency inversion, make sure the modules have a single responsibility) ",
@@ -20,7 +20,7 @@ module.exports = {
 				"add an exception for it in your dependency-cruiser configuration. By default " +
 				"this rule does not scrutinize dot-files (e.g. .eslintrc.js), TypeScript declaration " +
 				"files (.d.ts), tsconfig.json and some of the babel and webpack configs.",
-			severity: "warn",
+			severity: "error",
 			from: {
 				orphan: true,
 				pathNot: [
@@ -247,65 +247,11 @@ module.exports = {
 		// true: dependency-cruiser will detect calls to process.getBuiltinModule/
 		// globalThis.process.getBuiltinModule as imports.
 		detectProcessBuiltinModuleCalls: true,
-
-		// prefix for links in html, d2, mermaid and dot/ svg output (e.g. 'https://github.com/you/yourrepo/blob/main/'
-		// to open it on your online repo or `vscode://file/${process.cwd()}/` to
-		// open it in visual studio code),
-		// prefix: `vscode://file/${process.cwd()}/`,
-
-		// suffix for links in output. E.g. put .html here if you use it to link to
-		// your coverage reports.
-		// suffix: '.html',
-
-		// false (the default): ignore dependencies that only exist before typescript-to-javascript compilation
-		// true: also detect dependencies that only exist before typescript-to-javascript compilation
-		// 'specify': for each dependency identify whether it only exists before compilation or also after
+		prefix: `vscode://file/${process.cwd()}/`,
 		tsPreCompilationDeps: true,
-
-		// list of extensions to scan that aren't javascript or compile-to-javascript.
-		// Empty by default. Only put extensions in here that you want to take into
-		// account that are _not_ parsable.
-		// extraExtensionsToScan: ['.json', '.jpg', '.png', '.svg', '.webp'],
-
-		// if true combines the package.jsons found from the module up to the base
-		// folder the cruise is initiated from. Useful for how (some) mono-repos
-		// manage dependencies & dependency definitions.
-		// combinedDependencies: false,
-
-		// if true leave symlinks untouched, otherwise use the realpath
-		// preserveSymlinks: false,
-
-		// TypeScript project file ('tsconfig.json') to use for
-		// (1) compilation and
-		// (2) resolution (e.g. with the paths property)
-		//
-		// The (optional) fileName attribute specifies which file to take (relative to
-		// dependency-cruiser's current working directory). When not provided
-		// defaults to './tsconfig.json'.
 		tsConfig: {
 			fileName: "tsconfig.json",
 		},
-
-		// Webpack configuration to use to get resolve options from.
-		//
-		// The (optional) fileName attribute specifies which file to take (relative
-		// to dependency-cruiser's current working directory. When not provided defaults
-		// to './webpack.conf.js'.
-		//
-		// The (optional) 'env' and 'arguments' attributes contain the parameters
-		// to be passed if your webpack config is a function and takes them (see
-		//  webpack documentation for details)
-		// webpackConfig: {
-		//  fileName: 'webpack.config.js',
-		//  env: {},
-		//  arguments: {}
-		// },
-
-		// Babel config ('.babelrc', '.babelrc.json', '.babelrc.json5', ...) to use
-		// for compilation
-		// babelConfig: {
-		//   fileName: '.babelrc',
-		// },
 
 		// List of strings you have in use in addition to cjs/ es6 requires
 		// & imports to declare module dependencies. Use this e.g. if you've

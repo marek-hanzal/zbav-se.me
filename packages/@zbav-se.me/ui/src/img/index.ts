@@ -1,1 +1,0 @@
-export { HeroImage } from "./HeroImage";

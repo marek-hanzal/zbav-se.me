@@ -6,8 +6,8 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { Logo } from "@zbav-se.me/ui/logo";
 import type { FC } from "react";
+import { Logo } from "~/common/ui/logo";
 
 export namespace WelcomePage {
 	export interface Props extends Container.Props {}

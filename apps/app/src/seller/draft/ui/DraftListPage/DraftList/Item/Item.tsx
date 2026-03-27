@@ -7,10 +7,10 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
-import { CheckIcon } from "@zbav-se.me/ui/icon";
 import { isValid } from "~/common/draft/util/isValid";
 import { useMaybeUpload } from "~/common/gallery/hook/useMaybeUpload";
 import { ListItem } from "~/common/list-item/ListItem";
+import { CheckIcon } from "~/common/ui/icon";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 
 export namespace Item {

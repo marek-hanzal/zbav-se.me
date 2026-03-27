@@ -6,8 +6,8 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { FirstIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { FirstIcon } from "~/common/ui/icon";
 
 export namespace EmptyListing {
 	export interface Props extends Container.Props {

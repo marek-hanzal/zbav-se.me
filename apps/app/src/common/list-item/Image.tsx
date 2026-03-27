@@ -1,7 +1,7 @@
 import { Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
-import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
+import { HeroImage } from "~/common/ui/img";
 
 export namespace Image {
 	export interface Props {

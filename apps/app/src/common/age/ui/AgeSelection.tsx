@@ -1,5 +1,5 @@
-import { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
+import { Rating } from "~/common/ui/rating";
 
 export namespace AgeSelection {
 	export interface Props extends Rating.Props {

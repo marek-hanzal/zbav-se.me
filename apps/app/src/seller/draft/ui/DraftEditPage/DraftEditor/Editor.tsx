@@ -1,9 +1,9 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
+import { TitleContainer } from "~/common/ui/container";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";
 import type { DraftEditor } from "./DraftEditor";

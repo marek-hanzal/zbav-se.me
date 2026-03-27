@@ -3,10 +3,10 @@ import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
-import { FlagIcon } from "@zbav-se.me/ui/icon";
 import { useState } from "react";
 import { withFlagToggleMutation } from "~/buyer/flag/mutation/withFlagToggleMutation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
+import { FlagIcon } from "~/common/ui/icon";
 
 export namespace FlagButton {
 	export interface Props extends ConfirmButton.Props, MarkSuspense.Props {

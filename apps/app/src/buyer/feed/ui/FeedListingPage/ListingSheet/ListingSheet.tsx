@@ -2,11 +2,11 @@ import { CloseIcon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
-import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, type PropsWithChildren, Suspense, useCallback, useMemo, useState } from "react";
 import { SellerInfo } from "~/buyer/listing/~public/SellerInfo";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
+import { CloseButton } from "~/common/ui/button";
 import { ListingCard } from "../ListingCard";
 
 export namespace ListingSheet {

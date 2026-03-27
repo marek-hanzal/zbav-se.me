@@ -2,8 +2,8 @@ import { ArrowLeftIcon, SaveIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import { uiCancelButton, uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC, ReactNode } from "react";
+import { uiCancelButton, uiSaveButton } from "~/common/ui/ui";
 
 export namespace SaveContainer {
 	export interface Props extends Container.Props {

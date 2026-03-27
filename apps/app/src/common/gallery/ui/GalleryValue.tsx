@@ -1,8 +1,8 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import { PhotoIcon } from "@zbav-se.me/ui/icon";
-import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
+import { PhotoIcon } from "~/common/ui/icon";
+import { HeroImage } from "~/common/ui/img";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
 export namespace GalleryValue {

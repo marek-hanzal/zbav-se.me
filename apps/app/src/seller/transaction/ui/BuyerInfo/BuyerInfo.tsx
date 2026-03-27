@@ -5,7 +5,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
-import { SearchIcon } from "@zbav-se.me/ui/icon";
+import { SearchIcon } from "~/common/ui/icon";
 import { withTransactionBuyerInfoQuery } from "../../query/withTransactionBuyerInfoQuery";
 import { Events } from "./Events";
 import { Score } from "./Score";

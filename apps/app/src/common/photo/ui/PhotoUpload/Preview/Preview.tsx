@@ -1,7 +1,7 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
-import { HeroImage } from "@zbav-se.me/ui/img";
+import { HeroImage } from "~/common/ui/img";
 import { withUploadFetchQuery } from "~/user/upload/query/withUploadFetchQuery";
 
 export namespace Preview {

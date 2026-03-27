@@ -1,9 +1,9 @@
 import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { translator } from "@use-pico/common/translator";
-import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
+import { TitleContainer } from "~/common/ui/container";
 import { Transaction } from "~/seller/transaction/~public/Transaction";
 import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";
 import { withTransactionQuery } from "../../query/withTransactionQuery";

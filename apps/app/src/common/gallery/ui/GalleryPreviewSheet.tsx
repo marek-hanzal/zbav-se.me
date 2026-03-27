@@ -1,8 +1,8 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { translator } from "@use-pico/common/translator";
-import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC } from "react";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
+import { CloseButton } from "~/common/ui/button";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
 export namespace GalleryPreviewSheet {

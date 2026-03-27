@@ -4,12 +4,12 @@ import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { translator } from "@use-pico/common/translator";
-import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
+import { useAppForm } from "~/common/ui/form";
 
 const FormSchema = FeedCreateSchema.pick({
 	name: true,

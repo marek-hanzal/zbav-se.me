@@ -1,6 +1,6 @@
 import { Icon } from "@use-pico/client/icon";
-import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
+import { RatingToIcon } from "~/common/ui/rating";
 
 export namespace RatingIcon {
 	export interface Props extends Icon.PropsEx {

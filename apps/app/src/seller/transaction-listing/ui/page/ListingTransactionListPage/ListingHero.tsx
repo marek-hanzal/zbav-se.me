@@ -1,11 +1,11 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
-import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useState } from "react";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
+import { HeroImage } from "~/common/ui/img";
 import { ListingSheet } from "~/seller/listing/~public/ListingSheet";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 

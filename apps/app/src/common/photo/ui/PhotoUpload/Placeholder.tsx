@@ -1,8 +1,8 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
-import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { PhotoIcon } from "~/common/ui/icon";
 
 export namespace Placeholder {
 	export interface Props {

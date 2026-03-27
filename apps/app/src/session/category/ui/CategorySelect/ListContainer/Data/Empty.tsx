@@ -1,7 +1,7 @@
 import { translator } from "@use-pico/common/translator";
-import { SearchIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
+import { SearchIcon } from "~/common/ui/icon";
 
 export namespace Empty {
 	export interface Props extends EmptyStatus.Props {

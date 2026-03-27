@@ -4,11 +4,11 @@ import { FormField } from "@use-pico/client/ui/form";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { useAppForm } from "@zbav-se.me/ui/form";
-import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { LocationSelect } from "~/common/location/ui/LocationSelect";
+import { useAppForm } from "~/common/ui/form";
+import { uiWarningStatus } from "~/common/ui/ui";
 import { PersonalSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema/PersonalSchema";
 
 export namespace PersonalControl {

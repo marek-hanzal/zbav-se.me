@@ -6,10 +6,10 @@ import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { linkTo } from "@use-pico/common/link-to";
 import { translator } from "@use-pico/common/translator";
-import { useAppForm } from "@zbav-se.me/ui/form";
-import { Logo } from "@zbav-se.me/ui/logo";
 import { z } from "zod";
 import { withEmailSignInMutation } from "~/common/auth/mutation/withEmailSignInMutation";
+import { useAppForm } from "~/common/ui/form";
+import { Logo } from "~/common/ui/logo";
 
 const LoginSchema = z.object({
 	email: z.email({

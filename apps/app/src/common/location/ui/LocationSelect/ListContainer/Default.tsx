@@ -4,8 +4,8 @@ import { Container } from "@use-pico/client/ui/container";
 import { Mx } from "@use-pico/client/ui/mx";
 import type { Status as StatusUi } from "@use-pico/client/ui/status";
 import { Status } from "@use-pico/client/ui/status";
-import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
+import { uiWarningStatus } from "~/common/ui/ui";
 
 export namespace Default {
 	export interface Props extends Pick<ContainerUi.Props, "ui"> {

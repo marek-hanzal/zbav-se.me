@@ -2,9 +2,9 @@ import { useLocale, useSentinel } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { FlowContainer } from "@zbav-se.me/ui/container";
-import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useRef } from "react";
+import { FlowContainer } from "~/common/ui/container";
+import { uiBackButton } from "~/common/ui/ui";
 import { Content } from "./Content";
 
 export namespace FeedListingPage {

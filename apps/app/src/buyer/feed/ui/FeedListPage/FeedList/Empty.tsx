@@ -2,10 +2,10 @@ import { ChevronRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { FeedIcon } from "@zbav-se.me/ui/icon";
-import { uiCtaLinkButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
+import { FeedIcon } from "~/common/ui/icon";
+import { uiCtaLinkButton } from "~/common/ui/ui";
 import { CreateSheet } from "./CreateSheet";
 
 export namespace Empty {

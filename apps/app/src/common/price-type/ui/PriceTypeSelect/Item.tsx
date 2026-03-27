@@ -3,8 +3,8 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
+import { uiSelectButton } from "~/common/ui/ui";
 
 export namespace Item {
 	export interface Props {

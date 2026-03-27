@@ -1,7 +1,7 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import type { StateType } from "@use-pico/common/type";
-import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC, PropsWithChildren } from "react";
+import { CloseButton } from "~/common/ui/button";
 
 export namespace Sheet {
 	export interface Props extends PropsWithChildren {

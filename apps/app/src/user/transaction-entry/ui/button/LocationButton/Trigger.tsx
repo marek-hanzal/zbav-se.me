@@ -1,7 +1,7 @@
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import { LocationIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { LocationIcon } from "~/common/ui/icon";
 
 export namespace Trigger {
 	export interface Props extends Button.Props {

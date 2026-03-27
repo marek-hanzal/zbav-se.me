@@ -5,8 +5,8 @@ import { LabelValue } from "@use-pico/client/ui/container";
 import { Typo, uiTypo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
-import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { SendPackageIcon } from "~/common/ui/icon";
 import type { TransactionEntryPackage } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/PackageSchema";
 import { TypeContainer } from "../TypeContainer";
 

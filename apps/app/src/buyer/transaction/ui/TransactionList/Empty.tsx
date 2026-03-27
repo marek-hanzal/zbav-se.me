@@ -4,9 +4,9 @@ import type { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { uiCtaLinkButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
+import { uiCtaLinkButton } from "~/common/ui/ui";
 
 export namespace Empty {
 	export interface Props extends Container.Props {

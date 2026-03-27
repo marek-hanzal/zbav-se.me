@@ -6,10 +6,10 @@ import { LinkTo, uiLinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { HeroImage } from "@zbav-se.me/ui/img";
-import { Logo } from "@zbav-se.me/ui/logo";
 import { Suspense } from "react";
 import face from "~/assets/face.webp";
+import { HeroImage } from "~/common/ui/img";
+import { Logo } from "~/common/ui/logo";
 import { History } from "~/public/ui/History";
 import { HistoryPending } from "~/public/ui/HistoryPending";
 

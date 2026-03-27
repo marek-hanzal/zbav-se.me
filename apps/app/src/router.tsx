@@ -4,7 +4,7 @@ import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { Container } from "@use-pico/client/ui/container";
-import { Logo } from "@zbav-se.me/ui/logo";
+import { Logo } from "~/common/ui/logo";
 import { routeTree } from "./_route";
 
 export async function getRouter() {

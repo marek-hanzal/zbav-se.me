@@ -3,10 +3,10 @@ import { UserIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
-import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { useUser } from "~/common/auth/hook/useUser";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
+import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";
 import { SignOutButton } from "./SignOutButton";
 

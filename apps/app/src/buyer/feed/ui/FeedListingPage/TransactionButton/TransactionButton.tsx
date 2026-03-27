@@ -4,11 +4,11 @@ import { ChevronRightIcon } from "@use-pico/client/icon";
 import { Button, uiButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
+import { TransactionIcon } from "~/common/ui/icon";
 
 export namespace TransactionButton {
 	export interface Props extends Button.Props {

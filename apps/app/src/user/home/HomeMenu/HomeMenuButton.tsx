@@ -1,7 +1,7 @@
 import { useLocale } from "@use-pico/client/hook";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { HomeIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { HomeIcon } from "~/common/ui/icon";
 
 export namespace HomeMenuButton {
 	export type Props = {};

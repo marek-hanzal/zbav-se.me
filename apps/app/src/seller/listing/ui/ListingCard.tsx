@@ -4,11 +4,11 @@ import { Markdown } from "@use-pico/client/ui/markdown";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
-import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { ConditionIcon } from "~/common/condition/ui/ConditionIcon";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
+import { HeroImage } from "~/common/ui/img";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
 import { CategoryInline } from "~/session/category/ui/CategoryInline";
 

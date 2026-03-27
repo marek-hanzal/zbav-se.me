@@ -1,11 +1,11 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
-import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/common/location/ui/LocationBadge";
+import { HeroImage } from "~/common/ui/img";
 import { FavouriteButton } from "../../FavouriteButton";
 import { TransactionButton } from "../../TransactionButton";
 

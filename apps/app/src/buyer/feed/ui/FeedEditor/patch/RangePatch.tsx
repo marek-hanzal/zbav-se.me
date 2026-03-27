@@ -1,11 +1,11 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
+import { Dial } from "~/common/ui/dial";
 
 export namespace RangePatch {
 	export interface Props extends Container.Props {

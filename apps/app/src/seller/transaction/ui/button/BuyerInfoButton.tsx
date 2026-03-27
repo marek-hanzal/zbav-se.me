@@ -2,9 +2,9 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { CloseButton } from "@zbav-se.me/ui/button";
-import { BuyerIcon } from "@zbav-se.me/ui/icon";
 import { type FC, Suspense, useState } from "react";
+import { CloseButton } from "~/common/ui/button";
+import { BuyerIcon } from "~/common/ui/icon";
 import { BuyerInfo } from "../BuyerInfo";
 
 export namespace BuyerInfoButton {

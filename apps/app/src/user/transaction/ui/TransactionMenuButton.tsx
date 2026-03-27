@@ -1,8 +1,8 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { PaperclipIcon } from "@zbav-se.me/ui/icon";
 import type { FC, ReactNode } from "react";
 import { useState } from "react";
+import { PaperclipIcon } from "~/common/ui/icon";
 
 export namespace TransactionMenuButton {
 	export type Close = () => void;

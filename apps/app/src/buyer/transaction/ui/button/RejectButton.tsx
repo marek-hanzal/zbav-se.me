@@ -1,9 +1,9 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
+import { CancelIcon } from "~/common/ui/icon";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionRejectMutation } from "../../mutation/withTransactionRejectMutation";
 import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";

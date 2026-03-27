@@ -2,9 +2,9 @@ import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import { LockIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { withSignOutMutation } from "~/common/auth/mutation/withSignOutMutation";
+import { LockIcon } from "~/common/ui/icon";
 
 export namespace SignOutButton {
 	export interface Props extends Button.Props {}

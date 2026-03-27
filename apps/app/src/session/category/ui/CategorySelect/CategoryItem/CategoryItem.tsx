@@ -4,7 +4,7 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { uiSelectButton } from "@zbav-se.me/ui/ui";
+import { uiSelectButton } from "~/common/ui/ui";
 import { withCategoryQuery } from "~/session/category/withCategoryQuery";
 
 export namespace CategoryItem {

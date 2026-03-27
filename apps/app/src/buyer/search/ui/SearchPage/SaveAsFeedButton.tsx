@@ -11,12 +11,12 @@ import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { useState } from "react";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
+import { useAppForm } from "~/common/ui/form";
 
 const FormSchema = FeedCreateSchema.pick({
 	name: true,

@@ -5,9 +5,9 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
-import { DraftIcon } from "@zbav-se.me/ui/icon";
-import { TypoIcon } from "@zbav-se.me/ui/typo";
-import { uiMenuButton } from "@zbav-se.me/ui/ui";
+import { DraftIcon } from "~/common/ui/icon";
+import { TypoIcon } from "~/common/ui/typo";
+import { uiMenuButton } from "~/common/ui/ui";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 
 /**

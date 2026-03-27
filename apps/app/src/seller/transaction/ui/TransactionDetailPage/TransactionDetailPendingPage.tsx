@@ -1,9 +1,9 @@
 import { useLocale } from "@use-pico/client/hook";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
+import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";
 
 export namespace TransactionDetailPendingPage {

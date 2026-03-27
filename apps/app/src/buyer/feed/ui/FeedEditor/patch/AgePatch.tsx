@@ -1,11 +1,11 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
-import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { AgeSelection } from "~/common/age/ui/AgeSelection";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
+import type { Rating } from "~/common/ui/rating";
 
 export namespace AgePatch {
 	export interface Props extends Container.Props {
