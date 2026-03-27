@@ -1,9 +1,9 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
-import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { match } from "ts-pattern";
 import { withTransactionEntryQuery } from "~/client/@user/transaction-entry/withTransactionEntryQuery";
+import type { UserSideEnumSchema } from "~/server/database/@enum/UserSideEnumSchema";
 import { Common } from "./type/Common";
 import { Gallery } from "./type/Gallery";
 import { Location } from "./type/Location";
@@ -13,7 +13,7 @@ import { Text } from "./type/Text";
 
 export namespace Item {
 	export interface Props extends MarkSuspense.Props {
-		side: tUserSideEnum;
+		side: UserSideEnumSchema.Type;
 		transactionEntryId: string;
 	}
 }

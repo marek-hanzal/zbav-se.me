@@ -5,17 +5,17 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tTransactionEntryGallery } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { useState } from "react";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { GalleryPreviewSheet } from "~/client/@common/gallery/ui/GalleryPreviewSheet";
 import { withTransactionEntryGalleryFetchQuery } from "~/client/@user/transaction-entry/withTransactionEntryGalleryFetchQuery";
+import type { TransactionEntryGallery } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema/GallerySchema";
 import { TypeContainer } from "../TypeContainer";
 
 export namespace Gallery {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		transactionEntry: tTransactionEntryGallery;
+		transactionEntry: TransactionEntryGallery.Type;
 	}
 }
 
@@ -84,7 +84,7 @@ export const Gallery = withFallback(
 	function GalleryFallback({
 		transactionEntry,
 	}: {
-		transactionEntry: Pick<tTransactionEntryGallery, "direction">;
+		transactionEntry: Pick<TransactionEntryGallery.Type, "direction">;
 	}) {
 		return (
 			<TypeContainer

@@ -8,12 +8,12 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { Image } from "~/client/@common/list-item/Image";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import { ListItemPending } from "~/client/@common/list-item/ListItemPending";
 import { toActivityLabel } from "~/client/@seller/transaction/~public/toStatusLabel";
+import { withTransactionListingQuery } from "~/client/@seller/transaction-listing/withTransactionListingQuery";
 
 export namespace Item {
 	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {

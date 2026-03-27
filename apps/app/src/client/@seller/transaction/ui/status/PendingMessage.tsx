@@ -1,17 +1,17 @@
 import type { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
-import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
 import { BuyerInfoButton } from "~/client/@seller/transaction/~public/BuyerInfoButton";
 import { MessageButtonUi } from "~/client/@user/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
+import type { TransactionSchema } from "~/server/@seller/transaction/schema/TransactionSchema";
 import { AcceptButton } from "../button/AcceptButton";
 import { RejectButton } from "../button/RejectButton";
 
 export namespace PendingMessage {
 	export interface Props extends Container.Props {
 		close: TransactionMenuButton.Close;
-		transaction: tTransaction;
+		transaction: TransactionSchema.Type;
 	}
 }
 

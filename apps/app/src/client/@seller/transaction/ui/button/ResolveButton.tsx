@@ -1,17 +1,17 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
-import { withTransactionResolveMutation } from "@zbav-se.me/sdk/mutation/seller/transaction";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
+import type { TransactionSchema } from "~/server/@seller/transaction/schema/TransactionSchema";
 import { archiveBuyerMessageInbox } from "../../service/archiveBuyerMessageInbox";
+import { withTransactionResolveMutation } from "../../withTransactionResolveMutation";
 
 export namespace ResolveButton {
 	export interface Props extends Button.Props {
 		close: TransactionMenuButton.Close;
-		transaction: tTransaction;
+		transaction: TransactionSchema.Type;
 	}
 }
 
@@ -39,10 +39,7 @@ export const ResolveButton: FC<ResolveButton.Props> = ({ close, transaction, ...
 			iconEnabled={CheckIcon}
 			onClick={() => {
 				mutation.mutate({
-					path: {
-						transactionId: transaction.id,
-					},
-					url: "/api/seller/transaction/{transactionId}/resolve",
+					id: transaction.id,
 				});
 			}}
 			loading={mutation.isPending}

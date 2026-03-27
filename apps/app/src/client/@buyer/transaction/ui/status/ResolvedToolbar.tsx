@@ -1,8 +1,8 @@
 import { Group } from "@use-pico/client/ui/group";
-import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { TransactionButtonUi } from "~/client/@user/transaction/ui/TransactionButtonUi";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
+import type { TransactionSchema } from "~/server/@buyer/transaction/schema/TransactionSchema";
 import { CloseButton } from "../button/CloseButton";
 import { DisputeButton } from "../button/DisputeButton";
 import { SuccessButton } from "../button/SuccessButton";
@@ -10,7 +10,7 @@ import { SuccessButton } from "../button/SuccessButton";
 export namespace ResolvedToolbar {
 	export interface Props {
 		close: TransactionMenuButton.Close;
-		transaction: tTransaction;
+		transaction: TransactionSchema.Type;
 	}
 }
 

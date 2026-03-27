@@ -1,14 +1,14 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Typo, type uiTypo } from "@use-pico/client/ui/typo";
-import type { tTransactionFilter } from "@zbav-se.me/sdk/api/buyer";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import type { FC } from "react";
+import type { TransactionFilterSchema } from "~/server/@buyer/transaction/schema/TransactionFilterSchema";
 import { TransactionList } from "../ui/TransactionList";
+import { withTransactionQuery } from "../withTransactionQuery";
 
 export namespace ListGroup {
 	export interface Props extends Container.Props {
 		label: string;
-		filter: tTransactionFilter;
+		filter: TransactionFilterSchema.Type;
 		refetchInterval: number;
 		typoUi?: uiTypo.Ui;
 	}

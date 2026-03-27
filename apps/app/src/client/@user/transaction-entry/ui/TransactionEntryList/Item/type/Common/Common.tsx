@@ -3,15 +3,15 @@ import type { Container } from "@use-pico/client/ui/container";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import type { tTransactionEntryCommon } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
+import type { TransactionEntryCommon } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema/CommonSchema";
+import type { UserSideEnumSchema } from "~/server/database/@enum/UserSideEnumSchema";
 import { TypeContainer } from "../TypeContainer";
 
 export namespace Common {
 	export interface Props extends Container.Props {
-		side: tUserSideEnum;
-		transactionEntry: tTransactionEntryCommon;
+		side: UserSideEnumSchema.Type;
+		transactionEntry: TransactionEntryCommon.Type;
 	}
 }
 

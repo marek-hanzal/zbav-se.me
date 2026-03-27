@@ -1,14 +1,14 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo, type uiTypo } from "@use-pico/client/ui/typo";
-import type { tTransactionFilter } from "@zbav-se.me/sdk/api/seller";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import type { FC } from "react";
+import { withTransactionQuery } from "~/client/@seller/transaction/withTransactionQuery";
+import type { TransactionFilterSchema } from "~/server/@seller/transaction/schema/TransactionFilterSchema";
 import { List } from "./List";
 
 export namespace ListGroup {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		filter: tTransactionFilter;
+		filter: TransactionFilterSchema.Type;
 		label: string;
 		refetchInterval: number;
 		typoUi?: uiTypo.Ui;

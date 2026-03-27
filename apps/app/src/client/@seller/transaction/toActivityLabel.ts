@@ -1,19 +1,19 @@
 import { translator } from "@use-pico/common/translator";
-import type { tTransactionEntry } from "@zbav-se.me/sdk/api/user";
-import { zTransactionEntryText } from "@zbav-se.me/sdk/api/user";
 import { match } from "ts-pattern";
+import type { TransactionEntrySchema } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema";
+import { TransactionEntryText } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema/TextSchema";
 import { toStatusLabel } from "./toStatusLabel";
 
 export namespace toActivityLabel {
 	export interface Props {
-		entry: tTransactionEntry;
+		entry: TransactionEntrySchema.Type;
 	}
 }
 
 export const toActivityLabel = ({ entry }: toActivityLabel.Props) => {
 	return match(entry.kind)
 		.with("text", () => {
-			const { payload } = zTransactionEntryText.parse(entry);
+			const { payload } = TransactionEntryText.parse(entry);
 			return payload.text;
 		})
 		.with("status-pending", () => toStatusLabel("pending"))

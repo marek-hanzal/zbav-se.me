@@ -1,11 +1,11 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tTransactionStatusEnum } from "@zbav-se.me/sdk/api/public";
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC, ReactNode } from "react";
 import { useCallback } from "react";
 import { match } from "ts-pattern";
 import { withTransactionEntryQuery } from "~/client/@user/transaction-entry/withTransactionEntryQuery";
+import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 
 export namespace TransactionChat {
 	export interface Hooks {
@@ -22,7 +22,7 @@ export namespace TransactionChat {
 
 	export interface Transaction {
 		id: string;
-		status: tTransactionStatusEnum;
+		status: TransactionStatusEnumSchema.Type;
 	}
 
 	export interface Props extends Container.Props {

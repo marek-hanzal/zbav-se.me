@@ -2,15 +2,15 @@ import { useLocale } from "@use-pico/client/hook";
 import { Container, LabelValue } from "@use-pico/client/ui/container";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
-import type { tUserEventBuyer } from "@zbav-se.me/sdk/api/seller";
 import { DateTime } from "luxon";
 import type { FC } from "react";
+import type { UserEventBuyerSchema } from "~/server/@buyer/user-event/schema/UserEventBuyerSchema";
 
 const percentLabel = (value: number) => `${Math.round(value)}%`;
 
 export namespace Events {
 	export interface Props {
-		events: tUserEventBuyer;
+		events: UserEventBuyerSchema.Type;
 	}
 }
 

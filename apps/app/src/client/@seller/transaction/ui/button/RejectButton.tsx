@@ -1,17 +1,17 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
-import { withTransactionRejectMutation } from "@zbav-se.me/sdk/mutation/seller/transaction";
 import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
+import type { TransactionSchema } from "~/server/@seller/transaction/schema/TransactionSchema";
 import { archiveBuyerMessageInbox } from "../../service/archiveBuyerMessageInbox";
+import { withTransactionRejectMutation } from "../../withTransactionRejectMutation";
 
 export namespace RejectButton {
 	export interface Props extends Partial<ConfirmButton.Props> {
 		close: TransactionMenuButton.Close;
-		transaction: tTransaction;
+		transaction: TransactionSchema.Type;
 	}
 }
 
@@ -44,10 +44,7 @@ export const RejectButton: FC<RejectButton.Props> = ({ close, transaction, ...pr
 				children: <Tx label="Reject transaction - confirm (button)" />,
 				onClick() {
 					mutation.mutate({
-						path: {
-							transactionId: transaction.id,
-						},
-						url: "/api/seller/transaction/{transactionId}/reject",
+						id: transaction.id,
 					});
 				},
 			}}

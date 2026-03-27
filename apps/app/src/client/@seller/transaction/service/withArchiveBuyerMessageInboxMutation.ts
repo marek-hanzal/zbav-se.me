@@ -1,23 +1,23 @@
 import { withMutation } from "@use-pico/client/mutation";
-import { tTransactionStatusEnum } from "@zbav-se.me/sdk/api/seller";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
-import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
+import { withTransactionListingQuery } from "~/client/@seller/transaction-listing/withTransactionListingQuery";
 import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
+import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { inboxArchiveFn } from "~/server/@user/inbox/fn/inboxArchiveFn";
+import { withTransactionQuery } from "../withTransactionQuery";
 
-const terminalStatuses: tTransactionStatusEnum[] = [
-	tTransactionStatusEnum.rejected,
-	tTransactionStatusEnum.sold,
-	tTransactionStatusEnum.expired,
-	tTransactionStatusEnum.success,
-	tTransactionStatusEnum.closed,
+const terminalStatuses: TransactionStatusEnumSchema.Type[] = [
+	TransactionStatusEnumSchema.enum.rejected,
+	TransactionStatusEnumSchema.enum.sold,
+	TransactionStatusEnumSchema.enum.expired,
+	TransactionStatusEnumSchema.enum.success,
+	TransactionStatusEnumSchema.enum.closed,
 ];
 
 export namespace withArchiveBuyerMessageInboxMutation {
 	export interface Variables {
 		transactionId: string;
 		listingId: string;
-		status: tTransactionStatusEnum;
+		status: TransactionStatusEnumSchema.Type;
 	}
 }
 

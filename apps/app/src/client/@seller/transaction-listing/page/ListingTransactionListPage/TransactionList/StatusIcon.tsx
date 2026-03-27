@@ -1,12 +1,12 @@
 import { Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
-import type { tTransactionStatusEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 
 export namespace StatusIcon {
 	export interface Props {
-		status: tTransactionStatusEnum;
+		status: TransactionStatusEnumSchema.Type;
 	}
 }
 

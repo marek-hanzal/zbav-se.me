@@ -1,12 +1,12 @@
 import type { uiContainer } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
-import type { tTransactionEntryDirectionEnum } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import type { TransactionEntryDirectionEnumSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryDirectionEnumSchema";
 
 export namespace TypeContainer {
 	export interface Props extends Group.Props {
-		direction: tTransactionEntryDirectionEnum;
+		direction: TransactionEntryDirectionEnumSchema.Type;
 	}
 }
 

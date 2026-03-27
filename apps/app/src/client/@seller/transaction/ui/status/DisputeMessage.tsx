@@ -1,7 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import type { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
-import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import { type FC, useCallback, useState } from "react";
 import { GalleryUploadButton } from "~/client/@common/gallery/ui/GalleryUploadButton";
 import { MessageButtonUi } from "~/client/@user/transaction/ui/MessageButtonUi";
@@ -10,12 +9,13 @@ import { LocationButton } from "~/client/@user/transaction-entry/ui/button/Locat
 import { PackageButton } from "~/client/@user/transaction-entry/ui/button/PackageButton";
 import { PersonalButton } from "~/client/@user/transaction-entry/ui/button/PersonalButton";
 import { withTransactionEntryGalleryCreateMutation } from "~/client/@user/transaction-entry/withTransactionEntryGalleryCreateMutation";
+import type { TransactionSchema } from "~/server/@seller/transaction/schema/TransactionSchema";
 import { archiveBuyerMessageInbox } from "../../service/archiveBuyerMessageInbox";
 
 export namespace DisputeMessage {
 	export interface Props extends Container.Props {
 		close: TransactionMenuButton.Close;
-		transaction: tTransaction;
+		transaction: TransactionSchema.Type;
 	}
 }
 

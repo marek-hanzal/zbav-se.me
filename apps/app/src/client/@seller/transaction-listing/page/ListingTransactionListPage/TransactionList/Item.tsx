@@ -6,11 +6,11 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import { ListItemPending } from "~/client/@common/list-item/ListItemPending";
 import { toActivityLabel } from "~/client/@seller/transaction/~public/toStatusLabel";
+import { withTransactionQuery } from "~/client/@seller/transaction/withTransactionQuery";
 import { StatusIcon } from "./StatusIcon";
 
 export namespace Item {

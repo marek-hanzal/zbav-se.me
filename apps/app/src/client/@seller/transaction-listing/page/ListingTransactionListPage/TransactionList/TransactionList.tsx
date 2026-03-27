@@ -2,10 +2,10 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { translator } from "@use-pico/common/translator";
-import { tTransactionStatusEnum } from "@zbav-se.me/sdk/api/seller";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { type FC, useMemo } from "react";
 import { toStatusLabel } from "~/client/@seller/transaction/~public/toStatusLabel";
+import { withTransactionQuery } from "~/client/@seller/transaction/withTransactionQuery";
+import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { Empty } from "./Empty";
 import { ListGroup } from "./ListGroup";
 
@@ -18,7 +18,7 @@ export namespace TransactionList {
 
 interface Group extends Partial<Omit<ListGroup.Props, "filter" | "label" | "refetchInterval">> {
 	label: string;
-	statuses: tTransactionStatusEnum[];
+	statuses: TransactionStatusEnumSchema.Type[];
 }
 
 export const TransactionList: FC<TransactionList.Props> = ({
@@ -50,9 +50,9 @@ export const TransactionList: FC<TransactionList.Props> = ({
 		() =>
 			[
 				{
-					label: toStatusLabel(tTransactionStatusEnum.pending),
+					label: toStatusLabel(TransactionStatusEnumSchema.enum.pending),
 					statuses: [
-						tTransactionStatusEnum.pending,
+						TransactionStatusEnumSchema.enum.pending,
 					],
 					typoUi: {
 						tone: "neutral",
@@ -60,31 +60,31 @@ export const TransactionList: FC<TransactionList.Props> = ({
 					},
 				},
 				{
-					label: toStatusLabel(tTransactionStatusEnum.open),
+					label: toStatusLabel(TransactionStatusEnumSchema.enum.open),
 					statuses: [
-						tTransactionStatusEnum.open,
+						TransactionStatusEnumSchema.enum.open,
 					],
 				},
 				{
-					label: toStatusLabel(tTransactionStatusEnum.dispute),
+					label: toStatusLabel(TransactionStatusEnumSchema.enum.dispute),
 					statuses: [
-						tTransactionStatusEnum.dispute,
+						TransactionStatusEnumSchema.enum.dispute,
 					],
 				},
 				{
-					label: toStatusLabel(tTransactionStatusEnum.resolved),
+					label: toStatusLabel(TransactionStatusEnumSchema.enum.resolved),
 					statuses: [
-						tTransactionStatusEnum.resolved,
+						TransactionStatusEnumSchema.enum.resolved,
 					],
 				},
 				{
 					label: translator.text("Messages closed listings section (title)"),
 					statuses: [
-						tTransactionStatusEnum.success,
-						tTransactionStatusEnum.rejected,
-						tTransactionStatusEnum.sold,
-						tTransactionStatusEnum.closed,
-						tTransactionStatusEnum.expired,
+						TransactionStatusEnumSchema.enum.success,
+						TransactionStatusEnumSchema.enum.rejected,
+						TransactionStatusEnumSchema.enum.sold,
+						TransactionStatusEnumSchema.enum.closed,
+						TransactionStatusEnumSchema.enum.expired,
 					],
 					ui: {
 						opacity: "7",

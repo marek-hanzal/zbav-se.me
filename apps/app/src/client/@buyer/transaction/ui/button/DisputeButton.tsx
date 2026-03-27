@@ -1,17 +1,17 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
-import { withTransactionDisputeMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import type { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
+import type { TransactionSchema } from "~/server/@buyer/transaction/schema/TransactionSchema";
 import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";
+import { withTransactionDisputeMutation } from "../../withTransactionDisputeMutation";
 
 export namespace DisputeButton {
 	export interface Props extends ConfirmButton.Props {
 		close: TransactionMenuButton.Close;
-		transaction: tTransaction;
+		transaction: TransactionSchema.Type;
 	}
 }
 
@@ -44,10 +44,7 @@ export const DisputeButton: FC<DisputeButton.Props> = ({ close, transaction, ...
 				children: <Tx label="Dispute transaction - confirm (button)" />,
 				onClick() {
 					mutation.mutate({
-						path: {
-							transactionId: transaction.id,
-						},
-						url: "/api/buyer/transaction/{transactionId}/dispute",
+						id: transaction.id,
 					});
 				},
 			}}

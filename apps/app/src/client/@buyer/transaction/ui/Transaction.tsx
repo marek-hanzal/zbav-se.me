@@ -2,8 +2,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useEffect, useRef, useState } from "react";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
@@ -12,8 +10,10 @@ import { LocationBadge } from "~/client/@common/location/ui/LocationBadge";
 import { TransactionChat } from "~/client/@user/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/client/@user/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/client/@user/transaction-entry/ui/TransactionEntryList";
+import { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
 import { archiveSellerMessageInbox } from "../service/archiveSellerMessageInbox";
 import { withArchiveSellerMessageInboxMutation } from "../service/withArchiveSellerMessageInboxMutation";
+import { withTransactionQuery } from "../withTransactionQuery";
 import { PendingMessage } from "./status/PendingMessage";
 import { TransactionMenu } from "./TransactionMenu";
 
@@ -115,7 +115,7 @@ export const Transaction: FC<Transaction.Props> = ({
 
 					<TransactionEntryList
 						_suspense={"I know"}
-						side={tUserSideEnum.buyer}
+						side={UserSideEnumSchema.enum.buyer}
 						containerRef={containerRef}
 						transactionId={transaction.id}
 						refresh={refresh}

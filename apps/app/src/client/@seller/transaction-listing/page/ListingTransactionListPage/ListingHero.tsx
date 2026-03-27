@@ -1,13 +1,13 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
-import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useState } from "react";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/client/@common/listing/ui/ListingPrice";
 import { ListingSheet } from "~/client/@seller/listing/~public/ListingSheet";
+import { withListingQuery } from "~/client/@seller/listing/withListingQuery";
 
 export namespace ListingHero {
 	export interface Props extends Container.Props, MarkSuspense.Props {

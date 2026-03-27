@@ -1,12 +1,9 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tTransaction as tBuyerTransaction } from "@zbav-se.me/sdk/api/buyer";
-import type { tTransaction as tSellerTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC, ReactNode } from "react";
 import { match } from "ts-pattern";
+import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 
 export namespace TransactionToolbar {
-	type Status = tBuyerTransaction["status"] | tSellerTransaction["status"];
-
 	export interface Props extends Container.Props {
 		closed?: ReactNode;
 		dispute?: ReactNode;
@@ -16,7 +13,7 @@ export namespace TransactionToolbar {
 		rejected?: ReactNode;
 		resolved?: ReactNode;
 		sold?: ReactNode;
-		status: Status;
+		status: TransactionStatusEnumSchema.Type;
 		success?: ReactNode;
 	}
 }

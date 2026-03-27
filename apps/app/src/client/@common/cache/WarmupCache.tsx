@@ -1,12 +1,12 @@
 import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
-import { withTransactionQuery as withBuyerTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
-import { withListingQuery as withSellerListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
-import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
 import { type FC, useEffect } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/withFeedQuery";
 import { withListingQuery as withBuyerListingQuery } from "~/client/@buyer/listing/withListingQuery";
+import { withTransactionQuery as withBuyerTransactionQuery } from "~/client/@buyer/transaction/withTransactionQuery";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import { withListingQuery as withSellerListingQuery } from "~/client/@seller/listing/withListingQuery";
+import { withTransactionListingQuery } from "~/client/@seller/transaction-listing/withTransactionListingQuery";
 import { withCategoryQuery } from "~/client/@session/category/withCategoryQuery";
 import { withInboxQuery } from "~/client/@user/inbox/withInboxQuery";
 

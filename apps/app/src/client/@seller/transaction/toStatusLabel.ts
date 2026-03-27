@@ -1,8 +1,8 @@
 import { translator } from "@use-pico/common/translator";
-import type { tTransactionStatusEnum } from "@zbav-se.me/sdk/api/public";
 import { match } from "ts-pattern";
+import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 
-export const toStatusLabel = (status: tTransactionStatusEnum) => {
+export const toStatusLabel = (status: TransactionStatusEnumSchema.Type) => {
 	return match(status)
 		.with("pending", () => translator.text("Transaction status pending (label)"))
 		.with("open", () => translator.text("Transaction status open (label)"))

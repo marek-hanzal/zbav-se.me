@@ -5,13 +5,13 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tTransactionEntryLocation } from "@zbav-se.me/sdk/api/user";
 import { withLocationFetchQuery } from "~/client/@session/location/withLocationFetchQuery";
+import type { TransactionEntryLocation } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema/LocationSchema";
 import { TypeContainer } from "../TypeContainer";
 
 export namespace Location {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		transactionEntry: tTransactionEntryLocation;
+		transactionEntry: TransactionEntryLocation.Type;
 	}
 }
 
@@ -57,7 +57,7 @@ export const Location = withFallback(
 	function LocationFallback({
 		transactionEntry,
 	}: {
-		transactionEntry: Pick<tTransactionEntryLocation, "direction">;
+		transactionEntry: Pick<TransactionEntryLocation.Type, "direction">;
 	}) {
 		return (
 			<TypeContainer

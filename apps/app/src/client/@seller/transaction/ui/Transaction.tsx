@@ -2,8 +2,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useEffect, useRef } from "react";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
@@ -13,6 +11,7 @@ import { TransactionMenuButton } from "~/client/@user/transaction/ui/Transaction
 import { TransactionEntryList } from "~/client/@user/transaction-entry/ui/TransactionEntryList";
 import { archiveBuyerMessageInbox } from "../service/archiveBuyerMessageInbox";
 import { withArchiveBuyerMessageInboxMutation } from "../service/withArchiveBuyerMessageInboxMutation";
+import { withTransactionQuery } from "../withTransactionQuery";
 import { PendingMessage } from "./status/PendingMessage";
 import { TransactionMenu } from "./TransactionMenu";
 
@@ -100,7 +99,7 @@ export const Transaction: FC<Transaction.Props> = ({
 
 					<TransactionEntryList
 						_suspense={"I know"}
-						side={tUserSideEnum.seller}
+						side={"seller"}
 						containerRef={containerRef}
 						transactionId={transaction.id}
 						refresh={refresh}

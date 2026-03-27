@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/style/noNonNullAssertion: Ssst */
 
 import { clamp } from "@use-pico/common/clamp";
 import { median } from "@use-pico/common/median";

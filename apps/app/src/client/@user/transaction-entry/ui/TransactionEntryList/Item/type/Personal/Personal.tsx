@@ -5,13 +5,13 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tTransactionEntryPersonal } from "@zbav-se.me/sdk/api/user";
 import { withLocationFetchQuery } from "~/client/@session/location/withLocationFetchQuery";
+import type { TransactionEntryPersonal } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema/PersonalSchema";
 import { TypeContainer } from "../TypeContainer";
 
 export namespace Personal {
 	export interface Props extends ContainerType.Props, MarkSuspense.Props {
-		transactionEntry: tTransactionEntryPersonal;
+		transactionEntry: TransactionEntryPersonal.Type;
 	}
 }
 
@@ -88,7 +88,7 @@ export const Personal = withFallback(
 	function PersonalFallback({
 		transactionEntry,
 	}: {
-		transactionEntry: Pick<tTransactionEntryPersonal, "direction">;
+		transactionEntry: Pick<TransactionEntryPersonal.Type, "direction">;
 	}) {
 		return (
 			<TypeContainer
