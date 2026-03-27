@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './@routes/__root'
+import { Route as McpRouteImport } from './@routes/mcp'
 import { Route as ApiRouteImport } from './@routes/api'
 import { Route as DotwellKnownRouteImport } from './@routes/[.]well-known'
 import { Route as LocaleRouteImport } from './@routes/$locale'
@@ -48,6 +49,11 @@ import { Route as LocaleAppBuyerTransactionTransactionIdDetailRouteImport } from
 import { Route as LocaleAppBuyerFeedIdListRouteImport } from './@routes/$locale/app/buyer/feed/$id/list'
 import { Route as LocaleAppBuyerFeedIdFavouriteListRouteImport } from './@routes/$locale/app/buyer/feed/$id/favourite/list'
 
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiRoute = ApiRouteImport.update({
   id: '/api',
   path: '/api',
@@ -257,6 +263,7 @@ export interface FileRoutesByFullPath {
   '/$locale': typeof LocaleRouteWithChildren
   '/.well-known': typeof DotwellKnownRoute
   '/api': typeof ApiRouteWithChildren
+  '/mcp': typeof McpRoute
   '/$locale/app': typeof LocaleAppRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/oath': typeof LocaleOathRoute
@@ -296,6 +303,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/.well-known': typeof DotwellKnownRoute
   '/api': typeof ApiRouteWithChildren
+  '/mcp': typeof McpRoute
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/oath': typeof LocaleOathRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
@@ -336,6 +344,7 @@ export interface FileRoutesById {
   '/$locale': typeof LocaleRouteWithChildren
   '/.well-known': typeof DotwellKnownRoute
   '/api': typeof ApiRouteWithChildren
+  '/mcp': typeof McpRoute
   '/$locale/app': typeof LocaleAppRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/oath': typeof LocaleOathRoute
@@ -378,6 +387,7 @@ export interface FileRouteTypes {
     | '/$locale'
     | '/.well-known'
     | '/api'
+    | '/mcp'
     | '/$locale/app'
     | '/$locale/landing'
     | '/$locale/oath'
@@ -417,6 +427,7 @@ export interface FileRouteTypes {
     | '/'
     | '/.well-known'
     | '/api'
+    | '/mcp'
     | '/$locale/landing'
     | '/$locale/oath'
     | '/$locale/privacy'
@@ -456,6 +467,7 @@ export interface FileRouteTypes {
     | '/$locale'
     | '/.well-known'
     | '/api'
+    | '/mcp'
     | '/$locale/app'
     | '/$locale/landing'
     | '/$locale/oath'
@@ -497,12 +509,20 @@ export interface RootRouteChildren {
   LocaleRoute: typeof LocaleRouteWithChildren
   DotwellKnownRoute: typeof DotwellKnownRoute
   ApiRoute: typeof ApiRouteWithChildren
+  McpRoute: typeof McpRoute
   RedirectOathRoute: typeof RedirectOathRoute
   RedirectSignInRoute: typeof RedirectSignInRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api': {
       id: '/api'
       path: '/api'
@@ -872,6 +892,7 @@ const rootRouteChildren: RootRouteChildren = {
   LocaleRoute: LocaleRouteWithChildren,
   DotwellKnownRoute: DotwellKnownRoute,
   ApiRoute: ApiRouteWithChildren,
+  McpRoute: McpRoute,
   RedirectOathRoute: RedirectOathRoute,
   RedirectSignInRoute: RedirectSignInRoute,
 }
