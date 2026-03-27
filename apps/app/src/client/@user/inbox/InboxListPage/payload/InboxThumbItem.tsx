@@ -8,9 +8,9 @@ import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC } from "react";
 import { useState } from "react";
-import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
+import { withListingQuery } from "~/client/@public/listing/query/withListingQuery";
 import { withInboxQuery } from "~/client/@user/inbox/query/withInboxQuery";
 import type { ThumbSchema } from "~/server/database/@table/InboxTableSchema/ThumbSchema";
 

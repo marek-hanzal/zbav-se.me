@@ -1,7 +1,7 @@
 import { list } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
-import { favouriteToggleFx } from "~/server/@buyer/favourite/fx/favouriteToggleFx";
+import { favouriteToggleFx } from "~/client/@buyer/favourite/server/fx/favouriteToggleFx";
 import { flagToggleFx } from "~/server/@buyer/flag/fx/flagToggleFx";
 import { ignoreToggleFx } from "~/server/@buyer/ignore/fx/ignoreToggleFx";
 import { transactionCloseFx } from "~/server/@buyer/transaction/fx/transactionCloseFx";

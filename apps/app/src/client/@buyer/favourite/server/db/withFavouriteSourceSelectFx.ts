@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { FavouriteSortSchema } from "~/server/@buyer/favourite/schema/FavouriteSortSchema";
+import type { FavouriteSortSchema } from "~/client/@buyer/favourite/server/schema/FavouriteSortSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 
 export namespace withFavouriteSourceSelectFx {

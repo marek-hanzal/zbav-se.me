@@ -4,9 +4,9 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { FC } from "react";
-import { withListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
+import { withListingQuery } from "~/client/@public/listing/query/withListingQuery";
 import { withInboxQuery } from "~/client/@user/inbox/query/withInboxQuery";
 import type { FavouriteSchema } from "~/server/database/@table/InboxTableSchema/FavouriteSchema";
 

@@ -4,7 +4,7 @@ import { type FC, useEffect } from "react";
 import { withFeedQuery } from "~/client/@buyer/feed/query/withFeedQuery";
 import { withListingQuery as withBuyerListingQuery } from "~/client/@buyer/listing/query/withListingQuery";
 import { withTransactionQuery as withBuyerTransactionQuery } from "~/client/@buyer/transaction/query/withTransactionQuery";
-import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
 import { withListingQuery as withSellerListingQuery } from "~/client/@seller/listing/query/withListingQuery";
 import { withTransactionListingQuery } from "~/client/@seller/transaction-listing/query/withTransactionListingQuery";
 import { withCategoryQuery } from "~/client/@session/category/withCategoryQuery";

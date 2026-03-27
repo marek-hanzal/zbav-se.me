@@ -8,7 +8,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { WarrantySelect } from "~/client/@common/warranty/ui/WarrantySelect";
-import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
 import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import type { DraftEditor } from "../DraftEditor";

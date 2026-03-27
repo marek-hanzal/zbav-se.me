@@ -8,7 +8,7 @@ import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { z } from "zod";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
-import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import { ListingCreateSchema } from "~/server/@seller/listing/schema/ListingCreateSchema";
 import type { DraftEditor } from "../DraftEditor";

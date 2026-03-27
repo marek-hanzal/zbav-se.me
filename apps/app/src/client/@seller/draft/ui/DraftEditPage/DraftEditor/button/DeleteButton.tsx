@@ -6,7 +6,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
-import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 
 export namespace DeleteButton {

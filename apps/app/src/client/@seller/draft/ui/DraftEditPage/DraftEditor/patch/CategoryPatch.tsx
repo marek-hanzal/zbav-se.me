@@ -8,7 +8,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
-import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
 import { CategorySelect } from "~/client/@session/category/ui/CategorySelect";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import { ListingCreateSchema } from "~/server/@seller/listing/schema/ListingCreateSchema";

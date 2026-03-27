@@ -8,7 +8,7 @@ import { withFallback } from "@use-pico/client/utils";
 import { DraftIcon } from "@zbav-se.me/ui/icon";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
-import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
 
 /**
  * Renders a dedicated home menu draft navigation link with domain-specific state handling.

@@ -7,7 +7,7 @@ import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useCallback, useMemo, useState } from "react";
 import { BackHomeButton } from "~/client/@common/nav/BackHomeButton";
-import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
 import { HomeMenuButton } from "~/client/@user/home/~public/HomeMenuButton";
 import { Editor } from "./Editor";
 import { AgePatch } from "./patch/AgePatch";

@@ -11,7 +11,7 @@ import { CheckIcon } from "@zbav-se.me/ui/icon";
 import { isValid } from "~/client/@common/draft/util/isValid";
 import { useMaybeUpload } from "~/client/@common/gallery/hook/useMaybeUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
-import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
 
 export namespace Item {
 	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {

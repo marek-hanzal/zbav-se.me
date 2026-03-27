@@ -2,7 +2,7 @@ import { withMutation } from "@use-pico/client/mutation";
 import { draftGalleryCreateFn } from "~/server/@seller/draft-gallery/fn/draftGalleryCreateFn";
 import type { DraftGalleryCreateSchema } from "~/server/@seller/draft-gallery/schema/DraftGalleryCreateSchema";
 import type { GallerySchema } from "~/server/@user/gallery/schema/GallerySchema";
-import { withDraftQuery } from "./withDraftQuery";
+import { withDraftQuery } from "../query/withDraftQuery";
 
 export const withDraftGalleryCreateMutation = withMutation<
 	DraftGalleryCreateSchema.Type,

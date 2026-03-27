@@ -8,7 +8,7 @@ import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { ExpireAtSelect } from "~/client/@common/expire-at/ui/ExpireAtSelect";
-import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
 import type { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import { ListingCreateSchema } from "~/server/@seller/listing/schema/ListingCreateSchema";

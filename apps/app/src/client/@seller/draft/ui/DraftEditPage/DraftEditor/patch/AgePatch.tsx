@@ -8,7 +8,7 @@ import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { AgeSelection } from "~/client/@common/age/ui/AgeSelection";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
-import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";

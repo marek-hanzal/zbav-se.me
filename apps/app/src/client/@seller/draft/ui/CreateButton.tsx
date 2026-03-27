@@ -4,7 +4,7 @@ import { Icon, PlusIcon } from "@use-pico/client/icon";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
 import { ListItem } from "~/client/@common/list-item/ListItem";
-import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import { withDraftQuery } from "~/client/@seller/draft/query/withDraftQuery";
 
 export namespace CreateButton {
 	export interface Props extends ListItem.PropsEx {

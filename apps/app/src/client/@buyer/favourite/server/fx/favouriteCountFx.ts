@@ -1,9 +1,9 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { withFavouriteCollectionSelectFx } from "~/server/@buyer/favourite/db/withFavouriteCollectionSelectFx";
-import { withFavouriteQueryBuilderFx } from "~/server/@buyer/favourite/db/withFavouriteQueryBuilderFx";
-import type { FavouriteCountQuerySchema } from "~/server/@buyer/favourite/schema/FavouriteCountQuerySchema";
-import type { FavouriteFilterSchema } from "~/server/@buyer/favourite/schema/FavouriteFilterSchema";
+import { withFavouriteCollectionSelectFx } from "~/client/@buyer/favourite/server/db/withFavouriteCollectionSelectFx";
+import { withFavouriteQueryBuilderFx } from "~/client/@buyer/favourite/server/db/withFavouriteQueryBuilderFx";
+import type { FavouriteCountQuerySchema } from "~/client/@buyer/favourite/server/schema/FavouriteCountQuerySchema";
+import type { FavouriteFilterSchema } from "~/client/@buyer/favourite/server/schema/FavouriteFilterSchema";
 
 export namespace favouriteCountFx {
 	export interface Props extends FavouriteCountQuerySchema.Type {

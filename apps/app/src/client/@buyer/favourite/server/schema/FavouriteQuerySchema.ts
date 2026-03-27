@@ -1,8 +1,8 @@
 import { CursorSchema } from "@use-pico/common/schema";
 import { z } from "zod";
-import { FavouriteFilterSchema } from "~/server/@buyer/favourite/schema/FavouriteFilterSchema";
-import { FavouriteSortSchema } from "~/server/@buyer/favourite/schema/FavouriteSortSchema";
-import { FavouriteWhereSchema } from "~/server/@buyer/favourite/schema/FavouriteWhereSchema";
+import { FavouriteFilterSchema } from "~/client/@buyer/favourite/server/schema/FavouriteFilterSchema";
+import { FavouriteSortSchema } from "~/client/@buyer/favourite/server/schema/FavouriteSortSchema";
+import { FavouriteWhereSchema } from "~/client/@buyer/favourite/server/schema/FavouriteWhereSchema";
 
 export const FavouriteQuerySchema = z
 	.looseObject({

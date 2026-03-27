@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { favouriteFetchFx } from "~/server/@buyer/favourite/fx/favouriteFetchFx";
+import { favouriteFetchFx } from "~/client/@buyer/favourite/server/fx/favouriteFetchFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";

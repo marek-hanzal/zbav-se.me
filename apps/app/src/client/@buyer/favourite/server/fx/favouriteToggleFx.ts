@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import { favouriteCreateFx } from "~/server/@buyer/favourite/fx/favouriteCreateFx";
-import { favouriteDeleteFx } from "~/server/@buyer/favourite/fx/favouriteDeleteFx";
-import type { FavouriteToggleSchema } from "~/server/@buyer/favourite/schema/FavouriteToggleSchema";
+import { favouriteCreateFx } from "~/client/@buyer/favourite/server/fx/favouriteCreateFx";
+import { favouriteDeleteFx } from "~/client/@buyer/favourite/server/fx/favouriteDeleteFx";
+import type { FavouriteToggleSchema } from "~/client/@buyer/favourite/server/schema/FavouriteToggleSchema";
 import { listingCheckIfOwnFx } from "~/server/@buyer/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/server/@buyer/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/server/@buyer/listing-event/fx/listingEventCreateFx";

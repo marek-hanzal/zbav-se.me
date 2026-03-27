@@ -1,2 +1,2 @@
-export { toActivityLabel } from "../toActivityLabel";
-export { toStatusLabel } from "../toStatusLabel";
+export { toActivityLabel } from "../ui/toActivityLabel";
+export { toStatusLabel } from "../ui/toStatusLabel";

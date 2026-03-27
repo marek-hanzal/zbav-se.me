@@ -1,8 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { favouriteToggleFx } from "~/server/@buyer/favourite/fx/favouriteToggleFx";
-import { FavouriteToggleSchema } from "~/server/@buyer/favourite/schema/FavouriteToggleSchema";
+import { favouriteToggleFx } from "~/client/@buyer/favourite/server/fx/favouriteToggleFx";
+import { FavouriteToggleSchema } from "~/client/@buyer/favourite/server/schema/FavouriteToggleSchema";
 import { ListingSchema } from "~/server/@buyer/listing/schema/ListingSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";

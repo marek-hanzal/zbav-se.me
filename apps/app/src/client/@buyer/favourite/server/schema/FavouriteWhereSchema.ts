@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FavouriteFilterSchema } from "~/server/@buyer/favourite/schema/FavouriteFilterSchema";
+import { FavouriteFilterSchema } from "~/client/@buyer/favourite/server/schema/FavouriteFilterSchema";
 
 export const FavouriteWhereSchema = z
 	.looseObject({

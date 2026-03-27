@@ -10,8 +10,8 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { Logo } from "@zbav-se.me/ui/logo";
 import { Suspense } from "react";
 import face from "~/assets/face.webp";
-import { History } from "~/client/@public/history/History";
-import { HistoryPending } from "~/client/@public/history/HistoryPending";
+import { History } from "~/client/@public/ui/History";
+import { HistoryPending } from "~/client/@public/ui/HistoryPending";
 
 export const Route = createFileRoute("/$locale/landing")({
 	component() {

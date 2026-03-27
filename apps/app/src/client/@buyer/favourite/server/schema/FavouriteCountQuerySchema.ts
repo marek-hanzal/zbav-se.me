@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FavouriteQuerySchema } from "~/server/@buyer/favourite/schema/FavouriteQuerySchema";
+import { FavouriteQuerySchema } from "~/client/@buyer/favourite/server/schema/FavouriteQuerySchema";
 
 export const FavouriteCountQuerySchema = z
 	.looseObject({

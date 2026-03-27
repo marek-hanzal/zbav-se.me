@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { favouriteToggleFx } from "~/server/@buyer/favourite/fx/favouriteToggleFx";
+import { favouriteToggleFx } from "~/client/@buyer/favourite/server/fx/favouriteToggleFx";
 import { feedCreateFx } from "~/server/@buyer/feed/fx/feedCreateFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
