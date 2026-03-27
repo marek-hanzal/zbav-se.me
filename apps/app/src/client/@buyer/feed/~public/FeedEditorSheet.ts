@@ -1,1 +1,1 @@
-export { FeedEditorSheet } from "../FeedEditor/FeedEditorSheet";
+export { FeedEditorSheet } from "../ui/FeedEditor/FeedEditorSheet";

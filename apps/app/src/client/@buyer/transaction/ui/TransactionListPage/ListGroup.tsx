@@ -2,8 +2,8 @@ import { Container } from "@use-pico/client/ui/container";
 import { Typo, type uiTypo } from "@use-pico/client/ui/typo";
 import type { FC } from "react";
 import type { TransactionFilterSchema } from "~/server/@buyer/transaction/schema/TransactionFilterSchema";
-import { TransactionList } from "../ui/TransactionList";
-import { withTransactionQuery } from "../withTransactionQuery";
+import { withTransactionQuery } from "../../withTransactionQuery";
+import { TransactionList } from "../TransactionList";
 
 export namespace ListGroup {
 	export interface Props extends Container.Props {

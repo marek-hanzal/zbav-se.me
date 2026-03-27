@@ -1,1 +1,1 @@
-export { FeedEditor } from "../FeedEditor";
+export { FeedEditor } from "../ui/FeedEditor";

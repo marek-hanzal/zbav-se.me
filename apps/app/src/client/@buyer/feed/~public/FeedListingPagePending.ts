@@ -1,1 +1,1 @@
-export { FeedListingPagePending } from "../FeedListingPage/FeedListingPagePending";
+export { FeedListingPagePending } from "../ui/FeedListingPage/FeedListingPagePending";

@@ -7,8 +7,8 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useMemo } from "react";
 import { BackHomeButton } from "~/client/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/client/@user/home/~public/HomeMenuButton";
-import { Empty } from "../ui/TransactionList/Empty";
-import { withTransactionQuery } from "../withTransactionQuery";
+import { withTransactionQuery } from "../../withTransactionQuery";
+import { Empty } from "../TransactionList/Empty";
 import { ListGroup } from "./ListGroup";
 
 export namespace TransactionListPage {

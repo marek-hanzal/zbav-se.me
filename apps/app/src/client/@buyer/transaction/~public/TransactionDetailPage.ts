@@ -1,2 +1,2 @@
-export { TransactionDetailPage } from "../TransactionDetailPage";
-export { TransactionDetailPendingPage } from "../TransactionDetailPage/TransactionDetailPendingPage";
+export { TransactionDetailPage } from "../ui/TransactionDetailPage";
+export { TransactionDetailPendingPage } from "../ui/TransactionDetailPage/TransactionDetailPendingPage";

@@ -62,20 +62,6 @@
 									"!~/app/@seller/**/~public/**"
 								],
 								"message": "Use public import"
-							},
-							{
-								"group": [
-									"~/app/@buyer/**",
-									"!~/app/@buyer/**/~public/**"
-								],
-								"message": "Use public import"
-							},
-							{
-								"group": [
-									"~/app/@user/**",
-									"!~/app/@user/**/~public/**"
-								],
-								"message": "Use public import"
 							}
 						]
 					}
