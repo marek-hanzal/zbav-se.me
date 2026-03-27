@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
 import { SeedProgressContextFx } from "~/seed/context/withSeedProgressFx";
 import Queries from "~/seed/data/location.json" with { type: "json" };
+import { locationAutocompleteFx } from "~/server/@session/location/fx/locationAutocompleteFx";
 
 const withShuffle = (items: string[]) => {
 	const next = items.slice();

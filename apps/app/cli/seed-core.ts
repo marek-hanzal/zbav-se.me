@@ -1,11 +1,14 @@
 import { Effect } from "effect";
-import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
-import { appendSeedBenchmarkJsonl, printSeedCoreReport } from "~/seed/fx/report/seedReportConsole";
-import { seedCoreFx } from "~/seed/fx/seedCoreFx";
-import { withSeedRuntimeFx } from "~/seed/fx/withSeedRuntimeFx";
-import { parseSeedArgsFx } from "~/seed/schema/SeedArgsSchema";
+import {
+	appendSeedBenchmarkJsonl,
+	printSeedCoreReport,
+} from "~/server/@system/seed/fx/report/seedReportConsole";
+import { seedCoreFx } from "~/server/@system/seed/fx/seedCoreFx";
+import { withSeedRuntimeFx } from "~/server/@system/seed/fx/withSeedRuntimeFx";
+import { parseSeedArgsFx } from "~/server/@system/seed/schema/SeedArgsSchema";
+import { ServerCdnSchema } from "~/server/env/ServerCdnSchema";
 
-const program = Effect.gen(function* () {
+const { report, runtimeMs } = await Effect.gen(function* () {
 	const start = yield* Effect.sync(() => Date.now());
 	const args = yield* parseSeedArgsFx({
 		name: "seed-core",
@@ -23,13 +26,7 @@ const program = Effect.gen(function* () {
 		report,
 		runtimeMs: end - start,
 	};
-});
-
-const { report, runtimeMs } = await program.pipe(
-	withSeedRuntimeFx,
-	Effect.scoped,
-	Effect.runPromise,
-);
+}).pipe(withSeedRuntimeFx, Effect.runPromise);
 
 printSeedCoreReport(report);
 appendSeedBenchmarkJsonl({

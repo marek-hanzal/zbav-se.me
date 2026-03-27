@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { tryDbFx } from "~/database/fx/tryDbFx";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { tryDbFx } from "~/server/database/fx/tryDbFx";
 
 export const SeedPrimaryCoreTables = [
 	"user",

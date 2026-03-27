@@ -1,10 +1,10 @@
 import { Effect } from "effect";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { tryDbFx } from "~/database/fx/tryDbFx";
 import { SeedProgressContextFx } from "~/seed/context/withSeedProgressFx";
 import { seedThumbInsertFx } from "~/seed/fx/interaction/seedThumbInsertFx";
 import { withRandomPastDate } from "~/seed/fx/time/seedTime";
 import { withSeedNowFx } from "~/seed/fx/time/withSeedNowFx";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { tryDbFx } from "~/server/database/fx/tryDbFx";
 
 const THUMB_BATCH_SIZE = Number(process.env.SEED_INTERACTION_THUMB_BATCH_SIZE ?? 100);
 const THUMB_INSERT_CONCURRENCY = Number(process.env.SEED_INTERACTION_THUMB_CONCURRENCY ?? 12);

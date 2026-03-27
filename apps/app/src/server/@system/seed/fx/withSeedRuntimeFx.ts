@@ -2,18 +2,18 @@ import { withDialectFx } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
-import { withS3Fx } from "~/@common/s3/context/withS3Fx";
-import { withTransactionContextFx } from "~/@common/transaction/context/withTransactionContextFx";
-import { withUploadFx } from "~/@common/upload/context/withUploadFx";
-import { withLocationFx } from "~/@session/location/fx/withLocationFx";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { withDateFx } from "~/database/fx/withDateFx";
-import { database } from "~/database/kysely";
-import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
-import { ServerDatabaseSchema } from "~/schema/env/ServerDatabaseSchema";
-import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
-import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
-import { withSeedProgressFx } from "~/seed/context/withSeedProgressFx";
+import { withS3Fx } from "~/server/@common/s3/context/withS3Fx";
+import { withLocationFx } from "~/server/@session/location/fx/withLocationFx";
+import { withSeedProgressFx } from "~/server/@system/seed/context/withSeedProgressFx";
+import { withTransactionContextFx } from "~/server/@user/transaction/context/withTransactionContextFx";
+import { withUploadFx } from "~/server/@user/upload/context/withUploadFx";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { databaseFx } from "~/server/database/databaseFx";
+import { withDateFx } from "~/server/database/fx/withDateFx";
+import { ServerCdnSchema } from "~/server/env/ServerCdnSchema";
+import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
+import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
+import { ServerS3Schema } from "~/server/env/ServerS3Schema";
 
 export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 	const databaseConfig = ServerDatabaseSchema.parse(process.env);
@@ -38,7 +38,7 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 				}),
 		);
 
-		const kysely = yield* database.pipe(
+		const kysely = yield* databaseFx.pipe(
 			withDialectFx(
 				new PostgresDialect({
 					pool,

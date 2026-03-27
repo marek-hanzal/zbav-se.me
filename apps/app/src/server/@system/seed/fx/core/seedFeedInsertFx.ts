@@ -1,9 +1,9 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import type { FeedCreateSchema } from "~/@buyer/feed/schema/FeedCreateSchema";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { tryDbFx } from "~/database/fx/tryDbFx";
+import type { FeedCreateSchema } from "~/server/@buyer/feed/schema/FeedCreateSchema";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { tryDbFx } from "~/server/database/fx/tryDbFx";
 
 export namespace seedFeedInsertFx {
 	export interface Props extends FeedCreateSchema.Type {

@@ -1,9 +1,9 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { auth } from "~/auth/auth";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { tryDbFx } from "~/database/fx/tryDbFx";
-import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
+import { auth } from "~/server/auth/auth";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 
 const SEED_USER_PASSWORD = "12345678";
 
