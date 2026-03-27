@@ -2,12 +2,12 @@ import { cleanOf } from "@use-pico/common/clean-of";
 import { mapEmptyToNull } from "@use-pico/common/map";
 
 export namespace onSubmit {
-	export interface Mutation<TValues extends object, TOutput = any> {
+	export interface Mutation<in TValues extends object, out TOutput = any> {
 		mutateAsync(variables: TValues): Promise<TOutput>;
 	}
 
 	export namespace Map {
-		export interface Props<TValues extends object, TData extends object> {
+		export interface Props<out TValues extends object, out TData extends object> {
 			/**
 			 * Values from the form
 			 */
@@ -22,12 +22,12 @@ export namespace onSubmit {
 			cleanup(values: Partial<TValues>): TData;
 		}
 
-		export type Fn<TValues extends object, TData extends object> = (
+		export type Fn<in TValues extends object, TData extends object> = (
 			props: Map.Props<TValues, TData>,
 		) => Promise<TData>;
 	}
 
-	export interface Props<TValues extends object, TData extends object> {
+	export interface Props<in TValues extends object, TData extends object> {
 		mutation: Mutation<TData>;
 		/**
 		 * Map form values to mutation request values (output of this goes directly into mutation).
