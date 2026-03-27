@@ -15,8 +15,8 @@ export const feedCountFn = createServerFn()
 		withUserMiddleware,
 	])
 	.inputValidator(FeedCountQuerySchema)
-	.handler(async ({ data, context: { database, user } }) =>
-		zodGuardFx({
+	.handler(async ({ data, context: { database, user } }) => {
+		return zodGuardFx({
 			schema: CountSchema,
 			dataFx: feedCountFx({
 				...data,
@@ -32,5 +32,5 @@ export const feedCountFn = createServerFn()
 				},
 			}),
 			Effect.runPromise,
-		),
-	);
+		);
+	});

@@ -17,8 +17,8 @@ export const feedDeleteFn = createServerFn({
 		withUserMiddleware,
 	])
 	.inputValidator(FeedQuerySchema)
-	.handler(async ({ data, context: { database, user } }) =>
-		zodGuardFx({
+	.handler(async ({ data, context: { database, user } }) => {
+		return zodGuardFx({
 			schema: FeedSchema,
 			dataFx: feedDeleteFx({
 				...data,
@@ -40,5 +40,5 @@ export const feedDeleteFn = createServerFn({
 				},
 			}),
 			Effect.runPromise,
-		),
-	);
+		);
+	});

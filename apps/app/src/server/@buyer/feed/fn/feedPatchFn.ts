@@ -18,8 +18,8 @@ export const feedPatchFn = createServerFn({
 		withUserMiddleware,
 	])
 	.inputValidator(FeedPatchSchema)
-	.handler(async ({ data, context: { database, user } }) =>
-		zodGuardFx({
+	.handler(async ({ data, context: { database, user } }) => {
+		return zodGuardFx({
 			schema: FeedSchema,
 			dataFx: feedPatchFx({
 				...data,
@@ -42,5 +42,5 @@ export const feedPatchFn = createServerFn({
 				},
 			}),
 			Effect.runPromise,
-		),
-	);
+		);
+	});
