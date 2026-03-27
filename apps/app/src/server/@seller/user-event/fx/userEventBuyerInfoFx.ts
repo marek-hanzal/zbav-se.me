@@ -1,9 +1,8 @@
-
 import { clamp } from "@use-pico/common/clamp";
 import { median } from "@use-pico/common/median";
 import { p90 } from "@use-pico/common/p90";
 import { Effect } from "effect";
-import type { UserEventBuyerSchema } from "~/server/@buyer/user-event/schema/UserEventBuyerSchema";
+import type { UserEventBuyerSchema } from "~/server/@seller/user-event/schema/UserEventBuyerSchema";
 import { computeActivity } from "~/server/@user/user-event/fx/computeActivity";
 import { computeLoad } from "~/server/@user/user-event/fx/computeLoad";
 import { userEventCollectionFx } from "~/server/@user/user-event/fx/userEventCollectionFx";

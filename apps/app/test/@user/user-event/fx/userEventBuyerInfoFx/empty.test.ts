@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { userEventBuyerInfoFx } from "~/server/@buyer/user-event/fx/userEventBuyerInfoFx";
+import { userEventBuyerInfoFx } from "~/server/@seller/user-event/fx/userEventBuyerInfoFx";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";

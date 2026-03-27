@@ -1,8 +1,8 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { userEventBuyerInfoFx } from "~/server/@buyer/user-event/fx/userEventBuyerInfoFx";
 import { TransactionBuyerInfoSchema } from "~/server/@seller/transaction/schema/TransactionBuyerInfoSchema";
+import { userEventBuyerInfoFx } from "~/server/@seller/user-event/fx/userEventBuyerInfoFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 

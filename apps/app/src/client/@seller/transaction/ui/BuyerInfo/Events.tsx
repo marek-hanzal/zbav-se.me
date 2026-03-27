@@ -4,7 +4,7 @@ import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
 import { DateTime } from "luxon";
 import type { FC } from "react";
-import type { UserEventBuyerSchema } from "~/server/@buyer/user-event/schema/UserEventBuyerSchema";
+import type { UserEventBuyerSchema } from "~/server/@seller/user-event/schema/UserEventBuyerSchema";
 
 const percentLabel = (value: number) => `${Math.round(value)}%`;
 
