@@ -1,9 +1,8 @@
-import { VisibilityProvider } from "@use-pico/client/context";
-import { useElementVisibility } from "@use-pico/client/hook";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { withFallback } from "@use-pico/client/utils";
 import { useMemo, useRef } from "react";
+import { useElementVisibility, VisibilityProvider } from "@/lib/client/visibility";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 import { Content } from "./Content";
 import { Empty } from "./Data/Empty";

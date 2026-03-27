@@ -1,5 +1,5 @@
 import { type RefObject, useEffect, useLayoutEffect, useRef } from "react";
-import { createVisibilityStore } from "../store/createVisibilityStore";
+import { createVisibilityStore } from "./createVisibilityStore";
 
 function clearTimerMap(map: Map<string, ReturnType<typeof setTimeout>>) {
 	for (const t of map.values()) {

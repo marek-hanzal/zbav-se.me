@@ -1,6 +1,6 @@
 import { type FC, type ReactNode, useMemo } from "react";
-import { useVisible } from "../../hook/useVisible";
-import { Container } from "./Container";
+import { Container } from "../container/Container";
+import { useVisible } from "./useVisible";
 
 export namespace VisibleContainer {
 	export namespace Placeholder {

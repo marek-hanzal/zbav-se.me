@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { VisibilityContext } from "../context/VisibilityContext";
+import { VisibilityContext } from "./VisibilityContext";
 
 export const useVisible = () => {
 	const context = useContext(VisibilityContext);

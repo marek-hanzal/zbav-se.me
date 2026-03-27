@@ -1,5 +1,5 @@
 import type { FC, PropsWithChildren } from "react";
-import type { createVisibilityStore } from "../store/createVisibilityStore";
+import type { createVisibilityStore } from "./createVisibilityStore";
 import { VisibilityContext } from "./VisibilityContext";
 
 export namespace VisibilityProvider {
