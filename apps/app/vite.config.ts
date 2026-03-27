@@ -27,9 +27,6 @@ export default defineConfig(({ mode }) => {
 			react({}),
 			tailwindcss(),
 			ViteYaml(),
-			// assetSizePlugin({
-			// 	ssr: !!isSsrBuild,
-			// }),
 			isProduction
 				? nitro({
 						preset: process.env.NITRO_PRESET || "vercel",
