@@ -10,31 +10,16 @@ export const FilterSchema = z
 		/**
 		 * Basically any entity should have an ID, thus it's present in the default schema.
 		 */
-		id: z
-			.union([
-				z.string(),
-				z.null(),
-			])
-			.optional(),
+		id: z.string().nullish(),
 		/**
 		 * Option to get entities by an array of IDs.
 		 */
-		idIn: z
-			.union([
-				z.array(z.string()),
-				z.null(),
-			])
-			.optional(),
+		idIn: z.array(z.string()).nullish(),
 		/**
 		 * Usually it's somehow possible to search for the Entity by some text, thus it's present,
 		 * but not necessarily required.
 		 */
-		fulltext: z
-			.union([
-				z.string(),
-				z.null(),
-			])
-			.optional(),
+		fulltext: z.string().nullish(),
 	})
 	.strip()
 	.meta({

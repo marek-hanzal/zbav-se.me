@@ -21,33 +21,15 @@ export const DraftCreateSchema = z
 		age: z.number().optional().meta({
 			description: "Age of the item (0-based index)",
 		}),
-		delivery: z
-			.union([
-				z.null(),
-				z.array(ListingDeliveryEnumSchema),
-			])
-			.optional()
-			.meta({
-				description: "Delivery methods for the draft",
-			}),
-		warranty: z
-			.union([
-				z.null(),
-				ListingWarrantyEnumSchema,
-			])
-			.optional()
-			.meta({
-				description: "Warranty type for the draft",
-			}),
-		restriction: z
-			.union([
-				z.null(),
-				ListingRestrictionEnumSchema,
-			])
-			.optional()
-			.meta({
-				description: "Content restriction level of the draft",
-			}),
+		delivery: z.array(ListingDeliveryEnumSchema).nullish().meta({
+			description: "Delivery methods for the draft",
+		}),
+		warranty: ListingWarrantyEnumSchema.nullish().meta({
+			description: "Warranty type for the draft",
+		}),
+		restriction: ListingRestrictionEnumSchema.nullish().meta({
+			description: "Content restriction level of the draft",
+		}),
 		locationId: z.string().optional().meta({
 			description: "ID of the location",
 		}),
@@ -61,24 +43,12 @@ export const DraftCreateSchema = z
 		description: z.string().max(2048).optional().meta({
 			description: "Description of the item",
 		}),
-		pros: z
-			.union([
-				z.null(),
-				ProsConsSchema,
-			])
-			.optional()
-			.meta({
-				description: "Pros of the item",
-			}),
-		cons: z
-			.union([
-				z.null(),
-				ProsConsSchema,
-			])
-			.optional()
-			.meta({
-				description: "Cons of the item",
-			}),
+		pros: ProsConsSchema.nullish().meta({
+			description: "Pros of the item",
+		}),
+		cons: ProsConsSchema.nullish().meta({
+			description: "Cons of the item",
+		}),
 		uploadIds: z.array(z.string()).optional().meta({
 			description: "IDs of the uploads; order of uploads defines order in the gallery",
 		}),

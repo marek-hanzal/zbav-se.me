@@ -5,16 +5,10 @@ export const InboxPatchCollectionSchema = z
 	.looseObject({
 		patch: z
 			.looseObject({
-				archivedAt: z
-					.union([
-						z.null(),
-						z.coerce.date(),
-					])
-					.optional()
-					.meta({
-						description: "Archive timestamp",
-						type: "string",
-					}),
+				archivedAt: z.coerce.date().nullish().meta({
+					description: "Archive timestamp",
+					type: "string",
+				}),
 			})
 			.strip(),
 		query: InboxQuerySchema,

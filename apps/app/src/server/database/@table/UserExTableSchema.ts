@@ -9,29 +9,13 @@ export const UserExTableSchema = z
 		userId: z.string().meta({
 			description: "ID of the user (foreign key)",
 		}),
-		locationId: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "Default location for the user - user for listings & listing sorting",
-			}),
-		side: z
-			.union([
-				z.null(),
-				UserSideEnumSchema,
-			])
-			.optional(),
-		token: z
-			.union([
-				z.string(),
-				z.null(),
-			])
-			.optional()
-			.meta({
-				description: "Bearer token used for agent access and API token fallback auth",
-			}),
+		locationId: z.string().nullable().meta({
+			description: "Default location for the user - user for listings & listing sorting",
+		}),
+		side: UserSideEnumSchema.nullish(),
+		token: z.string().nullish().meta({
+			description: "Bearer token used for agent access and API token fallback auth",
+		}),
 	})
 	.meta({
 		id: "UserExTable",

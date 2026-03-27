@@ -7,22 +7,12 @@ import { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
 export const DraftSchema = z
 	.looseObject({
 		...DraftTableSchema.shape,
-		location: z
-			.union([
-				z.null(),
-				LocationSchema,
-			])
-			.meta({
-				description: "Location data",
-			}),
-		category: z
-			.union([
-				z.null(),
-				CategorySchema,
-			])
-			.meta({
-				description: "Category data",
-			}),
+		location: LocationSchema.nullable().meta({
+			description: "Location data",
+		}),
+		category: CategorySchema.nullable().meta({
+			description: "Category data",
+		}),
 		gallery: GallerySchema.meta({
 			description: "Draft gallery images",
 		}),

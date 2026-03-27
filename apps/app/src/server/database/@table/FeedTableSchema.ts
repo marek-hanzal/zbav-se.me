@@ -9,23 +9,13 @@ export const FeedTableSchema = z
 		userId: z.string().meta({
 			description: "ID of the user who created the feed",
 		}),
-		locationId: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "ID of the location associated with the feed",
-			}),
-		uploadId: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description:
-					"Hero image for this feed (usually selected from the listings in the feed)",
-			}),
+		locationId: z.string().nullable().meta({
+			description: "ID of the location associated with the feed",
+		}),
+		uploadId: z.string().nullable().meta({
+			description:
+				"Hero image for this feed (usually selected from the listings in the feed)",
+		}),
 		type: FeedTypeEnumSchema,
 		//
 		name: z.string().meta({

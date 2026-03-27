@@ -25,33 +25,17 @@ export const ListingTableSchema = z
 		//
 		currency: CurrencyEnumSchema,
 		//
-		condition: z
-			.union([
-				z.null(),
-				z.number(),
-			])
-			.meta({
-				description: "Condition of the item (0-based index)",
-			}),
+		condition: z.number().nullable().meta({
+			description: "Condition of the item (0-based index)",
+		}),
 		//
-		age: z
-			.union([
-				z.null(),
-				z.number(),
-			])
-			.meta({
-				description: "Age of the item (0-based index)",
-			}),
+		age: z.number().nullable().meta({
+			description: "Age of the item (0-based index)",
+		}),
 		//
-		delivery: z.union([
-			z.null(),
-			z.array(ListingDeliveryEnumSchema),
-		]),
+		delivery: z.array(ListingDeliveryEnumSchema).nullable(),
 		//
-		warranty: z.union([
-			z.null(),
-			ListingWarrantyEnumSchema,
-		]),
+		warranty: ListingWarrantyEnumSchema.nullable(),
 		//
 		status: ListingStatusEnumSchema,
 		//
@@ -66,14 +50,9 @@ export const ListingTableSchema = z
 		galleryId: z.string().meta({
 			description: "ID of the gallery",
 		}),
-		draftId: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "ID of the draft this listing was created from",
-			}),
+		draftId: z.string().nullable().meta({
+			description: "ID of the draft this listing was created from",
+		}),
 		expiresAt: z.coerce.date().meta({
 			description: "Expiration timestamp",
 			type: "string",
@@ -86,31 +65,16 @@ export const ListingTableSchema = z
 			description: "Embedding vector for title similarity search",
 		}),
 		//
-		description: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "Description of the item",
-			}),
+		description: z.string().nullable().meta({
+			description: "Description of the item",
+		}),
 		//
-		pros: z
-			.union([
-				z.null(),
-				ProsConsSchema,
-			])
-			.meta({
-				description: "Pros of the item",
-			}),
-		cons: z
-			.union([
-				z.null(),
-				ProsConsSchema,
-			])
-			.meta({
-				description: "Cons of the item",
-			}),
+		pros: ProsConsSchema.nullable().meta({
+			description: "Pros of the item",
+		}),
+		cons: ProsConsSchema.nullable().meta({
+			description: "Cons of the item",
+		}),
 		//
 		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",

@@ -7,14 +7,9 @@ export const FeedSchema = z
 	.looseObject({
 		...FeedTableSchema.shape,
 		query: ListingQuerySchema,
-		upload: z
-			.union([
-				z.null(),
-				UploadSchema,
-			])
-			.meta({
-				description: "Hero banner for this feed",
-			}),
+		upload: UploadSchema.nullable().meta({
+			description: "Hero banner for this feed",
+		}),
 	})
 	.omit({
 		userId: true,

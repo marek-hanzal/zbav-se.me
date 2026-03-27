@@ -13,40 +13,18 @@ export const ListingCreateSchema = z
 			type: "number",
 		}),
 		priceType: ListingPriceEnumSchema,
-		condition: z
-			.union([
-				z.null(),
-				z.number(),
-			])
-			.meta({
-				description: "Condition of the item (0-based index)",
-			}),
-		age: z
-			.union([
-				z.null(),
-				z.number(),
-			])
-			.meta({
-				description: "Age of the item (0-based index)",
-			}),
-		delivery: z
-			.union([
-				z.null(),
-				z.array(ListingDeliveryEnumSchema),
-			])
-			.optional()
-			.meta({
-				description: "Delivery methods for the listing",
-			}),
-		warranty: z
-			.union([
-				z.null(),
-				ListingWarrantyEnumSchema,
-			])
-			.optional()
-			.meta({
-				description: "Warranty type for the listing",
-			}),
+		condition: z.number().nullable().meta({
+			description: "Condition of the item (0-based index)",
+		}),
+		age: z.number().nullable().meta({
+			description: "Age of the item (0-based index)",
+		}),
+		delivery: z.array(ListingDeliveryEnumSchema).nullish().meta({
+			description: "Delivery methods for the listing",
+		}),
+		warranty: ListingWarrantyEnumSchema.nullish().meta({
+			description: "Warranty type for the listing",
+		}),
 		restriction: ListingRestrictionEnumSchema,
 		draftId: z.string().optional().meta({
 			description: "ID of the draft",
@@ -61,33 +39,15 @@ export const ListingCreateSchema = z
 		title: z.string().min(5).max(72).meta({
 			description: "Title of the item",
 		}),
-		description: z
-			.union([
-				z.null(),
-				z.string().max(2048),
-			])
-			.optional()
-			.meta({
-				description: "Description of the item",
-			}),
-		pros: z
-			.union([
-				z.null(),
-				ProsConsSchema,
-			])
-			.optional()
-			.meta({
-				description: "Pros of the item",
-			}),
-		cons: z
-			.union([
-				z.null(),
-				ProsConsSchema,
-			])
-			.optional()
-			.meta({
-				description: "Cons of the item",
-			}),
+		description: z.string().max(2048).nullish().meta({
+			description: "Description of the item",
+		}),
+		pros: ProsConsSchema.nullish().meta({
+			description: "Pros of the item",
+		}),
+		cons: ProsConsSchema.nullish().meta({
+			description: "Cons of the item",
+		}),
 		uploadIds: z.array(z.string()).min(1, "At least one upload is required").meta({
 			description: "IDs of the uploads; order of uploads defines order in the gallery",
 		}),

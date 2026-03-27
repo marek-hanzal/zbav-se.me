@@ -19,131 +19,61 @@ export const DraftTableSchema = z
 		price: z.coerce.number().nullable().meta({
 			description: "Price of the draft",
 		}),
-		priceType: z
-			.union([
-				z.null(),
-				ListingPriceEnumSchema,
-			])
-			.meta({
-				description: "Price type of the draft",
-			}),
+		priceType: ListingPriceEnumSchema.nullable().meta({
+			description: "Price type of the draft",
+		}),
 		//
-		currency: z
-			.union([
-				z.null(),
-				CurrencyEnumSchema,
-			])
-			.meta({
-				description: "Currency of the draft",
-			}),
+		currency: CurrencyEnumSchema.nullable().meta({
+			description: "Currency of the draft",
+		}),
 		//
-		condition: z
-			.union([
-				z.null(),
-				z.number(),
-			])
-			.meta({
-				description: "Condition of the item (0-based index)",
-			}),
+		condition: z.number().nullable().meta({
+			description: "Condition of the item (0-based index)",
+		}),
 		//
-		age: z
-			.union([
-				z.null(),
-				z.number(),
-			])
-			.meta({
-				description: "Age of the item (0-based index)",
-			}),
+		age: z.number().nullable().meta({
+			description: "Age of the item (0-based index)",
+		}),
 		//
-		delivery: z
-			.union([
-				z.null(),
-				z.array(ListingDeliveryEnumSchema),
-			])
-			.meta({
-				description: "Delivery methods for the draft",
-			}),
+		delivery: z.array(ListingDeliveryEnumSchema).nullable().meta({
+			description: "Delivery methods for the draft",
+		}),
 		//
-		warranty: z
-			.union([
-				z.null(),
-				ListingWarrantyEnumSchema,
-			])
-			.meta({
-				description: "Warranty type for the draft",
-			}),
+		warranty: ListingWarrantyEnumSchema.nullable().meta({
+			description: "Warranty type for the draft",
+		}),
 		//
-		restriction: z
-			.union([
-				z.null(),
-				ListingRestrictionEnumSchema,
-			])
-			.meta({
-				description: "Content restriction level of the draft",
-			}),
+		restriction: ListingRestrictionEnumSchema.nullable().meta({
+			description: "Content restriction level of the draft",
+		}),
 		//
-		locationId: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "ID of the location",
-			}),
-		categoryId: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "ID of the category",
-			}),
+		locationId: z.string().nullable().meta({
+			description: "ID of the location",
+		}),
+		categoryId: z.string().nullable().meta({
+			description: "ID of the category",
+		}),
 		galleryId: z.string().meta({
 			description: "ID of the gallery",
 		}),
-		expiresAt: z
-			.union([
-				z.null(),
-				ListingExpireEnumSchema,
-			])
-			.meta({
-				description: "Expiration timestamp",
-			}),
+		expiresAt: ListingExpireEnumSchema.nullable().meta({
+			description: "Expiration timestamp",
+		}),
 		//
-		title: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "Title of the item",
-			}),
+		title: z.string().nullable().meta({
+			description: "Title of the item",
+		}),
 		//
-		description: z
-			.union([
-				z.null(),
-				z.string().max(2048),
-			])
-			.meta({
-				description: "Description of the item",
-			}),
+		description: z.string().max(2048).nullable().meta({
+			description: "Description of the item",
+		}),
 		//
-		pros: z
-			.union([
-				z.null(),
-				ProsConsSchema,
-			])
-			.meta({
-				description: "Pros of the item",
-			}),
-		cons: z
-			.union([
-				z.null(),
-				ProsConsSchema,
-			])
-			.meta({
-				description: "Cons of the item",
-			}),
+		pros: ProsConsSchema.nullable().meta({
+			description: "Pros of the item",
+		}),
+		cons: ProsConsSchema.nullable().meta({
+			description: "Cons of the item",
+		}),
 		//
 		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",
@@ -153,16 +83,10 @@ export const DraftTableSchema = z
 			description: "Last update timestamp",
 			type: "string",
 		}),
-		usedAt: z
-			.union([
-				z.null(),
-				z.coerce.date().meta({
-					type: "string",
-				}),
-			])
-			.meta({
-				description: "Timestamp when the draft was used to create a listing",
-			}),
+		usedAt: z.coerce.date().nullable().meta({
+			description: "Timestamp when the draft was used to create a listing",
+			type: "string",
+		}),
 	})
 	.meta({
 		id: "DraftTable",

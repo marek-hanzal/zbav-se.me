@@ -7,14 +7,9 @@ export const TransactionBuyerInfoSchema = z
 			description: "Registration date",
 			type: "string",
 		}),
-		events: z
-			.union([
-				z.null(),
-				UserEventBuyerSchema,
-			])
-			.meta({
-				description: "Buyer info may not be available if we don't have enough data",
-			}),
+		events: UserEventBuyerSchema.nullable().meta({
+			description: "Buyer info may not be available if we don't have enough data",
+		}),
 	})
 	.strip()
 	.meta({

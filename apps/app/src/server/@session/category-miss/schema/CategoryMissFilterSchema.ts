@@ -4,14 +4,9 @@ import { z } from "zod";
 export const CategoryMissFilterSchema = z
 	.looseObject({
 		...FilterSchema.shape,
-		category: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "This filter matches the exact category name that was missed",
-			}),
+		category: z.string().nullable().meta({
+			description: "This filter matches the exact category name that was missed",
+		}),
 	})
 	.strip()
 	.meta({

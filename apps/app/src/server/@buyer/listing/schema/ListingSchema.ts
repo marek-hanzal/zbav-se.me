@@ -29,23 +29,12 @@ export const ListingSchema = z
 		hasFlag: z.boolean().meta({
 			description: "Whether the user flagged this listing",
 		}),
-		transactionId: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "Whether the user has a transaction with this listing",
-			}),
-		thumb: z
-			.union([
-				z.null(),
-				ThumbEnumSchema,
-			])
-			.meta({
-				description:
-					"Thumb type provided by the user (like/dislike) or null if not present",
-			}),
+		transactionId: z.string().nullable().meta({
+			description: "Whether the user has a transaction with this listing",
+		}),
+		thumb: ThumbEnumSchema.nullable().meta({
+			description: "Thumb type provided by the user (like/dislike) or null if not present",
+		}),
 	})
 	.omit({
 		userId: true,

@@ -15,57 +15,27 @@ export const LocationTableSchema = z
 		code: z.string().meta({
 			description: "Country code",
 		}),
-		county: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "The county that the location is in",
-			}),
-		municipality: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "The municipality that the location is in",
-			}),
-		state: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "The state that the location is in",
-			}),
+		county: z.string().nullable().meta({
+			description: "The county that the location is in",
+		}),
+		municipality: z.string().nullable().meta({
+			description: "The municipality that the location is in",
+		}),
+		state: z.string().nullable().meta({
+			description: "The state that the location is in",
+		}),
 		address: z.string().meta({
 			description: "Full address preview of a location",
 		}),
-		city: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "The city that the location is in",
-			}),
-		street: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "The street that the location is on",
-			}),
-		zip: z
-			.union([
-				z.null(),
-				z.string(),
-			])
-			.meta({
-				description: "The postal/zip code of the location",
-			}),
+		city: z.string().nullable().meta({
+			description: "The city that the location is in",
+		}),
+		street: z.string().nullable().meta({
+			description: "The street that the location is on",
+		}),
+		zip: z.string().nullable().meta({
+			description: "The postal/zip code of the location",
+		}),
 		confidence: z.coerce.number().meta({
 			description: "Confidence score of the location (based on query)",
 			type: "number",

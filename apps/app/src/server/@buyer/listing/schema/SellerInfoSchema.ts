@@ -11,14 +11,9 @@ export const SellerInfoSchema = z
 			description: "Number of listings",
 			example: 1,
 		}),
-		events: z
-			.union([
-				z.null(),
-				UserEventSellerSchema,
-			])
-			.meta({
-				description: "Seller info may not be available if we don't have enough data",
-			}),
+		events: UserEventSellerSchema.nullable().meta({
+			description: "Seller info may not be available if we don't have enough data",
+		}),
 	})
 	.strip()
 	.meta({
