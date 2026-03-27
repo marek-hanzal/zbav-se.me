@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { InboxSchema } from "./InboxSchema";
 
 export const FlagSchema = z
@@ -8,13 +8,17 @@ export const FlagSchema = z
 		type: z.literal("flag"),
 		payload: z
 			.looseObject({
-				listingId: z.string().openapi({
+				listingId: z.string().meta({
 					description: "Related listing identifier",
 				}),
 			})
 			.strip(),
 	})
-	.strip();
+	.strip()
+	.meta({
+		id: "InboxFlag",
+		description: "Inbox reaction event for flag",
+	});
 
 export type FlagSchema = typeof FlagSchema;
 

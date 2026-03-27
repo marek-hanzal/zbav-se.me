@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const LoadEnumSchema = z
 	.enum([
@@ -6,7 +6,8 @@ export const LoadEnumSchema = z
 		"medium",
 		"high",
 	])
-	.openapi("LoadEnum", {
+	.meta({
+		id: "LoadEnum",
 		description: "Load bucket (active transaction count: low/medium/high)",
 	});
 

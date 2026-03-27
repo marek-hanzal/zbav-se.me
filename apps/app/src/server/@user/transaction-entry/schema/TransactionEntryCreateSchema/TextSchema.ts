@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { EntrySchema } from "./EntrySchema";
 
 export const TextSchema = z
@@ -7,14 +7,16 @@ export const TextSchema = z
 		kind: z.literal("text"),
 		payload: z
 			.looseObject({
-				text: z.string().openapi({
+				text: z.string().meta({
 					description: "Text entry body",
 				}),
 			})
 			.strip(),
 	})
 	.strip()
-	.openapi("TransactionEntryTextCreate");
+	.meta({
+		id: "TransactionEntryTextCreate",
+	});
 
 export type TextSchema = typeof TextSchema;
 

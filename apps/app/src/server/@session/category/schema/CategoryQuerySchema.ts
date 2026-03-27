@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { CategoryFilterSchema } from "~/server/@session/category/schema/CategoryFilterSchema";
 import { CategorySortSchema } from "~/server/@session/category/schema/CategorySortSchema";
 import { CategoryWhereSchema } from "~/server/@session/category/schema/CategoryWhereSchema";
@@ -12,7 +12,8 @@ export const CategoryQuerySchema = z
 		sort: CategorySortSchema.array().optional(),
 	})
 	.strip()
-	.openapi("CategoryQuery", {
+	.meta({
+		id: "CategoryQuery",
 		description: "Category query parameters",
 	});
 

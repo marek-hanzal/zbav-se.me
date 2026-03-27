@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { ListingFilterSchema } from "~/server/@buyer/listing/schema/ListingFilterSchema";
 import { ListingMetaSchema } from "~/server/@buyer/listing/schema/ListingMetaSchema";
 import { ListingSortSchema } from "~/server/@buyer/listing/schema/ListingSortSchema";
@@ -12,14 +12,16 @@ export const ListingQuerySchema = z
 			size: 256,
 		}).optional(),
 		filter: ListingFilterSchema.optional(),
-		where: ListingWhereSchema.optional().openapi("ListingWhere", {
+		where: ListingWhereSchema.optional().meta({
+			id: "ListingWhere",
 			description: "App-based filters",
 		}),
 		sort: ListingSortSchema.array().optional(),
 		meta: ListingMetaSchema.optional(),
 	})
 	.strip()
-	.openapi("ListingQuery", {
+	.meta({
+		id: "ListingQuery",
 		description: "Query object for listing collection",
 	});
 

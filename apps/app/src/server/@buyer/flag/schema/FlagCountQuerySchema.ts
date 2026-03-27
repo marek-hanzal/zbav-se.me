@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { FlagCountWhereSchema } from "~/server/@buyer/flag/schema/FlagCountWhereSchema";
 import { FlagFilterSchema } from "~/server/@buyer/flag/schema/FlagFilterSchema";
 
@@ -10,7 +10,8 @@ export const FlagCountQuerySchema = z
 		where: FlagCountWhereSchema.optional(),
 	})
 	.strip()
-	.openapi("FlagCountQuery", {
+	.meta({
+		id: "FlagCountQuery",
 		description: "Query object for flag count",
 	});
 

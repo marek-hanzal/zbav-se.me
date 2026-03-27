@@ -1,16 +1,17 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const FeedGalleryCreateSchema = z
 	.looseObject({
-		feedId: z.string().openapi({
+		feedId: z.string().meta({
 			description: "The ID of the feed to add a gallery to",
 		}),
-		uploadIds: z.array(z.string()).min(1, "At least one upload is required").openapi({
+		uploadIds: z.array(z.string()).min(1, "At least one upload is required").meta({
 			description: "IDs of the uploads; order of uploads defines order in the gallery",
 		}),
 	})
 	.strip()
-	.openapi("FeedGalleryCreate", {
+	.meta({
+		id: "FeedGalleryCreate",
 		description: "Request to create or update a feed gallery",
 	});
 

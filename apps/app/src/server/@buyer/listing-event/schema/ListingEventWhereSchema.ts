@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { ListingEventFilterSchema } from "~/server/@buyer/listing-event/schema/ListingEventFilterSchema";
 
 export const ListingEventWhereSchema = z
@@ -6,7 +6,8 @@ export const ListingEventWhereSchema = z
 		...ListingEventFilterSchema.shape,
 	})
 	.strip()
-	.openapi("ListingEventWhere", {
+	.meta({
+		id: "ListingEventWhere",
 		description: "App-based filters",
 	});
 

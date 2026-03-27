@@ -1,15 +1,16 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { ListingEventEnumSchema } from "~/common/listing/enum/ListingEventEnumSchema";
 
 export const ListingEventCreateSchema = z
 	.looseObject({
-		listingId: z.string().openapi({
+		listingId: z.string().meta({
 			description: "ID of the listing",
 		}),
 		event: ListingEventEnumSchema,
 	})
 	.strip()
-	.openapi("ListingEventCreate", {
+	.meta({
+		id: "ListingEventCreate",
 		description: "Data for creating a new listing event",
 	});
 

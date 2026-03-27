@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const ListingEventEnumSchema = z
 	.enum([
@@ -35,7 +35,8 @@ export const ListingEventEnumSchema = z
 		 */
 		"dislike",
 	])
-	.openapi("ListingEventEnum", {
+	.meta({
+		id: "ListingEventEnum",
 		description: "Type of listing event",
 	});
 

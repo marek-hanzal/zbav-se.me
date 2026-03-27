@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const ListingExpireEnumSchema = z
 	.enum([
@@ -6,7 +6,8 @@ export const ListingExpireEnumSchema = z
 		"14-days",
 		"1-month",
 	])
-	.openapi("ListingExpireEnum", {
+	.meta({
+		id: "ListingExpireEnum",
 		description: "Expiration time of the listing",
 	});
 

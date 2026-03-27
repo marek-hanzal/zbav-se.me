@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const ListingStatusEnumSchema = z
 	.enum([
@@ -7,7 +7,8 @@ export const ListingStatusEnumSchema = z
 		"on-hold",
 		"banned",
 	])
-	.openapi("ListingStatusEnum", {
+	.meta({
+		id: "ListingStatusEnum",
 		description: "Status of the listing",
 	});
 

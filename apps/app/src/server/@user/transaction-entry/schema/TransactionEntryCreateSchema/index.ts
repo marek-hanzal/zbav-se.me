@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { CommonSchema } from "./CommonSchema";
 import { GallerySchema } from "./GallerySchema";
 import { LocationSchema } from "./LocationSchema";
@@ -14,8 +14,8 @@ export const TransactionEntryCreateSchema = z.discriminatedUnion("kind", [
 	PersonalSchema,
 	CommonSchema,
 	/**
-	 * We intentionally does not have .openapi() here as this create schema is
-	 * hidden from openapi (create endpoint should have it's custom version of this schema)
+	 * We intentionally do not add .meta({ id:  }) here because this create schema is
+	 * hidden from the public contract and the endpoint has its own tailored schema.
 	 */
 ]);
 

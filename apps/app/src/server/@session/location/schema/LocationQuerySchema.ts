@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { LocationFilterSchema } from "~/server/@session/location/schema/LocationFilterSchema";
 import { LocationSortSchema } from "~/server/@session/location/schema/LocationSortSchema";
 import { LocationWhereSchema } from "~/server/@session/location/schema/LocationWhereSchema";
@@ -12,7 +12,8 @@ export const LocationQuerySchema = z
 		sort: LocationSortSchema.array().optional(),
 	})
 	.strip()
-	.openapi("LocationQuery", {
+	.meta({
+		id: "LocationQuery",
 		description: "Data for location query",
 	});
 

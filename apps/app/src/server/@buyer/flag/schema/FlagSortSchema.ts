@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { OrderEnumSchema } from "~/common/schema/OrderEnumSchema";
+import { OrderEnumSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const FlagSortSchema = z
 	.looseObject({
@@ -7,13 +7,15 @@ export const FlagSortSchema = z
 			.enum([
 				"createdAt",
 			])
-			.openapi("FlagSortField", {
+			.meta({
+				id: "FlagSortField",
 				description: "Field of the flag sort",
 			}),
 		order: OrderEnumSchema,
 	})
 	.strip()
-	.openapi("FlagSort", {
+	.meta({
+		id: "FlagSort",
 		description: "Sort object for flag collection",
 	});
 

@@ -4,8 +4,8 @@ import { Mx } from "@use-pico/client/ui/mx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { FC } from "react";
+import type { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
 import type { TransactionEntryCommon } from "~/server/@user/transaction-entry/schema/TransactionEntrySchema/CommonSchema";
-import type { UserSideEnumSchema } from "~/server/database/@enum/UserSideEnumSchema";
 import { TypeContainer } from "../TypeContainer";
 
 export namespace Common {

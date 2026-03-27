@@ -1,19 +1,21 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const TransactionEntryGalleryQuerySchema = z
 	.looseObject({
 		where: z
 			.object({
-				transactionEntryId: z.string().openapi({
+				transactionEntryId: z.string().meta({
 					description: "Transaction entry identifier linked to the gallery",
 				}),
 			})
-			.openapi("TransactionEntryGalleryWhere", {
+			.meta({
+				id: "TransactionEntryGalleryWhere",
 				description: "Gallery lookup scoped by transaction entry identifier",
 			}),
 	})
 	.strip()
-	.openapi("TransactionEntryGalleryQuery", {
+	.meta({
+		id: "TransactionEntryGalleryQuery",
 		description: "Query object for transaction-entry gallery fetch",
 	});
 

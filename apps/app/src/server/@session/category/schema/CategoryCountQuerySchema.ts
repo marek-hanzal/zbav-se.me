@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { CategoryQuerySchema } from "~/server/@session/category/schema/CategoryQuerySchema";
 
 export const CategoryCountQuerySchema = z
@@ -9,7 +9,8 @@ export const CategoryCountQuerySchema = z
 		}).shape,
 	})
 	.strip()
-	.openapi("CategoryCountQuery", {
+	.meta({
+		id: "CategoryCountQuery",
 		description: "Query object for category count",
 	});
 

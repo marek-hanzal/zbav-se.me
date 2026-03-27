@@ -1,16 +1,17 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const LatLonSchema = z
 	.looseObject({
-		lat: z.number().min(-90).max(90).openapi({
+		lat: z.number().min(-90).max(90).meta({
 			description: "Latitude coordinate",
 		}),
-		lon: z.number().min(-180).max(180).openapi({
+		lon: z.number().min(-180).max(180).meta({
 			description: "Longitude coordinate",
 		}),
 	})
 	.strip()
-	.openapi("LatLon", {
+	.meta({
+		id: "LatLon",
 		description: "Latitude and longitude coordinates",
 	});
 

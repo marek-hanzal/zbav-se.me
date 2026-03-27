@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionEntryQuerySchema } from "~/server/@user/transaction-entry/schema/TransactionEntryQuerySchema";
 
 export const TransactionEntryCountQuerySchema = z
@@ -9,7 +9,8 @@ export const TransactionEntryCountQuerySchema = z
 		}).shape,
 	})
 	.strip()
-	.openapi("TransactionEntryCountQuery", {
+	.meta({
+		id: "TransactionEntryCountQuery",
 		description: "Query object for transaction entry count",
 	});
 

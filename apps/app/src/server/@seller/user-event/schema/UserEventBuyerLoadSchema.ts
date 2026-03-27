@@ -1,15 +1,16 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { LoadEnumSchema } from "~/server/@user/user-event/schema/LoadEnumSchema";
 
 export const UserEventBuyerLoadSchema = z
 	.looseObject({
-		bucket: LoadEnumSchema.openapi({
+		bucket: LoadEnumSchema.meta({
 			description: "Load type of the buyer",
 			example: "low",
 		}),
 	})
 	.strip()
-	.openapi("UserEventBuyerLoad", {
+	.meta({
+		id: "UserEventBuyerLoad",
 		description:
 			"Masks number of transactions of the buyer, basically it tells, how busy buyer is.",
 	});

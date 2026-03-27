@@ -1,19 +1,20 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const FavouriteToggleSchema = z
 	.looseObject({
-		toggle: z.boolean().openapi({
+		toggle: z.boolean().meta({
 			description: "Whether to add (true) or remove (false) the listing from favourites",
 		}),
-		feedId: z.string().openapi({
+		feedId: z.string().meta({
 			description: "Feed this listing belongs to",
 		}),
-		listingId: z.string().openapi({
+		listingId: z.string().meta({
 			description: "ID of the listing to toggle",
 		}),
 	})
 	.strip()
-	.openapi("FavouriteToggle", {
+	.meta({
+		id: "FavouriteToggle",
 		description: "Data for toggling a listing in favourites",
 	});
 

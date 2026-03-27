@@ -1,29 +1,30 @@
-import { z } from "@hono/zod-openapi";
-import { DefaultFilterSchema } from "~/common/schema/DefaultFilterSchema";
+import { FilterSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const LocationFilterSchema = z
 	.looseObject({
-		...DefaultFilterSchema.shape,
-		query: z.string().optional().openapi({
+		...FilterSchema.shape,
+		query: z.string().optional().meta({
 			description:
 				"This filter matches locations where id equals the value OR query ilike the value (useful for autocomplete)",
 		}),
-		lang: z.string().optional().openapi({
+		lang: z.string().optional().meta({
 			description: "This filter matches the exact language that was used to get the location",
 		}),
-		country: z.string().optional().openapi({
+		country: z.string().optional().meta({
 			description: "This filter matches the exact country of the location",
 		}),
-		code: z.string().optional().openapi({
+		code: z.string().optional().meta({
 			description: "This filter matches the exact country code of the location",
 		}),
-		confidenceMin: z.number().optional().openapi({
+		confidenceMin: z.number().optional().meta({
 			description:
 				"This filter matches locations with confidence greater than or equal to the provided value",
 		}),
 	})
 	.strip()
-	.openapi("LocationFilter", {
+	.meta({
+		id: "LocationFilter",
 		description: "Data for location filter",
 	});
 

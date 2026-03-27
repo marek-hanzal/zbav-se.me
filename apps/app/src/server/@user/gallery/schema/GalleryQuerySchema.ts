@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { GalleryFilterSchema } from "~/server/@user/gallery/schema/GalleryFilterSchema";
 import { GallerySortSchema } from "~/server/@user/gallery/schema/GallerySortSchema";
 import { GalleryWhereSchema } from "~/server/@user/gallery/schema/GalleryWhereSchema";
@@ -12,7 +12,8 @@ export const GalleryQuerySchema = z
 		sort: GallerySortSchema.array().optional(),
 	})
 	.strip()
-	.openapi("GalleryQuery", {
+	.meta({
+		id: "GalleryQuery",
 		description: "Query object for gallery collection",
 	});
 

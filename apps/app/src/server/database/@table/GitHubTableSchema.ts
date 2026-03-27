@@ -1,20 +1,24 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const GitHubTableSchema = z
 	.looseObject({
-		id: z.string().openapi({
+		id: z.string().meta({
 			description: "GitHub node ID",
 		}),
-		sha: z.string().openapi({
+		sha: z.string().meta({
 			description: "Commit SHA",
 		}),
-		date: z.coerce.date().openapi({
+		date: z.coerce.date().meta({
 			description: "Commit date",
 			type: "string",
 		}),
-		message: z.string().openapi({
+		message: z.string().meta({
 			description: "Commit message",
 		}),
+	})
+	.meta({
+		id: "GitHubTable",
+		description: "Database row for a GitHub history entry.",
 	})
 	.strip();
 

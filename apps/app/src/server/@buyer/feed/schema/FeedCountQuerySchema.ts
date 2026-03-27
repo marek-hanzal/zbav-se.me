@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { FeedQuerySchema } from "~/server/@buyer/feed/schema/FeedQuerySchema";
 
 export const FeedCountQuerySchema = z
@@ -9,7 +9,8 @@ export const FeedCountQuerySchema = z
 		}).shape,
 	})
 	.strip()
-	.openapi("FeedCountQuery", {
+	.meta({
+		id: "FeedCountQuery",
 		description: "Query object for feed count",
 	});
 

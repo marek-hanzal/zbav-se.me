@@ -1,20 +1,21 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const TransactionListingItemSchema = z
 	.looseObject({
-		listingId: z.string().openapi({
+		listingId: z.string().meta({
 			description: "ID of the listing",
 		}),
-		count: z.coerce.number().int().nonnegative().openapi({
+		count: z.coerce.number().int().nonnegative().meta({
 			description: "Total number of transactions for this listing",
 		}),
-		lastAt: z.coerce.date().openapi({
+		lastAt: z.coerce.date().meta({
 			description: "Timestamp of the most recent activity",
 			type: "string",
 		}),
 	})
 	.strip()
-	.openapi("TransactionListingItem", {
+	.meta({
+		id: "TransactionListingItem",
 		description: "Transaction-listing collection item",
 	});
 

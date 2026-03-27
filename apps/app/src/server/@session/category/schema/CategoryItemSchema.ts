@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
 
 export const CategoryItemSchema = z
@@ -6,7 +6,8 @@ export const CategoryItemSchema = z
 		...CategoryTableSchema.shape,
 	})
 	.strip()
-	.openapi("CategoryItem", {
+	.meta({
+		id: "CategoryItem",
 		description: "Category collection item",
 	});
 

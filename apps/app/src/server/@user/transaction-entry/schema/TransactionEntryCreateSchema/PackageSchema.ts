@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { EntrySchema } from "./EntrySchema";
 
 export const PackageSchema = z
@@ -7,17 +7,19 @@ export const PackageSchema = z
 		kind: z.literal("package"),
 		payload: z
 			.looseObject({
-				link: z.url().openapi({
+				link: z.url().meta({
 					description: "Package tracking link",
 				}),
-				number: z.string().nullable().openapi({
+				number: z.string().nullable().meta({
 					description: "Package tracking number",
 				}),
 			})
 			.strip(),
 	})
 	.strip()
-	.openapi("TransactionEntryPackageCreate");
+	.meta({
+		id: "TransactionEntryPackageCreate",
+	});
 
 export type PackageSchema = typeof PackageSchema;
 

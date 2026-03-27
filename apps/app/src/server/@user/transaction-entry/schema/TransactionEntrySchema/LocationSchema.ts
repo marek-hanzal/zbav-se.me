@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionEntryDirectionEnumSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryDirectionEnumSchema";
 import { LocationSchema as BaseLocationSchema } from "~/server/database/@table/TransactionEntryTableSchema/LocationSchema";
 
@@ -8,7 +8,8 @@ export const TransactionEntryLocation = z
 		direction: TransactionEntryDirectionEnumSchema,
 	})
 	.strip()
-	.openapi("TransactionEntryLocation", {
+	.meta({
+		id: "TransactionEntryLocation",
 		description: "Transaction location entry with linked location payload",
 	});
 

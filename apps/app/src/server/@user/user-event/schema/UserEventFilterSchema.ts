@@ -1,36 +1,37 @@
-import { z } from "@hono/zod-openapi";
-import { DefaultFilterSchema } from "~/common/schema/DefaultFilterSchema";
+import { FilterSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { UserEventScopeEnumSchema } from "~/common/user-event/enum/UserEventScopeEnumSchema";
-import { UserEventEnumSchema } from "~/server/database/@enum/UserEventEnumSchema";
-import { UserEventSourceEnumSchema } from "~/server/database/@enum/UserEventSourceEnumSchema";
+import { UserEventEnumSchema } from "~/server/@user/user-event/schema/UserEventEnumSchema";
+import { UserEventSourceEnumSchema } from "~/server/@user/user-event/schema/UserEventSourceEnumSchema";
 
 export const UserEventFilterSchema = z
 	.looseObject({
-		...DefaultFilterSchema.shape,
-		userId: z.string().optional().openapi({
+		...FilterSchema.shape,
+		userId: z.string().optional().meta({
 			description: "This filter matches the exact userId",
 		}),
-		scope: UserEventScopeEnumSchema.optional().openapi({
+		scope: UserEventScopeEnumSchema.optional().meta({
 			description: "This filter matches the exact scope",
 		}),
-		source: UserEventSourceEnumSchema.optional().openapi({
+		source: UserEventSourceEnumSchema.optional().meta({
 			description: "This filter matches the exact source",
 		}),
-		group: z.string().optional().openapi({
+		group: z.string().optional().meta({
 			description: "This filter matches the exact group",
 		}),
-		event: UserEventEnumSchema.optional().openapi({
+		event: UserEventEnumSchema.optional().meta({
 			description: "This filter matches the exact event",
 		}),
-		isTerminal: z.boolean().optional().openapi({
+		isTerminal: z.boolean().optional().meta({
 			description: "This filter matches the exact isTerminal value",
 		}),
-		cutoff: z.number().optional().openapi({
+		cutoff: z.number().optional().meta({
 			description: "Number of days to look back from the current time",
 		}),
 	})
 	.strip()
-	.openapi("UserEventFilter", {
+	.meta({
+		id: "UserEventFilter",
 		description: "Filter object for user event collection",
 	});
 

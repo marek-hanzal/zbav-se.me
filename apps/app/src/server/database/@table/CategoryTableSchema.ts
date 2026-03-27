@@ -1,25 +1,29 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const CategoryTableSchema = z
 	.looseObject({
-		id: z.string().openapi({
+		id: z.string().meta({
 			description: "ID of the category",
 		}),
-		group: z.string().openapi({
+		group: z.string().meta({
 			description: "Group/name of the category",
 		}),
-		category: z.string().openapi({
+		category: z.string().meta({
 			description: "Category name within the group",
 		}),
-		slug: z.string().openapi({
+		slug: z.string().meta({
 			description: "Slug of the category",
 		}),
-		sort: z.number().openapi({
+		sort: z.number().meta({
 			description: "Sort order (position) of the category",
 		}),
-		locale: z.string().openapi({
+		locale: z.string().meta({
 			description: "Locale/language of the category",
 		}),
+	})
+	.meta({
+		id: "CategoryTable",
+		description: "Database row for a category.",
 	})
 	.strip();
 

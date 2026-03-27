@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { EntrySchema } from "./EntrySchema";
 
 export const GallerySchema = z
@@ -7,14 +7,16 @@ export const GallerySchema = z
 		kind: z.literal("gallery"),
 		payload: z
 			.looseObject({
-				uploadIds: z.array(z.string()).min(1).openapi({
+				uploadIds: z.array(z.string()).min(1).meta({
 					description: "Ordered uploads used to build the gallery entry",
 				}),
 			})
 			.strip(),
 	})
 	.strip()
-	.openapi("TransactionEntryGalleryCreate");
+	.meta({
+		id: "TransactionEntryGalleryCreate",
+	});
 
 export type GallerySchema = typeof GallerySchema;
 

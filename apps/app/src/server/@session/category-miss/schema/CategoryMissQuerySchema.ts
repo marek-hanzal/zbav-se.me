@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { CategoryMissFilterSchema } from "~/server/@session/category-miss/schema/CategoryMissFilterSchema";
 import { CategoryMissSortSchema } from "~/server/@session/category-miss/schema/CategoryMissSortSchema";
 import { CategoryMissWhereSchema } from "~/server/@session/category-miss/schema/CategoryMissWhereSchema";
@@ -12,7 +12,8 @@ export const CategoryMissQuerySchema = z
 		sort: CategoryMissSortSchema.array().optional(),
 	})
 	.strip()
-	.openapi("CategoryMissQuery", {
+	.meta({
+		id: "CategoryMissQuery",
 		description: "Query object for category miss collection",
 	});
 

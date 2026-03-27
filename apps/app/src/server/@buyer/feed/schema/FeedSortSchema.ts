@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { OrderEnumSchema } from "~/common/schema/OrderEnumSchema";
+import { OrderEnumSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const FeedSortSchema = z
 	.looseObject({
@@ -8,13 +8,15 @@ export const FeedSortSchema = z
 				"createdAt",
 				"updatedAt",
 			])
-			.openapi("FeedSortField", {
+			.meta({
+				id: "FeedSortField",
 				description: "Field of the feed sort",
 			}),
 		order: OrderEnumSchema,
 	})
 	.strip()
-	.openapi("FeedSort", {
+	.meta({
+		id: "FeedSort",
 		description: "Sort object for feed collection",
 	});
 

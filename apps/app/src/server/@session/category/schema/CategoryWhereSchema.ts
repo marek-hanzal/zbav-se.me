@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { CategoryFilterSchema } from "~/server/@session/category/schema/CategoryFilterSchema";
 
 export const CategoryWhereSchema = z
@@ -6,7 +6,8 @@ export const CategoryWhereSchema = z
 		...CategoryFilterSchema.shape,
 	})
 	.strip()
-	.openapi("CategoryWhere", {
+	.meta({
+		id: "CategoryWhere",
 		description: "App-based filters",
 	});
 

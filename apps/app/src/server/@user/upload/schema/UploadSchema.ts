@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { UploadTableSchema } from "~/server/database/@table/UploadTableSchema";
 
 export const UploadSchema = z
@@ -10,7 +10,8 @@ export const UploadSchema = z
 		createdAt: true,
 	})
 	.strip()
-	.openapi("Upload", {
+	.meta({
+		id: "Upload",
 		description: "Upload file metadata",
 	});
 

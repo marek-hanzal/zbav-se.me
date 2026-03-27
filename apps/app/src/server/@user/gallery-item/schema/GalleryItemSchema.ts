@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { UploadSchema } from "~/server/@user/upload/schema/UploadSchema";
 import { GalleryItemTableSchema } from "~/server/database/@table/GalleryItemTableSchema";
 
@@ -11,7 +11,8 @@ export const GalleryItemSchema = z
 		createdAt: true,
 	})
 	.strip()
-	.openapi("GalleryItem", {
+	.meta({
+		id: "GalleryItem",
 		description: "Gallery item data",
 	});
 

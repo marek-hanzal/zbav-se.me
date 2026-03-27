@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionEntryKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
 import { EntrySchema } from "./EntrySchema";
 
@@ -10,13 +10,17 @@ export const GallerySchema = z
 		]),
 		payload: z
 			.looseObject({
-				galleryId: z.string().openapi({
+				galleryId: z.string().meta({
 					description: "Gallery identifier linked to this entry",
 				}),
 			})
 			.strip(),
 	})
-	.strip();
+	.strip()
+	.meta({
+		id: "TransactionEntryGallery",
+		description: "Transaction entry gallery payload",
+	});
 
 export type GallerySchema = typeof GallerySchema;
 

@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { GalleryQuerySchema } from "~/server/@user/gallery/schema/GalleryQuerySchema";
 
 export const GalleryCountQuerySchema = z
@@ -9,7 +9,8 @@ export const GalleryCountQuerySchema = z
 		}).shape,
 	})
 	.strip()
-	.openapi("GalleryCountQuery", {
+	.meta({
+		id: "GalleryCountQuery",
 		description: "Query object for gallery count",
 	});
 

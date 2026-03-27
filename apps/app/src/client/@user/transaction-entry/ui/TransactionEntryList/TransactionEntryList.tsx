@@ -3,7 +3,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { type FC, type RefObject, Suspense, useRef } from "react";
 import { withTransactionEntryQuery } from "~/client/@user/transaction-entry/withTransactionEntryQuery";
-import type { UserSideEnumSchema } from "~/server/database/@enum/UserSideEnumSchema";
+import type { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
 import { Item } from "./Item";
 
 export namespace TransactionEntryList {

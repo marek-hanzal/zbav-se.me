@@ -1,11 +1,12 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const UserEventScopeEnumSchema = z
 	.enum([
 		"user",
 		"foreign",
 	])
-	.openapi("UserEventScopeEnum", {
+	.meta({
+		id: "UserEventScopeEnum",
 		description: "Scope of the user event",
 	});
 

@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionListingFilterSchema } from "~/server/@seller/transaction-listing/schema/TransactionListingFilterSchema";
 
 export const TransactionListingWhereSchema = z
@@ -6,7 +6,8 @@ export const TransactionListingWhereSchema = z
 		...TransactionListingFilterSchema.shape,
 	})
 	.strip()
-	.openapi("TransactionListingWhere", {
+	.meta({
+		id: "TransactionListingWhere",
 		description: "App-based filters",
 	});
 

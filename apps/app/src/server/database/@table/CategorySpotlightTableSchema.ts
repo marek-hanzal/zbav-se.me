@@ -1,22 +1,26 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const CategorySpotlightTableSchema = z
 	.looseObject({
-		id: z.string().openapi({
+		id: z.string().meta({
 			description: "ID of the category spotlight entry",
 		}),
-		categoryId: z.string().openapi({
+		categoryId: z.string().meta({
 			description: "ID of the category this spotlight belongs to",
 		}),
-		text: z.string().openapi({
+		text: z.string().meta({
 			description: "Spotlight text content",
 		}),
-		locale: z.string().openapi({
+		locale: z.string().meta({
 			description: "Locale/language of the spotlight text",
 		}),
-		weight: z.number().openapi({
+		weight: z.number().meta({
 			description: "Weight/priority of this spotlight entry",
 		}),
+	})
+	.meta({
+		id: "CategorySpotlightTable",
+		description: "Database row for a category spotlight entry.",
 	})
 	.strip();
 

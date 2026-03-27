@@ -35,7 +35,7 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 
 	if (data.length === 0) {
 		yield* categoryMissCreateFx({
-			fulltext: filter?.fulltext || where?.fulltext,
+			fulltext: filter?.fulltext ?? where?.fulltext ?? undefined,
 		});
 	}
 

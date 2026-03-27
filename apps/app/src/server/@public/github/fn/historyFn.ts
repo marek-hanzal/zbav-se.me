@@ -13,13 +13,14 @@ const Repo = {
 
 const InputSchema = z
 	.looseObject({
-		weeks: z.coerce.number().int().nonnegative().min(1).max(104).openapi({
+		weeks: z.coerce.number().int().nonnegative().min(1).max(104).meta({
 			description: "How many weeks back (including the current week) to return",
 			example: 12,
 		}),
 	})
 	.strip()
-	.openapi("GitHubHistoryQuery", {
+	.meta({
+		id: "GitHubHistoryQuery",
 		description: "Query parameters for GitHub history",
 	});
 

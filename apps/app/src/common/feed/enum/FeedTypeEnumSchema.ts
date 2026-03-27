@@ -1,11 +1,12 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const FeedTypeEnumSchema = z
 	.enum([
 		"user",
 		"search",
 	])
-	.openapi("FeedTypeEnum", {
+	.meta({
+		id: "FeedTypeEnum",
 		description: "Type of the feed",
 	});
 

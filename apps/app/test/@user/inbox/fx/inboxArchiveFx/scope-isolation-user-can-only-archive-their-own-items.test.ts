@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import type { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
+import type { InboxTypeEnumSchema } from "~/common/inbox/enum/InboxTypeEnumSchema";
 import { inboxArchiveFx } from "~/server/@user/inbox/fx/inboxArchiveFx";
 import { auth } from "~/server/auth/auth";
-import type { InboxPriorityEnumSchema } from "~/server/database/@enum/InboxPriorityEnumSchema";
-import type { InboxTypeEnumSchema } from "~/server/database/@enum/InboxTypeEnumSchema";
 import type { InboxTableSchema } from "~/server/database/@table/InboxTableSchema";
 import { testabase } from "~/test/testabase";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";

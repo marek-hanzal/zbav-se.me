@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionEntryDirectionEnumSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryDirectionEnumSchema";
 import { CommonSchema as BaseCommonSchema } from "~/server/database/@table/TransactionEntryTableSchema/CommonSchema";
 
@@ -8,7 +8,8 @@ export const TransactionEntryCommon = z
 		direction: TransactionEntryDirectionEnumSchema,
 	})
 	.strip()
-	.openapi("TransactionEntryCommon", {
+	.meta({
+		id: "TransactionEntryCommon",
 		description: "Transaction system entry with shared status or informational payload",
 	});
 

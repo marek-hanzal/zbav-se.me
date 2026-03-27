@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { InboxQuerySchema } from "~/server/@user/inbox/schema/InboxQuerySchema";
 
 export const InboxPatchSchema = z
@@ -11,7 +11,7 @@ export const InboxPatchSchema = z
 						z.coerce.date(),
 					])
 					.optional()
-					.openapi({
+					.meta({
 						description: "Archive timestamp",
 						type: "string",
 					}),
@@ -20,7 +20,8 @@ export const InboxPatchSchema = z
 		query: InboxQuerySchema,
 	})
 	.strip()
-	.openapi("InboxPatch", {
+	.meta({
+		id: "InboxPatch",
 		description: "Patch one inbox item resolved by query",
 	});
 

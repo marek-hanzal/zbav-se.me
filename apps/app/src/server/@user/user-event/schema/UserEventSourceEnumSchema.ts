@@ -1,11 +1,12 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const UserEventSourceEnumSchema = z
 	.enum([
 		"listing",
 		"transaction",
 	])
-	.openapi("UserEventSourceEnum", {
+	.meta({
+		id: "UserEventSourceEnum",
 		description: "Source of the user event",
 	});
 

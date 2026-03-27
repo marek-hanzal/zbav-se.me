@@ -18,13 +18,14 @@ export const CommonSchema = z
 		]),
 		payload: z
 			.looseObject({
-				text: z.string().openapi({
+				text: z.string().meta({
 					description: "Translation key for the system/status timeline entry",
 				}),
 			})
 			.strip(),
 	})
 	.strip()
-	.openapi("TransactionEntryCommonCreate", {
+	.meta({
+		id: "TransactionEntryCommonCreate",
 		description: "Common entry create payload",
 	});

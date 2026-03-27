@@ -1,8 +1,8 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const MigrationSchema = z
 	.looseObject({
-		migrationName: z.string().openapi({
+		migrationName: z.string().meta({
 			description: "Migration name run",
 		}),
 		direction: z
@@ -10,7 +10,7 @@ export const MigrationSchema = z
 				"Up",
 				"Down",
 			])
-			.openapi({
+			.meta({
 				description: "Migration direction",
 			}),
 		status: z
@@ -19,11 +19,15 @@ export const MigrationSchema = z
 				"Error",
 				"NotExecuted",
 			])
-			.openapi({
+			.meta({
 				description: "Migration status",
 			}),
 	})
-	.strip();
+	.strip()
+	.meta({
+		id: "Migration",
+		description: "Migration run record",
+	});
 
 export type MigrationSchema = typeof MigrationSchema;
 

@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { EntrySchema } from "./EntrySchema";
 
 export const LocationSchema = z
@@ -7,14 +7,16 @@ export const LocationSchema = z
 		kind: z.literal("location"),
 		payload: z
 			.looseObject({
-				locationId: z.string().openapi({
+				locationId: z.string().meta({
 					description: "Location identifier linked to this entry",
 				}),
 			})
 			.strip(),
 	})
 	.strip()
-	.openapi("TransactionEntryLocationCreate");
+	.meta({
+		id: "TransactionEntryLocationCreate",
+	});
 
 export type LocationSchema = typeof LocationSchema;
 

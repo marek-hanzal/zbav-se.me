@@ -1,15 +1,16 @@
-import { z } from "@hono/zod-openapi";
-import { ThumbEnumSchema } from "~/server/database/@enum/ThumbEnumSchema";
+import { z } from "zod";
+import { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 
 export const ThumbCreateSchema = z
 	.looseObject({
-		listingId: z.string().openapi({
+		listingId: z.string().meta({
 			description: "ID of the listing",
 		}),
 		type: ThumbEnumSchema,
 	})
 	.strip()
-	.openapi("ThumbCreate", {
+	.meta({
+		id: "ThumbCreate",
 		description: "Data for creating a new thumb",
 	});
 

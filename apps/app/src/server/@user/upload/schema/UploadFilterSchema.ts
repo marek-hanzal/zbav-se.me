@@ -1,12 +1,13 @@
-import { z } from "@hono/zod-openapi";
-import { DefaultFilterSchema } from "~/common/schema/DefaultFilterSchema";
+import { FilterSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const UploadFilterSchema = z
 	.looseObject({
-		...DefaultFilterSchema.shape,
+		...FilterSchema.shape,
 	})
 	.strip()
-	.openapi("UploadFilter", {
+	.meta({
+		id: "UploadFilter",
 		description: "Data for uploading a file",
 	});
 

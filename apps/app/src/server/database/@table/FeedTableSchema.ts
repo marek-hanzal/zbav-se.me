@@ -1,12 +1,12 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { FeedTypeEnumSchema } from "~/common/feed/enum/FeedTypeEnumSchema";
 
 export const FeedTableSchema = z
 	.looseObject({
-		id: z.string().openapi({
+		id: z.string().meta({
 			description: "ID of the feed",
 		}),
-		userId: z.string().openapi({
+		userId: z.string().meta({
 			description: "ID of the user who created the feed",
 		}),
 		locationId: z
@@ -14,7 +14,7 @@ export const FeedTableSchema = z
 				z.null(),
 				z.string(),
 			])
-			.openapi({
+			.meta({
 				description: "ID of the location associated with the feed",
 			}),
 		uploadId: z
@@ -22,27 +22,29 @@ export const FeedTableSchema = z
 				z.null(),
 				z.string(),
 			])
-			.openapi({
+			.meta({
 				description:
 					"Hero image for this feed (usually selected from the listings in the feed)",
 			}),
-		type: FeedTypeEnumSchema.openapi({
-			description: "Type of the feed",
-		}),
+		type: FeedTypeEnumSchema,
 		//
-		name: z.string().openapi({
+		name: z.string().meta({
 			description: "Name of the feed",
 		}),
 		query: z.looseObject({}),
 		//
-		createdAt: z.coerce.date().openapi({
+		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",
 			type: "string",
 		}),
-		updatedAt: z.coerce.date().openapi({
+		updatedAt: z.coerce.date().meta({
 			description: "Last update timestamp, used to sort the feed selection",
 			type: "string",
 		}),
+	})
+	.meta({
+		id: "FeedTable",
+		description: "Database row for a feed.",
 	})
 	.strip();
 

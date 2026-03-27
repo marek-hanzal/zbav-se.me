@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { DraftQuerySchema } from "~/server/@seller/draft/schema/DraftQuerySchema";
 
 export const DraftCountQuerySchema = z
@@ -9,7 +9,8 @@ export const DraftCountQuerySchema = z
 		}).shape,
 	})
 	.strip()
-	.openapi("DraftCountQuery", {
+	.meta({
+		id: "DraftCountQuery",
 		description: "Query object for draft count",
 	});
 

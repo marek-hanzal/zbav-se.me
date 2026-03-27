@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { OrderEnumSchema } from "~/common/schema/OrderEnumSchema";
+import { OrderEnumSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const CategoryMissSortSchema = z
 	.looseObject({
@@ -9,13 +9,15 @@ export const CategoryMissSortSchema = z
 				"count",
 				"updatedAt",
 			])
-			.openapi("CategoryMissSortField", {
+			.meta({
+				id: "CategoryMissSortField",
 				description: "Field for category miss sort",
 			}),
 		order: OrderEnumSchema,
 	})
 	.strip()
-	.openapi("CategoryMissSort", {
+	.meta({
+		id: "CategoryMissSort",
 		description: "Data for category miss sort",
 	});
 

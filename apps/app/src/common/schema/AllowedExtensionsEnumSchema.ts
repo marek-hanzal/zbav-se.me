@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const AllowedExtensionsEnumSchema = z
 	.enum([
@@ -10,7 +10,8 @@ export const AllowedExtensionsEnumSchema = z
 		"heic",
 		"heif",
 	])
-	.openapi("AllowedExtensionsEnum", {
+	.meta({
+		id: "AllowedExtensionsEnum",
 		description: "Allowed extensions",
 	});
 

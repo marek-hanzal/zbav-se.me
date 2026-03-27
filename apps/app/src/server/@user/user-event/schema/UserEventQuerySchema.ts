@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { UserEventFilterSchema } from "./UserEventFilterSchema";
 import { UserEventSortSchema } from "./UserEventSortSchema";
 import { UserEventWhereSchema } from "./UserEventWhereSchema";
@@ -14,7 +14,8 @@ export const UserEventQuerySchema = z
 		sort: UserEventSortSchema.array().optional(),
 	})
 	.strip()
-	.openapi("UserEventQuery", {
+	.meta({
+		id: "UserEventQuery",
 		description: "Query object for user event collection",
 	});
 

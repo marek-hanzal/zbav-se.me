@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { ListingQuerySchema } from "~/server/@buyer/listing/schema/ListingQuerySchema";
 import { UploadSchema } from "~/server/@user/upload/schema/UploadSchema";
 import { FeedTableSchema } from "~/server/database/@table/FeedTableSchema";
@@ -12,7 +12,7 @@ export const FeedSchema = z
 				z.null(),
 				UploadSchema,
 			])
-			.openapi({
+			.meta({
 				description: "Hero banner for this feed",
 			}),
 	})
@@ -22,7 +22,8 @@ export const FeedSchema = z
 		updatedAt: true,
 	})
 	.strip()
-	.openapi("Feed", {
+	.meta({
+		id: "Feed",
 		description: "Feed data",
 	});
 

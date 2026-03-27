@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionQuerySchema } from "~/server/@seller/transaction/schema/TransactionQuerySchema";
 import { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
 
@@ -18,13 +18,14 @@ export const TransactionPatchSchema = z
 			})
 			.partial()
 			.strip()
-			.openapi({
+			.meta({
 				description: "Fields to update (all optional)",
 			}),
 		query: TransactionQuerySchema,
 	})
 	.strip()
-	.openapi("TransactionPatch", {
+	.meta({
+		id: "TransactionPatch",
 		description: "Payload for patching a transaction",
 	});
 

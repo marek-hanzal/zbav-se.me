@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
@@ -10,20 +10,18 @@ import { ProsConsSchema } from "~/server/@seller/listing/schema/ProsConsSchema";
 
 export const ListingTableSchema = z
 	.looseObject({
-		id: z.string().openapi({
+		id: z.string().meta({
 			description: "ID of the listing",
 		}),
-		userId: z.string().openapi({
+		userId: z.string().meta({
 			description: "ID of the user who created the listing",
 		}),
 		//
-		price: z.coerce.number().openapi({
+		price: z.coerce.number().meta({
 			description: "Price of the listing",
 			type: "number",
 		}),
-		priceType: ListingPriceEnumSchema.openapi({
-			description: "Price type of the listing",
-		}),
+		priceType: ListingPriceEnumSchema,
 		//
 		currency: CurrencyEnumSchema,
 		//
@@ -32,7 +30,7 @@ export const ListingTableSchema = z
 				z.null(),
 				z.number(),
 			])
-			.openapi({
+			.meta({
 				description: "Condition of the item (0-based index)",
 			}),
 		//
@@ -41,39 +39,31 @@ export const ListingTableSchema = z
 				z.null(),
 				z.number(),
 			])
-			.openapi({
+			.meta({
 				description: "Age of the item (0-based index)",
 			}),
 		//
-		delivery: z
-			.union([
-				z.null(),
-				z.array(ListingDeliveryEnumSchema),
-			])
-			.openapi({
-				description: "Delivery methods for the listing",
-			}),
+		delivery: z.union([
+			z.null(),
+			z.array(ListingDeliveryEnumSchema),
+		]),
 		//
-		warranty: z
-			.union([
-				z.null(),
-				ListingWarrantyEnumSchema,
-			])
-			.openapi({
-				description: "Warranty type for the listing",
-			}),
+		warranty: z.union([
+			z.null(),
+			ListingWarrantyEnumSchema,
+		]),
 		//
 		status: ListingStatusEnumSchema,
 		//
 		restriction: ListingRestrictionEnumSchema,
 		//
-		locationId: z.string().openapi({
+		locationId: z.string().meta({
 			description: "ID of the location",
 		}),
-		categoryId: z.string().openapi({
+		categoryId: z.string().meta({
 			description: "ID of the category",
 		}),
-		galleryId: z.string().openapi({
+		galleryId: z.string().meta({
 			description: "ID of the gallery",
 		}),
 		draftId: z
@@ -81,18 +71,18 @@ export const ListingTableSchema = z
 				z.null(),
 				z.string(),
 			])
-			.openapi({
+			.meta({
 				description: "ID of the draft this listing was created from",
 			}),
-		expiresAt: z.coerce.date().openapi({
+		expiresAt: z.coerce.date().meta({
 			description: "Expiration timestamp",
 			type: "string",
 		}),
 		//
-		title: z.string().openapi({
+		title: z.string().meta({
 			description: "Title of the item",
 		}),
-		titleVec: VectorSchema.openapi({
+		titleVec: VectorSchema.meta({
 			description: "Embedding vector for title similarity search",
 		}),
 		//
@@ -101,7 +91,7 @@ export const ListingTableSchema = z
 				z.null(),
 				z.string(),
 			])
-			.openapi({
+			.meta({
 				description: "Description of the item",
 			}),
 		//
@@ -110,7 +100,7 @@ export const ListingTableSchema = z
 				z.null(),
 				ProsConsSchema,
 			])
-			.openapi({
+			.meta({
 				description: "Pros of the item",
 			}),
 		cons: z
@@ -118,18 +108,22 @@ export const ListingTableSchema = z
 				z.null(),
 				ProsConsSchema,
 			])
-			.openapi({
+			.meta({
 				description: "Cons of the item",
 			}),
 		//
-		createdAt: z.coerce.date().openapi({
+		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",
 			type: "string",
 		}),
-		updatedAt: z.coerce.date().openapi({
+		updatedAt: z.coerce.date().meta({
 			description: "Last update timestamp",
 			type: "string",
 		}),
+	})
+	.meta({
+		id: "ListingTable",
+		description: "Database row for a listing.",
 	})
 	.strip();
 

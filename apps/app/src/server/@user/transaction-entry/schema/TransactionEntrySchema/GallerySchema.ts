@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionEntryDirectionEnumSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryDirectionEnumSchema";
 import { GallerySchema as BaseGallerySchema } from "~/server/database/@table/TransactionEntryTableSchema/GallerySchema";
 
@@ -8,7 +8,8 @@ export const TransactionEntryGallery = z
 		direction: TransactionEntryDirectionEnumSchema,
 	})
 	.strip()
-	.openapi("TransactionEntryGallery", {
+	.meta({
+		id: "TransactionEntryGallery",
 		description: "Transaction gallery entry with linked gallery payload",
 	});
 

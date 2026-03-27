@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
 import { InboxSchema } from "./InboxSchema";
 
@@ -9,23 +9,27 @@ export const UnknownSchema = z
 		type: z.literal("unknown"),
 		payload: z
 			.looseObject({
-				transactionId: z.string().openapi({
+				transactionId: z.string().meta({
 					description: "Related transaction identifier",
 				}),
-				listingId: z.string().openapi({
+				listingId: z.string().meta({
 					description: "Related listing identifier for seller-scoped transaction routes",
 				}),
-				transactionEntryId: z.string().optional().openapi({
+				transactionEntryId: z.string().optional().meta({
 					description: "Related transaction entry identifier when available",
 				}),
-				target: UserSideEnumSchema.openapi({
+				target: UserSideEnumSchema.meta({
 					description:
 						"Recipient-side transaction detail target used for deep-link routing",
 				}),
 			})
 			.strip(),
 	})
-	.strip();
+	.strip()
+	.meta({
+		id: "InboxUnknown",
+		description: "Fallback inbox transaction event",
+	});
 
 export type UnknownSchema = typeof UnknownSchema;
 

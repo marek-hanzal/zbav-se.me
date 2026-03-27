@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { InboxFilterSchema } from "~/server/@user/inbox/schema/InboxFilterSchema";
 
 export const InboxWhereSchema = z
@@ -6,7 +6,8 @@ export const InboxWhereSchema = z
 		...InboxFilterSchema.shape,
 	})
 	.strip()
-	.openapi("InboxWhere", {
+	.meta({
+		id: "InboxWhere",
 		description: "App-level where filters",
 	});
 

@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const TransactionStatusEnumSchema = z
 	.enum([
@@ -35,7 +35,8 @@ export const TransactionStatusEnumSchema = z
 		// Explicitly closed with "no emotions"
 		"closed",
 	])
-	.openapi("TransactionStatusEnum", {
+	.meta({
+		id: "TransactionStatusEnum",
 		description: "Current status of the listing transaction",
 	});
 

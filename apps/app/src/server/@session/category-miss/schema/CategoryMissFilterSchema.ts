@@ -1,20 +1,21 @@
-import { z } from "@hono/zod-openapi";
-import { DefaultFilterSchema } from "~/common/schema/DefaultFilterSchema";
+import { FilterSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const CategoryMissFilterSchema = z
 	.looseObject({
-		...DefaultFilterSchema.shape,
+		...FilterSchema.shape,
 		category: z
 			.union([
 				z.null(),
 				z.string(),
 			])
-			.openapi({
+			.meta({
 				description: "This filter matches the exact category name that was missed",
 			}),
 	})
 	.strip()
-	.openapi("CategoryMissFilter", {
+	.meta({
+		id: "CategoryMissFilter",
 		description: "Filter object for category miss collection",
 	});
 

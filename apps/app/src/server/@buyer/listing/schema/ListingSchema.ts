@@ -1,8 +1,8 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
+import { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 import { CategorySchema } from "~/server/@session/category/schema/CategorySchema";
 import { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/server/@user/gallery/schema/GallerySchema";
-import { ThumbEnumSchema } from "~/server/database/@enum/ThumbEnumSchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 
 export const ListingSchema = z
@@ -10,23 +10,23 @@ export const ListingSchema = z
 		...ListingTableSchema.shape,
 		location: LocationSchema,
 		category: CategorySchema,
-		distance: z.number().nullable().openapi({
+		distance: z.number().nullable().meta({
 			description:
 				"Distance from the input location to the listing (in km; meta lat/lon must be provided)",
 		}),
-		gallery: GallerySchema.openapi({
+		gallery: GallerySchema.meta({
 			description: "Listing gallery images",
 		}),
-		my: z.boolean().openapi({
+		my: z.boolean().meta({
 			description: "Whether the listing belongs to the current user",
 		}),
-		isFavourite: z.boolean().openapi({
+		isFavourite: z.boolean().meta({
 			description: "Whether the user has this listing in favourites",
 		}),
-		isIgnored: z.boolean().openapi({
+		isIgnored: z.boolean().meta({
 			description: "Whether the user ignored this listing",
 		}),
-		hasFlag: z.boolean().openapi({
+		hasFlag: z.boolean().meta({
 			description: "Whether the user flagged this listing",
 		}),
 		transactionId: z
@@ -34,7 +34,7 @@ export const ListingSchema = z
 				z.null(),
 				z.string(),
 			])
-			.openapi({
+			.meta({
 				description: "Whether the user has a transaction with this listing",
 			}),
 		thumb: z
@@ -42,7 +42,7 @@ export const ListingSchema = z
 				z.null(),
 				ThumbEnumSchema,
 			])
-			.openapi({
+			.meta({
 				description:
 					"Thumb type provided by the user (like/dislike) or null if not present",
 			}),
@@ -52,7 +52,8 @@ export const ListingSchema = z
 		titleVec: true,
 	})
 	.strip()
-	.openapi("Listing", {
+	.meta({
+		id: "Listing",
 		description: "Listing data",
 	});
 

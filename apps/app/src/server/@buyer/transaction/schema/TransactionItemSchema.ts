@@ -1,17 +1,18 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const TransactionItemSchema = z
 	.looseObject({
-		id: z.string().openapi({
+		id: z.string().meta({
 			description: "ID of the transaction",
 		}),
-		lastAt: z.coerce.date().openapi({
+		lastAt: z.coerce.date().meta({
 			description: "Timestamp of the last message in the transaction",
 			type: "string",
 		}),
 	})
 	.strip()
-	.openapi("TransactionItem", {
+	.meta({
+		id: "TransactionItem",
 		description: "Transaction collection item with last message timestamp",
 	});
 

@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { ListingEventFilterSchema } from "~/server/@buyer/listing-event/schema/ListingEventFilterSchema";
 import { ListingEventSortSchema } from "~/server/@buyer/listing-event/schema/ListingEventSortSchema";
 import { ListingEventWhereSchema } from "~/server/@buyer/listing-event/schema/ListingEventWhereSchema";
@@ -12,7 +12,8 @@ export const ListingEventQuerySchema = z
 		sort: ListingEventSortSchema.array().optional(),
 	})
 	.strip()
-	.openapi("ListingEventQuery", {
+	.meta({
+		id: "ListingEventQuery",
 		description: "Query object for listing event collection",
 	});
 

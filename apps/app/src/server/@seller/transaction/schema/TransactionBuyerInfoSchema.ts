@@ -1,9 +1,9 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { UserEventBuyerSchema } from "~/server/@seller/user-event/schema/UserEventBuyerSchema";
 
 export const TransactionBuyerInfoSchema = z
 	.looseObject({
-		registered: z.coerce.date().openapi({
+		registered: z.coerce.date().meta({
 			description: "Registration date",
 			type: "string",
 		}),
@@ -12,12 +12,13 @@ export const TransactionBuyerInfoSchema = z
 				z.null(),
 				UserEventBuyerSchema,
 			])
-			.openapi({
+			.meta({
 				description: "Buyer info may not be available if we don't have enough data",
 			}),
 	})
 	.strip()
-	.openapi("TransactionBuyerInfo", {
+	.meta({
+		id: "TransactionBuyerInfo",
 		description: "Buyer info for the transaction",
 	});
 

@@ -1,16 +1,17 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const FavouriteCreateSchema = z
 	.looseObject({
-		feedId: z.string().openapi({
+		feedId: z.string().meta({
 			description: "Feed this listing belongs to",
 		}),
-		listingId: z.string().openapi({
+		listingId: z.string().meta({
 			description: "ID of the listing",
 		}),
 	})
 	.strip()
-	.openapi({
+	.meta({
+		id: "FavouriteCreate",
 		description: "Favourite create schema",
 	});
 

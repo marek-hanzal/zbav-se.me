@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const TransactionSideEnumSchema = z
 	.enum([
@@ -8,7 +8,8 @@ export const TransactionSideEnumSchema = z
 		"system",
 		"unknown",
 	])
-	.openapi("TransactionSideEnum", {
+	.meta({
+		id: "TransactionSideEnum",
 		description: "Who initiated or affected the transaction change",
 	});
 

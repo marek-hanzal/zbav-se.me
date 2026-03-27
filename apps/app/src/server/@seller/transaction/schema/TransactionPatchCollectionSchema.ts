@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { TransactionQuerySchema } from "~/server/@seller/transaction/schema/TransactionQuerySchema";
 
@@ -12,7 +12,8 @@ export const TransactionPatchCollectionSchema = z
 		query: TransactionQuerySchema,
 	})
 	.strip()
-	.openapi("TransactionPatchCollection", {
+	.meta({
+		id: "TransactionPatchCollection",
 		description: "Patch transaction items resolved by query",
 	});
 

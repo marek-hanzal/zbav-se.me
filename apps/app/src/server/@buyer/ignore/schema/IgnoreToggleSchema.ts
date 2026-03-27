@@ -1,16 +1,17 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const IgnoreToggleSchema = z
 	.looseObject({
-		toggle: z.boolean().openapi({
+		toggle: z.boolean().meta({
 			description: "Whether to add (true) or remove (false) the listing from ignore list",
 		}),
-		listingId: z.string().openapi({
+		listingId: z.string().meta({
 			description: "ID of the listing to toggle",
 		}),
 	})
 	.strip()
-	.openapi("IgnoreToggle", {
+	.meta({
+		id: "IgnoreToggle",
 		description: "Data for toggling a listing in ignore list",
 	});
 

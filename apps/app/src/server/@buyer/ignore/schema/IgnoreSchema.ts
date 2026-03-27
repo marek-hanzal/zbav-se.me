@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { IgnoreTableSchema } from "~/server/database/@table/IgnoreTableSchema";
 
 export const IgnoreSchema = z
@@ -10,7 +10,8 @@ export const IgnoreSchema = z
 		createdAt: true,
 	})
 	.strip()
-	.openapi("Ignore", {
+	.meta({
+		id: "Ignore",
 		description: "Ignore data",
 	});
 

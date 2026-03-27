@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionEntryKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
 import { EntrySchema } from "./EntrySchema";
 
@@ -10,16 +10,20 @@ export const PackageSchema = z
 		]),
 		payload: z
 			.looseObject({
-				link: z.url().openapi({
+				link: z.url().meta({
 					description: "Package tracking link",
 				}),
-				number: z.string().nullable().openapi({
+				number: z.string().nullable().meta({
 					description: "Package tracking number",
 				}),
 			})
 			.strip(),
 	})
-	.strip();
+	.strip()
+	.meta({
+		id: "TransactionEntryPackage",
+		description: "Transaction entry package payload",
+	});
 
 export type PackageSchema = typeof PackageSchema;
 

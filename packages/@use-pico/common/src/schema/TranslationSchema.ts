@@ -1,10 +1,16 @@
 import { z } from "zod";
 
-export const TranslationSchema = z.object({
-	ref: z.string().optional(),
-	value: z.string(),
-	static: z.boolean().optional(),
-});
+export const TranslationSchema = z
+	.looseObject({
+		ref: z.string().optional(),
+		value: z.string(),
+		static: z.boolean().optional(),
+	})
+	.strip()
+	.meta({
+		id: "Translation",
+		description: "Single translation entry",
+	});
 
 export type TranslationSchema = typeof TranslationSchema;
 

@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { FavouriteTableSchema } from "~/server/database/@table/FavouriteTableSchema";
 
 export const FavouriteSchema = z
@@ -9,7 +9,8 @@ export const FavouriteSchema = z
 		userId: true,
 	})
 	.strip()
-	.openapi("Favourite", {
+	.meta({
+		id: "Favourite",
 		description: "Favourite data",
 	});
 

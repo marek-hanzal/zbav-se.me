@@ -1,11 +1,12 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const InboxPriorityEnumSchema = z
 	.enum([
 		"common",
 		"high",
 	])
-	.openapi("InboxPriorityEnum", {
+	.meta({
+		id: "InboxPriorityEnum",
 		description: "Inbox priority level",
 	});
 

@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { TransactionEntryFilterSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryFilterSchema";
 import { TransactionEntrySortSchema } from "~/server/@user/transaction-entry/schema/TransactionEntrySortSchema";
 import { TransactionEntryWhereSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryWhereSchema";
@@ -12,7 +12,8 @@ export const TransactionEntryQuerySchema = z
 		sort: TransactionEntrySortSchema.array().optional(),
 	})
 	.strip()
-	.openapi("TransactionEntryQuery", {
+	.meta({
+		id: "TransactionEntryQuery",
 		description: "Query object for transaction entry collection",
 	});
 

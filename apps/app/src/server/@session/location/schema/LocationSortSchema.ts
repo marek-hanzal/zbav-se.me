@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { OrderEnumSchema } from "~/common/schema/OrderEnumSchema";
+import { OrderEnumSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const LocationSortSchema = z
 	.looseObject({
@@ -10,13 +10,15 @@ export const LocationSortSchema = z
 				"country",
 				"address",
 			])
-			.openapi("LocationSortField", {
+			.meta({
+				id: "LocationSortField",
 				description: "Field for location sort",
 			}),
 		order: OrderEnumSchema,
 	})
 	.strip()
-	.openapi("LocationSort", {
+	.meta({
+		id: "LocationSort",
 		description: "Data for location sort",
 	});
 

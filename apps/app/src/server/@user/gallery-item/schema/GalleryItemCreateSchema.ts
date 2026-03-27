@@ -1,19 +1,20 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const GalleryItemCreateSchema = z
 	.looseObject({
-		galleryId: z.string().openapi({
+		galleryId: z.string().meta({
 			description: "ID of the gallery this item belongs to",
 		}),
-		uploadId: z.string().openapi({
+		uploadId: z.string().meta({
 			description: "ID of the upload this image belongs to",
 		}),
-		sort: z.number().openapi({
+		sort: z.number().meta({
 			description: "Sort order of the image in the gallery",
 		}),
 	})
 	.strip()
-	.openapi("GalleryItemCreate", {
+	.meta({
+		id: "GalleryItemCreate",
 		description: "Data for creating a new gallery item",
 	});
 

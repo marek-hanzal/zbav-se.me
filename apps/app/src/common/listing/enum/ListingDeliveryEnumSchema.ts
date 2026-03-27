@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const ListingDeliveryEnumSchema = z
 	.enum([
@@ -7,7 +7,8 @@ export const ListingDeliveryEnumSchema = z
 		"package",
 		"other",
 	])
-	.openapi("ListingDeliveryEnum", {
+	.meta({
+		id: "ListingDeliveryEnum",
 		description: "Delivery method for the listing",
 	});
 

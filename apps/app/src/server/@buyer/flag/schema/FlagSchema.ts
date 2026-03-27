@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { FlagTableSchema } from "~/server/database/@table/FlagTableSchema";
 
 export const FlagSchema = z
@@ -10,7 +10,8 @@ export const FlagSchema = z
 		createdAt: true,
 	})
 	.strip()
-	.openapi("Flag", {
+	.meta({
+		id: "Flag",
 		description: "Flag data",
 	});
 

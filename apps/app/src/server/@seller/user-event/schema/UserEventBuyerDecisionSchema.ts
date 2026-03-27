@@ -1,26 +1,27 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const UserEventBuyerDecisionSchema = z
 	.looseObject({
-		total: z.number().openapi({
+		total: z.number().meta({
 			description: "Total number of samples (transactions)",
 			example: 0,
 		}),
-		decisions: z.number().openapi({
+		decisions: z.number().meta({
 			description: "Total number of decisions (success, closed)",
 			example: 0,
 		}),
-		terminal: z.number().openapi({
+		terminal: z.number().meta({
 			description: "Total number of terminal decisions (usually from the other side)",
 			example: 0,
 		}),
-		percent: z.number().openapi({
+		percent: z.number().meta({
 			description: "Percentage of closed transactions (closed / total)",
 			example: 0,
 		}),
 	})
 	.strip()
-	.openapi("UserEventBuyerDecision", {
+	.meta({
+		id: "UserEventBuyerDecision",
 		description: "This metric describes if the user is used to close/success transactions",
 	});
 

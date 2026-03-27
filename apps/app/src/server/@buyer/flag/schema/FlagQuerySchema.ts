@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { FlagFilterSchema } from "~/server/@buyer/flag/schema/FlagFilterSchema";
 import { FlagSortSchema } from "~/server/@buyer/flag/schema/FlagSortSchema";
 import { FlagWhereSchema } from "~/server/@buyer/flag/schema/FlagWhereSchema";
@@ -14,7 +14,8 @@ export const FlagQuerySchema = z
 		sort: FlagSortSchema.array().optional(),
 	})
 	.strip()
-	.openapi("FlagQuery", {
+	.meta({
+		id: "FlagQuery",
 		description: "Query object for flag collection",
 	});
 

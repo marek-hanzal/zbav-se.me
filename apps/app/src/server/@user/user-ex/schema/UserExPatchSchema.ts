@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
 
 export const UserExPatchSchema = z
@@ -13,12 +13,13 @@ export const UserExPatchSchema = z
 			})
 			.partial()
 			.strip()
-			.openapi({
+			.meta({
 				description: "Fields to update (all optional)",
 			}),
 	})
 	.strip()
-	.openapi("UserExPatch", {
+	.meta({
+		id: "UserExPatch",
 		description: "Data for patching a user ex",
 	});
 

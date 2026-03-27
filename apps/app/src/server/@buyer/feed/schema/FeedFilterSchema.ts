@@ -1,19 +1,20 @@
-import { z } from "@hono/zod-openapi";
+import { FilterSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { FeedTypeEnumSchema } from "~/common/feed/enum/FeedTypeEnumSchema";
-import { DefaultFilterSchema } from "~/common/schema/DefaultFilterSchema";
 
 export const FeedFilterSchema = z
 	.looseObject({
-		...DefaultFilterSchema.shape,
-		userId: z.string().optional().openapi({
+		...FilterSchema.shape,
+		userId: z.string().optional().meta({
 			description: "Exact user id",
 		}),
-		type: FeedTypeEnumSchema.optional().openapi({
+		type: FeedTypeEnumSchema.optional().meta({
 			description: "Exact feed type",
 		}),
 	})
 	.strip()
-	.openapi("FeedFilter", {
+	.meta({
+		id: "FeedFilter",
 		description: "Filter object for feed collection",
 	});
 

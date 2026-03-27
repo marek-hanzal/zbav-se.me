@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { UploadFilterSchema } from "~/server/@user/upload/schema/UploadFilterSchema";
 
 export const UploadWhereSchema = z
@@ -6,7 +6,8 @@ export const UploadWhereSchema = z
 		...UploadFilterSchema.shape,
 	})
 	.strip()
-	.openapi("UploadWhere", {
+	.meta({
+		id: "UploadWhere",
 		description: "App-based filters",
 	});
 

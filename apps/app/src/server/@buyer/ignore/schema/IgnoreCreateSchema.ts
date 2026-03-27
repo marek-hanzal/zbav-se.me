@@ -1,13 +1,14 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const IgnoreCreateSchema = z
 	.looseObject({
-		listingId: z.string().openapi({
+		listingId: z.string().meta({
 			description: "ID of the listing to ignore",
 		}),
 	})
 	.strip()
-	.openapi("IgnoreCreate", {
+	.meta({
+		id: "IgnoreCreate",
 		description: "Data for creating an ignore entry",
 	});
 

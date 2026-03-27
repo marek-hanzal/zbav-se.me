@@ -1,17 +1,21 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const GalleryTableSchema = z
 	.looseObject({
-		id: z.string().openapi({
+		id: z.string().meta({
 			description: "ID of the gallery",
 		}),
-		userId: z.string().openapi({
+		userId: z.string().meta({
 			description: "ID of the user who owns the gallery",
 		}),
-		createdAt: z.coerce.date().openapi({
+		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",
 			type: "string",
 		}),
+	})
+	.meta({
+		id: "GalleryTable",
+		description: "Database row for a gallery.",
 	})
 	.strip();
 

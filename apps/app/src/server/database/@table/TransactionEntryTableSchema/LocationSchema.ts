@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionEntryKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
 import { EntrySchema } from "./EntrySchema";
 
@@ -10,13 +10,17 @@ export const LocationSchema = z
 		]),
 		payload: z
 			.looseObject({
-				locationId: z.string().openapi({
+				locationId: z.string().meta({
 					description: "Location identifier linked to this entry",
 				}),
 			})
 			.strip(),
 	})
-	.strip();
+	.strip()
+	.meta({
+		id: "TransactionEntryLocation",
+		description: "Transaction entry location payload",
+	});
 
 export type LocationSchema = typeof LocationSchema;
 

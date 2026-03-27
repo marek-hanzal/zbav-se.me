@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { UploadFilterSchema } from "~/server/@user/upload/schema/UploadFilterSchema";
 import { UploadSortSchema } from "~/server/@user/upload/schema/UploadSortSchema";
 import { UploadWhereSchema } from "~/server/@user/upload/schema/UploadWhereSchema";
@@ -12,7 +12,8 @@ export const UploadQuerySchema = z
 		sort: UploadSortSchema.array().optional(),
 	})
 	.strip()
-	.openapi("UploadQuery", {
+	.meta({
+		id: "UploadQuery",
 		description: "Data for uploading a file",
 	});
 

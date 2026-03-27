@@ -1,12 +1,13 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const ThumbEnumSchema = z
 	.enum([
 		"like",
 		"dislike",
 	])
-	.openapi("ThumbEnum", {
-		description: "Type of thumb",
+	.meta({
+		id: "ThumbEnum",
+		description: "Type of thumb reaction",
 	});
 
 export type ThumbEnumSchema = typeof ThumbEnumSchema;

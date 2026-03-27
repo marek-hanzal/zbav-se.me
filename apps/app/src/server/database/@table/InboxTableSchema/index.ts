@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { BuyerMessageSchema } from "./BuyerMessageSchema";
 import { FavouriteSchema } from "./FavouriteSchema";
 import { FlagSchema } from "./FlagSchema";
@@ -12,20 +12,25 @@ import { UnflagSchema } from "./UnflagSchema";
 import { UnignoreSchema } from "./UnignoreSchema";
 import { UnknownSchema } from "./UnknownSchema";
 
-export const InboxTableSchema = z.discriminatedUnion("type", [
-	BuyerMessageSchema,
-	SellerMessageSchema,
-	TransactionSchema,
-	SystemSchema,
-	UnknownSchema,
-	ThumbSchema,
-	FavouriteSchema,
-	UnfavouriteSchema,
-	FlagSchema,
-	UnflagSchema,
-	IgnoreSchema,
-	UnignoreSchema,
-]);
+export const InboxTableSchema = z
+	.discriminatedUnion("type", [
+		BuyerMessageSchema,
+		SellerMessageSchema,
+		TransactionSchema,
+		SystemSchema,
+		UnknownSchema,
+		ThumbSchema,
+		FavouriteSchema,
+		UnfavouriteSchema,
+		FlagSchema,
+		UnflagSchema,
+		IgnoreSchema,
+		UnignoreSchema,
+	])
+	.meta({
+		id: "InboxTable",
+		description: "Database row variants for inbox entries.",
+	});
 
 export type InboxTableSchema = typeof InboxTableSchema;
 

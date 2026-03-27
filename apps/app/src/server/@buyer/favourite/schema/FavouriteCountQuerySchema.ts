@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { FavouriteQuerySchema } from "~/server/@buyer/favourite/schema/FavouriteQuerySchema";
 
 export const FavouriteCountQuerySchema = z
@@ -9,7 +9,8 @@ export const FavouriteCountQuerySchema = z
 		}).shape,
 	})
 	.strip()
-	.openapi("FavouriteCountQuery", {
+	.meta({
+		id: "FavouriteCountQuery",
 		description: "Query object for favourite count",
 	});
 

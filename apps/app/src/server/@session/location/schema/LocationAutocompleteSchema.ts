@@ -1,16 +1,17 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const LocationAutocompleteSchema = z
 	.looseObject({
-		text: z.string().openapi({
+		text: z.string().meta({
 			description: "The search text for location autocomplete",
 		}),
-		lang: z.string().min(2).max(8).openapi({
+		lang: z.string().min(2).max(8).meta({
 			description: "The language code for the location search",
 		}),
 	})
 	.strip()
-	.openapi("LocationAutocomplete", {
+	.meta({
+		id: "LocationAutocomplete",
 		description: "Data for location autocomplete",
 	});
 

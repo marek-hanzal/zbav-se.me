@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { InboxFilterSchema } from "~/server/@user/inbox/schema/InboxFilterSchema";
 import { InboxSortSchema } from "~/server/@user/inbox/schema/InboxSortSchema";
 import { InboxWhereSchema } from "~/server/@user/inbox/schema/InboxWhereSchema";
@@ -12,7 +12,8 @@ export const InboxQuerySchema = z
 		sort: InboxSortSchema.array().optional(),
 	})
 	.strip()
-	.openapi("InboxQuery", {
+	.meta({
+		id: "InboxQuery",
 		description: "Query object for inbox collection",
 	});
 

@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { OrderEnumSchema } from "~/common/schema/OrderEnumSchema";
+import { OrderEnumSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const IgnoreSortSchema = z
 	.looseObject({
@@ -7,13 +7,15 @@ export const IgnoreSortSchema = z
 			.enum([
 				"createdAt",
 			])
-			.openapi("IgnoreSortField", {
+			.meta({
+				id: "IgnoreSortField",
 				description: "Field of the ignore sort",
 			}),
 		order: OrderEnumSchema,
 	})
 	.strip()
-	.openapi("IgnoreSort", {
+	.meta({
+		id: "IgnoreSort",
 		description: "Sort object for ignore collection",
 	});
 

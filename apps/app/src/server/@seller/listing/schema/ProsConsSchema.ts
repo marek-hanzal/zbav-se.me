@@ -1,9 +1,10 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const ProsConsSchema = z
 	.array(z.string().max(72))
 	.max(5)
-	.openapi("ProsCons", {
+	.meta({
+		id: "ProsCons",
 		type: "array",
 		items: {
 			type: "string",

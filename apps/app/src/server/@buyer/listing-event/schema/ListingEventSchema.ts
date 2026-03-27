@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { ListingEventTableSchema } from "~/server/database/@table/ListingEventTableSchema";
 
 export const ListingEventSchema = z
@@ -6,7 +6,8 @@ export const ListingEventSchema = z
 		...ListingEventTableSchema.shape,
 	})
 	.strip()
-	.openapi("ListingEvent", {
+	.meta({
+		id: "ListingEvent",
 		description: "Listing event data",
 	});
 

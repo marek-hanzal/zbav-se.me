@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { GalleryItemFilterSchema } from "~/server/@user/gallery-item/schema/GalleryItemFilterSchema";
 
 export const GalleryItemWhereSchema = z
@@ -6,7 +6,8 @@ export const GalleryItemWhereSchema = z
 		...GalleryItemFilterSchema.shape,
 	})
 	.strip()
-	.openapi("GalleryItemWhere", {
+	.meta({
+		id: "GalleryItemWhere",
 		description: "App-based filters",
 	});
 

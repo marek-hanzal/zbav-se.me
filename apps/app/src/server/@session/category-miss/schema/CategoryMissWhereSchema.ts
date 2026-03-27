@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { CategoryMissFilterSchema } from "~/server/@session/category-miss/schema/CategoryMissFilterSchema";
 
 export const CategoryMissWhereSchema = z
@@ -6,7 +6,8 @@ export const CategoryMissWhereSchema = z
 		...CategoryMissFilterSchema.shape,
 	})
 	.strip()
-	.openapi("CategoryMissWhere", {
+	.meta({
+		id: "CategoryMissWhere",
 		description: "App-based filters",
 	});
 

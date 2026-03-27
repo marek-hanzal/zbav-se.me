@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { FavouriteFilterSchema } from "~/server/@buyer/favourite/schema/FavouriteFilterSchema";
 import { FavouriteSortSchema } from "~/server/@buyer/favourite/schema/FavouriteSortSchema";
 import { FavouriteWhereSchema } from "~/server/@buyer/favourite/schema/FavouriteWhereSchema";
@@ -12,7 +12,8 @@ export const FavouriteQuerySchema = z
 		sort: FavouriteSortSchema.array().optional(),
 	})
 	.strip()
-	.openapi("FavouriteQuery", {
+	.meta({
+		id: "FavouriteQuery",
 		description: "Query object for favourite collection",
 	});
 

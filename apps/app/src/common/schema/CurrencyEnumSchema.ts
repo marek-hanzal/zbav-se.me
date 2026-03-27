@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const CurrencyEnumSchema = z
 	.enum([
@@ -10,7 +10,8 @@ export const CurrencyEnumSchema = z
 		"HUF",
 		"CHF",
 	])
-	.openapi("CurrencyEnum", {
+	.meta({
+		id: "CurrencyEnum",
 		description: "List of available currencies",
 	});
 

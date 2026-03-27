@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
-import { zodGuardFx } from "@use-pico/common/schema";
+import { CountSchema, zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { CountSchema } from "~/common/schema/CountSchema";
 import { transactionListingCountFx } from "~/server/@seller/transaction-listing/fx/transactionListingCountFx";
 import { TransactionListingCountQuerySchema } from "~/server/@seller/transaction-listing/schema/TransactionListingCountQuerySchema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";

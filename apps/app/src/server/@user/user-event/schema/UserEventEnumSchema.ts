@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const UserEventEnumSchema = z
 	.enum([
@@ -14,7 +14,8 @@ export const UserEventEnumSchema = z
 		"transaction.expired",
 		"transaction.resolved",
 	])
-	.openapi("UserEventEnum", {
+	.meta({
+		id: "UserEventEnum",
 		description: "Type of user event",
 	});
 

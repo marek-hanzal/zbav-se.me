@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { DraftFilterSchema } from "~/server/@seller/draft/schema/DraftFilterSchema";
 
 export const DraftWhereSchema = z
@@ -6,7 +6,8 @@ export const DraftWhereSchema = z
 		...DraftFilterSchema.shape,
 	})
 	.strip()
-	.openapi("DraftWhere", {
+	.meta({
+		id: "DraftWhere",
 		description: "App-based filters",
 	});
 

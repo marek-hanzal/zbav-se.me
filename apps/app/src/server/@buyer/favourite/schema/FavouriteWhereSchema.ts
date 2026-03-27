@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { FavouriteFilterSchema } from "~/server/@buyer/favourite/schema/FavouriteFilterSchema";
 
 export const FavouriteWhereSchema = z
@@ -6,7 +6,8 @@ export const FavouriteWhereSchema = z
 		...FavouriteFilterSchema.shape,
 	})
 	.strip()
-	.openapi("FavouriteWhere", {
+	.meta({
+		id: "FavouriteWhere",
 		description: "App-based filters",
 	});
 

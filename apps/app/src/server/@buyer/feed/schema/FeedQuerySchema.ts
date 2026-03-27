@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { FeedFilterSchema } from "~/server/@buyer/feed/schema/FeedFilterSchema";
 import { FeedSortSchema } from "~/server/@buyer/feed/schema/FeedSortSchema";
 import { FeedWhereSchema } from "~/server/@buyer/feed/schema/FeedWhereSchema";
@@ -12,7 +12,8 @@ export const FeedQuerySchema = z
 		sort: FeedSortSchema.array().optional(),
 	})
 	.strip()
-	.openapi("FeedQuery", {
+	.meta({
+		id: "FeedQuery",
 		description: "Query object for feed collection",
 	});
 

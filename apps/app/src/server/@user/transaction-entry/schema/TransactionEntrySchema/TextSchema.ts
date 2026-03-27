@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionEntryDirectionEnumSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryDirectionEnumSchema";
 import { TextSchema as BaseTextSchema } from "~/server/database/@table/TransactionEntryTableSchema/TextSchema";
 
@@ -8,7 +8,8 @@ export const TransactionEntryText = z
 		direction: TransactionEntryDirectionEnumSchema,
 	})
 	.strip()
-	.openapi("TransactionEntryText", {
+	.meta({
+		id: "TransactionEntryText",
 		description: "Transaction text entry with user-authored message payload",
 	});
 

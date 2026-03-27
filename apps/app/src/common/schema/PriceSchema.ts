@@ -1,10 +1,11 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const PriceSchema = ({
-	type = "Price",
+	id = "Price",
 	description = "Generic price, for filters, items, whatever.",
 }: PriceSchema.Props) =>
-	z.number().gte(0).openapi(type, {
+	z.number().gte(0).meta({
+		id,
 		description,
 	});
 
@@ -12,7 +13,7 @@ export type PriceSchema = ReturnType<typeof PriceSchema>;
 
 export namespace PriceSchema {
 	export interface Props {
-		type?: string;
+		id?: string;
 		description?: string;
 	}
 

@@ -1,18 +1,19 @@
-import { z } from "@hono/zod-openapi";
-import { DefaultFilterSchema } from "~/common/schema/DefaultFilterSchema";
+import { FilterSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const FavouriteFilterSchema = z
 	.looseObject({
-		...DefaultFilterSchema.shape,
-		userId: z.string().optional().openapi({
+		...FilterSchema.shape,
+		userId: z.string().optional().meta({
 			description: "This filter matches the exact userId",
 		}),
-		listingId: z.string().optional().openapi({
+		listingId: z.string().optional().meta({
 			description: "This filter matches the exact listingId",
 		}),
 	})
 	.strip()
-	.openapi("FavouriteFilter", {
+	.meta({
+		id: "FavouriteFilter",
 		description: "Filter object for favourite collection",
 	});
 

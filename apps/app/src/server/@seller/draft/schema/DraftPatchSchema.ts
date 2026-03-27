@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { DraftQuerySchema } from "~/server/@seller/draft/schema/DraftQuerySchema";
 import { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
 
@@ -17,13 +17,15 @@ export const DraftPatchSchema = z
 			})
 			.partial()
 			.strip()
-			.openapi("DraftPatchData", {
+			.meta({
+				id: "DraftPatchData",
 				description: "Fields to update (all optional)",
 			}),
 		query: DraftQuerySchema,
 	})
 	.strip()
-	.openapi("DraftPatch", {
+	.meta({
+		id: "DraftPatch",
 		description: "Data for updating an existing draft",
 	});
 

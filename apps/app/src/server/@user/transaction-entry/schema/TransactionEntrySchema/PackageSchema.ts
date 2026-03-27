@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionEntryDirectionEnumSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryDirectionEnumSchema";
 import { PackageSchema as BasePackageSchema } from "~/server/database/@table/TransactionEntryTableSchema/PackageSchema";
 
@@ -8,7 +8,8 @@ export const TransactionEntryPackage = z
 		direction: TransactionEntryDirectionEnumSchema,
 	})
 	.strip()
-	.openapi("TransactionEntryPackage", {
+	.meta({
+		id: "TransactionEntryPackage",
 		description: "Transaction package entry with shipment tracking payload",
 	});
 

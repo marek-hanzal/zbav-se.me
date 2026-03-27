@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { OrderEnumSchema } from "~/common/schema/OrderEnumSchema";
+import { OrderEnumSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const UploadSortSchema = z
 	.looseObject({
@@ -7,13 +7,15 @@ export const UploadSortSchema = z
 			.enum([
 				"createdAt",
 			])
-			.openapi("UploadSortField", {
+			.meta({
+				id: "UploadSortField",
 				description: "Field for uploading a file",
 			}),
 		order: OrderEnumSchema,
 	})
 	.strip()
-	.openapi("UploadSort", {
+	.meta({
+		id: "UploadSort",
 		description: "Data for uploading a file",
 	});
 

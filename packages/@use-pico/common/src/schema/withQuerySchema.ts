@@ -1,7 +1,7 @@
 import z from "zod";
 import { CursorSchema } from "./CursorSchema";
 import type { FilterSchema } from "./FilterSchema";
-import { OrderSchema } from "./OrderSchema";
+import { OrderEnumSchema } from "./OrderEnumSchema";
 
 export namespace withQuerySchema {
 	export interface Props<TFilterSchema extends FilterSchema, TSort extends string> {
@@ -92,7 +92,7 @@ export const withQuerySchema = <TFilterSchema extends FilterSchema, TSort extend
 			z.array(
 				z.object({
 					value: sort.length > 0 ? z.enum(sort) : z.never(),
-					sort: OrderSchema,
+					sort: OrderEnumSchema,
 				}),
 			),
 		),

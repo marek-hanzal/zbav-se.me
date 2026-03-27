@@ -1,11 +1,12 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const UserSideEnumSchema = z
 	.enum([
 		"seller",
 		"buyer",
 	])
-	.openapi("UserSideEnum", {
+	.meta({
+		id: "UserSideEnum",
 		description: "Side of the user",
 	});
 

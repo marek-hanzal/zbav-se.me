@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { IgnoreFilterSchema } from "~/server/@buyer/ignore/schema/IgnoreFilterSchema";
 
 export const IgnoreWhereSchema = z
@@ -6,7 +6,8 @@ export const IgnoreWhereSchema = z
 		...IgnoreFilterSchema.shape,
 	})
 	.strip()
-	.openapi("IgnoreWhere", {
+	.meta({
+		id: "IgnoreWhere",
 		description: "App-based filters",
 	});
 

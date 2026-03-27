@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const NoticeTypeEnumSchema = z
 	.enum([
@@ -6,7 +6,8 @@ export const NoticeTypeEnumSchema = z
 		"warning",
 		"error",
 	])
-	.openapi("NoticeTypeEnum", {
+	.meta({
+		id: "NoticeTypeEnum",
 		description: "Type of notice",
 	});
 

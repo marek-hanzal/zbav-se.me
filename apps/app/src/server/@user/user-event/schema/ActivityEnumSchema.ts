@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const ActivityEnumSchema = z
 	.enum([
@@ -6,7 +6,8 @@ export const ActivityEnumSchema = z
 		"medium",
 		"high",
 	])
-	.openapi("ActivityEnum", {
+	.meta({
+		id: "ActivityEnum",
 		description: "Activity bucket (last user-scoped event age: high = recent, low = old)",
 	});
 

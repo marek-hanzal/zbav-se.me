@@ -1,10 +1,12 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const EntrySchema = z
 	.looseObject({
-		transactionId: z.string().openapi({
+		transactionId: z.string().meta({
 			description: "Transaction identifier",
 		}),
 	})
 	.strip()
-	.openapi("TransactionEntryCreateBase");
+	.meta({
+		id: "TransactionEntryCreateBase",
+	});

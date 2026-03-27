@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { ThumbEnumSchema } from "~/server/database/@enum/ThumbEnumSchema";
+import { z } from "zod";
+import { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 import { InboxSchema } from "./InboxSchema";
 
 export const ThumbSchema = z
@@ -8,14 +8,16 @@ export const ThumbSchema = z
 		family: z.literal("reaction"),
 		type: z.literal("thumb"),
 		payload: z.looseObject({
-			listingId: z.string().openapi({
+			listingId: z.string().meta({
 				description: "Listing identifier",
 			}),
 			thumb: ThumbEnumSchema,
 		}),
 	})
 	.strip()
-	.openapi("InboxThumbCreate");
+	.meta({
+		id: "InboxThumbCreate",
+	});
 
 export type ThumbSchema = typeof ThumbSchema;
 

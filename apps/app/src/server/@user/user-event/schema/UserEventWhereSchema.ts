@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { UserEventFilterSchema } from "./UserEventFilterSchema";
 
 export const UserEventWhereSchema = z
@@ -9,7 +9,8 @@ export const UserEventWhereSchema = z
 		userId: true,
 	})
 	.strip()
-	.openapi("UserEventWhere", {
+	.meta({
+		id: "UserEventWhere",
 		description: "App-based filters",
 	});
 

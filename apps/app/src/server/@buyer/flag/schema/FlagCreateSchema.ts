@@ -1,13 +1,14 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const FlagCreateSchema = z
 	.looseObject({
-		listingId: z.string().openapi({
+		listingId: z.string().meta({
 			description: "ID of the listing to flag",
 		}),
 	})
 	.strip()
-	.openapi({
+	.meta({
+		id: "FlagCreate",
 		description: "Flag create schema",
 	});
 

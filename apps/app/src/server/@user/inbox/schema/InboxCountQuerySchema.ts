@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { InboxQuerySchema } from "./InboxQuerySchema";
 
 export const InboxCountQuerySchema = z
@@ -9,7 +9,8 @@ export const InboxCountQuerySchema = z
 		}).shape,
 	})
 	.strip()
-	.openapi("InboxCountQuery", {
+	.meta({
+		id: "InboxCountQuery",
 		description: "Query object for inbox count",
 	});
 

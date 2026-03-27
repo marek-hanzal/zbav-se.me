@@ -3,7 +3,7 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
 import { match } from "ts-pattern";
 import { withTransactionEntryQuery } from "~/client/@user/transaction-entry/withTransactionEntryQuery";
-import type { UserSideEnumSchema } from "~/server/database/@enum/UserSideEnumSchema";
+import type { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
 import { Common } from "./type/Common";
 import { Gallery } from "./type/Gallery";
 import { Location } from "./type/Location";

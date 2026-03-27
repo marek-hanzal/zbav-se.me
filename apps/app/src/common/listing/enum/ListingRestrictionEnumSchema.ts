@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const ListingRestrictionEnumSchema = z
 	.enum([
@@ -8,7 +8,8 @@ export const ListingRestrictionEnumSchema = z
 		"sensitive",
 		"restricted",
 	])
-	.openapi("ListingRestrictionEnum", {
+	.meta({
+		id: "ListingRestrictionEnum",
 		description: "Content restriction level of the listing",
 	});
 

@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { IgnoreQuerySchema } from "~/server/@buyer/ignore/schema/IgnoreQuerySchema";
 
 export const IgnoreCountQuerySchema = z
@@ -9,7 +9,8 @@ export const IgnoreCountQuerySchema = z
 		}).shape,
 	})
 	.strip()
-	.openapi("IgnoreCountQuery", {
+	.meta({
+		id: "IgnoreCountQuery",
 		description: "Query object for ignore count",
 	});
 

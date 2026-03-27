@@ -1,15 +1,16 @@
-import { z } from "@hono/zod-openapi";
-import { DefaultFilterSchema } from "~/common/schema/DefaultFilterSchema";
+import { FilterSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const ListingEventFilterSchema = z
 	.looseObject({
-		...DefaultFilterSchema.shape,
-		listingId: z.string().optional().openapi({
+		...FilterSchema.shape,
+		listingId: z.string().optional().meta({
 			description: "This filter matches the exact listingId",
 		}),
 	})
 	.strip()
-	.openapi("ListingEventFilter", {
+	.meta({
+		id: "ListingEventFilter",
 		description: "Filter object for listing event collection",
 	});
 

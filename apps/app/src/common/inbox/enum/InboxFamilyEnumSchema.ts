@@ -1,11 +1,12 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const InboxFamilyEnumSchema = z
 	.enum([
 		"transaction",
 		"reaction",
 	])
-	.openapi("InboxFamilyEnum", {
+	.meta({
+		id: "InboxFamilyEnum",
 		description: "Inbox family",
 	});
 

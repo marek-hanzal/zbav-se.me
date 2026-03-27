@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { EntrySchema } from "./EntrySchema";
 
 export const PersonalSchema = z
@@ -7,23 +7,25 @@ export const PersonalSchema = z
 		kind: z.literal("personal"),
 		payload: z
 			.looseObject({
-				name: z.string().openapi({
+				name: z.string().meta({
 					description: "Contact name",
 				}),
-				phone: z.string().openapi({
+				phone: z.string().meta({
 					description: "Contact phone",
 				}),
-				email: z.email().openapi({
+				email: z.email().meta({
 					description: "Contact email",
 				}),
-				locationId: z.string().openapi({
+				locationId: z.string().meta({
 					description: "Contact location identifier",
 				}),
 			})
 			.strip(),
 	})
 	.strip()
-	.openapi("TransactionEntryPersonalCreate");
+	.meta({
+		id: "TransactionEntryPersonalCreate",
+	});
 
 export type PersonalSchema = typeof PersonalSchema;
 

@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionEntryFilterSchema } from "./TransactionEntryFilterSchema";
 
 export const TransactionEntryWhereSchema = z
@@ -6,7 +6,8 @@ export const TransactionEntryWhereSchema = z
 		...TransactionEntryFilterSchema.shape,
 	})
 	.strip()
-	.openapi("TransactionEntryWhere", {
+	.meta({
+		id: "TransactionEntryWhere",
 		description: "App-level filters for transaction entry queries",
 	});
 

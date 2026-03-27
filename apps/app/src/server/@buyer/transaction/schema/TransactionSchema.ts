@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
@@ -10,21 +10,21 @@ import { TransactionTableSchema } from "~/server/database/@table/TransactionTabl
 export const TransactionSchema = z
 	.looseObject({
 		...TransactionTableSchema.shape,
-		title: z.string().openapi({
+		title: z.string().meta({
 			description: "Transaction title",
 		}),
 		status: TransactionStatusEnumSchema,
 		//
 		gallery: GallerySchema,
 		//
-		price: z.coerce.number().openapi({
+		price: z.coerce.number().meta({
 			description: "Price of the listing",
 			type: "number",
 		}),
 		priceType: ListingPriceEnumSchema,
 		currency: CurrencyEnumSchema,
 		entry: TransactionEntrySchema,
-		unreadCount: z.coerce.number().int().nonnegative().openapi({
+		unreadCount: z.coerce.number().int().nonnegative().meta({
 			description: "Unread inbox seller-message count for this transaction",
 			type: "number",
 		}),
@@ -35,7 +35,8 @@ export const TransactionSchema = z
 		userId: true,
 	})
 	.strip()
-	.openapi("Transaction", {
+	.meta({
+		id: "Transaction",
 		description: "Transaction data",
 	});
 

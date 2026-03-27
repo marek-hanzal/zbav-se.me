@@ -1,13 +1,14 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const GalleryItemSchema = z
 	.looseObject({
-		id: z.string().openapi({
+		id: z.string().meta({
 			description: "ID of the gallery",
 		}),
 	})
 	.strip()
-	.openapi("GalleryItem", {
+	.meta({
+		id: "GalleryItem",
 		description: "Gallery collection item",
 	});
 

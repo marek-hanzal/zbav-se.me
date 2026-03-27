@@ -8,7 +8,11 @@ export const CountSchema = z
 		isEmpty: z.boolean(),
 		isFilterEmpty: z.boolean(),
 	})
-	.strip();
+	.strip()
+	.meta({
+		id: "Count",
+		description: "Count data",
+	});
 
 export type CountSchema = typeof CountSchema;
 

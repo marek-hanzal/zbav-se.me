@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { FeedQuerySchema } from "~/server/@buyer/feed/schema/FeedQuerySchema";
 import { ListingQuerySchema } from "~/server/@buyer/listing/schema/ListingQuerySchema";
 import { FeedTableSchema } from "~/server/database/@table/FeedTableSchema";
@@ -17,13 +17,14 @@ export const FeedPatchSchema = z
 			})
 			.partial()
 			.strip()
-			.openapi({
+			.meta({
 				description: "Fields to update (all optional)",
 			}),
 		query: FeedQuerySchema,
 	})
 	.strip()
-	.openapi("FeedPatch", {
+	.meta({
+		id: "FeedPatch",
 		description: "Data for updating an existing feed",
 	});
 

@@ -1,16 +1,16 @@
-import type { OrderSchema } from "../schema/OrderSchema";
+import type { OrderEnumSchema } from "../schema/OrderEnumSchema";
 import type { StateType } from "../type/StateType";
 
 export namespace withSort {
 	export interface SortItem {
-		sort?: OrderSchema.Type;
+		sort?: OrderEnumSchema.Type;
 		value: string;
 	}
 
 	export interface Props {
 		state: StateType.State<SortItem[] | null | undefined>;
 		value: string;
-		by?: OrderSchema.Type;
+		by?: OrderEnumSchema.Type;
 	}
 }
 

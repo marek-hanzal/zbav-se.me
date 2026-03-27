@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
@@ -9,14 +9,14 @@ import { ProsConsSchema } from "~/server/@seller/listing/schema/ProsConsSchema";
 
 export const DraftTableSchema = z
 	.looseObject({
-		id: z.string().openapi({
+		id: z.string().meta({
 			description: "ID of the draft",
 		}),
-		userId: z.string().openapi({
+		userId: z.string().meta({
 			description: "ID of the user who created the draft",
 		}),
 		//
-		price: z.coerce.number().nullable().openapi({
+		price: z.coerce.number().nullable().meta({
 			description: "Price of the draft",
 		}),
 		priceType: z
@@ -24,7 +24,7 @@ export const DraftTableSchema = z
 				z.null(),
 				ListingPriceEnumSchema,
 			])
-			.openapi({
+			.meta({
 				description: "Price type of the draft",
 			}),
 		//
@@ -33,7 +33,7 @@ export const DraftTableSchema = z
 				z.null(),
 				CurrencyEnumSchema,
 			])
-			.openapi({
+			.meta({
 				description: "Currency of the draft",
 			}),
 		//
@@ -42,7 +42,7 @@ export const DraftTableSchema = z
 				z.null(),
 				z.number(),
 			])
-			.openapi({
+			.meta({
 				description: "Condition of the item (0-based index)",
 			}),
 		//
@@ -51,7 +51,7 @@ export const DraftTableSchema = z
 				z.null(),
 				z.number(),
 			])
-			.openapi({
+			.meta({
 				description: "Age of the item (0-based index)",
 			}),
 		//
@@ -60,7 +60,7 @@ export const DraftTableSchema = z
 				z.null(),
 				z.array(ListingDeliveryEnumSchema),
 			])
-			.openapi({
+			.meta({
 				description: "Delivery methods for the draft",
 			}),
 		//
@@ -69,7 +69,7 @@ export const DraftTableSchema = z
 				z.null(),
 				ListingWarrantyEnumSchema,
 			])
-			.openapi({
+			.meta({
 				description: "Warranty type for the draft",
 			}),
 		//
@@ -78,7 +78,7 @@ export const DraftTableSchema = z
 				z.null(),
 				ListingRestrictionEnumSchema,
 			])
-			.openapi({
+			.meta({
 				description: "Content restriction level of the draft",
 			}),
 		//
@@ -87,7 +87,7 @@ export const DraftTableSchema = z
 				z.null(),
 				z.string(),
 			])
-			.openapi({
+			.meta({
 				description: "ID of the location",
 			}),
 		categoryId: z
@@ -95,10 +95,10 @@ export const DraftTableSchema = z
 				z.null(),
 				z.string(),
 			])
-			.openapi({
+			.meta({
 				description: "ID of the category",
 			}),
-		galleryId: z.string().openapi({
+		galleryId: z.string().meta({
 			description: "ID of the gallery",
 		}),
 		expiresAt: z
@@ -106,7 +106,7 @@ export const DraftTableSchema = z
 				z.null(),
 				ListingExpireEnumSchema,
 			])
-			.openapi({
+			.meta({
 				description: "Expiration timestamp",
 			}),
 		//
@@ -115,7 +115,7 @@ export const DraftTableSchema = z
 				z.null(),
 				z.string(),
 			])
-			.openapi({
+			.meta({
 				description: "Title of the item",
 			}),
 		//
@@ -124,7 +124,7 @@ export const DraftTableSchema = z
 				z.null(),
 				z.string().max(2048),
 			])
-			.openapi({
+			.meta({
 				description: "Description of the item",
 			}),
 		//
@@ -133,7 +133,7 @@ export const DraftTableSchema = z
 				z.null(),
 				ProsConsSchema,
 			])
-			.openapi({
+			.meta({
 				description: "Pros of the item",
 			}),
 		cons: z
@@ -141,28 +141,32 @@ export const DraftTableSchema = z
 				z.null(),
 				ProsConsSchema,
 			])
-			.openapi({
+			.meta({
 				description: "Cons of the item",
 			}),
 		//
-		createdAt: z.coerce.date().openapi({
+		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",
 			type: "string",
 		}),
-		updatedAt: z.coerce.date().openapi({
+		updatedAt: z.coerce.date().meta({
 			description: "Last update timestamp",
 			type: "string",
 		}),
 		usedAt: z
 			.union([
 				z.null(),
-				z.coerce.date().openapi({
+				z.coerce.date().meta({
 					type: "string",
 				}),
 			])
-			.openapi({
+			.meta({
 				description: "Timestamp when the draft was used to create a listing",
 			}),
+	})
+	.meta({
+		id: "DraftTable",
+		description: "Database row for a draft listing.",
 	})
 	.strip();
 

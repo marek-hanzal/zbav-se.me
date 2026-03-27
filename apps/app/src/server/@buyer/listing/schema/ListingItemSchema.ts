@@ -1,13 +1,14 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const ListingItemSchema = z
 	.looseObject({
-		id: z.string().openapi({
+		id: z.string().meta({
 			description: "ID of the listing",
 		}),
 	})
 	.strip()
-	.openapi("ListingItem", {
+	.meta({
+		id: "ListingItem",
 		description: "Listing collection item",
 	});
 

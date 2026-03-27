@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { FlagFilterSchema } from "~/server/@buyer/flag/schema/FlagFilterSchema";
 
 export const FlagCountWhereSchema = z
@@ -9,7 +9,8 @@ export const FlagCountWhereSchema = z
 		userId: true,
 	})
 	.strip()
-	.openapi("FlagCountWhere", {
+	.meta({
+		id: "FlagCountWhere",
 		description: "App-based filters",
 	});
 

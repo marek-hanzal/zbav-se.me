@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { OrderEnumSchema } from "~/common/schema/OrderEnumSchema";
+import { OrderEnumSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const TransactionSortSchema = z
 	.looseObject({
@@ -11,13 +11,15 @@ export const TransactionSortSchema = z
 				"lastAt",
 				"status",
 			])
-			.openapi("TransactionSortField", {
+			.meta({
+				id: "TransactionSortField",
 				description: "Field of the transaction sort",
 			}),
 		order: OrderEnumSchema,
 	})
 	.strip()
-	.openapi("TransactionSort", {
+	.meta({
+		id: "TransactionSort",
 		description: "Sort object for transaction collection",
 	});
 

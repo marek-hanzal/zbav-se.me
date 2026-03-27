@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
 
 export const LocationSchema = z
@@ -9,7 +9,8 @@ export const LocationSchema = z
 		geo: true,
 	})
 	.strip()
-	.openapi("Location", {
+	.meta({
+		id: "Location",
 		description: "Location data",
 	});
 

@@ -1,18 +1,19 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const GitHubHistorySchema = z
 	.looseObject({
-		date: z.string().openapi({
+		date: z.string().meta({
 			description: "UTC day (YYYY-MM-DD)",
 			example: "2025-12-17",
 		}),
-		count: z.number().int().min(0).openapi({
+		count: z.number().int().min(0).meta({
 			description: "Number of commits on this day",
 			example: 3,
 		}),
 	})
 	.strip()
-	.openapi("GitHubHistory", {
+	.meta({
+		id: "GitHubHistory",
 		description: "GitHub commit history count",
 	});
 

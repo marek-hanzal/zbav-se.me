@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { FeedFilterSchema } from "~/server/@buyer/feed/schema/FeedFilterSchema";
 
 export const FeedWhereSchema = z
@@ -6,7 +6,8 @@ export const FeedWhereSchema = z
 		...FeedFilterSchema.shape,
 	})
 	.strip()
-	.openapi("FeedWhere", {
+	.meta({
+		id: "FeedWhere",
 		description: "App-based filters",
 	});
 

@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const TransactionEntryDirectionEnumSchema = z
 	.enum([
@@ -6,7 +6,8 @@ export const TransactionEntryDirectionEnumSchema = z
 		"out",
 		"system",
 	])
-	.openapi("TransactionEntryDirectionEnum", {
+	.meta({
+		id: "TransactionEntryDirectionEnum",
 		description: "Direction of the transaction entry from the current viewer perspective",
 	});
 

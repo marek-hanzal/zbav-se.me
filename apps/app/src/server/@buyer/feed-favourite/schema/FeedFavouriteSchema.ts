@@ -1,16 +1,17 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { FeedSchema } from "~/server/@buyer/feed/schema/FeedSchema";
 
 export const FeedFavouriteSchema = z
 	.looseObject({
 		...FeedSchema.shape,
-		count: z.coerce.number().openapi({
+		count: z.coerce.number().meta({
 			description: "Number of items in favourites for this feed",
 			type: "number",
 		}),
 	})
 	.strip()
-	.openapi("FeedFavourite", {
+	.meta({
+		id: "FeedFavourite",
 		description: "Feed data from favourites",
 	});
 

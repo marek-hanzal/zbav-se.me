@@ -1,12 +1,17 @@
-import { z } from "@hono/zod-openapi";
 import { cac } from "cac";
 import { Effect } from "effect";
+import { z } from "zod";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 
-export const SeedArgsSchema = z.object({
-	count: z.coerce.number().int().positive(),
-	user: z.email(),
-});
+export const SeedArgsSchema = z
+	.object({
+		count: z.coerce.number().int().positive(),
+		user: z.email(),
+	})
+	.meta({
+		id: "SeedArgs",
+		description: "CLI arguments for seed commands.",
+	});
 
 export type SeedArgsSchema = typeof SeedArgsSchema;
 

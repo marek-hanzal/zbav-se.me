@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { UserEventSellerActivitySchema } from "~/server/@buyer/user-event/schema/UserEventSellerActivitySchema";
 import { UserEventSellerExpiredSchema } from "~/server/@buyer/user-event/schema/UserEventSellerExpiredSchema";
 import { UserEventSellerLoadSchema } from "~/server/@buyer/user-event/schema/UserEventSellerLoadSchema";
@@ -18,7 +18,8 @@ export const UserEventSellerSchema = z
 		score: UserEventSellerScoreSchema,
 	})
 	.strip()
-	.openapi("UserEventSeller", {
+	.meta({
+		id: "UserEventSeller",
 		description: "Seller info for the user event",
 	});
 

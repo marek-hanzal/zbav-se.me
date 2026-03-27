@@ -1,6 +1,7 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
-export const GalleryCreateSchema = z.record(z.string(), z.any()).openapi("GalleryCreate", {
+export const GalleryCreateSchema = z.record(z.string(), z.any()).meta({
+	id: "GalleryCreate",
 	description: "Data for creating a new gallery",
 });
 

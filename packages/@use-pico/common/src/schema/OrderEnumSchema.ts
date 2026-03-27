@@ -1,12 +1,13 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const OrderEnumSchema = z
 	.enum([
 		"asc",
 		"desc",
 	])
-	.openapi("OrderEnum", {
-		description: "Order",
+	.meta({
+		id: "OrderEnum",
+		description: "Sort order",
 	});
 
 export type OrderEnumSchema = typeof OrderEnumSchema;

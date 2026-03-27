@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { OrderEnumSchema } from "~/common/schema/OrderEnumSchema";
+import { OrderEnumSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const ListingEventSortSchema = z
 	.looseObject({
@@ -7,13 +7,15 @@ export const ListingEventSortSchema = z
 			.enum([
 				"createdAt",
 			])
-			.openapi("ListingEventSortField", {
+			.meta({
+				id: "ListingEventSortField",
 				description: "Field of the listing event sort",
 			}),
 		order: OrderEnumSchema,
 	})
 	.strip()
-	.openapi("ListingEventSort", {
+	.meta({
+		id: "ListingEventSort",
 		description: "Sort object for listing event collection",
 	});
 

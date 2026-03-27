@@ -1,5 +1,5 @@
+import type { NoticeSchema } from "@use-pico/common/schema";
 import { type ZodError, z } from "zod";
-import type { NoticeSchema } from "~/common/schema/NoticeSchema";
 
 export const noticeZodError = (zod: ZodError): NoticeSchema.Type => {
 	return {

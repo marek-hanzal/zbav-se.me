@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { OrderEnumSchema } from "~/common/schema/OrderEnumSchema";
+import { OrderEnumSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const FavouriteSortSchema = z
 	.looseObject({
@@ -7,13 +7,15 @@ export const FavouriteSortSchema = z
 			.enum([
 				"createdAt",
 			])
-			.openapi("FavouriteSortField", {
+			.meta({
+				id: "FavouriteSortField",
 				description: "Field of the favourite sort",
 			}),
 		order: OrderEnumSchema,
 	})
 	.strip()
-	.openapi("FavouriteSort", {
+	.meta({
+		id: "FavouriteSort",
 		description: "Sort object for favourite collection",
 	});
 

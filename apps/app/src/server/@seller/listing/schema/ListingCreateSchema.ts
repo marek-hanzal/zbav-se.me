@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
@@ -8,19 +8,17 @@ import { ProsConsSchema } from "~/server/@seller/listing/schema/ProsConsSchema";
 
 export const ListingCreateSchema = z
 	.looseObject({
-		price: z.coerce.number().openapi({
+		price: z.coerce.number().meta({
 			description: "Price of the listing",
 			type: "number",
 		}),
-		priceType: ListingPriceEnumSchema.openapi({
-			description: "Price type of the listing",
-		}),
+		priceType: ListingPriceEnumSchema,
 		condition: z
 			.union([
 				z.null(),
 				z.number(),
 			])
-			.openapi({
+			.meta({
 				description: "Condition of the item (0-based index)",
 			}),
 		age: z
@@ -28,7 +26,7 @@ export const ListingCreateSchema = z
 				z.null(),
 				z.number(),
 			])
-			.openapi({
+			.meta({
 				description: "Age of the item (0-based index)",
 			}),
 		delivery: z
@@ -37,7 +35,7 @@ export const ListingCreateSchema = z
 				z.array(ListingDeliveryEnumSchema),
 			])
 			.optional()
-			.openapi({
+			.meta({
 				description: "Delivery methods for the listing",
 			}),
 		warranty: z
@@ -46,23 +44,21 @@ export const ListingCreateSchema = z
 				ListingWarrantyEnumSchema,
 			])
 			.optional()
-			.openapi({
+			.meta({
 				description: "Warranty type for the listing",
 			}),
-		restriction: ListingRestrictionEnumSchema.openapi({
-			description: "Content restriction level of the listing (required)",
-		}),
-		draftId: z.string().optional().openapi({
+		restriction: ListingRestrictionEnumSchema,
+		draftId: z.string().optional().meta({
 			description: "ID of the draft",
 		}),
-		locationId: z.string().openapi({
+		locationId: z.string().meta({
 			description: "ID of the location",
 		}),
-		categoryId: z.string().openapi({
+		categoryId: z.string().meta({
 			description: "ID of the category",
 		}),
 		expiresAt: ListingExpireEnumSchema,
-		title: z.string().min(5).max(72).openapi({
+		title: z.string().min(5).max(72).meta({
 			description: "Title of the item",
 		}),
 		description: z
@@ -71,7 +67,7 @@ export const ListingCreateSchema = z
 				z.string().max(2048),
 			])
 			.optional()
-			.openapi({
+			.meta({
 				description: "Description of the item",
 			}),
 		pros: z
@@ -80,7 +76,7 @@ export const ListingCreateSchema = z
 				ProsConsSchema,
 			])
 			.optional()
-			.openapi({
+			.meta({
 				description: "Pros of the item",
 			}),
 		cons: z
@@ -89,15 +85,16 @@ export const ListingCreateSchema = z
 				ProsConsSchema,
 			])
 			.optional()
-			.openapi({
+			.meta({
 				description: "Cons of the item",
 			}),
-		uploadIds: z.array(z.string()).min(1, "At least one upload is required").openapi({
+		uploadIds: z.array(z.string()).min(1, "At least one upload is required").meta({
 			description: "IDs of the uploads; order of uploads defines order in the gallery",
 		}),
 	})
 	.strip()
-	.openapi("ListingCreate", {
+	.meta({
+		id: "ListingCreate",
 		description: "Data for creating a new listing",
 	});
 

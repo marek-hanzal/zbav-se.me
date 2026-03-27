@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const InboxTypeEnumSchema = z
 	.enum([
@@ -15,7 +15,8 @@ export const InboxTypeEnumSchema = z
 		"ignore",
 		"unignore",
 	])
-	.openapi("InboxTypeEnum", {
+	.meta({
+		id: "InboxTypeEnum",
 		description: "Inbox type",
 	});
 

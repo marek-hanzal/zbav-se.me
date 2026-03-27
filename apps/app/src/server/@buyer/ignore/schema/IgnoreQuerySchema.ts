@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/common/schema/CursorSchema";
+import { CursorSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 import { IgnoreFilterSchema } from "~/server/@buyer/ignore/schema/IgnoreFilterSchema";
 import { IgnoreSortSchema } from "~/server/@buyer/ignore/schema/IgnoreSortSchema";
 import { IgnoreWhereSchema } from "~/server/@buyer/ignore/schema/IgnoreWhereSchema";
@@ -12,7 +12,8 @@ export const IgnoreQuerySchema = z
 		sort: IgnoreSortSchema.array().optional(),
 	})
 	.strip()
-	.openapi("IgnoreQuery", {
+	.meta({
+		id: "IgnoreQuery",
 		description: "Query object for ignore collection",
 	});
 

@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionEntryCommon } from "./CommonSchema";
 import { TransactionEntryGallery } from "./GallerySchema";
 import { TransactionEntryLocation } from "./LocationSchema";
@@ -15,7 +15,8 @@ export const TransactionEntrySchema = z
 		TransactionEntryPersonal,
 		TransactionEntryCommon,
 	])
-	.openapi("TransactionEntry", {
+	.meta({
+		id: "TransactionEntry",
 		description: "Transaction timeline entry",
 	});
 

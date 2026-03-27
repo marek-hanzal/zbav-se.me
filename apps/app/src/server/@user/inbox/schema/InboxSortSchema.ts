@@ -1,5 +1,5 @@
-import { z } from "@hono/zod-openapi";
-import { OrderEnumSchema } from "~/common/schema/OrderEnumSchema";
+import { OrderEnumSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const InboxSortSchema = z
 	.looseObject({
@@ -9,13 +9,15 @@ export const InboxSortSchema = z
 				"archivedAt",
 				"priority",
 			])
-			.openapi("InboxSortField", {
+			.meta({
+				id: "InboxSortField",
 				description: "Sort field for inbox collection",
 			}),
 		order: OrderEnumSchema,
 	})
 	.strip()
-	.openapi("InboxSort", {
+	.meta({
+		id: "InboxSort",
 		description: "Sort object for inbox collection",
 	});
 

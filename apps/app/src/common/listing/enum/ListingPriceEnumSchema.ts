@@ -1,11 +1,12 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const ListingPriceEnumSchema = z
 	.enum([
 		"closed",
 		"open",
 	])
-	.openapi("ListingPriceEnum", {
+	.meta({
+		id: "ListingPriceEnum",
 		description: "Price type of the listing",
 	});
 

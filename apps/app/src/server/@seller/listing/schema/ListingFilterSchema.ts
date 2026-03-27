@@ -1,15 +1,16 @@
-import { z } from "@hono/zod-openapi";
-import { DefaultFilterSchema } from "~/common/schema/DefaultFilterSchema";
+import { FilterSchema } from "@use-pico/common/schema";
+import { z } from "zod";
 
 export const ListingFilterSchema = z
 	.looseObject({
-		...DefaultFilterSchema.shape,
-		userId: z.string().optional().openapi({
+		...FilterSchema.shape,
+		userId: z.string().optional().meta({
 			description: "ID of the user; does not have an effect on API endpoints",
 		}),
 	})
 	.strip()
-	.openapi("ListingFilter", {
+	.meta({
+		id: "ListingFilter",
 		description: "User-land filters",
 	});
 

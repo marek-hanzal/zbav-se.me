@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { InboxSchema } from "./InboxSchema";
 
 export const FavouriteSchema = z
@@ -8,13 +8,17 @@ export const FavouriteSchema = z
 		type: z.literal("favourite"),
 		payload: z
 			.looseObject({
-				listingId: z.string().openapi({
+				listingId: z.string().meta({
 					description: "Related listing identifier",
 				}),
 			})
 			.strip(),
 	})
-	.strip();
+	.strip()
+	.meta({
+		id: "InboxFavourite",
+		description: "Inbox reaction event for favourite",
+	});
 
 export type FavouriteSchema = typeof FavouriteSchema;
 

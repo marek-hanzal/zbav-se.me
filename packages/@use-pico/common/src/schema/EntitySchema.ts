@@ -7,15 +7,21 @@ import { translator } from "../translator/translator";
  * It makes semantically a bit more sense than just say "IdSchema" as when
  * e.g. you use `TEntitySchema extends IdSchema`, it's quite ugly.
  */
-export const EntitySchema = z.object({
-	id: z.string().min(1, {
-		error() {
-			return translator.text(
-				"Missing identity for an Entity (id). I'm sorry, but I cannot provide better message than this :(",
-			);
-		},
-	}),
-});
+export const EntitySchema = z
+	.looseObject({
+		id: z.string().min(1, {
+			error() {
+				return translator.text(
+					"Missing identity for an Entity (id). I'm sorry, but I cannot provide better message than this :(",
+				);
+			},
+		}),
+	})
+	.strip()
+	.meta({
+		id: "Entity",
+		description: "Entity identity object",
+	});
 
 export type EntitySchema = typeof EntitySchema;
 

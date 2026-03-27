@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { ListingQuerySchema } from "~/server/@seller/listing/schema/ListingQuerySchema";
 
 export const ListingCountQuerySchema = z
@@ -9,7 +9,8 @@ export const ListingCountQuerySchema = z
 		}).shape,
 	})
 	.strip()
-	.openapi("ListingCountQuery", {
+	.meta({
+		id: "ListingCountQuery",
 		description: "Query object for listing count",
 	});
 

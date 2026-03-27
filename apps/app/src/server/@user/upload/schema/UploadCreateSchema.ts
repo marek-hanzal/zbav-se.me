@@ -1,13 +1,14 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const UploadCreateSchema = z
 	.looseObject({
-		url: z.url().openapi({
+		url: z.url().meta({
 			description: "Public URL to the uploaded file",
 		}),
 	})
 	.strip()
-	.openapi("UploadCreate", {
+	.meta({
+		id: "UploadCreate",
 		description: "Data for creating a new upload",
 	});
 

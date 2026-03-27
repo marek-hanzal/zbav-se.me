@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionEntryDirectionEnumSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryDirectionEnumSchema";
 import { PersonalSchema as BasePersonalSchema } from "~/server/database/@table/TransactionEntryTableSchema/PersonalSchema";
 
@@ -8,7 +8,8 @@ export const TransactionEntryPersonal = z
 		direction: TransactionEntryDirectionEnumSchema,
 	})
 	.strip()
-	.openapi("TransactionEntryPersonal", {
+	.meta({
+		id: "TransactionEntryPersonal",
 		description: "Transaction personal entry with contact and handoff payload",
 	});
 

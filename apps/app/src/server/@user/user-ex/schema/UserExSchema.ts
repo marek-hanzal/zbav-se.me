@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
 
 export const UserExSchema = z
@@ -9,7 +9,8 @@ export const UserExSchema = z
 		userId: true,
 	})
 	.strip()
-	.openapi("UserEx", {
+	.meta({
+		id: "UserEx",
 		description: "User extended information",
 	});
 

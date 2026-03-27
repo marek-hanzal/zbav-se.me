@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { TransactionEntryKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
 import { EntrySchema } from "./EntrySchema";
 
@@ -10,13 +10,17 @@ export const TextSchema = z
 		]),
 		payload: z
 			.looseObject({
-				text: z.string().openapi({
+				text: z.string().meta({
 					description: "Text entry body",
 				}),
 			})
 			.strip(),
 	})
-	.strip();
+	.strip()
+	.meta({
+		id: "TransactionEntryText",
+		description: "Transaction entry text payload",
+	});
 
 export type TextSchema = typeof TextSchema;
 

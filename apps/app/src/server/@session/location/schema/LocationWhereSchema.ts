@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { LocationFilterSchema } from "~/server/@session/location/schema/LocationFilterSchema";
 
 export const LocationWhereSchema = z
@@ -6,7 +6,8 @@ export const LocationWhereSchema = z
 		...LocationFilterSchema.shape,
 	})
 	.strip()
-	.openapi("LocationWhere", {
+	.meta({
+		id: "LocationWhere",
 		description: "App-based filters",
 	});
 

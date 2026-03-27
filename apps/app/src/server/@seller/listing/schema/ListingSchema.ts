@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 import { CategorySchema } from "~/server/@session/category/schema/CategorySchema";
 import { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/server/@user/gallery/schema/GallerySchema";
@@ -9,7 +9,7 @@ export const ListingSchema = z
 		...ListingTableSchema.shape,
 		location: LocationSchema,
 		category: CategorySchema,
-		gallery: GallerySchema.openapi({
+		gallery: GallerySchema.meta({
 			description: "Listing gallery images",
 		}),
 	})
@@ -18,7 +18,8 @@ export const ListingSchema = z
 		titleVec: true,
 	})
 	.strip()
-	.openapi("Listing", {
+	.meta({
+		id: "Listing",
 		description: "Listing data",
 	});
 

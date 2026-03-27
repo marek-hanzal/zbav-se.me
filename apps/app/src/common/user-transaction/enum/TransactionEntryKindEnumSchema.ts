@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const TransactionEntryKindEnumSchema = z
 	.enum([
@@ -19,7 +19,8 @@ export const TransactionEntryKindEnumSchema = z
 		"status-success",
 		"status-closed",
 	])
-	.openapi("TransactionEntryKindEnum", {
+	.meta({
+		id: "TransactionEntryKindEnum",
 		description: "Type of transaction timeline entry",
 	});
 

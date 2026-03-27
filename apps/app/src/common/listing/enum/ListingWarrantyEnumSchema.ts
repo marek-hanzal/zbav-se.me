@@ -1,4 +1,4 @@
-import { z } from "@hono/zod-openapi";
+import { z } from "zod";
 
 export const ListingWarrantyEnumSchema = z
 	.enum([
@@ -6,7 +6,8 @@ export const ListingWarrantyEnumSchema = z
 		"no-warranty",
 		"custom",
 	])
-	.openapi("ListingWarrantyEnum", {
+	.meta({
+		id: "ListingWarrantyEnum",
 		description: "Warranty type for the listing",
 	});
 
