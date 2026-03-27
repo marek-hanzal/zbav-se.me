@@ -47,7 +47,6 @@ env:
     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
     VERCEL_APP_PROJECT_ID: ${{ vars.VERCEL_APP_PROJECT_ID }}
-    VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
 
     MIGRATION_URL: ${{ vars.VITE_SERVER_API }}/api/public/migration/run
 
@@ -56,23 +55,6 @@ env:
     # -------------------------------
     APP_ENV_KEYS: |
         VITE_APP_ASSETS
-        VITE_ORIGIN
-        VITE_SERVER_API
-
-    # -------------------------------
-    # Server environment variables list (multiline)
-    # -------------------------------
-    SERVER_ENV_KEYS: |
-        SERVER_BETTER_AUTH_SECRET
-        SERVER_CONTENT_CDN
-        SERVER_DATABASE_URL
-        SERVER_GEOAPIFY_TOKEN
-        SERVER_GITHUB
-        SERVER_JWT_SECRET
-        SERVER_S3_API
-        SERVER_S3_BUCKET
-        SERVER_S3_KEY
-        SERVER_S3_SECRET
         VITE_ORIGIN
         VITE_SERVER_API
 
@@ -122,7 +104,6 @@ jobs:
                   check_var VERCEL_ORG_ID
                   check_var VERCEL_TOKEN
                   check_var VERCEL_APP_PROJECT_ID
-                  check_var VERCEL_SERVER_PROJECT_ID
 
                   echo "OK: required variables present."
 
@@ -147,49 +128,6 @@ jobs:
                   KEYS: ${{ env.APP_ENV_KEYS }}
                   TARGET: production
                   VERCEL_PROJECT_ID: ${{ env.VERCEL_APP_PROJECT_ID }}
-              run: |
-                  bun ./@ci/vercel-sync-env.ts
-
-    vercel-env-server:
-        name: "Server: Sync env. variables"
-        runs-on: ubuntu-latest
-        environment: production
-        needs: [validate-common-env]
-        steps:
-            - uses: actions/checkout@v6.0.2
-
-            - name: Setup Node.js
-              uses: actions/setup-node@v6.3.0
-              with:
-                  node-version: "24"
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2.2.0
-
-            - name: Resolve prod DB URL via Neon
-              id: neon
-              uses: neondatabase/create-branch-action@v6.4.0
-              with:
-                  project_id: ${{ env.NEON_PROJECT_ID }}
-                  branch_name: production
-                  database: neondb
-                  role: neondb_owner
-                  api_key: ${{ env.NEON_API_KEY }}
-
-            - name: Upsert server env
-              env:
-                  SERVER_DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
-                  KEYS: ${{ env.SERVER_ENV_KEYS }}
-                  SENSITIVE_KEYS: |
-                      SERVER_BETTER_AUTH_SECRET
-                      SERVER_DATABASE_URL
-                      SERVER_GEOAPIFY_TOKEN
-                      SERVER_GITHUB
-                      SERVER_JWT_SECRET
-                      SERVER_S3_KEY
-                      SERVER_S3_SECRET
-                  TARGET: production
-                  VERCEL_PROJECT_ID: ${{ env.VERCEL_SERVER_PROJECT_ID }}
               run: |
                   bun ./@ci/vercel-sync-env.ts
 
@@ -221,48 +159,11 @@ jobs:
                   path: apps/app/.vercel/output
                   key: app-${{ github.run_id }}
 
-            - name: Cache save (server prebuilt)
-              uses: actions/cache/save@v5.0.3
-              with:
-                  path: apps/server/.vercel/output
-                  key: server-${{ github.run_id }}
-
-    vercel-server:
-        name: Deploy server to Vercel
-        runs-on: ubuntu-latest
-        environment: production
-        needs: [build]
-        steps:
-            - name: Cache restore (server prebuilt)
-              uses: actions/cache/restore@v5.0.3
-              with:
-                  path: apps/server/.vercel/output
-                  key: server-${{ github.run_id }}
-                  fail-on-cache-miss: true
-
-            - name: Setup Node.js
-              uses: actions/setup-node@v6.3.0
-              with:
-                  node-version: "24"
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2.2.0
-
-            - name: Deploy to Vercel (server)
-              working-directory: apps/server
-              env:
-                  VERCEL_PROJECT_ID: ${{ env.VERCEL_SERVER_PROJECT_ID }}
-              run: |
-                  bunx -y vercel@latest deploy \
-                    --prebuilt \
-                    --prod --yes \
-                    --token "$VERCEL_TOKEN"
-
     vercel-app:
         name: Deploy app to Vercel
         runs-on: ubuntu-latest
         environment: production
-        needs: [build, vercel-server]
+        needs: [build]
         steps:
             - name: Cache restore (app prebuilt)
               uses: actions/cache/restore@v5.0.3
@@ -297,7 +198,7 @@ jobs:
         name: Update CDN (app)
         runs-on: ubuntu-latest
         environment: production
-        needs: [build, vercel-server]
+        needs: [build]
         steps:
             - name: Cache restore (app prebuilt)
               uses: actions/cache/restore@v5.0.3
@@ -363,7 +264,7 @@ jobs:
         name: Run migrations
         runs-on: ubuntu-latest
         environment: production
-        needs: [vercel-env-app, vercel-env-server, vercel-server]
+        needs: [vercel-env-app, vercel-app]
         steps:
             - name: Trigger migrations endpoint
               run: |
