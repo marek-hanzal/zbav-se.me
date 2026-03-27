@@ -1,11 +1,9 @@
-import { VisibilityProvider } from "@use-pico/client/context";
-import { useElementVisibility, useLocale, useMergeRefs, useScrollTo } from "@use-pico/client/hook";
+import { useMergeRefs, useScrollTo } from "@use-pico/client/hook";
 import { ChevronLeftIcon, ChevronRightIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import {
 	Container,
 	SpinnerContainer,
-	VisibleContainer,
 	SpinnerContainer as VisibleSpinnerContainer,
 } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -13,6 +11,12 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
 import { type Ref, Suspense, useCallback, useEffect, useRef } from "react";
+import { useLocale } from "@/lib/client/locale";
+import {
+	useElementVisibility,
+	VisibilityProvider,
+	VisibleContainer,
+} from "@/lib/client/visibility";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";

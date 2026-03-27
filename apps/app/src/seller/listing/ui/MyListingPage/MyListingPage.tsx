@@ -1,6 +1,6 @@
-import { useLocale } from "@use-pico/client/hook";
 import { translator } from "@use-pico/common/translator";
 import { type FC, Suspense } from "react";
+import { useLocale } from "@/lib/client/locale";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";

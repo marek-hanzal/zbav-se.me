@@ -1,9 +1,9 @@
-import { useLocale } from "@use-pico/client/hook";
 import { Icon, SpinnerIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { withFallback } from "@use-pico/client/utils";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { translator } from "@use-pico/common/translator";
+import { useLocale } from "@/lib/client/locale";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
 

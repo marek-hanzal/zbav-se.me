@@ -1,9 +1,9 @@
-import { useLocale } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
+import { useLocale } from "@/lib/client/locale";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import { CreateListingButton } from "../button/CreateListingButton";
 import { DeleteButton } from "../button/DeleteButton";

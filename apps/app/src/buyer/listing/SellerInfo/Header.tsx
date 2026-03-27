@@ -1,10 +1,10 @@
-import { useLocale } from "@use-pico/client/hook";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { useLocale } from "@/lib/client/locale";
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
 
 export namespace Header {

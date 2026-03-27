@@ -1,8 +1,8 @@
 import { useNavigate } from "@tanstack/react-router";
-import { useLocale } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
+import { useLocale } from "@/lib/client/locale";
 import { isValid } from "~/common/draft/util/isValid";
 import { uiSaveButton } from "~/common/ui/ui";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";

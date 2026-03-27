@@ -1,8 +1,8 @@
-import type { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { type FC, Suspense, useState } from "react";
+import type { useSelection } from "@/lib/client/selection";
 import { ListContainer } from "./ListContainer";
 
 export namespace CategorySelect {

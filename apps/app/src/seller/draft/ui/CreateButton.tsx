@@ -1,8 +1,8 @@
 import { useNavigate } from "@tanstack/react-router";
-import { useLocale } from "@use-pico/client/hook";
 import { Icon, PlusIcon } from "@use-pico/client/icon";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
+import { useLocale } from "@/lib/client/locale";
 import { ListItem } from "~/common/list-item/ListItem";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 

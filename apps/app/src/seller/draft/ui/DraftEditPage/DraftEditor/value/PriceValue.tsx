@@ -1,8 +1,8 @@
-import { useLocale } from "@use-pico/client/hook";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { useLocale } from "@/lib/client/locale";
 import type { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 
 export namespace PriceValue {

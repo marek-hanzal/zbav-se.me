@@ -1,10 +1,10 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useLocale } from "@use-pico/client/hook";
 import { ChevronRightIcon } from "@use-pico/client/icon";
 import { Button, uiButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
+import { useLocale } from "@/lib/client/locale";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";

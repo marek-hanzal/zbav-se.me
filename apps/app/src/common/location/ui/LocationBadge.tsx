@@ -1,8 +1,8 @@
-import { useLocale } from "@use-pico/client/hook";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { FC } from "react";
+import { useLocale } from "@/lib/client/locale";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 
 export namespace LocationBadge {

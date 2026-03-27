@@ -1,4 +1,3 @@
-import { useLocale } from "@use-pico/client/hook";
 import { MessageIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
@@ -6,6 +5,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
+import { useLocale } from "@/lib/client/locale";
 import { ListItem } from "~/common/list-item/ListItem";
 import { ListItemPending } from "~/common/list-item/ListItemPending";
 import { TypoIcon } from "~/common/ui/typo";

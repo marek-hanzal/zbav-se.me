@@ -1,10 +1,10 @@
-import { useSelection } from "@use-pico/client/hook";
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { useSelection } from "@/lib/client/selection";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import { TitleContainer } from "~/common/ui/container";

@@ -1,9 +1,9 @@
-import type { useSelection } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import type { EntitySchema } from "@use-pico/common/schema";
+import type { useSelection } from "@/lib/client/selection";
 import { uiSelectButton } from "~/common/ui/ui";
 import { withCategoryQuery } from "~/session/category/withCategoryQuery";
 

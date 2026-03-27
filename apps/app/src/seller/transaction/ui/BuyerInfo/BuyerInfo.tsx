@@ -1,10 +1,10 @@
-import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, LabelValue, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
+import { useLocale } from "@/lib/client/locale";
 import { SearchIcon } from "~/common/ui/icon";
 import { withTransactionBuyerInfoQuery } from "../../query/withTransactionBuyerInfoQuery";
 import { Events } from "./Events";

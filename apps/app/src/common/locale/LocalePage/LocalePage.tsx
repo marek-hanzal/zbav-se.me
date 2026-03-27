@@ -1,7 +1,7 @@
-import { LocaleContext } from "@use-pico/client/context";
 import type { TranslationListSchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
 import type { FC, PropsWithChildren } from "react";
+import { LocaleContext } from "@/lib/client/locale";
 
 export namespace LocalePage {
 	export interface Props extends PropsWithChildren {

@@ -1,4 +1,3 @@
-import { useLocale } from "@use-pico/client/hook";
 import { ChevronRightIcon, type Icon, MessageIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
@@ -6,6 +5,7 @@ import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
+import { useLocale } from "@/lib/client/locale";
 import { TypoIcon } from "~/common/ui/typo";
 import { uiMenuButton } from "~/common/ui/ui";
 

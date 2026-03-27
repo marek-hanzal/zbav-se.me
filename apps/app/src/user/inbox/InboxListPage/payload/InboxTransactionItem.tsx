@@ -1,4 +1,3 @@
-import { useLocale } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -6,6 +5,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { useLocale } from "@/lib/client/locale";
 import { ListItem } from "~/common/list-item/ListItem";
 import type { TransactionSchema } from "~/server/database/@table/InboxTableSchema/TransactionSchema";
 import { withInboxQuery } from "~/user/inbox/query/withInboxQuery";

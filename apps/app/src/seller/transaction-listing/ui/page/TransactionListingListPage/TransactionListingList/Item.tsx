@@ -1,4 +1,3 @@
-import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
@@ -8,6 +7,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
+import { useLocale } from "@/lib/client/locale";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { Image } from "~/common/list-item/Image";
 import { ListItem } from "~/common/list-item/ListItem";

@@ -1,4 +1,3 @@
-import { useLocale } from "@use-pico/client/hook";
 import {
 	ChevronRightIcon,
 	Icon,
@@ -13,6 +12,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
+import { useLocale } from "@/lib/client/locale";
 import { TypoIcon } from "~/common/ui/typo";
 import { uiMenuButton } from "~/common/ui/ui";
 import { withInboxQuery } from "~/user/inbox/query/withInboxQuery";

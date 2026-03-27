@@ -1,4 +1,3 @@
-import { useLocale } from "@use-pico/client/hook";
 import { EditIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
@@ -10,6 +9,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
 import { Suspense, useState } from "react";
+import { useLocale } from "@/lib/client/locale";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { ListItem } from "~/common/list-item/ListItem";
 import { ListingCount } from "~/common/listing/ui/ListingCount";

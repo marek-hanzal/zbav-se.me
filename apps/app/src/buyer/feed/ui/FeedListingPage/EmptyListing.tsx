@@ -1,4 +1,3 @@
-import { useLocale } from "@use-pico/client/hook";
 import { ChevronRightIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -7,6 +6,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { useLocale } from "@/lib/client/locale";
 import { FirstIcon } from "~/common/ui/icon";
 
 export namespace EmptyListing {

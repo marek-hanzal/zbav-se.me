@@ -1,6 +1,6 @@
-import { useLocale } from "@use-pico/client/hook";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { FC } from "react";
+import { useLocale } from "@/lib/client/locale";
 import { HomeIcon } from "~/common/ui/icon";
 
 export namespace HomeMenuButton {

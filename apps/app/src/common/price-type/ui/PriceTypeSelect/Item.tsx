@@ -1,9 +1,9 @@
-import type { useSelection } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { FC } from "react";
+import type { useSelection } from "@/lib/client/selection";
 import { uiSelectButton } from "~/common/ui/ui";
 
 export namespace Item {
