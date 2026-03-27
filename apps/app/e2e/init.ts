@@ -1,6 +1,6 @@
 import { withTestabaseFx } from "@use-pico/server/test";
-import { database } from "@zbav-se.me/server/database";
 import { Effect } from "effect";
+import { databaseFx } from "~/server/database/databaseFx";
 
 export default async function globalSetup() {
 	const cleanup = await withTestabaseFx({
@@ -8,7 +8,7 @@ export default async function globalSetup() {
 		name: "zbav-seme-e2e-postgres",
 		port: 55432,
 		template: "e2e",
-		databaseFx: database,
+		databaseFx,
 	}).pipe(Effect.runPromise);
 
 	return async () => {
