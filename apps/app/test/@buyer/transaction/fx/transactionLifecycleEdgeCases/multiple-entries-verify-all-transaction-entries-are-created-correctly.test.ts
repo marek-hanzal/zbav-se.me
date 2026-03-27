@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCloseFx } from "~/@buyer/transaction/fx/transactionCloseFx";
-import { transactionAcceptFx } from "~/@seller/transaction/fx/transactionAcceptFx";
-import { transactionResolveFx } from "~/@seller/transaction/fx/transactionResolveFx";
-import { auth } from "~/auth/auth";
+import { transactionCloseFx } from "~/server/@buyer/transaction/fx/transactionCloseFx";
+import { transactionAcceptFx } from "~/server/@seller/transaction/fx/transactionAcceptFx";
+import { transactionResolveFx } from "~/server/@seller/transaction/fx/transactionResolveFx";
+import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { ignoreToggleFx } from "~/@buyer/ignore/fx/ignoreToggleFx";
-import { auth } from "~/auth/auth";
+import { ignoreToggleFx } from "~/server/@buyer/ignore/fx/ignoreToggleFx";
+import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createListingFx } from "~/test/utils/createListingFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";

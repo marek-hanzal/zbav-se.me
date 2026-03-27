@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { favouriteToggleFx } from "~/@buyer/favourite/fx/favouriteToggleFx";
-import { feedCreateFx } from "~/@buyer/feed/fx/feedCreateFx";
-import { auth } from "~/auth/auth";
+import { favouriteToggleFx } from "~/server/@buyer/favourite/fx/favouriteToggleFx";
+import { feedCreateFx } from "~/server/@buyer/feed/fx/feedCreateFx";
+import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createListingFx } from "~/test/utils/createListingFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/auth/auth";
+import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/utils/createOpenScenarioFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
