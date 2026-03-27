@@ -24,7 +24,6 @@
 		"typescript": "beta"
 	},
 	"exports": {
-		"./ui.css": "./src/ui.css",
 		"./*": {
 			"import": "./src/*/index.ts",
 			"require": "./src/*/index.ts"
