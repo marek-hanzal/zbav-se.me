@@ -4,19 +4,19 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
-import type { tListingPriceEnum } from "@zbav-se.me/sdk/api/seller";
-import { zListingCreate } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { PriceTypeSelect } from "~/client/@common/price-type/ui/PriceTypeSelect";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
+import { ListingCreateSchema } from "~/server/@seller/listing/schema/ListingCreateSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
-const PriceTypeSchema = zListingCreate.pick({
+const PriceTypeSchema = ListingCreateSchema.pick({
 	priceType: true,
 });
 
@@ -39,7 +39,7 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, onVi
 	});
 	const form = useAppForm({
 		defaultValues: {
-			priceType: (draft.priceType as tListingPriceEnum | null) ?? null,
+			priceType: (draft.priceType as ListingPriceEnumSchema.Type | null) ?? null,
 		},
 		validators: {
 			onMount: PriceTypeSchema,
@@ -70,7 +70,10 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, onVi
 				]
 			: [],
 		onSelect(item) {
-			form.setFieldValue("priceType", (item?.id as tListingPriceEnum | undefined) ?? null);
+			form.setFieldValue(
+				"priceType",
+				(item?.id as ListingPriceEnumSchema.Type | undefined) ?? null,
+			);
 			form.setFieldMeta("priceType", (meta) => ({
 				...meta,
 				isTouched: true,

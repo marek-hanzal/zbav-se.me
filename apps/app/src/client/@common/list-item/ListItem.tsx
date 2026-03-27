@@ -1,12 +1,12 @@
 import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
-import { type tUpload, zUpload } from "@zbav-se.me/sdk/api/user";
 import type { FC, ReactNode } from "react";
+import { UploadSchema } from "~/server/@user/upload/schema/UploadSchema";
 import { Image } from "./Image";
 
 export namespace ListItem {
-	export type Hero = tUpload | ReactNode | undefined | null;
+	export type Hero = UploadSchema.Type | ReactNode | undefined | null;
 
 	export interface Props extends Omit<Group.Props, "title"> {
 		hero: Hero;
@@ -26,7 +26,7 @@ export const ListItem: FC<ListItem.Props> = ({
 	children,
 	...props
 }) => {
-	const upload = zUpload.safeParse(hero);
+	const upload = UploadSchema.safeParse(hero);
 	const image: ReactNode =
 		hero == null ? (
 			<Image />

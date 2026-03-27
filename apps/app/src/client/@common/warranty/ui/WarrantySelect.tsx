@@ -3,9 +3,9 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { tListingWarrantyEnum } from "@zbav-se.me/sdk/api/public";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
+import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 
 export namespace WarrantySelect {
 	export interface Props extends Container.Props {
@@ -32,7 +32,7 @@ export const WarrantySelect: FC<WarrantySelect.Props> = ({ selection, ui, ...pro
 			}}
 			{...props}
 		>
-			{Object.values(tListingWarrantyEnum).map((warranty) => {
+			{Object.values(ListingWarrantyEnumSchema.enum).map((warranty) => {
 				const item = {
 					id: warranty,
 				};

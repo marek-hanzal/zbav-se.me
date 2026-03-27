@@ -1,9 +1,9 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withGithubHistoryQuery } from "@zbav-se.me/sdk/query/public";
 import { type FC, useId } from "react";
 import { HistoryItem } from "~/client/@public/history/HistoryItem";
+import { withGithubHistoryQuery } from "~/client/@public/history/withGithubHistoryQuery";
 
 const DEFAULT_PALETTE = [
 	"bg-slate-50 text-slate-900 border-slate-100",

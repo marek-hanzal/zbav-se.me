@@ -1,12 +1,12 @@
 import { LabelValue } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tListingRestrictionEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
+import type { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
 
 export namespace RestrictionValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {
-		restriction: tListingRestrictionEnum | null | undefined;
+		restriction: ListingRestrictionEnumSchema.Type | null | undefined;
 	}
 }
 

@@ -4,12 +4,12 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
-import type { tListingDeliveryEnum } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { DeliverySelect } from "~/client/@common/delivery/ui/DeliverySelect";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
@@ -39,7 +39,8 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ draft, onCancel, onView
 	});
 
 	const deliveryIds = selection.optional.multiId();
-	const delivery = deliveryIds.length > 0 ? (deliveryIds as tListingDeliveryEnum[]) : null;
+	const delivery =
+		deliveryIds.length > 0 ? (deliveryIds as ListingDeliveryEnumSchema.Type[]) : null;
 
 	return (
 		<TitleContainer

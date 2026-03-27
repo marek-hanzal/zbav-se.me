@@ -4,24 +4,17 @@ import { FormField } from "@use-pico/client/ui/form";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { zTransactionEntryPersonalCreate } from "@zbav-se.me/sdk/api/user";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
-import type { z } from "zod";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/client/@common/location/ui/LocationSelect";
-
-// biome-ignore lint/correctness/noUnusedVariables: Ssst!
-const PersonalSchema = zTransactionEntryPersonalCreate.shape.payload;
-export namespace PersonalSchema {
-	export type Type = z.infer<typeof PersonalSchema>;
-}
+import { PersonalSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryCreateSchema/PersonalSchema";
 
 export namespace PersonalControl {
 	export interface Props extends Container.Props {
 		onCancel(): void;
-		onSave(props: PersonalSchema.Type): Promise<any>;
+		onSave(props: PersonalSchema.Type["payload"]): Promise<any>;
 	}
 }
 
@@ -32,9 +25,10 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, u
 			phone: "",
 			email: "",
 			locationId: "",
-		} satisfies PersonalSchema.Type,
+		} satisfies PersonalSchema.Type["payload"],
 		validators: {
-			onSubmit: PersonalSchema,
+			onMount: PersonalSchema.shape.payload,
+			onSubmit: PersonalSchema.shape.payload,
 		},
 		async onSubmit({ value }) {
 			return onSave(value);

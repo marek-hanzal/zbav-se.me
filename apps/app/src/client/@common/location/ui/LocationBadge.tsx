@@ -2,12 +2,12 @@ import { useLocale } from "@use-pico/client/hook";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tLocation } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
+import type { LocationSchema } from "~/server/@session/location/schema/LocationSchema";
 
 export namespace LocationBadge {
 	export interface Props extends Badge.Props {
-		location: tLocation;
+		location: LocationSchema.Type;
 		distance: number | null | undefined;
 	}
 }

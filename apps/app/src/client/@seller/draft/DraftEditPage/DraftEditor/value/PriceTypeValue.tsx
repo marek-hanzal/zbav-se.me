@@ -1,11 +1,11 @@
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tListingPriceEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
+import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 
 export namespace PriceTypeValue {
 	export interface Props extends LabelValue.PropsEx {
-		priceType: tListingPriceEnum | null | undefined;
+		priceType: ListingPriceEnumSchema.Type | null | undefined;
 	}
 }
 

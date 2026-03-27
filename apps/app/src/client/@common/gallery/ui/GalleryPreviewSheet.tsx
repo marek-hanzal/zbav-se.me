@@ -1,13 +1,13 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { translator } from "@use-pico/common/translator";
-import type { tUpload } from "@zbav-se.me/sdk/api/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC } from "react";
 import { GalleryPreview } from "~/client/@common/gallery/ui/GalleryPreview";
+import type { UploadSchema } from "~/server/@user/upload/schema/UploadSchema";
 
 export namespace GalleryPreviewSheet {
 	export interface Props extends BottomSheet.Props {
-		uploads: tUpload[];
+		uploads: UploadSchema.Type[];
 	}
 }
 

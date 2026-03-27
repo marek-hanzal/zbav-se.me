@@ -3,9 +3,9 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { tListingDeliveryEnum } from "@zbav-se.me/sdk/api/public";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
+import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 
 export namespace DeliverySelect {
 	export interface Props extends Container.Props {
@@ -32,7 +32,7 @@ export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ui, ...pro
 			}}
 			{...props}
 		>
-			{Object.values(tListingDeliveryEnum).map((delivery) => {
+			{Object.values(ListingDeliveryEnumSchema.enum).map((delivery) => {
 				const item = {
 					id: delivery,
 				};

@@ -1,7 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
-import type { tGitHubHistory } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
+import type { GitHubHistorySchema } from "~/server/@public/github/schema/GitHubHistorySchema";
 
 const clamp = (value: number, min: number, max: number) => {
 	return Math.max(min, Math.min(max, value));
@@ -33,7 +33,7 @@ const getSlot = (count: number, palette: readonly string[], threshold = 5) => {
 
 export namespace HistoryItem {
 	export interface Props extends Container.Props {
-		item: tGitHubHistory;
+		item: GitHubHistorySchema.Type;
 		palette: readonly string[];
 		/** How many commits are needed to change a color level (default: 5). */
 		threshold: number;

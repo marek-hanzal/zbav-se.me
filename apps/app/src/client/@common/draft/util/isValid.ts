@@ -1,5 +1,5 @@
-import { zListingCreate } from "@zbav-se.me/sdk/api/seller";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
+import { ListingCreateSchema } from "~/server/@seller/listing/schema/ListingCreateSchema";
 
 export const isValid = (draft: DraftSchema.Type) => {
 	const data = {
@@ -7,10 +7,18 @@ export const isValid = (draft: DraftSchema.Type) => {
 		uploadIds: draft.gallery.items.map((item) => item.uploadId),
 		draftId: draft.id,
 	};
-	const isValid = zListingCreate.safeParse(data).success;
+	const isValid = ListingCreateSchema.safeParse(data).success;
 
 	return {
 		isValid,
 		data,
-	} as const;
+	} as
+		| {
+				isValid: true;
+				data: ListingCreateSchema.Type;
+		  }
+		| {
+				isValid: false;
+				data: undefined;
+		  };
 };

@@ -1,7 +1,7 @@
 import { ValueList } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tListingWarrantyEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
+import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 
 export namespace WarrantyValueList {
 	export interface Item {
@@ -10,7 +10,7 @@ export namespace WarrantyValueList {
 	}
 
 	export interface Props extends ValueList.PropsEx<Item> {
-		warrantyIn: tListingWarrantyEnum[];
+		warrantyIn: ListingWarrantyEnumSchema.Type[];
 	}
 }
 

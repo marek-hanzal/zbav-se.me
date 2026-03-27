@@ -4,12 +4,12 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
-import type { tListingWarrantyEnum } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { WarrantySelect } from "~/client/@common/warranty/ui/WarrantySelect";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
@@ -43,7 +43,7 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ draft, onCancel, onView
 	});
 
 	const warrantyId = selection.optional.singleId();
-	const warranty = (warrantyId as tListingWarrantyEnum) ?? null;
+	const warranty = (warrantyId as ListingWarrantyEnumSchema.Type) ?? null;
 
 	return (
 		<TitleContainer

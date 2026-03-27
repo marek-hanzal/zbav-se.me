@@ -1,12 +1,12 @@
 import { Container } from "@use-pico/client/ui/container";
-import { tListingExpireEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
+import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { Item } from "./Item";
 
 export namespace ExpireAtSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {
-		value: tListingExpireEnum | undefined;
-		onChange(value: tListingExpireEnum): void;
+		value: ListingExpireEnumSchema.Type | undefined;
+		onChange(value: ListingExpireEnumSchema.Type): void;
 	}
 }
 
@@ -29,7 +29,7 @@ export const ExpireAtSelect: FC<ExpireAtSelect.Props> = ({ value, onChange, ui, 
 			}}
 			{...props}
 		>
-			{Object.values(tListingExpireEnum).map((expire) => {
+			{Object.values(ListingExpireEnumSchema.enum).map((expire) => {
 				return (
 					<Item
 						key={expire}

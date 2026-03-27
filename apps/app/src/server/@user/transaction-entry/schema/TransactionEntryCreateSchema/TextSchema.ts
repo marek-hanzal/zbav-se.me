@@ -5,11 +5,13 @@ export const TextSchema = z
 	.looseObject({
 		...EntrySchema.shape,
 		kind: z.literal("text"),
-		payload: z.looseObject({
-			text: z.string().openapi({
-				description: "Text entry body",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				text: z.string().openapi({
+					description: "Text entry body",
+				}),
+			})
+			.strip(),
 	})
 	.strip()
 	.openapi("TransactionEntryTextCreate");

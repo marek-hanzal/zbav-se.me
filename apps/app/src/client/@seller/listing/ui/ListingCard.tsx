@@ -4,13 +4,13 @@ import { Markdown } from "@use-pico/client/ui/markdown";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
-import type { tListing } from "@zbav-se.me/sdk/api/seller";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { ConditionIcon } from "~/client/@common/condition/ui/ConditionIcon";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/client/@common/listing/ui/ListingPrice";
 import { CategoryInline } from "~/client/@session/category/ui/CategoryInline";
+import type { ListingSchema } from "~/server/@seller/listing/schema/ListingSchema";
 
 export namespace ListingCard {
 	export interface Hooks {
@@ -19,7 +19,7 @@ export namespace ListingCard {
 	}
 
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		listing: tListing;
+		listing: ListingSchema.Type;
 		hooks: Hooks;
 	}
 }

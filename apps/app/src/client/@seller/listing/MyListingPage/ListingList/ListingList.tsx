@@ -3,8 +3,8 @@ import { useElementVisibility } from "@use-pico/client/hook";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { withFallback } from "@use-pico/client/utils";
-import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import { useMemo, useRef } from "react";
+import { withListingQuery } from "~/client/@seller/listing/withListingQuery";
 import { Content } from "./Content";
 import { Empty } from "./Data/Empty";
 

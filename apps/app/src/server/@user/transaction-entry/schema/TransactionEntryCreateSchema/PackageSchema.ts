@@ -5,14 +5,16 @@ export const PackageSchema = z
 	.looseObject({
 		...EntrySchema.shape,
 		kind: z.literal("package"),
-		payload: z.looseObject({
-			link: z.url().openapi({
-				description: "Package tracking link",
-			}),
-			number: z.string().nullable().openapi({
-				description: "Package tracking number",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				link: z.url().openapi({
+					description: "Package tracking link",
+				}),
+				number: z.string().nullable().openapi({
+					description: "Package tracking number",
+				}),
+			})
+			.strip(),
 	})
 	.strip()
 	.openapi("TransactionEntryPackageCreate");

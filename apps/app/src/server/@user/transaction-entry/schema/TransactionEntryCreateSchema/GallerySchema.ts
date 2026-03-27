@@ -5,11 +5,13 @@ export const GallerySchema = z
 	.looseObject({
 		...EntrySchema.shape,
 		kind: z.literal("gallery"),
-		payload: z.looseObject({
-			uploadIds: z.array(z.string()).min(1).openapi({
-				description: "Ordered uploads used to build the gallery entry",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				uploadIds: z.array(z.string()).min(1).openapi({
+					description: "Ordered uploads used to build the gallery entry",
+				}),
+			})
+			.strip(),
 	})
 	.strip()
 	.openapi("TransactionEntryGalleryCreate");

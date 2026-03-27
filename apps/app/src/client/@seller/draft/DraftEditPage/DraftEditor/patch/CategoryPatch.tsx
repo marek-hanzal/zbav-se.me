@@ -4,7 +4,6 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
-import { zListingCreate } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
@@ -12,10 +11,11 @@ import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
 import { CategorySelect } from "~/client/@session/category/ui/CategorySelect";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
+import { ListingCreateSchema } from "~/server/@seller/listing/schema/ListingCreateSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
-const CategorySchema = zListingCreate.pick({
+const CategorySchema = ListingCreateSchema.pick({
 	categoryId: true,
 });
 

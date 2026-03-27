@@ -4,19 +4,19 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
-import type { tListingRestrictionEnum } from "@zbav-se.me/sdk/api/seller";
-import { zListingCreate } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { RestrictionSelect } from "~/client/@common/restriction/ui/RestrictionSelect";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import type { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
+import { ListingCreateSchema } from "~/server/@seller/listing/schema/ListingCreateSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
-const RestrictionSchema = zListingCreate.pick({
+const RestrictionSchema = ListingCreateSchema.pick({
 	restriction: true,
 });
 
@@ -44,7 +44,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 	});
 	const form = useAppForm({
 		defaultValues: {
-			restriction: (draft.restriction as tListingRestrictionEnum | null) ?? null,
+			restriction: (draft.restriction as ListingRestrictionEnumSchema.Type | null) ?? null,
 		},
 		validators: {
 			onMount: RestrictionSchema,
@@ -77,7 +77,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 		onSelect(item) {
 			form.setFieldValue(
 				"restriction",
-				(item?.id as tListingRestrictionEnum | undefined) ?? null,
+				(item?.id as ListingRestrictionEnumSchema.Type | undefined) ?? null,
 			);
 			form.setFieldMeta("restriction", (meta) => ({
 				...meta,

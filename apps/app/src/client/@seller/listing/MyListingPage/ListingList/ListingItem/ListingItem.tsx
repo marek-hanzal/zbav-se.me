@@ -1,9 +1,9 @@
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
-import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import { useUpload } from "~/client/@common/gallery/hook/useUpload";
 import { ListItem } from "~/client/@common/list-item/ListItem";
 import { ListItemPending } from "~/client/@common/list-item/ListItemPending";
+import { withListingQuery } from "~/client/@seller/listing/withListingQuery";
 
 export namespace ListingItem {
 	export interface Props {

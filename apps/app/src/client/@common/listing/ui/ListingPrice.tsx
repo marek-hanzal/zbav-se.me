@@ -2,14 +2,14 @@ import { useLocale } from "@use-pico/client/hook";
 import { Badge } from "@use-pico/client/ui/badge";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tListingPriceEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 
 export namespace ListingPrice {
 	export interface Props extends Badge.Props {
 		price: number;
-		priceType: tListingPriceEnum;
+		priceType: ListingPriceEnumSchema.Type;
 		currency: string;
 	}
 }

@@ -2,7 +2,6 @@ import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { zListingCreate } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import { type FC, useState } from "react";
@@ -10,10 +9,11 @@ import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/client/@common/location/ui/LocationSelect";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
+import { ListingCreateSchema } from "~/server/@seller/listing/schema/ListingCreateSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
-const LocationSchema = zListingCreate.pick({
+const LocationSchema = ListingCreateSchema.pick({
 	locationId: true,
 });
 

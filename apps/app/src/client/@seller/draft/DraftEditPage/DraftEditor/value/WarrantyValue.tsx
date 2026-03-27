@@ -1,11 +1,11 @@
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tListingWarrantyEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
+import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 
 export namespace WarrantyValue {
 	export interface Props extends LabelValue.PropsEx {
-		warranty: tListingWarrantyEnum | null | undefined;
+		warranty: ListingWarrantyEnumSchema.Type | null | undefined;
 	}
 }
 

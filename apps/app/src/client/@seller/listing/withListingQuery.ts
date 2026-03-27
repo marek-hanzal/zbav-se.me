@@ -1,8 +1,10 @@
 import { withEntityQuery } from "@use-pico/client/query";
 import { listingCollectionFn } from "~/server/@seller/listing/fn/listingCollectionFn";
 import { listingCountFn } from "~/server/@seller/listing/fn/listingCountFn";
+import { listingCreateFn } from "~/server/@seller/listing/fn/listingCreateFn";
 import { listingFetchFn } from "~/server/@seller/listing/fn/listingFetchFn";
 import type { ListingCountQuerySchema } from "~/server/@seller/listing/schema/ListingCountQuerySchema";
+import type { ListingCreateSchema } from "~/server/@seller/listing/schema/ListingCreateSchema";
 import type { ListingQuerySchema } from "~/server/@seller/listing/schema/ListingQuerySchema";
 import type { ListingSchema } from "~/server/@seller/listing/schema/ListingSchema";
 
@@ -12,7 +14,7 @@ export const withListingQuery = withEntityQuery<
 	ListingQuerySchema.Type,
 	ListingCountQuerySchema.Type,
 	never,
-	never,
+	ListingCreateSchema.Type,
 	never,
 	never
 >({
@@ -40,8 +42,10 @@ export const withListingQuery = withEntityQuery<
 			data,
 		});
 	},
-	async createFn(_data) {
-		throw new Error("Listing create is not supported.");
+	async createFn(data) {
+		return listingCreateFn({
+			data,
+		});
 	},
 	async deleteFn(_data) {
 		throw new Error("Listing delete is not supported.");

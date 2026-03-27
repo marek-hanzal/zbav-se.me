@@ -1,13 +1,13 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import type { tUpload } from "@zbav-se.me/sdk/api/user";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
+import type { UploadSchema } from "~/server/@user/upload/schema/UploadSchema";
 
 export namespace GalleryValue {
 	export interface Props extends Container.Props {
-		uploads: tUpload[];
+		uploads: UploadSchema.Type[];
 		label: string;
 		statusProps?: Status.Props;
 	}

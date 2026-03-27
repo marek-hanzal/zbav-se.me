@@ -16,11 +16,13 @@ export const CommonSchema = z
 			"package",
 			"personal",
 		]),
-		payload: z.looseObject({
-			text: z.string().openapi({
-				description: "Translation key for the system/status timeline entry",
-			}),
-		}),
+		payload: z
+			.looseObject({
+				text: z.string().openapi({
+					description: "Translation key for the system/status timeline entry",
+				}),
+			})
+			.strip(),
 	})
 	.strip()
 	.openapi("TransactionEntryCommonCreate", {

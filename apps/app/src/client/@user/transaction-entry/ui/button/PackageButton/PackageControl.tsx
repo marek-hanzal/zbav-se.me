@@ -2,23 +2,15 @@ import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { zTransactionEntryPackageCreate } from "@zbav-se.me/sdk/api/user";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
-import type { z } from "zod";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
-
-// biome-ignore lint/correctness/noUnusedVariables: Ssst!
-const PackageSchema = zTransactionEntryPackageCreate.shape.payload;
-
-export namespace PackageSchema {
-	export type Type = z.infer<typeof PackageSchema>;
-}
+import { PackageSchema } from "~/server/@user/transaction-entry/schema/TransactionEntryCreateSchema/PackageSchema";
 
 export namespace PackageControl {
 	export interface Props extends Container.Props {
 		onCancel(): void;
-		onSave(props: PackageSchema.Type): Promise<any>;
+		onSave(props: PackageSchema.Type["payload"]): Promise<any>;
 	}
 }
 
@@ -27,10 +19,10 @@ export const PackageControl: FC<PackageControl.Props> = ({ onCancel, onSave, ui,
 		defaultValues: {
 			link: "",
 			number: null as string | null,
-		} satisfies PackageSchema.Type,
+		} satisfies PackageSchema.Type["payload"],
 		validators: {
-			onMount: PackageSchema,
-			onSubmit: PackageSchema,
+			onMount: PackageSchema.shape.payload,
+			onSubmit: PackageSchema.shape.payload,
 		},
 		async onSubmit({ value }) {
 			return onSave(value);

@@ -3,19 +3,19 @@ import { Container } from "@use-pico/client/ui/container";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tListingExpireEnum } from "@zbav-se.me/sdk/api/seller";
-import { zListingCreate } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/client/@common/container/ui/SaveContainer";
 import { ExpireAtSelect } from "~/client/@common/expire-at/ui/ExpireAtSelect";
 import { withDraftQuery } from "~/client/@seller/draft/withDraftQuery";
+import type { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import type { DraftSchema } from "~/server/@seller/draft/schema/DraftSchema";
+import { ListingCreateSchema } from "~/server/@seller/listing/schema/ListingCreateSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
-const ExpireAtSchema = zListingCreate.pick({
+const ExpireAtSchema = ListingCreateSchema.pick({
 	expiresAt: true,
 });
 
@@ -38,7 +38,7 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({ draft, onCancel, onView
 	});
 	const form = useAppForm({
 		defaultValues: {
-			expiresAt: (draft.expiresAt as tListingExpireEnum | null) ?? null,
+			expiresAt: (draft.expiresAt as ListingExpireEnumSchema.Type | null) ?? null,
 		},
 		validators: {
 			onMount: ExpireAtSchema,
