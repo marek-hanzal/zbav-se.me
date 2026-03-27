@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { SeedProgressContextFx } from "~/seed/context/withSeedProgressFx";
-import { seedThumbInsertFx } from "~/seed/fx/interaction/seedThumbInsertFx";
-import { withRandomPastDate } from "~/seed/fx/time/seedTime";
-import { withSeedNowFx } from "~/seed/fx/time/withSeedNowFx";
+import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";
+import { seedThumbInsertFx } from "~/server/@system/seed/fx/interaction/seedThumbInsertFx";
+import { withRandomPastDate } from "~/server/@system/seed/fx/time/seedTime";
+import { withSeedNowFx } from "~/server/@system/seed/fx/time/withSeedNowFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 

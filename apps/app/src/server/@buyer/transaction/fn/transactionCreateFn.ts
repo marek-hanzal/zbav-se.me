@@ -29,10 +29,7 @@ export const transactionCreateFn = createServerFn({
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
-			withTransactionContextFx({
-				expires: 3,
-				extend: 1,
-			}),
+			withTransactionContextFx(),
 			withCatchFx({
 				NotFoundErrorFx() {
 					throw new Error("NotFoundError");

@@ -63,10 +63,7 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 				cdn: cdnConfig.SERVER_CONTENT_CDN,
 			}),
 			withDateFx,
-			withTransactionContextFx({
-				expires: 3,
-				extend: 3,
-			}),
+			withTransactionContextFx(),
 			Effect.provideService(KyselyContextFx, kysely),
 		);
 	});

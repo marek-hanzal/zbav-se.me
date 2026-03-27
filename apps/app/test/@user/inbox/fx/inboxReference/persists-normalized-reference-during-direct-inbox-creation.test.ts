@@ -1,43 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
 import { listingCreateFx } from "~/server/@seller/listing/fx/listingCreateFx";
 import { categoryFetchFx } from "~/server/@session/category/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/server/@session/location/fx/locationAutocompleteFx";
-import { withLocationFx } from "~/server/@session/location/fx/withLocationFx";
 import { inboxCreateFx } from "~/server/@user/inbox/fx/inboxCreateFx";
-import { withTransactionContextFx } from "~/server/@user/transaction/context/withTransactionContextFx";
-import { withUploadFx } from "~/server/@user/upload/context/withUploadFx";
 import { uploadCreateFx } from "~/server/@user/upload/fx/uploadCreateFx";
 import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 interface ListingFixture {
 	listingId: string;
 	sellerId: string;
 	buyerId: string;
 }
-
-const withInboxRuntimeFx = (database: Awaited<ReturnType<typeof testabase>>) => {
-	const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
-
-	return <A, E, R>(eff: Effect.Effect<A, E, R>) =>
-		eff.pipe(
-			withKyselyFx(database),
-			withDateFx,
-			withTransactionContextFx(),
-			withLocationFx({
-				api: "https://api.geoapify.com",
-				autocomplete: "/v1/geocode/autocomplete",
-				geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
-			}),
-			withUploadFx({
-				cdn: "https://cdn.zbav-se.me",
-			}),
-		);
-};
 
 const _createListingFixtureFx = ({ buyerId, sellerId }: Omit<ListingFixture, "listingId">) =>
 	Effect.gen(function* () {
@@ -115,7 +91,7 @@ describe("inbox reference", () => {
 				},
 				priority: "common",
 			});
-		}).pipe(withInboxRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 		expect(inbox.reference).toEqual([
 			"listing-direct",

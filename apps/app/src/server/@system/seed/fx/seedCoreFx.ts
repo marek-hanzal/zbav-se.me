@@ -1,19 +1,19 @@
 import { Effect } from "effect";
-import { SeedProgressContextFx } from "~/seed/context/withSeedProgressFx";
-import LocationQueries from "~/seed/data/location.json" with { type: "json" };
-import { seedCoreFeedFx } from "~/seed/fx/core/seedCoreFeedFx";
-import { seedCoreGalleryFx } from "~/seed/fx/core/seedCoreGalleryFx";
-import { seedCoreListingFx } from "~/seed/fx/core/seedCoreListingFx";
-import { seedCoreLocationFx } from "~/seed/fx/core/seedCoreLocationFx";
-import { seedCoreUploadFx } from "~/seed/fx/core/seedCoreUploadFx";
-import { ensureSeedUserFx } from "~/seed/fx/ensureSeedUserFx";
-import { SeedCoreReportSchema } from "~/seed/fx/report/SeedCoreReportSchema";
-import { withInlineCounts } from "~/seed/fx/report/seedReportConsole";
-import { withSeedCoreUserCountsFx } from "~/seed/fx/report/withSeedCoreUserCountsFx";
+import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";
+import LocationQueries from "~/server/@system/seed/data/location.json" with { type: "json" };
+import { seedCoreFeedFx } from "~/server/@system/seed/fx/core/seedCoreFeedFx";
+import { seedCoreGalleryFx } from "~/server/@system/seed/fx/core/seedCoreGalleryFx";
+import { seedCoreListingFx } from "~/server/@system/seed/fx/core/seedCoreListingFx";
+import { seedCoreLocationFx } from "~/server/@system/seed/fx/core/seedCoreLocationFx";
+import { seedCoreUploadFx } from "~/server/@system/seed/fx/core/seedCoreUploadFx";
+import { ensureSeedUserFx } from "~/server/@system/seed/fx/ensureSeedUserFx";
+import { SeedCoreReportSchema } from "~/server/@system/seed/fx/report/SeedCoreReportSchema";
+import { withInlineCounts } from "~/server/@system/seed/fx/report/seedReportConsole";
+import { withSeedCoreUserCountsFx } from "~/server/@system/seed/fx/report/withSeedCoreUserCountsFx";
 import {
 	SeedPrimaryCoreTables,
 	withSeedTableCountsFx,
-} from "~/seed/fx/report/withSeedTableCountsFx";
+} from "~/server/@system/seed/fx/report/withSeedTableCountsFx";
 import { userExPatchFx } from "~/server/@user/user-ex/fx/userExPatchFx";
 
 export namespace seedCoreFx {

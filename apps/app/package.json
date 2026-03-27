@@ -62,6 +62,7 @@
 		"@types/pg-pool": "2.0.7",
 		"@types/react": "19.2.14",
 		"@types/react-dom": "19.2.3",
+		"@types/terminal-kit": "2.5.7",
 		"@typescript/native-preview": "7.0.0-dev.20260327.2",
 		"@use-pico/vite-asset-size": "1.0.4",
 		"@vitejs/plugin-react": "6.0.1",

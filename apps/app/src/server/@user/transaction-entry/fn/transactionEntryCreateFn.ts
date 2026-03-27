@@ -29,10 +29,7 @@ export const transactionEntryCreateFn = createServerFn({
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
-			withTransactionContextFx({
-				expires: 3,
-				extend: 1,
-			}),
+			withTransactionContextFx(),
 			withCatchFx({
 				AccessDeniedErrorFx() {
 					throw new Error("AccessDeniedError");

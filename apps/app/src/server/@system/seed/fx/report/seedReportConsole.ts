@@ -1,8 +1,8 @@
 import { appendFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { terminal as term } from "terminal-kit";
-import type { SeedCoreReportSchema } from "~/seed/fx/report/SeedCoreReportSchema";
-import type { SeedInteractionReportSchema } from "~/seed/fx/report/SeedInteractionReportSchema";
+import type { SeedCoreReportSchema } from "~/server/@system/seed/fx/report/SeedCoreReportSchema";
+import type { SeedInteractionReportSchema } from "~/server/@system/seed/fx/report/SeedInteractionReportSchema";
 
 const withMarkup = (markup: string) => (value: string) => {
 	if (!process.stdout.isTTY || process.env.NO_COLOR) {

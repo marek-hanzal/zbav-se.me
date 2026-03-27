@@ -32,10 +32,7 @@ export const transactionPatchCollectionFn = createServerFn({
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
-			withTransactionContextFx({
-				expires: 3,
-				extend: 1,
-			}),
+			withTransactionContextFx(),
 			withCatchFx({
 				ZodErrorFx() {
 					throw new Error("ZodError");
