@@ -1,9 +1,9 @@
-import { ArrowLeftIcon } from "@use-pico/client/icon";
-import type { MarkSuspense } from "@use-pico/client/type";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { type FC, useRef } from "react";
+import { ArrowLeftIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { useSentinel } from "@/lib/client/sentinel";
+import type { MarkSuspense } from "@/lib/client/type";
 import { FlowContainer } from "~/common/ui/container";
 import { uiBackButton } from "~/common/ui/ui";
 import { Content } from "./Content";

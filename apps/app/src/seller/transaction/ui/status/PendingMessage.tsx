@@ -1,6 +1,6 @@
-import type { Container } from "@use-pico/client/ui/container";
-import { Group } from "@use-pico/client/ui/group";
 import type { FC } from "react";
+import type { Container } from "@/lib/client/container";
+import { Group } from "@/lib/client/group";
 import { BuyerInfoButton } from "~/seller/transaction/~public/BuyerInfoButton";
 import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
 import { MessageButtonUi } from "~/user/transaction/ui/MessageButtonUi";

@@ -1,5 +1,5 @@
-import { CursorSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { CursorSchema } from "@/lib/common/schema";
 import { CategoryFilterSchema } from "~/session/category/server/schema/CategoryFilterSchema";
 import { CategorySortSchema } from "~/session/category/server/schema/CategorySortSchema";
 import { CategoryWhereSchema } from "~/session/category/server/schema/CategoryWhereSchema";

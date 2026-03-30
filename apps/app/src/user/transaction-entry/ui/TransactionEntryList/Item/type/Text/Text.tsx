@@ -1,9 +1,9 @@
-import type { Container } from "@use-pico/client/ui/container";
-import { Mx } from "@use-pico/client/ui/mx";
-import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { FC } from "react";
+import type { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
+import { Mx } from "@/lib/client/mx";
+import { Typo } from "@/lib/client/typo";
 import type { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
 import type { TransactionEntryText } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/TextSchema";
 import { TypeContainer } from "../TypeContainer";

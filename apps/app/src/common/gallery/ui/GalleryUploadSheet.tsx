@@ -1,8 +1,8 @@
-import type { withMutation } from "@use-pico/client/mutation";
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Container } from "@use-pico/client/ui/container";
 import type { StateType } from "@use-pico/common/type";
 import { useState } from "react";
+import { BottomSheet } from "@/lib/client/bottom-sheet";
+import { Container } from "@/lib/client/container";
+import type { withMutation } from "@/lib/client/mutation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
 

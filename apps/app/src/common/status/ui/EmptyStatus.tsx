@@ -1,6 +1,6 @@
-import { Container } from "@use-pico/client/ui/container";
-import { Status } from "@use-pico/client/ui/status";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
+import { Status } from "@/lib/client/status";
 
 export namespace EmptyStatus {
 	export interface Props

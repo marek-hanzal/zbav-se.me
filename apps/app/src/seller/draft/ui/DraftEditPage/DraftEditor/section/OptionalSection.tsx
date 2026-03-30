@@ -1,6 +1,6 @@
-import { Group } from "@use-pico/client/ui/group";
-import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
+import { Group } from "@/lib/client/group";
+import { Tx } from "@/lib/client/tx";
 import { DeliveryValueList } from "~/common/delivery/ui/DeliveryValueList";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import { ChevronAction } from "../ChevronAction";

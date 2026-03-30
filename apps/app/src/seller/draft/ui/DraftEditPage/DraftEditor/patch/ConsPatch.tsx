@@ -1,10 +1,9 @@
-import { ArrowRightIcon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
-import { FormField } from "@use-pico/client/ui/form";
-import { TextInput } from "@use-pico/client/ui/text-input";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { type FC, useState } from "react";
+import { Container } from "@/lib/client/container";
+import { FormField, TextInput } from "@/lib/client/form";
+import { ArrowRightIcon } from "@/lib/client/icon";
+import { Tx } from "@/lib/client/tx";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { TitleContainer } from "~/common/ui/container";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";

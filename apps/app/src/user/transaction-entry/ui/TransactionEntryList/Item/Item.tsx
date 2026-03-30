@@ -1,7 +1,7 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
 import { match } from "ts-pattern";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import type { MarkSuspense } from "@/lib/client/type";
 import type { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
 import { withTransactionEntryQuery } from "~/user/transaction-entry/query/withTransactionEntryQuery";
 import { Common } from "./type/Common";

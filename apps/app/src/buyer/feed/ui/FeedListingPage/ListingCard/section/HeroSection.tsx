@@ -1,6 +1,6 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import { Container } from "@use-pico/client/ui/container";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
+import type { MarkSuspense } from "@/lib/client/type";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";

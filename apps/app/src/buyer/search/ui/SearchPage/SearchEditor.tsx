@@ -1,7 +1,8 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { Group } from "@use-pico/client/ui/group";
 import { withFallback } from "@use-pico/client/utils";
+import { Container } from "@/lib/client/container";
+import { Group } from "@/lib/client/group";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import type { MarkSuspense } from "@/lib/client/type";
 import { FeedEditor } from "~/buyer/feed/~public/FeedEditor";
 import { ResetButton } from "./ResetButton";
 import { SaveAsFeedButton } from "./SaveAsFeedButton";

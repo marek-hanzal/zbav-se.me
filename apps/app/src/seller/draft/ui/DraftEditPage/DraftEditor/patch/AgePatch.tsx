@@ -1,9 +1,9 @@
-import { ArrowRightIcon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
+import { ArrowRightIcon } from "@/lib/client/icon";
 import { useSelection } from "@/lib/client/selection";
+import { Tx } from "@/lib/client/tx";
 import { AgeSelection } from "~/common/age/ui/AgeSelection";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { TitleContainer } from "~/common/ui/container";

@@ -1,8 +1,8 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import { ValueList } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
 import { Suspense } from "react";
+import type { MarkSuspense } from "@/lib/client/type";
+import { ValueList } from "@/lib/client/value";
 import type { CategorySchema } from "~/session/category/server/schema/CategorySchema";
 import { CategoryInline } from "~/session/category/ui/CategoryInline";
 import { withCategoryQuery } from "~/session/category/withCategoryQuery";

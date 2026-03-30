@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
-import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
+import { zodGuardFx } from "@/lib/common/schema";
 import { draftGalleryCreateFx } from "~/seller/draft-gallery/server/fx/draftGalleryCreateFx";
 import { DraftGalleryCreateSchema } from "~/seller/draft-gallery/server/schema/DraftGalleryCreateSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";

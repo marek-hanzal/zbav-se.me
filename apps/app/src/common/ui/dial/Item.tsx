@@ -1,6 +1,6 @@
-import type { Icon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
 import type { FC } from "react";
+import { Button } from "@/lib/client/button";
+import type { Icon } from "@/lib/client/icon";
 
 export namespace Item {
 	export interface Props extends Button.Props {

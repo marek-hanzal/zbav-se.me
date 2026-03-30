@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { Container } from "@use-pico/client/ui/container";
 import { type FC, useState } from "react";
+import { Container } from "@/lib/client/container";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { withFeedGalleryCreateMutation } from "~/buyer/feed-gallery/mutation/withFeedGalleryCreateMutation";

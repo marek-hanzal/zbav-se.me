@@ -1,7 +1,7 @@
-import { ValueList } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { Tx } from "@/lib/client/tx";
+import { ValueList } from "@/lib/client/value";
 
 export namespace ConsValueList {
 	export interface Props

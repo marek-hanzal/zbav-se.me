@@ -1,7 +1,7 @@
-import { NotificationIcon } from "@use-pico/client/icon";
-import type { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import type { Container } from "@/lib/client/container";
+import { NotificationIcon } from "@/lib/client/icon";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 
 export namespace Empty {

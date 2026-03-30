@@ -1,7 +1,7 @@
-import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
-import { Group } from "@use-pico/client/ui/group";
 import type { FC, ReactNode } from "react";
+import { Container } from "@/lib/client/container";
+import { Group } from "@/lib/client/group";
+import { ChevronRightIcon, Icon } from "@/lib/client/icon";
 import { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import { Image } from "./Image";
 

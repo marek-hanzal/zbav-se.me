@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
-import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { z } from "zod";
+import { zodGuardFx } from "@/lib/common/fx";
 import { feedCollectionFx } from "~/buyer/feed/server/fx/feedCollectionFx";
 import { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
 import { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";

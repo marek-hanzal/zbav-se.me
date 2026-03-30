@@ -1,5 +1,5 @@
-import { CursorSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { CursorSchema } from "@/lib/common/schema";
 import { TransactionEntryFilterSchema } from "~/user/transaction-entry/server/schema/TransactionEntryFilterSchema";
 import { TransactionEntrySortSchema } from "~/user/transaction-entry/server/schema/TransactionEntrySortSchema";
 import { TransactionEntryWhereSchema } from "~/user/transaction-entry/server/schema/TransactionEntryWhereSchema";

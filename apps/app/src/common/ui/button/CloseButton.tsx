@@ -1,6 +1,6 @@
-import { CloseDrawerIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
 import type { FC } from "react";
+import { Button } from "@/lib/client/button";
+import { CloseDrawerIcon } from "@/lib/client/icon";
 import { uiBackButton } from "../ui/uiBackButton";
 
 export namespace CloseButton {

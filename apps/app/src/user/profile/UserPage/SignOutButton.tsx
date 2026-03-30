@@ -1,8 +1,8 @@
 import { useNavigate } from "@tanstack/react-router";
-import { Button } from "@use-pico/client/ui/button";
-import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
+import { Button } from "@/lib/client/button";
 import { useLocale } from "@/lib/client/locale";
+import { Tx } from "@/lib/client/tx";
 import { withSignOutMutation } from "~/common/auth/mutation/withSignOutMutation";
 import { LockIcon } from "~/common/ui/icon";
 

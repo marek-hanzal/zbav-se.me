@@ -1,6 +1,6 @@
-import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { FC } from "react";
+import { ArrowLeftIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { FlowContainer } from "~/common/ui/container";

@@ -1,7 +1,7 @@
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
+import { SpinnerContainer } from "@/lib/client/spinner";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";

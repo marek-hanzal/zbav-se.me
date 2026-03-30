@@ -1,4 +1,4 @@
-import type { NoticeSchema } from "@use-pico/common/schema";
+import type { NoticeSchema } from "@/lib/common/schema";
 
 export const noticeError = (e: { message: string }): NoticeSchema.Type => {
 	return {

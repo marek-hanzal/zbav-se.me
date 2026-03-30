@@ -1,4 +1,4 @@
-import { withMutation } from "@use-pico/client/mutation";
+import { withMutation } from "@/lib/client/mutation";
 import { transactionEntryCreateFn } from "~/user/transaction-entry/server/fn/transactionEntryCreateFn";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 import { withTransactionEntryQuery } from "../query/withTransactionEntryQuery";

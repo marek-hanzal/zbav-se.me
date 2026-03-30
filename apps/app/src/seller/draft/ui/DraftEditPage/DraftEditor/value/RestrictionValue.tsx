@@ -1,7 +1,7 @@
-import { LabelValue } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { Tx } from "@/lib/client/tx";
+import { LabelValue } from "@/lib/client/value";
 import type { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
 
 export namespace RestrictionValue {

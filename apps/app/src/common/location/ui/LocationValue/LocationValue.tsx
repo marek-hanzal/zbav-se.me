@@ -1,6 +1,7 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import { LabelValue, SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import type { MarkSuspense } from "@/lib/client/type";
+import { LabelValue } from "@/lib/client/value";
 import { withLocationFetchQuery } from "~/session/location/withLocationFetchQuery";
 
 export namespace LocationValue {

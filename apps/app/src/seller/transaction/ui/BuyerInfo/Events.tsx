@@ -1,9 +1,10 @@
-import { Container, LabelValue } from "@use-pico/client/ui/container";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
 import { DateTime } from "luxon";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
+import { LabelValue } from "@/lib/client/value";
 import type { UserEventBuyerSchema } from "~/seller/user-event/server/schema/UserEventBuyerSchema";
 
 const percentLabel = (value: number) => `${Math.round(value)}%`;

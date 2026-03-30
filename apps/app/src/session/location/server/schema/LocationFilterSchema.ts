@@ -1,5 +1,5 @@
-import { FilterSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { FilterSchema } from "@/lib/common/schema";
 
 export const LocationFilterSchema = z
 	.looseObject({

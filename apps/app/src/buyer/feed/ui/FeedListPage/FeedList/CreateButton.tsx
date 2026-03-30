@@ -1,6 +1,6 @@
-import { Icon, PlusIcon } from "@use-pico/client/icon";
-import { Tx } from "@use-pico/client/ui/tx";
 import { type FC, useState } from "react";
+import { Icon, PlusIcon } from "@/lib/client/icon";
+import { Tx } from "@/lib/client/tx";
 import { ListItem } from "~/common/list-item/ListItem";
 import { CreateSheet } from "./CreateSheet";
 

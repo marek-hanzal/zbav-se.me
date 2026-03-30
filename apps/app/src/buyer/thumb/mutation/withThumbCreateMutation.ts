@@ -1,4 +1,4 @@
-import { withMutation } from "@use-pico/client/mutation";
+import { withMutation } from "@/lib/client/mutation";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { thumbCreateFn } from "~/buyer/thumb/server/fn/thumbCreateFn";
 import type { ThumbCreateSchema } from "~/buyer/thumb/server/schema/ThumbCreateSchema";

@@ -1,7 +1,7 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import { Container } from "@use-pico/client/ui/container";
 import type { FC } from "react";
 import { Suspense } from "react";
+import { Container } from "@/lib/client/container";
+import type { MarkSuspense } from "@/lib/client/type";
 import { Item } from "./Item";
 
 export namespace List {

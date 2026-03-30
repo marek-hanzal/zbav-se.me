@@ -1,5 +1,5 @@
-import { CursorSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { CursorSchema } from "@/lib/common/schema";
 import { FlagFilterSchema } from "~/buyer/flag/server/schema/FlagFilterSchema";
 import { FlagSortSchema } from "~/buyer/flag/server/schema/FlagSortSchema";
 import { FlagWhereSchema } from "~/buyer/flag/server/schema/FlagWhereSchema";

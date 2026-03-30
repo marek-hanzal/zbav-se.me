@@ -1,6 +1,6 @@
-import { ValueList } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { ValueList } from "@/lib/client/value";
 
 export namespace AgeValueList {
 	export interface Props

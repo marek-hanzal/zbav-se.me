@@ -1,5 +1,5 @@
-import { Icon } from "@use-pico/client/icon";
 import type { FC } from "react";
+import { Icon } from "@/lib/client/icon";
 import { RatingToIcon } from "~/common/ui/rating";
 
 export namespace RatingIcon {

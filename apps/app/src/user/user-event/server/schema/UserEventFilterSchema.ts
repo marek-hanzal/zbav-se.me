@@ -1,5 +1,5 @@
-import { FilterSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { FilterSchema } from "@/lib/common/schema";
 import { UserEventScopeEnumSchema } from "~/common/user-event/enum/UserEventScopeEnumSchema";
 import { UserEventEnumSchema } from "~/user/user-event/server/schema/UserEventEnumSchema";
 import { UserEventSourceEnumSchema } from "~/user/user-event/server/schema/UserEventSourceEnumSchema";

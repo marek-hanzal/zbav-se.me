@@ -1,8 +1,8 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
+import type { MarkSuspense } from "@/lib/client/type";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";

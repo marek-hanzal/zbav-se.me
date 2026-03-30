@@ -1,9 +1,9 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import { Container } from "@use-pico/client/ui/container";
 import { EmptyState } from "@use-pico/client/ui/empty-state";
 import { translator } from "@use-pico/common/translator";
 import { type FC, useMemo } from "react";
+import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
+import type { MarkSuspense } from "@/lib/client/type";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";

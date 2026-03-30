@@ -1,10 +1,10 @@
-import { CloseIcon } from "@use-pico/client/icon";
-import type { MarkSuspense } from "@use-pico/client/type";
-import type { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import { type FC, useMemo, useState } from "react";
+import type { BottomSheet } from "@/lib/client/bottom-sheet";
+import { CloseIcon } from "@/lib/client/icon";
+import { SheetView } from "@/lib/client/sheet-view";
+import type { MarkSuspense } from "@/lib/client/type";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { CloseButton } from "~/common/ui/button";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";

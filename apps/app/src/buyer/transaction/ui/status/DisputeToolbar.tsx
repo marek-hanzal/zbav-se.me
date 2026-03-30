@@ -1,5 +1,5 @@
-import { Group } from "@use-pico/client/ui/group";
 import type { FC } from "react";
+import { Group } from "@/lib/client/group";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
 import { TransactionButtonUi } from "~/user/transaction/ui/TransactionButtonUi";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";

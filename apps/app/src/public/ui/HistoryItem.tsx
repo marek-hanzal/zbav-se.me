@@ -1,6 +1,6 @@
-import { Container } from "@use-pico/client/ui/container";
-import { Typo } from "@use-pico/client/ui/typo";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
+import { Typo } from "@/lib/client/typo";
 import type { GitHubHistorySchema } from "~/public/github/server/schema/GitHubHistorySchema";
 
 const clamp = (value: number, min: number, max: number) => {

@@ -1,5 +1,5 @@
-import { CursorSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { CursorSchema } from "@/lib/common/schema";
 import { FavouriteFilterSchema } from "~/buyer/favourite/server/schema/FavouriteFilterSchema";
 import { FavouriteSortSchema } from "~/buyer/favourite/server/schema/FavouriteSortSchema";
 import { FavouriteWhereSchema } from "~/buyer/favourite/server/schema/FavouriteWhereSchema";

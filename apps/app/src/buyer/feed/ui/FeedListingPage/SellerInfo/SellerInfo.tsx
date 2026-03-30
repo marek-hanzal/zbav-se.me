@@ -1,8 +1,8 @@
-import { Icon, ShowIcon } from "@use-pico/client/icon";
-import type { MarkSuspense } from "@use-pico/client/type";
-import { LabelValue } from "@use-pico/client/ui/container";
 import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
+import { Icon, ShowIcon } from "@/lib/client/icon";
+import type { MarkSuspense } from "@/lib/client/type";
+import { LabelValue } from "@/lib/client/value";
 import { withListingSellerInfoQuery } from "~/buyer/listing/query/withListingSellerInfoQuery";
 import { RatingIcon } from "~/common/score/ui/RatingIcon";
 

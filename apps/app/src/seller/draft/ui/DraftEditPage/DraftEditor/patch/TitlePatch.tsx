@@ -1,11 +1,8 @@
-import { ArrowRightIcon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
-import { FormField } from "@use-pico/client/ui/form";
-import { Mx } from "@use-pico/client/ui/mx";
-import { Status } from "@use-pico/client/ui/status";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
+import { Mx } from "@/lib/client/mx";
+import { Status } from "@/lib/client/status";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { TitleContainer } from "~/common/ui/container";
 import { useAppForm } from "~/common/ui/form";

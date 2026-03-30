@@ -1,10 +1,10 @@
-import { WarningIcon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
-import { FormField } from "@use-pico/client/ui/form";
-import { Status } from "@use-pico/client/ui/status";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
+import { FormField } from "@/lib/client/form";
+import { WarningIcon } from "@/lib/client/icon";
+import { Status } from "@/lib/client/status";
+import { Tx } from "@/lib/client/tx";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { LocationSelect } from "~/common/location/ui/LocationSelect";
 import { useAppForm } from "~/common/ui/form";

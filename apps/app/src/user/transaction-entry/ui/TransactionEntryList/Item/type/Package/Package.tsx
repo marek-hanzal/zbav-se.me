@@ -1,11 +1,11 @@
-import { ExternalIcon, Icon } from "@use-pico/client/icon";
-import type { Container } from "@use-pico/client/ui/container";
-import { LabelValue } from "@use-pico/client/ui/container";
-import { Typo, uiTypo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import type { Container } from "@/lib/client/container";
+import { ExternalIcon, Icon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
+import { Typo, uiTypo } from "@/lib/client/typo";
+import { LabelValue } from "@/lib/client/value";
 import { SendPackageIcon } from "~/common/ui/icon";
 import type { TransactionEntryPackage } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/PackageSchema";
 import { TypeContainer } from "../TypeContainer";

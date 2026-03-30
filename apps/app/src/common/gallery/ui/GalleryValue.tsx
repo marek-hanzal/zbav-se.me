@@ -1,6 +1,6 @@
-import { Container } from "@use-pico/client/ui/container";
-import { Status } from "@use-pico/client/ui/status";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
+import { Status } from "@/lib/client/status";
 import { PhotoIcon } from "~/common/ui/icon";
 import { HeroImage } from "~/common/ui/img";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";

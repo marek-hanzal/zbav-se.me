@@ -1,7 +1,7 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import { Container } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import { type FC, useId } from "react";
+import { Container } from "@/lib/client/container";
+import { Tx } from "@/lib/client/tx";
+import type { MarkSuspense } from "@/lib/client/type";
 import { withGithubHistoryQuery } from "~/public/history/query/withGithubHistoryQuery";
 import { HistoryItem } from "~/public/ui/HistoryItem";
 

@@ -1,5 +1,5 @@
-import { CursorSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { CursorSchema } from "@/lib/common/schema";
 import { UserEventFilterSchema } from "./UserEventFilterSchema";
 import { UserEventSortSchema } from "./UserEventSortSchema";
 import { UserEventWhereSchema } from "./UserEventWhereSchema";

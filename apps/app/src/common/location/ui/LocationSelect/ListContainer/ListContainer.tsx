@@ -1,8 +1,9 @@
-import { Button } from "@use-pico/client/ui/button";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import { withFallback } from "@use-pico/client/utils";
+import { Button } from "@/lib/client/button";
+import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
+import { SpinnerContainer } from "@/lib/client/spinner";
 import { uiSelectButton } from "~/common/ui/ui";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { withLocationAutocompleteQuery } from "~/session/location/withLocationAutocompleteQuery";

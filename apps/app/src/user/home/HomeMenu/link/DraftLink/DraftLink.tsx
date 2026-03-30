@@ -1,10 +1,10 @@
 import { useMatchRoute } from "@tanstack/react-router";
-import { ChevronRightIcon } from "@use-pico/client/icon";
-import type { MarkSuspense } from "@use-pico/client/type";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
+import { ChevronRightIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
+import { Tx } from "@/lib/client/tx";
+import type { MarkSuspense } from "@/lib/client/type";
 import { DraftIcon } from "~/common/ui/icon";
 import { TypoIcon } from "~/common/ui/typo";
 import { uiMenuButton } from "~/common/ui/ui";

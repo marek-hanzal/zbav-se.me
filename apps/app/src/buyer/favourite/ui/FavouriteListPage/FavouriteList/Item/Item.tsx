@@ -1,9 +1,10 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
-import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
+
 import { useLocale } from "@/lib/client/locale";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import type { MarkSuspense } from "@/lib/client/type";
+import { Typo } from "@/lib/client/typo";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListItem } from "~/common/list-item/ListItem";

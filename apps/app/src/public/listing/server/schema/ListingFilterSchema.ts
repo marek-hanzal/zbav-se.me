@@ -1,5 +1,5 @@
-import { FilterSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { FilterSchema } from "@/lib/common/schema";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";

@@ -1,4 +1,4 @@
-import { uiStatus } from "@use-pico/client/ui/status";
+import { uiStatus } from "@/lib/client/status";
 import type { ui as coolUi } from "@/lib/cls";
 
 export namespace uiWarningStatus {

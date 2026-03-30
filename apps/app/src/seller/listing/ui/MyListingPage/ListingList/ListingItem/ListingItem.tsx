@@ -1,5 +1,5 @@
-import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
+import { Typo } from "@/lib/client/typo";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListItem } from "~/common/list-item/ListItem";
 import { ListItemPending } from "~/common/list-item/ListItemPending";

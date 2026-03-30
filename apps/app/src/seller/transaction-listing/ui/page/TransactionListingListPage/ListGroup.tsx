@@ -1,6 +1,6 @@
-import { Container } from "@use-pico/client/ui/container";
-import { Typo, type uiTypo } from "@use-pico/client/ui/typo";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
+import { Typo, type uiTypo } from "@/lib/client/typo";
 import { withTransactionListingQuery } from "~/seller/transaction-listing/query/withTransactionListingQuery";
 import type { TransactionListingFilterSchema } from "~/seller/transaction-listing/server/schema/TransactionListingFilterSchema";
 import { TransactionListingList } from "./TransactionListingList";

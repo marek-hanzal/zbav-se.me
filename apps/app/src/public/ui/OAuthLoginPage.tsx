@@ -1,12 +1,12 @@
-import { ChevronRightIcon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
-import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Status } from "@use-pico/client/ui/status";
-import { Tx } from "@use-pico/client/ui/tx";
 import { linkTo } from "@use-pico/common/link-to";
 import { translator } from "@use-pico/common/translator";
 import { z } from "zod";
+import { Container } from "@/lib/client/container";
+import { FormField } from "@/lib/client/form";
+import { ChevronRightIcon } from "@/lib/client/icon";
+import { Status } from "@/lib/client/status";
+import { Tx } from "@/lib/client/tx";
 import { withEmailSignInMutation } from "~/common/auth/mutation/withEmailSignInMutation";
 import { useAppForm } from "~/common/ui/form";
 import { Logo } from "~/common/ui/logo";

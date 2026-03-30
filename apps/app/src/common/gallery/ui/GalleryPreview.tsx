@@ -1,6 +1,6 @@
-import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { type FC, useRef } from "react";
+import { Container } from "@/lib/client/container";
 import { HeroImage } from "~/common/ui/img";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 

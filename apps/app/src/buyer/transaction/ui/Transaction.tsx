@@ -1,8 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
-import type { MarkSuspense } from "@use-pico/client/type";
-import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import { type FC, useEffect, useRef, useState } from "react";
+import { Container } from "@/lib/client/container";
+import type { MarkSuspense } from "@/lib/client/type";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/common/location/ui/LocationBadge";

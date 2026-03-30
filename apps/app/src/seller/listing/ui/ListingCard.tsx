@@ -1,10 +1,11 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import { Container, LabelValue, ValueList } from "@use-pico/client/ui/container";
-import { Markdown } from "@use-pico/client/ui/markdown";
-import { Tx } from "@use-pico/client/ui/tx";
-import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
+import { Markdown } from "@/lib/client/markdown";
+import { Tx } from "@/lib/client/tx";
+import type { MarkSuspense } from "@/lib/client/type";
+import { Typo } from "@/lib/client/typo";
+import { LabelValue, ValueList } from "@/lib/client/value";
 import { ConditionIcon } from "~/common/condition/ui/ConditionIcon";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";

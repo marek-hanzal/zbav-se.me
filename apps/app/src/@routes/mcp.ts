@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import type { NoticeSchema } from "@use-pico/common/schema";
+import type { NoticeSchema } from "@/lib/common/schema";
 
 export const Route = createFileRoute("/mcp")({
 	server: {

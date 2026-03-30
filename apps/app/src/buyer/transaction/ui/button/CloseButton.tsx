@@ -1,8 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { CheckIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
-import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
+import { Button } from "@/lib/client/button";
+import { CheckIcon } from "@/lib/client/icon";
+import { Tx } from "@/lib/client/tx";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionCloseMutation } from "../../mutation/withTransactionCloseMutation";

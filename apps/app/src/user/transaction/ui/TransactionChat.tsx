@@ -1,8 +1,8 @@
-import { Container } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import type { FC, ReactNode } from "react";
 import { useCallback } from "react";
 import { match } from "ts-pattern";
+import { Container } from "@/lib/client/container";
+import { Tx } from "@/lib/client/tx";
 import { ChatInput } from "~/common/ui/chat";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { withTransactionEntryQuery } from "~/user/transaction-entry/query/withTransactionEntryQuery";

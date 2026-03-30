@@ -1,5 +1,5 @@
-import { CursorSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { CursorSchema } from "@/lib/common/schema";
 import { LocationFilterSchema } from "~/session/location/server/schema/LocationFilterSchema";
 import { LocationSortSchema } from "~/session/location/server/schema/LocationSortSchema";
 import { LocationWhereSchema } from "~/session/location/server/schema/LocationWhereSchema";

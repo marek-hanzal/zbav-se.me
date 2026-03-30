@@ -1,9 +1,9 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import { ConfirmButton } from "@use-pico/client/ui/button";
-import { Mx } from "@use-pico/client/ui/mx";
-import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
 import { useState } from "react";
+import { ConfirmButton } from "@/lib/client/button";
+import { Mx } from "@/lib/client/mx";
+import { Tx } from "@/lib/client/tx";
+import type { MarkSuspense } from "@/lib/client/type";
 import { withFlagToggleMutation } from "~/buyer/flag/mutation/withFlagToggleMutation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { FlagIcon } from "~/common/ui/icon";

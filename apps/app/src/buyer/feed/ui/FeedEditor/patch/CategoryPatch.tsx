@@ -1,7 +1,7 @@
-import { Container } from "@use-pico/client/ui/container";
-import type { EntitySchema } from "@use-pico/common/schema";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
 import { useSelection } from "@/lib/client/selection";
+import type { EntitySchema } from "@/lib/common/schema";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";

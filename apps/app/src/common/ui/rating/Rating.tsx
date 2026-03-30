@@ -1,10 +1,10 @@
-import { TrashIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
-import type { EntitySchema } from "@use-pico/common/schema";
 import { type FC, useMemo } from "react";
+import { Button } from "@/lib/client/button";
+import { Container } from "@/lib/client/container";
+import { TrashIcon } from "@/lib/client/icon";
 import type { useSelection } from "@/lib/client/selection";
+import { Tx } from "@/lib/client/tx";
+import type { EntitySchema } from "@/lib/common/schema";
 import { uiSelectButton } from "../ui";
 import { RatingToIcon } from "./RatingToIcon";
 

@@ -1,4 +1,4 @@
-import { withMutation } from "@use-pico/client/mutation";
+import { withMutation } from "@/lib/client/mutation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { feedGalleryCreateFn } from "~/buyer/feed-gallery/server/fn/feedGalleryCreateFn";
 import type { FeedGalleryCreateSchema } from "~/buyer/feed-gallery/server/schema/FeedGalleryCreateSchema";

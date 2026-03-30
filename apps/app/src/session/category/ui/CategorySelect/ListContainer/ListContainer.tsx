@@ -1,12 +1,13 @@
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import { withFallback } from "@use-pico/client/utils";
-import type { EntitySchema } from "@use-pico/common/schema";
 import { Suspense, useEffect, useRef } from "react";
+import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
 import { useMergeRefs } from "@/lib/client/ref";
 import { useScrollTo } from "@/lib/client/scroll-to";
 import type { useSelection } from "@/lib/client/selection";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import type { EntitySchema } from "@/lib/common/schema";
 import { withCategoryQuery } from "~/session/category/withCategoryQuery";
 import { CategoryItem } from "../CategoryItem";
 import { Empty } from "./Data/Empty";

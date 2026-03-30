@@ -1,7 +1,7 @@
-import type { uiContainer } from "@use-pico/client/ui/container";
-import { Group } from "@use-pico/client/ui/group";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import type { uiContainer } from "@/lib/client/container";
+import { Group } from "@/lib/client/group";
 import type { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
 
 export namespace TypeContainer {

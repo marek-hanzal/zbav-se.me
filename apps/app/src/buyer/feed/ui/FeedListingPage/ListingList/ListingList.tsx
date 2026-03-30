@@ -1,18 +1,15 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@use-pico/client/icon";
-import type { MarkSuspense } from "@use-pico/client/type";
-import {
-	Container,
-	SpinnerContainer,
-	SpinnerContainer as VisibleSpinnerContainer,
-} from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
 import { type Ref, Suspense, useCallback, useEffect, useRef } from "react";
+import { Container } from "@/lib/client/container";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { useMergeRefs } from "@/lib/client/ref";
 import { useScrollTo } from "@/lib/client/scroll-to";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import { Tx } from "@/lib/client/tx";
+import type { MarkSuspense } from "@/lib/client/type";
 import {
 	useElementVisibility,
 	VisibilityProvider,
@@ -77,7 +74,7 @@ export const ListingList = withFallback(
 		});
 
 		const placeholder = useCallback(() => {
-			return <VisibleSpinnerContainer />;
+			return <SpinnerContainer />;
 		}, []);
 
 		return (

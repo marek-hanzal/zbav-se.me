@@ -1,5 +1,5 @@
-import { Container } from "@use-pico/client/ui/container";
 import { type FC, Suspense } from "react";
+import { Container } from "@/lib/client/container";
 import { Item } from "./Item";
 
 export namespace TransactionList {

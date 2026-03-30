@@ -1,6 +1,6 @@
-import type { MarkSuspense } from "@use-pico/client/type";
 import { type FC, useEffect } from "react";
 import { useLocale } from "@/lib/client/locale";
+import type { MarkSuspense } from "@/lib/client/type";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { withListingQuery as withBuyerListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { withTransactionQuery as withBuyerTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";

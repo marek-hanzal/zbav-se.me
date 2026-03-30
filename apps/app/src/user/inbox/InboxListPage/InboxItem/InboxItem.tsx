@@ -1,6 +1,6 @@
-import type { MarkSuspense } from "@use-pico/client/type";
 import { withFallback } from "@use-pico/client/utils";
 import { match } from "ts-pattern";
+import type { MarkSuspense } from "@/lib/client/type";
 import { ListItemPending } from "~/common/list-item/ListItemPending";
 import { withInboxQuery } from "~/user/inbox/query/withInboxQuery";
 import { InboxBuyerMessageItem } from "../payload/InboxBuyerMessageItem";

@@ -1,9 +1,9 @@
-import { UserIcon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
-import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
+import { UserIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
+import { Status } from "@/lib/client/status";
 import { useUser } from "~/common/auth/hook/useUser";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";

@@ -1,9 +1,9 @@
-import { ChevronRightIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { ChevronRightIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
+import { Tx } from "@/lib/client/tx";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 import { FavouriteIcon } from "~/common/ui/icon";
 import { uiCtaLinkButton } from "~/common/ui/ui";

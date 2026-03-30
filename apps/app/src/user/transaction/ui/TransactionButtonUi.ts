@@ -1,4 +1,4 @@
-import type { ConfirmButton } from "@use-pico/client/ui/button";
+import type { ConfirmButton } from "@/lib/client/button";
 
 export const TransactionButtonUi: ConfirmButton.Props = {
 	iconProps: {

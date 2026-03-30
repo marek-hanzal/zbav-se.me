@@ -3,7 +3,7 @@ import { keepPreviousData, QueryClient } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
-import { Container } from "@use-pico/client/ui/container";
+import { Container } from "@/lib/client/container";
 import { Logo } from "~/common/ui/logo";
 import { routeTree } from "./_route";
 

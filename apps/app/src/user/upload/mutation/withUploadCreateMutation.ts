@@ -1,4 +1,4 @@
-import { withMutation } from "@use-pico/client/mutation";
+import { withMutation } from "@/lib/client/mutation";
 import { uploadCreateFn } from "~/user/upload/server/fn/uploadCreateFn";
 import type { UploadCreateSchema } from "~/user/upload/server/schema/UploadCreateSchema";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";

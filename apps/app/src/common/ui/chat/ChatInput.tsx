@@ -1,6 +1,3 @@
-import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
-import { uiInput } from "@use-pico/client/ui/form";
 import {
 	type FC,
 	type KeyboardEventHandler,
@@ -10,6 +7,9 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { Button } from "@/lib/client/button";
+import { Container } from "@/lib/client/container";
+import { uiInput } from "@/lib/client/form";
 import { SendMessageIcon } from "../icon";
 
 export namespace ChatInput {

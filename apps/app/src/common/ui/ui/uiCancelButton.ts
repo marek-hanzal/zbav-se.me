@@ -1,4 +1,4 @@
-import { uiButton } from "@use-pico/client/ui/button";
+import { uiButton } from "@/lib/client/button";
 import type { ui as coolUi } from "@/lib/cls";
 
 export namespace uiCancelButton {

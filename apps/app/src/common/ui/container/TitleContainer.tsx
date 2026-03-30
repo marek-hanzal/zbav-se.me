@@ -1,6 +1,6 @@
-import { Container } from "@use-pico/client/ui/container";
-import type { Tx } from "@use-pico/client/ui/tx";
 import type { FC, ReactNode } from "react";
+import { Container } from "@/lib/client/container";
+import type { Tx } from "@/lib/client/tx";
 import { Title } from "../title/Title";
 import { BottomContainer } from "./BottomContainer";
 

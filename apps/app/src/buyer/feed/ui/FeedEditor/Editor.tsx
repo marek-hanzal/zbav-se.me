@@ -1,9 +1,9 @@
-import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
-import type { MarkSuspense } from "@use-pico/client/type";
-import { Container } from "@use-pico/client/ui/container";
-import { Group } from "@use-pico/client/ui/group";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
+import { Group } from "@/lib/client/group";
+import { ChevronRightIcon, Icon } from "@/lib/client/icon";
+import type { MarkSuspense } from "@/lib/client/type";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { DeliveryValueList } from "~/common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";

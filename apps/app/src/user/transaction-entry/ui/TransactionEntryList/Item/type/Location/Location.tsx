@@ -1,10 +1,11 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import type { Container } from "@use-pico/client/ui/container";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
-import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
+import type { Container } from "@/lib/client/container";
+
 import { useLocale } from "@/lib/client/locale";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import type { MarkSuspense } from "@/lib/client/type";
+import { Typo } from "@/lib/client/typo";
 import { withLocationFetchQuery } from "~/session/location/withLocationFetchQuery";
 import type { TransactionEntryLocation } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/LocationSchema";
 import { TypeContainer } from "../TypeContainer";

@@ -1,5 +1,5 @@
-import { CursorSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { CursorSchema } from "@/lib/common/schema";
 import { IgnoreFilterSchema } from "~/buyer/ignore/server/schema/IgnoreFilterSchema";
 import { IgnoreSortSchema } from "~/buyer/ignore/server/schema/IgnoreSortSchema";
 import { IgnoreWhereSchema } from "~/buyer/ignore/server/schema/IgnoreWhereSchema";

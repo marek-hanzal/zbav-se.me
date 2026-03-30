@@ -1,7 +1,7 @@
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Button } from "@use-pico/client/ui/button";
 import type { FC, ReactNode } from "react";
 import { useState } from "react";
+import { BottomSheet } from "@/lib/client/bottom-sheet";
+import { Button } from "@/lib/client/button";
 import { PaperclipIcon } from "~/common/ui/icon";
 
 export namespace TransactionMenuButton {

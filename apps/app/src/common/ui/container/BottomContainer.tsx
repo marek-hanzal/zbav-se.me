@@ -1,5 +1,5 @@
-import { Container } from "@use-pico/client/ui/container";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
 
 export namespace BottomContainer {
 	export interface Props extends Container.Props {}

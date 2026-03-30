@@ -1,5 +1,5 @@
-import { CursorSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { CursorSchema } from "@/lib/common/schema";
 import { UploadFilterSchema } from "~/user/upload/server/schema/UploadFilterSchema";
 import { UploadSortSchema } from "~/user/upload/server/schema/UploadSortSchema";
 import { UploadWhereSchema } from "~/user/upload/server/schema/UploadWhereSchema";

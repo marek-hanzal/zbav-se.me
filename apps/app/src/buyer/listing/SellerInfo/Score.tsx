@@ -1,7 +1,8 @@
-import { Container, LabelValue } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
+import { Tx } from "@/lib/client/tx";
+import { LabelValue } from "@/lib/client/value";
 import { RatingIcon } from "~/common/score/ui/RatingIcon";
 
 export namespace Score {

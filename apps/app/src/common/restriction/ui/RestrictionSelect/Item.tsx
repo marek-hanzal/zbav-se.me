@@ -1,8 +1,8 @@
-import { Button } from "@use-pico/client/ui/button";
-import { Tx } from "@use-pico/client/ui/tx";
-import type { EntitySchema } from "@use-pico/common/schema";
 import type { FC } from "react";
+import { Button } from "@/lib/client/button";
 import type { useSelection } from "@/lib/client/selection";
+import { Tx } from "@/lib/client/tx";
+import type { EntitySchema } from "@/lib/common/schema";
 import { uiSelectButton } from "~/common/ui/ui";
 
 export namespace Item {

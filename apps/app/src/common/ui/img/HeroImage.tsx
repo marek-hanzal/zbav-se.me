@@ -1,5 +1,3 @@
-import { Container, SpinnerContainer, uiContainer } from "@use-pico/client/ui/container";
-import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import {
 	type ComponentProps,
@@ -9,6 +7,9 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { Container, uiContainer } from "@/lib/client/container";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import { Status } from "@/lib/client/status";
 
 type ImageStatus = "loading" | "loaded" | "error";
 

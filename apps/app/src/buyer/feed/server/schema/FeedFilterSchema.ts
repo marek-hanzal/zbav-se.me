@@ -1,5 +1,5 @@
-import { FilterSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { FilterSchema } from "@/lib/common/schema";
 import { FeedTypeEnumSchema } from "~/common/feed/enum/FeedTypeEnumSchema";
 
 export const FeedFilterSchema = z

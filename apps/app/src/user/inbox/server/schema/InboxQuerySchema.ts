@@ -1,5 +1,5 @@
-import { CursorSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { CursorSchema } from "@/lib/common/schema";
 import { InboxFilterSchema } from "~/user/inbox/server/schema/InboxFilterSchema";
 import { InboxSortSchema } from "~/user/inbox/server/schema/InboxSortSchema";
 import { InboxWhereSchema } from "~/user/inbox/server/schema/InboxWhereSchema";

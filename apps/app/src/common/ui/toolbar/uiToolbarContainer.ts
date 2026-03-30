@@ -1,4 +1,4 @@
-import type { uiContainer } from "@use-pico/client/ui/container";
+import type { uiContainer } from "@/lib/client/container";
 import { ui as coolUi } from "@/lib/cls";
 
 export namespace uiToolbarContainer {

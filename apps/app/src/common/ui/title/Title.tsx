@@ -1,6 +1,6 @@
-import { Container } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import type { FC, ReactNode } from "react";
+import { Container } from "@/lib/client/container";
+import { Tx } from "@/lib/client/tx";
 
 export namespace Title {
 	export interface Props extends Container.Props {

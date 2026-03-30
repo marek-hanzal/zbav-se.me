@@ -1,5 +1,5 @@
-import { Button } from "@use-pico/client/ui/button";
-import { Tx } from "@use-pico/client/ui/tx";
+import { Button } from "@/lib/client/button";
+import { Tx } from "@/lib/client/tx";
 import { GalleryUploadSheet } from "~/common/gallery/ui/GalleryUploadSheet";
 import { PhotoIcon } from "~/common/ui/icon";
 

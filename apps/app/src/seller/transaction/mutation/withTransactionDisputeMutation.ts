@@ -1,5 +1,5 @@
-import { withMutation } from "@use-pico/client/mutation";
-import type { EntitySchema } from "@use-pico/common/schema";
+import { withMutation } from "@/lib/client/mutation";
+import type { EntitySchema } from "@/lib/common/schema";
 import { transactionDisputeFn } from "~/seller/transaction/server/fn/transactionDisputeFn";
 import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
 import { withTransactionListingQuery } from "~/seller/transaction-listing/query/withTransactionListingQuery";

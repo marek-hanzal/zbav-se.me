@@ -1,5 +1,5 @@
-import { CursorSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { CursorSchema } from "@/lib/common/schema";
 import { ListingFilterSchema } from "~/public/listing/server/schema/ListingFilterSchema";
 import { ListingMetaSchema } from "~/public/listing/server/schema/ListingMetaSchema";
 import { ListingSortSchema } from "~/public/listing/server/schema/ListingSortSchema";

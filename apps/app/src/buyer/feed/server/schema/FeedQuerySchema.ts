@@ -1,5 +1,5 @@
-import { CursorSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { CursorSchema } from "@/lib/common/schema";
 import { FeedFilterSchema } from "~/buyer/feed/server/schema/FeedFilterSchema";
 import { FeedSortSchema } from "~/buyer/feed/server/schema/FeedSortSchema";
 import { FeedWhereSchema } from "~/buyer/feed/server/schema/FeedWhereSchema";

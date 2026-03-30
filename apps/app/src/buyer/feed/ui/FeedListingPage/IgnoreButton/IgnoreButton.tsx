@@ -1,8 +1,8 @@
-import { TrashIcon } from "@use-pico/client/icon";
-import type { MarkSuspense } from "@use-pico/client/type";
-import { ConfirmButton } from "@use-pico/client/ui/button";
-import { Tx } from "@use-pico/client/ui/tx";
 import { withFallback } from "@use-pico/client/utils";
+import { ConfirmButton } from "@/lib/client/button";
+import { TrashIcon } from "@/lib/client/icon";
+import { Tx } from "@/lib/client/tx";
+import type { MarkSuspense } from "@/lib/client/type";
 import { withIgnoreToggleMutation } from "~/buyer/ignore/mutation/withIgnoreToggleMutation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 

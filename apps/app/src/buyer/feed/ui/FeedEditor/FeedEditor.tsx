@@ -1,8 +1,8 @@
-import type { MarkSuspense } from "@use-pico/client/type";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
-import { View } from "@use-pico/client/ui/view";
 import { withFallback } from "@use-pico/client/utils";
 import { type PropsWithChildren, useCallback, useMemo, useState } from "react";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import type { MarkSuspense } from "@/lib/client/type";
+import { View } from "@/lib/client/view";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { Editor } from "./Editor";
 import { AgePatch } from "./patch/AgePatch";

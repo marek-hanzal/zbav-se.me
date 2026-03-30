@@ -1,5 +1,5 @@
-import { EditIcon, Icon } from "@use-pico/client/icon";
 import type { FC } from "react";
+import { EditIcon, Icon } from "@/lib/client/icon";
 
 export namespace EditAction {
 	export interface Props extends Icon.PropsEx {

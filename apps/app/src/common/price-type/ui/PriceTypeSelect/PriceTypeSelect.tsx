@@ -1,7 +1,7 @@
-import { Container } from "@use-pico/client/ui/container";
-import type { EntitySchema } from "@use-pico/common/schema";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
 import type { useSelection } from "@/lib/client/selection";
+import type { EntitySchema } from "@/lib/common/schema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { Item } from "./Item";
 

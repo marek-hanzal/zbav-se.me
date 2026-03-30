@@ -1,5 +1,6 @@
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import type { FC } from "react";
+import { SpinnerContainer } from "@/lib/client/spinner";
+
 import { ListItem } from "./ListItem";
 
 export namespace ListItemPending {

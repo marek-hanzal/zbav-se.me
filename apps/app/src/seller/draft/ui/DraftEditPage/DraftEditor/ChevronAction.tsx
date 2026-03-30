@@ -1,5 +1,5 @@
-import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
 import type { FC } from "react";
+import { ChevronRightIcon, Icon } from "@/lib/client/icon";
 
 export namespace ChevronAction {
 	export interface Props extends Icon.PropsEx {}

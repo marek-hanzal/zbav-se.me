@@ -1,6 +1,6 @@
-import { Button } from "@use-pico/client/ui/button";
-import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
+import { Button } from "@/lib/client/button";
+import { Tx } from "@/lib/client/tx";
 import { LocationIcon } from "~/common/ui/icon";
 
 export namespace Trigger {

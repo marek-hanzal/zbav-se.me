@@ -1,10 +1,10 @@
-import { WarningIcon } from "@use-pico/client/icon";
-import type { Container as ContainerUi } from "@use-pico/client/ui/container";
-import { Container } from "@use-pico/client/ui/container";
-import { Mx } from "@use-pico/client/ui/mx";
-import type { Status as StatusUi } from "@use-pico/client/ui/status";
-import { Status } from "@use-pico/client/ui/status";
 import type { FC } from "react";
+import type { Container as ContainerUi } from "@/lib/client/container";
+import { Container } from "@/lib/client/container";
+import { WarningIcon } from "@/lib/client/icon";
+import { Mx } from "@/lib/client/mx";
+import type { Status as StatusUi } from "@/lib/client/status";
+import { Status } from "@/lib/client/status";
 import { uiWarningStatus } from "~/common/ui/ui";
 
 export namespace Default {

@@ -1,5 +1,5 @@
-import { CursorSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { CursorSchema } from "@/lib/common/schema";
 import { GalleryFilterSchema } from "~/user/gallery/server/schema/GalleryFilterSchema";
 import { GallerySortSchema } from "~/user/gallery/server/schema/GallerySortSchema";
 import { GalleryWhereSchema } from "~/user/gallery/server/schema/GalleryWhereSchema";

@@ -1,9 +1,9 @@
 import { Badge } from "@use-pico/client/ui/badge";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
-import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { useLocale } from "@/lib/client/locale";
+import { Tx } from "@/lib/client/tx";
 import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 
 export namespace ListingPrice {

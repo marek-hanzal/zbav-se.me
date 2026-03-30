@@ -1,5 +1,5 @@
-import { Container } from "@use-pico/client/ui/container";
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
 import { useSelection } from "@/lib/client/selection";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";

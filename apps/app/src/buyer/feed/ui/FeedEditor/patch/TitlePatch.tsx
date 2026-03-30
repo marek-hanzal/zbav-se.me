@@ -1,10 +1,9 @@
-import { Container } from "@use-pico/client/ui/container";
-import { FormField } from "@use-pico/client/ui/form";
-import { Mx } from "@use-pico/client/ui/mx";
-import { Status } from "@use-pico/client/ui/status";
-import { TextInput } from "@use-pico/client/ui/text-input";
 import { translator } from "@use-pico/common/translator";
 import { type FC, useState } from "react";
+import { Container } from "@/lib/client/container";
+import { FormField, TextInput } from "@/lib/client/form";
+import { Mx } from "@/lib/client/mx";
+import { Status } from "@/lib/client/status";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";

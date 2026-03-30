@@ -1,6 +1,6 @@
-import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { LabelValue } from "@/lib/client/value";
 
 export namespace AgeValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {

@@ -1,12 +1,13 @@
-import { Icon } from "@use-pico/client/icon";
-import type { MarkSuspense } from "@use-pico/client/type";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Tx } from "@use-pico/client/ui/tx";
-import { Typo } from "@use-pico/client/ui/typo";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
+import { Container } from "@/lib/client/container";
+import { Icon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import { Tx } from "@/lib/client/tx";
+import type { MarkSuspense } from "@/lib/client/type";
+import { Typo } from "@/lib/client/typo";
 import { isValid } from "~/common/draft/util/isValid";
 import { useMaybeUpload } from "~/common/gallery/hook/useMaybeUpload";
 import { ListItem } from "~/common/list-item/ListItem";

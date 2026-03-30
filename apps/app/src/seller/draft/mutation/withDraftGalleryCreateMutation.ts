@@ -1,4 +1,4 @@
-import { withMutation } from "@use-pico/client/mutation";
+import { withMutation } from "@/lib/client/mutation";
 import { draftGalleryCreateFn } from "~/seller/draft-gallery/server/fn/draftGalleryCreateFn";
 import type { DraftGalleryCreateSchema } from "~/seller/draft-gallery/server/schema/DraftGalleryCreateSchema";
 import type { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";

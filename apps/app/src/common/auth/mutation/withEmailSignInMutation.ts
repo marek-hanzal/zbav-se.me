@@ -1,4 +1,4 @@
-import { withMutation } from "@use-pico/client/mutation";
+import { withMutation } from "@/lib/client/mutation";
 import { authClient } from "~/common/auth/authClient";
 
 export namespace withEmailSignInMutation {

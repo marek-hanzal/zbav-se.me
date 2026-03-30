@@ -1,8 +1,8 @@
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Button } from "@use-pico/client/ui/button";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { type FC, Suspense, useState } from "react";
+import { BottomSheet } from "@/lib/client/bottom-sheet";
+import { Button } from "@/lib/client/button";
+import { Tx } from "@/lib/client/tx";
 import { CloseButton } from "~/common/ui/button";
 import { SellerIcon } from "~/common/ui/icon";
 import { SellerInfo } from "./SellerInfo";
