@@ -30,8 +30,8 @@
 		"@types/node": "25.5.0",
 		"dotenv-cli": "11.0.0",
 		"npm-run-all2": "8.0.4",
-		"syncpack": "14.2.1",
-		"turbo": "2.8.20",
+		"syncpack": "14.3.0",
+		"turbo": "2.8.21",
 		"typescript": "beta"
 	},
 	"license": "MIT",

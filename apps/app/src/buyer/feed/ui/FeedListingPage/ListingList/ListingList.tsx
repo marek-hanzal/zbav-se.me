@@ -1,4 +1,3 @@
-import { useMergeRefs, useScrollTo } from "@use-pico/client/hook";
 import { ChevronLeftIcon, ChevronRightIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import {
@@ -12,6 +11,8 @@ import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
 import { type Ref, Suspense, useCallback, useEffect, useRef } from "react";
 import { useLocale } from "@/lib/client/locale";
+import { useMergeRefs } from "@/lib/client/ref";
+import { useScrollTo } from "@/lib/client/scroll-to";
 import {
 	useElementVisibility,
 	VisibilityProvider,

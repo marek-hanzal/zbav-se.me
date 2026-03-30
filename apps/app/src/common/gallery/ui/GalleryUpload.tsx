@@ -1,8 +1,8 @@
-import { useSnapperNav } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import { SnapperNav } from "@use-pico/client/ui/snapper-nav";
 import type { StateType } from "@use-pico/common/type";
 import { type FC, useRef } from "react";
+import { useSnapperNav } from "@/lib/client/snapper";
 import { PhotoUpload } from "~/common/photo/ui/PhotoUpload";
 
 export namespace GalleryUpload {
