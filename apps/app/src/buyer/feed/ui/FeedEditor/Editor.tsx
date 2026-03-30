@@ -1,9 +1,9 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { ChevronRightIcon, Icon } from "@/lib/client/icon";
 import type { MarkSuspense } from "@/lib/client/type";
+import { translator } from "@/lib/common/translator";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { DeliveryValueList } from "~/common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";

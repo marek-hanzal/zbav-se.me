@@ -1,4 +1,3 @@
-import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { Badge } from "@/lib/client/badge";
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
@@ -13,6 +12,7 @@ import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
+import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { TypoIcon } from "~/common/ui/typo";
 import { uiMenuButton } from "~/common/ui/ui";
 import { withInboxQuery } from "~/user/inbox/query/withInboxQuery";

@@ -1,4 +1,3 @@
-import { translator } from "@use-pico/common/translator";
 import { type Ref, Suspense, useCallback, useEffect, useRef } from "react";
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
@@ -15,6 +14,7 @@ import {
 	VisibilityProvider,
 	VisibleContainer,
 } from "@/lib/client/visibility";
+import { translator } from "@/lib/common/translator";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";

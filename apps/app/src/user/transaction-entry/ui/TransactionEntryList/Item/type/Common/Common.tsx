@@ -1,9 +1,9 @@
-import { toTimeDiff } from "@use-pico/common/time";
 import type { FC } from "react";
 import type { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
 import { Mx } from "@/lib/client/mx";
 import { Typo } from "@/lib/client/typo";
+import { toTimeDiff } from "@use-pico/common/time";
 import type { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
 import type { TransactionEntryCommon } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/CommonSchema";
 import { TypeContainer } from "../TypeContainer";

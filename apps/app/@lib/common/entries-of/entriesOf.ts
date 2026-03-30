@@ -18,7 +18,7 @@
  *
  * @example
  * ```typescript
- * import { entriesOf } from "@use-pico/common/entries-of";
+ * import { entriesOf } from "@/lib/common/entries-of";
  *
  * const user = {
  *   id: "123",

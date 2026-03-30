@@ -1,7 +1,7 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
 import type { MarkSuspense } from "@/lib/client/type";
+import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { Transaction } from "~/seller/transaction/~public/Transaction";

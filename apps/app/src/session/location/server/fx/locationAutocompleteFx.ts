@@ -1,5 +1,5 @@
-import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { genId } from "@/lib/common/gen-id";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";

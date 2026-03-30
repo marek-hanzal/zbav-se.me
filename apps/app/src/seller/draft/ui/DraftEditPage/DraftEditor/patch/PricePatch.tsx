@@ -1,9 +1,9 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
+import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { TitleContainer } from "~/common/ui/container";
 import { Dial } from "~/common/ui/dial";

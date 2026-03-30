@@ -1,10 +1,10 @@
-import { translator } from "@use-pico/common/translator";
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Status } from "@/lib/client/status";
 import type { MarkSuspense } from "@/lib/client/type";
+import { translator } from "@/lib/common/translator";
 import { withListingSellerInfoQuery } from "~/buyer/listing/query/withListingSellerInfoQuery";
 import { SearchIcon } from "~/common/ui/icon";
 import { Header } from "./Header";

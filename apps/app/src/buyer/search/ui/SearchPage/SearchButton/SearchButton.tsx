@@ -1,4 +1,3 @@
-import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { Badge } from "@/lib/client/badge";
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
@@ -6,6 +5,7 @@ import { LinkTo, type uiLinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
+import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { SearchIcon } from "~/common/ui/icon";

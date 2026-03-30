@@ -1,5 +1,5 @@
-import { sleep } from "@use-pico/common/sleep";
 import { Client } from "pg";
+import { sleep } from "@/lib/common/sleep";
 
 export async function waitForConnect(dsn: string, timeoutMs = 15_000) {
 	const started = Date.now();

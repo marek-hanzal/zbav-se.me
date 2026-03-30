@@ -1,8 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { translator } from "@use-pico/common/translator";
 import { type FC, useEffect, useRef } from "react";
 import { Container } from "@/lib/client/container";
 import type { MarkSuspense } from "@/lib/client/type";
+import { translator } from "@/lib/common/translator";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { HeroImage } from "~/common/ui/img";

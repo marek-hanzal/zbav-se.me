@@ -1,5 +1,5 @@
-import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
+import { NotFoundErrorFx } from "@/lib/common/error";
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";

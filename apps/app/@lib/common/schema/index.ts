@@ -4,5 +4,6 @@ export { EntitySchema } from "./EntitySchema";
 export { FilterSchema } from "./FilterSchema";
 export { NoticeSchema } from "./NoticeSchema";
 export { NoticeTypeEnumSchema } from "./NoticeTypeEnumSchema";
+export { OrderEnumSchema } from "./OrderEnumSchema";
 export { TranslationListSchema } from "./TranslationListSchema";
 export { TranslationSchema } from "./TranslationSchema";

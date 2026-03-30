@@ -1,6 +1,6 @@
-import { NotFoundErrorFx } from "@use-pico/common/error";
-import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { NotFoundErrorFx } from "@/lib/common/error";
+import { withFetchFx } from "@/lib/common/fetch";
 import { withGalleryQueryBuilderFx } from "~/user/gallery/server/db/withGalleryQueryBuilderFx";
 import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
 import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";

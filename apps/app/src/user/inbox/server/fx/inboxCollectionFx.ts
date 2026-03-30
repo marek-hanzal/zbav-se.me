@@ -1,5 +1,5 @@
-import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withCollectionFx } from "@/lib/common/collection";
 import { withInboxCollectionSelectFx } from "~/user/inbox/server/db/withInboxCollectionSelectFx";
 import { withInboxQueryBuilderFx } from "~/user/inbox/server/db/withInboxQueryBuilderFx";
 import type { InboxFilterSchema } from "~/user/inbox/server/schema/InboxFilterSchema";

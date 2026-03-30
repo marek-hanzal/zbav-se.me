@@ -1,6 +1,6 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
+import { translator } from "@/lib/common/translator";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { CloseButton } from "~/common/ui/button";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";

@@ -1,10 +1,11 @@
 // import { passkey } from "@better-auth/passkey";
-import { genId } from "@use-pico/common/gen-id";
+
 import { betterAuth } from "better-auth";
 import { anonymous, customSession, mcp, openAPI } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { type Dialect, Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
+import { genId } from "@/lib/common/gen-id";
 import type { Database } from "~/server/database/Database";
 import { ServerBetterAuthSchema } from "~/server/env/ServerBetterAuthSchema";
 import { ServerViteSchema } from "~/server/env/ServerViteSchema";

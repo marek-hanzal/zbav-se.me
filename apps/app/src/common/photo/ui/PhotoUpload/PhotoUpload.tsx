@@ -1,9 +1,9 @@
-import { translator } from "@use-pico/common/translator";
 import { type FC, Suspense } from "react";
 import { Container } from "@/lib/client/container";
 import { SpinnerIcon } from "@/lib/client/icon";
 import { Progress } from "@/lib/client/progress";
 import { Status } from "@/lib/client/status";
+import { translator } from "@/lib/common/translator";
 import { Placeholder } from "./Placeholder";
 import { Preview } from "./Preview";
 import { useController } from "./useController";

@@ -1,5 +1,5 @@
-import { genId } from "@use-pico/common/gen-id";
 import { withMutation } from "@/lib/client/mutation";
+import { genId } from "@/lib/common/gen-id";
 import { authClient } from "~/common/auth/authClient";
 
 export namespace withRegisterMutation {

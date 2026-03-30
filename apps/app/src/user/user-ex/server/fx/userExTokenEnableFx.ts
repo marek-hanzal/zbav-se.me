@@ -1,5 +1,5 @@
-import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { genId } from "@/lib/common/gen-id";
 import { userExPatchFx } from "~/user/user-ex/server/fx/userExPatchFx";
 
 export namespace userExTokenEnableFx {

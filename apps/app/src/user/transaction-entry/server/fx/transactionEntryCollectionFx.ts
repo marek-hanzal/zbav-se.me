@@ -1,5 +1,5 @@
-import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withCollectionFx } from "@/lib/common/collection";
 import { withTransactionEntryQueryBuilderFx } from "../db/withTransactionEntryQueryBuilderFx";
 import { withTransactionEntrySelectFx } from "../db/withTransactionEntrySelectFx";
 import type { TransactionEntryFilterSchema } from "../schema/TransactionEntryFilterSchema";

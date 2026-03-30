@@ -1,5 +1,5 @@
-import { rangedom, sample } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
+import { rangedom, sample } from "@/lib/common/rangedom";
 import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";
 import { withSeedConcurrency } from "~/server/@system/seed/fx/core/seedConcurrency";
 import { seedGalleryItemBulkInsertFx } from "~/server/@system/seed/fx/core/seedGalleryItemBulkInsertFx";

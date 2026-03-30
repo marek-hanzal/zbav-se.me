@@ -1,5 +1,5 @@
-import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { withFetchFx } from "@/lib/common/fetch";
 import { withInboxQueryBuilderFx } from "~/user/inbox/server/db/withInboxQueryBuilderFx";
 import { withInboxSelectFx } from "~/user/inbox/server/db/withInboxSelectFx";
 import type { InboxFilterSchema } from "~/user/inbox/server/schema/InboxFilterSchema";

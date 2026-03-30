@@ -1,5 +1,5 @@
-import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { withFetchFx } from "@/lib/common/fetch";
 import { withIgnoreQueryBuilderFx } from "~/buyer/ignore/server/db/withIgnoreQueryBuilderFx";
 import { withIgnoreSelectFx } from "~/buyer/ignore/server/db/withIgnoreSelectFx";
 import type { IgnoreFilterSchema } from "~/buyer/ignore/server/schema/IgnoreFilterSchema";

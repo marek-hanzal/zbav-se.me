@@ -1,7 +1,7 @@
-import { genId } from "@use-pico/common/gen-id";
-import { list } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
+import { genId } from "@/lib/common/gen-id";
+import { list } from "@/lib/common/rangedom";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";
 import { ensureSeedUserFx } from "~/server/@system/seed/fx/ensureSeedUserFx";

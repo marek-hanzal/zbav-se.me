@@ -1,5 +1,5 @@
-import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withCollectionFx } from "@/lib/common/collection";
 import { withUserEventCollectionSelectFx } from "../db/withUserEventCollectionSelectFx";
 import { withUserEventQueryBuilderFx } from "../db/withUserEventQueryBuilderFx";
 import type { UserEventFilterSchema } from "../schema/UserEventFilterSchema";

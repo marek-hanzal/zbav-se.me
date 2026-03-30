@@ -1,5 +1,5 @@
-import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { withFetchFx } from "@/lib/common/fetch";
 import { withFlagQueryBuilderFx } from "~/buyer/flag/server/db/withFlagQueryBuilderFx";
 import { withFlagSelectFx } from "~/buyer/flag/server/db/withFlagSelectFx";
 import type { FlagFilterSchema } from "~/buyer/flag/server/schema/FlagFilterSchema";

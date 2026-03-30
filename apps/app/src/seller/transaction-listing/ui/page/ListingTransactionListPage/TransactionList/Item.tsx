@@ -1,4 +1,3 @@
-import { toTimeDiff } from "@use-pico/common/time";
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { MessageIcon } from "@/lib/client/icon";
@@ -6,6 +5,7 @@ import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
+import { toTimeDiff } from "@use-pico/common/time";
 import { ListItem } from "~/common/list-item/ListItem";
 import { ListItemPending } from "~/common/list-item/ListItemPending";
 import { TypoIcon } from "~/common/ui/typo";

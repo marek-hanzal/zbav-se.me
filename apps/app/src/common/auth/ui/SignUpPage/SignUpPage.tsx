@@ -1,5 +1,4 @@
 import { useNavigate } from "@tanstack/react-router";
-import { translator } from "@use-pico/common/translator";
 import { type FC, useRef } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
@@ -10,6 +9,7 @@ import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
 import { onSubmit } from "@/lib/client/submit";
 import { Tx } from "@/lib/client/tx";
+import { translator } from "@/lib/common/translator";
 import { withRegisterMutation } from "~/common/auth/mutation/withRegisterMutation";
 import { useAppForm } from "~/common/ui/form";
 import { CheckIcon } from "~/common/ui/icon";

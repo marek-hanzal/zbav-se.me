@@ -1,11 +1,10 @@
-import { translator } from "@use-pico/common/translator";
 import { useCallback, useMemo, useState } from "react";
 import { withFallback } from "@/lib/client/fallback";
-
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { View } from "@/lib/client/view";
+import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";

@@ -1,5 +1,5 @@
-import { translator } from "@use-pico/common/translator";
 import { type FC, Suspense } from "react";
+import { translator } from "@/lib/common/translator";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenu } from "../HomeMenu";
 

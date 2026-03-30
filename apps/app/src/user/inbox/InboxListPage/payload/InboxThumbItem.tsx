@@ -1,5 +1,3 @@
-import { toTimeDiff } from "@use-pico/common/time";
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { useState } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
@@ -7,6 +5,8 @@ import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
+import { toTimeDiff } from "@use-pico/common/time";
+import { translator } from "@/lib/common/translator";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListItem } from "~/common/list-item/ListItem";
 import { CloseButton } from "~/common/ui/button";

@@ -1,12 +1,12 @@
+import { Effect } from "effect";
+import { PostgresDialect, sql } from "kysely";
+import { Pool } from "pg";
 import {
 	type DialectContextFx,
 	MigrationContextFx,
 	withDatabaseFx,
 	withDialectFx,
-} from "@use-pico/common/database";
-import { Effect } from "effect";
-import { PostgresDialect, sql } from "kysely";
-import { Pool } from "pg";
+} from "@/lib/common/database";
 import { ensureDocker } from "../docker/ensureDocker";
 import { rmImage } from "../docker/rmImage";
 import { runImage } from "../docker/runImage";

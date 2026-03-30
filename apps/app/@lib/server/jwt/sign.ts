@@ -1,6 +1,6 @@
-import { genId } from "@use-pico/common/gen-id";
 import { SignJWT } from "jose";
 import type z from "zod";
+import { genId } from "@/lib/common/gen-id";
 
 export namespace sign {
 	export interface Props<out TSchema extends z.ZodObject> {

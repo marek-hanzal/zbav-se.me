@@ -1,5 +1,5 @@
-import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
+import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import type { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
 import type { InboxTypeEnumSchema } from "~/common/inbox/enum/InboxTypeEnumSchema";
 

@@ -1,8 +1,8 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
 import { PriceInline } from "@/lib/client/price-inline";
 import { LabelValue } from "@/lib/client/value";
+import { translator } from "@/lib/common/translator";
 import type { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 
 export namespace PriceValue {

@@ -1,8 +1,8 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { Group } from "@/lib/client/group";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
+import { translator } from "@/lib/common/translator";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
 import { TitleValue } from "~/common/title/ui/TitleValue";

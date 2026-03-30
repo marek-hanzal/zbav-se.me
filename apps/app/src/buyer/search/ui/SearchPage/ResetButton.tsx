@@ -1,10 +1,10 @@
 import { useNavigate } from "@tanstack/react-router";
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { Button } from "@/lib/client/button";
 import { RefreshIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
+import { translator } from "@/lib/common/translator";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
 

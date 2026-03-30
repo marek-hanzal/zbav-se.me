@@ -1,6 +1,6 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { LabelValue } from "@/lib/client/value";
+import { translator } from "@/lib/common/translator";
 
 export namespace DescriptionValue {
 	export interface Props extends LabelValue.PropsEx {

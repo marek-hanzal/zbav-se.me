@@ -1,6 +1,6 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { LabelValue } from "@/lib/client/value";
+import { translator } from "@/lib/common/translator";
 import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 
 export namespace PriceTypeValue {

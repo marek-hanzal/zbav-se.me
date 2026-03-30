@@ -1,12 +1,8 @@
-import {
-	type DialectContextFx,
-	type withDatabaseFx,
-	withDialectFx,
-} from "@use-pico/common/database";
-import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
+import { type DialectContextFx, type withDatabaseFx, withDialectFx } from "@/lib/common/database";
+import { genId } from "@/lib/common/gen-id";
 
 export namespace testabase {
 	export interface Props<in out TDatabase> {

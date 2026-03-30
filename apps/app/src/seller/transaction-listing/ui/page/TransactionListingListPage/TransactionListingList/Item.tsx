@@ -1,5 +1,3 @@
-import { toTimeDiff } from "@use-pico/common/time";
-import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { Badge } from "@/lib/client/badge";
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
@@ -8,6 +6,8 @@ import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
+import { toTimeDiff } from "@use-pico/common/time";
+import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { Image } from "~/common/list-item/Image";
 import { ListItem } from "~/common/list-item/ListItem";

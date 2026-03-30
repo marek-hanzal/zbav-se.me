@@ -1,4 +1,3 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
@@ -7,6 +6,7 @@ import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
+import { translator } from "@/lib/common/translator";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { CategoryInline } from "~/session/category/ui/CategoryInline";
 import { SellerInfo } from "../../SellerInfo";

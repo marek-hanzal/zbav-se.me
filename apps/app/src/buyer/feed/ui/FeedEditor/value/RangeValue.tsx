@@ -1,8 +1,8 @@
-import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
 import { LabelValue } from "@/lib/client/value";
+import { toLocaleNumber } from "@/lib/common/to-locale-number";
+import { translator } from "@/lib/common/translator";
 
 export namespace RangeValue {
 	export interface Props extends LabelValue.PropsEx {

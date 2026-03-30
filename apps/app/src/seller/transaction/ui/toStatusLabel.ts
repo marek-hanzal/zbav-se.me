@@ -1,5 +1,5 @@
-import { translator } from "@use-pico/common/translator";
 import { match } from "ts-pattern";
+import { translator } from "@/lib/common/translator";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 
 export const toStatusLabel = (status: TransactionStatusEnumSchema.Type) => {

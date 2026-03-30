@@ -1,5 +1,5 @@
-import { OrderEnumSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import { OrderEnumSchema } from "@/lib/common/schema";
 
 export const FlagSortSchema = z
 	.looseObject({

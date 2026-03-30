@@ -1,10 +1,10 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
 import type { EntitySchema } from "@/lib/common/schema";
+import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import { TitleContainer } from "~/common/ui/container";

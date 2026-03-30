@@ -1,7 +1,7 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
+import { translator } from "@/lib/common/translator";
 import { CategoryInline } from "~/session/category/ui/CategoryInline";
 
 export namespace CategoryValue {

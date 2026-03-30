@@ -1,8 +1,8 @@
-import { translator } from "@use-pico/common/translator";
 import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
+import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
 import { TitleContainer } from "~/common/ui/container";

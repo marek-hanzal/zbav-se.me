@@ -1,4 +1,3 @@
-import { translator } from "@use-pico/common/translator";
 import {
 	type ComponentProps,
 	type FC,
@@ -10,6 +9,7 @@ import {
 import { Container, uiContainer } from "@/lib/client/container";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Status } from "@/lib/client/status";
+import { translator } from "@/lib/common/translator";
 
 type ImageStatus = "loading" | "loaded" | "error";
 

@@ -1,4 +1,3 @@
-import { toTimeDiff } from "@use-pico/common/time";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
@@ -6,6 +5,7 @@ import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
+import { toTimeDiff } from "@use-pico/common/time";
 import { ListItem } from "~/common/list-item/ListItem";
 import type { TransactionSchema } from "~/server/database/@table/InboxTableSchema/TransactionSchema";
 import { withInboxQuery } from "~/user/inbox/query/withInboxQuery";

@@ -1,7 +1,7 @@
-import { genId } from "@use-pico/common/gen-id";
-import { keyOf } from "@use-pico/common/key-of";
-import { linkTo } from "@use-pico/common/link-to";
 import { Effect } from "effect";
+import { genId } from "@/lib/common/gen-id";
+import { keyOf } from "@/lib/common/key-of";
+import { linkTo } from "@use-pico/common/link-to";
 import { S3ContextFx } from "~/common/s3/server/context/S3ContextFx";
 import { s3ClientFx } from "~/common/s3/server/fx/s3ClientFx";
 import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";

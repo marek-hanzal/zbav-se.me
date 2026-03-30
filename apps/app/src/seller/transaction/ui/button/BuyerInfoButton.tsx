@@ -1,8 +1,8 @@
-import { translator } from "@use-pico/common/translator";
 import { type FC, Suspense, useState } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { Button } from "@/lib/client/button";
 import { Tx } from "@/lib/client/tx";
+import { translator } from "@/lib/common/translator";
 import { CloseButton } from "~/common/ui/button";
 import { BuyerIcon } from "~/common/ui/icon";
 import { BuyerInfo } from "../BuyerInfo";

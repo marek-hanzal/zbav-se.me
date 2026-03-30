@@ -1,5 +1,5 @@
-import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { withFetchFx } from "@/lib/common/fetch";
 import { withFavouriteQueryBuilderFx } from "~/buyer/favourite/server/db/withFavouriteQueryBuilderFx";
 import { withFavouriteSelectFx } from "~/buyer/favourite/server/db/withFavouriteSelectFx";
 import type { FavouriteFilterSchema } from "~/buyer/favourite/server/schema/FavouriteFilterSchema";

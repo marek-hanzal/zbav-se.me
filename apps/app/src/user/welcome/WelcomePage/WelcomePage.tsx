@@ -1,4 +1,3 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { uiButton } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
@@ -7,6 +6,7 @@ import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
+import { translator } from "@/lib/common/translator";
 import { Logo } from "~/common/ui/logo";
 
 export namespace WelcomePage {

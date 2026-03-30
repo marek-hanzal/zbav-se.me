@@ -1,7 +1,7 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { Tx } from "@/lib/client/tx";
 import { ValueList } from "@/lib/client/value";
+import { translator } from "@/lib/common/translator";
 
 export namespace ProsValueList {
 	export interface Props

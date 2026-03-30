@@ -1,5 +1,5 @@
-import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withCollectionFx } from "@/lib/common/collection";
 import { withGalleryCollectionSelectFx } from "~/user/gallery/server/db/withGalleryCollectionSelectFx";
 import { withGalleryQueryBuilderFx } from "~/user/gallery/server/db/withGalleryQueryBuilderFx";
 import type { GalleryFilterSchema } from "~/user/gallery/server/schema/GalleryFilterSchema";

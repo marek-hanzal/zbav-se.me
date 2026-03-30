@@ -1,5 +1,5 @@
-import { list, rangedom, sample } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
+import { list, rangedom, sample } from "@/lib/common/rangedom";
 import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";
 import Cons from "~/server/@system/seed/data/listing-cons.json" with { type: "json" };
 import Descriptions from "~/server/@system/seed/data/listing-description.json" with {

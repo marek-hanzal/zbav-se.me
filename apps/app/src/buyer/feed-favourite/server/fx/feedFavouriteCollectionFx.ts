@@ -1,5 +1,5 @@
-import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withCollectionFx } from "@/lib/common/collection";
 import { withFeedQueryBuilderFx } from "~/buyer/feed/server/db/withFeedQueryBuilderFx";
 import type { FeedFilterSchema } from "~/buyer/feed/server/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";

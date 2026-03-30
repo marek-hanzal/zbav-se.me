@@ -1,10 +1,10 @@
 import { useNavigate } from "@tanstack/react-router";
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { ConfirmButton } from "@/lib/client/button";
 import { TrashIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
+import { translator } from "@/lib/common/translator";
 import { uiSaveButton } from "~/common/ui/ui";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";

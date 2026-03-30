@@ -1,5 +1,5 @@
-import { MigrationContextFx, withDatabaseFx } from "@use-pico/common/database";
 import { Effect } from "effect";
+import { MigrationContextFx, withDatabaseFx } from "@/lib/common/database";
 import { migrations } from "~/server/@migrations/migrations";
 import { runAuthMigration } from "~/server/auth/runAuthMigration";
 import type { Database } from "~/server/database/Database";

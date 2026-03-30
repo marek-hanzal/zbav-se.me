@@ -1,5 +1,5 @@
-import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withCollectionFx } from "@/lib/common/collection";
 import { withFavouriteCollectionSelectFx } from "~/buyer/favourite/server/db/withFavouriteCollectionSelectFx";
 import { withFavouriteQueryBuilderFx } from "~/buyer/favourite/server/db/withFavouriteQueryBuilderFx";
 import type { FavouriteFilterSchema } from "~/buyer/favourite/server/schema/FavouriteFilterSchema";
