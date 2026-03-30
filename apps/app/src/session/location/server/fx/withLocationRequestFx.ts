@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { linkTo } from "@use-pico/common/link-to";
+import { linkTo } from "@/lib/common/link-to";
 import { LocationContextFx } from "~/session/location/server/context/LocationContextFx";
 
 export namespace withLocationRequestFx {

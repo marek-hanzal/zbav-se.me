@@ -5,7 +5,7 @@ import { ChevronRightIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
 import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
-import { linkTo } from "@use-pico/common/link-to";
+import { linkTo } from "@/lib/common/link-to";
 import { translator } from "@/lib/common/translator";
 import { withEmailSignInMutation } from "~/common/auth/mutation/withEmailSignInMutation";
 import { useAppForm } from "~/common/ui/form";
