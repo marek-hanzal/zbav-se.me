@@ -1,4 +1,4 @@
-import { Badge } from "@use-pico/client/ui/badge";
+import { Badge } from "@/lib/client/badge";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { Container } from "@/lib/client/container";

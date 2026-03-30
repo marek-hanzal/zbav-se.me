@@ -1,4 +1,4 @@
-import { Badge } from "@use-pico/client/ui/badge";
+import { Badge } from "@/lib/client/badge";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
