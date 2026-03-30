@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { clamp } from "@/lib/common/clamp";
-import { median } from "@use-pico/common/median";
-import { p90 } from "@use-pico/common/p90";
+import { median } from "@/lib/common/median";
+import { p90 } from "@/lib/common/p90";
 import type { UserEventBuyerSchema } from "~/seller/user-event/server/schema/UserEventBuyerSchema";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import { computeActivity } from "~/user/user-event/server/fx/computeActivity";

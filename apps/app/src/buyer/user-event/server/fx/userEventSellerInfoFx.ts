@@ -1,9 +1,8 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Ssst */
-
 import { Effect } from "effect";
 import { clamp } from "@/lib/common/clamp";
-import { median } from "@use-pico/common/median";
-import { p90 } from "@use-pico/common/p90";
+import { median } from "@/lib/common/median";
+import { p90 } from "@/lib/common/p90";
 import type { UserEventSellerSchema } from "~/buyer/user-event/server/schema/UserEventSellerSchema";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import { computeActivity } from "~/user/user-event/server/fx/computeActivity";
