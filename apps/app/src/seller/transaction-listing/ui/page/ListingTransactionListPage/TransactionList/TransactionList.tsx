@@ -1,4 +1,4 @@
-import { EmptyState } from "@use-pico/client/ui/empty-state";
+import { EmptyState } from "@/lib/client/empty-state";
 import { translator } from "@use-pico/common/translator";
 import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";

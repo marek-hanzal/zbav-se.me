@@ -1,4 +1,4 @@
-import { EmptyState } from "@use-pico/client/ui/empty-state";
+import { EmptyState } from "@/lib/client/empty-state";
 import { type Ref, useMemo, useState } from "react";
 import { Button } from "@/lib/client/button";
 import { withFallback } from "@/lib/client/fallback";
