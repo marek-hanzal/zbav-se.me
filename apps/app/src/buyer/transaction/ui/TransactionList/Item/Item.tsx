@@ -1,4 +1,4 @@
-import { LinkTo } from "@use-pico/client/ui/link-to";
+import { LinkTo } from "@/lib/client/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";

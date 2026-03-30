@@ -1,4 +1,4 @@
-import { LinkTo } from "@use-pico/client/ui/link-to";
+import { LinkTo } from "@/lib/client/link-to";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";

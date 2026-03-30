@@ -1,4 +1,4 @@
-import { LinkTo } from "@use-pico/client/ui/link-to";
+import { LinkTo } from "@/lib/client/link-to";
 import { linkTo } from "@use-pico/common/link-to";
 import { translator } from "@use-pico/common/translator";
 import { z } from "zod";

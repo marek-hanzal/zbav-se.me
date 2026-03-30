@@ -1,5 +1,5 @@
 import { useMatchRoute } from "@tanstack/react-router";
-import { LinkTo } from "@use-pico/client/ui/link-to";
+import { LinkTo } from "@/lib/client/link-to";
 import { withFallback } from "@use-pico/client/utils";
 import { ChevronRightIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";

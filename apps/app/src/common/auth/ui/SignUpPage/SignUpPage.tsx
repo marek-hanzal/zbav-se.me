@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { Fade } from "@use-pico/client/ui/fade";
-import { LinkTo } from "@use-pico/client/ui/link-to";
+import { LinkTo } from "@/lib/client/link-to";
 import { translator } from "@use-pico/common/translator";
 import { type FC, useRef } from "react";
 import { z } from "zod";

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { LinkTo, uiLinkTo } from "@use-pico/client/ui/link-to";
+import { LinkTo, uiLinkTo } from "@/lib/client/link-to";
 import { translator } from "@use-pico/common/translator";
 import { Suspense } from "react";
 import { uiButton } from "@/lib/client/button";

@@ -1,4 +1,4 @@
-import { LinkTo } from "@use-pico/client/ui/link-to";
+import { LinkTo } from "@/lib/client/link-to";
 import type { FC } from "react";
 import { ArrowLeftIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";

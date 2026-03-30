@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { LinkTo } from "@use-pico/client/ui/link-to";
+import { LinkTo } from "@/lib/client/link-to";
 import type { FC } from "react";
 import { Button, uiButton } from "@/lib/client/button";
 import { ChevronRightIcon } from "@/lib/client/icon";
