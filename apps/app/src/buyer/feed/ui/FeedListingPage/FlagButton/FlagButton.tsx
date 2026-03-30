@@ -1,6 +1,6 @@
-import { withFallback } from "@use-pico/client/utils";
 import { useState } from "react";
 import { ConfirmButton } from "@/lib/client/button";
+import { withFallback } from "@/lib/client/fallback";
 import { Mx } from "@/lib/client/mx";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";

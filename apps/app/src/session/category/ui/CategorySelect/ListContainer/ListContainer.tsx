@@ -1,6 +1,6 @@
-import { withFallback } from "@use-pico/client/utils";
 import { Suspense, useEffect, useRef } from "react";
 import { Container } from "@/lib/client/container";
+import { withFallback } from "@/lib/client/fallback";
 import type { Fulltext } from "@/lib/client/fulltext";
 import { useLocale } from "@/lib/client/locale";
 import { useMergeRefs } from "@/lib/client/ref";

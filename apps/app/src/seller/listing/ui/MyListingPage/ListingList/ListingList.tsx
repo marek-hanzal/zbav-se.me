@@ -1,7 +1,7 @@
 import { EmptyState } from "@use-pico/client/ui/empty-state";
-import { withFallback } from "@use-pico/client/utils";
 import { useMemo, useRef } from "react";
 import { Container } from "@/lib/client/container";
+import { withFallback } from "@/lib/client/fallback";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { useElementVisibility, VisibilityProvider } from "@/lib/client/visibility";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";

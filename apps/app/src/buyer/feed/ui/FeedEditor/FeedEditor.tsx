@@ -1,5 +1,5 @@
-import { withFallback } from "@use-pico/client/utils";
 import { type PropsWithChildren, useCallback, useMemo, useState } from "react";
+import { withFallback } from "@/lib/client/fallback";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { View } from "@/lib/client/view";

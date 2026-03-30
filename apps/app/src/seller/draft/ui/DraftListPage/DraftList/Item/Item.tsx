@@ -1,8 +1,8 @@
-import { LinkTo } from "@/lib/client/link-to";
-import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
 import { Container } from "@/lib/client/container";
+import { withFallback } from "@/lib/client/fallback";
 import { Icon } from "@/lib/client/icon";
+import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Tx } from "@/lib/client/tx";

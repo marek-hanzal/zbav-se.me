@@ -1,6 +1,6 @@
-import { LinkTo } from "@/lib/client/link-to";
-import { withFallback } from "@use-pico/client/utils";
+import { withFallback } from "@/lib/client/fallback";
 import { CartIcon, ChevronRightIcon } from "@/lib/client/icon";
+import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";

@@ -1,7 +1,7 @@
 import { EmptyState } from "@use-pico/client/ui/empty-state";
-import { withFallback } from "@use-pico/client/utils";
 import { type Ref, useMemo, useState } from "react";
 import { Button } from "@/lib/client/button";
+import { withFallback } from "@/lib/client/fallback";
 import { SettingsIcon } from "@/lib/client/icon";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";

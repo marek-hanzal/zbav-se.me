@@ -1,4 +1,4 @@
-import { withFallback } from "@use-pico/client/utils";
+import { withFallback } from "@/lib/client/fallback";
 import { Typo } from "@/lib/client/typo";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListItem } from "~/common/list-item/ListItem";

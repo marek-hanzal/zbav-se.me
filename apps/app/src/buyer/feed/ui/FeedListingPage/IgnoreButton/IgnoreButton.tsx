@@ -1,5 +1,5 @@
-import { withFallback } from "@use-pico/client/utils";
 import { ConfirmButton } from "@/lib/client/button";
+import { withFallback } from "@/lib/client/fallback";
 import { TrashIcon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";

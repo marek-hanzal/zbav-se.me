@@ -1,11 +1,11 @@
-import { LinkTo } from "@/lib/client/link-to";
-import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
 import { Suspense, useState } from "react";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
+import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import { EditIcon } from "@/lib/client/icon";
+import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";

@@ -1,8 +1,8 @@
-import { LinkTo } from "@/lib/client/link-to";
-import { withFallback } from "@use-pico/client/utils";
 import { Container } from "@/lib/client/container";
+import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import { ChevronRightIcon, type Icon, MessageIcon } from "@/lib/client/icon";
+import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";

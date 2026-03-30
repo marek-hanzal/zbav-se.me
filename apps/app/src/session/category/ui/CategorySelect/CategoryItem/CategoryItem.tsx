@@ -1,5 +1,5 @@
-import { withFallback } from "@use-pico/client/utils";
 import { Button } from "@/lib/client/button";
+import { withFallback } from "@/lib/client/fallback";
 
 import type { useSelection } from "@/lib/client/selection";
 import { SpinnerContainer } from "@/lib/client/spinner";

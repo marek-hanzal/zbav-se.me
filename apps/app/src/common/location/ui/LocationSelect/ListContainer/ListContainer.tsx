@@ -1,6 +1,6 @@
-import { withFallback } from "@use-pico/client/utils";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
+import { withFallback } from "@/lib/client/fallback";
 import type { Fulltext } from "@/lib/client/fulltext";
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";

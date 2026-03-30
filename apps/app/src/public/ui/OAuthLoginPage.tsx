@@ -1,10 +1,10 @@
-import { LinkTo } from "@/lib/client/link-to";
 import { linkTo } from "@use-pico/common/link-to";
 import { translator } from "@use-pico/common/translator";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { FormField } from "@/lib/client/form";
 import { ChevronRightIcon } from "@/lib/client/icon";
+import { LinkTo } from "@/lib/client/link-to";
 import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
 import { withEmailSignInMutation } from "~/common/auth/mutation/withEmailSignInMutation";

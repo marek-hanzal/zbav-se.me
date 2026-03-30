@@ -1,7 +1,7 @@
-import { LinkTo } from "@/lib/client/link-to";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
+import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";

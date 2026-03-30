@@ -1,6 +1,6 @@
-import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
 import { Container } from "@/lib/client/container";
+import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Status } from "@/lib/client/status";

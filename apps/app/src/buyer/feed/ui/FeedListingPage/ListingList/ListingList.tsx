@@ -1,9 +1,9 @@
-import { LinkTo } from "@/lib/client/link-to";
-import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
 import { type Ref, Suspense, useCallback, useEffect, useRef } from "react";
 import { Container } from "@/lib/client/container";
+import { withFallback } from "@/lib/client/fallback";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/client/icon";
+import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { useMergeRefs } from "@/lib/client/ref";
 import { useScrollTo } from "@/lib/client/scroll-to";

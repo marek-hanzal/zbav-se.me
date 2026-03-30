@@ -1,5 +1,5 @@
-import { withFallback } from "@use-pico/client/utils";
 import { match } from "ts-pattern";
+import { withFallback } from "@/lib/client/fallback";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";

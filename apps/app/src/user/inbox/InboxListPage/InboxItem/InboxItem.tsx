@@ -1,5 +1,5 @@
-import { withFallback } from "@use-pico/client/utils";
 import { match } from "ts-pattern";
+import { withFallback } from "@/lib/client/fallback";
 import type { MarkSuspense } from "@/lib/client/type";
 import { ListItemPending } from "~/common/list-item/ListItemPending";
 import { withInboxQuery } from "~/user/inbox/query/withInboxQuery";

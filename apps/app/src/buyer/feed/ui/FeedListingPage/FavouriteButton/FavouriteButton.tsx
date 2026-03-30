@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { withFallback } from "@use-pico/client/utils";
 import { Button } from "@/lib/client/button";
+import { withFallback } from "@/lib/client/fallback";
 import { FavouriteIcon, FavouriteOffIcon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";

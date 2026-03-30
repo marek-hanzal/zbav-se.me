@@ -1,5 +1,5 @@
-import { LinkTo } from "@/lib/client/link-to";
 import type { FC } from "react";
+import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { HomeIcon } from "~/common/ui/icon";
 

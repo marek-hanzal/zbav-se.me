@@ -1,6 +1,6 @@
-import { LinkTo } from "@/lib/client/link-to";
 import type { FC } from "react";
 import { ArrowLeftIcon } from "@/lib/client/icon";
+import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { FlowContainer } from "~/common/ui/container";

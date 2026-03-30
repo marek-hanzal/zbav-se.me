@@ -1,6 +1,6 @@
-import { LinkTo } from "@/lib/client/link-to";
 import { type FC, useRef } from "react";
 import { ArrowLeftIcon } from "@/lib/client/icon";
+import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { useSentinel } from "@/lib/client/sentinel";
 import type { MarkSuspense } from "@/lib/client/type";

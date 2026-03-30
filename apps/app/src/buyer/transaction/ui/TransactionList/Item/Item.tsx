@@ -1,6 +1,6 @@
-import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
 import { Container } from "@/lib/client/container";
+import { withFallback } from "@/lib/client/fallback";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { PriceInline } from "@/lib/client/price-inline";

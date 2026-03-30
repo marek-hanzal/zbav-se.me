@@ -1,5 +1,5 @@
-import { withFallback } from "@use-pico/client/utils";
 import { Container } from "@/lib/client/container";
+import { withFallback } from "@/lib/client/fallback";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { useListingEvent } from "~/buyer/listing/~public/useListingEvent";

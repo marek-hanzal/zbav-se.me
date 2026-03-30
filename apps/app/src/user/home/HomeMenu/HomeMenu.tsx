@@ -1,8 +1,8 @@
 import { useMatchRoute } from "@tanstack/react-router";
 import { Fade } from "@use-pico/client/ui/fade";
-import { withFallback } from "@use-pico/client/utils";
 import { useRef } from "react";
 import { Container } from "@/lib/client/container";
+import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import type { uiIcon } from "@/lib/client/icon";
 import { SpinnerContainer } from "@/lib/client/spinner";

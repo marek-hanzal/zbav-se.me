@@ -1,4 +1,4 @@
-import { withFallback } from "@use-pico/client/utils";
+import { withFallback } from "@/lib/client/fallback";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";

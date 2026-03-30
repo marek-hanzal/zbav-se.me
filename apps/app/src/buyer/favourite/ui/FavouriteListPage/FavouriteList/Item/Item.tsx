@@ -1,5 +1,5 @@
-import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
+import { withFallback } from "@/lib/client/fallback";
 
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";

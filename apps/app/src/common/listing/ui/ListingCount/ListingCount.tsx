@@ -1,6 +1,6 @@
-import { withFallback } from "@use-pico/client/utils";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { translator } from "@use-pico/common/translator";
+import { withFallback } from "@/lib/client/fallback";
 import { Icon, SpinnerIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import type { MarkSuspense } from "@/lib/client/type";

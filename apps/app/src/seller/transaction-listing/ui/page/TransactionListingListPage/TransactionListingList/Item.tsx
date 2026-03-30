@@ -1,9 +1,9 @@
 import { Badge } from "@use-pico/client/ui/badge";
-import { LinkTo } from "@/lib/client/link-to";
-import { withFallback } from "@use-pico/client/utils";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { Container } from "@/lib/client/container";
+import { withFallback } from "@/lib/client/fallback";
+import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";

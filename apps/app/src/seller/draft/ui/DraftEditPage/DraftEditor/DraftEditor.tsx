@@ -1,6 +1,6 @@
-import { withFallback } from "@use-pico/client/utils";
 import { translator } from "@use-pico/common/translator";
 import { useCallback, useMemo, useState } from "react";
+import { withFallback } from "@/lib/client/fallback";
 
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
