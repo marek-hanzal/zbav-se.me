@@ -4,12 +4,12 @@ import { withFallback } from "@use-pico/client/utils";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { Suspense, useEffect, useRef } from "react";
 import { useLocale } from "@/lib/client/locale";
+import { useMergeRefs } from "@/lib/client/ref";
+import { useScrollTo } from "@/lib/client/scroll-to";
 import type { useSelection } from "@/lib/client/selection";
 import { withCategoryQuery } from "~/session/category/withCategoryQuery";
 import { CategoryItem } from "../CategoryItem";
 import { Empty } from "./Data/Empty";
-import { useScrollTo } from "@/lib/client/scroll-to";
-import { useMergeRefs } from "@/lib/client/ref";
 
 export namespace ListContainer {
 	export interface Props extends Container.Props {
