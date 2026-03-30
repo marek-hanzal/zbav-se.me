@@ -1,7 +1,7 @@
-import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import { withFallback } from "@use-pico/client/utils";
 import { Suspense, useEffect, useRef } from "react";
 import { Container } from "@/lib/client/container";
+import type { Fulltext } from "@/lib/client/fulltext";
 import { useLocale } from "@/lib/client/locale";
 import { useMergeRefs } from "@/lib/client/ref";
 import { useScrollTo } from "@/lib/client/scroll-to";

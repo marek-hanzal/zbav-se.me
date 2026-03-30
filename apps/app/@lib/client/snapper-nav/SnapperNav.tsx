@@ -1,5 +1,6 @@
 import { type FC, useCallback, useId, useMemo } from "react";
 import { Container } from "../container/Container";
+import { useDoubleTap } from "../double-tap/useDoubleTap";
 import { DotIcon } from "../icon/DotIcon";
 import { Icon } from "../icon/Icon";
 import type { uiIcon } from "../icon/uiIcon";
