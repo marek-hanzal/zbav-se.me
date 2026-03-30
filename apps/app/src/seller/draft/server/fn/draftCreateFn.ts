@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { zodGuardFx } from "@/lib/common/schema";
+import { zodGuardFx } from "@/lib/common/fx";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { DraftCreateSchema } from "~/seller/draft/server/schema/DraftCreateSchema";
 import { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";

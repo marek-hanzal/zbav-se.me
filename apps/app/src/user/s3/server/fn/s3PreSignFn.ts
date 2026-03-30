@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { zodGuardFx } from "@/lib/common/schema";
+import { zodGuardFx } from "@/lib/common/fx";
 import { withS3Fx } from "~/common/s3/server/context/withS3Fx";
 import { s3PreSignFx } from "~/common/s3/server/fx/s3PreSignFx";
 import { withCatchFx } from "~/server/effect/withCatchFx";
