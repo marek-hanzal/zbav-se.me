@@ -1,9 +1,9 @@
 import { useRouterState } from "@tanstack/react-router";
 import { type ComponentProps, type FC, useEffect, useState } from "react";
-import { asNavigationIndicator } from "./asNavigationIndicator";
+import { uiNavigationIndicator } from "./uiNavigationIndicator";
 
 export namespace NavigationIndicator {
-	export interface Props extends asNavigationIndicator.PropsEx<ComponentProps<"div">> {
+	export interface Props extends uiNavigationIndicator.Component<ComponentProps<"div">> {
 		//
 	}
 }
@@ -36,8 +36,10 @@ export const NavigationIndicator: FC<NavigationIndicator.Props> = ({ className, 
 
 	return (
 		<div
-			{...asNavigationIndicator({
-				visible,
+			{...uiNavigationIndicator({
+				ui: {
+					visible,
+				},
 				className,
 			})}
 			{...props}

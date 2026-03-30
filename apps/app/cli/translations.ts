@@ -1,6 +1,6 @@
-import { TranslationSources } from "@use-pico/client/translation";
 import { tx } from "@use-pico/server/tx";
-import { locales } from "../src/locales";
+import { TranslationSources } from "@/lib/client/translation";
+import { locales } from "~/locales";
 
 tx({
 	packages: [
