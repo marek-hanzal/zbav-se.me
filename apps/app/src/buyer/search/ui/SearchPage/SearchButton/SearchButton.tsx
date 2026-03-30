@@ -1,5 +1,5 @@
-import { Badge } from "@/lib/client/badge";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
+import { Badge } from "@/lib/client/badge";
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { LinkTo, type uiLinkTo } from "@/lib/client/link-to";

@@ -1,6 +1,6 @@
-import { EmptyState } from "@/lib/client/empty-state";
 import { useMemo, useRef } from "react";
 import { Container } from "@/lib/client/container";
+import { EmptyState } from "@/lib/client/empty-state";
 import { withFallback } from "@/lib/client/fallback";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { useElementVisibility, VisibilityProvider } from "@/lib/client/visibility";

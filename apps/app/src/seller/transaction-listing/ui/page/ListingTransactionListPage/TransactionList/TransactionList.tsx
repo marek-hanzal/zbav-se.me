@@ -1,7 +1,7 @@
-import { EmptyState } from "@/lib/client/empty-state";
 import { translator } from "@use-pico/common/translator";
 import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";
+import { EmptyState } from "@/lib/client/empty-state";
 import type { MarkSuspense } from "@/lib/client/type";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { toStatusLabel } from "~/seller/transaction/~public/toStatusLabel";

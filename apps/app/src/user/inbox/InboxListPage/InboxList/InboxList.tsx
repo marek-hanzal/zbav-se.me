@@ -1,6 +1,6 @@
-import { EmptyState } from "@/lib/client/empty-state";
 import { Suspense, useMemo } from "react";
 import { Container } from "@/lib/client/container";
+import { EmptyState } from "@/lib/client/empty-state";
 import { withFallback } from "@/lib/client/fallback";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";

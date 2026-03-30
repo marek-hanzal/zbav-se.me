@@ -1,7 +1,7 @@
 import { useMatchRoute } from "@tanstack/react-router";
-import { Fade } from "@use-pico/client/ui/fade";
 import { useRef } from "react";
 import { Container } from "@/lib/client/container";
+import { Fade } from "@/lib/client/fade";
 import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import type { uiIcon } from "@/lib/client/icon";
@@ -56,7 +56,6 @@ export const HomeMenu = withFallback(({ _suspense, ui, onLinkClick, ...props }: 
 			<Fade scrollableRef={containerRef} />
 
 			<Container
-				data-ui={"HomeMenu-[Content]"}
 				ref={containerRef}
 				className={"min-h-0"}
 				ui={{

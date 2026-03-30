@@ -1,6 +1,6 @@
-import { EmptyState } from "@/lib/client/empty-state";
 import { type Ref, useMemo, useState } from "react";
 import { Button } from "@/lib/client/button";
+import { EmptyState } from "@/lib/client/empty-state";
 import { withFallback } from "@/lib/client/fallback";
 import { SettingsIcon } from "@/lib/client/icon";
 import { SpinnerContainer } from "@/lib/client/spinner";

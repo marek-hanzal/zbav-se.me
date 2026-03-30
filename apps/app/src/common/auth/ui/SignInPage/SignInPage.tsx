@@ -1,9 +1,9 @@
 import { useNavigate } from "@tanstack/react-router";
-import { Fade } from "@use-pico/client/ui/fade";
 import { translator } from "@use-pico/common/translator";
 import { type FC, useRef } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
+import { Fade } from "@/lib/client/fade";
 import { FormField } from "@/lib/client/form";
 import { ChevronRightIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
