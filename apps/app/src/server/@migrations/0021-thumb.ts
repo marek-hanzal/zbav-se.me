@@ -1,5 +1,5 @@
 import { type Migration, sql } from "kysely";
-import { toEnumGuard } from "@use-pico/common/to-enum-guard";
+import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 
 export const ThumbMigration: Migration = {

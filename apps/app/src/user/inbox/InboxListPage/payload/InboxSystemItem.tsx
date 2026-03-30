@@ -5,7 +5,7 @@ import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
-import { toTimeDiff } from "@use-pico/common/time";
+import { toTimeDiff } from "@/lib/common/time";
 import { ListItem } from "~/common/list-item/ListItem";
 import type { SystemSchema } from "~/server/database/@table/InboxTableSchema/SystemSchema";
 import { withInboxQuery } from "~/user/inbox/query/withInboxQuery";

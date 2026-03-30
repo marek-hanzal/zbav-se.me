@@ -1,5 +1,5 @@
 import { type Migration, sql } from "kysely";
-import { toEnumGuard } from "@use-pico/common/to-enum-guard";
+import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { TransactionSideEnumSchema } from "~/common/user-transaction/enum/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 

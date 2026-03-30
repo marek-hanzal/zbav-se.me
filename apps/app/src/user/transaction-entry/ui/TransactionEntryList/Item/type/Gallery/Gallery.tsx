@@ -5,7 +5,7 @@ import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
-import { toTimeDiff } from "@use-pico/common/time";
+import { toTimeDiff } from "@/lib/common/time";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { GalleryPreviewSheet } from "~/common/gallery/ui/GalleryPreviewSheet";
 import { HeroImage } from "~/common/ui/img";

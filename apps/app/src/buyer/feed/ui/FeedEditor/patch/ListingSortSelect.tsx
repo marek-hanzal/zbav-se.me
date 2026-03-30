@@ -3,7 +3,7 @@ import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
 import { TrashIcon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
-import type { StateType } from "@use-pico/common/type";
+import type { StateType } from "@/lib/client/type";
 import type { ListingSortSchema } from "~/buyer/listing/server/schema/ListingSortSchema";
 import { uiSelectButton } from "~/common/ui/ui";
 

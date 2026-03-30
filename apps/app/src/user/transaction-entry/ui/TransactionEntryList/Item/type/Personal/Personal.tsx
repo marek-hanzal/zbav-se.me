@@ -5,7 +5,7 @@ import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
-import { toTimeDiff } from "@use-pico/common/time";
+import { toTimeDiff } from "@/lib/common/time";
 import { withLocationFetchQuery } from "~/session/location/withLocationFetchQuery";
 import type { TransactionEntryPersonal } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/PersonalSchema";
 import { TypeContainer } from "../TypeContainer";

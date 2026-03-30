@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { translator } from "@/lib/common/translator";
-import type { StateType } from "@use-pico/common/type";
+import type { StateType } from "@/lib/client/type";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { LocationSelect } from "~/common/location/ui/LocationSelect";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";

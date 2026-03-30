@@ -7,7 +7,7 @@ import { SpinnerContainer } from "@/lib/client/spinner";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
-import { toTimeDiff } from "@use-pico/common/time";
+import { toTimeDiff } from "@/lib/common/time";
 import { isValid } from "~/common/draft/util/isValid";
 import { useMaybeUpload } from "~/common/gallery/hook/useMaybeUpload";
 import { ListItem } from "~/common/list-item/ListItem";

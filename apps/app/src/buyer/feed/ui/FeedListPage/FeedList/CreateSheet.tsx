@@ -6,7 +6,7 @@ import { Mx } from "@/lib/client/mx";
 import { Status } from "@/lib/client/status";
 import { TextInput } from "@/lib/client/text-input";
 import { translator } from "@/lib/common/translator";
-import type { StateType } from "@use-pico/common/type";
+import type { StateType } from "@/lib/client/type";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";

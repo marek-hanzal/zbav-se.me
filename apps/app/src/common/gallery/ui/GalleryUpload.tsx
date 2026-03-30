@@ -2,7 +2,7 @@ import { type FC, useRef } from "react";
 import { Container } from "@/lib/client/container";
 import { useSnapperNav } from "@/lib/client/snapper";
 import { SnapperNav } from "@/lib/client/snapper-nav";
-import type { StateType } from "@use-pico/common/type";
+import type { StateType } from "@/lib/client/type";
 import { PhotoUpload } from "~/common/photo/ui/PhotoUpload";
 
 export namespace GalleryUpload {

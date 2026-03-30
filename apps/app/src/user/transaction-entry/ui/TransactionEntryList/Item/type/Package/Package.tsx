@@ -4,7 +4,7 @@ import { ExternalIcon, Icon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { Typo, uiTypo } from "@/lib/client/typo";
 import { LabelValue } from "@/lib/client/value";
-import { toTimeDiff } from "@use-pico/common/time";
+import { toTimeDiff } from "@/lib/common/time";
 import { translator } from "@/lib/common/translator";
 import { SendPackageIcon } from "~/common/ui/icon";
 import type { TransactionEntryPackage } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/PackageSchema";

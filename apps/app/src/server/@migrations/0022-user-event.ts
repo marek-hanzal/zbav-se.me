@@ -1,5 +1,5 @@
 import { type Migration, sql } from "kysely";
-import { toEnumGuard } from "@use-pico/common/to-enum-guard";
+import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { UserEventScopeEnumSchema } from "~/common/user-event/enum/UserEventScopeEnumSchema";
 
 export const UserEventMigration: Migration = {

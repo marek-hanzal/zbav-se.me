@@ -5,7 +5,7 @@ import { SpinnerContainer } from "@/lib/client/spinner";
 import { Status } from "@/lib/client/status";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
-import { toTimeDiff } from "@use-pico/common/time";
+import { toTimeDiff } from "@/lib/common/time";
 import { translator } from "@/lib/common/translator";
 import { SearchIcon } from "~/common/ui/icon";
 import { withTransactionBuyerInfoQuery } from "../../query/withTransactionBuyerInfoQuery";

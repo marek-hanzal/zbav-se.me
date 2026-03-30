@@ -5,7 +5,7 @@ import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
-import { toTimeDiff } from "@use-pico/common/time";
+import { toTimeDiff } from "@/lib/common/time";
 import { translator } from "@/lib/common/translator";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListItem } from "~/common/list-item/ListItem";
