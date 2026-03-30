@@ -1,6 +1,6 @@
-import { Icon, SpinnerIcon } from "@use-pico/client/icon";
 import type { FC } from "react";
 import { Container } from "../container/Container";
+import { Icon, SpinnerIcon } from "../icon";
 import type { uiIcon } from "../icon/uiIcon";
 import { Status } from "../status/Status";
 

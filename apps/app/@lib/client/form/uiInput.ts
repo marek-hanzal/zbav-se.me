@@ -1,41 +1,30 @@
 import { ui as coolUi } from "../../cls";
 import type { Ui as CoolUi } from "../Ui";
 
-export namespace uiButton {
-	export type Size = CoolUi.Size;
-
+export namespace uiInput {
 	export interface Ui {
-		theme?: CoolUi.Theme;
 		tone?: CoolUi.Tone;
+		theme?: CoolUi.Theme;
 		//
-		size?: Size;
+		text?: CoolUi.Text;
+		font?: CoolUi.Font;
+		color?: CoolUi.Color;
+		size?: CoolUi.Size;
 		inner?: CoolUi.Inner;
 		square?: CoolUi.Square;
 		gap?: CoolUi.Gap;
 		round?: CoolUi.Round;
-		snapTo?: CoolUi.SnapTo;
-		opacity?: CoolUi.Opacity;
-		//
-		width?: CoolUi.Width;
-		height?: CoolUi.Height;
-		//
-		flow?: CoolUi.Flow;
-		//
-		justify?: CoolUi.Justify;
-		items?: CoolUi.Items;
-		//
-		disabled?: CoolUi.Disabled;
 		background?: CoolUi.Background;
 		backgroundActive?: CoolUi.BackgroundActive;
 		border?: CoolUi.Border;
 		borderActive?: CoolUi.BorderActive;
 		shadow?: CoolUi.Shadow;
 		shadowActive?: CoolUi.ShadowActive;
+		opacity?: CoolUi.Opacity;
 		zIndex?: CoolUi.zIndex;
-		//
-		text?: CoolUi.Text;
-		font?: CoolUi.Font;
-		color?: CoolUi.Color;
+		disabled?: CoolUi.Disabled;
+		width?: CoolUi.Width;
+		height?: CoolUi.Height;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
@@ -45,25 +34,22 @@ export namespace uiButton {
 	}
 }
 
-export const uiButton = ({ ui, className }: uiButton.Props) => {
-	return coolUi<uiButton.Ui>({
-		name: "Button",
+export const uiInput = ({ ui, className }: uiInput.Props) => {
+	return coolUi<uiInput.Ui>({
+		name: "Input",
 		ui: {
-			justify: "start",
-			items: "center",
-			flow: "horizontal",
-			round: "default",
-			gap: "sm",
+			tone: "neutral",
+			theme: "light",
+			text: "default",
 			color: "text",
 			background: "default",
 			border: true,
 			shadow: true,
+			round: "default",
+			width: "full",
+			inner: "default",
 			...ui,
 		},
-		className: [
-			"border-t-transparent",
-			"border-x-transparent",
-			className,
-		],
+		className,
 	});
 };
