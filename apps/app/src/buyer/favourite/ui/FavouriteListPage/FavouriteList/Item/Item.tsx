@@ -3,7 +3,7 @@ import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
-import { toTimeDiff } from "@use-pico/common/time";
+import { toTimeDiff } from "@/lib/common/time";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListItem } from "~/common/list-item/ListItem";

@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Group } from "@/lib/client/group";
 import { useLocale } from "@/lib/client/locale";
 import { LabelValue } from "@/lib/client/value";
-import { toTimeDiff } from "@use-pico/common/time";
+import { toTimeDiff } from "@/lib/common/time";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { translator } from "@/lib/common/translator";
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";

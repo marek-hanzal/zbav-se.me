@@ -6,7 +6,7 @@ import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
-import { toTimeDiff } from "@use-pico/common/time";
+import { toTimeDiff } from "@/lib/common/time";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { Image } from "~/common/list-item/Image";
