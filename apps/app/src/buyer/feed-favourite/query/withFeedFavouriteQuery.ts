@@ -1,4 +1,4 @@
-import { withEntityQuery } from "@use-pico/client/query";
+import { withEntityQuery } from "@/lib/client/query";
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
 import { feedFavouriteCollectionFn } from "~/buyer/feed-favourite/server/fn/feedFavouriteCollectionFn";
 import { feedFavouriteCountFn } from "~/buyer/feed-favourite/server/fn/feedFavouriteCountFn";

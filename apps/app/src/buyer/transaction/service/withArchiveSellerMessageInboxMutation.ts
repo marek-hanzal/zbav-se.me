@@ -1,4 +1,4 @@
-import { withMutation } from "@use-pico/client/mutation";
+import { withMutation } from "@/lib/client/mutation";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { withInboxQuery } from "~/user/inbox/query/withInboxQuery";
 import { inboxArchiveFn } from "~/user/inbox/server/fn/inboxArchiveFn";

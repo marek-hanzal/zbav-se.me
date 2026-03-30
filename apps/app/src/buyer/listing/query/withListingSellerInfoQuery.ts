@@ -1,5 +1,5 @@
-import { withQuery } from "@use-pico/client/query";
 import type { EntitySchema } from "@use-pico/common/schema";
+import { withQuery } from "@/lib/client/query";
 import { listingGetSellerInfoFn } from "~/buyer/listing/server/fn/listingGetSellerInfoFn";
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
 

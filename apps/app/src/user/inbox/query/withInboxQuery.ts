@@ -1,4 +1,4 @@
-import { withEntityQuery } from "@use-pico/client/query";
+import { withEntityQuery } from "@/lib/client/query";
 import { inboxCollectionFn } from "~/user/inbox/server/fn/inboxCollectionFn";
 import { inboxCountFn } from "~/user/inbox/server/fn/inboxCountFn";
 import { inboxFetchFn } from "~/user/inbox/server/fn/inboxFetchFn";

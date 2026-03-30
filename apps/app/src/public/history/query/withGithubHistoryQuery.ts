@@ -1,4 +1,4 @@
-import { withQuery } from "@use-pico/client/query";
+import { withQuery } from "@/lib/client/query";
 import { historyFn } from "~/public/github/server/fn/historyFn";
 import type { GitHubHistorySchema } from "~/public/github/server/schema/GitHubHistorySchema";
 

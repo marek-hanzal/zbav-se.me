@@ -1,4 +1,4 @@
-import { withEntityQuery } from "@use-pico/client/query";
+import { withEntityQuery } from "@/lib/client/query";
 import { transactionCollectionFn } from "~/buyer/transaction/server/fn/transactionCollectionFn";
 import { transactionCountFn } from "~/buyer/transaction/server/fn/transactionCountFn";
 import { transactionCreateFn } from "~/buyer/transaction/server/fn/transactionCreateFn";

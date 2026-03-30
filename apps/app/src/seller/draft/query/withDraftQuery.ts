@@ -1,4 +1,4 @@
-import { withEntityQuery } from "@use-pico/client/query";
+import { withEntityQuery } from "@/lib/client/query";
 import { draftCollectionFn } from "~/seller/draft/server/fn/draftCollectionFn";
 import { draftCountFn } from "~/seller/draft/server/fn/draftCountFn";
 import { draftCreateFn } from "~/seller/draft/server/fn/draftCreateFn";

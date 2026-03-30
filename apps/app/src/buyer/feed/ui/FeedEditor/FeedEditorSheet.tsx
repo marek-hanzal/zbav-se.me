@@ -1,7 +1,7 @@
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import { type FC, Suspense } from "react";
+import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { CloseButton } from "~/common/ui/button";
 import { FeedEditor } from "./FeedEditor";
 

@@ -1,4 +1,4 @@
-import { withEntityQuery } from "@use-pico/client/query";
+import { withEntityQuery } from "@/lib/client/query";
 import { listingCollectionFn } from "~/buyer/listing/server/fn/listingCollectionFn";
 import { listingCountFn } from "~/buyer/listing/server/fn/listingCountFn";
 import { listingFetchFn } from "~/buyer/listing/server/fn/listingFetchFn";

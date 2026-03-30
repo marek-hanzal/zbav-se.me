@@ -1,8 +1,6 @@
-import { CloseIcon } from "@use-pico/client/icon";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
-import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
 import { type FC, type PropsWithChildren, Suspense, useCallback, useMemo, useState } from "react";
+import { SpinnerContainer } from "@/lib/client/spinner";
 import { SellerInfo } from "~/buyer/listing/~public/SellerInfo";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";

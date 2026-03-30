@@ -1,8 +1,8 @@
 import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
+import { SpinnerContainer } from "@/lib/client/spinner";
 import { FlowContainer } from "~/common/ui/container";
 import { uiBackButton } from "~/common/ui/ui";
 

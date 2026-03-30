@@ -1,4 +1,4 @@
-import { withEntityQuery } from "@use-pico/client/query";
+import { withEntityQuery } from "@/lib/client/query";
 import { feedCollectionFn } from "~/buyer/feed/server/fn/feedCollectionFn";
 import { feedCountFn } from "~/buyer/feed/server/fn/feedCountFn";
 import { feedCreateFn } from "~/buyer/feed/server/fn/feedCreateFn";

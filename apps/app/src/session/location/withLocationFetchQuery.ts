@@ -1,4 +1,4 @@
-import { withQuery } from "@use-pico/client/query";
+import { withQuery } from "@/lib/client/query";
 import { locationFetchFn } from "~/session/location/server/fn/locationFetchFn";
 import type { LocationQuerySchema } from "~/session/location/server/schema/LocationQuerySchema";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";

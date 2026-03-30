@@ -1,4 +1,4 @@
-import { withQuery } from "@use-pico/client/query";
+import { withQuery } from "@/lib/client/query";
 import { uploadFetchFn } from "~/user/upload/server/fn/uploadFetchFn";
 import type { UploadQuerySchema } from "~/user/upload/server/schema/UploadQuerySchema";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";

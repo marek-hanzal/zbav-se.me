@@ -1,4 +1,4 @@
-import { withEntityQuery } from "@use-pico/client/query";
+import { withEntityQuery } from "@/lib/client/query";
 import { categoryCollectionFn } from "~/session/category/server/fn/categoryCollectionFn";
 import { categoryCountFn } from "~/session/category/server/fn/categoryCountFn";
 import { categoryFetchFn } from "~/session/category/server/fn/categoryFetchFn";
