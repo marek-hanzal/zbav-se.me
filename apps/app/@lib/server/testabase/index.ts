@@ -1,1 +1,0 @@
-export { testabase } from "./testabase";

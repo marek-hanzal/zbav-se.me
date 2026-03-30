@@ -2,9 +2,7 @@
 
 ## Source of truth
 - Shared implementation policy: this file.
-- App-specific overlays:
-  - `apps/app/AGENTS.md`
-  - `apps/server/AGENTS.md`
+- The app lives at the repo root now. Treat `src/`, `@lib/`, `cli/`, `test/`, `e2e/`, and `public/` as the primary app areas.
 
 ## Global rules (hard)
 1. Write file content in English.
@@ -19,22 +17,33 @@
 10. If work drifts into a long side task outside the current Linear scope, ask for a new issue.
 11. Don't start `dev`, it's already running
 
-## Monorepo dependency boundaries (hard)
-```txt
-apps/app -> buyer, seller, common, sdk, ui
-apps/server -> common only (no @zbav-se.me domain packages)
-buyer, seller -> common, sdk, ui
-common -> sdk, ui
-sdk, ui -> no @zbav-se.me dependencies
-```
+## App Rules
+- Keep screen and page component trees in the local `ui/` folders.
+- Keep query wrappers in `query/`.
+- Keep mutation wrappers in `mutation/`.
+- Keep public cross-domain surfaces in `~public/`.
+- Routes live in `src/@routes`; domain UI lives in `src/<domain>`.
+- Every route must have its own `*Page` component in its domain UI folder.
+- Route files may contain only route-specific hooks (`Route.useParams`, `Route.useSearch`, `Route.useLoaderData`, ...), then pass mapped data into the `*Page` component.
+- `*Page` components must never import or call Route APIs directly; all route-derived data must be injected from outside.
 
-## SDK policy (shared)
-- Generated-only: `packages/@zbav-se.me/sdk/src/api/*` and `*.gen.ts`.
-- Custom wrappers belong in `src/query/*` and `src/mutation/*`.
-- Query wrappers: `withQuery<Req, Res[200]>`, stable keys, return `res.data`.
-- Collections: use `withCollectionQuery` (`key`, `collectionQuery`, `fetchQuery`, `countQuery`, `patchMutation`, `toIdKey`).
-- Keep export chain complete through local/parent `index.ts`.
-- Contract changes require `bun run sdk` from repo root.
+## Component Rules
+- Exactly one React component per file. Split files when that is violated.
+- Prefer the namespace props pattern:
+  - `export namespace ComponentName { export interface Props ... }`
+  - `export const ComponentName: FC<ComponentName.Props>`
+- Extend base UI props when applicable (`Container.Props`, `Button.Props`, ...).
+- Merge `ui` defaults with `...ui` last.
+- Keep wrappers pass-through (`...props`).
+- For multi-callback components, prefer grouped `hooks` prop.
+
+## `data-ui` Contract
+- Root: `Component[Element]`
+- Child: `Component-[Element]`
+- State: `Component[Element.state]` or `Component-[Element.state]`
+- Dynamic variant: ``Component-[Button.${value}]``
+- Naming: `Component/Element` PascalCase, `state` lowercase, semantic/stable only.
+- If touching legacy free-form labels, normalize to bracket format.
 
 ## Formatting baseline
 - Use `bun run format`

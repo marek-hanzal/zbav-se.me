@@ -129,7 +129,7 @@ jobs:
                   TARGET: production
                   VERCEL_PROJECT_ID: ${{ env.VERCEL_APP_PROJECT_ID }}
               run: |
-                  bun ./@ci/vercel-sync-env.ts
+                  bun ./cli/vercel-sync-env.ts
 
     build:
         name: Build
@@ -156,7 +156,7 @@ jobs:
             - name: Cache save (app prebuilt)
               uses: actions/cache/save@v5.0.3
               with:
-                  path: apps/app/.vercel/output
+                  path: .vercel/output
                   key: app-${{ github.run_id }}
 
     vercel-app:
@@ -168,7 +168,7 @@ jobs:
             - name: Cache restore (app prebuilt)
               uses: actions/cache/restore@v5.0.3
               with:
-                  path: apps/app/.vercel/output
+                  path: .vercel/output
                   key: app-${{ github.run_id }}
                   fail-on-cache-miss: true
 
@@ -181,11 +181,9 @@ jobs:
               uses: oven-sh/setup-bun@v2.2.0
 
             - name: Strip assets
-              working-directory: apps/app
               run: rm -rf .vercel/output/static/assets || true
 
             - name: Deploy to Vercel (app)
-              working-directory: apps/app
               env:
                   VERCEL_PROJECT_ID: ${{ env.VERCEL_APP_PROJECT_ID }}
               run: |
@@ -203,7 +201,7 @@ jobs:
             - name: Cache restore (app prebuilt)
               uses: actions/cache/restore@v5.0.3
               with:
-                  path: apps/app/.vercel/output
+                  path: .vercel/output
                   key: app-${{ github.run_id }}
                   fail-on-cache-miss: true
 
@@ -226,7 +224,7 @@ jobs:
               uses: docker://rclone/rclone:1.73.2
               with:
                   args: >
-                      sync /github/workspace/apps/app/.vercel/output/static/assets bunny:/production/app/assets
+                      sync /github/workspace/.vercel/output/static/assets bunny:/production/app/assets
                       --config /github/workspace/rclone.conf
                       --inplace
                       --sftp-set-modtime=false
@@ -243,7 +241,7 @@ jobs:
               uses: docker://rclone/rclone:1.73.2
               with:
                   args: >
-                      copy /github/workspace/apps/app/.vercel/output/static bunny:/production/app/
+                      copy /github/workspace/.vercel/output/static bunny:/production/app/
                       --config /github/workspace/rclone.conf
                       --inplace
                       --include "/favicon*.ico"

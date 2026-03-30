@@ -1,9 +1,0 @@
-@layer components {
-	[data-ui-border="true"] {
-		border: var(--border-default) solid var(--color-border);
-	}
-
-	.active[data-ui-border-active="true"] {
-		border: var(--border-default) solid var(--color-border-active);
-	}
-}

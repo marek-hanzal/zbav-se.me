@@ -51,21 +51,7 @@
 				"noDangerouslySetInnerHtml": "off"
 			},
 			"style": {
-				"useComponentExportOnlyModules": "off",
-				"noRestrictedImports": {
-					"level": "error",
-					"options": {
-						"patterns": [
-							{
-								"group": [
-									"~/app/@seller/**",
-									"!~/app/@seller/**/~public/**"
-								],
-								"message": "Use public import"
-							}
-						]
-					}
-				}
+				"useComponentExportOnlyModules": "off"
 			},
 			"correctness": {
 				"useHookAtTopLevel": "off"

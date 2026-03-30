@@ -1,8 +1,0 @@
-@layer components {
-	.Icon {
-		display: block;
-		flex-shrink: 0;
-		min-width: 0;
-		min-height: 0;
-	}
-}

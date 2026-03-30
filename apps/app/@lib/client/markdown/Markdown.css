@@ -1,9 +1,0 @@
-@layer components {
-	[data-ui="Markdown"] [data-ui="Markdown[p]"] {
-		@apply pb-2;
-	}
-
-	[data-ui="Markdown"] [data-ui="Markdown[p]"]:last-child {
-		@apply pb-0;
-	}
-}

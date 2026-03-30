@@ -1,5 +1,0 @@
-@layer components {
-	[data-ui-disabled="true"] {
-		@apply opacity-50 pointer-events-none cursor-not-allowed shadow-none;
-	}
-}
