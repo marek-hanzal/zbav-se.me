@@ -1,20 +1,17 @@
 import type { ComponentProps, FC } from "react";
-import { asProgress } from "./asProgress";
+import { uiProgress } from "./uiProgress";
 
 export namespace Progress {
-	export interface Props extends asProgress.PropsEx<ComponentProps<"div">> {
+	export interface Props extends uiProgress.Component<ComponentProps<"div">> {
 		value: number;
 	}
 }
 
-export const Progress: FC<Progress.Props> = ({ value, size, tone, theme, className, ...props }) => {
+export const Progress: FC<Progress.Props> = ({ value, ui, className, ...props }) => {
 	return (
 		<div
-			{...asProgress({
-				size,
-				tone,
-				theme,
-				//
+			{...uiProgress({
+				ui,
 				className,
 			})}
 			{...props}
@@ -22,6 +19,8 @@ export const Progress: FC<Progress.Props> = ({ value, size, tone, theme, classNa
 			<div
 				data-ui="Progress-progress"
 				style={{
+					height: "100%",
+					lineHeight: 1,
 					width: `${Math.max(0, Math.min(100, value))}%`,
 				}}
 			></div>

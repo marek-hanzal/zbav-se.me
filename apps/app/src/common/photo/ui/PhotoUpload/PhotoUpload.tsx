@@ -1,8 +1,8 @@
-import { Progress } from "@use-pico/client/ui/progress";
 import { translator } from "@use-pico/common/translator";
 import { type FC, Suspense } from "react";
 import { Container } from "@/lib/client/container";
 import { SpinnerIcon } from "@/lib/client/icon";
+import { Progress } from "@/lib/client/progress";
 import { Status } from "@/lib/client/status";
 import { Placeholder } from "./Placeholder";
 import { Preview } from "./Preview";
@@ -39,9 +39,11 @@ const UploadPending: FC<{
 				action={
 					<Progress
 						value={progress * 100}
-						size={"lg"}
-						tone={"primary"}
-						theme={"dark"}
+						ui={{
+							size: "lg",
+							tone: "primary",
+							theme: "dark",
+						}}
 					/>
 				}
 				ui={{
