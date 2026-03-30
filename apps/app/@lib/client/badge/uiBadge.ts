@@ -1,4 +1,4 @@
-import { ui as coolUi } from "@use-pico/cls";
+import { ui as coolUi } from "@/lib/cls";
 import type { Ui as CoolUi } from "../Ui";
 
 export namespace uiBadge {
