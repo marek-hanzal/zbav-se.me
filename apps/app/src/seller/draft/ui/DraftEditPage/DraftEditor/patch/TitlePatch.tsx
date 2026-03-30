@@ -1,8 +1,11 @@
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
+import { FormField } from "@/lib/client/form";
+import { ArrowRightIcon } from "@/lib/client/icon";
 import { Mx } from "@/lib/client/mx";
 import { Status } from "@/lib/client/status";
+import { Tx } from "@/lib/client/tx";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { TitleContainer } from "~/common/ui/container";
 import { useAppForm } from "~/common/ui/form";
@@ -119,15 +122,20 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onView, ...p
 					/>
 				</Status>
 
-				<form.Subscribe selector={(state) => state.isValid}>
-					{(isValid) => (
+				<form.Subscribe
+					selector={(state) => ({
+						isValid: state.isValid,
+						isSubmitting: state.isSubmitting,
+					})}
+				>
+					{({ isValid, isSubmitting }) => (
 						<SaveContainer
 							onCancel={onCancel}
 							onSave={() => {
 								form.handleSubmit();
 							}}
-							loading={mutation.isPending}
-							disabled={!isValid || mutation.isPending}
+							loading={isSubmitting}
+							disabled={!isValid || isSubmitting}
 							textSave={<Tx label={"Continue (label)"} />}
 							textCancel={<Tx label={"Back (label)"} />}
 							saveProps={{

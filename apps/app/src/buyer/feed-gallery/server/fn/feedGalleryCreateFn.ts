@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { zodGuardFx } from "@/lib/common/schema";
+import { zodGuardFx } from "@/lib/common/fx";
 import { feedGalleryCreateFx } from "~/buyer/feed-gallery/server/fx/feedGalleryCreateFx";
 import { FeedGalleryCreateSchema } from "~/buyer/feed-gallery/server/schema/FeedGalleryCreateSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
@@ -18,8 +18,8 @@ export const feedGalleryCreateFn = createServerFn({
 		withUserMiddleware,
 	])
 	.inputValidator(FeedGalleryCreateSchema)
-	.handler(async ({ data, context: { database, user } }) =>
-		zodGuardFx({
+	.handler(async ({ data, context: { database, user } }) => {
+		return zodGuardFx({
 			schema: GallerySchema,
 			dataFx: feedGalleryCreateFx({
 				...data,
@@ -46,5 +46,5 @@ export const feedGalleryCreateFn = createServerFn({
 				},
 			}),
 			Effect.runPromise,
-		),
-	);
+		);
+	});

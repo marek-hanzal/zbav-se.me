@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { zodGuardFx } from "@/lib/common/schema";
+import { zodGuardFx } from "@/lib/common/fx";
 import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
 import { TransactionQuerySchema } from "~/seller/transaction/server/schema/TransactionQuerySchema";
 import { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";

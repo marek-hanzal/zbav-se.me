@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { zodGuardFx } from "@/lib/common/schema";
+import { zodGuardFx } from "@/lib/common/fx";
 import { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { thumbCreateFx } from "~/buyer/thumb/server/fx/thumbCreateFx";
 import { ThumbCreateSchema } from "~/buyer/thumb/server/schema/ThumbCreateSchema";

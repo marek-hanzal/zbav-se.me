@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { CountSchema, zodGuardFx } from "@/lib/common/schema";
+import { zodGuardFx } from "@/lib/common/fx";
+import { CountSchema } from "@/lib/common/schema";
 import { feedFavouriteCountFx } from "~/buyer/feed-favourite/server/fx/feedFavouriteCountFx";
 import { FeedFavouriteCountQuerySchema } from "~/buyer/feed-favourite/server/schema/FeedFavouriteCountQuerySchema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
@@ -14,8 +15,8 @@ export const feedFavouriteCountFn = createServerFn()
 		withUserMiddleware,
 	])
 	.inputValidator(FeedFavouriteCountQuerySchema)
-	.handler(async ({ data, context: { database, user } }) =>
-		zodGuardFx({
+	.handler(async ({ data, context: { database, user } }) => {
+		return zodGuardFx({
 			schema: CountSchema,
 			dataFx: feedFavouriteCountFx({
 				...data,
@@ -32,5 +33,5 @@ export const feedFavouriteCountFn = createServerFn()
 				},
 			}),
 			Effect.runPromise,
-		),
-	);
+		);
+	});
