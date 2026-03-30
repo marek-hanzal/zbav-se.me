@@ -33,6 +33,7 @@
         "axios": "1.14.0",
         "better-auth": "1.5.6",
         "effect": "3.21.0",
+        "fast-clean": "1.5.3",
         "kysely": "0.28.14",
         "luxon": "3.7.2",
         "minio": "8.0.7",
