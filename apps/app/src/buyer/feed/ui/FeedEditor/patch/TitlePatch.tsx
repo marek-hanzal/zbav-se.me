@@ -1,9 +1,10 @@
 import { translator } from "@use-pico/common/translator";
 import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
-import { FormField, TextInput } from "@/lib/client/form";
+import { FormField } from "@/lib/client/form";
 import { Mx } from "@/lib/client/mx";
 import { Status } from "@/lib/client/status";
+import { TextInput } from "@/lib/client/text-input";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
@@ -42,7 +43,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ui
 					textTitle={translator.text("Feed title (title)")}
 					action={
 						<FormField>
-							{(fieldProps) => (
+							{(props) => (
 								<TextInput
 									value={title}
 									onChange={(e) => {
@@ -50,7 +51,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ui
 									}}
 									placeholder={translator.text("Feed title (placeholder)")}
 									autoFocus
-									{...fieldProps}
+									{...props}
 								/>
 							)}
 						</FormField>

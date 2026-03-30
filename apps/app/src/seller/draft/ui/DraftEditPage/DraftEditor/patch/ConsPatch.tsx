@@ -1,8 +1,9 @@
 import { translator } from "@use-pico/common/translator";
 import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
-import { FormField, TextInput } from "@/lib/client/form";
+import { FormField } from "@/lib/client/form";
 import { ArrowRightIcon } from "@/lib/client/icon";
+import { TextInput } from "@/lib/client/text-input";
 import { Tx } from "@/lib/client/tx";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { TitleContainer } from "~/common/ui/container";
@@ -50,7 +51,7 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onView, ...pro
 
 	return (
 		<TitleContainer
-			data-ui={"Setup-[TitleContainer.cons]"}
+			data-ui={"ConsPatch"}
 			textTitle={translator.text("Listing - Cons (title)")}
 			left={<EditAction />}
 			{...props}

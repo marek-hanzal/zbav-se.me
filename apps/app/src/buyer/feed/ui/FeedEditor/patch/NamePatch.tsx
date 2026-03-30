@@ -1,9 +1,10 @@
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
-import { FormField, TextInput } from "@/lib/client/form";
+import { FormField } from "@/lib/client/form";
 import { Mx } from "@/lib/client/mx";
 import { Status } from "@/lib/client/status";
+import { TextInput } from "@/lib/client/text-input";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";

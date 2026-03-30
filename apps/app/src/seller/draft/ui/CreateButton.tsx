@@ -2,6 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import type { FC } from "react";
 import { Icon, PlusIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
+import { Tx } from "@/lib/client/tx";
 import { ListItem } from "~/common/list-item/ListItem";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 

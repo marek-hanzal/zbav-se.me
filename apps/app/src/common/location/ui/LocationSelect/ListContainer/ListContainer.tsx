@@ -1,7 +1,7 @@
-import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import { withFallback } from "@use-pico/client/utils";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
+import type { Fulltext } from "@/lib/client/fulltext";
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { uiSelectButton } from "~/common/ui/ui";
@@ -62,7 +62,7 @@ export const ListContainer = withFallback(
 
 		return (
 			<Container
-				data-ui="ListContainer[Container.content]"
+				data-ui="ListContainer"
 				ui={{
 					scroll: "vertical",
 					height: "full",

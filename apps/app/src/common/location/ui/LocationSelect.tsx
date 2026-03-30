@@ -1,7 +1,7 @@
-import { Fulltext } from "@use-pico/client/ui/fulltext";
 import { translator } from "@use-pico/common/translator";
 import { type FC, Suspense, useState } from "react";
 import { Container } from "@/lib/client/container";
+import { Fulltext } from "@/lib/client/fulltext";
 import type { Status } from "@/lib/client/status";
 import { ListContainer } from "~/common/location/ui/LocationSelect/ListContainer";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";

@@ -1,6 +1,6 @@
-import { Fulltext } from "@use-pico/client/ui/fulltext";
 import { type FC, Suspense, useState } from "react";
 import { Container } from "@/lib/client/container";
+import { Fulltext } from "@/lib/client/fulltext";
 import type { useSelection } from "@/lib/client/selection";
 import type { EntitySchema } from "@/lib/common/schema";
 import { ListContainer } from "./ListContainer";
