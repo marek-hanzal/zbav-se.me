@@ -1,8 +1,8 @@
-import { Overlay } from "@use-pico/client/ui/overlay";
 import { Suspense, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
+import { Overlay } from "@/lib/client/overlay";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { useListingEvent } from "~/buyer/listing/~public/useListingEvent";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
