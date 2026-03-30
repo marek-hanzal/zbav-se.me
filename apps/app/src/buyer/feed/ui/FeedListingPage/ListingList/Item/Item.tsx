@@ -49,7 +49,13 @@ export const Item = withFallback(({ listingId, feedId, ...props }: Item.Props) =
 				onClick={() => setDetail((prev) => !prev)}
 				{...props}
 			>
-				{listing.isIgnored ? <Overlay type={"subtle"} /> : null}
+				{listing.isIgnored ? (
+					<Overlay
+						ui={{
+							type: "subtle",
+						}}
+					/>
+				) : null}
 
 				<ListingPrice
 					price={listing.price}

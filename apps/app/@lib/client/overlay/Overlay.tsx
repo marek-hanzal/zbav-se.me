@@ -1,17 +1,17 @@
 import type { ComponentProps, FC } from "react";
-import { asOverlay } from "./asOverlay";
+import { uiOverlay } from "./uiOverlay";
 
 export namespace Overlay {
-	export interface Props extends asOverlay.PropsEx<ComponentProps<"div">> {
+	export interface Props extends uiOverlay.Component<ComponentProps<"div">> {
 		//
 	}
 }
 
-export const Overlay: FC<Overlay.Props> = ({ type, className, ...props }) => {
+export const Overlay: FC<Overlay.Props> = ({ ui, className, ...props }) => {
 	return (
 		<div
-			{...asOverlay({
-				type,
+			{...uiOverlay({
+				ui,
 				className,
 			})}
 			{...props}
