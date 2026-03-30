@@ -1,6 +1,6 @@
-import { embedMinHash } from "@use-pico/common/embedding";
 import type { Migration } from "kysely";
 import pgvector from "pgvector";
+import { embedMinHash } from "@/lib/common/embedding";
 import { genId } from "@/lib/common/gen-id";
 import categoriesCsData from "~/server/@migrations/0001-category/categories.cs.json" with {
 	type: "json",

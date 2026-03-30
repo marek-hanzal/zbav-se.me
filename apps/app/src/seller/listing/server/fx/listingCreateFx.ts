@@ -1,8 +1,8 @@
-import { embedMinHash } from "@use-pico/common/embedding";
 import { Effect } from "effect";
 import pgvector from "pgvector";
 import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
+import { embedMinHash } from "@/lib/common/embedding";
 import { genId } from "@/lib/common/gen-id";
 import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
 import type { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreateSchema";
