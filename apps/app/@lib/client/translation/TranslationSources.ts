@@ -1,4 +1,4 @@
-import type { TranslationSource } from "@use-pico/common/type";
+import type { TranslationSource } from "./TranslationSource";
 
 export const TranslationSources: TranslationSource.Sources = {
 	jsx: [

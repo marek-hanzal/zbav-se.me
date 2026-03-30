@@ -2,11 +2,11 @@ import fs from "node:fs";
 import { print, project, query } from "@phenomnomnominal/tsquery";
 import { diffOf } from "@use-pico/common/diff-of";
 import { keyOf } from "@use-pico/common/key-of";
-import type { TranslationSchema } from "@use-pico/common/schema";
-import type { TranslationSource } from "@use-pico/common/type";
 import cliProgress from "cli-progress";
 import { Timer } from "timer-node";
 import { parse, stringify } from "yaml";
+import type { TranslationSource } from "@/lib/client/translation";
+import type { TranslationSchema } from "@/lib/common/schema";
 
 export namespace tx {
 	export interface Translation {

@@ -1,5 +1,5 @@
-import { withTestabaseFx } from "@use-pico/server/test";
 import { Effect } from "effect";
+import { withTestabaseFx } from "@/lib/server/test";
 import { databaseFx } from "~/server/database/databaseFx";
 
 export default async function globalSetup() {
