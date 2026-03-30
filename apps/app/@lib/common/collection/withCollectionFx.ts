@@ -1,9 +1,12 @@
 import { Effect } from "effect";
-import type { SelectQueryBuilder } from "kysely";
+import type { SelectQueryBuilder, Simplify } from "kysely";
+import type { z } from "zod";
 import type { CursorSchema } from "../schema/CursorSchema";
 import type { FilterSchema } from "../schema/FilterSchema";
 
-export namespace withListFx {
+export namespace withCollectionFx {
+	export type Output<TOutputSchema extends z.ZodSchema> = Simplify<z.infer<TOutputSchema>>;
+
 	export namespace Query {
 		export interface Props<
 			TSelect extends SelectQueryBuilder<any, any, any>,
@@ -37,11 +40,11 @@ export namespace withListFx {
 		where?: TFilter;
 		scope?: TFilter;
 		//
-		cursor?: CursorSchema.Type;
+		cursor: CursorSchema.Type;
 	}
 }
 
-export const withListFx = Effect.fn("withListFx")(function* <
+export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 	const TDB,
 	const TTable extends keyof TDB,
 	const TOutput,
@@ -57,7 +60,7 @@ export const withListFx = Effect.fn("withListFx")(function* <
 	where,
 	scope,
 	cursor,
-}: withListFx.Props<
+}: withCollectionFx.Props<
 	TDB,
 	TTable,
 	TOutput,
@@ -81,17 +84,10 @@ export const withListFx = Effect.fn("withListFx")(function* <
 		});
 	}
 
-	const limit = (select: SelectQueryBuilder<TDB, TTable, TOutput>) => {
-		let $select = select;
-
-		if (cursor) {
-			$select = select.limit(cursor.size).offset(cursor.page * cursor.size);
-		}
-
-		return $select;
-	};
-
 	return yield* Effect.promise(async () => {
-		return limit(qb).execute();
+		return qb
+			.limit(cursor.size)
+			.offset(cursor.page * cursor.size)
+			.execute();
 	});
 });

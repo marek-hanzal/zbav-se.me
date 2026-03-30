@@ -1,5 +1,5 @@
-import type { EntitySchema } from "@use-pico/common/schema";
 import { useCallback, useMemo, useRef, useState } from "react";
+import type { EntitySchema } from "@/lib/common/schema";
 
 export namespace useSelection {
 	/** Selection mode - either single item or multiple items */

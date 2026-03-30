@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { translator } from "@use-pico/common/translator";
+import { translator } from "@/lib/common/translator";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
 import { SearchPage } from "~/buyer/search/~public/SearchPage";

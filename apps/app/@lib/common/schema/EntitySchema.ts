@@ -1,5 +1,5 @@
-import { translator } from "@use-pico/common/translator";
 import { z } from "zod";
+import { translator } from "@/lib/common/translator";
 
 /**
  * Entity schema represents any piece of data which has an identity.

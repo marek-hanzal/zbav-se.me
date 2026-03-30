@@ -1,5 +1,5 @@
-import { translator } from "@use-pico/common/translator";
 import type { ComponentProps, FC } from "react";
+import { translator } from "@/lib/common/translator";
 import { uiInput } from "../form/uiInput";
 
 export namespace TextInput {

@@ -78,6 +78,7 @@
         "cac": "7.0.0",
         "dependency-cruiser": "17.3.10",
         "google-fonts-helper": "3.7.4",
+        "js-sha256": "0.11.1",
         "knip": "6.1.0",
         "nitro": "3.0.260311-beta",
         "npm-run-all2": "8.0.4",

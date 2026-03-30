@@ -1,5 +1,5 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { translator } from "@/lib/common/translator";
 import { Markdown } from "../markdown/Markdown";
 
 export namespace Mx {

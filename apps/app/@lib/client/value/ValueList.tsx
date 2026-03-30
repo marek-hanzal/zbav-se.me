@@ -1,5 +1,5 @@
-import type { EntitySchema } from "@use-pico/common/schema";
 import type { ReactNode } from "react";
+import type { EntitySchema } from "@/lib/common/schema";
 import { Container } from "../container/Container";
 import { Group } from "../group/Group";
 import { SpinnerContainer } from "../spinner/SpinnerContainer";
