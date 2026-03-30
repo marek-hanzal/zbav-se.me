@@ -1,10 +1,10 @@
 import { translator } from "@use-pico/common/translator";
-import type { StateType } from "@use-pico/common/type";
 import { type ComponentProps, type FC, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { useMergeRefs } from "../../hook/useMergeRefs";
-import { Icon } from "../../icon/Icon";
 import { uiInput } from "../form/uiInput";
+import { Icon } from "../icon/Icon";
+import { useMergeRefs } from "../ref/useMergeRefs";
+import type { StateType } from "../type/StateType";
 import { uiFulltext } from "./uiFulltext";
 
 export namespace Fulltext {
