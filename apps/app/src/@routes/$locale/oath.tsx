@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container } from "@use-pico/client/ui/container";
-import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import { z } from "zod";
+import { Container } from "@/lib/client/container";
+import { Status } from "@/lib/client/status";
 import { OAuthLoginPage } from "~/public/ui/OAuthLoginPage";
 
 const SearchSchema = z.record(z.string(), z.string());

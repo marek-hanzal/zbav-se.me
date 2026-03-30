@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import type { NoticeSchema } from "@use-pico/common/schema";
 import { z } from "zod";
+import type { NoticeSchema } from "@/lib/common/schema";
 
 const CronSchema = z.enum([
 	"0",

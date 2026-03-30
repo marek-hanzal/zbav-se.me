@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ChevronRightIcon, GitHubIcon, Icon } from "@use-pico/client/icon";
-import { uiButton } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
 import { LinkTo, uiLinkTo } from "@use-pico/client/ui/link-to";
-import { Status } from "@use-pico/client/ui/status";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { Suspense } from "react";
+import { uiButton } from "@/lib/client/button";
+import { Container } from "@/lib/client/container";
+import { ChevronRightIcon, GitHubIcon, Icon } from "@/lib/client/icon";
+import { Status } from "@/lib/client/status";
+import { Tx } from "@/lib/client/tx";
 import face from "~/assets/face.webp";
 import { HeroImage } from "~/common/ui/img";
 import { Logo } from "~/common/ui/logo";
