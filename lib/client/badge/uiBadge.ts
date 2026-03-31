@@ -1,4 +1,4 @@
-import { ui as coolUi } from "@/lib/cls";
+import { ui as coolUi } from "@/lib/client/cls";
 import type { Ui as CoolUi } from "../Ui";
 
 export namespace uiBadge {

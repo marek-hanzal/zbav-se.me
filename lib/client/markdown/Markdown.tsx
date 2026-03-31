@@ -1,7 +1,7 @@
 import type { ComponentProps, FC } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { tvc } from "@/lib/cls";
+import { tvc } from "@/lib/client/cls";
 import { uiButton } from "../button/uiButton";
 import { Container } from "../container/Container";
 import { uiContainer } from "../container/uiContainer";

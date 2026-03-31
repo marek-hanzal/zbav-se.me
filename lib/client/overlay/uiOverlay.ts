@@ -1,4 +1,4 @@
-import { ui as coolUi } from "../../cls";
+import { ui as coolUi } from "../cls";
 
 export namespace uiOverlay {
 	export type Type = "overlay" | "subtle";

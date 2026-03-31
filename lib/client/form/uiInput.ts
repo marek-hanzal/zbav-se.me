@@ -1,4 +1,4 @@
-import { ui as coolUi } from "../../cls";
+import { ui as coolUi } from "../cls";
 import type { Ui as CoolUi } from "../Ui";
 
 export namespace uiInput {

@@ -1,7 +1,7 @@
 import type { FC } from "react";
+import { tvc } from "@/lib/client/cls";
 import { Container } from "@/lib/client/container";
 import { Icon } from "@/lib/client/icon";
-import { tvc } from "@/lib/cls";
 
 export namespace TypoIcon {
 	export interface Props extends Container.Props {

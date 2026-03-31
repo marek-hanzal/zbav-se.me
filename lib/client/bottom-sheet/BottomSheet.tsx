@@ -7,8 +7,8 @@ import {
 	useRef,
 } from "react";
 import { Sheet, type SheetRef } from "react-modal-sheet";
+import { tvc } from "@/lib/client/cls";
 import { useMergeRefs } from "@/lib/client/ref";
-import { tvc } from "@/lib/cls";
 import { Container } from "../container";
 import { Tx } from "../tx";
 

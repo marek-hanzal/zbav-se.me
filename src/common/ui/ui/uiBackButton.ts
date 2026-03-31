@@ -1,5 +1,5 @@
 import { uiButton } from "@/lib/client/button";
-import type { ui as coolUi } from "@/lib/cls";
+import type { ui as coolUi } from "@/lib/client/cls";
 
 export namespace uiBackButton {
 	export interface Ui extends uiButton.Ui {
