@@ -51,7 +51,8 @@ export const test = base.extend<{
 	db: string;
 	database: TestDatabase;
 }>({
-	async db(_, use, testInfo) {
+	// biome-ignore lint/correctness/noEmptyPattern: Ssst
+	async db({}, use, testInfo) {
 		await use(
 			toDatabaseName(testInfo.file, testInfo.title, testInfo.workerIndex, testInfo.retry),
 		);
