@@ -189,7 +189,7 @@ jobs:
         name: Deploy app to Vercel
         runs-on: ubuntu-latest
         environment: staging
-        needs: [build]
+        needs: [vercel-env-app, build]
         steps:
             - name: Cache restore (app prebuilt)
               uses: actions/cache/restore@v5.0.3
@@ -288,7 +288,7 @@ jobs:
         name: Run migrations
         runs-on: ubuntu-latest
         environment: staging
-        needs: [vercel-env-app, vercel-app]
+        needs: [vercel-app]
         steps:
             - name: Trigger migrations endpoint
               run: |
