@@ -67,8 +67,8 @@ env:
         SERVER_S3_SECRET
 
 jobs:
-    validate-common-env:
-        name: Validate common env
+    validate-env:
+        name: Validate env variables
         runs-on: ubuntu-latest
         environment: staging
         steps:
@@ -114,11 +114,11 @@ jobs:
 
                   echo "OK: required variables present."
 
-    vercel-env-app:
-        name: "App: Sync env. variables"
+    sync-env:
+        name: Sync env variables
         runs-on: ubuntu-latest
         environment: staging
-        needs: [validate-common-env]
+        needs: [validate-env]
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -161,7 +161,7 @@ jobs:
         name: Build
         runs-on: ubuntu-latest
         environment: staging
-        needs: [validate-common-env]
+        needs: [validate-env]
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -185,11 +185,11 @@ jobs:
                   path: .vercel/output
                   key: app-${{ github.run_id }}
 
-    vercel-app:
+    deploy:
         name: Deploy app to Vercel
         runs-on: ubuntu-latest
         environment: staging
-        needs: [vercel-env-app, build]
+        needs: [sync-env, build]
         steps:
             - name: Cache restore (app prebuilt)
               uses: actions/cache/restore@v5.0.3
@@ -218,11 +218,11 @@ jobs:
                     --prod --yes \
                     --token "$VERCEL_TOKEN"
 
-    bunny-cdn-app:
-        name: Update CDN (app)
+    cdn:
+        name: Update CDN
         runs-on: ubuntu-latest
         environment: staging
-        needs: [vercel-env-app, build]
+        needs: [sync-env, build]
         steps:
             - name: Cache restore (app prebuilt)
               uses: actions/cache/restore@v5.0.3
@@ -284,11 +284,11 @@ jobs:
                       --low-level-retries=10
                       --verbose
 
-    run-migrations:
+    migration:
         name: Run migrations
         runs-on: ubuntu-latest
         environment: staging
-        needs: [vercel-app]
+        needs: [deploy]
         steps:
             - name: Trigger migrations endpoint
               run: |
