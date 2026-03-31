@@ -1,7 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const reuseExistingServer = process.env.E2E_REUSE_EXISTING_SERVER === "1" || !process.env.CI;
-
 export default defineConfig({
 	testDir: "./e2e",
 	globalSetup: "./e2e/init.ts",
@@ -12,7 +10,7 @@ export default defineConfig({
 			command: "bun run e2e:build && bun run e2e:start",
 			url: process.env.VITE_ORIGIN,
 			ignoreHTTPSErrors: true,
-			reuseExistingServer,
+			reuseExistingServer: false,
 			timeout: 60_000,
 		},
 	],

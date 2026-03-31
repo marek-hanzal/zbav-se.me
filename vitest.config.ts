@@ -24,7 +24,7 @@ export default defineConfig({
 			},
 			{
 				find: /^@\/lib\//,
-				replacement: `${resolve(__dirname, "./@lib")}/`,
+				replacement: `${resolve(__dirname, "./lib")}/`,
 			},
 		],
 	},

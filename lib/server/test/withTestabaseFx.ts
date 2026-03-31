@@ -5,6 +5,7 @@ import {
 	type DialectContextFx,
 	MigrationContextFx,
 	withDatabaseFx,
+	withDatabaseName,
 	withDialectFx,
 } from "@/lib/common/database";
 import { ensureDocker } from "../docker/ensureDocker";
@@ -46,7 +47,12 @@ async function startPostgresContainer({ image, name, port, db }: startPostgresCo
 	});
 
 	try {
-		await waitForConnect(`postgresql://postgres:postgres@127.0.0.1:${port}/${db}`);
+		await waitForConnect(
+			withDatabaseName({
+				dsn: `postgresql://postgres:postgres@127.0.0.1:${port}`,
+				name: db,
+			}),
+		);
 	} catch (error) {
 		const logs = shOptional([
 			"docker",
@@ -100,7 +106,10 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 			withDialectFx(
 				new PostgresDialect({
 					pool: new Pool({
-						connectionString: `${dsn}/${template}`,
+						connectionString: withDatabaseName({
+							dsn: dsn,
+							name: template,
+						}),
 					}),
 				}),
 			),
@@ -118,7 +127,10 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 			withDialectFx(
 				new PostgresDialect({
 					pool: new Pool({
-						connectionString: `${dsn}/postgres`,
+						connectionString: withDatabaseName({
+							dsn: dsn,
+							name: "postgres",
+						}),
 					}),
 				}),
 			),

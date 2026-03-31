@@ -70,6 +70,7 @@ jobs:
         runs-on: ubuntu-latest
         environment: staging
         env:
+            SERVER_E2E: e2e
             PORTLESS_STATE_DIR: /tmp/portless
             NODE_EXTRA_CA_CERTS: /tmp/portless/ca.pem
             SSL_CERT_FILE: /tmp/portless/ca.pem

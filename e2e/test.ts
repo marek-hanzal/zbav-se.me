@@ -1,5 +1,7 @@
+import path from "node:path";
 import type { Page } from "@playwright/test";
 import { test as base, expect } from "@playwright/test";
+import { testabase } from "./testabase";
 
 async function waitForViewTransitions(page: Page) {
 	await page.waitForFunction(
@@ -26,8 +28,53 @@ async function waitForViewTransitions(page: Page) {
 	await page.waitForTimeout(50);
 }
 
-export const test = base.extend({
-	page: async ({ page }, use) => {
+function toDatabaseName(file: string, title: string, workerIndex: number, retry: number) {
+	const fileName = path.basename(file, path.extname(file));
+	const rawName = [
+		fileName,
+		title,
+		`w${workerIndex}`,
+		`r${retry}`,
+	]
+		.join("-")
+		.toLowerCase()
+		.replace(/[^a-z0-9_-]+/g, "-")
+		.replace(/-+/g, "-")
+		.replace(/^-+|-+$/g, "");
+
+	return `e2e-${rawName || "test"}`.slice(0, 63);
+}
+
+type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+
+export const test = base.extend<{
+	db: string;
+	database: TestDatabase;
+}>({
+	async db(_, use, testInfo) {
+		await use(
+			toDatabaseName(testInfo.file, testInfo.title, testInfo.workerIndex, testInfo.retry),
+		);
+	},
+	async database({ db }, use) {
+		let cleanup = async () => {};
+
+		const database = await testabase({
+			name: db,
+			onTestFinished(callbackFn) {
+				cleanup = callbackFn;
+			},
+		});
+
+		await use(database);
+
+		await cleanup();
+	},
+	async page({ page, db }, use) {
+		await page.context().setExtraHTTPHeaders({
+			"x-e2e-db": db,
+		});
+
 		await use(page);
 
 		if (page.isClosed()) {

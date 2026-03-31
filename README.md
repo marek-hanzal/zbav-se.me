@@ -92,6 +92,7 @@ Local sync source files live in `@env/*.json` and can be applied with `bun run e
 | auth | `SERVER_BETTER_AUTH_SECRET` | yes | secret | Signing and encryption secret used by Better Auth. |
 | auth | `SERVER_JWT_SECRET` | yes | secret | Secret used for JWT signing and verification. |
 | database | `SERVER_DATABASE_URL` | yes | secret | Postgres connection string used by the server runtime and seed flows. In GitHub Actions, this value is resolved dynamically from Neon before syncing to Vercel. |
+| e2e | `SERVER_E2E` | optional | variable | Soft gate for e2e DB routing. Set it to `e2e` only in test/dev flows that send `x-e2e-db`. |
 | s3 | `SERVER_S3_API` | yes | variable | S3-compatible endpoint used for uploads, presigning, and cleanup jobs. |
 | s3 | `SERVER_S3_BUCKET` | yes | variable | Bucket name used for uploaded content storage. |
 | s3 | `SERVER_S3_KEY` | yes | secret | Access key ID for the S3-compatible storage provider. |
@@ -122,6 +123,8 @@ bun run workflow:check
 ```
 
 `bun run workflow:check` runs the full non-test verification pipeline for the repo: formatting, linting, and TypeScript typecheck.
+
+The Playwright e2e flow uses `x-e2e-db` to select the per-test database. That header is ignored unless `SERVER_E2E=e2e` is present.
 
 ## Dependency Hygiene
 

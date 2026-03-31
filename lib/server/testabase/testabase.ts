@@ -1,8 +1,14 @@
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
-import { type DialectContextFx, type withDatabaseFx, withDialectFx } from "@/lib/common/database";
+import {
+	type DialectContextFx,
+	type withDatabaseFx,
+	withDatabaseName,
+	withDialectFx,
+} from "@/lib/common/database";
 import { genId } from "@/lib/common/gen-id";
+import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 
 export namespace testabase {
 	export interface Props<in out TDatabase> {
@@ -25,11 +31,16 @@ export const testabase = async <const TDatabase>({
 	onTestFinished,
 }: testabase.Props<TDatabase>) => {
 	return Effect.gen(function* () {
+		const databaseConfig = ServerDatabaseSchema.parse(process.env);
+
 		const { kysely } = yield* databaseFx.pipe(
 			withDialectFx(
 				new PostgresDialect({
 					pool: new Pool({
-						connectionString: `${process.env.SERVER_DATABASE_URL}/${root}`,
+						connectionString: withDatabaseName({
+							dsn: databaseConfig.SERVER_DATABASE_URL,
+							name: root,
+						}),
 						max: 1,
 					}),
 				}),
@@ -50,7 +61,10 @@ export const testabase = async <const TDatabase>({
 			withDialectFx(
 				new PostgresDialect({
 					pool: new Pool({
-						connectionString: `${process.env.SERVER_DATABASE_URL}/${name}`,
+						connectionString: withDatabaseName({
+							dsn: databaseConfig.SERVER_DATABASE_URL,
+							name: name,
+						}),
 						max: 4,
 					}),
 				}),
