@@ -28,6 +28,7 @@ import { Route as LocaleOathRouteImport } from './@routes/$locale/oath'
 import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
 import { Route as LocaleAppIndexRouteImport } from './@routes/$locale/app/index'
+import { Route as ApiOauthAuthorizeRouteImport } from './@routes/api/oauth/authorize'
 import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
 import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welcome'
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
@@ -145,6 +146,11 @@ const LocaleAppIndexRoute = LocaleAppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LocaleAppRoute,
+} as any)
+const ApiOauthAuthorizeRoute = ApiOauthAuthorizeRouteImport.update({
+  id: '/oauth/authorize',
+  path: '/oauth/authorize',
+  getParentRoute: () => ApiRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/auth/$',
@@ -294,6 +300,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/oauth/authorize': typeof ApiOauthAuthorizeRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
@@ -335,6 +342,7 @@ export interface FileRoutesByTo {
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/oauth/authorize': typeof ApiOauthAuthorizeRoute
   '/$locale/app': typeof LocaleAppIndexRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
@@ -379,6 +387,7 @@ export interface FileRoutesById {
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/oauth/authorize': typeof ApiOauthAuthorizeRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
@@ -424,6 +433,7 @@ export interface FileRouteTypes {
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/api/auth/$'
+    | '/api/oauth/authorize'
     | '/$locale/app/'
     | '/$locale/app/buyer/search'
     | '/$locale/app/inbox/$priority'
@@ -465,6 +475,7 @@ export interface FileRouteTypes {
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/api/auth/$'
+    | '/api/oauth/authorize'
     | '/$locale/app'
     | '/$locale/app/buyer/search'
     | '/$locale/app/inbox/$priority'
@@ -508,6 +519,7 @@ export interface FileRouteTypes {
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/api/auth/$'
+    | '/api/oauth/authorize'
     | '/$locale/app/'
     | '/$locale/app/buyer/search'
     | '/$locale/app/inbox/$priority'
@@ -672,6 +684,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/app/'
       preLoaderRoute: typeof LocaleAppIndexRouteImport
       parentRoute: typeof LocaleAppRoute
+    }
+    '/api/oauth/authorize': {
+      id: '/api/oauth/authorize'
+      path: '/oauth/authorize'
+      fullPath: '/api/oauth/authorize'
+      preLoaderRoute: typeof ApiOauthAuthorizeRouteImport
+      parentRoute: typeof ApiRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -916,6 +935,7 @@ interface ApiRouteChildren {
   ApiE2eRoute: typeof ApiE2eRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiOauthAuthorizeRoute: typeof ApiOauthAuthorizeRoute
   ApiPublicMigrationRunRoute: typeof ApiPublicMigrationRunRoute
 }
 
@@ -924,6 +944,7 @@ const ApiRouteChildren: ApiRouteChildren = {
   ApiE2eRoute: ApiE2eRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiOauthAuthorizeRoute: ApiOauthAuthorizeRoute,
   ApiPublicMigrationRunRoute: ApiPublicMigrationRunRoute,
 }
 

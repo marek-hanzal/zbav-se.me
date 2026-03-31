@@ -1,16 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { Status } from "@/lib/client/status";
 import { translator } from "@/lib/common/translator";
+import { OAuthSearchSchema } from "~/common/auth/schema/OAuthSearchSchema";
 import { OAuthLoginPage } from "~/public/ui/OAuthLoginPage";
 
-const SearchSchema = z.record(z.string(), z.string());
-
 export const Route = createFileRoute("/$locale/oath")({
-	validateSearch(search) {
-		return SearchSchema.parse(search);
-	},
+	validateSearch: OAuthSearchSchema,
 	errorComponent() {
 		return (
 			<Container

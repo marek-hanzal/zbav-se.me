@@ -8,6 +8,7 @@ import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
 import { translator } from "@/lib/common/translator";
 import { withEmailSignInMutation } from "~/common/auth/mutation/withEmailSignInMutation";
+import type { OAuthSearchSchema } from "~/common/auth/schema/OAuthSearchSchema";
 import { useAppForm } from "~/common/ui/form";
 import { Logo } from "~/common/ui/logo";
 
@@ -26,27 +27,10 @@ const LoginSchema = z.object({
 
 type LoginSchema = typeof LoginSchema;
 
-const OAuthRequiredQueryKeys = [
-	"response_type",
-	"client_id",
-	"redirect_uri",
-	"state",
-] as const;
-
-const withHasOAuthChallenge = (query: Record<string, string>): boolean => {
-	for (const key of OAuthRequiredQueryKeys) {
-		if (!query[key]) {
-			return false;
-		}
-	}
-
-	return true;
-};
-
 export namespace OAuthLoginPage {
 	export interface Props {
 		locale: string;
-		query: Record<string, string>;
+		query: OAuthSearchSchema.Type;
 	}
 }
 
@@ -55,23 +39,9 @@ export const OAuthLoginPage = ({ locale, query }: OAuthLoginPage.Props) => {
 
 	const signInMutation = withEmailSignInMutation.useMutation({
 		async onPostMutation() {
-			if (!withHasOAuthChallenge(query)) {
-				return navigate({
-					to: "/$locale/sign-in",
-					params: {
-						locale,
-					},
-				});
-			}
-
 			return navigate({
-				href: (() => {
-					const url = new URL("/api/oauth/mcp/authorize", import.meta.env.VITE_ORIGIN);
-
-					url.search = new URLSearchParams(query).toString();
-
-					return url.toString();
-				})(),
+				to: "/api/oauth/authorize",
+				search: query,
 			});
 		},
 	});

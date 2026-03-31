@@ -1,19 +1,15 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { z } from "zod";
+import { OAuthSearchSchema } from "~/common/auth/schema/OAuthSearchSchema";
 import { getLocaleFn } from "~/common/locale/getLocaleFn";
 
-const SearchSchema = z.record(z.string(), z.string());
-
 export const Route = createFileRoute("/redirect/oath")({
-	validateSearch(search) {
-		return SearchSchema.parse(search);
-	},
+	validateSearch: OAuthSearchSchema,
 	loaderDeps({ search }) {
 		return {
 			search,
 		};
 	},
-	async loader({ deps }) {
+	async loader({ deps: { search } }) {
 		const locale = await getLocaleFn();
 
 		return redirect({
@@ -21,7 +17,7 @@ export const Route = createFileRoute("/redirect/oath")({
 			params: {
 				locale,
 			},
-			search: deps.search,
+			search,
 		});
 	},
 });
