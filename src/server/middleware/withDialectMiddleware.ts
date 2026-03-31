@@ -1,25 +1,25 @@
 import { createMiddleware } from "@tanstack/react-start";
-import { type Dialect, PostgresDialect } from "kysely";
+import { PostgresDialect } from "kysely";
 import { Pool } from "~/server/database/pg";
+import { databaseRuntimeCache } from "~/server/database/runtime";
 import { withDsnMiddleware } from "~/server/middleware/withDsnMiddleware";
-
-const dialectMap: Map<string, Dialect> = new Map();
 
 export const withDialectMiddleware = createMiddleware()
 	.middleware([
 		withDsnMiddleware,
 	])
 	.server(async ({ next, context: { dsn } }) => {
-		let instance = dialectMap.get(dsn);
+		let instance = databaseRuntimeCache.dialectByDsn.get(dsn);
 
 		if (!instance) {
+			console.info("[db] initialising shared PostgresDialect cache");
 			instance = new PostgresDialect({
 				pool: new Pool({
 					connectionString: dsn,
 					max: 3,
 				}),
 			});
-			dialectMap.set(dsn, instance);
+			databaseRuntimeCache.dialectByDsn.set(dsn, instance);
 		}
 
 		return next({
