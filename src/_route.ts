@@ -33,6 +33,7 @@ import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welc
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
 import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
 import { Route as LocaleAppHomeRouteImport } from './@routes/$locale/app/home'
+import { Route as ApiPublicMigrationRunRouteImport } from './@routes/api/public/migration/run'
 import { Route as LocaleAppInboxPriorityRouteImport } from './@routes/$locale/app/inbox/$priority'
 import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
 import { Route as LocaleAppSellerTransactionListRouteImport } from './@routes/$locale/app/seller/transaction/list'
@@ -170,6 +171,11 @@ const LocaleAppHomeRoute = LocaleAppHomeRouteImport.update({
   path: '/home',
   getParentRoute: () => LocaleAppRoute,
 } as any)
+const ApiPublicMigrationRunRoute = ApiPublicMigrationRunRouteImport.update({
+  id: '/public/migration/run',
+  path: '/public/migration/run',
+  getParentRoute: () => ApiRoute,
+} as any)
 const LocaleAppInboxPriorityRoute = LocaleAppInboxPriorityRouteImport.update({
   id: '/inbox/$priority',
   path: '/inbox/$priority',
@@ -291,6 +297,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
+  '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
   '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
@@ -331,6 +338,7 @@ export interface FileRoutesByTo {
   '/$locale/app': typeof LocaleAppIndexRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
+  '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
   '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
@@ -374,6 +382,7 @@ export interface FileRoutesById {
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
+  '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
   '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
@@ -418,6 +427,7 @@ export interface FileRouteTypes {
     | '/$locale/app/'
     | '/$locale/app/buyer/search'
     | '/$locale/app/inbox/$priority'
+    | '/api/public/migration/run'
     | '/$locale/app/buyer/favourite/list'
     | '/$locale/app/buyer/feed/default'
     | '/$locale/app/buyer/feed/list'
@@ -458,6 +468,7 @@ export interface FileRouteTypes {
     | '/$locale/app'
     | '/$locale/app/buyer/search'
     | '/$locale/app/inbox/$priority'
+    | '/api/public/migration/run'
     | '/$locale/app/buyer/favourite/list'
     | '/$locale/app/buyer/feed/default'
     | '/$locale/app/buyer/feed/list'
@@ -500,6 +511,7 @@ export interface FileRouteTypes {
     | '/$locale/app/'
     | '/$locale/app/buyer/search'
     | '/$locale/app/inbox/$priority'
+    | '/api/public/migration/run'
     | '/$locale/app/buyer/favourite/list'
     | '/$locale/app/buyer/feed/default'
     | '/$locale/app/buyer/feed/list'
@@ -695,6 +707,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/app/home'
       preLoaderRoute: typeof LocaleAppHomeRouteImport
       parentRoute: typeof LocaleAppRoute
+    }
+    '/api/public/migration/run': {
+      id: '/api/public/migration/run'
+      path: '/public/migration/run'
+      fullPath: '/api/public/migration/run'
+      preLoaderRoute: typeof ApiPublicMigrationRunRouteImport
+      parentRoute: typeof ApiRoute
     }
     '/$locale/app/inbox/$priority': {
       id: '/$locale/app/inbox/$priority'
@@ -897,6 +916,7 @@ interface ApiRouteChildren {
   ApiE2eRoute: typeof ApiE2eRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiPublicMigrationRunRoute: typeof ApiPublicMigrationRunRoute
 }
 
 const ApiRouteChildren: ApiRouteChildren = {
@@ -904,6 +924,7 @@ const ApiRouteChildren: ApiRouteChildren = {
   ApiE2eRoute: ApiE2eRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiPublicMigrationRunRoute: ApiPublicMigrationRunRoute,
 }
 
 const ApiRouteWithChildren = ApiRoute._addFileChildren(ApiRouteChildren)
