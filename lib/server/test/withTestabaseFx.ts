@@ -164,11 +164,14 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 
 	process.env.SERVER_DATABASE_URL = dsn;
 
-	return async () => {
-		await terminateClientBackends(`${dsn}/postgres`);
+	return {
+		dsn,
+		async cleanup() {
+			await terminateClientBackends(`${dsn}/postgres`);
 
-		rmImage({
-			image: name,
-		});
-	};
+			rmImage({
+				image: name,
+			});
+		},
+	} as const;
 });

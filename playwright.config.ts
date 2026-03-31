@@ -13,7 +13,7 @@ export default defineConfig({
 			reuseExistingServer: false,
 			timeout: 60_000,
 			env: {
-				SERVER_DATABASE_URL: "hovno",
+				SERVER_DATABASE_URL: "postgresql://postgres:postgres@localhost:55432/postgres",
 			},
 		},
 	],
