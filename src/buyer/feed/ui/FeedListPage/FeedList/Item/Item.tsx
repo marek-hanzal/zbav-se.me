@@ -11,8 +11,8 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
+import { ListingCount } from "~/buyer/listing/ui/ListingCount";
 import { ListItem } from "~/common/list-item/ListItem";
-import { ListingCount } from "~/common/listing/ui/ListingCount";
 import { FeedEditorSheet } from "../../../FeedEditor/FeedEditorSheet";
 import { DeleteButton } from "../DeleteButton";
 

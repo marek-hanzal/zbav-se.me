@@ -3,9 +3,9 @@ import type { FC } from "react";
 import { Button } from "@/lib/client/button";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
-import { isValid } from "~/common/draft/util/isValid";
 import { uiSaveButton } from "~/common/ui/ui";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
+import { isValid } from "~/seller/draft/util/isValid";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 
 export namespace CreateListingButton {
