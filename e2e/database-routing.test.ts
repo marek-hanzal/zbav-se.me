@@ -9,11 +9,7 @@ function toSeedEmail(databaseName: string) {
 	return `${databaseName}@e2e.zbav.se.me`;
 }
 
-test("routes browser traffic to the per-test database", async ({
-	page,
-	database,
-	db,
-}) => {
+test("routes browser traffic to the per-test database", async ({ page, database, db }) => {
 	const feedName = "E2E feed";
 	const email = toSeedEmail(db);
 
@@ -43,14 +39,14 @@ test("routes browser traffic to the per-test database", async ({
 
 					return response.json();
 				},
-					{
-						e2eDatabaseName: db,
-					},
-				);
-			});
+				{
+					e2eDatabaseName: db,
+				},
+			);
+		});
 
-			expect(routeResult).toEqual({
-				databaseKey: `e2e:${db}`,
-			});
-		}).pipe(Effect.runPromise);
+		expect(routeResult).toEqual({
+			db,
+		});
+	}).pipe(Effect.runPromise);
 });

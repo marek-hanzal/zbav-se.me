@@ -11,7 +11,6 @@ import {
 import { ensureDocker } from "../docker/ensureDocker";
 import { rmImage } from "../docker/rmImage";
 import { runImage } from "../docker/runImage";
-import { terminateClientBackends } from "../pg/terminateClientBackends";
 import { waitForConnect } from "../pg/waitForConnect";
 import { shOptional } from "../sh/shOptional";
 
@@ -166,12 +165,6 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 
 	return {
 		dsn,
-		async cleanup() {
-			await terminateClientBackends(`${dsn}/postgres`);
-
-			rmImage({
-				image: name,
-			});
-		},
+		async cleanup() {},
 	} as const;
 });
