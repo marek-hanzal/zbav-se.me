@@ -6,12 +6,15 @@ export default defineConfig({
 	outputDir: "./results",
 	webServer: [
 		{
-			name: "Frontend",
-			command: "bun run e2e:build && bun run e2e:start",
+			name: "App",
+			command: "bunx run-s e2e:build e2e:start",
 			url: process.env.VITE_ORIGIN,
 			ignoreHTTPSErrors: true,
 			reuseExistingServer: false,
 			timeout: 60_000,
+			env: {
+				SERVER_DATABASE_URL: "hovno",
+			},
 		},
 	],
 	reporter: process.env.CI
