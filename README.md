@@ -79,7 +79,6 @@ Local sync source files live in `@env/*.json` and can be applied with `bun run e
 
 | group | VALUE | Required | secret/variable | comment |
 | --- | --- | --- | --- | --- |
-| origins | `VITE_SERVER_API` | yes | variable | Public API base URL used by the frontend auth and API clients. |
 | assets | `VITE_APP_ASSETS` | yes | variable | Public asset base URL used by the Vite production build for emitted static assets and CDN links. |
 | build | `NITRO_PRESET` | default: `vercel` | variable | Optional Nitro deployment preset override for production builds. |
 
@@ -87,8 +86,7 @@ Local sync source files live in `@env/*.json` and can be applied with `bun run e
 
 | group | VALUE | Required | secret/variable | comment |
 | --- | --- | --- | --- | --- |
-| origins | `VITE_ORIGIN` | yes | variable | Canonical frontend origin used for CORS, trusted origins, and auth redirect URLs. |
-| origins | `VITE_SERVER_API` | yes | variable | Canonical API base URL used by auth configuration and generated OpenAPI metadata. |
+| origins | `VITE_ORIGIN` | yes | variable | Canonical application origin used for CORS, trusted origins, auth redirect URLs, and API calls. |
 | auth | `SERVER_BETTER_AUTH_SECRET` | yes | secret | Signing and encryption secret used by Better Auth. |
 | auth | `SERVER_JWT_SECRET` | yes | secret | Secret used for JWT signing and verification. |
 | database | `SERVER_DATABASE_URL` | yes | secret | Postgres connection string used by the server runtime and seed flows. In GitHub Actions, this value is resolved dynamically from Neon before syncing to Vercel. |

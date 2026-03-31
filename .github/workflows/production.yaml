@@ -17,7 +17,6 @@ env:
     # -------------------------------
     # Common env. variables
     # -------------------------------
-    VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
     VITE_APP_ASSETS: ${{ vars.VITE_APP_ASSETS }}
     VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
     NODE_OPTIONS: --max-old-space-size=1300
@@ -48,7 +47,7 @@ env:
     VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
     VERCEL_APP_PROJECT_ID: ${{ vars.VERCEL_APP_PROJECT_ID }}
 
-    MIGRATION_URL: ${{ vars.VITE_SERVER_API }}/api/public/migration/run
+    MIGRATION_URL: ${{ vars.VITE_ORIGIN }}/api/public/migration/run
 
     # -------------------------------
     # App environment variables list (multiline)
@@ -56,7 +55,6 @@ env:
     APP_ENV_KEYS: |
         VITE_APP_ASSETS
         VITE_ORIGIN
-        VITE_SERVER_API
 
 jobs:
     validate-common-env:
@@ -78,7 +76,6 @@ jobs:
                   }
 
                   # Common env. variables
-                  check_var VITE_SERVER_API
                   check_var VITE_APP_ASSETS
                   check_var VITE_ORIGIN
 

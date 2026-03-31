@@ -17,7 +17,6 @@ env:
     FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     VITE_ORIGIN: https://zbav-se.me.localhost:1355
-    VITE_SERVER_API: https://api.zbav-se.me.localhost:1355
     NODE_OPTIONS: --max-old-space-size=1300
     SERVER_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:55432
     SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
@@ -108,5 +107,5 @@ jobs:
                   name: playwright-artifacts
                   if-no-files-found: ignore
                   path: |
-                      apps/e2e/playwright-report
-                      apps/e2e/results
+                      playwright-report
+                      results
