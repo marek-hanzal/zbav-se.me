@@ -23,6 +23,7 @@ const config: KnipConfig = {
 	ignoreDependencies: [
 		"@iconify/json",
 		"@iconify/tailwind4",
+		"@tanstack/router-plugin",
 		"tailwindcss",
 	],
 };
