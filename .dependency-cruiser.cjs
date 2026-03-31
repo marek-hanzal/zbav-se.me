@@ -1,6 +1,50 @@
 /** @type {import('dependency-cruiser').IForbiddenRuleType[]} */
 const rules = [
 	{
+		name: "lib-client-from-common",
+		comment: "Do not import lib client stuff from common",
+		severity: "error",
+		from: {
+			path: "^lib/common(/|$)",
+		},
+		to: {
+			path: "^lib/client(/|$)",
+		},
+	},
+	{
+		name: "lib-server-from-common",
+		comment: "Do not import lib server stuff from common",
+		severity: "error",
+		from: {
+			path: "^lib/common(/|$)",
+		},
+		to: {
+			path: "^lib/server(/|$)",
+		},
+	},
+	{
+		name: "lib-client-from-server",
+		comment: "Do not import lib client stuff from server",
+		severity: "error",
+		from: {
+			path: "^lib/server(/|$)",
+		},
+		to: {
+			path: "^lib/client(/|$)",
+		},
+	},
+	{
+		name: "lib-server-from-client",
+		comment: "Do not import lib server stuff from client",
+		severity: "error",
+		from: {
+			path: "^lib/client(/|$)",
+		},
+		to: {
+			path: "^lib/server(/|$)",
+		},
+	},
+	{
 		name: "seller-from-buyer",
 		comment: "Do not import seller stuff from buyer",
 		severity: "error",

@@ -1,4 +1,4 @@
-import type { TranslationSource } from "./TranslationSource";
+import type { TranslationSource } from "@/lib/common/translation";
 
 export const TranslationSources: TranslationSource.Sources = {
 	jsx: [

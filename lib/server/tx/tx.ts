@@ -3,10 +3,10 @@ import { print, project, query } from "@phenomnomnominal/tsquery";
 import cliProgress from "cli-progress";
 import { Timer } from "timer-node";
 import { parse, stringify } from "yaml";
-import type { TranslationSource } from "@/lib/client/translation";
 import { diffOf } from "@/lib/common/diff-of";
 import { keyOf } from "@/lib/common/key-of";
 import type { TranslationSchema } from "@/lib/common/schema";
+import type { TranslationSource } from "@/lib/common/translation";
 
 export namespace tx {
 	export interface Translation {
