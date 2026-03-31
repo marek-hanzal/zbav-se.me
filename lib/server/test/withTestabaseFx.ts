@@ -163,8 +163,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 
 	process.env.SERVER_DATABASE_URL = dsn;
 
-	return {
-		dsn,
-		async cleanup() {},
-	} as const;
+	return async () => {
+		//
+	};
 });
