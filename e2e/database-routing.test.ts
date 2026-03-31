@@ -30,17 +30,17 @@ test("routes browser traffic to the per-test database", async ({ page, database,
 
 		const routeResult = yield* Effect.promise(async () => {
 			return page.evaluate(
-				async ({ e2eDatabaseName }) => {
+				async ({ db }) => {
 					const response = await fetch(new URL("/api/e2e", window.location.origin), {
 						headers: {
-							"x-e2e-db": e2eDatabaseName,
+							"x-e2e-db": db,
 						},
 					});
 
 					return response.json();
 				},
 				{
-					e2eDatabaseName: db,
+					db,
 				},
 			);
 		});
