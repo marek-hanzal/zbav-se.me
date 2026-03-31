@@ -1,1 +1,0 @@
-export { withTransactionQuery } from "./withTransactionQuery";

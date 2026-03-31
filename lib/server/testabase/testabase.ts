@@ -1,0 +1,80 @@
+import { Effect } from "effect";
+import { PostgresDialect, sql } from "kysely";
+import { Pool } from "pg";
+import {
+	type DialectContextFx,
+	type withDatabaseFx,
+	withDatabaseName,
+	withDialectFx,
+} from "@/lib/common/database";
+import { genId } from "@/lib/common/gen-id";
+import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
+
+export namespace testabase {
+	export interface Props<in out TDatabase> {
+		databaseFx: Effect.Effect<withDatabaseFx.Instance<TDatabase>, never, DialectContextFx>;
+		/**
+		 * Root (admin) database name
+		 */
+		root?: string;
+		template?: string;
+		name?: string;
+		onTestFinished(callbackFn: () => Promise<any>): void;
+	}
+}
+
+export const testabase = async <const TDatabase>({
+	databaseFx,
+	root = "postgres",
+	template = "test",
+	name = genId(),
+	onTestFinished,
+}: testabase.Props<TDatabase>) => {
+	return Effect.gen(function* () {
+		const databaseConfig = ServerDatabaseSchema.parse(process.env);
+
+		const { kysely } = yield* databaseFx.pipe(
+			withDialectFx(
+				new PostgresDialect({
+					pool: new Pool({
+						connectionString: withDatabaseName({
+							dsn: databaseConfig.SERVER_DATABASE_URL,
+							name: root,
+						}),
+						max: 1,
+					}),
+				}),
+			),
+		);
+
+		yield* Effect.promise(async () => {
+			await sql`DROP DATABASE IF EXISTS ${sql.ref(name)}`.execute(kysely);
+
+			await sql`CREATE DATABASE ${sql.ref(name)} TEMPLATE ${sql.ref(template)}`.execute(
+				kysely,
+			);
+
+			await kysely.destroy();
+		});
+
+		const instance = yield* databaseFx.pipe(
+			withDialectFx(
+				new PostgresDialect({
+					pool: new Pool({
+						connectionString: withDatabaseName({
+							dsn: databaseConfig.SERVER_DATABASE_URL,
+							name: name,
+						}),
+						max: 4,
+					}),
+				}),
+			),
+		);
+
+		onTestFinished(async () => {
+			await instance.kysely.destroy();
+		});
+
+		return instance;
+	}).pipe(Effect.runPromise);
+};

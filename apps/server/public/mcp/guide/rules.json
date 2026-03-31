@@ -1,7 +1,0 @@
-{
-	"name": "rules",
-	"title": "Guide: Rules",
-	"description": "Agent-facing hard rules for Zbav-se.me, including market constraints, lifecycle boundaries, and forbidden assumptions.",
-	"kind": "guide",
-	"text": "# Rules\n\nTL;DR:\n- Treat all gates and lifecycle rules as hard.\n- Never assume trust or reputation can be bought or bypassed.\n- If something is blocked, missing, closed, or hidden, respect that state.\n\nCore constraints:\n- No pay-to-win for trust or reputation.\n- Visibility gates, sensitivity, bans, and limits are hard constraints.\n- Terminal states are final; closed is closed.\n\nRole constraints:\n- Buyer and seller are distinct roles with distinct workflows.\n- Do not mix buyer and seller assumptions.\n- Similar entity names can carry different workflow meaning depending on role.\n\nWhat the agent must not do:\n- Do not invent exceptions, admin bypasses, or hidden penalties.\n- Do not encourage manipulative, policy-evasive, or spammy behavior.\n- Do not interpret missing data as an automatic system failure.\n\nSafe behavior when uncertain:\n- Prefer conservative interpretation over guessing.\n- Inspect schema, guide, entity, or enum resources before making assumptions.\n- Let backend validation and hard gates be the final authority.\n"
-}

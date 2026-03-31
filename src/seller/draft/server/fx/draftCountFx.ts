@@ -1,0 +1,28 @@
+import { Effect } from "effect";
+import { withCountFx } from "@/lib/common/count";
+import { withDraftCollectionSelectFx } from "~/seller/draft/server/db/withDraftCollectionSelectFx";
+import { withDraftQueryBuilderFx } from "~/seller/draft/server/db/withDraftQueryBuilderFx";
+import type { DraftCountQuerySchema } from "~/seller/draft/server/schema/DraftCountQuerySchema";
+import type { DraftFilterSchema } from "~/seller/draft/server/schema/DraftFilterSchema";
+
+export namespace draftCountFx {
+	export interface Props extends DraftCountQuerySchema.Type {
+		scope: DraftFilterSchema.Type;
+	}
+}
+
+export const draftCountFx = Effect.fn("draftCountFx")(function* ({
+	filter,
+	where,
+	scope,
+}: draftCountFx.Props) {
+	return yield* withCountFx({
+		selectFx: withDraftCollectionSelectFx({}),
+		filter,
+		where,
+		scope,
+		queryFx: withDraftQueryBuilderFx,
+	});
+});
+
+export type draftCountFx = ReturnType<typeof draftCountFx>;

@@ -1,1 +1,0 @@
-export { withGithubHistoryQuery } from "./withGithubHistoryQuery";

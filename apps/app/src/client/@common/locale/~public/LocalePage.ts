@@ -1,1 +1,0 @@
-export { LocalePage } from "../LocalePage";

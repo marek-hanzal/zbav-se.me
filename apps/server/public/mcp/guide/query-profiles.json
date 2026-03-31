@@ -1,7 +1,0 @@
-{
-	"name": "query-profiles",
-	"title": "Guide: Query Profiles",
-	"description": "Agent-facing guide for canonical buyer query patterns and when to use them.",
-	"kind": "guide",
-	"text": "# Query Profiles\n\nTL;DR:\n- Prefer a canonical query profile over improvised filter composition when the user intent is clear.\n- Profiles reduce model improvisation and make recovery easier when a query returns nothing.\n- Use zbav://mcp/profile/* resources for concrete request patterns.\n\nWhat profiles are for:\n- Query profiles describe intent-safe request shapes for common buyer search workflows.\n- They show which filter fields are required, which fields are optional, and what to avoid.\n- They are not hard API constraints. They are canonical patterns for reliable agent behavior.\n\nAvailable buyer profiles:\n- zbav://mcp/profile/buyer.search.byDelivery\n- zbav://mcp/profile/buyer.search.nearby\n- zbav://mcp/profile/buyer.search.mine\n- zbav://mcp/profile/buyer.search.byCategory\n- zbav://mcp/profile/buyer.search.favourites\n\nAgent rule:\n- If the user intent clearly matches one of these profiles, start from the profile instead of composing an ad-hoc query from scratch.\n- If no profile fits exactly, choose the nearest profile and then add one or two extra constraints instead of inventing a completely new query strategy.\n"
-}

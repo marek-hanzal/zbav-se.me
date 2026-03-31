@@ -1,6 +1,0 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { FavouriteListPage } from "~/client/@buyer/favourite/~public/FavouriteListPage";
-
-export const Route = createFileRoute("/$locale/app/buyer/favourite/list")({
-	component: FavouriteListPage,
-});

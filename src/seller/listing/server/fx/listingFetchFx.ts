@@ -1,0 +1,32 @@
+import { Effect } from "effect";
+import { withFetchFx } from "@/lib/common/fetch";
+import { withListingQueryBuilderFx } from "~/seller/listing/server/db/withListingQueryBuilderFx";
+import { withListingSelectFx } from "~/seller/listing/server/db/withListingSelectFx";
+import type { ListingFilterSchema } from "~/seller/listing/server/schema/ListingFilterSchema";
+import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";
+
+export namespace listingFetchFx {
+	export interface Props extends ListingQuerySchema.Type {
+		scope: ListingFilterSchema.Type;
+	}
+}
+
+export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
+	filter,
+	where,
+	scope,
+	sort,
+}: listingFetchFx.Props) {
+	return yield* withFetchFx({
+		resource: "listing",
+		selectFx: withListingSelectFx({
+			sort,
+		}),
+		filter,
+		where,
+		scope,
+		queryFx: withListingQueryBuilderFx,
+	});
+});
+
+export type listingFetchFx = ReturnType<typeof listingFetchFx>;

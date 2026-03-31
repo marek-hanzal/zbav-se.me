@@ -31,18 +31,6 @@ export default {
 		"trustedDependencies",
 		"keywords",
 	],
-	versionGroups: [
-		{
-			label: "Workspace",
-			packages: [
-				"**",
-			],
-			dependencies: [
-				"$LOCAL",
-			],
-			pinVersion: "workspace:*",
-		},
-	],
 	semverGroups: [
 		{
 			label: "Current Version",

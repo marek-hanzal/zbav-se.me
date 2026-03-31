@@ -1,0 +1,36 @@
+import { createServerFn } from "@tanstack/react-start";
+import { Effect } from "effect";
+import { zodGuardFx } from "@/lib/common/fx";
+import { CountSchema } from "@/lib/common/schema";
+import { feedCountFx } from "~/buyer/feed/server/fx/feedCountFx";
+import { FeedCountQuerySchema } from "~/buyer/feed/server/schema/FeedCountQuerySchema";
+import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { withCatchFx } from "~/server/effect/withCatchFx";
+import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
+import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export const feedCountFn = createServerFn()
+	.middleware([
+		withDatabaseMiddleware,
+		withUserMiddleware,
+	])
+	.inputValidator(FeedCountQuerySchema)
+	.handler(async ({ data, context: { database, user } }) => {
+		return zodGuardFx({
+			schema: CountSchema,
+			dataFx: feedCountFx({
+				...data,
+				scope: {
+					userId: user.id,
+				},
+			}),
+		}).pipe(
+			withKyselyFx(database),
+			withCatchFx({
+				ZodErrorFx() {
+					throw new Error("ZodError");
+				},
+			}),
+			Effect.runPromise,
+		);
+	});

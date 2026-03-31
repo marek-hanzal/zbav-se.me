@@ -1,22 +1,24 @@
 # Zbav se mě!
 
-A modern C2C marketplace monorepo.
+The Zbav se mě app now lives at the repo root.
 
 This repo stays public for transparency and learning, but it is **not open source for commercial reuse**. Please read [LICENSE.md](./LICENSE.md) before using any part of the code.
 
 ## What is here
 
-- `apps/app` - unified frontend app (public site, auth, buyer + seller flows)
-- `apps/server` - API backend
-- `packages/@zbav-se.me/*` - shared domain/UI/SDK packages
-- `packages/@use-pico/*` - internal framework utilities
+- `src/` - app code, routes, domains, and server runtime
+- `@lib/` - shared client/common helpers and UI primitives
+- `cli/` - local maintenance and generation scripts
+- `test/` - Vitest suites and fixtures
+- `e2e/` - Playwright setup and helpers
+- `public/` - static assets
 
 ## Local development
 
 ### Requirements
 
 - Bun `1.3.0+`
-- Node.js `22.6.0+` (needed for Syncpack/CI tooling)
+- Node.js `22.6.0+`
 - Docker (recommended for local infra)
 
 ### Setup
@@ -39,11 +41,11 @@ bun run dev
 ```bash
 bun run dev
 bun run build
-bun run sdk
 bun run lint
 bun run typecheck
 bun run test
 bun run e2e
+bun run sp:format
 bun run workflow:test
 bun run workflow:check
 ```
@@ -54,11 +56,13 @@ bun run workflow:check
 - API: <https://api.zbav-se.me.localhost:1355>
 - OpenAPI JSON: <https://api.zbav-se.me.localhost:1355/v3/api-docs>
 
-The app and server scripts stay as plain `portless ...` commands. In the simplified non-root setup, start the shared HTTPS proxy with `portless proxy start --https`, then run `bun run dev`. Portless uses its default user-level state and serves the `.localhost` URLs on port `1355`.
+The app scripts stay as plain `portless ...` commands. Start the shared HTTPS proxy with `portless proxy start --https`, then run `bun run dev`. Portless uses its default user-level state and serves the `.localhost` URLs on port `1355`.
+
+`syncpack` is wired for the root package through `sp:*` scripts. Use `bun run sp:format` to normalize `package.json` ordering and `bun run sp:update` when dependency versions need a bulk refresh.
 
 ## Environment Variables
 
-This README is the shared source of truth for environment variable naming and intent in `apps/app` and `apps/server`.
+This README is the shared source of truth for environment variable naming and intent in the app.
 GitHub Actions environments are the source of truth only for which values are currently configured.
 Local sync source files live in `@env/*.json` and can be applied with `bun run env:sync <environment>`.
 
@@ -71,7 +75,7 @@ Local sync source files live in `@env/*.json` and can be applied with `bun run e
 | bunny | `BUNNY_PASSWORD` | yes | secret | Password for Bunny SFTP access used by deploy workflows to upload app assets. |
 | bunny | `BUNNY_TOKEN` | optional | secret | Bunny API token used for access to the Bunny HTTP API. It is not the SFTP password. |
 
-### apps/app
+### Client runtime
 
 | group | VALUE | Required | secret/variable | comment |
 | --- | --- | --- | --- | --- |
@@ -79,7 +83,7 @@ Local sync source files live in `@env/*.json` and can be applied with `bun run e
 | assets | `VITE_APP_ASSETS` | yes | variable | Public asset base URL used by the Vite production build for emitted static assets and CDN links. |
 | build | `NITRO_PRESET` | default: `vercel` | variable | Optional Nitro deployment preset override for production builds. |
 
-### apps/server
+### Server runtime
 
 | group | VALUE | Required | secret/variable | comment |
 | --- | --- | --- | --- | --- |
@@ -88,6 +92,7 @@ Local sync source files live in `@env/*.json` and can be applied with `bun run e
 | auth | `SERVER_BETTER_AUTH_SECRET` | yes | secret | Signing and encryption secret used by Better Auth. |
 | auth | `SERVER_JWT_SECRET` | yes | secret | Secret used for JWT signing and verification. |
 | database | `SERVER_DATABASE_URL` | yes | secret | Postgres connection string used by the server runtime and seed flows. In GitHub Actions, this value is resolved dynamically from Neon before syncing to Vercel. |
+| e2e | `SERVER_E2E` | optional | variable | Soft gate for e2e DB routing. Set it to `e2e` only in test/dev flows that send `x-e2e-db`. |
 | s3 | `SERVER_S3_API` | yes | variable | S3-compatible endpoint used for uploads, presigning, and cleanup jobs. |
 | s3 | `SERVER_S3_BUCKET` | yes | variable | Bucket name used for uploaded content storage. |
 | s3 | `SERVER_S3_KEY` | yes | secret | Access key ID for the S3-compatible storage provider. |
@@ -105,18 +110,6 @@ Local sync source files live in `@env/*.json` and can be applied with `bun run e
 | debug | `SERVER_DEBUG_DELAY_MS` | default: `0` | variable | Optional artificial middleware delay in milliseconds for debugging slow flows locally. |
 | debug | `NO_COLOR` | optional | variable | Standard terminal flag that disables ANSI colors in CLI and seed output when present. |
 
-## Architecture at a glance
-
-Dependency boundaries are strict:
-
-```txt
-apps/app -> buyer, seller, common, sdk, ui
-apps/server -> common only
-buyer, seller -> common, sdk, ui
-common -> sdk, ui
-sdk, ui -> no @zbav-se.me dependencies
-```
-
 ## Contributing
 
 Issues and PRs are welcome for bug reports, quality improvements, and architecture feedback.
@@ -126,12 +119,19 @@ Before handoff, run at least:
 ```bash
 bun run lint
 bun run typecheck
+bun run workflow:check
 ```
+
+`bun run workflow:check` runs the full non-test verification pipeline for the repo: formatting, linting, and TypeScript typecheck.
+
+The Playwright e2e flow uses `x-e2e-db` to select the per-test database. That header is ignored unless `SERVER_E2E=e2e` is present.
 
 ## Dependency Hygiene
 
 - Dependency cleanup decisions in this repository are evidence-based from source usage.
 - `knip` is treated as a candidate signal, not as the source of truth.
+- `dependency-cruiser` rules work on resolved source paths under `src/`, not on import alias strings.
+- Server-crossing import rules should use resolved `src/...` paths and keep only the approved server surfaces open, such as `server/fn` and `server/schema`, from the non-server side of the app. Type-only imports and `src/@routes` server glue are exempt.
 
 ## MCP
 
