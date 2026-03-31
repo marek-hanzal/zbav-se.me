@@ -20,6 +20,8 @@ export namespace auth {
 	}
 }
 
+export type auth = ReturnType<typeof auth>;
+
 export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 	const connection = dialect();
 
