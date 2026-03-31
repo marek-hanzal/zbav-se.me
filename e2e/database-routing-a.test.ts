@@ -33,16 +33,18 @@ test("registers the shared user in database A", async ({ page, database, db }) =
 			userId: seller.id,
 		}).pipe(withRuntimeFx(database));
 
-		yield* Effect.promise(async () => {
-			await page.goto("/cs/landing");
+		const response = yield* Effect.promise(async () => {
+			const result = await page.goto("/api/e2e");
+
+			if (result === null) {
+				throw new Error("Expected /api/e2e navigation response");
+			}
+
+			return result;
 		});
 
 		const routeResult = yield* Effect.promise(async () => {
-			return page.evaluate(async () => {
-				const response = await fetch(new URL("/api/e2e", window.location.origin));
-
-				return response.json();
-			});
+			return response.json();
 		});
 
 		expect(routeResult).toEqual({
