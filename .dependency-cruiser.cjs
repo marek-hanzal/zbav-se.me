@@ -23,6 +23,28 @@ const rules = [
 		},
 	},
 	{
+		name: "buyer-from-common",
+		comment: "Do not import buyer stuff from common",
+		severity: "error",
+		from: {
+			path: "^src/common(/|$)",
+		},
+		to: {
+			path: "^src/buyer(/|$)",
+		},
+	},
+	{
+		name: "seller-from-common",
+		comment: "Do not import seller stuff from common",
+		severity: "error",
+		from: {
+			path: "^src/common(/|$)",
+		},
+		to: {
+			path: "^src/seller(/|$)",
+		},
+	},
+	{
 		name: "no-server-imports",
 		comment: "Do not import server internals outside the approved server surface",
 		severity: "error",
