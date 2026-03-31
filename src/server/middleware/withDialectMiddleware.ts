@@ -10,9 +10,9 @@ export const withDialectMiddleware = createMiddleware()
 		withDsnMiddleware,
 	])
 	.server(async ({ next, context: { dsn } }) => {
-		let instance: Dialect | undefined;
+		let instance = dialectMap.get(dsn);
 
-		if (!dialectMap.has(dsn)) {
+		if (!instance) {
 			instance = new PostgresDialect({
 				pool: new Pool({
 					connectionString: dsn,
@@ -20,10 +20,6 @@ export const withDialectMiddleware = createMiddleware()
 				}),
 			});
 			dialectMap.set(dsn, instance);
-		}
-
-		if (!instance) {
-			throw new Error("Dialect not selected!");
 		}
 
 		return next({

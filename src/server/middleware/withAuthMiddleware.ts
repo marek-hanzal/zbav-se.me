@@ -9,15 +9,11 @@ export const withAuthMiddleware = createMiddleware()
 		withDialectMiddleware,
 	])
 	.server(async ({ next, context: { dialect, dsn } }) => {
-		let instance: auth | undefined;
-
-		if (!authMap.has(dsn)) {
-			instance = auth(() => dialect);
-			authMap.set(dsn, instance);
-		}
+		let instance = authMap.get(dsn);
 
 		if (!instance) {
-			throw new Error("Auth not selected!");
+			instance = auth(() => dialect);
+			authMap.set(dsn, instance);
 		}
 
 		return next({
