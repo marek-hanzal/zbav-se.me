@@ -7,4 +7,4 @@ This is the application code.
 - Keep screen and page component trees in `ui/`.
 - Keep query wrappers in `query/`.
 - Keep mutation wrappers in `mutation/`.
-- Keep public cross-domain surfaces in `~public/`.
+- Keep cross-domain public surfaces close to the concrete UI components and routes; `~public/` re-export wrappers are no longer used.

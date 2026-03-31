@@ -2,7 +2,7 @@ import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
-import { useListingEvent } from "~/buyer/listing/~public/useListingEvent";
+import { useListingEvent } from "~/buyer/listing/hook/useListingEvent";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { HeroSection } from "./section/HeroSection";
 import { InfoSection } from "./section/InfoSection";

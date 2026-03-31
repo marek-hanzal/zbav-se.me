@@ -3,7 +3,7 @@ import { useLocale } from "@/lib/client/locale";
 import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
-import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";
+import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 
 export namespace ShopPage {
 	export interface Props extends TitleContainer.Props {}

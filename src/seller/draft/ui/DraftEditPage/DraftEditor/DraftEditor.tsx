@@ -8,7 +8,7 @@ import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
-import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";
+import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { Editor } from "./Editor";
 import { AgePatch } from "./patch/AgePatch";
 import { CategoryPatch } from "./patch/CategoryPatch";

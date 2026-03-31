@@ -8,7 +8,7 @@ import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 import { withTransactionListingQuery } from "~/seller/transaction-listing/query/withTransactionListingQuery";
-import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";
+import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { Empty } from "./Empty";
 import { EmptyListings } from "./EmptyListings";
 import { ListGroup } from "./ListGroup";

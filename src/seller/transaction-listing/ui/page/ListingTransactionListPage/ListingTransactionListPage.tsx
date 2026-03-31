@@ -5,7 +5,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
-import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";
+import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { ListingHero } from "./ListingHero";
 import { TransactionList } from "./TransactionList";
 

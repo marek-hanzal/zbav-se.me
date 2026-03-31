@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { LocalePage } from "~/common/locale/~public/LocalePage";
+import { LocalePage } from "~/common/locale/LocalePage/LocalePage";
 
 export const Route = createFileRoute("/$locale")({
 	async loader({ params: { locale } }) {

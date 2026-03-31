@@ -12,7 +12,7 @@ import { useUpload } from "~/common/gallery/hook/useUpload";
 import { Image } from "~/common/list-item/Image";
 import { ListItem } from "~/common/list-item/ListItem";
 import { ListItemPending } from "~/common/list-item/ListItemPending";
-import { toActivityLabel } from "~/seller/transaction/~public/toStatusLabel";
+import { toActivityLabel } from "~/seller/transaction/ui/toActivityLabel";
 import { withTransactionListingQuery } from "~/seller/transaction-listing/query/withTransactionListingQuery";
 
 export namespace Item {

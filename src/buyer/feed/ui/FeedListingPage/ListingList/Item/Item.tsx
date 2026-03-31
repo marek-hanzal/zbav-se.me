@@ -4,7 +4,7 @@ import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import { Overlay } from "@/lib/client/overlay";
 import { SpinnerContainer } from "@/lib/client/spinner";
-import { useListingEvent } from "~/buyer/listing/~public/useListingEvent";
+import { useListingEvent } from "~/buyer/listing/hook/useListingEvent";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";

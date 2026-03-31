@@ -6,8 +6,8 @@ import { Typo } from "@/lib/client/typo";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { HeroImage } from "~/common/ui/img";
-import { ListingSheet } from "~/seller/listing/~public/ListingSheet";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
+import { ListingSheet } from "~/seller/listing/ui/ListingSheet";
 
 export namespace ListingHero {
 	export interface Props extends Container.Props, MarkSuspense.Props {

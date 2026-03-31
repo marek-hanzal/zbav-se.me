@@ -3,7 +3,7 @@ import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
-import { FeedEditor } from "~/buyer/feed/~public/FeedEditor";
+import { FeedEditor } from "~/buyer/feed/ui/FeedEditor/FeedEditor";
 import { ResetButton } from "./ResetButton";
 import { SaveAsFeedButton } from "./SaveAsFeedButton";
 import { SearchButton } from "./SearchButton";

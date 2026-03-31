@@ -5,7 +5,7 @@ import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
-import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";
+import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import type { DraftEditor } from "./DraftEditor";
 import { ActionSection } from "./section/ActionSection";
 import { OptionalSection } from "./section/OptionalSection";

@@ -3,7 +3,7 @@ import { CloseIcon } from "@/lib/client/icon";
 import { SheetView } from "@/lib/client/sheet-view";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { translator } from "@/lib/common/translator";
-import { SellerInfo } from "~/buyer/listing/~public/SellerInfo";
+import { SellerInfo } from "~/buyer/listing/SellerInfo/SellerInfo";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { CloseButton } from "~/common/ui/button";

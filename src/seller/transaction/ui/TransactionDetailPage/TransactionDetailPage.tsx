@@ -4,8 +4,8 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
-import { Transaction } from "~/seller/transaction/~public/Transaction";
-import { HomeMenuButton } from "~/user/home/~public/HomeMenuButton";
+import { Transaction } from "~/seller/transaction/ui/Transaction";
+import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { withTransactionQuery } from "../../query/withTransactionQuery";
 
 export namespace TransactionDetailPage {

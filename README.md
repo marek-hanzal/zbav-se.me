@@ -121,6 +121,8 @@ bun run typecheck
 bun run workflow:check
 ```
 
+`bun run workflow:check` runs the full non-test verification pipeline for the repo: formatting, linting, and TypeScript typecheck.
+
 ## Dependency Hygiene
 
 - Dependency cleanup decisions in this repository are evidence-based from source usage.

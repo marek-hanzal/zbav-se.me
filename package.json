@@ -24,7 +24,7 @@
 		"sp:format": "bunx syncpack format",
 		"sp:update": "bunx syncpack update",
 		"workflow:format": "run-s sp:format format",
-		"workflow:check": "run-s workflow:format lint typecheck",
+		"workflow:check": "run-s workflow:format lint dc typecheck",
 		"workflow:test": "run-p test e2e",
 		"workflow:update": "run-s sp:fix sp:update workflow:format update workflow:check"
 	},

@@ -9,8 +9,8 @@ import { toTimeDiff } from "@/lib/common/time";
 import { ListItem } from "~/common/list-item/ListItem";
 import { ListItemPending } from "~/common/list-item/ListItemPending";
 import { TypoIcon } from "~/common/ui/typo";
-import { toActivityLabel } from "~/seller/transaction/~public/toStatusLabel";
 import { withTransactionQuery } from "~/seller/transaction/query/withTransactionQuery";
+import { toActivityLabel } from "~/seller/transaction/ui/toActivityLabel";
 import { StatusIcon } from "./StatusIcon";
 
 export namespace Item {

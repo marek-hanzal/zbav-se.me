@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { type FC, useCallback, useState } from "react";
 import type { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
-import { SellerInfoButton } from "~/buyer/listing/~public/SellerInfoButton";
+import { SellerInfoButton } from "~/buyer/listing/SellerInfo/SellerInfoButton";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
 import { GalleryUploadButton } from "~/common/gallery/ui/GalleryUploadButton";
 import { MessageButtonUi } from "~/user/transaction/ui/MessageButtonUi";

@@ -4,8 +4,8 @@ import { EmptyState } from "@/lib/client/empty-state";
 import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
-import { toStatusLabel } from "~/seller/transaction/~public/toStatusLabel";
 import { withTransactionQuery } from "~/seller/transaction/query/withTransactionQuery";
+import { toStatusLabel } from "~/seller/transaction/ui/toStatusLabel";
 import { Empty } from "./Empty";
 import { ListGroup } from "./ListGroup";
 
