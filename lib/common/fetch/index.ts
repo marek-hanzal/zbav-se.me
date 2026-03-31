@@ -1,0 +1,1 @@
+export { withFetchFx } from "./withFetchFx";

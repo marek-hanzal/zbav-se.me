@@ -1,0 +1,425 @@
+:root {
+	/* BRAND tone – light theme */
+	--tone-brand-light-text: color-mix(in srgb, var(--color-pink-900) 75%, black);
+	--tone-brand-light-text-active: color-mix(in srgb, var(--tone-brand-light-text) 92.5%, black);
+	--tone-brand-light-lead: color-mix(in srgb, var(--color-pink-700) 85%, white);
+	--tone-brand-light-lead-active: color-mix(in srgb, var(--tone-brand-light-lead) 95%, black);
+	--tone-brand-light-bg: color-mix(in srgb, var(--color-pink-200) 25%, white);
+	--tone-brand-light-bg-active: color-mix(in srgb, var(--tone-brand-light-bg) 92.5%, white);
+	--tone-brand-light-bg-alt: color-mix(in srgb, var(--color-pink-100) 70%, white);
+	--tone-brand-light-bg-alt-active: color-mix(
+		in srgb,
+		var(--tone-brand-light-bg-alt) 92.5%,
+		black
+	);
+	--tone-brand-light-border: color-mix(in srgb, var(--color-pink-300) 30%, transparent);
+	--tone-brand-light-border-active: color-mix(
+		in srgb,
+		var(--tone-brand-light-border) 92.5%,
+		black
+	);
+	--tone-brand-light-icon: color-mix(in srgb, var(--color-pink-600) 75%, white);
+	--tone-brand-light-icon-active: color-mix(in srgb, var(--tone-brand-light-icon) 88%, black);
+	--tone-brand-light-shadow: color-mix(in srgb, var(--color-slate-700) 10%, transparent);
+	--tone-brand-light-shadow-active: color-mix(in srgb, var(--tone-brand-light-shadow) 25%, black);
+
+	/* BRAND tone – dark theme */
+	--tone-brand-dark-text: color-mix(in srgb, var(--color-pink-50) 100%, transparent);
+	--tone-brand-dark-text-active: color-mix(in srgb, var(--tone-brand-dark-text) 88%, white);
+	--tone-brand-dark-lead: color-mix(in srgb, var(--color-pink-200) 100%, transparent);
+	--tone-brand-dark-lead-active: color-mix(in srgb, var(--tone-brand-dark-lead) 88%, white);
+	--tone-brand-dark-bg: color-mix(in srgb, var(--color-pink-900) 70%, black);
+	--tone-brand-dark-bg-active: color-mix(in srgb, var(--tone-brand-dark-bg) 50%, black);
+	--tone-brand-dark-bg-alt: color-mix(in srgb, var(--color-pink-800) 70%, black);
+	--tone-brand-dark-bg-alt-active: color-mix(in srgb, var(--tone-brand-dark-bg-alt) 50%, black);
+	--tone-brand-dark-border: color-mix(in srgb, var(--color-pink-500) 50%, transparent);
+	--tone-brand-dark-border-active: color-mix(in srgb, var(--tone-brand-dark-border) 90%, black);
+	--tone-brand-dark-icon: color-mix(in srgb, var(--color-pink-100) 80%, black);
+	--tone-brand-dark-icon-active: color-mix(in srgb, var(--tone-brand-dark-icon) 88%, white);
+	--tone-brand-dark-shadow: color-mix(in srgb, var(--color-slate-700) 20%, transparent);
+	--tone-brand-dark-shadow-active: color-mix(in srgb, var(--tone-brand-dark-shadow) 90%, black);
+
+	/* PRIMARY tone – light theme */
+	--tone-primary-light-text: color-mix(in srgb, var(--color-pink-900) 60%, black);
+	--tone-primary-light-text-active: color-mix(
+		in srgb,
+		var(--tone-primary-light-text) 92.5%,
+		black
+	);
+	--tone-primary-light-lead: color-mix(in srgb, var(--color-pink-700) 70%, white);
+	--tone-primary-light-lead-active: color-mix(in srgb, var(--tone-primary-light-lead) 95%, black);
+	--tone-primary-light-bg: color-mix(in srgb, var(--color-pink-300) 70%, white);
+	--tone-primary-light-bg-active: color-mix(in srgb, var(--tone-primary-light-bg) 92.5%, white);
+	--tone-primary-light-bg-alt: color-mix(in srgb, var(--color-pink-400) 10%, white);
+	--tone-primary-light-bg-alt-active: color-mix(
+		in srgb,
+		var(--tone-primary-light-bg-alt) 92.5%,
+		black
+	);
+	--tone-primary-light-border: color-mix(in srgb, var(--color-pink-400) 10%, transparent);
+	--tone-primary-light-border-active: color-mix(
+		in srgb,
+		var(--tone-primary-light-border) 92.5%,
+		black
+	);
+	--tone-primary-light-icon: color-mix(in srgb, var(--color-slate-700) 85%, white);
+	--tone-primary-light-icon-active: color-mix(in srgb, var(--tone-primary-light-icon) 88%, black);
+	--tone-primary-light-shadow: color-mix(in srgb, var(--color-slate-700) 20%, transparent);
+	--tone-primary-light-shadow-active: color-mix(
+		in srgb,
+		var(--tone-primary-light-shadow) 25%,
+		black
+	);
+
+	/* PRIMARY tone – dark theme */
+	--tone-primary-dark-text: var(--color-pink-50);
+	--tone-primary-dark-text-active: color-mix(in srgb, var(--tone-primary-dark-text) 88%, white);
+	--tone-primary-dark-lead: var(--color-pink-200);
+	--tone-primary-dark-lead-active: color-mix(in srgb, var(--tone-primary-dark-lead) 88%, white);
+	--tone-primary-dark-bg: color-mix(in srgb, var(--color-pink-800) 75%, black);
+	--tone-primary-dark-bg-active: color-mix(in srgb, var(--tone-primary-dark-bg) 50%, black);
+	--tone-primary-dark-bg-alt: color-mix(in srgb, var(--color-pink-700) 75%, black);
+	--tone-primary-dark-bg-alt-active: color-mix(
+		in srgb,
+		var(--tone-primary-dark-bg-alt) 50%,
+		black
+	);
+	--tone-primary-dark-border: color-mix(in srgb, var(--color-pink-500) 50%, transparent);
+	--tone-primary-dark-border-active: color-mix(
+		in srgb,
+		var(--tone-primary-dark-border) 90%,
+		black
+	);
+	--tone-primary-dark-icon: color-mix(in srgb, var(--color-pink-50) 80%, black);
+	--tone-primary-dark-icon-active: color-mix(in srgb, var(--tone-primary-dark-icon) 88%, white);
+	--tone-primary-dark-shadow: color-mix(in srgb, var(--color-pink-800) 40%, transparent);
+	--tone-primary-dark-shadow-active: color-mix(
+		in srgb,
+		var(--tone-primary-dark-shadow) 90%,
+		black
+	);
+
+	/* SECONDARY tone – light theme */
+	--tone-secondary-light-text: color-mix(in srgb, var(--color-violet-900) 95%, transparent);
+	--tone-secondary-light-text-active: color-mix(
+		in srgb,
+		var(--tone-secondary-light-text) 92.5%,
+		black
+	);
+	--tone-secondary-light-lead: color-mix(in srgb, var(--color-violet-700) 100%, transparent);
+	--tone-secondary-light-lead-active: color-mix(
+		in srgb,
+		var(--tone-secondary-light-lead) 95%,
+		black
+	);
+	--tone-secondary-light-bg: color-mix(in srgb, var(--color-violet-200) 75%, white);
+	--tone-secondary-light-bg-active: color-mix(
+		in srgb,
+		var(--tone-secondary-light-bg) 92.5%,
+		white
+	);
+	--tone-secondary-light-bg-alt: color-mix(in srgb, var(--tone-secondary-light-bg) 35%, white);
+	--tone-secondary-light-bg-alt-active: color-mix(
+		in srgb,
+		var(--tone-secondary-light-bg-alt) 92.5%,
+		black
+	);
+	--tone-secondary-light-border: color-mix(in srgb, var(--color-violet-400) 10%, transparent);
+	--tone-secondary-light-border-active: color-mix(
+		in srgb,
+		var(--tone-secondary-light-border) 92.5%,
+		black
+	);
+	--tone-secondary-light-icon: color-mix(in srgb, var(--color-slate-700) 85%, white);
+	--tone-secondary-light-icon-active: color-mix(
+		in srgb,
+		var(--tone-secondary-light-icon) 88%,
+		black
+	);
+	--tone-secondary-light-shadow: color-mix(in srgb, var(--color-slate-700) 10%, transparent);
+	--tone-secondary-light-shadow-active: color-mix(
+		in srgb,
+		var(--tone-secondary-light-shadow) 25%,
+		black
+	);
+
+	/* SECONDARY tone – dark theme */
+	--tone-secondary-dark-text: color-mix(in srgb, var(--color-violet-50) 100%, transparent);
+	--tone-secondary-dark-text-active: color-mix(
+		in srgb,
+		var(--tone-secondary-dark-text) 88%,
+		white
+	);
+	--tone-secondary-dark-lead: color-mix(in srgb, var(--color-violet-200) 100%, transparent);
+	--tone-secondary-dark-lead-active: color-mix(
+		in srgb,
+		var(--tone-secondary-dark-lead) 88%,
+		white
+	);
+	--tone-secondary-dark-bg: color-mix(in srgb, var(--color-violet-800) 75%, black);
+	--tone-secondary-dark-bg-active: color-mix(in srgb, var(--tone-secondary-dark-bg) 50%, black);
+	--tone-secondary-dark-bg-alt: color-mix(in srgb, var(--color-violet-700) 75%, black);
+	--tone-secondary-dark-bg-alt-active: color-mix(
+		in srgb,
+		var(--tone-secondary-dark-bg-alt) 50%,
+		black
+	);
+	--tone-secondary-dark-border: color-mix(in srgb, var(--color-violet-500) 45%, transparent);
+	--tone-secondary-dark-border-active: color-mix(
+		in srgb,
+		var(--tone-secondary-dark-border) 90%,
+		black
+	);
+	--tone-secondary-dark-icon: color-mix(in srgb, var(--color-violet-50) 80%, black);
+	--tone-secondary-dark-icon-active: color-mix(
+		in srgb,
+		var(--tone-secondary-dark-icon) 88%,
+		white
+	);
+	--tone-secondary-dark-shadow: color-mix(in srgb, var(--color-violet-900) 40%, transparent);
+	--tone-secondary-dark-shadow-active: color-mix(
+		in srgb,
+		var(--tone-secondary-dark-shadow) 90%,
+		black
+	);
+
+	/* SUBTLE tone – light theme */
+	--tone-subtle-light-text: color-mix(in srgb, var(--color-violet-900) 75%, black);
+	--tone-subtle-light-text-active: color-mix(in srgb, var(--tone-subtle-light-text) 92.5%, black);
+	--tone-subtle-light-lead: color-mix(in srgb, var(--color-violet-700) 90%, white);
+	--tone-subtle-light-lead-active: color-mix(in srgb, var(--tone-subtle-light-lead) 95%, black);
+	--tone-subtle-light-bg: color-mix(in srgb, var(--color-violet-300) 15%, white);
+	--tone-subtle-light-bg-active: color-mix(in srgb, var(--tone-subtle-light-bg) 92.5%, white);
+	--tone-subtle-light-bg-alt: color-mix(in srgb, var(--color-violet-200) 25%, white);
+	--tone-subtle-light-bg-alt-active: color-mix(
+		in srgb,
+		var(--tone-subtle-light-bg-alt) 92.5%,
+		black
+	);
+	--tone-subtle-light-border: color-mix(in srgb, var(--color-violet-400) 10%, transparent);
+	--tone-subtle-light-border-active: color-mix(
+		in srgb,
+		var(--tone-subtle-light-border) 92.5%,
+		black
+	);
+	--tone-subtle-light-icon: color-mix(in srgb, var(--color-slate-500) 75%, white);
+	--tone-subtle-light-icon-active: color-mix(in srgb, var(--tone-subtle-light-icon) 88%, black);
+	--tone-subtle-light-shadow: color-mix(in srgb, var(--color-slate-700) 10%, transparent);
+	--tone-subtle-light-shadow-active: color-mix(
+		in srgb,
+		var(--tone-subtle-light-shadow) 25%,
+		black
+	);
+
+	/* SUBTLE tone – dark theme */
+	--tone-subtle-dark-text: color-mix(in srgb, var(--color-slate-100) 100%, transparent);
+	--tone-subtle-dark-text-active: color-mix(in srgb, var(--tone-subtle-dark-text) 88%, white);
+	--tone-subtle-dark-lead: color-mix(in srgb, var(--color-violet-200) 100%, transparent);
+	--tone-subtle-dark-lead-active: color-mix(in srgb, var(--tone-subtle-dark-lead) 88%, white);
+	--tone-subtle-dark-bg: color-mix(in srgb, var(--color-violet-900) 65%, black);
+	--tone-subtle-dark-bg-active: color-mix(in srgb, var(--tone-subtle-dark-bg) 50%, black);
+	--tone-subtle-dark-bg-alt: color-mix(in srgb, var(--color-violet-800) 65%, black);
+	--tone-subtle-dark-bg-alt-active: color-mix(in srgb, var(--tone-subtle-dark-bg-alt) 50%, black);
+	--tone-subtle-dark-border: color-mix(in srgb, var(--color-violet-700) 35%, transparent);
+	--tone-subtle-dark-border-active: color-mix(in srgb, var(--tone-subtle-dark-border) 90%, black);
+	--tone-subtle-dark-icon: color-mix(in srgb, var(--color-slate-100) 85%, black);
+	--tone-subtle-dark-icon-active: color-mix(in srgb, var(--tone-subtle-dark-icon) 88%, white);
+	--tone-subtle-dark-shadow: color-mix(in srgb, var(--color-slate-100) 30%, black);
+	--tone-subtle-dark-shadow-active: color-mix(in srgb, var(--tone-subtle-dark-shadow) 90%, black);
+
+	/* NEUTRAL tone – light theme */
+	--tone-neutral-light-text: color-mix(in srgb, var(--color-slate-900) 100%, transparent);
+	--tone-neutral-light-text-active: color-mix(
+		in srgb,
+		var(--tone-neutral-light-text) 92.5%,
+		black
+	);
+	--tone-neutral-light-lead: color-mix(in srgb, var(--color-slate-700) 100%, transparent);
+	--tone-neutral-light-lead-active: color-mix(in srgb, var(--tone-neutral-light-lead) 95%, black);
+	--tone-neutral-light-bg: color-mix(in srgb, var(--color-slate-100) 75%, transparent);
+	--tone-neutral-light-bg-active: color-mix(in srgb, var(--tone-neutral-light-bg) 92.5%, white);
+	--tone-neutral-light-bg-alt: color-mix(in srgb, var(--color-slate-200) 40%, transparent);
+	--tone-neutral-light-bg-alt-active: color-mix(
+		in srgb,
+		var(--tone-neutral-light-bg-alt) 92.5%,
+		black
+	);
+	--tone-neutral-light-border: color-mix(in srgb, var(--color-slate-600) 10%, transparent);
+	--tone-neutral-light-border-active: color-mix(
+		in srgb,
+		var(--tone-neutral-light-border) 92.5%,
+		black
+	);
+	--tone-neutral-light-icon: color-mix(in srgb, var(--color-slate-500) 100%, transparent);
+	--tone-neutral-light-icon-active: color-mix(in srgb, var(--tone-neutral-light-icon) 88%, black);
+	--tone-neutral-light-shadow: color-mix(in srgb, var(--color-slate-700) 10%, transparent);
+	--tone-neutral-light-shadow-active: color-mix(
+		in srgb,
+		var(--tone-neutral-light-shadow) 25%,
+		black
+	);
+
+	/* NEUTRAL tone – dark theme */
+	--tone-neutral-dark-text: color-mix(in srgb, var(--color-slate-50) 100%, transparent);
+	--tone-neutral-dark-text-active: color-mix(in srgb, var(--tone-neutral-dark-text) 88%, white);
+	--tone-neutral-dark-lead: color-mix(in srgb, var(--color-slate-200) 100%, transparent);
+	--tone-neutral-dark-lead-active: color-mix(in srgb, var(--tone-neutral-dark-lead) 88%, white);
+	--tone-neutral-dark-bg: color-mix(in srgb, var(--color-slate-900) 100%, transparent);
+	--tone-neutral-dark-bg-active: color-mix(in srgb, var(--tone-neutral-dark-bg) 50%, black);
+	--tone-neutral-dark-bg-alt: color-mix(in srgb, var(--color-slate-900) 80%, transparent);
+	--tone-neutral-dark-bg-alt-active: color-mix(
+		in srgb,
+		var(--tone-neutral-dark-bg-alt) 50%,
+		black
+	);
+	--tone-neutral-dark-border: color-mix(in srgb, var(--color-slate-500) 100%, transparent);
+	--tone-neutral-dark-border-active: color-mix(
+		in srgb,
+		var(--tone-neutral-dark-border) 90%,
+		black
+	);
+	--tone-neutral-dark-icon: color-mix(in srgb, var(--color-slate-50) 75%, black);
+	--tone-neutral-dark-icon-active: color-mix(in srgb, var(--tone-neutral-dark-icon) 88%, white);
+	--tone-neutral-dark-shadow: color-mix(in srgb, var(--color-slate-100) 25%, black);
+	--tone-neutral-dark-shadow-active: color-mix(
+		in srgb,
+		var(--tone-neutral-dark-shadow) 90%,
+		black
+	);
+
+	/* WARNING tone – light theme */
+	--tone-warning-light-text: color-mix(in srgb, var(--color-amber-700) 65%, black);
+	--tone-warning-light-text-active: color-mix(
+		in srgb,
+		var(--tone-warning-light-text) 92.5%,
+		black
+	);
+	--tone-warning-light-lead: color-mix(in srgb, var(--color-amber-700) 100%, transparent);
+	--tone-warning-light-lead-active: color-mix(in srgb, var(--tone-warning-light-lead) 95%, black);
+	--tone-warning-light-bg: color-mix(in srgb, var(--color-amber-100) 65%, white);
+	--tone-warning-light-bg-active: color-mix(in srgb, var(--tone-warning-light-bg) 92.5%, white);
+	--tone-warning-light-bg-alt: color-mix(in srgb, var(--color-amber-200) 25%, transparent);
+	--tone-warning-light-bg-alt-active: color-mix(
+		in srgb,
+		var(--tone-warning-light-bg-alt) 92.5%,
+		black
+	);
+	--tone-warning-light-border: color-mix(in srgb, var(--color-amber-400) 30%, transparent);
+	--tone-warning-light-border-active: color-mix(
+		in srgb,
+		var(--tone-warning-light-border) 92.5%,
+		black
+	);
+	--tone-warning-light-icon: color-mix(in srgb, var(--color-amber-700) 80%, white);
+	--tone-warning-light-icon-active: color-mix(in srgb, var(--tone-warning-light-icon) 88%, black);
+	--tone-warning-light-shadow: color-mix(in srgb, var(--color-slate-700) 10%, transparent);
+	--tone-warning-light-shadow-active: color-mix(
+		in srgb,
+		var(--tone-warning-light-shadow) 25%,
+		black
+	);
+
+	/* WARNING tone – dark theme */
+	--tone-warning-dark-text: color-mix(in srgb, var(--color-amber-50) 100%, transparent);
+	--tone-warning-dark-text-active: color-mix(in srgb, var(--tone-warning-dark-text) 88%, white);
+	--tone-warning-dark-lead: color-mix(in srgb, var(--color-amber-200) 100%, transparent);
+	--tone-warning-dark-lead-active: color-mix(in srgb, var(--tone-warning-dark-lead) 88%, white);
+	--tone-warning-dark-bg: color-mix(in srgb, var(--color-amber-900) 70%, black);
+	--tone-warning-dark-bg-active: color-mix(in srgb, var(--tone-warning-dark-bg) 50%, black);
+	--tone-warning-dark-bg-alt: color-mix(in srgb, var(--color-amber-800) 70%, black);
+	--tone-warning-dark-bg-alt-active: color-mix(
+		in srgb,
+		var(--tone-warning-dark-bg-alt) 50%,
+		black
+	);
+	--tone-warning-dark-border: color-mix(in srgb, var(--color-amber-500) 55%, transparent);
+	--tone-warning-dark-border-active: color-mix(
+		in srgb,
+		var(--tone-warning-dark-border) 90%,
+		black
+	);
+	--tone-warning-dark-icon: color-mix(in srgb, var(--color-amber-50) 80%, black);
+	--tone-warning-dark-icon-active: color-mix(in srgb, var(--tone-warning-dark-icon) 88%, white);
+	--tone-warning-dark-shadow: color-mix(in srgb, var(--color-amber-900) 45%, transparent);
+	--tone-warning-dark-shadow-active: color-mix(
+		in srgb,
+		var(--tone-warning-dark-shadow) 90%,
+		black
+	);
+
+	/* DANGER tone – light theme */
+	--tone-danger-light-text: color-mix(in srgb, var(--color-rose-800) 95%, black);
+	--tone-danger-light-text-active: color-mix(in srgb, var(--tone-danger-light-text) 92.5%, black);
+	--tone-danger-light-lead: color-mix(in srgb, var(--color-rose-700) 100%, transparent);
+	--tone-danger-light-lead-active: color-mix(in srgb, var(--tone-danger-light-lead) 95%, black);
+	--tone-danger-light-bg: color-mix(in srgb, var(--color-rose-100) 70%, white);
+	--tone-danger-light-bg-active: color-mix(in srgb, var(--tone-danger-light-bg) 92.5%, white);
+	--tone-danger-light-bg-alt: color-mix(in srgb, var(--color-rose-200) 60%, white);
+	--tone-danger-light-bg-alt-active: color-mix(
+		in srgb,
+		var(--tone-danger-light-bg-alt) 92.5%,
+		black
+	);
+	--tone-danger-light-border: color-mix(in srgb, var(--color-rose-400) 30%, transparent);
+	--tone-danger-light-border-active: color-mix(
+		in srgb,
+		var(--tone-danger-light-border) 92.5%,
+		black
+	);
+	--tone-danger-light-icon: color-mix(in srgb, var(--color-rose-700) 85%, white);
+	--tone-danger-light-icon-active: color-mix(in srgb, var(--tone-danger-light-icon) 88%, black);
+	--tone-danger-light-shadow: color-mix(in srgb, var(--color-slate-700) 10%, transparent);
+	--tone-danger-light-shadow-active: color-mix(
+		in srgb,
+		var(--tone-danger-light-shadow) 25%,
+		black
+	);
+
+	/* DANGER tone – dark theme */
+	--tone-danger-dark-text: color-mix(in srgb, var(--color-rose-50) 100%, transparent);
+	--tone-danger-dark-text-active: color-mix(in srgb, var(--tone-danger-dark-text) 88%, white);
+	--tone-danger-dark-lead: color-mix(in srgb, var(--color-rose-200) 100%, transparent);
+	--tone-danger-dark-lead-active: color-mix(in srgb, var(--tone-danger-dark-lead) 88%, white);
+	--tone-danger-dark-bg: color-mix(in srgb, var(--color-rose-900) 70%, black);
+	--tone-danger-dark-bg-active: color-mix(in srgb, var(--tone-danger-dark-bg) 50%, black);
+	--tone-danger-dark-bg-alt: color-mix(in srgb, var(--color-rose-800) 70%, black);
+	--tone-danger-dark-bg-alt-active: color-mix(in srgb, var(--tone-danger-dark-bg-alt) 50%, black);
+	--tone-danger-dark-border: color-mix(in srgb, var(--color-rose-500) 60%, transparent);
+	--tone-danger-dark-border-active: color-mix(in srgb, var(--tone-danger-dark-border) 90%, black);
+	--tone-danger-dark-icon: color-mix(in srgb, var(--color-rose-50) 80%, black);
+	--tone-danger-dark-icon-active: color-mix(in srgb, var(--tone-danger-dark-icon) 88%, white);
+	--tone-danger-dark-shadow: color-mix(in srgb, var(--color-rose-900) 45%, transparent);
+	--tone-danger-dark-shadow-active: color-mix(in srgb, var(--tone-danger-dark-shadow) 90%, black);
+
+	/* LINK tone – light theme */
+	--tone-link-light-text: color-mix(in srgb, var(--color-blue-700) 100%, transparent);
+	--tone-link-light-text-active: color-mix(in srgb, var(--tone-link-light-text) 92.5%, black);
+	--tone-link-light-lead: color-mix(in srgb, var(--color-blue-800) 100%, transparent);
+	--tone-link-light-lead-active: color-mix(in srgb, var(--tone-link-light-lead) 95%, black);
+	--tone-link-light-bg: color-mix(in srgb, var(--color-blue-50) 75%, white);
+	--tone-link-light-bg-active: color-mix(in srgb, var(--tone-link-light-bg) 92.5%, white);
+	--tone-link-light-bg-alt: color-mix(in srgb, var(--color-blue-100) 25%, white);
+	--tone-link-light-bg-alt-active: color-mix(in srgb, var(--tone-link-light-bg-alt) 92.5%, black);
+	--tone-link-light-border: color-mix(in srgb, var(--color-blue-400) 10%, transparent);
+	--tone-link-light-border-active: color-mix(in srgb, var(--tone-link-light-border) 92.5%, black);
+	--tone-link-light-icon: color-mix(in srgb, var(--color-blue-700) 85%, white);
+	--tone-link-light-icon-active: color-mix(in srgb, var(--tone-link-light-icon) 88%, black);
+	--tone-link-light-shadow: color-mix(in srgb, var(--color-slate-700) 10%, transparent);
+	--tone-link-light-shadow-active: color-mix(in srgb, var(--tone-link-light-shadow) 25%, black);
+
+	/* LINK tone – dark theme */
+	--tone-link-dark-text: color-mix(in srgb, var(--color-blue-50) 100%, transparent);
+	--tone-link-dark-text-active: color-mix(in srgb, var(--tone-link-dark-text) 88%, white);
+	--tone-link-dark-lead: color-mix(in srgb, var(--color-blue-200) 100%, transparent);
+	--tone-link-dark-lead-active: color-mix(in srgb, var(--tone-link-dark-lead) 88%, white);
+	--tone-link-dark-bg: color-mix(in srgb, var(--color-blue-900) 70%, black);
+	--tone-link-dark-bg-active: color-mix(in srgb, var(--tone-link-dark-bg) 50%, black);
+	--tone-link-dark-bg-alt: color-mix(in srgb, var(--color-blue-800) 70%, black);
+	--tone-link-dark-bg-alt-active: color-mix(in srgb, var(--tone-link-dark-bg-alt) 50%, black);
+	--tone-link-dark-border: color-mix(in srgb, var(--color-blue-500) 55%, transparent);
+	--tone-link-dark-border-active: color-mix(in srgb, var(--tone-link-dark-border) 90%, black);
+	--tone-link-dark-icon: color-mix(in srgb, var(--color-blue-50) 80%, black);
+	--tone-link-dark-icon-active: color-mix(in srgb, var(--tone-link-dark-icon) 88%, white);
+	--tone-link-dark-shadow: color-mix(in srgb, var(--color-blue-900) 45%, transparent);
+	--tone-link-dark-shadow-active: color-mix(in srgb, var(--tone-link-dark-shadow) 90%, black);
+}

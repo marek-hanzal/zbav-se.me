@@ -1,0 +1,81 @@
+@layer components {
+	[data-ui-snap-to="top-left"] {
+		@apply top-1 left-1;
+		position: absolute;
+		width: auto;
+	}
+
+	[data-ui-snap-to="top-center"] {
+		@apply top-1 left-1/2 -translate-x-1/2;
+		position: absolute;
+		width: auto;
+	}
+
+	[data-ui-snap-to="top-right"] {
+		@apply top-1 right-1;
+		position: absolute;
+		width: auto;
+	}
+
+	[data-ui-snap-to="top"] {
+		@apply top-1 left-1 right-1;
+		position: absolute;
+		width: auto;
+	}
+
+	[data-ui-snap-to="bottom-right"] {
+		@apply bottom-1 right-1;
+		position: absolute;
+		width: auto;
+	}
+
+	[data-ui-snap-to="bottom-left"] {
+		@apply bottom-1 left-1;
+		position: absolute;
+		width: auto;
+	}
+
+	[data-ui-snap-to="bottom-center"] {
+		@apply bottom-1 left-1/2 -translate-x-1/2;
+		position: absolute;
+		width: auto;
+	}
+
+	[data-ui-snap-to="bottom"] {
+		@apply bottom-1 left-1 right-1;
+		position: absolute;
+		width: auto;
+	}
+
+	[data-ui-snap-to="left"] {
+		@apply left-1 top-1 bottom-1;
+		position: absolute;
+		width: auto;
+		height: auto;
+	}
+
+	[data-ui-snap-to="right"] {
+		@apply right-1 top-1 bottom-1;
+		position: absolute;
+		width: auto;
+		height: auto;
+	}
+
+	[data-ui-snap-to="left-center"] {
+		@apply left-1;
+		position: absolute;
+		width: auto;
+	}
+
+	[data-ui-snap-to="right-center"] {
+		@apply right-1 top-1/2 -translate-y-1/2;
+		position: absolute;
+		width: auto;
+	}
+
+	[data-ui-snap-to="middle"] {
+		@apply top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+		position: absolute;
+		width: auto;
+	}
+}

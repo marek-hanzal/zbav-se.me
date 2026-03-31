@@ -1,0 +1,31 @@
+@layer components {
+	[data-ui-round="default"] {
+		overflow: hidden;
+		border-radius: var(--radius-default);
+	}
+
+	[data-ui-round="sm"] {
+		overflow: hidden;
+		@apply rounded-sm;
+	}
+
+	[data-ui-round="md"] {
+		overflow: hidden;
+		@apply rounded-md;
+	}
+
+	[data-ui-round="lg"] {
+		overflow: hidden;
+		@apply rounded-lg;
+	}
+
+	[data-ui-round="xl"] {
+		overflow: hidden;
+		@apply rounded-xl;
+	}
+
+	[data-ui-round="full"] {
+		overflow: hidden;
+		@apply rounded-full;
+	}
+}

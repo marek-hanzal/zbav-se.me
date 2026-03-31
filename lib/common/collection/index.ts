@@ -1,0 +1,1 @@
+export { withCollectionFx } from "./withCollectionFx";

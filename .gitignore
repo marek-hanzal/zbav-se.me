@@ -10,7 +10,6 @@
 .vscode/chrome-debug-profile
 *.log
 dist
-lib
 node_modules
 playwright-report
 results

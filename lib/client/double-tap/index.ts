@@ -1,0 +1,1 @@
+export { useDoubleTap } from "./useDoubleTap";

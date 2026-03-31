@@ -1,0 +1,975 @@
+/* ===========================
+ * BRAND tone – light theme
+ * Primary brand surfaces, marketing highlights, promo banners
+ * =========================== */
+
+@utility tone-brand-light-text {
+	--color-text: var(--tone-brand-light-text);
+}
+
+@utility tone-brand-light-text-active {
+	--color-text-active: var(--tone-brand-light-text-active);
+}
+
+@utility tone-brand-light-lead {
+	--color-lead: var(--tone-brand-light-lead);
+}
+
+@utility tone-brand-light-lead-active {
+	--color-lead-active: var(--tone-brand-light-lead-active);
+}
+
+@utility tone-brand-light-bg {
+	--color-bg: var(--tone-brand-light-bg);
+}
+
+@utility tone-brand-light-bg-active {
+	--color-bg-active: var(--tone-brand-light-bg-active);
+}
+
+@utility tone-brand-light-bg-alt {
+	--color-bg-alt: var(--tone-brand-light-bg-alt);
+}
+
+@utility tone-brand-light-bg-alt-active {
+	--color-bg-alt-active: var(--tone-brand-light-bg-alt-active);
+}
+
+@utility tone-brand-light-border {
+	--color-border: var(--tone-brand-light-border);
+}
+
+@utility tone-brand-light-border-active {
+	--color-border-active: var(--tone-brand-light-border-active);
+}
+
+@utility tone-brand-light-icon {
+	--color-icon: var(--tone-brand-light-icon);
+}
+
+@utility tone-brand-light-icon-active {
+	--color-icon-active: var(--tone-brand-light-icon-active);
+}
+
+@utility tone-brand-light-shadow {
+	--tw-shadow-color: var(--tone-brand-light-shadow);
+}
+
+@utility tone-brand-light-shadow-active {
+	--color-shadow-active: var(--tone-brand-light-shadow-active);
+}
+
+/* ===========================
+ * BRAND tone – dark theme
+ * Brand surfaces in dark mode
+ * =========================== */
+
+@utility tone-brand-dark-text {
+	--color-text: var(--tone-brand-dark-text);
+}
+
+@utility tone-brand-dark-text-active {
+	--color-text-active: var(--tone-brand-dark-text-active);
+}
+
+@utility tone-brand-dark-lead {
+	--color-lead: var(--tone-brand-dark-lead);
+}
+
+@utility tone-brand-dark-lead-active {
+	--color-lead-active: var(--tone-brand-dark-lead-active);
+}
+
+@utility tone-brand-dark-bg {
+	--color-bg: var(--tone-brand-dark-bg);
+}
+
+@utility tone-brand-dark-bg-active {
+	--color-bg-active: var(--tone-brand-dark-bg-active);
+}
+
+@utility tone-brand-dark-bg-alt {
+	--color-bg-alt: var(--tone-brand-dark-bg-alt);
+}
+
+@utility tone-brand-dark-bg-alt-active {
+	--color-bg-alt-active: var(--tone-brand-dark-bg-alt-active);
+}
+
+@utility tone-brand-dark-border {
+	--color-border: var(--tone-brand-dark-border);
+}
+
+@utility tone-brand-dark-border-active {
+	--color-border-active: var(--tone-brand-dark-border-active);
+}
+
+@utility tone-brand-dark-icon {
+	--color-icon: var(--tone-brand-dark-icon);
+}
+
+@utility tone-brand-dark-icon-active {
+	--color-icon-active: var(--tone-brand-dark-icon-active);
+}
+
+@utility tone-brand-dark-shadow {
+	--tw-shadow-color: var(--tone-brand-dark-shadow);
+}
+
+@utility tone-brand-dark-shadow-active {
+	--color-shadow-active: var(--tone-brand-dark-shadow-active);
+}
+
+/* ===========================
+ * PRIMARY tone – light theme
+ * Default primary actions and emphasis
+ * =========================== */
+
+@utility tone-primary-light-text {
+	--color-text: var(--tone-primary-light-text);
+}
+
+@utility tone-primary-light-text-active {
+	--color-text-active: var(--tone-primary-light-text-active);
+}
+
+@utility tone-primary-light-lead {
+	--color-lead: var(--tone-primary-light-lead);
+}
+
+@utility tone-primary-light-lead-active {
+	--color-lead-active: var(--tone-primary-light-lead-active);
+}
+
+@utility tone-primary-light-bg {
+	--color-bg: var(--tone-primary-light-bg);
+}
+
+@utility tone-primary-light-bg-active {
+	--color-bg-active: var(--tone-primary-light-bg-active);
+}
+
+@utility tone-primary-light-bg-alt {
+	--color-bg-alt: var(--tone-primary-light-bg-alt);
+}
+
+@utility tone-primary-light-bg-alt-active {
+	--color-bg-alt-active: var(--tone-primary-light-bg-alt-active);
+}
+
+@utility tone-primary-light-border {
+	--color-border: var(--tone-primary-light-border);
+}
+
+@utility tone-primary-light-border-active {
+	--color-border-active: var(--tone-primary-light-border-active);
+}
+
+@utility tone-primary-light-icon {
+	--color-icon: var(--tone-primary-light-icon);
+}
+
+@utility tone-primary-light-icon-active {
+	--color-icon-active: var(--tone-primary-light-icon-active);
+}
+
+@utility tone-primary-light-shadow {
+	--tw-shadow-color: var(--tone-primary-light-shadow);
+}
+
+@utility tone-primary-light-shadow-active {
+	--color-shadow-active: var(--tone-primary-light-shadow-active);
+}
+
+/* ===========================
+ * PRIMARY tone – dark theme
+ * Primary emphasis in dark mode
+ * =========================== */
+
+@utility tone-primary-dark-text {
+	--color-text: var(--tone-primary-dark-text);
+}
+
+@utility tone-primary-dark-text-active {
+	--color-text-active: var(--tone-primary-dark-text-active);
+}
+
+@utility tone-primary-dark-lead {
+	--color-lead: var(--tone-primary-dark-lead);
+}
+
+@utility tone-primary-dark-lead-active {
+	--color-lead-active: var(--tone-primary-dark-lead-active);
+}
+
+@utility tone-primary-dark-bg {
+	--color-bg: var(--tone-primary-dark-bg);
+}
+
+@utility tone-primary-dark-bg-active {
+	--color-bg-active: var(--tone-primary-dark-bg-active);
+}
+
+@utility tone-primary-dark-bg-alt {
+	--color-bg-alt: var(--tone-primary-dark-bg-alt);
+}
+
+@utility tone-primary-dark-bg-alt-active {
+	--color-bg-alt-active: var(--tone-primary-dark-bg-alt-active);
+}
+
+@utility tone-primary-dark-border {
+	--color-border: var(--tone-primary-dark-border);
+}
+
+@utility tone-primary-dark-border-active {
+	--color-border-active: var(--tone-primary-dark-border-active);
+}
+
+@utility tone-primary-dark-icon {
+	--color-icon: var(--tone-primary-dark-icon);
+}
+
+@utility tone-primary-dark-icon-active {
+	--color-icon-active: var(--tone-primary-dark-icon-active);
+}
+
+@utility tone-primary-dark-shadow {
+	--tw-shadow-color: var(--tone-primary-dark-shadow);
+}
+
+@utility tone-primary-dark-shadow-active {
+	--color-shadow-active: var(--tone-primary-dark-shadow-active);
+}
+
+/* ===========================
+ * SECONDARY tone – light theme
+ * Supporting accents, secondary buttons
+ * =========================== */
+
+@utility tone-secondary-light-text {
+	--color-text: var(--tone-secondary-light-text);
+}
+
+@utility tone-secondary-light-text-active {
+	--color-text-active: var(--tone-secondary-light-text-active);
+}
+
+@utility tone-secondary-light-lead {
+	--color-lead: var(--tone-secondary-light-lead);
+}
+
+@utility tone-secondary-light-lead-active {
+	--color-lead-active: var(--tone-secondary-light-lead-active);
+}
+
+@utility tone-secondary-light-bg {
+	--color-bg: var(--tone-secondary-light-bg);
+}
+
+@utility tone-secondary-light-bg-active {
+	--color-bg-active: var(--tone-secondary-light-bg-active);
+}
+
+@utility tone-secondary-light-bg-alt {
+	--color-bg-alt: var(--tone-secondary-light-bg-alt);
+}
+
+@utility tone-secondary-light-bg-alt-active {
+	--color-bg-alt-active: var(--tone-secondary-light-bg-alt-active);
+}
+
+@utility tone-secondary-light-border {
+	--color-border: var(--tone-secondary-light-border);
+}
+
+@utility tone-secondary-light-border-active {
+	--color-border-active: var(--tone-secondary-light-border-active);
+}
+
+@utility tone-secondary-light-icon {
+	--color-icon: var(--tone-secondary-light-icon);
+}
+
+@utility tone-secondary-light-icon-active {
+	--color-icon-active: var(--tone-secondary-light-icon-active);
+}
+
+@utility tone-secondary-light-shadow {
+	--tw-shadow-color: var(--tone-secondary-light-shadow);
+}
+
+@utility tone-secondary-light-shadow-active {
+	--color-shadow-active: var(--tone-secondary-light-shadow-active);
+}
+
+/* ===========================
+ * SECONDARY tone – dark theme
+ * Supporting accents in dark mode
+ * =========================== */
+
+@utility tone-secondary-dark-text {
+	--color-text: var(--tone-secondary-dark-text);
+}
+
+@utility tone-secondary-dark-text-active {
+	--color-text-active: var(--tone-secondary-dark-text-active);
+}
+
+@utility tone-secondary-dark-lead {
+	--color-lead: var(--tone-secondary-dark-lead);
+}
+
+@utility tone-secondary-dark-lead-active {
+	--color-lead-active: var(--tone-secondary-dark-lead-active);
+}
+
+@utility tone-secondary-dark-bg {
+	--color-bg: var(--tone-secondary-dark-bg);
+}
+
+@utility tone-secondary-dark-bg-active {
+	--color-bg-active: var(--tone-secondary-dark-bg-active);
+}
+
+@utility tone-secondary-dark-bg-alt {
+	--color-bg-alt: var(--tone-secondary-dark-bg-alt);
+}
+
+@utility tone-secondary-dark-bg-alt-active {
+	--color-bg-alt-active: var(--tone-secondary-dark-bg-alt-active);
+}
+
+@utility tone-secondary-dark-border {
+	--color-border: var(--tone-secondary-dark-border);
+}
+
+@utility tone-secondary-dark-border-active {
+	--color-border-active: var(--tone-secondary-dark-border-active);
+}
+
+@utility tone-secondary-dark-icon {
+	--color-icon: var(--tone-secondary-dark-icon);
+}
+
+@utility tone-secondary-dark-icon-active {
+	--color-icon-active: var(--tone-secondary-dark-icon-active);
+}
+
+@utility tone-secondary-dark-shadow {
+	--tw-shadow-color: var(--tone-secondary-dark-shadow);
+}
+
+@utility tone-secondary-dark-shadow-active {
+	--color-shadow-active: var(--tone-secondary-dark-shadow-active);
+}
+
+/* ===========================
+ * SUBTLE tone – light theme
+ * Soft backgrounds, low emphasis surfaces
+ * =========================== */
+
+@utility tone-subtle-light-text {
+	--color-text: var(--tone-subtle-light-text);
+}
+
+@utility tone-subtle-light-text-active {
+	--color-text-active: var(--tone-subtle-light-text-active);
+}
+
+@utility tone-subtle-light-lead {
+	--color-lead: var(--tone-subtle-light-lead);
+}
+
+@utility tone-subtle-light-lead-active {
+	--color-lead-active: var(--tone-subtle-light-lead-active);
+}
+
+@utility tone-subtle-light-bg {
+	--color-bg: var(--tone-subtle-light-bg);
+}
+
+@utility tone-subtle-light-bg-active {
+	--color-bg-active: var(--tone-subtle-light-bg-active);
+}
+
+@utility tone-subtle-light-bg-alt {
+	--color-bg-alt: var(--tone-subtle-light-bg-alt);
+}
+
+@utility tone-subtle-light-bg-alt-active {
+	--color-bg-alt-active: var(--tone-subtle-light-bg-alt-active);
+}
+
+@utility tone-subtle-light-border {
+	--color-border: var(--tone-subtle-light-border);
+}
+
+@utility tone-subtle-light-border-active {
+	--color-border-active: var(--tone-subtle-light-border-active);
+}
+
+@utility tone-subtle-light-icon {
+	--color-icon: var(--tone-subtle-light-icon);
+}
+
+@utility tone-subtle-light-icon-active {
+	--color-icon-active: var(--tone-subtle-light-icon-active);
+}
+
+@utility tone-subtle-light-shadow {
+	--tw-shadow-color: var(--tone-subtle-light-shadow);
+}
+
+@utility tone-subtle-light-shadow-active {
+	--color-shadow-active: var(--tone-subtle-light-shadow-active);
+}
+
+/* ===========================
+ * SUBTLE tone – dark theme
+ * Soft backgrounds in dark mode
+ * =========================== */
+
+@utility tone-subtle-dark-text {
+	--color-text: var(--tone-subtle-dark-text);
+}
+
+@utility tone-subtle-dark-text-active {
+	--color-text-active: var(--tone-subtle-dark-text-active);
+}
+
+@utility tone-subtle-dark-lead {
+	--color-lead: var(--tone-subtle-dark-lead);
+}
+
+@utility tone-subtle-dark-lead-active {
+	--color-lead-active: var(--tone-subtle-dark-lead-active);
+}
+
+@utility tone-subtle-dark-bg {
+	--color-bg: var(--tone-subtle-dark-bg);
+}
+
+@utility tone-subtle-dark-bg-active {
+	--color-bg-active: var(--tone-subtle-dark-bg-active);
+}
+
+@utility tone-subtle-dark-bg-alt {
+	--color-bg-alt: var(--tone-subtle-dark-bg-alt);
+}
+
+@utility tone-subtle-dark-bg-alt-active {
+	--color-bg-alt-active: var(--tone-subtle-dark-bg-alt-active);
+}
+
+@utility tone-subtle-dark-border {
+	--color-border: var(--tone-subtle-dark-border);
+}
+
+@utility tone-subtle-dark-border-active {
+	--color-border-active: var(--tone-subtle-dark-border-active);
+}
+
+@utility tone-subtle-dark-icon {
+	--color-icon: var(--tone-subtle-dark-icon);
+}
+
+@utility tone-subtle-dark-icon-active {
+	--color-icon-active: var(--tone-subtle-dark-icon-active);
+}
+
+@utility tone-subtle-dark-shadow {
+	--tw-shadow-color: var(--tone-subtle-dark-shadow);
+}
+
+@utility tone-subtle-dark-shadow-active {
+	--color-shadow-active: var(--tone-subtle-dark-shadow-active);
+}
+
+/* ===========================
+ * NEUTRAL tone – light theme
+ * Default cards, surfaces, background chrome
+ * =========================== */
+
+@utility tone-neutral-light-text {
+	--color-text: var(--tone-neutral-light-text);
+}
+
+@utility tone-neutral-light-text-active {
+	--color-text-active: var(--tone-neutral-light-text-active);
+}
+
+@utility tone-neutral-light-lead {
+	--color-lead: var(--tone-neutral-light-lead);
+}
+
+@utility tone-neutral-light-lead-active {
+	--color-lead-active: var(--tone-neutral-light-lead-active);
+}
+
+@utility tone-neutral-light-bg {
+	--color-bg: var(--tone-neutral-light-bg);
+}
+
+@utility tone-neutral-light-bg-active {
+	--color-bg-active: var(--tone-neutral-light-bg-active);
+}
+
+@utility tone-neutral-light-bg-alt {
+	--color-bg-alt: var(--tone-neutral-light-bg-alt);
+}
+
+@utility tone-neutral-light-bg-alt-active {
+	--color-bg-alt-active: var(--tone-neutral-light-bg-alt-active);
+}
+
+@utility tone-neutral-light-border {
+	--color-border: var(--tone-neutral-light-border);
+}
+
+@utility tone-neutral-light-border-active {
+	--color-border-active: var(--tone-neutral-light-border-active);
+}
+
+@utility tone-neutral-light-icon {
+	--color-icon: var(--tone-neutral-light-icon);
+}
+
+@utility tone-neutral-light-icon-active {
+	--color-icon-active: var(--tone-neutral-light-icon-active);
+}
+
+@utility tone-neutral-light-shadow {
+	--tw-shadow-color: var(--tone-neutral-light-shadow);
+}
+
+@utility tone-neutral-light-shadow-active {
+	--color-shadow-active: var(--tone-neutral-light-shadow-active);
+}
+
+/* ===========================
+ * NEUTRAL tone – dark theme
+ * Default cards & surfaces in dark mode
+ * =========================== */
+
+@utility tone-neutral-dark-text {
+	--color-text: var(--tone-neutral-dark-text);
+}
+
+@utility tone-neutral-dark-text-active {
+	--color-text-active: var(--tone-neutral-dark-text-active);
+}
+
+@utility tone-neutral-dark-lead {
+	--color-lead: var(--tone-neutral-dark-lead);
+}
+
+@utility tone-neutral-dark-lead-active {
+	--color-lead-active: var(--tone-neutral-dark-lead-active);
+}
+
+@utility tone-neutral-dark-bg {
+	--color-bg: var(--tone-neutral-dark-bg);
+}
+
+@utility tone-neutral-dark-bg-active {
+	--color-bg-active: var(--tone-neutral-dark-bg-active);
+}
+
+@utility tone-neutral-dark-bg-alt {
+	--color-bg-alt: var(--tone-neutral-dark-bg-alt);
+}
+
+@utility tone-neutral-dark-bg-alt-active {
+	--color-bg-alt-active: var(--tone-neutral-dark-bg-alt-active);
+}
+
+@utility tone-neutral-dark-border {
+	--color-border: var(--tone-neutral-dark-border);
+}
+
+@utility tone-neutral-dark-border-active {
+	--color-border-active: var(--tone-neutral-dark-border-active);
+}
+
+@utility tone-neutral-dark-icon {
+	--color-icon: var(--tone-neutral-dark-icon);
+}
+
+@utility tone-neutral-dark-icon-active {
+	--color-icon-active: var(--tone-neutral-dark-icon-active);
+}
+
+@utility tone-neutral-dark-shadow {
+	--tw-shadow-color: var(--tone-neutral-dark-shadow);
+}
+
+@utility tone-neutral-dark-shadow-active {
+	--color-shadow-active: var(--tone-neutral-dark-shadow-active);
+}
+
+/* ===========================
+ * WARNING tone – light theme
+ * Non-critical alerts, soft warnings
+ * =========================== */
+
+@utility tone-warning-light-text {
+	--color-text: var(--tone-warning-light-text);
+}
+
+@utility tone-warning-light-text-active {
+	--color-text-active: var(--tone-warning-light-text-active);
+}
+
+@utility tone-warning-light-lead {
+	--color-lead: var(--tone-warning-light-lead);
+}
+
+@utility tone-warning-light-lead-active {
+	--color-lead-active: var(--tone-warning-light-lead-active);
+}
+
+@utility tone-warning-light-bg {
+	--color-bg: var(--tone-warning-light-bg);
+}
+
+@utility tone-warning-light-bg-active {
+	--color-bg-active: var(--tone-warning-light-bg-active);
+}
+
+@utility tone-warning-light-bg-alt {
+	--color-bg-alt: var(--tone-warning-light-bg-alt);
+}
+
+@utility tone-warning-light-bg-alt-active {
+	--color-bg-alt-active: var(--tone-warning-light-bg-alt-active);
+}
+
+@utility tone-warning-light-border {
+	--color-border: var(--tone-warning-light-border);
+}
+
+@utility tone-warning-light-border-active {
+	--color-border-active: var(--tone-warning-light-border-active);
+}
+
+@utility tone-warning-light-icon {
+	--color-icon: var(--tone-warning-light-icon);
+}
+
+@utility tone-warning-light-icon-active {
+	--color-icon-active: var(--tone-warning-light-icon-active);
+}
+
+@utility tone-warning-light-shadow {
+	--tw-shadow-color: var(--tone-warning-light-shadow);
+}
+
+@utility tone-warning-light-shadow-active {
+	--color-shadow-active: var(--tone-warning-light-shadow-active);
+}
+
+/* ===========================
+ * WARNING tone – dark theme
+ * Non-critical alerts in dark mode
+ * =========================== */
+
+@utility tone-warning-dark-text {
+	--color-text: var(--tone-warning-dark-text);
+}
+
+@utility tone-warning-dark-text-active {
+	--color-text-active: var(--tone-warning-dark-text-active);
+}
+
+@utility tone-warning-dark-lead {
+	--color-lead: var(--tone-warning-dark-lead);
+}
+
+@utility tone-warning-dark-lead-active {
+	--color-lead-active: var(--tone-warning-dark-lead-active);
+}
+
+@utility tone-warning-dark-bg {
+	--color-bg: var(--tone-warning-dark-bg);
+}
+
+@utility tone-warning-dark-bg-active {
+	--color-bg-active: var(--tone-warning-dark-bg-active);
+}
+
+@utility tone-warning-dark-bg-alt {
+	--color-bg-alt: var(--tone-warning-dark-bg-alt);
+}
+
+@utility tone-warning-dark-bg-alt-active {
+	--color-bg-alt-active: var(--tone-warning-dark-bg-alt-active);
+}
+
+@utility tone-warning-dark-border {
+	--color-border: var(--tone-warning-dark-border);
+}
+
+@utility tone-warning-dark-border-active {
+	--color-border-active: var(--tone-warning-dark-border-active);
+}
+
+@utility tone-warning-dark-icon {
+	--color-icon: var(--tone-warning-dark-icon);
+}
+
+@utility tone-warning-dark-icon-active {
+	--color-icon-active: var(--tone-warning-dark-icon-active);
+}
+
+@utility tone-warning-dark-shadow {
+	--tw-shadow-color: var(--tone-warning-dark-shadow);
+}
+
+@utility tone-warning-dark-shadow-active {
+	--color-shadow-active: var(--tone-warning-dark-shadow-active);
+}
+
+/* ===========================
+ * DANGER tone – light theme
+ * Errors, destructive actions
+ * =========================== */
+
+@utility tone-danger-light-text {
+	--color-text: var(--tone-danger-light-text);
+}
+
+@utility tone-danger-light-text-active {
+	--color-text-active: var(--tone-danger-light-text-active);
+}
+
+@utility tone-danger-light-lead {
+	--color-lead: var(--tone-danger-light-lead);
+}
+
+@utility tone-danger-light-lead-active {
+	--color-lead-active: var(--tone-danger-light-lead-active);
+}
+
+@utility tone-danger-light-bg {
+	--color-bg: var(--tone-danger-light-bg);
+}
+
+@utility tone-danger-light-bg-active {
+	--color-bg-active: var(--tone-danger-light-bg-active);
+}
+
+@utility tone-danger-light-bg-alt {
+	--color-bg-alt: var(--tone-danger-light-bg-alt);
+}
+
+@utility tone-danger-light-bg-alt-active {
+	--color-bg-alt-active: var(--tone-danger-light-bg-alt-active);
+}
+
+@utility tone-danger-light-border {
+	--color-border: var(--tone-danger-light-border);
+}
+
+@utility tone-danger-light-border-active {
+	--color-border-active: var(--tone-danger-light-border-active);
+}
+
+@utility tone-danger-light-icon {
+	--color-icon: var(--tone-danger-light-icon);
+}
+
+@utility tone-danger-light-icon-active {
+	--color-icon-active: var(--tone-danger-light-icon-active);
+}
+
+@utility tone-danger-light-shadow {
+	--tw-shadow-color: var(--tone-danger-light-shadow);
+}
+
+@utility tone-danger-light-shadow-active {
+	--color-shadow-active: var(--tone-danger-light-shadow-active);
+}
+
+/* ===========================
+ * DANGER tone – dark theme
+ * Errors in dark mode
+ * =========================== */
+
+@utility tone-danger-dark-text {
+	--color-text: var(--tone-danger-dark-text);
+}
+
+@utility tone-danger-dark-text-active {
+	--color-text-active: var(--tone-danger-dark-text-active);
+}
+
+@utility tone-danger-dark-lead {
+	--color-lead: var(--tone-danger-dark-lead);
+}
+
+@utility tone-danger-dark-lead-active {
+	--color-lead-active: var(--tone-danger-dark-lead-active);
+}
+
+@utility tone-danger-dark-bg {
+	--color-bg: var(--tone-danger-dark-bg);
+}
+
+@utility tone-danger-dark-bg-active {
+	--color-bg-active: var(--tone-danger-dark-bg-active);
+}
+
+@utility tone-danger-dark-bg-alt {
+	--color-bg-alt: var(--tone-danger-dark-bg-alt);
+}
+
+@utility tone-danger-dark-bg-alt-active {
+	--color-bg-alt-active: var(--tone-danger-dark-bg-alt-active);
+}
+
+@utility tone-danger-dark-border {
+	--color-border: var(--tone-danger-dark-border);
+}
+
+@utility tone-danger-dark-border-active {
+	--color-border-active: var(--tone-danger-dark-border-active);
+}
+
+@utility tone-danger-dark-icon {
+	--color-icon: var(--tone-danger-dark-icon);
+}
+
+@utility tone-danger-dark-icon-active {
+	--color-icon-active: var(--tone-danger-dark-icon-active);
+}
+
+@utility tone-danger-dark-shadow {
+	--tw-shadow-color: var(--tone-danger-dark-shadow);
+}
+
+@utility tone-danger-dark-shadow-active {
+	--color-shadow-active: var(--tone-danger-dark-shadow-active);
+}
+
+/* ===========================
+ * LINK tone – light theme
+ * Interactive links, link-like buttons
+ * =========================== */
+
+@utility tone-link-light-text {
+	--color-text: var(--tone-link-light-text);
+}
+
+@utility tone-link-light-text-active {
+	--color-text-active: var(--tone-link-light-text-active);
+}
+
+@utility tone-link-light-lead {
+	--color-lead: var(--tone-link-light-lead);
+}
+
+@utility tone-link-light-lead-active {
+	--color-lead-active: var(--tone-link-light-lead-active);
+}
+
+@utility tone-link-light-bg {
+	--color-bg: var(--tone-link-light-bg);
+}
+
+@utility tone-link-light-bg-active {
+	--color-bg-active: var(--tone-link-light-bg-active);
+}
+
+@utility tone-link-light-bg-alt {
+	--color-bg-alt: var(--tone-link-light-bg-alt);
+}
+
+@utility tone-link-light-bg-alt-active {
+	--color-bg-alt-active: var(--tone-link-light-bg-alt-active);
+}
+
+@utility tone-link-light-border {
+	--color-border: var(--tone-link-light-border);
+}
+
+@utility tone-link-light-border-active {
+	--color-border-active: var(--tone-link-light-border-active);
+}
+
+@utility tone-link-light-icon {
+	--color-icon: var(--tone-link-light-icon);
+}
+
+@utility tone-link-light-icon-active {
+	--color-icon-active: var(--tone-link-light-icon-active);
+}
+
+@utility tone-link-light-shadow {
+	--tw-shadow-color: var(--tone-link-light-shadow);
+}
+
+@utility tone-link-light-shadow-active {
+	--color-shadow-active: var(--tone-link-light-shadow-active);
+}
+
+/* ===========================
+ * LINK tone – dark theme
+ * Interactive links in dark mode
+ * =========================== */
+
+@utility tone-link-dark-text {
+	--color-text: var(--tone-link-dark-text);
+}
+
+@utility tone-link-dark-text-active {
+	--color-text-active: var(--tone-link-dark-text-active);
+}
+
+@utility tone-link-dark-lead {
+	--color-lead: var(--tone-link-dark-lead);
+}
+
+@utility tone-link-dark-lead-active {
+	--color-lead-active: var(--tone-link-dark-lead-active);
+}
+
+@utility tone-link-dark-bg {
+	--color-bg: var(--tone-link-dark-bg);
+}
+
+@utility tone-link-dark-bg-active {
+	--color-bg-active: var(--tone-link-dark-bg-active);
+}
+
+@utility tone-link-dark-bg-alt {
+	--color-bg-alt: var(--tone-link-dark-bg-alt);
+}
+
+@utility tone-link-dark-bg-alt-active {
+	--color-bg-alt-active: var(--tone-link-dark-bg-alt-active);
+}
+
+@utility tone-link-dark-border {
+	--color-border: var(--tone-link-dark-border);
+}
+
+@utility tone-link-dark-border-active {
+	--color-border-active: var(--tone-link-dark-border-active);
+}
+
+@utility tone-link-dark-icon {
+	--color-icon: var(--tone-link-dark-icon);
+}
+
+@utility tone-link-dark-icon-active {
+	--color-icon-active: var(--tone-link-dark-icon-active);
+}
+
+@utility tone-link-dark-shadow {
+	--tw-shadow-color: var(--tone-link-dark-shadow);
+}
+
+@utility tone-link-dark-shadow-active {
+	--color-shadow-active: var(--tone-link-dark-shadow-active);
+}

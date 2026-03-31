@@ -1,0 +1,166 @@
+/* ===========================
+ * COMPONENT MAPPING
+ * Glue between data attributes and tone utilities
+ * =========================== */
+
+@layer components {
+	[data-ui-tone="brand"][data-ui-theme="light"] {
+		@apply tone-brand-light-text;
+		@apply tone-brand-light-lead;
+		@apply tone-brand-light-bg;
+		@apply tone-brand-light-bg-alt;
+		@apply tone-brand-light-border;
+		@apply tone-brand-light-icon;
+		@apply tone-brand-light-shadow;
+	}
+
+	[data-ui-tone="brand"][data-ui-theme="dark"] {
+		@apply tone-brand-dark-text;
+		@apply tone-brand-dark-lead;
+		@apply tone-brand-dark-bg;
+		@apply tone-brand-dark-bg-alt;
+		@apply tone-brand-dark-border;
+		@apply tone-brand-dark-icon;
+		@apply tone-brand-dark-shadow;
+	}
+
+	[data-ui-tone="primary"][data-ui-theme="light"] {
+		@apply tone-primary-light-text;
+		@apply tone-primary-light-lead;
+		@apply tone-primary-light-bg;
+		@apply tone-primary-light-bg-alt;
+		@apply tone-primary-light-border;
+		@apply tone-primary-light-icon;
+		@apply tone-primary-light-shadow;
+	}
+
+	[data-ui-tone="primary"][data-ui-theme="dark"] {
+		@apply tone-primary-dark-text;
+		@apply tone-primary-dark-lead;
+		@apply tone-primary-dark-bg;
+		@apply tone-primary-dark-bg-alt;
+		@apply tone-primary-dark-border;
+		@apply tone-primary-dark-icon;
+		@apply tone-primary-dark-shadow;
+	}
+
+	[data-ui-tone="secondary"][data-ui-theme="light"] {
+		@apply tone-secondary-light-text;
+		@apply tone-secondary-light-lead;
+		@apply tone-secondary-light-bg;
+		@apply tone-secondary-light-bg-alt;
+		@apply tone-secondary-light-border;
+		@apply tone-secondary-light-icon;
+		@apply tone-secondary-light-shadow;
+	}
+
+	[data-ui-tone="secondary"][data-ui-theme="dark"] {
+		@apply tone-secondary-dark-text;
+		@apply tone-secondary-dark-lead;
+		@apply tone-secondary-dark-bg;
+		@apply tone-secondary-dark-bg-alt;
+		@apply tone-secondary-dark-border;
+		@apply tone-secondary-dark-icon;
+		@apply tone-secondary-dark-shadow;
+	}
+
+	[data-ui-tone="subtle"][data-ui-theme="light"] {
+		@apply tone-subtle-light-text;
+		@apply tone-subtle-light-lead;
+		@apply tone-subtle-light-bg;
+		@apply tone-subtle-light-bg-alt;
+		@apply tone-subtle-light-border;
+		@apply tone-subtle-light-icon;
+		@apply tone-subtle-light-shadow;
+	}
+
+	[data-ui-tone="subtle"][data-ui-theme="dark"] {
+		@apply tone-subtle-dark-text;
+		@apply tone-subtle-dark-lead;
+		@apply tone-subtle-dark-bg;
+		@apply tone-subtle-dark-bg-alt;
+		@apply tone-subtle-dark-border;
+		@apply tone-subtle-dark-icon;
+		@apply tone-subtle-dark-shadow;
+	}
+
+	[data-ui-tone="neutral"][data-ui-theme="light"] {
+		@apply tone-neutral-light-text;
+		@apply tone-neutral-light-lead;
+		@apply tone-neutral-light-bg;
+		@apply tone-neutral-light-bg-alt;
+		@apply tone-neutral-light-border;
+		@apply tone-neutral-light-icon;
+		@apply tone-neutral-light-shadow;
+	}
+
+	[data-ui-tone="neutral"][data-ui-theme="dark"] {
+		@apply tone-neutral-dark-text;
+		@apply tone-neutral-dark-lead;
+		@apply tone-neutral-dark-bg;
+		@apply tone-neutral-dark-bg-alt;
+		@apply tone-neutral-dark-border;
+		@apply tone-neutral-dark-icon;
+		@apply tone-neutral-dark-shadow;
+	}
+
+	[data-ui-tone="warning"][data-ui-theme="light"] {
+		@apply tone-warning-light-text;
+		@apply tone-warning-light-lead;
+		@apply tone-warning-light-bg;
+		@apply tone-warning-light-bg-alt;
+		@apply tone-warning-light-border;
+		@apply tone-warning-light-icon;
+		@apply tone-warning-light-shadow;
+	}
+
+	[data-ui-tone="warning"][data-ui-theme="dark"] {
+		@apply tone-warning-dark-text;
+		@apply tone-warning-dark-lead;
+		@apply tone-warning-dark-bg;
+		@apply tone-warning-dark-bg-alt;
+		@apply tone-warning-dark-border;
+		@apply tone-warning-dark-icon;
+		@apply tone-warning-dark-shadow;
+	}
+
+	[data-ui-tone="danger"][data-ui-theme="light"] {
+		@apply tone-danger-light-text;
+		@apply tone-danger-light-lead;
+		@apply tone-danger-light-bg;
+		@apply tone-danger-light-bg-alt;
+		@apply tone-danger-light-border;
+		@apply tone-danger-light-icon;
+		@apply tone-danger-light-shadow;
+	}
+
+	[data-ui-tone="danger"][data-ui-theme="dark"] {
+		@apply tone-danger-dark-text;
+		@apply tone-danger-dark-lead;
+		@apply tone-danger-dark-bg;
+		@apply tone-danger-dark-bg-alt;
+		@apply tone-danger-dark-border;
+		@apply tone-danger-dark-icon;
+		@apply tone-danger-dark-shadow;
+	}
+
+	[data-ui-tone="link"][data-ui-theme="light"] {
+		@apply tone-link-light-text;
+		@apply tone-link-light-lead;
+		@apply tone-link-light-bg;
+		@apply tone-link-light-bg-alt;
+		@apply tone-link-light-border;
+		@apply tone-link-light-icon;
+		@apply tone-link-light-shadow;
+	}
+
+	[data-ui-tone="link"][data-ui-theme="dark"] {
+		@apply tone-link-dark-text;
+		@apply tone-link-dark-lead;
+		@apply tone-link-dark-bg;
+		@apply tone-link-dark-bg-alt;
+		@apply tone-link-dark-border;
+		@apply tone-link-dark-icon;
+		@apply tone-link-dark-shadow;
+	}
+}
