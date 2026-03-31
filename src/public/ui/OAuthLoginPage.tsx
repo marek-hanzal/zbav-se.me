@@ -1,3 +1,4 @@
+import { useNavigate } from "@tanstack/react-router";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { FormField } from "@/lib/client/form";
@@ -5,7 +6,6 @@ import { ChevronRightIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
 import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
-import { linkTo } from "@/lib/common/link-to";
 import { translator } from "@/lib/common/translator";
 import { withEmailSignInMutation } from "~/common/auth/mutation/withEmailSignInMutation";
 import { useAppForm } from "~/common/ui/form";
@@ -43,19 +43,6 @@ const withHasOAuthChallenge = (query: Record<string, string>): boolean => {
 	return true;
 };
 
-const withContinueOAuth = async (locale: string, query: Record<string, string>) => {
-	if (!withHasOAuthChallenge(query)) {
-		window.location.href = `/${locale}/sign-in`;
-		return;
-	}
-
-	window.location.href = linkTo({
-		base: import.meta.env.VITE_ORIGIN,
-		href: "/api/oauth/mcp/authorize",
-		query,
-	});
-};
-
 export namespace OAuthLoginPage {
 	export interface Props {
 		locale: string;
@@ -64,9 +51,28 @@ export namespace OAuthLoginPage {
 }
 
 export const OAuthLoginPage = ({ locale, query }: OAuthLoginPage.Props) => {
+	const navigate = useNavigate();
+
 	const signInMutation = withEmailSignInMutation.useMutation({
 		async onPostMutation() {
-			return withContinueOAuth(locale, query);
+			if (!withHasOAuthChallenge(query)) {
+				return navigate({
+					to: "/$locale/sign-in",
+					params: {
+						locale,
+					},
+				});
+			}
+
+			return navigate({
+				href: (() => {
+					const url = new URL("/api/oauth/mcp/authorize", import.meta.env.VITE_ORIGIN);
+
+					url.search = new URLSearchParams(query).toString();
+
+					return url.toString();
+				})(),
+			});
 		},
 	});
 
