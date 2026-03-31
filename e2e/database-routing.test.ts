@@ -12,10 +12,10 @@ function toSeedEmail(databaseName: string) {
 test("routes browser traffic to the per-test database", async ({
 	page,
 	database,
-	databaseName,
+	db,
 }) => {
 	const feedName = "E2E feed";
-	const email = toSeedEmail(databaseName);
+	const email = toSeedEmail(db);
 
 	return Effect.gen(function* () {
 		const seller = yield* ensureSeedUserFx({
@@ -43,14 +43,14 @@ test("routes browser traffic to the per-test database", async ({
 
 					return response.json();
 				},
-				{
-					e2eDatabaseName: databaseName,
-				},
-			);
-		});
+					{
+						e2eDatabaseName: db,
+					},
+				);
+			});
 
-		expect(routeResult).toEqual({
-			databaseKey: `e2e:${databaseName}`,
-		});
-	}).pipe(Effect.runPromise);
+			expect(routeResult).toEqual({
+				databaseKey: `e2e:${db}`,
+			});
+		}).pipe(Effect.runPromise);
 });
