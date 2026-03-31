@@ -125,6 +125,8 @@ bun run workflow:check
 
 - Dependency cleanup decisions in this repository are evidence-based from source usage.
 - `knip` is treated as a candidate signal, not as the source of truth.
+- `dependency-cruiser` rules work on resolved source paths under `src/`, not on import alias strings.
+- Server-crossing import rules should use resolved `src/...` paths and keep only the approved server surfaces open, such as `server/fn` and `server/schema`, from the non-server side of the app. Type-only imports and `src/@routes` server glue are exempt.
 
 ## MCP
 

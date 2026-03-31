@@ -3,13 +3,20 @@ import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
-import type { galleryCreateFx } from "~/user/gallery/server/fx/galleryCreateFx";
+import type { GalleryCreateSchema } from "~/user/gallery/server/schema/GalleryCreateSchema";
+
+export namespace galleryInsertFx {
+	export interface Props extends GalleryCreateSchema.Type {
+		userId: string;
+		id?: string;
+	}
+}
 
 export const galleryInsertFx = Effect.fn("galleryInsertFx")(function* ({
 	userId,
 	id,
 	...props
-}: galleryCreateFx.Props) {
+}: galleryInsertFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 
@@ -30,7 +37,7 @@ export const galleryInsertFx = Effect.fn("galleryInsertFx")(function* ({
 
 	return {
 		id: galleryId,
-	};
+	} as const;
 });
 
 export type galleryInsertFx = ReturnType<typeof galleryInsertFx>;

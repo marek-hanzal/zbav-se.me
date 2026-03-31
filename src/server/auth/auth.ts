@@ -1,5 +1,4 @@
 // import { passkey } from "@better-auth/passkey";
-
 import { betterAuth } from "better-auth";
 import { anonymous, customSession, mcp, openAPI } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";

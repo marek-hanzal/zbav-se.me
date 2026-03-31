@@ -1,12 +1,10 @@
 import { Effect } from "effect";
 import { galleryFetchFx } from "~/user/gallery/server/fx/galleryFetchFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
-import type { GalleryCreateSchema } from "~/user/gallery/server/schema/GalleryCreateSchema";
 
 export namespace galleryCreateFx {
-	export interface Props extends GalleryCreateSchema.Type {
-		userId: string;
-		id?: string;
+	export interface Props extends galleryInsertFx.Props {
+		//
 	}
 }
 

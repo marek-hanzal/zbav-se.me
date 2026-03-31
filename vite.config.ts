@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
 			tanstackStart({
 				router: {
 					routesDirectory: "./@routes",
-					generatedRouteTree: "./src/_route.ts",
+					generatedRouteTree: "./_route.ts",
 				},
 			}),
 			react({}),
