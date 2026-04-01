@@ -2,8 +2,10 @@
 import { betterAuth } from "better-auth";
 import { anonymous, customSession, mcp, openAPI } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
-import type { Dialect } from "kysely";
+import { type Dialect, Kysely } from "kysely";
+import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { genId } from "@/lib/common/gen-id";
+import type { Database } from "~/server/database/Database";
 import { ServerBetterAuthSchema } from "~/server/env/ServerBetterAuthSchema";
 import { ServerViteSchema } from "~/server/env/ServerViteSchema";
 
@@ -27,16 +29,22 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 	const viteConfig = ServerViteSchema.parse(process.env);
 	const { hostname: originHost } = new URL(viteConfig.VITE_ORIGIN);
 
+	/**
+	 * Necessary - resolves circular dependency
+	 */
+	const kysely = new Kysely<Database>({
+		dialect: connection,
+		log: [
+			"error",
+		],
+	});
+
 	return betterAuth({
 		database: connection,
 		baseURL: viteConfig.VITE_ORIGIN,
 		basePath: config.basePath ?? "/api/auth",
 		secret: betterAuthConfig.SERVER_BETTER_AUTH_SECRET,
 		plugins: [
-			// passkey({
-			// 	rpID: originHost,
-			// 	rpName: originHost,
-			// }),
 			anonymous({
 				emailDomainName: originHost,
 				generateName: () => genId(),
@@ -58,10 +66,28 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 				disableDefaultReference: true,
 			}),
 			customSession(async ({ user, session }) => {
+				const userEx = await kysely
+					.selectFrom("user_ex")
+					.selectAll()
+					.select((eb) => {
+						return jsonObjectFrom(
+							eb
+								.selectFrom("location")
+								.selectAll("location")
+								.whereRef("location.id", "=", "locationId")
+								.limit(1),
+						).as("location");
+					})
+					.where("userId", "=", user.id)
+					.executeTakeFirst();
+
 				return {
-					user,
+					user: {
+						...userEx,
+						...user,
+					},
 					session,
-				};
+				} as const;
 			}),
 			tanstackStartCookies(),
 		],
