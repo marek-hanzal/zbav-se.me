@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { withFeedFavouriteSourceSelectFx } from "~/buyer/feed-favourite/server/db/withFeedFavouriteSourceSelectFx";
 import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
