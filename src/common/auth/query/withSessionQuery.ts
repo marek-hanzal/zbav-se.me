@@ -11,4 +11,8 @@ export const withSessionQuery = withQuery<void, Awaited<ReturnType<typeof getSes
 	async queryFn() {
 		return getSessionFn();
 	},
+	defaultOptions: {
+		staleTime: 5 * 60 * 1_000,
+		gcTime: 5 * 60 * 1_000,
+	},
 });

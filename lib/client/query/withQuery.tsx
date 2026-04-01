@@ -33,6 +33,10 @@ export namespace withQuery {
 		 * @returns A promise resolving to the query result.
 		 */
 		queryFn(data: TData): Promise<TResult>;
+		/**
+		 * Default options used for every query-related call.
+		 */
+		defaultOptions?: QueryOptions<TResult>;
 	}
 
 	export type PropsEx<TData, TResult> = Omit<Props<TData, TResult>, "queryFn" | "keys">;
@@ -94,7 +98,11 @@ export namespace withQuery {
  * @param props - Query configuration and helpers.
  * @returns Query helpers and hooks.
  */
-export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TData, TResult>) {
+export function withQuery<TData, TResult>({
+	queryFn,
+	keys,
+	defaultOptions,
+}: withQuery.Props<TData, TResult>) {
 	/**
 	 * Internal key generator function that cleans and formats query keys.
 	 * @param data - Optional input data for the query.
@@ -116,6 +124,7 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 		return queryOptions<TResult, Error, TResult, QueryKey>({
 			queryKey,
 			queryFn: () => queryFn(data),
+			...defaultOptions,
 			...opts,
 		});
 	};
