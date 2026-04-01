@@ -11,32 +11,33 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 		const database = await testabase("txListing-resolved-terminal");
 		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@txlisting-resolved.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@txlisting-resolved.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@txlisting-resolved.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@txlisting-resolved.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const { listingId } = await createResolvedScenarioFx({
-			sellerId: seller.id,
-			buyerId: buyer.id,
-			database,
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const { listingId } = yield* createResolvedScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+				database,
+			});
 
-		// After resolve, transactionResolveFx sets other transactions to "sold"
-		// The resolved transaction itself is in "resolved" state — NOT terminal
-		// (pending/open/resolved/dispute are non-terminal per the query builder)
-		const collection = await Effect.gen(function* () {
-			return yield* transactionListingCollectionFx({
+			const collection = yield* transactionListingCollectionFx({
 				scope: {
 					userId: seller.id,
 				},
@@ -44,8 +45,8 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 					terminal: false,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(collection.map((l) => l.id)).toContain(listingId);
+			expect(collection.map((l) => l.id)).toContain(listingId);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

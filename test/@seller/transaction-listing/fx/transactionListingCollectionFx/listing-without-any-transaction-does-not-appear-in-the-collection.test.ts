@@ -11,28 +11,27 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 		const database = await testabase("txListing-no-tx");
 		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@txlisting-no-tx.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@txlisting-no-tx.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const listing = await createListingFx(seller.id).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
+			const listing = yield* createListingFx(seller.id);
 
-		const collection = await Effect.gen(function* () {
-			return yield* transactionListingCollectionFx({
+			const collection = yield* transactionListingCollectionFx({
 				scope: {
 					userId: seller.id,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		const ids = collection.map((l) => l.id);
-		expect(ids).not.toContain(listing.id);
+			const ids = collection.map((l) => l.id);
+			expect(ids).not.toContain(listing.id);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

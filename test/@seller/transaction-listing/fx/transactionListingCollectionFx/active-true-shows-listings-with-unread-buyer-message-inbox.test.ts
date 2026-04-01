@@ -11,29 +11,32 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 		const database = await testabase("txListing-active-true");
 		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@txlisting-active.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@txlisting-active.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@txlisting-active.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@txlisting-active.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		// Pending transaction → seller gets unread buyer-message inbox
-		const { listingId } = await createPendingScenarioFx({
-			sellerId: seller.id,
-			buyerId: buyer.id,
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const { listingId } = yield* createPendingScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+			});
 
-		const collection = await Effect.gen(function* () {
-			return yield* transactionListingCollectionFx({
+			const collection = yield* transactionListingCollectionFx({
 				scope: {
 					userId: seller.id,
 				},
@@ -41,8 +44,8 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 					active: true,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(collection.map((l) => l.id)).toContain(listingId);
+			expect(collection.map((l) => l.id)).toContain(listingId);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
