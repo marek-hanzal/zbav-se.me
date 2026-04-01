@@ -4,9 +4,8 @@ import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
+import { withUserEventRuntimeFx } from "~/test/utils/withUserEventRuntimeFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
@@ -16,16 +15,6 @@ describe("userEventSellerInfoFx", () => {
 		const { api } = auth(() => {
 			return database.dialect;
 		});
-
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@test.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-
-		const sellerId = seller.id;
 
 		// Base time: 90 days ago
 		const baseTime = DateTime.now().minus({
@@ -64,7 +53,19 @@ describe("userEventSellerInfoFx", () => {
 		// Total active: 3 (t1, t3, t4)
 		// Load bucket: lowMax=1, mediumMax=3, so 3 active = medium
 
-		const result = await Effect.gen(function* () {
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@test.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+
+			const sellerId = seller.id;
+
 			// Transaction 1: Active
 			yield* userEventCreateFx({
 				userId: sellerId,
@@ -175,19 +176,19 @@ describe("userEventSellerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventSellerInfoFx({
+			const result = yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).not.toBeNull();
-		if (!result) return;
+			expect(result).not.toBeNull();
+			if (!result) return;
 
-		// Load: 3 active transactions (t1, t3, t4)
-		// lowMax=1, mediumMax=3, so 3 <= 3 = medium
-		expect(result.load.bucket).toBe("medium");
+			// Load: 3 active transactions (t1, t3, t4)
+			// lowMax=1, mediumMax=3, so 3 <= 3 = medium
+			expect(result.load.bucket).toBe("medium");
 
-		// Add one more active transaction to test high bucket
-		// This would be 4 active, which is > 3, so high
+			// Add one more active transaction to test high bucket
+			// This would be 4 active, which is > 3, so high
+		}).pipe(withUserEventRuntimeFx(database), Effect.runPromise);
 	});
 });

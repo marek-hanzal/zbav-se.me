@@ -4,9 +4,8 @@ import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
+import { withUserEventRuntimeFx } from "~/test/utils/withUserEventRuntimeFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
@@ -16,16 +15,6 @@ describe("userEventSellerInfoFx", () => {
 		const { api } = auth(() => {
 			return database.dialect;
 		});
-
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@test.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-
-		const sellerId = seller.id;
 
 		// Base time: 89 days ago (within 90 day cutoff)
 		const baseTime = DateTime.now().minus({
@@ -60,7 +49,19 @@ describe("userEventSellerInfoFx", () => {
 			days: 1,
 		});
 
-		const result = await Effect.gen(function* () {
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@test.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+
+			const sellerId = seller.id;
+
 			// Transaction 1: Reject after message
 			yield* userEventCreateFx({
 				userId: sellerId,
@@ -184,23 +185,23 @@ describe("userEventSellerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventSellerInfoFx({
+			const result = yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).not.toBeNull();
-		if (!result) return;
+			expect(result).not.toBeNull();
+			if (!result) return;
 
-		// Rejected: Only t3 should count (rejected without interaction)
-		// t1 and t2 have interactions before reject, so they're dirty
-		expect(result.rejected.total).toBe(3);
-		expect(result.rejected.rejected).toBe(1); // Only t3
-		expect(result.rejected.percent).toBeCloseTo(33.33, 1);
+			// Rejected: Only t3 should count (rejected without interaction)
+			// t1 and t2 have interactions before reject, so they're dirty
+			expect(result.rejected.total).toBe(3);
+			expect(result.rejected.rejected).toBe(1); // Only t3
+			expect(result.rejected.percent).toBeCloseTo(33.33, 1);
 
-		// All three should have reactions (all rejected, which counts as reaction)
-		expect(result.reaction.total).toBe(3);
-		expect(result.reaction.reactions).toBe(3); // All three have reactions (reject events)
-		expect(result.reaction.terminal).toBe(0);
+			// All three should have reactions (all rejected, which counts as reaction)
+			expect(result.reaction.total).toBe(3);
+			expect(result.reaction.reactions).toBe(3); // All three have reactions (reject events)
+			expect(result.reaction.terminal).toBe(0);
+		}).pipe(withUserEventRuntimeFx(database), Effect.runPromise);
 	});
 });

@@ -1,5 +1,7 @@
+import { getLogger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { withLoggerFx } from "@/lib/common/log";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import { auth } from "~/server/auth/auth";
@@ -21,17 +23,20 @@ describe("userEventSellerInfoFx", () => {
 			return database.dialect;
 		});
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "a@x32.cz",
-				name: "A-User",
-				password: "12345678",
-			},
-		});
-
 		const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
+		const logger = getLogger("zbav-se.me");
 
-		const result = await Effect.gen(function* () {
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "a@x32.cz",
+						name: "A-User",
+						password: "12345678",
+					},
+				}),
+			);
+
 			const category = yield* categoryFetchFx({
 				where: {
 					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
@@ -69,10 +74,13 @@ describe("userEventSellerInfoFx", () => {
 				userId: seller.id,
 			});
 
-			return yield* userEventSellerInfoFx({
+			const result = yield* userEventSellerInfoFx({
 				userId: seller.id,
 			});
+
+			expect(result).toBeNull();
 		}).pipe(
+			withLoggerFx(logger),
 			withKyselyFx(database),
 			withDateFx,
 			withLocationFx({
@@ -85,7 +93,5 @@ describe("userEventSellerInfoFx", () => {
 			}),
 			Effect.runPromise,
 		);
-
-		expect(result).toBeNull();
 	});
 });

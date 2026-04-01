@@ -1,5 +1,7 @@
+import { getLogger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { withLoggerFx } from "@/lib/common/log";
 import { thumbCreateFx } from "~/buyer/thumb/server/fx/thumbCreateFx";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import { auth } from "~/server/auth/auth";
@@ -22,9 +24,11 @@ interface ListingFixture {
 
 const withInboxRuntimeFx = (database: Awaited<ReturnType<typeof testabase>>) => {
 	const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
+	const logger = getLogger("zbav-se.me");
 
 	return <A, E, R>(eff: Effect.Effect<A, E, R>) =>
 		eff.pipe(
+			withLoggerFx(logger),
 			withKyselyFx(database),
 			withDateFx,
 			withTransactionContextFx(),

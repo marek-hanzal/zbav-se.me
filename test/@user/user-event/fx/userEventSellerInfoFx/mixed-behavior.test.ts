@@ -4,9 +4,8 @@ import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
+import { withUserEventRuntimeFx } from "~/test/utils/withUserEventRuntimeFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
@@ -16,16 +15,6 @@ describe("userEventSellerInfoFx", () => {
 		const { api } = auth(() => {
 			return database.dialect;
 		});
-
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@test.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-
-		const sellerId = seller.id;
 
 		// Base time: 89 days ago (within 90 day cutoff)
 		const baseTime = DateTime.now().minus({
@@ -87,7 +76,19 @@ describe("userEventSellerInfoFx", () => {
 			days: 1,
 		});
 
-		const result = await Effect.gen(function* () {
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@test.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+
+			const sellerId = seller.id;
+
 			// Transaction 1: Good
 			yield* userEventCreateFx({
 				userId: sellerId,
@@ -319,41 +320,41 @@ describe("userEventSellerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventSellerInfoFx({
+			const result = yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).not.toBeNull();
-		if (!result) return;
+			expect(result).not.toBeNull();
+			if (!result) return;
 
-		// Reaction: 3 good reactions, 1 terminal, 2 rejects (count as reactions)
-		expect(result.reaction.total).toBe(6);
-		expect(result.reaction.reactions).toBe(5); // t1, t2 (reject), t3, t5 (reject), t6
-		expect(result.reaction.terminal).toBe(1); // t4
-		expect(result.reaction.percent).toBe(100); // 5 + 1 = 6 out of 6
+			// Reaction: 3 good reactions, 1 terminal, 2 rejects (count as reactions)
+			expect(result.reaction.total).toBe(6);
+			expect(result.reaction.reactions).toBe(5); // t1, t2 (reject), t3, t5 (reject), t6
+			expect(result.reaction.terminal).toBe(1); // t4
+			expect(result.reaction.percent).toBe(100); // 5 + 1 = 6 out of 6
 
-		// Rejected: 2 rejects without interaction
-		expect(result.rejected.total).toBe(6);
-		expect(result.rejected.rejected).toBe(2); // t2, t5
-		expect(result.rejected.percent).toBeCloseTo(33.33, 1);
+			// Rejected: 2 rejects without interaction
+			expect(result.rejected.total).toBe(6);
+			expect(result.rejected.rejected).toBe(2); // t2, t5
+			expect(result.rejected.percent).toBeCloseTo(33.33, 1);
 
-		// Resolved: 3 resolved
-		expect(result.resolved.total).toBe(6);
-		expect(result.resolved.resolved).toBe(3); // t1, t3, t6
-		expect(result.resolved.terminal).toBe(3); // t2, t4, t5
-		expect(result.resolved.percent).toBe(50);
+			// Resolved: 3 resolved
+			expect(result.resolved.total).toBe(6);
+			expect(result.resolved.resolved).toBe(3); // t1, t3, t6
+			expect(result.resolved.terminal).toBe(3); // t2, t4, t5
+			expect(result.resolved.percent).toBe(50);
 
-		// Expired: 0 expired
-		expect(result.expired.total).toBe(6);
-		expect(result.expired.expired).toBe(0);
-		expect(result.expired.percent).toBe(0);
+			// Expired: 0 expired
+			expect(result.expired.total).toBe(6);
+			expect(result.expired.expired).toBe(0);
+			expect(result.expired.percent).toBe(0);
 
-		// Load: No active transactions
-		expect(result.load.bucket).toBe("low");
+			// Load: No active transactions
+			expect(result.load.bucket).toBe("low");
 
-		// Score: Should be moderate (40-70)
-		expect(result.score.score).toBeGreaterThanOrEqual(40);
-		expect(result.score.score).toBeLessThan(80);
+			// Score: Should be moderate (40-70)
+			expect(result.score.score).toBeGreaterThanOrEqual(40);
+			expect(result.score.score).toBeLessThan(80);
+		}).pipe(withUserEventRuntimeFx(database), Effect.runPromise);
 	});
 });

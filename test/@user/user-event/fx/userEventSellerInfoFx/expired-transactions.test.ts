@@ -4,9 +4,8 @@ import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
+import { withUserEventRuntimeFx } from "~/test/utils/withUserEventRuntimeFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
@@ -16,16 +15,6 @@ describe("userEventSellerInfoFx", () => {
 		const { api } = auth(() => {
 			return database.dialect;
 		});
-
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@test.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-
-		const sellerId = seller.id;
 
 		// Base time: 89 days ago (within 90 day cutoff)
 		const baseTime = DateTime.now().minus({
@@ -60,7 +49,19 @@ describe("userEventSellerInfoFx", () => {
 			days: 5,
 		}); // Expires but seller acted
 
-		const result = await Effect.gen(function* () {
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@test.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+
+			const sellerId = seller.id;
+
 			// Transaction 1: Expires without seller action
 			yield* userEventCreateFx({
 				userId: sellerId,
@@ -184,18 +185,18 @@ describe("userEventSellerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventSellerInfoFx({
+			const result = yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).not.toBeNull();
-		if (!result) return;
+			expect(result).not.toBeNull();
+			if (!result) return;
 
-		// Expired: 2 expired without seller action (t1, t2)
-		// t3 has seller action before expire, so doesn't count
-		expect(result.expired.total).toBe(3);
-		expect(result.expired.expired).toBe(2); // t1 and t2
-		expect(result.expired.percent).toBeCloseTo(66.67, 1);
+			// Expired: 2 expired without seller action (t1, t2)
+			// t3 has seller action before expire, so doesn't count
+			expect(result.expired.total).toBe(3);
+			expect(result.expired.expired).toBe(2); // t1 and t2
+			expect(result.expired.percent).toBeCloseTo(66.67, 1);
+		}).pipe(withUserEventRuntimeFx(database), Effect.runPromise);
 	});
 });

@@ -4,9 +4,8 @@ import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
 import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
+import { withUserEventRuntimeFx } from "~/test/utils/withUserEventRuntimeFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventBuyerInfoFx", () => {
@@ -70,6 +69,6 @@ describe("userEventBuyerInfoFx", () => {
 			if (!result) return;
 
 			expect(result.activity.bucket).toBe("high");
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
+		}).pipe(withUserEventRuntimeFx(database), Effect.runPromise);
 	});
 });

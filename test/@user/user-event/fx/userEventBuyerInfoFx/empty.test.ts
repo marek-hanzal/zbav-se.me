@@ -1,9 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
+import { withUserEventRuntimeFx } from "~/test/utils/withUserEventRuntimeFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Empty user's info returns nothing", async () => {
@@ -15,6 +14,6 @@ describe("userEventBuyerInfoFx", () => {
 			});
 
 			expect(result).toBeNull();
-		}).pipe(withKyselyFx(kysely), withDateFx, Effect.runPromise);
+		}).pipe(withUserEventRuntimeFx(kysely), Effect.runPromise);
 	});
 });

@@ -4,9 +4,8 @@ import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
+import { withUserEventRuntimeFx } from "~/test/utils/withUserEventRuntimeFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
@@ -16,16 +15,6 @@ describe("userEventSellerInfoFx", () => {
 		const { api } = auth(() => {
 			return database.dialect;
 		});
-
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@test.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-
-		const sellerId = seller.id;
 		const base = DateTime.now().minus({
 			days: 20,
 		});
@@ -47,7 +36,19 @@ describe("userEventSellerInfoFx", () => {
 			days: 2,
 		});
 
-		const result = await Effect.gen(function* () {
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@test.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+
+			const sellerId = seller.id;
+
 			// tx-1
 			yield* userEventCreateFx({
 				userId: sellerId,
@@ -115,16 +116,16 @@ describe("userEventSellerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventSellerInfoFx({
+			const result = yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).not.toBeNull();
-		if (!result) return;
+			expect(result).not.toBeNull();
+			if (!result) return;
 
-		expect(result.expired.total).toBe(2);
-		expect(result.expired.expired).toBe(1);
-		expect(result.expired.percent).toBe(50);
+			expect(result.expired.total).toBe(2);
+			expect(result.expired.expired).toBe(1);
+			expect(result.expired.percent).toBe(50);
+		}).pipe(withUserEventRuntimeFx(database), Effect.runPromise);
 	});
 });

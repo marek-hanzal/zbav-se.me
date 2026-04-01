@@ -4,9 +4,8 @@ import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
+import { withUserEventRuntimeFx } from "~/test/utils/withUserEventRuntimeFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
@@ -16,16 +15,6 @@ describe("userEventSellerInfoFx", () => {
 		const { api } = auth(() => {
 			return database.dialect;
 		});
-
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@test.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-
-		const sellerId = seller.id;
 
 		// Base time: 89 days ago (within 90 day cutoff)
 		const baseTime = DateTime.now().minus({
@@ -62,7 +51,19 @@ describe("userEventSellerInfoFx", () => {
 			days: 2,
 		});
 
-		const result = await Effect.gen(function* () {
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@test.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+
+			const sellerId = seller.id;
+
 			// Transaction 1: Reject without interaction
 			yield* userEventCreateFx({
 				userId: sellerId,
@@ -187,42 +188,42 @@ describe("userEventSellerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventSellerInfoFx({
+			const result = yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).not.toBeNull();
-		if (!result) return;
+			expect(result).not.toBeNull();
+			if (!result) return;
 
-		// Reaction: t1 and t4 have seller reactions (rejects), t2 is terminal (buyer closed), t3 expired doesn't count
-		expect(result.reaction.total).toBe(4);
-		expect(result.reaction.reactions).toBe(2); // t1 and t4 (seller rejected)
-		expect(result.reaction.terminal).toBe(1); // t2 (buyer closed before seller reacted)
-		expect(result.reaction.percent).toBe(75); // 3 out of 4 (2 reactions + 1 terminal)
+			// Reaction: t1 and t4 have seller reactions (rejects), t2 is terminal (buyer closed), t3 expired doesn't count
+			expect(result.reaction.total).toBe(4);
+			expect(result.reaction.reactions).toBe(2); // t1 and t4 (seller rejected)
+			expect(result.reaction.terminal).toBe(1); // t2 (buyer closed before seller reacted)
+			expect(result.reaction.percent).toBe(75); // 3 out of 4 (2 reactions + 1 terminal)
 
-		// Rejected: 2 rejects without interaction
-		expect(result.rejected.total).toBe(4);
-		expect(result.rejected.rejected).toBe(2); // t1 and t4
-		expect(result.rejected.percent).toBe(50);
+			// Rejected: 2 rejects without interaction
+			expect(result.rejected.total).toBe(4);
+			expect(result.rejected.rejected).toBe(2); // t1 and t4
+			expect(result.rejected.percent).toBe(50);
 
-		// Resolved: None resolved
-		expect(result.resolved.total).toBe(4);
-		expect(result.resolved.resolved).toBe(0);
-		expect(result.resolved.terminal).toBe(3); // t1 (seller rejected), t2 (buyer closed), t4 (seller rejected)
-		// t3 expires but doesn't count as terminal in resolved (expired is not buyer terminal)
-		expect(result.resolved.percent).toBe(0);
+			// Resolved: None resolved
+			expect(result.resolved.total).toBe(4);
+			expect(result.resolved.resolved).toBe(0);
+			expect(result.resolved.terminal).toBe(3); // t1 (seller rejected), t2 (buyer closed), t4 (seller rejected)
+			// t3 expires but doesn't count as terminal in resolved (expired is not buyer terminal)
+			expect(result.resolved.percent).toBe(0);
 
-		// Expired: 1 expired (t3)
-		expect(result.expired.total).toBe(4);
-		expect(result.expired.expired).toBe(1);
-		expect(result.expired.percent).toBe(25);
+			// Expired: 1 expired (t3)
+			expect(result.expired.total).toBe(4);
+			expect(result.expired.expired).toBe(1);
+			expect(result.expired.percent).toBe(25);
 
-		// Load: No active transactions
-		expect(result.load.bucket).toBe("low");
+			// Load: No active transactions
+			expect(result.load.bucket).toBe("low");
 
-		// Score: Should be low (< 40)
-		expect(result.score.score).toBeLessThan(40);
-		expect(result.score.rank).toBeLessThanOrEqual(3);
+			// Score: Should be low (< 40)
+			expect(result.score.score).toBeLessThan(40);
+			expect(result.score.rank).toBeLessThanOrEqual(3);
+		}).pipe(withUserEventRuntimeFx(database), Effect.runPromise);
 	});
 });

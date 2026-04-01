@@ -4,9 +4,8 @@ import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
+import { withUserEventRuntimeFx } from "~/test/utils/withUserEventRuntimeFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
@@ -16,16 +15,6 @@ describe("userEventSellerInfoFx", () => {
 		const { api } = auth(() => {
 			return database.dialect;
 		});
-
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@test.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-
-		const sellerId = seller.id;
 
 		// Recent transactions (good behavior) - within last 90 days
 		// Transaction 1 (80 days ago): Bad - reject without interaction
@@ -88,7 +77,19 @@ describe("userEventSellerInfoFx", () => {
 			days: 1,
 		});
 
-		const result = await Effect.gen(function* () {
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@test.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+
+			const sellerId = seller.id;
+
 			// Transaction 1: Bad - early period
 			yield* userEventCreateFx({
 				userId: sellerId,
@@ -335,41 +336,41 @@ describe("userEventSellerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventSellerInfoFx({
+			const result = yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).not.toBeNull();
-		if (!result) return;
+			expect(result).not.toBeNull();
+			if (!result) return;
 
-		// Reaction: t1 has seller reaction (reject), t2 is terminal (buyer closed), t3-t6 all have reactions
-		expect(result.reaction.total).toBe(6);
-		expect(result.reaction.reactions).toBe(5); // t1 (reject), t3, t4, t5, t6
-		expect(result.reaction.terminal).toBe(1); // t2 (buyer closed)
-		expect(result.reaction.percent).toBe(100); // 5 + 1 = 6 out of 6
+			// Reaction: t1 has seller reaction (reject), t2 is terminal (buyer closed), t3-t6 all have reactions
+			expect(result.reaction.total).toBe(6);
+			expect(result.reaction.reactions).toBe(5); // t1 (reject), t3, t4, t5, t6
+			expect(result.reaction.terminal).toBe(1); // t2 (buyer closed)
+			expect(result.reaction.percent).toBe(100); // 5 + 1 = 6 out of 6
 
-		// Rejected: 1 reject without interaction (t1)
-		expect(result.rejected.total).toBe(6);
-		expect(result.rejected.rejected).toBe(1); // t1
-		expect(result.rejected.percent).toBeCloseTo(16.67, 1);
+			// Rejected: 1 reject without interaction (t1)
+			expect(result.rejected.total).toBe(6);
+			expect(result.rejected.rejected).toBe(1); // t1
+			expect(result.rejected.percent).toBeCloseTo(16.67, 1);
 
-		// Resolved: 4 resolved (t3-t6)
-		expect(result.resolved.total).toBe(6);
-		expect(result.resolved.resolved).toBe(4); // t3, t4, t5, t6
-		expect(result.resolved.terminal).toBe(2); // t1, t2
-		expect(result.resolved.percent).toBeCloseTo(66.67, 1);
+			// Resolved: 4 resolved (t3-t6)
+			expect(result.resolved.total).toBe(6);
+			expect(result.resolved.resolved).toBe(4); // t3, t4, t5, t6
+			expect(result.resolved.terminal).toBe(2); // t1, t2
+			expect(result.resolved.percent).toBeCloseTo(66.67, 1);
 
-		// Expired: 0 expired
-		expect(result.expired.total).toBe(6);
-		expect(result.expired.expired).toBe(0);
-		expect(result.expired.percent).toBe(0);
+			// Expired: 0 expired
+			expect(result.expired.total).toBe(6);
+			expect(result.expired.expired).toBe(0);
+			expect(result.expired.percent).toBe(0);
 
-		// Activity: High (very recent activity - 1 day ago)
-		expect(result.activity.bucket).toBe("high");
+			// Activity: High (very recent activity - 1 day ago)
+			expect(result.activity.bucket).toBe("high");
 
-		// Score: Should be good (70+) due to recent good behavior
-		expect(result.score.score).toBeGreaterThanOrEqual(70);
-		expect(result.score.rank).toBeGreaterThanOrEqual(5);
+			// Score: Should be good (70+) due to recent good behavior
+			expect(result.score.score).toBeGreaterThanOrEqual(70);
+			expect(result.score.rank).toBeGreaterThanOrEqual(5);
+		}).pipe(withUserEventRuntimeFx(database), Effect.runPromise);
 	});
 });
