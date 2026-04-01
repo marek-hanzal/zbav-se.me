@@ -6,6 +6,7 @@ import { createOpenScenarioFx } from "~/test/utils/createOpenScenarioFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
+import { transactionEntryGalleryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryGalleryFetchFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 describe("transactionEntry workflow", () => {
@@ -105,6 +106,26 @@ describe("transactionEntry workflow", () => {
 			expect(sellerView.kind).toBe("gallery");
 			expect(sellerView.direction).toBe("in");
 
+			const buyerGallery = yield* transactionEntryGalleryFetchFx({
+				userId: buyer.id,
+				where: {
+					transactionEntryId: entry.id,
+				},
+			});
+			const sellerGallery = yield* transactionEntryGalleryFetchFx({
+				userId: seller.id,
+				where: {
+					transactionEntryId: entry.id,
+				},
+			});
+
+			expect(buyerGallery.id).toBe(entry.payload.galleryId);
+			expect(buyerGallery.items.map((item) => item.uploadId)).toEqual([
+				firstUpload.id,
+				secondUpload.id,
+			]);
+			expect(sellerGallery.id).toBe(entry.payload.galleryId);
+
 			const outsiderView = yield* Effect.either(
 				transactionEntryFetchFx({
 					userId: outsider.id,
@@ -113,8 +134,17 @@ describe("transactionEntry workflow", () => {
 					},
 				}),
 			);
+			const outsiderGallery = yield* Effect.either(
+				transactionEntryGalleryFetchFx({
+					userId: outsider.id,
+					where: {
+						transactionEntryId: entry.id,
+					},
+				}),
+			);
 
 			expect(outsiderView._tag).toBe("Left");
+			expect(outsiderGallery._tag).toBe("Left");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
