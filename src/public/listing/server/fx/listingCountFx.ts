@@ -38,6 +38,9 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 		const { count } = yield* Effect.promise(async () => {
 			return kysely
 				.selectFrom("listing as l")
+				.where("l.status", "in", [
+					"live",
+				])
 				.select((eb) => eb.fn.countAll<number>().as("count"))
 				.executeTakeFirstOrThrow();
 		});
