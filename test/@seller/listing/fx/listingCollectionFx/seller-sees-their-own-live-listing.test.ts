@@ -11,27 +11,26 @@ describe("listingCollectionFx (seller)", () => {
 		const database = await testabase("sellerListing-live");
 		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@seller-listing-live.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@seller-listing-live.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const listing = await createListingFx(seller.id).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
+			const listing = yield* createListingFx(seller.id);
 
-		const collection = await Effect.gen(function* () {
-			return yield* listingCollectionFx({
+			const collection = yield* listingCollectionFx({
 				scope: {
 					userId: seller.id,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(collection.map((l) => l.id)).toContain(listing.id);
+			expect(collection.map((l) => l.id)).toContain(listing.id);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

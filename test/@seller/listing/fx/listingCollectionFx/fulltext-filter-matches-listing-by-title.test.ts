@@ -11,19 +11,20 @@ describe("listingCollectionFx (seller)", () => {
 		const database = await testabase("sellerListing-fulltext");
 		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@seller-listing-ft.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@seller-listing-ft.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
 
-		// Two listings with different titles — fixture uses "Test listing"
-		await createListingFx(seller.id).pipe(withRuntimeFx(database), Effect.runPromise);
+			yield* createListingFx(seller.id);
 
-		const collection = await Effect.gen(function* () {
-			return yield* listingCollectionFx({
+			const collection = yield* listingCollectionFx({
 				scope: {
 					userId: seller.id,
 				},
@@ -31,14 +32,11 @@ describe("listingCollectionFx (seller)", () => {
 					fulltext: "Test listing",
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(collection.length).toBeGreaterThanOrEqual(1);
-		expect(collection.every((l) => l.title.toLowerCase().includes("test"))).toBe(true);
+			expect(collection.length).toBeGreaterThanOrEqual(1);
+			expect(collection.every((l) => l.title.toLowerCase().includes("test"))).toBe(true);
 
-		// Non-matching search returns empty
-		const empty = await Effect.gen(function* () {
-			return yield* listingCollectionFx({
+			const empty = yield* listingCollectionFx({
 				scope: {
 					userId: seller.id,
 				},
@@ -46,8 +44,8 @@ describe("listingCollectionFx (seller)", () => {
 					fulltext: "xyzzy-nonexistent-title",
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(empty).toHaveLength(0);
+			expect(empty).toHaveLength(0);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
