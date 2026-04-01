@@ -8,7 +8,6 @@
         "@logtape/file": "2.0.5",
         "@logtape/logtape": "2.0.5",
         "@logtape/pretty": "2.0.5",
-        "@logtape/redaction": "2.0.5",
         "@paralleldrive/cuid2": "3.3.0",
         "@phenomnomnominal/tsquery": "6.1.4",
         "@tanstack/query-async-storage-persister": "5.96.1",
@@ -288,8 +287,6 @@
     "@logtape/logtape": ["@logtape/logtape@2.0.5", "", {}, "sha512-UizDkh20ZPJVOddRxG1F77WhHdlNl/sbQgoO8T534R7XvUBMAJ9En9f35u+meW2tRsNLvjz6R87Zanwf53tspQ=="],
 
     "@logtape/pretty": ["@logtape/pretty@2.0.5", "", { "peerDependencies": { "@logtape/logtape": "^2.0.5" } }, "sha512-jU5pYL0CW0tFmxBS5umMF5VEMq1vXLvkqKrj7KRHnSlb5SrBOSCYl0w4q7FmPPFVADmgTmzVVr6IcIWwK/2Nig=="],
-
-    "@logtape/redaction": ["@logtape/redaction@2.0.5", "", { "peerDependencies": { "@logtape/logtape": "^2.0.5" } }, "sha512-EyC6gaTITsZCujGvEl6jNf1+od6YtY8H+Y6Rs9aWXtbr0LDMcts/Tk2v6T3uXf1M/YPwb+xCmcBU+r8NQcJmxA=="],
 
     "@modyfi/vite-plugin-yaml": ["@modyfi/vite-plugin-yaml@1.1.1", "", { "dependencies": { "@rollup/pluginutils": "5.1.0", "js-yaml": "4.1.0", "tosource": "2.0.0-alpha.3" }, "peerDependencies": { "vite": ">=3.2.7" } }, "sha512-rEbfFNlMGLKpAYs2RsfLAhxCHFa6M4QKHHk0A4EYcCJAUwFtFO6qiEdLjUGUTtnRUxAC7GxxCa+ZbeUILSDvqQ=="],
 

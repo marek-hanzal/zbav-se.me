@@ -5,10 +5,10 @@ import {
 	fingersCrossed,
 	getConsoleSink,
 	getLogger,
+	jsonLinesFormatter,
 	withContext,
 } from "@logtape/logtape";
 import { getPrettyFormatter } from "@logtape/pretty";
-import { redactByPattern } from "@logtape/redaction";
 import { createMiddleware } from "@tanstack/react-start";
 import { genId } from "@/lib/common/gen-id";
 
@@ -25,23 +25,14 @@ export const withLogMiddleware = createMiddleware().server(async ({ next }) => {
 				 * 8hrs
 				 */
 				maxAgeMs: 8 * 60 * 60 * 1_000,
+				formatter: jsonLinesFormatter,
 			}),
 			console: fingersCrossed(
 				getConsoleSink({
-					formatter: redactByPattern(
-						getPrettyFormatter({
-							categoryWidth: 42,
-							properties: true,
-						}),
-						[
-							// {
-							// 	pattern: /postgresql:\/\//g,
-							// 	replacement(match, ...rest) {
-							// 		return `--${match}--`;
-							// 	},
-							// },
-						],
-					),
+					formatter: getPrettyFormatter({
+						categoryWidth: 42,
+						properties: true,
+					}),
 					nonBlocking: true,
 				}),
 				{
