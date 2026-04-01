@@ -1,5 +1,5 @@
+import { useDebouncedCallback } from "@tanstack/react-pacer";
 import { type RefObject, useLayoutEffect } from "react";
-import { useDebouncedCallback } from "use-debounce";
 
 export namespace useAutoScroll {
 	export interface Props {
@@ -26,17 +26,14 @@ export function useAutoScroll({
 }: useAutoScroll.Props): useAutoScroll.Result {
 	const scrollToEnd = useDebouncedCallback(
 		(behavior: ScrollBehavior) => {
-			if (!enabled) {
-				return;
-			}
-
 			containerRef.current?.scrollTo({
 				top: containerRef.current?.scrollHeight,
 				behavior,
 			});
 		},
-		debounceMs,
 		{
+			enabled,
+			wait: debounceMs,
 			leading: true,
 			trailing: true,
 		},
