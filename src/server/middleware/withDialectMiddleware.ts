@@ -1,25 +1,23 @@
-import { getLogger } from "@logtape/logtape";
 import { createMiddleware } from "@tanstack/react-start";
 import { type Dialect, PostgresDialect } from "kysely";
 import { Pool } from "~/server/database/pg";
 import { withDsnMiddleware } from "~/server/middleware/withDsnMiddleware";
-
-const logger = getLogger([
-	"zbav-se.me",
-	"withDialectMiddleware",
-]);
+import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 
 const dialectMap = new Map<string, Dialect>();
 
 export const withDialectMiddleware = createMiddleware()
 	.middleware([
+		withLogMiddleware,
 		withDsnMiddleware,
 	])
-	.server(async ({ next, context: { dsn } }) => {
+	.server(async ({ next, context: { dsn, logger } }) => {
 		let instance = dialectMap.get(dsn);
 
 		if (!instance) {
-			logger.debug`Creating dialect instance for ${dsn}`;
+			logger.debug("Creating dialect instance for {dsn}", {
+				dsn,
+			});
 
 			instance = new PostgresDialect({
 				pool: new Pool({

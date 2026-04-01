@@ -1,9 +1,15 @@
+import { getLogger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { withFeedCollectionSelectFx } from "~/buyer/feed/server/db/withFeedCollectionSelectFx";
 import { withFeedQueryBuilderFx } from "~/buyer/feed/server/db/withFeedQueryBuilderFx";
 import type { FeedFilterSchema } from "~/buyer/feed/server/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
+
+const logger = getLogger([
+	"zbav-se.me",
+	"feedCollectionFx",
+]);
 
 export namespace feedCollectionFx {
 	export interface Props extends FeedQuerySchema.Type {
@@ -15,17 +21,25 @@ export const feedCollectionFx = Effect.fn("feedCollectionFx")(function* ({
 	filter,
 	where,
 	scope,
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
 	sort,
 }: feedCollectionFx.Props) {
+	logger.trace({
+		filter,
+		where,
+		scope,
+		cursor,
+		sort,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withFeedCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
 		filter,
 		where,
 		scope,
