@@ -10,7 +10,7 @@ export const withLogMiddleware = createMiddleware().server(async ({ next }) => {
 		loggers: [
 			{
 				category: "zbav-se.me",
-				lowestLevel: "error",
+				lowestLevel: "debug",
 				sinks: [
 					"console",
 				],
