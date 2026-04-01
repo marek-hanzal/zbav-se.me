@@ -19,7 +19,16 @@ export const withFeedSelectFx = Effect.fn("withFeedSelectFx")(function* ({
 	});
 
 	return sourceSelect
-		.selectAll()
+		.select([
+			"f.id",
+			"f.userId",
+			"f.locationId",
+			"f.uploadId",
+			"f.type",
+			"f.name",
+			"f.createdAt",
+			"f.updatedAt",
+		])
 		.select((eb) => eb.ref("f.query").$castTo<ListingQuerySchema.Type>().as("query"))
 		.select((eb) =>
 			jsonObjectFrom(
