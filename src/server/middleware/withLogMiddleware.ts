@@ -21,9 +21,7 @@ export const withLogMiddleware = createMiddleware().server(async ({ next }) => {
 					"meta",
 				],
 				lowestLevel: "debug",
-				sinks: [
-					// "console",
-				],
+				sinks: [],
 			},
 		],
 	});
