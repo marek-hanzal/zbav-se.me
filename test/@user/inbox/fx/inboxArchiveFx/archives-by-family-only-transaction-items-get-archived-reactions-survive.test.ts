@@ -41,46 +41,49 @@ describe("inboxArchiveFx", () => {
 		const database = await testabase("inboxArchive-by-family");
 		const { api } = auth(() => database.dialect);
 
-		const { user } = await api.signUpEmail({
-			body: {
-				email: "user@inbox-archive-family.cz",
-				name: "User",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "user@inbox-archive-family.cz",
+						name: "User",
+						password: "12345678",
+					},
+				}),
+			);
 
-		await seedInbox(database, [
-			{
-				id: "family-tx",
-				userId: user.id,
-				reference: [
-					"listing-x",
-					"tx-x",
-				],
-				family: "transaction",
-				type: "buyer-message",
-				payload: {
-					transactionId: "tx-x",
-				},
-				priority: "high",
-			},
-			{
-				id: "family-reaction",
-				userId: user.id,
-				reference: [
-					"listing-x",
-				],
-				family: "reaction",
-				type: "favourite",
-				payload: {
-					listingId: "listing-x",
-				},
-				priority: "common",
-			},
-		]);
+			yield* Effect.promise(() =>
+				seedInbox(database, [
+					{
+						id: "family-tx",
+						userId: user.id,
+						reference: [
+							"listing-x",
+							"tx-x",
+						],
+						family: "transaction",
+						type: "buyer-message",
+						payload: {
+							transactionId: "tx-x",
+						},
+						priority: "high",
+					},
+					{
+						id: "family-reaction",
+						userId: user.id,
+						reference: [
+							"listing-x",
+						],
+						family: "reaction",
+						type: "favourite",
+						payload: {
+							listingId: "listing-x",
+						},
+						priority: "common",
+					},
+				]),
+			);
 
-		// Archive only transaction family
-		await Effect.gen(function* () {
 			yield* inboxArchiveFx({
 				scope: {
 					userId: user.id,
@@ -89,21 +92,25 @@ describe("inboxArchiveFx", () => {
 					family: "transaction",
 				},
 			});
+
+			const txItem = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select("archivedAt")
+					.where("id", "=", "family-tx")
+					.executeTakeFirstOrThrow(),
+			);
+
+			const reactionItem = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select("archivedAt")
+					.where("id", "=", "family-reaction")
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(txItem.archivedAt).not.toBeNull();
+			expect(reactionItem.archivedAt).toBeNull();
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		const txItem = await database.kysely
-			.selectFrom("inbox")
-			.select("archivedAt")
-			.where("id", "=", "family-tx")
-			.executeTakeFirstOrThrow();
-
-		const reactionItem = await database.kysely
-			.selectFrom("inbox")
-			.select("archivedAt")
-			.where("id", "=", "family-reaction")
-			.executeTakeFirstOrThrow();
-
-		expect(txItem.archivedAt).not.toBeNull();
-		expect(reactionItem.archivedAt).toBeNull();
 	});
 });

@@ -14,52 +14,56 @@ describe("inbox family", () => {
 			return database.dialect;
 		});
 
-		const { user } = await api.signUpEmail({
-			body: {
-				email: "inbox-reference@test.cz",
-				name: "Inbox Reference",
-				password: "12345678",
-			},
-		});
-
-		await database.kysely
-			.insertInto("inbox")
-			.values([
-				{
-					id: "inbox-reference-a",
-					userId: user.id,
-					reference: [
-						"listing-a",
-						"tx-a",
-					],
-					timestamp: new Date("2026-03-09T09:00:00.000Z"),
-					family: "transaction",
-					type: "buyer-message",
-					payload: {
-						transactionId: "tx-a",
+		return Effect.gen(function* () {
+			const { user } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "inbox-reference@test.cz",
+						name: "Inbox Reference",
+						password: "12345678",
 					},
-					priority: "high",
-					archivedAt: null,
-				},
-				{
-					id: "inbox-reference-b",
-					userId: user.id,
-					reference: [
-						"listing-b",
-					],
-					timestamp: new Date("2026-03-09T10:00:00.000Z"),
-					family: "reaction",
-					type: "favourite",
-					payload: {
-						listingId: "listing-b",
-					},
-					priority: "common",
-					archivedAt: null,
-				},
-			])
-			.execute();
+				}),
+			);
 
-		const rows = await Effect.gen(function* () {
+			yield* Effect.promise(() =>
+				database.kysely
+					.insertInto("inbox")
+					.values([
+						{
+							id: "inbox-reference-a",
+							userId: user.id,
+							reference: [
+								"listing-a",
+								"tx-a",
+							],
+							timestamp: new Date("2026-03-09T09:00:00.000Z"),
+							family: "transaction",
+							type: "buyer-message",
+							payload: {
+								transactionId: "tx-a",
+							},
+							priority: "high",
+							archivedAt: null,
+						},
+						{
+							id: "inbox-reference-b",
+							userId: user.id,
+							reference: [
+								"listing-b",
+							],
+							timestamp: new Date("2026-03-09T10:00:00.000Z"),
+							family: "reaction",
+							type: "favourite",
+							payload: {
+								listingId: "listing-b",
+							},
+							priority: "common",
+							archivedAt: null,
+						},
+					])
+					.execute(),
+			);
+
 			const select = yield* withInboxSelectFx({});
 			const query = yield* withInboxQueryBuilderFx({
 				select,
@@ -69,13 +73,13 @@ describe("inbox family", () => {
 				},
 			});
 
-			return yield* Effect.promise(async () => query.execute());
-		}).pipe(withKyselyFx(database), Effect.runPromise);
+			const rows = yield* Effect.promise(() => query.execute());
 
-		expect(rows).toHaveLength(1);
-		expect(rows[0]?.id).toBe("inbox-reference-b");
-		expect(rows[0]?.reference).toEqual([
-			"listing-b",
-		]);
+			expect(rows).toHaveLength(1);
+			expect(rows[0]?.id).toBe("inbox-reference-b");
+			expect(rows[0]?.reference).toEqual([
+				"listing-b",
+			]);
+		}).pipe(withKyselyFx(database), Effect.runPromise);
 	});
 });
