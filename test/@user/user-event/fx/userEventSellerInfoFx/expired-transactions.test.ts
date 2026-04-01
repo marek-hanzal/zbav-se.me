@@ -5,7 +5,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
-import { withUserEventRuntimeFx } from "~/test/utils/withUserEventRuntimeFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
@@ -197,6 +197,6 @@ describe("userEventSellerInfoFx", () => {
 			expect(result.expired.total).toBe(3);
 			expect(result.expired.expired).toBe(2); // t1 and t2
 			expect(result.expired.percent).toBeCloseTo(66.67, 1);
-		}).pipe(withUserEventRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

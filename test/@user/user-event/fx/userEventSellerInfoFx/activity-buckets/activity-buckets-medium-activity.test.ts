@@ -5,7 +5,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
-import { withUserEventRuntimeFx } from "~/test/utils/withUserEventRuntimeFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
@@ -79,6 +79,6 @@ describe("userEventSellerInfoFx", () => {
 
 			// Activity: 45 days ago in [30-60) tier = medium
 			expect(result.activity.bucket).toBe("medium");
-		}).pipe(withUserEventRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

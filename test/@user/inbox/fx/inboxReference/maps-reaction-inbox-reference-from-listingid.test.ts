@@ -1,19 +1,12 @@
-import { getLogger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { withLoggerFx } from "@/lib/common/log";
 import { thumbCreateFx } from "~/buyer/thumb/server/fx/thumbCreateFx";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
 import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
-import { withLocationFx } from "~/session/location/server/fx/withLocationFx";
 import { testabase } from "~/test/testabase";
-import { withTransactionContextFx } from "~/user/transaction/server/context/withTransactionContextFx";
-import { withUploadFx } from "~/user/upload/server/context/withUploadFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 interface ListingFixture {
@@ -21,27 +14,6 @@ interface ListingFixture {
 	sellerId: string;
 	buyerId: string;
 }
-
-const withInboxRuntimeFx = (database: Awaited<ReturnType<typeof testabase>>) => {
-	const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
-	const logger = getLogger("zbav-se.me");
-
-	return <A, E, R>(eff: Effect.Effect<A, E, R>) =>
-		eff.pipe(
-			withLoggerFx(logger),
-			withKyselyFx(database),
-			withDateFx,
-			withTransactionContextFx(),
-			withLocationFx({
-				api: "https://api.geoapify.com",
-				autocomplete: "/v1/geocode/autocomplete",
-				geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
-			}),
-			withUploadFx({
-				cdn: "https://cdn.zbav-se.me",
-			}),
-		);
-};
 
 const createListingFixtureFx = ({ buyerId, sellerId }: Omit<ListingFixture, "listingId">) =>
 	Effect.gen(function* () {
@@ -146,6 +118,6 @@ describe("inbox reference", () => {
 			expect(inbox.reference).toEqual([
 				fixture.listingId,
 			]);
-		}).pipe(withInboxRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

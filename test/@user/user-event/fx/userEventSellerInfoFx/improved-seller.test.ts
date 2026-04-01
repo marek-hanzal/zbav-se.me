@@ -5,7 +5,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
-import { withUserEventRuntimeFx } from "~/test/utils/withUserEventRuntimeFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
@@ -371,6 +371,6 @@ describe("userEventSellerInfoFx", () => {
 			// Score: Should be good (70+) due to recent good behavior
 			expect(result.score.score).toBeGreaterThanOrEqual(70);
 			expect(result.score.rank).toBeGreaterThanOrEqual(5);
-		}).pipe(withUserEventRuntimeFx(database), Effect.runPromise);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
