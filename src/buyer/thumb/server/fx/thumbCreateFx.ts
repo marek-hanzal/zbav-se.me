@@ -52,13 +52,7 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 				scope: {},
 			});
 
-			yield* listingEventCreateFx({
-				userId,
-				listingId,
-				event: type,
-			}).pipe(Effect.ignore);
-
-			yield* tryDbFx(async () =>
+			const thumb = yield* tryDbFx(async () =>
 				kysely
 					.insertInto("thumb")
 					.values({
@@ -71,22 +65,30 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 					})
 					.onConflict((eb) => eb.doNothing())
 					.returningAll()
-					.executeTakeFirstOrThrow(),
+					.executeTakeFirst(),
 			);
 
-			yield* inboxCreateFx({
-				userId: listing.userId,
-				reference: [
+			if (thumb) {
+				yield* listingEventCreateFx({
+					userId,
 					listingId,
-				],
-				family: "reaction",
-				type: "thumb",
-				payload: {
-					listingId,
-					thumb: type,
-				},
-				priority: "common",
-			});
+					event: type,
+				}).pipe(Effect.ignore);
+
+				yield* inboxCreateFx({
+					userId: listing.userId,
+					reference: [
+						listingId,
+					],
+					family: "reaction",
+					type: "thumb",
+					payload: {
+						listingId,
+						thumb: type,
+					},
+					priority: "common",
+				});
+			}
 
 			/**
 			 * It's intentional, because listing has a lot of user-related
