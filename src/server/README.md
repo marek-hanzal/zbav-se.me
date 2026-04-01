@@ -2,5 +2,5 @@
 
 Server-side code, never should leak to client.
 
-Shared runtime caches that back server middleware live on `globalThis` so one
-runtime instance reuses the same dialect and auth objects across server chunks.
+Middleware keeps per-DSN dialect and auth caches so the same runtime reuses the
+same server objects for each database target.
