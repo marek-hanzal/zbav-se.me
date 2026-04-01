@@ -11,23 +11,23 @@ describe("draft lifecycle", () => {
 		const database = await testabase("draft-patch");
 		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@draft-patch.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@draft-patch.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const draft = await Effect.gen(function* () {
-			return yield* draftCreateFx({
+			const draft = yield* draftCreateFx({
 				userId: seller.id,
 				title: "Original title",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		const patched = await Effect.gen(function* () {
-			return yield* draftPatchFx({
+			const patched = yield* draftPatchFx({
 				patch: {
 					title: "Updated title",
 					price: 999,
@@ -41,11 +41,11 @@ describe("draft lifecycle", () => {
 					userId: seller.id,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(patched.title).toBe("Updated title");
-		expect(Number(patched.price)).toBe(999);
-		expect(patched.usedAt).toBeNull();
-		expect(patched.updatedAt.getTime()).toBeGreaterThanOrEqual(draft.updatedAt.getTime());
+			expect(patched.title).toBe("Updated title");
+			expect(Number(patched.price)).toBe(999);
+			expect(patched.usedAt).toBeNull();
+			expect(patched.updatedAt.getTime()).toBeGreaterThanOrEqual(draft.updatedAt.getTime());
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

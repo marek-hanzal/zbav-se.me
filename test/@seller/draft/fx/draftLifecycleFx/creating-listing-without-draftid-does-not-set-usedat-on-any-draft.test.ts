@@ -14,15 +14,17 @@ describe("draft lifecycle", () => {
 		const database = await testabase("listing-no-draft");
 		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@listing-no-draft.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@listing-no-draft.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
 
-		await Effect.gen(function* () {
 			const category = yield* categoryFetchFx({
 				where: {
 					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
@@ -61,15 +63,16 @@ describe("draft lifecycle", () => {
 					upload.id,
 				],
 			});
+
+			const draft = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("draft")
+					.select("usedAt")
+					.where("userId", "=", seller.id)
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(draft.usedAt).toBeNull();
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		// The draft should have usedAt = null (not touched)
-		const draft = await database.kysely
-			.selectFrom("draft")
-			.select("usedAt")
-			.where("userId", "=", seller.id)
-			.executeTakeFirstOrThrow();
-
-		expect(draft.usedAt).toBeNull();
 	});
 });

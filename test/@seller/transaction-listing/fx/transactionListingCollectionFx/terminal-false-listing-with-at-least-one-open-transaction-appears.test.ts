@@ -11,30 +11,33 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 		const database = await testabase("txListing-non-terminal");
 		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@txlisting-non-terminal.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@txlisting-non-terminal.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@txlisting-non-terminal.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@txlisting-non-terminal.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const { listingId } = await createOpenScenarioFx({
-			sellerId: seller.id,
-			buyerId: buyer.id,
-			database,
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const { listingId } = yield* createOpenScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+				database,
+			});
 
-		// "open" is a non-terminal status
-		const collection = await Effect.gen(function* () {
-			return yield* transactionListingCollectionFx({
+			const collection = yield* transactionListingCollectionFx({
 				scope: {
 					userId: seller.id,
 				},
@@ -42,8 +45,8 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 					terminal: false,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(collection.map((l) => l.id)).toContain(listingId);
+			expect(collection.map((l) => l.id)).toContain(listingId);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
