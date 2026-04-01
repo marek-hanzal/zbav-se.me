@@ -17,78 +17,73 @@ describe("userEventBuyerInfoFx", () => {
 			return database.dialect;
 		});
 
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@test.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@test.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const buyerId = buyer.id;
+			const buyerId = buyer.id;
+			const t1Create = DateTime.now().minus({
+				days: 80,
+			});
+			const t1Open = t1Create.plus({
+				hours: 1,
+			});
+			const t1Close = t1Open.plus({
+				minutes: 2,
+			});
+			const t2Create = DateTime.now().minus({
+				days: 70,
+			});
+			const t2Open = t2Create.plus({
+				hours: 2,
+			});
+			const t2Expired = t2Open.plus({
+				days: 5,
+			});
+			const t3Create = DateTime.now().minus({
+				days: 20,
+			});
+			const t3Open = t3Create.plus({
+				minutes: 30,
+			});
+			const t3Msg = t3Open.plus({
+				minutes: 10,
+			});
+			const t3Success = t3Msg.plus({
+				days: 2,
+			});
+			const t4Create = DateTime.now().minus({
+				days: 5,
+			});
+			const t4Open = t4Create.plus({
+				minutes: 5,
+			});
+			const t4Msg = t4Open.plus({
+				minutes: 5,
+			});
+			const t4Success = t4Msg.plus({
+				days: 1,
+			});
+			const t5Create = DateTime.now().minus({
+				days: 2,
+			});
+			const t5Open = t5Create.plus({
+				minutes: 10,
+			});
+			const t5Msg = t5Open.plus({
+				minutes: 10,
+			});
+			const t5Close = DateTime.now().minus({
+				days: 1,
+			});
 
-		// Earlier (still within cutoff) bad-ish behavior
-		const t1Create = DateTime.now().minus({
-			days: 80,
-		});
-		const t1Open = t1Create.plus({
-			hours: 1,
-		});
-		const t1Close = t1Open.plus({
-			minutes: 2,
-		}); // closer (no other interaction)
-
-		const t2Create = DateTime.now().minus({
-			days: 70,
-		});
-		const t2Open = t2Create.plus({
-			hours: 2,
-		});
-		const t2Expired = t2Open.plus({
-			days: 5,
-		}); // ghosted -> expired
-
-		// Recent good behavior
-		const t3Create = DateTime.now().minus({
-			days: 20,
-		});
-		const t3Open = t3Create.plus({
-			minutes: 30,
-		});
-		const t3Msg = t3Open.plus({
-			minutes: 10,
-		});
-		const t3Success = t3Msg.plus({
-			days: 2,
-		});
-
-		const t4Create = DateTime.now().minus({
-			days: 5,
-		});
-		const t4Open = t4Create.plus({
-			minutes: 5,
-		});
-		const t4Msg = t4Open.plus({
-			minutes: 5,
-		});
-		const t4Success = t4Msg.plus({
-			days: 1,
-		});
-
-		const t5Create = DateTime.now().minus({
-			days: 2,
-		});
-		const t5Open = t5Create.plus({
-			minutes: 10,
-		});
-		const t5Msg = t5Open.plus({
-			minutes: 10,
-		});
-		const t5Close = DateTime.now().minus({
-			days: 1,
-		});
-
-		const result = await Effect.gen(function* () {
 			// tx-1 closer
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -328,23 +323,20 @@ describe("userEventBuyerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventBuyerInfoFx({
+			const result = yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
+
+			expect(result).not.toBeNull();
+			if (!result) return;
+
+			expect(result.reaction.total).toBe(5);
+			expect(result.closer.total).toBe(5);
+			expect(result.decision.total).toBe(5);
+			expect(result.expired.total).toBe(5);
+			expect(result.activity.bucket).toBe("high");
+			expect(result.score.score).toBeGreaterThanOrEqual(70);
+			expect(result.score.rank).toBeGreaterThanOrEqual(5);
 		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
-
-		expect(result).not.toBeNull();
-		if (!result) return;
-
-		expect(result.reaction.total).toBe(5);
-		expect(result.closer.total).toBe(5);
-		expect(result.decision.total).toBe(5);
-		expect(result.expired.total).toBe(5);
-
-		expect(result.activity.bucket).toBe("high");
-
-		// Should be meaningfully better than "bad buyer" despite earlier issues.
-		expect(result.score.score).toBeGreaterThanOrEqual(70);
-		expect(result.score.rank).toBeGreaterThanOrEqual(5);
 	});
 });

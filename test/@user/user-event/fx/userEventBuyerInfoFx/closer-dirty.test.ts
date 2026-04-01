@@ -17,57 +17,53 @@ describe("userEventBuyerInfoFx", () => {
 			return database.dialect;
 		});
 
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@test.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@test.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const buyerId = buyer.id;
-		const base = DateTime.now().minus({
-			days: 20,
-		});
+			const buyerId = buyer.id;
+			const base = DateTime.now().minus({
+				days: 20,
+			});
+			const t1Create = base;
+			const t1Open = t1Create.plus({
+				hours: 1,
+			});
+			const t1Msg = t1Open.plus({
+				minutes: 10,
+			});
+			const t1Close = t1Msg.plus({
+				minutes: 5,
+			});
+			const t2Create = base.plus({
+				days: 1,
+			});
+			const t2Open = t2Create.plus({
+				hours: 1,
+			});
+			const t2SellerMsg = t2Open.plus({
+				minutes: 2,
+			});
+			const t2Close = t2SellerMsg.plus({
+				minutes: 10,
+			});
+			const t3Create = base.plus({
+				days: 2,
+			});
+			const t3Open = t3Create.plus({
+				minutes: 30,
+			});
+			const t3Close = t3Open.plus({
+				minutes: 1,
+			});
 
-		// tx-1: buyer message before close => dirty
-		const t1Create = base;
-		const t1Open = t1Create.plus({
-			hours: 1,
-		});
-		const t1Msg = t1Open.plus({
-			minutes: 10,
-		});
-		const t1Close = t1Msg.plus({
-			minutes: 5,
-		});
-
-		// tx-2: seller message before buyer end => dirty
-		const t2Create = base.plus({
-			days: 1,
-		});
-		const t2Open = t2Create.plus({
-			hours: 1,
-		});
-		const t2SellerMsg = t2Open.plus({
-			minutes: 2,
-		});
-		const t2Close = t2SellerMsg.plus({
-			minutes: 10,
-		});
-
-		// tx-3: only open between create and close => not dirty => counts
-		const t3Create = base.plus({
-			days: 2,
-		});
-		const t3Open = t3Create.plus({
-			minutes: 30,
-		});
-		const t3Close = t3Open.plus({
-			minutes: 1,
-		});
-
-		const result = await Effect.gen(function* () {
 			// tx-1
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -214,16 +210,16 @@ describe("userEventBuyerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventBuyerInfoFx({
+			const result = yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
+
+			expect(result).not.toBeNull();
+			if (!result) return;
+
+			expect(result.closer.total).toBe(3);
+			expect(result.closer.closed).toBe(1);
+			expect(result.closer.percent).toBeCloseTo(33.33, 1);
 		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
-
-		expect(result).not.toBeNull();
-		if (!result) return;
-
-		expect(result.closer.total).toBe(3);
-		expect(result.closer.closed).toBe(1); // only tx-3
-		expect(result.closer.percent).toBeCloseTo(33.33, 1);
 	});
 });
