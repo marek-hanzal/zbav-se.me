@@ -13,14 +13,21 @@ describe("draftGalleryCreateFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "draft-gallery-user@test.cz",
-						name: "Draft Gallery User",
-						password: "12345678",
-					},
-				}),
+			const signUp = (email: string, name: string) =>
+				Effect.promise(() =>
+					api.signUpEmail({
+						body: {
+							email,
+							name,
+							password: "12345678",
+						},
+					}),
+				);
+
+			const { user } = yield* signUp("draft-gallery-user@test.cz", "Draft Gallery User");
+			const { user: stranger } = yield* signUp(
+				"draft-gallery-stranger@test.cz",
+				"Draft Gallery Stranger",
 			);
 
 			const firstUpload = yield* uploadCreateFx({
@@ -34,6 +41,10 @@ describe("draftGalleryCreateFx", () => {
 			const thirdUpload = yield* uploadCreateFx({
 				userId: user.id,
 				url: "https://cdn.zbav-se.me/draft-gallery-3.jpg",
+			});
+			const strangerUpload = yield* uploadCreateFx({
+				userId: stranger.id,
+				url: "https://cdn.zbav-se.me/draft-gallery-stranger.jpg",
 			});
 
 			const draft = yield* draftCreateFx({
@@ -85,6 +96,37 @@ describe("draftGalleryCreateFx", () => {
 			);
 
 			expect(emptyResult._tag).toBe("Left");
+
+			const foreignAttempt = yield* Effect.either(
+				draftGalleryCreateFx({
+					userId: stranger.id,
+					draftId: draft.id,
+					uploadIds: [
+						strangerUpload.id,
+					],
+				}),
+			);
+
+			expect(foreignAttempt._tag).toBe("Left");
+
+			const itemsAfterForeignAttempt = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("gallery_item")
+					.select([
+						"uploadId",
+						"sort",
+					])
+					.where("galleryId", "=", draft.galleryId)
+					.orderBy("sort", "asc")
+					.execute(),
+			);
+
+			expect(itemsAfterForeignAttempt).toEqual([
+				{
+					uploadId: thirdUpload.id,
+					sort: 0,
+				},
+			]);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

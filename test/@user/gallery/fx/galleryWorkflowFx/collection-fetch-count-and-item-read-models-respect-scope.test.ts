@@ -149,9 +149,39 @@ describe("gallery workflow", () => {
 					},
 				}),
 			);
+			const strangerGalleryCollection = yield* galleryCollectionFx({
+				scope: {
+					userId: stranger.id,
+				},
+			});
+			const strangerGalleryCount = yield* galleryCountFx({
+				scope: {
+					userId: stranger.id,
+				},
+			});
+			const strangerItemCollection = yield* galleryItemCollectionFx({
+				scope: {
+					userId: stranger.id,
+				},
+				where: {
+					galleryId: draft.galleryId,
+				},
+			});
+			const strangerItemCount = yield* galleryItemCountFx({
+				scope: {
+					userId: stranger.id,
+				},
+				where: {
+					galleryId: draft.galleryId,
+				},
+			});
 
 			expect(strangerGalleryFetch._tag).toBe("Left");
 			expect(strangerItemFetch._tag).toBe("Left");
+			expect(strangerGalleryCollection).toHaveLength(0);
+			expect(strangerGalleryCount.total).toBe(0);
+			expect(strangerItemCollection).toHaveLength(0);
+			expect(strangerItemCount.total).toBe(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

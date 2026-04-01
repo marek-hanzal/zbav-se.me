@@ -14,14 +14,21 @@ describe("feedGalleryCreateFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "feed-gallery-user@test.cz",
-						name: "Feed Gallery User",
-						password: "12345678",
-					},
-				}),
+			const signUp = (email: string, name: string) =>
+				Effect.promise(() =>
+					api.signUpEmail({
+						body: {
+							email,
+							name,
+							password: "12345678",
+						},
+					}),
+				);
+
+			const { user } = yield* signUp("feed-gallery-user@test.cz", "Feed Gallery User");
+			const { user: stranger } = yield* signUp(
+				"feed-gallery-stranger@test.cz",
+				"Feed Gallery Stranger",
 			);
 
 			const feed = yield* feedCreateFx({
@@ -42,6 +49,10 @@ describe("feedGalleryCreateFx", () => {
 			const thirdUpload = yield* uploadCreateFx({
 				userId: user.id,
 				url: "https://cdn.zbav-se.me/feed-gallery-3.jpg",
+			});
+			const strangerUpload = yield* uploadCreateFx({
+				userId: stranger.id,
+				url: "https://cdn.zbav-se.me/feed-gallery-stranger.jpg",
 			});
 
 			const firstGallery = yield* feedGalleryCreateFx({
@@ -100,6 +111,37 @@ describe("feedGalleryCreateFx", () => {
 			});
 
 			expect(fetchedFeed.uploadId).toBe(thirdUpload.id);
+
+			const foreignAttempt = yield* Effect.either(
+				feedGalleryCreateFx({
+					userId: stranger.id,
+					feedId: feed.id,
+					uploadIds: [
+						strangerUpload.id,
+					],
+				}),
+			);
+
+			expect(foreignAttempt._tag).toBe("Left");
+
+			const itemsAfterForeignAttempt = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("gallery_item")
+					.select([
+						"uploadId",
+						"sort",
+					])
+					.where("galleryId", "=", feed.id)
+					.orderBy("sort", "asc")
+					.execute(),
+			);
+
+			expect(itemsAfterForeignAttempt).toEqual([
+				{
+					uploadId: thirdUpload.id,
+					sort: 0,
+				},
+			]);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
