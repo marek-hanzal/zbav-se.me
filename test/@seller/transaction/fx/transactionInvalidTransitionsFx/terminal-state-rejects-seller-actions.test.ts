@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { transactionRejectFx } from "~/seller/transaction/server/fx/transactionRejectFx";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
@@ -7,7 +8,6 @@ import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createResolvedScenarioFx } from "~/test/utils/createResolvedScenarioFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
-import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
 
 describe("seller transaction invalid transitions", () => {
 	it("rejects seller actions once the transaction is terminal", async () => {
