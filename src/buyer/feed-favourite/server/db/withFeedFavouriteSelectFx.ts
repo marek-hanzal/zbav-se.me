@@ -1,6 +1,8 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { withFeedFavouriteSourceSelectFx } from "~/buyer/feed-favourite/server/db/withFeedFavouriteSourceSelectFx";
+import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
 
 export namespace withFeedFavouriteSelectFx {
 	export interface Props extends withFeedFavouriteSourceSelectFx.Props {
@@ -20,7 +22,17 @@ export const withFeedFavouriteSelectFx = Effect.fn("withFeedFavouriteSelectFx")(
 	});
 
 	return sourceSelect
-		.selectAll()
+		.select([
+			"f.id",
+			"f.userId",
+			"f.locationId",
+			"f.uploadId",
+			"f.type",
+			"f.name",
+			"f.createdAt",
+			"f.updatedAt",
+		])
+		.select((eb) => eb.ref("f.query").$castTo<ListingQuerySchema.Type>().as("query"))
 		.select((eb) =>
 			jsonObjectFrom(
 				eb
