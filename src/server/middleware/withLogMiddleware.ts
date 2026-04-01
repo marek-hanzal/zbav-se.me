@@ -21,10 +21,8 @@ export const withLogMiddleware = createMiddleware().server(async ({ next }) => {
 				nonBlocking: true,
 				directory: "./.logs",
 				interval: "hourly",
-				/**
-				 * 8hrs
-				 */
-				maxAgeMs: 8 * 60 * 60 * 1_000,
+				//
+				maxAgeMs: 4 * 60 * 60 * 1_000,
 				formatter: jsonLinesFormatter,
 			}),
 			console: fingersCrossed(
