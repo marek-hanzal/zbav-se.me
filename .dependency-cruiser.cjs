@@ -94,6 +94,7 @@ const rules = [
 		severity: "error",
 		from: {
 			pathNot: [
+				"^src/start\\.ts$",
 				"^src/@routes(?:/|$)",
 				"^src/server(?:/|$)",
 				"^src/[^/]+/server(?:/|$)",
