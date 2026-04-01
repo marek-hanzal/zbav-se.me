@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { NotFoundErrorFx } from "@/lib/common/error";
+import { getLoggerFx } from "@/lib/common/log";
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -14,6 +15,11 @@ export namespace listingGetSellerInfoFx {
 export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(function* ({
 	listingId,
 }: listingGetSellerInfoFx.Props) {
+	const logger = yield* getLoggerFx("listingGetSellerInfoFx");
+	logger.debug("listingGetSellerInfoFx", {
+		listingId,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 
 	const userInfo = yield* tryDbFx(async () =>

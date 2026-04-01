@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
+import { getLoggerFx } from "@/lib/common/log";
 import { withTransactionListingQueryBuilderFx } from "~/seller/transaction-listing/server/db/withTransactionListingQueryBuilderFx";
 import { withTransactionListingSourceSelectFx } from "~/seller/transaction-listing/server/db/withTransactionListingSourceSelectFx";
 import type { TransactionListingCountQuerySchema } from "~/seller/transaction-listing/server/schema/TransactionListingCountQuerySchema";
@@ -16,6 +17,13 @@ export const transactionListingCountFx = Effect.fn("transactionListingCountFx")(
 	where,
 	scope,
 }: transactionListingCountFx.Props) {
+	const logger = yield* getLoggerFx("transactionListingCountFx");
+	logger.debug("transactionListingCountFx", {
+		filter,
+		where,
+		scope,
+	});
+
 	return yield* withCountFx({
 		selectFx: withTransactionListingSourceSelectFx(),
 		filter,

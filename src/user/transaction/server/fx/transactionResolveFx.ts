@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { AccessDeniedErrorFx } from "~/server/error/AccessDeniedErrorFx";
@@ -17,6 +18,13 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	transactionId,
 	message = "You are not allowed to access this transaction",
 }: transactionResolveFx.Props) {
+	const logger = yield* getLoggerFx("transactionResolveFx");
+	logger.debug("transactionResolveFx", {
+		userId,
+		transactionId,
+		message,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 
 	const transaction = yield* tryDbFx(async () =>

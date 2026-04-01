@@ -1,6 +1,7 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Ssst */
 import { Effect } from "effect";
 import { clamp } from "@/lib/common/clamp";
+import { getLoggerFx } from "@/lib/common/log";
 import { median } from "@/lib/common/median";
 import { p90 } from "@/lib/common/p90";
 import type { UserEventSellerSchema } from "~/buyer/user-event/server/schema/UserEventSellerSchema";
@@ -511,6 +512,11 @@ const computeScore = (input: {
 export const userEventSellerInfoFx = Effect.fn("userEventSellerInfoFx")(function* ({
 	userId,
 }: userEventSellerInfoFx.Props) {
+	const logger = yield* getLoggerFx("userEventSellerInfoFx");
+	logger.debug("userEventSellerInfoFx", {
+		userId,
+	});
+
 	const cutoff = 90;
 
 	const source = yield* userEventCollectionFx({

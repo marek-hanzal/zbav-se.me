@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { linkTo } from "@/lib/common/link-to";
+import { getLoggerFx } from "@/lib/common/log";
 import { LocationContextFx } from "~/session/location/server/context/LocationContextFx";
 
 export namespace withLocationRequestFx {
@@ -38,6 +39,13 @@ export const withLocationRequestFx = Effect.fn("withLocationRequestFx")(function
 	lang,
 	limit = 5,
 }: withLocationRequestFx.Props) {
+	const logger = yield* getLoggerFx("withLocationRequestFx");
+	logger.debug("withLocationRequestFx", {
+		text,
+		lang,
+		limit,
+	});
+
 	const context = yield* LocationContextFx;
 
 	const link = linkTo({

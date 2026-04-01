@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import type { GalleryCreateSchema } from "~/user/gallery/server/schema/GalleryCreateSchema";
@@ -17,6 +18,13 @@ export const galleryInsertFx = Effect.fn("galleryInsertFx")(function* ({
 	id,
 	...props
 }: galleryInsertFx.Props) {
+	const logger = yield* getLoggerFx("galleryInsertFx");
+	logger.debug("galleryInsertFx", {
+		userId,
+		id,
+		...props,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

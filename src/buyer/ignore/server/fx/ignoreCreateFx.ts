@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import type { IgnoreCreateSchema } from "~/buyer/ignore/server/schema/IgnoreCreateSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
@@ -15,6 +16,12 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 	userId,
 	listingId,
 }: ignoreCreateFx.Props) {
+	const logger = yield* getLoggerFx("ignoreCreateFx");
+	logger.debug("ignoreCreateFx", {
+		userId,
+		listingId,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

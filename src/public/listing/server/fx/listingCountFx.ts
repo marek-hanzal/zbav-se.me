@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
+import { getLoggerFx } from "@/lib/common/log";
 import { withListingCollectionSelectFx } from "~/public/listing/server/db/withListingCollectionSelectFx";
 import { withListingQueryBuilderFx } from "~/public/listing/server/db/withListingQueryBuilderFx";
 import type { ListingCountQuerySchema } from "~/public/listing/server/schema/ListingCountQuerySchema";
@@ -18,6 +19,14 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	scope,
 	meta,
 }: listingCountFx.Props) {
+	const logger = yield* getLoggerFx("listingCountFx");
+	logger.debug("listingCountFx", {
+		filter,
+		where,
+		scope,
+		meta,
+	});
+
 	const hasFilter = !!(filter && Object.keys(filter).length > 0);
 	const hasWhere = !!(where && Object.keys(where).length > 0);
 	const hasScope = !!(scope && Object.keys(scope).length > 0);

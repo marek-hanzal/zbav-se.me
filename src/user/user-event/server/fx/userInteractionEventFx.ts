@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import type { UserEventCreateSchema } from "../schema/UserEventCreateSchema";
 import { userEventCreateFx } from "./userEventCreateFx";
@@ -15,6 +16,13 @@ export const userInteractionEventFx = Effect.fn("userInteractionEventFx")(functi
 	targetId,
 	...props
 }: userInteractionEventFx.Props) {
+	const logger = yield* getLoggerFx("userInteractionEventFx");
+	logger.debug("userInteractionEventFx", {
+		userId,
+		targetId,
+		...props,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			yield* userEventCreateFx({

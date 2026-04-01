@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
@@ -16,6 +17,12 @@ export const userExPatchFx = Effect.fn("userExPatchFx")(function* ({
 	userId,
 	patch,
 }: userExPatchFx.Props) {
+	const logger = yield* getLoggerFx("userExPatchFx");
+	logger.debug("userExPatchFx", {
+		userId,
+		patch,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

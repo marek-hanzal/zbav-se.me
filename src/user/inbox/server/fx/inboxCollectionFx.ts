@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
+import { getLoggerFx } from "@/lib/common/log";
 import { withInboxCollectionSelectFx } from "~/user/inbox/server/db/withInboxCollectionSelectFx";
 import { withInboxQueryBuilderFx } from "~/user/inbox/server/db/withInboxQueryBuilderFx";
 import type { InboxFilterSchema } from "~/user/inbox/server/schema/InboxFilterSchema";
@@ -18,6 +19,15 @@ export const inboxCollectionFx = Effect.fn("inboxCollectionFx")(function* ({
 	scope,
 	sort,
 }: inboxCollectionFx.Props) {
+	const logger = yield* getLoggerFx("inboxCollectionFx");
+	logger.debug("inboxCollectionFx", {
+		cursor,
+		filter,
+		where,
+		scope,
+		sort,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withInboxCollectionSelectFx({
 			sort,

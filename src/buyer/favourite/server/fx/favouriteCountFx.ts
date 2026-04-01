@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
+import { getLoggerFx } from "@/lib/common/log";
 import { withFavouriteCollectionSelectFx } from "~/buyer/favourite/server/db/withFavouriteCollectionSelectFx";
 import { withFavouriteQueryBuilderFx } from "~/buyer/favourite/server/db/withFavouriteQueryBuilderFx";
 import type { FavouriteCountQuerySchema } from "~/buyer/favourite/server/schema/FavouriteCountQuerySchema";
@@ -16,6 +17,13 @@ export const favouriteCountFx = Effect.fn("favouriteCountFx")(function* ({
 	where,
 	scope,
 }: favouriteCountFx.Props) {
+	const logger = yield* getLoggerFx("favouriteCountFx");
+	logger.debug("favouriteCountFx", {
+		filter,
+		where,
+		scope,
+	});
+
 	return yield* withCountFx({
 		selectFx: withFavouriteCollectionSelectFx({}),
 		filter,

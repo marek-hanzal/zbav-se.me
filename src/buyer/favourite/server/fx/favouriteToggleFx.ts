@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { favouriteCreateFx } from "~/buyer/favourite/server/fx/favouriteCreateFx";
 import { favouriteDeleteFx } from "~/buyer/favourite/server/fx/favouriteDeleteFx";
 import type { FavouriteToggleSchema } from "~/buyer/favourite/server/schema/FavouriteToggleSchema";
@@ -20,6 +21,14 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 	listingId,
 	toggle,
 }: favouriteToggleFx.Props) {
+	const logger = yield* getLoggerFx("favouriteToggleFx");
+	logger.debug("favouriteToggleFx", {
+		userId,
+		feedId,
+		listingId,
+		toggle,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const listingUserId = yield* listingCheckIfOwnFx({

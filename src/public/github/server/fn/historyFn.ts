@@ -5,6 +5,7 @@ import { genId } from "@/lib/common/gen-id";
 import type { GitHubHistorySchema } from "~/public/github/server/schema/GitHubHistorySchema";
 import { ServerGithubSchema } from "~/server/env/ServerGithubSchema";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
+import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 
 const Repo = {
 	owner: "marek-hanzal",
@@ -26,6 +27,7 @@ const InputSchema = z
 
 export const historyFn = createServerFn()
 	.middleware([
+		withLogMiddleware,
 		withDatabaseMiddleware,
 	])
 	.inputValidator(InputSchema)

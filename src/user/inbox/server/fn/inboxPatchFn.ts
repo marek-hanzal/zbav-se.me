@@ -1,9 +1,11 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { zodGuardFx } from "@/lib/common/fx";
+import { withLoggerFx } from "@/lib/common/log";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
+import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { inboxPatchFx } from "~/user/inbox/server/fx/inboxPatchFx";
 import { InboxPatchSchema } from "~/user/inbox/server/schema/InboxPatchSchema";
@@ -13,11 +15,15 @@ export const inboxPatchFn = createServerFn({
 	method: "POST",
 })
 	.middleware([
+		withLogMiddleware,
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
 	.inputValidator(InboxPatchSchema)
-	.handler(async ({ data, context: { database, user } }) => {
+	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
+		const logger = rootLogger.getChild(name);
+		logger.debug(name, data);
+
 		return zodGuardFx({
 			schema: InboxSchema,
 			dataFx: inboxPatchFx({
@@ -28,6 +34,7 @@ export const inboxPatchFn = createServerFn({
 			}),
 		}).pipe(
 			withKyselyFx(database),
+			withLoggerFx(logger),
 			withCatchFx({
 				NotFoundErrorFx() {
 					throw new Error("NotFoundError");

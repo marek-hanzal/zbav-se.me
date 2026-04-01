@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
+import { getLoggerFx } from "@/lib/common/log";
 import type { ListingEventEnumSchema } from "~/common/listing/enum/ListingEventEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
@@ -18,6 +19,13 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 	event,
 	minutes = 10,
 }: listingEventRateLimitFx.Props) {
+	const logger = yield* getLoggerFx("listingEventRateLimitFx");
+	logger.debug("listingEventRateLimitFx", {
+		listingId,
+		event,
+		minutes,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

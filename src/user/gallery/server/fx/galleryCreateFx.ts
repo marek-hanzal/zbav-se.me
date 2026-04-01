@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { galleryFetchFx } from "~/user/gallery/server/fx/galleryFetchFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 
@@ -11,6 +12,11 @@ export namespace galleryCreateFx {
 export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* (
 	data: galleryCreateFx.Props,
 ) {
+	const logger = yield* getLoggerFx("galleryCreateFx");
+	logger.debug("galleryCreateFx", {
+		...data,
+	});
+
 	const { id } = yield* galleryInsertFx(data);
 
 	return yield* galleryFetchFx({

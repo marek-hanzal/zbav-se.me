@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { favouriteFetchFx } from "~/buyer/favourite/server/fx/favouriteFetchFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
@@ -15,6 +16,12 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 	userId,
 	listingId,
 }: favouriteDeleteFx.Props) {
+	const logger = yield* getLoggerFx("favouriteDeleteFx");
+	logger.debug("favouriteDeleteFx", {
+		userId,
+		listingId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

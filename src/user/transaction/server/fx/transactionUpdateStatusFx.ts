@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
+import { getLoggerFx } from "@/lib/common/log";
 import type { TransactionSideEnumSchema } from "~/common/user-transaction/enum/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -36,6 +37,14 @@ export const transactionUpdateStatusFx = Effect.fn("transactionUpdateStatusFx")(
 	request,
 	target,
 }: transactionUpdateStatusFx.Props) {
+	const logger = yield* getLoggerFx("transactionUpdateStatusFx");
+	logger.debug("transactionUpdateStatusFx", {
+		transactionId,
+		status,
+		request,
+		target,
+	});
+
 	yield* transactionTransitionFx({
 		status,
 		request,

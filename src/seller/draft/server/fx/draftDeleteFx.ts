@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { draftFetchFx } from "~/seller/draft/server/fx/draftFetchFx";
 import type { DraftFilterSchema } from "~/seller/draft/server/schema/DraftFilterSchema";
 import type { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
@@ -13,6 +14,11 @@ export namespace draftDeleteFx {
 }
 
 export const draftDeleteFx = Effect.fn("draftDeleteFx")(function* (query: draftDeleteFx.Props) {
+	const logger = yield* getLoggerFx("draftDeleteFx");
+	logger.debug("draftDeleteFx", {
+		...query,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

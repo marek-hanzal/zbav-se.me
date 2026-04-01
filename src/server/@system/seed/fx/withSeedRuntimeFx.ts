@@ -1,7 +1,9 @@
+import { getLogger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
 import { withDialectFx } from "@/lib/common/database";
+import { withLoggerFx } from "@/lib/common/log";
 import { withS3Fx } from "~/common/s3/server/context/withS3Fx";
 import { withSeedProgressFx } from "~/server/@system/seed/context/withSeedProgressFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -20,6 +22,7 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 	const s3Config = ServerS3Schema.parse(process.env);
 	const cdnConfig = ServerCdnSchema.parse(process.env);
 	const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
+	const logger = getLogger("zbav-se.me");
 
 	return Effect.gen(function* () {
 		const pool = yield* Effect.acquireRelease(
@@ -48,6 +51,7 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 
 		return yield* effect.pipe(
 			withSeedProgressFx,
+			withLoggerFx(logger),
 			withLocationFx({
 				api: "https://api.geoapify.com",
 				autocomplete: "/v1/geocode/autocomplete",

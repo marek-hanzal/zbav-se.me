@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
+import { getLoggerFx } from "@/lib/common/log";
 import { withLocationQueryBuilderFx } from "~/session/location/server/db/withLocationQueryBuilderFx";
 import { withLocationSelectFx } from "~/session/location/server/db/withLocationSelectFx";
 import type { LocationQuerySchema } from "~/session/location/server/schema/LocationQuerySchema";
@@ -13,6 +14,13 @@ export const locationFetchFx = Effect.fn("locationFetchFx")(function* ({
 	where,
 	sort,
 }: locationFetchFx.Props) {
+	const logger = yield* getLoggerFx("locationFetchFx");
+	logger.debug("locationFetchFx", {
+		filter,
+		where,
+		sort,
+	});
+
 	return yield* withFetchFx({
 		resource: "location",
 		selectFx: withLocationSelectFx({

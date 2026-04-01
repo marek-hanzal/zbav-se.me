@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
 import { transactionFetchFx } from "~/buyer/transaction/server/fx/transactionFetchFx";
 import type { TransactionCreateSchema } from "~/buyer/transaction/server/schema/TransactionCreateSchema";
@@ -26,6 +27,13 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 	listingId,
 	...data
 }: transactionCreateFx.Props) {
+	const logger = yield* getLoggerFx("transactionCreateFx");
+	logger.debug("transactionCreateFx", {
+		userId,
+		listingId,
+		...data,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

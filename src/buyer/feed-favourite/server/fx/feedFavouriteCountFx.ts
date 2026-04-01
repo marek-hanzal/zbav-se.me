@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
+import { getLoggerFx } from "@/lib/common/log";
 import { withFeedQueryBuilderFx } from "~/buyer/feed/server/db/withFeedQueryBuilderFx";
 import type { FeedFilterSchema } from "~/buyer/feed/server/schema/FeedFilterSchema";
 import { withFeedFavouriteCollectionSelectFx } from "~/buyer/feed-favourite/server/db/withFeedFavouriteCollectionSelectFx";
@@ -18,6 +19,14 @@ export const feedFavouriteCountFx = Effect.fn("feedFavouriteCountFx")(function* 
 	scope,
 	userId,
 }: feedFavouriteCountFx.Props) {
+	const logger = yield* getLoggerFx("feedFavouriteCountFx");
+	logger.debug("feedFavouriteCountFx", {
+		filter,
+		where,
+		scope,
+		userId,
+	});
+
 	return yield* withCountFx({
 		selectFx: withFeedFavouriteCollectionSelectFx({
 			userId,

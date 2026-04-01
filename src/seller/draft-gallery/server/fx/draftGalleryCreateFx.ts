@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { draftResolveFx } from "~/seller/draft/server/fx/draftResolveFx";
 import type { DraftGalleryCreateSchema } from "~/seller/draft-gallery/server/schema/DraftGalleryCreateSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -19,6 +20,13 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 	draftId,
 	uploadIds,
 }: draftGalleryCreateFx.Props) {
+	const logger = yield* getLoggerFx("draftGalleryCreateFx");
+	logger.debug("draftGalleryCreateFx", {
+		userId,
+		draftId,
+		uploadIds,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

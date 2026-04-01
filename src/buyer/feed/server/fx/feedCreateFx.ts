@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import type { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -19,6 +20,13 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 	query,
 	...data
 }: feedCreateFx.Props) {
+	const logger = yield* getLoggerFx("feedCreateFx");
+	logger.debug("feedCreateFx", {
+		userId,
+		query,
+		...data,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

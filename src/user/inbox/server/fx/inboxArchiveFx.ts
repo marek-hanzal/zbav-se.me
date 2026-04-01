@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
+import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
@@ -21,6 +22,15 @@ export const inboxArchiveFx = Effect.fn("inboxArchiveFx")(function* ({
 	scope,
 	sort,
 }: inboxArchiveFx.Props) {
+	const logger = yield* getLoggerFx("inboxArchiveFx");
+	logger.debug("inboxArchiveFx", {
+		cursor,
+		filter,
+		where,
+		scope,
+		sort,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

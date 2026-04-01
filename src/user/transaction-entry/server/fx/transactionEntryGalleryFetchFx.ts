@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { withFetchFx } from "@/lib/common/fetch";
+import { getLoggerFx } from "@/lib/common/log";
 import { withGalleryQueryBuilderFx } from "~/user/gallery/server/db/withGalleryQueryBuilderFx";
 import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
 import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
@@ -14,6 +15,12 @@ export namespace transactionEntryGalleryFetchFx {
 
 export const transactionEntryGalleryFetchFx = Effect.fn("transactionEntryGalleryFetchFx")(
 	function* ({ userId, where }: transactionEntryGalleryFetchFx.Props) {
+		const logger = yield* getLoggerFx("transactionEntryGalleryFetchFx");
+		logger.debug("transactionEntryGalleryFetchFx", {
+			userId,
+			where,
+		});
+
 		const transactionEntry = yield* transactionEntryFetchFx({
 			userId,
 			where: {

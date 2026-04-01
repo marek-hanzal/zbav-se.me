@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import { AccessDeniedErrorFx } from "~/server/error/AccessDeniedErrorFx";
 
@@ -15,6 +16,13 @@ export const feedResolveFx = Effect.fn("feedResolveFx")(function* ({
 	feedId,
 	message = "You are not allowed to access this feed",
 }: feedResolveFx.Props) {
+	const logger = yield* getLoggerFx("feedResolveFx");
+	logger.debug("feedResolveFx", {
+		userId,
+		feedId,
+		message,
+	});
+
 	const feed = yield* feedFetchFx({
 		where: {
 			id: feedId,

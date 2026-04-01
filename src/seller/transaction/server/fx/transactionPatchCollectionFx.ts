@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { DateContextFx } from "@/lib/common/date";
+import { getLoggerFx } from "@/lib/common/log";
 import { withTransactionCollectionSelectFx } from "~/seller/transaction/server/db/withTransactionCollectionSelectFx";
 import { withTransactionQueryBuilderFx } from "~/seller/transaction/server/db/withTransactionQueryBuilderFx";
 import type { TransactionFilterSchema } from "~/seller/transaction/server/schema/TransactionFilterSchema";
@@ -20,6 +21,13 @@ export const transactionPatchCollectionFx = Effect.fn("transactionPatchCollectio
 	query,
 	scope,
 }: transactionPatchCollectionFx.Props) {
+	const logger = yield* getLoggerFx("transactionPatchCollectionFx");
+	logger.debug("transactionPatchCollectionFx", {
+		patch,
+		query,
+		scope,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

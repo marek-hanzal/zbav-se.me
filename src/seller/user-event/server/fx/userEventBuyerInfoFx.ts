@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { clamp } from "@/lib/common/clamp";
+import { getLoggerFx } from "@/lib/common/log";
 import { median } from "@/lib/common/median";
 import { p90 } from "@/lib/common/p90";
 import type { UserEventBuyerSchema } from "~/seller/user-event/server/schema/UserEventBuyerSchema";
@@ -484,6 +485,11 @@ const computeScore = (input: {
 export const userEventBuyerInfoFx = Effect.fn("userEventBuyerInfoFx")(function* ({
 	userId,
 }: userEventBuyerInfoFx.Props) {
+	const logger = yield* getLoggerFx("userEventBuyerInfoFx");
+	logger.debug("userEventBuyerInfoFx", {
+		userId,
+	});
+
 	const cutoff = 90;
 
 	const source = yield* userEventCollectionFx({

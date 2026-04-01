@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
 import { keyOf } from "@/lib/common/key-of";
 import { linkTo } from "@/lib/common/link-to";
+import { getLoggerFx } from "@/lib/common/log";
 import { S3ContextFx } from "~/common/s3/server/context/S3ContextFx";
 import { s3ClientFx } from "~/common/s3/server/fx/s3ClientFx";
 import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
@@ -19,6 +20,13 @@ export const s3PreSignFx = Effect.fn("s3PreSignFx")(function* ({
 	path,
 	extension,
 }: s3PreSignFx.Props) {
+	const logger = yield* getLoggerFx("s3PreSignFx");
+	logger.debug("s3PreSignFx", {
+		userId,
+		path,
+		extension,
+	});
+
 	const { cdn } = yield* UploadContextFx;
 	const { bucket } = yield* S3ContextFx;
 

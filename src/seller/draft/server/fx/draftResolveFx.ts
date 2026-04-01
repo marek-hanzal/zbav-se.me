@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { NotFoundErrorFx } from "@/lib/common/error";
+import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { AccessDeniedErrorFx } from "~/server/error/AccessDeniedErrorFx";
@@ -17,6 +18,13 @@ export const draftResolveFx = Effect.fn("draftResolveFx")(function* ({
 	draftId,
 	message = "You are not allowed to access this draft",
 }: draftResolveFx.Props) {
+	const logger = yield* getLoggerFx("draftResolveFx");
+	logger.debug("draftResolveFx", {
+		userId,
+		draftId,
+		message,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 
 	const draft = yield* tryDbFx(async () =>

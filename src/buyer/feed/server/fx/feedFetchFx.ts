@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
+import { getLoggerFx } from "@/lib/common/log";
 import { withFeedQueryBuilderFx } from "~/buyer/feed/server/db/withFeedQueryBuilderFx";
 import { withFeedSelectFx } from "~/buyer/feed/server/db/withFeedSelectFx";
 import type { FeedFilterSchema } from "~/buyer/feed/server/schema/FeedFilterSchema";
@@ -17,6 +18,14 @@ export const feedFetchFx = Effect.fn("feedFetchFx")(function* ({
 	scope,
 	sort,
 }: feedFetchFx.Props) {
+	const logger = yield* getLoggerFx("feedFetchFx");
+	logger.debug("feedFetchFx", {
+		filter,
+		where,
+		scope,
+		sort,
+	});
+
 	return yield* withFetchFx({
 		resource: "feed",
 		selectFx: withFeedSelectFx({

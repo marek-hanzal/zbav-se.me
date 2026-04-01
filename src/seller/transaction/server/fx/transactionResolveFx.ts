@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
+import { getLoggerFx } from "@/lib/common/log";
 import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
 import { transactionPatchCollectionFx } from "~/seller/transaction/server/fx/transactionPatchCollectionFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -22,6 +23,12 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	userId,
 	transactionId,
 }: transactionResolveFx.Props) {
+	const logger = yield* getLoggerFx("transactionResolveFx");
+	logger.debug("transactionResolveFx", {
+		userId,
+		transactionId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const transaction = yield* resolveTransactionFx({

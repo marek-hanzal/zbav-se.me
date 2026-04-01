@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { ignoreCreateFx } from "~/buyer/ignore/server/fx/ignoreCreateFx";
 import { ignoreDeleteFx } from "~/buyer/ignore/server/fx/ignoreDeleteFx";
 import type { IgnoreToggleSchema } from "~/buyer/ignore/server/schema/IgnoreToggleSchema";
@@ -19,6 +20,13 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 	toggle,
 	listingId,
 }: ignoreToggleFx.Props) {
+	const logger = yield* getLoggerFx("ignoreToggleFx");
+	logger.debug("ignoreToggleFx", {
+		userId,
+		toggle,
+		listingId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const listingUserId = yield* listingCheckIfOwnFx({

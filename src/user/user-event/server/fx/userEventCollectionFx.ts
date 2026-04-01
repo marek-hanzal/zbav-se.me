@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
+import { getLoggerFx } from "@/lib/common/log";
 import { withUserEventCollectionSelectFx } from "../db/withUserEventCollectionSelectFx";
 import { withUserEventQueryBuilderFx } from "../db/withUserEventQueryBuilderFx";
 import type { UserEventFilterSchema } from "../schema/UserEventFilterSchema";
@@ -18,6 +19,15 @@ export const userEventCollectionFx = Effect.fn("userEventCollectionFx")(function
 	cursor,
 	sort,
 }: userEventCollectionFx.Props) {
+	const logger = yield* getLoggerFx("userEventCollectionFx");
+	logger.debug("userEventCollectionFx", {
+		filter,
+		where,
+		scope,
+		cursor,
+		sort,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withUserEventCollectionSelectFx({
 			sort,
