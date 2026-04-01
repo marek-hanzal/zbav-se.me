@@ -3,9 +3,11 @@ import { Effect } from "effect";
 import { withDialectFx } from "@/lib/common/database";
 import { databaseFx } from "~/server/database/databaseFx";
 import { withDialectMiddleware } from "~/server/middleware/withDialectMiddleware";
+import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 
 export const withDatabaseMiddleware = createMiddleware()
 	.middleware([
+		withLogMiddleware,
 		withDialectMiddleware,
 	])
 	.server(async ({ next, context: { dialect } }) => {
