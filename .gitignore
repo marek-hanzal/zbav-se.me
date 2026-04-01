@@ -1,12 +1,13 @@
 .aigiscode
 .DS_Store
 .env.local
+.logs
 .million
+.nitro
 .output
 .tanstack
-.vercel
-.nitro
 .turbo
+.vercel
 .vscode/chrome-debug-profile
 *.log
 dist
@@ -16,4 +17,3 @@ results
 temp
 test-results
 tsconfig.tsbuildinfo
-zbav-se.me.sqlite3*
