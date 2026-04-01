@@ -11,27 +11,28 @@ describe("flagToggleFx", () => {
 		const database = await testabase("flagToggle-own-listing");
 		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@flag-own.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@flag-own.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const listing = await createListingFx(seller.id).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
+			const listing = yield* createListingFx(seller.id);
 
-		await expect(
-			Effect.gen(function* () {
-				yield* flagToggleFx({
+			const result = yield* Effect.either(
+				flagToggleFx({
 					userId: seller.id,
 					listingId: listing.id,
 					toggle: true,
-				});
-			}).pipe(withRuntimeFx(database), Effect.runPromise),
-		).rejects.toThrow();
+				}),
+			);
+
+			expect(result._tag).toBe("Left");
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

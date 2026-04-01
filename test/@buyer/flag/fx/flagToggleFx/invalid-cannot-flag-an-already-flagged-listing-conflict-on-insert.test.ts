@@ -11,44 +11,43 @@ describe("flagToggleFx", () => {
 		const database = await testabase("flagToggle-duplicate");
 		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@flag-duplicate.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@flag-duplicate.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@flag-duplicate.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@flag-duplicate.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const listing = await createListingFx(seller.id).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
+			const listing = yield* createListingFx(seller.id);
 
-		// First flag succeeds
-		await Effect.gen(function* () {
 			yield* flagToggleFx({
 				userId: buyer.id,
 				listingId: listing.id,
 				toggle: true,
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		// Second flag throws because doNothing causes executeTakeFirstOrThrow to fail
-		await expect(
-			Effect.gen(function* () {
-				yield* flagToggleFx({
+			const result = yield* Effect.either(
+				flagToggleFx({
 					userId: buyer.id,
 					listingId: listing.id,
 					toggle: true,
-				});
-			}).pipe(withRuntimeFx(database), Effect.runPromise),
-		).rejects.toThrow();
+				}),
+			);
+
+			expect(result._tag).toBe("Left");
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

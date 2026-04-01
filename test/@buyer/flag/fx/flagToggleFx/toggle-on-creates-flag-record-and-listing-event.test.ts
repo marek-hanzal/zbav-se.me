@@ -11,65 +11,69 @@ describe("flagToggleFx", () => {
 		const database = await testabase("flagToggle-on");
 		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@flag-toggle-on.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@flag-toggle-on.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@flag-toggle-on.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@flag-toggle-on.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const listing = await createListingFx(seller.id).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
+			const listing = yield* createListingFx(seller.id);
 
-		await Effect.gen(function* () {
 			yield* flagToggleFx({
 				userId: buyer.id,
 				listingId: listing.id,
 				toggle: true,
 			});
+
+			const flag = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("flag")
+					.select([
+						"listingId",
+						"userId",
+					])
+					.where("listingId", "=", listing.id)
+					.where("userId", "=", buyer.id)
+					.executeTakeFirst(),
+			);
+
+			expect(flag).toBeDefined();
+
+			const events = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("listing_event")
+					.select("event")
+					.where("listingId", "=", listing.id)
+					.execute(),
+			);
+
+			expect(events.map((e) => e.event)).toContain("flag");
+
+			const sellerInbox = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select("type")
+					.where("userId", "=", seller.id)
+					.where("type", "=", "flag")
+					.executeTakeFirst(),
+			);
+
+			expect(sellerInbox).toBeDefined();
+			expect(sellerInbox?.type).toBe("flag");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		// Flag record was created
-		const flag = await database.kysely
-			.selectFrom("flag")
-			.select([
-				"listingId",
-				"userId",
-			])
-			.where("listingId", "=", listing.id)
-			.where("userId", "=", buyer.id)
-			.executeTakeFirst();
-
-		expect(flag).toBeDefined();
-
-		// listing_event "flag" was created
-		const events = await database.kysely
-			.selectFrom("listing_event")
-			.select("event")
-			.where("listingId", "=", listing.id)
-			.execute();
-
-		expect(events.map((e) => e.event)).toContain("flag");
-
-		// Flag creates inbox for seller (type "flag", priority "common")
-		const sellerInbox = await database.kysely
-			.selectFrom("inbox")
-			.select("type")
-			.where("userId", "=", seller.id)
-			.where("type", "=", "flag")
-			.executeTakeFirst();
-
-		expect(sellerInbox).toBeDefined();
-		expect(sellerInbox?.type).toBe("flag");
 	});
 });
