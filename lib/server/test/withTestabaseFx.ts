@@ -164,6 +164,8 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 	process.env.SERVER_DATABASE_URL = dsn;
 
 	return async () => {
-		//
+		rmImage({
+			image: name,
+		});
 	};
 });
