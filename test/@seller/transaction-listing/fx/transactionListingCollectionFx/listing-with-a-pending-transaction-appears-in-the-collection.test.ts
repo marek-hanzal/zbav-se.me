@@ -42,8 +42,12 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 				},
 			});
 
+			const item = collection.find((l) => l.id === listingId);
+
 			const ids = collection.map((l) => l.id);
 			expect(ids).toContain(listingId);
+			expect(typeof item?.count).toBe("number");
+			expect(item?.count).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
