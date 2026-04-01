@@ -11,15 +11,17 @@ describe("draft lifecycle", () => {
 		const database = await testabase("draft-create-with-uploads");
 		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@draft-uploads.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@draft-uploads.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const draft = await Effect.gen(function* () {
 			const upload1 = yield* uploadCreateFx({
 				url: "https://cdn.zbav-se.me/test1.jpg",
 				userId: seller.id,
@@ -29,7 +31,7 @@ describe("draft lifecycle", () => {
 				userId: seller.id,
 			});
 
-			return yield* draftCreateFx({
+			const draft = yield* draftCreateFx({
 				userId: seller.id,
 				title: "Draft with uploads",
 				uploadIds: [
@@ -37,20 +39,22 @@ describe("draft lifecycle", () => {
 					upload2.id,
 				],
 			});
+
+			const galleryItems = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("gallery_item")
+					.select([
+						"uploadId",
+						"sort",
+					])
+					.where("galleryId", "=", draft.galleryId)
+					.orderBy("sort", "asc")
+					.execute(),
+			);
+
+			expect(galleryItems).toHaveLength(2);
+			expect(galleryItems[0]?.sort).toBe(0);
+			expect(galleryItems[1]?.sort).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		const galleryItems = await database.kysely
-			.selectFrom("gallery_item")
-			.select([
-				"uploadId",
-				"sort",
-			])
-			.where("galleryId", "=", draft.galleryId)
-			.orderBy("sort", "asc")
-			.execute();
-
-		expect(galleryItems).toHaveLength(2);
-		expect(galleryItems[0]?.sort).toBe(0);
-		expect(galleryItems[1]?.sort).toBe(1);
 	});
 });

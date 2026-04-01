@@ -93,49 +93,55 @@ describe("inbox reference", () => {
 			return database.dialect;
 		});
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "inbox-reference-thumb-seller@test.cz",
-				name: "Seller Thumb",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "inbox-reference-thumb-seller@test.cz",
+						name: "Seller Thumb",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "inbox-reference-thumb-buyer@test.cz",
-				name: "Buyer Thumb",
-				password: "12345678",
-			},
-		});
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "inbox-reference-thumb-buyer@test.cz",
+						name: "Buyer Thumb",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const fixture = await createListingFixtureFx({
-			buyerId: buyer.id,
-			sellerId: seller.id,
-		}).pipe(withInboxRuntimeFx(database), Effect.runPromise);
+			const fixture = yield* createListingFixtureFx({
+				buyerId: buyer.id,
+				sellerId: seller.id,
+			});
 
-		await Effect.gen(function* () {
 			yield* thumbCreateFx({
 				listingId: fixture.listingId,
 				type: "like",
 				userId: fixture.buyerId,
 			});
+
+			const inbox = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select([
+						"id",
+						"reference",
+						"type",
+						"userId",
+					])
+					.where("userId", "=", fixture.sellerId)
+					.where("type", "=", "thumb")
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(inbox.reference).toEqual([
+				fixture.listingId,
+			]);
 		}).pipe(withInboxRuntimeFx(database), Effect.runPromise);
-
-		const inbox = await database.kysely
-			.selectFrom("inbox")
-			.select([
-				"id",
-				"reference",
-				"type",
-				"userId",
-			])
-			.where("userId", "=", fixture.sellerId)
-			.where("type", "=", "thumb")
-			.executeTakeFirstOrThrow();
-
-		expect(inbox.reference).toEqual([
-			fixture.listingId,
-		]);
 	});
 });

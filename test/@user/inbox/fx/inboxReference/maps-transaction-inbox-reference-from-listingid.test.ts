@@ -69,55 +69,63 @@ describe("inbox reference", () => {
 			return database.dialect;
 		});
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "inbox-reference-seller@test.cz",
-				name: "Seller Ref",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "inbox-reference-seller@test.cz",
+						name: "Seller Ref",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "inbox-reference-buyer@test.cz",
-				name: "Buyer Ref",
-				password: "12345678",
-			},
-		});
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "inbox-reference-buyer@test.cz",
+						name: "Buyer Ref",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const fixture = await createListingFixtureFx({
-			buyerId: buyer.id,
-			sellerId: seller.id,
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const fixture = yield* createListingFixtureFx({
+				buyerId: buyer.id,
+				sellerId: seller.id,
+			});
 
-		await Effect.gen(function* () {
 			yield* transactionCreateFx({
 				listingId: fixture.listingId,
 				userId: fixture.buyerId,
 			});
+
+			const transaction = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction")
+					.select("id")
+					.where("listingId", "=", fixture.listingId)
+					.executeTakeFirstOrThrow(),
+			);
+
+			const inbox = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select([
+						"id",
+						"reference",
+						"type",
+						"userId",
+					])
+					.where("userId", "=", fixture.sellerId)
+					.where("type", "=", "buyer-message")
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(inbox.reference).toEqual([
+				fixture.listingId,
+				transaction.id,
+			]);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		const transaction = await database.kysely
-			.selectFrom("transaction")
-			.select("id")
-			.where("listingId", "=", fixture.listingId)
-			.executeTakeFirstOrThrow();
-
-		const inbox = await database.kysely
-			.selectFrom("inbox")
-			.select([
-				"id",
-				"reference",
-				"type",
-				"userId",
-			])
-			.where("userId", "=", fixture.sellerId)
-			.where("type", "=", "buyer-message")
-			.executeTakeFirstOrThrow();
-
-		expect(inbox.reference).toEqual([
-			fixture.listingId,
-			transaction.id,
-		]);
 	});
 });

@@ -69,16 +69,18 @@ describe("inbox reference", () => {
 			return database.dialect;
 		});
 
-		const { user } = await api.signUpEmail({
-			body: {
-				email: "inbox-reference-direct@test.cz",
-				name: "Inbox Direct",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "inbox-reference-direct@test.cz",
+						name: "Inbox Direct",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const inbox = await Effect.gen(function* () {
-			return yield* inboxCreateFx({
+			const inbox = yield* inboxCreateFx({
 				userId: user.id,
 				reference: [
 					"listing-direct",
@@ -91,11 +93,11 @@ describe("inbox reference", () => {
 				},
 				priority: "common",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(inbox.reference).toEqual([
-			"listing-direct",
-			"transaction-direct",
-		]);
+			expect(inbox.reference).toEqual([
+				"listing-direct",
+				"transaction-direct",
+			]);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

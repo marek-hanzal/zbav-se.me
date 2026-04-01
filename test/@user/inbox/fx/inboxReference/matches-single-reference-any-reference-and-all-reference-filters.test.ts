@@ -70,15 +70,17 @@ describe("inbox reference", () => {
 			return database.dialect;
 		});
 
-		const { user } = await api.signUpEmail({
-			body: {
-				email: "inbox-reference-filter@test.cz",
-				name: "Inbox Filter",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "inbox-reference-filter@test.cz",
+						name: "Inbox Filter",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const inboxIds = await Effect.gen(function* () {
 			const listingInbox = yield* inboxCreateFx({
 				userId: user.id,
 				reference: [
@@ -111,14 +113,12 @@ describe("inbox reference", () => {
 				priority: "high",
 			});
 
-			return {
+			const inboxIds = {
 				listingInboxId: listingInbox.id,
 				otherInboxId: otherInbox.id,
 			};
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		const singleReference = await Effect.gen(function* () {
-			return yield* inboxCollectionFx({
+			const singleReference = yield* inboxCollectionFx({
 				where: {
 					reference: "transaction-1",
 				},
@@ -126,10 +126,8 @@ describe("inbox reference", () => {
 					userId: user.id,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		const anyReference = await Effect.gen(function* () {
-			return yield* inboxCollectionFx({
+			const anyReference = yield* inboxCollectionFx({
 				where: {
 					referenceIn: [
 						"listing-3",
@@ -140,10 +138,8 @@ describe("inbox reference", () => {
 					userId: user.id,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		const allReference = await Effect.gen(function* () {
-			return yield* inboxCollectionFx({
+			const allReference = yield* inboxCollectionFx({
 				where: {
 					referenceAllIn: [
 						"listing-1",
@@ -154,16 +150,16 @@ describe("inbox reference", () => {
 					userId: user.id,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(singleReference.map(({ id }) => id)).toEqual([
-			inboxIds.listingInboxId,
-		]);
-		expect(anyReference.map(({ id }) => id)).toEqual([
-			inboxIds.otherInboxId,
-		]);
-		expect(allReference.map(({ id }) => id)).toEqual([
-			inboxIds.listingInboxId,
-		]);
+			expect(singleReference.map(({ id }) => id)).toEqual([
+				inboxIds.listingInboxId,
+			]);
+			expect(anyReference.map(({ id }) => id)).toEqual([
+				inboxIds.otherInboxId,
+			]);
+			expect(allReference.map(({ id }) => id)).toEqual([
+				inboxIds.listingInboxId,
+			]);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
