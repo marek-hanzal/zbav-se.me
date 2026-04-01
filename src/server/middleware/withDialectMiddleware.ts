@@ -15,7 +15,7 @@ export const withDialectMiddleware = createMiddleware()
 		let instance = dialectMap.get(dsn);
 
 		if (!instance) {
-			logger.debug("Creating dialect instance for {dsn}", {
+			logger.debug("Creating dialect instance", {
 				dsn,
 			});
 
