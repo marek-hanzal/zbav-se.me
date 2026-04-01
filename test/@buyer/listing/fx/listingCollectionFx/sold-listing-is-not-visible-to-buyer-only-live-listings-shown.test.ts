@@ -9,47 +9,51 @@ import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 describe("listingCollectionFx (buyer) — listing status visibility", () => {
 	it("sold listing is NOT visible to buyer (only live listings shown)", async () => {
 		const database = await testabase("listingCollection-sold-hidden");
-		const { api } = auth(() => database.dialect);
+		return Effect.gen(function* () {
+			const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@listing-sold.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@listing-sold.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+			const { user: seller } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "seller@listing-sold.cz",
+						name: "Seller",
+						password: "12345678",
+					},
+				}),
+			);
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@listing-sold.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		// Resolve transaction → listing becomes "sold"
-		const { listingId } = await createResolvedScenarioFx({
-			sellerId: seller.id,
-			buyerId: buyer.id,
-			database,
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const { listingId } = yield* createResolvedScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+				database,
+			});
 
-		const { status } = await database.kysely
-			.selectFrom("listing")
-			.select("status")
-			.where("id", "=", listingId)
-			.executeTakeFirstOrThrow();
+			const { status } = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("listing")
+					.select("status")
+					.where("id", "=", listingId)
+					.executeTakeFirstOrThrow(),
+			);
 
-		expect(status).toBe("sold");
+			expect(status).toBe("sold");
 
-		// Buyer listing collection must not return this listing
-		const collection = await Effect.gen(function* () {
-			return yield* listingCollectionFx({
+			const collection = yield* listingCollectionFx({
 				userId: buyer.id,
 				scope: {},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		const ids = collection.map((l) => l.id);
-		expect(ids).not.toContain(listingId);
+			const ids = collection.map((l) => l.id);
+			expect(ids).not.toContain(listingId);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
