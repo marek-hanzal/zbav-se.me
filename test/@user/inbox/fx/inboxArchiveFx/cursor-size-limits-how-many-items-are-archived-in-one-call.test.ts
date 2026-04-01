@@ -41,58 +41,61 @@ describe("inboxArchiveFx", () => {
 		const database = await testabase("inboxArchive-cursor-limit");
 		const { api } = auth(() => database.dialect);
 
-		const { user } = await api.signUpEmail({
-			body: {
-				email: "user@inbox-archive-cursor.cz",
-				name: "User",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "user@inbox-archive-cursor.cz",
+						name: "User",
+						password: "12345678",
+					},
+				}),
+			);
 
-		await seedInbox(database, [
-			{
-				id: "cursor-1",
-				userId: user.id,
-				reference: [
-					"listing-cursor",
-				],
-				family: "reaction",
-				type: "favourite",
-				payload: {
-					listingId: "listing-cursor",
-				},
-				priority: "common",
-			},
-			{
-				id: "cursor-2",
-				userId: user.id,
-				reference: [
-					"listing-cursor",
-				],
-				family: "reaction",
-				type: "favourite",
-				payload: {
-					listingId: "listing-cursor",
-				},
-				priority: "common",
-			},
-			{
-				id: "cursor-3",
-				userId: user.id,
-				reference: [
-					"listing-cursor",
-				],
-				family: "reaction",
-				type: "favourite",
-				payload: {
-					listingId: "listing-cursor",
-				},
-				priority: "common",
-			},
-		]);
+			yield* Effect.promise(() =>
+				seedInbox(database, [
+					{
+						id: "cursor-1",
+						userId: user.id,
+						reference: [
+							"listing-cursor",
+						],
+						family: "reaction",
+						type: "favourite",
+						payload: {
+							listingId: "listing-cursor",
+						},
+						priority: "common",
+					},
+					{
+						id: "cursor-2",
+						userId: user.id,
+						reference: [
+							"listing-cursor",
+						],
+						family: "reaction",
+						type: "favourite",
+						payload: {
+							listingId: "listing-cursor",
+						},
+						priority: "common",
+					},
+					{
+						id: "cursor-3",
+						userId: user.id,
+						reference: [
+							"listing-cursor",
+						],
+						family: "reaction",
+						type: "favourite",
+						payload: {
+							listingId: "listing-cursor",
+						},
+						priority: "common",
+					},
+				]),
+			);
 
-		// Archive with cursor size 2 — only 2 should be archived
-		await Effect.gen(function* () {
 			yield* inboxArchiveFx({
 				scope: {
 					userId: user.id,
@@ -105,18 +108,20 @@ describe("inboxArchiveFx", () => {
 					size: 2,
 				},
 			});
+
+			const archived = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select("archivedAt")
+					.where("userId", "=", user.id)
+					.execute(),
+			);
+
+			const archivedCount = archived.filter((i) => i.archivedAt !== null).length;
+			const activeCount = archived.filter((i) => i.archivedAt === null).length;
+
+			expect(archivedCount).toBe(2);
+			expect(activeCount).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		const archived = await database.kysely
-			.selectFrom("inbox")
-			.select("archivedAt")
-			.where("userId", "=", user.id)
-			.execute();
-
-		const archivedCount = archived.filter((i) => i.archivedAt !== null).length;
-		const activeCount = archived.filter((i) => i.archivedAt === null).length;
-
-		expect(archivedCount).toBe(2);
-		expect(activeCount).toBe(1);
 	});
 });

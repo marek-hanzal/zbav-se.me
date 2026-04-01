@@ -41,52 +41,57 @@ describe("inboxArchiveFx", () => {
 		const database = await testabase("inboxArchive-scope-isolation");
 		const { api } = auth(() => database.dialect);
 
-		const { user: alice } = await api.signUpEmail({
-			body: {
-				email: "alice@inbox-scope.cz",
-				name: "Alice",
-				password: "12345678",
-			},
-		});
-		const { user: bob } = await api.signUpEmail({
-			body: {
-				email: "bob@inbox-scope.cz",
-				name: "Bob",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: alice } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "alice@inbox-scope.cz",
+						name: "Alice",
+						password: "12345678",
+					},
+				}),
+			);
+			const { user: bob } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "bob@inbox-scope.cz",
+						name: "Bob",
+						password: "12345678",
+					},
+				}),
+			);
 
-		await seedInbox(database, [
-			{
-				id: "scope-alice",
-				userId: alice.id,
-				reference: [
-					"listing-shared",
-				],
-				family: "reaction",
-				type: "favourite",
-				payload: {
-					listingId: "listing-shared",
-				},
-				priority: "common",
-			},
-			{
-				id: "scope-bob",
-				userId: bob.id,
-				reference: [
-					"listing-shared",
-				],
-				family: "reaction",
-				type: "favourite",
-				payload: {
-					listingId: "listing-shared",
-				},
-				priority: "common",
-			},
-		]);
+			yield* Effect.promise(() =>
+				seedInbox(database, [
+					{
+						id: "scope-alice",
+						userId: alice.id,
+						reference: [
+							"listing-shared",
+						],
+						family: "reaction",
+						type: "favourite",
+						payload: {
+							listingId: "listing-shared",
+						},
+						priority: "common",
+					},
+					{
+						id: "scope-bob",
+						userId: bob.id,
+						reference: [
+							"listing-shared",
+						],
+						family: "reaction",
+						type: "favourite",
+						payload: {
+							listingId: "listing-shared",
+						},
+						priority: "common",
+					},
+				]),
+			);
 
-		// Alice archives by reference — scope is alice's userId
-		await Effect.gen(function* () {
 			yield* inboxArchiveFx({
 				scope: {
 					userId: alice.id,
@@ -95,22 +100,25 @@ describe("inboxArchiveFx", () => {
 					reference: "listing-shared",
 				},
 			});
+
+			const aliceItem = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select("archivedAt")
+					.where("id", "=", "scope-alice")
+					.executeTakeFirstOrThrow(),
+			);
+
+			const bobItem = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select("archivedAt")
+					.where("id", "=", "scope-bob")
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(aliceItem.archivedAt).not.toBeNull();
+			expect(bobItem.archivedAt).toBeNull();
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		const aliceItem = await database.kysely
-			.selectFrom("inbox")
-			.select("archivedAt")
-			.where("id", "=", "scope-alice")
-			.executeTakeFirstOrThrow();
-
-		const bobItem = await database.kysely
-			.selectFrom("inbox")
-			.select("archivedAt")
-			.where("id", "=", "scope-bob")
-			.executeTakeFirstOrThrow();
-
-		expect(aliceItem.archivedAt).not.toBeNull();
-		// Bob's item must remain untouched — scope filtered by userId
-		expect(bobItem.archivedAt).toBeNull();
 	});
 });

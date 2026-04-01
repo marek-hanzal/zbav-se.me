@@ -9,12 +9,12 @@ describe("userEventBuyerInfoFx", () => {
 	it("Empty user's info returns nothing", async () => {
 		const kysely = await testabase("userEventBuyerInfoFx-empty");
 
-		const result = await Effect.gen(function* () {
-			return yield* userEventBuyerInfoFx({
+		return Effect.gen(function* () {
+			const result = yield* userEventBuyerInfoFx({
 				userId: "test-user-id",
 			});
-		}).pipe(withKyselyFx(kysely), withDateFx, Effect.runPromise);
 
-		expect(result).toBeNull();
+			expect(result).toBeNull();
+		}).pipe(withKyselyFx(kysely), withDateFx, Effect.runPromise);
 	});
 });
