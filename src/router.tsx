@@ -1,11 +1,17 @@
-import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import { keepPreviousData, QueryClient } from "@tanstack/react-query";
-import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { Container } from "@/lib/client/container";
 import { Logo } from "~/common/ui/logo";
 import { routeTree } from "./_route";
+
+// function getBrowserStorage() {
+// 	if (typeof window === "undefined") {
+// 		return undefined;
+// 	}
+
+// 	return window.sessionStorage;
+// }
 
 export async function getRouter() {
 	const staleTime = 5 * 60 * 1_000;
@@ -58,14 +64,17 @@ export async function getRouter() {
 		defaultViewTransition: true,
 	});
 
-	persistQueryClient({
-		queryClient,
-		persister: createAsyncStoragePersister({
-			storage: typeof window !== "undefined" ? window.sessionStorage : null,
-		}),
-		// maxAge: 30 * 60_1000,
-		maxAge: 0,
-	});
+	// const storage = getBrowserStorage();
+
+	// storage &&
+	// 	persistQueryClient({
+	// 		queryClient,
+	// 		persister: createAsyncStoragePersister({
+	// 			storage,
+	// 		}),
+	// 		// maxAge: 30 * 60_1000,
+	// 		maxAge: 0,
+	// 	});
 
 	setupRouterSsrQueryIntegration({
 		router,

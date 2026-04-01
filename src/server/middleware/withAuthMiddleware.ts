@@ -2,7 +2,6 @@ import { getLogger } from "@logtape/logtape";
 import { createMiddleware } from "@tanstack/react-start";
 import { auth } from "~/server/auth/auth";
 import { withDialectMiddleware } from "~/server/middleware/withDialectMiddleware";
-import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 
 const logger = getLogger([
 	"zbav-se.me",
@@ -13,7 +12,6 @@ const authMap = new Map<string, auth>();
 
 export const withAuthMiddleware = createMiddleware()
 	.middleware([
-		withLogMiddleware,
 		withDialectMiddleware,
 	])
 	.server(async ({ next, context: { dialect, dsn } }) => {

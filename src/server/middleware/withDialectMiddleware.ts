@@ -3,7 +3,6 @@ import { createMiddleware } from "@tanstack/react-start";
 import { type Dialect, PostgresDialect } from "kysely";
 import { Pool } from "~/server/database/pg";
 import { withDsnMiddleware } from "~/server/middleware/withDsnMiddleware";
-import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 
 const logger = getLogger([
 	"zbav-se.me",
@@ -14,7 +13,6 @@ const dialectMap = new Map<string, Dialect>();
 
 export const withDialectMiddleware = createMiddleware()
 	.middleware([
-		withLogMiddleware,
 		withDsnMiddleware,
 	])
 	.server(async ({ next, context: { dsn } }) => {

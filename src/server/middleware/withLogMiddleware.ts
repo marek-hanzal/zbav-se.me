@@ -3,21 +3,28 @@ import { createMiddleware } from "@tanstack/react-start";
 
 export const withLogMiddleware = createMiddleware().server(async ({ next }) => {
 	await configure({
+		reset: true,
 		sinks: {
 			console: getConsoleSink(),
 		},
 		loggers: [
 			{
-				//
 				category: "zbav-se.me",
-				lowestLevel: "info",
+				lowestLevel: "error",
 				sinks: [
 					"console",
 				],
 			},
-			// {
-			//     category: [],
-			// }
+			{
+				category: [
+					"logtape",
+					"meta",
+				],
+				lowestLevel: "debug",
+				sinks: [
+					// "console",
+				],
+			},
 		],
 	});
 
