@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { feedDeleteFx } from "~/buyer/feed/server/fx/feedDeleteFx";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
+import { feedPatchFx } from "~/buyer/feed/server/fx/feedPatchFx";
 import { feedResolveFx } from "~/buyer/feed/server/fx/feedResolveFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
@@ -50,6 +51,35 @@ describe("feedLifecycleFx", () => {
 			);
 
 			expect(foreignResolution._tag).toBe("Left");
+
+			const foreignPatch = yield* Effect.either(
+				feedPatchFx({
+					scope: {
+						userId: stranger.id,
+					},
+					query: {
+						where: {
+							id: feed.id,
+						},
+					},
+					patch: {
+						name: "Foreign patch attempt",
+					},
+				}),
+			);
+			const foreignDelete = yield* Effect.either(
+				feedDeleteFx({
+					scope: {
+						userId: stranger.id,
+					},
+					where: {
+						id: feed.id,
+					},
+				}),
+			);
+
+			expect(foreignPatch._tag).toBe("Left");
+			expect(foreignDelete._tag).toBe("Left");
 
 			const deleted = yield* feedDeleteFx({
 				scope: {

@@ -23,6 +23,15 @@ describe("inboxPatchFx", () => {
 					},
 				}),
 			);
+			const { user: stranger } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "inbox-patch-stranger@test.cz",
+						name: "Inbox Patch Stranger",
+						password: "12345678",
+					},
+				}),
+			);
 
 			yield* Effect.promise(() =>
 				database.kysely
@@ -73,6 +82,35 @@ describe("inboxPatchFx", () => {
 			});
 
 			expect(fetched.archivedAt?.toISOString()).toBe(archivedAt.toISOString());
+
+			const foreignFetch = yield* Effect.either(
+				inboxFetchFx({
+					scope: {
+						userId: stranger.id,
+					},
+					where: {
+						id: "inbox-patch-1",
+					},
+				}),
+			);
+			const foreignPatch = yield* Effect.either(
+				inboxPatchFx({
+					scope: {
+						userId: stranger.id,
+					},
+					query: {
+						where: {
+							id: "inbox-patch-1",
+						},
+					},
+					patch: {
+						archivedAt: null,
+					},
+				}),
+			);
+
+			expect(foreignFetch._tag).toBe("Left");
+			expect(foreignPatch._tag).toBe("Left");
 
 			const activeCount = yield* inboxCountFx({
 				scope: {

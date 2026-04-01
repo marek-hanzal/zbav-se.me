@@ -125,6 +125,18 @@ describe("feedFavouriteReadModelFx", () => {
 			expect(fetched.count).toBe(2);
 			expect(fetched.query.where?.title).toBe("macbook");
 
+			const foreignFetch = yield* Effect.either(
+				feedFavouriteFetchFx({
+					userId: buyer.id,
+					scope: {},
+					where: {
+						id: strangerFeed.id,
+					},
+				}),
+			);
+
+			expect(foreignFetch._tag).toBe("Left");
+
 			const count = yield* feedFavouriteCountFx({
 				userId: buyer.id,
 				scope: {},
@@ -132,6 +144,19 @@ describe("feedFavouriteReadModelFx", () => {
 
 			expect(count.total).toBe(2);
 			expect(count.where).toBe(2);
+
+			const strangerCollection = yield* feedFavouriteCollectionFx({
+				userId: stranger.id,
+				scope: {},
+			});
+			const strangerCount = yield* feedFavouriteCountFx({
+				userId: stranger.id,
+				scope: {},
+			});
+
+			expect(strangerCollection).toHaveLength(1);
+			expect(strangerCollection[0]?.id).toBe(strangerFeed.id);
+			expect(strangerCount.total).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

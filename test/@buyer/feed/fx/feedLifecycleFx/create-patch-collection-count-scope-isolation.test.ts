@@ -78,6 +78,24 @@ describe("feedLifecycleFx", () => {
 			expect(patched.name).toBe("Updated MacBooks");
 			expect(patchedQuery.where?.title).toBe("macbook pro");
 
+			const foreignPatch = yield* Effect.either(
+				feedPatchFx({
+					scope: {
+						userId: stranger.id,
+					},
+					query: {
+						where: {
+							id: firstFeed.id,
+						},
+					},
+					patch: {
+						name: "Foreign Patch Attempt",
+					},
+				}),
+			);
+
+			expect(foreignPatch._tag).toBe("Left");
+
 			const fetched = yield* feedFetchFx({
 				scope: {
 					userId: owner.id,
@@ -105,6 +123,19 @@ describe("feedLifecycleFx", () => {
 			});
 
 			expect(count.where).toBe(2);
+
+			const foreignFetch = yield* Effect.either(
+				feedFetchFx({
+					scope: {
+						userId: stranger.id,
+					},
+					where: {
+						id: firstFeed.id,
+					},
+				}),
+			);
+
+			expect(foreignFetch._tag).toBe("Left");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

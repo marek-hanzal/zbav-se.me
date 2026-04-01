@@ -5,6 +5,7 @@ import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/utils/createOpenScenarioFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 import { transactionEntryCollectionFx } from "~/user/transaction-entry/server/fx/transactionEntryCollectionFx";
+import { transactionEntryCountFx } from "~/user/transaction-entry/server/fx/transactionEntryCountFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
 
@@ -32,6 +33,10 @@ describe("transactionEntry workflow", () => {
 			const { user: buyer } = yield* signUp(
 				"transaction-entry-text-buyer@test.cz",
 				"Transaction Entry Buyer",
+			);
+			const { user: outsider } = yield* signUp(
+				"transaction-entry-text-outsider@test.cz",
+				"Transaction Entry Outsider",
 			);
 
 			const { transactionId, listingId } = yield* createOpenScenarioFx({
@@ -71,6 +76,31 @@ describe("transactionEntry workflow", () => {
 			});
 
 			expect(collection.map((item) => item.id)).toContain(entry.id);
+
+			const outsiderFetch = yield* Effect.either(
+				transactionEntryFetchFx({
+					userId: outsider.id,
+					where: {
+						id: entry.id,
+					},
+				}),
+			);
+			const outsiderCollection = yield* transactionEntryCollectionFx({
+				userId: outsider.id,
+				where: {
+					transactionId,
+				},
+			});
+			const outsiderCount = yield* transactionEntryCountFx({
+				userId: outsider.id,
+				where: {
+					transactionId,
+				},
+			});
+
+			expect(outsiderFetch._tag).toBe("Left");
+			expect(outsiderCollection).toHaveLength(0);
+			expect(outsiderCount.total).toBe(0);
 
 			const inboxItems = yield* Effect.promise(() =>
 				database.kysely
