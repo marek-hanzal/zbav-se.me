@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
@@ -31,7 +32,7 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 				"u.createdAt",
 				eb
 					.selectFrom("listing as l2")
-					.select((eb) => eb.fn.countAll<number>().as("listings"))
+					.select(sql<number>`count(*)::int`.as("listings"))
 					.whereRef("l2.userId", "=", "u.id")
 					.$asScalar()
 					.$notNull()
@@ -54,7 +55,7 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 
 	return {
 		registered: userInfo.createdAt,
-		listings: Number(userInfo.listings),
+		listings: userInfo.listings,
 		events,
 	} satisfies SellerInfoSchema.Type;
 });

@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { DateContextFx } from "@/lib/common/date";
 import type { CleanupSchema } from "~/server/@system/janitor/schema/CleanupSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -18,7 +19,7 @@ export const cleanupCategoryFx = Effect.fn("cleanupCategoryFx")(function* () {
 	const total = yield* tryDbFx(async () =>
 		kysely
 			.selectFrom("category_miss")
-			.select((eb) => eb.fn.count<number>("id").as("count"))
+			.select(sql<number>`count(*)::int`.as("count"))
 			.executeTakeFirstOrThrow(),
 	);
 
@@ -28,7 +29,7 @@ export const cleanupCategoryFx = Effect.fn("cleanupCategoryFx")(function* () {
 
 	return {
 		type: "category",
-		total: Number(total.count),
+		total: total.count,
 		deleted: Number(result.numDeletedRows),
 	} satisfies CleanupSchema.Type;
 });

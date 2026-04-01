@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 
@@ -38,10 +39,10 @@ export const withSeedTableCountsFx = Effect.fn("withSeedTableCountsFx")(function
 		const { total } = yield* tryDbFx(async () =>
 			kysely
 				.selectFrom(table as any)
-				.select((eb) => eb.fn.countAll<number>().as("total"))
+				.select(sql<number>`count(*)::int`.as("total"))
 				.executeTakeFirstOrThrow(),
 		);
-		result[table] = Number(total ?? 0);
+		result[table] = total ?? 0;
 	}
 
 	return result;

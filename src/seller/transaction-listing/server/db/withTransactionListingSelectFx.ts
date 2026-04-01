@@ -28,12 +28,12 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 					.as("gallery"),
 				sql<number>`(${eb
 					.selectFrom("transaction as lt")
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select(sql<number>`count(*)::int`.as("count"))
 					.whereRef("lt.listingId", "=", "l.id")})`.as("count"),
 				sql<number>`coalesce((${eb
 					.selectFrom("inbox as i")
 					.select((eb) =>
-						sql<number>`count(distinct ${eb.ref("i.payload")} ->> 'transactionId')`.as(
+						sql<number>`count(distinct ${eb.ref("i.payload")} ->> 'transactionId')::int`.as(
 							"unreadCount",
 						),
 					)

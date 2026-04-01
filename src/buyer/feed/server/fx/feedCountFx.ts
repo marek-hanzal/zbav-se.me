@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
 import { withFeedCollectionSelectFx } from "~/buyer/feed/server/db/withFeedCollectionSelectFx";
@@ -40,18 +41,14 @@ export const feedCountFx = Effect.fn("feedCountFx")(function* ({
 		}
 
 		const { count } = yield* Effect.promise(async () => {
-			return query
-				.select((eb) => eb.fn.countAll<number>().as("count"))
-				.executeTakeFirstOrThrow();
+			return query.select(sql<number>`count(*)::int`.as("count")).executeTakeFirstOrThrow();
 		});
 
-		const total = Number(count);
-
 		return {
-			total,
-			filter: total,
-			where: total,
-			isEmpty: total === 0,
+			total: count,
+			filter: count,
+			where: count,
+			isEmpty: count === 0,
 			isFilterEmpty: false,
 		};
 	}

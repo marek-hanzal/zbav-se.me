@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { withFeedFavouriteSourceSelectFx } from "~/buyer/feed-favourite/server/db/withFeedFavouriteSourceSelectFx";
 import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
@@ -44,7 +45,7 @@ export const withFeedFavouriteCollectionSelectFx = Effect.fn("withFeedFavouriteC
 			.select((eb) =>
 				eb
 					.selectFrom("favourite")
-					.select((eb) => eb.fn.count<number>("favourite.id").$notNull().as("count"))
+					.select(sql<number>`count(*)::int`.as("count"))
 					.whereRef("favourite.feedId", "=", "f.id")
 					.where("favourite.userId", "=", userId)
 					.$asScalar()

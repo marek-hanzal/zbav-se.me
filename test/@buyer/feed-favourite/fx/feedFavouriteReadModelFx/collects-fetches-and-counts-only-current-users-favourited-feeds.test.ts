@@ -122,7 +122,7 @@ describe("feedFavouriteReadModelFx", () => {
 			});
 
 			expect(fetched.id).toBe(macFeed.id);
-			expect(Number(fetched.count)).toBe(2);
+			expect(fetched.count).toBe(2);
 			expect(fetched.query.where?.title).toBe("macbook");
 
 			const count = yield* feedFavouriteCountFx({
