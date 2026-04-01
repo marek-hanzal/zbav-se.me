@@ -17,31 +17,31 @@ describe("userEventBuyerInfoFx", () => {
 			return database.dialect;
 		});
 
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@test.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@test.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const buyerId = buyer.id;
-		const tCreate = DateTime.now().minus({
-			days: 10,
-		});
-		const tSellerClose = tCreate.plus({
-			hours: 1,
-		});
+			const buyerId = buyer.id;
+			const tCreate = DateTime.now().minus({
+				days: 10,
+			});
+			const tSellerClose = tCreate.plus({
+				hours: 1,
+			});
+			const t2Create = DateTime.now().minus({
+				days: 9,
+			});
+			const t2SellerReject = t2Create.plus({
+				hours: 1,
+			});
 
-		// second group to ensure we have > 1 event overall
-		const t2Create = DateTime.now().minus({
-			days: 9,
-		});
-		const t2SellerReject = t2Create.plus({
-			hours: 1,
-		});
-
-		const result = await Effect.gen(function* () {
 			yield* userEventCreateFx({
 				userId: buyerId,
 				scope: "user",
@@ -95,17 +95,17 @@ describe("userEventBuyerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventBuyerInfoFx({
+			const result = yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
+
+			expect(result).not.toBeNull();
+			if (!result) return;
+
+			expect(result.reaction.total).toBe(2);
+			expect(result.reaction.reactions).toBe(0);
+			expect(result.reaction.terminal).toBe(2);
+			expect(result.reaction.percent).toBe(100);
 		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
-
-		expect(result).not.toBeNull();
-		if (!result) return;
-
-		expect(result.reaction.total).toBe(2);
-		expect(result.reaction.reactions).toBe(0);
-		expect(result.reaction.terminal).toBe(2);
-		expect(result.reaction.percent).toBe(100);
 	});
 });

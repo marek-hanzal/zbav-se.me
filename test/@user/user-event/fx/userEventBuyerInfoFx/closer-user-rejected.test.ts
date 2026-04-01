@@ -17,43 +17,41 @@ describe("userEventBuyerInfoFx", () => {
 			return database.dialect;
 		});
 
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@test.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@test.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const buyerId = buyer.id;
-		const base = DateTime.now().minus({
-			days: 10,
-		});
+			const buyerId = buyer.id;
+			const base = DateTime.now().minus({
+				days: 10,
+			});
+			const t1Create = base;
+			const t1Open = t1Create.plus({
+				minutes: 10,
+			});
+			const t1Reject = t1Open.plus({
+				minutes: 5,
+			});
+			const t2Create = base.plus({
+				days: 1,
+			});
+			const t2Open = t2Create.plus({
+				minutes: 10,
+			});
+			const t2Msg = t2Open.plus({
+				minutes: 1,
+			});
+			const t2Reject = t2Msg.plus({
+				minutes: 1,
+			});
 
-		// tx-1: create -> open (allowed) -> rejected (user) => closer.closed++
-		const t1Create = base;
-		const t1Open = t1Create.plus({
-			minutes: 10,
-		});
-		const t1Reject = t1Open.plus({
-			minutes: 5,
-		});
-
-		// tx-2: create -> message -> rejected => dirty => NOT counted
-		const t2Create = base.plus({
-			days: 1,
-		});
-		const t2Open = t2Create.plus({
-			minutes: 10,
-		});
-		const t2Msg = t2Open.plus({
-			minutes: 1,
-		});
-		const t2Reject = t2Msg.plus({
-			minutes: 1,
-		});
-
-		const result = await Effect.gen(function* () {
 			yield* userEventCreateFx({
 				userId: buyerId,
 				scope: "user",
@@ -145,16 +143,16 @@ describe("userEventBuyerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventBuyerInfoFx({
+			const result = yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
+
+			expect(result).not.toBeNull();
+			if (!result) return;
+
+			expect(result.closer.total).toBe(2);
+			expect(result.closer.closed).toBe(1);
+			expect(result.closer.percent).toBe(50);
 		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
-
-		expect(result).not.toBeNull();
-		if (!result) return;
-
-		expect(result.closer.total).toBe(2);
-		expect(result.closer.closed).toBe(1);
-		expect(result.closer.percent).toBe(50);
 	});
 });

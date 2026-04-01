@@ -17,43 +17,41 @@ describe("userEventBuyerInfoFx", () => {
 			return database.dialect;
 		});
 
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@test.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@test.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const buyerId = buyer.id;
-		const base = DateTime.now().minus({
-			days: 25,
-		});
+			const buyerId = buyer.id;
+			const base = DateTime.now().minus({
+				days: 25,
+			});
+			const t1Create = base;
+			const t1Open = t1Create.plus({
+				hours: 1,
+			});
+			const t1Resolved = t1Open.plus({
+				days: 3,
+			});
+			const t2Create = base.plus({
+				days: 1,
+			});
+			const t2Open = t2Create.plus({
+				hours: 1,
+			});
+			const t2BuyerMsg = t2Open.plus({
+				minutes: 5,
+			});
+			const t2Resolved = t2BuyerMsg.plus({
+				days: 3,
+			});
 
-		// tx-1: seller opens (ping), buyer does nothing, seller ends as "resolved" -> expired++
-		const t1Create = base;
-		const t1Open = t1Create.plus({
-			hours: 1,
-		});
-		const t1Resolved = t1Open.plus({
-			days: 3,
-		});
-
-		// tx-2: seller opens (ping), buyer reacts, seller ends as "resolved" -> NOT expired
-		const t2Create = base.plus({
-			days: 1,
-		});
-		const t2Open = t2Create.plus({
-			hours: 1,
-		});
-		const t2BuyerMsg = t2Open.plus({
-			minutes: 5,
-		});
-		const t2Resolved = t2BuyerMsg.plus({
-			days: 3,
-		});
-
-		const result = await Effect.gen(function* () {
 			// tx-1
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -147,16 +145,16 @@ describe("userEventBuyerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventBuyerInfoFx({
+			const result = yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
+
+			expect(result).not.toBeNull();
+			if (!result) return;
+
+			expect(result.expired.total).toBe(2);
+			expect(result.expired.expired).toBe(1);
+			expect(result.expired.percent).toBe(50);
 		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
-
-		expect(result).not.toBeNull();
-		if (!result) return;
-
-		expect(result.expired.total).toBe(2);
-		expect(result.expired.expired).toBe(1);
-		expect(result.expired.percent).toBe(50);
 	});
 });
