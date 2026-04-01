@@ -83,6 +83,31 @@ describe("favourite read model", () => {
 
 			expect(count.total).toBe(1);
 
+			const filteredCollection = yield* favouriteCollectionFx({
+				scope: {
+					userId: buyer.id,
+				},
+				where: {
+					listingId: listing.id,
+					idIn: [
+						favourite.id,
+						"foreign-favourite-id",
+					],
+				},
+			});
+			const filteredCount = yield* favouriteCountFx({
+				scope: {
+					userId: buyer.id,
+				},
+				where: {
+					listingId: listing.id,
+				},
+			});
+
+			expect(filteredCollection).toHaveLength(1);
+			expect(filteredCollection[0]?.id).toBe(favourite.id);
+			expect(filteredCount.where).toBe(1);
+
 			const strangerCollection = yield* favouriteCollectionFx({
 				scope: {
 					userId: stranger.id,

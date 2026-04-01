@@ -65,6 +65,31 @@ describe("flag read model", () => {
 
 			expect(count.total).toBe(1);
 
+			const filteredCollection = yield* flagCollectionFx({
+				scope: {
+					userId: buyer.id,
+				},
+				where: {
+					listingId: listing.id,
+					idIn: [
+						flagged.id,
+						"foreign-flag-id",
+					],
+				},
+			});
+			const filteredCount = yield* flagCountFx({
+				scope: {
+					userId: buyer.id,
+				},
+				where: {
+					listingId: listing.id,
+				},
+			});
+
+			expect(filteredCollection).toHaveLength(1);
+			expect(filteredCollection[0]?.id).toBe(flagged.id);
+			expect(filteredCount.where).toBe(1);
+
 			const strangerCollection = yield* flagCollectionFx({
 				scope: {
 					userId: stranger.id,

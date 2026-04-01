@@ -68,6 +68,31 @@ describe("ignore read model", () => {
 
 			expect(count.total).toBe(1);
 
+			const filteredCollection = yield* ignoreCollectionFx({
+				scope: {
+					userId: buyer.id,
+				},
+				where: {
+					listingId: listing.id,
+					idIn: [
+						ignored.id,
+						"foreign-ignore-id",
+					],
+				},
+			});
+			const filteredCount = yield* ignoreCountFx({
+				scope: {
+					userId: buyer.id,
+				},
+				where: {
+					listingId: listing.id,
+				},
+			});
+
+			expect(filteredCollection).toHaveLength(1);
+			expect(filteredCollection[0]?.id).toBe(ignored.id);
+			expect(filteredCount.where).toBe(1);
+
 			const strangerCollection = yield* ignoreCollectionFx({
 				scope: {
 					userId: stranger.id,

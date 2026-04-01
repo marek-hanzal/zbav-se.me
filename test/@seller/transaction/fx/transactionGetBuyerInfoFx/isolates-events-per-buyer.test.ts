@@ -1,0 +1,152 @@
+import { Effect } from "effect";
+import { DateTime } from "luxon";
+import { describe, expect, it } from "vitest";
+import { DateContextFx } from "@/lib/common/date";
+import { transactionGetBuyerInfoFx } from "~/seller/transaction/server/fx/transactionGetBuyerInfoFx";
+import { auth } from "~/server/auth/auth";
+import { testabase } from "~/test/testabase";
+import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
+import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+
+describe("transactionGetBuyerInfoFx", () => {
+	it("returns buyer events only for the buyer behind the requested transaction", async () => {
+		const database = await testabase("transactionGetBuyerInfoFx-event-isolation");
+		const { api } = auth(() => database.dialect);
+
+		return Effect.gen(function* () {
+			const signUp = (email: string, name: string) =>
+				Effect.promise(() =>
+					api.signUpEmail({
+						body: {
+							email,
+							name,
+							password: "12345678",
+						},
+					}),
+				);
+
+			const { user: seller } = yield* signUp("buyer-info-owner@test.cz", "Buyer Info Owner");
+			const { user: buyerA } = yield* signUp("buyer-info-a@test.cz", "Buyer Info A");
+			const { user: buyerB } = yield* signUp("buyer-info-b@test.cz", "Buyer Info B");
+
+			const scenarioA = yield* createPendingScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyerA.id,
+			});
+			const scenarioB = yield* createPendingScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyerB.id,
+			});
+
+			const transactionA = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction")
+					.select("id")
+					.where("listingId", "=", scenarioA.listingId)
+					.where("userId", "=", buyerA.id)
+					.executeTakeFirstOrThrow(),
+			);
+			const transactionB = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction")
+					.select("id")
+					.where("listingId", "=", scenarioB.listingId)
+					.where("userId", "=", buyerB.id)
+					.executeTakeFirstOrThrow(),
+			);
+
+			yield* userEventCreateFx({
+				userId: buyerA.id,
+				scope: "user",
+				source: "transaction",
+				group: "buyer-info-a-group",
+				event: "transaction.create",
+				isTerminal: false,
+			}).pipe(
+				Effect.provideService(DateContextFx, {
+					now: () =>
+						DateTime.now().minus({
+							days: 10,
+						}),
+				}),
+			);
+			yield* userEventCreateFx({
+				userId: buyerA.id,
+				scope: "user",
+				source: "transaction",
+				group: "buyer-info-a-group",
+				event: "transaction.message",
+				isTerminal: false,
+			}).pipe(
+				Effect.provideService(DateContextFx, {
+					now: () =>
+						DateTime.now().minus({
+							days: 9,
+						}),
+				}),
+			);
+			yield* userEventCreateFx({
+				userId: buyerA.id,
+				scope: "user",
+				source: "transaction",
+				group: "buyer-info-a-group-extra-1",
+				event: "transaction.create",
+				isTerminal: false,
+			}).pipe(
+				Effect.provideService(DateContextFx, {
+					now: () =>
+						DateTime.now().minus({
+							days: 7,
+						}),
+				}),
+			);
+			yield* userEventCreateFx({
+				userId: buyerA.id,
+				scope: "user",
+				source: "transaction",
+				group: "buyer-info-a-group-extra-2",
+				event: "transaction.create",
+				isTerminal: false,
+			}).pipe(
+				Effect.provideService(DateContextFx, {
+					now: () =>
+						DateTime.now().minus({
+							days: 6,
+						}),
+				}),
+			);
+
+			yield* userEventCreateFx({
+				userId: buyerB.id,
+				scope: "user",
+				source: "transaction",
+				group: "buyer-info-b-group",
+				event: "transaction.create",
+				isTerminal: false,
+			}).pipe(
+				Effect.provideService(DateContextFx, {
+					now: () =>
+						DateTime.now().minus({
+							days: 8,
+						}),
+				}),
+			);
+
+			const buyerAInfo = yield* transactionGetBuyerInfoFx({
+				userId: seller.id,
+				transactionId: transactionA.id,
+			});
+			const buyerBInfo = yield* transactionGetBuyerInfoFx({
+				userId: seller.id,
+				transactionId: transactionB.id,
+			});
+
+			expect(buyerAInfo.events).not.toBeNull();
+			expect(buyerBInfo.events).not.toBeNull();
+			expect(buyerAInfo.events?.reaction.total ?? 0).toBeGreaterThan(
+				buyerBInfo.events?.reaction.total ?? 0,
+			);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+});
