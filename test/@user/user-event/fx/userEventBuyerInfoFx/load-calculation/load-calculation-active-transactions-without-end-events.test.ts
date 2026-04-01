@@ -17,20 +17,22 @@ describe("userEventBuyerInfoFx", () => {
 			return database.dialect;
 		});
 
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@test.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const { user: buyer } = yield* Effect.promise(() =>
+				api.signUpEmail({
+					body: {
+						email: "buyer@test.cz",
+						name: "Buyer",
+						password: "12345678",
+					},
+				}),
+			);
 
-		const buyerId = buyer.id;
-		const baseTime = DateTime.now().minus({
-			days: 30,
-		});
+			const buyerId = buyer.id;
+			const baseTime = DateTime.now().minus({
+				days: 30,
+			});
 
-		const result = await Effect.gen(function* () {
 			// Active: tx-1 (create only)
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -143,15 +145,14 @@ describe("userEventBuyerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventBuyerInfoFx({
+			const result = yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
+
+			expect(result).not.toBeNull();
+			if (!result) return;
+
+			expect(result.load.bucket).toBe("medium");
 		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
-
-		expect(result).not.toBeNull();
-		if (!result) return;
-
-		// Active: tx-1, tx-3, tx-4 => 3 => medium (lowMax=1, mediumMax=3)
-		expect(result.load.bucket).toBe("medium");
 	});
 });
