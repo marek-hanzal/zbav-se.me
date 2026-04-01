@@ -31,6 +31,7 @@ export const withLogMiddleware = createMiddleware().server(async ({ next }) => {
 					formatter: redactByPattern(
 						getPrettyFormatter({
 							categoryWidth: 42,
+							properties: true,
 						}),
 						[
 							// {
@@ -88,20 +89,15 @@ export const withLogMiddleware = createMiddleware().server(async ({ next }) => {
 		],
 	});
 
-	const traceId = genId();
+	const context = {
+		traceId: genId(),
+	} as const;
 
-	return withContext(
-		{
-			traceId,
-		},
-		async () => {
-			return next({
-				context: {
-					logger: getLogger("zbav-se.me").with({
-						traceId,
-					}),
-				},
-			});
-		},
-	);
+	return withContext(context, async () => {
+		return next({
+			context: {
+				rootLogger: getLogger("zbav-se.me").with(context),
+			},
+		});
+	});
 });

@@ -19,7 +19,11 @@ export const feedCollectionFn = createServerFn()
 		withUserMiddleware,
 	])
 	.inputValidator(FeedQuerySchema)
-	.handler(async ({ data, context: { database, user, logger } }) => {
+	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
+		const logger = rootLogger.getChild(name);
+
+		logger.debug(name, data);
+
 		return zodGuardFx({
 			schema: z.array(FeedSchema),
 			dataFx: feedCollectionFx({

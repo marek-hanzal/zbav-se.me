@@ -9,7 +9,9 @@ export const withUserMiddleware = createMiddleware()
 		withLogMiddleware,
 		withAuthMiddleware,
 	])
-	.server(async ({ request, next, context: { auth, logger } }) => {
+	.server(async ({ request, next, context: { auth, rootLogger } }) => {
+		const logger = rootLogger.getChild("withUserMiddleware");
+
 		const data = await auth.api.getSession({
 			headers: request.headers,
 		});
@@ -24,19 +26,16 @@ export const withUserMiddleware = createMiddleware()
 			});
 		}
 
-		return withContext(
-			{
-				userId: data.user.id,
-			},
-			async () => {
-				return next({
-					context: {
-						user: data.user,
-						logger: logger.with({
-							userId: data.user.id,
-						}),
-					},
-				});
-			},
-		);
+		const context = {
+			userId: data.user.id,
+		} as const;
+
+		return withContext(context, async () => {
+			return next({
+				context: {
+					user: data.user,
+					rootLogger: rootLogger.with(context),
+				},
+			});
+		});
 	});
