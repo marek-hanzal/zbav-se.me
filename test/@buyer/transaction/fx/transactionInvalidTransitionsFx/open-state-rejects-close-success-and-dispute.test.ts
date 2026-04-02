@@ -53,11 +53,7 @@ describe("buyer transaction invalid transitions", () => {
 				database.kysely
 					.selectFrom("inbox")
 					.select((eb) => eb.fn.countAll<number>().as("count"))
-					.where(
-						sql<boolean>`reference @> ${JSON.stringify([
-							transactionId,
-						])}::jsonb`,
-					)
+					.where(sql<boolean>`reference @> ARRAY[${transactionId}]::text[]`)
 					.executeTakeFirstOrThrow(),
 			);
 
@@ -111,11 +107,7 @@ describe("buyer transaction invalid transitions", () => {
 				database.kysely
 					.selectFrom("inbox")
 					.select((eb) => eb.fn.countAll<number>().as("count"))
-					.where(
-						sql<boolean>`reference @> ${JSON.stringify([
-							transactionId,
-						])}::jsonb`,
-					)
+					.where(sql<boolean>`reference @> ARRAY[${transactionId}]::text[]`)
 					.executeTakeFirstOrThrow(),
 			);
 
