@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import type { withDatabaseFx } from "@/lib/common/database";
 import type { Database } from "~/server/database/Database";
 
@@ -32,7 +33,7 @@ export const seedTestLocationsFx = Effect.fn("seedTestLocationsFx")(function* ({
 					hash: "test:praha:cs",
 					lat: 50.075539,
 					lon: 14.4378,
-					geo: "geo",
+					geo: sql`default`,
 				},
 			])
 			.onConflict((oc) =>
