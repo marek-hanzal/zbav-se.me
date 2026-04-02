@@ -3,10 +3,10 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUserFx } from "~/test/utils/createUserFx";
-import { seedUserEventTimelineFx } from "~/test/utils/seedUserEventTimelineFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createUserFx } from "~/test/user/fx/createUserFx";
+import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Reaction: seller terminal before open counts as terminal reaction", async () => {

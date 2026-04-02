@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 import { userExTokenDisableFx } from "~/user/user-ex/server/fx/userExTokenDisableFx";
 import { userExTokenEnableFx } from "~/user/user-ex/server/fx/userExTokenEnableFx";
 

@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createOpenScenarioFx } from "~/test/utils/createOpenScenarioFx";
-import { createResolvedScenarioFx } from "~/test/utils/createResolvedScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
+import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 
 describe("transactionEntry workflow", () => {

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
 import type { testabase } from "~/test/testabase";
-import { createOpenScenarioFx } from "~/test/utils/createOpenScenarioFx";
+import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 

@@ -2,9 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createResolvedScenarioFx } from "~/test/utils/createResolvedScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 
 describe("transactionAcceptFx", () => {
 	it("invalid: cannot accept an already resolved transaction", async () => {

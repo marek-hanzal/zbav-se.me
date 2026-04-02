@@ -4,9 +4,9 @@ import { transactionCloseFx } from "~/buyer/transaction/server/fx/transactionClo
 import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
 import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createOpenScenarioFx } from "~/test/utils/createOpenScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 
 describe("buyer transaction invalid transitions", () => {
 	it("rejects close, success and dispute while the transaction is still open", async () => {

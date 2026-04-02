@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
 import { auth } from "~/server/auth/auth";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { expect, test } from "./test";
 
 test("registers the shared user in database B", async ({ page, database, db }) => {

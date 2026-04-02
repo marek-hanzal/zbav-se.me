@@ -4,9 +4,9 @@ import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionD
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 
 describe("transactionLifecycleEdgeCases (buyer)", () => {
 	it("dispute: buyer initiates dispute and seller resolves in buyer's favor", async () => {

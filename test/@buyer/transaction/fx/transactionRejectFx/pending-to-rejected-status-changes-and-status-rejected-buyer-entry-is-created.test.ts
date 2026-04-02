@@ -2,9 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionRejectFx } from "~/buyer/transaction/server/fx/transactionRejectFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 
 describe("transactionRejectFx (buyer)", () => {
 	it("pending → rejected: status changes and status-rejected-buyer entry is created", async () => {

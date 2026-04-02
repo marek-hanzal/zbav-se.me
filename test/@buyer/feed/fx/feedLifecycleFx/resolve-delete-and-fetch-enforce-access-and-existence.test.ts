@@ -6,8 +6,8 @@ import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import { feedPatchFx } from "~/buyer/feed/server/fx/feedPatchFx";
 import { feedResolveFx } from "~/buyer/feed/server/fx/feedResolveFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("feedLifecycleFx", () => {
 	it("resolves for owner, rejects foreign access, and deletes feed cleanly", async () => {

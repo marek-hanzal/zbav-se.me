@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { categoryMissCreateFx } from "~/session/category-miss/server/fx/categoryMissCreateFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("categoryMissCreateFx", () => {
 	it("ignores short input and increments existing category miss rows", async () => {

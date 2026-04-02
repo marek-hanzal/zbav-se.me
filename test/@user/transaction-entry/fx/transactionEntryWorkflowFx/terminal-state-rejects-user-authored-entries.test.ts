@@ -2,9 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCloseFx } from "~/buyer/transaction/server/fx/transactionCloseFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createResolvedScenarioFx } from "~/test/utils/createResolvedScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 
 describe("transactionEntry workflow", () => {

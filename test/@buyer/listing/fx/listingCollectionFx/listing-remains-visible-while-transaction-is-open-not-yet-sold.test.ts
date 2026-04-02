@@ -2,9 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createOpenScenarioFx } from "~/test/utils/createOpenScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 
 describe("listingCollectionFx (buyer) — listing status visibility", () => {
 	it("listing remains visible while transaction is open (not yet sold)", async () => {

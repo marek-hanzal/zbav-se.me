@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { feedGalleryCreateFx } from "~/buyer/feed-gallery/server/fx/feedGalleryCreateFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("feedGalleryCreateFx", () => {
 	it("rejects empty upload list", async () => {

@@ -4,7 +4,17 @@ import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
-export const createListingFx = (sellerId: string) =>
+export namespace createListingFx {
+	export interface Props {
+		title?: string;
+		locationId?: string;
+	}
+}
+
+export const createListingFx = (
+	sellerId: string,
+	{ title = "Test listing", locationId }: createListingFx.Props = {},
+) =>
 	Effect.gen(function* () {
 		const category = yield* categoryFetchFx({
 			where: {
@@ -13,11 +23,19 @@ export const createListingFx = (sellerId: string) =>
 			scope: {},
 		});
 
-		const location = yield* locationAutocompleteFx({
-			lang: "cs",
-			text: "Praha",
-			limit: 1,
-		});
+		const locations = locationId
+			? []
+			: yield* locationAutocompleteFx({
+					lang: "cs",
+					text: "Praha",
+					limit: 1,
+				});
+		const location = locations[0];
+		const resolvedLocationId = locationId ?? location?.id;
+
+		if (!resolvedLocationId) {
+			throw new Error("Expected location autocomplete to return Praha");
+		}
 
 		const upload = yield* uploadCreateFx({
 			url: "https://cdn.zbav-se.me/test.jpg",
@@ -29,12 +47,11 @@ export const createListingFx = (sellerId: string) =>
 			condition: 1,
 			categoryId: category.id,
 			expiresAt: "1-month",
-			// biome-ignore lint/style/noNonNullAssertion: Asserted above via locationAutocompleteFx.
-			locationId: location[0]!.id,
+			locationId: resolvedLocationId,
 			price: 500,
 			priceType: "open",
 			restriction: "none",
-			title: "Test listing",
+			title,
 			uploadIds: [
 				upload.id,
 			],

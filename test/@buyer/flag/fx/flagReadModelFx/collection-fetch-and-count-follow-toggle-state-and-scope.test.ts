@@ -5,9 +5,9 @@ import { flagCountFx } from "~/buyer/flag/server/fx/flagCountFx";
 import { flagFetchFx } from "~/buyer/flag/server/fx/flagFetchFx";
 import { flagToggleFx } from "~/buyer/flag/server/fx/flagToggleFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
-import { createListingFx } from "~/test/utils/createListingFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("flag read model", () => {
 	it("collection, fetch and count reflect toggle state and respect scope", async () => {

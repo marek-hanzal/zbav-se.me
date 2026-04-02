@@ -2,11 +2,11 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionPatchFx } from "~/seller/transaction/server/fx/transactionPatchFx";
 import { auth } from "~/server/auth/auth";
+import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
-import { createUsersFx } from "~/test/utils/createUsersFx";
-import { expectErrorFx } from "~/test/utils/expectErrorFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
+import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("transactionPatchFx", () => {
 	it("rejects a foreign seller patch and keeps the transaction unchanged", async () => {

@@ -6,8 +6,8 @@ import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import { feedPatchFx } from "~/buyer/feed/server/fx/feedPatchFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("feedLifecycleFx", () => {
 	it("creates, patches, collects and counts feeds while respecting owner scope", async () => {

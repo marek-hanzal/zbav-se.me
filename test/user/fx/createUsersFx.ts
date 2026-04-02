@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import type { auth } from "~/server/auth/auth";
-import { createUserFx } from "~/test/utils/createUserFx";
+import { createUserFx } from "~/test/user/fx/createUserFx";
 
 export namespace createUsersFx {
 	export interface Props {

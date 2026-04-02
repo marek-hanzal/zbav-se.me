@@ -6,9 +6,9 @@ import { favouriteFetchFx } from "~/buyer/favourite/server/fx/favouriteFetchFx";
 import { favouriteToggleFx } from "~/buyer/favourite/server/fx/favouriteToggleFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
-import { createListingFx } from "~/test/utils/createListingFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("favourite read model", () => {
 	it("collection, fetch and count reflect toggle state and respect scope", async () => {

@@ -5,9 +5,9 @@ import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionD
 import { transactionRejectFx } from "~/buyer/transaction/server/fx/transactionRejectFx";
 import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createResolvedScenarioFx } from "~/test/utils/createResolvedScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 
 describe("buyer transaction invalid transitions", () => {
 	it("rejects buyer actions once the transaction is already closed", async () => {

@@ -4,9 +4,9 @@ import { transactionCollectionFx } from "~/seller/transaction/server/fx/transact
 import { transactionCountFx } from "~/seller/transaction/server/fx/transactionCountFx";
 import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 
 describe("seller transaction read model", () => {
 	it("collection, fetch and count respect seller scope and expose unreadCount", async () => {

@@ -2,11 +2,11 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { thumbCreateFx } from "~/buyer/thumb/server/fx/thumbCreateFx";
 import { auth } from "~/server/auth/auth";
+import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
-import { createListingFx } from "~/test/utils/createListingFx";
-import { createUserFx } from "~/test/utils/createUserFx";
-import { expectErrorFx } from "~/test/utils/expectErrorFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createUserFx } from "~/test/user/fx/createUserFx";
 
 describe("thumbCreateFx", () => {
 	it("rejects when seller tries to thumb their own listing", async () => {

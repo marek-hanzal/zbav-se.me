@@ -7,9 +7,9 @@ import { transactionCountFx } from "~/seller/transaction/server/fx/transactionCo
 import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 
 describe("seller transaction read model", () => {
 	it("filters by where combinations and keeps foreign seller data out", async () => {

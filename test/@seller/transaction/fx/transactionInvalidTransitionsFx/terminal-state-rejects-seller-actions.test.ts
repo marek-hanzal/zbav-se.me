@@ -5,9 +5,9 @@ import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionA
 import { transactionRejectFx } from "~/seller/transaction/server/fx/transactionRejectFx";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createResolvedScenarioFx } from "~/test/utils/createResolvedScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
 
 describe("seller transaction invalid transitions", () => {
 	it("rejects seller actions once the transaction is terminal", async () => {

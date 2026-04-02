@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { createListingFx } from "~/test/utils/createListingFx";
+import { createListingFx } from "~/test/listing/fx/createListingFx";
 
 type CreatePendingScenarioInput = {
 	sellerId: string;

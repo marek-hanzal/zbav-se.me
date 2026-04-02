@@ -1,11 +1,12 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { auth } from "~/server/auth/auth";
+import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { fetchInboxItemsFx } from "~/test/inbox/fx/fetchInboxItemsFx";
 import { testabase } from "~/test/testabase";
-import { createOpenScenarioFx } from "~/test/utils/createOpenScenarioFx";
-import { createUsersFx } from "~/test/utils/createUsersFx";
-import { expectErrorFx } from "~/test/utils/expectErrorFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
+import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { transactionEntryCollectionFx } from "~/user/transaction-entry/server/fx/transactionEntryCollectionFx";
 import { transactionEntryCountFx } from "~/user/transaction-entry/server/fx/transactionEntryCountFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
@@ -88,18 +89,11 @@ describe("transactionEntry workflow", () => {
 			expect(outsiderCollection).toHaveLength(0);
 			expect(outsiderCount.total).toBe(0);
 
-			const inboxItems = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("inbox")
-					.select([
-						"type",
-						"reference",
-						"payload",
-					])
-					.where("userId", "=", seller.id)
-					.where("type", "=", "buyer-message")
-					.execute(),
-			);
+			const inboxItems = yield* fetchInboxItemsFx({
+				database,
+				userId: seller.id,
+				type: "buyer-message",
+			});
 
 			const matchingInbox = inboxItems.find(
 				(item) =>

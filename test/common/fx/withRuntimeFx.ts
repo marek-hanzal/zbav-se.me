@@ -11,23 +11,33 @@ import { withUploadFx } from "~/user/upload/server/context/withUploadFx";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 
-export const withRuntimeFx = (database: TestDatabase) => {
-	const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
-	const logger = getLogger("zbav-se.me");
+const logger = getLogger("zbav-se.me");
 
+const withBaseRuntimeFx = (database: TestDatabase) => {
 	return <A, E, R>(eff: Effect.Effect<A, E, R>) =>
 		eff.pipe(
 			withLoggerFx(logger),
 			withKyselyFx(database),
 			withDateFx,
 			withTransactionContextFx(),
-			withLocationFx({
-				api: "https://api.geoapify.com",
-				autocomplete: "/v1/geocode/autocomplete",
-				geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
-			}),
 			withUploadFx({
 				cdn: "https://cdn.zbav-se.me",
 			}),
 		);
 };
+
+export const withRuntimeFx = (database: TestDatabase) => {
+	const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
+
+	return <A, E, R>(eff: Effect.Effect<A, E, R>) =>
+		eff.pipe(
+			withBaseRuntimeFx(database),
+			withLocationFx({
+				api: "https://api.geoapify.com",
+				autocomplete: "/v1/geocode/autocomplete",
+				geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
+			}),
+		);
+};
+
+export const withExternalRuntimeFx = withRuntimeFx;
