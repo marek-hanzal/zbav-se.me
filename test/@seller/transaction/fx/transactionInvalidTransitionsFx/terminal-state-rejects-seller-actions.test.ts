@@ -4,37 +4,25 @@ import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionS
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { transactionRejectFx } from "~/seller/transaction/server/fx/transactionRejectFx";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
-import { auth } from "~/server/auth/auth";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 
 describe("seller transaction invalid transitions", () => {
 	it("rejects seller actions once the transaction is terminal", async () => {
 		const database = await testabase("sellerTransactionFx-invalid-terminal-actions");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"seller-terminal-invalid@test.cz",
-				"Seller Terminal Invalid",
-			);
-			const { user: buyer } = yield* signUp(
-				"buyer-terminal-invalid@test.cz",
-				"Buyer Terminal Invalid",
-			);
+			const seller = yield* createDbUserFx({
+				email: "seller-terminal-invalid@test.cz",
+				name: "Seller Terminal Invalid",
+			});
+			const buyer = yield* createDbUserFx({
+				email: "buyer-terminal-invalid@test.cz",
+				name: "Buyer Terminal Invalid",
+			});
 
 			const { transactionId } = yield* createResolvedScenarioFx({
 				sellerId: seller.id,

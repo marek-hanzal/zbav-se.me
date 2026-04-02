@@ -5,24 +5,26 @@ import { transactionCountFx } from "~/buyer/transaction/server/fx/transactionCou
 import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
-import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 
 describe("buyer transactionCollectionFx", () => {
 	it("filters active transactions by inbox state within buyer scope", async () => {
 		const database = await testabase("buyer-transactionCollection-active");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller, buyer } = yield* createUsersFx({
-				api,
-				slug: "buyer-transaction-collection-direct",
+			const seller = yield* createDbUserFx({
+				email: "buyer-transaction-collection-seller@test.cz",
+				name: "Buyer Transaction Collection Seller",
+			});
+			const buyer = yield* createDbUserFx({
+				email: "buyer-transaction-collection-buyer@test.cz",
+				name: "Buyer Transaction Collection Buyer",
 			});
 			const listing = yield* getDefaultListingCreateFx;
 
@@ -92,12 +94,15 @@ describe("buyer transactionCollectionFx", () => {
 
 	it("filters statusIn and keeps count consistent within buyer scope", async () => {
 		const database = await testabase("buyer-transactionCollection-statusIn");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller, buyer } = yield* createUsersFx({
-				api,
-				slug: "buyer-transaction-collection-status",
+			const seller = yield* createDbUserFx({
+				email: "buyer-transaction-status-seller@test.cz",
+				name: "Buyer Transaction Status Seller",
+			});
+			const buyer = yield* createDbUserFx({
+				email: "buyer-transaction-status-buyer@test.cz",
+				name: "Buyer Transaction Status Buyer",
 			});
 			const listing = yield* getDefaultListingCreateFx;
 
