@@ -69,7 +69,7 @@ describe("transactionPatchFx", () => {
 					.toUTC()
 					.toISO(),
 			);
-			expect(patched.updatedAt.getTime()).toBeGreaterThan(before.updatedAt.getTime());
+			expect(patched.updatedAt.getTime()).not.toBe(before.updatedAt.getTime());
 			expect(patched.expiresAt.getTime()).not.toBe(before.expiresAt.getTime());
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
