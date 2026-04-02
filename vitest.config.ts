@@ -42,6 +42,11 @@ export default defineConfig({
 		sequence: {
 			shuffle: false,
 		},
+		benchmark: {
+			reporters: [
+				"default",
+			],
+		},
 		//
 		// testTimeout: 10_000,
 		//
