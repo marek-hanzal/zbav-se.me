@@ -59,12 +59,12 @@ describe("galleryCollectionFx", () => {
 			});
 
 			expect(sellerCollection).toHaveLength(2);
-			expect(
-				sellerCollection.map((gallery) => gallery.id).sort(),
-			).toEqual([
-				sellerFirst.id,
-				sellerSecond.id,
-			].sort());
+			expect(sellerCollection.map((gallery) => gallery.id).sort()).toEqual(
+				[
+					sellerFirst.id,
+					sellerSecond.id,
+				].sort(),
+			);
 			expect(sellerCount.total).toBe(2);
 			expect(sellerCount.where).toBe(2);
 			expect(sellerCount.filter).toBe(2);

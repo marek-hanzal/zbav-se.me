@@ -1,0 +1,111 @@
+import { Effect } from "effect";
+import { describe, expect, it } from "vitest";
+import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
+import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { testabase } from "~/test/testabase";
+import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { galleryItemCollectionFx } from "~/user/gallery-item/server/fx/galleryItemCollectionFx";
+import { galleryItemCountFx } from "~/user/gallery-item/server/fx/galleryItemCountFx";
+import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+
+describe("galleryItemCollectionFx", () => {
+	it("filters by gallery, owner scope and ids while keeping count consistent", async () => {
+		const database = await testabase("galleryItemCollectionFx-contract");
+		const { api } = auth(() => database.dialect);
+
+		return Effect.gen(function* () {
+			const { seller, buyer, stranger } = yield* createUsersFx({
+				api,
+				slug: "gallery-item-collection",
+			});
+
+			const sellerFirstUpload = yield* uploadCreateFx({
+				userId: seller.id,
+				url: "https://cdn.zbav-se.me/gallery-item-collection-1.jpg",
+			});
+			const sellerSecondUpload = yield* uploadCreateFx({
+				userId: seller.id,
+				url: "https://cdn.zbav-se.me/gallery-item-collection-2.jpg",
+			});
+			const buyerUpload = yield* uploadCreateFx({
+				userId: buyer.id,
+				url: "https://cdn.zbav-se.me/gallery-item-collection-3.jpg",
+			});
+
+			const sellerDraft = yield* draftCreateFx({
+				userId: seller.id,
+				title: "Seller Gallery",
+				uploadIds: [
+					sellerFirstUpload.id,
+					sellerSecondUpload.id,
+				],
+			});
+			const buyerDraft = yield* draftCreateFx({
+				userId: buyer.id,
+				title: "Buyer Gallery",
+				uploadIds: [
+					buyerUpload.id,
+				],
+			});
+
+			const sellerItems = yield* galleryItemCollectionFx({
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					galleryId: sellerDraft.galleryId,
+				},
+			});
+
+			const firstSellerItem = sellerItems[0];
+
+			if (!firstSellerItem) {
+				throw new Error("Expected seller gallery to contain at least one item");
+			}
+
+			const filteredByIds = yield* galleryItemCollectionFx({
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					idIn: [
+						firstSellerItem.id,
+						"missing-gallery-item-id",
+					],
+				},
+			});
+			const sellerCount = yield* galleryItemCountFx({
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					galleryId: sellerDraft.galleryId,
+				},
+			});
+			const strangerItems = yield* galleryItemCollectionFx({
+				scope: {
+					userId: stranger.id,
+				},
+				where: {
+					galleryId: sellerDraft.galleryId,
+				},
+			});
+			const buyerOwnItems = yield* galleryItemCollectionFx({
+				scope: {
+					userId: buyer.id,
+				},
+				where: {
+					galleryId: buyerDraft.galleryId,
+				},
+			});
+
+			expect(sellerItems).toHaveLength(2);
+			expect(filteredByIds).toHaveLength(1);
+			expect(filteredByIds[0]?.id).toBe(firstSellerItem.id);
+			expect(sellerCount.where).toBe(2);
+			expect(strangerItems).toEqual([]);
+			expect(buyerOwnItems).toHaveLength(1);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+});
