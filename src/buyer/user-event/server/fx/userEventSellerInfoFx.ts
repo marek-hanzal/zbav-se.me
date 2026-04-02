@@ -6,7 +6,7 @@ import { median } from "@/lib/common/median";
 import { p90 } from "@/lib/common/p90";
 import type { UserEventSellerSchema } from "~/buyer/user-event/server/schema/UserEventSellerSchema";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
-import { computeActivity } from "~/user/user-event/server/fx/computeActivity";
+import { computeActivityFx } from "~/user/user-event/server/fx/computeActivityFx";
 import { computeLoad } from "~/user/user-event/server/fx/computeLoad";
 import { userEventCollectionFx } from "~/user/user-event/server/fx/userEventCollectionFx";
 import type { ActivityEnumSchema } from "~/user/user-event/server/schema/ActivityEnumSchema";
@@ -555,8 +555,14 @@ export const userEventSellerInfoFx = Effect.fn("userEventSellerInfoFx")(function
 		rejected: computeSellerRejected(source),
 		resolved: computeSellerResolved(source),
 		expired: computeSellerExpired(source),
-		load: computeLoad(source, "foreign"),
-		activity: computeActivity(source, cutoff),
+		load: computeLoad({
+			source,
+			createScope: "foreign",
+		}),
+		activity: yield* computeActivityFx({
+			source,
+			days: cutoff,
+		}),
 	};
 
 	return {

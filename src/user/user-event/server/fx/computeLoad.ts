@@ -1,10 +1,23 @@
+import type { UserEventScopeEnumSchema } from "~/common/user-event/enum/UserEventScopeEnumSchema";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { LoadEnumSchema } from "../schema/LoadEnumSchema";
 
-const LOAD_THRESHOLDS_DEFAULT = {
-	lowMax: 1,
-	mediumMax: 3,
-} as const;
+export namespace computeLoad {
+	export interface Thresholds {
+		lowMax: number;
+		mediumMax: number;
+	}
+
+	export interface Props {
+		source: UserEventTableSchema.Type[];
+		createScope: UserEventScopeEnumSchema.Type;
+		thresholds?: Thresholds;
+	}
+
+	export interface Result {
+		bucket: LoadEnumSchema.Type;
+	}
+}
 
 /**
  * Counts "active" opened transactions per group (transaction.create in given scope, no terminal event),
@@ -12,16 +25,14 @@ const LOAD_THRESHOLDS_DEFAULT = {
  *
  * @param createScope - Which scope's transaction.create counts as "created" (user = buyer-created, foreign = seller-view of buyer-created).
  */
-export const computeLoad = (
-	source: UserEventTableSchema.Type[],
-	createScope: "user" | "foreign",
-	thresholds: {
-		lowMax: number;
-		mediumMax: number;
-	} = LOAD_THRESHOLDS_DEFAULT,
-): {
-	bucket: LoadEnumSchema.Type;
-} => {
+export const computeLoad = ({
+	source,
+	createScope,
+	thresholds = {
+		lowMax: 1,
+		mediumMax: 3,
+	},
+}: computeLoad.Props): computeLoad.Result => {
 	let count = 0;
 
 	let currentGroup: string | null = null;

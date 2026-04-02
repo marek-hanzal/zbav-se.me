@@ -5,6 +5,7 @@ import { withLoggerFx } from "@/lib/common/log";
 import { EntitySchema } from "@/lib/common/schema";
 import { listingGetSellerInfoFx } from "~/buyer/listing/server/fx/listingGetSellerInfoFx";
 import { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
+import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
@@ -29,6 +30,7 @@ export const listingGetSellerInfoFn = createServerFn()
 			}),
 		}).pipe(
 			withKyselyFx(database),
+			withDateFx,
 			withLoggerFx(logger),
 			withCatchFx({
 				NotFoundErrorFx() {

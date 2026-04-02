@@ -6,6 +6,7 @@ import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFe
 import { transactionGetBuyerInfoFx } from "~/seller/transaction/server/fx/transactionGetBuyerInfoFx";
 import { TransactionBuyerInfoSchema } from "~/seller/transaction/server/schema/TransactionBuyerInfoSchema";
 import { TransactionQuerySchema } from "~/seller/transaction/server/schema/TransactionQuerySchema";
+import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
@@ -40,6 +41,7 @@ export const transactionBuyerInfoFn = createServerFn()
 			});
 		}).pipe(
 			withKyselyFx(database),
+			withDateFx,
 			withLoggerFx(logger),
 			withCatchFx({
 				NotFoundErrorFx() {
