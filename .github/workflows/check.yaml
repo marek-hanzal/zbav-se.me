@@ -108,6 +108,8 @@ jobs:
         runs-on: ubuntu-latest
         environment: staging
         needs: [lint, dc, typecheck, knip]
+        env:
+            VITEST_INCLUDE_FILE: .github/vitest-include.txt
         steps:
             - uses: actions/checkout@v6.0.2
 
