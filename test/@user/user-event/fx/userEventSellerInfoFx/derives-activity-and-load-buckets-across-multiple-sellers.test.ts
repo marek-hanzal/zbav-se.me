@@ -2,11 +2,9 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUserFx } from "~/test/user/fx/createUserFx";
-import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
@@ -44,11 +42,9 @@ describe("userEventSellerInfoFx", {
 }, () => {
 	it("derives high seller load bucket", async () => {
 		const database = await testabase("userEventSellerInfoFx-load-high");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const seller = yield* createUserFx({
-				api,
+			const seller = yield* createDbUserFx({
 				email: "seller-load-high@test.cz",
 				name: "Seller Load High",
 			});
@@ -71,12 +67,15 @@ describe("userEventSellerInfoFx", {
 
 	it("derives medium and low seller load buckets", async () => {
 		const database = await testabase("userEventSellerInfoFx-load-medium-low");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller: mediumSeller, buyer: lowSeller } = yield* createUsersFx({
-				api,
-				slug: "seller-load-medium-low",
+			const mediumSeller = yield* createDbUserFx({
+				email: "seller-load-medium@test.cz",
+				name: "Seller Load Medium",
+			});
+			const lowSeller = yield* createDbUserFx({
+				email: "seller-load-low@test.cz",
+				name: "Seller Load Low",
 			});
 
 			yield* seedUserEventTimelineFx({
@@ -123,16 +122,19 @@ describe("userEventSellerInfoFx", {
 
 	it("derives seller activity buckets", async () => {
 		const database = await testabase("userEventSellerInfoFx-activity-derivation");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const {
-				seller: highSeller,
-				buyer: mediumSeller,
-				stranger: lowSeller,
-			} = yield* createUsersFx({
-				api,
-				slug: "seller-activity-buckets",
+			const highSeller = yield* createDbUserFx({
+				email: "seller-activity-high@test.cz",
+				name: "Seller Activity High",
+			});
+			const mediumSeller = yield* createDbUserFx({
+				email: "seller-activity-medium@test.cz",
+				name: "Seller Activity Medium",
+			});
+			const lowSeller = yield* createDbUserFx({
+				email: "seller-activity-low@test.cz",
+				name: "Seller Activity Low",
 			});
 
 			const seedSellerEvents = ({
@@ -218,13 +220,12 @@ describe("userEventSellerInfoFx", {
 
 	it("handles seller activity when there is no recent user action", async () => {
 		const database = await testabase("userEventSellerInfoFx-activity-none");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const seller = yield* createUsersFx({
-				api,
-				slug: "seller-activity-none",
-			}).pipe(Effect.map((users) => users.seller));
+			const seller = yield* createDbUserFx({
+				email: "seller-activity-none@test.cz",
+				name: "Seller Activity None",
+			});
 
 			yield* seedUserEventTimelineFx({
 				userId: seller.id,

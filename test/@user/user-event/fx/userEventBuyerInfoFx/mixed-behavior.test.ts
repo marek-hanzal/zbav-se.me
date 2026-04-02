@@ -86,7 +86,7 @@ describe("userEventBuyerInfoFx", {
 									})
 									.plus({
 										minutes: 30,
-								}),
+									}),
 								scope: "foreign",
 								event: "transaction.open",
 								isTerminal: false,
@@ -98,7 +98,7 @@ describe("userEventBuyerInfoFx", {
 									})
 									.plus({
 										minutes: 35,
-								}),
+									}),
 								scope: "user",
 								event: "transaction.closed",
 								isTerminal: true,
