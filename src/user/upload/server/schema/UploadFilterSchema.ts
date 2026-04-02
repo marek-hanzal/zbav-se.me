@@ -4,6 +4,9 @@ import { FilterSchema } from "@/lib/common/schema";
 export const UploadFilterSchema = z
 	.looseObject({
 		...FilterSchema.shape,
+		userId: z.string().optional().meta({
+			description: "This filter matches uploads with the exact userId",
+		}),
 	})
 	.strip()
 	.meta({
