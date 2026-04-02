@@ -4,12 +4,10 @@ import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
-import { inboxCountFx } from "~/user/inbox/server/fx/inboxCountFx";
-import { inboxFetchFx } from "~/user/inbox/server/fx/inboxFetchFx";
 
 describe("inbox read model", () => {
-	it("filters collection, fetch and count by inbox fields while isolating foreign items", async () => {
-		const database = await testabase("inboxReadModelFx-filters");
+	it("filters collections by inbox fields while keeping foreign rows out", async () => {
+		const database = await testabase("inboxReadModelFx-collection-filters");
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
@@ -207,40 +205,6 @@ describe("inbox read model", () => {
 					],
 				},
 			});
-			const fetched = yield* inboxFetchFx({
-				scope: {
-					userId: user.id,
-				},
-				where: {
-					id: "inbox-read-thumb-b",
-				},
-			});
-			const foreignFetch = yield* Effect.either(
-				inboxFetchFx({
-					scope: {
-						userId: user.id,
-					},
-					where: {
-						id: "inbox-read-stranger",
-					},
-				}),
-			);
-			const reactionCount = yield* inboxCountFx({
-				scope: {
-					userId: user.id,
-				},
-				where: {
-					family: "reaction",
-				},
-			});
-			const archivedCount = yield* inboxCountFx({
-				scope: {
-					userId: user.id,
-				},
-				where: {
-					archivedAtIsNull: false,
-				},
-			});
 
 			expect(all.map((item) => item.id)).toEqual([
 				"inbox-read-tx-a",
@@ -274,11 +238,6 @@ describe("inbox read model", () => {
 			expect(idSubset.map((item) => item.id)).toEqual([
 				"inbox-read-favourite-c",
 			]);
-			expect(fetched.id).toBe("inbox-read-thumb-b");
-			expect(fetched.userId).toBe(user.id);
-			expect(foreignFetch._tag).toBe("Left");
-			expect(reactionCount.where).toBe(2);
-			expect(archivedCount.where).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

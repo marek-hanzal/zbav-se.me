@@ -1,7 +1,10 @@
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
-import { DateContextFx } from "@/lib/common/date";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { genId } from "@/lib/common/gen-id";
+import { keyOf } from "@/lib/common/key-of";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import type { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 export namespace seedUserEventTimelineFx {
 	export interface Event {
@@ -23,18 +26,23 @@ export const seedUserEventTimelineFx = Effect.fn("seedUserEventTimelineFx")(func
 	userId,
 	events,
 }: seedUserEventTimelineFx.Props) {
-	for (const entry of events) {
-		yield* userEventCreateFx({
-			userId,
-			group: entry.group,
-			scope: entry.scope,
-			source: entry.source,
-			event: entry.event,
-			isTerminal: entry.isTerminal,
-		}).pipe(
-			Effect.provideService(DateContextFx, {
-				now: () => entry.at,
-			}),
-		);
-	}
+	const { kysely } = yield* KyselyContextFx;
+
+	yield* tryDbFx(async () =>
+		kysely
+			.insertInto("user_event")
+			.values(
+				events.map((entry) => ({
+					id: genId(),
+					userId,
+					group: keyOf(entry.group),
+					scope: entry.scope,
+					source: entry.source,
+					event: entry.event,
+					isTerminal: entry.isTerminal,
+					createdAt: entry.at.toJSDate(),
+				})),
+			)
+			.execute(),
+	);
 });
