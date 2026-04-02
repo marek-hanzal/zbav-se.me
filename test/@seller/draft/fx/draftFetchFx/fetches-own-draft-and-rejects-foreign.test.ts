@@ -2,29 +2,31 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { draftFetchFx } from "~/seller/draft/server/fx/draftFetchFx";
-import { auth } from "~/server/auth/auth";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 
 describe("draftFetchFx", () => {
 	it("fetches own draft and rejects foreign draft", async () => {
 		const database = await testabase("draftFetchFx-scope");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "draft-fetch",
+			const seller = yield* createDbUserFx({
+				email: "draft-fetch-seller@test.cz",
+				name: "Draft Fetch Seller",
+			});
+			const stranger = yield* createDbUserFx({
+				email: "draft-fetch-stranger@test.cz",
+				name: "Draft Fetch Stranger",
 			});
 
 			const ownDraft = yield* draftCreateFx({
-				userId: users.seller.id,
+				userId: seller.id,
 				title: "Own draft title",
 			});
 			const foreignDraft = yield* draftCreateFx({
-				userId: users.stranger.id,
+				userId: stranger.id,
 				title: "Foreign draft title",
 			});
 
@@ -33,7 +35,7 @@ describe("draftFetchFx", () => {
 					id: ownDraft.id,
 				},
 				scope: {
-					userId: users.seller.id,
+					userId: seller.id,
 				},
 			});
 
@@ -46,7 +48,7 @@ describe("draftFetchFx", () => {
 						id: foreignDraft.id,
 					},
 					scope: {
-						userId: users.seller.id,
+						userId: seller.id,
 					},
 				}),
 			);

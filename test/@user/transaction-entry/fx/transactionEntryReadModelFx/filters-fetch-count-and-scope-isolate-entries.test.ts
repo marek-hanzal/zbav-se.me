@@ -1,43 +1,27 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 import { transactionEntryCollectionFx } from "~/user/transaction-entry/server/fx/transactionEntryCollectionFx";
 import { transactionEntryCountFx } from "~/user/transaction-entry/server/fx/transactionEntryCountFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
 
 describe("transactionEntry read model", () => {
-	it("filters entries by kind, actor and ids while isolating foreign viewers", async () => {
+	it("filters entries by kind, actor and ids for participants", async () => {
 		const database = await testabase("transactionEntryReadModelFx-filters");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"transaction-entry-read-seller@test.cz",
-				"Transaction Entry Read Seller",
-			);
-			const { user: buyer } = yield* signUp(
-				"transaction-entry-read-buyer@test.cz",
-				"Transaction Entry Read Buyer",
-			);
-			const { user: outsider } = yield* signUp(
-				"transaction-entry-read-outsider@test.cz",
-				"Transaction Entry Read Outsider",
-			);
+			const seller = yield* createDbUserFx({
+				email: "transaction-entry-read-seller@test.cz",
+				name: "Transaction Entry Read Seller",
+			});
+			const buyer = yield* createDbUserFx({
+				email: "transaction-entry-read-buyer@test.cz",
+				name: "Transaction Entry Read Buyer",
+			});
 
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,
@@ -121,6 +105,63 @@ describe("transactionEntry read model", () => {
 					id: sellerLocation.id,
 				},
 			});
+
+			expect(byKind.map((item) => item.id)).toEqual([
+				buyerText.id,
+				sellerText.id,
+			]);
+			expect(byKindIn.map((item) => item.id).sort()).toEqual(
+				[
+					buyerText.id,
+					sellerLocation.id,
+					sellerText.id,
+				].sort(),
+			);
+			const actorIds = byActor.map((item) => item.id);
+			expect(actorIds).toContain(sellerText.id);
+			expect(actorIds).toContain(sellerLocation.id);
+			expect(actorIds).not.toContain(buyerText.id);
+			expect(idSubset.map((item) => item.id)).toEqual([
+				sellerLocation.id,
+			]);
+			expect(textCount.where).toBe(2);
+			expect(fetched.id).toBe(sellerLocation.id);
+			expect(fetched.kind).toBe("location");
+			expect(fetched.direction).toBe("in");
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+
+	it("isolates foreign viewers from transaction entries", async () => {
+		const database = await testabase("transactionEntryReadModelFx-foreign");
+
+		return Effect.gen(function* () {
+			const seller = yield* createDbUserFx({
+				email: "transaction-entry-foreign-seller@test.cz",
+				name: "Transaction Entry Foreign Seller",
+			});
+			const buyer = yield* createDbUserFx({
+				email: "transaction-entry-foreign-buyer@test.cz",
+				name: "Transaction Entry Foreign Buyer",
+			});
+			const outsider = yield* createDbUserFx({
+				email: "transaction-entry-read-outsider@test.cz",
+				name: "Transaction Entry Read Outsider",
+			});
+
+			const { transactionId } = yield* createOpenScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+			});
+
+			const sellerLocation = yield* transactionEntryCreateFx({
+				userId: seller.id,
+				transactionId,
+				kind: "location",
+				payload: {
+					locationId: "loc_transaction_entry_read",
+				},
+			});
+
 			const outsiderFetch = yield* Effect.either(
 				transactionEntryFetchFx({
 					userId: outsider.id,
@@ -146,29 +187,6 @@ describe("transactionEntry read model", () => {
 				},
 			});
 
-			expect(byKind.map((item) => item.id)).toEqual([
-				buyerText.id,
-				sellerText.id,
-			]);
-			expect(byKindIn.map((item) => item.id).sort()).toEqual(
-				[
-					buyerText.id,
-					sellerLocation.id,
-					sellerText.id,
-				].sort(),
-			);
-			const actorIds = byActor.map((item) => item.id);
-
-			expect(actorIds).toContain(sellerText.id);
-			expect(actorIds).toContain(sellerLocation.id);
-			expect(actorIds).not.toContain(buyerText.id);
-			expect(idSubset.map((item) => item.id)).toEqual([
-				sellerLocation.id,
-			]);
-			expect(textCount.where).toBe(2);
-			expect(fetched.id).toBe(sellerLocation.id);
-			expect(fetched.kind).toBe("location");
-			expect(fetched.direction).toBe("in");
 			expect(outsiderFetch._tag).toBe("Left");
 			expect(outsiderCollection).toHaveLength(0);
 			expect(outsiderCount.where).toBe(0);

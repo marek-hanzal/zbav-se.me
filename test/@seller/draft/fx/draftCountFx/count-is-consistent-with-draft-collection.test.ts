@@ -3,40 +3,38 @@ import { describe, expect, it } from "vitest";
 import { draftCollectionFx } from "~/seller/draft/server/fx/draftCollectionFx";
 import { draftCountFx } from "~/seller/draft/server/fx/draftCountFx";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 
 describe("draftCountFx", () => {
 	it("matches draft collection and supports empty filter", async () => {
 		const database = await testabase("draftCountFx-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "draft-count",
+			const seller = yield* createDbUserFx({
+				email: "draft-count-seller@test.cz",
+				name: "Draft Count Seller",
 			});
 
 			yield* draftCreateFx({
-				userId: users.seller.id,
+				userId: seller.id,
 				title: "Draft count one",
 			});
 			yield* draftCreateFx({
-				userId: users.seller.id,
+				userId: seller.id,
 				title: "Draft count two",
 			});
 
 			const collection = yield* draftCollectionFx({
 				scope: {
-					userId: users.seller.id,
+					userId: seller.id,
 				},
 			});
 
 			const count = yield* draftCountFx({
 				scope: {
-					userId: users.seller.id,
+					userId: seller.id,
 				},
 			});
 
@@ -49,7 +47,7 @@ describe("draftCountFx", () => {
 					id: "missing-draft-id",
 				},
 				scope: {
-					userId: users.seller.id,
+					userId: seller.id,
 				},
 			});
 

@@ -2,38 +2,40 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { draftCollectionFx } from "~/seller/draft/server/fx/draftCollectionFx";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 
 describe("draftCollectionFx", () => {
 	it("returns only scoped drafts and supports empty result", async () => {
 		const database = await testabase("draftCollectionFx-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "draft-collection",
+			const seller = yield* createDbUserFx({
+				email: "draft-collection-seller@test.cz",
+				name: "Draft Collection Seller",
+			});
+			const stranger = yield* createDbUserFx({
+				email: "draft-collection-stranger@test.cz",
+				name: "Draft Collection Stranger",
 			});
 
 			const draftA = yield* draftCreateFx({
-				userId: users.seller.id,
+				userId: seller.id,
 				title: "Seller draft A",
 			});
 			const draftB = yield* draftCreateFx({
-				userId: users.seller.id,
+				userId: seller.id,
 				title: "Seller draft B",
 			});
 			yield* draftCreateFx({
-				userId: users.stranger.id,
+				userId: stranger.id,
 				title: "Foreign draft hidden",
 			});
 
 			const collection = yield* draftCollectionFx({
 				scope: {
-					userId: users.seller.id,
+					userId: seller.id,
 				},
 				sort: [
 					{
@@ -56,7 +58,7 @@ describe("draftCollectionFx", () => {
 					id: "missing-draft-id",
 				},
 				scope: {
-					userId: users.seller.id,
+					userId: seller.id,
 				},
 			});
 

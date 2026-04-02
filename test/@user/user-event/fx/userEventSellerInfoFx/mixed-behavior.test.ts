@@ -2,26 +2,25 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUserFx } from "~/test/user/fx/createUserFx";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
-describe("userEventSellerInfoFx", () => {
+describe("userEventSellerInfoFx", {
+	timeout: 4_000,
+}, () => {
 	it("Mixed behavior - good resolutions are dragged down by direct rejects and buyer-led endings", async () => {
 		const database = await testabase("userEventSellerInfoFx-mixed-behavior");
-		const { api } = auth(() => database.dialect);
 		const baseTime = DateTime.now().minus({
 			days: 89,
 		});
 
 		return Effect.gen(function* () {
-			const seller = yield* createUserFx({
-				api,
-				email: "seller@test.cz",
-				name: "Seller",
+			const seller = yield* createDbUserFx({
+				email: "seller-mixed-behavior@test.cz",
+				name: "Seller Mixed Behavior",
 			});
 
 			yield* seedUserEventTimelineFx({
