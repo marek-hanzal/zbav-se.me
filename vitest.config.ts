@@ -51,7 +51,6 @@ export default defineConfig({
 			enabled: true,
 			provider: "v8",
 			reporter: [
-				// "text",
 				"html",
 				"json-summary",
 			],
@@ -63,11 +62,15 @@ export default defineConfig({
 			exclude: [
 				"**/*.test.ts",
 				"**/*.d.ts",
-				"src/**/fn/**/*.ts",
-				"src/**/query/**/*.ts",
-				"src/**/mutation/**/*.ts",
-				"src/**/ui/**/*.ts",
+				//
+				"lib/client/**/*.t*",
+				"lib/common/**/*.t*",
+				//
 				"src/@routes/**/*.ts",
+				"src/**/fn/**/*.ts",
+				"src/**/mutation/**/*.ts",
+				"src/**/query/**/*.ts",
+				"src/**/ui/**/*.ts",
 			],
 			reportOnFailure: false,
 			watermarks: {
