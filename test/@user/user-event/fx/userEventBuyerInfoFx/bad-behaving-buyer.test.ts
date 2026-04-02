@@ -1,233 +1,159 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { createUserFx } from "~/test/user/fx/createUserFx";
+import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
-describe("userEventBuyerInfoFx", () => {
+describe("userEventBuyerInfoFx", {
+	timeout: 4_000,
+}, () => {
 	it("Bad behaving buyer - instant closes, ghosts after open, and lets transactions expire", async () => {
 		const database = await testabase("userEventBuyerInfoFx-bad-behaving-buyer");
-
-		const { api } = auth(() => {
-			return database.dialect;
+		const { api } = auth(() => database.dialect);
+		const base = DateTime.now().minus({
+			days: 50,
 		});
 
 		return Effect.gen(function* () {
-			const { user: buyer } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "buyer@test.cz",
-						name: "Buyer",
-						password: "12345678",
-					},
-				}),
-			);
-
-			const buyerId = buyer.id;
-			const base = DateTime.now().minus({
-				days: 50,
-			});
-			const t1Create = base;
-			const t1Open = t1Create.plus({
-				hours: 1,
-			});
-			const t1SellerClose = t1Open.plus({
-				hours: 1,
-			});
-			const t2Create = base.plus({
-				days: 5,
-			});
-			const t2Open = t2Create.plus({
-				minutes: 30,
-			});
-			const t2BuyerClose = t2Open.plus({
-				minutes: 5,
-			});
-			const t3Create = base.plus({
-				days: 10,
-			});
-			const t3Open = t3Create.plus({
-				hours: 2,
-			});
-			const t3Expired = t3Open.plus({
-				days: 7,
-			});
-			const t4Create = base.plus({
-				days: 15,
-			});
-			const t4Open = t4Create.plus({
-				minutes: 10,
-			});
-			const t4BuyerClose = t4Open.plus({
-				minutes: 1,
+			const buyer = yield* createUserFx({
+				api,
+				email: "buyer@test.cz",
+				name: "Buyer",
 			});
 
-			// tx-1
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t1Create,
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.open",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t1Open,
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.closed",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t1SellerClose,
-				}),
-			);
-
-			// tx-2
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t2Create,
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.open",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t2Open,
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.closed",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t2BuyerClose,
-				}),
-			);
-
-			// tx-3
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t3Create,
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.open",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t3Open,
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.expired",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t3Expired,
-				}),
-			);
-
-			// tx-4
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-4",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t4Create,
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-4",
-				event: "transaction.open",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t4Open,
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-4",
-				event: "transaction.closed",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t4BuyerClose,
-				}),
-			);
+			yield* seedUserEventTimelineFx({
+				userId: buyer.id,
+				events: [
+					...createTransactionTimeline({
+						group: "tx-1",
+						steps: [
+							{
+								at: base,
+								scope: "user",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: base.plus({
+									hours: 1,
+								}),
+								scope: "foreign",
+								event: "transaction.open",
+								isTerminal: false,
+							},
+							{
+								at: base.plus({
+									hours: 2,
+								}),
+								scope: "foreign",
+								event: "transaction.closed",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-2",
+						steps: [
+							{
+								at: base.plus({
+									days: 5,
+								}),
+								scope: "user",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: base.plus({
+									days: 5,
+									minutes: 30,
+								}),
+								scope: "foreign",
+								event: "transaction.open",
+								isTerminal: false,
+							},
+							{
+								at: base.plus({
+									days: 5,
+									minutes: 35,
+								}),
+								scope: "user",
+								event: "transaction.closed",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-3",
+						steps: [
+							{
+								at: base.plus({
+									days: 10,
+								}),
+								scope: "user",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: base.plus({
+									days: 10,
+									hours: 2,
+								}),
+								scope: "foreign",
+								event: "transaction.open",
+								isTerminal: false,
+							},
+							{
+								at: base.plus({
+									days: 17,
+									hours: 2,
+								}),
+								scope: "foreign",
+								event: "transaction.expired",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-4",
+						steps: [
+							{
+								at: base.plus({
+									days: 15,
+								}),
+								scope: "user",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: base.plus({
+									days: 15,
+									minutes: 10,
+								}),
+								scope: "foreign",
+								event: "transaction.open",
+								isTerminal: false,
+							},
+							{
+								at: base.plus({
+									days: 15,
+									minutes: 11,
+								}),
+								scope: "user",
+								event: "transaction.closed",
+								isTerminal: true,
+							},
+						],
+					}),
+				],
+			});
 
 			const result = yield* userEventBuyerInfoFx({
-				userId: buyerId,
+				userId: buyer.id,
 			});
 
 			expect(result).not.toBeNull();
