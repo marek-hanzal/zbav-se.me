@@ -31,7 +31,7 @@ export namespace userEventBuyerInfoFx {
  * 3a. If transaction.closed/rejected (foreign scope) before buyer reacts -> terminal
  * 3b. If transaction.message/closed/rejected (user scope) after open -> reaction (records delta from open)
  */
-const computeReaction = (source: UserEventTableSchema.Type[]) => {
+export const computeBuyerReaction = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let reactions = 0;
 	let terminal = 0;
@@ -132,7 +132,7 @@ const computeReaction = (source: UserEventTableSchema.Type[]) => {
  * 3. Any other event between create and end (including messages) -> marks as dirty
  * 4. transaction.closed/rejected/success (user scope) - if not dirty, counts as closed (records delta from create)
  */
-const computeCloser = (source: UserEventTableSchema.Type[]) => {
+export const computeBuyerCloser = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let closed = 0;
 	const deltasMs: number[] = [];
@@ -234,7 +234,7 @@ const computeCloser = (source: UserEventTableSchema.Type[]) => {
  * 2a. If transaction.closed/rejected (foreign scope) -> terminal (seller ended, buyer had no choice)
  * 2b. If transaction.success/closed (user scope) -> decision (buyer made explicit decision)
  */
-const computeDecision = (source: UserEventTableSchema.Type[]) => {
+export const computeBuyerDecision = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let decisions = 0;
 	let terminal = 0;
@@ -315,7 +315,7 @@ const computeDecision = (source: UserEventTableSchema.Type[]) => {
  * 4a. If transaction.message/closed/rejected/success (user scope) after ping -> disqualifies from expired
  * 4b. If transaction.expired/resolved (foreign scope) after ping without buyer action -> expired
  */
-const computeExpired = (source: UserEventTableSchema.Type[]) => {
+export const computeBuyerExpired = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let expired = 0; // transaction.expired OR transaction.resolved (foreign) without buyer action after seller ping
 	let currentGroup: string | null = null;
@@ -407,7 +407,7 @@ const computeExpired = (source: UserEventTableSchema.Type[]) => {
 	} satisfies UserEventBuyerSchema.Type["expired"];
 };
 
-const computeScore = (input: {
+export const computeBuyerScore = (input: {
 	reaction: UserEventBuyerSchema.Type["reaction"];
 	decision: UserEventBuyerSchema.Type["decision"];
 	closer: UserEventBuyerSchema.Type["closer"];
@@ -524,16 +524,16 @@ export const userEventBuyerInfoFx = Effect.fn("userEventBuyerInfoFx")(function* 
 	}
 
 	const result: Omit<UserEventBuyerSchema.Type, "score"> = {
-		reaction: computeReaction(source),
-		closer: computeCloser(source),
-		decision: computeDecision(source),
-		expired: computeExpired(source),
+		reaction: computeBuyerReaction(source),
+		closer: computeBuyerCloser(source),
+		decision: computeBuyerDecision(source),
+		expired: computeBuyerExpired(source),
 		load: computeLoad(source, "user"),
 		activity: computeActivity(source, cutoff),
 	};
 
 	return {
 		...result,
-		score: computeScore(result),
+		score: computeBuyerScore(result),
 	} satisfies UserEventBuyerSchema.Type;
 });
