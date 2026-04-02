@@ -47,6 +47,7 @@ jobs:
         name: Test
         runs-on: ubuntu-latest
         environment: staging
+        needs: [check]
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -109,9 +110,10 @@ jobs:
                   path: coverage/vitest
 
     e2e:
-        name: e2e
+        name: Fullstack Test
         runs-on: ubuntu-latest
         environment: staging
+        needs: [test]
         env:
             NITRO_PRESET: node_server
             SERVER_E2E: e2e
