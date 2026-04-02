@@ -76,6 +76,9 @@ export default defineConfig({
 				"src/*.ts",
 				//
 				"src/@routes/**/*.ts",
+				//
+				"src/common/**/*.ts",
+				//
 				"src/**/fn/**/*.ts",
 				"src/**/mutation/**/*.ts",
 				"src/**/query/**/*.ts",

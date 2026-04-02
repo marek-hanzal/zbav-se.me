@@ -23,8 +23,8 @@ env:
     SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
 
 jobs:
-    prepare:
-        name: Prepare
+    lint:
+        name: Lint
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6.0.2
@@ -40,50 +40,14 @@ jobs:
             - name: Install dependencies
               run: bun install --frozen-lockfile
 
-            - name: Cache save (dependencies)
-              uses: actions/cache/save@v5.0.3
-              with:
-                  path: node_modules
-                  key: deps-${{ github.run_id }}
-
-    lint:
-        name: Lint
-        runs-on: ubuntu-latest
-        needs: [prepare]
-        steps:
-            - uses: actions/checkout@v6.0.2
-
-            - name: Cache restore (dependencies)
-              uses: actions/cache/restore@v5.0.3
-              with:
-                  path: node_modules
-                  key: deps-${{ github.run_id }}
-                  fail-on-cache-miss: true
-
-            - name: Setup Node.js
-              uses: actions/setup-node@v6.3.0
-              with:
-                  node-version: "24"
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2.2.0
-
             - name: Lint
               run: bun run lint
 
     dc:
         name: Dependency Cruiser
         runs-on: ubuntu-latest
-        needs: [prepare]
         steps:
             - uses: actions/checkout@v6.0.2
-
-            - name: Cache restore (dependencies)
-              uses: actions/cache/restore@v5.0.3
-              with:
-                  path: node_modules
-                  key: deps-${{ github.run_id }}
-                  fail-on-cache-miss: true
 
             - name: Setup Node.js
               uses: actions/setup-node@v6.3.0
@@ -92,6 +56,9 @@ jobs:
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
 
             - name: Dependency Cruiser
               run: bun run dc
@@ -99,16 +66,8 @@ jobs:
     typecheck:
         name: Typecheck
         runs-on: ubuntu-latest
-        needs: [prepare]
         steps:
             - uses: actions/checkout@v6.0.2
-
-            - name: Cache restore (dependencies)
-              uses: actions/cache/restore@v5.0.3
-              with:
-                  path: node_modules
-                  key: deps-${{ github.run_id }}
-                  fail-on-cache-miss: true
 
             - name: Setup Node.js
               uses: actions/setup-node@v6.3.0
@@ -117,6 +76,9 @@ jobs:
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
 
             - name: Typecheck
               run: bun run typecheck
@@ -124,16 +86,8 @@ jobs:
     knip:
         name: Knip
         runs-on: ubuntu-latest
-        needs: [prepare]
         steps:
             - uses: actions/checkout@v6.0.2
-
-            - name: Cache restore (dependencies)
-              uses: actions/cache/restore@v5.0.3
-              with:
-                  path: node_modules
-                  key: deps-${{ github.run_id }}
-                  fail-on-cache-miss: true
 
             - name: Setup Node.js
               uses: actions/setup-node@v6.3.0
@@ -142,6 +96,9 @@ jobs:
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
 
             - name: Knip
               run: bun run knip
@@ -150,16 +107,9 @@ jobs:
         name: Vitest
         runs-on: ubuntu-latest
         environment: staging
-        needs: [prepare, lint, dc, typecheck, knip]
+        needs: [lint, dc, typecheck, knip]
         steps:
             - uses: actions/checkout@v6.0.2
-
-            - name: Cache restore (dependencies)
-              uses: actions/cache/restore@v5.0.3
-              with:
-                  path: node_modules
-                  key: deps-${{ github.run_id }}
-                  fail-on-cache-miss: true
 
             - name: Setup Node.js
               uses: actions/setup-node@v6.3.0
@@ -168,6 +118,9 @@ jobs:
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
 
             - name: Test
               run: bun run test
@@ -220,7 +173,7 @@ jobs:
         name: Full-Stack Test
         runs-on: ubuntu-latest
         environment: staging
-        needs: [prepare, vitest]
+        needs: [vitest]
         env:
             NITRO_PRESET: node_server
             SERVER_E2E: e2e
@@ -230,13 +183,6 @@ jobs:
         steps:
             - uses: actions/checkout@v6.0.2
 
-            - name: Cache restore (dependencies)
-              uses: actions/cache/restore@v5.0.3
-              with:
-                  path: node_modules
-                  key: deps-${{ github.run_id }}
-                  fail-on-cache-miss: true
-
             - name: Setup Node.js
               uses: actions/setup-node@v6.3.0
               with:
@@ -244,6 +190,9 @@ jobs:
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
 
             - name: Install portless
               run: bun install -g portless
