@@ -4,6 +4,7 @@ import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/utils/createOpenScenarioFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { transactionEntryCleanupSensitiveFx } from "~/user/transaction-entry/server/fx/transactionEntryCleanupSensitiveFx";
 
 describe("transactionEntryCleanupSensitiveFx", () => {
 	it("does not delete entries when status is non-terminal (open)", async () => {
@@ -55,7 +56,11 @@ describe("transactionEntryCleanupSensitiveFx", () => {
 					.execute(),
 			);
 
-			// No rejection — entries should remain intact
+			yield* transactionEntryCleanupSensitiveFx({
+				transactionId,
+				status: "open",
+			});
+
 			const entries = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction_entry")
