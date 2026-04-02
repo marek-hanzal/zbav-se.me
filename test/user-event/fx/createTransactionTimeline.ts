@@ -1,7 +1,7 @@
 import type { DateTime } from "luxon";
 import type { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
-namespace createTransactionTimelineFx {
+namespace createTransactionTimeline {
 	export interface Step {
 		at: DateTime;
 		scope: userEventCreateFx.Props["scope"];
@@ -15,7 +15,7 @@ namespace createTransactionTimelineFx {
 	}
 }
 
-export const createTransactionTimelineFx = ({ group, steps }: createTransactionTimelineFx.Props) =>
+export const createTransactionTimeline = ({ group, steps }: createTransactionTimeline.Props) =>
 	steps.map((step) => ({
 		at: step.at,
 		group,

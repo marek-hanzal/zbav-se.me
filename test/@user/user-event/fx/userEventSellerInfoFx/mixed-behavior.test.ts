@@ -6,7 +6,7 @@ import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUserFx } from "~/test/user/fx/createUserFx";
-import { createTransactionTimelineFx } from "~/test/user-event/fx/createTransactionTimelineFx";
+import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 describe("userEventSellerInfoFx", () => {
@@ -27,7 +27,7 @@ describe("userEventSellerInfoFx", () => {
 			yield* seedUserEventTimelineFx({
 				userId: seller.id,
 				events: [
-					...createTransactionTimelineFx({
+					...createTransactionTimeline({
 						group: "tx-1",
 						steps: [
 							{
@@ -55,7 +55,7 @@ describe("userEventSellerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimelineFx({
+					...createTransactionTimeline({
 						group: "tx-2",
 						steps: [
 							{
@@ -76,7 +76,7 @@ describe("userEventSellerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimelineFx({
+					...createTransactionTimeline({
 						group: "tx-3",
 						steps: [
 							{
@@ -107,7 +107,7 @@ describe("userEventSellerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimelineFx({
+					...createTransactionTimeline({
 						group: "tx-4",
 						steps: [
 							{
@@ -128,7 +128,7 @@ describe("userEventSellerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimelineFx({
+					...createTransactionTimeline({
 						group: "tx-5",
 						steps: [
 							{
@@ -149,7 +149,7 @@ describe("userEventSellerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimelineFx({
+					...createTransactionTimeline({
 						group: "tx-6",
 						steps: [
 							{

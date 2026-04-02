@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { expect } from "vitest";
 import { createToggleBaseContextFx } from "~/test/@buyer/common/fx/createToggleBaseContextFx";
-import { runWithTestRuntimeFx } from "~/test/common/fx/runWithTestRuntimeFx";
+import { runWithTestRuntime } from "~/test/common/fx/runWithTestRuntime";
 import { testabase } from "~/test/testabase";
 
 namespace runToggleEntityContractFx {
@@ -110,7 +110,7 @@ export const runToggleEntityContractFx = async <Extra, RecordShape, InboxShape, 
 		}
 		return undefined;
 	}).pipe((effect) =>
-		runWithTestRuntimeFx({
+		runWithTestRuntime({
 			database,
 			effect,
 		}),

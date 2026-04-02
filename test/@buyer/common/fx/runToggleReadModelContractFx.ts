@@ -3,7 +3,7 @@ import { expect } from "vitest";
 import type { EntitySchema } from "@/lib/common/schema/EntitySchema";
 import { createToggleBaseContextFx } from "~/test/@buyer/common/fx/createToggleBaseContextFx";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { runWithTestRuntimeFx } from "~/test/common/fx/runWithTestRuntimeFx";
+import { runWithTestRuntime } from "~/test/common/fx/runWithTestRuntime";
 import { testabase } from "~/test/testabase";
 
 namespace runToggleReadModelContractFx {
@@ -121,7 +121,7 @@ export const runToggleReadModelContractFx = async <
 		expectErrorFx(afterFetch);
 		return undefined;
 	}).pipe((effect) =>
-		runWithTestRuntimeFx({
+		runWithTestRuntime({
 			database,
 			effect,
 		}),
