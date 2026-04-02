@@ -1,22 +1,11 @@
 import { Effect } from "effect";
 import { expect } from "vitest";
-import { auth } from "~/server/auth/auth";
-import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { createListingFx } from "~/test/listing/fx/createListingFx";
+import { createToggleBaseContextFx } from "~/test/@buyer/common/fx/createToggleBaseContextFx";
+import { runWithTestRuntimeFx } from "~/test/common/fx/runWithTestRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
-type TestListing = Effect.Effect.Success<ReturnType<typeof createListingFx>>;
-type TestUsers = Effect.Effect.Success<ReturnType<typeof createUsersFx>>;
-
-export namespace runToggleEntityContractFx {
-	export interface BaseContext {
-		database: TestDatabase;
-		listing: TestListing;
-		users: TestUsers;
-	}
+namespace runToggleEntityContractFx {
+	export type BaseContext = Effect.Effect.Success<ReturnType<typeof createToggleBaseContextFx>>;
 
 	export interface ToggleContext<Extra> extends BaseContext {
 		extra: Extra;
@@ -44,41 +33,7 @@ export namespace runToggleEntityContractFx {
 		assertInboxOn?: (inbox: InboxShape, context: ToggleContext<Extra>) => void;
 		assertInboxOff?: (inbox: InboxShape, context: ToggleContext<Extra>) => void;
 	}
-
-	export interface ErrorProps<Extra, Runtime> {
-		databaseName: string;
-		userSlug: string;
-		createExtraFx?: (context: BaseContext) => Effect.Effect<Extra, unknown, Runtime>;
-		beforeFx?: (context: ToggleContext<Extra>) => Effect.Effect<unknown, unknown, Runtime>;
-		errorFx: (context: ToggleContext<Extra>) => Effect.Effect<unknown, unknown, Runtime>;
-		assertAfterFx?: (context: ToggleContext<Extra>) => Effect.Effect<unknown, unknown, Runtime>;
-	}
 }
-
-const createBaseContextFx = ({
-	database,
-	userSlug,
-}: {
-	database: TestDatabase;
-	userSlug: string;
-}) =>
-	Effect.gen(function* () {
-		const { api } = auth(() => database.dialect);
-		const users = yield* createUsersFx({
-			api,
-			slug: userSlug,
-		});
-		const listing = yield* createListingFx(users.seller.id);
-
-		return {
-			database,
-			listing,
-			users,
-		} satisfies runToggleEntityContractFx.BaseContext;
-	});
-
-const runWithRuntimeFx = <A, E, R>(database: TestDatabase, effect: Effect.Effect<A, E, R>) =>
-	Effect.runPromise(effect.pipe(withRuntimeFx(database)) as Effect.Effect<A, E, never>);
 
 export const runToggleEntityContractFx = async <Extra, RecordShape, InboxShape, Runtime>({
 	databaseName,
@@ -99,7 +54,7 @@ export const runToggleEntityContractFx = async <Extra, RecordShape, InboxShape, 
 	const database = await testabase(databaseName);
 
 	return Effect.gen(function* () {
-		const baseContext = yield* createBaseContextFx({
+		const baseContext = yield* createToggleBaseContextFx({
 			database,
 			userSlug,
 		});
@@ -154,40 +109,10 @@ export const runToggleEntityContractFx = async <Extra, RecordShape, InboxShape, 
 			assertInboxOff?.(inboxOff, context);
 		}
 		return undefined;
-	}).pipe((effect) => runWithRuntimeFx(database, effect));
-};
-
-export const runToggleEntityErrorContractFx = async <Extra, Runtime>({
-	databaseName,
-	userSlug,
-	createExtraFx,
-	beforeFx,
-	errorFx,
-	assertAfterFx,
-}: runToggleEntityContractFx.ErrorProps<Extra, Runtime>) => {
-	const database = await testabase(databaseName);
-
-	return Effect.gen(function* () {
-		const baseContext = yield* createBaseContextFx({
+	}).pipe((effect) =>
+		runWithTestRuntimeFx({
 			database,
-			userSlug,
-		});
-		const extra = createExtraFx ? yield* createExtraFx(baseContext) : (undefined as Extra);
-		const context = {
-			...baseContext,
-			extra,
-		} satisfies runToggleEntityContractFx.ToggleContext<Extra>;
-
-		if (beforeFx) {
-			yield* beforeFx(context);
-		}
-
-		const result = yield* Effect.either(errorFx(context));
-		expectErrorFx(result);
-
-		if (assertAfterFx) {
-			yield* assertAfterFx(context);
-		}
-		return undefined;
-	}).pipe((effect) => runWithRuntimeFx(database, effect));
+			effect,
+		}),
+	);
 };

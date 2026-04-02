@@ -6,10 +6,8 @@ import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUserFx } from "~/test/user/fx/createUserFx";
-import {
-	createTransactionTimeline,
-	seedUserEventTimelineFx,
-} from "~/test/user-event/fx/seedUserEventTimelineFx";
+import { createTransactionTimelineFx } from "~/test/user-event/fx/createTransactionTimelineFx";
+import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Mixed behavior - good resolutions are dragged down by direct rejects and buyer-led endings", async () => {
@@ -29,7 +27,7 @@ describe("userEventSellerInfoFx", () => {
 			yield* seedUserEventTimelineFx({
 				userId: seller.id,
 				events: [
-					...createTransactionTimeline({
+					...createTransactionTimelineFx({
 						group: "tx-1",
 						steps: [
 							{
@@ -57,7 +55,7 @@ describe("userEventSellerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFx({
 						group: "tx-2",
 						steps: [
 							{
@@ -78,7 +76,7 @@ describe("userEventSellerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFx({
 						group: "tx-3",
 						steps: [
 							{
@@ -109,7 +107,7 @@ describe("userEventSellerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFx({
 						group: "tx-4",
 						steps: [
 							{
@@ -130,7 +128,7 @@ describe("userEventSellerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFx({
 						group: "tx-5",
 						steps: [
 							{
@@ -151,7 +149,7 @@ describe("userEventSellerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFx({
 						group: "tx-6",
 						steps: [
 							{

@@ -1,6 +1,6 @@
 import { describe, it } from "vitest";
 import { flagToggleFx } from "~/buyer/flag/server/fx/flagToggleFx";
-import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityContractFx";
+import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
 
 describe("flagToggleFx", () => {
 	it("invalid: seller cannot flag own listing", async () => {

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { flagToggleFx } from "~/buyer/flag/server/fx/flagToggleFx";
-import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityContractFx";
+import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
 
 describe("flagToggleFx", () => {
 	it("invalid: cannot flag an already-flagged listing (conflict on insert)", async () => {

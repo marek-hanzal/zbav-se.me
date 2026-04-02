@@ -1,7 +1,7 @@
 import { describe, it } from "vitest";
 import { favouriteToggleFx } from "~/buyer/favourite/server/fx/favouriteToggleFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityContractFx";
+import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
 
 describe("favouriteToggleFx", () => {
 	it("invalid: cannot favourite with another user's feed", async () => {

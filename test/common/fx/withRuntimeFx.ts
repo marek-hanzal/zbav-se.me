@@ -39,5 +39,3 @@ export const withRuntimeFx = (database: TestDatabase) => {
 			}),
 		);
 };
-
-export const withExternalRuntimeFx = withRuntimeFx;

@@ -1,23 +1,13 @@
 import { Effect } from "effect";
 import { expect } from "vitest";
 import type { EntitySchema } from "@/lib/common/schema/EntitySchema";
-import { auth } from "~/server/auth/auth";
+import { createToggleBaseContextFx } from "~/test/@buyer/common/fx/createToggleBaseContextFx";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { createListingFx } from "~/test/listing/fx/createListingFx";
+import { runWithTestRuntimeFx } from "~/test/common/fx/runWithTestRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
-type TestDatabase = Awaited<ReturnType<typeof testabase>>;
-type TestListing = Effect.Effect.Success<ReturnType<typeof createListingFx>>;
-type TestUsers = Effect.Effect.Success<ReturnType<typeof createUsersFx>>;
-
-export namespace runToggleReadModelContractFx {
-	export interface BaseContext {
-		database: TestDatabase;
-		listing: TestListing;
-		users: TestUsers;
-	}
+namespace runToggleReadModelContractFx {
+	export type BaseContext = Effect.Effect.Success<ReturnType<typeof createToggleBaseContextFx>>;
 
 	export interface Context<Extra> extends BaseContext {
 		extra: Extra;
@@ -64,31 +54,6 @@ export namespace runToggleReadModelContractFx {
 	}
 }
 
-const createBaseContextFx = ({
-	database,
-	userSlug,
-}: {
-	database: TestDatabase;
-	userSlug: string;
-}) =>
-	Effect.gen(function* () {
-		const { api } = auth(() => database.dialect);
-		const users = yield* createUsersFx({
-			api,
-			slug: userSlug,
-		});
-		const listing = yield* createListingFx(users.seller.id);
-
-		return {
-			database,
-			listing,
-			users,
-		} satisfies runToggleReadModelContractFx.BaseContext;
-	});
-
-const runWithRuntimeFx = <A, E, R>(database: TestDatabase, effect: Effect.Effect<A, E, R>) =>
-	Effect.runPromise(effect.pipe(withRuntimeFx(database)) as Effect.Effect<A, E, never>);
-
 export const runToggleReadModelContractFx = async <
 	Extra,
 	CollectionItemShape extends EntitySchema.Type,
@@ -110,7 +75,7 @@ export const runToggleReadModelContractFx = async <
 	const database = await testabase(databaseName);
 
 	return Effect.gen(function* () {
-		const baseContext = yield* createBaseContextFx({
+		const baseContext = yield* createToggleBaseContextFx({
 			database,
 			userSlug,
 		});
@@ -155,5 +120,10 @@ export const runToggleReadModelContractFx = async <
 		expect(afterCount.total).toBe(0);
 		expectErrorFx(afterFetch);
 		return undefined;
-	}).pipe((effect) => runWithRuntimeFx(database, effect));
+	}).pipe((effect) =>
+		runWithTestRuntimeFx({
+			database,
+			effect,
+		}),
+	);
 };

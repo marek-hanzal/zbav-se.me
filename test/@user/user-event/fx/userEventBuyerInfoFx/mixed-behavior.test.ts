@@ -6,10 +6,8 @@ import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUserFx } from "~/test/user/fx/createUserFx";
-import {
-	createTransactionTimeline,
-	seedUserEventTimelineFx,
-} from "~/test/user-event/fx/seedUserEventTimelineFx";
+import { createTransactionTimelineFx } from "~/test/user-event/fx/createTransactionTimelineFx";
+import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Mixed behavior - combines good reactions, one closer and one ghosted thread", async () => {
@@ -30,7 +28,7 @@ describe("userEventBuyerInfoFx", () => {
 			yield* seedUserEventTimelineFx({
 				userId: buyer.id,
 				events: [
-					...createTransactionTimeline({
+					...createTransactionTimelineFx({
 						group: "tx-1",
 						steps: [
 							{
@@ -68,7 +66,7 @@ describe("userEventBuyerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFx({
 						group: "tx-2",
 						steps: [
 							{
@@ -99,7 +97,7 @@ describe("userEventBuyerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFx({
 						group: "tx-3",
 						steps: [
 							{
@@ -131,7 +129,7 @@ describe("userEventBuyerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFx({
 						group: "tx-4",
 						steps: [
 							{
@@ -162,7 +160,7 @@ describe("userEventBuyerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFx({
 						group: "tx-5",
 						steps: [
 							{
@@ -202,7 +200,7 @@ describe("userEventBuyerInfoFx", () => {
 							},
 						],
 					}),
-					...createTransactionTimeline({
+					...createTransactionTimelineFx({
 						group: "tx-6",
 						steps: [
 							{

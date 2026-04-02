@@ -1,6 +1,6 @@
 import { describe, it } from "vitest";
 import { ignoreToggleFx } from "~/buyer/ignore/server/fx/ignoreToggleFx";
-import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityContractFx";
+import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
 
 describe("ignoreToggleFx", () => {
 	it("invalid: seller cannot ignore own listing", async () => {
