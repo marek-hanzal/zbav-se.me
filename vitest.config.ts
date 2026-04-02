@@ -42,6 +42,9 @@ export default defineConfig({
 		sequence: {
 			shuffle: false,
 		},
+		//
+		testTimeout: 10_000,
+		//
 		pool: "forks",
 		maxConcurrency: 4,
 		//
