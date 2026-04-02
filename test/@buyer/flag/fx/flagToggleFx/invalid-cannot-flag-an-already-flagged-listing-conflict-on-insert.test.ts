@@ -1,53 +1,36 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { flagToggleFx } from "~/buyer/flag/server/fx/flagToggleFx";
-import { auth } from "~/server/auth/auth";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityContractFx";
 
 describe("flagToggleFx", () => {
 	it("invalid: cannot flag an already-flagged listing (conflict on insert)", async () => {
-		const database = await testabase("flagToggle-duplicate");
-		const { api } = auth(() => database.dialect);
-
-		return Effect.gen(function* () {
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "seller@flag-duplicate.cz",
-						name: "Seller",
-						password: "12345678",
-					},
-				}),
-			);
-			const { user: buyer } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "buyer@flag-duplicate.cz",
-						name: "Buyer",
-						password: "12345678",
-					},
-				}),
-			);
-
-			const listing = yield* createListingFx(seller.id);
-
-			yield* flagToggleFx({
-				userId: buyer.id,
-				listingId: listing.id,
-				toggle: true,
-			});
-
-			const result = yield* Effect.either(
+		return runToggleEntityErrorContractFx({
+			databaseName: "flagToggle-duplicate",
+			userSlug: "flag-duplicate",
+			beforeFx: ({ users, listing }) =>
 				flagToggleFx({
-					userId: buyer.id,
+					userId: users.buyer.id,
 					listingId: listing.id,
 					toggle: true,
 				}),
-			);
+			errorFx: ({ users, listing }) =>
+				flagToggleFx({
+					userId: users.buyer.id,
+					listingId: listing.id,
+					toggle: true,
+				}),
+			assertAfterFx: ({ database, users, listing }) =>
+				Effect.promise(async () => {
+					const rows = await database.kysely
+						.selectFrom("flag")
+						.select("id")
+						.where("listingId", "=", listing.id)
+						.where("userId", "=", users.buyer.id)
+						.execute();
 
-			expect(result._tag).toBe("Left");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+					expect(rows).toHaveLength(1);
+				}),
+		});
 	});
 });

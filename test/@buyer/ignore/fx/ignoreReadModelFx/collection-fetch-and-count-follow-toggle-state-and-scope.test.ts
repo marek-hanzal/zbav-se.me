@@ -1,136 +1,73 @@
-import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { ignoreCollectionFx } from "~/buyer/ignore/server/fx/ignoreCollectionFx";
 import { ignoreCountFx } from "~/buyer/ignore/server/fx/ignoreCountFx";
 import { ignoreFetchFx } from "~/buyer/ignore/server/fx/ignoreFetchFx";
 import { ignoreToggleFx } from "~/buyer/ignore/server/fx/ignoreToggleFx";
-import { auth } from "~/server/auth/auth";
-import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { testabase } from "~/test/testabase";
+import { runToggleReadModelContractFx } from "~/test/@buyer/common/fx/runToggleReadModelContractFx";
 
 describe("ignore read model", () => {
 	it("collection, fetch and count reflect toggle state and respect scope", async () => {
-		const database = await testabase("ignoreReadModelFx");
-		const { api } = auth(() => database.dialect);
-
-		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp("ignore-read-seller@test.cz", "Ignore Seller");
-			const { user: buyer } = yield* signUp("ignore-read-buyer@test.cz", "Ignore Buyer");
-			const { user: stranger } = yield* signUp(
-				"ignore-read-stranger@test.cz",
-				"Ignore Stranger",
-			);
-
-			const listing = yield* createListingFx(seller.id);
-
-			yield* ignoreToggleFx({
-				userId: buyer.id,
-				listingId: listing.id,
-				toggle: true,
-			});
-
-			const collection = yield* ignoreCollectionFx({
-				scope: {
-					userId: buyer.id,
-				},
-			});
-
-			expect(collection).toHaveLength(1);
-
-			const ignored = yield* ignoreFetchFx({
-				scope: {
-					userId: buyer.id,
-				},
-				where: {
+		return runToggleReadModelContractFx({
+			databaseName: "ignoreReadModelFx",
+			userSlug: "ignore-read",
+			toggleOnFx: ({ users, listing }) =>
+				ignoreToggleFx({
+					userId: users.buyer.id,
 					listingId: listing.id,
-				},
-			});
-
-			expect(ignored.listingId).toBe(listing.id);
-
-			const count = yield* ignoreCountFx({
-				scope: {
-					userId: buyer.id,
-				},
-			});
-
-			expect(count.total).toBe(1);
-
-			const filteredCollection = yield* ignoreCollectionFx({
-				scope: {
-					userId: buyer.id,
-				},
-				where: {
+					toggle: true,
+				}),
+			toggleOffFx: ({ users, listing }) =>
+				ignoreToggleFx({
+					userId: users.buyer.id,
 					listingId: listing.id,
-					idIn: [
-						ignored.id,
-						"foreign-ignore-id",
-					],
-				},
-			});
-			const filteredCount = yield* ignoreCountFx({
-				scope: {
-					userId: buyer.id,
-				},
-				where: {
-					listingId: listing.id,
-				},
-			});
-
-			expect(filteredCollection).toHaveLength(1);
-			expect(filteredCollection[0]?.id).toBe(ignored.id);
-			expect(filteredCount.where).toBe(1);
-
-			const strangerCollection = yield* ignoreCollectionFx({
-				scope: {
-					userId: stranger.id,
-				},
-			});
-
-			expect(strangerCollection).toEqual([]);
-
-			yield* ignoreToggleFx({
-				userId: buyer.id,
-				listingId: listing.id,
-				toggle: false,
-			});
-
-			const afterCollection = yield* ignoreCollectionFx({
-				scope: {
-					userId: buyer.id,
-				},
-			});
-			const afterCount = yield* ignoreCountFx({
-				scope: {
-					userId: buyer.id,
-				},
-			});
-			const afterFetch = yield* Effect.either(
+					toggle: false,
+				}),
+			collectionFx: (_, userId) =>
+				ignoreCollectionFx({
+					scope: {
+						userId,
+					},
+				}),
+			fetchFx: ({ listing }, userId) =>
 				ignoreFetchFx({
 					scope: {
-						userId: buyer.id,
+						userId,
 					},
 					where: {
 						listingId: listing.id,
 					},
 				}),
-			);
-
-			expect(afterCollection).toEqual([]);
-			expect(afterCount.total).toBe(0);
-			expect(afterFetch._tag).toBe("Left");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			countFx: (_, userId) =>
+				ignoreCountFx({
+					scope: {
+						userId,
+					},
+				}),
+			filteredCollectionFx: ({ listing }, userId, itemId) =>
+				ignoreCollectionFx({
+					scope: {
+						userId,
+					},
+					where: {
+						listingId: listing.id,
+						idIn: [
+							itemId,
+							"foreign-ignore-id",
+						],
+					},
+				}),
+			filteredCountFx: ({ listing }, userId) =>
+				ignoreCountFx({
+					scope: {
+						userId,
+					},
+					where: {
+						listingId: listing.id,
+					},
+				}),
+			assertFetched: (item, { listing }) => {
+				expect(item.listingId).toBe(listing.id);
+			},
+		});
 	});
 });
