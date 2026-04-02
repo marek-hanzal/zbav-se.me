@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
+import { createUserFx } from "~/test/utils/createUserFx";
+import { seedUserEventTimelineFx } from "~/test/utils/seedUserEventTimelineFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("isolates seller metrics by userId and does not mix other sellers' events", async () => {
@@ -14,66 +14,58 @@ describe("userEventSellerInfoFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
+			const sellerA = yield* createUserFx({
+				api,
+				email: "seller-a-events@test.cz",
+				name: "Seller A",
+			});
+			const sellerB = yield* createUserFx({
+				api,
+				email: "seller-b-events@test.cz",
+				name: "Seller B",
+			});
 
-			const { user: sellerA } = yield* signUp("seller-a-events@test.cz", "Seller A");
-			const { user: sellerB } = yield* signUp("seller-b-events@test.cz", "Seller B");
-
-			yield* userEventCreateFx({
+			yield* seedUserEventTimelineFx({
 				userId: sellerA.id,
-				scope: "foreign",
-				source: "transaction",
-				group: "seller-a-group",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () =>
-						DateTime.now().minus({
+				events: [
+					{
+						at: DateTime.now().minus({
 							days: 10,
 						}),
-				}),
-			);
-			yield* userEventCreateFx({
-				userId: sellerA.id,
-				scope: "user",
-				source: "transaction",
-				group: "seller-a-group",
-				event: "transaction.open",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () =>
-						DateTime.now().minus({
+						group: "seller-a-group",
+						scope: "foreign",
+						source: "transaction",
+						event: "transaction.create",
+						isTerminal: false,
+					},
+					{
+						at: DateTime.now().minus({
 							days: 9,
 						}),
-				}),
-			);
+						group: "seller-a-group",
+						scope: "user",
+						source: "transaction",
+						event: "transaction.open",
+						isTerminal: false,
+					},
+				],
+			});
 
-			yield* userEventCreateFx({
+			yield* seedUserEventTimelineFx({
 				userId: sellerB.id,
-				scope: "foreign",
-				source: "transaction",
-				group: "seller-b-group",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () =>
-						DateTime.now().minus({
+				events: [
+					{
+						at: DateTime.now().minus({
 							days: 8,
 						}),
-				}),
-			);
+						group: "seller-b-group",
+						scope: "foreign",
+						source: "transaction",
+						event: "transaction.create",
+						isTerminal: false,
+					},
+				],
+			});
 
 			const sellerAInfo = yield* userEventSellerInfoFx({
 				userId: sellerA.id,

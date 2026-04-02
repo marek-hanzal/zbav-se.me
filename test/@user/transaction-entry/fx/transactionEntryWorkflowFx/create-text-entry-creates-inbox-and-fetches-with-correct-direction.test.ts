@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/utils/createOpenScenarioFx";
+import { createUsersFx } from "~/test/utils/createUsersFx";
+import { expectErrorFx } from "~/test/utils/expectErrorFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 import { transactionEntryCollectionFx } from "~/user/transaction-entry/server/fx/transactionEntryCollectionFx";
 import { transactionEntryCountFx } from "~/user/transaction-entry/server/fx/transactionEntryCountFx";
@@ -15,29 +17,13 @@ describe("transactionEntry workflow", () => {
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"transaction-entry-text-seller@test.cz",
-				"Transaction Entry Seller",
-			);
-			const { user: buyer } = yield* signUp(
-				"transaction-entry-text-buyer@test.cz",
-				"Transaction Entry Buyer",
-			);
-			const { user: outsider } = yield* signUp(
-				"transaction-entry-text-outsider@test.cz",
-				"Transaction Entry Outsider",
-			);
+			const users = yield* createUsersFx({
+				api,
+				slug: "transaction-entry-text",
+			});
+			const seller = users.seller;
+			const buyer = users.buyer;
+			const stranger = users.stranger;
 
 			const { transactionId, listingId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,
@@ -79,26 +65,26 @@ describe("transactionEntry workflow", () => {
 
 			const outsiderFetch = yield* Effect.either(
 				transactionEntryFetchFx({
-					userId: outsider.id,
+					userId: stranger.id,
 					where: {
 						id: entry.id,
 					},
 				}),
 			);
 			const outsiderCollection = yield* transactionEntryCollectionFx({
-				userId: outsider.id,
+				userId: stranger.id,
 				where: {
 					transactionId,
 				},
 			});
 			const outsiderCount = yield* transactionEntryCountFx({
-				userId: outsider.id,
+				userId: stranger.id,
 				where: {
 					transactionId,
 				},
 			});
 
-			expect(outsiderFetch._tag).toBe("Left");
+			expectErrorFx(outsiderFetch);
 			expect(outsiderCollection).toHaveLength(0);
 			expect(outsiderCount.total).toBe(0);
 

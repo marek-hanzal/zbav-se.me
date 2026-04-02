@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
+import { createUserFx } from "~/test/utils/createUserFx";
+import { seedUserEventTimelineFx } from "~/test/utils/seedUserEventTimelineFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Reaction: seller terminal before open counts as terminal reaction", async () => {
@@ -17,15 +17,11 @@ describe("userEventBuyerInfoFx", () => {
 		});
 
 		return Effect.gen(function* () {
-			const { user: buyer } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "buyer@test.cz",
-						name: "Buyer",
-						password: "12345678",
-					},
-				}),
-			);
+			const buyer = yield* createUserFx({
+				api,
+				email: "buyer@test.cz",
+				name: "Buyer",
+			});
 
 			const buyerId = buyer.id;
 			const tCreate = DateTime.now().minus({
@@ -41,58 +37,43 @@ describe("userEventBuyerInfoFx", () => {
 				hours: 1,
 			});
 
-			yield* userEventCreateFx({
+			yield* seedUserEventTimelineFx({
 				userId: buyerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => tCreate,
-				}),
-			);
-
-			// terminal before any open event exists
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.closed",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => tSellerClose,
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t2Create,
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: buyerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.rejected",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now: () => t2SellerReject,
-				}),
-			);
+				events: [
+					{
+						at: tCreate,
+						group: "tx-1",
+						scope: "user",
+						source: "transaction",
+						event: "transaction.create",
+						isTerminal: false,
+					},
+					{
+						at: tSellerClose,
+						group: "tx-1",
+						scope: "foreign",
+						source: "transaction",
+						event: "transaction.closed",
+						isTerminal: true,
+					},
+					{
+						at: t2Create,
+						group: "tx-2",
+						scope: "user",
+						source: "transaction",
+						event: "transaction.create",
+						isTerminal: false,
+					},
+					{
+						at: t2SellerReject,
+						group: "tx-2",
+						scope: "foreign",
+						source: "transaction",
+						event: "transaction.rejected",
+						isTerminal: true,
+					},
+				],
+			});
 
 			const result = yield* userEventBuyerInfoFx({
 				userId: buyerId,

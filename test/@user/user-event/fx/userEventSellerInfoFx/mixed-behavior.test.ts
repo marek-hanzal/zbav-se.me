@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
+import { createUserFx } from "~/test/utils/createUserFx";
+import { seedUserEventTimelineFx } from "~/test/utils/seedUserEventTimelineFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Mixed behavior - combo of good and bad seller behaviors", async () => {
@@ -77,248 +77,138 @@ describe("userEventSellerInfoFx", () => {
 		});
 
 		return Effect.gen(function* () {
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "seller@test.cz",
-						name: "Seller",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* createUserFx({
+				api,
+				email: "seller@test.cz",
+				name: "Seller",
+			});
 
 			const sellerId = seller.id;
-
-			// Transaction 1: Good
-			yield* userEventCreateFx({
+			yield* seedUserEventTimelineFx({
 				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1Create;
+				events: [
+					{
+						at: t1Create,
+						group: "tx-1",
+						scope: "foreign",
+						source: "transaction",
+						event: "transaction.create",
+						isTerminal: false,
 					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.open",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1React;
+					{
+						at: t1React,
+						group: "tx-1",
+						scope: "user",
+						source: "transaction",
+						event: "transaction.open",
+						isTerminal: false,
 					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.resolved",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1Resolve;
+					{
+						at: t1Resolve,
+						group: "tx-1",
+						scope: "user",
+						source: "transaction",
+						event: "transaction.resolved",
+						isTerminal: true,
 					},
-				}),
-			);
-
-			// Transaction 2: Bad - reject without interaction
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t2Create;
+					{
+						at: t2Create,
+						group: "tx-2",
+						scope: "foreign",
+						source: "transaction",
+						event: "transaction.create",
+						isTerminal: false,
 					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.rejected",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t2Reject;
+					{
+						at: t2Reject,
+						group: "tx-2",
+						scope: "user",
+						source: "transaction",
+						event: "transaction.rejected",
+						isTerminal: true,
 					},
-				}),
-			);
-
-			// Transaction 3: Good
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t3Create;
+					{
+						at: t3Create,
+						group: "tx-3",
+						scope: "foreign",
+						source: "transaction",
+						event: "transaction.create",
+						isTerminal: false,
 					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.message",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t3React;
+					{
+						at: t3React,
+						group: "tx-3",
+						scope: "user",
+						source: "transaction",
+						event: "transaction.message",
+						isTerminal: false,
 					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.resolved",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t3Resolve;
+					{
+						at: t3Resolve,
+						group: "tx-3",
+						scope: "user",
+						source: "transaction",
+						event: "transaction.resolved",
+						isTerminal: true,
 					},
-				}),
-			);
-
-			// Transaction 4: Bad - buyer ends
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-4",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t4Create;
+					{
+						at: t4Create,
+						group: "tx-4",
+						scope: "foreign",
+						source: "transaction",
+						event: "transaction.create",
+						isTerminal: false,
 					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-4",
-				event: "transaction.closed",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t4BuyerEnd;
+					{
+						at: t4BuyerEnd,
+						group: "tx-4",
+						scope: "foreign",
+						source: "transaction",
+						event: "transaction.closed",
+						isTerminal: true,
 					},
-				}),
-			);
-
-			// Transaction 5: Bad - reject without interaction
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-5",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t5Create;
+					{
+						at: t5Create,
+						group: "tx-5",
+						scope: "foreign",
+						source: "transaction",
+						event: "transaction.create",
+						isTerminal: false,
 					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-5",
-				event: "transaction.rejected",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t5Reject;
+					{
+						at: t5Reject,
+						group: "tx-5",
+						scope: "user",
+						source: "transaction",
+						event: "transaction.rejected",
+						isTerminal: true,
 					},
-				}),
-			);
-
-			// Transaction 6: Good
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-6",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t6Create;
+					{
+						at: t6Create,
+						group: "tx-6",
+						scope: "foreign",
+						source: "transaction",
+						event: "transaction.create",
+						isTerminal: false,
 					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-6",
-				event: "transaction.open",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t6React;
+					{
+						at: t6React,
+						group: "tx-6",
+						scope: "user",
+						source: "transaction",
+						event: "transaction.open",
+						isTerminal: false,
 					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-6",
-				event: "transaction.resolved",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t6Resolve;
+					{
+						at: t6Resolve,
+						group: "tx-6",
+						scope: "user",
+						source: "transaction",
+						event: "transaction.resolved",
+						isTerminal: true,
 					},
-				}),
-			);
+				],
+			});
 
 			const result = yield* userEventSellerInfoFx({
 				userId: sellerId,

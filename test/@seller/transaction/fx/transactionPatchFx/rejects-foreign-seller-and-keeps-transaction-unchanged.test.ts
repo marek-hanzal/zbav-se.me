@@ -4,6 +4,8 @@ import { transactionPatchFx } from "~/seller/transaction/server/fx/transactionPa
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
+import { createUsersFx } from "~/test/utils/createUsersFx";
+import { expectErrorFx } from "~/test/utils/expectErrorFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("transactionPatchFx", () => {
@@ -12,29 +14,13 @@ describe("transactionPatchFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"transaction-patch-owner@test.cz",
-				"Transaction Patch Owner",
-			);
-			const { user: buyer } = yield* signUp(
-				"transaction-patch-owner-buyer@test.cz",
-				"Transaction Patch Buyer",
-			);
-			const { user: strangerSeller } = yield* signUp(
-				"transaction-patch-foreign@test.cz",
-				"Transaction Patch Foreign",
-			);
+			const users = yield* createUsersFx({
+				api,
+				slug: "transaction-patch",
+			});
+			const seller = users.seller;
+			const buyer = users.buyer;
+			const stranger = users.stranger;
 
 			const scenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
@@ -55,7 +41,7 @@ describe("transactionPatchFx", () => {
 
 			const foreignAttempt = yield* Effect.either(
 				transactionPatchFx({
-					userId: strangerSeller.id,
+					userId: stranger.id,
 					patch: {
 						status: "open",
 					},
@@ -65,12 +51,12 @@ describe("transactionPatchFx", () => {
 						},
 					},
 					scope: {
-						userId: strangerSeller.id,
+						userId: stranger.id,
 					},
 				}),
 			);
 
-			expect(foreignAttempt._tag).toBe("Left");
+			expectErrorFx(foreignAttempt);
 
 			const transactionAfter = yield* Effect.promise(() =>
 				database.kysely

@@ -4,6 +4,8 @@ import { thumbCreateFx } from "~/buyer/thumb/server/fx/thumbCreateFx";
 import { auth } from "~/server/auth/auth";
 import { testabase } from "~/test/testabase";
 import { createListingFx } from "~/test/utils/createListingFx";
+import { createUserFx } from "~/test/utils/createUserFx";
+import { expectErrorFx } from "~/test/utils/expectErrorFx";
 import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
 
 describe("thumbCreateFx", () => {
@@ -12,15 +14,11 @@ describe("thumbCreateFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "thumb-own-listing@test.cz",
-						name: "Thumb Own Listing",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* createUserFx({
+				api,
+				email: "thumb-own-listing@test.cz",
+				name: "Thumb Own Listing",
+			});
 
 			const listing = yield* createListingFx(seller.id);
 
@@ -32,7 +30,7 @@ describe("thumbCreateFx", () => {
 				}),
 			);
 
-			expect(result._tag).toBe("Left");
+			expectErrorFx(result);
 
 			const thumbCount = yield* Effect.promise(() =>
 				database.kysely
