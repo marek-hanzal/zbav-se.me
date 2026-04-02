@@ -71,10 +71,12 @@ export default defineConfig({
 				"lib/server/**/*.t*",
 				//
 				"src/*.ts",
+				//
 				"src/@routes/**/*.ts",
 				"src/**/fn/**/*.ts",
 				"src/**/mutation/**/*.ts",
 				"src/**/query/**/*.ts",
+				"src/**/schema/**/*.ts",
 				"src/**/ui/**/*.ts",
 			],
 			reportOnFailure: false,

@@ -64,6 +64,50 @@ jobs:
             - name: Test
               run: bun run test
 
+            - name: Publish coverage summary
+              if: always()
+              run: |
+                  node <<'EOF'
+                  const fs = require("node:fs");
+                  const summaryPath = "coverage/vitest/coverage-summary.json";
+                  const outputPath = process.env.GITHUB_STEP_SUMMARY;
+
+                  if (!outputPath || !fs.existsSync(summaryPath)) {
+                    process.exit(0);
+                  }
+
+                  const summary = JSON.parse(fs.readFileSync(summaryPath, "utf8"));
+                  const total = summary.total;
+
+                  const lines = [
+                    "## Vitest Coverage",
+                    "",
+                    "| Metric | Covered | Total | % |",
+                    "| --- | ---: | ---: | ---: |",
+                    `| Lines | ${total.lines.covered} | ${total.lines.total} | ${total.lines.pct}% |`,
+                    `| Statements | ${total.statements.covered} | ${total.statements.total} | ${total.statements.pct}% |`,
+                    `| Functions | ${total.functions.covered} | ${total.functions.total} | ${total.functions.pct}% |`,
+                    `| Branches | ${total.branches.covered} | ${total.branches.total} | ${total.branches.pct}% |`,
+                    "",
+                    "Artifacts:",
+                    "- `coverage/vitest/index.html`",
+                    "- `coverage/vitest/lcov.info`",
+                    "- `coverage/vitest/cobertura-coverage.xml`",
+                    "- `coverage/vitest/coverage-summary.json`",
+                    "",
+                  ];
+
+                  fs.appendFileSync(outputPath, lines.join("\n"));
+                  EOF
+
+            - name: Upload coverage artifact
+              if: always()
+              uses: actions/upload-artifact@v7
+              with:
+                  name: vitest-coverage
+                  if-no-files-found: ignore
+                  path: coverage/vitest
+
     e2e:
         name: e2e
         runs-on: ubuntu-latest
