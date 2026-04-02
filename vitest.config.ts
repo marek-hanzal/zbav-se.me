@@ -43,7 +43,7 @@ export default defineConfig({
 			shuffle: false,
 		},
 		//
-		testTimeout: 20_000,
+		testTimeout: 10_000,
 		//
 		pool: "forks",
 		maxConcurrency: 4,
