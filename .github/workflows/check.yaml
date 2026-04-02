@@ -23,8 +23,8 @@ env:
     SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
 
 jobs:
-    check:
-        name: Check
+    lint:
+        name: Lint
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6.0.2
@@ -40,14 +40,74 @@ jobs:
             - name: Install dependencies
               run: bun install
 
-            - name: Check
-              run: bun run workflow:check
+            - name: Lint
+              run: bun run lint
 
-    test:
-        name: Test
+    dc:
+        name: Dependency Cruiser
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6.0.2
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v6.3.0
+              with:
+                  node-version: "24"
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Install dependencies
+              run: bun install
+
+            - name: Dependency Cruiser
+              run: bun run dc
+
+    typecheck:
+        name: Typecheck
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6.0.2
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v6.3.0
+              with:
+                  node-version: "24"
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Install dependencies
+              run: bun install
+
+            - name: Typecheck
+              run: bun run typecheck
+
+    knip:
+        name: Knip
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6.0.2
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v6.3.0
+              with:
+                  node-version: "24"
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Install dependencies
+              run: bun install
+
+            - name: Typecheck
+              run: bun run knip
+
+    vitest:
+        name: Vitest
         runs-on: ubuntu-latest
         environment: staging
-        needs: [check]
+        needs: [lint, dc, typecheck, knip]
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -110,10 +170,10 @@ jobs:
                   path: coverage/vitest
 
     e2e:
-        name: Fullstack Test
+        name: Full-Stack Test
         runs-on: ubuntu-latest
         environment: staging
-        needs: [test]
+        needs: [vitest]
         env:
             NITRO_PRESET: node_server
             SERVER_E2E: e2e
