@@ -51,7 +51,10 @@ export default defineConfig({
 			enabled: true,
 			provider: "v8",
 			reporter: [
+				"text-summary",
 				"html",
+				"lcov",
+				"cobertura",
 				"json-summary",
 			],
 			reportsDirectory: "./coverage/vitest",
@@ -65,7 +68,9 @@ export default defineConfig({
 				//
 				"lib/client/**/*.t*",
 				"lib/common/**/*.t*",
+				"lib/server/**/*.t*",
 				//
+				"src/*.ts",
 				"src/@routes/**/*.ts",
 				"src/**/fn/**/*.ts",
 				"src/**/mutation/**/*.ts",
