@@ -37,6 +37,7 @@ export default defineConfig({
 		include: [
 			"test/**/*.test.ts",
 		],
+		slowTestThreshold: 600,
 		passWithNoTests: true,
 		isolate: false,
 		sequence: {
