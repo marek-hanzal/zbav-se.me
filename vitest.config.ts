@@ -53,9 +53,9 @@ export default defineConfig({
 		// testTimeout: 10_000,
 		//
 		pool: "forks",
-		maxConcurrency: 4,
+		maxConcurrency: 2,
 		//
-		maxWorkers: 8,
+		maxWorkers: 2,
 		//
 		coverage: {
 			enabled: true,
