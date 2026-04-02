@@ -10,6 +10,7 @@
 .vercel
 .vscode/chrome-debug-profile
 *.log
+coverage
 dist
 node_modules
 playwright-report

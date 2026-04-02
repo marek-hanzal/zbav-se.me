@@ -48,7 +48,46 @@ export default defineConfig({
 		maxWorkers: 8,
 		//
 		coverage: {
-			enabled: false,
+			enabled: true,
+			provider: "v8",
+			reporter: [
+				// "text",
+				"html",
+				"json-summary",
+			],
+			reportsDirectory: "./coverage/vitest",
+			include: [
+				"src/**/*.ts",
+				"lib/**/*.ts",
+			],
+			exclude: [
+				"**/*.test.ts",
+				"**/*.d.ts",
+				"src/**/fn/**/*.ts",
+				"src/**/query/**/*.ts",
+				"src/**/mutation/**/*.ts",
+				"src/**/ui/**/*.ts",
+				"src/@routes/**/*.ts",
+			],
+			reportOnFailure: false,
+			watermarks: {
+				statements: [
+					45,
+					75,
+				],
+				branches: [
+					35,
+					65,
+				],
+				functions: [
+					45,
+					75,
+				],
+				lines: [
+					45,
+					75,
+				],
+			},
 		},
 		bail: 1,
 		silent: false,

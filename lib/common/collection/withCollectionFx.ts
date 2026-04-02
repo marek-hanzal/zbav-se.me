@@ -32,7 +32,7 @@ export namespace withCollectionFx {
 			TSelectError,
 			TSelectContext
 		>;
-		queryFx?(
+		queryFx(
 			props: Query.Props<SelectQueryBuilder<TDB, TTable, TOutput>, TFilter>,
 		): Effect.Effect<SelectQueryBuilder<TDB, TTable, TOutput>, TQueryError, TQueryContext>;
 		//
@@ -55,7 +55,7 @@ export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 	const TQueryContext,
 >({
 	selectFx,
-	queryFx = ({ select }) => Effect.succeed(select),
+	queryFx,
 	filter,
 	where,
 	scope,
