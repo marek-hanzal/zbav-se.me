@@ -19,8 +19,8 @@ interface SeedSellerEventsProps {
 const createLoadEvents = ({
 	activeTransactions,
 	userId,
-}: Pick<SeedSellerEventsProps, "activeTransactions" | "userId">) => [
-	...Array.from({
+}: Pick<SeedSellerEventsProps, "activeTransactions" | "userId">) =>
+	Array.from({
 		length: activeTransactions,
 	}).flatMap((_, index) =>
 		createTransactionTimeline({
@@ -36,21 +36,7 @@ const createLoadEvents = ({
 				},
 			],
 		}),
-	),
-	...createTransactionTimeline({
-		group: `tx-${userId}-activity`,
-		steps: [
-			{
-				at: DateTime.now().minus({
-					days: 3,
-				}),
-				scope: "user",
-				event: "transaction.message",
-				isTerminal: false,
-			},
-		],
-	}),
-];
+	);
 
 describe("userEventSellerInfoFx", {
 	timeout: 4_000,
@@ -69,7 +55,7 @@ describe("userEventSellerInfoFx", {
 				userId: seller.seller.id,
 				events: createLoadEvents({
 					userId: seller.seller.id,
-					activeTransactions: 5,
+					activeTransactions: 4,
 				}),
 			});
 
@@ -100,10 +86,25 @@ describe("userEventSellerInfoFx", {
 			});
 			yield* seedUserEventTimelineFx({
 				userId: lowSeller.id,
-				events: createLoadEvents({
-					userId: lowSeller.id,
-					activeTransactions: 1,
-				}),
+				events: [
+					...createLoadEvents({
+						userId: lowSeller.id,
+						activeTransactions: 1,
+					}),
+					...createTransactionTimeline({
+						group: `tx-${lowSeller.id}-0`,
+						steps: [
+							{
+								at: DateTime.now().minus({
+									days: 2,
+								}),
+								scope: "user",
+								event: "transaction.message",
+								isTerminal: false,
+							},
+						],
+					}),
+				],
 			});
 
 			const medium = yield* userEventSellerInfoFx({
