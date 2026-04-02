@@ -34,7 +34,6 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 			const { listingId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			const collection = yield* transactionListingCollectionFx({

@@ -1,12 +1,20 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { createUserFx } from "~/test/user/fx/createUserFx";
+import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
+
+interface SeedSellerEventsProps {
+	userId: string;
+	activeTransactions: number;
+	lastActionDaysAgo: number;
+	withUserAction?: boolean;
+}
 
 describe("userEventSellerInfoFx", () => {
 	it("derives seller activity and load buckets across multiple sellers without separate microtests", async () => {
@@ -14,96 +22,99 @@ describe("userEventSellerInfoFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
+			const highSeller = yield* createUserFx({
+				api,
+				email: "seller-high@test.cz",
+				name: "Seller High",
+			});
+			const mediumSeller = yield* createUserFx({
+				api,
+				email: "seller-medium@test.cz",
+				name: "Seller Medium",
+			});
+			const lowSeller = yield* createUserFx({
+				api,
+				email: "seller-low@test.cz",
+				name: "Seller Low",
+			});
+			const noActivitySeller = yield* createUserFx({
+				api,
+				email: "seller-none@test.cz",
+				name: "Seller No Activity",
+			});
 
-			const { user: highSeller } = yield* signUp("seller-high@test.cz", "Seller High");
-			const { user: mediumSeller } = yield* signUp("seller-medium@test.cz", "Seller Medium");
-			const { user: lowSeller } = yield* signUp("seller-low@test.cz", "Seller Low");
-			const { user: noActivitySeller } = yield* signUp(
-				"seller-none@test.cz",
-				"Seller No Activity",
-			);
-
-			const seedSeller = ({
+			const seedSellerEvents = ({
 				userId,
 				activeTransactions,
 				lastActionDaysAgo,
 				withUserAction = true,
-			}: {
-				userId: string;
-				activeTransactions: number;
-				lastActionDaysAgo: number;
-				withUserAction?: boolean;
-			}) =>
-				Effect.gen(function* () {
-					for (let index = 0; index < activeTransactions; index++) {
-						const group = `tx-${userId}-${index}`;
-
-						yield* userEventCreateFx({
-							userId,
-							scope: "foreign",
-							source: "transaction",
-							group,
-							event: "transaction.create",
-							isTerminal: false,
-						}).pipe(
-							Effect.provideService(DateContextFx, {
-								now: () =>
-									DateTime.now().minus({
-										days: lastActionDaysAgo + 5 + index,
-									}),
-							}),
-						);
-					}
-
-					if (!withUserAction) return;
-
-					yield* userEventCreateFx({
-						userId,
-						scope: "user",
-						source: "transaction",
-						group: `tx-${userId}-activity`,
-						event: "transaction.message",
-						isTerminal: false,
-					}).pipe(
-						Effect.provideService(DateContextFx, {
-							now: () =>
-								DateTime.now().minus({
-									days: lastActionDaysAgo,
+			}: SeedSellerEventsProps) => [
+				...Array.from({
+					length: activeTransactions,
+				}).flatMap((_, index) =>
+					createTransactionTimeline({
+						group: `tx-${userId}-${index}`,
+						steps: [
+							{
+								at: DateTime.now().minus({
+									days: lastActionDaysAgo + 5 + index,
 								}),
-						}),
-					);
-				});
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+						],
+					}),
+				),
+				...(withUserAction
+					? createTransactionTimeline({
+							group: `tx-${userId}-activity`,
+							steps: [
+								{
+									at: DateTime.now().minus({
+										days: lastActionDaysAgo,
+									}),
+									scope: "user",
+									event: "transaction.message",
+									isTerminal: false,
+								},
+							],
+						})
+					: []),
+			];
 
-			yield* seedSeller({
+			yield* seedUserEventTimelineFx({
 				userId: highSeller.id,
-				activeTransactions: 5,
-				lastActionDaysAgo: 5,
+				events: seedSellerEvents({
+					userId: highSeller.id,
+					activeTransactions: 5,
+					lastActionDaysAgo: 5,
+				}),
 			});
-			yield* seedSeller({
+			yield* seedUserEventTimelineFx({
 				userId: mediumSeller.id,
-				activeTransactions: 3,
-				lastActionDaysAgo: 45,
+				events: seedSellerEvents({
+					userId: mediumSeller.id,
+					activeTransactions: 3,
+					lastActionDaysAgo: 45,
+				}),
 			});
-			yield* seedSeller({
+			yield* seedUserEventTimelineFx({
 				userId: lowSeller.id,
-				activeTransactions: 1,
-				lastActionDaysAgo: 75,
+				events: seedSellerEvents({
+					userId: lowSeller.id,
+					activeTransactions: 1,
+					lastActionDaysAgo: 75,
+				}),
 			});
-			yield* seedSeller({
+			yield* seedUserEventTimelineFx({
 				userId: noActivitySeller.id,
-				activeTransactions: 2,
-				lastActionDaysAgo: 20,
-				withUserAction: false,
+				events: seedSellerEvents({
+					userId: noActivitySeller.id,
+					activeTransactions: 2,
+					lastActionDaysAgo: 20,
+					withUserAction: false,
+				}),
 			});
 
 			const high = yield* userEventSellerInfoFx({

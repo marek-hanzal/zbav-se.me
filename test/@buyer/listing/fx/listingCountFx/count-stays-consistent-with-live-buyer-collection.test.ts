@@ -27,7 +27,6 @@ describe("buyer listingCountFx", () => {
 			yield* createResolvedScenarioFx({
 				sellerId: users.seller.id,
 				buyerId: users.buyer.id,
-				database,
 			});
 
 			const collection = yield* listingCollectionFx({

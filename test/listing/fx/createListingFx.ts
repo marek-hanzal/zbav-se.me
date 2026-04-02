@@ -6,6 +6,7 @@ import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 export namespace createListingFx {
 	export interface Props {
+		categoryId?: string;
 		title?: string;
 		locationId?: string;
 	}
@@ -13,15 +14,17 @@ export namespace createListingFx {
 
 export const createListingFx = (
 	sellerId: string,
-	{ title = "Test listing", locationId }: createListingFx.Props = {},
+	{ title = "Test listing", locationId, categoryId }: createListingFx.Props = {},
 ) =>
 	Effect.gen(function* () {
-		const category = yield* categoryFetchFx({
-			where: {
-				slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
-			},
-			scope: {},
-		});
+		const resolvedCategoryId =
+			categoryId ??
+			(yield* categoryFetchFx({
+				where: {
+					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
+				},
+				scope: {},
+			})).id;
 
 		const locations = locationId
 			? []
@@ -45,7 +48,7 @@ export const createListingFx = (
 		return yield* listingCreateFx({
 			age: 1,
 			condition: 1,
-			categoryId: category.id,
+			categoryId: resolvedCategoryId,
 			expiresAt: "1-month",
 			locationId: resolvedLocationId,
 			price: 500,

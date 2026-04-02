@@ -3,8 +3,10 @@ import { describe, expect, it } from "vitest";
 import { transactionPatchCollectionFx } from "~/seller/transaction/server/fx/transactionPatchCollectionFx";
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
+import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("transactionPatchCollectionFx", () => {
 	it("updates only scoped seller transactions and refreshes statusUpdatedAt", async () => {
@@ -12,41 +14,21 @@ describe("transactionPatchCollectionFx", () => {
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"transaction-patch-seller@test.cz",
-				"Transaction Patch Seller",
-			);
-			const { user: buyer } = yield* signUp(
-				"transaction-patch-buyer@test.cz",
-				"Transaction Patch Buyer",
-			);
-			const { user: strangerSeller } = yield* signUp(
-				"transaction-patch-stranger-seller@test.cz",
-				"Transaction Patch Stranger Seller",
-			);
-			const { user: strangerBuyer } = yield* signUp(
-				"transaction-patch-stranger-buyer@test.cz",
-				"Transaction Patch Stranger Buyer",
-			);
+			const { seller, buyer, stranger } = yield* createUsersFx({
+				api,
+				slug: "transaction-patch",
+			});
+			const listing = yield* getDefaultListingCreateFx;
 
 			const ownScenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
+				listing,
 			});
 			const strangerScenario = yield* createPendingScenarioFx({
-				sellerId: strangerSeller.id,
-				buyerId: strangerBuyer.id,
+				sellerId: stranger.id,
+				buyerId: buyer.id,
+				listing,
 			});
 
 			const ownBefore = yield* Effect.promise(() =>
@@ -56,7 +38,7 @@ describe("transactionPatchCollectionFx", () => {
 						"id",
 						"statusUpdatedAt",
 					])
-					.where("listingId", "=", ownScenario.listingId)
+					.where("id", "=", ownScenario.transactionId)
 					.executeTakeFirstOrThrow(),
 			);
 			const strangerBefore = yield* Effect.promise(() =>
@@ -67,7 +49,7 @@ describe("transactionPatchCollectionFx", () => {
 						"status",
 						"statusUpdatedAt",
 					])
-					.where("listingId", "=", strangerScenario.listingId)
+					.where("id", "=", strangerScenario.transactionId)
 					.executeTakeFirstOrThrow(),
 			);
 

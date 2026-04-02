@@ -8,107 +8,52 @@ import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionA
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
+import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("buyer transaction read model", () => {
-	it("filters by where combinations and keeps foreign transactions out", async () => {
+	it("filters by where combinations inside buyer scope", async () => {
 		const database = await testabase("buyerTransactionReadModelFx-filters");
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"buyer-transaction-filter-seller@test.cz",
-				"Buyer Transaction Filter Seller",
-			);
-			const { user: buyer } = yield* signUp(
-				"buyer-transaction-filter-buyer@test.cz",
-				"Buyer Transaction Filter Buyer",
-			);
-			const { user: strangerSeller } = yield* signUp(
-				"buyer-transaction-filter-stranger-seller@test.cz",
-				"Buyer Transaction Filter Stranger Seller",
-			);
-			const { user: strangerBuyer } = yield* signUp(
-				"buyer-transaction-filter-stranger-buyer@test.cz",
-				"Buyer Transaction Filter Stranger Buyer",
-			);
+			const { seller, buyer } = yield* createUsersFx({
+				api,
+				slug: "buyer-transaction-filter",
+			});
+			const listing = yield* getDefaultListingCreateFx;
 
 			const pendingScenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
+				listing,
 			});
 			const openScenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
+				listing,
 			});
 			const resolvedScenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
+				listing,
 			});
-			const foreignScenario = yield* createPendingScenarioFx({
-				sellerId: strangerSeller.id,
-				buyerId: strangerBuyer.id,
-			});
-
-			const pendingTx = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("transaction")
-					.select("id")
-					.where("listingId", "=", pendingScenario.listingId)
-					.where("userId", "=", buyer.id)
-					.executeTakeFirstOrThrow(),
-			);
-			const openTx = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("transaction")
-					.select("id")
-					.where("listingId", "=", openScenario.listingId)
-					.where("userId", "=", buyer.id)
-					.executeTakeFirstOrThrow(),
-			);
-			const resolvedTx = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("transaction")
-					.select("id")
-					.where("listingId", "=", resolvedScenario.listingId)
-					.where("userId", "=", buyer.id)
-					.executeTakeFirstOrThrow(),
-			);
-			const foreignTx = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("transaction")
-					.select("id")
-					.where("listingId", "=", foreignScenario.listingId)
-					.where("userId", "=", strangerBuyer.id)
-					.executeTakeFirstOrThrow(),
-			);
-
 			yield* transactionAcceptFx({
-				transactionId: openTx.id,
+				transactionId: openScenario.transactionId,
 				userId: seller.id,
 			});
 			yield* transactionAcceptFx({
-				transactionId: resolvedTx.id,
+				transactionId: resolvedScenario.transactionId,
 				userId: seller.id,
 			});
 			yield* transactionResolveFx({
-				transactionId: resolvedTx.id,
+				transactionId: resolvedScenario.transactionId,
 				userId: seller.id,
 			});
 			yield* transactionSuccessFx({
-				transactionId: resolvedTx.id,
+				transactionId: resolvedScenario.transactionId,
 				userId: buyer.id,
 			});
 
@@ -147,8 +92,8 @@ describe("buyer transaction read model", () => {
 				},
 				where: {
 					idIn: [
-						openTx.id,
-						foreignTx.id,
+						pendingScenario.transactionId,
+						openScenario.transactionId,
 					],
 				},
 			});
@@ -165,7 +110,65 @@ describe("buyer transaction read model", () => {
 					userId: buyer.id,
 				},
 				where: {
-					id: openTx.id,
+					id: openScenario.transactionId,
+				},
+			});
+			expect(all.map((item) => item.id).sort()).toEqual(
+				[
+					pendingScenario.transactionId,
+					openScenario.transactionId,
+					resolvedScenario.transactionId,
+				].sort(),
+			);
+			expect(byListing).toHaveLength(1);
+			expect(byListing[0]?.id).toBe(openScenario.transactionId);
+			expect(openOnly).toHaveLength(1);
+			expect(openOnly[0]?.id).toBe(openScenario.transactionId);
+			expect(terminalOnly).toHaveLength(1);
+			expect(terminalOnly[0]?.id).toBe(resolvedScenario.transactionId);
+			expect(mixedIds.map((item) => item.id).sort()).toEqual(
+				[
+					pendingScenario.transactionId,
+					openScenario.transactionId,
+				].sort(),
+			);
+			expect(resolvedCount.where).toBe(1);
+			expect(fetched.id).toBe(openScenario.transactionId);
+			expect(typeof fetched.unreadCount).toBe("number");
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+
+	it("keeps foreign buyer transactions out", async () => {
+		const database = await testabase("buyerTransactionReadModelFx-foreign");
+		const { api } = auth(() => database.dialect);
+
+		return Effect.gen(function* () {
+			const { seller, buyer, stranger } = yield* createUsersFx({
+				api,
+				slug: "buyer-transaction-foreign",
+			});
+			const listing = yield* getDefaultListingCreateFx;
+
+			const ownScenario = yield* createPendingScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+				listing,
+			});
+			const foreignScenario = yield* createPendingScenarioFx({
+				sellerId: seller.id,
+				buyerId: stranger.id,
+				listing,
+			});
+
+			const mixedIds = yield* transactionCollectionFx({
+				scope: {
+					userId: buyer.id,
+				},
+				where: {
+					idIn: [
+						ownScenario.transactionId,
+						foreignScenario.transactionId,
+					],
 				},
 			});
 			const foreignFetch = yield* Effect.either(
@@ -174,29 +177,13 @@ describe("buyer transaction read model", () => {
 						userId: buyer.id,
 					},
 					where: {
-						id: foreignTx.id,
+						id: foreignScenario.transactionId,
 					},
 				}),
 			);
 
-			expect(all.map((item) => item.id).sort()).toEqual(
-				[
-					pendingTx.id,
-					openTx.id,
-					resolvedTx.id,
-				].sort(),
-			);
-			expect(byListing).toHaveLength(1);
-			expect(byListing[0]?.id).toBe(openTx.id);
-			expect(openOnly).toHaveLength(1);
-			expect(openOnly[0]?.id).toBe(openTx.id);
-			expect(terminalOnly).toHaveLength(1);
-			expect(terminalOnly[0]?.id).toBe(resolvedTx.id);
 			expect(mixedIds).toHaveLength(1);
-			expect(mixedIds[0]?.id).toBe(openTx.id);
-			expect(resolvedCount.where).toBe(1);
-			expect(fetched.id).toBe(openTx.id);
-			expect(typeof fetched.unreadCount).toBe("number");
+			expect(mixedIds[0]?.id).toBe(ownScenario.transactionId);
 			expect(foreignFetch._tag).toBe("Left");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

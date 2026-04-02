@@ -7,6 +7,7 @@ import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionA
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -23,60 +24,39 @@ describe("buyer transactionCollectionFx", () => {
 				api,
 				slug: "buyer-transaction-collection-direct",
 			});
+			const listing = yield* getDefaultListingCreateFx;
 
 			const activeScenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
+				listing,
 			});
 			const passiveScenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
+				listing,
 			});
 			const terminalScenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
+				listing,
 			});
 
-			const activeTx = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("transaction")
-					.select("id")
-					.where("listingId", "=", activeScenario.listingId)
-					.where("userId", "=", buyer.id)
-					.executeTakeFirstOrThrow(),
-			);
-			const passiveTx = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("transaction")
-					.select("id")
-					.where("listingId", "=", passiveScenario.listingId)
-					.where("userId", "=", buyer.id)
-					.executeTakeFirstOrThrow(),
-			);
-			const terminalTx = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("transaction")
-					.select("id")
-					.where("listingId", "=", terminalScenario.listingId)
-					.where("userId", "=", buyer.id)
-					.executeTakeFirstOrThrow(),
-			);
-
 			yield* transactionAcceptFx({
-				transactionId: activeTx.id,
+				transactionId: activeScenario.transactionId,
 				userId: seller.id,
 			});
 			yield* transactionAcceptFx({
-				transactionId: passiveTx.id,
+				transactionId: passiveScenario.transactionId,
 				userId: seller.id,
 			});
 			yield* transactionAcceptFx({
-				transactionId: terminalTx.id,
+				transactionId: terminalScenario.transactionId,
 				userId: seller.id,
 			});
 			yield* transactionEntryCreateFx({
 				userId: seller.id,
-				transactionId: activeTx.id,
+				transactionId: activeScenario.transactionId,
 				kind: "text",
 				payload: {
 					text: "Seller ping",
@@ -88,15 +68,15 @@ describe("buyer transactionCollectionFx", () => {
 				},
 				where: {
 					type: "seller-message",
-					reference: passiveTx.id,
+					reference: passiveScenario.transactionId,
 				},
 			});
 			yield* transactionResolveFx({
-				transactionId: terminalTx.id,
+				transactionId: terminalScenario.transactionId,
 				userId: seller.id,
 			});
 			yield* transactionSuccessFx({
-				transactionId: terminalTx.id,
+				transactionId: terminalScenario.transactionId,
 				userId: buyer.id,
 			});
 			yield* inboxArchiveFx({
@@ -105,7 +85,7 @@ describe("buyer transactionCollectionFx", () => {
 				},
 				where: {
 					type: "seller-message",
-					reference: terminalTx.id,
+					reference: terminalScenario.transactionId,
 				},
 			});
 
@@ -142,12 +122,12 @@ describe("buyer transactionCollectionFx", () => {
 			});
 
 			expect(activeOnly.map((item) => item.id)).toEqual([
-				activeTx.id,
+				activeScenario.transactionId,
 			]);
 			expect(inactiveOnly.map((item) => item.id).sort()).toEqual(
 				[
-					passiveTx.id,
-					terminalTx.id,
+					passiveScenario.transactionId,
+					terminalScenario.transactionId,
 				].sort(),
 			);
 			expect(statusCount.where).toBe(3);

@@ -42,7 +42,6 @@ describe("transactionEntry read model", () => {
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			const buyerText = yield* transactionEntryCreateFx({

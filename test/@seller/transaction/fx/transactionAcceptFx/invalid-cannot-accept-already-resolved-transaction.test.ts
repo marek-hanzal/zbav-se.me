@@ -36,7 +36,6 @@ describe("transactionAcceptFx", () => {
 			const { transactionId } = yield* createResolvedScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			const result = yield* Effect.either(

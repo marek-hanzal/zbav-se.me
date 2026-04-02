@@ -34,7 +34,6 @@ describe("listingCollectionFx (buyer) — listing status visibility", () => {
 			const { listingId } = yield* createResolvedScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			const { status } = yield* Effect.promise(() =>

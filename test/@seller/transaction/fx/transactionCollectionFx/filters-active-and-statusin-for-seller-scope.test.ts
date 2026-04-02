@@ -5,6 +5,7 @@ import { transactionCollectionFx } from "~/seller/transaction/server/fx/transact
 import { transactionCountFx } from "~/seller/transaction/server/fx/transactionCountFx";
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -20,41 +21,23 @@ describe("seller transactionCollectionFx", () => {
 				api,
 				slug: "seller-transaction-collection-direct",
 			});
+			const listing = yield* getDefaultListingCreateFx;
 
 			const activeScenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
+				listing,
 			});
 			const archivedScenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
+				listing,
 			});
 			const openScenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
+				listing,
 			});
-
-			const activeTx = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("transaction")
-					.select("id")
-					.where("listingId", "=", activeScenario.listingId)
-					.executeTakeFirstOrThrow(),
-			);
-			const archivedTx = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("transaction")
-					.select("id")
-					.where("listingId", "=", archivedScenario.listingId)
-					.executeTakeFirstOrThrow(),
-			);
-			const openTx = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("transaction")
-					.select("id")
-					.where("listingId", "=", openScenario.listingId)
-					.executeTakeFirstOrThrow(),
-			);
 
 			yield* inboxArchiveFx({
 				scope: {
@@ -62,11 +45,11 @@ describe("seller transactionCollectionFx", () => {
 				},
 				where: {
 					type: "buyer-message",
-					reference: archivedTx.id,
+					reference: archivedScenario.transactionId,
 				},
 			});
 			yield* transactionAcceptFx({
-				transactionId: openTx.id,
+				transactionId: openScenario.transactionId,
 				userId: seller.id,
 			});
 
@@ -104,12 +87,12 @@ describe("seller transactionCollectionFx", () => {
 
 			expect(activeOnly.map((item) => item.id).sort()).toEqual(
 				[
-					activeTx.id,
-					openTx.id,
+					activeScenario.transactionId,
+					openScenario.transactionId,
 				].sort(),
 			);
 			expect(inactiveOnly.map((item) => item.id).sort()).toEqual([
-				archivedTx.id,
+				archivedScenario.transactionId,
 			]);
 			expect(statusCount.where).toBe(3);
 			expect(typeof activeOnly[0]?.unreadCount).toBe("number");

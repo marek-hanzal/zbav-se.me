@@ -34,7 +34,6 @@ describe("listingCollectionFx (seller)", () => {
 			const { listingId } = yield* createResolvedScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			const { status } = yield* Effect.promise(() =>

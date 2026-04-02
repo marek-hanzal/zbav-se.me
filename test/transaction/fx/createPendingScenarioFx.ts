@@ -2,21 +2,29 @@ import { Effect } from "effect";
 import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 
-type CreatePendingScenarioInput = {
-	sellerId: string;
-	buyerId: string;
-};
+export namespace createPendingScenarioFx {
+	export interface Props {
+		buyerId: string;
+		listing?: createListingFx.Props;
+		sellerId: string;
+	}
+}
 
-export const createPendingScenarioFx = ({ sellerId, buyerId }: CreatePendingScenarioInput) =>
+export const createPendingScenarioFx = ({
+	sellerId,
+	buyerId,
+	listing,
+}: createPendingScenarioFx.Props) =>
 	Effect.gen(function* () {
-		const listing = yield* createListingFx(sellerId);
+		const createdListing = yield* createListingFx(sellerId, listing);
 
-		yield* transactionCreateFx({
-			listingId: listing.id,
+		const transaction = yield* transactionCreateFx({
+			listingId: createdListing.id,
 			userId: buyerId,
 		});
 
 		return {
-			listingId: listing.id,
+			listingId: createdListing.id,
+			transactionId: transaction.id,
 		};
 	});

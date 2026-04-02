@@ -8,89 +8,52 @@ import { transactionListingCountFx } from "~/seller/transaction-listing/server/f
 import { transactionListingFetchFx } from "~/seller/transaction-listing/server/fx/transactionListingFetchFx";
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
+import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("seller transaction-listing read model", () => {
-	it("filters by listing ids and terminal state while isolating foreign seller listings", async () => {
+	it("filters by listing ids and terminal state inside seller scope", async () => {
 		const database = await testabase("sellerTransactionListingReadModelFx-filters");
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"seller-transaction-listing-filter-seller@test.cz",
-				"Seller Transaction Listing Filter Seller",
-			);
-			const { user: buyer } = yield* signUp(
-				"seller-transaction-listing-filter-buyer@test.cz",
-				"Seller Transaction Listing Filter Buyer",
-			);
-			const { user: strangerSeller } = yield* signUp(
-				"seller-transaction-listing-filter-stranger-seller@test.cz",
-				"Seller Transaction Listing Filter Stranger Seller",
-			);
-			const { user: strangerBuyer } = yield* signUp(
-				"seller-transaction-listing-filter-stranger-buyer@test.cz",
-				"Seller Transaction Listing Filter Stranger Buyer",
-			);
+			const { seller, buyer } = yield* createUsersFx({
+				api,
+				slug: "seller-transaction-listing-filter",
+			});
+			const listing = yield* getDefaultListingCreateFx;
 
 			const pendingScenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
+				listing,
 			});
 			const openScenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
+				listing,
 			});
 			const terminalScenario = yield* createPendingScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
+				listing,
 			});
-			const foreignScenario = yield* createPendingScenarioFx({
-				sellerId: strangerSeller.id,
-				buyerId: strangerBuyer.id,
-			});
-
-			const openTx = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("transaction")
-					.select("id")
-					.where("listingId", "=", openScenario.listingId)
-					.executeTakeFirstOrThrow(),
-			);
-			const terminalTx = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("transaction")
-					.select("id")
-					.where("listingId", "=", terminalScenario.listingId)
-					.executeTakeFirstOrThrow(),
-			);
-
 			yield* transactionAcceptFx({
-				transactionId: openTx.id,
+				transactionId: openScenario.transactionId,
 				userId: seller.id,
 			});
 			yield* transactionAcceptFx({
-				transactionId: terminalTx.id,
+				transactionId: terminalScenario.transactionId,
 				userId: seller.id,
 			});
 			yield* transactionResolveFx({
-				transactionId: terminalTx.id,
+				transactionId: terminalScenario.transactionId,
 				userId: seller.id,
 			});
 			yield* transactionSuccessFx({
-				transactionId: terminalTx.id,
+				transactionId: terminalScenario.transactionId,
 				userId: buyer.id,
 			});
 
@@ -114,7 +77,7 @@ describe("seller transaction-listing read model", () => {
 				where: {
 					idIn: [
 						pendingScenario.listingId,
-						foreignScenario.listingId,
+						openScenario.listingId,
 					],
 				},
 			});
@@ -142,6 +105,63 @@ describe("seller transaction-listing read model", () => {
 					id: terminalScenario.listingId,
 				},
 			});
+			expect(all.map((item) => item.id).sort()).toEqual(
+				[
+					pendingScenario.listingId,
+					openScenario.listingId,
+					terminalScenario.listingId,
+				].sort(),
+			);
+			expect(byId).toHaveLength(1);
+			expect(byId[0]?.id).toBe(openScenario.listingId);
+			expect(mixedIds.map((item) => item.id).sort()).toEqual(
+				[
+					pendingScenario.listingId,
+					openScenario.listingId,
+				].sort(),
+			);
+			expect(terminalOnly).toHaveLength(1);
+			expect(terminalOnly[0]?.id).toBe(terminalScenario.listingId);
+			expect(nonTerminalCount.where).toBe(2);
+			expect(fetched.id).toBe(terminalScenario.listingId);
+			expect(typeof fetched.count).toBe("number");
+			expect(typeof fetched.unreadCount).toBe("number");
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+
+	it("keeps foreign seller listings out", async () => {
+		const database = await testabase("sellerTransactionListingReadModelFx-foreign");
+		const { api } = auth(() => database.dialect);
+
+		return Effect.gen(function* () {
+			const { seller, buyer, stranger } = yield* createUsersFx({
+				api,
+				slug: "seller-transaction-listing-foreign",
+			});
+			const listing = yield* getDefaultListingCreateFx;
+
+			const ownScenario = yield* createPendingScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+				listing,
+			});
+			const foreignScenario = yield* createPendingScenarioFx({
+				sellerId: stranger.id,
+				buyerId: buyer.id,
+				listing,
+			});
+
+			const mixedIds = yield* transactionListingCollectionFx({
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					idIn: [
+						ownScenario.listingId,
+						foreignScenario.listingId,
+					],
+				},
+			});
 			const foreignFetch = yield* Effect.either(
 				transactionListingFetchFx({
 					scope: {
@@ -153,23 +173,8 @@ describe("seller transaction-listing read model", () => {
 				}),
 			);
 
-			expect(all.map((item) => item.id).sort()).toEqual(
-				[
-					pendingScenario.listingId,
-					openScenario.listingId,
-					terminalScenario.listingId,
-				].sort(),
-			);
-			expect(byId).toHaveLength(1);
-			expect(byId[0]?.id).toBe(openScenario.listingId);
 			expect(mixedIds).toHaveLength(1);
-			expect(mixedIds[0]?.id).toBe(pendingScenario.listingId);
-			expect(terminalOnly).toHaveLength(1);
-			expect(terminalOnly[0]?.id).toBe(terminalScenario.listingId);
-			expect(nonTerminalCount.where).toBe(2);
-			expect(fetched.id).toBe(terminalScenario.listingId);
-			expect(typeof fetched.count).toBe("number");
-			expect(typeof fetched.unreadCount).toBe("number");
+			expect(mixedIds[0]?.id).toBe(ownScenario.listingId);
 			expect(foreignFetch._tag).toBe("Left");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

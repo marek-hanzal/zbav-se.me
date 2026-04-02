@@ -24,7 +24,6 @@ describe("transactionEntry workflow", () => {
 			const { transactionId, listingId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			const listing = yield* Effect.promise(() =>
@@ -91,12 +90,12 @@ describe("transactionEntry workflow", () => {
 					.where("id", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
-			const buyerToSellerInbox = yield* fetchInboxItemsFx({
+			const sellerInbox = yield* fetchInboxItemsFx({
 				database,
 				userId: seller.id,
 				type: "buyer-message",
 			});
-			const sellerToBuyerInbox = yield* fetchInboxItemsFx({
+			const buyerInbox = yield* fetchInboxItemsFx({
 				database,
 				userId: buyer.id,
 				type: "seller-message",
@@ -123,21 +122,21 @@ describe("transactionEntry workflow", () => {
 			);
 
 			expect(
-				buyerToSellerInbox.some(
+				sellerInbox.some(
 					(item) =>
 						"transactionEntryId" in item.payload &&
 						item.payload.transactionEntryId === locationEntry.id,
 				),
 			).toBe(true);
 			expect(
-				buyerToSellerInbox.some(
+				sellerInbox.some(
 					(item) =>
 						"transactionEntryId" in item.payload &&
 						item.payload.transactionEntryId === personalEntry.id,
 				),
 			).toBe(true);
 			expect(
-				sellerToBuyerInbox.some(
+				buyerInbox.some(
 					(item) =>
 						"transactionEntryId" in item.payload &&
 						item.payload.transactionEntryId === packageEntry.id,

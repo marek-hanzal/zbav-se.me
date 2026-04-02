@@ -36,7 +36,6 @@ describe("transactionEntry workflow", () => {
 			const { transactionId } = yield* createResolvedScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			yield* transactionCloseFx({

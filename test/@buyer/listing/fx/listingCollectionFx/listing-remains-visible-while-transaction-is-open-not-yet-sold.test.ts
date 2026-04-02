@@ -36,7 +36,6 @@ describe("listingCollectionFx (buyer) — listing status visibility", () => {
 			const { listingId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			const { status } = yield* Effect.promise(async () => {

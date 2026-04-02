@@ -21,7 +21,6 @@ describe("transactionDisputeFx (seller)", () => {
 			const scenario = yield* createResolvedScenarioFx({
 				sellerId: users.seller.id,
 				buyerId: users.buyer.id,
-				database,
 			});
 
 			yield* transactionDisputeFx({

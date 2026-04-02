@@ -22,5 +22,5 @@ export const fetchTransactionEntryKindsFx = ({
 			.orderBy("createdAt", "asc")
 			.execute();
 
-		return entries.map(({ kind }) => kind);
+		return entries.map((entry) => entry.kind);
 	});

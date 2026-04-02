@@ -34,7 +34,6 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 			const { listingId } = yield* createResolvedScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			const collection = yield* transactionListingCollectionFx({

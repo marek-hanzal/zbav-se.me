@@ -39,7 +39,6 @@ describe("buyer transaction invalid transitions", () => {
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			const beforeEntries = yield* Effect.promise(() =>

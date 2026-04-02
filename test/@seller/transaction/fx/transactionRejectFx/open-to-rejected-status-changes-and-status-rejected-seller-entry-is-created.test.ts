@@ -35,7 +35,6 @@ describe("transactionRejectFx (seller)", () => {
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			yield* transactionRejectFx({

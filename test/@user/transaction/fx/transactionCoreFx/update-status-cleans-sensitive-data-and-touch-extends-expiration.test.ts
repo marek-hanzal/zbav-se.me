@@ -35,7 +35,6 @@ describe("transaction core", () => {
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			yield* Effect.promise(() =>

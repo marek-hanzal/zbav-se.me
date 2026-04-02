@@ -36,7 +36,6 @@ describe("transactionSuccessFx (buyer)", () => {
 			const { transactionId } = yield* createResolvedScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 			const beforeEntries = yield* Effect.promise(() =>
 				database.kysely

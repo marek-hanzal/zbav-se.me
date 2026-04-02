@@ -34,7 +34,6 @@ describe("transactionEntryCleanupSensitiveFx", () => {
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			// Insert sensitive + non-sensitive entries directly into DB

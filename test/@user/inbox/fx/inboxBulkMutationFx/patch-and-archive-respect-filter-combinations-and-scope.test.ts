@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 import { inboxCountFx } from "~/user/inbox/server/fx/inboxCountFx";
 import { inboxPatchCollectionFx } from "~/user/inbox/server/fx/inboxPatchCollectionFx";
@@ -14,22 +15,10 @@ describe("inbox bulk mutation", () => {
 		const archivedAt = new Date("2026-04-01T14:00:00.000Z");
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: owner } = yield* signUp("inbox-bulk-owner@test.cz", "Inbox Bulk Owner");
-			const { user: stranger } = yield* signUp(
-				"inbox-bulk-stranger@test.cz",
-				"Inbox Bulk Stranger",
-			);
+			const { buyer: owner, stranger } = yield* createUsersFx({
+				api,
+				slug: "inbox-bulk",
+			});
 
 			yield* Effect.promise(() =>
 				database.kysely
