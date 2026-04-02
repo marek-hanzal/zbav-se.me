@@ -5,6 +5,7 @@ import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSel
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { createUserFx } from "~/test/user/fx/createUserFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
@@ -46,21 +47,22 @@ describe("userEventSellerInfoFx", {
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const seller = yield* createUsersFx({
+			const seller = yield* createUserFx({
 				api,
-				slug: "seller-load-high",
+				email: "seller-load-high@test.cz",
+				name: "Seller Load High",
 			});
 
 			yield* seedUserEventTimelineFx({
-				userId: seller.seller.id,
+				userId: seller.id,
 				events: createLoadEvents({
-					userId: seller.seller.id,
+					userId: seller.id,
 					activeTransactions: 4,
 				}),
 			});
 
 			const result = yield* userEventSellerInfoFx({
-				userId: seller.seller.id,
+				userId: seller.id,
 			});
 
 			expect(result?.load.bucket).toBe("high");

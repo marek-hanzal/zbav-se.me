@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { createUserFx } from "~/test/user/fx/createUserFx";
 import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
 
 describe("inbox read model", {
@@ -14,9 +14,15 @@ describe("inbox read model", {
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller: user, stranger } = yield* createUsersFx({
+			const user = yield* createUserFx({
 				api,
-				slug: "inbox-read-core",
+				email: "inbox-read-core-user@test.cz",
+				name: "Inbox Read Core User",
+			});
+			const stranger = yield* createUserFx({
+				api,
+				email: "inbox-read-core-stranger@test.cz",
+				name: "Inbox Read Core Stranger",
 			});
 
 			yield* Effect.promise(() =>
@@ -181,9 +187,15 @@ describe("inbox read model", {
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller: user, stranger } = yield* createUsersFx({
+			const user = yield* createUserFx({
 				api,
-				slug: "inbox-read-meta",
+				email: "inbox-read-meta-user@test.cz",
+				name: "Inbox Read Meta User",
+			});
+			const stranger = yield* createUserFx({
+				api,
+				email: "inbox-read-meta-stranger@test.cz",
+				name: "Inbox Read Meta Stranger",
 			});
 
 			yield* Effect.promise(() =>
