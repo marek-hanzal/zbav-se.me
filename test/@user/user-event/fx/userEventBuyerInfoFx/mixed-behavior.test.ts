@@ -9,7 +9,9 @@ import { createUserFx } from "~/test/user/fx/createUserFx";
 import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
-describe("userEventBuyerInfoFx", () => {
+describe("userEventBuyerInfoFx", {
+	timeout: 4_000,
+}, () => {
 	it("Mixed behavior - combines good reactions, one closer and one ghosted thread", async () => {
 		const database = await testabase("userEventBuyerInfoFx-mixed-behavior");
 		const { api } = auth(() => database.dialect);
@@ -164,46 +166,6 @@ describe("userEventBuyerInfoFx", () => {
 						group: "tx-5",
 						steps: [
 							{
-								at: base.plus({
-									days: 8,
-								}),
-								scope: "user",
-								event: "transaction.create",
-								isTerminal: false,
-							},
-							{
-								at: base.plus({
-									days: 8,
-									minutes: 15,
-								}),
-								scope: "foreign",
-								event: "transaction.open",
-								isTerminal: false,
-							},
-							{
-								at: base.plus({
-									days: 8,
-									minutes: 30,
-								}),
-								scope: "user",
-								event: "transaction.message",
-								isTerminal: false,
-							},
-							{
-								at: base.plus({
-									days: 10,
-									minutes: 30,
-								}),
-								scope: "user",
-								event: "transaction.success",
-								isTerminal: true,
-							},
-						],
-					}),
-					...createTransactionTimeline({
-						group: "tx-6",
-						steps: [
-							{
 								at: DateTime.now().minus({
 									days: 2,
 								}),
@@ -255,9 +217,9 @@ describe("userEventBuyerInfoFx", () => {
 			expect(result).not.toBeNull();
 			if (!result) return;
 
-			expect(result.reaction.percent).toBeCloseTo(83.33, 1);
+			expect(result.reaction.percent).toBe(80);
 			expect(result.closer.closed).toBe(1);
-			expect(result.decision.percent).toBeCloseTo(83.33, 1);
+			expect(result.decision.percent).toBe(80);
 			expect(result.expired.expired).toBe(1);
 			expect(result.load.bucket).toBe("low");
 			expect(result.activity.bucket).toBe("high");

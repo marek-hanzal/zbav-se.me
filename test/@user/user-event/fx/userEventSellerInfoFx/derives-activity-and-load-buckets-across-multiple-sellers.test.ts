@@ -115,7 +115,7 @@ describe("userEventSellerInfoFx", {
 			const {
 				seller: highSeller,
 				buyer: mediumSeller,
-				stranger: lowSeller
+				stranger: lowSeller,
 			} = yield* createUsersFx({
 				api,
 				slug: "seller-activity-buckets",
