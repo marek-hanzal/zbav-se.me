@@ -2,10 +2,9 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUserFx } from "~/test/user/fx/createUserFx";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
@@ -14,14 +13,13 @@ describe("userEventBuyerInfoFx", {
 }, () => {
 	it("Improved buyer - earlier misses are outweighed by recent healthy decisions", async () => {
 		const database = await testabase("userEventBuyerInfoFx-improved-buyer");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const buyer = yield* createUserFx({
-				api,
-				email: "buyer@test.cz",
-				name: "Buyer",
+			const buyer = yield* createDbUserFx({
+				email: "buyer-improved@test.cz",
+				name: "Buyer Improved",
 			});
+			const now = DateTime.now();
 
 			yield* seedUserEventTimelineFx({
 				userId: buyer.id,
@@ -30,7 +28,7 @@ describe("userEventBuyerInfoFx", {
 						group: "tx-1",
 						steps: [
 							{
-								at: DateTime.now().minus({
+								at: now.minus({
 									days: 60,
 								}),
 								scope: "user",
@@ -38,7 +36,7 @@ describe("userEventBuyerInfoFx", {
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now()
+								at: now
 									.minus({
 										days: 60,
 									})
@@ -50,7 +48,7 @@ describe("userEventBuyerInfoFx", {
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now()
+								at: now
 									.minus({
 										days: 60,
 									})
@@ -68,7 +66,7 @@ describe("userEventBuyerInfoFx", {
 						group: "tx-2",
 						steps: [
 							{
-								at: DateTime.now().minus({
+								at: now.minus({
 									days: 45,
 								}),
 								scope: "user",
@@ -76,7 +74,7 @@ describe("userEventBuyerInfoFx", {
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now()
+								at: now
 									.minus({
 										days: 45,
 									})
@@ -88,7 +86,7 @@ describe("userEventBuyerInfoFx", {
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now().minus({
+								at: now.minus({
 									days: 38,
 								}),
 								scope: "foreign",
@@ -101,7 +99,7 @@ describe("userEventBuyerInfoFx", {
 						group: "tx-3",
 						steps: [
 							{
-								at: DateTime.now().minus({
+								at: now.minus({
 									days: 8,
 								}),
 								scope: "user",
@@ -109,7 +107,7 @@ describe("userEventBuyerInfoFx", {
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now()
+								at: now
 									.minus({
 										days: 8,
 									})
@@ -121,7 +119,7 @@ describe("userEventBuyerInfoFx", {
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now()
+								at: now
 									.minus({
 										days: 8,
 									})
@@ -133,7 +131,7 @@ describe("userEventBuyerInfoFx", {
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now().minus({
+								at: now.minus({
 									days: 7,
 								}),
 								scope: "user",
@@ -146,7 +144,7 @@ describe("userEventBuyerInfoFx", {
 						group: "tx-4",
 						steps: [
 							{
-								at: DateTime.now().minus({
+								at: now.minus({
 									days: 3,
 								}),
 								scope: "user",
@@ -154,7 +152,7 @@ describe("userEventBuyerInfoFx", {
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now()
+								at: now
 									.minus({
 										days: 3,
 									})
@@ -166,7 +164,7 @@ describe("userEventBuyerInfoFx", {
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now()
+								at: now
 									.minus({
 										days: 3,
 									})
@@ -178,7 +176,7 @@ describe("userEventBuyerInfoFx", {
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now().minus({
+								at: now.minus({
 									days: 2,
 								}),
 								scope: "user",
