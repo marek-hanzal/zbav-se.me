@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
 import { auth } from "~/server/auth/auth";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
@@ -64,7 +65,11 @@ describe("transactionResolveFx", () => {
 				}),
 			);
 
-			expect(result._tag).toBe("Left");
+			expectTaggedErrorFx(result, {
+				tag: "InvalidRequestErrorFx",
+				message:
+					"Invalid transaction status transition from pending to resolved for seller",
+			});
 
 			const afterTransaction = yield* Effect.promise(() =>
 				database.kysely
@@ -82,7 +87,7 @@ describe("transactionResolveFx", () => {
 			);
 
 			expect(afterTransaction.status).toBe("pending");
-			expect(Number(afterEntries.count)).toBe(Number(beforeEntries.count));
+			expect(afterEntries.count).toBe(beforeEntries.count);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

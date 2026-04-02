@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { auth } from "~/server/auth/auth";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
@@ -40,8 +41,18 @@ describe("transactionAcceptFx", () => {
 			const tx = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction")
-					.select("id")
+					.select([
+						"id",
+						"status",
+					])
 					.where("userId", "=", buyer.id)
+					.executeTakeFirstOrThrow(),
+			);
+			const beforeEntries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.where("transactionId", "=", tx.id)
 					.executeTakeFirstOrThrow(),
 			);
 
@@ -52,7 +63,28 @@ describe("transactionAcceptFx", () => {
 				}),
 			);
 
-			expect(result._tag).toBe("Left");
+			expectTaggedErrorFx(result, {
+				tag: "InvalidRequestErrorFx",
+				message: "Buyer cannot accept their own transaction",
+			});
+
+			const afterTransaction = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction")
+					.select("status")
+					.where("id", "=", tx.id)
+					.executeTakeFirstOrThrow(),
+			);
+			const afterEntries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.where("transactionId", "=", tx.id)
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(afterTransaction.status).toBe(tx.status);
+			expect(afterEntries.count).toBe(beforeEntries.count);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

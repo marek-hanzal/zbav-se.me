@@ -5,6 +5,7 @@ import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionD
 import { transactionRejectFx } from "~/buyer/transaction/server/fx/transactionRejectFx";
 import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
 import { auth } from "~/server/auth/auth";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
@@ -45,6 +46,13 @@ describe("buyer transaction invalid transitions", () => {
 				transactionId,
 				userId: buyer.id,
 			});
+			const beforeEntries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.where("transactionId", "=", transactionId)
+					.executeTakeFirstOrThrow(),
+			);
 
 			const rejectResult = yield* Effect.either(
 				transactionRejectFx({
@@ -71,10 +79,22 @@ describe("buyer transaction invalid transitions", () => {
 				}),
 			);
 
-			expect(rejectResult._tag).toBe("Left");
-			expect(disputeResult._tag).toBe("Left");
-			expect(successResult._tag).toBe("Left");
-			expect(closeAgainResult._tag).toBe("Left");
+			expectTaggedErrorFx(rejectResult, {
+				tag: "InvalidRequestErrorFx",
+				message: "Invalid transaction status transition from closed to rejected for buyer",
+			});
+			expectTaggedErrorFx(disputeResult, {
+				tag: "InvalidRequestErrorFx",
+				message: "Invalid transaction status transition from closed to dispute for buyer",
+			});
+			expectTaggedErrorFx(successResult, {
+				tag: "InvalidRequestErrorFx",
+				message: "Invalid transaction status transition from closed to success for buyer",
+			});
+			expectTaggedErrorFx(closeAgainResult, {
+				tag: "InvalidRequestErrorFx",
+				message: "Invalid transaction status transition from closed to closed for buyer",
+			});
 
 			const transaction = yield* Effect.promise(() =>
 				database.kysely
@@ -83,8 +103,16 @@ describe("buyer transaction invalid transitions", () => {
 					.where("id", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
+			const afterEntries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.where("transactionId", "=", transactionId)
+					.executeTakeFirstOrThrow(),
+			);
 
 			expect(transaction.status).toBe("closed");
+			expect(afterEntries.count).toBe(beforeEntries.count);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

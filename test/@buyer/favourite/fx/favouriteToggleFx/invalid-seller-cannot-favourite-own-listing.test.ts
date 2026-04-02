@@ -1,4 +1,5 @@
-import { describe, it } from "vitest";
+import { Effect } from "effect";
+import { describe, expect, it } from "vitest";
 import { favouriteToggleFx } from "~/buyer/favourite/server/fx/favouriteToggleFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
@@ -8,6 +9,10 @@ describe("favouriteToggleFx", () => {
 		return runToggleEntityErrorContractFx({
 			databaseName: "favouriteToggle-own-listing",
 			userSlug: "fav-own",
+			expectedError: {
+				tag: "InvalidRequestErrorFx",
+				message: "You cannot add your own listing to favourites",
+			},
 			createExtraFx: ({ users }) =>
 				feedCreateFx({
 					userId: users.seller.id,
@@ -21,6 +26,23 @@ describe("favouriteToggleFx", () => {
 					listingId: listing.id,
 					feedId: feed.id,
 					toggle: true,
+				}),
+			assertAfterFx: ({ database, users, listing }) =>
+				Effect.promise(async () => {
+					const favourite = await database.kysely
+						.selectFrom("favourite")
+						.select("id")
+						.where("listingId", "=", listing.id)
+						.where("userId", "=", users.seller.id)
+						.executeTakeFirst();
+					const events = await database.kysely
+						.selectFrom("listing_event")
+						.select("id")
+						.where("listingId", "=", listing.id)
+						.execute();
+
+					expect(favourite).toBeUndefined();
+					expect(events).toHaveLength(0);
 				}),
 		});
 	});

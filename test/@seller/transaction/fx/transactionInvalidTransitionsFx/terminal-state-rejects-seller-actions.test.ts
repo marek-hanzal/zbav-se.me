@@ -5,6 +5,7 @@ import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionA
 import { transactionRejectFx } from "~/seller/transaction/server/fx/transactionRejectFx";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
 import { auth } from "~/server/auth/auth";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
@@ -45,6 +46,13 @@ describe("seller transaction invalid transitions", () => {
 				transactionId,
 				userId: buyer.id,
 			});
+			const beforeEntries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.where("transactionId", "=", transactionId)
+					.executeTakeFirstOrThrow(),
+			);
 
 			const acceptResult = yield* Effect.either(
 				transactionAcceptFx({
@@ -65,9 +73,20 @@ describe("seller transaction invalid transitions", () => {
 				}),
 			);
 
-			expect(acceptResult._tag).toBe("Left");
-			expect(rejectResult._tag).toBe("Left");
-			expect(resolveResult._tag).toBe("Left");
+			expectTaggedErrorFx(acceptResult, {
+				tag: "InvalidRequestErrorFx",
+				message: "Invalid transaction status transition from success to open for seller",
+			});
+			expectTaggedErrorFx(rejectResult, {
+				tag: "InvalidRequestErrorFx",
+				message:
+					"Invalid transaction status transition from success to rejected for seller",
+			});
+			expectTaggedErrorFx(resolveResult, {
+				tag: "InvalidRequestErrorFx",
+				message:
+					"Invalid transaction status transition from success to resolved for seller",
+			});
 
 			const transaction = yield* Effect.promise(() =>
 				database.kysely
@@ -76,8 +95,16 @@ describe("seller transaction invalid transitions", () => {
 					.where("id", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
+			const afterEntries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.where("transactionId", "=", transactionId)
+					.executeTakeFirstOrThrow(),
+			);
 
 			expect(transaction.status).toBe("success");
+			expect(afterEntries.count).toBe(beforeEntries.count);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

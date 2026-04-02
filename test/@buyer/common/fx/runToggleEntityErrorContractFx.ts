@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { createToggleBaseContextFx } from "~/test/@buyer/common/fx/createToggleBaseContextFx";
-import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { runWithTestRuntime } from "~/test/common/fx/runWithTestRuntime";
 import { testabase } from "~/test/testabase";
 
@@ -14,6 +14,7 @@ namespace runToggleEntityErrorContractFx {
 	export interface Props<Extra, Runtime> {
 		databaseName: string;
 		userSlug: string;
+		expectedError: expectTaggedErrorFx.Props;
 		createExtraFx?: (context: BaseContext) => Effect.Effect<Extra, unknown, Runtime>;
 		beforeFx?: (context: ToggleContext<Extra>) => Effect.Effect<unknown, unknown, Runtime>;
 		errorFx: (context: ToggleContext<Extra>) => Effect.Effect<unknown, unknown, Runtime>;
@@ -24,6 +25,7 @@ namespace runToggleEntityErrorContractFx {
 export const runToggleEntityErrorContractFx = async <Extra, Runtime>({
 	databaseName,
 	userSlug,
+	expectedError,
 	createExtraFx,
 	beforeFx,
 	errorFx,
@@ -47,7 +49,7 @@ export const runToggleEntityErrorContractFx = async <Extra, Runtime>({
 		}
 
 		const result = yield* Effect.either(errorFx(context));
-		expectErrorFx(result);
+		expectTaggedErrorFx(result, expectedError);
 
 		if (assertAfterFx) {
 			yield* assertAfterFx(context);

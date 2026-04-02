@@ -8,6 +8,10 @@ describe("flagToggleFx", () => {
 		return runToggleEntityErrorContractFx({
 			databaseName: "flagToggle-duplicate",
 			userSlug: "flag-duplicate",
+			expectedError: {
+				tag: "RuntimeErrorFx",
+				message: "Generic Error",
+			},
 			beforeFx: ({ users, listing }) =>
 				flagToggleFx({
 					userId: users.buyer.id,
@@ -28,8 +32,22 @@ describe("flagToggleFx", () => {
 						.where("listingId", "=", listing.id)
 						.where("userId", "=", users.buyer.id)
 						.execute();
+					const events = await database.kysely
+						.selectFrom("listing_event")
+						.select("id")
+						.where("listingId", "=", listing.id)
+						.where("event", "=", "flag")
+						.execute();
+					const inbox = await database.kysely
+						.selectFrom("inbox")
+						.select("id")
+						.where("userId", "=", users.seller.id)
+						.where("type", "=", "flag")
+						.execute();
 
 					expect(rows).toHaveLength(1);
+					expect(events).toHaveLength(1);
+					expect(inbox).toHaveLength(1);
 				}),
 		});
 	});

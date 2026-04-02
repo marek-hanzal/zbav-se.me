@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
 import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
 import { auth } from "~/server/auth/auth";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
@@ -42,8 +43,18 @@ describe("transactionDisputeFx (buyer)", () => {
 			const tx = yield* Effect.promise(() =>
 				database.kysely
 					.selectFrom("transaction")
-					.select("id")
+					.select([
+						"id",
+						"status",
+					])
 					.where("userId", "=", buyer.id)
+					.executeTakeFirstOrThrow(),
+			);
+			const beforeEntries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.where("transactionId", "=", tx.id)
 					.executeTakeFirstOrThrow(),
 			);
 
@@ -54,7 +65,28 @@ describe("transactionDisputeFx (buyer)", () => {
 				}),
 			);
 
-			expect(result._tag).toBe("Left");
+			expectTaggedErrorFx(result, {
+				tag: "InvalidRequestErrorFx",
+				message: "Invalid transaction status transition from pending to dispute for buyer",
+			});
+
+			const afterTransaction = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction")
+					.select("status")
+					.where("id", "=", tx.id)
+					.executeTakeFirstOrThrow(),
+			);
+			const afterEntries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.where("transactionId", "=", tx.id)
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(afterTransaction.status).toBe(tx.status);
+			expect(afterEntries.count).toBe(beforeEntries.count);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
