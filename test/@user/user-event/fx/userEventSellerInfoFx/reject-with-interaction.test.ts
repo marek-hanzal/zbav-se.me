@@ -1,20 +1,18 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
-describe("userEventSellerInfoFx", () => {
+describe("userEventSellerInfoFx", {
+	timeout: 4_000,
+}, () => {
 	it("Seller rejects after interaction - should not count as rejected without interaction", async () => {
 		const database = await testabase("userEventSellerInfoFx-reject-with-interaction");
-
-		const { api } = auth(() => {
-			return database.dialect;
-		});
 
 		// Base time: 89 days ago (within 90 day cutoff)
 		const baseTime = DateTime.now().minus({
@@ -50,143 +48,82 @@ describe("userEventSellerInfoFx", () => {
 		});
 
 		return Effect.gen(function* () {
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "seller@test.cz",
-						name: "Seller",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* createDbUserFx({
+				email: "seller-reject-with-interaction@test.cz",
+				name: "Seller Reject With Interaction",
+			});
 
-			const sellerId = seller.id;
-
-			// Transaction 1: Reject after message
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.message",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1Message;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.rejected",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1Reject;
-					},
-				}),
-			);
-
-			// Transaction 2: Reject after open
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t2Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.open",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t2Open;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.rejected",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t2Reject;
-					},
-				}),
-			);
-
-			// Transaction 3: Reject without interaction
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t3Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.rejected",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t3Reject;
-					},
-				}),
-			);
+			yield* seedUserEventTimelineFx({
+				userId: seller.id,
+				events: [
+					...createTransactionTimeline({
+						group: "tx-1",
+						steps: [
+							{
+								at: t1Create,
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: t1Message,
+								scope: "user",
+								event: "transaction.message",
+								isTerminal: false,
+							},
+							{
+								at: t1Reject,
+								scope: "user",
+								event: "transaction.rejected",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-2",
+						steps: [
+							{
+								at: t2Create,
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: t2Open,
+								scope: "user",
+								event: "transaction.open",
+								isTerminal: false,
+							},
+							{
+								at: t2Reject,
+								scope: "user",
+								event: "transaction.rejected",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-3",
+						steps: [
+							{
+								at: t3Create,
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: t3Reject,
+								scope: "user",
+								event: "transaction.rejected",
+								isTerminal: true,
+							},
+						],
+					}),
+				],
+			});
 
 			const result = yield* userEventSellerInfoFx({
-				userId: sellerId,
+				userId: seller.id,
 			});
 
 			expect(result).not.toBeNull();

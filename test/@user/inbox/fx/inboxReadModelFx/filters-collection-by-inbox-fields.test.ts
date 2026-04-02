@@ -1,9 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUserFx } from "~/test/user/fx/createUserFx";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
 
 describe("inbox read model", {
@@ -11,16 +10,13 @@ describe("inbox read model", {
 }, () => {
 	it("filters collections by family, type and references", async () => {
 		const database = await testabase("inboxReadModelFx-collection-filters-core");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const user = yield* createUserFx({
-				api,
+			const user = yield* createDbUserFx({
 				email: "inbox-read-core-user@test.cz",
 				name: "Inbox Read Core User",
 			});
-			const stranger = yield* createUserFx({
-				api,
+			const stranger = yield* createDbUserFx({
 				email: "inbox-read-core-stranger@test.cz",
 				name: "Inbox Read Core Stranger",
 			});
@@ -184,16 +180,13 @@ describe("inbox read model", {
 
 	it("filters collections by archive, timestamp and scope", async () => {
 		const database = await testabase("inboxReadModelFx-collection-filters-meta");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const user = yield* createUserFx({
-				api,
+			const user = yield* createDbUserFx({
 				email: "inbox-read-meta-user@test.cz",
 				name: "Inbox Read Meta User",
 			});
-			const stranger = yield* createUserFx({
-				api,
+			const stranger = yield* createDbUserFx({
 				email: "inbox-read-meta-stranger@test.cz",
 				name: "Inbox Read Meta Stranger",
 			});
