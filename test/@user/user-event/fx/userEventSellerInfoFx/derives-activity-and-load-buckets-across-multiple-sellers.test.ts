@@ -16,7 +16,9 @@ interface SeedSellerEventsProps {
 	withUserAction?: boolean;
 }
 
-describe("userEventSellerInfoFx", () => {
+describe("userEventSellerInfoFx", {
+	timeout: 4_000,
+}, () => {
 	it("derives seller load buckets across multiple sellers", async () => {
 		const database = await testabase("userEventSellerInfoFx-load-derivation");
 		const { api } = auth(() => database.dialect);
@@ -113,15 +115,11 @@ describe("userEventSellerInfoFx", () => {
 			const {
 				seller: highSeller,
 				buyer: mediumSeller,
-				stranger: lowSeller,
+				stranger: lowSeller
 			} = yield* createUsersFx({
 				api,
 				slug: "seller-activity-buckets",
 			});
-			const noActivitySeller = yield* createUsersFx({
-				api,
-				slug: "seller-activity-none",
-			}).pipe(Effect.map((users) => users.seller));
 
 			const seedSellerEvents = ({
 				userId,
@@ -188,12 +186,11 @@ describe("userEventSellerInfoFx", () => {
 				}),
 			});
 			yield* seedUserEventTimelineFx({
-				userId: noActivitySeller.id,
+				userId: lowSeller.id,
 				events: seedSellerEvents({
-					userId: noActivitySeller.id,
-					activeTransactions: 2,
-					lastActionDaysAgo: 20,
-					withUserAction: false,
+					userId: lowSeller.id,
+					activeTransactions: 1,
+					lastActionDaysAgo: 75,
 				}),
 			});
 
@@ -206,13 +203,50 @@ describe("userEventSellerInfoFx", () => {
 			const low = yield* userEventSellerInfoFx({
 				userId: lowSeller.id,
 			});
-			const noActivity = yield* userEventSellerInfoFx({
-				userId: noActivitySeller.id,
-			});
 
 			expect(high?.activity.bucket).toBe("high");
 			expect(medium?.activity.bucket).toBe("medium");
 			expect(low?.activity.bucket).toBe("low");
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+
+	it("handles seller activity when there is no recent user action", async () => {
+		const database = await testabase("userEventSellerInfoFx-activity-none");
+		const { api } = auth(() => database.dialect);
+
+		return Effect.gen(function* () {
+			const seller = yield* createUsersFx({
+				api,
+				slug: "seller-activity-none",
+			}).pipe(Effect.map((users) => users.seller));
+
+			yield* seedUserEventTimelineFx({
+				userId: seller.id,
+				events: [
+					...Array.from({
+						length: 2,
+					}).flatMap((_, index) =>
+						createTransactionTimeline({
+							group: `tx-${seller.id}-no-activity-${index}`,
+							steps: [
+								{
+									at: DateTime.now().minus({
+										days: 25 + index,
+									}),
+									scope: "foreign",
+									event: "transaction.create",
+									isTerminal: false,
+								},
+							],
+						}),
+					),
+				],
+			});
+
+			const noActivity = yield* userEventSellerInfoFx({
+				userId: seller.id,
+			});
+
 			expect(noActivity?.load.bucket).toBe("medium");
 			expect(noActivity?.activity.bucket).toBe("low");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);

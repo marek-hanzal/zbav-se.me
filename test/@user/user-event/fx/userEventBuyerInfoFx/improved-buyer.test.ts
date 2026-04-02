@@ -9,7 +9,9 @@ import { createUserFx } from "~/test/user/fx/createUserFx";
 import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
-describe("userEventBuyerInfoFx", () => {
+describe("userEventBuyerInfoFx", {
+	timeout: 4_000,
+}, () => {
 	it("Improved buyer - earlier misses are outweighed by recent healthy decisions", async () => {
 		const database = await testabase("userEventBuyerInfoFx-improved-buyer");
 		const { api } = auth(() => database.dialect);

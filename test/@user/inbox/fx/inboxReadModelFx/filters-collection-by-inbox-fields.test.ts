@@ -6,7 +6,9 @@ import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
 
-describe("inbox read model", () => {
+describe("inbox read model", {
+	timeout: 4_000,
+}, () => {
 	it("filters collections by family, type and references", async () => {
 		const database = await testabase("inboxReadModelFx-collection-filters-core");
 		const { api } = auth(() => database.dialect);
