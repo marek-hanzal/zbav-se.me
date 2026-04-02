@@ -65,7 +65,7 @@ export const testabase = async <const TDatabase>({
 							dsn: databaseConfig.SERVER_DATABASE_URL,
 							name: name,
 						}),
-						max: 4,
+						max: 1,
 					}),
 				}),
 			),

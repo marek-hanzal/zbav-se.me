@@ -1,7 +1,16 @@
 import { Effect } from "effect";
-import { sql } from "kysely";
+import { PostgresDialect, sql } from "kysely";
+import { Pool } from "pg";
 import { describe, expect, it } from "vitest";
+import {
+	MigrationContextFx,
+	withDatabaseFx,
+	withDatabaseName,
+	withDialectFx,
+} from "@/lib/common/database";
 import { auth } from "~/server/auth/auth";
+import type { Database } from "~/server/database/Database";
+import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
@@ -12,39 +21,57 @@ describe("userExPatchFx", () => {
 	it("creates when missing, updates when existing, and hits conflict branch on concurrent create", async () => {
 		const database = await testabase("userExPatchFx-create-update-conflict");
 		const { api } = auth(() => database.dialect);
+		const databaseConfig = ServerDatabaseSchema.parse(process.env);
+		const secondDatabase = await withDatabaseFx<Database>({}).pipe(
+			withDialectFx(
+				new PostgresDialect({
+					pool: new Pool({
+						connectionString: withDatabaseName({
+							dsn: databaseConfig.SERVER_DATABASE_URL,
+							name: "userExPatchFx-create-update-conflict",
+						}),
+						max: 1,
+					}),
+				}),
+			),
+			Effect.provideService(MigrationContextFx, {}),
+			Effect.runPromise,
+		);
 
 		const runtime = withRuntimeFx(database);
+		const secondRuntime = withRuntimeFx(secondDatabase);
 
-		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "user-ex-patch",
-			});
+		try {
+			return await Effect.gen(function* () {
+				const users = yield* createUsersFx({
+					api,
+					slug: "user-ex-patch",
+				});
 
-			const created = yield* userExPatchFx({
-				userId: users.seller.id,
-				patch: {
-					side: "seller",
-				},
-			});
+				const created = yield* userExPatchFx({
+					userId: users.seller.id,
+					patch: {
+						side: "seller",
+					},
+				});
 
-			expect(created.userId).toBe(users.seller.id);
-			expect(created.side).toBe("seller");
+				expect(created.userId).toBe(users.seller.id);
+				expect(created.side).toBe("seller");
 
-			const updated = yield* userExPatchFx({
-				userId: users.seller.id,
-				patch: {
-					token: "updated-token",
-				},
-			});
+				const updated = yield* userExPatchFx({
+					userId: users.seller.id,
+					patch: {
+						token: "updated-token",
+					},
+				});
 
-			expect(updated.id).toBe(created.id);
-			expect(updated.side).toBe("seller");
-			expect(updated.token).toBe("updated-token");
+				expect(updated.id).toBe(created.id);
+				expect(updated.side).toBe("seller");
+				expect(updated.token).toBe("updated-token");
 
-			yield* Effect.promise(() =>
-				sql
-					.raw(`
+				yield* Effect.promise(() =>
+					sql
+						.raw(`
 					create or replace function user_ex_conflict_delay()
 					returns trigger as $$
 					begin
@@ -55,55 +82,60 @@ describe("userExPatchFx", () => {
 					end;
 					$$ language plpgsql;
 				`)
-					.execute(database.kysely),
-			);
+						.execute(database.kysely),
+				);
 
-			yield* Effect.promise(() =>
-				sql`
+				yield* Effect.promise(() =>
+					sql`
 					create trigger user_ex_conflict_delay_trigger
 					before insert on "user_ex"
 					for each row
 					execute function user_ex_conflict_delay();
 				`.execute(database.kysely),
-			);
+				);
 
-			const parallel = yield* Effect.promise(() =>
-				Promise.all(
-					Array.from({
-						length: 2,
-					}).map(() =>
+				const parallel = yield* Effect.promise(() =>
+					Promise.all([
 						userExPatchFx({
 							userId: users.buyer.id,
 							patch: {
 								side: "buyer",
 							},
 						}).pipe(runtime, Effect.either, Effect.runPromise),
-					),
-				),
-			);
+						userExPatchFx({
+							userId: users.buyer.id,
+							patch: {
+								side: "buyer",
+							},
+						}).pipe(secondRuntime, Effect.either, Effect.runPromise),
+					]),
+				);
 
-			const conflicts = parallel.filter((item) => item._tag === "Left");
-			const successes = parallel.filter((item) => item._tag === "Right");
-			const conflict = conflicts[0];
+				const conflicts = parallel.filter((item) => item._tag === "Left");
+				const successes = parallel.filter((item) => item._tag === "Right");
+				const conflict = conflicts[0];
 
-			expect(successes.length).toBeGreaterThan(0);
-			expect(conflicts.length).toBeGreaterThan(0);
+				expect(successes.length).toBeGreaterThan(0);
+				expect(conflicts.length).toBeGreaterThan(0);
 
-			if (!conflict) {
-				throw new Error("Expected at least one conflict branch result");
-			}
+				if (!conflict) {
+					throw new Error("Expected at least one conflict branch result");
+				}
 
-			expectErrorFx(conflict);
+				expectErrorFx(conflict);
 
-			const buyerUserEx = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("user_ex")
-					.selectAll()
-					.where("userId", "=", users.buyer.id)
-					.execute(),
-			);
+				const buyerUserEx = yield* Effect.promise(() =>
+					database.kysely
+						.selectFrom("user_ex")
+						.selectAll()
+						.where("userId", "=", users.buyer.id)
+						.execute(),
+				);
 
-			expect(buyerUserEx).toHaveLength(1);
-		}).pipe(runtime, Effect.runPromise);
+				expect(buyerUserEx).toHaveLength(1);
+			}).pipe(runtime, Effect.runPromise);
+		} finally {
+			await secondDatabase.kysely.destroy();
+		}
 	});
 });
