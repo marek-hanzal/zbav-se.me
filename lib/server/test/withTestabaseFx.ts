@@ -77,6 +77,7 @@ export namespace withTestabaseFx {
 		port: number;
 		template: string;
 		databaseFx: Effect.Effect<withDatabaseFx.Instance<any>, never, DialectContextFx>;
+		onMigrate?: (database: withDatabaseFx.Instance<any>) => Promise<void>;
 	}
 }
 
@@ -86,6 +87,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 	port,
 	template,
 	databaseFx,
+	onMigrate,
 }: withTestabaseFx.Props) {
 	ensureDocker();
 
@@ -101,7 +103,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 	const dsn = `postgresql://postgres:postgres@127.0.0.1:${port}`;
 
 	yield* Effect.gen(function* () {
-		const { kysely, migrate } = yield* databaseFx.pipe(
+		const database = yield* databaseFx.pipe(
 			withDialectFx(
 				new PostgresDialect({
 					pool: new Pool({
@@ -113,9 +115,12 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 				}),
 			),
 		);
+		const { kysely, migrate } = database;
 
 		yield* Effect.promise(async () => {
 			await migrate();
+
+			await onMigrate?.(database);
 
 			await kysely.destroy();
 		});
