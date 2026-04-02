@@ -4,6 +4,13 @@ import { DateContextFx } from "@/lib/common/date";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 export namespace seedUserEventTimelineFx {
+	export interface TransactionStep {
+		at: DateTime;
+		scope: userEventCreateFx.Props["scope"];
+		event: userEventCreateFx.Props["event"];
+		isTerminal: boolean;
+	}
+
 	export interface Event {
 		at: DateTime;
 		group: string;
@@ -18,6 +25,22 @@ export namespace seedUserEventTimelineFx {
 		events: Event[];
 	}
 }
+
+export const createTransactionTimeline = ({
+	group,
+	steps,
+}: {
+	group: string;
+	steps: seedUserEventTimelineFx.TransactionStep[];
+}): seedUserEventTimelineFx.Event[] =>
+	steps.map((step) => ({
+		at: step.at,
+		group,
+		scope: step.scope,
+		source: "transaction",
+		event: step.event,
+		isTerminal: step.isTerminal,
+	}));
 
 export const seedUserEventTimelineFx = Effect.fn("seedUserEventTimelineFx")(function* ({
 	userId,

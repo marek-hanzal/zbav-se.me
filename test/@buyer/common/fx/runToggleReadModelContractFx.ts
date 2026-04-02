@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { expect } from "vitest";
-import { EntitySchema } from "@/lib/common/schema/EntitySchema";
+import type { EntitySchema } from "@/lib/common/schema/EntitySchema";
 import { auth } from "~/server/auth/auth";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
