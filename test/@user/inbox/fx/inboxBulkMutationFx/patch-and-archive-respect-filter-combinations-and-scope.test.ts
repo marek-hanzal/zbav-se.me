@@ -1,23 +1,25 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 import { inboxCountFx } from "~/user/inbox/server/fx/inboxCountFx";
 import { inboxPatchCollectionFx } from "~/user/inbox/server/fx/inboxPatchCollectionFx";
 
 describe("inbox bulk mutation", () => {
-	it("patches and archives only scoped rows matched by combined filters", async () => {
-		const database = await testabase("inboxBulkMutationFx-filters");
-		const { api } = auth(() => database.dialect);
+	it("patches only scoped rows matched by combined filters", async () => {
+		const database = await testabase("inboxBulkMutationFx-patch");
 		const archivedAt = new Date("2026-04-01T14:00:00.000Z");
 
 		return Effect.gen(function* () {
-			const { buyer: owner, stranger } = yield* createUsersFx({
-				api,
-				slug: "inbox-bulk",
+			const owner = yield* createDbUserFx({
+				email: "inbox-bulk-owner@test.cz",
+				name: "Inbox Bulk Owner",
+			});
+			const stranger = yield* createDbUserFx({
+				email: "inbox-bulk-stranger@test.cz",
+				name: "Inbox Bulk Stranger",
 			});
 
 			yield* Effect.promise(() =>
@@ -76,22 +78,6 @@ describe("inbox bulk mutation", () => {
 							archivedAt: null,
 						},
 						{
-							id: "bulk-owner-reaction",
-							userId: owner.id,
-							reference: [
-								"listing-bulk",
-							],
-							family: "reaction",
-							type: "thumb",
-							payload: {
-								listingId: "listing-bulk",
-								thumb: "like",
-							},
-							priority: "common",
-							timestamp: new Date("2026-04-01T12:00:00.000Z"),
-							archivedAt: null,
-						},
-						{
 							id: "bulk-stranger-a",
 							userId: stranger.id,
 							reference: [
@@ -134,6 +120,105 @@ describe("inbox bulk mutation", () => {
 				"bulk-owner-b",
 			]);
 
+			const rows = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select([
+						"id",
+						"archivedAt",
+					])
+					.where("id", "in", [
+						"bulk-owner-a",
+						"bulk-owner-b",
+						"bulk-owner-c",
+						"bulk-stranger-a",
+					])
+					.execute(),
+			);
+
+			const archivedIds = rows
+				.filter((row) => row.archivedAt !== null)
+				.map((row) => row.id)
+				.sort();
+
+			expect(archivedIds).toEqual([
+				"bulk-owner-a",
+				"bulk-owner-b",
+			]);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+
+	it("archives only scoped rows matched by reference filters and keeps counts consistent", async () => {
+		const database = await testabase("inboxBulkMutationFx-archive");
+
+		return Effect.gen(function* () {
+			const owner = yield* createDbUserFx({
+				email: "inbox-archive-owner@test.cz",
+				name: "Inbox Archive Owner",
+			});
+			const stranger = yield* createDbUserFx({
+				email: "inbox-archive-stranger@test.cz",
+				name: "Inbox Archive Stranger",
+			});
+
+			yield* Effect.promise(() =>
+				database.kysely
+					.insertInto("inbox")
+					.values([
+						{
+							id: "bulk-owner-c",
+							userId: owner.id,
+							reference: [
+								"listing-bulk",
+								"tx-c",
+							],
+							family: "transaction",
+							type: "seller-message",
+							payload: {
+								transactionId: "tx-c",
+								transactionEntryId: "entry-c",
+							},
+							priority: "high",
+							timestamp: new Date("2026-04-01T11:00:00.000Z"),
+							archivedAt: null,
+						},
+						{
+							id: "bulk-owner-reaction",
+							userId: owner.id,
+							reference: [
+								"listing-bulk",
+							],
+							family: "reaction",
+							type: "thumb",
+							payload: {
+								listingId: "listing-bulk",
+								thumb: "like",
+							},
+							priority: "common",
+							timestamp: new Date("2026-04-01T12:00:00.000Z"),
+							archivedAt: null,
+						},
+						{
+							id: "bulk-stranger-a",
+							userId: stranger.id,
+							reference: [
+								"listing-bulk",
+								"tx-stranger",
+							],
+							family: "transaction",
+							type: "buyer-message",
+							payload: {
+								transactionId: "tx-stranger",
+								transactionEntryId: "entry-stranger",
+							},
+							priority: "high",
+							timestamp: new Date("2026-04-01T09:30:00.000Z"),
+							archivedAt: null,
+						},
+					])
+					.execute(),
+			);
+
 			yield* inboxArchiveFx({
 				scope: {
 					userId: owner.id,
@@ -156,8 +241,6 @@ describe("inbox bulk mutation", () => {
 						"archivedAt",
 					])
 					.where("id", "in", [
-						"bulk-owner-a",
-						"bulk-owner-b",
 						"bulk-owner-c",
 						"bulk-owner-reaction",
 						"bulk-stranger-a",
@@ -171,8 +254,6 @@ describe("inbox bulk mutation", () => {
 				.sort();
 
 			expect(archivedIds).toEqual([
-				"bulk-owner-a",
-				"bulk-owner-b",
 				"bulk-owner-c",
 			]);
 
