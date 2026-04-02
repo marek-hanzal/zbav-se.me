@@ -1,34 +1,25 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
 import { inboxCountFx } from "~/user/inbox/server/fx/inboxCountFx";
 import { inboxFetchFx } from "~/user/inbox/server/fx/inboxFetchFx";
 
 describe("inbox read model", () => {
-	it("fetches and counts scoped items while denying foreign access", async () => {
+	it("fetches and counts scoped items", async () => {
 		const database = await testabase("inboxReadModelFx-fetch-count-scope");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user } = yield* signUp("inbox-read-owner@test.cz", "Inbox Read Owner");
-			const { user: stranger } = yield* signUp(
-				"inbox-read-stranger@test.cz",
-				"Inbox Read Stranger",
-			);
+			const user = yield* createDbUserFx({
+				email: "inbox-read-owner@test.cz",
+				name: "Inbox Read Owner",
+			});
+			const stranger = yield* createDbUserFx({
+				email: "inbox-read-stranger@test.cz",
+				name: "Inbox Read Stranger",
+			});
 
 			yield* Effect.promise(() =>
 				database.kysely
@@ -118,16 +109,6 @@ describe("inbox read model", () => {
 					id: "inbox-read-thumb-b",
 				},
 			});
-			const foreignFetch = yield* Effect.either(
-				inboxFetchFx({
-					scope: {
-						userId: user.id,
-					},
-					where: {
-						id: "inbox-read-stranger",
-					},
-				}),
-			);
 			const reactionCount = yield* inboxCountFx({
 				scope: {
 					userId: user.id,
@@ -152,9 +133,59 @@ describe("inbox read model", () => {
 			]);
 			expect(fetched.id).toBe("inbox-read-thumb-b");
 			expect(fetched.userId).toBe(user.id);
-			expect(foreignFetch._tag).toBe("Left");
 			expect(reactionCount.where).toBe(2);
 			expect(archivedCount.where).toBe(1);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+
+	it("denies foreign access", async () => {
+		const database = await testabase("inboxReadModelFx-fetch-foreign");
+
+		return Effect.gen(function* () {
+			const user = yield* createDbUserFx({
+				email: "inbox-read-owner-foreign@test.cz",
+				name: "Inbox Read Owner Foreign",
+			});
+			const stranger = yield* createDbUserFx({
+				email: "inbox-read-stranger-foreign@test.cz",
+				name: "Inbox Read Stranger Foreign",
+			});
+
+			yield* Effect.promise(() =>
+				database.kysely
+					.insertInto("inbox")
+					.values({
+						id: "inbox-read-foreign-item",
+						userId: stranger.id,
+						reference: [
+							"listing-stranger",
+							"tx-stranger",
+						],
+						family: "transaction",
+						type: "buyer-message",
+						payload: {
+							transactionId: "tx-stranger",
+							transactionEntryId: "entry-stranger",
+						},
+						priority: "high",
+						timestamp: new Date("2026-04-01T13:00:00.000Z"),
+						archivedAt: null,
+					})
+					.execute(),
+			);
+
+			const foreignFetch = yield* Effect.either(
+				inboxFetchFx({
+					scope: {
+						userId: user.id,
+					},
+					where: {
+						id: "inbox-read-foreign-item",
+					},
+				}),
+			);
+
+			expect(foreignFetch._tag).toBe("Left");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
