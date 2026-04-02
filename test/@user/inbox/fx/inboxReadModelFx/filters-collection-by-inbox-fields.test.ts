@@ -3,30 +3,19 @@ import { describe, expect, it } from "vitest";
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
 
 describe("inbox read model", () => {
-	it("filters collections by inbox fields while keeping foreign rows out", async () => {
-		const database = await testabase("inboxReadModelFx-collection-filters");
+	it("filters collections by family, type and references", async () => {
+		const database = await testabase("inboxReadModelFx-collection-filters-core");
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user } = yield* signUp("inbox-read-owner@test.cz", "Inbox Read Owner");
-			const { user: stranger } = yield* signUp(
-				"inbox-read-stranger@test.cz",
-				"Inbox Read Stranger",
-			);
+			const { seller: user, stranger } = yield* createUsersFx({
+				api,
+				slug: "inbox-read-core",
+			});
 
 			yield* Effect.promise(() =>
 				database.kysely
@@ -119,18 +108,6 @@ describe("inbox read model", () => {
 					])
 					.execute(),
 			);
-
-			const all = yield* inboxCollectionFx({
-				scope: {
-					userId: user.id,
-				},
-				sort: [
-					{
-						field: "timestamp",
-						order: "asc",
-					},
-				],
-			});
 			const byFamily = yield* inboxCollectionFx({
 				scope: {
 					userId: user.id,
@@ -177,6 +154,123 @@ describe("inbox read model", () => {
 					],
 				},
 			});
+
+			expect(byFamily.map((item) => item.id).sort()).toEqual([
+				"inbox-read-favourite-c",
+				"inbox-read-thumb-b",
+			]);
+			expect(byType.map((item) => item.id)).toEqual([
+				"inbox-read-thumb-b",
+			]);
+			expect(byReference.map((item) => item.id)).toEqual([
+				"inbox-read-tx-a",
+			]);
+			expect(byAnyReference.map((item) => item.id)).toEqual([
+				"inbox-read-thumb-b",
+			]);
+			expect(byAllReference.map((item) => item.id)).toEqual([
+				"inbox-read-tx-a",
+			]);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+
+	it("filters collections by archive, timestamp and scope", async () => {
+		const database = await testabase("inboxReadModelFx-collection-filters-meta");
+		const { api } = auth(() => database.dialect);
+
+		return Effect.gen(function* () {
+			const { seller: user, stranger } = yield* createUsersFx({
+				api,
+				slug: "inbox-read-meta",
+			});
+
+			yield* Effect.promise(() =>
+				database.kysely
+					.insertInto("inbox")
+					.values([
+						{
+							id: "inbox-read-tx-a",
+							userId: user.id,
+							reference: [
+								"listing-a",
+								"tx-a",
+							],
+							family: "transaction",
+							type: "buyer-message",
+							payload: {
+								transactionId: "tx-a",
+								transactionEntryId: "entry-a",
+							},
+							priority: "high",
+							timestamp: new Date("2026-04-01T09:00:00.000Z"),
+							archivedAt: null,
+						},
+						{
+							id: "inbox-read-favourite-c",
+							userId: user.id,
+							reference: [
+								"listing-c",
+							],
+							family: "reaction",
+							type: "favourite",
+							payload: {
+								listingId: "listing-c",
+							},
+							priority: "common",
+							timestamp: new Date("2026-04-01T11:00:00.000Z"),
+							archivedAt: null,
+						},
+						{
+							id: "inbox-read-tx-archived",
+							userId: user.id,
+							reference: [
+								"listing-a",
+								"tx-archived",
+							],
+							family: "transaction",
+							type: "transaction",
+							payload: {
+								listingId: "listing-a",
+								transactionId: "tx-archived",
+								transactionEntryId: "entry-archived",
+								target: "seller",
+							},
+							priority: "high",
+							timestamp: new Date("2026-04-01T12:00:00.000Z"),
+							archivedAt: new Date("2026-04-01T12:30:00.000Z"),
+						},
+						{
+							id: "inbox-read-stranger",
+							userId: stranger.id,
+							reference: [
+								"listing-stranger",
+								"tx-stranger",
+							],
+							family: "transaction",
+							type: "buyer-message",
+							payload: {
+								transactionId: "tx-stranger",
+								transactionEntryId: "entry-stranger",
+							},
+							priority: "high",
+							timestamp: new Date("2026-04-01T13:00:00.000Z"),
+							archivedAt: null,
+						},
+					])
+					.execute(),
+			);
+
+			const all = yield* inboxCollectionFx({
+				scope: {
+					userId: user.id,
+				},
+				sort: [
+					{
+						field: "timestamp",
+						order: "asc",
+					},
+				],
+			});
 			const archivedOnly = yield* inboxCollectionFx({
 				scope: {
 					userId: user.id,
@@ -208,25 +302,8 @@ describe("inbox read model", () => {
 
 			expect(all.map((item) => item.id)).toEqual([
 				"inbox-read-tx-a",
-				"inbox-read-thumb-b",
 				"inbox-read-favourite-c",
 				"inbox-read-tx-archived",
-			]);
-			expect(byFamily.map((item) => item.id).sort()).toEqual([
-				"inbox-read-favourite-c",
-				"inbox-read-thumb-b",
-			]);
-			expect(byType.map((item) => item.id)).toEqual([
-				"inbox-read-thumb-b",
-			]);
-			expect(byReference.map((item) => item.id)).toEqual([
-				"inbox-read-tx-a",
-			]);
-			expect(byAnyReference.map((item) => item.id)).toEqual([
-				"inbox-read-thumb-b",
-			]);
-			expect(byAllReference.map((item) => item.id)).toEqual([
-				"inbox-read-tx-a",
 			]);
 			expect(archivedOnly.map((item) => item.id)).toEqual([
 				"inbox-read-tx-archived",

@@ -25,25 +25,17 @@ describe("transactionUserCreateFx", () => {
 				buyerId: users.buyer.id,
 			});
 
-			const transaction = yield* Effect.promise(() =>
-				database.kysely
-					.selectFrom("transaction")
-					.select("id")
-					.where("listingId", "=", scenario.listingId)
-					.executeTakeFirstOrThrow(),
-			);
-
 			yield* Effect.promise(() =>
 				database.kysely
 					.deleteFrom("transaction_user")
-					.where("transactionId", "=", transaction.id)
+					.where("transactionId", "=", scenario.transactionId)
 					.execute(),
 			);
 
 			const fixedNow = DateTime.fromISO("2026-04-02T13:00:00.000Z");
 
 			yield* transactionUserCreateFx({
-				transactionId: transaction.id,
+				transactionId: scenario.transactionId,
 				users: [
 					{
 						userId: users.seller.id,
@@ -68,7 +60,7 @@ describe("transactionUserCreateFx", () => {
 						"side",
 						"createdAt",
 					])
-					.where("transactionId", "=", transaction.id)
+					.where("transactionId", "=", scenario.transactionId)
 					.orderBy("side", "asc")
 					.execute(),
 			);

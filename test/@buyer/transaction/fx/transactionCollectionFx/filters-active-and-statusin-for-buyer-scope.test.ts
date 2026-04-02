@@ -15,8 +15,8 @@ import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 
 describe("buyer transactionCollectionFx", () => {
-	it("filters by active inbox state and statusIn within buyer scope", async () => {
-		const database = await testabase("buyer-transactionCollection-active-statusIn");
+	it("filters active transactions by inbox state within buyer scope", async () => {
+		const database = await testabase("buyer-transactionCollection-active");
 		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
@@ -36,11 +36,6 @@ describe("buyer transactionCollectionFx", () => {
 				buyerId: buyer.id,
 				listing,
 			});
-			const terminalScenario = yield* createPendingScenarioFx({
-				sellerId: seller.id,
-				buyerId: buyer.id,
-				listing,
-			});
 
 			yield* transactionAcceptFx({
 				transactionId: activeScenario.transactionId,
@@ -48,10 +43,6 @@ describe("buyer transactionCollectionFx", () => {
 			});
 			yield* transactionAcceptFx({
 				transactionId: passiveScenario.transactionId,
-				userId: seller.id,
-			});
-			yield* transactionAcceptFx({
-				transactionId: terminalScenario.transactionId,
 				userId: seller.id,
 			});
 			yield* transactionEntryCreateFx({
@@ -71,23 +62,6 @@ describe("buyer transactionCollectionFx", () => {
 					reference: passiveScenario.transactionId,
 				},
 			});
-			yield* transactionResolveFx({
-				transactionId: terminalScenario.transactionId,
-				userId: seller.id,
-			});
-			yield* transactionSuccessFx({
-				transactionId: terminalScenario.transactionId,
-				userId: buyer.id,
-			});
-			yield* inboxArchiveFx({
-				scope: {
-					userId: buyer.id,
-				},
-				where: {
-					type: "seller-message",
-					reference: terminalScenario.transactionId,
-				},
-			});
 
 			const activeOnly = yield* transactionCollectionFx({
 				scope: {
@@ -97,6 +71,97 @@ describe("buyer transactionCollectionFx", () => {
 					active: true,
 				},
 			});
+			const inactiveOnly = yield* transactionCollectionFx({
+				scope: {
+					userId: buyer.id,
+				},
+				where: {
+					active: false,
+				},
+			});
+
+			expect(activeOnly.map((item) => item.id)).toEqual([
+				activeScenario.transactionId,
+			]);
+			expect(inactiveOnly.map((item) => item.id)).toEqual([
+				passiveScenario.transactionId,
+			]);
+			expect(typeof activeOnly[0]?.unreadCount).toBe("number");
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+
+	it("filters statusIn and keeps count consistent within buyer scope", async () => {
+		const database = await testabase("buyer-transactionCollection-statusIn");
+		const { api } = auth(() => database.dialect);
+
+		return Effect.gen(function* () {
+			const { seller, buyer } = yield* createUsersFx({
+				api,
+				slug: "buyer-transaction-collection-status",
+			});
+			const listing = yield* getDefaultListingCreateFx;
+
+			const openScenario = yield* createPendingScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+				listing,
+			});
+			const successScenario = yield* createPendingScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+				listing,
+			});
+			yield* transactionAcceptFx({
+				transactionId: openScenario.transactionId,
+				userId: seller.id,
+			});
+			yield* transactionAcceptFx({
+				transactionId: successScenario.transactionId,
+				userId: seller.id,
+			});
+			yield* transactionEntryCreateFx({
+				userId: seller.id,
+				transactionId: openScenario.transactionId,
+				kind: "text",
+				payload: {
+					text: "Open seller ping",
+				},
+			});
+			yield* transactionEntryCreateFx({
+				userId: seller.id,
+				transactionId: successScenario.transactionId,
+				kind: "text",
+				payload: {
+					text: "Success seller ping",
+				},
+			});
+			yield* transactionResolveFx({
+				transactionId: successScenario.transactionId,
+				userId: seller.id,
+			});
+			yield* transactionSuccessFx({
+				transactionId: successScenario.transactionId,
+				userId: buyer.id,
+			});
+			yield* inboxArchiveFx({
+				scope: {
+					userId: buyer.id,
+				},
+				where: {
+					type: "seller-message",
+					reference: openScenario.transactionId,
+				},
+			});
+			yield* inboxArchiveFx({
+				scope: {
+					userId: buyer.id,
+				},
+				where: {
+					type: "seller-message",
+					reference: successScenario.transactionId,
+				},
+			});
+
 			const inactiveOnly = yield* transactionCollectionFx({
 				scope: {
 					userId: buyer.id,
@@ -121,17 +186,14 @@ describe("buyer transactionCollectionFx", () => {
 				},
 			});
 
-			expect(activeOnly.map((item) => item.id)).toEqual([
-				activeScenario.transactionId,
-			]);
 			expect(inactiveOnly.map((item) => item.id).sort()).toEqual(
 				[
-					passiveScenario.transactionId,
-					terminalScenario.transactionId,
+					openScenario.transactionId,
+					successScenario.transactionId,
 				].sort(),
 			);
-			expect(statusCount.where).toBe(3);
-			expect(typeof activeOnly[0]?.unreadCount).toBe("number");
+			expect(statusCount.where).toBe(2);
+			expect(inactiveOnly.every((item) => typeof item.unreadCount === "number")).toBe(true);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

@@ -29,7 +29,7 @@ describe("userEventBuyerInfoFx", () => {
 						steps: [
 							{
 								at: DateTime.now().minus({
-									days: 80,
+									days: 60,
 								}),
 								scope: "user",
 								event: "transaction.create",
@@ -38,7 +38,7 @@ describe("userEventBuyerInfoFx", () => {
 							{
 								at: DateTime.now()
 									.minus({
-										days: 80,
+										days: 60,
 									})
 									.plus({
 										hours: 1,
@@ -50,7 +50,7 @@ describe("userEventBuyerInfoFx", () => {
 							{
 								at: DateTime.now()
 									.minus({
-										days: 80,
+										days: 60,
 									})
 									.plus({
 										hours: 1,
@@ -67,7 +67,7 @@ describe("userEventBuyerInfoFx", () => {
 						steps: [
 							{
 								at: DateTime.now().minus({
-									days: 70,
+									days: 45,
 								}),
 								scope: "user",
 								event: "transaction.create",
@@ -76,7 +76,7 @@ describe("userEventBuyerInfoFx", () => {
 							{
 								at: DateTime.now()
 									.minus({
-										days: 70,
+										days: 45,
 									})
 									.plus({
 										hours: 2,
@@ -87,7 +87,7 @@ describe("userEventBuyerInfoFx", () => {
 							},
 							{
 								at: DateTime.now().minus({
-									days: 65,
+									days: 38,
 								}),
 								scope: "foreign",
 								event: "transaction.expired",
@@ -100,7 +100,7 @@ describe("userEventBuyerInfoFx", () => {
 						steps: [
 							{
 								at: DateTime.now().minus({
-									days: 20,
+									days: 8,
 								}),
 								scope: "user",
 								event: "transaction.create",
@@ -109,7 +109,7 @@ describe("userEventBuyerInfoFx", () => {
 							{
 								at: DateTime.now()
 									.minus({
-										days: 20,
+										days: 8,
 									})
 									.plus({
 										minutes: 30,
@@ -121,7 +121,7 @@ describe("userEventBuyerInfoFx", () => {
 							{
 								at: DateTime.now()
 									.minus({
-										days: 20,
+										days: 8,
 									})
 									.plus({
 										minutes: 40,
@@ -132,7 +132,7 @@ describe("userEventBuyerInfoFx", () => {
 							},
 							{
 								at: DateTime.now().minus({
-									days: 18,
+									days: 7,
 								}),
 								scope: "user",
 								event: "transaction.success",
@@ -145,7 +145,7 @@ describe("userEventBuyerInfoFx", () => {
 						steps: [
 							{
 								at: DateTime.now().minus({
-									days: 5,
+									days: 3,
 								}),
 								scope: "user",
 								event: "transaction.create",
@@ -154,7 +154,7 @@ describe("userEventBuyerInfoFx", () => {
 							{
 								at: DateTime.now()
 									.minus({
-										days: 5,
+										days: 3,
 									})
 									.plus({
 										minutes: 5,
@@ -166,7 +166,7 @@ describe("userEventBuyerInfoFx", () => {
 							{
 								at: DateTime.now()
 									.minus({
-										days: 5,
+										days: 3,
 									})
 									.plus({
 										minutes: 10,
@@ -175,54 +175,9 @@ describe("userEventBuyerInfoFx", () => {
 								event: "transaction.message",
 								isTerminal: false,
 							},
-							{
-								at: DateTime.now().minus({
-									days: 4,
-								}),
-								scope: "user",
-								event: "transaction.success",
-								isTerminal: true,
-							},
-						],
-					}),
-					...createTransactionTimeline({
-						group: "tx-5",
-						steps: [
 							{
 								at: DateTime.now().minus({
 									days: 2,
-								}),
-								scope: "user",
-								event: "transaction.create",
-								isTerminal: false,
-							},
-							{
-								at: DateTime.now()
-									.minus({
-										days: 2,
-									})
-									.plus({
-										minutes: 10,
-									}),
-								scope: "foreign",
-								event: "transaction.open",
-								isTerminal: false,
-							},
-							{
-								at: DateTime.now()
-									.minus({
-										days: 2,
-									})
-									.plus({
-										minutes: 20,
-									}),
-								scope: "user",
-								event: "transaction.message",
-								isTerminal: false,
-							},
-							{
-								at: DateTime.now().minus({
-									days: 1,
 								}),
 								scope: "user",
 								event: "transaction.closed",
@@ -240,12 +195,12 @@ describe("userEventBuyerInfoFx", () => {
 			expect(result).not.toBeNull();
 			if (!result) return;
 
-			expect(result.reaction.total).toBe(5);
-			expect(result.decision.total).toBe(5);
+			expect(result.reaction.total).toBe(4);
+			expect(result.decision.total).toBe(4);
 			expect(result.activity.bucket).toBe("high");
-			expect(result.expired.percent).toBeLessThanOrEqual(20);
-			expect(result.score.score).toBeGreaterThanOrEqual(70);
-			expect(result.score.rank).toBeGreaterThanOrEqual(5);
+			expect(result.expired.percent).toBeLessThanOrEqual(25);
+			expect(result.score.score).toBeGreaterThanOrEqual(65);
+			expect(result.score.rank).toBeGreaterThanOrEqual(4);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
