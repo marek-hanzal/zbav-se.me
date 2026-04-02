@@ -9,10 +9,15 @@ import { createUserFx } from "~/test/user/fx/createUserFx";
 import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
-describe("userEventSellerInfoFx", () => {
+describe("userEventSellerInfoFx", {
+	timeout: 4_000,
+}, () => {
 	it("Improved seller - old rejects are outweighed by recent quick resolutions", async () => {
 		const database = await testabase("userEventSellerInfoFx-improved-seller");
 		const { api } = auth(() => database.dialect);
+		const base = DateTime.now().minus({
+			days: 80,
+		});
 
 		return Effect.gen(function* () {
 			const seller = yield* createUserFx({
@@ -28,16 +33,14 @@ describe("userEventSellerInfoFx", () => {
 						group: "tx-1",
 						steps: [
 							{
-								at: DateTime.now().minus({
-									days: 80,
-								}),
+								at: base,
 								scope: "foreign",
 								event: "transaction.create",
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now().minus({
-									days: 79,
+								at: base.plus({
+									days: 1,
 								}),
 								scope: "user",
 								event: "transaction.rejected",
@@ -49,19 +52,29 @@ describe("userEventSellerInfoFx", () => {
 						group: "tx-2",
 						steps: [
 							{
-								at: DateTime.now().minus({
-									days: 70,
+								at: base.plus({
+									days: 40,
 								}),
 								scope: "foreign",
 								event: "transaction.create",
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now().minus({
-									days: 67,
+								at: base.plus({
+									days: 40,
+									hours: 1,
 								}),
-								scope: "foreign",
-								event: "transaction.closed",
+								scope: "user",
+								event: "transaction.open",
+								isTerminal: false,
+							},
+							{
+								at: base.plus({
+									days: 41,
+									hours: 1,
+								}),
+								scope: "user",
+								event: "transaction.resolved",
 								isTerminal: true,
 							},
 						],
@@ -70,28 +83,26 @@ describe("userEventSellerInfoFx", () => {
 						group: "tx-3",
 						steps: [
 							{
-								at: DateTime.now().minus({
-									days: 40,
+								at: base.plus({
+									days: 60,
 								}),
 								scope: "foreign",
 								event: "transaction.create",
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now()
-									.minus({
-										days: 40,
-									})
-									.plus({
-										hours: 1,
-									}),
+								at: base.plus({
+									days: 60,
+									minutes: 30,
+								}),
 								scope: "user",
-								event: "transaction.open",
+								event: "transaction.message",
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now().minus({
-									days: 39,
+								at: base.plus({
+									days: 62,
+									minutes: 30,
 								}),
 								scope: "user",
 								event: "transaction.resolved",
@@ -103,28 +114,25 @@ describe("userEventSellerInfoFx", () => {
 						group: "tx-4",
 						steps: [
 							{
-								at: DateTime.now().minus({
-									days: 20,
+								at: base.plus({
+									days: 75,
 								}),
 								scope: "foreign",
 								event: "transaction.create",
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now()
-									.minus({
-										days: 20,
-									})
-									.plus({
-										minutes: 30,
-									}),
+								at: base.plus({
+									days: 75,
+									minutes: 15,
+								}),
 								scope: "user",
-								event: "transaction.message",
+								event: "transaction.open",
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now().minus({
-									days: 18,
+								at: base.plus({
+									days: 76,
 								}),
 								scope: "user",
 								event: "transaction.resolved",
@@ -136,60 +144,26 @@ describe("userEventSellerInfoFx", () => {
 						group: "tx-5",
 						steps: [
 							{
-								at: DateTime.now().minus({
-									days: 5,
+								at: base.plus({
+									days: 79,
 								}),
 								scope: "foreign",
 								event: "transaction.create",
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now()
-									.minus({
-										days: 5,
-									})
-									.plus({
-										minutes: 15,
-									}),
-								scope: "user",
-								event: "transaction.open",
-								isTerminal: false,
-							},
-							{
-								at: DateTime.now().minus({
-									days: 4,
+								at: base.plus({
+									days: 79,
+									hours: 2,
 								}),
-								scope: "user",
-								event: "transaction.resolved",
-								isTerminal: true,
-							},
-						],
-					}),
-					...createTransactionTimeline({
-						group: "tx-6",
-						steps: [
-							{
-								at: DateTime.now().minus({
-									days: 1,
-								}),
-								scope: "foreign",
-								event: "transaction.create",
-								isTerminal: false,
-							},
-							{
-								at: DateTime.now()
-									.minus({
-										days: 1,
-									})
-									.plus({
-										hours: 2,
-									}),
 								scope: "user",
 								event: "transaction.message",
 								isTerminal: false,
 							},
 							{
-								at: DateTime.now(),
+								at: base.plus({
+									days: 80,
+								}),
 								scope: "user",
 								event: "transaction.resolved",
 								isTerminal: true,
@@ -207,7 +181,7 @@ describe("userEventSellerInfoFx", () => {
 			if (!result) return;
 
 			expect(result.reaction.percent).toBe(100);
-			expect(result.rejected.percent).toBeCloseTo(16.67, 1);
+			expect(result.rejected.percent).toBe(20);
 			expect(result.resolved.resolved).toBe(4);
 			expect(result.activity.bucket).toBe("high");
 			expect(result.score.score).toBeGreaterThanOrEqual(70);

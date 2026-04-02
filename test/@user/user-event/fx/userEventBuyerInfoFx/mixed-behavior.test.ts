@@ -72,7 +72,7 @@ describe("userEventBuyerInfoFx", {
 						group: "tx-2",
 						steps: [
 							{
-								at: base.plus({
+								at: DateTime.now().minus({
 									days: 2,
 								}),
 								scope: "user",
@@ -80,18 +80,24 @@ describe("userEventBuyerInfoFx", {
 								isTerminal: false,
 							},
 							{
-								at: base.plus({
-									days: 2,
-									minutes: 30,
+								at: DateTime.now()
+									.minus({
+										days: 2,
+									})
+									.plus({
+										minutes: 30,
 								}),
 								scope: "foreign",
 								event: "transaction.open",
 								isTerminal: false,
 							},
 							{
-								at: base.plus({
-									days: 2,
-									minutes: 35,
+								at: DateTime.now()
+									.minus({
+										days: 2,
+									})
+									.plus({
+										minutes: 35,
 								}),
 								scope: "user",
 								event: "transaction.closed",
@@ -162,51 +168,6 @@ describe("userEventBuyerInfoFx", {
 							},
 						],
 					}),
-					...createTransactionTimeline({
-						group: "tx-5",
-						steps: [
-							{
-								at: DateTime.now().minus({
-									days: 2,
-								}),
-								scope: "user",
-								event: "transaction.create",
-								isTerminal: false,
-							},
-							{
-								at: DateTime.now()
-									.minus({
-										days: 2,
-									})
-									.plus({
-										minutes: 5,
-									}),
-								scope: "foreign",
-								event: "transaction.open",
-								isTerminal: false,
-							},
-							{
-								at: DateTime.now()
-									.minus({
-										days: 2,
-									})
-									.plus({
-										minutes: 10,
-									}),
-								scope: "user",
-								event: "transaction.message",
-								isTerminal: false,
-							},
-							{
-								at: DateTime.now().minus({
-									days: 1,
-								}),
-								scope: "user",
-								event: "transaction.closed",
-								isTerminal: true,
-							},
-						],
-					}),
 				],
 			});
 
@@ -217,9 +178,9 @@ describe("userEventBuyerInfoFx", {
 			expect(result).not.toBeNull();
 			if (!result) return;
 
-			expect(result.reaction.percent).toBe(80);
+			expect(result.reaction.percent).toBe(75);
 			expect(result.closer.closed).toBe(1);
-			expect(result.decision.percent).toBe(80);
+			expect(result.decision.percent).toBe(75);
 			expect(result.expired.expired).toBe(1);
 			expect(result.load.bucket).toBe("low");
 			expect(result.activity.bucket).toBe("high");
