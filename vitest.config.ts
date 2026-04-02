@@ -43,6 +43,7 @@ export default defineConfig({
 			shuffle: false,
 		},
 		benchmark: {
+			compare: "benchmark.json",
 			reporters: [
 				"default",
 			],
