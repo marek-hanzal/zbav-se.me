@@ -37,6 +37,7 @@ export const CreateListingButton: FC<CreateListingButton.Props> = ({
 
 	return (
 		<Button
+			data-action={"publish listing"}
 			iconEnabled={"icon-[solar--globus-linear]"}
 			iconProps={{
 				ui: {

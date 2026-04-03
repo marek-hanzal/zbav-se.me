@@ -41,6 +41,7 @@ export const WelcomePage: FC<WelcomePage.Props> = ({ ui, ...props }) => {
 				}}
 				action={
 					<LinkTo
+						data-action={"go home from welcome"}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
 						to={"/$locale/app/home"}

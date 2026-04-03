@@ -134,6 +134,7 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 									>
 										{(fieldProps) => (
 											<field.TextInput
+												data-ui={"SignInPage[EmailInput]"}
 												type={"email"}
 												autoComplete={"email webauthn"}
 												placeholder={translator.text("Enter your email")}
@@ -157,6 +158,7 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 									>
 										{(fieldProps) => (
 											<field.TextInput
+												data-ui={"SignInPage[PasswordInput]"}
 												type={"password"}
 												autoComplete={"current-password webauthn"}
 												value={field.state.value ?? ""}
@@ -196,6 +198,8 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 								>
 									{({ isValid, isSubmitting }) => (
 										<form.SubmitButton
+											data-action={"sign in"}
+											data-ui={"SignInPage[SubmitButton]"}
 											iconEnabled={ChevronRightIcon}
 											iconPosition={"right"}
 											disabled={!isValid || isSubmitting}
