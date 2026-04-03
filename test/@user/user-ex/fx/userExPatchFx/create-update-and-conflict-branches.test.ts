@@ -30,6 +30,7 @@ describe("userExPatchFx", () => {
 							dsn: databaseConfig.SERVER_DATABASE_URL,
 							name: "userExPatchFx-create-update-conflict",
 						}),
+						application_name: "userExPatchFx:secondary",
 						max: 1,
 					}),
 				}),

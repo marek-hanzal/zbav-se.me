@@ -90,17 +90,41 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 	onMigrate,
 }: withTestabaseFx.Props) {
 	ensureDocker();
+	const root = "bootstrap";
 
 	yield* Effect.promise(async () => {
 		return startPostgresContainer({
 			image,
 			name,
 			port,
-			db: template,
+			db: root,
 		});
 	});
 
 	const dsn = `postgresql://postgres:postgres@127.0.0.1:${port}`;
+
+	yield* Effect.gen(function* () {
+		const { kysely } = yield* withDatabaseFx({}).pipe(
+			withDialectFx(
+				new PostgresDialect({
+					pool: new Pool({
+						connectionString: withDatabaseName({
+							dsn: dsn,
+							name: root,
+						}),
+						application_name: `withTestabase:template-bootstrap:${template}`,
+					}),
+				}),
+			),
+			Effect.provideService(MigrationContextFx, {}),
+		);
+
+		yield* Effect.promise(async () => {
+			await sql`DROP DATABASE IF EXISTS ${sql.ref(template)}`.execute(kysely);
+			await sql`CREATE DATABASE ${sql.ref(template)}`.execute(kysely);
+			await kysely.destroy();
+		});
+	});
 
 	yield* Effect.gen(function* () {
 		const database = yield* databaseFx.pipe(
@@ -111,6 +135,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 							dsn: dsn,
 							name: template,
 						}),
+						application_name: `withTestabase:template-migrate:${template}`,
 					}),
 				}),
 			),
@@ -135,6 +160,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 							dsn: dsn,
 							name: "postgres",
 						}),
+						application_name: `withTestabase:template-admin:${template}`,
 					}),
 				}),
 			),
@@ -143,17 +169,6 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 
 		yield* Effect.promise(async () => {
 			await sql`ALTER DATABASE ${sql.ref(template)} WITH IS_TEMPLATE = true;`.execute(kysely);
-
-			await sql`
-                SELECT
-                    pg_terminate_backend(pid)
-                FROM
-                    pg_stat_activity
-                WHERE
-                    datname = ${template}
-                    AND
-                    pid <> pg_backend_pid()
-            `.execute(kysely);
 
 			/**
 			 * This ensures early we're able to create new databases from the template.
