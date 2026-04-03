@@ -24,7 +24,7 @@ export const WelcomePage: FC<WelcomePage.Props> = ({ ui, ...props }) => {
 
 	return (
 		<Container
-			data-ui={"WelcomePage[Container]"}
+			data-ui={"WelcomePage"}
 			ui={{
 				layout: "vertical-centered",
 				height: "full",

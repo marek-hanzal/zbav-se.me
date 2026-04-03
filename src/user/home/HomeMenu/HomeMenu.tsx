@@ -44,7 +44,7 @@ export const HomeMenu = withFallback(({ _suspense, ui, onLinkClick, ...props }: 
 
 	return (
 		<Container
-			data-ui="HomeMenu[Container]"
+			data-ui="HomeMenu"
 			ui={{
 				position: "relative",
 				height: "full",
