@@ -5,7 +5,6 @@ import {
 	computeSellerReaction,
 	computeSellerRejected,
 	computeSellerResolved,
-	computeSellerScore,
 } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 
@@ -29,8 +28,8 @@ const createEvent = (
 	createdAt: createdAt.toJSDate(),
 });
 
-describe("userEventSellerInfoFx computations", () => {
-	it("computes mixed seller metrics from grouped events", () => {
+describe("userEventSellerInfoFx terminal ratio", () => {
+	it("computes reaction, rejected, resolved and expired ratios from grouped events", () => {
 		const base = DateTime.fromISO("2026-01-01T10:00:00.000Z");
 		const source = [
 			createEvent("1", base, "transaction.create", "foreign", "tx-1"),
@@ -186,84 +185,5 @@ describe("userEventSellerInfoFx computations", () => {
 			expired: 0,
 			percent: 0,
 		});
-	});
-
-	it("scores improved seller inputs above mixed-quality inputs", () => {
-		const mixed = computeSellerScore({
-			reaction: {
-				total: 6,
-				reactions: 5,
-				terminal: 1,
-				percent: 100,
-				medianMs: 60 * 60 * 1000,
-				p90Ms: 2 * 60 * 60 * 1000,
-			},
-			rejected: {
-				total: 6,
-				rejected: 2,
-				percent: 33.33,
-				medianMs: 24 * 60 * 60 * 1000,
-				p90Ms: 2 * 24 * 60 * 60 * 1000,
-			},
-			resolved: {
-				total: 6,
-				resolved: 3,
-				terminal: 3,
-				percent: 50,
-				medianMs: 2 * 24 * 60 * 60 * 1000,
-				p90Ms: 3 * 24 * 60 * 60 * 1000,
-			},
-			expired: {
-				total: 6,
-				expired: 0,
-				percent: 0,
-			},
-			activity: {
-				bucket: "medium",
-			},
-			load: {
-				bucket: "low",
-			},
-		});
-
-		const improved = computeSellerScore({
-			reaction: {
-				total: 6,
-				reactions: 5,
-				terminal: 1,
-				percent: 100,
-				medianMs: 20 * 60 * 1000,
-				p90Ms: 60 * 60 * 1000,
-			},
-			rejected: {
-				total: 6,
-				rejected: 1,
-				percent: 16.67,
-				medianMs: 24 * 60 * 60 * 1000,
-				p90Ms: 24 * 60 * 60 * 1000,
-			},
-			resolved: {
-				total: 6,
-				resolved: 4,
-				terminal: 2,
-				percent: 66.67,
-				medianMs: 24 * 60 * 60 * 1000,
-				p90Ms: 2 * 24 * 60 * 60 * 1000,
-			},
-			expired: {
-				total: 6,
-				expired: 0,
-				percent: 0,
-			},
-			activity: {
-				bucket: "high",
-			},
-			load: {
-				bucket: "low",
-			},
-		});
-
-		expect(improved.score).toBeGreaterThan(mixed.score);
-		expect(improved.rank).toBeGreaterThanOrEqual(5);
 	});
 });
