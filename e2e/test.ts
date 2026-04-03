@@ -1,6 +1,6 @@
 import path from "node:path";
 import { test as base, expect } from "@playwright/test";
-import { testabase } from "./testabase";
+import { testabase } from "./utils/testabase";
 
 function toDatabaseName(file: string, title: string, workerIndex: number, retry: number) {
 	const fileName = path.basename(file, path.extname(file));

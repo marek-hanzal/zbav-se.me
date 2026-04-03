@@ -3,16 +3,16 @@ import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { expect, test } from "./test";
+import { expect, test } from "../test";
 
-test("registers the shared user in database A", async ({ page, database, db }) => {
+test("registers the shared user in database B", async ({ page, database, db }) => {
 	return Effect.gen(function* () {
 		const seller = yield* leaseTestUserFx({
 			key: "a",
 		});
 
 		yield* feedCreateFx({
-			...getFeedDefaultCreate(`E2E feed A ${db}`),
+			...getFeedDefaultCreate(`E2E feed B ${db}`),
 			locationId: null,
 			userId: seller.id,
 		});

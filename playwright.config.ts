@@ -4,6 +4,7 @@ export default defineConfig({
 	testDir: "./e2e",
 	globalSetup: "./e2e/init.ts",
 	outputDir: "./results",
+	workers: 1,
 	webServer: [
 		{
 			name: "App",

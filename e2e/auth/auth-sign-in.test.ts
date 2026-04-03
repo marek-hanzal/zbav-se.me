@@ -1,10 +1,9 @@
-import { expect } from "@playwright/test";
 import { auth } from "~/server/auth/auth";
-import { test } from "./test";
-import { createBrowserUser } from "./utils/auth";
+import { expect, test } from "../test";
+import { createUser } from "../utils/createUser";
 
 test("auth sign in", async ({ page, database }) => {
-	const user = createBrowserUser("signin");
+	const user = createUser();
 
 	const ath = auth(() => database.dialect);
 	await ath.api.signUpEmail({
