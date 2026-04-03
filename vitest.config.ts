@@ -75,7 +75,7 @@ export default defineConfig({
 		pool: "vmForks",
 		maxConcurrency: 4,
 		//
-		maxWorkers: 10,
+		maxWorkers: 8,
 		//
 		coverage: {
 			enabled: true,
