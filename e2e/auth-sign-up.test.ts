@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 import { test } from "./test";
-import { createBrowserUser, signUp, waitForWelcome } from "./test-helpers";
+import { createBrowserUser, signUp, waitForWelcome } from "./utils/auth";
 
 test("auth sign up", async ({ page, database, db }) => {
 	void database;

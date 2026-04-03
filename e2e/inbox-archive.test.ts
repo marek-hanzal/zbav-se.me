@@ -1,15 +1,10 @@
 import { expect } from "@playwright/test";
 import { test } from "./test";
-import {
-	createBrowserUser,
-	getUserIdByEmail,
-	seedBuyerTransaction,
-	seedPublishableDraft,
-	signIn,
-	signUp,
-	waitForLatestInboxByUserId,
-	waitForListingByDraftId,
-} from "./test-helpers";
+import { createBrowserUser, signIn, signUp } from "./utils/auth";
+import { seedBuyerTransaction } from "./utils/buyer";
+import { getUserIdByEmail } from "./utils/database";
+import { waitForLatestInboxByUserId } from "./utils/inbox";
+import { seedPublishableDraft, waitForListingByDraftId } from "./utils/seller";
 
 test("inbox archive", async ({ page, database }) => {
 	const seller = createBrowserUser("inbox-archive");

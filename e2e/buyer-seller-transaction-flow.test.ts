@@ -1,15 +1,9 @@
 import { expect } from "@playwright/test";
 import { test } from "./test";
-import {
-	createBrowserUser,
-	getUserIdByEmail,
-	seedPublishableDraft,
-	signIn,
-	signOut,
-	signUp,
-	waitForLatestInboxByUserId,
-	waitForListingByDraftId,
-} from "./test-helpers";
+import { createBrowserUser, signIn, signOut, signUp } from "./utils/auth";
+import { getUserIdByEmail } from "./utils/database";
+import { waitForLatestInboxByUserId } from "./utils/inbox";
+import { seedPublishableDraft, waitForListingByDraftId } from "./utils/seller";
 
 test("buyer seller transaction flow", async ({ page, database }) => {
 	const seller = createBrowserUser("seller-flow");

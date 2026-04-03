@@ -1,6 +1,8 @@
 import { expect } from "@playwright/test";
 import { test } from "./test";
-import { createBrowserUser, getUserIdByEmail, seedPublishableDraft, signUp } from "./test-helpers";
+import { createBrowserUser, signUp } from "./utils/auth";
+import { getUserIdByEmail } from "./utils/database";
+import { seedPublishableDraft } from "./utils/seller";
 
 test("seller listing publish", async ({ page, database }) => {
 	const user = createBrowserUser("publish");
