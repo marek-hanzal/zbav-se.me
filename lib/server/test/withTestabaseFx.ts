@@ -146,7 +146,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 
 			await sql`
                 SELECT
-                    pg_terminate_backend(pid, 150)
+                    pg_terminate_backend(pid)
                 FROM
                     pg_stat_activity
                 WHERE

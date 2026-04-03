@@ -60,6 +60,7 @@ export default defineConfig({
 		slowTestThreshold: 600,
 		passWithNoTests: true,
 		isolate: false,
+		fileParallelism: false,
 		sequence: {
 			shuffle: false,
 		},
