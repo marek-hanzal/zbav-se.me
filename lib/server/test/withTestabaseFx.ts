@@ -144,9 +144,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 
 		yield* Effect.promise(async () => {
 			await migrate();
-
 			await onMigrate?.(database);
-
 			await kysely.destroy();
 		});
 	});
@@ -174,7 +172,6 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 			 * This ensures early we're able to create new databases from the template.
 			 */
 			await sql`CREATE DATABASE dummy TEMPLATE ${sql.ref(template)};`.execute(kysely);
-
 			await kysely.destroy();
 		});
 	});

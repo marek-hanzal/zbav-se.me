@@ -9,7 +9,7 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 
@@ -18,14 +18,8 @@ describe("buyer transactionCollectionFx", () => {
 		const database = await testabase("buyer-transactionCollection-active");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "buyer-transaction-collection-seller@test.cz",
-				name: "Buyer Transaction Collection Seller",
-			});
-			const buyer = yield* createDbUserFx({
-				email: "buyer-transaction-collection-buyer@test.cz",
-				name: "Buyer Transaction Collection Buyer",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 			const listing = yield* getDefaultListingCreateFx;
 
 			const activeScenario = yield* createPendingScenarioFx({
@@ -96,14 +90,8 @@ describe("buyer transactionCollectionFx", () => {
 		const database = await testabase("buyer-transactionCollection-statusIn");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "buyer-transaction-status-seller@test.cz",
-				name: "Buyer Transaction Status Seller",
-			});
-			const buyer = yield* createDbUserFx({
-				email: "buyer-transaction-status-buyer@test.cz",
-				name: "Buyer Transaction Status Buyer",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 			const listing = yield* getDefaultListingCreateFx;
 
 			const openScenario = yield* createPendingScenarioFx({

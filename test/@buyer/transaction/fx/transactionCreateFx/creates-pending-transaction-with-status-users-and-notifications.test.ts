@@ -2,7 +2,6 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { keyOf } from "@/lib/common/key-of";
 import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
@@ -11,13 +10,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("transactionCreateFx", () => {
 	it("creates pending transaction with status entry, participants and seller notifications", async () => {
 		const database = await testabase("transactionCreateFx-direct");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller, buyer } = yield* createUsersFx({
-				api,
-				slug: "transaction-create-direct",
-			});
+			const { seller, buyer } = yield* createUsersFx({});
 			const listing = yield* createListingFx(seller.id, {
 				title: "Transaction Create Listing",
 			});

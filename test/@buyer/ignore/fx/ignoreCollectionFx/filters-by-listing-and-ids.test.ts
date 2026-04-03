@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { ignoreCollectionFx } from "~/buyer/ignore/server/fx/ignoreCollectionFx";
 import { ignoreCountFx } from "~/buyer/ignore/server/fx/ignoreCountFx";
 import { ignoreToggleFx } from "~/buyer/ignore/server/fx/ignoreToggleFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
@@ -12,13 +11,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("ignoreCollectionFx", () => {
 	it("filters by listing and idIn while staying scoped to the current user", async () => {
 		const database = await testabase("ignoreCollectionFx-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller, buyer, stranger } = yield* createUsersFx({
-				api,
-				slug: "ignore-collection-contract",
-			});
+			const { seller, buyer, stranger } = yield* createUsersFx({});
 			const firstListing = yield* createListingFx(seller.id, {
 				title: "Ignore One",
 			});

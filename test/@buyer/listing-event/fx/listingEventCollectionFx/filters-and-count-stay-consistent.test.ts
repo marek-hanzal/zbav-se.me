@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { listingEventCollectionFx } from "~/buyer/listing-event/server/fx/listingEventCollectionFx";
 import { listingEventCountFx } from "~/buyer/listing-event/server/fx/listingEventCountFx";
 import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
@@ -12,13 +11,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("listingEvent read model", () => {
 	it("filters events by listing and ids while keeping count consistent", async () => {
 		const database = await testabase("listingEvent-collection-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller, buyer, stranger } = yield* createUsersFx({
-				api,
-				slug: "listing-event-collection",
-			});
+			const { seller, buyer, stranger } = yield* createUsersFx({});
 			const listing = yield* createListingFx(seller.id, {
 				title: "Listing Event Primary",
 			});

@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
@@ -10,13 +9,9 @@ import { transactionStatusMessageFx } from "~/user/transaction/server/fx/transac
 describe("transactionStatusMessageFx", () => {
 	it("ignores unmapped request and target combinations", async () => {
 		const database = await testabase("transactionStatusMessageFx-noop");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller, buyer } = yield* createUsersFx({
-				api,
-				slug: "transaction-status-noop",
-			});
+			const { seller, buyer } = yield* createUsersFx({});
 
 			const { listingId } = yield* createPendingScenarioFx({
 				sellerId: seller.id,

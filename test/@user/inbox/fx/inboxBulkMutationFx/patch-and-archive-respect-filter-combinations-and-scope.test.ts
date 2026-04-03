@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 import { inboxCountFx } from "~/user/inbox/server/fx/inboxCountFx";
 import { inboxPatchCollectionFx } from "~/user/inbox/server/fx/inboxPatchCollectionFx";
@@ -13,14 +13,8 @@ describe("inbox bulk mutation", () => {
 		const archivedAt = new Date("2026-04-01T14:00:00.000Z");
 
 		return Effect.gen(function* () {
-			const owner = yield* createDbUserFx({
-				email: "inbox-bulk-owner@test.cz",
-				name: "Inbox Bulk Owner",
-			});
-			const stranger = yield* createDbUserFx({
-				email: "inbox-bulk-stranger@test.cz",
-				name: "Inbox Bulk Stranger",
-			});
+			const owner = yield* leaseTestUserFx({});
+			const stranger = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
 				database.kysely
@@ -152,14 +146,8 @@ describe("inbox bulk mutation", () => {
 		const database = await testabase("inboxBulkMutationFx-archive");
 
 		return Effect.gen(function* () {
-			const owner = yield* createDbUserFx({
-				email: "inbox-archive-owner@test.cz",
-				name: "Inbox Archive Owner",
-			});
-			const stranger = yield* createDbUserFx({
-				email: "inbox-archive-stranger@test.cz",
-				name: "Inbox Archive Stranger",
-			});
+			const owner = yield* leaseTestUserFx({});
+			const stranger = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
 				database.kysely

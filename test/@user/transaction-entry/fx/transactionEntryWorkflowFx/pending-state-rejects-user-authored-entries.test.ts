@@ -1,37 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 describe("transactionEntry workflow", () => {
 	it("rejects text, gallery, location and personal entries while transaction is pending", async () => {
 		const database = await testabase("transactionEntry-pending-rejects-authored");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"transaction-entry-pending-seller@test.cz",
-				"Transaction Entry Pending Seller",
-			);
-			const { user: buyer } = yield* signUp(
-				"transaction-entry-pending-buyer@test.cz",
-				"Transaction Entry Pending Buyer",
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { listingId } = yield* createPendingScenarioFx({
 				sellerId: seller.id,

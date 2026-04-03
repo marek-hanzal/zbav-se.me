@@ -2,25 +2,16 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { draftPatchFx } from "~/seller/draft/server/fx/draftPatchFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("draft lifecycle", () => {
 	it("patch draft updates fields and updatedAt, usedAt stays null", async () => {
 		const database = await testabase("draft-patch");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "seller@draft-patch.cz",
-						name: "Seller",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* leaseTestUserFx({});
 
 			const draft = yield* draftCreateFx({
 				userId: seller.id,

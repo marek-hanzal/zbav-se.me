@@ -2,10 +2,9 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUserFx } from "~/test/user/fx/createUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
@@ -14,17 +13,12 @@ describe("userEventBuyerInfoFx", {
 }, () => {
 	it("Good behaving buyer - reacts after open, negotiates, and marks success", async () => {
 		const database = await testabase("userEventBuyerInfoFx-good-behaving-buyer");
-		const { api } = auth(() => database.dialect);
 		const base = DateTime.now().minus({
 			days: 60,
 		});
 
 		return Effect.gen(function* () {
-			const buyer = yield* createUserFx({
-				api,
-				email: "buyer@test.cz",
-				name: "Buyer",
-			});
+			const buyer = yield* leaseTestUserFx({});
 
 			yield* seedUserEventTimelineFx({
 				userId: buyer.id,

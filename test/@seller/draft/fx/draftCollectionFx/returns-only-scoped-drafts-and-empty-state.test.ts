@@ -4,21 +4,15 @@ import { draftCollectionFx } from "~/seller/draft/server/fx/draftCollectionFx";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("draftCollectionFx", () => {
 	it("returns only scoped drafts and supports empty result", async () => {
 		const database = await testabase("draftCollectionFx-contract");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "draft-collection-seller@test.cz",
-				name: "Draft Collection Seller",
-			});
-			const stranger = yield* createDbUserFx({
-				email: "draft-collection-stranger@test.cz",
-				name: "Draft Collection Stranger",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const stranger = yield* leaseTestUserFx({});
 
 			const draftA = yield* draftCreateFx({
 				userId: seller.id,

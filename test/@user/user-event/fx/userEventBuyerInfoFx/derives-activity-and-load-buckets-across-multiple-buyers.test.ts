@@ -3,31 +3,19 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("derives activity and load buckets across multiple buyers without separate microtests", async () => {
 		const database = await testabase("userEventBuyerInfoFx-bucket-derivation");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: highBuyer } = yield* signUp("buyer-high@test.cz", "Buyer High");
-			const { user: mediumBuyer } = yield* signUp("buyer-medium@test.cz", "Buyer Medium");
-			const { user: lowBuyer } = yield* signUp("buyer-low@test.cz", "Buyer Low");
+			const highBuyer = yield* leaseTestUserFx({});
+			const mediumBuyer = yield* leaseTestUserFx({});
+			const lowBuyer = yield* leaseTestUserFx({});
 
 			const seedBuyer = ({
 				userId,

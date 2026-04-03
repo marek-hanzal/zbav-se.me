@@ -4,21 +4,15 @@ import { thumbCreateFx } from "~/buyer/thumb/server/fx/thumbCreateFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("inbox reference", () => {
 	it("maps reaction inbox reference from listingId", async () => {
 		const database = await testabase("inboxReference-thumb-create");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "inbox-reference-thumb-seller@test.cz",
-				name: "Seller Thumb",
-			});
-			const buyer = yield* createDbUserFx({
-				email: "inbox-reference-thumb-buyer@test.cz",
-				name: "Buyer Thumb",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 			const listing = yield* createListingFx(seller.id, {
 				title: "Reference fixture listing",
 			});

@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import { auth } from "~/server/auth/auth";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import type { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -21,16 +20,9 @@ namespace createToggleBaseContextFx {
 	}
 }
 
-export const createToggleBaseContextFx = ({
-	database,
-	userSlug,
-}: createToggleBaseContextFx.Props) =>
+export const createToggleBaseContextFx = ({ database }: createToggleBaseContextFx.Props) =>
 	Effect.gen(function* () {
-		const { api } = auth(() => database.dialect);
-		const users = yield* createUsersFx({
-			api,
-			slug: userSlug,
-		});
+		const users = yield* createUsersFx({});
 		const listing = yield* createListingFx(users.seller.id);
 
 		return {

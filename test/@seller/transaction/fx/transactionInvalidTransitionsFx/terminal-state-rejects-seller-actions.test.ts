@@ -8,21 +8,15 @@ import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("seller transaction invalid transitions", () => {
 	it("rejects seller actions once the transaction is terminal", async () => {
 		const database = await testabase("sellerTransactionFx-invalid-terminal-actions");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "seller-terminal-invalid@test.cz",
-				name: "Seller Terminal Invalid",
-			});
-			const buyer = yield* createDbUserFx({
-				email: "buyer-terminal-invalid@test.cz",
-				name: "Buyer Terminal Invalid",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { transactionId } = yield* createResolvedScenarioFx({
 				sellerId: seller.id,

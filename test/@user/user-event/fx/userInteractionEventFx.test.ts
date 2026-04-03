@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { keyOf } from "@/lib/common/key-of";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -11,13 +10,9 @@ describe("userInteractionEventFx", () => {
 	it("writes one user-scoped event and one foreign-scoped event", async () => {
 		const group = "tx-1";
 		const database = await testabase("userInteractionEventFx");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "user-interaction-event",
-			});
+			const users = yield* createUsersFx({});
 
 			yield* userInteractionEventFx({
 				userId: users.buyer.id,

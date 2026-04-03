@@ -1,30 +1,18 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { thumbCreateFx } from "~/buyer/thumb/server/fx/thumbCreateFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("thumbCreateFx", () => {
 	it("creates thumb record, listing event, seller inbox and returns listing with thumb", async () => {
 		const database = await testabase("thumbCreate-side-effects");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp("thumb-seller@test.cz", "Thumb Seller");
-			const { user: buyer } = yield* signUp("thumb-buyer@test.cz", "Thumb Buyer");
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const listing = yield* createListingFx(seller.id);
 

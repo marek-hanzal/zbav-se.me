@@ -2,7 +2,6 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
@@ -12,13 +11,9 @@ import { transactionUserCreateFx } from "~/user/transaction-user/server/fx/trans
 describe("transactionUserCreateFx", () => {
 	it("inserts transaction participants with expected sides", async () => {
 		const database = await testabase("transactionUserCreateFx-insert-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "transaction-user-create",
-			});
+			const users = yield* createUsersFx({});
 
 			const scenario = yield* createPendingScenarioFx({
 				sellerId: users.seller.id,

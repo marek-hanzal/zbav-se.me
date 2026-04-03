@@ -3,7 +3,6 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { transactionPatchFx } from "~/buyer/transaction/server/fx/transactionPatchFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
@@ -12,13 +11,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("transactionPatchFx", () => {
 	it("patches transaction data and refreshes updatedAt and expiresAt", async () => {
 		const database = await testabase("buyerTransactionPatchFx-refreshes-timestamps");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "buyer-transaction-patch",
-			});
+			const users = yield* createUsersFx({});
 
 			const scenario = yield* createPendingScenarioFx({
 				sellerId: users.seller.id,

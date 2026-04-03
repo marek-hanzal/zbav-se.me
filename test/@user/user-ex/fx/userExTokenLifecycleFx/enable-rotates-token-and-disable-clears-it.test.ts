@@ -1,26 +1,17 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userExTokenDisableFx } from "~/user/user-ex/server/fx/userExTokenDisableFx";
 import { userExTokenEnableFx } from "~/user/user-ex/server/fx/userExTokenEnableFx";
 
 describe("userEx token lifecycle", () => {
 	it("enables, rotates and disables token for a user", async () => {
 		const database = await testabase("userExTokenLifecycle");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "user-ex-token@test.cz",
-						name: "User Ex Token",
-						password: "12345678",
-					},
-				}),
-			);
+			const user = yield* leaseTestUserFx({});
 
 			const first = yield* userExTokenEnableFx({
 				userId: user.id,

@@ -4,37 +4,19 @@ import { transactionCloseFx } from "~/buyer/transaction/server/fx/transactionClo
 import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
 import { transactionRejectFx } from "~/buyer/transaction/server/fx/transactionRejectFx";
 import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
-import { auth } from "~/server/auth/auth";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("buyer transaction invalid transitions", () => {
 	it("rejects buyer actions once the transaction is already closed", async () => {
 		const database = await testabase("buyerTransactionFx-invalid-terminal-actions");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"seller-buyer-terminal-invalid@test.cz",
-				"Seller Buyer Terminal Invalid",
-			);
-			const { user: buyer } = yield* signUp(
-				"buyer-buyer-terminal-invalid@test.cz",
-				"Buyer Buyer Terminal Invalid",
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { transactionId } = yield* createResolvedScenarioFx({
 				sellerId: seller.id,

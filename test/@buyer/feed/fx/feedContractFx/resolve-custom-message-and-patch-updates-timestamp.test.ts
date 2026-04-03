@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { feedPatchFx } from "~/buyer/feed/server/fx/feedPatchFx";
 import { feedResolveFx } from "~/buyer/feed/server/fx/feedResolveFx";
-import { auth } from "~/server/auth/auth";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
@@ -12,13 +11,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("feed contract", () => {
 	it("supports custom resolve denial message and advances updatedAt on patch", async () => {
 		const database = await testabase("feed-contract-resolve-patch");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller: owner, stranger } = yield* createUsersFx({
-				api,
-				slug: "feed-contract",
-			});
+			const { seller: owner, stranger } = yield* createUsersFx({});
 
 			const feed = yield* feedCreateFx({
 				userId: owner.id,

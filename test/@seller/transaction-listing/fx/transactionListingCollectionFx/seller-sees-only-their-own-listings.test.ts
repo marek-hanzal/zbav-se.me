@@ -1,44 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionListingCollectionFx } from "~/seller/transaction-listing/server/fx/transactionListingCollectionFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionListingCollectionFx (seller dashboard)", () => {
 	it("seller sees only their own listings", async () => {
 		const database = await testabase("txListing-scope-isolation");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user: seller1 } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "seller1@txlisting-scope.cz",
-						name: "Seller1",
-						password: "12345678",
-					},
-				}),
-			);
-			const { user: seller2 } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "seller2@txlisting-scope.cz",
-						name: "Seller2",
-						password: "12345678",
-					},
-				}),
-			);
-			const { user: buyer } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "buyer@txlisting-scope.cz",
-						name: "Buyer",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller1 = yield* leaseTestUserFx({});
+			const seller2 = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { listingId: listing1 } = yield* createPendingScenarioFx({
 				sellerId: seller1.id,

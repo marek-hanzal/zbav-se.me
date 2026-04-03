@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { flagCollectionFx } from "~/buyer/flag/server/fx/flagCollectionFx";
 import { flagCountFx } from "~/buyer/flag/server/fx/flagCountFx";
 import { flagToggleFx } from "~/buyer/flag/server/fx/flagToggleFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
@@ -12,13 +11,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("flagCollectionFx", () => {
 	it("filters by listing and idIn while staying scoped to the current user", async () => {
 		const database = await testabase("flagCollectionFx-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller, buyer, stranger } = yield* createUsersFx({
-				api,
-				slug: "flag-collection-contract",
-			});
+			const { seller, buyer, stranger } = yield* createUsersFx({});
 			const firstListing = yield* createListingFx(seller.id, {
 				title: "Flag One",
 			});

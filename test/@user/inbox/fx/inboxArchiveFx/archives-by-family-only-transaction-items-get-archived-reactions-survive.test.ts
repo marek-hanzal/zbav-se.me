@@ -2,10 +2,10 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import type { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
 import type { InboxTypeEnumSchema } from "~/common/inbox/enum/InboxTypeEnumSchema";
-import { auth } from "~/server/auth/auth";
 import type { InboxTableSchema } from "~/server/database/@table/InboxTableSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 
 /**
@@ -39,18 +39,9 @@ const seedInbox = async (
 describe("inboxArchiveFx", () => {
 	it("archives by family: only transaction items get archived, reactions survive", async () => {
 		const database = await testabase("inboxArchive-by-family");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "user@inbox-archive-family.cz",
-						name: "User",
-						password: "12345678",
-					},
-				}),
-			);
+			const user = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
 				seedInbox(database, [

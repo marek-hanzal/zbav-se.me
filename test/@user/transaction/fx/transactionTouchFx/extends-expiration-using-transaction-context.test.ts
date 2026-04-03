@@ -1,36 +1,19 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionTouchFx } from "~/user/transaction/server/fx/transactionTouchFx";
 
 describe("transactionTouchFx", () => {
 	it("updates timestamps and extends expiration from the touched moment", async () => {
 		const database = await testabase("transactionTouchFx-direct");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "touch-direct-seller@test.cz",
-						name: "Touch Direct Seller",
-						password: "12345678",
-					},
-				}),
-			);
-			const { user: buyer } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "touch-direct-buyer@test.cz",
-						name: "Touch Direct Buyer",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,

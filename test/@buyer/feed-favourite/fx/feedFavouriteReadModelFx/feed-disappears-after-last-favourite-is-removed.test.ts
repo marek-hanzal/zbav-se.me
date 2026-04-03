@@ -5,36 +5,18 @@ import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { feedFavouriteCollectionFx } from "~/buyer/feed-favourite/server/fx/feedFavouriteCollectionFx";
 import { feedFavouriteCountFx } from "~/buyer/feed-favourite/server/fx/feedFavouriteCountFx";
 import { feedFavouriteFetchFx } from "~/buyer/feed-favourite/server/fx/feedFavouriteFetchFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("feedFavouriteReadModelFx", () => {
 	it("removes a feed from favourite read model after its last favourite is toggled off", async () => {
 		const database = await testabase("feedFavouriteReadModel-removal");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"feed-favourite-remove-seller@test.cz",
-				"Feed Favourite Remove Seller",
-			);
-			const { user: buyer } = yield* signUp(
-				"feed-favourite-remove-buyer@test.cz",
-				"Feed Favourite Remove Buyer",
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const listing = yield* createListingFx(seller.id);
 

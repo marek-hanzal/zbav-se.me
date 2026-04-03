@@ -2,25 +2,16 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { feedGalleryCreateFx } from "~/buyer/feed-gallery/server/fx/feedGalleryCreateFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("feedGalleryCreateFx", () => {
 	it("rejects empty upload list", async () => {
 		const database = await testabase("feedGalleryCreateFx-empty");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "feed-gallery-empty@test.cz",
-						name: "Feed Gallery Empty",
-						password: "12345678",
-					},
-				}),
-			);
+			const user = yield* leaseTestUserFx({});
 
 			const feed = yield* feedCreateFx({
 				userId: user.id,

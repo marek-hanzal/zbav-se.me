@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { fetchInboxItemsFx } from "~/test/inbox/fx/fetchInboxItemsFx";
@@ -15,13 +14,9 @@ import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/tran
 describe("transactionEntry workflow", () => {
 	it("creates text entry, notifies counterparty and maps direction per viewer", async () => {
 		const database = await testabase("transactionEntry-text-workflow");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "transaction-entry-text",
-			});
+			const users = yield* createUsersFx({});
 			const seller = users.seller;
 			const buyer = users.buyer;
 			const stranger = users.stranger;

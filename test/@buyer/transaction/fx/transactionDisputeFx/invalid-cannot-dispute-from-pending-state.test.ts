@@ -2,37 +2,19 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
 import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
-import { auth } from "~/server/auth/auth";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionDisputeFx (buyer)", () => {
 	it("invalid: cannot dispute from pending state", async () => {
 		const database = await testabase("buyerDisputeFx-invalid-from-pending");
 
 		return Effect.gen(function* () {
-			const { api } = auth(() => database.dialect);
-
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "seller@dispute-invalid.cz",
-						name: "Seller",
-						password: "12345678",
-					},
-				}),
-			);
-			const { user: buyer } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "buyer@dispute-invalid.cz",
-						name: "Buyer",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const listing = yield* createListingFx(seller.id);
 			yield* transactionCreateFx({

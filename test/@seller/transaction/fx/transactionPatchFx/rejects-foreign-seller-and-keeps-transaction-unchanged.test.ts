@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionPatchFx } from "~/seller/transaction/server/fx/transactionPatchFx";
-import { auth } from "~/server/auth/auth";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
@@ -11,13 +10,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("transactionPatchFx", () => {
 	it("rejects a foreign seller patch and keeps the transaction unchanged", async () => {
 		const database = await testabase("transactionPatchFx-foreign-seller");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "transaction-patch",
-			});
+			const users = yield* createUsersFx({});
 			const seller = users.seller;
 			const buyer = users.buyer;
 			const stranger = users.stranger;

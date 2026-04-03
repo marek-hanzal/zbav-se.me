@@ -1,27 +1,17 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUserFx } from "~/test/user/fx/createUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxCreateFx } from "~/user/inbox/server/fx/inboxCreateFx";
 
 describe("inboxCreateFx", () => {
 	it("persists default reference, keeps archivedAt null and stays scoped to owner", async () => {
 		const database = await testabase("inboxCreateFx-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const owner = yield* createUserFx({
-				api,
-				email: "inbox-create-owner@test.cz",
-				name: "Inbox Create Owner",
-			});
-			const stranger = yield* createUserFx({
-				api,
-				email: "inbox-create-stranger@test.cz",
-				name: "Inbox Create Stranger",
-			});
+			const owner = yield* leaseTestUserFx({});
+			const stranger = yield* leaseTestUserFx({});
 
 			const inbox = yield* inboxCreateFx({
 				userId: owner.id,

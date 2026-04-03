@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionDisputeFx } from "~/seller/transaction/server/fx/transactionDisputeFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
@@ -10,13 +9,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("transactionDisputeFx (seller)", () => {
 	it("changes status, creates seller dispute status message and buyer inbox side effect", async () => {
 		const database = await testabase("sellerTransactionDisputeFx-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "seller-transaction-dispute",
-			});
+			const users = yield* createUsersFx({});
 
 			const scenario = yield* createResolvedScenarioFx({
 				sellerId: users.seller.id,

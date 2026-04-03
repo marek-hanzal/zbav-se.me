@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { transactionCollectionFx } from "~/seller/transaction/server/fx/transactionCollectionFx";
 import { transactionCountFx } from "~/seller/transaction/server/fx/transactionCountFx";
 import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
@@ -13,13 +12,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("seller transaction read model", () => {
 	it("collection, fetch and count respect seller scope and expose unreadCount", async () => {
 		const database = await testabase("sellerTransactionReadModelFx");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller, buyer, stranger } = yield* createUsersFx({
-				api,
-				slug: "seller-transaction-read",
-			});
+			const { seller, buyer, stranger } = yield* createUsersFx({});
 			const listing = yield* getDefaultListingCreateFx;
 
 			const ownScenario = yield* createPendingScenarioFx({

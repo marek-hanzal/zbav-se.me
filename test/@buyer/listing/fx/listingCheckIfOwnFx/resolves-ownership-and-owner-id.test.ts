@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCheckIfOwnFx } from "~/buyer/listing/server/fx/listingCheckIfOwnFx";
-import { auth } from "~/server/auth/auth";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
@@ -11,13 +10,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("listingCheckIfOwnFx", () => {
 	it("rejects missing and own listing, and returns owner id for foreign listing", async () => {
 		const database = await testabase("listingCheckIfOwnFx-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "listing-check-if-own",
-			});
+			const users = yield* createUsersFx({});
 
 			const listing = yield* createListingFx(users.seller.id);
 

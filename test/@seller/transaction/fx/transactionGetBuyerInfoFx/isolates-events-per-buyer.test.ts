@@ -3,32 +3,20 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { transactionGetBuyerInfoFx } from "~/seller/transaction/server/fx/transactionGetBuyerInfoFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("transactionGetBuyerInfoFx", () => {
 	it("returns buyer events only for the buyer behind the requested transaction", async () => {
 		const database = await testabase("transactionGetBuyerInfoFx-event-isolation");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp("buyer-info-owner@test.cz", "Buyer Info Owner");
-			const { user: buyerA } = yield* signUp("buyer-info-a@test.cz", "Buyer Info A");
-			const { user: buyerB } = yield* signUp("buyer-info-b@test.cz", "Buyer Info B");
+			const seller = yield* leaseTestUserFx({});
+			const buyerA = yield* leaseTestUserFx({});
+			const buyerB = yield* leaseTestUserFx({});
 
 			const scenarioA = yield* createPendingScenarioFx({
 				sellerId: seller.id,

@@ -1,36 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionTouchFx } from "~/user/transaction/server/fx/transactionTouchFx";
 import { transactionUpdateStatusFx } from "~/user/transaction/server/fx/transactionUpdateStatusFx";
 
 describe("transaction core", () => {
 	it("updates status, cleans sensitive data on terminal transition, and extends expiration on touch", async () => {
 		const database = await testabase("transactionCore-update-touch");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "core-seller@test.cz",
-						name: "Core Seller",
-						password: "12345678",
-					},
-				}),
-			);
-			const { user: buyer } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "core-buyer@test.cz",
-						name: "Core Buyer",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,

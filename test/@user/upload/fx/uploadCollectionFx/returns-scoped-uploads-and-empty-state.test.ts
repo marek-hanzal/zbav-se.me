@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -11,13 +10,9 @@ import { uploadFetchFx } from "~/user/upload/server/fx/uploadFetchFx";
 describe("uploadCollectionFx", () => {
 	it("returns only scoped uploads and stays consistent with fetch", async () => {
 		const database = await testabase("uploadCollectionFx-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "upload-collection",
-			});
+			const users = yield* createUsersFx({});
 
 			const first = yield* uploadCreateFx({
 				userId: users.seller.id,

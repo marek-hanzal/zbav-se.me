@@ -3,36 +3,21 @@ import { describe, expect, it } from "vitest";
 import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
 import { fetchTransactionFx } from "~/test/transaction/fx/fetchTransactionFx";
 import { fetchTransactionEntryKindsFx } from "~/test/transaction-entry/fx/fetchTransactionEntryKindsFx";
-import { createUserFx } from "~/test/user/fx/createUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionResolveFx — sold behavior", () => {
 	it("seller resolves transaction for buyer B — buyer C gets sold, listing gets sold", async () => {
 		const database = await testabase("transactionResolveFx-sold-behavior");
 
 		return Effect.gen(function* () {
-			const { api } = auth(() => database.dialect);
-
-			const seller = yield* createUserFx({
-				api,
-				email: "seller@resolve-test.cz",
-				name: "Seller A",
-			});
-			const buyerB = yield* createUserFx({
-				api,
-				email: "buyer-b@resolve-test.cz",
-				name: "Buyer B",
-			});
-			const buyerC = yield* createUserFx({
-				api,
-				email: "buyer-c@resolve-test.cz",
-				name: "Buyer C",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyerB = yield* leaseTestUserFx({});
+			const buyerC = yield* leaseTestUserFx({});
 
 			const listing = yield* createListingFx(seller.id, {
 				title: "Test listing for resolve flow",

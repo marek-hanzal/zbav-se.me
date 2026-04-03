@@ -3,18 +3,14 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Expired: counts foreign transaction.resolved when seller did not act after buyer ping", async () => {
 		const database = await testabase("userEventSellerInfoFx-expired-resolved-foreign");
-
-		const { api } = auth(() => {
-			return database.dialect;
-		});
 		const base = DateTime.now().minus({
 			days: 20,
 		});
@@ -37,15 +33,7 @@ describe("userEventSellerInfoFx", () => {
 		});
 
 		return Effect.gen(function* () {
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "seller@test.cz",
-						name: "Seller",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* leaseTestUserFx({});
 
 			const sellerId = seller.id;
 

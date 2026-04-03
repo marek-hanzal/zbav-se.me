@@ -10,21 +10,15 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("seller transaction read model", () => {
 	it("filters collection rows by status, terminal and listing inside seller scope", async () => {
 		const database = await testabase("sellerTransactionReadModelFx-filters-collection");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "seller-transaction-filter@test.cz",
-				name: "Seller Transaction Filter",
-			});
-			const buyer = yield* createDbUserFx({
-				email: "buyer-transaction-filter@test.cz",
-				name: "Buyer Transaction Filter",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 			const listing = yield* getDefaultListingCreateFx;
 
 			const pendingScenario = yield* createPendingScenarioFx({
@@ -108,14 +102,8 @@ describe("seller transaction read model", () => {
 		const database = await testabase("sellerTransactionReadModelFx-filters-fetch-count");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "seller-transaction-fetch@test.cz",
-				name: "Seller Transaction Fetch",
-			});
-			const buyer = yield* createDbUserFx({
-				email: "buyer-transaction-fetch@test.cz",
-				name: "Buyer Transaction Fetch",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 			const listing = yield* getDefaultListingCreateFx;
 
 			const pendingScenario = yield* createPendingScenarioFx({
@@ -178,18 +166,9 @@ describe("seller transaction read model", () => {
 		const database = await testabase("sellerTransactionReadModelFx-foreign");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "seller-transaction-foreign@test.cz",
-				name: "Seller Transaction Foreign",
-			});
-			const buyer = yield* createDbUserFx({
-				email: "buyer-transaction-foreign@test.cz",
-				name: "Buyer Transaction Foreign",
-			});
-			const stranger = yield* createDbUserFx({
-				email: "stranger-transaction-foreign@test.cz",
-				name: "Stranger Transaction Foreign",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
+			const stranger = yield* leaseTestUserFx({});
 			const listing = yield* getDefaultListingCreateFx;
 
 			const ownScenario = yield* createPendingScenarioFx({

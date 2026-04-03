@@ -3,36 +3,18 @@ import { describe, expect, it } from "vitest";
 import { transactionCollectionFx } from "~/buyer/transaction/server/fx/transactionCollectionFx";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionLifecycleEdgeCases (buyer)", () => {
 	it("fetch: verify transaction fetch with filters returns correct data", async () => {
 		const database = await testabase("buyerCloseFx-fetch-filter");
 
 		return Effect.gen(function* () {
-			const { api } = auth(() => database.dialect);
-
-			const { user: seller } = yield* Effect.promise(async () => {
-				return api.signUpEmail({
-					body: {
-						email: "seller@fetch-filter.cz",
-						name: "Seller",
-						password: "12345678",
-					},
-				});
-			});
-			const { user: buyer } = yield* Effect.promise(async () => {
-				return api.signUpEmail({
-					body: {
-						email: "buyer@fetch-filter.cz",
-						name: "Buyer",
-						password: "12345678",
-					},
-				});
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { listingId: listingId1 } = yield* createPendingScenarioFx({
 				sellerId: seller.id,

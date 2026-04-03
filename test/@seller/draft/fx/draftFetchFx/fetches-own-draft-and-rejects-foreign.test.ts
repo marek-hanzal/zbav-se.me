@@ -5,21 +5,15 @@ import { draftFetchFx } from "~/seller/draft/server/fx/draftFetchFx";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("draftFetchFx", () => {
 	it("fetches own draft and rejects foreign draft", async () => {
 		const database = await testabase("draftFetchFx-scope");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "draft-fetch-seller@test.cz",
-				name: "Draft Fetch Seller",
-			});
-			const stranger = yield* createDbUserFx({
-				email: "draft-fetch-stranger@test.cz",
-				name: "Draft Fetch Stranger",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const stranger = yield* leaseTestUserFx({});
 
 			const ownDraft = yield* draftCreateFx({
 				userId: seller.id,

@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { fetchInboxItemsFx } from "~/test/inbox/fx/fetchInboxItemsFx";
@@ -12,13 +11,9 @@ import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/tra
 describe("transactionEntry workflow", () => {
 	it("rejects empty gallery payload and does not create touch, inbox or entry side effects", async () => {
 		const database = await testabase("transactionEntry-empty-gallery");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller, buyer } = yield* createUsersFx({
-				api,
-				slug: "transaction-entry-empty-gallery",
-			});
+			const { seller, buyer } = yield* createUsersFx({});
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,

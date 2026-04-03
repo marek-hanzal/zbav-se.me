@@ -1,36 +1,18 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { thumbCreateFx } from "~/buyer/thumb/server/fx/thumbCreateFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("thumbCreateFx", () => {
 	it("is idempotent on duplicate thumb creation and does not duplicate side effects", async () => {
 		const database = await testabase("thumbCreate-idempotent");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"thumb-idempotent-seller@test.cz",
-				"Thumb Idempotent Seller",
-			);
-			const { user: buyer } = yield* signUp(
-				"thumb-idempotent-buyer@test.cz",
-				"Thumb Idempotent Buyer",
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const listing = yield* createListingFx(seller.id);
 

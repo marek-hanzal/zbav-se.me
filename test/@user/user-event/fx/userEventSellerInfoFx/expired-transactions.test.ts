@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
@@ -15,10 +15,7 @@ describe("userEventSellerInfoFx", {
 		const database = await testabase("userEventSellerInfoFx-expired-transactions");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "seller-expired-transactions@test.cz",
-				name: "Seller Expired Transactions",
-			});
+			const seller = yield* leaseTestUserFx({});
 			const baseTime = DateTime.now().minus({
 				days: 89,
 			});

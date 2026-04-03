@@ -5,40 +5,19 @@ import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { feedFavouriteCollectionFx } from "~/buyer/feed-favourite/server/fx/feedFavouriteCollectionFx";
 import { feedFavouriteCountFx } from "~/buyer/feed-favourite/server/fx/feedFavouriteCountFx";
 import { feedFavouriteFetchFx } from "~/buyer/feed-favourite/server/fx/feedFavouriteFetchFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("feedFavouriteReadModelFx", () => {
 	it("collects, fetches and counts only current user's favourited feeds with per-feed counts", async () => {
 		const database = await testabase("feedFavouriteReadModel-counts");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"feed-favourite-seller@test.cz",
-				"Feed Favourite Seller",
-			);
-			const { user: buyer } = yield* signUp(
-				"feed-favourite-buyer@test.cz",
-				"Feed Favourite Buyer",
-			);
-			const { user: stranger } = yield* signUp(
-				"feed-favourite-stranger@test.cz",
-				"Feed Favourite Stranger",
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
+			const stranger = yield* leaseTestUserFx({});
 
 			const firstListing = yield* createListingFx(seller.id);
 			const secondListing = yield* createListingFx(seller.id);

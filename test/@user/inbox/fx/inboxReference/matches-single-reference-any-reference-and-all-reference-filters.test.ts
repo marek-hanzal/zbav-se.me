@@ -1,11 +1,11 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
-import { auth } from "~/server/auth/auth";
 import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
 import { inboxCreateFx } from "~/user/inbox/server/fx/inboxCreateFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
@@ -66,20 +66,8 @@ describe("inbox reference", () => {
 	it("matches single reference, any-reference and all-reference filters", async () => {
 		const database = await testabase("inboxReference-query-filtering");
 
-		const { api } = auth(() => {
-			return database.dialect;
-		});
-
 		return Effect.gen(function* () {
-			const { user } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "inbox-reference-filter@test.cz",
-						name: "Inbox Filter",
-						password: "12345678",
-					},
-				}),
-			);
+			const user = yield* leaseTestUserFx({});
 
 			const listingInbox = yield* inboxCreateFx({
 				userId: user.id,

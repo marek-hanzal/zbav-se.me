@@ -5,7 +5,7 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { fetchInboxItemsFx } from "~/test/inbox/fx/fetchInboxItemsFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 
 describe("transactionEntry workflow", () => {
@@ -13,14 +13,8 @@ describe("transactionEntry workflow", () => {
 		const database = await testabase("transactionEntry-structured-workflow-buyer");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "transaction-entry-structured-seller@test.cz",
-				name: "Transaction Entry Structured Seller",
-			});
-			const buyer = yield* createDbUserFx({
-				email: "transaction-entry-structured-buyer@test.cz",
-				name: "Transaction Entry Structured Buyer",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { transactionId, listingId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,
@@ -135,14 +129,8 @@ describe("transactionEntry workflow", () => {
 		const database = await testabase("transactionEntry-structured-workflow-seller");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "transaction-entry-package-seller@test.cz",
-				name: "Transaction Entry Package Seller",
-			});
-			const buyer = yield* createDbUserFx({
-				email: "transaction-entry-package-buyer@test.cz",
-				name: "Transaction Entry Package Buyer",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,

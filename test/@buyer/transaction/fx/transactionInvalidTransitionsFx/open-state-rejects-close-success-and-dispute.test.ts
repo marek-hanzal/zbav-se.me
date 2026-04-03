@@ -4,37 +4,19 @@ import { describe, expect, it } from "vitest";
 import { transactionCloseFx } from "~/buyer/transaction/server/fx/transactionCloseFx";
 import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
 import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
-import { auth } from "~/server/auth/auth";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("buyer transaction invalid transitions", () => {
 	it("rejects close, success and dispute while the transaction is still open", async () => {
 		const database = await testabase("buyerTransactionFx-invalid-open-transitions");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"seller-invalid-open-transitions@test.cz",
-				"Seller Invalid Open Transitions",
-			);
-			const { user: buyer } = yield* signUp(
-				"buyer-invalid-open-transitions@test.cz",
-				"Buyer Invalid Open Transitions",
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,

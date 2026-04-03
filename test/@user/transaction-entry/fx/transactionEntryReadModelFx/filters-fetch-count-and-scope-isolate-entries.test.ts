@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionEntryCollectionFx } from "~/user/transaction-entry/server/fx/transactionEntryCollectionFx";
 import { transactionEntryCountFx } from "~/user/transaction-entry/server/fx/transactionEntryCountFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
@@ -14,14 +14,8 @@ describe("transactionEntry read model", () => {
 		const database = await testabase("transactionEntryReadModelFx-filters");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "transaction-entry-read-seller@test.cz",
-				name: "Transaction Entry Read Seller",
-			});
-			const buyer = yield* createDbUserFx({
-				email: "transaction-entry-read-buyer@test.cz",
-				name: "Transaction Entry Read Buyer",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,
@@ -135,18 +129,9 @@ describe("transactionEntry read model", () => {
 		const database = await testabase("transactionEntryReadModelFx-foreign");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "transaction-entry-foreign-seller@test.cz",
-				name: "Transaction Entry Foreign Seller",
-			});
-			const buyer = yield* createDbUserFx({
-				email: "transaction-entry-foreign-buyer@test.cz",
-				name: "Transaction Entry Foreign Buyer",
-			});
-			const outsider = yield* createDbUserFx({
-				email: "transaction-entry-read-outsider@test.cz",
-				name: "Transaction Entry Read Outsider",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
+			const outsider = yield* leaseTestUserFx({});
 
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,

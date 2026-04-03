@@ -2,23 +2,17 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/public/listing/server/fx/listingCollectionFx";
 import { listingCountFx } from "~/public/listing/server/fx/listingCountFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
-import { createUserFx } from "~/test/user/fx/createUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("public listingCollectionFx", () => {
 	it("filters live listings by title, price and condition and paginates with cursor", async () => {
 		const database = await testabase("publicListingCollectionFx-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const seller = yield* createUserFx({
-				api,
-				email: "public-listing-collection-seller@test.cz",
-				name: "Public Listing Collection Seller",
-			});
+			const seller = yield* leaseTestUserFx({});
 
 			const alpha = yield* createListingFx(seller.id, {
 				title: "Alpha MacBook",

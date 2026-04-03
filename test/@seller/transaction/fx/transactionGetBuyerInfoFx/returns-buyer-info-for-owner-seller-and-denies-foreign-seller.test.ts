@@ -1,40 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionGetBuyerInfoFx } from "~/seller/transaction/server/fx/transactionGetBuyerInfoFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionGetBuyerInfoFx", () => {
 	it("returns buyer info for the owning seller and denies a foreign seller", async () => {
 		const database = await testabase("transactionGetBuyerInfoFx-access");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"transaction-buyer-info-seller@test.cz",
-				"Transaction Buyer Info Seller",
-			);
-			const { user: buyer } = yield* signUp(
-				"transaction-buyer-info-buyer@test.cz",
-				"Transaction Buyer Info Buyer",
-			);
-			const { user: strangerSeller } = yield* signUp(
-				"transaction-buyer-info-stranger@test.cz",
-				"Transaction Buyer Info Stranger",
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
+			const strangerSeller = yield* leaseTestUserFx({});
 
 			const { listingId } = yield* createPendingScenarioFx({
 				sellerId: seller.id,

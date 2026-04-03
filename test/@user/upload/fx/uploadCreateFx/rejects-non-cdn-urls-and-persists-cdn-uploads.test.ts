@@ -1,25 +1,16 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 describe("uploadCreateFx", () => {
 	it("rejects non-CDN URLs and persists CDN uploads", async () => {
 		const database = await testabase("uploadCreateFx-cdn-gate");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "upload-create-user@test.cz",
-						name: "Upload Create User",
-						password: "12345678",
-					},
-				}),
-			);
+			const user = yield* leaseTestUserFx({});
 
 			const invalid = yield* Effect.either(
 				uploadCreateFx({

@@ -8,7 +8,6 @@ import {
 	withDatabaseName,
 	withDialectFx,
 } from "@/lib/common/database";
-import { auth } from "~/server/auth/auth";
 import type { Database } from "~/server/database/Database";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
@@ -20,7 +19,6 @@ import { userExPatchFx } from "~/user/user-ex/server/fx/userExPatchFx";
 describe("userExPatchFx", () => {
 	it("creates when missing, updates when existing, and hits conflict branch on concurrent create", async () => {
 		const database = await testabase("userExPatchFx-create-update-conflict");
-		const { api } = auth(() => database.dialect);
 		const databaseConfig = ServerDatabaseSchema.parse(process.env);
 		const secondDatabase = await withDatabaseFx<Database>({}).pipe(
 			withDialectFx(
@@ -44,10 +42,7 @@ describe("userExPatchFx", () => {
 
 		try {
 			return await Effect.gen(function* () {
-				const users = yield* createUsersFx({
-					api,
-					slug: "user-ex-patch",
-				});
+				const users = yield* createUsersFx({});
 
 				const created = yield* userExPatchFx({
 					userId: users.seller.id,

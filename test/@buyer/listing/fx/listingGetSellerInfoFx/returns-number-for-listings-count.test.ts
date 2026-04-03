@@ -1,34 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingGetSellerInfoFx } from "~/buyer/listing/server/fx/listingGetSellerInfoFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("listingGetSellerInfoFx", () => {
 	it("returns seller listings count as a number", async () => {
 		const database = await testabase("listingGetSellerInfoFx-listings-number");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
+			const seller = yield* leaseTestUserFx({});
 
-			const { user: seller } = yield* signUp(
-				"seller-info-seller@test.cz",
-				"Seller Info Seller",
-			);
-
-			yield* signUp("seller-info-buyer@test.cz", "Seller Info Buyer");
+			yield* leaseTestUserFx({});
 
 			const firstListing = yield* createListingFx(seller.id);
 			yield* createListingFx(seller.id);

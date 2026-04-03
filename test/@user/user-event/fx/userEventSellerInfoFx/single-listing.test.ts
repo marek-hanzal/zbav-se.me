@@ -2,31 +2,19 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
-import { auth } from "~/server/auth/auth";
 import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Single listing returns nothing", async () => {
 		const database = await testabase("userEventSellerInfoFx-single-listing");
 
-		const { api } = auth(() => {
-			return database.dialect;
-		});
-
 		return Effect.gen(function* () {
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "a@x32.cz",
-						name: "A-User",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* leaseTestUserFx({});
 
 			const category = yield* categoryFetchFx({
 				where: {

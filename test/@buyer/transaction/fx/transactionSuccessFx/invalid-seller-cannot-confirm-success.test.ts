@@ -1,37 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
-import { auth } from "~/server/auth/auth";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionSuccessFx (buyer)", () => {
 	it("invalid: seller cannot confirm success", async () => {
 		const database = await testabase("buyerSuccessFx-seller-cannot-confirm");
 
 		return Effect.gen(function* () {
-			const { api } = auth(() => database.dialect);
-
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "seller@buyer-success-invalid.cz",
-						name: "Seller",
-						password: "12345678",
-					},
-				}),
-			);
-			const { user: buyer } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "buyer@buyer-success-invalid.cz",
-						name: "Buyer",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { transactionId } = yield* createResolvedScenarioFx({
 				sellerId: seller.id,

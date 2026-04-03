@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -12,13 +11,9 @@ import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 describe("galleryItemCollectionFx", () => {
 	it("filters by gallery, owner scope and ids while keeping count consistent", async () => {
 		const database = await testabase("galleryItemCollectionFx-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller, buyer, stranger } = yield* createUsersFx({
-				api,
-				slug: "gallery-item-collection",
-			});
+			const { seller, buyer, stranger } = yield* createUsersFx({});
 
 			const sellerFirstUpload = yield* uploadCreateFx({
 				userId: seller.id,

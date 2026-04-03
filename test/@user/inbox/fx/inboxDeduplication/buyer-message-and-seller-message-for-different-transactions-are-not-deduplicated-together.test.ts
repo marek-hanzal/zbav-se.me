@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
 
 describe("inbox deduplication (PARTITION BY transactionId)", () => {
@@ -10,14 +10,8 @@ describe("inbox deduplication (PARTITION BY transactionId)", () => {
 		const database = await testabase("inboxDedup-separate-transactions");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "seller@inbox-dedup-sep.cz",
-				name: "Seller",
-			});
-			yield* createDbUserFx({
-				email: "buyer@inbox-dedup-sep.cz",
-				name: "Buyer",
-			});
+			const seller = yield* leaseTestUserFx({});
+			yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
 				database.kysely

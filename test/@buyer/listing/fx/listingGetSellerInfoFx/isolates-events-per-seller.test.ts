@@ -3,31 +3,19 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { listingGetSellerInfoFx } from "~/buyer/listing/server/fx/listingGetSellerInfoFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("listingGetSellerInfoFx", () => {
 	it("returns seller events only for the seller behind the requested listing", async () => {
 		const database = await testabase("listingGetSellerInfoFx-event-isolation");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: sellerA } = yield* signUp("seller-info-a@test.cz", "Seller Info A");
-			const { user: sellerB } = yield* signUp("seller-info-b@test.cz", "Seller Info B");
+			const sellerA = yield* leaseTestUserFx({});
+			const sellerB = yield* leaseTestUserFx({});
 
 			const listingA = yield* createListingFx(sellerA.id);
 			const listingB = yield* createListingFx(sellerB.id);

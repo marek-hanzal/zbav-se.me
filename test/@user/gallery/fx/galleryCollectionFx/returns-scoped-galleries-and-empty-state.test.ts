@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -11,13 +10,9 @@ import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 describe("galleryCollectionFx", () => {
 	it("returns scoped galleries and stays consistent with count and empty state", async () => {
 		const database = await testabase("galleryCollectionFx-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller, buyer, stranger } = yield* createUsersFx({
-				api,
-				slug: "gallery-collection-contract",
-			});
+			const { seller, buyer, stranger } = yield* createUsersFx({});
 
 			const sellerFirst = yield* galleryInsertFx({
 				userId: seller.id,

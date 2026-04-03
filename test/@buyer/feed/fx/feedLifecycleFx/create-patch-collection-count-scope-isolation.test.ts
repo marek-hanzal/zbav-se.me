@@ -5,29 +5,17 @@ import { feedCountFx } from "~/buyer/feed/server/fx/feedCountFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import { feedPatchFx } from "~/buyer/feed/server/fx/feedPatchFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("feedLifecycleFx", () => {
 	it("creates, patches, collects and counts feeds while respecting owner scope", async () => {
 		const database = await testabase("feedLifecycle-scope");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: owner } = yield* signUp("feed-owner@test.cz", "Feed Owner");
-			const { user: stranger } = yield* signUp("feed-stranger@test.cz", "Feed Stranger");
+			const owner = yield* leaseTestUserFx({});
+			const stranger = yield* leaseTestUserFx({});
 
 			const firstFeed = yield* feedCreateFx({
 				userId: owner.id,

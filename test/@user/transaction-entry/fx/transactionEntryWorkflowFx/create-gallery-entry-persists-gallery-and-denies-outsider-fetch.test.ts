@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
 import { transactionEntryGalleryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryGalleryFetchFx";
@@ -12,32 +12,11 @@ import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 describe("transactionEntry workflow", () => {
 	it("creates gallery entry with ordered items and blocks outsider access", async () => {
 		const database = await testabase("transactionEntry-gallery-workflow");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"transaction-entry-gallery-seller@test.cz",
-				"Transaction Gallery Seller",
-			);
-			const { user: buyer } = yield* signUp(
-				"transaction-entry-gallery-buyer@test.cz",
-				"Transaction Gallery Buyer",
-			);
-			const { user: outsider } = yield* signUp(
-				"transaction-entry-gallery-outsider@test.cz",
-				"Transaction Gallery Outsider",
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
+			const outsider = yield* leaseTestUserFx({});
 
 			const { transactionId } = yield* createOpenScenarioFx({
 				sellerId: seller.id,

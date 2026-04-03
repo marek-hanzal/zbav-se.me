@@ -1,37 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
-import { auth } from "~/server/auth/auth";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionResolveFx", () => {
 	it("invalid: cannot resolve a pending transaction", async () => {
 		const database = await testabase("sellerResolveFx-invalid-pending");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"seller-resolve-invalid-pending@test.cz",
-				"Seller Resolve Invalid Pending",
-			);
-			const { user: buyer } = yield* signUp(
-				"buyer-resolve-invalid-pending@test.cz",
-				"Buyer Resolve Invalid Pending",
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { listingId } = yield* createPendingScenarioFx({
 				sellerId: seller.id,

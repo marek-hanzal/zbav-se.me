@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
-import { auth } from "~/server/auth/auth";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
@@ -11,13 +10,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("seller listingFetchFx", () => {
 	it("fetches own listing and rejects foreign listing", async () => {
 		const database = await testabase("seller-listingFetchFx-scope");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "seller-listing-fetch",
-			});
+			const users = yield* createUsersFx({});
 			const ownListing = yield* createListingFx(users.seller.id, {
 				title: "Seller own listing",
 			});

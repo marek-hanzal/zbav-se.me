@@ -5,7 +5,7 @@ import type { InboxTypeEnumSchema } from "~/common/inbox/enum/InboxTypeEnumSchem
 import type { InboxTableSchema } from "~/server/database/@table/InboxTableSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 
 /**
@@ -41,14 +41,8 @@ describe("inboxArchiveFx", () => {
 		const database = await testabase("inboxArchive-scope-isolation");
 
 		return Effect.gen(function* () {
-			const alice = yield* createDbUserFx({
-				email: "alice@inbox-scope.cz",
-				name: "Alice",
-			});
-			const bob = yield* createDbUserFx({
-				email: "bob@inbox-scope.cz",
-				name: "Bob",
-			});
+			const alice = yield* leaseTestUserFx({});
+			const bob = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
 				seedInbox(database, [

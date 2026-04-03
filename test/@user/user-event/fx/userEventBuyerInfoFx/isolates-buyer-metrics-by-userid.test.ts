@@ -3,30 +3,18 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("isolates buyer metrics by userId and does not mix other buyers' events", async () => {
 		const database = await testabase("userEventBuyerInfoFx-isolation");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: buyerA } = yield* signUp("buyer-a-events@test.cz", "Buyer A");
-			const { user: buyerB } = yield* signUp("buyer-b-events@test.cz", "Buyer B");
+			const buyerA = yield* leaseTestUserFx({});
+			const buyerB = yield* leaseTestUserFx({});
 
 			yield* userEventCreateFx({
 				userId: buyerA.id,

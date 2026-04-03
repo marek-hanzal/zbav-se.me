@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { withInboxQueryBuilderFx } from "~/user/inbox/server/db/withInboxQueryBuilderFx";
 import { withInboxSelectFx } from "~/user/inbox/server/db/withInboxSelectFx";
 
@@ -10,20 +10,8 @@ describe("inbox family", () => {
 	it("filters inbox rows by family", async () => {
 		const database = await testabase("inboxFamilyFiltering-message");
 
-		const { api } = auth(() => {
-			return database.dialect;
-		});
-
 		return Effect.gen(function* () {
-			const { user } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "inbox-family@test.cz",
-						name: "Inbox User",
-						password: "12345678",
-					},
-				}),
-			);
+			const user = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
 				database.kysely

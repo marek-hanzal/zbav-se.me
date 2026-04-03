@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { feedCollectionFx } from "~/buyer/feed/server/fx/feedCollectionFx";
 import { feedCountFx } from "~/buyer/feed/server/fx/feedCountFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -11,13 +10,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("feedCollectionFx", () => {
 	it("filters by type and idIn, paginates with cursor and keeps count scoped", async () => {
 		const database = await testabase("feedCollectionFx-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller: owner, stranger } = yield* createUsersFx({
-				api,
-				slug: "feed-collection-contract",
-			});
+			const { seller: owner, stranger } = yield* createUsersFx({});
 
 			const searchFeed = yield* feedCreateFx({
 				userId: owner.id,

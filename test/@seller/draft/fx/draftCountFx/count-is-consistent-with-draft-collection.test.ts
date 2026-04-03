@@ -5,17 +5,14 @@ import { draftCountFx } from "~/seller/draft/server/fx/draftCountFx";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("draftCountFx", () => {
 	it("matches draft collection and supports empty filter", async () => {
 		const database = await testabase("draftCountFx-contract");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "draft-count-seller@test.cz",
-				name: "Draft Count Seller",
-			});
+			const seller = yield* leaseTestUserFx({});
 
 			yield* draftCreateFx({
 				userId: seller.id,

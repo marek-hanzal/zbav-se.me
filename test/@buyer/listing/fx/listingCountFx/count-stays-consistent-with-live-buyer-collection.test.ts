@@ -2,7 +2,6 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
 import { listingCountFx } from "~/buyer/listing/server/fx/listingCountFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
@@ -12,13 +11,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("buyer listingCountFx", () => {
 	it("matches buyer-visible live collection and supports empty state", async () => {
 		const database = await testabase("buyer-listingCountFx-live-consistency");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "buyer-listing-count",
-			});
+			const users = yield* createUsersFx({});
 
 			yield* createListingFx(users.seller.id, {
 				title: "Live buyer listing",

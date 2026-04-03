@@ -2,26 +2,17 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/public/listing/server/fx/listingCollectionFx";
 import { listingFetchFx } from "~/public/listing/server/fx/listingFetchFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("public listing visibility", () => {
 	it("fetches live listings and applies public title filters while hiding sold ones", async () => {
 		const database = await testabase("publicListing-fetch-filter");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "public-listing-filter-seller@test.cz",
-						name: "Public Filter Seller",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* leaseTestUserFx({});
 
 			const alpha = yield* createListingFx(seller.id);
 			const beta = yield* createListingFx(seller.id);

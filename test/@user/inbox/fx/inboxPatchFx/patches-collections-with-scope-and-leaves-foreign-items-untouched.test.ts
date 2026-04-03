@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxCountFx } from "~/user/inbox/server/fx/inboxCountFx";
 import { inboxPatchCollectionFx } from "~/user/inbox/server/fx/inboxPatchCollectionFx";
 
@@ -12,14 +12,8 @@ describe("inboxPatchCollectionFx", () => {
 		const archivedAt = new Date("2026-04-01T11:00:00.000Z");
 
 		return Effect.gen(function* () {
-			const owner = yield* createDbUserFx({
-				email: "inbox-owner@test.cz",
-				name: "Inbox Owner",
-			});
-			const stranger = yield* createDbUserFx({
-				email: "inbox-stranger@test.cz",
-				name: "Inbox Stranger",
-			});
+			const owner = yield* leaseTestUserFx({});
+			const stranger = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
 				database.kysely

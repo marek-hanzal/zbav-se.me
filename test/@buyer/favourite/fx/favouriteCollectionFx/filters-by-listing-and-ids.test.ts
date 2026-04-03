@@ -4,7 +4,6 @@ import { favouriteCollectionFx } from "~/buyer/favourite/server/fx/favouriteColl
 import { favouriteCountFx } from "~/buyer/favourite/server/fx/favouriteCountFx";
 import { favouriteToggleFx } from "~/buyer/favourite/server/fx/favouriteToggleFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
@@ -13,13 +12,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 describe("favouriteCollectionFx", () => {
 	it("filters by listing and idIn while staying scoped to the current user", async () => {
 		const database = await testabase("favouriteCollectionFx-contract");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller, buyer, stranger } = yield* createUsersFx({
-				api,
-				slug: "favourite-collection-contract",
-			});
+			const { seller, buyer, stranger } = yield* createUsersFx({});
 			const feed = yield* feedCreateFx({
 				userId: buyer.id,
 				type: "user",

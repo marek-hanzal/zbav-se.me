@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { galleryCollectionFx } from "~/user/gallery/server/fx/galleryCollectionFx";
 import { galleryCountFx } from "~/user/gallery/server/fx/galleryCountFx";
 import { galleryFetchFx } from "~/user/gallery/server/fx/galleryFetchFx";
@@ -17,10 +17,7 @@ describe("gallery workflow", () => {
 		const database = await testabase("galleryWorkflowFx-owner");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "gallery-workflow-seller@test.cz",
-				name: "Gallery Seller",
-			});
+			const seller = yield* leaseTestUserFx({});
 
 			const firstUpload = yield* uploadCreateFx({
 				userId: seller.id,
@@ -112,14 +109,8 @@ describe("gallery workflow", () => {
 		const database = await testabase("galleryWorkflowFx-foreign");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "gallery-workflow-owner@test.cz",
-				name: "Gallery Owner",
-			});
-			const stranger = yield* createDbUserFx({
-				email: "gallery-workflow-stranger@test.cz",
-				name: "Gallery Stranger",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const stranger = yield* leaseTestUserFx({});
 
 			const upload = yield* uploadCreateFx({
 				userId: seller.id,

@@ -2,26 +2,17 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createUserFx } from "~/test/user/fx/createUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Reaction: seller terminal before open counts as terminal reaction", async () => {
 		const database = await testabase("userEventBuyerInfoFx-reaction-terminal-before-open");
 
-		const { api } = auth(() => {
-			return database.dialect;
-		});
-
 		return Effect.gen(function* () {
-			const buyer = yield* createUserFx({
-				api,
-				email: "buyer@test.cz",
-				name: "Buyer",
-			});
+			const buyer = yield* leaseTestUserFx({});
 
 			const buyerId = buyer.id;
 			const tCreate = DateTime.now().minus({

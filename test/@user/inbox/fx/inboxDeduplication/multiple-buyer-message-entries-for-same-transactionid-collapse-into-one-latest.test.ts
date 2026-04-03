@@ -1,25 +1,16 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
 
 describe("inbox deduplication (PARTITION BY transactionId)", () => {
 	it("multiple buyer-message entries for same transactionId collapse into one (latest)", async () => {
 		const database = await testabase("inboxDedup-buyer-message");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "seller@inbox-dedup.cz",
-						name: "Seller",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* leaseTestUserFx({});
 
 			const txId = "dedup-tx-001";
 			const listingId = "dedup-listing-001";

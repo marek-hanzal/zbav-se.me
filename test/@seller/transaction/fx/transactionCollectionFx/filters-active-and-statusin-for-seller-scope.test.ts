@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { transactionCollectionFx } from "~/seller/transaction/server/fx/transactionCollectionFx";
 import { transactionCountFx } from "~/seller/transaction/server/fx/transactionCountFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
@@ -14,13 +13,9 @@ import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 describe("seller transactionCollectionFx", () => {
 	it("filters by active inbox state and statusIn within seller scope", async () => {
 		const database = await testabase("seller-transactionCollection-active-statusIn");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { seller, buyer } = yield* createUsersFx({
-				api,
-				slug: "seller-transaction-collection-direct",
-			});
+			const { seller, buyer } = yield* createUsersFx({});
 			const listing = yield* getDefaultListingCreateFx;
 
 			const activeScenario = yield* createPendingScenarioFx({

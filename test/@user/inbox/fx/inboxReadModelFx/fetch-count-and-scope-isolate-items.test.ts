@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
 import { inboxCountFx } from "~/user/inbox/server/fx/inboxCountFx";
 import { inboxFetchFx } from "~/user/inbox/server/fx/inboxFetchFx";
@@ -12,14 +12,8 @@ describe("inbox read model", () => {
 		const database = await testabase("inboxReadModelFx-fetch-count-scope");
 
 		return Effect.gen(function* () {
-			const user = yield* createDbUserFx({
-				email: "inbox-read-owner@test.cz",
-				name: "Inbox Read Owner",
-			});
-			const stranger = yield* createDbUserFx({
-				email: "inbox-read-stranger@test.cz",
-				name: "Inbox Read Stranger",
-			});
+			const user = yield* leaseTestUserFx({});
+			const stranger = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
 				database.kysely
@@ -142,14 +136,8 @@ describe("inbox read model", () => {
 		const database = await testabase("inboxReadModelFx-fetch-foreign");
 
 		return Effect.gen(function* () {
-			const user = yield* createDbUserFx({
-				email: "inbox-read-owner-foreign@test.cz",
-				name: "Inbox Read Owner Foreign",
-			});
-			const stranger = yield* createDbUserFx({
-				email: "inbox-read-stranger-foreign@test.cz",
-				name: "Inbox Read Stranger Foreign",
-			});
+			const user = yield* leaseTestUserFx({});
+			const stranger = yield* leaseTestUserFx({});
 
 			yield* Effect.promise(() =>
 				database.kysely

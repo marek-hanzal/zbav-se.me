@@ -2,36 +2,18 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
 import { listingEventRateLimitFx } from "~/buyer/listing-event/server/fx/listingEventRateLimitFx";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("listingEventRateLimitFx", () => {
 	it("rejects duplicate event within the window and allows old or different events", async () => {
 		const database = await testabase("listingEventRateLimitFx-window");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: seller } = yield* signUp(
-				"listing-event-rate-limit-seller@test.cz",
-				"Listing Event Seller",
-			);
-			const { user: buyer } = yield* signUp(
-				"listing-event-rate-limit-buyer@test.cz",
-				"Listing Event Buyer",
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const listing = yield* createListingFx(seller.id);
 

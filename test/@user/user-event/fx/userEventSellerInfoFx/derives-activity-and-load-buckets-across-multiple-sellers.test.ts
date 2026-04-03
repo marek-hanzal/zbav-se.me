@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
 import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
@@ -44,10 +44,7 @@ describe("userEventSellerInfoFx", {
 		const database = await testabase("userEventSellerInfoFx-load-high");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "seller-load-high@test.cz",
-				name: "Seller Load High",
-			});
+			const seller = yield* leaseTestUserFx({});
 
 			yield* seedUserEventTimelineFx({
 				userId: seller.id,
@@ -69,14 +66,8 @@ describe("userEventSellerInfoFx", {
 		const database = await testabase("userEventSellerInfoFx-load-medium-low");
 
 		return Effect.gen(function* () {
-			const mediumSeller = yield* createDbUserFx({
-				email: "seller-load-medium@test.cz",
-				name: "Seller Load Medium",
-			});
-			const lowSeller = yield* createDbUserFx({
-				email: "seller-load-low@test.cz",
-				name: "Seller Load Low",
-			});
+			const mediumSeller = yield* leaseTestUserFx({});
+			const lowSeller = yield* leaseTestUserFx({});
 
 			yield* seedUserEventTimelineFx({
 				userId: mediumSeller.id,
@@ -124,18 +115,9 @@ describe("userEventSellerInfoFx", {
 		const database = await testabase("userEventSellerInfoFx-activity-derivation");
 
 		return Effect.gen(function* () {
-			const highSeller = yield* createDbUserFx({
-				email: "seller-activity-high@test.cz",
-				name: "Seller Activity High",
-			});
-			const mediumSeller = yield* createDbUserFx({
-				email: "seller-activity-medium@test.cz",
-				name: "Seller Activity Medium",
-			});
-			const lowSeller = yield* createDbUserFx({
-				email: "seller-activity-low@test.cz",
-				name: "Seller Activity Low",
-			});
+			const highSeller = yield* leaseTestUserFx({});
+			const mediumSeller = yield* leaseTestUserFx({});
+			const lowSeller = yield* leaseTestUserFx({});
 
 			const seedSellerEvents = ({
 				userId,
@@ -222,10 +204,7 @@ describe("userEventSellerInfoFx", {
 		const database = await testabase("userEventSellerInfoFx-activity-none");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "seller-activity-none@test.cz",
-				name: "Seller Activity None",
-			});
+			const seller = yield* leaseTestUserFx({});
 
 			yield* seedUserEventTimelineFx({
 				userId: seller.id,

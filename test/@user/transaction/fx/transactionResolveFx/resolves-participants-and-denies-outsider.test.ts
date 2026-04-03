@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
@@ -11,13 +10,9 @@ import { transactionResolveFx } from "~/user/transaction/server/fx/transactionRe
 describe("transactionResolveFx", () => {
 	it("resolves buyer and seller access and denies outsider", async () => {
 		const database = await testabase("transactionResolveFx-access-resolver");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const users = yield* createUsersFx({
-				api,
-				slug: "transaction-resolve-access",
-			});
+			const users = yield* createUsersFx({});
 
 			const scenario = yield* createPendingScenarioFx({
 				sellerId: users.seller.id,

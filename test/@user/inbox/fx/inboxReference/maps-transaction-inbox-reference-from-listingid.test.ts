@@ -4,21 +4,15 @@ import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCr
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
-import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("inbox reference", () => {
 	it("maps transaction inbox reference from listingId", async () => {
 		const database = await testabase("inboxReference-transaction-create");
 
 		return Effect.gen(function* () {
-			const seller = yield* createDbUserFx({
-				email: "inbox-reference-seller@test.cz",
-				name: "Seller Ref",
-			});
-			const buyer = yield* createDbUserFx({
-				email: "inbox-reference-buyer@test.cz",
-				name: "Buyer Ref",
-			});
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 			const listing = yield* createListingFx(seller.id, {
 				title: "Reference fixture listing",
 			});
