@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
@@ -173,7 +174,9 @@ describe("inbox read model", () => {
 				}),
 			);
 
-			expect(foreignFetch._tag).toBe("Left");
+			expectTaggedErrorFx(foreignFetch, {
+				tag: "NotFoundErrorFx",
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

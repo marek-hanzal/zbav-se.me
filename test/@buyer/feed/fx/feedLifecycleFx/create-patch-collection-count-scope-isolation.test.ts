@@ -5,6 +5,7 @@ import { feedCountFx } from "~/buyer/feed/server/fx/feedCountFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import { feedPatchFx } from "~/buyer/feed/server/fx/feedPatchFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
@@ -82,7 +83,9 @@ describe("feedLifecycleFx", () => {
 				}),
 			);
 
-			expect(foreignPatch._tag).toBe("Left");
+			expectTaggedErrorFx(foreignPatch, {
+				tag: "NotFoundErrorFx",
+			});
 
 			const fetched = yield* feedFetchFx({
 				scope: {
@@ -123,7 +126,9 @@ describe("feedLifecycleFx", () => {
 				}),
 			);
 
-			expect(foreignFetch._tag).toBe("Left");
+			expectTaggedErrorFx(foreignFetch, {
+				tag: "NotFoundErrorFx",
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

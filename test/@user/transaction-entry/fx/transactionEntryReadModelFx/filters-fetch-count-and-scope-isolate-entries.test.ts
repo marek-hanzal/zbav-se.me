@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
@@ -172,7 +173,9 @@ describe("transactionEntry read model", () => {
 				},
 			});
 
-			expect(outsiderFetch._tag).toBe("Left");
+			expectTaggedErrorFx(outsiderFetch, {
+				tag: "NotFoundErrorFx",
+			});
 			expect(outsiderCollection).toHaveLength(0);
 			expect(outsiderCount.where).toBe(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);

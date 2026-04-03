@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
@@ -92,8 +93,30 @@ describe("inboxPatchFx", () => {
 				}),
 			);
 
-			expect(foreignFetch._tag).toBe("Left");
-			expect(foreignPatch._tag).toBe("Left");
+			expectTaggedErrorFx(foreignFetch, {
+				tag: "NotFoundErrorFx",
+			});
+			expectTaggedErrorFx(foreignPatch, {
+				tag: "NotFoundErrorFx",
+			});
+
+			const storedInbox = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select([
+						"id",
+						"userId",
+						"archivedAt",
+					])
+					.where("id", "=", "inbox-patch-1")
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(storedInbox).toEqual({
+				id: "inbox-patch-1",
+				userId: user.id,
+				archivedAt,
+			});
 
 			const activeCount = yield* inboxCountFx({
 				scope: {

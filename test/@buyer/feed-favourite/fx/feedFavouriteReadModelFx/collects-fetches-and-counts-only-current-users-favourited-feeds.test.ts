@@ -5,6 +5,7 @@ import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { feedFavouriteCollectionFx } from "~/buyer/feed-favourite/server/fx/feedFavouriteCollectionFx";
 import { feedFavouriteCountFx } from "~/buyer/feed-favourite/server/fx/feedFavouriteCountFx";
 import { feedFavouriteFetchFx } from "~/buyer/feed-favourite/server/fx/feedFavouriteFetchFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
@@ -114,7 +115,9 @@ describe("feedFavouriteReadModelFx", () => {
 				}),
 			);
 
-			expect(foreignFetch._tag).toBe("Left");
+			expectTaggedErrorFx(foreignFetch, {
+				tag: "NotFoundErrorFx",
+			});
 
 			const count = yield* feedFavouriteCountFx({
 				userId: buyer.id,

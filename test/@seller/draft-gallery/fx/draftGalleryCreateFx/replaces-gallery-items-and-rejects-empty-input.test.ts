@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { draftGalleryCreateFx } from "~/seller/draft-gallery/server/fx/draftGalleryCreateFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
@@ -80,7 +81,29 @@ describe("draftGalleryCreateFx", () => {
 				}),
 			);
 
-			expect(emptyResult._tag).toBe("Left");
+			expectTaggedErrorFx(emptyResult, {
+				tag: "InvalidRequestErrorFx",
+				message: "At least one upload is required",
+			});
+
+			const itemsAfterEmptyAttempt = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("gallery_item")
+					.select([
+						"uploadId",
+						"sort",
+					])
+					.where("galleryId", "=", draft.galleryId)
+					.orderBy("sort", "asc")
+					.execute(),
+			);
+
+			expect(itemsAfterEmptyAttempt).toEqual([
+				{
+					uploadId: thirdUpload.id,
+					sort: 0,
+				},
+			]);
 
 			const foreignAttempt = yield* Effect.either(
 				draftGalleryCreateFx({
@@ -92,7 +115,10 @@ describe("draftGalleryCreateFx", () => {
 				}),
 			);
 
-			expect(foreignAttempt._tag).toBe("Left");
+			expectTaggedErrorFx(foreignAttempt, {
+				tag: "AccessDeniedErrorFx",
+				message: "You are not allowed to create a gallery for this draft",
+			});
 
 			const itemsAfterForeignAttempt = yield* Effect.promise(() =>
 				database.kysely

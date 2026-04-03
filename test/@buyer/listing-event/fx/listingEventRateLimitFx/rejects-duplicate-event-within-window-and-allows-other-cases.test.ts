@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
 import { listingEventRateLimitFx } from "~/buyer/listing-event/server/fx/listingEventRateLimitFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
@@ -30,7 +31,21 @@ describe("listingEventRateLimitFx", () => {
 				}),
 			);
 
-			expect(duplicate._tag).toBe("Left");
+			expectTaggedErrorFx(duplicate, {
+				tag: "TooManyRequestsFx",
+				message: "You have already created this event",
+			});
+
+			const duplicateCount = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("listing_event")
+					.select("id")
+					.where("listingId", "=", listing.id)
+					.where("event", "=", "favourite")
+					.execute(),
+			);
+
+			expect(duplicateCount).toHaveLength(1);
 
 			const differentEvent = yield* Effect.either(
 				listingEventRateLimitFx({

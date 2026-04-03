@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCollectionFx } from "~/buyer/transaction/server/fx/transactionCollectionFx";
 import { transactionFetchFx } from "~/buyer/transaction/server/fx/transactionFetchFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
@@ -53,7 +54,9 @@ describe("buyer transaction read model foreign isolation", () => {
 
 			expect(mixedIds).toHaveLength(1);
 			expect(mixedIds[0]?.id).toBe(ownScenario.transactionId);
-			expect(foreignFetch._tag).toBe("Left");
+			expectTaggedErrorFx(foreignFetch, {
+				tag: "NotFoundErrorFx",
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

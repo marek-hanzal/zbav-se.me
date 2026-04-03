@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
@@ -185,8 +186,12 @@ describe("gallery workflow", () => {
 				},
 			});
 
-			expect(strangerGalleryFetch._tag).toBe("Left");
-			expect(strangerItemFetch._tag).toBe("Left");
+			expectTaggedErrorFx(strangerGalleryFetch, {
+				tag: "NotFoundErrorFx",
+			});
+			expectTaggedErrorFx(strangerItemFetch, {
+				tag: "NotFoundErrorFx",
+			});
 			expect(strangerGalleryCollection).toHaveLength(0);
 			expect(strangerGalleryCount.total).toBe(0);
 			expect(strangerItemCollection).toHaveLength(0);

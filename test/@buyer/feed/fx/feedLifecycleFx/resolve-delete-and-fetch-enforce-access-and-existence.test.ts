@@ -5,6 +5,7 @@ import { feedDeleteFx } from "~/buyer/feed/server/fx/feedDeleteFx";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import { feedPatchFx } from "~/buyer/feed/server/fx/feedPatchFx";
 import { feedResolveFx } from "~/buyer/feed/server/fx/feedResolveFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
@@ -38,7 +39,9 @@ describe("feedLifecycleFx", () => {
 				}),
 			);
 
-			expect(foreignResolution._tag).toBe("Left");
+			expectTaggedErrorFx(foreignResolution, {
+				tag: "NotFoundErrorFx",
+			});
 
 			const foreignPatch = yield* Effect.either(
 				feedPatchFx({
@@ -66,8 +69,12 @@ describe("feedLifecycleFx", () => {
 				}),
 			);
 
-			expect(foreignPatch._tag).toBe("Left");
-			expect(foreignDelete._tag).toBe("Left");
+			expectTaggedErrorFx(foreignPatch, {
+				tag: "NotFoundErrorFx",
+			});
+			expectTaggedErrorFx(foreignDelete, {
+				tag: "NotFoundErrorFx",
+			});
 
 			const deleted = yield* feedDeleteFx({
 				scope: {
@@ -91,7 +98,9 @@ describe("feedLifecycleFx", () => {
 				}),
 			);
 
-			expect(missing._tag).toBe("Left");
+			expectTaggedErrorFx(missing, {
+				tag: "NotFoundErrorFx",
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

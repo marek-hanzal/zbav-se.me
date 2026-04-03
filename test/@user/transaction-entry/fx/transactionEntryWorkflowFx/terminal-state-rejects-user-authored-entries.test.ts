@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCloseFx } from "~/buyer/transaction/server/fx/transactionCloseFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
@@ -49,8 +50,26 @@ describe("transactionEntry workflow", () => {
 				}),
 			);
 
-			expect(sellerText._tag).toBe("Left");
-			expect(buyerPersonal._tag).toBe("Left");
+			expectTaggedErrorFx(sellerText, {
+				tag: "InvalidRequestErrorFx",
+			});
+			expectTaggedErrorFx(buyerPersonal, {
+				tag: "InvalidRequestErrorFx",
+			});
+
+			const transactionEntries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select("id")
+					.where("transactionId", "=", transactionId)
+					.where("kind", "in", [
+						"text",
+						"personal",
+					])
+					.execute(),
+			);
+
+			expect(transactionEntries).toHaveLength(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

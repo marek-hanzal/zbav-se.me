@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { feedGalleryCreateFx } from "~/buyer/feed-gallery/server/fx/feedGalleryCreateFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
@@ -28,7 +29,20 @@ describe("feedGalleryCreateFx", () => {
 				}),
 			);
 
-			expect(result._tag).toBe("Left");
+			expectTaggedErrorFx(result, {
+				tag: "InvalidRequestErrorFx",
+				message: "At least one upload is required",
+			});
+
+			const galleryItems = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("gallery_item")
+					.select("id")
+					.where("galleryId", "=", feed.id)
+					.execute(),
+			);
+
+			expect(galleryItems).toHaveLength(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

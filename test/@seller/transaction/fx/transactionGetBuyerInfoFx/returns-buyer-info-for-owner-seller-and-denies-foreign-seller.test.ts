@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionGetBuyerInfoFx } from "~/seller/transaction/server/fx/transactionGetBuyerInfoFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
@@ -43,7 +44,9 @@ describe("transactionGetBuyerInfoFx", () => {
 				}),
 			);
 
-			expect(denied._tag).toBe("Left");
+			expectTaggedErrorFx(denied, {
+				tag: "NotFoundErrorFx",
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

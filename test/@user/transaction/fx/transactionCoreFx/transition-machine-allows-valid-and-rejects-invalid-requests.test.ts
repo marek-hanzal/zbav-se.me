@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { transactionTransitionFx } from "~/user/transaction/server/fx/transactionTransitionFx";
@@ -34,8 +35,12 @@ describe("transaction core", () => {
 			);
 
 			expect(allowed._tag).toBe("Right");
-			expect(denied._tag).toBe("Left");
-			expect(deniedTerminalWrite._tag).toBe("Left");
+			expectTaggedErrorFx(denied, {
+				tag: "InvalidRequestErrorFx",
+			});
+			expectTaggedErrorFx(deniedTerminalWrite, {
+				tag: "InvalidRequestErrorFx",
+			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

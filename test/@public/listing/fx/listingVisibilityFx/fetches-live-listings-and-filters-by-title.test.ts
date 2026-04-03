@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/public/listing/server/fx/listingCollectionFx";
 import { listingFetchFx } from "~/public/listing/server/fx/listingFetchFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
@@ -56,7 +57,9 @@ describe("public listing visibility", () => {
 				}),
 			);
 
-			expect(sold._tag).toBe("Left");
+			expectTaggedErrorFx(sold, {
+				tag: "NotFoundErrorFx",
+			});
 
 			const filtered = yield* listingCollectionFx({
 				scope: {},

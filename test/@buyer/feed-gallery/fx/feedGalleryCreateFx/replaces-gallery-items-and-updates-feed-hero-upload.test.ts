@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import { feedGalleryCreateFx } from "~/buyer/feed-gallery/server/fx/feedGalleryCreateFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
@@ -107,7 +108,9 @@ describe("feedGalleryCreateFx", () => {
 				}),
 			);
 
-			expect(foreignAttempt._tag).toBe("Left");
+			expectTaggedErrorFx(foreignAttempt, {
+				tag: "NotFoundErrorFx",
+			});
 
 			const itemsAfterForeignAttempt = yield* Effect.promise(() =>
 				database.kysely

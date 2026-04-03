@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { transactionRejectFx } from "~/buyer/transaction/server/fx/transactionRejectFx";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
@@ -47,7 +48,22 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				}),
 			);
 
-			expect(result._tag).toBe("Left");
+			expectTaggedErrorFx(result, {
+				tag: "InvalidRequestErrorFx",
+			});
+
+			const storedTransaction = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction")
+					.select([
+						"id",
+						"status",
+					])
+					.where("id", "=", tx.id)
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(storedTransaction.status).toBe("resolved");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

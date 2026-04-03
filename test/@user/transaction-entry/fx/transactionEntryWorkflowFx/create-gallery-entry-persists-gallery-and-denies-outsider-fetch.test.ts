@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
@@ -121,8 +122,35 @@ describe("transactionEntry workflow", () => {
 				}),
 			);
 
-			expect(outsiderView._tag).toBe("Left");
-			expect(outsiderGallery._tag).toBe("Left");
+			expectTaggedErrorFx(outsiderView, {
+				tag: "NotFoundErrorFx",
+			});
+			expectTaggedErrorFx(outsiderGallery, {
+				tag: "NotFoundErrorFx",
+			});
+
+			const galleryAfterOutsiderAttempt = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("gallery_item")
+					.select([
+						"uploadId",
+						"sort",
+					])
+					.where("galleryId", "=", entry.payload.galleryId)
+					.orderBy("sort", "asc")
+					.execute(),
+			);
+
+			expect(galleryAfterOutsiderAttempt).toEqual([
+				{
+					uploadId: firstUpload.id,
+					sort: 0,
+				},
+				{
+					uploadId: secondUpload.id,
+					sort: 1,
+				},
+			]);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
