@@ -6,8 +6,9 @@ import { ServerE2eSchema } from "~/server/env/ServerE2eSchema";
 export const withDsnMiddleware = createMiddleware().server(async ({ next, request }) => {
 	const e2eConfig = ServerE2eSchema.parse(process.env);
 	const databaseConfig = ServerDatabaseSchema.parse(process.env);
-	const db =
-		e2eConfig.SERVER_E2E === "e2e" ? (request.headers.get("x-e2e-db") ?? undefined) : undefined;
+	//
+	const isE2e = e2eConfig.SERVER_E2E === "e2e";
+	const db = isE2e ? (request.headers.get("x-e2e-db") ?? undefined) : undefined;
 	const dsn = db
 		? withDatabaseName({
 				dsn: databaseConfig.SERVER_DATABASE_URL,
@@ -15,9 +16,17 @@ export const withDsnMiddleware = createMiddleware().server(async ({ next, reques
 			})
 		: databaseConfig.SERVER_DATABASE_URL;
 
-	return next({
+	const result = await next({
 		context: {
 			dsn,
 		},
 	});
+
+	if (!isE2e) {
+		return result;
+	}
+
+	result.response.headers.set("x-e2e-db", db ?? "unset");
+
+	return result;
 });
