@@ -144,6 +144,17 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 		yield* Effect.promise(async () => {
 			await sql`ALTER DATABASE ${sql.ref(template)} WITH IS_TEMPLATE = true;`.execute(kysely);
 
+			await sql`
+                SELECT
+                    pg_terminate_backend(pid, 150)
+                FROM
+                    pg_stat_activity
+                WHERE
+                    datname = ${template}
+                    AND
+                    pid <> pg_backend_pid()
+            `.execute(kysely);
+
 			/**
 			 * This ensures early we're able to create new databases from the template.
 			 */
