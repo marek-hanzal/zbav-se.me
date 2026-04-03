@@ -112,7 +112,6 @@ jobs:
         name: Vitest
         runs-on: ubuntu-latest
         environment: staging
-        needs: [lint, dc, typecheck, knip]
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -178,7 +177,6 @@ jobs:
         name: Full-Stack Test
         runs-on: ubuntu-latest
         environment: staging
-        needs: [vitest]
         env:
             NITRO_PRESET: node_server
             SERVER_E2E: e2e
