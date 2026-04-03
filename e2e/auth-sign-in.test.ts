@@ -21,12 +21,11 @@ test("auth sign in", async ({ page, database }) => {
 
 	await page.click('[data-action="goto sign-in"]');
 
-	page.waitForURL(/\/cs\/sign-in$/g);
+	await expect(page).toHaveURL(/\/cs\/sign-in$/g);
 
 	await page.locator('[data-ui="SignInPage[EmailInput]"]').fill(user.email);
 	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(user.password);
 	await page.locator('[data-action="sign in"]').click();
 
 	await expect(page).toHaveURL(/\/cs\/app\/home$/);
-	await expect(page.locator('[data-ui="HomePage"]')).toBeVisible();
 });

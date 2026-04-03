@@ -13,12 +13,12 @@ test("auth sign up", async ({ page, database }) => {
 
 	await page.click('[data-action="goto sign-up"]');
 
-	page.waitForURL(/\/cs\/sign-up$/g);
+	await expect(page).toHaveURL(/\/cs\/sign-up$/g);
 
 	await page.locator('[data-ui="SignUpPage[EmailInput]"]').fill(user.email);
 	await page.locator('[data-ui="SignUpPage[PasswordInput]"]').fill(user.password);
 	await page.locator('[data-ui="SignUpPage[ConfirmPasswordInput]"]').fill(user.password);
 	await page.locator('[data-action="sign up"]').click();
 
-	await page.waitForURL(/\/cs\/app\/welcome$/g);
+	await expect(page).toHaveURL(/\/cs\/app\/welcome$/g);
 });
