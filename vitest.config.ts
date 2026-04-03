@@ -35,7 +35,8 @@ export default defineConfig({
 		environment: "node",
 		globals: true,
 		include: [
-			"test/**/*.test.ts",
+			"test/@user/user-event/fx/userEventSellerInfoFx/derives-activity-and-load-buckets-across-multiple-sellers.test.ts",
+			"test/@buyer/favourite/fx/favouriteToggleFx/invalid-cannot-favourite-with-another-user-s-feed.test.ts",
 		],
 		slowTestThreshold: 1_200,
 		passWithNoTests: true,

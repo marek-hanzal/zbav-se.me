@@ -1,39 +1,14 @@
 import { Effect } from "effect";
-import type { auth } from "~/server/auth/auth";
-import { createUserFx } from "~/test/user/fx/createUserFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 export namespace createUsersFx {
-	export interface Props {
-		api: auth.Api["api"];
-		slug: string;
-	}
+	export type Props = {};
 }
 
-export const createUsersFx = Effect.fn("createUsersFx")(function* ({
-	api,
-	slug,
-}: createUsersFx.Props) {
-	const seller = yield* createUserFx({
-		api,
-		email: `${slug}-seller@test.cz`,
-		name: `${slug} Seller`,
-	});
-
-	const buyer = yield* createUserFx({
-		api,
-		email: `${slug}-buyer@test.cz`,
-		name: `${slug} Buyer`,
-	});
-
-	const stranger = yield* createUserFx({
-		api,
-		email: `${slug}-stranger@test.cz`,
-		name: `${slug} Stranger`,
-	});
-
+export const createUsersFx = Effect.fn("createUsersFx")(function* (_: createUsersFx.Props) {
 	return {
-		seller,
-		buyer,
-		stranger,
-	};
+		seller: yield* leaseTestUserFx({}),
+		buyer: yield* leaseTestUserFx({}),
+		stranger: yield* leaseTestUserFx({}),
+	} as const;
 });
