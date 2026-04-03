@@ -38,24 +38,6 @@
 			}
 		},
 		{
-			"label": "sdk",
-			"type": "shell",
-			"command": "bun run sdk",
-			"problemMatcher": [],
-			"detail": "Generate or update the SDK using bun run sdk.",
-			"runOptions": {
-				"instanceLimit": 1
-			},
-			"presentation": {
-				"echo": true,
-				"reveal": "always",
-				"focus": false,
-				"panel": "shared",
-				"showReuseMessage": true,
-				"clear": true
-			}
-		},
-		{
 			"type": "shell",
 			"command": "bun run workflow:check",
 			"problemMatcher": [],
@@ -113,32 +95,8 @@
 			"type": "shell",
 			"command": "bun run translations",
 			"problemMatcher": [],
-			"label": "translations - web",
-			"detail": "Generate translations for the web.",
-			"options": {
-				"cwd": "${workspaceFolder}/apps/web"
-			},
-			"runOptions": {
-				"instanceLimit": 1
-			},
-			"presentation": {
-				"echo": true,
-				"reveal": "always",
-				"focus": false,
-				"panel": "shared",
-				"showReuseMessage": true,
-				"clear": true
-			}
-		},
-		{
-			"type": "shell",
-			"command": "bun run translations",
-			"problemMatcher": [],
-			"label": "translations - app",
-			"detail": "Generate translations for the app.",
-			"options": {
-				"cwd": "${workspaceFolder}/apps/app"
-			},
+			"label": "translations",
+			"detail": "Generate translations.",
 			"runOptions": {
 				"instanceLimit": 1
 			},
@@ -168,24 +126,6 @@
 				"showReuseMessage": true,
 				"clear": true,
 				"close": true
-			}
-		},
-		{
-			"type": "shell",
-			"command": "bun run preview",
-			"problemMatcher": [],
-			"label": "preview",
-			"detail": "Start production preview.",
-			"runOptions": {
-				"instanceLimit": 1
-			},
-			"presentation": {
-				"echo": true,
-				"reveal": "always",
-				"focus": false,
-				"panel": "shared",
-				"showReuseMessage": true,
-				"clear": true
 			}
 		},
 		{
