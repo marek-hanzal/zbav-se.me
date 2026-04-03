@@ -71,7 +71,7 @@ describe("transactionStatusMessageFx", () => {
 						"status-open",
 						"status-expired",
 					])
-					.orderBy("createdAt asc")
+					.orderBy("createdAt", "asc")
 					.execute(),
 			);
 

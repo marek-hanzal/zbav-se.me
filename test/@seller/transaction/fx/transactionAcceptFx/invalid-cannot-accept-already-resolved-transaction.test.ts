@@ -62,7 +62,7 @@ describe("transactionAcceptFx", () => {
 					.selectFrom("transaction_entry")
 					.select("kind")
 					.where("transactionId", "=", transactionId)
-					.orderBy("createdAt asc")
+					.orderBy("createdAt", "asc")
 					.execute(),
 			);
 

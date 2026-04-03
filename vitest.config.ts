@@ -57,10 +57,9 @@ export default defineConfig({
 		environment: "node",
 		globals: true,
 		include: testInclude,
-		slowTestThreshold: 600,
+		slowTestThreshold: 1_200,
 		passWithNoTests: true,
 		isolate: false,
-		fileParallelism: false,
 		sequence: {
 			shuffle: false,
 		},
@@ -71,12 +70,12 @@ export default defineConfig({
 			],
 		},
 		//
-		// testTimeout: 10_000,
+		testTimeout: 3_000,
 		//
-		pool: "forks",
-		maxConcurrency: 2,
+		pool: "vmForks",
+		maxConcurrency: 4,
 		//
-		maxWorkers: 2,
+		maxWorkers: 10,
 		//
 		coverage: {
 			enabled: true,
