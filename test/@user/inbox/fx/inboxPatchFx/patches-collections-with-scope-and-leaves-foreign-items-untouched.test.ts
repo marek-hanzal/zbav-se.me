@@ -1,31 +1,25 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 import { inboxCountFx } from "~/user/inbox/server/fx/inboxCountFx";
 import { inboxPatchCollectionFx } from "~/user/inbox/server/fx/inboxPatchCollectionFx";
 
 describe("inboxPatchCollectionFx", () => {
 	it("patches only scoped matching items and leaves foreign rows untouched", async () => {
 		const database = await testabase("inboxPatch-collection");
-		const { api } = auth(() => database.dialect);
 		const archivedAt = new Date("2026-04-01T11:00:00.000Z");
 
 		return Effect.gen(function* () {
-			const signUp = (email: string, name: string) =>
-				Effect.promise(() =>
-					api.signUpEmail({
-						body: {
-							email,
-							name,
-							password: "12345678",
-						},
-					}),
-				);
-
-			const { user: owner } = yield* signUp("inbox-owner@test.cz", "Inbox Owner");
-			const { user: stranger } = yield* signUp("inbox-stranger@test.cz", "Inbox Stranger");
+			const owner = yield* createDbUserFx({
+				email: "inbox-owner@test.cz",
+				name: "Inbox Owner",
+			});
+			const stranger = yield* createDbUserFx({
+				email: "inbox-stranger@test.cz",
+				name: "Inbox Stranger",
+			});
 
 			yield* Effect.promise(() =>
 				database.kysely

@@ -1,34 +1,23 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
 
 describe("inbox deduplication (PARTITION BY transactionId)", () => {
 	it("buyer-message and seller-message for different transactions are NOT deduplicated together", async () => {
 		const database = await testabase("inboxDedup-separate-transactions");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "seller@inbox-dedup-sep.cz",
-						name: "Seller",
-						password: "12345678",
-					},
-				}),
-			);
-			yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "buyer@inbox-dedup-sep.cz",
-						name: "Buyer",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* createDbUserFx({
+				email: "seller@inbox-dedup-sep.cz",
+				name: "Seller",
+			});
+			yield* createDbUserFx({
+				email: "buyer@inbox-dedup-sep.cz",
+				name: "Buyer",
+			});
 
 			yield* Effect.promise(() =>
 				database.kysely

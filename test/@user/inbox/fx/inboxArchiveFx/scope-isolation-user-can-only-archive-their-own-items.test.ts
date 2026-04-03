@@ -2,10 +2,10 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import type { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
 import type { InboxTypeEnumSchema } from "~/common/inbox/enum/InboxTypeEnumSchema";
-import { auth } from "~/server/auth/auth";
 import type { InboxTableSchema } from "~/server/database/@table/InboxTableSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 
 /**
@@ -39,27 +39,16 @@ const seedInbox = async (
 describe("inboxArchiveFx", () => {
 	it("scope isolation: user can only archive their own items", async () => {
 		const database = await testabase("inboxArchive-scope-isolation");
-		const { api } = auth(() => database.dialect);
 
 		return Effect.gen(function* () {
-			const { user: alice } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "alice@inbox-scope.cz",
-						name: "Alice",
-						password: "12345678",
-					},
-				}),
-			);
-			const { user: bob } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "bob@inbox-scope.cz",
-						name: "Bob",
-						password: "12345678",
-					},
-				}),
-			);
+			const alice = yield* createDbUserFx({
+				email: "alice@inbox-scope.cz",
+				name: "Alice",
+			});
+			const bob = yield* createDbUserFx({
+				email: "bob@inbox-scope.cz",
+				name: "Bob",
+			});
 
 			yield* Effect.promise(() =>
 				seedInbox(database, [

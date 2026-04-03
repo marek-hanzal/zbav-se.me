@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { createDbUserFx } from "~/test/user/fx/createDbUserFx";
 import { inboxCountFx } from "~/user/inbox/server/fx/inboxCountFx";
 import { inboxFetchFx } from "~/user/inbox/server/fx/inboxFetchFx";
 import { inboxPatchFx } from "~/user/inbox/server/fx/inboxPatchFx";
@@ -10,28 +10,17 @@ import { inboxPatchFx } from "~/user/inbox/server/fx/inboxPatchFx";
 describe("inboxPatchFx", () => {
 	it("patches a single item and exposes the updated state via fetch/count", async () => {
 		const database = await testabase("inboxPatch-single");
-		const { api } = auth(() => database.dialect);
 		const archivedAt = new Date("2026-04-01T10:00:00.000Z");
 
 		return Effect.gen(function* () {
-			const { user } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "inbox-patch@test.cz",
-						name: "Inbox Patch",
-						password: "12345678",
-					},
-				}),
-			);
-			const { user: stranger } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "inbox-patch-stranger@test.cz",
-						name: "Inbox Patch Stranger",
-						password: "12345678",
-					},
-				}),
-			);
+			const user = yield* createDbUserFx({
+				email: "inbox-patch@test.cz",
+				name: "Inbox Patch",
+			});
+			const stranger = yield* createDbUserFx({
+				email: "inbox-patch-stranger@test.cz",
+				name: "Inbox Patch Stranger",
+			});
 
 			yield* Effect.promise(() =>
 				database.kysely
