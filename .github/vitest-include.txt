@@ -1,3 +1,0 @@
-# Temporary CI investigation whitelist.
-# Keep exactly the tests we want Vitest to run in GitHub Actions.
-test/@user/inbox/**/*.test.ts

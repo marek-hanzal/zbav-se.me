@@ -1,27 +1,5 @@
-import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { defineConfig } from "vitest/config";
-
-const includeFile = process.env.VITEST_INCLUDE_FILE;
-const includeFromFile =
-	includeFile && existsSync(includeFile)
-		? readFileSync(includeFile, "utf8")
-				.split("\n")
-				.map((line) => line.trim())
-				.filter((line) => line.length > 0 && !line.startsWith("#"))
-		: [];
-const includeFromEnv =
-	process.env.VITEST_INCLUDE?.split(",")
-		.map((pattern) => pattern.trim())
-		.filter((pattern) => pattern.length > 0) ?? [];
-const testInclude =
-	includeFromEnv.length > 0
-		? includeFromEnv
-		: includeFromFile.length > 0
-			? includeFromFile
-			: [
-					"test/**/*.test.ts",
-				];
 
 export default defineConfig({
 	build: {
@@ -56,7 +34,9 @@ export default defineConfig({
 		],
 		environment: "node",
 		globals: true,
-		include: testInclude,
+		include: [
+			"test/**/*.test.ts",
+		],
 		slowTestThreshold: 1_200,
 		passWithNoTests: true,
 		isolate: false,
