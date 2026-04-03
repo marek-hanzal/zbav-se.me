@@ -20,5 +20,5 @@ test("auth sign up", async ({ page, database }) => {
 	await page.locator('[data-ui="SignUpPage[ConfirmPasswordInput]"]').fill(user.password);
 	await page.locator('[data-action="sign up"]').click();
 
-	await expect(page.locator('[data-action="go home from welcome"]')).toBeVisible();
+	await page.waitForURL(/\/cs\/app\/welcome$/g);
 });
