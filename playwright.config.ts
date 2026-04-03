@@ -3,6 +3,7 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
 	testDir: "./e2e",
 	globalSetup: "./e2e/init.ts",
+	workers: 1,
 	outputDir: "./results",
 	webServer: [
 		{
