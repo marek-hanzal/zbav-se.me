@@ -6,13 +6,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import type { UserEventCreateSchema } from "../schema/UserEventCreateSchema";
-import type { UserEventEnumSchema } from "../schema/UserEventEnumSchema";
-
-const ignored: UserEventEnumSchema.Type[] = [
-	"listing.create",
-];
 
 export namespace userEventCreateFx {
 	export interface Props extends UserEventCreateSchema.Type {
@@ -36,12 +30,6 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
-
-			if (ignored.includes(data.event)) {
-				return yield* new InvalidRequestErrorFx({
-					message: `Event [${data.event}] is ignored`,
-				});
-			}
 
 			return yield* tryDbFx(async () =>
 				kysely
