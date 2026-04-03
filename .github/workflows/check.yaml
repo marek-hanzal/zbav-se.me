@@ -25,6 +25,7 @@ env:
     SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
     SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
     SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
+    SERVER_CONTENT_CDN: ${{ vars.SERVER_CONTENT_CDN }}
 
 jobs:
     lint:
