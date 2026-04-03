@@ -24,14 +24,10 @@ test("registers the shared user in database B", async ({ page, database, db }) =
 				throw new Error("Expected /api/e2e navigation response");
 			}
 
-			return result;
+			return await result.json();
 		});
 
-		const routeResult = yield* Effect.promise(async () => {
-			return response.json();
-		});
-
-		expect(routeResult).toEqual({
+		expect(response).toEqual({
 			db,
 		});
 	}).pipe(withRuntimeFx(database), Effect.runPromise);

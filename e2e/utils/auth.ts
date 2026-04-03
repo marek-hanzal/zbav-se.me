@@ -22,7 +22,7 @@ export async function signUp(page: Page, user: BrowserUser) {
 	await page.locator('[data-ui="SignUpPage[ConfirmPasswordInput]"]').fill(user.password);
 	await page.locator('[data-action="sign up"]').click();
 	await page.waitForURL(`**/${E2E_LOCALE}/app/welcome`);
-	await expect(page.locator('[data-ui="WelcomePage[Container]"]')).toBeVisible();
+	await expect(page.locator('[data-ui="WelcomePage"]')).toBeVisible();
 }
 
 export async function waitForWelcome(page: Page) {
