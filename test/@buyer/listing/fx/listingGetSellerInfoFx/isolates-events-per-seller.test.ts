@@ -76,7 +76,8 @@ describe("listingGetSellerInfoFx", () => {
 
 			expect(sellerAInfo.events).not.toBeNull();
 			expect(sellerAInfo.events?.reaction.total).toBe(1);
-			expect(sellerBInfo.events).toBeNull();
+			expect(sellerBInfo.events).not.toBeNull();
+			expect(sellerBInfo.events?.reaction.total).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
