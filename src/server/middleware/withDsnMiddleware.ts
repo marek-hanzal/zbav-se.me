@@ -1,4 +1,5 @@
 import { createMiddleware } from "@tanstack/react-start";
+import { setResponseHeader } from "@tanstack/react-start/server";
 import { withDatabaseName } from "@/lib/common/database/withDatabaseName";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 import { ServerE2eSchema } from "~/server/env/ServerE2eSchema";
@@ -16,17 +17,13 @@ export const withDsnMiddleware = createMiddleware().server(async ({ next, reques
 			})
 		: databaseConfig.SERVER_DATABASE_URL;
 
-	const result = await next({
+	if (isE2e) {
+		setResponseHeader("x-e2e-db", db ?? "unset");
+	}
+
+	return next({
 		context: {
 			dsn,
 		},
 	});
-
-	if (!isE2e) {
-		return result;
-	}
-
-	result.response.headers.set("x-e2e-db", db ?? "unset");
-
-	return result;
 });

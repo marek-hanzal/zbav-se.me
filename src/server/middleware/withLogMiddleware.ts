@@ -19,6 +19,7 @@ let flag = true;
 export const withLogMiddleware = createMiddleware().server(async ({ next }) => {
 	flag &&
 		(await configure({
+			reset: true,
 			contextLocalStorage,
 			sinks: {
 				file: getTimeRotatingFileSink({

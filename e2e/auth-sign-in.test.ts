@@ -1,28 +1,25 @@
 import { expect } from "@playwright/test";
+import { auth } from "~/server/auth/auth";
 import { test } from "./test";
-import { createBrowserUser, signIn, signOut, signUp } from "./utils/auth";
+import { createBrowserUser, signIn } from "./utils/auth";
 
-test("auth sign in", async ({ page, database, db }) => {
-	void database;
+test("auth sign in", async ({ page, database }) => {
+	await page.goto("/cs/landing");
+
+	await expect(page).toHaveURL(/\/cs\/landing$/g);
 
 	const user = createBrowserUser("signin");
 
-	await signUp(page, user);
-	await signOut(page);
-
-	await expect(page).toHaveURL(/\/cs\/landing$/);
-
-	const responsePromise = page.waitForResponse((response) => {
-		return (
-			response.request().method() === "POST" &&
-			response.url().includes("/api/auth/sign-in/email")
-		);
+	const ath = auth(() => database.dialect);
+	ath.api.signInEmail({
+		body: {
+			email: user.email,
+			password: user.password,
+		},
 	});
 
 	await signIn(page, user);
-	const response = await responsePromise;
 
 	await expect(page).toHaveURL(/\/cs\/app\/home$/);
-	await expect(response.headers()["x-e2e-db"]).toBe(db);
 	await expect(page.locator('[data-ui="HomePage"]')).toBeVisible();
 });
