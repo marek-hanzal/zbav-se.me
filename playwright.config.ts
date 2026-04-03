@@ -59,9 +59,6 @@ export default defineConfig({
 			use: {
 				browserName: "chromium",
 				headless: true,
-				launchOptions: {
-					slowMo: 1250,
-				},
 				...devices["iPhone SE"],
 			},
 		},

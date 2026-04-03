@@ -68,6 +68,7 @@ export const Route = createFileRoute("/$locale/landing")({
 							}}
 						>
 							<LinkTo
+								data-action={"goto sign-in"}
 								{...uiButton({
 									ui: {
 										tone: "secondary",
@@ -95,6 +96,7 @@ export const Route = createFileRoute("/$locale/landing")({
 							</LinkTo>
 
 							<LinkTo
+								data-action={"goto sign-up"}
 								{...uiButton({
 									ui: {
 										tone: "primary",
