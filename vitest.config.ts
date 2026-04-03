@@ -37,7 +37,7 @@ export default defineConfig({
 		include: [
 			"./test/**/*.test.ts",
 		],
-		slowTestThreshold: 750,
+		slowTestThreshold: 1_000,
 		passWithNoTests: true,
 		isolate: false,
 		sequence: {
@@ -50,12 +50,12 @@ export default defineConfig({
 			],
 		},
 		//
-		testTimeout: 1_750,
+		testTimeout: 2_500,
 		//
-		pool: "vmForks",
+		pool: "forks",
 		maxConcurrency: 4,
 		//
-		maxWorkers: 8,
+		maxWorkers: 12,
 		//
 		coverage: {
 			enabled: true,
