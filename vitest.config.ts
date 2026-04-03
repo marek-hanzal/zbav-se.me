@@ -35,10 +35,9 @@ export default defineConfig({
 		environment: "node",
 		globals: true,
 		include: [
-			"test/@user/user-event/fx/userEventSellerInfoFx/derives-activity-and-load-buckets-across-multiple-sellers.test.ts",
-			"test/@buyer/favourite/fx/favouriteToggleFx/invalid-cannot-favourite-with-another-user-s-feed.test.ts",
+			"./test/**/*.test.ts",
 		],
-		slowTestThreshold: 1_200,
+		slowTestThreshold: 750,
 		passWithNoTests: true,
 		isolate: false,
 		sequence: {
@@ -51,7 +50,7 @@ export default defineConfig({
 			],
 		},
 		//
-		testTimeout: 3_000,
+		testTimeout: 1_750,
 		//
 		pool: "vmForks",
 		maxConcurrency: 4,
