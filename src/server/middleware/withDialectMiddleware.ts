@@ -21,11 +21,19 @@ export const withDialectMiddleware = createMiddleware()
 				dsn,
 			});
 
+			const pool = new Pool({
+				connectionString: dsn,
+				max: 3,
+			});
+
+			pool.on("error", (error) => {
+				logger.warn("Postgres Pool Error", {
+					error,
+				});
+			});
+
 			instance = new PostgresDialect({
-				pool: new Pool({
-					connectionString: dsn,
-					max: 3,
-				}),
+				pool,
 			});
 			dialectMap.set(dsn, instance);
 		}
