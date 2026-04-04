@@ -20,7 +20,7 @@ export default defineConfig({
 		},
 	],
 	failOnFlakyTests: true,
-	fullyParallel: true,
+	fullyParallel: false,
 	reporter: process.env.CI
 		? [
 				[
