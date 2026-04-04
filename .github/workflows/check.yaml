@@ -27,6 +27,9 @@ env:
     SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
     SERVER_CONTENT_CDN: ${{ vars.SERVER_CONTENT_CDN }}
     SERVER_GITHUB: ${{ secrets.SERVER_GITHUB }}
+    SERVER_AI_TOKEN: ${{ secrets.SERVER_AI_TOKEN }}
+    SERVER_AI_SERVER_URL: ${{ vars.SERVER_AI_SERVER_URL }}
+    SERVER_AI_MODEL: ${{ vars.SERVER_AI_MODEL }}
 
 jobs:
     lint:

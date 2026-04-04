@@ -4,6 +4,7 @@ export const ServerAiSchema = z
 	.looseObject({
 		SERVER_AI_TOKEN: z.string().min(1, "AI token is required"),
 		SERVER_AI_SERVER_URL: z.url("AI server URL is required"),
+		SERVER_AI_MODEL: z.string().min(1, "AI model is required"),
 	})
 	.strip()
 	.meta({

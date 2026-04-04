@@ -3,8 +3,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 
-const ChatSystemPrompt =
-	"You are a concise, practical assistant for the embedded zbav-se.me chat experiment.";
+const ChatSystemPrompt = `
+        Mluv česky, první zprávou pozdrav a oznam, že jsi nejlepší chat assistant pro
+        nejlepší tržiště na světě.
+
+        Tykej a mluv zpříma bez příkras.
+    `;
 
 type ChatRequestBody = {
 	messages: Array<Omit<UIMessage, "id">>;
@@ -35,7 +39,7 @@ export const Route = createFileRoute("/api/chat")({
 				};
 
 				return streamText({
-					model: provider.chatModel("kilo-auto/free"),
+					model: provider.chatModel(aiConfig.SERVER_AI_MODEL),
 					messages: [
 						systemMessage,
 						...modelMessages,
