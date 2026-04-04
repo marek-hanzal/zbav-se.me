@@ -19,6 +19,7 @@ import { Route as RedirectSignInRouteImport } from './@routes/redirect/sign-in'
 import { Route as RedirectOathRouteImport } from './@routes/redirect/oath'
 import { Route as ApiHealthRouteImport } from './@routes/api/health'
 import { Route as ApiE2eRouteImport } from './@routes/api/e2e'
+import { Route as ApiChatRouteImport } from './@routes/api/chat'
 import { Route as ApiCronRouteImport } from './@routes/api/$cron'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleSignUpRouteImport } from './@routes/$locale/sign-up'
@@ -34,6 +35,7 @@ import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welc
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
 import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
 import { Route as LocaleAppHomeRouteImport } from './@routes/$locale/app/home'
+import { Route as LocaleAppChatRouteImport } from './@routes/$locale/app/chat'
 import { Route as ApiPublicMigrationRunRouteImport } from './@routes/api/public/migration/run'
 import { Route as LocaleAppInboxPriorityRouteImport } from './@routes/$locale/app/inbox/$priority'
 import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
@@ -100,6 +102,11 @@ const ApiHealthRoute = ApiHealthRouteImport.update({
 const ApiE2eRoute = ApiE2eRouteImport.update({
   id: '/e2e',
   path: '/e2e',
+  getParentRoute: () => ApiRoute,
+} as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
   getParentRoute: () => ApiRoute,
 } as any)
 const ApiCronRoute = ApiCronRouteImport.update({
@@ -175,6 +182,11 @@ const LocaleAppShopRoute = LocaleAppShopRouteImport.update({
 const LocaleAppHomeRoute = LocaleAppHomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
+const LocaleAppChatRoute = LocaleAppChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
   getParentRoute: () => LocaleAppRoute,
 } as any)
 const ApiPublicMigrationRunRoute = ApiPublicMigrationRunRouteImport.update({
@@ -290,11 +302,13 @@ export interface FileRoutesByFullPath {
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/api/$cron': typeof ApiCronRoute
+  '/api/chat': typeof ApiChatRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
+  '/$locale/app/chat': typeof LocaleAppChatRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
@@ -332,11 +346,13 @@ export interface FileRoutesByTo {
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/api/$cron': typeof ApiCronRoute
+  '/api/chat': typeof ApiChatRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale': typeof LocaleIndexRoute
+  '/$locale/app/chat': typeof LocaleAppChatRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
@@ -377,11 +393,13 @@ export interface FileRoutesById {
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/api/$cron': typeof ApiCronRoute
+  '/api/chat': typeof ApiChatRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
+  '/$locale/app/chat': typeof LocaleAppChatRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
@@ -423,11 +441,13 @@ export interface FileRouteTypes {
     | '/$locale/sign-up'
     | '/$locale/tos'
     | '/api/$cron'
+    | '/api/chat'
     | '/api/e2e'
     | '/api/health'
     | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale/'
+    | '/$locale/app/chat'
     | '/$locale/app/home'
     | '/$locale/app/shop'
     | '/$locale/app/user'
@@ -465,11 +485,13 @@ export interface FileRouteTypes {
     | '/$locale/sign-up'
     | '/$locale/tos'
     | '/api/$cron'
+    | '/api/chat'
     | '/api/e2e'
     | '/api/health'
     | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale'
+    | '/$locale/app/chat'
     | '/$locale/app/home'
     | '/$locale/app/shop'
     | '/$locale/app/user'
@@ -509,11 +531,13 @@ export interface FileRouteTypes {
     | '/$locale/sign-up'
     | '/$locale/tos'
     | '/api/$cron'
+    | '/api/chat'
     | '/api/e2e'
     | '/api/health'
     | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale/'
+    | '/$locale/app/chat'
     | '/$locale/app/home'
     | '/$locale/app/shop'
     | '/$locale/app/user'
@@ -622,6 +646,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiE2eRouteImport
       parentRoute: typeof ApiRoute
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof ApiRoute
+    }
     '/api/$cron': {
       id: '/api/$cron'
       path: '/$cron'
@@ -725,6 +756,13 @@ declare module '@tanstack/react-router' {
       path: '/home'
       fullPath: '/$locale/app/home'
       preLoaderRoute: typeof LocaleAppHomeRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/chat': {
+      id: '/$locale/app/chat'
+      path: '/chat'
+      fullPath: '/$locale/app/chat'
+      preLoaderRoute: typeof LocaleAppChatRouteImport
       parentRoute: typeof LocaleAppRoute
     }
     '/api/public/migration/run': {
@@ -850,6 +888,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface LocaleAppRouteChildren {
+  LocaleAppChatRoute: typeof LocaleAppChatRoute
   LocaleAppHomeRoute: typeof LocaleAppHomeRoute
   LocaleAppShopRoute: typeof LocaleAppShopRoute
   LocaleAppUserRoute: typeof LocaleAppUserRoute
@@ -874,6 +913,7 @@ interface LocaleAppRouteChildren {
 }
 
 const LocaleAppRouteChildren: LocaleAppRouteChildren = {
+  LocaleAppChatRoute: LocaleAppChatRoute,
   LocaleAppHomeRoute: LocaleAppHomeRoute,
   LocaleAppShopRoute: LocaleAppShopRoute,
   LocaleAppUserRoute: LocaleAppUserRoute,
@@ -932,6 +972,7 @@ const LocaleRouteWithChildren =
 
 interface ApiRouteChildren {
   ApiCronRoute: typeof ApiCronRoute
+  ApiChatRoute: typeof ApiChatRoute
   ApiE2eRoute: typeof ApiE2eRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -941,6 +982,7 @@ interface ApiRouteChildren {
 
 const ApiRouteChildren: ApiRouteChildren = {
   ApiCronRoute: ApiCronRoute,
+  ApiChatRoute: ApiChatRoute,
   ApiE2eRoute: ApiE2eRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
