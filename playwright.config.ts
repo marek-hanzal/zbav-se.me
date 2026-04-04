@@ -4,6 +4,7 @@ export default defineConfig({
 	testDir: "./e2e",
 	globalSetup: "./e2e/init.ts",
 	outputDir: "./results",
+	workers: 1,
 	webServer: [
 		{
 			name: "App",
@@ -14,13 +15,16 @@ export default defineConfig({
 			timeout: 60_000,
 			env: {
 				SERVER_DATABASE_URL: "postgresql://postgres:postgres@localhost:55432/postgres",
+				SERVER_E2E: "e2e",
 			},
 		},
 	],
+	failOnFlakyTests: true,
+	fullyParallel: false,
 	reporter: process.env.CI
 		? [
 				[
-					"list",
+					"github",
 				],
 				[
 					"html",
@@ -44,9 +48,18 @@ export default defineConfig({
 	},
 	projects: [
 		{
-			name: "iphone-se",
+			name: "mobile",
 			use: {
 				browserName: "chromium",
+				headless: true,
+				...devices["iPhone SE"],
+			},
+		},
+		{
+			name: "dev",
+			use: {
+				browserName: "chromium",
+				headless: true,
 				...devices["iPhone SE"],
 			},
 		},

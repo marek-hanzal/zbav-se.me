@@ -1,3 +1,4 @@
+import { useDebouncedCallback } from "@tanstack/react-pacer";
 import {
 	type RefObject,
 	useCallback,
@@ -8,7 +9,6 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { useDebouncedCallback } from "use-debounce";
 import { clamp } from "@/lib/common/clamp";
 
 export namespace useSnapperNav {
@@ -18,7 +18,7 @@ export namespace useSnapperNav {
 		count: number;
 		defaultIndex?: number;
 		threshold?: number;
-		onSnapDebounce?: number;
+		debounce?: number;
 		onSnap?: (index: number) => void;
 	}
 
@@ -51,7 +51,7 @@ export function useSnapperNav({
 	count,
 	defaultIndex = 0,
 	threshold = 0.5,
-	onSnapDebounce = 150,
+	debounce = 150,
 	onSnap,
 }: useSnapperNav.Props): useSnapperNav.Result {
 	const totalCount = Math.max(1, Math.floor(count));
@@ -66,21 +66,12 @@ export function useSnapperNav({
 		onSnap?.(index);
 	});
 
-	const emitSnapDebounced = useDebouncedCallback(
-		(index: number) => emitSnap(index),
-		onSnapDebounce,
-		{
-			maxWait: onSnapDebounce,
-			trailing: true,
-		},
-	);
-
-	useEffect(
-		() => () => emitSnapDebounced.cancel(),
-		[
-			emitSnapDebounced,
-		],
-	);
+	const emitSnapDebounced = useDebouncedCallback((index: number) => emitSnap(index), {
+		key: "useSnapperNav",
+		wait: debounce,
+		leading: false,
+		trailing: true,
+	});
 
 	// --- helpers ---------------------------------------------------------------
 

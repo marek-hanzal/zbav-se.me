@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
+import { getLoggerFx } from "@/lib/common/log";
 import { withGalleryItemCollectionSelectFx } from "~/user/gallery-item/server/db/withGalleryItemCollectionSelectFx";
 import { withGalleryItemQueryBuilderFx } from "~/user/gallery-item/server/db/withGalleryItemQueryBuilderFx";
 import type { GalleryItemFilterSchema } from "~/user/gallery-item/server/schema/GalleryItemFilterSchema";
@@ -18,6 +19,15 @@ export const galleryItemCollectionFx = Effect.fn("galleryItemCollectionFx")(func
 	scope,
 	sort,
 }: galleryItemCollectionFx.Props) {
+	const logger = yield* getLoggerFx("galleryItemCollectionFx");
+	logger.debug("galleryItemCollectionFx", {
+		cursor,
+		filter,
+		where,
+		scope,
+		sort,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withGalleryItemCollectionSelectFx({
 			sort,

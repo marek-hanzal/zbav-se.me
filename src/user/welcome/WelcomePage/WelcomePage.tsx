@@ -24,6 +24,7 @@ export const WelcomePage: FC<WelcomePage.Props> = ({ ui, ...props }) => {
 
 	return (
 		<Container
+			data-ui={"WelcomePage"}
 			ui={{
 				layout: "vertical-centered",
 				height: "full",
@@ -41,6 +42,7 @@ export const WelcomePage: FC<WelcomePage.Props> = ({ ui, ...props }) => {
 				}}
 				action={
 					<LinkTo
+						data-action={"go home from welcome"}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
 						to={"/$locale/app/home"}

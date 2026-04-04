@@ -1,42 +1,25 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionListingCollectionFx } from "~/seller/transaction-listing/server/fx/transactionListingCollectionFx";
-import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createResolvedScenarioFx } from "~/test/utils/createResolvedScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionListingCollectionFx (seller dashboard)", () => {
 	it("resolved listing has terminal: true — all transactions sold or resolved", async () => {
 		const database = await testabase("txListing-resolved-terminal");
-		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@txlisting-resolved.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@txlisting-resolved.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
-		const { listingId } = await createResolvedScenarioFx({
-			sellerId: seller.id,
-			buyerId: buyer.id,
-			database,
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const { listingId } = yield* createResolvedScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+			});
 
-		// After resolve, transactionResolveFx sets other transactions to "sold"
-		// The resolved transaction itself is in "resolved" state — NOT terminal
-		// (pending/open/resolved/dispute are non-terminal per the query builder)
-		const collection = await Effect.gen(function* () {
-			return yield* transactionListingCollectionFx({
+			const collection = yield* transactionListingCollectionFx({
 				scope: {
 					userId: seller.id,
 				},
@@ -44,8 +27,8 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 					terminal: false,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(collection.map((l) => l.id)).toContain(listingId);
+			expect(collection.map((l) => l.id)).toContain(listingId);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

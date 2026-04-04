@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
+import { getLoggerFx } from "@/lib/common/log";
 import { withListingCollectionSelectFx } from "~/buyer/listing/server/db/withListingCollectionSelectFx";
 import { withListingQueryBuilderFx } from "~/buyer/listing/server/db/withListingQueryBuilderFx";
 import type { ListingFilterSchema } from "~/buyer/listing/server/schema/ListingFilterSchema";
@@ -21,6 +22,17 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	sort,
 	meta,
 }: listingCollectionFx.Props) {
+	const logger = yield* getLoggerFx("listingCollectionFx");
+	logger.debug("listingCollectionFx", {
+		userId,
+		cursor,
+		filter,
+		where,
+		scope,
+		sort,
+		meta,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withListingCollectionSelectFx({
 			userId,

@@ -1,5 +1,5 @@
+import { useDebouncedCallback } from "@tanstack/react-pacer";
 import { type ComponentProps, type FC, useRef, useState } from "react";
-import { useDebouncedCallback } from "use-debounce";
 import { translator } from "@/lib/common/translator";
 import { uiInput } from "../form/uiInput";
 import { Icon } from "../icon/Icon";
@@ -42,9 +42,9 @@ export const Fulltext: FC<Fulltext.Props> = ({
 		inputRef,
 	]);
 	const [search, setSearch] = useState(value || "");
-	const debounced = useDebouncedCallback((value) => {
-		set(value);
-	}, 500);
+	const debounced = useDebouncedCallback(set, {
+		wait: 500,
+	});
 
 	const isDisabled = withSubmit && search.length < limit;
 

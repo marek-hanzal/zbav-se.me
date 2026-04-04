@@ -35,20 +35,82 @@ export default defineConfig({
 		environment: "node",
 		globals: true,
 		include: [
-			"test/**/*.test.ts",
+			"./test/**/*.test.ts",
 		],
+		slowTestThreshold: 1_000,
 		passWithNoTests: true,
 		isolate: false,
 		sequence: {
 			shuffle: false,
 		},
+		benchmark: {
+			compare: "benchmark.json",
+			reporters: [
+				"default",
+			],
+		},
+		//
+		testTimeout: 3_500,
+		//
 		pool: "forks",
 		maxConcurrency: 4,
 		//
 		maxWorkers: 8,
 		//
 		coverage: {
-			enabled: false,
+			enabled: true,
+			provider: "v8",
+			reporter: [
+				"text-summary",
+				"html",
+				"lcov",
+				"cobertura",
+				"json-summary",
+			],
+			reportsDirectory: "./coverage/vitest",
+			include: [
+				"src/**/*.ts",
+				"lib/**/*.ts",
+			],
+			exclude: [
+				"**/*.test.ts",
+				"**/*.d.ts",
+				//
+				"lib/client/**/*.t*",
+				"lib/common/**/*.t*",
+				"lib/server/**/*.t*",
+				//
+				"src/*.ts",
+				//
+				"src/@routes/**/*.ts",
+				//
+				"src/common/**/*.ts",
+				//
+				"src/**/fn/**/*.ts",
+				"src/**/mutation/**/*.ts",
+				"src/**/query/**/*.ts",
+				"src/**/schema/**/*.ts",
+				"src/**/ui/**/*.ts",
+			],
+			reportOnFailure: false,
+			watermarks: {
+				statements: [
+					45,
+					75,
+				],
+				branches: [
+					35,
+					65,
+				],
+				functions: [
+					45,
+					75,
+				],
+				lines: [
+					45,
+					75,
+				],
+			},
 		},
 		bail: 1,
 		silent: false,

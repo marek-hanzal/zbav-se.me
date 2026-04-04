@@ -2,9 +2,11 @@ import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { z } from "zod";
 import { zodGuardFx } from "@/lib/common/fx";
+import { withLoggerFx } from "@/lib/common/log";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
+import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { inboxPatchCollectionFx } from "~/user/inbox/server/fx/inboxPatchCollectionFx";
 import { InboxPatchCollectionSchema } from "~/user/inbox/server/schema/InboxPatchCollectionSchema";
@@ -14,11 +16,15 @@ export const inboxPatchCollectionFn = createServerFn({
 	method: "POST",
 })
 	.middleware([
+		withLogMiddleware,
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
 	.inputValidator(InboxPatchCollectionSchema)
-	.handler(async ({ data, context: { database, user } }) => {
+	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
+		const logger = rootLogger.getChild(name);
+		logger.debug(name, data);
+
 		return zodGuardFx({
 			schema: z.array(InboxSchema),
 			dataFx: inboxPatchCollectionFx({
@@ -29,6 +35,7 @@ export const inboxPatchCollectionFn = createServerFn({
 			}),
 		}).pipe(
 			withKyselyFx(database),
+			withLoggerFx(logger),
 			withCatchFx({
 				RuntimeErrorFx() {
 					throw new Error("RuntimeError");

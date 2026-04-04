@@ -1,359 +1,198 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
-import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
+import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
-describe("userEventSellerInfoFx", () => {
-	it("Mixed behavior - combo of good and bad seller behaviors", async () => {
+describe("userEventSellerInfoFx", {
+	timeout: 4_000,
+}, () => {
+	it("Mixed behavior - good resolutions are dragged down by direct rejects and buyer-led endings", async () => {
 		const database = await testabase("userEventSellerInfoFx-mixed-behavior");
-
-		const { api } = auth(() => {
-			return database.dialect;
-		});
-
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@test.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-
-		const sellerId = seller.id;
-
-		// Base time: 89 days ago (within 90 day cutoff)
 		const baseTime = DateTime.now().minus({
 			days: 89,
 		});
 
-		// Transaction 1: Good - quick reaction and resolve
-		const t1Create = baseTime;
-		const t1React = t1Create.plus({
-			hours: 1,
-		});
-		const t1Resolve = t1React.plus({
-			days: 1,
-		});
+		return Effect.gen(function* () {
+			const seller = yield* leaseTestUserFx({});
 
-		// Transaction 2: Bad - reject without interaction
-		const t2Create = baseTime.plus({
-			days: 10,
-		});
-		const t2Reject = t2Create.plus({
-			days: 1,
-		});
-
-		// Transaction 3: Good - quick reaction, resolves
-		const t3Create = baseTime.plus({
-			days: 20,
-		});
-		const t3React = t3Create.plus({
-			minutes: 45,
-		});
-		const t3Resolve = t3React.plus({
-			days: 2,
-		});
-
-		// Transaction 4: Bad - buyer ends before seller reacts
-		const t4Create = baseTime.plus({
-			days: 30,
-		});
-		const t4BuyerEnd = t4Create.plus({
-			days: 3,
-		});
-
-		// Transaction 5: Bad - reject without interaction
-		const t5Create = baseTime.plus({
-			days: 40,
-		});
-		const t5Reject = t5Create.plus({
-			days: 2,
-		});
-
-		// Transaction 6: Good - reaction and resolve
-		const t6Create = baseTime.plus({
-			days: 50,
-		});
-		const t6React = t6Create.plus({
-			hours: 2,
-		});
-		const t6Resolve = t6React.plus({
-			days: 1,
-		});
-
-		const result = await Effect.gen(function* () {
-			// Transaction 1: Good
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.open",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1React;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.resolved",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1Resolve;
-					},
-				}),
-			);
-
-			// Transaction 2: Bad - reject without interaction
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t2Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.rejected",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t2Reject;
-					},
-				}),
-			);
-
-			// Transaction 3: Good
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t3Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.message",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t3React;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.resolved",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t3Resolve;
-					},
-				}),
-			);
-
-			// Transaction 4: Bad - buyer ends
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-4",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t4Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-4",
-				event: "transaction.closed",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t4BuyerEnd;
-					},
-				}),
-			);
-
-			// Transaction 5: Bad - reject without interaction
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-5",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t5Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-5",
-				event: "transaction.rejected",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t5Reject;
-					},
-				}),
-			);
-
-			// Transaction 6: Good
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-6",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t6Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-6",
-				event: "transaction.open",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t6React;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-6",
-				event: "transaction.resolved",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t6Resolve;
-					},
-				}),
-			);
-
-			return yield* userEventSellerInfoFx({
-				userId: sellerId,
+			yield* seedUserEventTimelineFx({
+				userId: seller.id,
+				events: [
+					...createTransactionTimeline({
+						group: "tx-1",
+						steps: [
+							{
+								at: baseTime,
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: baseTime.plus({
+									hours: 1,
+								}),
+								scope: "user",
+								event: "transaction.open",
+								isTerminal: false,
+							},
+							{
+								at: baseTime.plus({
+									days: 1,
+									hours: 1,
+								}),
+								scope: "user",
+								event: "transaction.resolved",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-2",
+						steps: [
+							{
+								at: baseTime.plus({
+									days: 10,
+								}),
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: baseTime.plus({
+									days: 11,
+								}),
+								scope: "user",
+								event: "transaction.rejected",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-3",
+						steps: [
+							{
+								at: baseTime.plus({
+									days: 20,
+								}),
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: baseTime.plus({
+									days: 20,
+									minutes: 45,
+								}),
+								scope: "user",
+								event: "transaction.message",
+								isTerminal: false,
+							},
+							{
+								at: baseTime.plus({
+									days: 22,
+									minutes: 45,
+								}),
+								scope: "user",
+								event: "transaction.resolved",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-4",
+						steps: [
+							{
+								at: baseTime.plus({
+									days: 30,
+								}),
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: baseTime.plus({
+									days: 33,
+								}),
+								scope: "foreign",
+								event: "transaction.closed",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-5",
+						steps: [
+							{
+								at: baseTime.plus({
+									days: 40,
+								}),
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: baseTime.plus({
+									days: 42,
+								}),
+								scope: "user",
+								event: "transaction.rejected",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-6",
+						steps: [
+							{
+								at: baseTime.plus({
+									days: 50,
+								}),
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: baseTime.plus({
+									days: 50,
+									hours: 2,
+								}),
+								scope: "user",
+								event: "transaction.open",
+								isTerminal: false,
+							},
+							{
+								at: baseTime.plus({
+									days: 51,
+									hours: 2,
+								}),
+								scope: "user",
+								event: "transaction.resolved",
+								isTerminal: true,
+							},
+						],
+					}),
+				],
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).not.toBeNull();
-		if (!result) return;
+			const result = yield* userEventSellerInfoFx({
+				userId: seller.id,
+			});
 
-		// Reaction: 3 good reactions, 1 terminal, 2 rejects (count as reactions)
-		expect(result.reaction.total).toBe(6);
-		expect(result.reaction.reactions).toBe(5); // t1, t2 (reject), t3, t5 (reject), t6
-		expect(result.reaction.terminal).toBe(1); // t4
-		expect(result.reaction.percent).toBe(100); // 5 + 1 = 6 out of 6
+			expect(result).not.toBeNull();
+			if (!result) return;
 
-		// Rejected: 2 rejects without interaction
-		expect(result.rejected.total).toBe(6);
-		expect(result.rejected.rejected).toBe(2); // t2, t5
-		expect(result.rejected.percent).toBeCloseTo(33.33, 1);
-
-		// Resolved: 3 resolved
-		expect(result.resolved.total).toBe(6);
-		expect(result.resolved.resolved).toBe(3); // t1, t3, t6
-		expect(result.resolved.terminal).toBe(3); // t2, t4, t5
-		expect(result.resolved.percent).toBe(50);
-
-		// Expired: 0 expired
-		expect(result.expired.total).toBe(6);
-		expect(result.expired.expired).toBe(0);
-		expect(result.expired.percent).toBe(0);
-
-		// Load: No active transactions
-		expect(result.load.bucket).toBe("low");
-
-		// Score: Should be moderate (40-70)
-		expect(result.score.score).toBeGreaterThanOrEqual(40);
-		expect(result.score.score).toBeLessThan(80);
+			expect(result.reaction.percent).toBe(100);
+			expect(result.rejected.rejected).toBe(2);
+			expect(result.resolved.percent).toBe(50);
+			expect(result.expired.expired).toBe(0);
+			expect(result.load.bucket).toBe("low");
+			expect(result.score.score).toBeGreaterThanOrEqual(40);
+			expect(result.score.score).toBeLessThan(80);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

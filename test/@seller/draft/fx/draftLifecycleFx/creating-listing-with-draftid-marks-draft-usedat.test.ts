@@ -2,27 +2,20 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
-import { auth } from "~/server/auth/auth";
 import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 describe("draft lifecycle", () => {
 	it("creating listing with draftId marks draft.usedAt", async () => {
 		const database = await testabase("draft-to-listing");
-		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@draft-to-listing.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const seller = yield* leaseTestUserFx({});
 
-		const { draft, listing } = await Effect.gen(function* () {
 			const category = yield* categoryFetchFx({
 				where: {
 					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
@@ -68,23 +61,27 @@ describe("draft lifecycle", () => {
 				draft: createdDraft,
 				listing: createdListing,
 			};
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(
+			withRuntimeFx(database),
+			Effect.flatMap(({ draft, listing }) =>
+				Effect.gen(function* () {
+					expect(listing.status).toBe("live");
 
-		// Listing was created with status live
-		expect(listing.status).toBe("live");
+					const updatedDraft = yield* Effect.promise(() =>
+						database.kysely
+							.selectFrom("draft")
+							.select([
+								"usedAt",
+								"updatedAt",
+							])
+							.where("id", "=", draft.id)
+							.executeTakeFirstOrThrow(),
+					);
 
-		// draft.usedAt must be set after listing creation
-		const updatedDraft = await database.kysely
-			.selectFrom("draft")
-			.select([
-				"usedAt",
-				"updatedAt",
-			])
-			.where("id", "=", draft.id)
-			.executeTakeFirstOrThrow();
-
-		expect(updatedDraft.usedAt).not.toBeNull();
-
-		// "listing.create" is in userEventCreateFx ignored list — intentionally not persisted
+					expect(updatedDraft.usedAt).not.toBeNull();
+				}),
+			),
+			Effect.runPromise,
+		);
 	});
 });

@@ -1,36 +1,18 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
-import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
-import { createListingFx } from "~/test/utils/createListingFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("listingCollectionFx (seller)", () => {
 	it("seller does not see other sellers' listings", async () => {
 		const database = await testabase("sellerListing-isolation");
 
 		return Effect.gen(function* () {
-			const { api } = auth(() => database.dialect);
-
-			const { user: seller1 } = yield* Effect.promise(async () => {
-				return api.signUpEmail({
-					body: {
-						email: "seller1@seller-listing-iso.cz",
-						name: "Seller1",
-						password: "12345678",
-					},
-				});
-			});
-			const { user: seller2 } = yield* Effect.promise(async () => {
-				return api.signUpEmail({
-					body: {
-						email: "seller2@seller-listing-iso.cz",
-						name: "Seller2",
-						password: "12345678",
-					},
-				});
-			});
+			const seller1 = yield* leaseTestUserFx({});
+			const seller2 = yield* leaseTestUserFx({});
 
 			const listing1 = yield* createListingFx(seller1.id);
 			const listing2 = yield* createListingFx(seller2.id);

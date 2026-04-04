@@ -4,6 +4,7 @@ import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
 import { embedMinHash } from "@/lib/common/embedding";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
 import type { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreateSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -25,6 +26,13 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 	uploadIds,
 	...data
 }: listingCreateFx.Props) {
+	const logger = yield* getLoggerFx("listingCreateFx");
+	logger.debug("listingCreateFx", {
+		userId,
+		uploadIds,
+		...data,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

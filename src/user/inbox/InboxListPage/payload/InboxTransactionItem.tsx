@@ -26,6 +26,9 @@ export const InboxTransactionItem: FC<InboxTransactionItem.Props> = ({ item }) =
 
 	return (
 		<LinkTo
+			data-id={item.id}
+			data-ui={"InboxTransactionItem[Link]"}
+			data-action={"open transaction inbox item"}
 			{...match(item.payload.target)
 				.with(
 					"buyer",

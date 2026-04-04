@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
@@ -13,6 +14,12 @@ export namespace transactionEntryCleanupSensitiveFx {
 
 export const transactionEntryCleanupSensitiveFx = Effect.fn("transactionEntryCleanupSensitiveFx")(
 	function* ({ transactionId, status }: transactionEntryCleanupSensitiveFx.Props) {
+		const logger = yield* getLoggerFx("transactionEntryCleanupSensitiveFx");
+		logger.debug("transactionEntryCleanupSensitiveFx", {
+			transactionId,
+			status,
+		});
+
 		if (!Transitions.CleanupSensitiveStatus.includes(status)) {
 			return;
 		}

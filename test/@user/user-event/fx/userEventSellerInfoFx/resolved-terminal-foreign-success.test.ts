@@ -3,29 +3,14 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
-import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Resolved: counts foreign transaction.success as buyer-terminal for seller resolve", async () => {
 		const database = await testabase("userEventSellerInfoFx-resolved-terminal-foreign-success");
-
-		const { api } = auth(() => {
-			return database.dialect;
-		});
-
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@test.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-
-		const sellerId = seller.id;
 		const base = DateTime.now().minus({
 			days: 20,
 		});
@@ -44,7 +29,11 @@ describe("userEventSellerInfoFx", () => {
 			days: 3,
 		});
 
-		const result = await Effect.gen(function* () {
+		return Effect.gen(function* () {
+			const seller = yield* leaseTestUserFx({});
+
+			const sellerId = seller.id;
+
 			yield* userEventCreateFx({
 				userId: sellerId,
 				scope: "foreign",
@@ -97,17 +86,17 @@ describe("userEventSellerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventSellerInfoFx({
+			const result = yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).not.toBeNull();
-		if (!result) return;
+			expect(result).not.toBeNull();
+			if (!result) return;
 
-		expect(result.resolved.total).toBe(2);
-		expect(result.resolved.resolved).toBe(1);
-		expect(result.resolved.terminal).toBe(1);
-		expect(result.resolved.percent).toBe(50);
+			expect(result.resolved.total).toBe(2);
+			expect(result.resolved.resolved).toBe(1);
+			expect(result.resolved.terminal).toBe(1);
+			expect(result.resolved.percent).toBe(50);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

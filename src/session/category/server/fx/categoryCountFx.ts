@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
+import { getLoggerFx } from "@/lib/common/log";
 import { withCategoryCollectionSelectFx } from "~/session/category/server/db/withCategoryCollectionSelectFx";
 import { withCategoryQueryBuilderFx } from "~/session/category/server/db/withCategoryQueryBuilderFx";
 import type { CategoryCountQuerySchema } from "~/session/category/server/schema/CategoryCountQuerySchema";
@@ -16,6 +17,13 @@ export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
 	where,
 	scope,
 }: categoryCountFx.Props) {
+	const logger = yield* getLoggerFx("categoryCountFx");
+	logger.debug("categoryCountFx", {
+		filter,
+		where,
+		scope,
+	});
+
 	return yield* withCountFx({
 		selectFx: withCategoryCollectionSelectFx({}),
 		filter,

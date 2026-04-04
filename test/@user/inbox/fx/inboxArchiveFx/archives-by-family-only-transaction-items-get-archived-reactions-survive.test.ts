@@ -2,10 +2,10 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import type { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
 import type { InboxTypeEnumSchema } from "~/common/inbox/enum/InboxTypeEnumSchema";
-import { auth } from "~/server/auth/auth";
 import type { InboxTableSchema } from "~/server/database/@table/InboxTableSchema";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 
 /**
@@ -39,48 +39,42 @@ const seedInbox = async (
 describe("inboxArchiveFx", () => {
 	it("archives by family: only transaction items get archived, reactions survive", async () => {
 		const database = await testabase("inboxArchive-by-family");
-		const { api } = auth(() => database.dialect);
 
-		const { user } = await api.signUpEmail({
-			body: {
-				email: "user@inbox-archive-family.cz",
-				name: "User",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const user = yield* leaseTestUserFx({});
 
-		await seedInbox(database, [
-			{
-				id: "family-tx",
-				userId: user.id,
-				reference: [
-					"listing-x",
-					"tx-x",
-				],
-				family: "transaction",
-				type: "buyer-message",
-				payload: {
-					transactionId: "tx-x",
-				},
-				priority: "high",
-			},
-			{
-				id: "family-reaction",
-				userId: user.id,
-				reference: [
-					"listing-x",
-				],
-				family: "reaction",
-				type: "favourite",
-				payload: {
-					listingId: "listing-x",
-				},
-				priority: "common",
-			},
-		]);
+			yield* Effect.promise(() =>
+				seedInbox(database, [
+					{
+						id: "family-tx",
+						userId: user.id,
+						reference: [
+							"listing-x",
+							"tx-x",
+						],
+						family: "transaction",
+						type: "buyer-message",
+						payload: {
+							transactionId: "tx-x",
+						},
+						priority: "high",
+					},
+					{
+						id: "family-reaction",
+						userId: user.id,
+						reference: [
+							"listing-x",
+						],
+						family: "reaction",
+						type: "favourite",
+						payload: {
+							listingId: "listing-x",
+						},
+						priority: "common",
+					},
+				]),
+			);
 
-		// Archive only transaction family
-		await Effect.gen(function* () {
 			yield* inboxArchiveFx({
 				scope: {
 					userId: user.id,
@@ -89,21 +83,25 @@ describe("inboxArchiveFx", () => {
 					family: "transaction",
 				},
 			});
+
+			const txItem = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select("archivedAt")
+					.where("id", "=", "family-tx")
+					.executeTakeFirstOrThrow(),
+			);
+
+			const reactionItem = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select("archivedAt")
+					.where("id", "=", "family-reaction")
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(txItem.archivedAt).not.toBeNull();
+			expect(reactionItem.archivedAt).toBeNull();
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		const txItem = await database.kysely
-			.selectFrom("inbox")
-			.select("archivedAt")
-			.where("id", "=", "family-tx")
-			.executeTakeFirstOrThrow();
-
-		const reactionItem = await database.kysely
-			.selectFrom("inbox")
-			.select("archivedAt")
-			.where("id", "=", "family-reaction")
-			.executeTakeFirstOrThrow();
-
-		expect(txItem.archivedAt).not.toBeNull();
-		expect(reactionItem.archivedAt).toBeNull();
 	});
 });

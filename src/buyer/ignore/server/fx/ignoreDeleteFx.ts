@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { ignoreFetchFx } from "~/buyer/ignore/server/fx/ignoreFetchFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
@@ -15,6 +16,12 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 	userId,
 	listingId,
 }: ignoreDeleteFx.Props) {
+	const logger = yield* getLoggerFx("ignoreDeleteFx");
+	logger.debug("ignoreDeleteFx", {
+		userId,
+		listingId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { flagCreateFx } from "~/buyer/flag/server/fx/flagCreateFx";
 import { flagDeleteFx } from "~/buyer/flag/server/fx/flagDeleteFx";
 import type { FlagToggleSchema } from "~/buyer/flag/server/schema/FlagToggleSchema";
@@ -19,6 +20,13 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 	toggle,
 	listingId,
 }: flagToggleFx.Props) {
+	const logger = yield* getLoggerFx("flagToggleFx");
+	logger.debug("flagToggleFx", {
+		userId,
+		toggle,
+		listingId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const listingUserId = yield* listingCheckIfOwnFx({

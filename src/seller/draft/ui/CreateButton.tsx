@@ -34,6 +34,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ ...props }) => {
 	return (
 		<ListItem
 			data-ui={"DraftCreateButton[Button]"}
+			data-action={"create draft"}
 			onClick={() => {
 				draftCreateMutation.mutate({});
 			}}

@@ -38,24 +38,6 @@
 			}
 		},
 		{
-			"label": "sdk",
-			"type": "shell",
-			"command": "bun run sdk",
-			"problemMatcher": [],
-			"detail": "Generate or update the SDK using bun run sdk.",
-			"runOptions": {
-				"instanceLimit": 1
-			},
-			"presentation": {
-				"echo": true,
-				"reveal": "always",
-				"focus": false,
-				"panel": "shared",
-				"showReuseMessage": true,
-				"clear": true
-			}
-		},
-		{
 			"type": "shell",
 			"command": "bun run workflow:check",
 			"problemMatcher": [],
@@ -113,32 +95,8 @@
 			"type": "shell",
 			"command": "bun run translations",
 			"problemMatcher": [],
-			"label": "translations - web",
-			"detail": "Generate translations for the web.",
-			"options": {
-				"cwd": "${workspaceFolder}/apps/web"
-			},
-			"runOptions": {
-				"instanceLimit": 1
-			},
-			"presentation": {
-				"echo": true,
-				"reveal": "always",
-				"focus": false,
-				"panel": "shared",
-				"showReuseMessage": true,
-				"clear": true
-			}
-		},
-		{
-			"type": "shell",
-			"command": "bun run translations",
-			"problemMatcher": [],
-			"label": "translations - app",
-			"detail": "Generate translations for the app.",
-			"options": {
-				"cwd": "${workspaceFolder}/apps/app"
-			},
+			"label": "translations",
+			"detail": "Generate translations.",
 			"runOptions": {
 				"instanceLimit": 1
 			},
@@ -172,10 +130,10 @@
 		},
 		{
 			"type": "shell",
-			"command": "bun run preview",
+			"command": "bun run test",
 			"problemMatcher": [],
-			"label": "preview",
-			"detail": "Start production preview.",
+			"label": "test",
+			"detail": "Run tests.",
 			"runOptions": {
 				"instanceLimit": 1
 			},
@@ -190,10 +148,46 @@
 		},
 		{
 			"type": "shell",
-			"command": "bun run test",
+			"command": "bun run e2e",
 			"problemMatcher": [],
-			"label": "test",
-			"detail": "Run tests.",
+			"label": "e2e",
+			"detail": "Run end-to-end tests.",
+			"runOptions": {
+				"instanceLimit": 1
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": true
+			}
+		},
+		{
+			"type": "shell",
+			"command": "bun run e2e:dev",
+			"problemMatcher": [],
+			"label": "e2e:dev",
+			"detail": "Run end-to-end tests in Playwright UI mode.",
+			"runOptions": {
+				"instanceLimit": 1
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": true
+			}
+		},
+		{
+			"type": "shell",
+			"command": "bun run e2e:ui",
+			"problemMatcher": [],
+			"label": "e2e:ui",
+			"detail": "Run end-to-end tests in headed mode.",
 			"runOptions": {
 				"instanceLimit": 1
 			},

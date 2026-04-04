@@ -17,6 +17,7 @@ const BaseBackHomeButton: FC<uiBackButton.Component<ComponentProps<"a">>> = ({
 	return (
 		<a
 			data-root={"BackHomeButton"}
+			data-action={"go back home"}
 			{...uiBackButton({
 				ui,
 				className,

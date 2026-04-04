@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
+import { getLoggerFx } from "@/lib/common/log";
 import { withFlagCollectionSelectFx } from "~/buyer/flag/server/db/withFlagCollectionSelectFx";
 import { withFlagQueryBuilderFx } from "~/buyer/flag/server/db/withFlagQueryBuilderFx";
 import type { FlagFilterSchema } from "~/buyer/flag/server/schema/FlagFilterSchema";
@@ -18,6 +19,15 @@ export const flagCollectionFx = Effect.fn("flagCollectionFx")(function* ({
 	scope,
 	sort,
 }: flagCollectionFx.Props) {
+	const logger = yield* getLoggerFx("flagCollectionFx");
+	logger.debug("flagCollectionFx", {
+		cursor,
+		filter,
+		where,
+		scope,
+		sort,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withFlagCollectionSelectFx({
 			sort,

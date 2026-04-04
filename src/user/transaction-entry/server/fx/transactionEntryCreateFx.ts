@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import type { TransactionEntryTableSchema } from "~/server/database/@table/TransactionEntryTableSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
@@ -30,6 +31,13 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 	transactionId,
 	...entry
 }: transactionEntryCreateFx.Props) {
+	const logger = yield* getLoggerFx("transactionEntryCreateFx");
+	logger.debug("transactionEntryCreateFx", {
+		userId,
+		transactionId,
+		...entry,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const createTransactionEntryFx = Effect.fn("createTransactionEntryFx")(function* ({

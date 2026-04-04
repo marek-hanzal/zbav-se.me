@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
+import { getLoggerFx } from "@/lib/common/log";
 import { draftFetchFx } from "~/seller/draft/server/fx/draftFetchFx";
 import type { DraftFilterSchema } from "~/seller/draft/server/schema/DraftFilterSchema";
 import type { DraftPatchSchema } from "~/seller/draft/server/schema/DraftPatchSchema";
@@ -18,6 +19,13 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 	query,
 	scope,
 }: draftPatchFx.Props) {
+	const logger = yield* getLoggerFx("draftPatchFx");
+	logger.debug("draftPatchFx", {
+		patch,
+		query,
+		scope,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

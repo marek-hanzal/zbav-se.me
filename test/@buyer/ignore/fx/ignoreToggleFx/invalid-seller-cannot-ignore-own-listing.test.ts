@@ -1,39 +1,40 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { ignoreToggleFx } from "~/buyer/ignore/server/fx/ignoreToggleFx";
-import { auth } from "~/server/auth/auth";
-import { testabase } from "~/test/testabase";
-import { createListingFx } from "~/test/utils/createListingFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
 
 describe("ignoreToggleFx", () => {
 	it("invalid: seller cannot ignore own listing", async () => {
-		const database = await testabase("ignoreToggle-own-listing");
-
-		return Effect.gen(function* () {
-			const { api } = auth(() => database.dialect);
-
-			const { user: seller } = yield* Effect.promise(async () =>
-				api.signUpEmail({
-					body: {
-						email: "seller@ignore-own.cz",
-						name: "Seller",
-						password: "12345678",
-					},
-				}),
-			);
-
-			const listing = yield* createListingFx(seller.id);
-
-			const result = yield* Effect.either(
+		return runToggleEntityErrorContractFx({
+			databaseName: "ignoreToggle-own-listing",
+			userSlug: "ignore-own",
+			expectedError: {
+				tag: "InvalidRequestErrorFx",
+				message: "You cannot ignore your own listing",
+			},
+			errorFx: ({ users, listing }) =>
 				ignoreToggleFx({
-					userId: seller.id,
+					userId: users.seller.id,
 					listingId: listing.id,
 					toggle: true,
 				}),
-			);
+			assertAfterFx: ({ database, users, listing }) =>
+				Effect.promise(async () => {
+					const ignore = await database.kysely
+						.selectFrom("ignore")
+						.select("id")
+						.where("listingId", "=", listing.id)
+						.where("userId", "=", users.seller.id)
+						.executeTakeFirst();
+					const events = await database.kysely
+						.selectFrom("listing_event")
+						.select("id")
+						.where("listingId", "=", listing.id)
+						.execute();
 
-			expect(result._tag).toBe("Left");
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+					expect(ignore).toBeUndefined();
+					expect(events).toHaveLength(0);
+				}),
+		});
 	});
 });

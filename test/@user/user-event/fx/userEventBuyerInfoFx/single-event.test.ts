@@ -3,29 +3,18 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Single event returns nothing", async () => {
 		const database = await testabase("userEventBuyerInfoFx-single-event");
 
-		const { api } = auth(() => {
-			return database.dialect;
-		});
+		return Effect.gen(function* () {
+			const buyer = yield* leaseTestUserFx({});
 
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@test.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
-
-		const result = await Effect.gen(function* () {
 			yield* userEventCreateFx({
 				userId: buyer.id,
 				scope: "user",
@@ -43,11 +32,11 @@ describe("userEventBuyerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventBuyerInfoFx({
+			const result = yield* userEventBuyerInfoFx({
 				userId: buyer.id,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).toBeNull();
+			expect(result).toBeNull();
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

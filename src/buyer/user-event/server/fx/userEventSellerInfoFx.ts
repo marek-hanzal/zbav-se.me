@@ -1,11 +1,12 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Ssst */
 import { Effect } from "effect";
 import { clamp } from "@/lib/common/clamp";
+import { getLoggerFx } from "@/lib/common/log";
 import { median } from "@/lib/common/median";
 import { p90 } from "@/lib/common/p90";
 import type { UserEventSellerSchema } from "~/buyer/user-event/server/schema/UserEventSellerSchema";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
-import { computeActivity } from "~/user/user-event/server/fx/computeActivity";
+import { computeActivityFx } from "~/user/user-event/server/fx/computeActivityFx";
 import { computeLoad } from "~/user/user-event/server/fx/computeLoad";
 import { userEventCollectionFx } from "~/user/user-event/server/fx/userEventCollectionFx";
 import type { ActivityEnumSchema } from "~/user/user-event/server/schema/ActivityEnumSchema";
@@ -31,7 +32,7 @@ export namespace userEventSellerInfoFx {
  * 3a. If transaction.closed/rejected (foreign scope) before seller reacts -> terminal
  * 3b. If transaction.message/open/closed/rejected (user scope) after create -> reaction (records delta from create)
  */
-const computeReaction = (source: UserEventTableSchema.Type[]) => {
+export const computeSellerReaction = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (foreign)
 	let reactions = 0;
 	let terminal = 0;
@@ -127,7 +128,7 @@ const computeReaction = (source: UserEventTableSchema.Type[]) => {
  * 2. Any interaction event between create and reject (e.g., transaction.message) -> marks as dirty
  * 3. transaction.rejected (user scope) - if not dirty, counts as rejected (records delta from create)
  */
-const computeRejected = (source: UserEventTableSchema.Type[]) => {
+export const computeSellerRejected = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (foreign)
 	let rejected = 0;
 	const deltasMs: number[] = [];
@@ -231,7 +232,7 @@ const computeRejected = (source: UserEventTableSchema.Type[]) => {
  * 2b. If transaction.rejected (user scope) -> terminal (seller rejected, not resolved)
  * 2c. If transaction.success/closed (user scope) -> resolved (seller made explicit resolution, records delta from create)
  */
-const computeResolved = (source: UserEventTableSchema.Type[]) => {
+export const computeSellerResolved = (source: UserEventTableSchema.Type[]) => {
 	let total = 0;
 	let resolved = 0;
 	let terminal = 0;
@@ -345,7 +346,7 @@ const computeResolved = (source: UserEventTableSchema.Type[]) => {
  * 4a. If transaction.message/open/closed/rejected/success (user scope) after ping -> disqualifies from expired
  * 4b. If transaction.expired/resolved (foreign scope) after ping without seller action -> expired
  */
-const computeExpired = (source: UserEventTableSchema.Type[]) => {
+export const computeSellerExpired = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (foreign)
 	let expired = 0; // transaction.expired OR transaction.resolved (foreign) without seller action after buyer ping
 	let currentGroup: string | null = null;
@@ -433,7 +434,7 @@ const computeExpired = (source: UserEventTableSchema.Type[]) => {
 	} satisfies UserEventSellerSchema.Type["expired"];
 };
 
-const computeScore = (input: {
+export const computeSellerScore = (input: {
 	reaction: UserEventSellerSchema.Type["reaction"];
 	resolved: UserEventSellerSchema.Type["resolved"];
 	rejected: UserEventSellerSchema.Type["rejected"];
@@ -511,6 +512,11 @@ const computeScore = (input: {
 export const userEventSellerInfoFx = Effect.fn("userEventSellerInfoFx")(function* ({
 	userId,
 }: userEventSellerInfoFx.Props) {
+	const logger = yield* getLoggerFx("userEventSellerInfoFx");
+	logger.debug("userEventSellerInfoFx", {
+		userId,
+	});
+
 	const cutoff = 90;
 
 	const source = yield* userEventCollectionFx({
@@ -545,16 +551,22 @@ export const userEventSellerInfoFx = Effect.fn("userEventSellerInfoFx")(function
 	}
 
 	const result: Omit<UserEventSellerSchema.Type, "score"> = {
-		reaction: computeReaction(source),
-		rejected: computeRejected(source),
-		resolved: computeResolved(source),
-		expired: computeExpired(source),
-		load: computeLoad(source, "foreign"),
-		activity: computeActivity(source, cutoff),
+		reaction: computeSellerReaction(source),
+		rejected: computeSellerRejected(source),
+		resolved: computeSellerResolved(source),
+		expired: computeSellerExpired(source),
+		load: computeLoad({
+			source,
+			createScope: "foreign",
+		}),
+		activity: yield* computeActivityFx({
+			source,
+			days: cutoff,
+		}),
 	};
 
 	return {
 		...result,
-		score: computeScore(result),
+		score: computeSellerScore(result),
 	} satisfies UserEventSellerSchema.Type;
 });

@@ -1,31 +1,18 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
-import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
+import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
-describe("userEventSellerInfoFx", () => {
+describe("userEventSellerInfoFx", {
+	timeout: 4_000,
+}, () => {
 	it("Seller rejects after interaction - should not count as rejected without interaction", async () => {
 		const database = await testabase("userEventSellerInfoFx-reject-with-interaction");
-
-		const { api } = auth(() => {
-			return database.dialect;
-		});
-
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@test.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-
-		const sellerId = seller.id;
 
 		// Base time: 89 days ago (within 90 day cutoff)
 		const baseTime = DateTime.now().minus({
@@ -60,147 +47,95 @@ describe("userEventSellerInfoFx", () => {
 			days: 1,
 		});
 
-		const result = await Effect.gen(function* () {
-			// Transaction 1: Reject after message
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1Create;
-					},
-				}),
-			);
+		return Effect.gen(function* () {
+			const seller = yield* leaseTestUserFx({});
 
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.message",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1Message;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.rejected",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1Reject;
-					},
-				}),
-			);
-
-			// Transaction 2: Reject after open
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t2Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.open",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t2Open;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.rejected",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t2Reject;
-					},
-				}),
-			);
-
-			// Transaction 3: Reject without interaction
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t3Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.rejected",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t3Reject;
-					},
-				}),
-			);
-
-			return yield* userEventSellerInfoFx({
-				userId: sellerId,
+			yield* seedUserEventTimelineFx({
+				userId: seller.id,
+				events: [
+					...createTransactionTimeline({
+						group: "tx-1",
+						steps: [
+							{
+								at: t1Create,
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: t1Message,
+								scope: "user",
+								event: "transaction.message",
+								isTerminal: false,
+							},
+							{
+								at: t1Reject,
+								scope: "user",
+								event: "transaction.rejected",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-2",
+						steps: [
+							{
+								at: t2Create,
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: t2Open,
+								scope: "user",
+								event: "transaction.open",
+								isTerminal: false,
+							},
+							{
+								at: t2Reject,
+								scope: "user",
+								event: "transaction.rejected",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-3",
+						steps: [
+							{
+								at: t3Create,
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: t3Reject,
+								scope: "user",
+								event: "transaction.rejected",
+								isTerminal: true,
+							},
+						],
+					}),
+				],
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).not.toBeNull();
-		if (!result) return;
+			const result = yield* userEventSellerInfoFx({
+				userId: seller.id,
+			});
 
-		// Rejected: Only t3 should count (rejected without interaction)
-		// t1 and t2 have interactions before reject, so they're dirty
-		expect(result.rejected.total).toBe(3);
-		expect(result.rejected.rejected).toBe(1); // Only t3
-		expect(result.rejected.percent).toBeCloseTo(33.33, 1);
+			expect(result).not.toBeNull();
+			if (!result) return;
 
-		// All three should have reactions (all rejected, which counts as reaction)
-		expect(result.reaction.total).toBe(3);
-		expect(result.reaction.reactions).toBe(3); // All three have reactions (reject events)
-		expect(result.reaction.terminal).toBe(0);
+			// Rejected: Only t3 should count (rejected without interaction)
+			// t1 and t2 have interactions before reject, so they're dirty
+			expect(result.rejected.total).toBe(3);
+			expect(result.rejected.rejected).toBe(1); // Only t3
+			expect(result.rejected.percent).toBeCloseTo(33.33, 1);
+
+			// All three should have reactions (all rejected, which counts as reaction)
+			expect(result.reaction.total).toBe(3);
+			expect(result.reaction.reactions).toBe(3); // All three have reactions (reject events)
+			expect(result.reaction.terminal).toBe(0);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

@@ -77,6 +77,7 @@ export namespace withTestabaseFx {
 		port: number;
 		template: string;
 		databaseFx: Effect.Effect<withDatabaseFx.Instance<any>, never, DialectContextFx>;
+		onMigrate?: (database: withDatabaseFx.Instance<any>) => Promise<void>;
 	}
 }
 
@@ -86,22 +87,47 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 	port,
 	template,
 	databaseFx,
+	onMigrate,
 }: withTestabaseFx.Props) {
 	ensureDocker();
+	const root = "bootstrap";
 
 	yield* Effect.promise(async () => {
 		return startPostgresContainer({
 			image,
 			name,
 			port,
-			db: template,
+			db: root,
 		});
 	});
 
 	const dsn = `postgresql://postgres:postgres@127.0.0.1:${port}`;
 
 	yield* Effect.gen(function* () {
-		const { kysely, migrate } = yield* databaseFx.pipe(
+		const { kysely } = yield* withDatabaseFx({}).pipe(
+			withDialectFx(
+				new PostgresDialect({
+					pool: new Pool({
+						connectionString: withDatabaseName({
+							dsn: dsn,
+							name: root,
+						}),
+						application_name: `withTestabase:template-bootstrap:${template}`,
+					}),
+				}),
+			),
+			Effect.provideService(MigrationContextFx, {}),
+		);
+
+		yield* Effect.promise(async () => {
+			await sql`DROP DATABASE IF EXISTS ${sql.ref(template)}`.execute(kysely);
+			await sql`CREATE DATABASE ${sql.ref(template)}`.execute(kysely);
+			await kysely.destroy();
+		});
+	});
+
+	yield* Effect.gen(function* () {
+		const database = yield* databaseFx.pipe(
 			withDialectFx(
 				new PostgresDialect({
 					pool: new Pool({
@@ -109,14 +135,16 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 							dsn: dsn,
 							name: template,
 						}),
+						application_name: `withTestabase:template-migrate:${template}`,
 					}),
 				}),
 			),
 		);
+		const { kysely, migrate } = database;
 
 		yield* Effect.promise(async () => {
 			await migrate();
-
+			await onMigrate?.(database);
 			await kysely.destroy();
 		});
 	});
@@ -130,6 +158,7 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 							dsn: dsn,
 							name: "postgres",
 						}),
+						application_name: `withTestabase:template-admin:${template}`,
 					}),
 				}),
 			),
@@ -137,26 +166,12 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 		);
 
 		yield* Effect.promise(async () => {
-			await sql`ALTER DATABASE ${sql.ref(template)} WITH IS_TEMPLATE = true ALLOW_CONNECTIONS = false;`.execute(
-				kysely,
-			);
-
-			await sql`
-                SELECT
-                    pg_terminate_backend(pid, 5000)
-                FROM
-                    pg_stat_activity
-                WHERE
-                    datname = ${template}
-                    AND
-                    pid <> pg_backend_pid()
-            `.execute(kysely);
+			await sql`ALTER DATABASE ${sql.ref(template)} WITH IS_TEMPLATE = true;`.execute(kysely);
 
 			/**
-			 * This just ensures early we're able to create new databases from template
+			 * This ensures early we're able to create new databases from the template.
 			 */
 			await sql`CREATE DATABASE dummy TEMPLATE ${sql.ref(template)};`.execute(kysely);
-
 			await kysely.destroy();
 		});
 	});
@@ -164,6 +179,8 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 	process.env.SERVER_DATABASE_URL = dsn;
 
 	return async () => {
-		//
+		rmImage({
+			image: name,
+		});
 	};
 });

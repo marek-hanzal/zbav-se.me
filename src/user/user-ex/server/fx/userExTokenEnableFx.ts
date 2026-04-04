@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import { userExPatchFx } from "~/user/user-ex/server/fx/userExPatchFx";
 
 export namespace userExTokenEnableFx {
@@ -11,6 +12,11 @@ export namespace userExTokenEnableFx {
 export const userExTokenEnableFx = Effect.fn("userExTokenEnableFx")(function* ({
 	userId,
 }: userExTokenEnableFx.Props) {
+	const logger = yield* getLoggerFx("userExTokenEnableFx");
+	logger.debug("userExTokenEnableFx", {
+		userId,
+	});
+
 	return yield* userExPatchFx({
 		userId,
 		patch: {

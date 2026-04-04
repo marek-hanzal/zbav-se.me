@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import type { FeedFilterSchema } from "~/buyer/feed/server/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
@@ -13,6 +14,11 @@ export namespace feedDeleteFx {
 }
 
 export const feedDeleteFx = Effect.fn("feedDeleteFx")(function* (query: feedDeleteFx.Props) {
+	const logger = yield* getLoggerFx("feedDeleteFx");
+	logger.debug("feedDeleteFx", {
+		...query,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

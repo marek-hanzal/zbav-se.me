@@ -1,37 +1,27 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
-import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
-import { createListingFx } from "~/test/utils/createListingFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("listingCollectionFx (seller)", () => {
 	it("seller sees their own live listing", async () => {
 		const database = await testabase("sellerListing-live");
-		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@seller-listing-live.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const seller = yield* leaseTestUserFx({});
 
-		const listing = await createListingFx(seller.id).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
+			const listing = yield* createListingFx(seller.id);
 
-		const collection = await Effect.gen(function* () {
-			return yield* listingCollectionFx({
+			const collection = yield* listingCollectionFx({
 				scope: {
 					userId: seller.id,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(collection.map((l) => l.id)).toContain(listing.id);
+			expect(collection.map((l) => l.id)).toContain(listing.id);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

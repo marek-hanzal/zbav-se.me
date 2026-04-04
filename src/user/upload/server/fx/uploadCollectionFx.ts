@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
+import { getLoggerFx } from "@/lib/common/log";
 import { withUploadCollectionSelectFx } from "~/user/upload/server/db/withUploadCollectionSelectFx";
 import { withUploadQueryBuilderFx } from "~/user/upload/server/db/withUploadQueryBuilderFx";
 import type { UploadFilterSchema } from "~/user/upload/server/schema/UploadFilterSchema";
@@ -18,6 +19,15 @@ export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
 	scope,
 	sort,
 }: uploadCollectionFx.Props) {
+	const logger = yield* getLoggerFx("uploadCollectionFx");
+	logger.debug("uploadCollectionFx", {
+		cursor,
+		filter,
+		where,
+		scope,
+		sort,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withUploadCollectionSelectFx({
 			sort,

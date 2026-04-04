@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
+import { getLoggerFx } from "@/lib/common/log";
 import { withTransactionQueryBuilderFx } from "~/seller/transaction/server/db/withTransactionQueryBuilderFx";
 import { withTransactionSelectFx } from "~/seller/transaction/server/db/withTransactionSelectFx";
 import type { TransactionFilterSchema } from "~/seller/transaction/server/schema/TransactionFilterSchema";
@@ -17,6 +18,14 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 	scope,
 	sort,
 }: transactionFetchFx.Props) {
+	const logger = yield* getLoggerFx("transactionFetchFx");
+	logger.debug("transactionFetchFx", {
+		filter,
+		where,
+		scope,
+		sort,
+	});
+
 	return yield* withFetchFx({
 		resource: "transaction",
 		selectFx: withTransactionSelectFx({

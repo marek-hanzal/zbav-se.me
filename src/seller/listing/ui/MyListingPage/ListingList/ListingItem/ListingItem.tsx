@@ -23,6 +23,8 @@ export const ListingItem = withFallback(({ listingId }: ListingItem.Props) => {
 
 	return (
 		<ListItem
+			data-id={listing.id}
+			data-ui={"MyListingItem"}
 			hero={hero}
 			title={
 				<Typo

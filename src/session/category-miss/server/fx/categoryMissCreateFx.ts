@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 
@@ -16,6 +17,12 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 	fulltext,
 	limit = 4,
 }: categoryMissCreateFx.Props) {
+	const logger = yield* getLoggerFx("categoryMissCreateFx");
+	logger.debug("categoryMissCreateFx", {
+		fulltext,
+		limit,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

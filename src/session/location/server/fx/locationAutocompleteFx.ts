@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
@@ -21,6 +22,13 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 	lang,
 	limit = 5,
 }: locationAutocompleteFx.Props) {
+	const logger = yield* getLoggerFx("locationAutocompleteFx");
+	logger.debug("locationAutocompleteFx", {
+		text,
+		lang,
+		limit,
+	});
+
 	if (text.length < 3) {
 		return yield* new TextTooShortErrorFx({
 			message: "Text too short",

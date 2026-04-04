@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
+import { getLoggerFx } from "@/lib/common/log";
 import { withCategoryCollectionSelectFx } from "~/session/category/server/db/withCategoryCollectionSelectFx";
 import { withCategoryQueryBuilderFx } from "~/session/category/server/db/withCategoryQueryBuilderFx";
 import type { CategoryFilterSchema } from "~/session/category/server/schema/CategoryFilterSchema";
@@ -19,6 +20,15 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 	scope,
 	sort,
 }: categoryCollectionFx.Props) {
+	const logger = yield* getLoggerFx("categoryCollectionFx");
+	logger.debug("categoryCollectionFx", {
+		cursor,
+		filter,
+		where,
+		scope,
+		sort,
+	});
+
 	const data = yield* withCollectionFx({
 		selectFx: withCategoryCollectionSelectFx({
 			sort,

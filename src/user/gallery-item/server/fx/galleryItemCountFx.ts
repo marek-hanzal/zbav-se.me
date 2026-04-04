@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
+import { getLoggerFx } from "@/lib/common/log";
 import { withGalleryItemCollectionSelectFx } from "~/user/gallery-item/server/db/withGalleryItemCollectionSelectFx";
 import { withGalleryItemQueryBuilderFx } from "~/user/gallery-item/server/db/withGalleryItemQueryBuilderFx";
 import type { GalleryItemCountQuerySchema } from "~/user/gallery-item/server/schema/GalleryItemCountQuerySchema";
@@ -16,6 +17,13 @@ export const galleryItemCountFx = Effect.fn("galleryItemCountFx")(function* ({
 	where,
 	scope,
 }: galleryItemCountFx.Props) {
+	const logger = yield* getLoggerFx("galleryItemCountFx");
+	logger.debug("galleryItemCountFx", {
+		filter,
+		where,
+		scope,
+	});
+
 	return yield* withCountFx({
 		selectFx: withGalleryItemCollectionSelectFx({}),
 		filter,

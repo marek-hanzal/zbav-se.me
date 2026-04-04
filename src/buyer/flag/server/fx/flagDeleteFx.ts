@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { flagFetchFx } from "~/buyer/flag/server/fx/flagFetchFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
@@ -15,6 +16,12 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 	userId,
 	listingId,
 }: flagDeleteFx.Props) {
+	const logger = yield* getLoggerFx("flagDeleteFx");
+	logger.debug("flagDeleteFx", {
+		userId,
+		listingId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

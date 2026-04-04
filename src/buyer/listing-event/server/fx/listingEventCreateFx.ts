@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import { listingCheckIfOwnFx } from "~/buyer/listing/server/fx/listingCheckIfOwnFx";
 import { listingEventRateLimitFx } from "~/buyer/listing-event/server/fx/listingEventRateLimitFx";
 import type { ListingEventCreateSchema } from "~/buyer/listing-event/server/schema/ListingEventCreateSchema";
@@ -19,6 +20,13 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 	listingId,
 	event,
 }: listingEventCreateFx.Props) {
+	const logger = yield* getLoggerFx("listingEventCreateFx");
+	logger.debug("listingEventCreateFx", {
+		userId,
+		listingId,
+		event,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

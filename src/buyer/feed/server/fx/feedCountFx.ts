@@ -1,5 +1,7 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { withCountFx } from "@/lib/common/count";
+import { getLoggerFx } from "@/lib/common/log";
 import { withFeedCollectionSelectFx } from "~/buyer/feed/server/db/withFeedCollectionSelectFx";
 import { withFeedQueryBuilderFx } from "~/buyer/feed/server/db/withFeedQueryBuilderFx";
 import type { FeedCountQuerySchema } from "~/buyer/feed/server/schema/FeedCountQuerySchema";
@@ -17,6 +19,13 @@ export const feedCountFx = Effect.fn("feedCountFx")(function* ({
 	where,
 	scope,
 }: feedCountFx.Props) {
+	const logger = yield* getLoggerFx("feedCountFx");
+	logger.debug("feedCountFx", {
+		filter,
+		where,
+		scope,
+	});
+
 	const hasFilter = !!(filter && Object.keys(filter).length > 0);
 	const hasWhere = !!(where && Object.keys(where).length > 0);
 
@@ -32,18 +41,14 @@ export const feedCountFx = Effect.fn("feedCountFx")(function* ({
 		}
 
 		const { count } = yield* Effect.promise(async () => {
-			return query
-				.select((eb) => eb.fn.countAll<number>().as("count"))
-				.executeTakeFirstOrThrow();
+			return query.select(sql<number>`count(*)::int`.as("count")).executeTakeFirstOrThrow();
 		});
 
-		const total = Number(count);
-
 		return {
-			total,
-			filter: total,
-			where: total,
-			isEmpty: total === 0,
+			total: count,
+			filter: count,
+			where: count,
+			isEmpty: count === 0,
 			isFilterEmpty: false,
 		};
 	}

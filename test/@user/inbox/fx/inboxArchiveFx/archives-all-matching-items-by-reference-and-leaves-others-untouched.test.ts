@@ -2,10 +2,10 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import type { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
 import type { InboxTypeEnumSchema } from "~/common/inbox/enum/InboxTypeEnumSchema";
-import { auth } from "~/server/auth/auth";
 import type { InboxTableSchema } from "~/server/database/@table/InboxTableSchema";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 
 /**
@@ -39,62 +39,56 @@ const seedInbox = async (
 describe("inboxArchiveFx", () => {
 	it("archives all matching items by reference and leaves others untouched", async () => {
 		const database = await testabase("inboxArchive-by-reference");
-		const { api } = auth(() => database.dialect);
 
-		const { user } = await api.signUpEmail({
-			body: {
-				email: "user@inbox-archive-ref.cz",
-				name: "User",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const user = yield* leaseTestUserFx({});
 
-		await seedInbox(database, [
-			{
-				id: "arch-ref-a1",
-				userId: user.id,
-				reference: [
-					"listing-a",
-					"tx-1",
-				],
-				family: "transaction",
-				type: "buyer-message",
-				payload: {
-					transactionId: "tx-1",
-				},
-				priority: "high",
-			},
-			{
-				id: "arch-ref-a2",
-				userId: user.id,
-				reference: [
-					"listing-a",
-					"tx-1",
-				],
-				family: "transaction",
-				type: "seller-message",
-				payload: {
-					transactionId: "tx-1",
-				},
-				priority: "high",
-			},
-			{
-				id: "arch-ref-b1",
-				userId: user.id,
-				reference: [
-					"listing-b",
-				],
-				family: "reaction",
-				type: "favourite",
-				payload: {
-					listingId: "listing-b",
-				},
-				priority: "common",
-			},
-		]);
+			yield* Effect.promise(() =>
+				seedInbox(database, [
+					{
+						id: "arch-ref-a1",
+						userId: user.id,
+						reference: [
+							"listing-a",
+							"tx-1",
+						],
+						family: "transaction",
+						type: "buyer-message",
+						payload: {
+							transactionId: "tx-1",
+						},
+						priority: "high",
+					},
+					{
+						id: "arch-ref-a2",
+						userId: user.id,
+						reference: [
+							"listing-a",
+							"tx-1",
+						],
+						family: "transaction",
+						type: "seller-message",
+						payload: {
+							transactionId: "tx-1",
+						},
+						priority: "high",
+					},
+					{
+						id: "arch-ref-b1",
+						userId: user.id,
+						reference: [
+							"listing-b",
+						],
+						family: "reaction",
+						type: "favourite",
+						payload: {
+							listingId: "listing-b",
+						},
+						priority: "common",
+					},
+				]),
+			);
 
-		// Archive all items that reference "listing-a"
-		await Effect.gen(function* () {
 			yield* inboxArchiveFx({
 				scope: {
 					userId: user.id,
@@ -103,30 +97,32 @@ describe("inboxArchiveFx", () => {
 					reference: "listing-a",
 				},
 			});
+
+			const archivedItems = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select([
+						"id",
+						"archivedAt",
+					])
+					.where("id", "in", [
+						"arch-ref-a1",
+						"arch-ref-a2",
+					])
+					.execute(),
+			);
+
+			expect(archivedItems.every((i) => i.archivedAt !== null)).toBe(true);
+
+			const untouched = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select("archivedAt")
+					.where("id", "=", "arch-ref-b1")
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(untouched.archivedAt).toBeNull();
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		// listing-a items should now have archivedAt set
-		const archivedItems = await database.kysely
-			.selectFrom("inbox")
-			.select([
-				"id",
-				"archivedAt",
-			])
-			.where("id", "in", [
-				"arch-ref-a1",
-				"arch-ref-a2",
-			])
-			.execute();
-
-		expect(archivedItems.every((i) => i.archivedAt !== null)).toBe(true);
-
-		// listing-b item must remain unarchived
-		const untouched = await database.kysely
-			.selectFrom("inbox")
-			.select("archivedAt")
-			.where("id", "=", "arch-ref-b1")
-			.executeTakeFirstOrThrow();
-
-		expect(untouched.archivedAt).toBeNull();
 	});
 });

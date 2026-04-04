@@ -1,5 +1,7 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { withCountFx } from "@/lib/common/count";
+import { getLoggerFx } from "@/lib/common/log";
 import { withListingCollectionSelectFx } from "~/seller/listing/server/db/withListingCollectionSelectFx";
 import { withListingQueryBuilderFx } from "~/seller/listing/server/db/withListingQueryBuilderFx";
 import type { ListingCountQuerySchema } from "~/seller/listing/server/schema/ListingCountQuerySchema";
@@ -17,6 +19,13 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	where,
 	scope,
 }: listingCountFx.Props) {
+	const logger = yield* getLoggerFx("listingCountFx");
+	logger.debug("listingCountFx", {
+		filter,
+		where,
+		scope,
+	});
+
 	const hasFilter = !!(filter && Object.keys(filter).length > 0);
 	const hasWhere = !!(where && Object.keys(where).length > 0);
 
@@ -29,18 +38,14 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 		}
 
 		const { count } = yield* Effect.promise(async () => {
-			return query
-				.select((eb) => eb.fn.countAll<number>().as("count"))
-				.executeTakeFirstOrThrow();
+			return query.select(sql<number>`count(*)::int`.as("count")).executeTakeFirstOrThrow();
 		});
 
-		const total = Number(count);
-
 		return {
-			total,
-			filter: total,
-			where: total,
-			isEmpty: total === 0,
+			total: count,
+			filter: count,
+			where: count,
+			isEmpty: count === 0,
 			isFilterEmpty: false,
 		};
 	}

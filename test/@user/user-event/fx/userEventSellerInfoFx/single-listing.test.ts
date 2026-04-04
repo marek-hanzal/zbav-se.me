@@ -2,36 +2,20 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
-import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
 import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
-import { withLocationFx } from "~/session/location/server/fx/withLocationFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withUploadFx } from "~/user/upload/server/context/withUploadFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Single listing returns nothing", async () => {
 		const database = await testabase("userEventSellerInfoFx-single-listing");
 
-		const { api } = auth(() => {
-			return database.dialect;
-		});
+		return Effect.gen(function* () {
+			const seller = yield* leaseTestUserFx({});
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "a@x32.cz",
-				name: "A-User",
-				password: "12345678",
-			},
-		});
-
-		const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
-
-		const result = await Effect.gen(function* () {
 			const category = yield* categoryFetchFx({
 				where: {
 					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
@@ -69,23 +53,11 @@ describe("userEventSellerInfoFx", () => {
 				userId: seller.id,
 			});
 
-			return yield* userEventSellerInfoFx({
+			const result = yield* userEventSellerInfoFx({
 				userId: seller.id,
 			});
-		}).pipe(
-			withKyselyFx(database),
-			withDateFx,
-			withLocationFx({
-				api: "https://api.geoapify.com",
-				autocomplete: "/v1/geocode/autocomplete",
-				geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
-			}),
-			withUploadFx({
-				cdn: "https://cdn.zbav-se.me",
-			}),
-			Effect.runPromise,
-		);
 
-		expect(result).toBeNull();
+			expect(result).toBeNull();
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 
@@ -22,35 +23,35 @@ export const withSeedCoreUserCountsFx = Effect.fn("withSeedCoreUserCountsFx")(fu
 		tryDbFx(async () =>
 			kysely
 				.selectFrom("upload")
-				.select((eb) => eb.fn.countAll<number>().as("total"))
+				.select(sql<number>`count(*)::int`.as("total"))
 				.where("userId", "=", userId)
 				.executeTakeFirstOrThrow(),
 		),
 		tryDbFx(async () =>
 			kysely
 				.selectFrom("gallery")
-				.select((eb) => eb.fn.countAll<number>().as("total"))
+				.select(sql<number>`count(*)::int`.as("total"))
 				.where("userId", "=", userId)
 				.executeTakeFirstOrThrow(),
 		),
 		tryDbFx(async () =>
 			kysely
 				.selectFrom("draft")
-				.select((eb) => eb.fn.countAll<number>().as("total"))
+				.select(sql<number>`count(*)::int`.as("total"))
 				.where("userId", "=", userId)
 				.executeTakeFirstOrThrow(),
 		),
 		tryDbFx(async () =>
 			kysely
 				.selectFrom("listing")
-				.select((eb) => eb.fn.countAll<number>().as("total"))
+				.select(sql<number>`count(*)::int`.as("total"))
 				.where("userId", "=", userId)
 				.executeTakeFirstOrThrow(),
 		),
 		tryDbFx(async () =>
 			kysely
 				.selectFrom("feed")
-				.select((eb) => eb.fn.countAll<number>().as("total"))
+				.select(sql<number>`count(*)::int`.as("total"))
 				.where("userId", "=", userId)
 				.executeTakeFirstOrThrow(),
 		),
@@ -58,19 +59,19 @@ export const withSeedCoreUserCountsFx = Effect.fn("withSeedCoreUserCountsFx")(fu
 			kysely
 				.selectFrom("gallery_item as gi")
 				.innerJoin("gallery as g", "g.id", "gi.galleryId")
-				.select((eb) => eb.fn.countAll<number>().as("total"))
+				.select(sql<number>`count(*)::int`.as("total"))
 				.where("g.userId", "=", userId)
 				.executeTakeFirstOrThrow(),
 		),
 	]);
 
 	return {
-		upload: Number(upload.total ?? 0),
-		gallery: Number(gallery.total ?? 0),
-		gallery_item: Number(galleryItem.total ?? 0),
-		draft: Number(draft.total ?? 0),
-		listing: Number(listing.total ?? 0),
-		feed: Number(feed.total ?? 0),
+		upload: upload.total ?? 0,
+		gallery: gallery.total ?? 0,
+		gallery_item: galleryItem.total ?? 0,
+		draft: draft.total ?? 0,
+		listing: listing.total ?? 0,
+		feed: feed.total ?? 0,
 	} satisfies SeedCoreUserCounts;
 });
 

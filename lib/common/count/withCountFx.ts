@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import type { SelectQueryBuilder } from "kysely";
+import { type SelectQueryBuilder, sql } from "kysely";
 import type { FilterSchema } from "../schema/FilterSchema";
 
 export namespace withCountFx {
@@ -79,7 +79,7 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 	const countTotal = yield* Effect.promise(async () => {
 		return scopeSelect
 			.clearSelect()
-			.select((eb) => eb.fn.countAll<number>().as("count"))
+			.select(sql<number>`count(*)::int`.as("count"))
 			.executeTakeFirstOrThrow();
 	});
 
@@ -88,7 +88,7 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 		: yield* Effect.promise(async () => {
 				return filterSelect
 					.clearSelect()
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select(sql<number>`count(*)::int`.as("count"))
 					.executeTakeFirstOrThrow();
 			});
 
@@ -97,19 +97,15 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 		: yield* Effect.promise(async () => {
 				return whereSelect
 					.clearSelect()
-					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.select(sql<number>`count(*)::int`.as("count"))
 					.executeTakeFirstOrThrow();
 			});
 
-	const total = Number(countTotal.count);
-	const filterCount = Number(countFilter.count);
-	const whereCount = Number(countWhere.count);
-
 	return {
-		total,
-		filter: filterCount,
-		where: whereCount,
-		isEmpty: total === 0,
-		isFilterEmpty: filterCount === 0 && total > 0,
+		total: countTotal.count,
+		filter: countFilter.count,
+		where: countWhere.count,
+		isEmpty: countTotal.count === 0,
+		isFilterEmpty: countFilter.count === 0 && countTotal.count > 0,
 	};
 });

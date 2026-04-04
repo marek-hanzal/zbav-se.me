@@ -2,10 +2,10 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import type { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
 import type { InboxTypeEnumSchema } from "~/common/inbox/enum/InboxTypeEnumSchema";
-import { auth } from "~/server/auth/auth";
 import type { InboxTableSchema } from "~/server/database/@table/InboxTableSchema";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 
 /**
@@ -39,60 +39,54 @@ const seedInbox = async (
 describe("inboxArchiveFx", () => {
 	it("cursor size limits how many items are archived in one call", async () => {
 		const database = await testabase("inboxArchive-cursor-limit");
-		const { api } = auth(() => database.dialect);
 
-		const { user } = await api.signUpEmail({
-			body: {
-				email: "user@inbox-archive-cursor.cz",
-				name: "User",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const user = yield* leaseTestUserFx({});
 
-		await seedInbox(database, [
-			{
-				id: "cursor-1",
-				userId: user.id,
-				reference: [
-					"listing-cursor",
-				],
-				family: "reaction",
-				type: "favourite",
-				payload: {
-					listingId: "listing-cursor",
-				},
-				priority: "common",
-			},
-			{
-				id: "cursor-2",
-				userId: user.id,
-				reference: [
-					"listing-cursor",
-				],
-				family: "reaction",
-				type: "favourite",
-				payload: {
-					listingId: "listing-cursor",
-				},
-				priority: "common",
-			},
-			{
-				id: "cursor-3",
-				userId: user.id,
-				reference: [
-					"listing-cursor",
-				],
-				family: "reaction",
-				type: "favourite",
-				payload: {
-					listingId: "listing-cursor",
-				},
-				priority: "common",
-			},
-		]);
+			yield* Effect.promise(() =>
+				seedInbox(database, [
+					{
+						id: "cursor-1",
+						userId: user.id,
+						reference: [
+							"listing-cursor",
+						],
+						family: "reaction",
+						type: "favourite",
+						payload: {
+							listingId: "listing-cursor",
+						},
+						priority: "common",
+					},
+					{
+						id: "cursor-2",
+						userId: user.id,
+						reference: [
+							"listing-cursor",
+						],
+						family: "reaction",
+						type: "favourite",
+						payload: {
+							listingId: "listing-cursor",
+						},
+						priority: "common",
+					},
+					{
+						id: "cursor-3",
+						userId: user.id,
+						reference: [
+							"listing-cursor",
+						],
+						family: "reaction",
+						type: "favourite",
+						payload: {
+							listingId: "listing-cursor",
+						},
+						priority: "common",
+					},
+				]),
+			);
 
-		// Archive with cursor size 2 — only 2 should be archived
-		await Effect.gen(function* () {
 			yield* inboxArchiveFx({
 				scope: {
 					userId: user.id,
@@ -105,18 +99,20 @@ describe("inboxArchiveFx", () => {
 					size: 2,
 				},
 			});
+
+			const archived = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("inbox")
+					.select("archivedAt")
+					.where("userId", "=", user.id)
+					.execute(),
+			);
+
+			const archivedCount = archived.filter((i) => i.archivedAt !== null).length;
+			const activeCount = archived.filter((i) => i.archivedAt === null).length;
+
+			expect(archivedCount).toBe(2);
+			expect(activeCount).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		const archived = await database.kysely
-			.selectFrom("inbox")
-			.select("archivedAt")
-			.where("userId", "=", user.id)
-			.execute();
-
-		const archivedCount = archived.filter((i) => i.archivedAt !== null).length;
-		const activeCount = archived.filter((i) => i.archivedAt === null).length;
-
-		expect(archivedCount).toBe(2);
-		expect(activeCount).toBe(1);
 	});
 });

@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { LocationSortSchema } from "~/session/location/server/schema/LocationSortSchema";
@@ -16,7 +17,25 @@ export const withLocationSelectFx = Effect.fn("withLocationSelectFx")(function* 
 }: withLocationSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	let query = kysely.selectFrom("location as loc").selectAll("loc");
+	let query = kysely.selectFrom("location as loc").select([
+		"loc.id",
+		"loc.query",
+		"loc.lang",
+		"loc.country",
+		"loc.code",
+		"loc.county",
+		"loc.municipality",
+		"loc.state",
+		"loc.address",
+		"loc.city",
+		"loc.street",
+		"loc.zip",
+		"loc.hash",
+		sql<number>`loc.confidence::float8`.as("confidence"),
+		sql<number>`loc.lat::float8`.as("lat"),
+		sql<number>`loc.lon::float8`.as("lon"),
+		"loc.geo",
+	]);
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

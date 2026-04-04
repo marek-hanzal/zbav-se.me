@@ -2,10 +2,10 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import type { InboxPriorityEnumSchema } from "~/common/inbox/enum/InboxPriorityEnumSchema";
 import type { InboxTypeEnumSchema } from "~/common/inbox/enum/InboxTypeEnumSchema";
-import { auth } from "~/server/auth/auth";
 import type { InboxTableSchema } from "~/server/database/@table/InboxTableSchema";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
 import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
 
@@ -40,47 +40,41 @@ const seedInbox = async (
 describe("inboxArchiveFx", () => {
 	it("archived items disappear from collection when filtered with archivedAtIsNull", async () => {
 		const database = await testabase("inboxArchive-collection-filter");
-		const { api } = auth(() => database.dialect);
 
-		const { user } = await api.signUpEmail({
-			body: {
-				email: "user@inbox-archive-coll.cz",
-				name: "User",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const user = yield* leaseTestUserFx({});
 
-		await seedInbox(database, [
-			{
-				id: "coll-active",
-				userId: user.id,
-				reference: [
-					"listing-active",
-				],
-				family: "reaction",
-				type: "favourite",
-				payload: {
-					listingId: "listing-active",
-				},
-				priority: "common",
-			},
-			{
-				id: "coll-to-archive",
-				userId: user.id,
-				reference: [
-					"listing-old",
-				],
-				family: "reaction",
-				type: "favourite",
-				payload: {
-					listingId: "listing-old",
-				},
-				priority: "common",
-			},
-		]);
+			yield* Effect.promise(() =>
+				seedInbox(database, [
+					{
+						id: "coll-active",
+						userId: user.id,
+						reference: [
+							"listing-active",
+						],
+						family: "reaction",
+						type: "favourite",
+						payload: {
+							listingId: "listing-active",
+						},
+						priority: "common",
+					},
+					{
+						id: "coll-to-archive",
+						userId: user.id,
+						reference: [
+							"listing-old",
+						],
+						family: "reaction",
+						type: "favourite",
+						payload: {
+							listingId: "listing-old",
+						},
+						priority: "common",
+					},
+				]),
+			);
 
-		// Archive the old one
-		await Effect.gen(function* () {
 			yield* inboxArchiveFx({
 				scope: {
 					userId: user.id,
@@ -89,11 +83,8 @@ describe("inboxArchiveFx", () => {
 					reference: "listing-old",
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		// Collection with archivedAtIsNull: true — should only return active item
-		const active = await Effect.gen(function* () {
-			return yield* inboxCollectionFx({
+			const active = yield* inboxCollectionFx({
 				scope: {
 					userId: user.id,
 				},
@@ -101,23 +92,20 @@ describe("inboxArchiveFx", () => {
 					archivedAtIsNull: true,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		const ids = active.map((i) => i.id);
-		expect(ids).toContain("coll-active");
-		expect(ids).not.toContain("coll-to-archive");
+			const ids = active.map((i) => i.id);
+			expect(ids).toContain("coll-active");
+			expect(ids).not.toContain("coll-to-archive");
 
-		// Collection without filter returns both
-		const all = await Effect.gen(function* () {
-			return yield* inboxCollectionFx({
+			const all = yield* inboxCollectionFx({
 				scope: {
 					userId: user.id,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		const allIds = all.map((i) => i.id);
-		expect(allIds).toContain("coll-active");
-		expect(allIds).toContain("coll-to-archive");
+			const allIds = all.map((i) => i.id);
+			expect(allIds).toContain("coll-active");
+			expect(allIds).toContain("coll-to-archive");
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

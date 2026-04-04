@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import { listingCheckIfOwnFx } from "~/buyer/listing/server/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/buyer/listing/server/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
@@ -22,6 +23,14 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 	type,
 	...data
 }: thumbCreateFx.Props) {
+	const logger = yield* getLoggerFx("thumbCreateFx");
+	logger.debug("thumbCreateFx", {
+		userId,
+		listingId,
+		type,
+		...data,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
@@ -43,13 +52,7 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 				scope: {},
 			});
 
-			yield* listingEventCreateFx({
-				userId,
-				listingId,
-				event: type,
-			}).pipe(Effect.ignore);
-
-			yield* tryDbFx(async () =>
+			const thumb = yield* tryDbFx(async () =>
 				kysely
 					.insertInto("thumb")
 					.values({
@@ -62,22 +65,30 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 					})
 					.onConflict((eb) => eb.doNothing())
 					.returningAll()
-					.executeTakeFirstOrThrow(),
+					.executeTakeFirst(),
 			);
 
-			yield* inboxCreateFx({
-				userId: listing.userId,
-				reference: [
+			if (thumb) {
+				yield* listingEventCreateFx({
+					userId,
 					listingId,
-				],
-				family: "reaction",
-				type: "thumb",
-				payload: {
-					listingId,
-					thumb: type,
-				},
-				priority: "common",
-			});
+					event: type,
+				}).pipe(Effect.ignore);
+
+				yield* inboxCreateFx({
+					userId: listing.userId,
+					reference: [
+						listingId,
+					],
+					family: "reaction",
+					type: "thumb",
+					payload: {
+						listingId,
+						thumb: type,
+					},
+					priority: "common",
+				});
+			}
 
 			/**
 			 * It's intentional, because listing has a lot of user-related

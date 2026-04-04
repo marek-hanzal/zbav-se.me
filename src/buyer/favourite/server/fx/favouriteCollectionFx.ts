@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
+import { getLoggerFx } from "@/lib/common/log";
 import { withFavouriteCollectionSelectFx } from "~/buyer/favourite/server/db/withFavouriteCollectionSelectFx";
 import { withFavouriteQueryBuilderFx } from "~/buyer/favourite/server/db/withFavouriteQueryBuilderFx";
 import type { FavouriteFilterSchema } from "~/buyer/favourite/server/schema/FavouriteFilterSchema";
@@ -18,6 +19,15 @@ export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function
 	cursor,
 	sort,
 }: favouriteCollectionFx.Props) {
+	const logger = yield* getLoggerFx("favouriteCollectionFx");
+	logger.debug("favouriteCollectionFx", {
+		filter,
+		where,
+		scope,
+		cursor,
+		sort,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withFavouriteCollectionSelectFx({
 			sort,

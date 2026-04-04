@@ -1,9 +1,12 @@
 import { Effect } from "effect";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { withFeedSourceSelectFx } from "~/buyer/feed/server/db/withFeedSourceSelectFx";
+import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
 
 export namespace withFeedSelectFx {
-	export interface Props extends withFeedSourceSelectFx.Props {}
+	export interface Props extends withFeedSourceSelectFx.Props {
+		//
+	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withFeedSelectFx>>;
 }
@@ -16,7 +19,17 @@ export const withFeedSelectFx = Effect.fn("withFeedSelectFx")(function* ({
 	});
 
 	return sourceSelect
-		.selectAll()
+		.select([
+			"f.id",
+			"f.userId",
+			"f.locationId",
+			"f.uploadId",
+			"f.type",
+			"f.name",
+			"f.createdAt",
+			"f.updatedAt",
+		])
+		.select((eb) => eb.ref("f.query").$castTo<ListingQuerySchema.Type>().as("query"))
 		.select((eb) =>
 			jsonObjectFrom(
 				eb

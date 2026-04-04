@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
@@ -18,6 +19,13 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	url,
 	...data
 }: uploadCreateFx.Props) {
+	const logger = yield* getLoggerFx("uploadCreateFx");
+	logger.debug("uploadCreateFx", {
+		userId,
+		url,
+		...data,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const uploadContext = yield* UploadContextFx;
 	const dateContext = yield* DateContextFx;

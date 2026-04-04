@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
+import { getLoggerFx } from "@/lib/common/log";
 import { withTransactionEntryQueryBuilderFx } from "../db/withTransactionEntryQueryBuilderFx";
 import { withTransactionEntrySelectFx } from "../db/withTransactionEntrySelectFx";
 import type { TransactionEntryFilterSchema } from "../schema/TransactionEntryFilterSchema";
@@ -20,6 +21,16 @@ export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectio
 	scope,
 	sort,
 }: transactionEntryCollectionFx.Props) {
+	const logger = yield* getLoggerFx("transactionEntryCollectionFx");
+	logger.debug("transactionEntryCollectionFx", {
+		userId,
+		cursor,
+		filter,
+		where,
+		scope,
+		sort,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withTransactionEntrySelectFx({
 			userId,

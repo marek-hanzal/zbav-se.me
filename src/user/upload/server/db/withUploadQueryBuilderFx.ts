@@ -32,5 +32,9 @@ export const withUploadQueryBuilderFx = Effect.fn("withUploadQueryBuilderFx")(fu
 		query = query.where("u.id", "in", where.idIn) as TSelect;
 	}
 
+	if (where.userId) {
+		query = query.where("u.userId", "=", where.userId) as TSelect;
+	}
+
 	return yield* Effect.succeed(query);
 });

@@ -1,228 +1,141 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
-import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
+import { createTransactionTimeline } from "~/test/user-event/fx/createTransactionTimeline";
+import { seedUserEventTimelineFx } from "~/test/user-event/fx/seedUserEventTimelineFx";
 
-describe("userEventSellerInfoFx", () => {
+describe("userEventSellerInfoFx", {
+	timeout: 4_000,
+}, () => {
 	it("Bad behaving seller - rejects without interaction, no reactions, expired transactions", async () => {
 		const database = await testabase("userEventSellerInfoFx-bad-behaving-seller");
-
-		const { api } = auth(() => {
-			return database.dialect;
-		});
-
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@test.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-
-		const sellerId = seller.id;
-
-		// Base time: 89 days ago (within 90 day cutoff)
 		const baseTime = DateTime.now().minus({
 			days: 89,
 		});
 
-		// Transaction 1: Seller rejects without interaction
-		const t1Create = baseTime;
-		const t1Reject = t1Create.plus({
-			days: 1,
-		});
+		return Effect.gen(function* () {
+			const seller = yield* leaseTestUserFx({});
 
-		// Transaction 2: Seller never reacts, buyer ends
-		const t2Create = baseTime.plus({
-			days: 10,
-		});
-		const t2BuyerEnd = t2Create.plus({
-			days: 5,
-		});
-
-		// Transaction 3: Transaction expires without seller action
-		const t3Create = baseTime.plus({
-			days: 20,
-		});
-		const t3Expired = t3Create.plus({
-			days: 10,
-		});
-
-		// Transaction 4: Seller rejects without interaction
-		const t4Create = baseTime.plus({
-			days: 30,
-		});
-		const t4Reject = t4Create.plus({
-			days: 2,
-		});
-
-		const result = await Effect.gen(function* () {
-			// Transaction 1: Reject without interaction
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-1",
-				event: "transaction.rejected",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t1Reject;
-					},
-				}),
-			);
-
-			// Transaction 2: Buyer ends before seller reacts
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t2Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-2",
-				event: "transaction.closed",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t2BuyerEnd;
-					},
-				}),
-			);
-
-			// Transaction 3: Expires without seller action
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t3Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-3",
-				event: "transaction.expired",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t3Expired;
-					},
-				}),
-			);
-
-			// Transaction 4: Reject without interaction
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "foreign",
-				source: "transaction",
-				group: "tx-4",
-				event: "transaction.create",
-				isTerminal: false,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t4Create;
-					},
-				}),
-			);
-
-			yield* userEventCreateFx({
-				userId: sellerId,
-				scope: "user",
-				source: "transaction",
-				group: "tx-4",
-				event: "transaction.rejected",
-				isTerminal: true,
-			}).pipe(
-				Effect.provideService(DateContextFx, {
-					now() {
-						return t4Reject;
-					},
-				}),
-			);
-
-			return yield* userEventSellerInfoFx({
-				userId: sellerId,
+			yield* seedUserEventTimelineFx({
+				userId: seller.id,
+				events: [
+					...createTransactionTimeline({
+						group: "tx-1",
+						steps: [
+							{
+								at: baseTime,
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: baseTime.plus({
+									days: 1,
+								}),
+								scope: "user",
+								event: "transaction.rejected",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-2",
+						steps: [
+							{
+								at: baseTime.plus({
+									days: 10,
+								}),
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: baseTime.plus({
+									days: 15,
+								}),
+								scope: "foreign",
+								event: "transaction.closed",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-3",
+						steps: [
+							{
+								at: baseTime.plus({
+									days: 20,
+								}),
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: baseTime.plus({
+									days: 30,
+								}),
+								scope: "foreign",
+								event: "transaction.expired",
+								isTerminal: true,
+							},
+						],
+					}),
+					...createTransactionTimeline({
+						group: "tx-4",
+						steps: [
+							{
+								at: baseTime.plus({
+									days: 30,
+								}),
+								scope: "foreign",
+								event: "transaction.create",
+								isTerminal: false,
+							},
+							{
+								at: baseTime.plus({
+									days: 32,
+								}),
+								scope: "user",
+								event: "transaction.rejected",
+								isTerminal: true,
+							},
+						],
+					}),
+				],
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).not.toBeNull();
-		if (!result) return;
+			const result = yield* userEventSellerInfoFx({
+				userId: seller.id,
+			});
 
-		// Reaction: t1 and t4 have seller reactions (rejects), t2 is terminal (buyer closed), t3 expired doesn't count
-		expect(result.reaction.total).toBe(4);
-		expect(result.reaction.reactions).toBe(2); // t1 and t4 (seller rejected)
-		expect(result.reaction.terminal).toBe(1); // t2 (buyer closed before seller reacted)
-		expect(result.reaction.percent).toBe(75); // 3 out of 4 (2 reactions + 1 terminal)
+			expect(result).not.toBeNull();
+			if (!result) return;
 
-		// Rejected: 2 rejects without interaction
-		expect(result.rejected.total).toBe(4);
-		expect(result.rejected.rejected).toBe(2); // t1 and t4
-		expect(result.rejected.percent).toBe(50);
+			expect(result.reaction.total).toBe(4);
+			expect(result.reaction.reactions).toBe(2);
+			expect(result.reaction.terminal).toBe(1);
+			expect(result.reaction.percent).toBe(75);
 
-		// Resolved: None resolved
-		expect(result.resolved.total).toBe(4);
-		expect(result.resolved.resolved).toBe(0);
-		expect(result.resolved.terminal).toBe(3); // t1 (seller rejected), t2 (buyer closed), t4 (seller rejected)
-		// t3 expires but doesn't count as terminal in resolved (expired is not buyer terminal)
-		expect(result.resolved.percent).toBe(0);
+			expect(result.rejected.total).toBe(4);
+			expect(result.rejected.rejected).toBe(2);
+			expect(result.rejected.percent).toBe(50);
 
-		// Expired: 1 expired (t3)
-		expect(result.expired.total).toBe(4);
-		expect(result.expired.expired).toBe(1);
-		expect(result.expired.percent).toBe(25);
+			expect(result.resolved.total).toBe(4);
+			expect(result.resolved.resolved).toBe(0);
+			expect(result.resolved.terminal).toBe(3);
+			expect(result.resolved.percent).toBe(0);
 
-		// Load: No active transactions
-		expect(result.load.bucket).toBe("low");
+			expect(result.expired.total).toBe(4);
+			expect(result.expired.expired).toBe(1);
+			expect(result.expired.percent).toBe(25);
 
-		// Score: Should be low (< 40)
-		expect(result.score.score).toBeLessThan(40);
-		expect(result.score.rank).toBeLessThanOrEqual(3);
+			expect(result.load.bucket).toBe("low");
+			expect(result.score.score).toBeLessThan(40);
+			expect(result.score.rank).toBeLessThanOrEqual(3);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

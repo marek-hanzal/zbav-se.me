@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
@@ -19,6 +20,16 @@ export const inboxCreateFx = Effect.fn("inboxCreateFx")(function* ({
 	payload,
 	priority,
 }: inboxCreateFx.Props) {
+	const logger = yield* getLoggerFx("inboxCreateFx");
+	logger.debug("inboxCreateFx", {
+		userId,
+		reference,
+		family,
+		type,
+		payload,
+		priority,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

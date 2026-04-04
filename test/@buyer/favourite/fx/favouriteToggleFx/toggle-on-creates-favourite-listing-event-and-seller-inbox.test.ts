@@ -2,90 +2,89 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { favouriteToggleFx } from "~/buyer/favourite/server/fx/favouriteToggleFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { auth } from "~/server/auth/auth";
-import { testabase } from "~/test/testabase";
-import { createListingFx } from "~/test/utils/createListingFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { runToggleEntityContractFx } from "~/test/@buyer/common/fx/runToggleEntityContractFx";
 
 describe("favouriteToggleFx", () => {
 	it("toggle on: creates favourite, listing_event and seller inbox", async () => {
-		const database = await testabase("favouriteToggle-on");
-		const { api } = auth(() => database.dialect);
+		return runToggleEntityContractFx({
+			databaseName: "favouriteToggle-on",
+			userSlug: "fav-toggle-on",
+			createExtraFx: ({ users }) =>
+				feedCreateFx({
+					userId: users.buyer.id,
+					type: "user",
+					name: "Test feed",
+					query: {},
+				}),
+			toggleOnFx: ({ users, listing, extra: feed }) =>
+				favouriteToggleFx({
+					userId: users.buyer.id,
+					listingId: listing.id,
+					feedId: feed.id,
+					toggle: true,
+				}),
+			toggleOffFx: ({ users, listing, extra: feed }) =>
+				favouriteToggleFx({
+					userId: users.buyer.id,
+					listingId: listing.id,
+					feedId: feed.id,
+					toggle: false,
+				}),
+			recordFx: ({ database, users, listing }) =>
+				Effect.promise(() =>
+					database.kysely
+						.selectFrom("favourite")
+						.select([
+							"listingId",
+							"userId",
+							"feedId",
+						])
+						.where("listingId", "=", listing.id)
+						.where("userId", "=", users.buyer.id)
+						.executeTakeFirst(),
+				),
+			eventsFx: ({ database, listing }) =>
+				Effect.promise(async () => {
+					const events = await database.kysely
+						.selectFrom("listing_event")
+						.select("event")
+						.where("listingId", "=", listing.id)
+						.execute();
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@fav-toggle-on.cz",
-				name: "Seller",
-				password: "12345678",
+					return events.map((event) => event.event);
+				}),
+			assertRecordOn: (record, { extra: feed }) => {
+				expect(record.feedId).toBe(feed.id);
 			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@fav-toggle-on.cz",
-				name: "Buyer",
-				password: "12345678",
+			onEvent: "favourite",
+			offEvent: "unfavourite",
+			inboxOnFx: ({ database, users }) =>
+				Effect.promise(() =>
+					database.kysely
+						.selectFrom("inbox")
+						.select([
+							"type",
+							"family",
+						])
+						.where("userId", "=", users.seller.id)
+						.where("type", "=", "favourite")
+						.executeTakeFirst(),
+				),
+			assertInboxOn: (inbox) => {
+				expect(inbox.family).toBe("reaction");
 			},
+			inboxOffFx: ({ database, users }) =>
+				Effect.promise(() =>
+					database.kysely
+						.selectFrom("inbox")
+						.select([
+							"type",
+							"family",
+						])
+						.where("userId", "=", users.seller.id)
+						.where("type", "=", "unfavourite")
+						.executeTakeFirst(),
+				),
 		});
-
-		const listing = await createListingFx(seller.id).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
-
-		const feed = await Effect.gen(function* () {
-			return yield* feedCreateFx({
-				userId: buyer.id,
-				type: "user",
-				name: "Test feed",
-				query: {},
-			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		await Effect.gen(function* () {
-			yield* favouriteToggleFx({
-				userId: buyer.id,
-				listingId: listing.id,
-				feedId: feed.id,
-				toggle: true,
-			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		// Favourite record was created
-		const favourite = await database.kysely
-			.selectFrom("favourite")
-			.select([
-				"listingId",
-				"userId",
-				"feedId",
-			])
-			.where("listingId", "=", listing.id)
-			.where("userId", "=", buyer.id)
-			.executeTakeFirst();
-
-		expect(favourite).toBeDefined();
-		expect(favourite?.feedId).toBe(feed.id);
-
-		// listing_event "favourite" was created
-		const events = await database.kysely
-			.selectFrom("listing_event")
-			.select("event")
-			.where("listingId", "=", listing.id)
-			.execute();
-
-		expect(events.map((e) => e.event)).toContain("favourite");
-
-		// Seller received an inbox item of type "favourite"
-		const inbox = await database.kysely
-			.selectFrom("inbox")
-			.select([
-				"type",
-				"family",
-			])
-			.where("userId", "=", seller.id)
-			.where("type", "=", "favourite")
-			.executeTakeFirst();
-
-		expect(inbox).toBeDefined();
-		expect(inbox?.family).toBe("reaction");
 	});
 });

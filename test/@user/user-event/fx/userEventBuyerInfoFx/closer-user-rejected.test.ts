@@ -3,57 +3,42 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Closer: counts user transaction.rejected when no interaction happened (open is allowed)", async () => {
 		const database = await testabase("userEventBuyerInfoFx-closer-user-rejected");
 
-		const { api } = auth(() => {
-			return database.dialect;
-		});
+		return Effect.gen(function* () {
+			const buyer = yield* leaseTestUserFx({});
 
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@test.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+			const buyerId = buyer.id;
+			const base = DateTime.now().minus({
+				days: 10,
+			});
+			const t1Create = base;
+			const t1Open = t1Create.plus({
+				minutes: 10,
+			});
+			const t1Reject = t1Open.plus({
+				minutes: 5,
+			});
+			const t2Create = base.plus({
+				days: 1,
+			});
+			const t2Open = t2Create.plus({
+				minutes: 10,
+			});
+			const t2Msg = t2Open.plus({
+				minutes: 1,
+			});
+			const t2Reject = t2Msg.plus({
+				minutes: 1,
+			});
 
-		const buyerId = buyer.id;
-		const base = DateTime.now().minus({
-			days: 10,
-		});
-
-		// tx-1: create -> open (allowed) -> rejected (user) => closer.closed++
-		const t1Create = base;
-		const t1Open = t1Create.plus({
-			minutes: 10,
-		});
-		const t1Reject = t1Open.plus({
-			minutes: 5,
-		});
-
-		// tx-2: create -> message -> rejected => dirty => NOT counted
-		const t2Create = base.plus({
-			days: 1,
-		});
-		const t2Open = t2Create.plus({
-			minutes: 10,
-		});
-		const t2Msg = t2Open.plus({
-			minutes: 1,
-		});
-		const t2Reject = t2Msg.plus({
-			minutes: 1,
-		});
-
-		const result = await Effect.gen(function* () {
 			yield* userEventCreateFx({
 				userId: buyerId,
 				scope: "user",
@@ -145,16 +130,16 @@ describe("userEventBuyerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventBuyerInfoFx({
+			const result = yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).not.toBeNull();
-		if (!result) return;
+			expect(result).not.toBeNull();
+			if (!result) return;
 
-		expect(result.closer.total).toBe(2);
-		expect(result.closer.closed).toBe(1);
-		expect(result.closer.percent).toBe(50);
+			expect(result.closer.total).toBe(2);
+			expect(result.closer.closed).toBe(1);
+			expect(result.closer.percent).toBe(50);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

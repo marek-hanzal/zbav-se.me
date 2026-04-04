@@ -41,6 +41,7 @@ export const testabase = async <const TDatabase>({
 							dsn: databaseConfig.SERVER_DATABASE_URL,
 							name: root,
 						}),
+						application_name: `testabase:admin:${name}`,
 						max: 1,
 					}),
 				}),
@@ -49,11 +50,9 @@ export const testabase = async <const TDatabase>({
 
 		yield* Effect.promise(async () => {
 			await sql`DROP DATABASE IF EXISTS ${sql.ref(name)}`.execute(kysely);
-
 			await sql`CREATE DATABASE ${sql.ref(name)} TEMPLATE ${sql.ref(template)}`.execute(
 				kysely,
 			);
-
 			await kysely.destroy();
 		});
 
@@ -65,7 +64,8 @@ export const testabase = async <const TDatabase>({
 							dsn: databaseConfig.SERVER_DATABASE_URL,
 							name: name,
 						}),
-						max: 4,
+						application_name: `testabase:db:${name}`,
+						max: 1,
 					}),
 				}),
 			),

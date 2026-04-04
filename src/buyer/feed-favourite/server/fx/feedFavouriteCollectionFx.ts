@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
+import { getLoggerFx } from "@/lib/common/log";
 import { withFeedQueryBuilderFx } from "~/buyer/feed/server/db/withFeedQueryBuilderFx";
 import type { FeedFilterSchema } from "~/buyer/feed/server/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
@@ -20,6 +21,16 @@ export const feedFavouriteCollectionFx = Effect.fn("feedFavouriteCollectionFx")(
 	cursor,
 	sort,
 }: feedFavouriteCollectionFx.Props) {
+	const logger = yield* getLoggerFx("feedFavouriteCollectionFx");
+	logger.debug("feedFavouriteCollectionFx", {
+		userId,
+		filter,
+		where,
+		scope,
+		cursor,
+		sort,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withFeedFavouriteCollectionSelectFx({
 			userId,

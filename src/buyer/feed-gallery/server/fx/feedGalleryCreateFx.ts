@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { feedPatchFx } from "~/buyer/feed/server/fx/feedPatchFx";
 import { feedResolveFx } from "~/buyer/feed/server/fx/feedResolveFx";
 import type { FeedGalleryCreateSchema } from "~/buyer/feed-gallery/server/schema/FeedGalleryCreateSchema";
@@ -21,6 +22,13 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 	feedId,
 	uploadIds,
 }: feedGalleryCreateFx.Props) {
+	const logger = yield* getLoggerFx("feedGalleryCreateFx");
+	logger.debug("feedGalleryCreateFx", {
+		userId,
+		feedId,
+		uploadIds,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

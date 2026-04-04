@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
+import { getLoggerFx } from "@/lib/common/log";
 import { withListingQueryBuilderFx } from "~/buyer/listing/server/db/withListingQueryBuilderFx";
 import { withListingSelectFx } from "~/buyer/listing/server/db/withListingSelectFx";
 import type { ListingFilterSchema } from "~/buyer/listing/server/schema/ListingFilterSchema";
@@ -20,6 +21,16 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 	sort,
 	meta,
 }: listingFetchFx.Props) {
+	const logger = yield* getLoggerFx("listingFetchFx");
+	logger.debug("listingFetchFx", {
+		userId,
+		filter,
+		where,
+		scope,
+		sort,
+		meta,
+	});
+
 	return yield* withFetchFx({
 		resource: "listing",
 		selectFx: withListingSelectFx({

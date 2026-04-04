@@ -137,6 +137,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 								>
 									{(fieldProps) => (
 										<field.TextInput
+											data-ui={"SignUpPage[EmailInput]"}
 											type={"email"}
 											autoComplete={"email"}
 											placeholder={translator.text("Enter your email")}
@@ -160,6 +161,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 								>
 									{(fieldProps) => (
 										<field.TextInput
+											data-ui={"SignUpPage[PasswordInput]"}
 											type={"password"}
 											autoComplete={"new-password"}
 											value={field.state.value ?? ""}
@@ -183,6 +185,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 								>
 									{(fieldProps) => (
 										<field.TextInput
+											data-ui={"SignUpPage[ConfirmPasswordInput]"}
 											type={"password"}
 											autoComplete={"new-password"}
 											value={field.state.value ?? ""}
@@ -212,6 +215,8 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 							>
 								{({ isValid, isSubmitting }) => (
 									<form.SubmitButton
+										data-action={"sign up"}
+										data-ui={"SignUpPage[SubmitButton]"}
 										iconEnabled={"icon-[eos-icons--system-re-registered]"}
 										disabled={!isValid || isSubmitting}
 									>

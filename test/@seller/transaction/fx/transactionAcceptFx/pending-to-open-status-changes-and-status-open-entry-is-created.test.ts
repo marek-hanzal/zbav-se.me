@@ -1,36 +1,18 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionAcceptFx", () => {
 	it("pending → open: status changes and status-open entry is created", async () => {
 		const database = await testabase("transactionAcceptFx-pending-to-open");
 
 		return Effect.gen(function* () {
-			const { api } = auth(() => database.dialect);
-
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "seller@accept-test.cz",
-						name: "Seller",
-						password: "12345678",
-					},
-				}),
-			);
-			const { user: buyer } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "buyer@accept-test.cz",
-						name: "Buyer",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			yield* createPendingScenarioFx({
 				sellerId: seller.id,

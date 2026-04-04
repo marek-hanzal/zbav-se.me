@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
@@ -17,6 +18,13 @@ export const inboxPatchFx = Effect.fn("inboxPatchFx")(function* ({
 	query,
 	scope,
 }: inboxPatchFx.Props) {
+	const logger = yield* getLoggerFx("inboxPatchFx");
+	logger.debug("inboxPatchFx", {
+		patch,
+		query,
+		scope,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

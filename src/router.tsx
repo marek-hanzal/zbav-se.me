@@ -61,7 +61,7 @@ export async function getRouter() {
 	persistQueryClient({
 		queryClient,
 		persister: createAsyncStoragePersister({
-			storage: typeof window !== "undefined" ? window.sessionStorage : null,
+			storage: typeof window === "undefined" ? undefined : window.sessionStorage,
 		}),
 		// maxAge: 30 * 60_1000,
 		maxAge: 0,

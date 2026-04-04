@@ -1,11 +1,11 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
-import { auth } from "~/server/auth/auth";
 import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { inboxCreateFx } from "~/user/inbox/server/fx/inboxCreateFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
@@ -65,20 +65,10 @@ describe("inbox reference", () => {
 	it("persists normalized reference during direct inbox creation", async () => {
 		const database = await testabase("inboxReference-direct-create");
 
-		const { api } = auth(() => {
-			return database.dialect;
-		});
+		return Effect.gen(function* () {
+			const user = yield* leaseTestUserFx({});
 
-		const { user } = await api.signUpEmail({
-			body: {
-				email: "inbox-reference-direct@test.cz",
-				name: "Inbox Direct",
-				password: "12345678",
-			},
-		});
-
-		const inbox = await Effect.gen(function* () {
-			return yield* inboxCreateFx({
+			const inbox = yield* inboxCreateFx({
 				userId: user.id,
 				reference: [
 					"listing-direct",
@@ -91,11 +81,11 @@ describe("inbox reference", () => {
 				},
 				priority: "common",
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(inbox.reference).toEqual([
-			"listing-direct",
-			"transaction-direct",
-		]);
+			expect(inbox.reference).toEqual([
+				"listing-direct",
+				"transaction-direct",
+			]);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

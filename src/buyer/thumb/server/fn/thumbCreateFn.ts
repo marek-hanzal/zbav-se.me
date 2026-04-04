@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { zodGuardFx } from "@/lib/common/fx";
+import { withLoggerFx } from "@/lib/common/log";
 import { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { thumbCreateFx } from "~/buyer/thumb/server/fx/thumbCreateFx";
 import { ThumbCreateSchema } from "~/buyer/thumb/server/schema/ThumbCreateSchema";
@@ -8,18 +9,22 @@ import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
+import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
 export const thumbCreateFn = createServerFn({
 	method: "POST",
 })
 	.middleware([
+		withLogMiddleware,
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
 	.inputValidator(ThumbCreateSchema)
-	.handler(async ({ data, context: { database, user } }) =>
-		zodGuardFx({
+	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
+		const logger = rootLogger.getChild(name);
+		logger.debug(name, data);
+		return zodGuardFx({
 			schema: ListingSchema,
 			dataFx: thumbCreateFx({
 				...data,
@@ -28,6 +33,7 @@ export const thumbCreateFn = createServerFn({
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
+			withLoggerFx(logger),
 			withCatchFx({
 				NotFoundErrorFx() {
 					throw new Error("NotFoundErrorFx");
@@ -43,5 +49,5 @@ export const thumbCreateFn = createServerFn({
 				},
 			}),
 			Effect.runPromise,
-		),
-	);
+		);
+	});

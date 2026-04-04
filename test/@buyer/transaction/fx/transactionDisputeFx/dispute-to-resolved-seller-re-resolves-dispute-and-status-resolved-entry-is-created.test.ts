@@ -2,41 +2,22 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
-import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createResolvedScenarioFx } from "~/test/utils/createResolvedScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionDisputeFx (buyer)", () => {
 	it("dispute → resolved: seller re-resolves dispute and status-resolved entry is created", async () => {
 		const database = await testabase("buyerDisputeFx-dispute-to-resolved");
 
 		return Effect.gen(function* () {
-			const { api } = auth(() => database.dialect);
-
-			const { user: seller } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "seller@dispute-re-resolve.cz",
-						name: "Seller",
-						password: "12345678",
-					},
-				}),
-			);
-			const { user: buyer } = yield* Effect.promise(() =>
-				api.signUpEmail({
-					body: {
-						email: "buyer@dispute-re-resolve.cz",
-						name: "Buyer",
-						password: "12345678",
-					},
-				}),
-			);
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
 			const { transactionId } = yield* createResolvedScenarioFx({
 				sellerId: seller.id,
 				buyerId: buyer.id,
-				database,
 			});
 
 			yield* transactionDisputeFx({

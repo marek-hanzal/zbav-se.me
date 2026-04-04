@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import { transactionFetchFx } from "~/buyer/transaction/server/fx/transactionFetchFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { inboxCreateFx } from "~/user/inbox/server/fx/inboxCreateFx";
@@ -18,6 +19,12 @@ export const transactionSuccessFx = Effect.fn("transactionSuccessFx")(function* 
 	userId,
 	transactionId,
 }: transactionSuccessFx.Props) {
+	const logger = yield* getLoggerFx("transactionSuccessFx");
+	logger.debug("transactionSuccessFx", {
+		userId,
+		transactionId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const transaction = yield* transactionResolveFx({

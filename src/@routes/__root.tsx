@@ -1,6 +1,5 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
-import { Toaster } from "sonner";
 import { uiContainer } from "@/lib/client/container";
 import styles from "~/assets/style.css?url";
 import { getLocaleFn } from "~/common/locale/getLocaleFn";
@@ -44,7 +43,7 @@ export const Route = createRootRouteWithContext<{
 		return (
 			<html
 				lang={locale}
-				className={"bg-slate-200 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"}
+				className={"bg-slate-200"}
 			>
 				<head>
 					<HeadContent />
@@ -56,18 +55,10 @@ export const Route = createRootRouteWithContext<{
 							"font-roboto",
 							"w-dvw",
 							"h-dvh",
-							"md:mx-auto",
-							"md:w-1/4",
 						],
 					})}
 				>
-					<Toaster
-						richColors
-						position={"top-center"}
-					/>
-
 					<Outlet />
-
 					<Scripts />
 				</body>
 			</html>

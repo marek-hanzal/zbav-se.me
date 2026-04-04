@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { zodGuardFx } from "@/lib/common/fx";
+import { getLoggerFx } from "@/lib/common/log";
 import { TransactionBuyerInfoSchema } from "~/seller/transaction/server/schema/TransactionBuyerInfoSchema";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -17,6 +18,12 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 	userId,
 	transactionId,
 }: transactionGetBuyerInfoFx.Props) {
+	const logger = yield* getLoggerFx("transactionGetBuyerInfoFx");
+	logger.debug("transactionGetBuyerInfoFx", {
+		userId,
+		transactionId,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 
 	const userInfo = yield* tryDbFx(async () =>

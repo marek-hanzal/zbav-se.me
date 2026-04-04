@@ -57,7 +57,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 				.as("entry"),
 			sql<number>`coalesce((${eb
 				.selectFrom("inbox as i")
-				.select((eb) => eb.fn.countAll<number>().as("unreadCount"))
+				.select(sql<number>`count(*)::int`.as("unreadCount"))
 				.whereRef("i.userId", "=", "lt.userId")
 				.where("i.family", "=", "transaction")
 				.where("i.type", "=", "seller-message")

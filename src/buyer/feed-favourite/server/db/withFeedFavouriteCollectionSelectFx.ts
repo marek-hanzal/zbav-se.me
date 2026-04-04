@@ -1,6 +1,8 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { withFeedFavouriteSourceSelectFx } from "~/buyer/feed-favourite/server/db/withFeedFavouriteSourceSelectFx";
+import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
 
 export namespace withFeedFavouriteCollectionSelectFx {
 	export interface Props extends withFeedFavouriteSourceSelectFx.Props {
@@ -20,7 +22,17 @@ export const withFeedFavouriteCollectionSelectFx = Effect.fn("withFeedFavouriteC
 		});
 
 		return sourceSelect
-			.selectAll("f")
+			.select([
+				"f.id",
+				"f.userId",
+				"f.locationId",
+				"f.uploadId",
+				"f.type",
+				"f.name",
+				"f.createdAt",
+				"f.updatedAt",
+			])
+			.select((eb) => eb.ref("f.query").$castTo<ListingQuerySchema.Type>().as("query"))
 			.select((eb) =>
 				jsonObjectFrom(
 					eb
@@ -33,7 +45,7 @@ export const withFeedFavouriteCollectionSelectFx = Effect.fn("withFeedFavouriteC
 			.select((eb) =>
 				eb
 					.selectFrom("favourite")
-					.select((eb) => eb.fn.count<number>("favourite.id").$notNull().as("count"))
+					.select(sql<number>`count(*)::int`.as("count"))
 					.whereRef("favourite.feedId", "=", "f.id")
 					.where("favourite.userId", "=", userId)
 					.$asScalar()

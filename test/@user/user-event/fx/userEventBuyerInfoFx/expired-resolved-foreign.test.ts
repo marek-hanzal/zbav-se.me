@@ -3,57 +3,42 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { auth } from "~/server/auth/auth";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Expired: counts foreign transaction.resolved when buyer did not act after seller ping", async () => {
 		const database = await testabase("userEventBuyerInfoFx-expired-resolved-foreign");
 
-		const { api } = auth(() => {
-			return database.dialect;
-		});
+		return Effect.gen(function* () {
+			const buyer = yield* leaseTestUserFx({});
 
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@test.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+			const buyerId = buyer.id;
+			const base = DateTime.now().minus({
+				days: 25,
+			});
+			const t1Create = base;
+			const t1Open = t1Create.plus({
+				hours: 1,
+			});
+			const t1Resolved = t1Open.plus({
+				days: 3,
+			});
+			const t2Create = base.plus({
+				days: 1,
+			});
+			const t2Open = t2Create.plus({
+				hours: 1,
+			});
+			const t2BuyerMsg = t2Open.plus({
+				minutes: 5,
+			});
+			const t2Resolved = t2BuyerMsg.plus({
+				days: 3,
+			});
 
-		const buyerId = buyer.id;
-		const base = DateTime.now().minus({
-			days: 25,
-		});
-
-		// tx-1: seller opens (ping), buyer does nothing, seller ends as "resolved" -> expired++
-		const t1Create = base;
-		const t1Open = t1Create.plus({
-			hours: 1,
-		});
-		const t1Resolved = t1Open.plus({
-			days: 3,
-		});
-
-		// tx-2: seller opens (ping), buyer reacts, seller ends as "resolved" -> NOT expired
-		const t2Create = base.plus({
-			days: 1,
-		});
-		const t2Open = t2Create.plus({
-			hours: 1,
-		});
-		const t2BuyerMsg = t2Open.plus({
-			minutes: 5,
-		});
-		const t2Resolved = t2BuyerMsg.plus({
-			days: 3,
-		});
-
-		const result = await Effect.gen(function* () {
 			// tx-1
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -147,16 +132,16 @@ describe("userEventBuyerInfoFx", () => {
 				}),
 			);
 
-			return yield* userEventBuyerInfoFx({
+			const result = yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 
-		expect(result).not.toBeNull();
-		if (!result) return;
+			expect(result).not.toBeNull();
+			if (!result) return;
 
-		expect(result.expired.total).toBe(2);
-		expect(result.expired.expired).toBe(1);
-		expect(result.expired.percent).toBe(50);
+			expect(result.expired.total).toBe(2);
+			expect(result.expired.expired).toBe(1);
+			expect(result.expired.percent).toBe(50);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

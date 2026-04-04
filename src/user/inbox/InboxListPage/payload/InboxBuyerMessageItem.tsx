@@ -29,6 +29,9 @@ export const InboxBuyerMessageItem: FC<InboxBuyerMessageItem.Props> = ({ item })
 
 	return (
 		<LinkTo
+			data-id={item.id}
+			data-ui={"InboxBuyerMessageItem[Link]"}
+			data-action={"open buyer inbox message"}
 			to="/$locale/app/seller/transaction/$transactionId/detail"
 			params={{
 				locale,

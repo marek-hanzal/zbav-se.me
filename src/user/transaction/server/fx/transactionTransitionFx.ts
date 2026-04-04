@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import type { TransactionEntryKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
 import type { TransactionSideEnumSchema } from "~/common/user-transaction/enum/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
@@ -396,6 +397,11 @@ export namespace transactionTransitionFx {
 export const transactionTransitionFx = Effect.fn("transactionTransitionFx")(function* (
 	props: transactionTransitionFx.Props,
 ) {
+	const logger = yield* getLoggerFx("transactionTransitionFx");
+	logger.debug("transactionTransitionFx", {
+		...props,
+	});
+
 	const allowedTransitions = Transitions.Machine[props.status ?? "null"];
 	const transition = allowedTransitions.find(
 		(transition) => transition.request === props.request && transition.side === props.side,

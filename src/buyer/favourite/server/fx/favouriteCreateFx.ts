@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
 import { favouriteFetchFx } from "~/buyer/favourite/server/fx/favouriteFetchFx";
 import type { FavouriteCreateSchema } from "~/buyer/favourite/server/schema/FavouriteCreateSchema";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
@@ -18,6 +19,13 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 	feedId,
 	...data
 }: favouriteCreateFx.Props) {
+	const logger = yield* getLoggerFx("favouriteCreateFx");
+	logger.debug("favouriteCreateFx", {
+		userId,
+		feedId,
+		...data,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

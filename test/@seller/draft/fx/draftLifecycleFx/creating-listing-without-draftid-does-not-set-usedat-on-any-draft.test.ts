@@ -2,27 +2,20 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
-import { auth } from "~/server/auth/auth";
 import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 describe("draft lifecycle", () => {
 	it("creating listing without draftId does not set usedAt on any draft", async () => {
 		const database = await testabase("listing-no-draft");
-		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@listing-no-draft.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const seller = yield* leaseTestUserFx({});
 
-		await Effect.gen(function* () {
 			const category = yield* categoryFetchFx({
 				where: {
 					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
@@ -61,15 +54,16 @@ describe("draft lifecycle", () => {
 					upload.id,
 				],
 			});
+
+			const draft = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("draft")
+					.select("usedAt")
+					.where("userId", "=", seller.id)
+					.executeTakeFirstOrThrow(),
+			);
+
+			expect(draft.usedAt).toBeNull();
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		// The draft should have usedAt = null (not touched)
-		const draft = await database.kysely
-			.selectFrom("draft")
-			.select("usedAt")
-			.where("userId", "=", seller.id)
-			.executeTakeFirstOrThrow();
-
-		expect(draft.usedAt).toBeNull();
 	});
 });

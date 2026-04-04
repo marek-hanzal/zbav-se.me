@@ -2,45 +2,33 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionRejectFx } from "~/seller/transaction/server/fx/transactionRejectFx";
 import { transactionListingCollectionFx } from "~/seller/transaction-listing/server/fx/transactionListingCollectionFx";
-import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { createPendingScenarioFx } from "~/test/utils/createPendingScenarioFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionListingCollectionFx (seller dashboard)", () => {
 	it("terminal: true — listing appears only when all transactions are in terminal status", async () => {
 		const database = await testabase("txListing-terminal");
-		const { api } = auth(() => database.dialect);
 
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@txlisting-terminal.cz",
-				name: "Seller",
-				password: "12345678",
-			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@txlisting-terminal.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
+		return Effect.gen(function* () {
+			const seller = yield* leaseTestUserFx({});
+			const buyer = yield* leaseTestUserFx({});
 
-		const { listingId } = await createPendingScenarioFx({
-			sellerId: seller.id,
-			buyerId: buyer.id,
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+			const { listingId } = yield* createPendingScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+			});
 
-		const tx = await database.kysely
-			.selectFrom("transaction")
-			.select("id")
-			.where("listingId", "=", listingId)
-			.executeTakeFirstOrThrow();
+			const tx = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction")
+					.select("id")
+					.where("listingId", "=", listingId)
+					.executeTakeFirstOrThrow(),
+			);
 
-		// Not terminal yet (pending is non-terminal)
-		const notTerminal = await Effect.gen(function* () {
-			return yield* transactionListingCollectionFx({
+			const notTerminal = yield* transactionListingCollectionFx({
 				scope: {
 					userId: seller.id,
 				},
@@ -48,20 +36,15 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 					terminal: true,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(notTerminal.map((l) => l.id)).not.toContain(listingId);
+			expect(notTerminal.map((l) => l.id)).not.toContain(listingId);
 
-		// Reject → terminal status
-		await Effect.gen(function* () {
 			yield* transactionRejectFx({
 				transactionId: tx.id,
 				userId: seller.id,
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		const terminal = await Effect.gen(function* () {
-			return yield* transactionListingCollectionFx({
+			const terminal = yield* transactionListingCollectionFx({
 				scope: {
 					userId: seller.id,
 				},
@@ -69,8 +52,8 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 					terminal: true,
 				},
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-		expect(terminal.map((l) => l.id)).toContain(listingId);
+			expect(terminal.map((l) => l.id)).toContain(listingId);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

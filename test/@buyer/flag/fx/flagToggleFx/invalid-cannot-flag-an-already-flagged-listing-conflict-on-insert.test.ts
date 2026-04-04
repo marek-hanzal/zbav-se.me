@@ -1,54 +1,54 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { flagToggleFx } from "~/buyer/flag/server/fx/flagToggleFx";
-import { auth } from "~/server/auth/auth";
-import { testabase } from "~/test/testabase";
-import { createListingFx } from "~/test/utils/createListingFx";
-import { withRuntimeFx } from "~/test/utils/withRuntimeFx";
+import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
 
 describe("flagToggleFx", () => {
 	it("invalid: cannot flag an already-flagged listing (conflict on insert)", async () => {
-		const database = await testabase("flagToggle-duplicate");
-		const { api } = auth(() => database.dialect);
-
-		const { user: seller } = await api.signUpEmail({
-			body: {
-				email: "seller@flag-duplicate.cz",
-				name: "Seller",
-				password: "12345678",
+		return runToggleEntityErrorContractFx({
+			databaseName: "flagToggle-duplicate",
+			userSlug: "flag-duplicate",
+			expectedError: {
+				tag: "RuntimeErrorFx",
+				message: "Generic Error",
 			},
-		});
-		const { user: buyer } = await api.signUpEmail({
-			body: {
-				email: "buyer@flag-duplicate.cz",
-				name: "Buyer",
-				password: "12345678",
-			},
-		});
-
-		const listing = await createListingFx(seller.id).pipe(
-			withRuntimeFx(database),
-			Effect.runPromise,
-		);
-
-		// First flag succeeds
-		await Effect.gen(function* () {
-			yield* flagToggleFx({
-				userId: buyer.id,
-				listingId: listing.id,
-				toggle: true,
-			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
-
-		// Second flag throws because doNothing causes executeTakeFirstOrThrow to fail
-		await expect(
-			Effect.gen(function* () {
-				yield* flagToggleFx({
-					userId: buyer.id,
+			beforeFx: ({ users, listing }) =>
+				flagToggleFx({
+					userId: users.buyer.id,
 					listingId: listing.id,
 					toggle: true,
-				});
-			}).pipe(withRuntimeFx(database), Effect.runPromise),
-		).rejects.toThrow();
+				}),
+			errorFx: ({ users, listing }) =>
+				flagToggleFx({
+					userId: users.buyer.id,
+					listingId: listing.id,
+					toggle: true,
+				}),
+			assertAfterFx: ({ database, users, listing }) =>
+				Effect.promise(async () => {
+					const rows = await database.kysely
+						.selectFrom("flag")
+						.select("id")
+						.where("listingId", "=", listing.id)
+						.where("userId", "=", users.buyer.id)
+						.execute();
+					const events = await database.kysely
+						.selectFrom("listing_event")
+						.select("id")
+						.where("listingId", "=", listing.id)
+						.where("event", "=", "flag")
+						.execute();
+					const inbox = await database.kysely
+						.selectFrom("inbox")
+						.select("id")
+						.where("userId", "=", users.seller.id)
+						.where("type", "=", "flag")
+						.execute();
+
+					expect(rows).toHaveLength(1);
+					expect(events).toHaveLength(1);
+					expect(inbox).toHaveLength(1);
+				}),
+		});
 	});
 });
