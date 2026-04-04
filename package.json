@@ -31,6 +31,8 @@
 		"workflow:update": "run-s sp:fix sp:update workflow:format update workflow:check"
 	},
 	"dependencies": {
+		"@ai-sdk/openai-compatible": "2.0.38",
+		"@ai-sdk/react": "3.0.148",
 		"@escapace/accept-language-parser": "2.1.2",
 		"@logtape/file": "2.0.5",
 		"@logtape/logtape": "2.0.5",
@@ -45,6 +47,7 @@
 		"@tanstack/react-router": "1.168.10",
 		"@tanstack/react-router-ssr-query": "1.166.10",
 		"@tanstack/react-start": "1.167.16",
+		"ai": "6.0.146",
 		"axios": "1.14.0",
 		"better-auth": "1.5.6",
 		"cac": "7.0.0",
@@ -76,7 +79,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.10",
-		"@iconify/json": "2.2.458",
+		"@iconify/json": "2.2.459",
 		"@iconify/tailwind4": "1.2.3",
 		"@modyfi/vite-plugin-yaml": "1.1.1",
 		"@playwright/test": "1.59.1",
