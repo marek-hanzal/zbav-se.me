@@ -16,7 +16,6 @@ import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
 import { Route as RedirectSignInRouteImport } from './@routes/redirect/sign-in'
-import { Route as RedirectOathRouteImport } from './@routes/redirect/oath'
 import { Route as ApiHealthRouteImport } from './@routes/api/health'
 import { Route as ApiE2eRouteImport } from './@routes/api/e2e'
 import { Route as ApiAssistantRouteImport } from './@routes/api/assistant'
@@ -25,11 +24,9 @@ import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleSignUpRouteImport } from './@routes/$locale/sign-up'
 import { Route as LocaleSignInRouteImport } from './@routes/$locale/sign-in'
 import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
-import { Route as LocaleOathRouteImport } from './@routes/$locale/oath'
 import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
 import { Route as LocaleAppIndexRouteImport } from './@routes/$locale/app/index'
-import { Route as ApiOauthAuthorizeRouteImport } from './@routes/api/oauth/authorize'
 import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
 import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welcome'
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
@@ -89,11 +86,6 @@ const RedirectSignInRoute = RedirectSignInRouteImport.update({
   path: '/redirect/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RedirectOathRoute = RedirectOathRouteImport.update({
-  id: '/redirect/oath',
-  path: '/redirect/oath',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiHealthRoute = ApiHealthRouteImport.update({
   id: '/health',
   path: '/health',
@@ -134,11 +126,6 @@ const LocalePrivacyRoute = LocalePrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleOathRoute = LocaleOathRouteImport.update({
-  id: '/oath',
-  path: '/oath',
-  getParentRoute: () => LocaleRoute,
-} as any)
 const LocaleLandingRoute = LocaleLandingRouteImport.update({
   id: '/landing',
   path: '/landing',
@@ -153,11 +140,6 @@ const LocaleAppIndexRoute = LocaleAppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LocaleAppRoute,
-} as any)
-const ApiOauthAuthorizeRoute = ApiOauthAuthorizeRouteImport.update({
-  id: '/oauth/authorize',
-  path: '/oauth/authorize',
-  getParentRoute: () => ApiRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/auth/$',
@@ -296,7 +278,6 @@ export interface FileRoutesByFullPath {
   '/mcp': typeof McpRoute
   '/$locale/app': typeof LocaleAppRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
-  '/$locale/oath': typeof LocaleOathRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
@@ -305,7 +286,6 @@ export interface FileRoutesByFullPath {
   '/api/assistant': typeof ApiAssistantRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
-  '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/assistant': typeof LocaleAppAssistantRoute
@@ -314,7 +294,6 @@ export interface FileRoutesByFullPath {
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/oauth/authorize': typeof ApiOauthAuthorizeRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
@@ -340,7 +319,6 @@ export interface FileRoutesByTo {
   '/api': typeof ApiRouteWithChildren
   '/mcp': typeof McpRoute
   '/$locale/landing': typeof LocaleLandingRoute
-  '/$locale/oath': typeof LocaleOathRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
@@ -349,7 +327,6 @@ export interface FileRoutesByTo {
   '/api/assistant': typeof ApiAssistantRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
-  '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/app/assistant': typeof LocaleAppAssistantRoute
@@ -358,7 +335,6 @@ export interface FileRoutesByTo {
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/oauth/authorize': typeof ApiOauthAuthorizeRoute
   '/$locale/app': typeof LocaleAppIndexRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
@@ -387,7 +363,6 @@ export interface FileRoutesById {
   '/mcp': typeof McpRoute
   '/$locale/app': typeof LocaleAppRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
-  '/$locale/oath': typeof LocaleOathRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
@@ -396,7 +371,6 @@ export interface FileRoutesById {
   '/api/assistant': typeof ApiAssistantRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
-  '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/assistant': typeof LocaleAppAssistantRoute
@@ -405,7 +379,6 @@ export interface FileRoutesById {
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/oauth/authorize': typeof ApiOauthAuthorizeRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
@@ -435,7 +408,6 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/$locale/app'
     | '/$locale/landing'
-    | '/$locale/oath'
     | '/$locale/privacy'
     | '/$locale/sign-in'
     | '/$locale/sign-up'
@@ -444,7 +416,6 @@ export interface FileRouteTypes {
     | '/api/assistant'
     | '/api/e2e'
     | '/api/health'
-    | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale/'
     | '/$locale/app/assistant'
@@ -453,7 +424,6 @@ export interface FileRouteTypes {
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/api/auth/$'
-    | '/api/oauth/authorize'
     | '/$locale/app/'
     | '/$locale/app/buyer/search'
     | '/$locale/app/inbox/$priority'
@@ -479,7 +449,6 @@ export interface FileRouteTypes {
     | '/api'
     | '/mcp'
     | '/$locale/landing'
-    | '/$locale/oath'
     | '/$locale/privacy'
     | '/$locale/sign-in'
     | '/$locale/sign-up'
@@ -488,7 +457,6 @@ export interface FileRouteTypes {
     | '/api/assistant'
     | '/api/e2e'
     | '/api/health'
-    | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale'
     | '/$locale/app/assistant'
@@ -497,7 +465,6 @@ export interface FileRouteTypes {
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/api/auth/$'
-    | '/api/oauth/authorize'
     | '/$locale/app'
     | '/$locale/app/buyer/search'
     | '/$locale/app/inbox/$priority'
@@ -525,7 +492,6 @@ export interface FileRouteTypes {
     | '/mcp'
     | '/$locale/app'
     | '/$locale/landing'
-    | '/$locale/oath'
     | '/$locale/privacy'
     | '/$locale/sign-in'
     | '/$locale/sign-up'
@@ -534,7 +500,6 @@ export interface FileRouteTypes {
     | '/api/assistant'
     | '/api/e2e'
     | '/api/health'
-    | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale/'
     | '/$locale/app/assistant'
@@ -543,7 +508,6 @@ export interface FileRouteTypes {
     | '/$locale/app/user'
     | '/$locale/app/welcome'
     | '/api/auth/$'
-    | '/api/oauth/authorize'
     | '/$locale/app/'
     | '/$locale/app/buyer/search'
     | '/$locale/app/inbox/$priority'
@@ -570,7 +534,6 @@ export interface RootRouteChildren {
   DotwellKnownRoute: typeof DotwellKnownRoute
   ApiRoute: typeof ApiRouteWithChildren
   McpRoute: typeof McpRoute
-  RedirectOathRoute: typeof RedirectOathRoute
   RedirectSignInRoute: typeof RedirectSignInRoute
 }
 
@@ -623,13 +586,6 @@ declare module '@tanstack/react-router' {
       path: '/redirect/sign-in'
       fullPath: '/redirect/sign-in'
       preLoaderRoute: typeof RedirectSignInRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/redirect/oath': {
-      id: '/redirect/oath'
-      path: '/redirect/oath'
-      fullPath: '/redirect/oath'
-      preLoaderRoute: typeof RedirectOathRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/health': {
@@ -688,13 +644,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocalePrivacyRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/oath': {
-      id: '/$locale/oath'
-      path: '/oath'
-      fullPath: '/$locale/oath'
-      preLoaderRoute: typeof LocaleOathRouteImport
-      parentRoute: typeof LocaleRoute
-    }
     '/$locale/landing': {
       id: '/$locale/landing'
       path: '/landing'
@@ -715,13 +664,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/app/'
       preLoaderRoute: typeof LocaleAppIndexRouteImport
       parentRoute: typeof LocaleAppRoute
-    }
-    '/api/oauth/authorize': {
-      id: '/api/oauth/authorize'
-      path: '/oauth/authorize'
-      fullPath: '/api/oauth/authorize'
-      preLoaderRoute: typeof ApiOauthAuthorizeRouteImport
-      parentRoute: typeof ApiRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -948,7 +890,6 @@ const LocaleAppRouteWithChildren = LocaleAppRoute._addFileChildren(
 interface LocaleRouteChildren {
   LocaleAppRoute: typeof LocaleAppRouteWithChildren
   LocaleLandingRoute: typeof LocaleLandingRoute
-  LocaleOathRoute: typeof LocaleOathRoute
   LocalePrivacyRoute: typeof LocalePrivacyRoute
   LocaleSignInRoute: typeof LocaleSignInRoute
   LocaleSignUpRoute: typeof LocaleSignUpRoute
@@ -959,7 +900,6 @@ interface LocaleRouteChildren {
 const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleAppRoute: LocaleAppRouteWithChildren,
   LocaleLandingRoute: LocaleLandingRoute,
-  LocaleOathRoute: LocaleOathRoute,
   LocalePrivacyRoute: LocalePrivacyRoute,
   LocaleSignInRoute: LocaleSignInRoute,
   LocaleSignUpRoute: LocaleSignUpRoute,
@@ -976,7 +916,6 @@ interface ApiRouteChildren {
   ApiE2eRoute: typeof ApiE2eRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
-  ApiOauthAuthorizeRoute: typeof ApiOauthAuthorizeRoute
   ApiPublicMigrationRunRoute: typeof ApiPublicMigrationRunRoute
 }
 
@@ -986,7 +925,6 @@ const ApiRouteChildren: ApiRouteChildren = {
   ApiE2eRoute: ApiE2eRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
-  ApiOauthAuthorizeRoute: ApiOauthAuthorizeRoute,
   ApiPublicMigrationRunRoute: ApiPublicMigrationRunRoute,
 }
 
@@ -998,7 +936,6 @@ const rootRouteChildren: RootRouteChildren = {
   DotwellKnownRoute: DotwellKnownRoute,
   ApiRoute: ApiRouteWithChildren,
   McpRoute: McpRoute,
-  RedirectOathRoute: RedirectOathRoute,
   RedirectSignInRoute: RedirectSignInRoute,
 }
 export const routeTree = rootRouteImport
