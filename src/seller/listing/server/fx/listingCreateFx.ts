@@ -70,8 +70,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						id,
 						userId,
 						galleryId: gallery.id,
-						createdAt: now.toJSDate().toISOString(),
-						updatedAt: now.toJSDate().toISOString(),
+						createdAt: now.toJSDate(),
+						updatedAt: now.toJSDate(),
 						currency: "CZK",
 						status: "live",
 						...data,
@@ -97,8 +97,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 								}),
 							)
 							.exhaustive()
-							.toJSDate()
-							.toISOString(),
+							.toJSDate(),
 					})
 					.execute(),
 			);
@@ -109,8 +108,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					kysely
 						.updateTable("draft")
 						.set({
-							usedAt: now.toJSDate().toISOString(),
-							updatedAt: now.toJSDate().toISOString(),
+							usedAt: now.toJSDate(),
+							updatedAt: now.toJSDate(),
 						})
 						.where("id", "=", draftId)
 						.where("userId", "=", userId)

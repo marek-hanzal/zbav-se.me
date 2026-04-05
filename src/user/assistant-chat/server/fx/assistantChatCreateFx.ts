@@ -39,7 +39,7 @@ export const assistantChatCreateFx = Effect.fn("assistantChatCreateFx")(function
 						id,
 						userId,
 						payload,
-						createdAt: now.toJSDate().toISOString(),
+						createdAt: now.toJSDate(),
 					})
 					.executeTakeFirstOrThrow();
 			});
