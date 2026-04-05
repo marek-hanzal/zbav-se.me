@@ -6,6 +6,7 @@ import { toolDraftCollection } from "~/public/assistant/draft/tool/toolDraftColl
 import { toolKnowledge } from "~/public/assistant/knowledge/tool/toolKnowledge";
 import { toolKnowledgeIndex } from "~/public/assistant/knowledge/tool/toolKnowledgeIndex";
 import { toolKnowledgeSearch } from "~/public/assistant/knowledge/tool/toolKnowledgeSearch";
+import { toolLocationAutocomplete } from "~/public/assistant/location/tool/toolLocationAutocomplete";
 import { SystemPrompt } from "~/public/assistant/SystemPrompt";
 import { MessageSchema } from "~/public/assistant/schema/MessageSchema";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
@@ -17,6 +18,7 @@ const tools = {
 	//
 	"draft-collection": toolDraftCollection,
 	//
+	"location-autocomplete": toolLocationAutocomplete,
 } as const;
 
 export const ChatRequestSchema = z
