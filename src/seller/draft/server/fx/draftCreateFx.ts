@@ -34,7 +34,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 			const dateContext = yield* DateContextFx;
 
 			const id = genId();
-			const now = dateContext.now();
+			const now = dateContext.now().toJSDate().toISOString();
 
 			const gallery = yield* galleryInsertFx({
 				userId,
@@ -62,8 +62,8 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 						userId,
 						id,
 						galleryId: gallery.id,
-						createdAt: now.toJSDate(),
-						updatedAt: now.toJSDate(),
+						createdAt: now,
+						updatedAt: now,
 						currency: "CZK",
 					})
 					.execute();

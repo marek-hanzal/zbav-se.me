@@ -22,7 +22,7 @@ export namespace DraftList {
  * @see src/draft/page/DraftListPage.tsx
  */
 export const DraftList = withFallback(({ _suspense, ui, ...props }: DraftList.Props) => {
-	const { data: draftCollection } = withDraftQuery.useCollectionQuery({
+	const { data: draftCollection } = withDraftQuery.useIdsQuery({
 		where: {
 			usedAtIsNull: true,
 		},

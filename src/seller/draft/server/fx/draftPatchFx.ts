@@ -41,7 +41,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 					.updateTable("draft")
 					.set({
 						...patch,
-						updatedAt: dateContext.now().toJSDate(),
+						updatedAt: dateContext.now().toJSDate().toISOString(),
 					})
 					.where("id", "=", draft.id)
 					.executeTakeFirst(),

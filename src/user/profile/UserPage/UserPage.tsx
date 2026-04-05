@@ -3,15 +3,16 @@ import { Container } from "@/lib/client/container";
 import { UserIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
+import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
-import { useUser } from "~/common/auth/hook/useUser";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
+import { useUser } from "~/user/auth/hook/useUser";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { SignOutButton } from "./SignOutButton";
 
 export namespace UserPage {
-	export interface Props extends TitleContainer.Props {
+	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
 		//
 	}
 }

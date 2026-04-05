@@ -70,8 +70,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						id,
 						userId,
 						galleryId: gallery.id,
-						createdAt: now.toJSDate(),
-						updatedAt: now.toJSDate(),
+						createdAt: now.toJSDate().toISOString(),
+						updatedAt: now.toJSDate().toISOString(),
 						currency: "CZK",
 						status: "live",
 						...data,
@@ -82,27 +82,23 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						),
 						expiresAt: match(data.expiresAt)
 							.with("7-days", () =>
-								now
-									.plus({
-										days: 7,
-									})
-									.toJSDate(),
+								now.plus({
+									days: 7,
+								}),
 							)
 							.with("14-days", () =>
-								now
-									.plus({
-										days: 14,
-									})
-									.toJSDate(),
+								now.plus({
+									days: 14,
+								}),
 							)
 							.with("1-month", () =>
-								now
-									.plus({
-										months: 1,
-									})
-									.toJSDate(),
+								now.plus({
+									months: 1,
+								}),
 							)
-							.exhaustive(),
+							.exhaustive()
+							.toJSDate()
+							.toISOString(),
 					})
 					.execute(),
 			);
@@ -113,8 +109,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					kysely
 						.updateTable("draft")
 						.set({
-							usedAt: now.toJSDate(),
-							updatedAt: now.toJSDate(),
+							usedAt: now.toJSDate().toISOString(),
+							updatedAt: now.toJSDate().toISOString(),
 						})
 						.where("id", "=", draftId)
 						.where("userId", "=", userId)

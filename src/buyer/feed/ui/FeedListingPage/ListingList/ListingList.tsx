@@ -43,7 +43,7 @@ export const ListingList = withFallback(
 		]);
 
 		const { data: feed } = withFeedQuery.useFetchQuery(feedId);
-		const { data: listingCollection } = withListingQuery.useCollectionQuery({
+		const { data: listingCollection } = withListingQuery.useIdsQuery({
 			...feed.query,
 			cursor: {
 				page: 0,

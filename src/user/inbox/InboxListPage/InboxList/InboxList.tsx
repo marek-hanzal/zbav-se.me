@@ -18,7 +18,7 @@ export namespace InboxList {
 
 export const InboxList = withFallback(
 	({ _suspense, priority, refetchInterval = 5_000, ...props }: InboxList.Props) => {
-		const { data: inboxCollection } = withInboxQuery.useCollectionQuery(
+		const { data: inboxCollection } = withInboxQuery.useIdsQuery(
 			{
 				where: {
 					priority,

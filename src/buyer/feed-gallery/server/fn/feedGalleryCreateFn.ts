@@ -36,19 +36,36 @@ export const feedGalleryCreateFn = createServerFn({
 			withDateFx,
 			withLoggerFx(logger),
 			withCatchFx({
-				InvalidRequestErrorFx() {
+				InvalidRequestErrorFx(error) {
+					logger.error("InvalidRequestError", {
+						message: error.message,
+					});
 					throw new Error("InvalidRequestErrorFx");
 				},
-				NotFoundErrorFx() {
+				NotFoundErrorFx(error) {
+					logger.error("NotFoundError", {
+						message: error.message,
+					});
 					throw new Error("NotFoundErrorFx");
 				},
-				AccessDeniedErrorFx() {
+				AccessDeniedErrorFx(error) {
+					logger.error("AccessDeniedError", {
+						message: error.message,
+					});
 					throw new Error("AccessDeniedErrorFx");
 				},
-				RuntimeErrorFx() {
+				RuntimeErrorFx(error) {
+					logger.error("RuntimeError", {
+						message: error.message,
+						cause: error.cause,
+					});
 					throw new Error("RuntimeErrorFx");
 				},
-				ZodErrorFx() {
+				ZodErrorFx({ zod, input }) {
+					logger.error("ZodErrorFx", {
+						zod,
+						input,
+					});
 					throw new Error("ZodErrorFx");
 				},
 			}),

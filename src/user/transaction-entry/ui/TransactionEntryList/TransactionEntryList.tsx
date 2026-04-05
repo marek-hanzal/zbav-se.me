@@ -30,7 +30,7 @@ export const TransactionEntryList: FC<TransactionEntryList.Props> = ({
 		containerRef,
 		contentRef,
 	});
-	const { data } = withTransactionEntryQuery.useCollectionQuery(
+	const { data } = withTransactionEntryQuery.useIdsQuery(
 		{
 			filter: {
 				transactionId,

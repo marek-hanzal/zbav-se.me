@@ -100,6 +100,9 @@ const rules = [
 				"^src/[^/]+/server(?:/|$)",
 				"^src/[^/]+/[^/]+/server(?:/|$)",
 				"^src/[^/]+/[^/]+/[^/]+/server(?:/|$)",
+				"^src/[^/]+/middleware(?:/|$)",
+				"^src/[^/]+/[^/]+/middleware(?:/|$)",
+				"^src/[^/]+/[^/]+/[^/]+/middleware(?:/|$)",
 			],
 		},
 		to: {
@@ -114,6 +117,9 @@ const rules = [
 				"^src/[^/]+/server/(?:fn|schema)(?:/|$)",
 				"^src/[^/]+/[^/]+/server/(?:fn|schema)(?:/|$)",
 				"^src/[^/]+/[^/]+/[^/]+/server/(?:fn|schema)(?:/|$)",
+				"^src/[^/]+/middleware(?:/|$)",
+				"^src/[^/]+/[^/]+/middleware(?:/|$)",
+				"^src/[^/]+/[^/]+/[^/]+/middleware(?:/|$)",
 			],
 			dependencyTypesNot: [
 				"type-only",

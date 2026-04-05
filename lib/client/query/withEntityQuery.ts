@@ -407,13 +407,13 @@ export const withEntityQuery = <
 			);
 		});
 
-		return result.map((item) => item.id);
+		return result;
 	}
 
 	function ensureCollectionQuery(
 		queryClient: QueryClient,
 		data: TCollectionRequest,
-		opts?: withEntityQuery.QueryOptions<string[]>,
+		opts?: withEntityQuery.QueryOptions<TEntity[]>,
 	) {
 		return queryClient.ensureQueryData({
 			queryKey: $keys("collection", data),
@@ -435,7 +435,7 @@ export const withEntityQuery = <
 	 */
 	function useCollectionQuery(
 		data: TCollectionRequest,
-		opts?: withEntityQuery.QueryOptions<string[]>,
+		opts?: withEntityQuery.QueryOptions<TEntity[]>,
 	) {
 		const queryClient = useQueryClient();
 
@@ -443,6 +443,18 @@ export const withEntityQuery = <
 			queryKey: $keys("collection", data),
 			async queryFn() {
 				return $collectionFn(queryClient, data);
+			},
+			...opts,
+		});
+	}
+
+	function useIdsQuery(data: TCollectionRequest, opts?: withEntityQuery.QueryOptions<string[]>) {
+		const queryClient = useQueryClient();
+
+		return useSuspenseQuery({
+			queryKey: $keys("collection", data),
+			async queryFn() {
+				return (await $collectionFn(queryClient, data)).map((item) => item.id);
 			},
 			...opts,
 		});
@@ -764,6 +776,7 @@ export const withEntityQuery = <
 		useEntityQuery,
 		useMaybeEntityQuery,
 		useCollectionQuery,
+		useIdsQuery,
 		useCountQuery,
 		//
 		usePatchMutation,

@@ -38,7 +38,11 @@ export const categoryCollectionFn = createServerFn()
 				RuntimeErrorFx() {
 					throw new Error("RuntimeErrorFx");
 				},
-				ZodErrorFx() {
+				ZodErrorFx({ zod, input }) {
+					logger.error("ZodError", {
+						zod,
+						input,
+					});
 					throw new Error("ZodError");
 				},
 			}),

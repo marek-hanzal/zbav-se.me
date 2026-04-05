@@ -15,26 +15,15 @@ permissions:
 
 env:
     FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
-    VITE_ORIGIN: https://zbav-se.me.localhost:1355
     NODE_OPTIONS: --max-old-space-size=1600
+    VITE_ORIGIN: https://zbav-se.me.localhost:1355
     SERVER_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:55432
-    SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
-    SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
-    SERVER_S3_API: ${{ vars.SERVER_S3_API }}
-    SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
-    SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
-    SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
-    SERVER_CONTENT_CDN: ${{ vars.SERVER_CONTENT_CDN }}
-    SERVER_GITHUB: ${{ secrets.SERVER_GITHUB }}
-    SERVER_AI_TOKEN: ${{ secrets.SERVER_AI_TOKEN }}
-    SERVER_AI_SERVER_URL: ${{ vars.SERVER_AI_SERVER_URL }}
-    SERVER_AI_MODEL: ${{ vars.SERVER_AI_MODEL }}
 
 jobs:
     lint:
         name: Lint
         runs-on: ubuntu-latest
+        environment: staging
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -55,6 +44,7 @@ jobs:
     dc:
         name: Dependency Cruiser
         runs-on: ubuntu-latest
+        environment: staging
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -75,6 +65,7 @@ jobs:
     typecheck:
         name: Typecheck
         runs-on: ubuntu-latest
+        environment: staging
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -95,6 +86,7 @@ jobs:
     knip:
         name: Knip
         runs-on: ubuntu-latest
+        environment: staging
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -116,6 +108,18 @@ jobs:
         name: Vitest
         runs-on: ubuntu-latest
         environment: staging
+        env:
+            SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
+            SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
+            SERVER_S3_API: ${{ vars.SERVER_S3_API }}
+            SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
+            SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
+            SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
+            SERVER_CONTENT_CDN: ${{ vars.SERVER_CONTENT_CDN }}
+            SERVER_GITHUB: ${{ secrets.SERVER_GITHUB }}
+            SERVER_AI_TOKEN: ${{ secrets.SERVER_AI_TOKEN }}
+            SERVER_AI_SERVER_URL: ${{ vars.SERVER_AI_SERVER_URL }}
+            SERVER_AI_MODEL: ${{ vars.SERVER_AI_MODEL }}
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -182,6 +186,17 @@ jobs:
         runs-on: ubuntu-latest
         environment: staging
         env:
+            SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
+            SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
+            SERVER_S3_API: ${{ vars.SERVER_S3_API }}
+            SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
+            SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
+            SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
+            SERVER_CONTENT_CDN: ${{ vars.SERVER_CONTENT_CDN }}
+            SERVER_GITHUB: ${{ secrets.SERVER_GITHUB }}
+            SERVER_AI_TOKEN: ${{ secrets.SERVER_AI_TOKEN }}
+            SERVER_AI_SERVER_URL: ${{ vars.SERVER_AI_SERVER_URL }}
+            SERVER_AI_MODEL: ${{ vars.SERVER_AI_MODEL }}
             NITRO_PRESET: node_server
             SERVER_E2E: e2e
             PORTLESS_STATE_DIR: /tmp/portless

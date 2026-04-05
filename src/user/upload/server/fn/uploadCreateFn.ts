@@ -40,13 +40,24 @@ export const uploadCreateFn = createServerFn({
 			}),
 			withLoggerFx(logger),
 			withCatchFx({
-				InvalidRequestErrorFx() {
+				InvalidRequestErrorFx(error) {
+					logger.error("InvalidRequestError", {
+						message: error.message,
+					});
 					throw new Error("InvalidRequestError");
 				},
-				RuntimeErrorFx() {
+				RuntimeErrorFx(error) {
+					logger.error("RuntimeError", {
+						message: error.message,
+						cause: error.cause,
+					});
 					throw new Error("RuntimeError");
 				},
-				ZodErrorFx() {
+				ZodErrorFx({ zod, input }) {
+					logger.error("ZodError", {
+						zod,
+						input,
+					});
 					throw new Error("ZodError");
 				},
 			}),

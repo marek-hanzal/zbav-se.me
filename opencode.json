@@ -8,26 +8,6 @@
 			]
 		}
 	},
-	"provider": {
-		"lmstudio": {
-			"npm": "@ai-sdk/openai-compatible",
-			"name": "Obsidian LLM",
-			"options": {
-				"baseURL": "http://127.0.0.1:1234/v1"
-			},
-			"models": {
-				"zai-org/glm-4.7-flash": {
-					"name": "GLM 4.7 - Flash (Reasoning)"
-				},
-				"qwen/qwen3-coder-30b": {
-					"name": "Qwen Coder 30b (8bit)"
-				},
-				"mistralai/devstral-small-2-2512": {
-					"name": "Devstrall (8bit)"
-				}
-			}
-		}
-	},
 	"plugin": [
 		"context-mode"
 	]

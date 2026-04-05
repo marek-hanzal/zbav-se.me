@@ -47,7 +47,11 @@ export const locationAutocompleteFn = createServerFn()
 				RuntimeErrorFx() {
 					throw new Error("RuntimeError");
 				},
-				ZodErrorFx() {
+				ZodErrorFx({ zod, input }) {
+					logger.error("ZodError", {
+						zod,
+						input,
+					});
 					throw new Error("ZodError");
 				},
 			}),

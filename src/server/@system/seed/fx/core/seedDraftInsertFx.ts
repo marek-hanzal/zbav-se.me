@@ -40,8 +40,8 @@ export const seedDraftInsertFx = Effect.fn("seedDraftInsertFx")(function* ({
 				userId,
 				id,
 				galleryId: gallery.id,
-				createdAt: now,
-				updatedAt: now,
+				createdAt: now.toISOString(),
+				updatedAt: now.toISOString(),
 				currency: "CZK",
 			})
 			.execute(),

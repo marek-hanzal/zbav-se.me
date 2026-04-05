@@ -38,16 +38,30 @@ export const transactionCreateFn = createServerFn({
 			withTransactionContextFx(),
 			withLoggerFx(logger),
 			withCatchFx({
-				NotFoundErrorFx() {
+				NotFoundErrorFx(error) {
+					logger.error("NotFoundError", {
+						message: error.message,
+					});
 					throw new Error("NotFoundError");
 				},
-				InvalidRequestErrorFx() {
+				InvalidRequestErrorFx(error) {
+					logger.error("InvalidRequestError", {
+						message: error.message,
+					});
 					throw new Error("InvalidRequestError");
 				},
-				RuntimeErrorFx() {
+				RuntimeErrorFx(error) {
+					logger.error("RuntimeError", {
+						message: error.message,
+						cause: error.cause,
+					});
 					throw new Error("RuntimeError");
 				},
-				ZodErrorFx() {
+				ZodErrorFx({ zod, input }) {
+					logger.error("ZodError", {
+						zod,
+						input,
+					});
 					throw new Error("ZodError");
 				},
 			}),

@@ -21,7 +21,7 @@ export namespace ListingList {
  * @see src/listing/page/MyListingPage.tsx
  */
 export const ListingList = withFallback(({ ui, ...props }: ListingList.Props) => {
-	const { data: listingCollection } = withListingQuery.useCollectionQuery({
+	const { data: listingCollection } = withListingQuery.useIdsQuery({
 		cursor: {
 			page: 0,
 			size: 100,

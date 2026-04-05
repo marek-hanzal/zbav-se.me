@@ -1,0 +1,16 @@
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { getLogger } from "@logtape/logtape";
+import { getIndexOf } from "@/lib/common/front";
+import { KnowledgeFrontSchema } from "~/public/assistant/knowledge/schema/KnowledgeFrontSchema";
+
+const logger = getLogger("getKnowledgeIndex");
+
+export const getKnowledgeIndex = () => {
+	logger.debug("Index of proxy for Knowledge Index");
+
+	return getIndexOf({
+		schema: KnowledgeFrontSchema,
+		source: join(dirname(fileURLToPath(import.meta.url)), "../content"),
+	});
+};

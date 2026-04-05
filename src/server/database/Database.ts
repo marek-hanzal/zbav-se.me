@@ -1,4 +1,5 @@
 import type { auth } from "~/server/auth/auth";
+import type { AssistantChatTableSchema } from "~/server/database/@table/AssistantChatTableSchema";
 import type { CategoryMissTableSchema } from "~/server/database/@table/CategoryMissTableSchema";
 import type { CategorySpotlightTableSchema } from "~/server/database/@table/CategorySpotlightTableSchema";
 import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
@@ -23,6 +24,7 @@ import type { UserEventTableSchema } from "~/server/database/@table/UserEventTab
 import type { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
 
 export interface Database {
+	assistant_chat: AssistantChatTableSchema.Type;
 	category_miss: CategoryMissTableSchema.Type;
 	category_spotlight: CategorySpotlightTableSchema.Type;
 	category: CategoryTableSchema.Type;

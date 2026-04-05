@@ -151,6 +151,9 @@
 1e2c52ff0279d0ad26557c2235b137106f4d5a45187461bba1242a01:
   ref: Listing condition not selected
   value: Listing condition not selected
+1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
+  ref: Agreement with (label)
+  value: Agreement with (label)
 202839a5815da796fc7bf9523af6a1632740384024fad4cbbdf1ab3a:
   ref: No listings for current filter (message)
   value: No listings with messages match the current filter.
@@ -178,6 +181,9 @@
 27199be77960fa6b867fcd30bf00eb0f6d4ff1e4279ba9b3d99b82ca:
   ref: Create new draft (title)
   value: Create new draft (title)
+2893c5e3aa27d9e9f20c82e0b9921c385df9e15828fc420f45dc5c67:
+  ref: Please wait...
+  value: Please wait...
 29b5698dbd428037dfdf3d01534751de7b9bbdce4a6eeb4df2655548:
   ref: Price not set
   value: Price not set
@@ -214,6 +220,12 @@
 3136e34a81ab39a2fb1e4198edccbf10acf6244b0543a98136311b44:
   ref: Listing warranty (hint)
   value: Listing warranty (hint)
+323351b9e4c55b173d9f38ae62898421c4bbfb45584093c73f1f2a8c:
+  ref: Enter your email
+  value: Enter your email
+3323505e78622b0fc96dcca7ff8249ba42f46036e7ee0bf66750f3c4:
+  ref: About me (title)
+  value: About me (title)
 339d9753b567b5672f79522f5fbd8264123ec49f0c6601c07043a408:
   ref: Feed range (description)
   value: Feed range (description)
@@ -226,12 +238,18 @@
 356f63775751bd5232d3021e2d6775a39bb1f9a2ec6041b1e763e6b9:
   ref: Dispute transaction - confirm (button)
   value: Dispute transaction - confirm (button)
+366b3439049aa504cfaf6a357cfa29c6325205bc08bb6781cba78f65:
+  ref: Assistant (label)
+  value: Assistant (label)
 36725bc2ac5cbe7bac8e1e99ad76766f37ce4ce1e330af2152a16d6d:
   ref: Listing favourited (label)
   value: Listing favourited (label)
 3685c79576a1efb41990be4a56a962ff63eaab48e01dd64da8e62c16:
   ref: No drafts (title)
   value: No drafts (title)
+36867b0182ba4840c97c772c1168bf1584a52897b6a292d58dc53dc9:
+  ref: Register (title)
+  value: Register (title)
 376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
   ref: rejected
   value: rejected
@@ -256,6 +274,9 @@
 3ca78530a9e9985ed4678eeb359e23a9c8e913ec6de9f637c0f53e46:
   ref: Price - free
   value: Price - free
+3df09c51e95ae8860071d5aa5bdab57a73ecc7c25ae2f25373ac5da3:
+  ref: Privacy policy not available in this language (title)
+  value: Privacy policy not available in this language (title)
 3eec6c407e43937eb1d57728d162a58ab3d6c35a05faf5ca7772d984:
   ref: No categories found (label)
   value: No categories found (label)
@@ -265,18 +286,30 @@
 4034c9134481a06e13f39b3d2b927ade85886fc9bbfb379d51f01153:
   ref: Photo upload placeholder (message)
   value: Photo upload placeholder (message)
+42888fcc58a5c859961d7ce1f9843868fd000cd931e43e080d44b369:
+  ref: Register (hero)
+  value: Register (hero)
 42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
   ref: Listing category (label)
   value: Listing category (label)
+435b71e7556a644cd11a2e8059ae87568d2ccd2115317edbb53af97f:
+  ref: History activity (hint)
+  value: History activity (hint)
 4363f4fb6f819cf057645cd3a62c4560949f8c20bae08b9619b2518e:
   ref: Your favourites (title)
   value: Your favourites (title)
+4388497d37a170bfe956cd3195a9ef8f6976885f0b625b7c24e9f0d5:
+  ref: Write to a assistant
+  value: Write to a assistant
 43c97e37d539928f112ef93039df9510299f8c68dc170da7c864a3ba:
   ref: Draft list (label)
   value: Draft list (label)
 44768dba85d12f054b4b9820de22bfdf8dcd0d561e4edc9d5546340b:
   ref: Find listings (label)
   value: Find listings (label)
+451a67f84c10be2ef031071c09e2d990a466b33ae4376b5c8cee64a5:
+  ref: Password confirmation is required
+  value: Password confirmation is required
 45260cbfb1db18e4526fef4cc251c0564b693545bec5e2fa17efea67:
   ref: New buyer message (label)
   value: New buyer message (label)
@@ -334,9 +367,15 @@
 5216a97ce804ea83d2142778cf1659ad70adc72c670ea7365e396fcb:
   ref: Go home (welcome)
   value: Go home (welcome)
+521ed1d53a15e6fa2570cb571f3ae7f357ab7bc3fb69439cecfec543:
+  ref: ToS not available in this language (description)
+  value: ToS not available in this language (description)
 53630910d2b191f4a79a007e555fd44b9e109f75bafb3df5171ea48f:
   ref: New seller message (label)
   value: New seller message (label)
+54c4e7b4b5a3122ed9a673a0ac2b0df248bef02857032624aec47948:
+  ref: Register
+  value: Register
 55672785780f3eaea6cb3ccba093853d44e33d6e4f984123c2b89a7a:
   ref: Transaction status expired (label)
   value: Transaction expired
@@ -379,6 +418,9 @@
 5dc3ea5f4971a9d3d71980e83f4d740bae8b6fb905950d61523b432a:
   ref: Draft - bunch of required (title)
   value: Draft - bunch of required (title)
+5dff2c312c85487ff5ee3fb9ac4ef2e1d4a492a52eeb2f1d0333c94a:
+  ref: About me (message)
+  value: About me (message)
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
   ref: Listing age (label)
   value: Listing age (label)
@@ -409,6 +451,9 @@
 61dd087b73e6d2b3291aa14c76d9dcc813946be2957f788836796746:
   ref: Transaction status closed (label)
   value: Transaction closed
+6212dbd7147760fc25e692c4d4e94e2e429e7adae46d98ca3bc21a07:
+  ref: Login (link)
+  value: Login (link)
 62323b76d8ec615cba6e105b1c5c1e2e4f6e9f89de5a251ed565809f:
   ref: Transaction row - personal activity (label)
   value: Shared handoff details
@@ -430,6 +475,9 @@
 64b012aba980dc949c73673c6027f83c13b38bd1c1965dba3133a3de:
   ref: Listing description (hint)
   value: Listing description (hint)
+64d1d959871730b453081489881ac52d2b3eb84fb20e372802ddacb2:
+  ref: Landing - Hero (title)
+  value: Landing - Hero (title)
 6526401dc54716accd5e7f420d3f70d39b06beff9a4a9bf64dcd15d0:
   ref: Share contact info (button)
   value: Share contact info (button)
@@ -451,6 +499,9 @@
 6dbcf4fc35bb69ec88d55c0a6ab2a709d55dc49588e018564cbca5a1:
   ref: Transaction update (label)
   value: Transaction update (label)
+6facc75794554d433accb2f240799b65ee08b763fef727c9bf711dc7:
+  ref: Login (hero)
+  value: Login (hero)
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
   ref: Feed sorting not selected
   value: Feed sorting not selected
@@ -487,18 +538,30 @@
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
   ref: Feed name (title)
   value: Feed name
+7c7513e1fc9138518db23ced33814236e395a5e16b73ca2057ed0225:
+  ref: Assistant welcome (title)
+  value: Assistant welcome (title)
 7dbeb77d3b315a1061d4bcd83875d872181ea3f46593933720e8dc4a:
   ref: Close transaction (button)
   value: Close transaction (button)
+7e0689b27022e61a1b7df254ca32c6b73914488dcf5ab0dad249b407:
+  ref: Passwords do not match
+  value: Passwords do not match
 7f2df328f0f16e7c1fd38d50d6a91a5160b4daf7ba80e34a5907d814:
   ref: Feed range (placeholder)
   value: Feed range (placeholder)
+7f590474fc7aa21590e42c47aa3f3b5d5f1f5b6e56c2aae5da611958:
+  ref: Privacy policy (label)
+  value: Privacy policy (label)
 7f89976c181499cadaa8961f43343f08d5d5660f0188347e382dc807:
   ref: Listing delivery (label)
   value: Listing delivery (label)
 7fff5a32624ca773f775bae93783cbc55b943a4c968052d2b32e91cd:
   ref: Mark transaction as successful (button)
   value: Mark transaction as successful (button)
+80ea2f2b8b1c2a4f5ea26ec61c1e24acbc4b8df3d2193036245e10f8:
+  ref: Something went wrong
+  value: Something went wrong
 80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
   ref: unused
   value: unused
@@ -580,6 +643,9 @@
 93e4f0b9a0dc4d17c33a08d475281a1a736fff83763a516958a1f693:
   ref: Feed title (title)
   value: Feed title (title)
+94268a800874338c42540c7f350a713b3b5afceb7b26a4297491aa5c:
+  ref: Confirm your password
+  value: Confirm your password
 957897e367a94096dcbfda99c8cf5bd4dc9f4d2a2292065c65990299:
   ref: Draft - action section (title)
   value: Draft - action section (title)
@@ -628,6 +694,9 @@ a038a4da09ca1bfcd3d73f545e72575a33516d5e7ef37b09b4f5b397:
 a0d2788aec3760e59aa4f698966708ab8ece9b28608ff2bef10db62d:
   ref: Messages (title)
   value: Messages (title)
+a1308b7983fef7def9ffd06bed7ff767fa4216baf9d9d911af1e7e2e:
+  ref: Password
+  value: Password
 a139f46f59f778256c981865c1f30e87d2f787451118cbd9fc8d3699:
   ref: Inbox - nothing new (label)
   value: Inbox - nothing new (label)
@@ -658,9 +727,15 @@ a78ed5f38f0cf730dc1a618d9df1ca5011cc5d947d61f00075e0c5da:
 a92a914e77188202f38d6b42be76d7f92cee60d777d0c00ca5aecbde:
   ref: Package - Tracking number (placeholder)
   value: Package - Tracking number (placeholder)
+aae57032f267d5303e09b5e9f3a1d39b9cff3b65064a933cd6bc9d7a:
+  ref: Please try again later.
+  value: Please try again later.
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
   ref: Photo upload placeholder (title)
   value: Photo upload placeholder (title)
+ac1247f9e2a8fcba4db03d65dbefe4199b1c6a62d16df9e7738793fb:
+  ref: ToS agreement (label)
+  value: ToS agreement (label)
 ac4e887fc8f3f64d662b6a940ff6e823894c748bf103185448f43afa:
   ref: personal
   value: personal
@@ -703,6 +778,9 @@ b46060e6e02e9a672bd27f869c2d7206d0c7a0584e298065557d7954:
 b48018d27bcd6409768ac5c0dd69a1a716d97c25a2dbfe6713cf393b:
   ref: success
   value: success
+b65d42611ff7cab6a942af611b0d58db85dbce7be2cfd00067877d4d:
+  ref: Password is required
+  value: Password is required
 b69e7c81a2cf955f47aaed9418e325ed9cedbe08fda6ee8d438f1752:
   ref: dispute
   value: dispute
@@ -756,9 +834,15 @@ c360a8542e6f85f8f1c9cacccc525cb1fcdf6b743584428ee6111e55:
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
   ref: Feed title not filled
   value: Feed title not filled
+c4b158980cb127ec4b61c7409fd02fabe867d223c95b7884ecf64f78:
+  ref: Email
+  value: Email
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
   ref: Price (title)
   value: Price (title)
+c63c18d024c71d5ed991f81e9b237b7cdaad5e667ad64a22fc0614de:
+  ref: Privacy policy not available in this language (description)
+  value: Privacy policy not available in this language (description)
 c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
   ref: First listing (message)
   value: First listing (message)
@@ -795,6 +879,9 @@ d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
   ref: Listing condition (label)
   value: Listing condition (label)
+d5fb36eeef11375839f9b27cd328ac9d4705d04c04417cc2d3b4d093:
+  ref: Enter your password
+  value: Enter your password
 d60d6c00507c0ff00445c84999529eb3c9da48141213ff1a5396cc72:
   ref: You got dislike (label)
   value: You got dislike (label)
@@ -807,6 +894,9 @@ d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
 d95b6247e69f90b9f6f613b62be4396f37f5c45acb205f993f42dd18:
   ref: Reaction rate (label)
   value: Reaction rate (label)
+d9b33cbea0db22bdc23b80834ef175837c4db97d6e48eb1405ab9917:
+  ref: Login failed
+  value: Login failed
 dbb55f0c704298dbeda11ddad88ff05b151057e984bf244f0d09c4d9:
   ref: No listings with transactions (title)
   value: Nothing here yet
@@ -828,6 +918,9 @@ e28de503976684df4b16c4366122c99432deab1cf2b99efa46456e0f:
 e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
   ref: Listing title (required)
   value: Listing title (required)
+e63e9e8221ecbf42ba535801b2bc3cb544011e6f3552ac2ee5886a5e:
+  ref: Confirm Password
+  value: Confirm Password
 e6ae675232ef4ec304588531c21f87323fba1e262aff12e5dccf22d5:
   ref: Warranty (title)
   value: Warranty (title)
@@ -840,12 +933,21 @@ e71d354084e447c188977c94dd32b5163d009bd889d26e8819df7ead:
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
   ref: Feed location not selected
   value: Feed location not selected
+e8a19177576d520c7d0b09d78bf7abc632de0b6f07d3a579f3822693:
+  ref: Password must be at least 8 characters
+  value: Password must be at least 8 characters
+e9774c347a82dce48b5bee9adf2b79476ec38d3a3ed0b65d50c3391e:
+  ref: Register (link)
+  value: Register (link)
 eb18c941e11fe2d241983a0df227512b3e3691c12cc66af2303bc987:
   ref: Draft (label)
   value: Draft (label)
 ebff4121130dcb1e32bc8706a7005ec0c78e811db18e0ae28a6abb4c:
   ref: Close draft (hint)
   value: Close draft (hint)
+ec4a4862ee04c61e1fdfa3e4be7eabc32fa95e9f33a193e11251c8f2:
+  ref: Invalid email address
+  value: Invalid email address
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
   ref: Submit listing (button)
   value: Submit listing (button)
@@ -855,6 +957,9 @@ f17512f4ea86964511c8c06419c3e45fb8a04a38bbe1ebdc8750b0de:
 f18a36932d031042735ffe9b5fbf3fad95a86de7b3b04e8ae3f43986:
   ref: Tracking number (label)
   value: Tracking number (label)
+f1d8618be0710a1c63660b921e24c74d12ec596b08c577e92d6cad30:
+  ref: Assistant welcome (message)
+  value: Assistant welcome (message)
 f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
   ref: Favourites (label)
   value: Favourites (label)
@@ -864,6 +969,9 @@ f3f9c0a66a107af2911fa0f9019dc4526940d1afe4a957e1445e3447:
 f46058bf18d21ce15dec12d40576f79fa0ad2591d6605ed13ed1bb7a:
   ref: Feed list empty (title)
   value: Feed list empty (title)
+f4c78f5c9d5da03c2e4748bc079587f65e1597259a75c1d8390a8ce3:
+  ref: Sign in (button)
+  value: Sign in (button)
 f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
   ref: My listings (title)
   value: My listings (title)
@@ -879,6 +987,9 @@ f7656349927879425de1f295c96260d551349336336a22ada2d9ff70:
 f7e0ec1bfc4a3e3a1766b4f3f07644ce4a036f0e83bd3f138796434b:
   ref: Go to my listings (button)
   value: Go to my listings (button)
+f7f80e74caded576c51df6fc0f28049ae431e30b2a9c4aa5c0ad3f4d:
+  ref: ToS not available in this language (title)
+  value: ToS not available in this language (title)
 f807d8f885d618d3ba330d91e5719faba4383e66108e44f61570ab43:
   ref: Listing seller hint (label)
   value: Listing seller hint (label)
@@ -939,111 +1050,3 @@ ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
 ffbc6be860a399d98c4f2dba58bd6deca4118189f2befade5e28ce2f:
   ref: Transaction status open (label)
   value: Transaction accepted
-18719022c3a2f44b4dbf4ca0e7b65141e8845daa2e9de55179f6dafc:
-  ref: Login with passkey (title)
-  value: Login with passkey (title)
-1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
-  ref: Agreement with (label)
-  value: Agreement with (label)
-2893c5e3aa27d9e9f20c82e0b9921c385df9e15828fc420f45dc5c67:
-  ref: Please wait...
-  value: Please wait...
-323351b9e4c55b173d9f38ae62898421c4bbfb45584093c73f1f2a8c:
-  ref: Enter your email
-  value: Enter your email
-3323505e78622b0fc96dcca7ff8249ba42f46036e7ee0bf66750f3c4:
-  ref: About me (title)
-  value: About me (title)
-36867b0182ba4840c97c772c1168bf1584a52897b6a292d58dc53dc9:
-  ref: Register (title)
-  value: Register (title)
-36f23b35ec600d0a8092ca4dcb3ef776925a00acf1fe6b7627293907:
-  ref: Login with passkey (message)
-  value: Login with passkey (message)
-3df09c51e95ae8860071d5aa5bdab57a73ecc7c25ae2f25373ac5da3:
-  ref: Privacy policy not available in this language (title)
-  value: Privacy policy not available in this language (title)
-42888fcc58a5c859961d7ce1f9843868fd000cd931e43e080d44b369:
-  ref: Register (hero)
-  value: Register (hero)
-435b71e7556a644cd11a2e8059ae87568d2ccd2115317edbb53af97f:
-  ref: History activity (hint)
-  value: History activity (hint)
-451a67f84c10be2ef031071c09e2d990a466b33ae4376b5c8cee64a5:
-  ref: Password confirmation is required
-  value: Password confirmation is required
-521ed1d53a15e6fa2570cb571f3ae7f357ab7bc3fb69439cecfec543:
-  ref: ToS not available in this language (description)
-  value: ToS not available in this language (description)
-54c4e7b4b5a3122ed9a673a0ac2b0df248bef02857032624aec47948:
-  ref: Register
-  value: Register
-5dff2c312c85487ff5ee3fb9ac4ef2e1d4a492a52eeb2f1d0333c94a:
-  ref: About me (message)
-  value: About me (message)
-6212dbd7147760fc25e692c4d4e94e2e429e7adae46d98ca3bc21a07:
-  ref: Login (link)
-  value: Login (link)
-64d1d959871730b453081489881ac52d2b3eb84fb20e372802ddacb2:
-  ref: Landing - Hero (title)
-  value: Landing - Hero (title)
-6facc75794554d433accb2f240799b65ee08b763fef727c9bf711dc7:
-  ref: Login (hero)
-  value: Login (hero)
-7e0689b27022e61a1b7df254ca32c6b73914488dcf5ab0dad249b407:
-  ref: Passwords do not match
-  value: Passwords do not match
-7f590474fc7aa21590e42c47aa3f3b5d5f1f5b6e56c2aae5da611958:
-  ref: Privacy policy (label)
-  value: Privacy policy (label)
-80ea2f2b8b1c2a4f5ea26ec61c1e24acbc4b8df3d2193036245e10f8:
-  ref: Something went wrong
-  value: Something went wrong
-91f3a6e4bee345872696ff6ef6b88f3aac5a451a2c531c92ddf20865:
-  ref: Login with passkey
-  value: Login with passkey
-94268a800874338c42540c7f350a713b3b5afceb7b26a4297491aa5c:
-  ref: Confirm your password
-  value: Confirm your password
-a1308b7983fef7def9ffd06bed7ff767fa4216baf9d9d911af1e7e2e:
-  ref: Password
-  value: Password
-aae57032f267d5303e09b5e9f3a1d39b9cff3b65064a933cd6bc9d7a:
-  ref: Please try again later.
-  value: Please try again later.
-ac1247f9e2a8fcba4db03d65dbefe4199b1c6a62d16df9e7738793fb:
-  ref: ToS agreement (label)
-  value: ToS agreement (label)
-b65d42611ff7cab6a942af611b0d58db85dbce7be2cfd00067877d4d:
-  ref: Password is required
-  value: Password is required
-c4b158980cb127ec4b61c7409fd02fabe867d223c95b7884ecf64f78:
-  ref: Email
-  value: Email
-c63c18d024c71d5ed991f81e9b237b7cdaad5e667ad64a22fc0614de:
-  ref: Privacy policy not available in this language (description)
-  value: Privacy policy not available in this language (description)
-d5fb36eeef11375839f9b27cd328ac9d4705d04c04417cc2d3b4d093:
-  ref: Enter your password
-  value: Enter your password
-d9b33cbea0db22bdc23b80834ef175837c4db97d6e48eb1405ab9917:
-  ref: Login failed
-  value: Login failed
-e63e9e8221ecbf42ba535801b2bc3cb544011e6f3552ac2ee5886a5e:
-  ref: Confirm Password
-  value: Confirm Password
-e8a19177576d520c7d0b09d78bf7abc632de0b6f07d3a579f3822693:
-  ref: Password must be at least 8 characters
-  value: Password must be at least 8 characters
-e9774c347a82dce48b5bee9adf2b79476ec38d3a3ed0b65d50c3391e:
-  ref: Register (link)
-  value: Register (link)
-ec4a4862ee04c61e1fdfa3e4be7eabc32fa95e9f33a193e11251c8f2:
-  ref: Invalid email address
-  value: Invalid email address
-f4c78f5c9d5da03c2e4748bc079587f65e1597259a75c1d8390a8ce3:
-  ref: Sign in (button)
-  value: Sign in (button)
-f7f80e74caded576c51df6fc0f28049ae431e30b2a9c4aa5c0ad3f4d:
-  ref: ToS not available in this language (title)
-  value: ToS not available in this language (title)

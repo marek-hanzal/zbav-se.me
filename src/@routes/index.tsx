@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { withSessionQuery } from "~/common/auth/query/withSessionQuery";
 import { getLocaleFn } from "~/common/locale/getLocaleFn";
+import { withSessionQuery } from "~/user/auth/query/withSessionQuery";
 
 export const Route = createFileRoute("/")({
 	async loader({ context: { queryClient } }) {
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/")({
 			throwOnError: true,
 		});
 
-		if (sessionQuery.data?.user) {
+		if (sessionQuery?.user) {
 			throw redirect({
 				to: "/$locale/app/home",
 				params: {

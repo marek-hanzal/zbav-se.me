@@ -22,7 +22,7 @@ export const ListGroup: FC<ListGroup.Props> = ({
 	ui,
 	...props
 }) => {
-	const { data: transactionListingCollection } = withTransactionListingQuery.useCollectionQuery(
+	const { data: transactionListingCollection } = withTransactionListingQuery.useIdsQuery(
 		{
 			filter,
 			cursor: {

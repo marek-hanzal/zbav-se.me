@@ -3,8 +3,8 @@ import type { FC } from "react";
 import { Button } from "@/lib/client/button";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
-import { withSignOutMutation } from "~/common/auth/mutation/withSignOutMutation";
 import { LockIcon } from "~/common/ui/icon";
+import { withSignOutMutation } from "~/user/auth/mutation/withSignOutMutation";
 
 export namespace SignOutButton {
 	export interface Props extends Button.Props {}

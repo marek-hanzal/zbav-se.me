@@ -41,10 +41,18 @@ export const transactionPatchCollectionFn = createServerFn({
 			withTransactionContextFx(),
 			withLoggerFx(logger),
 			withCatchFx({
-				ZodErrorFx() {
+				ZodErrorFx({ zod, input }) {
+					logger.error("ZodError", {
+						zod,
+						input,
+					});
 					throw new Error("ZodError");
 				},
-				RuntimeErrorFx() {
+				RuntimeErrorFx(error) {
+					logger.error("RuntimeError", {
+						message: error.message,
+						cause: error.cause,
+					});
 					throw new Error("RuntimeError");
 				},
 			}),
