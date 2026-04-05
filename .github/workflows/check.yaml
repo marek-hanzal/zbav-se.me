@@ -115,7 +115,6 @@ jobs:
     vitest:
         name: Vitest
         runs-on: ubuntu-latest
-        environment: staging
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -180,7 +179,6 @@ jobs:
     e2e:
         name: Full-Stack Test
         runs-on: ubuntu-latest
-        environment: staging
         env:
             NITRO_PRESET: node_server
             SERVER_E2E: e2e
