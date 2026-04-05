@@ -1,13 +1,18 @@
 // import { passkey } from "@better-auth/passkey";
+
+import { getLogger } from "@logtape/logtape";
 import { betterAuth } from "better-auth";
-import { anonymous, customSession, mcp, openAPI } from "better-auth/plugins";
+import { anonymous, customSession } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { type Dialect, Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
+import { match } from "ts-pattern";
 import { genId } from "@/lib/common/gen-id";
 import type { Database } from "~/server/database/Database";
 import { ServerBetterAuthSchema } from "~/server/env/ServerBetterAuthSchema";
 import { ServerViteSchema } from "~/server/env/ServerViteSchema";
+
+const logger = getLogger("auth");
 
 export namespace auth {
 	export type Api = Awaited<ReturnType<typeof auth>>;
@@ -44,6 +49,26 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 		baseURL: viteConfig.VITE_ORIGIN,
 		basePath: config.basePath ?? "/api/auth",
 		secret: betterAuthConfig.SERVER_BETTER_AUTH_SECRET,
+		logger: {
+			level: "debug",
+			disabled: false,
+			log(level, message) {
+				return match(level)
+					.with("info", () => {
+						return logger.info(message);
+					})
+					.with("error", () => {
+						return logger.error(message);
+					})
+					.with("warn", () => {
+						return logger.warn(message);
+					})
+					.with("debug", () => {
+						return logger.debug(message);
+					})
+					.exhaustive();
+			},
+		},
 		plugins: [
 			anonymous({
 				emailDomainName: originHost,
@@ -51,19 +76,6 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 				async onLinkAccount() {
 					//
 				},
-			}),
-			mcp({
-				loginPage: `${viteConfig.VITE_ORIGIN}/redirect/oath`,
-				resource: new URL("/api/mcp", viteConfig.VITE_ORIGIN).toString(),
-				oidcConfig: {
-					loginPage: `${viteConfig.VITE_ORIGIN}/redirect/oath`,
-					metadata: {
-						issuer: viteConfig.VITE_ORIGIN,
-					},
-				},
-			}),
-			openAPI({
-				disableDefaultReference: true,
 			}),
 			customSession(async ({ user, session }) => {
 				const userEx = await kysely

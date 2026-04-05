@@ -26,5 +26,6 @@ export const zodFx = Effect.fn("zodFx")(function* <
 
 	return yield* new ZodErrorFx({
 		zod: result.error,
+		input: data,
 	});
 });
