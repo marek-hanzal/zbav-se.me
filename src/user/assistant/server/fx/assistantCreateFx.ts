@@ -5,7 +5,6 @@ import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { ConflictErrorFx } from "~/server/error/ConflictErrorFx";
 import { assistantFetchFx } from "~/user/assistant/server/fx/assistantFetchFx";
 import type { AssistantCreateSchema } from "~/user/assistant/server/schema/AssistantCreateSchema";
 
@@ -33,19 +32,17 @@ export const assistantCreateFx = Effect.fn("assistantCreateFx")(function* ({
 			const id = genId();
 			const now = dateContext.now();
 
-			yield* tryDbFx(
-				async () =>
-					kysely
-						.insertInto("assistant")
-						.values({
-							id,
-							userId,
-							payload: payload as any,
-							createdAt: now.toJSDate().toISOString(),
-						})
-						.executeTakeFirstOrThrow(),
-			
-			);
+			yield* tryDbFx(async () => {
+				return kysely
+					.insertInto("assistant")
+					.values({
+						id,
+						userId,
+						payload: payload as any,
+						createdAt: now.toJSDate().toISOString(),
+					})
+					.executeTakeFirstOrThrow();
+			});
 
 			return yield* assistantFetchFx({
 				where: {

@@ -45,9 +45,6 @@ export const assistantCreateFn = createServerFn({
 				RuntimeErrorFx() {
 					throw new Error("RuntimeErrorFx");
 				},
-				ConflictErrorFx() {
-					throw new Error("ConflictErrorFx");
-				},
 			}),
 			Effect.runPromise,
 		);
