@@ -6,48 +6,19 @@ type EnvMap = Record<string, string>;
 
 interface ParsedEnvFile {
 	environment: string;
-	filePath: string;
 	variables: EnvMap;
 	secrets: EnvMap;
 }
 
+interface VercelEnv {
+	id: string;
+	key: string;
+	system?: boolean;
+	target?: string[];
+}
+
 const REPO = "marek-hanzal/zbav-se.me";
 const ENV_DIRECTORY = "@env";
-
-try {
-	main();
-} catch (error) {
-	const message = error instanceof Error ? error.message : String(error);
-	console.error(message);
-	process.exit(1);
-}
-
-function main() {
-	const input = process.argv[2];
-
-	if (!input) {
-		printUsage("Missing environment name.", 1);
-	}
-
-	if (input === "--help" || input === "-h") {
-		printUsage(undefined, 0);
-	}
-
-	const filePath = resolveEnvFilePath(input);
-	const parsedEnvFile = parseEnvFile(filePath);
-
-	console.log(
-		`Syncing GitHub Actions environment "${parsedEnvFile.environment}" from ${parsedEnvFile.filePath}`,
-	);
-
-	deleteRepoLevelKeys();
-	deleteEnvironmentLevelKeys(parsedEnvFile.environment);
-	setEnvironmentLevelKeys(parsedEnvFile);
-
-	console.log(
-		`GitHub Actions environment "${parsedEnvFile.environment}" is now synced from ${parsedEnvFile.filePath}.`,
-	);
-}
 
 function printUsage(reason?: string, exitCode = 1): never {
 	if (reason) {
@@ -55,19 +26,17 @@ function printUsage(reason?: string, exitCode = 1): never {
 		console.error("");
 	}
 
-	console.error("Usage: bun run env:sync <environment>");
+	console.error("Usage: bun run env:sync:all <environment> <vercel-project-id>");
 	console.error("");
 	console.error("Examples:");
-	console.error("  bun run env:sync staging");
-	console.error("  bun run env:sync production");
-	console.error("  bun run env:sync staging.json");
+	console.error("  bun run env:sync:all staging prj_xxx");
+	console.error("  bun run env:sync:all production prj_xxx");
 
 	process.exit(exitCode);
 }
 
 function resolveEnvFilePath(input: string) {
-	const fileName = input.endsWith(".json") ? input : `${input}.json`;
-	const absolutePath = path.resolve(process.cwd(), ENV_DIRECTORY, fileName);
+	const absolutePath = path.resolve(process.cwd(), ENV_DIRECTORY, `${input}.json`);
 
 	if (!existsSync(absolutePath)) {
 		printUsage(`Environment file not found: ${absolutePath}`, 1);
@@ -84,7 +53,6 @@ function parseEnvFile(filePath: string): ParsedEnvFile {
 
 	return {
 		environment: path.basename(filePath, ".json"),
-		filePath,
 		variables,
 		secrets,
 	};
@@ -108,54 +76,51 @@ function withEnvMap(source: unknown): EnvMap {
 	return envMap;
 }
 
-function deleteRepoLevelKeys() {
-	for (const name of listGhNames([
-		"gh",
-		"variable",
-		"list",
-		"-R",
-		REPO,
-		"--json",
-		"name",
-		"-q",
-		".[].name",
-	])) {
-		console.log(`Deleting repo variable ${name}`);
+function syncGitHub(parsedEnvFile: ParsedEnvFile) {
+	const { environment, variables, secrets } = parsedEnvFile;
+
+	console.log(`Syncing GitHub environment "${environment}"...`);
+
+	deleteAllKeys(environment);
+
+	const varEntries = Object.entries(variables).filter(([, v]) => v);
+	const secEntries = Object.entries(secrets).filter(([, v]) => v);
+
+	for (const [name, value] of varEntries) {
 		runGh([
 			"gh",
 			"variable",
-			"delete",
+			"set",
 			name,
 			"-R",
 			REPO,
+			"--env",
+			environment,
+			"--body",
+			value!,
 		]);
 	}
 
-	for (const name of listGhNames([
-		"gh",
-		"secret",
-		"list",
-		"-R",
-		REPO,
-		"--json",
-		"name",
-		"-q",
-		".[].name",
-	])) {
-		console.log(`Deleting repo secret ${name}`);
+	for (const [name, value] of secEntries) {
 		runGh([
 			"gh",
 			"secret",
-			"delete",
+			"set",
 			name,
 			"-R",
 			REPO,
+			"--env",
+			environment,
+			"--body",
+			value!,
 		]);
 	}
+
+	console.log(`GitHub environment "${environment}" synced.`);
 }
 
-function deleteEnvironmentLevelKeys(environment: string) {
-	for (const name of listGhNames([
+function deleteAllKeys(environment: string) {
+	const existingVars = listGhNames([
 		"gh",
 		"variable",
 		"list",
@@ -167,8 +132,23 @@ function deleteEnvironmentLevelKeys(environment: string) {
 		"name",
 		"-q",
 		".[].name",
-	])) {
-		console.log(`Deleting ${environment} variable ${name}`);
+	]);
+
+	const existingSecs = listGhNames([
+		"gh",
+		"secret",
+		"list",
+		"-R",
+		REPO,
+		"--env",
+		environment,
+		"--json",
+		"name",
+		"-q",
+		".[].name",
+	]);
+
+	for (const name of existingVars) {
 		runGh([
 			"gh",
 			"variable",
@@ -181,20 +161,7 @@ function deleteEnvironmentLevelKeys(environment: string) {
 		]);
 	}
 
-	for (const name of listGhNames([
-		"gh",
-		"secret",
-		"list",
-		"-R",
-		REPO,
-		"--env",
-		environment,
-		"--json",
-		"name",
-		"-q",
-		".[].name",
-	])) {
-		console.log(`Deleting ${environment} secret ${name}`);
+	for (const name of existingSecs) {
 		runGh([
 			"gh",
 			"secret",
@@ -208,47 +175,168 @@ function deleteEnvironmentLevelKeys(environment: string) {
 	}
 }
 
-function setEnvironmentLevelKeys(parsedEnvFile: ParsedEnvFile) {
-	for (const [name, value] of Object.entries(parsedEnvFile.variables)) {
-		if (!value) {
-			console.warn(`Skipping empty variable ${name} in ${parsedEnvFile.environment}.`);
-			continue;
-		}
+async function syncVercel(parsedEnvFile: ParsedEnvFile, projectId: string) {
+	const { environment, variables, secrets } = parsedEnvFile;
 
-		console.log(`Setting ${parsedEnvFile.environment} variable ${name}`);
-		runGh([
-			"gh",
-			"variable",
-			"set",
-			name,
-			"-R",
-			REPO,
-			"--env",
-			parsedEnvFile.environment,
-			"--body",
-			value,
-		]);
+	console.log(`Syncing Vercel environment "${environment}"...`);
+
+	const token = secrets.VERCEL_TOKEN;
+	const orgId = variables.VERCEL_ORG_ID;
+
+	if (!token || !orgId) {
+		throw new Error("Missing VERCEL_TOKEN or VERCEL_ORG_ID.");
 	}
 
-	for (const [name, value] of Object.entries(parsedEnvFile.secrets)) {
-		if (!value) {
-			console.warn(`Skipping empty secret ${name} in ${parsedEnvFile.environment}.`);
-			continue;
-		}
+	const target = environment === "production" ? "production" : "preview";
 
-		console.log(`Setting ${parsedEnvFile.environment} secret ${name}`);
-		runGh([
-			"gh",
-			"secret",
-			"set",
-			name,
-			"-R",
-			REPO,
-			"--env",
-			parsedEnvFile.environment,
-			"--body",
-			value,
-		]);
+	const allKeys = Object.keys(variables).concat(Object.keys(secrets));
+	const sensitiveKeys = new Set(Object.keys(secrets));
+
+	const existingEnvs = fetchExistingEnvs(projectId, orgId, token);
+	const existingToDelete = existingEnvs.filter(
+		(env) => env.system !== true && env.target?.includes(target),
+	);
+
+	if (existingToDelete.length > 0) {
+		console.log(`Deleting ${existingToDelete.length} existing Vercel envs...`);
+		deleteExistingEnvs(
+			projectId,
+			orgId,
+			token,
+			existingToDelete.map((e) => e.id),
+		);
+	}
+
+	const payload = allKeys
+		.filter((key) => key !== "VERCEL_APP_PROJECT_ID")
+		.map((key) => {
+			const value = variables[key] ?? secrets[key];
+			return {
+				key,
+				target: [
+					target,
+				] as const,
+				type: sensitiveKeys.has(key) ? ("sensitive" as const) : ("plain" as const),
+				value: value ?? "",
+			};
+		});
+
+	console.log(`Creating ${payload.length} Vercel envs...`);
+	createEnvs(projectId, orgId, token, payload);
+
+	console.log(`Vercel environment "${environment}" synced.`);
+}
+
+function fetchExistingEnvs(projectId: string, orgId: string, token: string): VercelEnv[] {
+	const url = new URL(`https://api.vercel.com/v10/projects/${projectId}/env`);
+	url.searchParams.set("teamId", orgId);
+
+	const proc = Bun.spawnSync({
+		cmd: [
+			"curl",
+			"-s",
+			"-X",
+			"GET",
+			"-H",
+			`Authorization: Bearer ${token}`,
+			"-H",
+			"Content-Type: application/json",
+			url.toString(),
+		],
+		stdout: "pipe",
+		stderr: "pipe",
+	});
+
+	if (proc.exitCode !== 0) {
+		const stderr = new TextDecoder().decode(proc.stderr).trim();
+		throw new Error(`Failed to fetch Vercel envs: ${stderr}`);
+	}
+
+	const body = JSON.parse(new TextDecoder().decode(proc.stdout)) as {
+		envs?: VercelEnv[];
+	};
+	return body.envs ?? [];
+}
+
+function deleteExistingEnvs(projectId: string, orgId: string, token: string, ids: string[]) {
+	if (ids.length === 0) return;
+
+	const url = new URL(`https://api.vercel.com/v1/projects/${projectId}/env`);
+	url.searchParams.set("teamId", orgId);
+
+	const body = JSON.stringify({
+		ids,
+	});
+
+	const proc = Bun.spawnSync({
+		cmd: [
+			"curl",
+			"-s",
+			"-X",
+			"DELETE",
+			"-H",
+			`Authorization: Bearer ${token}`,
+			"-H",
+			"Content-Type: application/json",
+			"-d",
+			body,
+			url.toString(),
+		],
+		stdout: "pipe",
+		stderr: "pipe",
+	});
+
+	if (proc.exitCode !== 0) {
+		const stderr = new TextDecoder().decode(proc.stderr).trim();
+		throw new Error(`Failed to delete Vercel envs: ${stderr}`);
+	}
+}
+
+function createEnvs(
+	projectId: string,
+	orgId: string,
+	token: string,
+	payload: Array<{
+		key: string;
+		target: readonly string[];
+		type: "plain" | "sensitive";
+		value: string;
+	}>,
+) {
+	const url = new URL(`https://api.vercel.com/v10/projects/${projectId}/env`);
+	url.searchParams.set("teamId", orgId);
+	url.searchParams.set("upsert", "true");
+
+	const body = JSON.stringify(payload);
+
+	const proc = Bun.spawnSync({
+		cmd: [
+			"curl",
+			"-s",
+			"-X",
+			"POST",
+			"-H",
+			`Authorization: Bearer ${token}`,
+			"-H",
+			"Content-Type: application/json",
+			"-d",
+			body,
+			url.toString(),
+		],
+		stdout: "pipe",
+		stderr: "pipe",
+	});
+
+	if (proc.exitCode !== 0) {
+		const stderr = new TextDecoder().decode(proc.stderr).trim();
+		throw new Error(`Failed to create Vercel envs: ${stderr}`);
+	}
+
+	const response = JSON.parse(new TextDecoder().decode(proc.stdout)) as {
+		failed?: unknown[];
+	};
+	if (Array.isArray(response.failed) && response.failed.length > 0) {
+		throw new Error(`Vercel reported ${response.failed.length} failed env operations.`);
 	}
 }
 
@@ -274,4 +362,56 @@ function runGh(cmd: string[]) {
 	}
 
 	return new TextDecoder().decode(proc.stdout).trim();
+}
+
+function runGhAsync(cmd: string[]): Promise<void> {
+	return new Promise((resolve, reject) => {
+		const child = Bun.spawn({
+			cmd,
+			stdout: "pipe",
+			stderr: "pipe",
+			onExit: (proc) => {
+				if (proc.exitCode !== 0) {
+					reject(new Error(`Command failed: ${cmd.join(" ")}`));
+				} else {
+					resolve();
+				}
+			},
+		});
+	});
+}
+
+async function main() {
+	const envInput = process.argv[2];
+	const vercelProjectId = process.argv[3];
+
+	if (!envInput || !vercelProjectId) {
+		printUsage("Missing environment name or Vercel project ID.", 1);
+	}
+
+	if (envInput === "--help" || envInput === "-h") {
+		printUsage(undefined, 0);
+	}
+
+	const filePath = resolveEnvFilePath(envInput);
+	const parsedEnvFile = parseEnvFile(filePath);
+
+	console.log(
+		`Syncing "${parsedEnvFile.environment}" environment to GitHub and Vercel (${vercelProjectId})...`,
+	);
+
+	await Promise.all([
+		syncGitHub(parsedEnvFile),
+		syncVercel(parsedEnvFile, vercelProjectId),
+	]);
+
+	console.log(`Environment "${parsedEnvFile.environment}" synced to GitHub and Vercel.`);
+}
+
+try {
+	await main();
+} catch (error) {
+	const message = error instanceof Error ? error.message : String(error);
+	console.error(message);
+	process.exit(1);
 }
