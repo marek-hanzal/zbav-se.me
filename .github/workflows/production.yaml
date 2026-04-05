@@ -52,26 +52,6 @@ env:
 
     MIGRATION_URL: ${{ vars.VITE_ORIGIN }}/api/public/migration/run
 
-    # -------------------------------
-    # App environment variables list (multiline)
-    # -------------------------------
-    APP_ENV_KEYS: |
-        VITE_APP_ASSETS
-        VITE_ORIGIN
-        SERVER_BETTER_AUTH_SECRET
-        SERVER_CONTENT_CDN
-        SERVER_DATABASE_URL
-        SERVER_GEOAPIFY_TOKEN
-        SERVER_GITHUB
-        SERVER_JWT_SECRET
-        SERVER_S3_API
-        SERVER_S3_BUCKET
-        SERVER_S3_KEY
-        SERVER_S3_SECRET
-        SERVER_AI_TOKEN
-        SERVER_AI_SERVER_URL
-        SERVER_AI_MODEL
-
 jobs:
     validate-env:
         name: Validate env variables
