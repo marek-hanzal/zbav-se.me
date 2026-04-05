@@ -76,66 +76,51 @@ function withEnvMap(source: unknown): EnvMap {
 	return envMap;
 }
 
-async function syncGitHub(parsedEnvFile: ParsedEnvFile) {
+function syncGitHub(parsedEnvFile: ParsedEnvFile) {
 	const { environment, variables, secrets } = parsedEnvFile;
 
 	console.log(`Syncing GitHub environment "${environment}"...`);
 
-	deleteRepoLevelKeys();
-	deleteEnvironmentLevelKeys(environment);
-	setEnvironmentLevelKeys(environment, variables, secrets);
+	deleteAllKeys(environment);
+
+	const varEntries = Object.entries(variables).filter(([, v]) => v);
+	const secEntries = Object.entries(secrets).filter(([, v]) => v);
+
+	for (const [name, value] of varEntries) {
+		runGh([
+			"gh",
+			"variable",
+			"set",
+			name,
+			"-R",
+			REPO,
+			"--env",
+			environment,
+			"--body",
+			value!,
+		]);
+	}
+
+	for (const [name, value] of secEntries) {
+		runGh([
+			"gh",
+			"secret",
+			"set",
+			name,
+			"-R",
+			REPO,
+			"--env",
+			environment,
+			"--body",
+			value!,
+		]);
+	}
 
 	console.log(`GitHub environment "${environment}" synced.`);
 }
 
-function deleteRepoLevelKeys() {
-	for (const name of listGhNames([
-		"gh",
-		"variable",
-		"list",
-		"-R",
-		REPO,
-		"--json",
-		"name",
-		"-q",
-		".[].name",
-	])) {
-		console.log(`Deleting repo variable ${name}`);
-		runGh([
-			"gh",
-			"variable",
-			"delete",
-			name,
-			"-R",
-			REPO,
-		]);
-	}
-
-	for (const name of listGhNames([
-		"gh",
-		"secret",
-		"list",
-		"-R",
-		REPO,
-		"--json",
-		"name",
-		"-q",
-		".[].name",
-	])) {
-		console.log(`Deleting repo secret ${name}`);
-		runGh([
-			"gh",
-			"secret",
-			"delete",
-			name,
-			"-R",
-			REPO,
-		]);
-	}
-}
-
-function deleteEnvironmentLevelKeys(environment: string) {
-	for (const name of listGhNames([
+function deleteAllKeys(environment: string) {
+	const existingVars = listGhNames([
 		"gh",
 		"variable",
 		"list",
@@ -147,21 +132,9 @@ function deleteEnvironmentLevelKeys(environment: string) {
 		"name",
 		"-q",
 		".[].name",
-	])) {
-		console.log(`Deleting ${environment} variable ${name}`);
-		runGh([
-			"gh",
-			"variable",
-			"delete",
-			name,
-			"-R",
-			REPO,
-			"--env",
-			environment,
-		]);
-	}
+	]);
 
-	for (const name of listGhNames([
+	const existingSecs = listGhNames([
 		"gh",
 		"secret",
 		"list",
@@ -173,8 +146,22 @@ function deleteEnvironmentLevelKeys(environment: string) {
 		"name",
 		"-q",
 		".[].name",
-	])) {
-		console.log(`Deleting ${environment} secret ${name}`);
+	]);
+
+	for (const name of existingVars) {
+		runGh([
+			"gh",
+			"variable",
+			"delete",
+			name,
+			"-R",
+			REPO,
+			"--env",
+			environment,
+		]);
+	}
+
+	for (const name of existingSecs) {
 		runGh([
 			"gh",
 			"secret",
@@ -184,50 +171,6 @@ function deleteEnvironmentLevelKeys(environment: string) {
 			REPO,
 			"--env",
 			environment,
-		]);
-	}
-}
-
-function setEnvironmentLevelKeys(environment: string, variables: EnvMap, secrets: EnvMap) {
-	for (const [name, value] of Object.entries(variables)) {
-		if (!value) {
-			console.warn(`Skipping empty variable ${name} in ${environment}.`);
-			continue;
-		}
-
-		console.log(`Setting ${environment} variable ${name}`);
-		runGh([
-			"gh",
-			"variable",
-			"set",
-			name,
-			"-R",
-			REPO,
-			"--env",
-			environment,
-			"--body",
-			value,
-		]);
-	}
-
-	for (const [name, value] of Object.entries(secrets)) {
-		if (!value) {
-			console.warn(`Skipping empty secret ${name} in ${environment}.`);
-			continue;
-		}
-
-		console.log(`Setting ${environment} secret ${name}`);
-		runGh([
-			"gh",
-			"secret",
-			"set",
-			name,
-			"-R",
-			REPO,
-			"--env",
-			environment,
-			"--body",
-			value,
 		]);
 	}
 }
@@ -419,6 +362,23 @@ function runGh(cmd: string[]) {
 	}
 
 	return new TextDecoder().decode(proc.stdout).trim();
+}
+
+function runGhAsync(cmd: string[]): Promise<void> {
+	return new Promise((resolve, reject) => {
+		const child = Bun.spawn({
+			cmd,
+			stdout: "pipe",
+			stderr: "pipe",
+			onExit: (proc) => {
+				if (proc.exitCode !== 0) {
+					reject(new Error(`Command failed: ${cmd.join(" ")}`));
+				} else {
+					resolve();
+				}
+			},
+		});
+	});
 }
 
 async function main() {
