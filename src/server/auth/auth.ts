@@ -114,10 +114,6 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 			enabled: true,
 		},
 		advanced: {
-			crossSubDomainCookies: {
-				enabled: true,
-				domain: originHost,
-			},
 			database: {
 				generateId: () => genId(),
 			},
