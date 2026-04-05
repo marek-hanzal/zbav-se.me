@@ -2,14 +2,14 @@ import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, stepCountIs, streamText, type UIMessage } from "ai";
 import { z } from "zod";
-import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
 import { toolKnowledge } from "~/public/assistant/knowledge/tool/toolKnowledge";
 import { toolKnowledgeIndex } from "~/public/assistant/knowledge/tool/toolKnowledgeIndex";
 import { toolKnowledgeSearch } from "~/public/assistant/knowledge/tool/toolKnowledgeSearch";
-import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
 import { SystemPrompt } from "~/public/assistant/SystemPrompt";
 import { MessageSchema } from "~/public/assistant/schema/MessageSchema";
+import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
+import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
 
 const tools = {
 	"knowledge-index": toolKnowledgeIndex,
