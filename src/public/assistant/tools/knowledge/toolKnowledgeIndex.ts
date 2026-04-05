@@ -1,8 +1,31 @@
 import { tool } from "ai";
+import Fuse from "fuse.js";
 import { z } from "zod";
 import { KnowledgeIndex } from "~/public/assistant/Knowledge";
 
 const KnowledgeTopics = Object.values(KnowledgeIndex);
+
+const KnowledgeTopicFuse = new Fuse(KnowledgeTopics, {
+	keys: [
+		{
+			name: "key",
+			weight: 0.5,
+		},
+		{
+			name: "title",
+			weight: 0.33,
+		},
+		{
+			name: "summary",
+			weight: 0.17,
+		},
+	],
+	includeScore: true,
+	ignoreLocation: true,
+	ignoreFieldNorm: true,
+	minMatchCharLength: 1,
+	threshold: 1,
+});
 
 export const toolKnowledgeIndex = tool({
 	title: "knowledge-index",
@@ -26,21 +49,7 @@ export const toolKnowledgeIndex = tool({
 		const normalized = query?.trim().toLowerCase();
 
 		const topics = normalized
-			? [
-					...KnowledgeTopics,
-				].sort((a, b) => {
-					const aScore =
-						Number(a.key.includes(normalized)) * 3 +
-						Number(a.title.toLowerCase().includes(normalized)) * 2 +
-						Number(a.summary.toLowerCase().includes(normalized));
-
-					const bScore =
-						Number(b.key.includes(normalized)) * 3 +
-						Number(b.title.toLowerCase().includes(normalized)) * 2 +
-						Number(b.summary.toLowerCase().includes(normalized));
-
-					return bScore - aScore;
-				})
+			? KnowledgeTopicFuse.search(normalized).map(({ item }) => item)
 			: KnowledgeTopics;
 
 		return {

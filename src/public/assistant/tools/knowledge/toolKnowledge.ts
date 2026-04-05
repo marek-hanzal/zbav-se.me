@@ -54,7 +54,7 @@ export const toolKnowledge = tool({
 			})
 			.strip(),
 	]),
-	execute: async ({ key }) => {
+	async execute({ key }) {
 		const topic = KnowledgeIndex[key as keyof KnowledgeIndex];
 
 		if (!topic) {
