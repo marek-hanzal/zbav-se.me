@@ -1,11 +1,13 @@
 import { z } from "zod";
 
 export const PartTypeEnumSchema = z.enum([
-	"text",
-	"reasoning",
 	"dynamic-tool",
-	"source-url",
+	"file",
+	"reasoning",
 	"source-document",
+	"source-url",
+	"step-start",
+	"text",
 ]);
 
 export type PartTypeEnumSchema = typeof PartTypeEnumSchema;
