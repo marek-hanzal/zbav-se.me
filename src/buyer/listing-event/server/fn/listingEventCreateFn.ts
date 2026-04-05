@@ -36,7 +36,10 @@ export const listingEventCreateFn = createServerFn({
 			withDateFx,
 			withLoggerFx(logger),
 			withCatchFx({
-				NotFoundErrorFx() {
+				NotFoundErrorFx(error) {
+					logger.error("NotFoundError", {
+						message: error.message,
+					});
 					throw new Error("NotFoundErrorFx");
 				},
 				ZodErrorFx({ zod, input }) {
@@ -46,10 +49,17 @@ export const listingEventCreateFn = createServerFn({
 					});
 					throw new Error("ZodErrorFx");
 				},
-				RuntimeErrorFx() {
+				RuntimeErrorFx(error) {
+					logger.error("RuntimeError", {
+						message: error.message,
+						cause: error.cause,
+					});
 					throw new Error("RuntimeErrorFx");
 				},
-				InvalidRequestErrorFx() {
+				InvalidRequestErrorFx(error) {
+					logger.error("InvalidRequestError", {
+						message: error.message,
+					});
 					throw new Error("InvalidRequestErrorFx");
 				},
 				TooManyRequestsFx() {

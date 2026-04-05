@@ -35,13 +35,23 @@ export const ignoreToggleFn = createServerFn({
 			withDateFx,
 			withLoggerFx(logger),
 			withCatchFx({
-				NotFoundErrorFx() {
+				NotFoundErrorFx(error) {
+					logger.error("NotFoundError", {
+						message: error.message,
+					});
 					throw new Error("NotFoundErrorFx");
 				},
-				InvalidRequestErrorFx() {
+				InvalidRequestErrorFx(error) {
+					logger.error("InvalidRequestError", {
+						message: error.message,
+					});
 					throw new Error("InvalidRequestErrorFx");
 				},
-				RuntimeErrorFx() {
+				RuntimeErrorFx(error) {
+					logger.error("RuntimeError", {
+						message: error.message,
+						cause: error.cause,
+					});
 					throw new Error("RuntimeErrorFx");
 				},
 				ZodErrorFx({ zod, input }) {

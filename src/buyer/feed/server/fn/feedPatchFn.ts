@@ -38,7 +38,10 @@ export const feedPatchFn = createServerFn({
 			withDateFx,
 			withLoggerFx(logger),
 			withCatchFx({
-				NotFoundErrorFx() {
+				NotFoundErrorFx(error) {
+					logger.error("NotFoundError", {
+						message: error.message,
+					});
 					throw new Error("NotFoundErrorFx");
 				},
 				ZodErrorFx({ zod, input }) {
@@ -48,7 +51,11 @@ export const feedPatchFn = createServerFn({
 					});
 					throw new Error("ZodErrorFx");
 				},
-				RuntimeErrorFx() {
+				RuntimeErrorFx(error) {
+					logger.error("RuntimeError", {
+						message: error.message,
+						cause: error.cause,
+					});
 					throw new Error("RuntimeErrorFx");
 				},
 			}),
