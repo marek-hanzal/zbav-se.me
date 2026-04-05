@@ -1,6 +1,6 @@
 import { useChat } from "@ai-sdk/react";
 import { useRouter } from "@tanstack/react-router";
-import { DefaultChatTransport } from "ai";
+import { DefaultChatTransport, type UIMessage } from "ai";
 import { type FC, useEffect, useRef } from "react";
 import { Container } from "@/lib/client/container";
 import { EmptyState } from "@/lib/client/empty-state";
@@ -11,6 +11,7 @@ import { Status } from "@/lib/client/status";
 import { translator } from "@/lib/common/translator";
 import { ChatInput } from "~/common/ui/chat";
 import { getTextFromMessage } from "~/public/assistant/service/getTextFromMessage";
+import { withAssistantQuery } from "~/user/assistant/query/withAssistantQuery";
 
 export namespace AssistantPage {
 	export interface Props extends Container.Props {
@@ -20,12 +21,27 @@ export namespace AssistantPage {
 
 export const AssistantPage: FC<AssistantPage.Props> = ({ ui, ...props }) => {
 	const { buildLocation } = useRouter();
+	const assistantQuery = withAssistantQuery.useCollectionQuery({
+		sort: [
+			{
+				field: "createdAt",
+				order: "desc",
+			},
+		],
+	});
 
 	const { messages, sendMessage, status, error } = useChat({
 		transport: new DefaultChatTransport({
 			api: buildLocation({
 				to: "/api/assistant",
 			}).href,
+		}),
+		messages: assistantQuery.data.map((item) => {
+			/**
+			 * This is a type-lie, but we do not process payload in any way,
+			 * so it's somehow acceptable here.
+			 */
+			return item.payload as UIMessage;
 		}),
 	});
 

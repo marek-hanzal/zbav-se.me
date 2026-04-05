@@ -1,13 +1,13 @@
 import {
-	notifyManager,
-	type OmitKeyof,
-	type QueryClient,
-	type QueryKey,
-	type UseMutationOptions,
-	type UseSuspenseQueryOptions,
-	useMutation,
-	useQueryClient,
-	useSuspenseQuery,
+    notifyManager,
+    type OmitKeyof,
+    type QueryClient,
+    type QueryKey,
+    type UseMutationOptions,
+    type UseSuspenseQueryOptions,
+    useMutation,
+    useQueryClient,
+    useSuspenseQuery,
 } from "@tanstack/react-query";
 import { cleanOf } from "@/lib/common/clean-of";
 import type { CountSchema, EntitySchema } from "@/lib/common/schema";
@@ -407,13 +407,13 @@ export const withEntityQuery = <
 			);
 		});
 
-		return result.map((item) => item.id);
+		return result;
 	}
 
 	function ensureCollectionQuery(
 		queryClient: QueryClient,
 		data: TCollectionRequest,
-		opts?: withEntityQuery.QueryOptions<string[]>,
+		opts?: withEntityQuery.QueryOptions<TEntity[]>,
 	) {
 		return queryClient.ensureQueryData({
 			queryKey: $keys("collection", data),
@@ -435,7 +435,7 @@ export const withEntityQuery = <
 	 */
 	function useCollectionQuery(
 		data: TCollectionRequest,
-		opts?: withEntityQuery.QueryOptions<string[]>,
+		opts?: withEntityQuery.QueryOptions<TEntity[]>,
 	) {
 		const queryClient = useQueryClient();
 
