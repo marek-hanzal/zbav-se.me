@@ -5,6 +5,7 @@ import { type FC, useEffect, useRef } from "react";
 import { Container } from "@/lib/client/container";
 import { Markdown } from "@/lib/client/markdown";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { translator } from "@/lib/common/translator";
 import { ChatInput } from "~/common/ui/chat";
 import { getTextFromMessage } from "~/public/assistant/service/getTextFromMessage";
 
@@ -83,10 +84,8 @@ export const AssistantPage: FC<AssistantPage.Props> = ({ ui, ...props }) => {
 					className={[
 						"min-h-0",
 						"flex-1",
-						"px-4",
-						"py-4",
-						"md:px-6",
-						"md:py-6",
+						"px-2",
+						"py-2",
 					]}
 				>
 					{messages.length === 0 ? (
@@ -127,14 +126,10 @@ export const AssistantPage: FC<AssistantPage.Props> = ({ ui, ...props }) => {
 												"py-3",
 												"shadow-sm",
 												isAssistant
-													? "bg-white text-slate-900 ring-1 ring-slate-200"
+													? "bg-white"
 													: "bg-slate-900 text-white",
 											].join(" ")}
 										>
-											<p className="mb-1 text-[0.65rem] font-semibold uppercase tracking-[0.22em] opacity-70">
-												{isAssistant ? "Assistant" : "You"}
-											</p>
-
 											{text.length > 0 ? (
 												isAssistant ? (
 													<Markdown className="prose prose-sm max-w-none prose-slate">
@@ -172,14 +167,14 @@ export const AssistantPage: FC<AssistantPage.Props> = ({ ui, ...props }) => {
 					) : null}
 				</Container>
 
-				<div className="border-t border-slate-200/80 bg-slate-50 px-4 py-4 md:px-6">
+				<div className="border-t border-slate-200/80 bg-slate-50 px-2 py-2">
 					<ChatInput
 						onSubmit={(value) => {
 							void sendMessage({
 								text: value,
 							});
 						}}
-						placeholder={"Write a message. Ctrl+Enter sends it."}
+						placeholder={translator.text("Write to a assistant")}
 						loading={isBusy}
 					/>
 				</div>
