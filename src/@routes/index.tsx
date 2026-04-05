@@ -9,7 +9,7 @@ export const Route = createFileRoute("/")({
 			throwOnError: true,
 		});
 
-		if (sessionQuery.data?.user) {
+		if (sessionQuery?.user) {
 			throw redirect({
 				to: "/$locale/app/home",
 				params: {
