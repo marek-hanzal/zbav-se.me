@@ -1,23 +1,22 @@
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { createFileRoute } from "@tanstack/react-router";
-import { convertToModelMessages, streamText, type UIMessage } from "ai";
+import { convertToModelMessages, type ModelMessage, streamText } from "ai";
+import { z } from "zod";
+import { SystemPrompt } from "~/public/assistant/SystemPrompt";
+import { MessageSchema } from "~/public/assistant/schema/MessageSchema";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 
-const ChatSystemPrompt = `
-        Mluv česky, první zprávou pozdrav a oznam, že jsi nejlepší chat assistant pro
-        nejlepší tržiště na světě.
+export const ChatRequestSchema = z
+	.looseObject({
+		messages: z.array(
+			MessageSchema.omit({
+				id: true,
+			}),
+		),
+	})
+	.strip();
 
-        Tykej a mluv zpříma bez příkras.
-    `;
-
-type ChatRequestBody = {
-	messages: Array<Omit<UIMessage, "id">>;
-};
-
-type ModelMessages = Awaited<ReturnType<typeof convertToModelMessages>>;
-type ModelMessage = ModelMessages[number];
-
-export const Route = createFileRoute("/api/chat")({
+export const Route = createFileRoute("/api/assistant")({
 	server: {
 		handlers: {
 			async POST({ request }) {
@@ -29,13 +28,13 @@ export const Route = createFileRoute("/api/chat")({
 					apiKey: aiConfig.SERVER_AI_TOKEN,
 				});
 
-				const { messages } = (await request.json()) as ChatRequestBody;
+				const { messages } = ChatRequestSchema.parse(await request.json());
 
 				const modelMessages = await convertToModelMessages(messages);
 
 				const systemMessage: ModelMessage = {
 					role: "system",
-					content: ChatSystemPrompt,
+					content: SystemPrompt,
 				};
 
 				return streamText({
