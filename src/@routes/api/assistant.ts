@@ -2,12 +2,22 @@ import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, stepCountIs, streamText, type UIMessage } from "ai";
 import { z } from "zod";
+import { toolDraftCollection } from "~/public/assistant/draft/tool/toolDraftCollection";
 import { toolKnowledge } from "~/public/assistant/knowledge/tool/toolKnowledge";
 import { toolKnowledgeIndex } from "~/public/assistant/knowledge/tool/toolKnowledgeIndex";
 import { toolKnowledgeSearch } from "~/public/assistant/knowledge/tool/toolKnowledgeSearch";
 import { SystemPrompt } from "~/public/assistant/SystemPrompt";
 import { MessageSchema } from "~/public/assistant/schema/MessageSchema";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
+
+const tools = {
+	"knowledge-index": toolKnowledgeIndex,
+	"knowledge-search": toolKnowledgeSearch,
+	knowledge: toolKnowledge,
+	//
+	"draft-collection": toolDraftCollection,
+	//
+} as const;
 
 export const ChatRequestSchema = z
 	.looseObject({
@@ -40,11 +50,7 @@ export const Route = createFileRoute("/api/assistant")({
 					 * This app has limited subset of schemas, so we've to cheat types here
 					 */
 					messages: await convertToModelMessages(messages as UIMessage[]),
-					tools: {
-						"knowledge-index": toolKnowledgeIndex,
-						"knowledge-search": toolKnowledgeSearch,
-						knowledge: toolKnowledge,
-					} as const,
+					tools,
 					stopWhen: stepCountIs(5),
 				}).toUIMessageStreamResponse();
 			},
