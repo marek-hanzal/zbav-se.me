@@ -20,7 +20,7 @@
 		"format": "biome format --write .",
 		"lint": "biome check --write .",
 		"test": "dotenv -c development -- vitest run",
-		"env:sync": "bun ./cli/env-sync.ts",
+		"env:sync": "bun ./cli/env-sync-all.ts",
 		"update": "bun update",
 		"sp:fix": "bunx syncpack fix",
 		"sp:format": "bunx syncpack format",
