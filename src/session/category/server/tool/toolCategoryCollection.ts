@@ -9,6 +9,15 @@ export const toolCategoryCollection = tool({
 	needsApproval: false,
 	description:
 		"Get a list of categories; usable also for resolving category candidates for listing, search and others who need a category",
+	inputExamples: [
+		{
+			input: {
+				filter: {
+					fulltext: "Television",
+				},
+			},
+		},
+	],
 	inputSchema: CategoryQuerySchema,
 	outputSchema: CategorySchema.array(),
 	async execute(data) {

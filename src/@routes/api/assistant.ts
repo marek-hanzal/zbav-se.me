@@ -10,6 +10,7 @@ import { MessageSchema } from "~/public/assistant/schema/MessageSchema";
 import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
+import { toolCategoryFetch } from "~/session/category/server/tool/toolCategoryFetch";
 import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
 
 const tools = {
@@ -22,6 +23,7 @@ const tools = {
 	"location-autocomplete": toolLocationAutocomplete,
 	//
 	"category-collection": toolCategoryCollection,
+	"category-fetch": toolCategoryFetch,
 } as const;
 
 export const ChatRequestSchema = z
