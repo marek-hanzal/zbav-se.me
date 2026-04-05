@@ -68,7 +68,7 @@ export const Route = createFileRoute("/api/assistant")({
 					 */
 					messages: await convertToModelMessages(messages as UIMessage[]),
 					tools,
-					stopWhen: stepCountIs(5),
+					stopWhen: stepCountIs(8),
 				}).toUIMessageStreamResponse();
 			},
 		},
