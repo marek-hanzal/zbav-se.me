@@ -8,6 +8,11 @@ import { toolKnowledgeSearch } from "~/public/assistant/knowledge/tool/toolKnowl
 import { SystemPrompt } from "~/public/assistant/SystemPrompt";
 import { MessageSchema } from "~/public/assistant/schema/MessageSchema";
 import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
+import { toolDraftCount } from "~/seller/draft/server/tool/toolDraftCount";
+import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
+import { toolDraftDelete } from "~/seller/draft/server/tool/toolDraftDelete";
+import { toolDraftFetch } from "~/seller/draft/server/tool/toolDraftFetch";
+import { toolDraftPatch } from "~/seller/draft/server/tool/toolDraftPatch";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
 import { toolCategoryFetch } from "~/session/category/server/tool/toolCategoryFetch";
@@ -19,6 +24,11 @@ const tools = {
 	knowledge: toolKnowledge,
 	//
 	"draft-collection": toolDraftCollection,
+	"draft-fetch": toolDraftFetch,
+	"draft-create": toolDraftCreate,
+	"draft-patch": toolDraftPatch,
+	"draft-delete": toolDraftDelete,
+	"draft-count": toolDraftCount,
 	//
 	"location-autocomplete": toolLocationAutocomplete,
 	//
