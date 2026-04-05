@@ -75,13 +75,13 @@ export const DraftTableSchema = z
 			description: "Cons of the item",
 		}),
 		//
-		createdAt: z.iso.datetime().meta({
+		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",
 		}),
-		updatedAt: z.iso.datetime().meta({
+		updatedAt: z.coerce.date().meta({
 			description: "Last update timestamp",
 		}),
-		usedAt: z.iso.datetime().nullable().meta({
+		usedAt: z.coerce.date().nullable().meta({
 			description: "Timestamp when the draft was used to create a listing",
 		}),
 	})

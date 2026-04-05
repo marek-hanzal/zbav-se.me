@@ -90,7 +90,7 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 					.updateTable("listing")
 					.set({
 						status: "sold",
-						updatedAt: now.toISOString(),
+						updatedAt: now,
 					})
 					.where("id", "=", transaction.listingId)
 					.executeTakeFirstOrThrow(),

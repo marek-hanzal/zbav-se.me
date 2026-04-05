@@ -93,7 +93,7 @@ export const Route = createFileRoute("/api/assistant")({
 									.values(
 										messages.map((message) => ({
 											id: genId(),
-											createdAt: dateContext.now().toJSDate().toISOString(),
+											createdAt: dateContext.now().toJSDate(),
 											payload: message,
 											userId: user.id,
 										})),
