@@ -37,7 +37,11 @@ export const inboxPatchCollectionFn = createServerFn({
 			withKyselyFx(database),
 			withLoggerFx(logger),
 			withCatchFx({
-				RuntimeErrorFx() {
+				RuntimeErrorFx(error) {
+					logger.error("RuntimeError", {
+						message: error.message,
+						cause: error.cause,
+					});
 					throw new Error("RuntimeError");
 				},
 				ZodErrorFx({ zod, input }) {

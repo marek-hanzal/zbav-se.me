@@ -31,10 +31,17 @@ export const userExTokenDisableFn = createServerFn({
 			withKyselyFx(database),
 			withLoggerFx(logger),
 			withCatchFx({
-				ConflictErrorFx() {
+				ConflictErrorFx(error) {
+					logger.error("ConflictError", {
+						message: error.message,
+					});
 					throw new Error("ConflictError");
 				},
-				RuntimeErrorFx() {
+				RuntimeErrorFx(error) {
+					logger.error("RuntimeError", {
+						message: error.message,
+						cause: error.cause,
+					});
 					throw new Error("RuntimeError");
 				},
 				ZodErrorFx({ zod, input }) {

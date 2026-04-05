@@ -36,16 +36,29 @@ export const draftGalleryCreateFn = createServerFn({
 			withDateFx,
 			withLoggerFx(logger),
 			withCatchFx({
-				NotFoundErrorFx() {
+				NotFoundErrorFx(error) {
+					logger.error("NotFoundError", {
+						message: error.message,
+					});
 					throw new Error("NotFoundError");
 				},
-				AccessDeniedErrorFx() {
+				AccessDeniedErrorFx(error) {
+					logger.error("AccessDeniedError", {
+						message: error.message,
+					});
 					throw new Error("AccessDeniedError");
 				},
-				InvalidRequestErrorFx() {
+				InvalidRequestErrorFx(error) {
+					logger.error("InvalidRequestError", {
+						message: error.message,
+					});
 					throw new Error("InvalidRequestError");
 				},
-				RuntimeErrorFx() {
+				RuntimeErrorFx(error) {
+					logger.error("RuntimeError", {
+						message: error.message,
+						cause: error.cause,
+					});
 					throw new Error("RuntimeError");
 				},
 				ZodErrorFx({ zod, input }) {
