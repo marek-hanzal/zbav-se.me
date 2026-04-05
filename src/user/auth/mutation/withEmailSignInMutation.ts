@@ -1,5 +1,5 @@
 import { withMutation } from "@/lib/client/mutation";
-import { authClient } from "~/common/auth/authClient";
+import { signInFn } from "~/user/auth/fn/signInFn";
 
 export namespace withEmailSignInMutation {
 	export interface Props {
@@ -10,7 +10,7 @@ export namespace withEmailSignInMutation {
 
 export const withEmailSignInMutation = withMutation<
 	withEmailSignInMutation.Props,
-	ReturnType<typeof authClient.signIn.email>,
+	unknown,
 	unknown
 >({
 	keys(variables) {
@@ -20,7 +20,9 @@ export const withEmailSignInMutation = withMutation<
 			variables,
 		];
 	},
-	async mutationFn(variables) {
-		return authClient.signIn.email(variables);
+	async mutationFn(data) {
+		return signInFn({
+			data,
+		});
 	},
 });

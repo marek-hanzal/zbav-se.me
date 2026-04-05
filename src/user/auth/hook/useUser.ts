@@ -1,4 +1,4 @@
-import { withSessionQuery } from "~/server/auth/query/withSessionQuery";
+import { withSessionQuery } from "~/user/auth/query/withSessionQuery";
 
 export const useUser = () => {
 	const { data: session } = withSessionQuery.useSuspenseQuery();
