@@ -49,7 +49,6 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 
 	const id = genId();
 	const now = dateContext.now();
-	const nowDate = now.toJSDate();
 
 	const gallery = yield* galleryInsertFx({
 		userId,
@@ -67,35 +66,31 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 				id,
 				userId,
 				galleryId: gallery.id,
-				createdAt: nowDate,
-				updatedAt: nowDate,
+				createdAt: now.toJSDate().toISOString(),
+				updatedAt: now.toJSDate().toISOString(),
 				currency: "CZK",
 				status: "live",
 				...data,
 				titleVec: withCachedTitleVec(data.title),
 				expiresAt: match(data.expiresAt)
 					.with("7-days", () =>
-						now
-							.plus({
-								days: 7,
-							})
-							.toJSDate(),
+						now.plus({
+							days: 7,
+						}),
 					)
 					.with("14-days", () =>
-						now
-							.plus({
-								days: 14,
-							})
-							.toJSDate(),
+						now.plus({
+							days: 14,
+						}),
 					)
 					.with("1-month", () =>
-						now
-							.plus({
-								months: 1,
-							})
-							.toJSDate(),
+						now.plus({
+							months: 1,
+						}),
 					)
-					.exhaustive(),
+					.exhaustive()
+					.toJSDate()
+					.toISOString(),
 			})
 			.execute(),
 	);
@@ -106,8 +101,8 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 			kysely
 				.updateTable("draft")
 				.set({
-					usedAt: nowDate,
-					updatedAt: nowDate,
+					usedAt: now.toJSDate().toISOString(),
+					updatedAt: now.toJSDate().toISOString(),
 				})
 				.where("id", "=", draftId)
 				.where("userId", "=", userId)

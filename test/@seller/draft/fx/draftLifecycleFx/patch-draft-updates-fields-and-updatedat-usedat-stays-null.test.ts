@@ -36,7 +36,9 @@ describe("draft lifecycle", () => {
 			expect(patched.title).toBe("Updated title");
 			expect(Number(patched.price)).toBe(999);
 			expect(patched.usedAt).toBeNull();
-			expect(patched.updatedAt.getTime()).toBeGreaterThanOrEqual(draft.updatedAt.getTime());
+			expect(new Date(patched.updatedAt).getTime()).toBeGreaterThanOrEqual(
+				new Date(draft.updatedAt).getTime(),
+			);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

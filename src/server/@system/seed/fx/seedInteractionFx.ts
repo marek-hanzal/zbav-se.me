@@ -184,7 +184,7 @@ export const seedInteractionFx = Effect.fn("seedInteractionFx")(function* ({
 					locationId: listing.locationId,
 					feedId,
 					timeline: withInteractionTimeline({
-						from: DateTime.fromJSDate(listing.createdAt),
+						from: DateTime.fromISO(listing.createdAt),
 						offsetMinutes:
 							(planned + index) * Math.max(1, INTERACTION_SCENARIO_GAP_MINUTES),
 					}),

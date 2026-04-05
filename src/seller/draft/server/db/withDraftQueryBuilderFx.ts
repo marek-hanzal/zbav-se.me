@@ -42,11 +42,11 @@ export const withDraftQueryBuilderFx = Effect.fn("withDraftQueryBuilderFx")(func
 	}
 
 	if (where?.updatedAtGte !== undefined) {
-		query = query.where("d.updatedAt", ">=", new Date(where.updatedAtGte)) as TSelect;
+		query = query.where("d.updatedAt", ">=", where.updatedAtGte) as TSelect;
 	}
 
 	if (where?.updatedAtLte !== undefined) {
-		query = query.where("d.updatedAt", "<=", new Date(where.updatedAtLte)) as TSelect;
+		query = query.where("d.updatedAt", "<=", where.updatedAtLte) as TSelect;
 	}
 
 	if (where?.usedAtIsNull !== undefined) {
