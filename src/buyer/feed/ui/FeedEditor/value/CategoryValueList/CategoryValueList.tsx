@@ -33,7 +33,7 @@ export const CategoryValueList = withFallback(
 			);
 		}
 
-		const { data: categoryIds } = withCategoryQuery.useCollectionQuery({
+		const { data: categoryIds } = withCategoryQuery.useIdsQuery({
 			where: {
 				idIn: categoryIdIn,
 			},

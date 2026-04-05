@@ -8,24 +8,24 @@ import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import { assistantCollectionFx } from "~/user/assistant/server/fx/assistantCollectionFx";
-import { AssistantQuerySchema } from "~/user/assistant/server/schema/AssistantQuerySchema";
-import { AssistantSchema } from "~/user/assistant/server/schema/AssistantSchema";
+import { assistantChatCollectionFx } from "~/user/assistant-chat/server/fx/assistantChatCollectionFx";
+import { AssistantChatQuerySchema } from "~/user/assistant-chat/server/schema/AssistantChatQuerySchema";
+import { AssistantChatSchema } from "~/user/assistant-chat/server/schema/AssistantChatSchema";
 
-export const assistantCollectionFn = createServerFn()
+export const assistantChatCollectionFn = createServerFn()
 	.middleware([
 		withLogMiddleware,
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(AssistantQuerySchema)
+	.inputValidator(AssistantChatQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild(name);
 		logger.debug(name, data);
 
 		return zodGuardFx({
-			schema: z.array(AssistantSchema),
-			dataFx: assistantCollectionFx({
+			schema: z.array(AssistantChatSchema),
+			dataFx: assistantChatCollectionFx({
 				...data,
 				scope: {
 					userId: user.id,

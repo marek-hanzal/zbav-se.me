@@ -29,7 +29,7 @@ export namespace ListContainer {
 export const ListContainer = withFallback(
 	({ ref, fulltext, selection, categoryId, ...props }: ListContainer.Props) => {
 		const locale = useLocale();
-		const { data: categoryIds } = withCategoryQuery.useCollectionQuery({
+		const { data: categoryIds } = withCategoryQuery.useIdsQuery({
 			filter: {
 				locale,
 				fulltext,

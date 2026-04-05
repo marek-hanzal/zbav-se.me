@@ -5,21 +5,21 @@ import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { assistantFetchFx } from "~/user/assistant/server/fx/assistantFetchFx";
-import type { AssistantCreateSchema } from "~/user/assistant/server/schema/AssistantCreateSchema";
+import { assistantChatFetchFx } from "~/user/assistant-chat/server/fx/assistantChatFetchFx";
+import type { AssistantChatCreateSchema } from "~/user/assistant-chat/server/schema/AssistantChatCreateSchema";
 
-export namespace assistantCreateFx {
-	export interface Props extends AssistantCreateSchema.Type {
+export namespace assistantChatCreateFx {
+	export interface Props extends AssistantChatCreateSchema.Type {
 		userId: string;
 	}
 }
 
-export const assistantCreateFx = Effect.fn("assistantCreateFx")(function* ({
+export const assistantChatCreateFx = Effect.fn("assistantChatCreateFx")(function* ({
 	userId,
 	payload,
-}: assistantCreateFx.Props) {
-	const logger = yield* getLoggerFx("assistantCreateFx");
-	logger.debug("assistantCreateFx", {
+}: assistantChatCreateFx.Props) {
+	const logger = yield* getLoggerFx("assistantChatCreateFx");
+	logger.debug("assistantChatCreateFx", {
 		userId,
 		payload,
 	});
@@ -34,7 +34,7 @@ export const assistantCreateFx = Effect.fn("assistantCreateFx")(function* ({
 
 			yield* tryDbFx(async () => {
 				return kysely
-					.insertInto("assistant")
+					.insertInto("assistant_chat")
 					.values({
 						id,
 						userId,
@@ -44,7 +44,7 @@ export const assistantCreateFx = Effect.fn("assistantCreateFx")(function* ({
 					.executeTakeFirstOrThrow();
 			});
 
-			return yield* assistantFetchFx({
+			return yield* assistantChatFetchFx({
 				where: {
 					id,
 				},
@@ -56,4 +56,4 @@ export const assistantCreateFx = Effect.fn("assistantCreateFx")(function* ({
 	);
 });
 
-export type assistantCreateFx = ReturnType<typeof assistantCreateFx>;
+export type assistantChatCreateFx = ReturnType<typeof assistantChatCreateFx>;

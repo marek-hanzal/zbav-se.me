@@ -448,6 +448,18 @@ export const withEntityQuery = <
 		});
 	}
 
+	function useIdsQuery(data: TCollectionRequest, opts?: withEntityQuery.QueryOptions<string[]>) {
+		const queryClient = useQueryClient();
+
+		return useSuspenseQuery({
+			queryKey: $keys("collection", data),
+			async queryFn() {
+				return (await $collectionFn(queryClient, data)).map((item) => item.id);
+			},
+			...opts,
+		});
+	}
+
 	function ensureCountQuery(
 		queryClient: QueryClient,
 		data: TCountRequest,
@@ -764,6 +776,7 @@ export const withEntityQuery = <
 		useEntityQuery,
 		useMaybeEntityQuery,
 		useCollectionQuery,
+		useIdsQuery,
 		useCountQuery,
 		//
 		usePatchMutation,

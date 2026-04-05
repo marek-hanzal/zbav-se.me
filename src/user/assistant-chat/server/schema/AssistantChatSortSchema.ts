@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { OrderEnumSchema } from "@/lib/common/schema";
 
-export const AssistantSortSchema = z
+export const AssistantChatSortSchema = z
 	.looseObject({
 		field: z
 			.enum([
@@ -19,10 +19,10 @@ export const AssistantSortSchema = z
 		description: "Sort object for assistant collection",
 	});
 
-export type AssistantSortSchema = typeof AssistantSortSchema;
+export type AssistantChatSortSchema = typeof AssistantChatSortSchema;
 
-export namespace AssistantSortSchema {
-	export type Type = z.infer<AssistantSortSchema>;
+export namespace AssistantChatSortSchema {
+	export type Type = z.infer<AssistantChatSortSchema>;
 
 	export type Field = Type["field"];
 }

@@ -8,23 +8,23 @@ import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import { assistantCountFx } from "~/user/assistant/server/fx/assistantCountFx";
-import { AssistantQuerySchema } from "~/user/assistant/server/schema/AssistantQuerySchema";
+import { assistantChatCountFx } from "~/user/assistant-chat/server/fx/assistantChatCountFx";
+import { AssistantChatQuerySchema } from "~/user/assistant-chat/server/schema/AssistantChatQuerySchema";
 
-export const assistantCountFn = createServerFn()
+export const assistantChatCountFn = createServerFn()
 	.middleware([
 		withLogMiddleware,
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(AssistantQuerySchema)
+	.inputValidator(AssistantChatQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild(name);
 		logger.debug(name, data);
 
 		return zodGuardFx({
 			schema: CountSchema,
-			dataFx: assistantCountFx({
+			dataFx: assistantChatCountFx({
 				...data,
 				scope: {
 					userId: user.id,

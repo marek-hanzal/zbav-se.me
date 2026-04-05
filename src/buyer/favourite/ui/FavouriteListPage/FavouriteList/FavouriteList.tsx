@@ -30,7 +30,7 @@ export const FavouriteList = withFallback(
 				},
 			});
 
-		const { data: listingCollection } = withListingQuery.useCollectionQuery({
+		const { data: listingCollection } = withListingQuery.useIdsQuery({
 			where: {
 				isFavourite: true,
 				withIgnored: false,

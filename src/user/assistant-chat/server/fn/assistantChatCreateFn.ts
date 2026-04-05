@@ -2,43 +2,48 @@ import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
+import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import { assistantFetchFx } from "~/user/assistant/server/fx/assistantFetchFx";
-import { AssistantQuerySchema } from "~/user/assistant/server/schema/AssistantQuerySchema";
-import { AssistantSchema } from "~/user/assistant/server/schema/AssistantSchema";
+import { assistantChatCreateFx } from "~/user/assistant-chat/server/fx/assistantChatCreateFx";
+import { AssistantChatCreateSchema } from "~/user/assistant-chat/server/schema/AssistantChatCreateSchema";
+import { AssistantChatSchema } from "~/user/assistant-chat/server/schema/AssistantChatSchema";
 
-export const assistantFetchFn = createServerFn()
+export const assistantChatCreateFn = createServerFn({
+	method: "POST",
+})
 	.middleware([
 		withLogMiddleware,
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(AssistantQuerySchema)
+	.inputValidator(AssistantChatCreateSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild(name);
 		logger.debug(name, data);
 
 		return zodGuardFx({
-			schema: AssistantSchema,
-			dataFx: assistantFetchFx({
+			schema: AssistantChatSchema,
+			dataFx: assistantChatCreateFx({
 				...data,
-				scope: {
-					userId: user.id,
-				},
+				userId: user.id,
 			}),
 		}).pipe(
 			withKyselyFx(database),
+			withDateFx,
 			withLoggerFx(logger),
 			withCatchFx({
 				NotFoundErrorFx() {
-					throw new Error("NotFoundError");
+					throw new Error("NotFoundErrorFx");
 				},
 				ZodErrorFx() {
-					throw new Error("ZodError");
+					throw new Error("ZodErrorFx");
+				},
+				RuntimeErrorFx() {
+					throw new Error("RuntimeErrorFx");
 				},
 			}),
 			Effect.runPromise,

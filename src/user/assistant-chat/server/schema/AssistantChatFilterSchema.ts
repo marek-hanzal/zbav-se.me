@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { FilterSchema } from "@/lib/common/schema";
 
-export const AssistantFilterSchema = z
+export const AssistantChatFilterSchema = z
 	.looseObject({
 		...FilterSchema.shape,
 		userId: z.string().optional().meta({
@@ -14,8 +14,8 @@ export const AssistantFilterSchema = z
 		description: "Filter object for assistant collection",
 	});
 
-export type AssistantFilterSchema = typeof AssistantFilterSchema;
+export type AssistantChatFilterSchema = typeof AssistantChatFilterSchema;
 
-export namespace AssistantFilterSchema {
-	export type Type = z.infer<AssistantFilterSchema>;
+export namespace AssistantChatFilterSchema {
+	export type Type = z.infer<AssistantChatFilterSchema>;
 }

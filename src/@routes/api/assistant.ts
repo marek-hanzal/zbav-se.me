@@ -82,14 +82,14 @@ export const Route = createFileRoute("/api/assistant")({
 						Effect.gen(function* () {
 							yield* Effect.promise(async () => {
 								return kysely
-									.deleteFrom("assistant")
+									.deleteFrom("assistant_chat")
 									.where("userId", "=", user.id)
 									.execute();
 							});
 
 							yield* tryDbFx(async () => {
 								return kysely
-									.insertInto("assistant")
+									.insertInto("assistant_chat")
 									.values(
 										messages.map((message) => ({
 											id: genId(),

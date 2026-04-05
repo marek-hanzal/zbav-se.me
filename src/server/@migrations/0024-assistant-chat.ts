@@ -1,15 +1,15 @@
 import { type Migration, sql } from "kysely";
 
-export const AssistantMigration: Migration = {
+export const AssistantChatMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("assistant")
+			.createTable("assistant_chat")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("payload", "jsonb", (col) => col.notNull())
 			.addForeignKeyConstraint(
-				"assistant_[userId]_fk",
+				"assistant_chat_[userId]_fk",
 				[
 					"userId",
 				],
@@ -22,7 +22,7 @@ export const AssistantMigration: Migration = {
 			.execute();
 
 		await sql`
-			CREATE INDEX "assistant_[userId-createdAt]_idx" ON "assistant" ("userId", "createdAt" DESC);
+			CREATE INDEX "assistant_chat_[userId-createdAt]_idx" ON "assistant_chat" ("userId", "createdAt" DESC);
 		`.execute(db);
 	},
 };

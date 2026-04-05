@@ -11,7 +11,7 @@ import { Status } from "@/lib/client/status";
 import { translator } from "@/lib/common/translator";
 import { ChatInput } from "~/common/ui/chat";
 import { getTextFromMessage } from "~/public/assistant/service/getTextFromMessage";
-import { withAssistantQuery } from "~/user/assistant/query/withAssistantQuery";
+import { withAssistantChatQuery } from "~/user/assistant-chat/query/withAssistantChatQuery";
 
 export namespace AssistantPage {
 	export interface Props extends Container.Props {
@@ -21,7 +21,7 @@ export namespace AssistantPage {
 
 export const AssistantPage: FC<AssistantPage.Props> = ({ ui, ...props }) => {
 	const { buildLocation } = useRouter();
-	const assistantQuery = withAssistantQuery.useCollectionQuery({
+	const assistantQuery = withAssistantChatQuery.useCollectionQuery({
 		sort: [
 			{
 				field: "createdAt",
