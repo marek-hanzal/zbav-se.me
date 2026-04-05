@@ -12,7 +12,7 @@ export const Route = createFileRoute("/$locale/app/seller/draft/resolve")({
 						.minus({
 							days: 3,
 						})
-						.toJSDate(),
+						.toISO(),
 					usedAtIsNull: true,
 				},
 			})
