@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const AssistantCreateSchema = z
 	.looseObject({
-		payload: z.unknown(),
+		payload: z.record(z.string(), z.unknown()),
 	})
 	.strip()
 	.meta({

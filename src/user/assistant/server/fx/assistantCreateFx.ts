@@ -38,7 +38,7 @@ export const assistantCreateFx = Effect.fn("assistantCreateFx")(function* ({
 					.values({
 						id,
 						userId,
-						payload: payload as any,
+						payload,
 						createdAt: now.toJSDate().toISOString(),
 					})
 					.executeTakeFirstOrThrow();
