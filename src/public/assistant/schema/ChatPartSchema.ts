@@ -6,8 +6,9 @@ import { SourceDocumentPartSchema } from "./part/SourceDocumentPartSchema";
 import { SourceUrlPartSchema } from "./part/SourceUrlPartSchema";
 import { StepStartPartSchema } from "./part/StepStartPartSchema";
 import { TextPartSchema } from "./part/TextPartSchema";
+import { ToolPartSchema } from "./part/ToolPartSchema";
 
-export const ChatPartSchema = z.discriminatedUnion("type", [
+export const ChatPartSchema = z.union([
 	DynamicToolPartSchema,
 	FilePartSchema,
 	ReasoningPartSchema,
@@ -15,6 +16,7 @@ export const ChatPartSchema = z.discriminatedUnion("type", [
 	SourceUrlPartSchema,
 	StepStartPartSchema,
 	TextPartSchema,
+	ToolPartSchema,
 ]);
 
 export type ChatPartSchema = typeof ChatPartSchema;
