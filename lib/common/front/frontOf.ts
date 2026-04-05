@@ -15,7 +15,6 @@ export const frontOf = <TSchema extends z.ZodType>({ schema, source }: frontOf.P
 	const topic = matter(source);
 
 	logger.trace("frontOf", {
-		source,
 		data: topic.data,
 	});
 

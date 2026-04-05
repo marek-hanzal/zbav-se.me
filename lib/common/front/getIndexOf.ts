@@ -1,4 +1,4 @@
-import { readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { getLogger } from "@logtape/logtape";
 import type { z } from "zod";
@@ -24,13 +24,9 @@ export const getIndexOf = <TSchema extends z.ZodType>({
 	return readdirSync(source)
 		.filter((file) => file.endsWith(".md"))
 		.map((file) => {
-			logger.trace("Parsing front-matter", {
-				source: file,
-			});
-
 			return frontOf({
 				schema,
-				source: join(source, file),
+				source: readFileSync(join(source, file), "utf8"),
 			});
 		})
 		.sort();
