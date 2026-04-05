@@ -1,36 +1,27 @@
 import { useChat } from "@ai-sdk/react";
+import { useRouter } from "@tanstack/react-router";
 import { DefaultChatTransport } from "ai";
 import { type FC, useEffect, useRef } from "react";
 import { Container } from "@/lib/client/container";
 import { Markdown } from "@/lib/client/markdown";
+import { SpinnerContainer } from "@/lib/client/spinner";
 import { ChatInput } from "~/common/ui/chat";
+import { getTextFromMessage } from "~/public/assistant/service/getTextFromMessage";
 
-type ChatMessage = ReturnType<typeof useChat>["messages"][number];
-type ChatMessagePart = ChatMessage["parts"][number];
-type ChatTextPart = Extract<
-	ChatMessagePart,
-	{
-		type: "text";
-	}
->;
-
-export namespace ChatPage {
+export namespace AssistantPage {
 	export interface Props extends Container.Props {
 		//
 	}
 }
 
-function getMessageText(message: ChatMessage) {
-	return message.parts
-		.filter((part): part is ChatTextPart => part.type === "text")
-		.map((part) => part.text)
-		.join("");
-}
+export const AssistantPage: FC<AssistantPage.Props> = ({ ui, ...props }) => {
+	const { buildLocation } = useRouter();
 
-export const ChatPage: FC<ChatPage.Props> = ({ ui, ...props }) => {
 	const { messages, sendMessage, status, error } = useChat({
 		transport: new DefaultChatTransport({
-			api: "/api/chat",
+			api: buildLocation({
+				to: "/api/assistant",
+			}).href,
 		}),
 	});
 
@@ -113,8 +104,12 @@ export const ChatPage: FC<ChatPage.Props> = ({ ui, ...props }) => {
 					) : (
 						<ol className="space-y-3">
 							{messages.map((message) => {
-								const text = getMessageText(message);
+								const text = getTextFromMessage(message);
 								const isAssistant = message.role === "assistant";
+
+								if (!text) {
+									return null;
+								}
 
 								return (
 									<li
@@ -164,9 +159,7 @@ export const ChatPage: FC<ChatPage.Props> = ({ ui, ...props }) => {
 
 							{isBusy ? (
 								<li className="flex justify-start">
-									<div className="rounded-2xl bg-white px-4 py-3 text-sm text-slate-500 ring-1 ring-slate-200">
-										Streaming response from Kilo Gateway...
-									</div>
+									<SpinnerContainer />
 								</li>
 							) : null}
 						</ol>

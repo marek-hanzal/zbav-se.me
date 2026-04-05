@@ -19,7 +19,7 @@ import { Route as RedirectSignInRouteImport } from './@routes/redirect/sign-in'
 import { Route as RedirectOathRouteImport } from './@routes/redirect/oath'
 import { Route as ApiHealthRouteImport } from './@routes/api/health'
 import { Route as ApiE2eRouteImport } from './@routes/api/e2e'
-import { Route as ApiChatRouteImport } from './@routes/api/chat'
+import { Route as ApiAssistantRouteImport } from './@routes/api/assistant'
 import { Route as ApiCronRouteImport } from './@routes/api/$cron'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleSignUpRouteImport } from './@routes/$locale/sign-up'
@@ -35,7 +35,7 @@ import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welc
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
 import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
 import { Route as LocaleAppHomeRouteImport } from './@routes/$locale/app/home'
-import { Route as LocaleAppChatRouteImport } from './@routes/$locale/app/chat'
+import { Route as LocaleAppAssistantRouteImport } from './@routes/$locale/app/assistant'
 import { Route as ApiPublicMigrationRunRouteImport } from './@routes/api/public/migration/run'
 import { Route as LocaleAppInboxPriorityRouteImport } from './@routes/$locale/app/inbox/$priority'
 import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
@@ -104,9 +104,9 @@ const ApiE2eRoute = ApiE2eRouteImport.update({
   path: '/e2e',
   getParentRoute: () => ApiRoute,
 } as any)
-const ApiChatRoute = ApiChatRouteImport.update({
-  id: '/chat',
-  path: '/chat',
+const ApiAssistantRoute = ApiAssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
   getParentRoute: () => ApiRoute,
 } as any)
 const ApiCronRoute = ApiCronRouteImport.update({
@@ -184,9 +184,9 @@ const LocaleAppHomeRoute = LocaleAppHomeRouteImport.update({
   path: '/home',
   getParentRoute: () => LocaleAppRoute,
 } as any)
-const LocaleAppChatRoute = LocaleAppChatRouteImport.update({
-  id: '/chat',
-  path: '/chat',
+const LocaleAppAssistantRoute = LocaleAppAssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
   getParentRoute: () => LocaleAppRoute,
 } as any)
 const ApiPublicMigrationRunRoute = ApiPublicMigrationRunRouteImport.update({
@@ -302,13 +302,13 @@ export interface FileRoutesByFullPath {
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/api/$cron': typeof ApiCronRoute
-  '/api/chat': typeof ApiChatRoute
+  '/api/assistant': typeof ApiAssistantRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/app/chat': typeof LocaleAppChatRoute
+  '/$locale/app/assistant': typeof LocaleAppAssistantRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
@@ -346,13 +346,13 @@ export interface FileRoutesByTo {
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/api/$cron': typeof ApiCronRoute
-  '/api/chat': typeof ApiChatRoute
+  '/api/assistant': typeof ApiAssistantRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale': typeof LocaleIndexRoute
-  '/$locale/app/chat': typeof LocaleAppChatRoute
+  '/$locale/app/assistant': typeof LocaleAppAssistantRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
@@ -393,13 +393,13 @@ export interface FileRoutesById {
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/api/$cron': typeof ApiCronRoute
-  '/api/chat': typeof ApiChatRoute
+  '/api/assistant': typeof ApiAssistantRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/oath': typeof RedirectOathRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/app/chat': typeof LocaleAppChatRoute
+  '/$locale/app/assistant': typeof LocaleAppAssistantRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
@@ -441,13 +441,13 @@ export interface FileRouteTypes {
     | '/$locale/sign-up'
     | '/$locale/tos'
     | '/api/$cron'
-    | '/api/chat'
+    | '/api/assistant'
     | '/api/e2e'
     | '/api/health'
     | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale/'
-    | '/$locale/app/chat'
+    | '/$locale/app/assistant'
     | '/$locale/app/home'
     | '/$locale/app/shop'
     | '/$locale/app/user'
@@ -485,13 +485,13 @@ export interface FileRouteTypes {
     | '/$locale/sign-up'
     | '/$locale/tos'
     | '/api/$cron'
-    | '/api/chat'
+    | '/api/assistant'
     | '/api/e2e'
     | '/api/health'
     | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale'
-    | '/$locale/app/chat'
+    | '/$locale/app/assistant'
     | '/$locale/app/home'
     | '/$locale/app/shop'
     | '/$locale/app/user'
@@ -531,13 +531,13 @@ export interface FileRouteTypes {
     | '/$locale/sign-up'
     | '/$locale/tos'
     | '/api/$cron'
-    | '/api/chat'
+    | '/api/assistant'
     | '/api/e2e'
     | '/api/health'
     | '/redirect/oath'
     | '/redirect/sign-in'
     | '/$locale/'
-    | '/$locale/app/chat'
+    | '/$locale/app/assistant'
     | '/$locale/app/home'
     | '/$locale/app/shop'
     | '/$locale/app/user'
@@ -646,11 +646,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiE2eRouteImport
       parentRoute: typeof ApiRoute
     }
-    '/api/chat': {
-      id: '/api/chat'
-      path: '/chat'
-      fullPath: '/api/chat'
-      preLoaderRoute: typeof ApiChatRouteImport
+    '/api/assistant': {
+      id: '/api/assistant'
+      path: '/assistant'
+      fullPath: '/api/assistant'
+      preLoaderRoute: typeof ApiAssistantRouteImport
       parentRoute: typeof ApiRoute
     }
     '/api/$cron': {
@@ -758,11 +758,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppHomeRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/chat': {
-      id: '/$locale/app/chat'
-      path: '/chat'
-      fullPath: '/$locale/app/chat'
-      preLoaderRoute: typeof LocaleAppChatRouteImport
+    '/$locale/app/assistant': {
+      id: '/$locale/app/assistant'
+      path: '/assistant'
+      fullPath: '/$locale/app/assistant'
+      preLoaderRoute: typeof LocaleAppAssistantRouteImport
       parentRoute: typeof LocaleAppRoute
     }
     '/api/public/migration/run': {
@@ -888,7 +888,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface LocaleAppRouteChildren {
-  LocaleAppChatRoute: typeof LocaleAppChatRoute
+  LocaleAppAssistantRoute: typeof LocaleAppAssistantRoute
   LocaleAppHomeRoute: typeof LocaleAppHomeRoute
   LocaleAppShopRoute: typeof LocaleAppShopRoute
   LocaleAppUserRoute: typeof LocaleAppUserRoute
@@ -913,7 +913,7 @@ interface LocaleAppRouteChildren {
 }
 
 const LocaleAppRouteChildren: LocaleAppRouteChildren = {
-  LocaleAppChatRoute: LocaleAppChatRoute,
+  LocaleAppAssistantRoute: LocaleAppAssistantRoute,
   LocaleAppHomeRoute: LocaleAppHomeRoute,
   LocaleAppShopRoute: LocaleAppShopRoute,
   LocaleAppUserRoute: LocaleAppUserRoute,
@@ -972,7 +972,7 @@ const LocaleRouteWithChildren =
 
 interface ApiRouteChildren {
   ApiCronRoute: typeof ApiCronRoute
-  ApiChatRoute: typeof ApiChatRoute
+  ApiAssistantRoute: typeof ApiAssistantRoute
   ApiE2eRoute: typeof ApiE2eRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -982,7 +982,7 @@ interface ApiRouteChildren {
 
 const ApiRouteChildren: ApiRouteChildren = {
   ApiCronRoute: ApiCronRoute,
-  ApiChatRoute: ApiChatRoute,
+  ApiAssistantRoute: ApiAssistantRoute,
   ApiE2eRoute: ApiE2eRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
