@@ -3,6 +3,8 @@ import { UserPage } from "~/user/profile/UserPage/UserPage";
 import { UserPagePending } from "~/user/profile/UserPage/UserPagePending";
 
 export const Route = createFileRoute("/$locale/app/user")({
-	component: UserPage,
+	component() {
+		return <UserPage _suspense={"I know"} />;
+	},
 	pendingComponent: UserPagePending,
 });
