@@ -8,7 +8,7 @@ export const getSessionFn = createServerFn()
 	])
 	.handler(async ({ context: { auth } }) => {
 		const session = await auth.api.getSession({
-			headers: getRequestHeaders(),            
+			headers: getRequestHeaders(),
 		});
 
 		console.log("session!", {
