@@ -9,6 +9,7 @@ import { SystemPrompt } from "~/public/assistant/SystemPrompt";
 import { MessageSchema } from "~/public/assistant/schema/MessageSchema";
 import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
+import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
 import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
 
 const tools = {
@@ -19,6 +20,8 @@ const tools = {
 	"draft-collection": toolDraftCollection,
 	//
 	"location-autocomplete": toolLocationAutocomplete,
+	//
+	"category-collection": toolCategoryCollection,
 } as const;
 
 export const ChatRequestSchema = z

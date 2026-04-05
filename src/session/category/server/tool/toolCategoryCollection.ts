@@ -7,7 +7,8 @@ export const toolCategoryCollection = tool({
 	title: "category-collection",
 	type: "function",
 	needsApproval: false,
-	description: "Get a list of categories",
+	description:
+		"Get a list of categories; usable also for resolving category candidates for listing, search and others who need a category",
 	inputSchema: CategoryQuerySchema,
 	outputSchema: CategorySchema.array(),
 	async execute(data) {
