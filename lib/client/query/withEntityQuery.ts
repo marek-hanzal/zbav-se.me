@@ -1,13 +1,13 @@
 import {
-    notifyManager,
-    type OmitKeyof,
-    type QueryClient,
-    type QueryKey,
-    type UseMutationOptions,
-    type UseSuspenseQueryOptions,
-    useMutation,
-    useQueryClient,
-    useSuspenseQuery,
+	notifyManager,
+	type OmitKeyof,
+	type QueryClient,
+	type QueryKey,
+	type UseMutationOptions,
+	type UseSuspenseQueryOptions,
+	useMutation,
+	useQueryClient,
+	useSuspenseQuery,
 } from "@tanstack/react-query";
 import { cleanOf } from "@/lib/common/clean-of";
 import type { CountSchema, EntitySchema } from "@/lib/common/schema";
