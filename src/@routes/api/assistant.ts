@@ -1,6 +1,7 @@
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { createFileRoute } from "@tanstack/react-router";
 import { convertToModelMessages, stepCountIs, streamText, type UIMessage } from "ai";
+import { Effect } from "effect";
 import { z } from "zod";
 import { toolKnowledge } from "~/public/assistant/knowledge/tool/toolKnowledge";
 import { toolKnowledgeIndex } from "~/public/assistant/knowledge/tool/toolKnowledgeIndex";
@@ -50,26 +51,32 @@ export const Route = createFileRoute("/api/assistant")({
 	server: {
 		handlers: {
 			async POST({ request }) {
-				const aiConfig = ServerAiSchema.parse(process.env);
+				return Effect.gen(function* () {
+					const aiConfig = ServerAiSchema.parse(process.env);
 
-				const provider = createOpenAICompatible({
-					name: "kilo",
-					baseURL: aiConfig.SERVER_AI_SERVER_URL,
-					apiKey: aiConfig.SERVER_AI_TOKEN,
-				});
+					const provider = createOpenAICompatible({
+						name: "kilo",
+						baseURL: aiConfig.SERVER_AI_SERVER_URL,
+						apiKey: aiConfig.SERVER_AI_TOKEN,
+					});
 
-				const { messages } = ChatRequestSchema.parse(await request.json());
+					const { messages } = yield* Effect.promise(async () => {
+						return ChatRequestSchema.parseAsync(await request.json());
+					});
 
-				return streamText({
-					model: provider.chatModel(aiConfig.SERVER_AI_MODEL),
-					system: SystemPrompt,
-					/**
-					 * This app has limited subset of schemas, so we've to cheat types here
-					 */
-					messages: await convertToModelMessages(messages as UIMessage[]),
-					tools,
-					stopWhen: stepCountIs(8),
-				}).toUIMessageStreamResponse();
+					return streamText({
+						model: provider.chatModel(aiConfig.SERVER_AI_MODEL),
+						system: SystemPrompt,
+						/**
+						 * This app has limited subset of schemas, so we've to cheat types here
+						 */
+						messages: yield* Effect.promise(async () => {
+							return convertToModelMessages(messages as UIMessage[]);
+						}),
+						tools,
+						stopWhen: stepCountIs(8),
+					}).toUIMessageStreamResponse();
+				}).pipe(Effect.runPromise);
 			},
 		},
 	},
