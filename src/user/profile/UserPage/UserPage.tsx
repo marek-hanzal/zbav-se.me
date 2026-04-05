@@ -12,7 +12,7 @@ import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { SignOutButton } from "./SignOutButton";
 
 export namespace UserPage {
-	export interface Props extends TitleContainer.Props, MarkSuspense {
+	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
 		//
 	}
 }
