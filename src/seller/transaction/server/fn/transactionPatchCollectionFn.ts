@@ -48,7 +48,11 @@ export const transactionPatchCollectionFn = createServerFn({
 					});
 					throw new Error("ZodError");
 				},
-				RuntimeErrorFx() {
+				RuntimeErrorFx(error) {
+					logger.error("RuntimeError", {
+						message: error.message,
+						cause: error.cause,
+					});
 					throw new Error("RuntimeError");
 				},
 			}),
