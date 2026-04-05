@@ -26,11 +26,11 @@ function printUsage(reason?: string, exitCode = 1): never {
 		console.error("");
 	}
 
-	console.error("Usage: bun run env:sync:all <environment> <vercel-project-id>");
+	console.error("Usage: bun run env:sync <environment> <vercel-project-id>");
 	console.error("");
 	console.error("Examples:");
-	console.error("  bun run env:sync:all staging prj_xxx");
-	console.error("  bun run env:sync:all production prj_xxx");
+	console.error("  bun run env:sync staging prj_xxx");
+	console.error("  bun run env:sync production prj_xxx");
 
 	process.exit(exitCode);
 }
@@ -112,6 +112,7 @@ function syncGitHub(parsedEnvFile: ParsedEnvFile) {
 	console.log(`Deleting ${existingVars.length} variables and ${existingSecs.length} secrets...`);
 
 	for (const name of existingVars) {
+		console.log(`  Deleting variable ${name}`);
 		runGh([
 			"gh",
 			"variable",
@@ -125,6 +126,7 @@ function syncGitHub(parsedEnvFile: ParsedEnvFile) {
 	}
 
 	for (const name of existingSecs) {
+		console.log(`  Deleting secret ${name}`);
 		runGh([
 			"gh",
 			"secret",
@@ -140,8 +142,9 @@ function syncGitHub(parsedEnvFile: ParsedEnvFile) {
 	const varEntries = Object.entries(variables).filter(([, v]) => v);
 	const secEntries = Object.entries(secrets).filter(([, v]) => v);
 
-	console.log(`Creating ${varEntries.length} variables...`);
+	console.log(`Creating ${varEntries.length} variables and ${secEntries.length} secrets...`);
 	for (const [name, value] of varEntries) {
+		console.log(`  Setting variable ${name}`);
 		runGh([
 			"gh",
 			"variable",
@@ -156,8 +159,8 @@ function syncGitHub(parsedEnvFile: ParsedEnvFile) {
 		]);
 	}
 
-	console.log(`Creating ${secEntries.length} secrets...`);
 	for (const [name, value] of secEntries) {
+		console.log(`  Setting secret ${name}`);
 		runGh([
 			"gh",
 			"secret",
