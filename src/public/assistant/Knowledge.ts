@@ -76,3 +76,5 @@ export const KnowledgeIndex = {
 		],
 	},
 } as const satisfies Partial<Record<Knowledge.Index, Knowledge.Topic>>;
+
+export type KnowledgeIndex = typeof KnowledgeIndex;
