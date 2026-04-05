@@ -26,13 +26,14 @@ export const SystemPrompt = [
         Pokud něco nenajdeš v knowledge tool, slušně to řekni.
     `,
 	`
-		Pro zjištění informací o aplikaci používej nástroj "knowledge-index",
-		který vrací dostupná témata a jejich přesné klíče. Pokud neznáš přesný klíč,
-		nejdřív vždy použij "knowledge-index".
+		Pro zjištění informací o aplikaci používej nástroj "knowledge-search",
+		když hledáš relevantní téma podle dotazu nebo klíčových slov.
+		Pro získání všech témat a přesných klíčů používej "knowledge-index".
+		Když neznáš přesný klíč, nejdřív použij "knowledge-search" a pak "knowledge".
 	`,
 	`
 		Pro načtení obsahu konkrétního tématu používej nástroj "knowledge".
-		Nikdy si nevymýšlej klíč tématu. Používej jen klíče vrácené z "knowledge-index".
+		Nikdy si nevymýšlej klíč tématu. Používej jen klíče vrácené z "knowledge-index" nebo "knowledge-search".
 	`,
 	`
         Když je dotaz na konkrétní funkci, limit, stav, pricing, flow, výjimku,

@@ -1,18 +1,20 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { KnowledgeIndex } from "~/public/assistant/Knowledge";
+import { getKnowledgeIndex } from "~/public/assistant/knowledge/service/getKnowledgeIndex";
 
 export const toolKnowledge = tool({
 	title: "knowledge",
 	type: "function",
 	needsApproval: false,
 	description:
-		"Returns the full content of one knowledge topic by exact key from knowledge-index.",
+		"Returns the full content of one knowledge topic by exact key from knowledge-index or knowledge-search.",
 	inputSchema: z
 		.looseObject({
 			key: z
 				.string()
-				.describe("Exact topic key returned by knowledge-index. Never invent a key."),
+				.describe(
+					"Exact topic key returned by knowledge-index or knowledge-search. Never invent a key.",
+				),
 		})
 		.strip(),
 	outputSchema: z.discriminatedUnion("found", [
@@ -55,23 +57,24 @@ export const toolKnowledge = tool({
 			.strip(),
 	]),
 	async execute({ key }) {
-		const topic = KnowledgeIndex[key as keyof KnowledgeIndex];
+		const index = getKnowledgeIndex();
+		const topic = index.find((item) => item.data.key === key);
 
 		if (!topic) {
 			return {
 				found: false,
 				key,
-				error: "Unknown knowledge key. Use knowledge-index first.",
+				error: "Unknown knowledge key. Use knowledge-search or knowledge-index first.",
 			};
 		}
 
 		return {
 			found: true,
-			key: topic.key,
-			title: topic.title,
-			summary: topic.summary,
+			key: topic.data.key,
+			title: topic.data.title,
+			summary: topic.data.summary,
+			related: topic.data.related ?? [],
 			content: topic.content,
-			related: topic.related ?? [],
 		};
 	},
 });

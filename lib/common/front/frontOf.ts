@@ -13,6 +13,6 @@ export const frontOf = <TSchema extends z.ZodType>({ schema, source }: frontOf.P
 
 	return {
 		...topic,
-		front: schema.parse(topic.data),
+		data: schema.parse(topic.data),
 	} as const;
 };
