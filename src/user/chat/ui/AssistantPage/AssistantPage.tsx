@@ -3,8 +3,11 @@ import { useRouter } from "@tanstack/react-router";
 import { DefaultChatTransport } from "ai";
 import { type FC, useEffect, useRef } from "react";
 import { Container } from "@/lib/client/container";
+import { EmptyState } from "@/lib/client/empty-state";
+import { AiIcon } from "@/lib/client/icon/AiIcon";
 import { Markdown } from "@/lib/client/markdown";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { Status } from "@/lib/client/status";
 import { translator } from "@/lib/common/translator";
 import { ChatInput } from "~/common/ui/chat";
 import { getTextFromMessage } from "~/public/assistant/service/getTextFromMessage";
@@ -88,19 +91,52 @@ export const AssistantPage: FC<AssistantPage.Props> = ({ ui, ...props }) => {
 						"py-2",
 					]}
 				>
-					{messages.length === 0 ? (
-						<div className="grid h-full place-items-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-center">
-							<div className="max-w-md space-y-3">
-								<p className="text-lg font-medium text-slate-900">
-									Start the first message.
-								</p>
-								<p className="text-sm leading-6 text-slate-600">
-									Try a prompt about the product, a bug, or an API idea. The
-									gateway is configured through `ServerAiSchema`.
-								</p>
-							</div>
-						</div>
-					) : (
+					<EmptyState
+						check={[
+							{
+								check() {
+									return !messages.length;
+								},
+								render() {
+									return (
+										<Container
+											ui={{
+												layout: "vertical-centered",
+												height: "full",
+												width: "full",
+											}}
+										>
+											<Status
+												icon={AiIcon}
+												textTitle={translator.text(
+													"Assistant welcome (title)",
+												)}
+												textMessage={translator.text(
+													"Assistant welcome (message)",
+												)}
+												action={
+													<ChatInput
+														onSubmit={(value) => {
+															void sendMessage({
+																text: value,
+															});
+														}}
+														placeholder={translator.text(
+															"Write to a assistant",
+														)}
+														loading={isBusy}
+														ui={{
+															width: "full",
+														}}
+													/>
+												}
+											/>
+										</Container>
+									);
+								},
+							},
+						]}
+					>
 						<ol className="space-y-3">
 							{messages.map((message) => {
 								const text = getTextFromMessage(message);
@@ -157,27 +193,29 @@ export const AssistantPage: FC<AssistantPage.Props> = ({ ui, ...props }) => {
 									<SpinnerContainer />
 								</li>
 							) : null}
-						</ol>
-					)}
 
-					{error ? (
-						<div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
-							{error.message}
-						</div>
-					) : null}
+							{error ? (
+								<div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+									{error.message}
+								</div>
+							) : null}
+						</ol>
+					</EmptyState>
 				</Container>
 
-				<div className="border-t border-slate-200/80 bg-slate-50 px-2 py-2">
-					<ChatInput
-						onSubmit={(value) => {
-							void sendMessage({
-								text: value,
-							});
-						}}
-						placeholder={translator.text("Write to a assistant")}
-						loading={isBusy}
-					/>
-				</div>
+				{messages.length > 0 ? (
+					<div className="border-t border-slate-200/80 bg-slate-50 px-2 py-2">
+						<ChatInput
+							onSubmit={(value) => {
+								void sendMessage({
+									text: value,
+								});
+							}}
+							placeholder={translator.text("Write to a assistant")}
+							loading={isBusy}
+						/>
+					</div>
+				) : null}
 			</Container>
 		</Container>
 	);

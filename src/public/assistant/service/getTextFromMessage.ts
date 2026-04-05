@@ -4,6 +4,10 @@ import { MessageSchema } from "../schema/MessageSchema";
 export const getTextFromMessage = (input: unknown) => {
 	const result = MessageSchema.safeParse(input);
 	if (!result.success) {
+		console.error("Failed to parse messages", {
+			error: result.error,
+			input,
+		});
 		return undefined;
 	}
 

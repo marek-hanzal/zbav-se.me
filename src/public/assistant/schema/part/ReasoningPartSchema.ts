@@ -5,7 +5,7 @@ import type { PartTypeEnumSchema } from "./PartTypeEnumSchema";
 export const ReasoningPartSchema = z
 	.looseObject({
 		type: z.literal("reasoning" satisfies PartTypeEnumSchema.Type),
-		text: z.string().min(1),
+		text: z.string(),
 		state: PartStateEnumSchema.optional(),
 	})
 	.strip();

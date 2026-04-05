@@ -1,5 +1,6 @@
 import { withFallback } from "@/lib/client/fallback";
 import { ChevronRightIcon } from "@/lib/client/icon";
+import { AiIcon } from "@/lib/client/icon/AiIcon";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
@@ -23,7 +24,7 @@ export const AssistantLink = withFallback(
 				{...uiMenuButton({
 					className: [],
 				})}
-				icon={"icon-[si--ai-line]"}
+				icon={AiIcon}
 				to="/$locale/app/assistant"
 				params={{
 					locale,
@@ -67,7 +68,7 @@ export const AssistantLink = withFallback(
 				{...uiMenuButton({
 					className: [],
 				})}
-				icon={"icon-[si--ai-line]"}
+				icon={AiIcon}
 				to="/$locale/app/assistant"
 				params={{
 					locale,
