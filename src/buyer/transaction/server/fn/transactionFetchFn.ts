@@ -34,7 +34,10 @@ export const transactionFetchFn = createServerFn()
 			withKyselyFx(database),
 			withLoggerFx(logger),
 			withCatchFx({
-				NotFoundErrorFx() {
+				NotFoundErrorFx(error) {
+					logger.error("NotFoundError", {
+						message: error.message,
+					});
 					throw new Error("NotFoundError");
 				},
 				ZodErrorFx({ zod, input }) {
