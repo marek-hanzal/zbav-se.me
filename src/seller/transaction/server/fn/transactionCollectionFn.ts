@@ -35,7 +35,11 @@ export const transactionCollectionFn = createServerFn()
 			withKyselyFx(database),
 			withLoggerFx(logger),
 			withCatchFx({
-				ZodErrorFx() {
+				ZodErrorFx({ zod, input }) {
+					logger.error("ZodError", {
+						zod,
+						input,
+					});
 					throw new Error("ZodError");
 				},
 			}),

@@ -39,7 +39,11 @@ export const feedDeleteFn = createServerFn({
 				NotFoundErrorFx() {
 					throw new Error("NotFoundErrorFx");
 				},
-				ZodErrorFx() {
+				ZodErrorFx({ zod, input }) {
+					logger.error("ZodErrorFx", {
+						zod,
+						input,
+					});
 					throw new Error("ZodErrorFx");
 				},
 				RuntimeErrorFx() {

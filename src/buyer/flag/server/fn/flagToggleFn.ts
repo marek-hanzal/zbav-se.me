@@ -44,7 +44,11 @@ export const flagToggleFn = createServerFn({
 				RuntimeErrorFx() {
 					throw new Error("RuntimeErrorFx");
 				},
-				ZodErrorFx() {
+				ZodErrorFx({ zod, input }) {
+					logger.error("ZodErrorFx", {
+						zod,
+						input,
+					});
 					throw new Error("ZodErrorFx");
 				},
 			}),

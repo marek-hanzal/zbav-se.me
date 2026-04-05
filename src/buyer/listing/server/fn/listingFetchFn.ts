@@ -35,7 +35,11 @@ export const listingFetchFn = createServerFn()
 				NotFoundErrorFx() {
 					throw new Error("NotFoundError");
 				},
-				ZodErrorFx() {
+				ZodErrorFx({ zod, input }) {
+					logger.error("ZodError", {
+						zod,
+						input,
+					});
 					throw new Error("ZodError");
 				},
 			}),

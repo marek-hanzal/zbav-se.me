@@ -38,8 +38,12 @@ export const draftCreateFn = createServerFn({
 				NotFoundErrorFx() {
 					throw new Error("NotFoundErrorFx");
 				},
-				ZodErrorFx() {
-					throw new Error("ZodErrorFx");
+				ZodErrorFx({ zod, input }) {
+					logger.error("ZodError", {
+						zod,
+						input,
+					});
+					throw new Error("ZodError");
 				},
 				RuntimeErrorFx() {
 					throw new Error("RuntimeErrorFx");
