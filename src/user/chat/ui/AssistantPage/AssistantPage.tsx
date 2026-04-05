@@ -4,6 +4,7 @@ import { DefaultChatTransport } from "ai";
 import { type FC, useEffect, useRef } from "react";
 import { Container } from "@/lib/client/container";
 import { Markdown } from "@/lib/client/markdown";
+import { SpinnerContainer } from "@/lib/client/spinner";
 import { ChatInput } from "~/common/ui/chat";
 import { getTextFromMessage } from "~/public/assistant/service/getTextFromMessage";
 
@@ -106,6 +107,10 @@ export const AssistantPage: FC<AssistantPage.Props> = ({ ui, ...props }) => {
 								const text = getTextFromMessage(message);
 								const isAssistant = message.role === "assistant";
 
+								if (!text) {
+									return null;
+								}
+
 								return (
 									<li
 										key={message.id}
@@ -154,9 +159,7 @@ export const AssistantPage: FC<AssistantPage.Props> = ({ ui, ...props }) => {
 
 							{isBusy ? (
 								<li className="flex justify-start">
-									<div className="rounded-2xl bg-white px-4 py-3 text-sm text-slate-500 ring-1 ring-slate-200">
-										Streaming response from Kilo Gateway...
-									</div>
+									<SpinnerContainer />
 								</li>
 							) : null}
 						</ol>

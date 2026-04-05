@@ -1,6 +1,6 @@
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { createFileRoute } from "@tanstack/react-router";
-import { convertToModelMessages, type ModelMessage, streamText } from "ai";
+import { convertToModelMessages, type ModelMessage, streamText, type UIMessage } from "ai";
 import { z } from "zod";
 import { SystemPrompt } from "~/public/assistant/SystemPrompt";
 import { MessageSchema } from "~/public/assistant/schema/MessageSchema";
@@ -30,7 +30,10 @@ export const Route = createFileRoute("/api/assistant")({
 
 				const { messages } = ChatRequestSchema.parse(await request.json());
 
-				const modelMessages = await convertToModelMessages(messages);
+				/**
+				 * This app has limited subset of schemas, so we've to cheat types here
+				 */
+				const modelMessages = await convertToModelMessages(messages as UIMessage[]);
 
 				const systemMessage: ModelMessage = {
 					role: "system",
