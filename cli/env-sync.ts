@@ -155,6 +155,7 @@ function syncGitHub(parsedEnvFile: ParsedEnvFile) {
 			"--env",
 			environment,
 			"--body",
+			// biome-ignore lint/style/noNonNullAssertion: Ssst
 			value!,
 		]);
 	}
@@ -171,6 +172,7 @@ function syncGitHub(parsedEnvFile: ParsedEnvFile) {
 			"--env",
 			environment,
 			"--body",
+			// biome-ignore lint/style/noNonNullAssertion: Ssst
 			value!,
 		]);
 	}
