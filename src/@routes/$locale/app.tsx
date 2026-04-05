@@ -7,7 +7,7 @@ export const Route = createFileRoute("/$locale/app")({
 			throwOnError: true,
 		});
 
-		if (!sessionQuery.data?.user) {
+		if (!sessionQuery?.user) {
 			throw redirect({
 				to: "/$locale/sign-in",
 				params: {
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/$locale/app")({
 		}
 
 		return {
-			user: sessionQuery.data.user,
+			user: sessionQuery.user,
 		} as const;
 	},
 });
