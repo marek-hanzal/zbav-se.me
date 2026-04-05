@@ -35,7 +35,10 @@ export const assistantChatCollectionFn = createServerFn()
 			withKyselyFx(database),
 			withLoggerFx(logger),
 			withCatchFx({
-				ZodErrorFx() {
+				ZodErrorFx(e) {
+					logger.error("ZodError", {
+						e,
+					});
 					throw new Error("ZodError");
 				},
 			}),
