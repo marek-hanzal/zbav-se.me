@@ -1,5 +1,5 @@
 import { withQuery } from "@/lib/client/query";
-import { getSessionFn } from "~/common/auth/getSessionFn";
+import { getSessionFn } from "../fn/getSessionFn";
 
 export const withSessionQuery = withQuery<void, Awaited<ReturnType<typeof getSessionFn>>>({
 	keys() {
