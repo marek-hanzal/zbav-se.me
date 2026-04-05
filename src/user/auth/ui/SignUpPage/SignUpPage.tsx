@@ -10,10 +10,10 @@ import { Status } from "@/lib/client/status";
 import { onSubmit } from "@/lib/client/submit";
 import { Tx } from "@/lib/client/tx";
 import { translator } from "@/lib/common/translator";
-import { withRegisterMutation } from "~/common/auth/mutation/withRegisterMutation";
 import { useAppForm } from "~/common/ui/form";
 import { CheckIcon } from "~/common/ui/icon";
 import { Logo } from "~/common/ui/logo";
+import { withRegisterMutation } from "~/user/auth/mutation/withRegisterMutation";
 
 const RegisterSchema = z
 	.looseObject({

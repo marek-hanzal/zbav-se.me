@@ -1,5 +1,5 @@
 import { withMutation } from "@/lib/client/mutation";
-import { authClient } from "~/common/auth/authClient";
+import { signOutFn } from "~/user/auth/fn/signOutFn";
 
 export const withSignOutMutation = withMutation({
 	keys(variables) {
@@ -9,6 +9,6 @@ export const withSignOutMutation = withMutation({
 		];
 	},
 	async mutationFn() {
-		return authClient.signOut();
+		return signOutFn();
 	},
 });
