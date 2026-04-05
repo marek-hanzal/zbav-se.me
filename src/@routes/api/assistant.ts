@@ -4,8 +4,8 @@ import { convertToModelMessages, stepCountIs, streamText, type UIMessage } from 
 import { z } from "zod";
 import { SystemPrompt } from "~/public/assistant/SystemPrompt";
 import { MessageSchema } from "~/public/assistant/schema/MessageSchema";
-import { toolKnowledge } from "~/public/assistant/tools/knowledge/toolKnowledge";
-import { toolKnowledgeIndex } from "~/public/assistant/tools/knowledge/toolKnowledgeIndex";
+import { toolKnowledge } from "~/public/assistant/knowledge/tool/toolKnowledge";
+import { toolKnowledgeIndex } from "~/public/assistant/knowledge/tool/toolKnowledgeIndex";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 
 export const ChatRequestSchema = z

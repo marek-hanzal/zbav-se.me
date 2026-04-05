@@ -71,7 +71,7 @@ export const toolKnowledge = tool({
 			title: topic.title,
 			summary: topic.summary,
 			content: topic.content,
-			related: topic.related,
+			related: topic.related ?? [],
 		};
 	},
 });
