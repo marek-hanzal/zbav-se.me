@@ -16,6 +16,8 @@ import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
 import { toolDraftDelete } from "~/seller/draft/server/tool/toolDraftDelete";
 import { toolDraftFetch } from "~/seller/draft/server/tool/toolDraftFetch";
 import { toolDraftPatch } from "~/seller/draft/server/tool/toolDraftPatch";
+import { toolListingCollection as toolSellerListingCollection } from "~/seller/listing/server/tool/toolListingCollection";
+import { toolListingCount as toolSellerListingCount } from "~/seller/listing/server/tool/toolListingCount";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withDateFx } from "~/server/database/fx/withDateFx";
@@ -38,7 +40,10 @@ const tools = {
 	"draft-patch": toolDraftPatch,
 	"draft-delete": toolDraftDelete,
 	"draft-count": toolDraftCount,
-	// //
+	//
+	"seller-listing-collection": toolSellerListingCollection,
+	"seller-listing-count": toolSellerListingCount,
+	//
 	"location-autocomplete": toolLocationAutocomplete,
 	//
 	"category-collection": toolCategoryCollection,
