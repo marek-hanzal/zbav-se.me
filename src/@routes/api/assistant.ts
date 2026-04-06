@@ -38,7 +38,7 @@ const tools = {
 	"draft-patch": toolDraftPatch,
 	"draft-delete": toolDraftDelete,
 	"draft-count": toolDraftCount,
-	//
+	// //
 	"location-autocomplete": toolLocationAutocomplete,
 	//
 	"category-collection": toolCategoryCollection,

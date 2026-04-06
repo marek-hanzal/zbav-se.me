@@ -25,9 +25,13 @@ export const AssistantPage: FC<AssistantPage.Props> = ({ ui, ...props }) => {
 		sort: [
 			{
 				field: "createdAt",
-				order: "desc",
+				order: "asc",
 			},
 		],
+		cursor: {
+			page: 0,
+			size: 1000,
+		},
 	});
 
 	const { messages, sendMessage, status, error } = useChat({
