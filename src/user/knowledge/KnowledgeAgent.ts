@@ -27,6 +27,7 @@ export const KnowledgeAgent = new Agent({
     `.trim(),
 	tools: [
 		DraftAgent.asTool({}),
+		//
 		LocationAgent.asTool({}),
 	],
 });

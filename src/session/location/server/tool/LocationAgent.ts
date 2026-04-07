@@ -9,6 +9,11 @@ export const LocationAgent = new Agent({
 
         Respect your prompts and use proper tools.
     `.trim(),
+	modelSettings: {
+		reasoning: {
+			effort: "none",
+		},
+	},
 	tools: [
 		toolLocationAutocomplete,
 	],
