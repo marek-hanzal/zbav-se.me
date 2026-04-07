@@ -11,6 +11,9 @@ export const AssistantChatTableSchema = z
 		payload: z.record(z.string(), z.any()).meta({
 			description: "JSON payload for the assistant chat",
 		}),
+		sort: z.int().meta({
+			description: "The order of this message in the chat; sorting authority",
+		}),
 		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",
 		}),

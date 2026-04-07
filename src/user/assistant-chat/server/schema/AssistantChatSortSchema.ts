@@ -6,6 +6,7 @@ export const AssistantChatSortSchema = z
 		field: z
 			.enum([
 				"createdAt",
+				"sort",
 			])
 			.meta({
 				id: "AssistantSortField",

@@ -1,9 +1,7 @@
 import { withEntityQuery } from "@/lib/client/query";
 import { assistantChatCollectionFn } from "~/user/assistant-chat/server/fn/assistantChatCollectionFn";
 import { assistantChatCountFn } from "~/user/assistant-chat/server/fn/assistantChatCountFn";
-import { assistantChatCreateFn } from "~/user/assistant-chat/server/fn/assistantChatCreateFn";
 import { assistantChatFetchFn } from "~/user/assistant-chat/server/fn/assistantChatFetchFn";
-import type { AssistantChatCreateSchema } from "~/user/assistant-chat/server/schema/AssistantChatCreateSchema";
 import type { AssistantChatQuerySchema } from "~/user/assistant-chat/server/schema/AssistantChatQuerySchema";
 import type { AssistantChatSchema } from "~/user/assistant-chat/server/schema/AssistantChatSchema";
 
@@ -13,7 +11,7 @@ export const withAssistantChatQuery = withEntityQuery<
 	AssistantChatQuerySchema.Type,
 	AssistantChatQuerySchema.Type,
 	never,
-	AssistantChatCreateSchema.Type,
+	never,
 	AssistantChatQuerySchema.Type,
 	never
 >({
@@ -40,10 +38,8 @@ export const withAssistantChatQuery = withEntityQuery<
 			data,
 		});
 	},
-	async createFn(data) {
-		return assistantChatCreateFn({
-			data,
-		});
+	async createFn(_data) {
+		throw new Error("Assistant create is not supported.");
 	},
 	async deleteFn(_data) {
 		throw new Error("Assistant delete is not supported.");

@@ -86,11 +86,12 @@ export const Route = createFileRoute("/api/assistant")({
 										return kysely
 											.insertInto("assistant_chat")
 											.values(
-												messages.map((message) => ({
+												messages.map((message, sort) => ({
 													id: genId(),
 													createdAt: dateContext.now().toJSDate(),
 													payload: message,
 													userId: user.id,
+													sort,
 												})),
 											)
 											.executeTakeFirstOrThrow();

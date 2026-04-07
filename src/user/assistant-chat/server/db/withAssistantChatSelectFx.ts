@@ -21,5 +21,6 @@ export const withAssistantChatSelectFx = Effect.fn("withAssistantChatSelectFx")(
 		"a.userId",
 		"a.payload",
 		"a.createdAt",
+		"a.sort",
 	]);
 });

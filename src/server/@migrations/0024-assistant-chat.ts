@@ -8,6 +8,7 @@ export const AssistantChatMigration: Migration = {
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("payload", "jsonb", (col) => col.notNull())
+			.addColumn("sort", "integer", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"assistant_chat_[userId]_fk",
 				[
