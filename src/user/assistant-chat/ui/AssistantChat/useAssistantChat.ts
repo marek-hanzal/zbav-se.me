@@ -20,5 +20,8 @@ export const useAssistantChat = () => {
 	return {
 		status: "pending",
 		messages: [] as MessageUi[],
+		sendMessage(_: { text: string }) {
+			//
+		},
 	};
 };
