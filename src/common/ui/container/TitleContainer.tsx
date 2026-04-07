@@ -16,6 +16,8 @@ export namespace TitleContainer {
 	}
 }
 
+export type TitleContainer = typeof TitleContainer;
+
 export const TitleContainer: FC<TitleContainer.Props> = ({
 	textTitle,
 	textTitleProps,

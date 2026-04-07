@@ -58,7 +58,6 @@ export const Transaction: FC<Transaction.Props> = ({
 			{...props}
 		>
 			<Container
-				data-ui={"TransactionSheet-[Container]"}
 				ui={{
 					layout: "vertical-content-footer",
 					height: "full",

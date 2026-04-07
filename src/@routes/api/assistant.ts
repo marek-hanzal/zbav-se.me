@@ -5,6 +5,8 @@ import { Effect } from "effect";
 import { z } from "zod";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
+import { toolListingCollection as toolBuyerListingCollection } from "~/buyer/listing/server/tool/toolListingCollection";
+import { toolListingCount as toolBuyerListingCount } from "~/buyer/listing/server/tool/toolListingCount";
 import { toolKnowledge } from "~/public/assistant/knowledge/tool/toolKnowledge";
 import { toolKnowledgeIndex } from "~/public/assistant/knowledge/tool/toolKnowledgeIndex";
 import { toolKnowledgeSearch } from "~/public/assistant/knowledge/tool/toolKnowledgeSearch";
@@ -43,6 +45,8 @@ const tools = {
 	//
 	"seller-listing-collection": toolSellerListingCollection,
 	"seller-listing-count": toolSellerListingCount,
+	"buyer-listing-collection": toolBuyerListingCollection,
+	"buyer-listing-count": toolBuyerListingCount,
 	//
 	"location-autocomplete": toolLocationAutocomplete,
 	//

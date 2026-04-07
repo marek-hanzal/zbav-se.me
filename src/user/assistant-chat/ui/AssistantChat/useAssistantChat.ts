@@ -1,0 +1,31 @@
+import { useChat } from "@ai-sdk/react";
+import { useRouter } from "@tanstack/react-router";
+import { DefaultChatTransport, type UIMessage } from "ai";
+import { withAssistantChatQuery } from "~/user/assistant-chat/query/withAssistantChatQuery";
+
+export namespace useAssistantChat {
+	export type UseResult = ReturnType<typeof useAssistantChat>;
+}
+
+export const useAssistantChat = () => {
+	const { buildLocation } = useRouter();
+	const assistantQuery = withAssistantChatQuery.useCollectionQuery({
+		sort: [
+			{
+				field: "createdAt",
+				order: "desc",
+			},
+		],
+	});
+
+	return useChat({
+		transport: new DefaultChatTransport({
+			api: buildLocation({
+				to: "/api/assistant",
+			}).href,
+		}),
+		messages: assistantQuery.data.map((item) => {
+			return item.payload as UIMessage;
+		}),
+	});
+};

@@ -1,6 +1,5 @@
 import { withFallback } from "@/lib/client/fallback";
-import { ChevronRightIcon } from "@/lib/client/icon";
-import { AiIcon } from "@/lib/client/icon/AiIcon";
+import { AiIcon, ChevronRightIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";

@@ -15,6 +15,8 @@ export namespace EmptyState {
 	export interface Props extends PropsWithChildren {
 		check: Check[];
 	}
+
+	export type PropsEx = Partial<Props>;
 }
 
 export const EmptyState: FC<EmptyState.Props> = ({ check, children }) => {

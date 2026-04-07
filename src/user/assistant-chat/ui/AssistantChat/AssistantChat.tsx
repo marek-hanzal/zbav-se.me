@@ -1,132 +1,114 @@
-import { useChat } from "@ai-sdk/react";
-import { useRouter } from "@tanstack/react-router";
-import { DefaultChatTransport, type UIMessage } from "ai";
-import { type FC, useEffect, useRef } from "react";
+import { type FC, useCallback, useRef } from "react";
 import { Container } from "@/lib/client/container";
+import { EmptyState } from "@/lib/client/empty-state";
+import { AiIcon } from "@/lib/client/icon";
+import { Status } from "@/lib/client/status";
+import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
 import { ChatInput } from "~/common/ui/chat";
-import { withAssistantChatQuery } from "~/user/assistant-chat/query/withAssistantChatQuery";
-import { Empty } from "./Empty/Empty";
-import { Message } from "./Message/Message";
+import { MessageList } from "~/user/assistant-chat/ui/AssistantChat/MessageList";
+import { useAssistantChat } from "~/user/assistant-chat/ui/AssistantChat/useAssistantChat";
 
 export namespace AssistantChat {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		//
 	}
 }
 
 export const AssistantChat: FC<AssistantChat.Props> = ({ ui, ...props }) => {
-	const { buildLocation } = useRouter();
-	const assistantQuery = withAssistantChatQuery.useCollectionQuery({
-		sort: [
-			{
-				field: "createdAt",
-				order: "desc",
-			},
+	const chat = useAssistantChat();
+	const containerRef = useRef<HTMLDivElement | null>(null);
+
+	const submit = useCallback(
+		(value: string) => {
+			void chat.sendMessage({
+				text: value,
+			});
+		},
+		[
+			chat.sendMessage,
 		],
-	});
+	);
 
-	const { messages, sendMessage, status, error } = useChat({
-		transport: new DefaultChatTransport({
-			api: buildLocation({
-				to: "/api/assistant",
-			}).href,
-		}),
-		messages: assistantQuery.data.map((item) => {
-			return item.payload as UIMessage;
-		}),
-	});
-
-	const scrollerRef = useRef<HTMLDivElement | null>(null);
-	const messageCount = messages.length;
-
-	useEffect(() => {
-		const el = scrollerRef.current;
-		if (!el) {
-			return;
-		}
-
-		el.scrollTop = messageCount === 0 ? 0 : el.scrollHeight;
-	}, [
-		messageCount,
-	]);
-
-	const isBusy = status === "submitted" || status === "streaming";
-
-	const submit = (value: string) => {
-		void sendMessage({
-			text: value,
-		});
-	};
+	const isBusy = chat.status === "submitted" || chat.status === "streaming";
 
 	return (
 		<Container
-			data-ui={"ChatPage"}
+			data-ui={"AssistantChat"}
 			ui={{
-				layout: "vertical-flex",
 				height: "full",
 				width: "full",
 				...ui,
 			}}
-			className={[
-				"bg-[linear-gradient(180deg,rgba(15,23,42,0.05)_0%,rgba(148,163,184,0.18)_100%)]",
-				"overflow-hidden",
-			]}
 			{...props}
 		>
 			<Container
 				ui={{
-					layout: "vertical-flex",
+					layout: "vertical-content-footer",
 					height: "full",
-					round: "xl",
-					background: "default",
-					shadow: true,
-					border: true,
-					theme: "light",
-					tone: "neutral",
+					gap: "xs",
 				}}
-				className={[
-					"min-h-0",
-					"overflow-hidden",
-				]}
 			>
 				<Container
-					ref={scrollerRef}
+					ref={containerRef}
 					ui={{
 						layout: "vertical-flex",
 						gap: "default",
 						scroll: "vertical",
 						height: "full",
 					}}
-					className={[
-						"min-h-0",
-						"flex-1",
-						"px-2",
-						"py-2",
-					]}
 				>
-					<Empty
-						check={messages.length === 0}
-						onSubmit={submit}
-						isBusy={isBusy}
-						error={error}
+					<EmptyState
+						check={[
+							{
+								check() {
+									return !chat.messages.length;
+								},
+								render() {
+									return (
+										<Container
+											ui={{
+												layout: "vertical-centered",
+												height: "full",
+												width: "full",
+											}}
+										>
+											<Status
+												icon={AiIcon}
+												textTitle={translator.text(
+													"Assistant welcome (title)",
+												)}
+												textMessage={translator.text(
+													"Assistant welcome (message)",
+												)}
+											/>
+										</Container>
+									);
+								},
+							},
+						]}
 					>
-						<Message
-							messages={messages}
-							isBusy={isBusy}
+						<MessageList
+							containerRef={containerRef}
+							chat={chat}
 						/>
-					</Empty>
+					</EmptyState>
 				</Container>
 
-				{messages.length > 0 ? (
-					<div className="border-t border-slate-200/80 bg-slate-50 px-2 py-2">
-						<ChatInput
-							onSubmit={submit}
-							placeholder={translator.text("Write to a assistant")}
-							loading={isBusy}
-						/>
-					</div>
-				) : null}
+				<Container
+					ui={{
+						layout: "vertical-flex",
+						width: "full",
+						...ui,
+					}}
+					{...props}
+				>
+					<ChatInput
+						onSubmit={submit}
+						placeholder={translator.text("Write to a assistant")}
+						loading={isBusy}
+					/>
+				</Container>
 			</Container>
 		</Container>
 	);
