@@ -8,7 +8,7 @@ setTracingDisabled(true);
 
 const cli = cac("Agent Test");
 cli.option("--user <email>", "User email");
-cli.option("--prompt <your prompt>", "Ask agent whatever you need");
+cli.option("--model <name>", "Override the AI model");
 cli.help();
 
 const args = cli.parse(process.argv, {
@@ -18,13 +18,6 @@ const args = cli.parse(process.argv, {
 if (args.options.help) {
 	process.exit(0);
 }
-
-type ChatRole = "user" | "assistant";
-
-type ChatMessage = {
-	role: ChatRole;
-	text: string;
-};
 
 type RunnerConfig = ConstructorParameters<typeof Runner>[0];
 
@@ -37,14 +30,15 @@ const withMarkup = (markup: string) => (value: string) => {
 };
 
 const style = {
-	bold: withMarkup("^+"),
-	dim: withMarkup("^k"),
-	green: withMarkup("^g"),
-	cyan: withMarkup("^c"),
-	white: withMarkup("^w"),
+	title: withMarkup("^+^c"),
+	agent: withMarkup("^g"),
+	user: withMarkup("^w"),
+	accent: withMarkup("^c"),
+	muted: withMarkup("^k"),
+	error: withMarkup("^r"),
 };
 
-const trimPrompt = (value: string | undefined) => value?.trim() ?? "";
+const trimOption = (value: string | undefined) => value?.trim() ?? "";
 
 const isExitCommand = (value: string) => {
 	const normalized = value.trim().toLowerCase();
@@ -56,25 +50,26 @@ const isExitCommand = (value: string) => {
 	);
 };
 
+const createSeparator = () => style.muted("------------------------------------------------");
+
 const printHeader = () => {
 	console.log("");
-	console.log(style.bold(style.cyan("Agent chat")));
-	console.log(style.dim("Type your message and press Enter. Use Ctrl+C or /exit to quit."));
+	console.log(style.title("zbav-se.me agent"));
+	console.log(createSeparator());
+	console.log(
+		style.muted(
+			"Enter a message, then press Enter. Esc stops the current reply. Ctrl+C exits.",
+		),
+	);
 	console.log("");
-};
-
-const printMessage = (message: ChatMessage) => {
-	const label = message.role === "user" ? "You" : "Agent";
-	const labelStyle = message.role === "user" ? style.white : style.green;
-
-	console.log(`${labelStyle(label)}: ${message.text}`);
 };
 
 const createRunner = () => {
 	const aiConfig = ServerAiSchema.parse(process.env);
+	const model = trimOption(args.options.model) || aiConfig.SERVER_AI_MODEL;
 
 	const runnerConfig: RunnerConfig = {
-		model: aiConfig.SERVER_AI_MODEL,
+		model,
 		modelProvider: new OpenAIProvider({
 			baseURL: aiConfig.SERVER_AI_SERVER_URL,
 			apiKey: aiConfig.SERVER_AI_TOKEN,
@@ -85,33 +80,7 @@ const createRunner = () => {
 	return new Runner(runnerConfig);
 };
 
-const readPrompt = async () => {
-	process.stdout.write(`${style.cyan("You")}: `);
-	const input = await term.inputField({
-		cancelable: true,
-	}).promise;
-	process.stdout.write("\n");
-
-	return trimPrompt(input);
-};
-
-const runTurn = async (input: string, previousResponseId?: string) => {
-	const controller = new AbortController();
-
-	return {
-		controller,
-		response: await runner.run(CoreAgent, input, {
-			stream: true,
-			previousResponseId,
-			signal: controller.signal,
-		}),
-	};
-};
-
 const runner = createRunner();
-const shouldRunInteractive =
-	process.stdin.isTTY && process.stdout.isTTY && !trimPrompt(args.options.prompt);
-const initialPrompt = trimPrompt(args.options.prompt);
 
 let activeController: AbortController | undefined;
 let shuttingDown = false;
@@ -120,6 +89,21 @@ let escapeRequested = false;
 term.grabInput({
 	safe: true,
 });
+
+const cleanupAndExit = async (code: number) => {
+	if (shuttingDown) {
+		process.exit(code);
+	}
+
+	shuttingDown = true;
+	activeController?.abort();
+
+	try {
+		await term.asyncCleanup();
+	} finally {
+		process.exit(code);
+	}
+};
 
 const abortActiveTurn = () => {
 	if (!activeController || activeController.signal.aborted) {
@@ -141,21 +125,6 @@ term.on("key", (key: string) => {
 	}
 });
 
-const cleanupAndExit = async (code: number) => {
-	if (shuttingDown) {
-		process.exit(code);
-	}
-
-	shuttingDown = true;
-	activeController?.abort();
-
-	try {
-		await term.asyncCleanup();
-	} finally {
-		process.exit(code);
-	}
-};
-
 process.once("SIGINT", () => {
 	void cleanupAndExit(130);
 });
@@ -164,17 +133,42 @@ process.once("SIGTERM", () => {
 	void cleanupAndExit(143);
 });
 
+const readPrompt = async () => {
+	process.stdout.write(`${style.user("You")} ${style.muted("›")} `);
+	const input = await term.inputField({
+		cancelable: true,
+		style: term.white,
+	}).promise;
+	process.stdout.write("\n");
+
+	return trimOption(input);
+};
+
+const runTurn = async (input: string, previousResponseId?: string) => {
+	const controller = new AbortController();
+
+	const response = await runner.run(CoreAgent, input, {
+		stream: true,
+		previousResponseId,
+		signal: controller.signal,
+	});
+
+	return {
+		controller,
+		response,
+	};
+};
+
+const printAbortNotice = () => {
+	console.log(style.muted("[aborted]"));
+};
+
 const sendTurn = async (input: string, previousResponseId?: string) => {
 	const { controller, response } = await runTurn(input, previousResponseId);
 	activeController = controller;
 
 	try {
-		printMessage({
-			role: "user",
-			text: input,
-		});
-
-		process.stdout.write(`${style.green("Agent")}: `);
+		process.stdout.write(`${style.agent("Agent")} ${style.muted("›")} `);
 
 		const textStream = response.toTextStream({
 			compatibleWithNodeStreams: true,
@@ -200,8 +194,7 @@ const sendTurn = async (input: string, previousResponseId?: string) => {
 			await response.completed;
 
 			if (escapeRequested) {
-				process.stdout.write(style.dim("[aborted]"));
-				process.stdout.write("\n");
+				printAbortNotice();
 				return response.lastResponseId;
 			}
 
@@ -213,8 +206,7 @@ const sendTurn = async (input: string, previousResponseId?: string) => {
 				throw error;
 			}
 
-			process.stdout.write(style.dim("[aborted]"));
-			process.stdout.write("\n");
+			printAbortNotice();
 		}
 
 		return response.lastResponseId;
@@ -225,32 +217,23 @@ const sendTurn = async (input: string, previousResponseId?: string) => {
 	}
 };
 
-const runOneShot = async () => {
-	const input = initialPrompt;
-
-	if (!input) {
-		console.error("Missing --prompt. Use interactive mode in a TTY or pass a prompt.");
+const runInteractive = async () => {
+	if (!process.stdin.isTTY || !process.stdout.isTTY) {
+		console.error("This CLI is interactive only. Run it in a TTY.");
 		process.exit(1);
 	}
 
-	await sendTurn(input);
-};
-
-const runInteractive = async () => {
 	printHeader();
 
 	let previousResponseId: string | undefined;
-	let queuedPrompt: string | undefined = initialPrompt;
 
 	while (true) {
-		const input = queuedPrompt ?? (await readPrompt());
-		queuedPrompt = undefined;
+		const input = await readPrompt();
 
 		if (!input) {
 			if (escapeRequested) {
 				escapeRequested = false;
-				process.stdout.write(style.dim("[aborted]"));
-				process.stdout.write("\n");
+				printAbortNotice();
 			}
 
 			continue;
@@ -261,12 +244,10 @@ const runInteractive = async () => {
 			return;
 		}
 
+		console.log(createSeparator());
 		previousResponseId = await sendTurn(input, previousResponseId);
+		console.log("");
 	}
 };
 
-if (shouldRunInteractive) {
-	await runInteractive();
-} else {
-	await runOneShot();
-}
+await runInteractive();
