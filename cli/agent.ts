@@ -87,7 +87,9 @@ const createRunner = () => {
 
 const readPrompt = async () => {
 	process.stdout.write(`${style.cyan("You")}: `);
-	const input = await term.inputField().promise;
+	const input = await term.inputField({
+		cancelable: true,
+	}).promise;
 	process.stdout.write("\n");
 
 	return trimPrompt(input);
@@ -113,6 +115,31 @@ const initialPrompt = trimPrompt(args.options.prompt);
 
 let activeController: AbortController | undefined;
 let shuttingDown = false;
+let escapeRequested = false;
+
+term.grabInput({
+	safe: true,
+});
+
+const abortActiveTurn = () => {
+	if (!activeController || activeController.signal.aborted) {
+		return;
+	}
+
+	escapeRequested = true;
+	activeController.abort();
+};
+
+term.on("key", (key: string) => {
+	if (key === "ESCAPE") {
+		abortActiveTurn();
+		return;
+	}
+
+	if (key === "CTRL_C") {
+		void cleanupAndExit(130);
+	}
+});
 
 const cleanupAndExit = async (code: number) => {
 	if (shuttingDown) {
@@ -154,30 +181,46 @@ const sendTurn = async (input: string, previousResponseId?: string) => {
 		});
 		let wroteText = false;
 
-		for await (const chunk of textStream) {
-			wroteText = true;
-			process.stdout.write(String(chunk));
-		}
-
-		if (!wroteText) {
-			const finalOutput = response.finalOutput;
-
-			if (typeof finalOutput === "string" && finalOutput.trim().length > 0) {
-				process.stdout.write(finalOutput);
+		try {
+			for await (const chunk of textStream) {
+				wroteText = true;
+				process.stdout.write(String(chunk));
 			}
-		}
 
-		process.stdout.write("\n");
+			if (!wroteText) {
+				const finalOutput = response.finalOutput;
 
-		await response.completed;
+				if (typeof finalOutput === "string" && finalOutput.trim().length > 0) {
+					process.stdout.write(finalOutput);
+				}
+			}
 
-		if (response.error) {
-			throw response.error;
+			process.stdout.write("\n");
+
+			await response.completed;
+
+			if (escapeRequested) {
+				process.stdout.write(style.dim("[aborted]"));
+				process.stdout.write("\n");
+				return response.lastResponseId;
+			}
+
+			if (response.error) {
+				throw response.error;
+			}
+		} catch (error) {
+			if (!escapeRequested) {
+				throw error;
+			}
+
+			process.stdout.write(style.dim("[aborted]"));
+			process.stdout.write("\n");
 		}
 
 		return response.lastResponseId;
 	} finally {
 		activeController = undefined;
+		escapeRequested = false;
 		controller.abort();
 	}
 };
@@ -204,6 +247,12 @@ const runInteractive = async () => {
 		queuedPrompt = undefined;
 
 		if (!input) {
+			if (escapeRequested) {
+				escapeRequested = false;
+				process.stdout.write(style.dim("[aborted]"));
+				process.stdout.write("\n");
+			}
+
 			continue;
 		}
 
