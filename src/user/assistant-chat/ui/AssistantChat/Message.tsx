@@ -87,10 +87,10 @@ export const Message: FC<Message.Props> = ({ message, ...props }) => {
 					)
 					.with(
 						{
-							type: "tool-${string}" as `tool-${string}`,
+							type: "tool" as `tool-${string}`,
 						},
 						{
-							type: "data-${string}" as `data-${string}`,
+							type: "data" as `data-${string}`,
 						},
 						(_part) => {
 							return "fake tool";
