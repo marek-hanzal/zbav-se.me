@@ -1,8 +1,8 @@
 import { getLogger } from "@logtape/logtape";
 import { tool } from "ai";
 import { z } from "zod";
-import { KnowledgeFrontSchema } from "~/public/assistant/knowledge/schema/KnowledgeFrontSchema";
-import { getKnowledgeIndex } from "~/public/assistant/knowledge/service/getKnowledgeIndex";
+import { KnowledgeFrontSchema } from "~/user/knowledge/schema/KnowledgeFrontSchema";
+import { getKnowledgeIndex } from "~/user/knowledge/service/getKnowledgeIndex";
 
 const logger = getLogger("toolKnowledgeIndex");
 

@@ -1,6 +1,6 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { getKnowledgeIndex } from "~/public/assistant/knowledge/service/getKnowledgeIndex";
+import { getKnowledgeIndex } from "~/user/knowledge/service/getKnowledgeIndex";
 
 export const toolKnowledge = tool({
 	title: "knowledge",

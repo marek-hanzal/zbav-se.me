@@ -2,9 +2,9 @@ import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { getLogger } from "@logtape/logtape";
 import { generateText, stepCountIs, tool } from "ai";
 import { z } from "zod";
-import { toolKnowledge } from "~/public/assistant/knowledge/tool/toolKnowledge";
-import { toolKnowledgeIndex } from "~/public/assistant/knowledge/tool/toolKnowledgeIndex";
-import { toolKnowledgeSearch } from "~/public/assistant/knowledge/tool/toolKnowledgeSearch";
+import { toolKnowledge } from "~/user/knowledge/tool/toolKnowledge";
+import { toolKnowledgeIndex } from "~/user/knowledge/tool/toolKnowledgeIndex";
+import { toolKnowledgeSearch } from "~/user/knowledge/tool/toolKnowledgeSearch";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 
 const logger = getLogger("toolExpertKnowledge");

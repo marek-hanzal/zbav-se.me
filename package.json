@@ -32,8 +32,6 @@
 		"workflow:update": "run-s sp:fix sp:update workflow:format update workflow:check"
 	},
 	"dependencies": {
-		"@ai-sdk/openai-compatible": "2.0.40",
-		"@ai-sdk/react": "3.0.151",
 		"@escapace/accept-language-parser": "2.1.2",
 		"@logtape/file": "2.0.5",
 		"@logtape/logtape": "2.0.5",
@@ -49,7 +47,6 @@
 		"@tanstack/react-router": "1.168.10",
 		"@tanstack/react-router-ssr-query": "1.166.10",
 		"@tanstack/react-start": "1.167.16",
-		"ai": "6.0.149",
 		"axios": "1.14.0",
 		"better-auth": "1.6.0",
 		"cac": "7.0.0",

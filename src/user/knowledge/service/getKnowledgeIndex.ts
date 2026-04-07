@@ -2,7 +2,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getLogger } from "@logtape/logtape";
 import { getIndexOf } from "@/lib/common/front";
-import { KnowledgeFrontSchema } from "~/public/assistant/knowledge/schema/KnowledgeFrontSchema";
+import { KnowledgeFrontSchema } from "~/user/knowledge/schema/KnowledgeFrontSchema";
 
 const logger = getLogger("getKnowledgeIndex");
 

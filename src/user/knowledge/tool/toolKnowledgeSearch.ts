@@ -1,8 +1,8 @@
 import { tool } from "ai";
 import Fuse from "fuse.js";
 import { z } from "zod";
-import { KnowledgeFrontSchema } from "~/public/assistant/knowledge/schema/KnowledgeFrontSchema";
-import { getKnowledgeIndex } from "~/public/assistant/knowledge/service/getKnowledgeIndex";
+import { KnowledgeFrontSchema } from "~/user/knowledge/schema/KnowledgeFrontSchema";
+import { getKnowledgeIndex } from "~/user/knowledge/service/getKnowledgeIndex";
 
 export const toolKnowledgeSearch = tool({
 	title: "knowledge-search",
