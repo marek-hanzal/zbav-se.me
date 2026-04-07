@@ -1,4 +1,6 @@
 import { Agent } from "@openai/agents";
+import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
+import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
 
 export const KnowledgeAgent = new Agent({
 	name: "General Knowledge Agent",
@@ -19,5 +21,9 @@ export const KnowledgeAgent = new Agent({
         Every guide, workflow, resource, whatever other agents needs, is available
         here.
     `.trim(),
+	tools: [
+		toolDraftCreate,
+		toolDraftCollection,
+	],
 	toolUseBehavior: "run_llm_again",
 });
