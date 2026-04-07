@@ -23,7 +23,7 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 	limit = 5,
 }: locationAutocompleteFx.Props) {
 	const logger = yield* getLoggerFx("locationAutocompleteFx");
-	logger.debug("locationAutocompleteFx", {
+	logger.trace("locationAutocompleteFx", {
 		text,
 		lang,
 		limit,

@@ -23,7 +23,7 @@ export const locationAutocompleteFn = createServerFn()
 	.inputValidator(LocationAutocompleteSchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild(name);
-		logger.debug(name, data);
+		logger.trace(name, data);
 
 		const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
 

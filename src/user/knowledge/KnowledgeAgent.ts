@@ -1,7 +1,6 @@
 import { Agent } from "@openai/agents";
-import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
-import { toolDraftCount } from "~/seller/draft/server/tool/toolDraftCount";
-import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
+import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
+import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
 
 export const KnowledgeAgent = new Agent({
 	name: "General Knowledge Agent",
@@ -19,17 +18,15 @@ export const KnowledgeAgent = new Agent({
         the will execute the workflow.
 
         Or just give the user information he asks.
-    `.trim(),
-	handoffDescription: `
-        Get access to all the knowledge in the app, kind of knowledge base or wiki.
 
-        Every guide, workflow, resource, whatever other agents needs, is available
-        here.
+        You're read-only agent providing only single source of truth to the managing
+        agent.
+
+        When you're generating output, you're expected to tell the user the source of your knowledge, e.g.
+        you found something in Draft Agent and so on.
     `.trim(),
 	tools: [
-		toolDraftCreate,
-		toolDraftCount,
-		toolDraftCollection,
+		DraftAgent.asTool({}),
+		LocationAgent.asTool({}),
 	],
-	toolUseBehavior: "run_llm_again",
 });

@@ -23,7 +23,7 @@ export const withLogMiddleware = createMiddleware()
 		withDevEnvMiddleware,
 	])
 	.server(async ({ next, context: { isDev } }) => {
-		const level: LogLevel = "info";
+		const level: LogLevel = "trace";
 
 		flag &&
 			(await configure({
@@ -80,16 +80,6 @@ export const withLogMiddleware = createMiddleware()
 						sinks: [
 							"console",
 							"file",
-						],
-					},
-					//
-					{
-						category: [
-							"toolExpertKnowledge",
-						],
-						lowestLevel: "trace",
-						sinks: [
-							"console",
 						],
 					},
 					//

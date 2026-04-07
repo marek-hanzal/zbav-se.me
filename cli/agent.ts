@@ -12,6 +12,7 @@ import * as terminalKit from "terminal-kit";
 import { match, P } from "ts-pattern";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 import { CoreAgent } from "~/user/assistant/CoreAgent";
+import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
 
 setTracingDisabled(true);
 
@@ -396,7 +397,7 @@ const streamAssistantOutput = async (input: string | ResumeState) => {
 		appState.streaming = true;
 
 		try {
-			stream = await runner.run(CoreAgent, nextInput, {
+			stream = await runner.run(LocationAgent, nextInput, {
 				session,
 				stream: true,
 				signal: abortController.signal,
