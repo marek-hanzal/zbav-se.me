@@ -1,6 +1,4 @@
-import { useChat } from "@ai-sdk/react";
 import { useRouter } from "@tanstack/react-router";
-import { DefaultChatTransport } from "ai";
 import type { MessageUi } from "~/user/assistant/MessageUi";
 import { withAssistantChatQuery } from "~/user/assistant-chat/query/withAssistantChatQuery";
 
@@ -19,14 +17,8 @@ export const useAssistantChat = () => {
 		],
 	});
 
-	return useChat({
-		transport: new DefaultChatTransport({
-			api: buildLocation({
-				to: "/api/assistant",
-			}).href,
-		}),
-		messages: assistantQuery.data.map((item) => {
-			return item.payload as MessageUi;
-		}),
-	});
+	return {
+		status: "pending",
+		messages: [] as MessageUi[],
+	};
 };
