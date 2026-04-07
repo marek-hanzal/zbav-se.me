@@ -1,14 +1,25 @@
-import { OpenAIProvider, Runner, setTracingDisabled } from "@openai/agents";
+import { Writable } from "node:stream";
+import { pipeline } from "node:stream/promises";
+import {
+	MemorySession,
+	OpenAIProvider,
+	Runner,
+	type RunState,
+	setTracingDisabled,
+} from "@openai/agents";
 import { cac } from "cac";
-import { terminal as term } from "terminal-kit";
+import * as terminalKit from "terminal-kit";
+import { match, P } from "ts-pattern";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 import { CoreAgent } from "~/user/assistant/CoreAgent";
 
 setTracingDisabled(true);
 
-const cli = cac("Agent Test");
+const term = terminalKit.terminal;
+
+const cli = cac("agent-chat");
 cli.option("--user <email>", "User email");
-cli.option("--model <name>", "Override the AI model");
+cli.option("--model <name>", "Override model");
 cli.help();
 
 const args = cli.parse(process.argv, {
@@ -19,235 +30,363 @@ if (args.options.help) {
 	process.exit(0);
 }
 
-type RunnerConfig = ConstructorParameters<typeof Runner>[0];
+const aiConfig = ServerAiSchema.parse(process.env);
+const model = args.options.model ?? aiConfig.SERVER_AI_MODEL;
 
-const withMarkup = (markup: string) => (value: string) => {
-	if (!process.stdout.isTTY || process.env.NO_COLOR) {
+const runner = new Runner({
+	model,
+	modelProvider: new OpenAIProvider({
+		baseURL: aiConfig.SERVER_AI_SERVER_URL,
+		apiKey: aiConfig.SERVER_AI_TOKEN,
+	}),
+	tracingDisabled: true,
+});
+
+const session = new MemorySession({
+	sessionId: args.options.user ?? "local-terminal-chat",
+});
+
+const inputHistory: string[] = [];
+
+const appState = {
+	running: true,
+	streaming: false,
+	terminating: false,
+	activeAbortController: null as AbortController | null,
+};
+
+const divider = () => "─".repeat(Math.max(32, term.width - 4));
+
+const printDivider = () => {
+	term.brightBlack("%s\n", divider());
+};
+
+const printHeader = () => {
+	term.clear();
+
+	term.bold.brightWhite("Agent");
+	term.brightBlack("  ·  ");
+	term.bold.brightMagenta("zbav-se.me");
+	term("\n");
+
+	printDivider();
+
+	term.brightBlack("Model   ");
+	term.brightWhite("%s\n", model);
+
+	term.brightBlack("Session ");
+	term.brightWhite("%s\n", args.options.user ?? "local-terminal-chat");
+
+	term.brightBlack("Příkazy ");
+	term.brightYellow("/clear");
+	term.brightBlack("  ");
+	term.brightYellow("/help");
+	term.brightBlack("  ");
+	term.brightYellow("/exit");
+	term("\n");
+
+	term.brightBlack("Stream  ");
+	term.brightWhite("Esc");
+	term.brightBlack(" = stop odpovědi");
+	term("\n");
+
+	printDivider();
+	term("\n");
+};
+
+const normalizeOutput = (value: unknown): string => {
+	if (typeof value === "string") {
 		return value;
 	}
 
-	return String(term.str(`${markup}${value}^:`));
+	if (value == null) {
+		return "";
+	}
+
+	try {
+		return JSON.stringify(value, null, 2);
+	} catch {
+		return String(value);
+	}
 };
 
-const style = {
-	title: withMarkup("^+^c"),
-	agent: withMarkup("^g"),
-	user: withMarkup("^w"),
-	accent: withMarkup("^c"),
-	muted: withMarkup("^k"),
-	error: withMarkup("^r"),
+const isAbortLikeError = (error: unknown): boolean => {
+	if (!(error instanceof Error)) {
+		return false;
+	}
+
+	return error.name === "AbortError" || /abort|aborted|cancelled|canceled/i.test(error.message);
 };
 
-const trimOption = (value: string | undefined) => value?.trim() ?? "";
+const terminate = async (exitCode = 0) => {
+	if (appState.terminating) {
+		return;
+	}
 
-const isExitCommand = (value: string) => {
-	const normalized = value.trim().toLowerCase();
-	return (
-		normalized === "/exit" ||
-		normalized === "exit" ||
-		normalized === "/quit" ||
-		normalized === "quit"
-	);
+	appState.terminating = true;
+	appState.running = false;
+
+	if (appState.activeAbortController && !appState.activeAbortController.signal.aborted) {
+		appState.activeAbortController.abort();
+	}
+
+	term.removeListener("key", onKey);
+
+	try {
+		term("\n");
+		printDivider();
+		term.green("👋 Končím.\n");
+		term.grabInput(false);
+		term.styleReset();
+
+		// Malá pauza, aby si terminál stihl uklidit ruce od klávesnice.
+		await new Promise((resolve) => setTimeout(resolve, 30));
+
+		term.processExit(exitCode);
+	} catch {
+		process.exit(exitCode);
+	}
 };
 
-const createSeparator = () => style.muted("------------------------------------------------");
+const onKey = (name: string) => {
+	if (name === "CTRL_C") {
+		void terminate(0);
+		return;
+	}
 
-const printHeader = () => {
-	console.log("");
-	console.log(style.title("zbav-se.me agent"));
-	console.log(createSeparator());
-	console.log(
-		style.muted(
-			"Enter a message, then press Enter. Esc stops the current reply. Ctrl+C exits.",
-		),
-	);
-	console.log("");
+	if (
+		appState.streaming &&
+		appState.activeAbortController &&
+		(name === "ESCAPE" || name === "ESC")
+	) {
+		if (!appState.activeAbortController.signal.aborted) {
+			appState.activeAbortController.abort();
+		}
+	}
 };
 
-const createRunner = () => {
-	const aiConfig = ServerAiSchema.parse(process.env);
-	const model = trimOption(args.options.model) || aiConfig.SERVER_AI_MODEL;
+process.on("SIGINT", () => {
+	void terminate(0);
+});
 
-	const runnerConfig: RunnerConfig = {
-		model,
-		modelProvider: new OpenAIProvider({
-			baseURL: aiConfig.SERVER_AI_SERVER_URL,
-			apiKey: aiConfig.SERVER_AI_TOKEN,
-		}),
-		tracingDisabled: true,
-	};
-
-	return new Runner(runnerConfig);
-};
-
-const runner = createRunner();
-
-let activeController: AbortController | undefined;
-let shuttingDown = false;
-let escapeRequested = false;
+process.on("SIGTERM", () => {
+	void terminate(0);
+});
 
 term.grabInput({
-	safe: true,
+	mouse: false,
 });
+term.on("key", onKey);
 
-const cleanupAndExit = async (code: number) => {
-	if (shuttingDown) {
-		process.exit(code);
-	}
+const askInput = async () => {
+	term.bold.brightGreen("you");
+	term.brightBlack("  > ");
+	term.brightWhite("");
 
-	shuttingDown = true;
-	activeController?.abort();
-
-	try {
-		await term.asyncCleanup();
-	} finally {
-		process.exit(code);
-	}
-};
-
-const abortActiveTurn = () => {
-	if (!activeController || activeController.signal.aborted) {
-		return;
-	}
-
-	escapeRequested = true;
-	activeController.abort();
-};
-
-term.on("key", (key: string) => {
-	if (key === "ESCAPE") {
-		abortActiveTurn();
-		return;
-	}
-
-	if (key === "CTRL_C") {
-		void cleanupAndExit(130);
-	}
-});
-
-process.once("SIGINT", () => {
-	void cleanupAndExit(130);
-});
-
-process.once("SIGTERM", () => {
-	void cleanupAndExit(143);
-});
-
-const readPrompt = async () => {
-	process.stdout.write(`${style.user("You")} ${style.muted("›")} `);
 	const input = await term.inputField({
-		cancelable: true,
-		style: term.white,
+		echo: true,
+		history: inputHistory,
+		autoCompleteHint: false,
+		cancelable: false,
 	}).promise;
-	process.stdout.write("\n");
 
-	return trimOption(input);
+	term("\n");
+
+	return input;
 };
 
-const runTurn = async (input: string, previousResponseId?: string) => {
-	const controller = new AbortController();
+const askApproval = async (agentName: string, toolName: string, toolArguments: string) => {
+	printDivider();
 
-	const response = await runner.run(CoreAgent, input, {
-		stream: true,
-		previousResponseId,
-		signal: controller.signal,
-	});
+	term.bold.brightYellow("approval");
+	term.brightBlack(" > ");
+	term.brightWhite("%s", agentName);
+	term.brightBlack(" chce spustit ");
+	term.brightCyan("%s", toolName);
+	term("\n");
 
-	return {
-		controller,
-		response,
-	};
+	if (toolArguments.trim()) {
+		term.brightBlack("args     ");
+		term.brightWhite("%s\n", toolArguments);
+	}
+
+	term.brightYellow("approve? ");
+	const approved = await term.yesOrNo({
+		yes: [
+			"y",
+			"Y",
+			"ENTER",
+		],
+		no: [
+			"n",
+			"N",
+		],
+		echoYes: "yes",
+		echoNo: "no",
+	}).promise;
+
+	term("\n");
+
+	return approved;
 };
 
-const printAbortNotice = () => {
-	console.log(style.muted("[aborted]"));
-};
+const streamAssistantOutput = async (input: string | RunState) => {
+	let nextInput: string | RunState = input;
 
-const sendTurn = async (input: string, previousResponseId?: string) => {
-	const { controller, response } = await runTurn(input, previousResponseId);
-	activeController = controller;
+	while (appState.running) {
+		const abortController = new AbortController();
 
-	try {
-		process.stdout.write(`${style.agent("Agent")} ${style.muted("›")} `);
+		appState.activeAbortController = abortController;
+		appState.streaming = true;
 
-		const textStream = response.toTextStream({
-			compatibleWithNodeStreams: true,
+		const stream = await runner.run(CoreAgent, nextInput, {
+			session,
+			stream: true,
+			signal: abortController.signal,
 		});
-		let wroteText = false;
+
+		let wroteAnyText = false;
+
+		term.bold.brightCyan("agent");
+		term.brightBlack(" > ");
+
+		const sink = new Writable({
+			write(chunk, _encoding, callback) {
+				wroteAnyText = true;
+				term.brightWhite("%s", chunk.toString());
+				callback();
+			},
+		});
 
 		try {
-			for await (const chunk of textStream) {
-				wroteText = true;
-				process.stdout.write(String(chunk));
-			}
+			await pipeline(
+				stream.toTextStream({
+					compatibleWithNodeStreams: true,
+				}),
+				sink,
+			);
 
-			if (!wroteText) {
-				const finalOutput = response.finalOutput;
-
-				if (typeof finalOutput === "string" && finalOutput.trim().length > 0) {
-					process.stdout.write(finalOutput);
-				}
-			}
-
-			process.stdout.write("\n");
-
-			await response.completed;
-
-			if (escapeRequested) {
-				printAbortNotice();
-				return response.lastResponseId;
-			}
-
-			if (response.error) {
-				throw response.error;
-			}
+			await stream.completed;
 		} catch (error) {
-			if (!escapeRequested) {
+			const aborted =
+				abortController.signal.aborted || stream.cancelled || isAbortLikeError(error);
+
+			if (!aborted) {
 				throw error;
 			}
-
-			printAbortNotice();
+		} finally {
+			appState.streaming = false;
+			appState.activeAbortController = null;
 		}
 
-		return response.lastResponseId;
-	} finally {
-		activeController = undefined;
-		escapeRequested = false;
-		controller.abort();
-	}
-};
+		const wasAborted = abortController.signal.aborted || stream.cancelled;
 
-const runInteractive = async () => {
-	if (!process.stdin.isTTY || !process.stdout.isTTY) {
-		console.error("This CLI is interactive only. Run it in a TTY.");
-		process.exit(1);
-	}
-
-	printHeader();
-
-	let previousResponseId: string | undefined;
-
-	while (true) {
-		const input = await readPrompt();
-
-		if (!input) {
-			if (escapeRequested) {
-				escapeRequested = false;
-				printAbortNotice();
+		if (wasAborted) {
+			if (!wroteAnyText) {
+				term.brightBlack("[žádný text]\n");
+			} else {
+				term("\n");
 			}
 
-			continue;
-		}
-
-		if (isExitCommand(input)) {
-			await cleanupAndExit(0);
+			term.brightRed("stream zastaven\n");
 			return;
 		}
 
-		console.log(createSeparator());
-		previousResponseId = await sendTurn(input, previousResponseId);
-		console.log("");
+		if (!wroteAnyText && stream.finalOutput != null) {
+			term.brightWhite("%s", normalizeOutput(stream.finalOutput));
+		}
+
+		term("\n");
+
+		if (!stream.interruptions?.length) {
+			return;
+		}
+
+		const state = stream.state;
+
+		for (const interruption of stream.interruptions) {
+			const approved = await askApproval(
+				interruption.agent.name,
+				interruption.name,
+				interruption.arguments,
+			);
+
+			if (approved) {
+				state.approve(interruption);
+				term.green("approved\n");
+			} else {
+				state.reject(interruption);
+				term.red("rejected\n");
+			}
+		}
+
+		printDivider();
+		nextInput = state;
 	}
 };
 
-await runInteractive();
+const printHelp = () => {
+	printDivider();
+
+	term.bold.brightWhite("Nápověda\n");
+	term.brightBlack("  /clear");
+	term.brightWhite("  smaže session a překreslí obrazovku\n");
+	term.brightBlack("  /help");
+	term.brightWhite("   zobrazí tenhle help\n");
+	term.brightBlack("  /exit");
+	term.brightWhite("   ukončí appku\n");
+	term.brightBlack("  Esc");
+	term.brightWhite("     během streamu zastaví odpověď agenta\n");
+};
+
+const handleInput = async (input: string) => {
+	const trimmed = input.trim();
+
+	if (!trimmed) {
+		return;
+	}
+
+	await match(trimmed)
+		.with(P.union("/exit", "/quit"), async () => {
+			await terminate(0);
+		})
+		.with("/clear", async () => {
+			await session.clearSession();
+			printHeader();
+			term.green("🧹 Session smazána.\n\n");
+		})
+		.with("/help", async () => {
+			printHelp();
+		})
+		.otherwise(async (prompt) => {
+			inputHistory.push(prompt);
+
+			printDivider();
+			await streamAssistantOutput(prompt);
+			term("\n");
+		});
+};
+
+printHeader();
+
+while (appState.running) {
+	try {
+		const input = await askInput();
+
+		if (!appState.running) {
+			break;
+		}
+
+		if (typeof input !== "string") {
+			continue;
+		}
+
+		await handleInput(input);
+	} catch (error) {
+		if (appState.terminating) {
+			break;
+		}
+
+		term.red("[chyba] %s\n\n", error instanceof Error ? error.message : String(error));
+	}
+}
