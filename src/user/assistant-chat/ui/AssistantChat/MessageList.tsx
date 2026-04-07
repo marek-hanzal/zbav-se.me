@@ -1,6 +1,9 @@
-import type { FC, RefObject } from "react";
+import { type FC, type RefObject, useRef } from "react";
+import { useAutoScroll } from "@/lib/client/auto-scroll";
 import { Container } from "@/lib/client/container";
-import type { useAssistantChat } from "~/user/assistant-chat/ui/AssistantChat/useAssistantChat";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import { Message } from "./Message";
+import type { useAssistantChat } from "./useAssistantChat";
 
 export namespace MessageList {
 	export interface Props extends Container.Props {
@@ -10,11 +13,29 @@ export namespace MessageList {
 }
 
 export const MessageList: FC<MessageList.Props> = ({ containerRef, chat, ...props }) => {
-	// useAutoScroll({
-	// 	containerRef,
-	// 	contentRef,
-	// });
+	const contentRef = useRef<HTMLDivElement | null>(null);
+	useAutoScroll({
+		containerRef,
+		contentRef,
+	});
+
 	const isBusy = chat.status === "submitted" || chat.status === "streaming";
 
-	return <Container {...props}></Container>;
+	return (
+		<Container
+			ref={contentRef}
+			{...props}
+		>
+			{chat.messages.map((message) => {
+				return (
+					<Message
+						key={message.id}
+						message={message}
+					/>
+				);
+			})}
+
+			{isBusy ? <SpinnerContainer /> : null}
+		</Container>
+	);
 };
