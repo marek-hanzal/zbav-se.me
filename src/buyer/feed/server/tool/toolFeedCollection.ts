@@ -1,15 +1,13 @@
-import { tool } from "ai";
+import { tool } from "@openai/agents";
 import { feedCollectionFn } from "~/buyer/feed/server/fn/feedCollectionFn";
 import { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
-import { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 
 export const toolFeedCollection = tool({
-	title: "feed-collection",
-	type: "function",
+	name: "feed-collection",
 	needsApproval: false,
 	description: "Get a list of feeds (saved searches for listings)",
-	inputSchema: FeedQuerySchema,
-	outputSchema: FeedSchema.array(),
+	parameters: FeedQuerySchema,
+	// outputSchema: FeedSchema.array(),
 	async execute(data) {
 		return feedCollectionFn({
 			data,

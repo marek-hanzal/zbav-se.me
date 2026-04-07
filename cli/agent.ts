@@ -228,7 +228,7 @@ process.on("SIGTERM", () => {
 });
 
 term.grabInput({
-	mouse: false,
+	mouse: undefined,
 });
 term.on("key", onKey);
 

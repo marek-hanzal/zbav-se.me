@@ -1,16 +1,19 @@
-import { tool } from "ai";
-import { z } from "zod";
+import { tool } from "@openai/agents";
 import { listingCollectionFn } from "~/buyer/listing/server/fn/listingCollectionFn";
-import { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { ListingToolQuerySchema } from "~/buyer/listing/server/schema/ListingToolQuerySchema";
 
 export const toolListingCollection = tool({
-	title: "listing-collection",
-	type: "function",
+	name: "listing-collection",
 	needsApproval: false,
-	description: "Access user's listings",
-	inputSchema: ListingToolQuerySchema,
-	outputSchema: z.array(ListingSchema),
+	description: `
+        Here you've access to all user's published listings, it's useful for questions about
+        what is published, how long given listing remain active, which ones are about to expire
+        and other interesting stuff.
+
+        This is main entry-point to listings from the seller's point of view.
+    `.trim(),
+	parameters: ListingToolQuerySchema,
+	// outputSchema: z.array(ListingSchema),
 	async execute(data) {
 		return listingCollectionFn({
 			data,
