@@ -27,6 +27,13 @@ export const Tools = {
 	// "category-collection": toolCategoryCollection,
 	// "category-fetch": toolCategoryFetch,
 	//
+
+	/**
+	 * Experimental memory tools for model - used just after system prompt or maybe
+	 * even just after system prompt; this one we've to investigate
+	 */
+
+	//
 	/**
 	 * Experimental RAG for accessing knowledge about the app.
 	 */
