@@ -23,8 +23,7 @@ export const assistantChatCollectionFx = Effect.fn("assistantChatCollectionFx")(
 	sort,
 }: assistantChatCollectionFx.Props) {
 	const logger = yield* getLoggerFx("assistantChatCollectionFx");
-
-	logger.debug("assistantChatCollectionFx", {
+	logger.trace("assistantChatCollectionFx", {
 		filter,
 		where,
 		scope,

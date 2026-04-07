@@ -19,7 +19,7 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 	sort,
 }: transactionFetchFx.Props) {
 	const logger = yield* getLoggerFx("transactionFetchFx");
-	logger.debug("transactionFetchFx", {
+	logger.trace("transactionFetchFx", {
 		filter,
 		where,
 		scope,

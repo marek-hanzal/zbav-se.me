@@ -7,7 +7,7 @@ import { KnowledgeFrontSchema } from "~/public/assistant/knowledge/schema/Knowle
 const logger = getLogger("getKnowledgeIndex");
 
 export const getKnowledgeIndex = () => {
-	logger.debug("Index of proxy for Knowledge Index");
+	logger.trace("Index of proxy for Knowledge Index");
 
 	return getIndexOf({
 		schema: KnowledgeFrontSchema,

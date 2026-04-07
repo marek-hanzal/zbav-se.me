@@ -6,6 +6,7 @@ import {
 	getConsoleSink,
 	getLogger,
 	jsonLinesFormatter,
+	type LogLevel,
 	withContext,
 } from "@logtape/logtape";
 import { getPrettyFormatter } from "@logtape/pretty";
@@ -22,6 +23,8 @@ export const withLogMiddleware = createMiddleware()
 		withDevEnvMiddleware,
 	])
 	.server(async ({ next, context: { isDev } }) => {
+		const level: LogLevel = "debug";
+
 		flag &&
 			(await configure({
 				reset: true,
@@ -65,7 +68,7 @@ export const withLogMiddleware = createMiddleware()
 						 * Root logger
 						 */
 						category: [],
-						lowestLevel: "trace",
+						lowestLevel: level,
 						sinks: [
 							"console",
 							"file",
@@ -73,12 +76,25 @@ export const withLogMiddleware = createMiddleware()
 					},
 					{
 						category: "zbav-se.me",
-						lowestLevel: "trace",
+						lowestLevel: level,
 						sinks: [
 							"console",
 							"file",
 						],
 					},
+					//
+
+					{
+						category: [
+							"zbav-se.me",
+							"/api/assistant",
+						],
+						lowestLevel: "trace",
+						sinks: [
+							"console",
+						],
+					},
+					//
 					{
 						category: [
 							"logtape",

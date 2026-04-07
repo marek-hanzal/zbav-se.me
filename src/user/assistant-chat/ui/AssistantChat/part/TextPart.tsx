@@ -11,13 +11,15 @@ export namespace TextPart {
 	}
 }
 
-export const TextPart: FC<TextPart.Props> = ({ message, part, ui, ...props }) => {
+export const TextPart: FC<TextPart.Props> = ({ message, part, ui, className, ...props }) => {
 	const isAssistant = message.role === "assistant";
+	const isUser = message.role === "user";
 
 	if (part.text.length === 0) {
 		return (
 			<Container
 				ui={{
+					inner: "default",
 					text: "sm",
 					opacity: "2",
 					...ui,
@@ -31,5 +33,34 @@ export const TextPart: FC<TextPart.Props> = ({ message, part, ui, ...props }) =>
 		);
 	}
 
-	return <Markdown>{part.text}</Markdown>;
+	return (
+		<Container
+			ui={{
+				inner: "default",
+				...(isUser
+					? {
+							tone: "brand",
+							theme: "light",
+							background: "default",
+							shadow: true,
+							border: true,
+							round: "default",
+						}
+					: {}),
+				...(isAssistant ? {} : {}),
+				...ui,
+			}}
+			className={[
+				isUser
+					? [
+							"text-right",
+						]
+					: [],
+				className,
+			]}
+			{...props}
+		>
+			<Markdown>{part.text}</Markdown>
+		</Container>
+	);
 };

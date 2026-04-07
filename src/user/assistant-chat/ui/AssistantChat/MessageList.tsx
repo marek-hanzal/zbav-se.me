@@ -12,7 +12,7 @@ export namespace MessageList {
 	}
 }
 
-export const MessageList: FC<MessageList.Props> = ({ containerRef, chat, ...props }) => {
+export const MessageList: FC<MessageList.Props> = ({ containerRef, chat, ui, ...props }) => {
 	const contentRef = useRef<HTMLDivElement | null>(null);
 	useAutoScroll({
 		containerRef,
@@ -24,6 +24,12 @@ export const MessageList: FC<MessageList.Props> = ({ containerRef, chat, ...prop
 	return (
 		<Container
 			ref={contentRef}
+			ui={{
+				flow: "vertical",
+				inner: "default",
+				gap: "default",
+				...ui,
+			}}
 			{...props}
 		>
 			{chat.messages.map((message) => {

@@ -21,7 +21,7 @@ export const transactionEntryFetchFx = Effect.fn("transactionEntryFetchFx")(func
 	sort,
 }: transactionEntryFetchFx.Props) {
 	const logger = yield* getLoggerFx("transactionEntryFetchFx");
-	logger.debug("transactionEntryFetchFx", {
+	logger.trace("transactionEntryFetchFx", {
 		userId,
 		filter,
 		where,

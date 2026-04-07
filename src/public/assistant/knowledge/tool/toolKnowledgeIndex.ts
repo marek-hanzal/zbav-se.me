@@ -23,7 +23,7 @@ export const toolKnowledgeIndex = tool({
 		.strip(),
 	outputSchema: z.array(KnowledgeFrontSchema),
 	async execute() {
-		logger.debug("Calling knowledge index");
+		logger.trace("Calling knowledge index");
 
 		return getKnowledgeIndex().map(({ data }) => data);
 	},

@@ -15,7 +15,7 @@ export const withAuthMiddleware = createMiddleware()
 		let instance = authMap.get(dsn);
 
 		if (!instance) {
-			logger.debug("Creating auth instance", {
+			logger.trace("Creating auth instance", {
 				dsn,
 			});
 

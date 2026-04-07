@@ -22,7 +22,7 @@ export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectio
 	sort,
 }: transactionEntryCollectionFx.Props) {
 	const logger = yield* getLoggerFx("transactionEntryCollectionFx");
-	logger.debug("transactionEntryCollectionFx", {
+	logger.trace("transactionEntryCollectionFx", {
 		userId,
 		cursor,
 		filter,

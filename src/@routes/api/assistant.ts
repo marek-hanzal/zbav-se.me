@@ -18,11 +18,7 @@ import { Tools } from "~/user/assistant/server/Tools";
 
 export const ChatRequestSchema = z
 	.looseObject({
-		messages: z.array(
-			MessageSchema.omit({
-				id: true,
-			}),
-		),
+		messages: z.array(MessageSchema),
 	})
 	.strip();
 
@@ -32,7 +28,9 @@ export const Route = createFileRoute("/api/assistant")({
 			withUserMiddleware,
 		],
 		handlers: {
-			async POST({ request, context: { user, database } }) {
+			async POST({ request, context: { user, database, rootLogger } }) {
+				const logger = rootLogger.getChild("/api/assistant");
+
 				return Effect.gen(function* () {
 					const dateContext = yield* DateContextFx;
 					const { kysely } = yield* KyselyContextFx;
@@ -45,25 +43,36 @@ export const Route = createFileRoute("/api/assistant")({
 						apiKey: aiConfig.SERVER_AI_TOKEN,
 					});
 
-					const { messages } = yield* Effect.promise(async () => {
-						return ChatRequestSchema.parseAsync(await request.json());
+					const messages = yield* Effect.promise(async () => {
+						const { messages } = ChatRequestSchema.parse(await request.json()) as {
+							messages: UIMessage[];
+						};
+
+						return {
+							model: await convertToModelMessages(messages),
+							source: messages,
+						} as const;
+					});
+
+					logger.trace("Running inference", {
+						messages,
 					});
 
 					return streamText({
 						model: provider.chatModel(aiConfig.SERVER_AI_MODEL),
+						seed: 64,
 						system: SystemPrompt,
 						/**
 						 * This app has limited subset of schemas, so we've to cheat types here
 						 */
-						messages: yield* Effect.promise(async () => {
-							return convertToModelMessages(messages as UIMessage[]);
-						}),
+						messages: messages.model,
 						tools: Tools,
 						stopWhen: stepCountIs(8),
-						/**
-						 * We've usage access and various interesting stuff as an input to this callback!
-						 */
-						async onFinish() {
+					}).toUIMessageStreamResponse({
+						originalMessages: messages.source,
+						async onFinish({ messages }) {
+							logger.trace("Finished streaming!");
+
 							return withTransactionFx(
 								Effect.gen(function* () {
 									yield* Effect.promise(async () => {
@@ -89,7 +98,7 @@ export const Route = createFileRoute("/api/assistant")({
 								}),
 							).pipe(withKyselyFx(database), Effect.runPromise);
 						},
-					}).toUIMessageStreamResponse();
+					});
 				}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 			},
 		},

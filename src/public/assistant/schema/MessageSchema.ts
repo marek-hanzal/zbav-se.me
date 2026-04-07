@@ -4,7 +4,7 @@ import { RoleEnumSchema } from "./RoleEnumSchema";
 
 export const MessageSchema = z
 	.looseObject({
-		id: z.string().optional(),
+		id: z.string(),
 		role: RoleEnumSchema,
 		parts: z.array(ChatPartSchema),
 	})
