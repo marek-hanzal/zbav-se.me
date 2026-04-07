@@ -55,7 +55,7 @@ export const Route = createFileRoute("/api/assistant")({
 					});
 
 					logger.trace("Running inference", {
-						messages,
+						messages: messages.source,
 					});
 
 					return streamText({

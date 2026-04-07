@@ -1,12 +1,13 @@
-import type { TextUIPart, UIMessage } from "ai";
+import type { TextUIPart } from "ai";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Markdown } from "@/lib/client/markdown";
 import { translator } from "@/lib/common/translator";
+import type { MessageUi } from "~/user/assistant/MessageUi";
 
 export namespace TextPart {
 	export interface Props extends Omit<Container.Props, "part"> {
-		message: UIMessage;
+		message: MessageUi;
 		part: TextUIPart;
 	}
 }
@@ -24,6 +25,10 @@ export const TextPart: FC<TextPart.Props> = ({ message, part, ui, className, ...
 					opacity: "2",
 					...ui,
 				}}
+				className={[
+					"max-w-[min(42rem,100%)]",
+					className,
+				]}
 				{...props}
 			>
 				{isAssistant
@@ -51,16 +56,23 @@ export const TextPart: FC<TextPart.Props> = ({ message, part, ui, className, ...
 				...ui,
 			}}
 			className={[
-				isUser
-					? [
-							"text-right",
-						]
-					: [],
+				"flex",
+				isAssistant ? "justify-start" : undefined,
+				isUser ? "justify-end" : undefined,
 				className,
 			]}
 			{...props}
 		>
-			<Markdown>{part.text}</Markdown>
+			<Container
+				ui={{
+					width: "content",
+				}}
+				className={[
+					"max-w-[min(42rem,100%)]",
+				]}
+			>
+				<Markdown>{part.text}</Markdown>
+			</Container>
 		</Container>
 	);
 };

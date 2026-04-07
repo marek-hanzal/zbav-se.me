@@ -1,11 +1,11 @@
-import type { UIMessage } from "ai";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import type { MessageUi } from "~/user/assistant/MessageUi";
 import { Part } from "./Part/Part";
 
 export namespace Message {
 	export interface Props {
-		messages: UIMessage[];
+		messages: MessageUi[];
 		isBusy: boolean;
 	}
 }

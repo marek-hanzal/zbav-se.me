@@ -23,7 +23,7 @@ export const withLogMiddleware = createMiddleware()
 		withDevEnvMiddleware,
 	])
 	.server(async ({ next, context: { isDev } }) => {
-		const level: LogLevel = "debug";
+		const level: LogLevel = "info";
 
 		flag &&
 			(await configure({
@@ -83,11 +83,9 @@ export const withLogMiddleware = createMiddleware()
 						],
 					},
 					//
-
 					{
 						category: [
-							"zbav-se.me",
-							"/api/assistant",
+							"toolExpertKnowledge",
 						],
 						lowestLevel: "trace",
 						sinks: [

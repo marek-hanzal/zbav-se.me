@@ -1,6 +1,7 @@
 import { useChat } from "@ai-sdk/react";
 import { useRouter } from "@tanstack/react-router";
-import { DefaultChatTransport, type UIMessage } from "ai";
+import { DefaultChatTransport } from "ai";
+import type { MessageUi } from "~/user/assistant/MessageUi";
 import { withAssistantChatQuery } from "~/user/assistant-chat/query/withAssistantChatQuery";
 
 export namespace useAssistantChat {
@@ -25,7 +26,7 @@ export const useAssistantChat = () => {
 			}).href,
 		}),
 		messages: assistantQuery.data.map((item) => {
-			return item.payload as UIMessage;
+			return item.payload as MessageUi;
 		}),
 	});
 };

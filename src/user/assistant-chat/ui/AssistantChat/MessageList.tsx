@@ -41,7 +41,16 @@ export const MessageList: FC<MessageList.Props> = ({ containerRef, chat, ui, ...
 				);
 			})}
 
-			{isBusy ? <SpinnerContainer /> : null}
+			{isBusy ? (
+				<SpinnerContainer
+					type={"icon"}
+					iconProps={{
+						ui: {
+							text: "md",
+						},
+					}}
+				/>
+			) : null}
 		</Container>
 	);
 };

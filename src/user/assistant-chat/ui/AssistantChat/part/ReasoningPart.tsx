@@ -1,19 +1,17 @@
-import type { ReasoningUIPart, UIMessage } from "ai";
+import type { ReasoningUIPart } from "ai";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
-import { SpinnerContainer } from "@/lib/client/spinner";
 import { Tx } from "@/lib/client/tx";
+import type { MessageUi } from "~/user/assistant/MessageUi";
 
 export namespace ReasoningPart {
 	export interface Props extends Omit<Container.Props, "part"> {
-		message: UIMessage;
+		message: MessageUi;
 		part: ReasoningUIPart;
 	}
 }
 
 export const ReasoningPart: FC<ReasoningPart.Props> = ({ message, part, ui, ...props }) => {
-	const isStreaming = part.state === "streaming";
-
 	return (
 		<Container
 			ui={{
@@ -25,8 +23,6 @@ export const ReasoningPart: FC<ReasoningPart.Props> = ({ message, part, ui, ...p
 			{...props}
 		>
 			<Tx label={part.text} />
-
-			{isStreaming ? <SpinnerContainer type="icon" /> : null}
 		</Container>
 	);
 };
