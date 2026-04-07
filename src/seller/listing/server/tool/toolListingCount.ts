@@ -1,15 +1,15 @@
-import { tool } from "ai";
-import { CountSchema } from "@/lib/common/schema";
+import { tool } from "@openai/agents";
 import { listingCountFn } from "~/seller/listing/server/fn/listingCountFn";
 import { ListingToolQuerySchema } from "~/seller/listing/server/schema/ListingToolQuerySchema";
 
 export const toolListingCount = tool({
-	title: "listing-count",
-	type: "function",
+	name: "listing-count",
 	needsApproval: false,
-	description: "Get count of listings matching filter",
-	inputSchema: ListingToolQuerySchema,
-	outputSchema: CountSchema,
+	description: `
+        Get number of listings a seller have published on the marketplace by the provided query object.
+    `.trim(),
+	parameters: ListingToolQuerySchema,
+	// outputSchema: CountSchema,
 	async execute(data) {
 		return listingCountFn({
 			data,

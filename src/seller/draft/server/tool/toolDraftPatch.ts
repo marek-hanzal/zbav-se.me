@@ -1,15 +1,15 @@
-import { tool } from "ai";
+import { tool } from "@openai/agents";
 import { draftPatchFn } from "~/seller/draft/server/fn/draftPatchFn";
-import { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import { DraftToolPatchSchema } from "~/seller/draft/server/schema/DraftToolPatchSchema";
 
 export const toolDraftPatch = tool({
-	title: "draft-patch",
-	type: "function",
+	name: "draft-patch",
 	needsApproval: false,
-	description: "Update an existing draft using an input query (not an ID directly)",
-	inputSchema: DraftToolPatchSchema,
-	outputSchema: DraftSchema,
+	description: `
+        Update an existing draft using an input query (not an ID directly)
+    `.trim(),
+	parameters: DraftToolPatchSchema,
+	// outputSchema: DraftSchema,
 	async execute(data) {
 		return draftPatchFn({
 			data,

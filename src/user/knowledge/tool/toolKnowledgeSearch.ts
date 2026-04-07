@@ -1,16 +1,15 @@
-import { tool } from "ai";
+import { tool } from "@openai/agents";
 import Fuse from "fuse.js";
 import { z } from "zod";
-import { KnowledgeFrontSchema } from "~/user/knowledge/schema/KnowledgeFrontSchema";
 import { getKnowledgeIndex } from "~/user/knowledge/service/getKnowledgeIndex";
 
 export const toolKnowledgeSearch = tool({
-	title: "knowledge-search",
-	type: "function",
+	name: "knowledge-search",
 	needsApproval: false,
-	description:
-		"Fuzzy searches all knowledge topics, including front-matter and content, and returns the best matches.",
-	inputSchema: z
+	description: `
+        Fuzzy searches all knowledge topics, including front-matter and content, and returns the best matches.
+    `.trim(),
+	parameters: z
 		.looseObject({
 			query: z
 				.string()
@@ -26,14 +25,14 @@ export const toolKnowledgeSearch = tool({
 				.describe("Optional maximum number of topics to return."),
 		})
 		.strip(),
-	outputSchema: z.array(
-		z
-			.looseObject({
-				...KnowledgeFrontSchema.shape,
-				score: z.number(),
-			})
-			.strip(),
-	),
+	// outputSchema: z.array(
+	// 	z
+	// 		.looseObject({
+	// 			...KnowledgeFrontSchema.shape,
+	// 			score: z.number(),
+	// 		})
+	// 		.strip(),
+	// ),
 	async execute({ query, limit }) {
 		const normalized = query.trim();
 		const index = getKnowledgeIndex().map(

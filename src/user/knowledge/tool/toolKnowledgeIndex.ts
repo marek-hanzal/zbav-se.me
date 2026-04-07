@@ -1,19 +1,17 @@
 import { getLogger } from "@logtape/logtape";
-import { tool } from "ai";
+import { tool } from "@openai/agents";
 import { z } from "zod";
-import { KnowledgeFrontSchema } from "~/user/knowledge/schema/KnowledgeFrontSchema";
 import { getKnowledgeIndex } from "~/user/knowledge/service/getKnowledgeIndex";
 
 const logger = getLogger("toolKnowledgeIndex");
 
 export const toolKnowledgeIndex = tool({
-	title: "knowledge-index",
-	type: "function",
+	name: "knowledge-index",
 	needsApproval: false,
 	description: `
         Returns all available knowledge topics.
     `.trim(),
-	inputSchema: z
+	parameters: z
 		.looseObject({
 			query: z
 				.string()
@@ -21,7 +19,7 @@ export const toolKnowledgeIndex = tool({
 				.describe("Ignored. The tool always returns the full knowledge index."),
 		})
 		.strip(),
-	outputSchema: z.array(KnowledgeFrontSchema),
+	// outputSchema: z.array(KnowledgeFrontSchema),
 	async execute() {
 		logger.trace("Calling knowledge index");
 
