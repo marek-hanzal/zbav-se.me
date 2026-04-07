@@ -1,4 +1,3 @@
-import type { TextUIPart } from "ai";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Markdown } from "@/lib/client/markdown";
@@ -8,7 +7,7 @@ import type { MessageUi } from "~/user/assistant/MessageUi";
 export namespace TextPart {
 	export interface Props extends Omit<Container.Props, "part"> {
 		message: MessageUi;
-		part: TextUIPart;
+		part: any;
 	}
 }
 

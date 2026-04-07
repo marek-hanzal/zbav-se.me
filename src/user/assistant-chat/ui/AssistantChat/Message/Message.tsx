@@ -69,18 +69,6 @@ export const Message: FC<Message.Props> = ({ messages }) => {
 													/>
 												);
 											})
-											.with("tool-call", () => {
-												const p = part as {
-													toolCallId: string;
-													state?: string;
-												};
-												return (
-													<Part.Tool
-														toolCallId={p.toolCallId}
-														state={p.state}
-													/>
-												);
-											})
 											.otherwise(() => {
 												return null;
 											})}
