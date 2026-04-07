@@ -4,7 +4,6 @@ import {
 	MemorySession,
 	OpenAIProvider,
 	Runner,
-	type RunState,
 	setTracingDisabled,
 	type Usage,
 } from "@openai/agents";
@@ -58,9 +57,10 @@ type TurnStats = UsageTotals & {
 	turn: number;
 	elapsedMs: number;
 	firstTokenMs: number | null;
-	historyItems: number;
 	cancelled: boolean;
 };
+
+type ResumeState = Awaited<ReturnType<typeof runner.run>>["state"];
 
 const inputHistory: string[] = [];
 
@@ -69,7 +69,6 @@ const appState = {
 	terminating: false,
 	streaming: false,
 	turn: 0,
-	lastHistoryItems: 0,
 	activeAbortController: null as AbortController | null,
 	appUsage: {
 		requests: 0,
@@ -124,9 +123,7 @@ const printAppStats = () => {
 	term.brightBlack("  ·  out ");
 	term.white("%s", formatNumber(appState.appUsage.outputTokens));
 	term.brightBlack("  ·  total ");
-	term.white("%s", formatNumber(appState.appUsage.totalTokens));
-	term.brightBlack("  ·  history items ");
-	term.white("%s\n", formatNumber(appState.lastHistoryItems));
+	term.white("%s\n", formatNumber(appState.appUsage.totalTokens));
 };
 
 const printHeader = () => {
@@ -188,8 +185,6 @@ const printTurnStats = (stats: TurnStats) => {
 	term.white("%s", formatNumber(stats.outputTokens));
 	term.brightBlack("  ·  total ");
 	term.white("%s", formatNumber(stats.totalTokens));
-	term.brightBlack("  ·  history items ");
-	term.white("%s", formatNumber(stats.historyItems));
 
 	if (stats.cancelled) {
 		term.brightBlack("  ·  ");
@@ -329,9 +324,7 @@ process.on("SIGTERM", () => {
 	void terminate(0);
 });
 
-term.grabInput({
-	mouse: false,
-});
+term.grabInput({});
 term.on("key", onKey);
 
 const askInput = async () => {
@@ -387,8 +380,8 @@ const askApproval = async (agentName: string, toolName: string, toolArguments: s
 	return approved;
 };
 
-const streamAssistantOutput = async (input: string | RunState) => {
-	let nextInput: string | RunState = input;
+const streamAssistantOutput = async (input: string | ResumeState) => {
+	let nextInput: string | ResumeState = input;
 
 	while (appState.running) {
 		const turnStartedAt = Date.now();
@@ -456,6 +449,7 @@ const streamAssistantOutput = async (input: string | RunState) => {
 					if (!aborted) {
 						appState.streaming = false;
 						appState.activeAbortController = null;
+						// biome-ignore lint/correctness/noUnsafeFinally: Ssst
 						throw error;
 					}
 				}
@@ -472,10 +466,8 @@ const streamAssistantOutput = async (input: string | RunState) => {
 		const wasCancelled = abortController.signal.aborted || stream.cancelled;
 		const turnUsage = usageFrom(stream.runContext.usage);
 		const turnElapsedMs = Date.now() - turnStartedAt;
-		const historyItems = Array.isArray(stream.history) ? stream.history.length : 0;
 
 		appState.turn += 1;
-		appState.lastHistoryItems = historyItems;
 		addUsage(appState.appUsage, turnUsage);
 
 		if (wasCancelled) {
@@ -492,7 +484,6 @@ const streamAssistantOutput = async (input: string | RunState) => {
 				turn: appState.turn,
 				elapsedMs: turnElapsedMs,
 				firstTokenMs,
-				historyItems,
 				cancelled: true,
 				...turnUsage,
 			});
@@ -521,7 +512,6 @@ const streamAssistantOutput = async (input: string | RunState) => {
 			turn: appState.turn,
 			elapsedMs: turnElapsedMs,
 			firstTokenMs,
-			historyItems,
 			cancelled: false,
 			...turnUsage,
 		});
@@ -535,8 +525,8 @@ const streamAssistantOutput = async (input: string | RunState) => {
 		for (const interruption of stream.interruptions) {
 			const approved = await askApproval(
 				interruption.agent.name,
-				interruption.name,
-				interruption.arguments,
+				interruption.name ?? "unknown_tool",
+				interruption.arguments ?? "",
 			);
 
 			if (approved) {
@@ -583,7 +573,6 @@ const handleInput = async (input: string) => {
 		})
 		.with("/clear", async () => {
 			await session.clearSession();
-			appState.lastHistoryItems = 0;
 			printHeader();
 			term.green("Session cleared.\n\n");
 		})
