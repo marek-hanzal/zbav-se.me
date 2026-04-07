@@ -11,7 +11,7 @@ export const toolDraftCollection = tool({
         other properties.
     `.trim(),
 	strict: true,
-	parameters: DraftToolQuerySchema,    
+	parameters: DraftToolQuerySchema,
 	// outputSchema: z.array(DraftSchema),
 	async execute(data) {
 		return draftCollectionFn({

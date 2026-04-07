@@ -1,15 +1,24 @@
-import { tool } from "ai";
+import { tool } from "@openai/agents";
 import { draftFetchFn } from "~/seller/draft/server/fn/draftFetchFn";
-import { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
 
 export const toolDraftFetch = tool({
-	title: "draft-fetch",
-	type: "function",
+	name: "draft-fetch",
 	needsApproval: false,
-	description: "Get a single draft by filter",
-	inputSchema: DraftToolQuerySchema,
-	outputSchema: DraftSchema,
+	description: `
+        Fetch a draft by the query object, e.g. filter by name,
+        filter by an ID and so on.
+
+        Use this tool only if you're sure a draft exists (e.g. you've an ID) as this
+        tool will fail for drafts not found.
+
+        If you want safer way to fetch a draft, use draft-collection which have the
+        same input query but returns a collection of items or an empty array.
+
+        @see draft-collection
+    `.trim(),
+	parameters: DraftToolQuerySchema,
+	// outputSchema: DraftSchema,
 	async execute(data) {
 		return draftFetchFn({
 			data,
