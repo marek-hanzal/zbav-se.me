@@ -61,6 +61,15 @@ type TurnStats = UsageTotals & {
 };
 
 type ResumeState = Awaited<ReturnType<typeof runner.run>>["state"];
+type UnknownRecord = Record<string, unknown>;
+
+type ToolView = {
+	id: string;
+	name: string;
+	agentName?: string;
+	input?: unknown;
+	output?: unknown;
+};
 
 const inputHistory: string[] = [];
 
@@ -219,6 +228,116 @@ const isAbortLikeError = (error: unknown): boolean => {
 	return error.name === "AbortError" || /abort|aborted|cancelled|canceled/i.test(error.message);
 };
 
+const isRecord = (value: unknown): value is UnknownRecord =>
+	typeof value === "object" && value !== null;
+
+const getString = (value: unknown, key: string): string | undefined => {
+	if (!isRecord(value)) {
+		return undefined;
+	}
+
+	const result = value[key];
+	return typeof result === "string" ? result : undefined;
+};
+
+const getRecord = (value: unknown, key: string): UnknownRecord | undefined => {
+	if (!isRecord(value)) {
+		return undefined;
+	}
+
+	const result = value[key];
+	return isRecord(result) ? result : undefined;
+};
+
+const maybeParseJsonString = (value: string): unknown => {
+	const trimmed = value.trim();
+
+	if (!trimmed) {
+		return value;
+	}
+
+	const looksJson =
+		(trimmed.startsWith("{") && trimmed.endsWith("}")) ||
+		(trimmed.startsWith("[") && trimmed.endsWith("]")) ||
+		(trimmed.startsWith('"') && trimmed.endsWith('"'));
+
+	if (!looksJson) {
+		return value;
+	}
+
+	try {
+		return JSON.parse(trimmed);
+	} catch {
+		return value;
+	}
+};
+
+const previewTextFrom = (value: unknown): string => {
+	if (typeof value === "string") {
+		const parsed = maybeParseJsonString(value);
+
+		if (typeof parsed === "string") {
+			return parsed;
+		}
+
+		try {
+			return JSON.stringify(parsed, null, 2);
+		} catch {
+			return String(parsed);
+		}
+	}
+
+	if (value == null) {
+		return "[empty]";
+	}
+
+	try {
+		return JSON.stringify(value, null, 2);
+	} catch {
+		return String(value);
+	}
+};
+
+const formatPreviewLines = (
+	value: unknown,
+	options?: {
+		maxLines?: number;
+		maxChars?: number;
+		maxWidth?: number;
+	},
+): string[] => {
+	const maxLines = options?.maxLines ?? 8;
+	const maxChars = options?.maxChars ?? 1_200;
+	const maxWidth = options?.maxWidth ?? Math.max(40, term.width - 14);
+
+	let text = previewTextFrom(value);
+	let charTruncated = false;
+
+	if (text.length > maxChars) {
+		text = `${text.slice(0, maxChars)}…`;
+		charTruncated = true;
+	}
+
+	const rawLines = text.replace(/\t/g, "  ").split("\n");
+	const lines = rawLines
+		.slice(0, maxLines)
+		.map((line) =>
+			line.length > maxWidth ? `${line.slice(0, Math.max(1, maxWidth - 1))}…` : line,
+		);
+
+	if (rawLines.length > maxLines) {
+		lines.push(`… +${rawLines.length - maxLines} more lines`);
+	} else if (charTruncated) {
+		lines.push("… output truncated");
+	}
+
+	return lines.length > 0
+		? lines
+		: [
+				"[empty]",
+			];
+};
+
 const createThinkingIndicator = () => {
 	const frames = [
 		"⠋",
@@ -324,7 +443,7 @@ process.on("SIGTERM", () => {
 	void terminate(0);
 });
 
-term.grabInput({});
+term.grabInput();
 term.on("key", onKey);
 
 const askInput = async () => {
@@ -378,6 +497,164 @@ const askApproval = async (agentName: string, toolName: string, toolArguments: s
 	term("\n");
 
 	return approved;
+};
+
+const extractCallId = (value: unknown): string | undefined =>
+	getString(value, "callId") ?? getString(value, "call_id") ?? getString(value, "id");
+
+const extractToolInput = (item: unknown, rawItem: unknown): unknown => {
+	const args = getString(rawItem, "arguments");
+
+	if (typeof args === "string") {
+		return maybeParseJsonString(args);
+	}
+
+	if (isRecord(rawItem) && "input" in rawItem) {
+		return rawItem.input;
+	}
+
+	if (isRecord(item) && "input" in item) {
+		return item.input;
+	}
+
+	return undefined;
+};
+
+const extractToolOutput = (item: unknown, rawItem: unknown): unknown => {
+	if (isRecord(item) && "output" in item) {
+		return item.output;
+	}
+
+	if (isRecord(rawItem) && "output" in rawItem) {
+		return rawItem.output;
+	}
+
+	if (isRecord(rawItem) && "result" in rawItem) {
+		return rawItem.result;
+	}
+
+	return undefined;
+};
+
+const collectToolViews = (items: unknown[]): ToolView[] => {
+	const views: ToolView[] = [];
+	const byId = new Map<string, ToolView>();
+	let anonymousCounter = 0;
+
+	for (const item of items) {
+		if (!isRecord(item)) {
+			continue;
+		}
+
+		const type = getString(item, "type");
+		const rawItem = getRecord(item, "rawItem");
+		const agentName = getString(getRecord(item, "agent"), "name");
+
+		if (type === "tool_call_item") {
+			const id = extractCallId(rawItem) ?? `tool-${++anonymousCounter}`;
+			let view = byId.get(id);
+
+			if (!view) {
+				view = {
+					id,
+					name:
+						getString(rawItem, "name") ??
+						getString(item, "name") ??
+						`tool_${anonymousCounter}`,
+				};
+
+				byId.set(id, view);
+				views.push(view);
+			}
+
+			view.agentName ??= agentName;
+
+			const input = extractToolInput(item, rawItem);
+			if (input !== undefined) {
+				view.input = input;
+			}
+
+			continue;
+		}
+
+		if (type === "tool_call_output_item") {
+			const id = extractCallId(rawItem) ?? `tool-${++anonymousCounter}`;
+			let view = byId.get(id);
+
+			if (!view) {
+				view = {
+					id,
+					name:
+						getString(rawItem, "name") ??
+						getString(item, "name") ??
+						`tool_${anonymousCounter}`,
+				};
+
+				byId.set(id, view);
+				views.push(view);
+			}
+
+			view.agentName ??= agentName;
+
+			const output = extractToolOutput(item, rawItem);
+			if (output !== undefined) {
+				view.output = output;
+			}
+		}
+	}
+
+	return views;
+};
+
+const printToolBlock = (view: ToolView, index: number) => {
+	term.bold.brightMagenta("tool");
+	term.brightBlack(" #");
+	term.white("%s", String(index + 1));
+	term.brightBlack("  ·  ");
+	term.bold.brightCyan("%s", view.name);
+
+	if (view.agentName) {
+		term.brightBlack("  ·  ");
+		term.white("%s", view.agentName);
+	}
+
+	term("\n");
+
+	if (view.input !== undefined) {
+		term.bold.brightWhite("  input\n");
+		for (const line of formatPreviewLines(view.input)) {
+			term.brightBlack("    │ ");
+			term.white("%s\n", line);
+		}
+	}
+
+	if (view.output !== undefined) {
+		term.bold.brightWhite("  output\n");
+		for (const line of formatPreviewLines(view.output)) {
+			term.brightBlack("    │ ");
+			term.white("%s\n", line);
+		}
+	}
+};
+
+const printToolViews = (items: unknown[]) => {
+	const tools = collectToolViews(items);
+
+	if (tools.length === 0) {
+		return;
+	}
+
+	printDivider();
+	term.bold.brightWhite("Tool calls\n");
+
+	tools.forEach((tool, index) => {
+		printToolBlock(tool, index);
+
+		if (index < tools.length - 1) {
+			term.brightBlack("  ");
+			term.brightBlack("%s\n", "·".repeat(Math.max(10, term.width - 6)));
+		}
+	});
 };
 
 const streamAssistantOutput = async (input: string | ResumeState) => {
@@ -449,7 +726,6 @@ const streamAssistantOutput = async (input: string | ResumeState) => {
 					if (!aborted) {
 						appState.streaming = false;
 						appState.activeAbortController = null;
-						// biome-ignore lint/correctness/noUnsafeFinally: Ssst
 						throw error;
 					}
 				}
@@ -479,6 +755,7 @@ const streamAssistantOutput = async (input: string | ResumeState) => {
 			}
 
 			term.brightRed("[stream stopped]\n");
+			printToolViews(stream.newItems as unknown[]);
 
 			printTurnStats({
 				turn: appState.turn,
@@ -507,6 +784,8 @@ const streamAssistantOutput = async (input: string | ResumeState) => {
 		} else {
 			term("\n");
 		}
+
+		printToolViews(stream.newItems as unknown[]);
 
 		printTurnStats({
 			turn: appState.turn,
@@ -539,7 +818,6 @@ const streamAssistantOutput = async (input: string | ResumeState) => {
 		}
 
 		printDivider();
-		thinking.setLabel("continuing");
 		nextInput = state;
 	}
 };
