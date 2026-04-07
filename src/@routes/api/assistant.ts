@@ -14,7 +14,7 @@ import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import { Tools } from "~/user/assistant/Tools";
+import { Tools } from "~/user/assistant/server/Tools";
 
 export const ChatRequestSchema = z
 	.looseObject({

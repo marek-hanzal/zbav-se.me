@@ -87,10 +87,13 @@ export const Message: FC<Message.Props> = ({ message, ...props }) => {
 					)
 					.with(
 						{
-							type: "tool-knowledge-index",
+							type: "tool-${string}" as `tool-${string}`,
 						},
-						(part) => {
-							return "knowledge index";
+						{
+							type: "data-${string}" as `data-${string}`,
+						},
+						(_part) => {
+							return "fake tool";
 						},
 					)
 					.exhaustive();
