@@ -1,15 +1,14 @@
-import { tool } from "ai";
+import { tool } from "@openai/agents";
 import { feedCreateFn } from "~/buyer/feed/server/fn/feedCreateFn";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 
 export const toolFeedCreate = tool({
-	title: "feed-create",
-	type: "function",
+	name: "feed-create",
 	needsApproval: false,
-	description: "Create a new feed (saved search for listings)",
-	inputSchema: FeedCreateSchema,
-	outputSchema: FeedSchema,
+	description: `Create a new feed (saved search for listings)`.trim(),
+	parameters: FeedCreateSchema,
+	// outputSchema: FeedSchema,
 	async execute(data) {
 		return feedCreateFn({
 			data,

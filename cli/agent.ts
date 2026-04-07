@@ -6,6 +6,7 @@ import {
 	Runner,
 	type RunState,
 	setTracingDisabled,
+	type Usage,
 } from "@openai/agents";
 import { cac } from "cac";
 import * as terminalKit from "terminal-kit";
@@ -46,45 +47,107 @@ const session = new MemorySession({
 	sessionId: args.options.user ?? "local-terminal-chat",
 });
 
+type UsageTotals = {
+	requests: number;
+	inputTokens: number;
+	outputTokens: number;
+	totalTokens: number;
+};
+
+type TurnStats = UsageTotals & {
+	turn: number;
+	elapsedMs: number;
+	firstTokenMs: number | null;
+	historyItems: number;
+	cancelled: boolean;
+};
+
 const inputHistory: string[] = [];
 
 const appState = {
 	running: true,
-	streaming: false,
 	terminating: false,
+	streaming: false,
+	turn: 0,
+	lastHistoryItems: 0,
 	activeAbortController: null as AbortController | null,
+	appUsage: {
+		requests: 0,
+		inputTokens: 0,
+		outputTokens: 0,
+		totalTokens: 0,
+	} satisfies UsageTotals,
 };
 
-const divider = () => "─".repeat(Math.max(32, term.width - 4));
+const divider = () => "─".repeat(Math.max(40, term.width - 2));
 
-const printDivider = () => {
-	term.brightWhite("%s\n", divider());
+const formatNumber = (value: number) => new Intl.NumberFormat("en-US").format(value);
+
+const formatMs = (value: number) => {
+	if (value < 1_000) {
+		return `${value}ms`;
+	}
+
+	return `${(value / 1_000).toFixed(1)}s`;
+};
+
+const usageFrom = (usage?: Usage | null): UsageTotals => ({
+	requests: usage?.requests ?? 0,
+	inputTokens: usage?.inputTokens ?? 0,
+	outputTokens: usage?.outputTokens ?? 0,
+	totalTokens: usage?.totalTokens ?? 0,
+});
+
+const addUsage = (target: UsageTotals, source: UsageTotals) => {
+	target.requests += source.requests;
+	target.inputTokens += source.inputTokens;
+	target.outputTokens += source.outputTokens;
+	target.totalTokens += source.totalTokens;
 };
 
 const clearCurrentLine = () => {
 	term("\r\x1b[2K");
 };
 
+const printDivider = () => {
+	term.brightWhite("%s\n", divider());
+};
+
+const printAppStats = () => {
+	term.bold.brightWhite("App stats  ");
+	term.brightBlack("turns ");
+	term.white("%s", formatNumber(appState.turn));
+	term.brightBlack("  ·  req ");
+	term.white("%s", formatNumber(appState.appUsage.requests));
+	term.brightBlack("  ·  in ");
+	term.white("%s", formatNumber(appState.appUsage.inputTokens));
+	term.brightBlack("  ·  out ");
+	term.white("%s", formatNumber(appState.appUsage.outputTokens));
+	term.brightBlack("  ·  total ");
+	term.white("%s", formatNumber(appState.appUsage.totalTokens));
+	term.brightBlack("  ·  history items ");
+	term.white("%s\n", formatNumber(appState.lastHistoryItems));
+};
+
 const printHeader = () => {
 	term.clear();
 
-	term.bold.brightWhite("Agent");
-	term.brightWhite(" ");
+	term.bgBrightWhite.black.bold(" Agent ");
+	term.white(" ");
 	term.brightBlack("-");
-	term.brightWhite(" ");
+	term.white(" ");
 	term.bold.brightMagenta("zbav-se.me");
 	term("\n");
 
 	printDivider();
 
-	term.bold.brightWhite("Model   ");
+	term.bold.brightWhite("Model      ");
 	term.white("%s\n", model);
 
-	term.bold.brightWhite("Session ");
+	term.bold.brightWhite("Session    ");
 	term.white("%s\n", args.options.user ?? "local-terminal-chat");
 
-	term.bold.brightWhite("Commands");
-	term.white("  ");
+	term.bold.brightWhite("Commands   ");
 	term.brightYellow("/clear");
 	term.white("  ");
 	term.brightYellow("/help");
@@ -92,14 +155,49 @@ const printHeader = () => {
 	term.brightYellow("/exit");
 	term("\n");
 
-	term.bold.brightWhite("Stream  ");
+	term.bold.brightWhite("Interrupt  ");
 	term.white("Press ");
 	term.brightYellow("Esc");
 	term.white(" to stop the current response");
 	term("\n");
 
 	printDivider();
+	printAppStats();
 	term("\n");
+};
+
+const printTurnStats = (stats: TurnStats) => {
+	printDivider();
+
+	term.bold.brightWhite("Turn stats ");
+	term.brightBlack("turn ");
+	term.white("%s", formatNumber(stats.turn));
+	term.brightBlack("  ·  elapsed ");
+	term.white("%s", formatMs(stats.elapsedMs));
+
+	if (stats.firstTokenMs != null) {
+		term.brightBlack("  ·  first token ");
+		term.white("%s", formatMs(stats.firstTokenMs));
+	}
+
+	term.brightBlack("  ·  req ");
+	term.white("%s", formatNumber(stats.requests));
+	term.brightBlack("  ·  in ");
+	term.white("%s", formatNumber(stats.inputTokens));
+	term.brightBlack("  ·  out ");
+	term.white("%s", formatNumber(stats.outputTokens));
+	term.brightBlack("  ·  total ");
+	term.white("%s", formatNumber(stats.totalTokens));
+	term.brightBlack("  ·  history items ");
+	term.white("%s", formatNumber(stats.historyItems));
+
+	if (stats.cancelled) {
+		term.brightBlack("  ·  ");
+		term.brightRed("stopped");
+	}
+
+	term("\n");
+	printAppStats();
 };
 
 const normalizeOutput = (value: unknown): string => {
@@ -141,6 +239,7 @@ const createThinkingIndicator = () => {
 	];
 	let frameIndex = 0;
 	let active = true;
+	let label = "thinking";
 
 	const render = () => {
 		if (!active) {
@@ -149,9 +248,9 @@ const createThinkingIndicator = () => {
 
 		clearCurrentLine();
 		term.bold.brightCyan("agent");
-		term.brightWhite(" > ");
+		term.white(" > ");
 		term.brightYellow("%s ", frames[frameIndex]);
-		term.bold.brightWhite("thinking");
+		term.bold.brightWhite("%s", label);
 
 		frameIndex = (frameIndex + 1) % frames.length;
 	};
@@ -161,6 +260,9 @@ const createThinkingIndicator = () => {
 	const timer = setInterval(render, 80);
 
 	return {
+		setLabel(nextLabel: string) {
+			label = nextLabel;
+		},
 		stop() {
 			if (!active) {
 				return;
@@ -228,13 +330,13 @@ process.on("SIGTERM", () => {
 });
 
 term.grabInput({
-	mouse: undefined,
+	mouse: false,
 });
 term.on("key", onKey);
 
 const askInput = async () => {
 	term.bold.brightGreen("you");
-	term.brightWhite(" > ");
+	term.white(" > ");
 
 	const input = await term.inputField({
 		echo: true,
@@ -252,14 +354,15 @@ const askApproval = async (agentName: string, toolName: string, toolArguments: s
 	printDivider();
 
 	term.bold.brightYellow("approval");
-	term.brightWhite(" > ");
+	term.white(" > ");
 	term.white("%s", agentName);
 	term.white(" wants to run ");
 	term.brightCyan("%s", toolName);
 	term("\n");
 
 	if (toolArguments.trim()) {
-		term.bold.brightWhite("args    ");
+		term.bold.brightWhite("args");
+		term.white("      ");
 		term.white("%s\n", toolArguments);
 	}
 
@@ -288,16 +391,16 @@ const streamAssistantOutput = async (input: string | RunState) => {
 	let nextInput: string | RunState = input;
 
 	while (appState.running) {
+		const turnStartedAt = Date.now();
 		const abortController = new AbortController();
 		const thinking = createThinkingIndicator();
 
+		let stream: Awaited<ReturnType<typeof runner.run>> | null = null;
+		let wroteAnyText = false;
+		let firstTokenMs: number | null = null;
+
 		appState.activeAbortController = abortController;
 		appState.streaming = true;
-
-		let stream: Awaited<ReturnType<typeof runner.run>> | null = null;
-
-		let wroteAnyText = false;
-		let startedOutput = false;
 
 		try {
 			stream = await runner.run(CoreAgent, nextInput, {
@@ -306,16 +409,17 @@ const streamAssistantOutput = async (input: string | RunState) => {
 				signal: abortController.signal,
 			});
 
-			const sink = new Writable({
+			const textSink = new Writable({
 				write(chunk, _encoding, callback) {
-					if (!startedOutput) {
-						startedOutput = true;
+					if (!wroteAnyText) {
+						wroteAnyText = true;
+						firstTokenMs = Date.now() - turnStartedAt;
 						thinking.stop();
+
 						term.bold.brightCyan("agent");
-						term.brightWhite(" > ");
+						term.white(" > ");
 					}
 
-					wroteAnyText = true;
 					term.white("%s", chunk.toString());
 					callback();
 				},
@@ -325,72 +429,105 @@ const streamAssistantOutput = async (input: string | RunState) => {
 				stream.toTextStream({
 					compatibleWithNodeStreams: true,
 				}),
-				sink,
+				textSink,
 			);
-
-			await stream.completed;
 		} catch (error) {
 			const aborted =
 				abortController.signal.aborted || stream?.cancelled || isAbortLikeError(error);
 
 			if (!aborted) {
 				thinking.stop();
+				appState.streaming = false;
+				appState.activeAbortController = null;
 				throw error;
 			}
 		} finally {
 			thinking.stop();
+
+			if (stream) {
+				try {
+					await stream.completed;
+				} catch (error) {
+					const aborted =
+						abortController.signal.aborted ||
+						stream.cancelled ||
+						isAbortLikeError(error);
+
+					if (!aborted) {
+						appState.streaming = false;
+						appState.activeAbortController = null;
+						throw error;
+					}
+				}
+			}
+
 			appState.streaming = false;
 			appState.activeAbortController = null;
 		}
 
-		const wasAborted = abortController.signal.aborted || stream?.cancelled;
-
-		if (wasAborted) {
-			if (!startedOutput) {
-				term.bold.brightCyan("agent");
-				term.brightWhite(" > ");
-			} else {
-				term("\n");
-			}
-
-			term.brightRed("[stream stopped]");
-			term("\n");
-			return;
-		}
-
 		if (!stream) {
-			term.bold.brightCyan("agent");
-			term.brightWhite(" > ");
-			term.brightRed("[stream failed]");
-			term("\n");
 			return;
 		}
 
-		if (!wroteAnyText && stream.finalOutput != null) {
-			term.bold.brightCyan("agent");
-			term.brightWhite(" > ");
-			term.white("%s", normalizeOutput(stream.finalOutput));
-			startedOutput = true;
-		}
+		const wasCancelled = abortController.signal.aborted || stream.cancelled;
+		const turnUsage = usageFrom(stream.runContext.usage);
+		const turnElapsedMs = Date.now() - turnStartedAt;
+		const historyItems = Array.isArray(stream.history) ? stream.history.length : 0;
 
-		if (!stream.interruptions?.length) {
-			if (!startedOutput) {
+		appState.turn += 1;
+		appState.lastHistoryItems = historyItems;
+		addUsage(appState.appUsage, turnUsage);
+
+		if (wasCancelled) {
+			if (wroteAnyText) {
+				term("\n");
+			} else {
 				term.bold.brightCyan("agent");
-				term.brightWhite(" > ");
-				term.brightBlack("[no output]");
+				term.white(" > ");
 			}
 
-			term("\n");
+			term.brightRed("[stream stopped]\n");
+
+			printTurnStats({
+				turn: appState.turn,
+				elapsedMs: turnElapsedMs,
+				firstTokenMs,
+				historyItems,
+				cancelled: true,
+				...turnUsage,
+			});
+
 			return;
 		}
 
-		if (!startedOutput) {
+		if (!wroteAnyText) {
+			const fallback = normalizeOutput(stream.finalOutput);
+
 			term.bold.brightCyan("agent");
-			term.brightWhite(" > ");
-			term.brightBlack("[waiting for approval]");
-			term("\n");
+			term.white(" > ");
+
+			if (fallback) {
+				term.white("%s\n", fallback);
+			} else if (stream.interruptions?.length) {
+				term.brightBlack("[waiting for approval]\n");
+			} else {
+				term.brightBlack("[no output]\n");
+			}
 		} else {
 			term("\n");
+		}
+
+		printTurnStats({
+			turn: appState.turn,
+			elapsedMs: turnElapsedMs,
+			firstTokenMs,
+			historyItems,
+			cancelled: false,
+			...turnUsage,
+		});
+
+		if (!stream.interruptions?.length) {
+			return;
 		}
 
 		const state = stream.state;
@@ -412,6 +549,7 @@ const streamAssistantOutput = async (input: string | RunState) => {
 		}
 
 		printDivider();
+		thinking.setLabel("continuing");
 		nextInput = state;
 	}
 };
@@ -428,6 +566,8 @@ const printHelp = () => {
 	term.white("  Exit the app\n");
 	term.bold.brightWhite("  Esc   ");
 	term.white("  Stop the current streaming response\n");
+	term.bold.brightWhite("  Ctrl+C");
+	term.white("  Gracefully exit the app\n");
 };
 
 const handleInput = async (input: string) => {
@@ -443,6 +583,7 @@ const handleInput = async (input: string) => {
 		})
 		.with("/clear", async () => {
 			await session.clearSession();
+			appState.lastHistoryItems = 0;
 			printHeader();
 			term.green("Session cleared.\n\n");
 		})
