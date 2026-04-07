@@ -5,21 +5,8 @@ import { Effect } from "effect";
 import { z } from "zod";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
-import { toolListingCollection as toolBuyerListingCollection } from "~/buyer/listing/server/tool/toolListingCollection";
-import { toolListingCount as toolBuyerListingCount } from "~/buyer/listing/server/tool/toolListingCount";
-import { toolKnowledge } from "~/public/assistant/knowledge/tool/toolKnowledge";
-import { toolKnowledgeIndex } from "~/public/assistant/knowledge/tool/toolKnowledgeIndex";
-import { toolKnowledgeSearch } from "~/public/assistant/knowledge/tool/toolKnowledgeSearch";
 import { SystemPrompt } from "~/public/assistant/SystemPrompt";
 import { MessageSchema } from "~/public/assistant/schema/MessageSchema";
-import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
-import { toolDraftCount } from "~/seller/draft/server/tool/toolDraftCount";
-import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
-import { toolDraftDelete } from "~/seller/draft/server/tool/toolDraftDelete";
-import { toolDraftFetch } from "~/seller/draft/server/tool/toolDraftFetch";
-import { toolDraftPatch } from "~/seller/draft/server/tool/toolDraftPatch";
-import { toolListingCollection as toolSellerListingCollection } from "~/seller/listing/server/tool/toolListingCollection";
-import { toolListingCount as toolSellerListingCount } from "~/seller/listing/server/tool/toolListingCount";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withDateFx } from "~/server/database/fx/withDateFx";
@@ -27,32 +14,7 @@ import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
-import { toolCategoryFetch } from "~/session/category/server/tool/toolCategoryFetch";
-import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
-
-const tools = {
-	"knowledge-index": toolKnowledgeIndex,
-	"knowledge-search": toolKnowledgeSearch,
-	knowledge: toolKnowledge,
-	//
-	"draft-collection": toolDraftCollection,
-	"draft-fetch": toolDraftFetch,
-	"draft-create": toolDraftCreate,
-	"draft-patch": toolDraftPatch,
-	"draft-delete": toolDraftDelete,
-	"draft-count": toolDraftCount,
-	//
-	"seller-listing-collection": toolSellerListingCollection,
-	"seller-listing-count": toolSellerListingCount,
-	"buyer-listing-collection": toolBuyerListingCollection,
-	"buyer-listing-count": toolBuyerListingCount,
-	//
-	"location-autocomplete": toolLocationAutocomplete,
-	//
-	"category-collection": toolCategoryCollection,
-	"category-fetch": toolCategoryFetch,
-} as const;
+import { Tools } from "~/user/assistant/Tools";
 
 export const ChatRequestSchema = z
 	.looseObject({
@@ -87,31 +49,6 @@ export const Route = createFileRoute("/api/assistant")({
 						return ChatRequestSchema.parseAsync(await request.json());
 					});
 
-					yield* withTransactionFx(
-						Effect.gen(function* () {
-							yield* Effect.promise(async () => {
-								return kysely
-									.deleteFrom("assistant_chat")
-									.where("userId", "=", user.id)
-									.execute();
-							});
-
-							yield* tryDbFx(async () => {
-								return kysely
-									.insertInto("assistant_chat")
-									.values(
-										messages.map((message) => ({
-											id: genId(),
-											createdAt: dateContext.now().toJSDate(),
-											payload: message,
-											userId: user.id,
-										})),
-									)
-									.executeTakeFirstOrThrow();
-							});
-						}),
-					);
-
 					return streamText({
 						model: provider.chatModel(aiConfig.SERVER_AI_MODEL),
 						system: SystemPrompt,
@@ -121,8 +58,37 @@ export const Route = createFileRoute("/api/assistant")({
 						messages: yield* Effect.promise(async () => {
 							return convertToModelMessages(messages as UIMessage[]);
 						}),
-						tools,
+						tools: Tools,
 						stopWhen: stepCountIs(8),
+						/**
+						 * We've usage access and various interesting stuff as an input to this callback!
+						 */
+						async onFinish() {
+							return withTransactionFx(
+								Effect.gen(function* () {
+									yield* Effect.promise(async () => {
+										return kysely
+											.deleteFrom("assistant_chat")
+											.where("userId", "=", user.id)
+											.execute();
+									});
+
+									yield* tryDbFx(async () => {
+										return kysely
+											.insertInto("assistant_chat")
+											.values(
+												messages.map((message) => ({
+													id: genId(),
+													createdAt: dateContext.now().toJSDate(),
+													payload: message,
+													userId: user.id,
+												})),
+											)
+											.executeTakeFirstOrThrow();
+									});
+								}),
+							).pipe(withKyselyFx(database), Effect.runPromise);
+						},
 					}).toUIMessageStreamResponse();
 				}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 			},
