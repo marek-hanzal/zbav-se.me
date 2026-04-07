@@ -12,8 +12,8 @@ export const useAssistantChat = () => {
 	const assistantQuery = withAssistantChatQuery.useCollectionQuery({
 		sort: [
 			{
-				field: "createdAt",
-				order: "desc",
+				field: "sort",
+				order: "asc",
 			},
 		],
 	});

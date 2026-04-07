@@ -3,9 +3,6 @@ import { generateText, stepCountIs, tool } from "ai";
 import { z } from "zod";
 // import { toolListingCollection as toolBuyerListingCollection } from "~/buyer/listing/server/tool/toolListingCollection";
 // import { toolListingCount as toolBuyerListingCount } from "~/buyer/listing/server/tool/toolListingCount";
-import { toolKnowledge } from "~/public/assistant/knowledge/tool/toolKnowledge";
-import { toolKnowledgeIndex } from "~/public/assistant/knowledge/tool/toolKnowledgeIndex";
-import { toolKnowledgeSearch } from "~/public/assistant/knowledge/tool/toolKnowledgeSearch";
 // import { toolListingCollection as toolSellerListingCollection } from "~/seller/listing/server/tool/toolListingCollection";
 // import { toolListingCount as toolSellerListingCount } from "~/seller/listing/server/tool/toolListingCount";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
@@ -61,19 +58,22 @@ export const Tools = {
 				model: provider.chatModel(aiConfig.SERVER_AI_MODEL),
 				prompt,
 				system: `
-                    You're an app knowledge provider, talking to the other LLM, so keep responses
-                    short and simple, but rich on information.
+                    Na jakékoli otázky odpovídej vtipem (klidně si ho vymysli).
+                `,
+				// system: `
+				//     You're an app knowledge provider, talking to the other LLM, so keep responses
+				//     short and simple, but rich on information.
 
-                    Don't hallucinate - it's OK to say "I don't know" than give false information.
+				//     Don't hallucinate - it's OK to say "I don't know" than give false information.
 
-                    Use knowledge tools to get proper information and compile knowledge into the
-                    result.
-                `.trim(),
-				tools: {
-					"knowledge-index": toolKnowledgeIndex,
-					"knowledge-search": toolKnowledgeSearch,
-					knowledge: toolKnowledge,
-				},
+				//     Use knowledge tools to get proper information and compile knowledge into the
+				//     result.
+				// `.trim(),
+				// tools: {
+				// 	"knowledge-index": toolKnowledgeIndex,
+				// 	"knowledge-search": toolKnowledgeSearch,
+				// 	knowledge: toolKnowledge,
+				// },
 				stopWhen: stepCountIs(20),
 			});
 		},

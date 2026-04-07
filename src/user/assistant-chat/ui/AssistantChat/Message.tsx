@@ -50,7 +50,7 @@ export const Message: FC<Message.Props> = ({ message, ...props }) => {
 							type: "step-start",
 						},
 						(_part) => {
-							return "Step!";
+							return null;
 						},
 					)
 					.with(

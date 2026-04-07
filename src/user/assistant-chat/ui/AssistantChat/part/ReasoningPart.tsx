@@ -11,11 +11,19 @@ export namespace ReasoningPart {
 	}
 }
 
-export const ReasoningPart: FC<ReasoningPart.Props> = ({ message, part, ...props }) => {
+export const ReasoningPart: FC<ReasoningPart.Props> = ({ message, part, ui, ...props }) => {
 	const isStreaming = part.state === "streaming";
 
 	return (
-		<Container {...props}>
+		<Container
+			ui={{
+				text: "sm",
+				inner: "default",
+				opacity: "6",
+				...ui,
+			}}
+			{...props}
+		>
 			<Tx label={part.text} />
 
 			{isStreaming ? <SpinnerContainer type="icon" /> : null}
