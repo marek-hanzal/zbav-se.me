@@ -6,11 +6,13 @@ export const toolListingCollection = tool({
 	name: "listing-collection",
 	needsApproval: false,
 	description: `
-        Here you've access to all user's published listings, it's useful for questions about
-        what is published, how long given listing remain active, which ones are about to expire
-        and other interesting stuff.
+        Access collection of listings like you're browsing the listing catalog.
 
-        This is main entry-point to listings from the seller's point of view.
+        Here you can sort, filter out different listings.
+
+        This is the main entry point for buyer to find out what he wants.
+
+        Carefully read input query as it will guide you, what you can use.
     `.trim(),
 	parameters: ListingToolQuerySchema,
 	// outputSchema: z.array(ListingSchema),
