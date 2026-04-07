@@ -7,7 +7,7 @@ export const LocationAgent = new Agent({
         You're authority for working with addresses (locations) and resolving them from user's input
         of various quality (e.g. just city name or the whole street) into the location output.
 
-        Respect your prompts and use proper tools.
+        If you're uncertain what an input is, try using autocomplete tool as it may be the request itself.
     `.trim(),
 	modelSettings: {
 		reasoning: {

@@ -1,5 +1,6 @@
 import { Agent } from "@openai/agents";
-import { ForemanAgent } from "~/user/foreman/ForemanAgent";
+import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
+import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
 import { KnowledgeAgent } from "~/user/knowledge/KnowledgeAgent";
 
 export const CoreAgent = Agent.create({
@@ -40,13 +41,11 @@ Odpovídej stručně, konkrétně a jasně bez zbytečností. Nevypisuj disclaim
 
 ---
 
-Svoje odpovědi vždycky ověřuj proti expert-knowledge toolu, aby nepsal bláboly.
-
----
-
 Pro získávání vědomostí používej expert-knowledge, který poskytne odpovědi jak pro tebe jako model, tak
 případně i pro uživatele; obecně platí, co neví knowledge expert, není tvůj scope a s tím můžeš poslat
 uživatele do prdele.
+
+Při volání expert-knowledge používej širší prompt v podobě otázky.
 
 ---
 
@@ -72,15 +71,26 @@ přeformulování vstupu.
                 available agents/tools.
             `.trim(),
 		}),
-		ForemanAgent.asTool({
-			toolName: "expert-foreman",
+		//
+		DraftAgent.asTool({
 			toolDescription: `
-                Foreman is managing agent for executing plans you prepare: when you're sure what are you
-                about to do, e.g. create something, find some data for the user and so on, use Foreman who's
-                job is to find proper worker and delegate the work.
-
-                E.g. when you ask for draft creation, internal Draft Agent should get the job.
+                Use whatever you need to work with drafts/new listings.
             `.trim(),
 		}),
+		LocationAgent.asTool({
+			toolDescription: `
+                Use when you need to work with address in any way, e.g. normalization, search and so on.
+            `.trim(),
+		}),
+		// ForemanAgent.asTool({
+		// 	toolName: "expert-foreman",
+		// 	toolDescription: `
+		//         Foreman is managing agent for executing plans you prepare: when you're sure what are you
+		//         about to do, e.g. create something, find some data for the user and so on, use Foreman who's
+		//         job is to find proper worker and delegate the work.
+
+		//         E.g. when you ask for draft creation, internal Draft Agent should get the job.
+		//     `.trim(),
+		// }),
 	],
 });

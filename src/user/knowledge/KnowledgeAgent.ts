@@ -24,10 +24,22 @@ export const KnowledgeAgent = new Agent({
 
         When you're generating output, you're expected to tell the user the source of your knowledge, e.g.
         you found something in Draft Agent and so on.
+
+        You should got a question, if the input cannot be classified as a question, reject it.
+
+        Your role is to answer questions, nothing else.
     `.trim(),
 	tools: [
-		DraftAgent.asTool({}),
+		DraftAgent.asTool({
+			toolDescription: `
+                Use whatever you need to work with drafts/new listings.
+            `.trim(),
+		}),
 		//
-		LocationAgent.asTool({}),
+		LocationAgent.asTool({
+			toolDescription: `
+                Use when you need to work with address in any way, e.g. normalization, search and so on.
+            `.trim(),
+		}),
 	],
 });
