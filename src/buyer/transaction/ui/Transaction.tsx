@@ -52,6 +52,7 @@ export const Transaction: FC<Transaction.Props> = ({
 
 	return (
 		<Container
+			data-ui="Transaction"
 			ui={{
 				height: "full",
 			}}
@@ -65,7 +66,6 @@ export const Transaction: FC<Transaction.Props> = ({
 				}}
 			>
 				<Container
-					data-ui="Transaction-[MessageListContainer]"
 					ref={containerRef}
 					ui={{
 						layout: "vertical-header-content",
@@ -74,7 +74,6 @@ export const Transaction: FC<Transaction.Props> = ({
 					}}
 				>
 					<Container
-						data-ui="Transaction-[HeroContainer]"
 						data-action={"open transaction detail"}
 						ui={{
 							position: "relative",
@@ -89,7 +88,6 @@ export const Transaction: FC<Transaction.Props> = ({
 						/>
 
 						<ListingPrice
-							data-ui={"ListingOverlay-[ListingPrice]"}
 							price={transaction.price}
 							priceType={transaction.priceType}
 							currency={transaction.currency}
@@ -101,7 +99,6 @@ export const Transaction: FC<Transaction.Props> = ({
 						/>
 
 						<LocationBadge
-							data-ui={"ListingOverlay-[LocationBadge]"}
 							location={transaction.location}
 							distance={null}
 							ui={{

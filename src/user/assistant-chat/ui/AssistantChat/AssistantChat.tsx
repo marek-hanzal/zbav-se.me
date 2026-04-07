@@ -68,10 +68,16 @@ export const AssistantChat: FC<AssistantChat.Props> = ({ ui, ...props }) => {
 									return (
 										<Container
 											ui={{
+												tone: "brand",
+												theme: "light",
 												layout: "vertical-centered",
 												height: "full",
 												width: "full",
+												inner: "4xl",
 											}}
+											className={[
+												"text-center",
+											]}
 										>
 											<Status
 												icon={AiIcon}
@@ -99,6 +105,7 @@ export const AssistantChat: FC<AssistantChat.Props> = ({ ui, ...props }) => {
 					ui={{
 						layout: "vertical-flex",
 						width: "full",
+						inner: "default",
 						...ui,
 					}}
 					{...props}

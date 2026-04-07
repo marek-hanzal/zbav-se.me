@@ -86,7 +86,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 
 	return (
 		<Container
-			data-ui={"ChatInput-Container"}
+			data-ui={"ChatInput"}
 			ui={{
 				layout: "horizontal-flex",
 				items: "center",
@@ -123,7 +123,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			/>
 
 			<Button
-				data-ui={"ChatInput-Button-send"}
+				data-action={"send chat text message"}
 				iconEnabled={SendMessageIcon}
 				iconProps={{
 					ui: {

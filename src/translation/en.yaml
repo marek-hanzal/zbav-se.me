@@ -559,9 +559,6 @@
 7fff5a32624ca773f775bae93783cbc55b943a4c968052d2b32e91cd:
   ref: Mark transaction as successful (button)
   value: Mark transaction as successful (button)
-80ea2f2b8b1c2a4f5ea26ec61c1e24acbc4b8df3d2193036245e10f8:
-  ref: Something went wrong
-  value: Something went wrong
 80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
   ref: unused
   value: unused
@@ -727,9 +724,6 @@ a78ed5f38f0cf730dc1a618d9df1ca5011cc5d947d61f00075e0c5da:
 a92a914e77188202f38d6b42be76d7f92cee60d777d0c00ca5aecbde:
   ref: Package - Tracking number (placeholder)
   value: Package - Tracking number (placeholder)
-aae57032f267d5303e09b5e9f3a1d39b9cff3b65064a933cd6bc9d7a:
-  ref: Please try again later.
-  value: Please try again later.
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
   ref: Photo upload placeholder (title)
   value: Photo upload placeholder (title)
@@ -1029,6 +1023,9 @@ fc284aa9aa4a2c690a4e62463e646eb74f9af7cb7354ebf85a149a07:
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
   ref: Back to home (link)
   value: Back to home (link)
+fc4e8fe72243bd4575664eb1fb807d1ddc11eff54f0946685b664118:
+  ref: Assistant (title)
+  value: Assistant (title)
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
   ref: Listing title (label)
   value: Listing title (label)
