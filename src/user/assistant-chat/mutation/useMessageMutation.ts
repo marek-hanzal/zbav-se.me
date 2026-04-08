@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
-import { createEventSource } from "eventsource-client";
+import { EventSourceParserStream } from "eventsource-parser/stream";
 import { useCallback, useEffect, useRef } from "react";
 import { genId } from "@/lib/common/gen-id";
 import type { AssistantChatMessageSchema } from "~/user/assistant/schema/message/AssistantChatMessageSchema";
@@ -75,84 +75,48 @@ export const useMessageMutation = ({ setMessages }: useMessageMutation.Props) =>
 			});
 
 			try {
-				let requestError: Error | null = null;
-				const eventSource = createEventSource({
-					url: link.href,
+				const response = await fetch(link.href, {
 					method: "POST",
 					headers: {
 						Accept: "text/event-stream",
 						"Content-Type": "application/json",
 					},
 					body: JSON.stringify(trimmed),
-                    
-					async fetch(url, init) {
-						const response = await fetch(url, {
-							...init,
-							signal: AbortSignal.any([
-								controller.signal,
-								init?.signal,
-							]),
-						});
-
-						if (!response.ok) {
-							requestError = new Error(
-								await getResponseError({
-									response,
-								}),
-							);
-
-							throw requestError;
-						}
-
-						if (!response.body) {
-							requestError = new Error("Assistant stream is missing response body");
-
-							throw requestError;
-						}
-
-						return response;
-					},
-					onDisconnect() {
-						eventSource.close();
-					},
-					onScheduleReconnect() {
-						eventSource.close();
-					},
+					signal: controller.signal,
 				});
 
-				const abort = () => {
-					eventSource.close();
-				};
-
-				controller.signal.addEventListener("abort", abort, {
-					once: true,
-				});
-
-				try {
-					for await (const message of eventSource) {
-						if (!message.data) {
-							continue;
-						}
-
-						const event = JSON.parse(message.data);
-
-						setMessages((messages) => {
-							const nextState = reduceAssistantChatStreamEvent({
-								event,
-								messages,
-								status: "streaming",
-							});
-
-							return nextState.messages;
-						});
-					}
-				} finally {
-					controller.signal.removeEventListener("abort", abort);
-					eventSource.close();
+				if (!response.ok) {
+					throw new Error(
+						await getResponseError({
+							response,
+						}),
+					);
 				}
 
-				if (requestError) {
-					throw requestError;
+				if (!response.body) {
+					throw new Error("Assistant stream is missing response body");
+				}
+
+				const stream = response.body
+					.pipeThrough(new TextDecoderStream())
+					.pipeThrough(new EventSourceParserStream());
+
+				for await (const message of stream) {
+					if (!message.data) {
+						continue;
+					}
+
+					const event = JSON.parse(message.data);
+
+					setMessages((messages) => {
+						const nextState = reduceAssistantChatStreamEvent({
+							event,
+							messages,
+							status: "streaming",
+						});
+
+						return nextState.messages;
+					});
 				}
 			} catch (error) {
 				if (
