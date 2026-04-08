@@ -1,4 +1,5 @@
 import type { AgentInputItem } from "@openai/agents-core";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { createEventSource } from "eventsource-client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -27,8 +28,7 @@ export const useAssistantChat = () => {
 		],
 	});
 	const abortControllerRef = useRef<AbortController | null>(null);
-	const [status, setStatus] = useState<useAssistantChat.Status>("idle");
-	const [error, setError] = useState<string | null>(null);
+	const [pendingStatus, setPendingStatus] = useState<"submitted" | "streaming">("submitted");
 	const persistedMessages = useMemo(() => {
 		return fromAgentInputItems({
 			items: assistantQuery.data.map((item) => item.payload as AgentInputItem),
@@ -39,32 +39,20 @@ export const useAssistantChat = () => {
 	const [messages, setMessages] = useState<AssistantChatMessageSchema.Type[]>(persistedMessages);
 
 	useEffect(() => {
-		if (status === "submitted" || status === "streaming") {
-			return;
-		}
-
-		setMessages(persistedMessages);
-	}, [
-		persistedMessages,
-		status,
-	]);
-
-	useEffect(() => {
 		return () => {
 			abortControllerRef.current?.abort();
 		};
 	}, []);
 
-	const stop = useCallback(() => {
-		abortControllerRef.current?.abort();
-	}, []);
-
-	const sendMessage = useCallback(
-		async ({ text }: { text: string }) => {
-			if (status === "submitted" || status === "streaming") {
-				return;
-			}
-
+	const sendMessageMutation = useMutation<
+		void,
+		Error,
+		{
+			text: string;
+			controller: AbortController;
+		}
+	>({
+		async mutationFn({ text, controller }) {
 			const trimmed = text.trim();
 
 			if (trimmed.length === 0) {
@@ -73,14 +61,12 @@ export const useAssistantChat = () => {
 
 			const userMessageId = genId();
 			const assistantMessageId = genId();
-			const controller = new AbortController();
 			const assistantLocation = buildLocation({
 				to: "/api/assistant",
 			});
 
 			abortControllerRef.current = controller;
-			setError(null);
-			setStatus("submitted");
+			setPendingStatus("submitted");
 			setMessages((messages) => {
 				return [
 					...messages,
@@ -167,16 +153,16 @@ export const useAssistantChat = () => {
 								return;
 							}
 
+							setPendingStatus("streaming");
+
 							const event = JSON.parse(message.data);
 
 							setMessages((messages) => {
 								const nextState = reduceAssistantChatStreamEvent({
 									event,
 									messages,
-									status,
+									status: "streaming",
 								});
-
-								setStatus(nextState.status);
 
 								return nextState.messages;
 							});
@@ -189,7 +175,6 @@ export const useAssistantChat = () => {
 								return;
 							}
 
-							setStatus("idle");
 							complete();
 						},
 						onScheduleReconnect: () => {
@@ -207,19 +192,57 @@ export const useAssistantChat = () => {
 						error,
 					})
 				) {
-					setStatus("idle");
-				} else {
-					setError(error instanceof Error ? error.message : "Assistant stream failed");
-					setStatus("error");
+					return;
 				}
-			} finally {
-				abortControllerRef.current = null;
-				void assistantQuery.refetch();
+
+				throw error;
 			}
 		},
+		onSettled() {
+			abortControllerRef.current = null;
+			void assistantQuery.refetch();
+		},
+	});
+
+	const status: useAssistantChat.Status = sendMessageMutation.isError
+		? "error"
+		: sendMessageMutation.isPending
+			? pendingStatus
+			: "idle";
+	const error = sendMessageMutation.error?.message ?? null;
+
+	useEffect(() => {
+		if (status === "submitted" || status === "streaming") {
+			return;
+		}
+
+		setMessages(persistedMessages);
+	}, [
+		persistedMessages,
+		status,
+	]);
+
+	const stop = useCallback(() => {
+		abortControllerRef.current?.abort();
+	}, []);
+
+	const sendMessage = useCallback(
+		async ({ text }: { text: string }) => {
+			if (status === "submitted" || status === "streaming") {
+				return;
+			}
+
+			const controller = new AbortController();
+
+			abortControllerRef.current = controller;
+
+			await sendMessageMutation.mutateAsync({
+				text,
+				controller,
+			});
+		},
 		[
-			assistantQuery,
-			buildLocation,
+			sendMessageMutation,
 			status,
 		],
 	);
