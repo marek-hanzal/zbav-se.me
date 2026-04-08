@@ -20,28 +20,24 @@ export class KyselySession implements Session {
 	}
 
 	public async getItems(limit?: number): Promise<AgentInputItem[]> {
-		const rows = await this.props.kysely
+		const recent = this.props.kysely
 			.selectFrom("assistant_chat")
 			.select([
-				"id",
 				"payload",
 				"sort",
 			])
 			.where("userId", "=", this.props.userId)
+			.orderBy("sort", "desc");
+
+		const rows = await this.props.kysely
+			.selectFrom(
+				(limit !== undefined && limit > 0 ? recent.limit(limit) : recent).as("recent"),
+			)
+			.select((eb) => eb.ref("payload").$castTo<AgentInputItem>().as("payload"))
 			.orderBy("sort", "asc")
 			.execute();
 
-		const items = rows.map(({ payload }) => structuredClone(payload as AgentInputItem));
-
-		if (limit === undefined) {
-			return items;
-		}
-
-		if (limit <= 0) {
-			return [];
-		}
-
-		return items.slice(-limit);
+		return rows.map(({ payload }) => payload);
 	}
 
 	public async addItems(items: AgentInputItem[]): Promise<void> {
@@ -64,7 +60,8 @@ export class KyselySession implements Session {
 					items.map((payload) => ({
 						id: genId(),
 						userId: this.props.userId,
-						payload: structuredClone(payload),
+						threadId: this.props.userId,
+						payload,
 						sort: ++nextSort,
 					})),
 				)
@@ -78,7 +75,7 @@ export class KyselySession implements Session {
 				.selectFrom("assistant_chat")
 				.select([
 					"id",
-					"payload",
+					(eb) => eb.ref("payload").$castTo<AgentInputItem>().as("payload"),
 				])
 				.where("userId", "=", this.props.userId)
 				.orderBy("sort", "desc")
@@ -90,7 +87,7 @@ export class KyselySession implements Session {
 
 			await trx.deleteFrom("assistant_chat").where("id", "=", row.id).execute();
 
-			return structuredClone(row.payload as AgentInputItem);
+			return row.payload;
 		});
 	}
 
