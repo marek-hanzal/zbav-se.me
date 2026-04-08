@@ -32,452 +32,323 @@ export const reduceAssistantChatStreamEvent = ({
 	messages,
 	status,
 }: reduceAssistantChatStreamEvent.Props): reduceAssistantChatStreamEvent.Result => {
-	return (
-		match(event)
-			.returnType<reduceAssistantChatStreamEvent.Result>()
-			.with(
-				{
-					type: "raw_model_stream_event",
-					source: "openai-responses",
-					data: {
-						type: "model",
-						event: {
-							type: "response.output_text.delta",
-							item_id: P.string,
-							content_index: P.number,
-							delta: P.string,
-						},
+	return match(event)
+		.returnType<reduceAssistantChatStreamEvent.Result>()
+		.with(
+			{
+				type: "raw_model_stream_event",
+				source: "openai-responses",
+				data: {
+					type: "model",
+					event: {
+						type: "response.output_text.delta",
+						item_id: P.string,
+						content_index: P.number,
+						delta: P.string,
 					},
 				},
-				(event) => {
-					const assistantMessage =
-						messages.findLast((message) => message.role === "assistant") ??
-						createAssistantChatMessage({
-							id: event.data.event.item_id,
-							role: "assistant",
-						});
-
-					return {
-						status: "streaming",
-						messages: upsertAssistantChatMessage({
-							messages,
-							message: appendAssistantChatTextDelta({
-								message: assistantMessage,
-								delta: {
-									partId: `${event.data.event.item_id}-text-${event.data.event.content_index}`,
-									text: event.data.event.delta,
-								},
-							}),
-						}),
-					};
-				},
-			)
-			.with(
-				{
-					type: "raw_model_stream_event",
-					source: "openai-responses",
-					data: {
-						type: "model",
-						event: {
-							type: "response.reasoning_text.delta",
-							item_id: P.string,
-							content_index: P.number,
-							delta: P.string,
-						},
-					},
-				},
-				(event) => {
-					const assistantMessage =
-						messages.findLast((message) => message.role === "assistant") ??
-						createAssistantChatMessage({
-							id: event.data.event.item_id,
-							role: "assistant",
-						});
-
-					return {
-						status: "streaming",
-						messages: upsertAssistantChatMessage({
-							messages,
-							message: appendAssistantChatReasoningDelta({
-								message: assistantMessage,
-								delta: {
-									partId: `${event.data.event.item_id}-reasoning-${event.data.event.content_index}`,
-									text: event.data.event.delta,
-								},
-							}),
-						}),
-					};
-				},
-			)
-			.with(
-				{
-					type: "raw_model_stream_event",
-					source: "openai-responses",
-					data: {
-						type: "model",
-						event: {
-							type: "response.reasoning_summary_text.delta",
-							item_id: P.string,
-							summary_index: P.number,
-							delta: P.string,
-						},
-					},
-				},
-				(event) => {
-					const assistantMessage =
-						messages.findLast((message) => message.role === "assistant") ??
-						createAssistantChatMessage({
-							id: event.data.event.item_id,
-							role: "assistant",
-						});
-
-					return {
-						status: "streaming",
-						messages: upsertAssistantChatMessage({
-							messages,
-							message: appendAssistantChatReasoningDelta({
-								message: assistantMessage,
-								delta: {
-									partId: `${event.data.event.item_id}-summary-${event.data.event.summary_index}`,
-									text: event.data.event.delta,
-								},
-							}),
-						}),
-					};
-				},
-			)
-			.with(
-				{
-					type: "raw_model_stream_event",
-					source: "openai-responses",
-					data: {
-						type: "model",
-						event: {
-							type: "response.function_call_arguments.delta",
-							item_id: P.string,
-							delta: P.string,
-						},
-					},
-				},
-				(event) => {
-					const assistantMessage =
-						messages.findLast((message) => message.role === "assistant") ??
-						createAssistantChatMessage({
-							id: genId(),
-							role: "assistant",
-						});
-					const currentPart = assistantMessage.parts.find((part) => {
-						return part.id === event.data.event.item_id && part.type === "tool_call";
+			},
+			(event) => {
+				const assistantMessage =
+					messages.findLast((message) => message.role === "assistant") ??
+					createAssistantChatMessage({
+						id: event.data.event.item_id,
+						role: "assistant",
 					});
 
-					return {
-						status: "streaming",
-						messages: upsertAssistantChatMessage({
-							messages,
-							message: upsertAssistantChatToolCall({
-								message: assistantMessage,
-								patch: {
-									id: event.data.event.item_id,
-									input: `${currentPart?.type === "tool_call" ? currentPart.input : ""}${event.data.event.delta}`,
-								},
-							}),
+				return {
+					status: "streaming",
+					messages: upsertAssistantChatMessage({
+						messages,
+						message: appendAssistantChatTextDelta({
+							message: assistantMessage,
+							delta: {
+								partId: `${event.data.event.item_id}-text-${event.data.event.content_index}`,
+								text: event.data.event.delta,
+							},
 						}),
-					};
+					}),
+				};
+			},
+		)
+		.with(
+			{
+				type: "raw_model_stream_event",
+				source: "openai-responses",
+				data: {
+					type: "model",
+					event: {
+						type: "response.reasoning_text.delta",
+						item_id: P.string,
+						content_index: P.number,
+						delta: P.string,
+					},
 				},
-			)
-			// .with(
-			// 	{
-			// 		type: "run_item_stream_event",
-			// 		name: "message_output_created",
-			// 		item: P.any,
-			// 	},
-			// 	(event) => {
-			// 		const rawItem = getRunItemRawItem({
-			// 			item: event.item,
-			// 		});
-			//
-			// 		return match(rawItem)
-			// 			.returnType<reduceAssistantChatStreamEvent.Result>()
-			// 			.with(
-			// 				{
-			// 					id: P.string,
-			// 					content: P.array(P.any),
-			// 				},
-			// 				(rawItem) => {
-			// 					const assistantMessage =
-			// 						messages.findLast((message) => message.role === "assistant") ??
-			// 						createAssistantChatMessage({
-			// 							id: rawItem.id,
-			// 							role: "assistant",
-			// 						});
-			// 					const nextMessage =
-			// 						rawItem.content.reduce<AssistantChatMessageSchema.Type>(
-			// 							(message, part, index) => {
-			// 								return match(part)
-			// 									.with(
-			// 										{
-			// 											type: "output_text",
-			// 											text: P.string,
-			// 										},
-			// 										(part) => {
-			// 											return replaceAssistantChatText({
-			// 												message,
-			// 												delta: {
-			// 													partId: `${rawItem.id}-text-${index}`,
-			// 													text: part.text,
-			// 												},
-			// 											});
-			// 										},
-			// 									)
-			// 									.with(
-			// 										{
-			// 											type: "refusal",
-			// 											refusal: P.string,
-			// 										},
-			// 										(part) => {
-			// 											return replaceAssistantChatText({
-			// 												message,
-			// 												delta: {
-			// 													partId: `${rawItem.id}-text-${index}`,
-			// 													text: part.refusal,
-			// 												},
-			// 											});
-			// 										},
-			// 									)
-			// 									.otherwise(() => message);
-			// 							},
-			// 							assistantMessage,
-			// 						);
-			//
-			// 					return {
-			// 						status: "streaming" satisfies reduceAssistantChatStreamEvent.Status,
-			// 						messages: upsertAssistantChatMessage({
-			// 							messages,
-			// 							message: nextMessage,
-			// 						}),
-			// 					};
-			// 				},
-			// 			)
-			// 			.otherwise(() => ({
-			// 				messages,
-			// 				status,
-			// 			}));
-			// 	},
-			// )
-			// .with(
-			// 	{
-			// 		type: "run_item_stream_event",
-			// 		name: "reasoning_item_created",
-			// 		item: P.any,
-			// 	},
-			// 	(event) => {
-			// 		const rawItem = getRunItemRawItem({
-			// 			item: event.item,
-			// 		});
-			//
-			// 		return match(rawItem)
-			// 			.returnType<reduceAssistantChatStreamEvent.Result>()
-			// 			.with(
-			// 				{
-			// 					id: P.string,
-			// 				},
-			// 				(rawItem) => {
-			// 					const assistantMessage =
-			// 						messages.findLast((message) => message.role === "assistant") ??
-			// 						createAssistantChatMessage({
-			// 							id: rawItem.id,
-			// 							role: "assistant",
-			// 						});
-			//
-			// 					return {
-			// 						status: "streaming" satisfies reduceAssistantChatStreamEvent.Status,
-			// 						messages: upsertAssistantChatMessage({
-			// 							messages,
-			// 							message: replaceAssistantChatReasoning({
-			// 								message: assistantMessage,
-			// 								delta: {
-			// 									partId: `${rawItem.id}-reasoning-0`,
-			// 									text: getAssistantChatReasoningSummaryText({
-			// 										value: rawItem,
-			// 									}),
-			// 								},
-			// 							}),
-			// 						}),
-			// 					};
-			// 				},
-			// 			)
-			// 			.otherwise(() => ({
-			// 				messages,
-			// 				status,
-			// 			}));
-			// 	},
-			// )
-			.with(
-				{
-					type: "run_item_stream_event",
-					name: P.union("tool_called", "tool_search_called"),
-					item: P.any,
-				},
-				(event) => {
-					const rawItem = getRunItemRawItem({
-						item: event.item,
+			},
+			(event) => {
+				const assistantMessage =
+					messages.findLast((message) => message.role === "assistant") ??
+					createAssistantChatMessage({
+						id: event.data.event.item_id,
+						role: "assistant",
 					});
-					const assistantMessage =
-						messages.findLast((message) => message.role === "assistant") ??
-						createAssistantChatMessage({
-							id: genId(),
-							role: "assistant",
-						});
 
-					return match(rawItem)
-						.returnType<reduceAssistantChatStreamEvent.Result>()
-						.with(
-							{
-								type: "function_call",
-								callId: P.string,
-								name: P.string,
-								arguments: P.string,
+				return {
+					status: "streaming",
+					messages: upsertAssistantChatMessage({
+						messages,
+						message: appendAssistantChatReasoningDelta({
+							message: assistantMessage,
+							delta: {
+								partId: `${event.data.event.item_id}-reasoning-${event.data.event.content_index}`,
+								text: event.data.event.delta,
 							},
-							(rawItem) => {
-								return {
-									status: "streaming" satisfies reduceAssistantChatStreamEvent.Status,
-									messages: upsertAssistantChatMessage({
-										messages,
-										message: upsertAssistantChatToolCall({
-											message: assistantMessage,
-											patch: {
-												id: rawItem.callId,
-												toolName: rawItem.name,
-												status: getAssistantChatToolCallStatus({
-													value: rawItem,
-													fallback: "in_progress",
-												}),
-												input: rawItem.arguments,
-											},
-										}),
-									}),
-								};
-							},
-						)
-						.with(
-							{
-								type: "tool_search_call",
-								arguments: P.any,
-							},
-							(rawItem) => {
-								return {
-									status: "streaming" satisfies reduceAssistantChatStreamEvent.Status,
-									messages: upsertAssistantChatMessage({
-										messages,
-										message: upsertAssistantChatToolCall({
-											message: assistantMessage,
-											patch: {
-												id: getToolSearchCallId({
-													item: rawItem,
-													index: 0,
-												}),
-												toolName: "tool_search",
-												status: "in_progress",
-												input: toAssistantChatDisplayText({
-													value: rawItem.arguments,
-												}),
-											},
-										}),
-									}),
-								};
-							},
-						)
-						.otherwise(() => ({
-							messages,
-							status,
-						}));
+						}),
+					}),
+				};
+			},
+		)
+		.with(
+			{
+				type: "raw_model_stream_event",
+				source: "openai-responses",
+				data: {
+					type: "model",
+					event: {
+						type: "response.reasoning_summary_text.delta",
+						item_id: P.string,
+						summary_index: P.number,
+						delta: P.string,
+					},
 				},
-			)
-			.with(
-				{
-					type: "run_item_stream_event",
-					name: P.union("tool_output", "tool_search_output_created"),
-					item: P.any,
-				},
-				(event) => {
-					const rawItem = getRunItemRawItem({
-						item: event.item,
+			},
+			(event) => {
+				const assistantMessage =
+					messages.findLast((message) => message.role === "assistant") ??
+					createAssistantChatMessage({
+						id: event.data.event.item_id,
+						role: "assistant",
 					});
-					const assistantMessage =
-						messages.findLast((message) => message.role === "assistant") ??
-						createAssistantChatMessage({
-							id: genId(),
-							role: "assistant",
-						});
 
-					return match(rawItem)
-						.returnType<reduceAssistantChatStreamEvent.Result>()
-						.with(
-							{
-								type: "function_call_result",
-								callId: P.string,
-								name: P.string,
+				return {
+					status: "streaming",
+					messages: upsertAssistantChatMessage({
+						messages,
+						message: appendAssistantChatReasoningDelta({
+							message: assistantMessage,
+							delta: {
+								partId: `${event.data.event.item_id}-summary-${event.data.event.summary_index}`,
+								text: event.data.event.delta,
 							},
-							(rawItem) => {
-								return {
-									status: "streaming" satisfies reduceAssistantChatStreamEvent.Status,
-									messages: upsertAssistantChatMessage({
-										messages,
-										message: upsertAssistantChatToolCall({
-											message: assistantMessage,
-											patch: {
-												id: rawItem.callId,
-												toolName: rawItem.name,
-												status: getAssistantChatToolCallStatus({
-													value: rawItem,
-													fallback: "completed",
-												}),
-												output: getAssistantChatToolOutputText({
-													value: rawItem,
-												}),
-											},
-										}),
-									}),
-								};
-							},
-						)
-						.with(
-							{
-								type: "tool_search_output",
-								tools: P.any,
-							},
-							(rawItem) => {
-								return {
-									status: "streaming" satisfies reduceAssistantChatStreamEvent.Status,
-									messages: upsertAssistantChatMessage({
-										messages,
-										message: upsertAssistantChatToolCall({
-											message: assistantMessage,
-											patch: {
-												id: getToolSearchCallId({
-													item: rawItem,
-													index: 0,
-												}),
-												toolName: "tool_search",
-												status: "completed",
-												output: toAssistantChatDisplayText({
-													value: rawItem.tools,
-												}),
-											},
-										}),
-									}),
-								};
-							},
-						)
-						.otherwise(() => ({
-							messages,
-							status,
-						}));
+						}),
+					}),
+				};
+			},
+		)
+		.with(
+			{
+				type: "raw_model_stream_event",
+				source: "openai-responses",
+				data: {
+					type: "model",
+					event: {
+						type: "response.function_call_arguments.delta",
+						item_id: P.string,
+						delta: P.string,
+					},
 				},
-			)
-			.otherwise(() => ({
-				messages,
-				status,
-			}))
-	);
+			},
+			(event) => {
+				const assistantMessage =
+					messages.findLast((message) => message.role === "assistant") ??
+					createAssistantChatMessage({
+						id: genId(),
+						role: "assistant",
+					});
+				const currentPart = assistantMessage.parts.find((part) => {
+					return part.id === event.data.event.item_id && part.type === "tool_call";
+				});
+
+				return {
+					status: "streaming",
+					messages: upsertAssistantChatMessage({
+						messages,
+						message: upsertAssistantChatToolCall({
+							message: assistantMessage,
+							patch: {
+								id: event.data.event.item_id,
+								input: `${currentPart?.type === "tool_call" ? currentPart.input : ""}${event.data.event.delta}`,
+							},
+						}),
+					}),
+				};
+			},
+		)
+		.with(
+			{
+				type: "run_item_stream_event",
+				name: P.union("tool_called", "tool_search_called"),
+				item: P.any,
+			},
+			(event) => {
+				const rawItem = getRunItemRawItem({
+					item: event.item,
+				});
+				const assistantMessage =
+					messages.findLast((message) => message.role === "assistant") ??
+					createAssistantChatMessage({
+						id: genId(),
+						role: "assistant",
+					});
+
+				return match(rawItem)
+					.returnType<reduceAssistantChatStreamEvent.Result>()
+					.with(
+						{
+							type: "function_call",
+							callId: P.string,
+							name: P.string,
+							arguments: P.string,
+						},
+						(rawItem) => {
+							return {
+								status: "streaming" satisfies reduceAssistantChatStreamEvent.Status,
+								messages: upsertAssistantChatMessage({
+									messages,
+									message: upsertAssistantChatToolCall({
+										message: assistantMessage,
+										patch: {
+											id: rawItem.callId,
+											toolName: rawItem.name,
+											status: getAssistantChatToolCallStatus({
+												value: rawItem,
+												fallback: "in_progress",
+											}),
+											input: rawItem.arguments,
+										},
+									}),
+								}),
+							};
+						},
+					)
+					.with(
+						{
+							type: "tool_search_call",
+							arguments: P.any,
+						},
+						(rawItem) => {
+							return {
+								status: "streaming" satisfies reduceAssistantChatStreamEvent.Status,
+								messages: upsertAssistantChatMessage({
+									messages,
+									message: upsertAssistantChatToolCall({
+										message: assistantMessage,
+										patch: {
+											id: getToolSearchCallId({
+												item: rawItem,
+												index: 0,
+											}),
+											toolName: "tool_search",
+											status: "in_progress",
+											input: toAssistantChatDisplayText({
+												value: rawItem.arguments,
+											}),
+										},
+									}),
+								}),
+							};
+						},
+					)
+					.otherwise(() => ({
+						messages,
+						status,
+					}));
+			},
+		)
+		.with(
+			{
+				type: "run_item_stream_event",
+				name: P.union("tool_output", "tool_search_output_created"),
+				item: P.any,
+			},
+			(event) => {
+				const rawItem = getRunItemRawItem({
+					item: event.item,
+				});
+				const assistantMessage =
+					messages.findLast((message) => message.role === "assistant") ??
+					createAssistantChatMessage({
+						id: genId(),
+						role: "assistant",
+					});
+
+				return match(rawItem)
+					.returnType<reduceAssistantChatStreamEvent.Result>()
+					.with(
+						{
+							type: "function_call_result",
+							callId: P.string,
+							name: P.string,
+						},
+						(rawItem) => {
+							return {
+								status: "streaming" satisfies reduceAssistantChatStreamEvent.Status,
+								messages: upsertAssistantChatMessage({
+									messages,
+									message: upsertAssistantChatToolCall({
+										message: assistantMessage,
+										patch: {
+											id: rawItem.callId,
+											toolName: rawItem.name,
+											status: getAssistantChatToolCallStatus({
+												value: rawItem,
+												fallback: "completed",
+											}),
+											output: getAssistantChatToolOutputText({
+												value: rawItem,
+											}),
+										},
+									}),
+								}),
+							};
+						},
+					)
+					.with(
+						{
+							type: "tool_search_output",
+							tools: P.any,
+						},
+						(rawItem) => {
+							return {
+								status: "streaming" satisfies reduceAssistantChatStreamEvent.Status,
+								messages: upsertAssistantChatMessage({
+									messages,
+									message: upsertAssistantChatToolCall({
+										message: assistantMessage,
+										patch: {
+											id: getToolSearchCallId({
+												item: rawItem,
+												index: 0,
+											}),
+											toolName: "tool_search",
+											status: "completed",
+											output: toAssistantChatDisplayText({
+												value: rawItem.tools,
+											}),
+										},
+									}),
+								}),
+							};
+						},
+					)
+					.otherwise(() => ({
+						messages,
+						status,
+					}));
+			},
+		)
+		.otherwise(() => ({
+			messages,
+			status,
+		}));
 };
