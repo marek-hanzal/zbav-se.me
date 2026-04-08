@@ -42,9 +42,9 @@ const runner = new Runner({
 	tracingDisabled: true,
 });
 
-const session = new MemorySession({
-	sessionId: args.options.user ?? "local-terminal-chat",
-});
+// const session = new MemorySession({
+// 	sessionId: args.options.user ?? "local-terminal-chat",
+// });
 
 type UsageTotals = {
 	requests: number;
@@ -443,7 +443,7 @@ process.on("SIGTERM", () => {
 	void terminate(0);
 });
 
-term.grabInput();
+term.grabInput({});
 term.on("key", onKey);
 
 const askInput = async () => {
