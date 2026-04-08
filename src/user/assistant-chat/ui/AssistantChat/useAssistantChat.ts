@@ -1,11 +1,9 @@
 import type { AgentInputItem } from "@openai/agents-core";
 import { useRouter } from "@tanstack/react-router";
-import { EventSourceParserStream } from "eventsource-parser/stream";
+import { createEventSource } from "eventsource-client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { genId } from "@/lib/common/gen-id";
-import { Route as ApiAssistantRoute } from "~/@routes/api/assistant";
 import type { AssistantChatMessageSchema } from "~/user/assistant/schema/message/AssistantChatMessageSchema";
-import { buildAssistantUrl } from "~/user/assistant/service/buildAssistantUrl";
 import { createAssistantChatMessage } from "~/user/assistant/service/createAssistantChatMessage";
 import { fromAgentInputItems } from "~/user/assistant/service/fromAgentInputItems";
 import { getResponseError } from "~/user/assistant/service/getResponseError";
@@ -77,7 +75,7 @@ export const useAssistantChat = () => {
 			const assistantMessageId = genId();
 			const controller = new AbortController();
 			const assistantLocation = buildLocation({
-				to: ApiAssistantRoute.to,
+				to: "/api/assistant",
 			});
 
 			abortControllerRef.current = controller;
@@ -105,61 +103,104 @@ export const useAssistantChat = () => {
 			});
 
 			try {
-				const response = await fetch(
-					buildAssistantUrl({
-						href: assistantLocation.href,
-						pathname: assistantLocation.pathname,
-						search: assistantLocation.search,
-						hash: assistantLocation.hash,
-					}),
-					{
+				await new Promise<void>((resolve, reject) => {
+					let requestError: Error | null = null;
+					let isCompleted = false;
+					let eventSource: ReturnType<typeof createEventSource> | null = null;
+
+					const complete = () => {
+						if (isCompleted) {
+							return;
+						}
+
+						isCompleted = true;
+						resolve();
+					};
+					const abort = () => {
+						eventSource?.close();
+						reject(new DOMException("The operation was aborted.", "AbortError"));
+					};
+
+					controller.signal.addEventListener("abort", abort, {
+						once: true,
+					});
+
+					eventSource = createEventSource({
+						url: assistantLocation.href,
 						method: "POST",
 						headers: {
 							Accept: "text/event-stream",
 							"Content-Type": "application/json",
 						},
 						body: JSON.stringify(trimmed),
-						signal: controller.signal,
-					},
-				);
+						fetch: async (url, init) => {
+							const response = await fetch(url, {
+								...init,
+								signal: AbortSignal.any([
+									controller.signal,
+									init?.signal as AbortSignal,
+								]),
+							});
 
-				if (!response.ok) {
-					throw new Error(
-						await getResponseError({
-							response,
-						}),
-					);
-				}
+							if (!response.ok) {
+								requestError = new Error(
+									await getResponseError({
+										response,
+									}),
+								);
 
-				if (!response.body) {
-					throw new Error("Assistant stream is missing response body");
-				}
+								throw requestError;
+							}
 
-				const stream = response.body
-					.pipeThrough(new TextDecoderStream())
-					.pipeThrough(new EventSourceParserStream());
+							if (!response.body) {
+								requestError = new Error(
+									"Assistant stream is missing response body",
+								);
 
-				for await (const sseEvent of stream) {
-					if (!sseEvent.data) {
-						continue;
-					}
+								throw requestError;
+							}
 
-					const event = JSON.parse(sseEvent.data);
+							return response;
+						},
+						onMessage: (message) => {
+							if (!message.data) {
+								return;
+							}
 
-					setMessages((messages) => {
-						const nextState = reduceAssistantChatStreamEvent({
-							event,
-							messages,
-							status,
-						});
+							const event = JSON.parse(message.data);
 
-						setStatus(nextState.status);
+							setMessages((messages) => {
+								const nextState = reduceAssistantChatStreamEvent({
+									event,
+									messages,
+									status,
+								});
 
-						return nextState.messages;
+								setStatus(nextState.status);
+
+								return nextState.messages;
+							});
+						},
+						onDisconnect: () => {
+							eventSource?.close();
+
+							if (requestError) {
+								reject(requestError);
+								return;
+							}
+
+							setStatus("idle");
+							complete();
+						},
+						onScheduleReconnect: () => {
+							if (!requestError) {
+								return;
+							}
+
+							eventSource?.close();
+						},
 					});
-				}
-
-				setStatus("idle");
+				});
 			} catch (error) {
 				if (
 					isAbortError({
