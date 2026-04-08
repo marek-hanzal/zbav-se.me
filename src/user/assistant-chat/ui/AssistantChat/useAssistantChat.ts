@@ -1,5 +1,5 @@
 import type { AgentInputItem } from "@openai/agents-core";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { AssistantChatMessageSchema } from "~/user/assistant/schema/message/AssistantChatMessageSchema";
 import { fromAgentInputItems } from "~/user/assistant/service/fromAgentInputItems";
 import { useMessageMutation } from "~/user/assistant-chat/mutation/useMessageMutation";
@@ -27,42 +27,23 @@ export const useAssistantChat = () => {
 	]);
 	const [messages, setMessages] = useState<AssistantChatMessageSchema.Type[]>(persistedMessages);
 
-	const messageMutation = useMessageMutation({
+	const mutation = useMessageMutation({
 		setMessages,
 	});
-	const isStreaming = messageMutation.isPending;
 
 	useEffect(() => {
-		if (isStreaming) {
+		if (mutation.isPending) {
 			return;
 		}
 
 		setMessages(persistedMessages);
 	}, [
-		isStreaming,
+		mutation.isPending,
 		persistedMessages,
 	]);
 
-	const sendMessage = useCallback(
-		async ({ text }: { text: string }) => {
-			if (isStreaming) {
-				return;
-			}
-
-			await messageMutation.mutateAsync({
-				text,
-			});
-		},
-		[
-			isStreaming,
-			messageMutation,
-		],
-	);
-
 	return {
-		isStreaming,
 		messages,
-		sendMessage,
-		stop: messageMutation.stop,
+		mutation,
 	};
 };
