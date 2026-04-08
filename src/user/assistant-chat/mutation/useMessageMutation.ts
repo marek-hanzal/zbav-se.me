@@ -1,25 +1,39 @@
+import type { AgentInputItem } from "@openai/agents-core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { EventSourceParserStream } from "eventsource-parser/stream";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { genId } from "@/lib/common/gen-id";
 import type { AssistantChatMessageSchema } from "~/user/assistant/schema/message/AssistantChatMessageSchema";
+import { fromAgentInputItems } from "~/user/assistant/service/fromAgentInputItems";
 import { getResponseError } from "~/user/assistant/service/getResponseError";
 import { reduceAssistantChatStreamEvent } from "~/user/assistant/service/reduceAssistantChatStreamEvent";
+import { withAssistantChatQuery } from "~/user/assistant-chat/query/withAssistantChatQuery";
 
 export namespace useMessageMutation {
 	export interface Variables {
 		text: string;
 	}
-
-	export interface Props {
-		persistedMessages: AssistantChatMessageSchema.Type[];
-	}
 }
 
-export const useMessageMutation = ({ persistedMessages }: useMessageMutation.Props) => {
+export const useMessageMutation = () => {
 	const { buildLocation } = useRouter();
+	const assistantQuery = withAssistantChatQuery.useCollectionQuery({
+		sort: [
+			{
+				field: "sort",
+				order: "asc",
+			},
+		],
+	});
 	const abortControllerRef = useRef<AbortController | null>(null);
+	const persistedMessages = useMemo(() => {
+		return fromAgentInputItems({
+			items: assistantQuery.data.map((item) => item.payload as AgentInputItem),
+		});
+	}, [
+		assistantQuery.data,
+	]);
 	const [messages, setMessages] = useState<AssistantChatMessageSchema.Type[]>(persistedMessages);
 	const link = buildLocation({
 		to: "/api/assistant",
