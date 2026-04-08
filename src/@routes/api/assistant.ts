@@ -2,8 +2,8 @@ import {
 	type AGUIEvent,
 	type CustomEvent,
 	EventType,
+	type InputContent,
 	type RunAgentInput,
-	type TextInputContent,
 	type UserMessage,
 } from "@ag-ui/core";
 import {
@@ -11,6 +11,7 @@ import {
 	isOpenAIResponsesRawModelStreamEvent,
 	MemorySession,
 	OpenAIProvider,
+	type AgentInputItem as OpenAiAgentInputItem,
 	Runner,
 } from "@openai/agents";
 import { toServerSentEventsResponse } from "@tanstack/ai";
@@ -25,32 +26,121 @@ import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { CoreAgent } from "~/user/assistant/CoreAgent";
 
-const extractUserText = (body: RunAgentInput): string => {
+const getLastUserMessage = (body: RunAgentInput): UserMessage => {
 	for (let index = body.messages.length - 1; index >= 0; index--) {
 		const message = body.messages[index];
 
-		if (!message || message.role !== "user") {
-			continue;
-		}
-
-		const userMessage = message as UserMessage;
-
-		if (typeof userMessage.content === "string") {
-			return userMessage.content.trim();
-		}
-
-		const text = userMessage.content
-			.filter((part): part is TextInputContent => part.type === "text")
-			.map((part) => part.text)
-			.join("\n")
-			.trim();
-
-		if (text.length > 0) {
-			return text;
+		if (message.role === "user") {
+			return message;
 		}
 	}
 
-	return "";
+	throw new Error("RunAgentInput.messages does not contain a user message.");
+};
+
+const inferFilenameFromUrl = (url: string): string | undefined => {
+	try {
+		const pathname = new URL(url).pathname;
+		const last = pathname.split("/").filter(Boolean).at(-1);
+
+		return last || undefined;
+	} catch {
+		return undefined;
+	}
+};
+
+const getPartMetadata = (part: InputContent) => {
+	return (
+		part as {
+			metadata?: {
+				detail?: unknown;
+				filename?: unknown;
+			};
+		}
+	).metadata;
+};
+
+const toOpenAiInputContent = (part: InputContent): Record<string, unknown> => {
+	switch (part.type) {
+		case "text":
+			return {
+				type: "input_text",
+				text: part.text,
+			};
+
+		case "image": {
+			const detail = getPartMetadata(part)?.detail;
+			const normalizedDetail =
+				detail === "low" || detail === "high" || detail === "auto" ? detail : undefined;
+
+			if (part.source.type === "url") {
+				return {
+					type: "input_image",
+					image_url: part.source.value,
+					detail: normalizedDetail,
+				};
+			}
+
+			return {
+				type: "input_image",
+				image_url: `data:${part.source.mimeType};base64,${part.source.value}`,
+				detail: normalizedDetail,
+			};
+		}
+
+		case "audio":
+		case "video":
+		case "document": {
+			const filenameFromMetadata = getPartMetadata(part)?.filename;
+			const filename =
+				typeof filenameFromMetadata === "string" && filenameFromMetadata.length > 0
+					? filenameFromMetadata
+					: part.source.type === "url"
+						? inferFilenameFromUrl(part.source.value)
+						: undefined;
+
+			if (part.source.type === "url") {
+				return {
+					type: "input_file",
+					file_url: part.source.value,
+					filename,
+				};
+			}
+
+			return {
+				type: "input_file",
+				file_data: part.source.value,
+				filename,
+			};
+		}
+
+		default: {
+			const exhaustive: never = part;
+			throw new Error(`Unsupported input part: ${JSON.stringify(exhaustive)}`);
+		}
+	}
+};
+
+const toOpenAiCurrentTurn = (body: RunAgentInput): OpenAiAgentInputItem[] => {
+	const userMessage = getLastUserMessage(body);
+
+	const content =
+		typeof userMessage.content === "string"
+			? [
+					{
+						type: "input_text",
+						text: userMessage.content,
+					},
+				]
+			: userMessage.content.map(toOpenAiInputContent);
+
+	return [
+		{
+			type: "message",
+			role: "user",
+			content,
+		} as OpenAiAgentInputItem,
+	];
 };
 
 export const Route = createFileRoute("/api/assistant")({
@@ -66,7 +156,7 @@ export const Route = createFileRoute("/api/assistant")({
 				});
 
 				const body = (await request.json()) as RunAgentInput;
-				const input = extractUserText(body);
+				const currentTurn = toOpenAiCurrentTurn(body);
 
 				return Effect.gen(function* () {
 					const dateContext = yield* DateContextFx;
@@ -160,8 +250,12 @@ export const Route = createFileRoute("/api/assistant")({
 									input: body,
 								};
 
-								const stream = await runner.run(CoreAgent, input, {
+								const stream = await runner.run(CoreAgent, currentTurn, {
 									session,
+									sessionInputCallback: (history, newItems) => [
+										...history,
+										...newItems,
+									],
 									stream: true,
 									signal: request.signal,
 								});
