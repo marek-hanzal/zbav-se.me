@@ -14,7 +14,6 @@ import {
 	OpenAIProvider,
 	Runner,
 } from "@openai/agents";
-import { toServerSentEventsResponse } from "@tanstack/ai";
 import { createFileRoute } from "@tanstack/react-router";
 import { Effect } from "effect";
 import { match } from "ts-pattern";
@@ -756,7 +755,36 @@ export const Route = createFileRoute("/api/assistant")({
 							}
 						}
 
-						return toServerSentEventsResponse(bridge());
+						const encoder = new TextEncoder();
+
+						const responseStream = new ReadableStream<Uint8Array>({
+							async start(controller) {
+								try {
+									for await (const event of bridge()) {
+										controller.enqueue(
+											encoder.encode(`data: ${JSON.stringify(event)}\n\n`),
+										);
+									}
+
+									controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+									controller.close();
+								} catch (error) {
+									controller.error(error);
+								}
+							},
+							cancel() {
+								request.signal.throwIfAborted?.();
+							},
+						});
+
+						return new Response(responseStream, {
+							headers: {
+								"Content-Type": "text/event-stream; charset=utf-8",
+								"Cache-Control": "no-cache, no-transform",
+								Connection: "keep-alive",
+								"X-Accel-Buffering": "no",
+							},
+						});
 					});
 				}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
 			},
