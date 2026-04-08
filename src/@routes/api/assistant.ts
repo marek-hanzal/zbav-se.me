@@ -1,15 +1,9 @@
-import type { AgentInputItem } from "@openai/agents-core";
 import { createFileRoute } from "@tanstack/react-router";
-import { z } from "zod";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { CoreAgent } from "~/user/assistant/CoreAgent";
 import { withRunnerMiddleware } from "~/user/assistant/middleware/withRunnerMiddleware";
 import { withRunnerSessionMiddleware } from "~/user/assistant/middleware/withRunnerSessionMiddleware";
-
-const AssistantRequestSchema: z.ZodType<string | AgentInputItem[]> = z.union([
-	z.string(),
-	z.array(z.unknown()).transform((items) => items as AgentInputItem[]),
-]);
+import { AssistantRequestSchema } from "~/user/assistant/schema/AssistantRequestSchema";
 
 const encoder = new TextEncoder();
 

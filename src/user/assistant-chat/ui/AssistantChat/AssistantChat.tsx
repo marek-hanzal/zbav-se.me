@@ -1,4 +1,5 @@
 import { type FC, useCallback, useRef } from "react";
+import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
 import { EmptyState } from "@/lib/client/empty-state";
 import { AiIcon } from "@/lib/client/icon";
@@ -6,6 +7,7 @@ import { Status } from "@/lib/client/status";
 import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
 import { ChatInput } from "~/common/ui/chat";
+import { CancelIcon } from "~/common/ui/icon";
 import { MessageList } from "~/user/assistant-chat/ui/AssistantChat/MessageList";
 import { useAssistantChat } from "~/user/assistant-chat/ui/AssistantChat/useAssistantChat";
 
@@ -114,6 +116,27 @@ export const AssistantChat: FC<AssistantChat.Props> = ({ ui, ...props }) => {
 						onSubmit={submit}
 						placeholder={translator.text("Write to a assistant")}
 						loading={isBusy}
+						left={
+							isBusy ? (
+								<Button
+									data-action={"stop assistant stream"}
+									iconEnabled={CancelIcon}
+									onClick={chat.stop}
+									ui={{
+										tone: "danger",
+										theme: "light",
+										square: "default",
+										background: undefined,
+										border: false,
+										shadow: false,
+										color: "lead",
+									}}
+								/>
+							) : null
+						}
+						ui={{
+							disabled: isBusy,
+						}}
 					/>
 				</Container>
 			</Container>

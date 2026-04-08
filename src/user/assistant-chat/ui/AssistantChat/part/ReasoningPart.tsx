@@ -1,12 +1,13 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Tx } from "@/lib/client/tx";
-import type { MessageUi } from "~/user/assistant/MessageUi";
+import type { AssistantChatMessageSchema } from "~/user/assistant/schema/message/AssistantChatMessageSchema";
+import type { AssistantChatReasoningPartSchema } from "~/user/assistant/schema/part/AssistantChatReasoningPartSchema";
 
 export namespace ReasoningPart {
 	export interface Props extends Omit<Container.Props, "part"> {
-		message: MessageUi;
-		part: any;
+		message: AssistantChatMessageSchema.Type;
+		part: AssistantChatReasoningPartSchema.Type;
 	}
 }
 

@@ -2,12 +2,13 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Markdown } from "@/lib/client/markdown";
 import { translator } from "@/lib/common/translator";
-import type { MessageUi } from "~/user/assistant/MessageUi";
+import type { AssistantChatMessageSchema } from "~/user/assistant/schema/message/AssistantChatMessageSchema";
+import type { AssistantChatTextPartSchema } from "~/user/assistant/schema/part/AssistantChatTextPartSchema";
 
 export namespace TextPart {
 	export interface Props extends Omit<Container.Props, "part"> {
-		message: MessageUi;
-		part: any;
+		message: AssistantChatMessageSchema.Type;
+		part: AssistantChatTextPartSchema.Type;
 	}
 }
 
