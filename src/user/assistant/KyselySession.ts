@@ -60,7 +60,6 @@ export class KyselySession implements Session {
 					items.map((payload) => ({
 						id: genId(),
 						userId: this.props.userId,
-						threadId: this.props.userId,
 						payload,
 						sort: ++nextSort,
 					})),

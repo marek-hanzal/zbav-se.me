@@ -1,8 +1,10 @@
-import { OpenAIProvider, Runner } from "@openai/agents";
+import { OpenAIProvider, Runner, setTracingDisabled } from "@openai/agents";
 import { createMiddleware } from "@tanstack/react-start";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 
 export const withRunnerMiddleware = createMiddleware().server(async ({ next }) => {
+	setTracingDisabled(true);
+
 	const aiConfig = ServerAiSchema.parse(process.env);
 
 	const runner = new Runner({
