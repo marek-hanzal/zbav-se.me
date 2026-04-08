@@ -1,6 +1,5 @@
 import type { AgentInputItem } from "@openai/agents-core";
-import { useEffect, useMemo, useState } from "react";
-import type { AssistantChatMessageSchema } from "~/user/assistant/schema/message/AssistantChatMessageSchema";
+import { useMemo } from "react";
 import { fromAgentInputItems } from "~/user/assistant/service/fromAgentInputItems";
 import { useMessageMutation } from "~/user/assistant-chat/mutation/useMessageMutation";
 import { withAssistantChatQuery } from "~/user/assistant-chat/query/withAssistantChatQuery";
@@ -25,25 +24,13 @@ export const useAssistantChat = () => {
 	}, [
 		assistantQuery.data,
 	]);
-	const [messages, setMessages] = useState<AssistantChatMessageSchema.Type[]>(persistedMessages);
 
 	const mutation = useMessageMutation({
-		setMessages,
+		persistedMessages,
 	});
 
-	useEffect(() => {
-		if (mutation.mutation.isPending) {
-			return;
-		}
-
-		setMessages(persistedMessages);
-	}, [
-		mutation.mutation.isPending,
-		persistedMessages,
-	]);
-
 	return {
-		messages,
+		messages: mutation.messages,
 		mutation,
 	};
 };

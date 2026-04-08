@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { EventSourceParserStream } from "eventsource-parser/stream";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { genId } from "@/lib/common/gen-id";
 import type { AssistantChatMessageSchema } from "~/user/assistant/schema/message/AssistantChatMessageSchema";
 import { getResponseError } from "~/user/assistant/service/getResponseError";
@@ -13,17 +13,14 @@ export namespace useMessageMutation {
 	}
 
 	export interface Props {
-		setMessages(
-			updater: (
-				messages: AssistantChatMessageSchema.Type[],
-			) => AssistantChatMessageSchema.Type[],
-		): void;
+		persistedMessages: AssistantChatMessageSchema.Type[];
 	}
 }
 
-export const useMessageMutation = ({ setMessages }: useMessageMutation.Props) => {
+export const useMessageMutation = ({ persistedMessages }: useMessageMutation.Props) => {
 	const { buildLocation } = useRouter();
 	const abortControllerRef = useRef<AbortController | null>(null);
+	const [messages, setMessages] = useState<AssistantChatMessageSchema.Type[]>(persistedMessages);
 	const link = buildLocation({
 		to: "/api/assistant",
 	});
@@ -138,7 +135,19 @@ export const useMessageMutation = ({ setMessages }: useMessageMutation.Props) =>
 		},
 	});
 
+	useEffect(() => {
+		if (mutation.isPending) {
+			return;
+		}
+
+		setMessages(persistedMessages);
+	}, [
+		mutation.isPending,
+		persistedMessages,
+	]);
+
 	return {
+		messages,
 		mutation,
 		stop,
 	};
