@@ -25,7 +25,7 @@ export namespace useMessageMutation {
 export const useMessageMutation = ({ setMessages }: useMessageMutation.Props) => {
 	const { buildLocation } = useRouter();
 	const abortControllerRef = useRef<AbortController | null>(null);
-	const assistantLocation = buildLocation({
+	const link = buildLocation({
 		to: "/api/assistant",
 	});
 
@@ -75,101 +75,84 @@ export const useMessageMutation = ({ setMessages }: useMessageMutation.Props) =>
 			});
 
 			try {
-				await new Promise<void>((resolve, reject) => {
-					let requestError: Error | null = null;
-					let isCompleted = false;
-					let eventSource: ReturnType<typeof createEventSource> | null = null;
+				let requestError: Error | null = null;
+				const eventSource = createEventSource({
+					url: link.href,
+					method: "POST",
+					headers: {
+						Accept: "text/event-stream",
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(trimmed),
+					fetch: async (url, init) => {
+						const response = await fetch(url, {
+							...init,
+							signal: AbortSignal.any([
+								controller.signal,
+								init?.signal as AbortSignal,
+							]),
+						});
 
-					const complete = () => {
-						if (isCompleted) {
-							return;
+						if (!response.ok) {
+							requestError = new Error(
+								await getResponseError({
+									response,
+								}),
+							);
+
+							throw requestError;
 						}
 
-						isCompleted = true;
-						resolve();
-					};
-					const abort = () => {
-						eventSource?.close();
-						reject(new DOMException("The operation was aborted.", "AbortError"));
-					};
+						if (!response.body) {
+							requestError = new Error("Assistant stream is missing response body");
 
-					controller.signal.addEventListener("abort", abort, {
-						once: true,
-					});
+							throw requestError;
+						}
 
-					eventSource = createEventSource({
-						url: assistantLocation.href,
-						method: "POST",
-						headers: {
-							Accept: "text/event-stream",
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify(trimmed),
-						fetch: async (url, init) => {
-							const response = await fetch(url, {
-								...init,
-								signal: AbortSignal.any([
-									controller.signal,
-									init?.signal as AbortSignal,
-								]),
-							});
-
-							if (!response.ok) {
-								requestError = new Error(
-									await getResponseError({
-										response,
-									}),
-								);
-
-								throw requestError;
-							}
-
-							if (!response.body) {
-								requestError = new Error(
-									"Assistant stream is missing response body",
-								);
-
-								throw requestError;
-							}
-
-							return response;
-						},
-						onMessage: (message) => {
-							if (!message.data) {
-								return;
-							}
-
-							const event = JSON.parse(message.data);
-
-							setMessages((messages) => {
-								const nextState = reduceAssistantChatStreamEvent({
-									event,
-									messages,
-									status: "streaming",
-								});
-
-								return nextState.messages;
-							});
-						},
-						onDisconnect: () => {
-							eventSource?.close();
-
-							if (requestError) {
-								reject(requestError);
-								return;
-							}
-
-							complete();
-						},
-						onScheduleReconnect: () => {
-							if (!requestError) {
-								return;
-							}
-
-							eventSource?.close();
-						},
-					});
+						return response;
+					},
+					onDisconnect() {
+						eventSource.close();
+					},
+					onScheduleReconnect() {
+						eventSource.close();
+					},
 				});
+
+				const abort = () => {
+					eventSource.close();
+				};
+
+				controller.signal.addEventListener("abort", abort, {
+					once: true,
+				});
+
+				try {
+					for await (const message of eventSource) {
+						if (!message.data) {
+							continue;
+						}
+
+						const event = JSON.parse(message.data);
+
+						setMessages((messages) => {
+							const nextState = reduceAssistantChatStreamEvent({
+								event,
+								messages,
+								status: "streaming",
+							});
+
+							return nextState.messages;
+						});
+					}
+				} finally {
+					controller.signal.removeEventListener("abort", abort);
+					eventSource.close();
+				}
+
+				if (requestError) {
+					throw requestError;
+				}
 			} catch (error) {
 				if (
 					isAbortError({
