@@ -1,12 +1,6 @@
 import { Writable } from "node:stream";
 import { pipeline } from "node:stream/promises";
-import {
-	MemorySession,
-	OpenAIProvider,
-	Runner,
-	setTracingDisabled,
-	type Usage,
-} from "@openai/agents";
+import { OpenAIProvider, Runner, setTracingDisabled, type Usage } from "@openai/agents";
 import { cac } from "cac";
 import * as terminalKit from "terminal-kit";
 import { match, P } from "ts-pattern";
@@ -674,7 +668,6 @@ const streamAssistantOutput = async (input: string | ResumeState) => {
 
 		try {
 			stream = await runner.run(CoreAgent, nextInput, {
-				session,
 				stream: true,
 				signal: abortController.signal,
 			});
@@ -726,6 +719,7 @@ const streamAssistantOutput = async (input: string | ResumeState) => {
 					if (!aborted) {
 						appState.streaming = false;
 						appState.activeAbortController = null;
+						// biome-ignore lint/correctness/noUnsafeFinally: ssst
 						throw error;
 					}
 				}
@@ -850,7 +844,7 @@ const handleInput = async (input: string) => {
 			await terminate(0);
 		})
 		.with("/clear", async () => {
-			await session.clearSession();
+			// await session.clearSession();
 			printHeader();
 			term.green("Session cleared.\n\n");
 		})
