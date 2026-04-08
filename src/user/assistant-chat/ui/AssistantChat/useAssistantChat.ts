@@ -1,15 +1,8 @@
 import type { AgentInputItem } from "@openai/agents-core";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "@tanstack/react-router";
-import { createEventSource } from "eventsource-client";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { genId } from "@/lib/common/gen-id";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { AssistantChatMessageSchema } from "~/user/assistant/schema/message/AssistantChatMessageSchema";
-import { createAssistantChatMessage } from "~/user/assistant/service/createAssistantChatMessage";
 import { fromAgentInputItems } from "~/user/assistant/service/fromAgentInputItems";
-import { getResponseError } from "~/user/assistant/service/getResponseError";
-import { isAbortError } from "~/user/assistant/service/isAbortError";
-import { reduceAssistantChatStreamEvent } from "~/user/assistant/service/reduceAssistantChatStreamEvent";
+import { useMessageMutation } from "~/user/assistant-chat/mutation/useMessageMutation";
 import { withAssistantChatQuery } from "~/user/assistant-chat/query/withAssistantChatQuery";
 
 export namespace useAssistantChat {
@@ -18,7 +11,6 @@ export namespace useAssistantChat {
 }
 
 export const useAssistantChat = () => {
-	const { buildLocation } = useRouter();
 	const assistantQuery = withAssistantChatQuery.useCollectionQuery({
 		sort: [
 			{
@@ -27,7 +19,6 @@ export const useAssistantChat = () => {
 			},
 		],
 	});
-	const abortControllerRef = useRef<AbortController | null>(null);
 	const [pendingStatus, setPendingStatus] = useState<"submitted" | "streaming">("submitted");
 	const persistedMessages = useMemo(() => {
 		return fromAgentInputItems({
@@ -38,178 +29,17 @@ export const useAssistantChat = () => {
 	]);
 	const [messages, setMessages] = useState<AssistantChatMessageSchema.Type[]>(persistedMessages);
 
-	useEffect(() => {
-		return () => {
-			abortControllerRef.current?.abort();
-		};
-	}, []);
-
-	const sendMessageMutation = useMutation<
-		void,
-		Error,
-		{
-			text: string;
-			controller: AbortController;
-		}
-	>({
-		async mutationFn({ text, controller }) {
-			const trimmed = text.trim();
-
-			if (trimmed.length === 0) {
-				return;
-			}
-
-			const userMessageId = genId();
-			const assistantMessageId = genId();
-			const assistantLocation = buildLocation({
-				to: "/api/assistant",
-			});
-
-			abortControllerRef.current = controller;
-			setPendingStatus("submitted");
-			setMessages((messages) => {
-				return [
-					...messages,
-					{
-						id: userMessageId,
-						role: "user",
-						parts: [
-							{
-								id: `${userMessageId}-text-0`,
-								type: "text",
-								text: trimmed,
-							},
-						],
-					},
-					createAssistantChatMessage({
-						id: assistantMessageId,
-						role: "assistant",
-					}),
-				];
-			});
-
-			try {
-				await new Promise<void>((resolve, reject) => {
-					let requestError: Error | null = null;
-					let isCompleted = false;
-					let eventSource: ReturnType<typeof createEventSource> | null = null;
-
-					const complete = () => {
-						if (isCompleted) {
-							return;
-						}
-
-						isCompleted = true;
-						resolve();
-					};
-					const abort = () => {
-						eventSource?.close();
-						reject(new DOMException("The operation was aborted.", "AbortError"));
-					};
-
-					controller.signal.addEventListener("abort", abort, {
-						once: true,
-					});
-
-					eventSource = createEventSource({
-						url: assistantLocation.href,
-						method: "POST",
-						headers: {
-							Accept: "text/event-stream",
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify(trimmed),
-						fetch: async (url, init) => {
-							const response = await fetch(url, {
-								...init,
-								signal: AbortSignal.any([
-									controller.signal,
-									init?.signal as AbortSignal,
-								]),
-							});
-
-							if (!response.ok) {
-								requestError = new Error(
-									await getResponseError({
-										response,
-									}),
-								);
-
-								throw requestError;
-							}
-
-							if (!response.body) {
-								requestError = new Error(
-									"Assistant stream is missing response body",
-								);
-
-								throw requestError;
-							}
-
-							return response;
-						},
-						onMessage: (message) => {
-							if (!message.data) {
-								return;
-							}
-
-							setPendingStatus("streaming");
-
-							const event = JSON.parse(message.data);
-
-							setMessages((messages) => {
-								const nextState = reduceAssistantChatStreamEvent({
-									event,
-									messages,
-									status: "streaming",
-								});
-
-								return nextState.messages;
-							});
-						},
-						onDisconnect: () => {
-							eventSource?.close();
-
-							if (requestError) {
-								reject(requestError);
-								return;
-							}
-
-							complete();
-						},
-						onScheduleReconnect: () => {
-							if (!requestError) {
-								return;
-							}
-
-							eventSource?.close();
-						},
-					});
-				});
-			} catch (error) {
-				if (
-					isAbortError({
-						error,
-					})
-				) {
-					return;
-				}
-
-				throw error;
-			}
-		},
-		onSettled() {
-			abortControllerRef.current = null;
-			void assistantQuery.refetch();
-		},
+	const messageMutation = useMessageMutation({
+		setPendingStatus,
+		setMessages,
 	});
 
-	const status: useAssistantChat.Status = sendMessageMutation.isError
+	const status: useAssistantChat.Status = messageMutation.isError
 		? "error"
-		: sendMessageMutation.isPending
+		: messageMutation.isPending
 			? pendingStatus
 			: "idle";
-	const error = sendMessageMutation.error?.message ?? null;
+	const error = messageMutation.error?.message ?? null;
 
 	useEffect(() => {
 		if (status === "submitted" || status === "streaming") {
@@ -222,27 +52,18 @@ export const useAssistantChat = () => {
 		status,
 	]);
 
-	const stop = useCallback(() => {
-		abortControllerRef.current?.abort();
-	}, []);
-
 	const sendMessage = useCallback(
 		async ({ text }: { text: string }) => {
 			if (status === "submitted" || status === "streaming") {
 				return;
 			}
 
-			const controller = new AbortController();
-
-			abortControllerRef.current = controller;
-
-			await sendMessageMutation.mutateAsync({
+			await messageMutation.mutateAsync({
 				text,
-				controller,
 			});
 		},
 		[
-			sendMessageMutation,
+			messageMutation,
 			status,
 		],
 	);
@@ -252,6 +73,6 @@ export const useAssistantChat = () => {
 		error,
 		messages,
 		sendMessage,
-		stop,
+		stop: messageMutation.stop,
 	};
 };
