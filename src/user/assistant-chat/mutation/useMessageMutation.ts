@@ -5,7 +5,6 @@ import { useCallback, useEffect, useRef } from "react";
 import { genId } from "@/lib/common/gen-id";
 import type { AssistantChatMessageSchema } from "~/user/assistant/schema/message/AssistantChatMessageSchema";
 import { getResponseError } from "~/user/assistant/service/getResponseError";
-import { isAbortError } from "~/user/assistant/service/isAbortError";
 import { reduceAssistantChatStreamEvent } from "~/user/assistant/service/reduceAssistantChatStreamEvent";
 
 export namespace useMessageMutation {
@@ -101,12 +100,20 @@ export const useMessageMutation = ({ setMessages }: useMessageMutation.Props) =>
 					.pipeThrough(new TextDecoderStream())
 					.pipeThrough(new EventSourceParserStream());
 
-				for await (const message of stream) {
-					if (!message.data) {
+				const reader = stream.getReader();
+
+				for (;;) {
+					const { done, value } = await reader.read();
+
+					if (done) {
+						break;
+					}
+
+					if (!value.data) {
 						continue;
 					}
 
-					const event = JSON.parse(message.data);
+					const event = JSON.parse(value.data);
 
 					setMessages((messages) => {
 						const nextState = reduceAssistantChatStreamEvent({
@@ -119,11 +126,7 @@ export const useMessageMutation = ({ setMessages }: useMessageMutation.Props) =>
 					});
 				}
 			} catch (error) {
-				if (
-					isAbortError({
-						error,
-					})
-				) {
+				if (error instanceof Error && error.name === "AbortError") {
 					return;
 				}
 
