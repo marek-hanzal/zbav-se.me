@@ -5,7 +5,6 @@ export const AssistantChatSortSchema = z
 	.looseObject({
 		field: z
 			.enum([
-				"createdAt",
 				"sort",
 			])
 			.meta({

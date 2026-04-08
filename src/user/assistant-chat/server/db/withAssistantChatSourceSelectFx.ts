@@ -19,7 +19,6 @@ export const withAssistantChatSourceSelectFx = Effect.fn("withAssistantChatSourc
 
 		for (const item of sort ?? []) {
 			query = match(item.field)
-				.with("createdAt", () => query.orderBy("a.createdAt", item.order))
 				.with("sort", () => query.orderBy("a.sort", item.order))
 				.exhaustive();
 		}

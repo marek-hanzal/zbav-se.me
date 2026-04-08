@@ -1,8 +1,9 @@
 import {
 	type AGUIEvent,
-	type CustomEvent,
+	EventSchemas,
 	EventType,
 	type InputContent,
+	type InputContentSource,
 	type RunAgentInput,
 	type UserMessage,
 } from "@ag-ui/core";
@@ -11,12 +12,13 @@ import {
 	isOpenAIResponsesRawModelStreamEvent,
 	MemorySession,
 	OpenAIProvider,
-	type AgentInputItem as OpenAiAgentInputItem,
 	Runner,
 } from "@openai/agents";
 import { toServerSentEventsResponse } from "@tanstack/ai";
 import { createFileRoute } from "@tanstack/react-router";
 import { Effect } from "effect";
+import { match } from "ts-pattern";
+import { z } from "zod";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -26,9 +28,116 @@ import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { CoreAgent } from "~/user/assistant/CoreAgent";
 
+const RunAgentInputSchema: z.ZodType<RunAgentInput> = z.object({
+	threadId: z.string().min(1),
+	runId: z.string().min(1),
+	parentRunId: z.string().optional(),
+	state: z.unknown(),
+	messages: z.array(z.any()),
+	tools: z.array(z.any()),
+	context: z.array(z.any()),
+	forwardedProps: z.unknown(),
+});
+
+const UrlStringSchema = z.string().url();
+
+const PartMetadataSchema = z
+	.object({
+		detail: z
+			.enum([
+				"low",
+				"high",
+				"auto",
+			])
+			.optional(),
+		filename: z.string().min(1).optional(),
+	})
+	.passthrough();
+
+const PartWithMetadataSchema = z
+	.object({
+		metadata: PartMetadataSchema.optional(),
+	})
+	.passthrough();
+
+const DeprecatedBinaryInputContentSchema = z
+	.object({
+		type: z.literal("binary"),
+		mimeType: z.string().min(1),
+		id: z.string().min(1).optional(),
+		data: z.string().min(1).optional(),
+		url: z.string().url().optional(),
+		filename: z.string().min(1).optional(),
+	})
+	.passthrough();
+
+const ToolCalledItemSchema = z
+	.object({
+		id: z.string().optional(),
+		name: z.string().optional(),
+		arguments: z.unknown().optional(),
+	})
+	.passthrough();
+
+const ToolOutputItemSchema = z
+	.object({
+		id: z.string().optional(),
+		toolCallId: z.string().optional(),
+		output: z.unknown().optional(),
+	})
+	.passthrough();
+
+type DeprecatedBinaryInputContent = z.infer<typeof DeprecatedBinaryInputContentSchema>;
+type AnyInputContent = InputContent | DeprecatedBinaryInputContent;
+
+const emit = <T extends AGUIEvent>(event: T): T => {
+	const parsed = EventSchemas.safeParse(event);
+
+	if (!parsed.success) {
+		throw new Error(parsed.error.message);
+	}
+
+	return event;
+};
+
+const serializeUnknown = (value: unknown): string => {
+	if (typeof value === "string") {
+		return value;
+	}
+
+	try {
+		return JSON.stringify(value);
+	} catch {
+		return String(value);
+	}
+};
+
+const inferFilenameFromUrl = (url: string): string | undefined => {
+	const parsed = UrlStringSchema.safeParse(url);
+
+	if (!parsed.success) {
+		return undefined;
+	}
+
+	const pathname = new URL(parsed.data).pathname;
+	const last = pathname.split("/").filter(Boolean).at(-1);
+
+	return last || undefined;
+};
+
+const getPartMetadata = (part: AnyInputContent) => {
+	const parsed = PartWithMetadataSchema.safeParse(part);
+
+	return parsed.success ? parsed.data.metadata : undefined;
+};
+
 const getLastUserMessage = (body: RunAgentInput): UserMessage => {
 	for (let index = body.messages.length - 1; index >= 0; index--) {
-		const message = body.messages[index];
+		const message = body.messages.at(index);
+
+		if (!message) {
+			continue;
+		}
 
 		if (message.role === "user") {
 			return message;
@@ -38,108 +147,210 @@ const getLastUserMessage = (body: RunAgentInput): UserMessage => {
 	throw new Error("RunAgentInput.messages does not contain a user message.");
 };
 
-const inferFilenameFromUrl = (url: string): string | undefined => {
-	try {
-		const pathname = new URL(url).pathname;
-		const last = pathname.split("/").filter(Boolean).at(-1);
-
-		return last || undefined;
-	} catch {
-		return undefined;
+const normalizeUserContentParts = (content: UserMessage["content"]): AnyInputContent[] => {
+	if (typeof content === "string") {
+		return [];
 	}
-};
 
-const getPartMetadata = (part: InputContent) => {
-	return (
-		part as {
-			metadata?: {
-				detail?: unknown;
-				filename?: unknown;
-			};
-		}
-	).metadata;
-};
+	return content.map((part) => {
+		const binary = DeprecatedBinaryInputContentSchema.safeParse(part);
 
-const toOpenAiInputContent = (part: InputContent): Record<string, unknown> => {
-	switch (part.type) {
-		case "text":
-			return {
-				type: "input_text",
-				text: part.text,
-			};
-
-		case "image": {
-			const detail = getPartMetadata(part)?.detail;
-			const normalizedDetail =
-				detail === "low" || detail === "high" || detail === "auto" ? detail : undefined;
-
-			if (part.source.type === "url") {
-				return {
-					type: "input_image",
-					image_url: part.source.value,
-					detail: normalizedDetail,
-				};
-			}
-
-			return {
-				type: "input_image",
-				image_url: `data:${part.source.mimeType};base64,${part.source.value}`,
-				detail: normalizedDetail,
-			};
+		if (binary.success) {
+			return binary.data;
 		}
 
-		case "audio":
-		case "video":
-		case "document": {
-			const filenameFromMetadata = getPartMetadata(part)?.filename;
-			const filename =
-				typeof filenameFromMetadata === "string" && filenameFromMetadata.length > 0
-					? filenameFromMetadata
-					: part.source.type === "url"
-						? inferFilenameFromUrl(part.source.value)
-						: undefined;
+		return part;
+	});
+};
 
-			if (part.source.type === "url") {
-				return {
-					type: "input_file",
-					file_url: part.source.value,
-					filename,
-				};
-			}
-
-			return {
-				type: "input_file",
-				file_data: part.source.value,
+const toOpenAiFileInput = (source: InputContentSource, filename?: string) => {
+	return match(source)
+		.with(
+			{
+				type: "url",
+			},
+			(value) => ({
+				type: "input_file" as const,
+				file: {
+					url: value.value,
+				},
 				filename,
-			};
-		}
-
-		default: {
-			const exhaustive: never = part;
-			throw new Error(`Unsupported input part: ${JSON.stringify(exhaustive)}`);
-		}
-	}
+			}),
+		)
+		.with(
+			{
+				type: "data",
+			},
+			(value) => ({
+				type: "input_file" as const,
+				file: value.value,
+				filename,
+			}),
+		)
+		.exhaustive();
 };
 
-const toOpenAiCurrentTurn = (body: RunAgentInput): OpenAiAgentInputItem[] => {
+const toOpenAiImageInput = (source: InputContentSource, detail?: "low" | "high" | "auto") => {
+	return match(source)
+		.with(
+			{
+				type: "url",
+			},
+			(value) => ({
+				type: "input_image" as const,
+				image: value.value,
+				detail,
+			}),
+		)
+		.with(
+			{
+				type: "data",
+			},
+			(value) => ({
+				type: "input_image" as const,
+				image: `data:${value.mimeType};base64,${value.value}`,
+				detail,
+			}),
+		)
+		.exhaustive();
+};
+
+const toOpenAiBinaryInput = (part: DeprecatedBinaryInputContent) => {
+	const filename =
+		part.filename ?? (part.url ? inferFilenameFromUrl(part.url) : undefined) ?? part.id;
+
+	if (part.url) {
+		return {
+			type: "input_file" as const,
+			file: {
+				url: part.url,
+			},
+			filename,
+		};
+	}
+
+	if (part.id) {
+		return {
+			type: "input_file" as const,
+			file: {
+				id: part.id,
+			},
+			filename,
+		};
+	}
+
+	if (part.data) {
+		return {
+			type: "input_file" as const,
+			file: part.data,
+			filename,
+		};
+	}
+
+	throw new Error("Binary input does not contain url, id, or data.");
+};
+
+const toOpenAiInputContent = (part: AnyInputContent) => {
+	return match(part)
+		.with(
+			{
+				type: "text",
+			},
+			(value) => ({
+				type: "input_text" as const,
+				text: value.text,
+			}),
+		)
+		.with(
+			{
+				type: "image",
+			},
+			(value) => {
+				const metadata = getPartMetadata(value);
+
+				return toOpenAiImageInput(value.source, metadata?.detail);
+			},
+		)
+		.with(
+			{
+				type: "audio",
+			},
+			(value) => {
+				const metadata = getPartMetadata(value);
+				const filename =
+					metadata?.filename ??
+					(value.source.type === "url"
+						? inferFilenameFromUrl(value.source.value)
+						: undefined);
+
+				return toOpenAiFileInput(value.source, filename);
+			},
+		)
+		.with(
+			{
+				type: "video",
+			},
+			(value) => {
+				const metadata = getPartMetadata(value);
+				const filename =
+					metadata?.filename ??
+					(value.source.type === "url"
+						? inferFilenameFromUrl(value.source.value)
+						: undefined);
+
+				return toOpenAiFileInput(value.source, filename);
+			},
+		)
+		.with(
+			{
+				type: "document",
+			},
+			(value) => {
+				const metadata = getPartMetadata(value);
+				const filename =
+					metadata?.filename ??
+					(value.source.type === "url"
+						? inferFilenameFromUrl(value.source.value)
+						: undefined);
+
+				return toOpenAiFileInput(value.source, filename);
+			},
+		)
+		.with(
+			{
+				type: "binary",
+			},
+			(value) => toOpenAiBinaryInput(value),
+		)
+		.exhaustive();
+};
+
+const toOpenAiCurrentTurn = (body: RunAgentInput): AgentInputItem[] => {
 	const userMessage = getLastUserMessage(body);
 
-	const content =
-		typeof userMessage.content === "string"
-			? [
+	if (typeof userMessage.content === "string") {
+		return [
+			{
+				type: "message",
+				role: "user",
+				content: [
 					{
 						type: "input_text",
 						text: userMessage.content,
 					},
-				]
-			: userMessage.content.map(toOpenAiInputContent);
+				],
+			} satisfies AgentInputItem,
+		];
+	}
+
+	const content = normalizeUserContentParts(userMessage.content).map(toOpenAiInputContent);
 
 	return [
 		{
 			type: "message",
 			role: "user",
 			content,
-		} as OpenAiAgentInputItem,
+		} satisfies AgentInputItem,
 	];
 };
 
@@ -155,7 +366,27 @@ export const Route = createFileRoute("/api/assistant")({
 					userId: user.id,
 				});
 
-				const body = (await request.json()) as RunAgentInput;
+				const rawBody = await request.json();
+				const bodyResult = RunAgentInputSchema.safeParse(rawBody);
+
+				if (!bodyResult.success) {
+					logger.warn("Invalid AG-UI request body", {
+						userId: user.id,
+						issues: bodyResult.error.issues,
+					});
+
+					return Response.json(
+						{
+							error: "Invalid AG-UI request body",
+							issues: bodyResult.error.issues,
+						},
+						{
+							status: 400,
+						},
+					);
+				}
+
+				const body = bodyResult.data;
 				const currentTurn = toOpenAiCurrentTurn(body);
 
 				return Effect.gen(function* () {
@@ -175,20 +406,27 @@ export const Route = createFileRoute("/api/assistant")({
 						tracingDisabled: true,
 					});
 
-					const messages = yield* Effect.promise(async () => {
-						const items = await kysely
+					const historyRows = yield* Effect.promise(async () => {
+						return await kysely
 							.selectFrom("assistant_chat")
-							.select("payload")
+							.select([
+								"payload",
+								"sort",
+							])
 							.orderBy("sort", "asc")
 							.execute();
-
-						return items.map(({ payload }) => payload as AgentInputItem);
 					});
+
+					const initialHistory = historyRows.map(
+						({ payload }) => payload as AgentInputItem,
+					);
+					const initialHistoryLength = initialHistory.length;
+					let nextSort = historyRows.at(-1)?.sort ?? 0;
 
 					return yield* Effect.promise(async () => {
 						const session = new MemorySession({
 							sessionId: body.threadId,
-							initialItems: messages,
+							initialItems: initialHistory,
 							logger: {
 								namespace: body.threadId,
 								dontLogModelData: false,
@@ -205,50 +443,90 @@ export const Route = createFileRoute("/api/assistant")({
 							},
 						});
 
+						const appendHistory = async (history: AgentInputItem[]) => {
+							const appended = history.slice(initialHistoryLength);
+
+							if (appended.length === 0) {
+								return;
+							}
+
+							await kysely
+								.insertInto("assistant_chat")
+								.values(
+									appended.map((payload, index) => ({
+										id: genId(),
+										userId: user.id,
+										payload,
+										sort: nextSort + index + 1,
+									})),
+								)
+								.execute();
+
+							nextSort += appended.length;
+						};
+
 						async function* bridge(): AsyncGenerator<AGUIEvent> {
 							let completed: Promise<unknown> | undefined;
+							let completedAwaited = false;
+
 							let textMessageId: string | null = null;
 							let reasoningMessageId: string | null = null;
 
-							const closeReasoning = function* (): Generator<AGUIEvent> {
+							const closeReasoning = (): AGUIEvent[] => {
 								if (!reasoningMessageId) {
-									return;
+									return [];
 								}
 
-								yield {
-									type: EventType.REASONING_MESSAGE_END,
-									messageId: reasoningMessageId,
-								};
-
-								yield {
-									type: EventType.REASONING_END,
-									messageId: reasoningMessageId,
-								};
+								const events = [
+									emit({
+										type: EventType.REASONING_MESSAGE_END,
+										messageId: reasoningMessageId,
+									}),
+									emit({
+										type: EventType.REASONING_END,
+										messageId: reasoningMessageId,
+									}),
+								];
 
 								reasoningMessageId = null;
+
+								return events;
 							};
 
-							const closeText = function* (): Generator<AGUIEvent> {
+							const closeText = (): AGUIEvent[] => {
 								if (!textMessageId) {
+									return [];
+								}
+
+								const events = [
+									emit({
+										type: EventType.TEXT_MESSAGE_END,
+										messageId: textMessageId,
+									}),
+								];
+
+								textMessageId = null;
+
+								return events;
+							};
+
+							const awaitCompletedOnce = async () => {
+								if (!completed || completedAwaited) {
 									return;
 								}
 
-								yield {
-									type: EventType.TEXT_MESSAGE_END,
-									messageId: textMessageId,
-								};
-
-								textMessageId = null;
+								completedAwaited = true;
+								await completed;
 							};
 
 							try {
-								yield {
+								yield emit({
 									type: EventType.RUN_STARTED,
 									threadId: body.threadId,
 									runId: body.runId,
 									parentRunId: body.parentRunId,
 									input: body,
-								};
+								});
 
 								const stream = await runner.run(CoreAgent, currentTurn, {
 									session,
@@ -270,174 +548,188 @@ export const Route = createFileRoute("/api/assistant")({
 											if (!reasoningMessageId) {
 												reasoningMessageId = genId();
 
-												yield {
+												yield emit({
 													type: EventType.REASONING_START,
 													messageId: reasoningMessageId,
 													rawEvent: raw,
-												};
+												});
 
-												yield {
+												yield emit({
 													type: EventType.REASONING_MESSAGE_START,
 													messageId: reasoningMessageId,
 													role: "reasoning",
 													rawEvent: raw,
-												};
+												});
 											}
 
 											if (raw.delta) {
-												yield {
+												yield emit({
 													type: EventType.REASONING_MESSAGE_CONTENT,
 													messageId: reasoningMessageId,
 													delta: raw.delta,
 													rawEvent: raw,
-												};
+												});
 											}
 
 											continue;
 										}
 
 										if (raw.type === "response.output_text.delta") {
-											yield* closeReasoning();
+											for (const agEvent of closeReasoning()) {
+												yield agEvent;
+											}
 
 											if (!textMessageId) {
 												textMessageId = genId();
 
-												yield {
+												yield emit({
 													type: EventType.TEXT_MESSAGE_START,
 													messageId: textMessageId,
 													role: "assistant",
 													rawEvent: raw,
-												};
+												});
 											}
 
 											if (raw.delta) {
-												yield {
+												yield emit({
 													type: EventType.TEXT_MESSAGE_CONTENT,
 													messageId: textMessageId,
 													delta: raw.delta,
 													rawEvent: raw,
-												};
+												});
 											}
 
 											continue;
 										}
+
+										continue;
 									}
 
 									if (event.type === "run_item_stream_event") {
-										switch (event.name) {
-											case "tool_called": {
-												yield* closeReasoning();
+										const agEvents = match(event.name)
+											.with("tool_called", () => {
+												const parsed = ToolCalledItemSchema.safeParse(
+													event.item,
+												);
+												const item = parsed.success
+													? parsed.data
+													: undefined;
 
-												const item = event.item as {
-													id?: string;
-													name?: string;
-													arguments?: unknown;
-												};
+												const toolCallId = item?.id ?? genId();
+												const toolCallName = item?.name ?? "unknown_tool";
+												const args =
+													item?.arguments === undefined
+														? undefined
+														: serializeUnknown(item.arguments);
 
-												const toolCallId = item.id ?? genId();
-												const toolCallName = item.name ?? "unknown_tool";
-
-												yield {
-													type: EventType.TOOL_CALL_START,
-													toolCallId,
-													toolCallName,
-													parentMessageId: textMessageId ?? undefined,
-													rawEvent: event,
-												};
-
-												if (item.arguments !== undefined) {
-													const args =
-														typeof item.arguments === "string"
-															? item.arguments
-															: JSON.stringify(item.arguments);
-
-													if (args) {
-														yield {
-															type: EventType.TOOL_CALL_ARGS,
-															toolCallId,
-															delta: args,
-															rawEvent: event,
-														};
-													}
-												}
-
-												break;
-											}
-
-											case "tool_output": {
-												const item = event.item as {
-													id?: string;
-													toolCallId?: string;
-													output?: unknown;
-												};
+												return [
+													...closeReasoning(),
+													emit({
+														type: EventType.TOOL_CALL_START,
+														toolCallId,
+														toolCallName,
+														parentMessageId: textMessageId ?? undefined,
+														rawEvent: event,
+													}),
+													...(args
+														? [
+																emit({
+																	type: EventType.TOOL_CALL_ARGS,
+																	toolCallId,
+																	delta: args,
+																	rawEvent: event,
+																}),
+															]
+														: []),
+												];
+											})
+											.with("tool_output", () => {
+												const parsed = ToolOutputItemSchema.safeParse(
+													event.item,
+												);
+												const item = parsed.success
+													? parsed.data
+													: undefined;
 
 												const toolCallId =
-													item.id ?? item.toolCallId ?? genId();
+													item?.id ?? item?.toolCallId ?? genId();
 												const content =
-													typeof item.output === "string"
-														? item.output
-														: item.output == null
-															? ""
-															: JSON.stringify(item.output);
+													item?.output === undefined
+														? ""
+														: serializeUnknown(item.output);
 
-												yield {
-													type: EventType.TOOL_CALL_END,
-													toolCallId,
-													rawEvent: event,
-												};
+												return [
+													emit({
+														type: EventType.TOOL_CALL_END,
+														toolCallId,
+														rawEvent: event,
+													}),
+													emit({
+														type: EventType.TOOL_CALL_RESULT,
+														messageId: genId(),
+														toolCallId,
+														content,
+														role: "tool",
+														rawEvent: event,
+													}),
+												];
+											})
+											.with(
+												"tool_approval_requested",
+												"handoff_requested",
+												"handoff_occurred",
+												"tool_search_called",
+												"tool_search_output_created",
+												(name) => [
+													emit({
+														type: EventType.CUSTOM,
+														name,
+														value: event.item,
+														rawEvent: event,
+													}),
+												],
+											)
+											.with(
+												"message_output_created",
+												"reasoning_item_created",
+												() => [],
+											)
+											.otherwise(() => []);
 
-												yield {
-													type: EventType.TOOL_CALL_RESULT,
-													messageId: genId(),
-													toolCallId,
-													content,
-													role: "tool",
-													rawEvent: event,
-												};
-
-												break;
-											}
-
-											case "tool_approval_requested":
-											case "handoff_requested":
-											case "handoff_occurred":
-											case "tool_search_called":
-											case "tool_search_output_created": {
-												yield {
-													type: EventType.CUSTOM,
-													name: event.name,
-													value: event.item,
-													rawEvent: event,
-												} satisfies CustomEvent;
-												break;
-											}
-
-											case "message_output_created":
-											case "reasoning_item_created": {
-												break;
-											}
+										for (const agEvent of agEvents) {
+											yield agEvent;
 										}
+
+										continue;
 									}
 
 									if (event.type === "agent_updated_stream_event") {
-										yield {
+										yield emit({
 											type: EventType.CUSTOM,
 											name: "agent-updated",
 											value: event.agent,
 											rawEvent: event,
-										};
+										});
 									}
 								}
 
-								yield* closeReasoning();
-								yield* closeText();
+								await awaitCompletedOnce();
+								await appendHistory(stream.history);
 
-								yield {
+								for (const agEvent of closeReasoning()) {
+									yield agEvent;
+								}
+
+								for (const agEvent of closeText()) {
+									yield agEvent;
+								}
+
+								yield emit({
 									type: EventType.RUN_FINISHED,
 									threadId: body.threadId,
 									runId: body.runId,
 									result: stream.finalOutput,
-								};
+								});
 							} catch (error) {
 								const isAbort =
 									error instanceof DOMException && error.name === "AbortError";
@@ -447,21 +739,19 @@ export const Route = createFileRoute("/api/assistant")({
 									error,
 								});
 
-								yield {
+								yield emit({
 									type: EventType.RUN_ERROR,
 									message: error instanceof Error ? error.message : String(error),
 									code: isAbort ? "ABORT_ERR" : undefined,
-								};
+								});
 							} finally {
-								if (completed) {
-									try {
-										await completed;
-									} catch (error) {
-										logger.warn("Assistant stream completion failed", {
-											userId: user.id,
-											error,
-										});
-									}
+								try {
+									await awaitCompletedOnce();
+								} catch (error) {
+									logger.warn("Assistant stream completion failed", {
+										userId: user.id,
+										error,
+									});
 								}
 							}
 						}

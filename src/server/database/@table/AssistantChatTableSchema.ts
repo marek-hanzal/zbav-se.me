@@ -14,9 +14,6 @@ export const AssistantChatTableSchema = z
 		sort: z.int().meta({
 			description: "The order of this message in the chat; sorting authority",
 		}),
-		createdAt: z.coerce.date().meta({
-			description: "Creation timestamp",
-		}),
 	})
 	.meta({
 		id: "AssistantChatTable",
