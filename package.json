@@ -6,7 +6,6 @@
 	"scripts": {
 		"dev": "dotenv -c development -- portless zbav-se.me vite",
 		"build": "dotenv -c development -- vite build",
-		"agent": "dotenv -c development -- bun ./cli/agent.ts",
 		"e2e:build": "dotenv -c development -- vite build --mode production",
 		"e2e:start": "dotenv -c development -- portless --force zbav-se.me node .output/server/index.mjs",
 		"e2e": "dotenv -c development -- playwright test --project=mobile",

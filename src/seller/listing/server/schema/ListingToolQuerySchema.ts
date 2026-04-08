@@ -1,8 +1,10 @@
 import { z } from "zod";
-import { ListingToolFilterSchema } from "~/seller/listing/server/schema/ListingToolFilterSchema";
+import { ListingQuerySchema } from "./ListingQuerySchema";
+import { ListingToolFilterSchema } from "./ListingToolFilterSchema";
 
 export const ListingToolQuerySchema = z
 	.looseObject({
+		...ListingQuerySchema.shape,
 		filter: ListingToolFilterSchema.optional(),
 		where: ListingToolFilterSchema.optional(),
 	})
