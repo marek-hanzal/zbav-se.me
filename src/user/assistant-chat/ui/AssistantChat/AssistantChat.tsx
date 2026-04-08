@@ -32,7 +32,7 @@ export const AssistantChat: FC<AssistantChat.Props> = ({ ui, ...props }) => {
 		],
 	);
 
-	const isBusy = chat.status === "submitted" || chat.status === "streaming";
+	const isBusy = chat.isStreaming;
 
 	return (
 		<Container

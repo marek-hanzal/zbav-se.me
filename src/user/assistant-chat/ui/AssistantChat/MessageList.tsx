@@ -19,7 +19,7 @@ export const MessageList: FC<MessageList.Props> = ({ containerRef, chat, ui, ...
 		contentRef,
 	});
 
-	const isBusy = chat.status === "submitted" || chat.status === "streaming";
+	const isBusy = chat.isStreaming;
 
 	return (
 		<Container

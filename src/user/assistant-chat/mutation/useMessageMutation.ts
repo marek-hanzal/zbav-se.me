@@ -4,7 +4,6 @@ import { createEventSource } from "eventsource-client";
 import { useCallback, useEffect, useRef } from "react";
 import { genId } from "@/lib/common/gen-id";
 import type { AssistantChatMessageSchema } from "~/user/assistant/schema/message/AssistantChatMessageSchema";
-import { createAssistantChatMessage } from "~/user/assistant/service/createAssistantChatMessage";
 import { getResponseError } from "~/user/assistant/service/getResponseError";
 import { isAbortError } from "~/user/assistant/service/isAbortError";
 import { reduceAssistantChatStreamEvent } from "~/user/assistant/service/reduceAssistantChatStreamEvent";
@@ -15,7 +14,6 @@ export namespace useMessageMutation {
 	}
 
 	export interface Props {
-		setPendingStatus(status: "submitted" | "streaming"): void;
 		setMessages(
 			updater: (
 				messages: AssistantChatMessageSchema.Type[],
@@ -24,7 +22,7 @@ export namespace useMessageMutation {
 	}
 }
 
-export const useMessageMutation = ({ setPendingStatus, setMessages }: useMessageMutation.Props) => {
+export const useMessageMutation = ({ setMessages }: useMessageMutation.Props) => {
 	const { buildLocation } = useRouter();
 	const abortControllerRef = useRef<AbortController | null>(null);
 	const assistantLocation = buildLocation({
@@ -54,7 +52,6 @@ export const useMessageMutation = ({ setPendingStatus, setMessages }: useMessage
 			const controller = new AbortController();
 
 			abortControllerRef.current = controller;
-			setPendingStatus("submitted");
 			setMessages((messages) => {
 				return [
 					...messages,
@@ -69,10 +66,11 @@ export const useMessageMutation = ({ setPendingStatus, setMessages }: useMessage
 							},
 						],
 					},
-					createAssistantChatMessage({
+					{
 						id: assistantMessageId,
 						role: "assistant",
-					}),
+						parts: [],
+					} satisfies AssistantChatMessageSchema.Type,
 				];
 			});
 
@@ -140,8 +138,6 @@ export const useMessageMutation = ({ setPendingStatus, setMessages }: useMessage
 							if (!message.data) {
 								return;
 							}
-
-							setPendingStatus("streaming");
 
 							const event = JSON.parse(message.data);
 

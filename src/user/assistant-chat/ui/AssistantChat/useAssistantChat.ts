@@ -6,7 +6,6 @@ import { useMessageMutation } from "~/user/assistant-chat/mutation/useMessageMut
 import { withAssistantChatQuery } from "~/user/assistant-chat/query/withAssistantChatQuery";
 
 export namespace useAssistantChat {
-	export type Status = "idle" | "submitted" | "streaming" | "error";
 	export type UseResult = ReturnType<typeof useAssistantChat>;
 }
 
@@ -19,7 +18,6 @@ export const useAssistantChat = () => {
 			},
 		],
 	});
-	const [pendingStatus, setPendingStatus] = useState<"submitted" | "streaming">("submitted");
 	const persistedMessages = useMemo(() => {
 		return fromAgentInputItems({
 			items: assistantQuery.data.map((item) => item.payload as AgentInputItem),
@@ -30,31 +28,24 @@ export const useAssistantChat = () => {
 	const [messages, setMessages] = useState<AssistantChatMessageSchema.Type[]>(persistedMessages);
 
 	const messageMutation = useMessageMutation({
-		setPendingStatus,
 		setMessages,
 	});
-
-	const status: useAssistantChat.Status = messageMutation.isError
-		? "error"
-		: messageMutation.isPending
-			? pendingStatus
-			: "idle";
-	const error = messageMutation.error?.message ?? null;
+	const isStreaming = messageMutation.isPending;
 
 	useEffect(() => {
-		if (status === "submitted" || status === "streaming") {
+		if (isStreaming) {
 			return;
 		}
 
 		setMessages(persistedMessages);
 	}, [
+		isStreaming,
 		persistedMessages,
-		status,
 	]);
 
 	const sendMessage = useCallback(
 		async ({ text }: { text: string }) => {
-			if (status === "submitted" || status === "streaming") {
+			if (isStreaming) {
 				return;
 			}
 
@@ -63,14 +54,13 @@ export const useAssistantChat = () => {
 			});
 		},
 		[
+			isStreaming,
 			messageMutation,
-			status,
 		],
 	);
 
 	return {
-		status,
-		error,
+		isStreaming,
 		messages,
 		sendMessage,
 		stop: messageMutation.stop,
