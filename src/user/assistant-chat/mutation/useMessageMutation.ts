@@ -139,7 +139,7 @@ export const useMessageMutation = ({ setMessages }: useMessageMutation.Props) =>
 	});
 
 	return {
-		...mutation,
+		mutation,
 		stop,
 	};
 };

@@ -32,13 +32,13 @@ export const useAssistantChat = () => {
 	});
 
 	useEffect(() => {
-		if (mutation.isPending) {
+		if (mutation.mutation.isPending) {
 			return;
 		}
 
 		setMessages(persistedMessages);
 	}, [
-		mutation.isPending,
+		mutation.mutation.isPending,
 		persistedMessages,
 	]);
 

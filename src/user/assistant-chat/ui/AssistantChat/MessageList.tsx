@@ -19,7 +19,7 @@ export const MessageList: FC<MessageList.Props> = ({ containerRef, chat, ui, ...
 		contentRef,
 	});
 
-	const isBusy = chat.mutation.isPending;
+	const isBusy = chat.mutation.mutation.isPending;
 
 	return (
 		<Container

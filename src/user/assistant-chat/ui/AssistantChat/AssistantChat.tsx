@@ -23,11 +23,11 @@ export const AssistantChat: FC<AssistantChat.Props> = ({ ui, ...props }) => {
 
 	const submit = useCallback(
 		(value: string) => {
-			if (chat.mutation.isPending) {
+			if (chat.mutation.mutation.isPending) {
 				return;
 			}
 
-			void chat.mutation.mutateAsync({
+			void chat.mutation.mutation.mutateAsync({
 				text: value,
 			});
 		},
@@ -36,7 +36,7 @@ export const AssistantChat: FC<AssistantChat.Props> = ({ ui, ...props }) => {
 		],
 	);
 
-	const isBusy = chat.mutation.isPending;
+	const isBusy = chat.mutation.mutation.isPending;
 
 	return (
 		<Container
