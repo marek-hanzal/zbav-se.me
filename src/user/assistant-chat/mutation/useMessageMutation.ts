@@ -84,6 +84,7 @@ export const useMessageMutation = ({ setMessages }: useMessageMutation.Props) =>
 						"Content-Type": "application/json",
 					},
 					body: JSON.stringify(trimmed),
+                    
 					async fetch(url, init) {
 						const response = await fetch(url, {
 							...init,
