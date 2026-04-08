@@ -10,12 +10,6 @@ export namespace KyselySession {
 	}
 }
 
-/**
- * NOTE:
- * - assistant_chat is expected to have at least:
- *   id, userId, threadId, payload, sort
- * - payload stores AgentInputItem as JSON
- */
 export class KyselySession implements Session {
 	public constructor(private readonly props: KyselySession.Props) {
 		//
@@ -70,7 +64,6 @@ export class KyselySession implements Session {
 					items.map((payload) => ({
 						id: genId(),
 						userId: this.props.userId,
-						threadId: this.props.threadId,
 						payload: structuredClone(payload),
 						sort: ++nextSort,
 					})),
