@@ -84,12 +84,12 @@ export const useMessageMutation = ({ setMessages }: useMessageMutation.Props) =>
 						"Content-Type": "application/json",
 					},
 					body: JSON.stringify(trimmed),
-					fetch: async (url, init) => {
+					async fetch(url, init) {
 						const response = await fetch(url, {
 							...init,
 							signal: AbortSignal.any([
 								controller.signal,
-								init?.signal as AbortSignal,
+								init?.signal,
 							]),
 						});
 
