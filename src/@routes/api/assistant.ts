@@ -5,7 +5,6 @@ import {
 	type InputContent,
 	type InputContentSource,
 	type RunAgentInput,
-	type UserMessage,
 } from "@ag-ui/core";
 import {
 	type AgentInputItem,
@@ -27,21 +26,8 @@ import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { CoreAgent } from "~/user/assistant/CoreAgent";
 
-const RunAgentInputSchema: z.ZodType<RunAgentInput> = z.object({
-	threadId: z.string().min(1),
-	runId: z.string().min(1),
-	parentRunId: z.string().optional(),
-	state: z.unknown(),
-	messages: z.array(z.any()),
-	tools: z.array(z.any()),
-	context: z.array(z.any()),
-	forwardedProps: z.unknown(),
-});
-
-const UrlStringSchema = z.string().url();
-
 const PartMetadataSchema = z
-	.object({
+	.looseObject({
 		detail: z
 			.enum([
 				"low",
@@ -50,44 +36,182 @@ const PartMetadataSchema = z
 			])
 			.optional(),
 		filename: z.string().min(1).optional(),
+		transcript: z.string().min(1).optional(),
 	})
-	.passthrough();
+	.strip();
 
 const PartWithMetadataSchema = z
-	.object({
+	.looseObject({
 		metadata: PartMetadataSchema.optional(),
 	})
-	.passthrough();
+	.strip();
 
 const DeprecatedBinaryInputContentSchema = z
-	.object({
+	.looseObject({
 		type: z.literal("binary"),
 		mimeType: z.string().min(1),
 		id: z.string().min(1).optional(),
 		data: z.string().min(1).optional(),
-		url: z.string().url().optional(),
+		url: z.url().optional(),
 		filename: z.string().min(1).optional(),
 	})
-	.passthrough();
+	.strip();
 
 const ToolCalledItemSchema = z
-	.object({
-		id: z.string().optional(),
-		name: z.string().optional(),
+	.looseObject({
+		id: z.string().min(1).optional(),
+		callId: z.string().min(1).optional(),
+		call_id: z.string().min(1).optional(),
+		name: z.string().min(1).optional(),
+		namespace: z.string().min(1).optional(),
 		arguments: z.unknown().optional(),
+		status: z.string().min(1).optional(),
+		type: z.string().min(1).optional(),
 	})
-	.passthrough();
+	.strip();
 
 const ToolOutputItemSchema = z
-	.object({
-		id: z.string().optional(),
-		toolCallId: z.string().optional(),
+	.looseObject({
+		id: z.string().min(1).optional(),
+		callId: z.string().min(1).optional(),
+		call_id: z.string().min(1).optional(),
+		toolCallId: z.string().min(1).optional(),
+		name: z.string().min(1).optional(),
+		namespace: z.string().min(1).optional(),
 		output: z.unknown().optional(),
+		status: z.string().min(1).optional(),
+		type: z.string().min(1).optional(),
 	})
-	.passthrough();
+	.strip();
+
+const AgUiFunctionCallSchema = z
+	.looseObject({
+		name: z.string().min(1),
+		arguments: z.string(),
+	})
+	.strip();
+
+const AgUiToolCallSchema = z
+	.looseObject({
+		id: z.string().min(1),
+		type: z.literal("function"),
+		function: AgUiFunctionCallSchema,
+	})
+	.strip();
+
+const AgUiUserMessageSchema = z
+	.looseObject({
+		id: z.string().min(1).optional(),
+		role: z.literal("user"),
+		content: z.union([
+			z.string(),
+			z.array(z.unknown()),
+		]),
+		name: z.string().min(1).optional(),
+	})
+	.strip();
+
+const AgUiAssistantMessageSchema = z
+	.looseObject({
+		id: z.string().min(1).optional(),
+		role: z.literal("assistant"),
+		content: z.string().optional(),
+		name: z.string().min(1).optional(),
+		toolCalls: z.array(AgUiToolCallSchema).optional(),
+	})
+	.strip();
+
+const AgUiSystemMessageSchema = z
+	.looseObject({
+		id: z.string().min(1).optional(),
+		role: z.literal("system"),
+		content: z.string(),
+		name: z.string().min(1).optional(),
+	})
+	.strip();
+
+const AgUiDeveloperMessageSchema = z
+	.looseObject({
+		id: z.string().min(1).optional(),
+		role: z.literal("developer"),
+		content: z.string(),
+		name: z.string().min(1).optional(),
+	})
+	.strip();
+
+const AgUiToolMessageSchema = z
+	.looseObject({
+		id: z.string().min(1).optional(),
+		role: z.literal("tool"),
+		content: z.string(),
+		toolCallId: z.string().min(1),
+		error: z.string().min(1).optional(),
+	})
+	.strip();
 
 type DeprecatedBinaryInputContent = z.infer<typeof DeprecatedBinaryInputContentSchema>;
 type AnyInputContent = InputContent | DeprecatedBinaryInputContent;
+type ParsedToolCalledItem = z.infer<typeof ToolCalledItemSchema>;
+type ParsedToolOutputItem = z.infer<typeof ToolOutputItemSchema>;
+type ParsedAgUiToolCall = z.infer<typeof AgUiToolCallSchema>;
+type OpenAiUserContentPart =
+	| {
+			type: "input_text";
+			text: string;
+	  }
+	| {
+			type: "input_image";
+			image: string;
+			detail?: "low" | "high" | "auto";
+	  }
+	| {
+			type: "input_file";
+			file:
+				| string
+				| {
+						id: string;
+				  }
+				| {
+						url: string;
+				  };
+			filename?: string;
+	  }
+	| {
+			type: "audio";
+			audio:
+				| string
+				| {
+						id: string;
+				  };
+			format?: string;
+			transcript?: string;
+	  };
+
+type OpenAiConversationInput = {
+	initialHistory: AgentInputItem[];
+	currentTurn: AgentInputItem[];
+};
+
+let runnerInstance: Runner | undefined;
+
+const getRunner = () => {
+	if (runnerInstance) {
+		return runnerInstance;
+	}
+
+	const aiConfig = ServerAiSchema.parse(process.env);
+
+	runnerInstance = new Runner({
+		model: aiConfig.SERVER_AI_MODEL,
+		modelProvider: new OpenAIProvider({
+			baseURL: aiConfig.SERVER_AI_SERVER_URL,
+			apiKey: aiConfig.SERVER_AI_TOKEN,
+		}),
+		tracingDisabled: true,
+	});
+
+	return runnerInstance;
+};
 
 const emit = <T extends AGUIEvent>(event: T): T => {
 	const parsed = EventSchemas.safeParse(event);
@@ -112,16 +236,27 @@ const serializeUnknown = (value: unknown): string => {
 };
 
 const inferFilenameFromUrl = (url: string): string | undefined => {
-	const parsed = UrlStringSchema.safeParse(url);
+	const parsed = z.url().safeParse(url);
 
 	if (!parsed.success) {
 		return undefined;
 	}
 
-	const pathname = new URL(parsed.data).pathname;
-	const last = pathname.split("/").filter(Boolean).at(-1);
+	return new URL(parsed.data).pathname.split("/").filter(Boolean).at(-1);
+};
 
-	return last || undefined;
+const inferFormatFromMimeType = (mimeType?: string): string | undefined => {
+	if (!mimeType) {
+		return undefined;
+	}
+
+	const [, subtype] = mimeType.split("/");
+
+	if (!subtype) {
+		return undefined;
+	}
+
+	return subtype.split(";")[0]?.trim() || undefined;
 };
 
 const getPartMetadata = (part: AnyInputContent) => {
@@ -130,23 +265,7 @@ const getPartMetadata = (part: AnyInputContent) => {
 	return parsed.success ? parsed.data.metadata : undefined;
 };
 
-const getLastUserMessage = (body: RunAgentInput): UserMessage => {
-	for (let index = body.messages.length - 1; index >= 0; index--) {
-		const message = body.messages.at(index);
-
-		if (!message) {
-			continue;
-		}
-
-		if (message.role === "user") {
-			return message;
-		}
-	}
-
-	throw new Error("RunAgentInput.messages does not contain a user message.");
-};
-
-const normalizeUserContentParts = (content: UserMessage["content"]): AnyInputContent[] => {
+const normalizeUserContentParts = (content: string | AnyInputContent[]): AnyInputContent[] => {
 	if (typeof content === "string") {
 		return [];
 	}
@@ -158,22 +277,81 @@ const normalizeUserContentParts = (content: UserMessage["content"]): AnyInputCon
 			return binary.data;
 		}
 
-		return part;
+		return part as AnyInputContent;
 	});
 };
 
+const toOpenAiFileReference = (source: InputContentSource) => {
+	return match(source)
+		.with(
+			{
+				type: "url",
+			},
+			(value) => ({
+				url: value.value,
+			}),
+		)
+		.with(
+			{
+				type: "data",
+			},
+			(value) => value.value,
+		)
+		.exhaustive();
+};
+
 const toOpenAiFileInput = (source: InputContentSource, filename?: string) => {
+	return {
+		type: "input_file",
+		file: toOpenAiFileReference(source),
+		filename,
+	} satisfies OpenAiUserContentPart;
+};
+
+const toOpenAiImageInput = (
+	source: InputContentSource,
+	detail?: "low" | "high" | "auto",
+): OpenAiUserContentPart => {
+	return match(source)
+		.with(
+			{
+				type: "url",
+			},
+			(value) =>
+				({
+					type: "input_image",
+					image: value.value,
+					detail,
+				}) as const,
+		)
+		.with(
+			{
+				type: "data",
+			},
+			(value) =>
+				({
+					type: "input_image",
+					image: `data:${value.mimeType};base64,${value.value}`,
+					detail,
+				}) as const,
+		)
+		.exhaustive();
+};
+
+const toOpenAiAudioInput = (
+	source: InputContentSource,
+	transcript?: string,
+): OpenAiUserContentPart => {
 	return match(source)
 		.with(
 			{
 				type: "url",
 			},
 			(value) => ({
-				type: "input_file" as const,
-				file: {
-					url: value.value,
-				},
-				filename,
+				type: "audio",
+				audio: value.value,
+				format: inferFormatFromMimeType(value.mimeType),
+				transcript,
 			}),
 		)
 		.with(
@@ -181,46 +359,22 @@ const toOpenAiFileInput = (source: InputContentSource, filename?: string) => {
 				type: "data",
 			},
 			(value) => ({
-				type: "input_file" as const,
-				file: value.value,
-				filename,
+				type: "audio",
+				audio: `data:${value.mimeType};base64,${value.value}`,
+				format: inferFormatFromMimeType(value.mimeType),
+				transcript,
 			}),
 		)
 		.exhaustive();
 };
 
-const toOpenAiImageInput = (source: InputContentSource, detail?: "low" | "high" | "auto") => {
-	return match(source)
-		.with(
-			{
-				type: "url",
-			},
-			(value) => ({
-				type: "input_image" as const,
-				image: value.value,
-				detail,
-			}),
-		)
-		.with(
-			{
-				type: "data",
-			},
-			(value) => ({
-				type: "input_image" as const,
-				image: `data:${value.mimeType};base64,${value.value}`,
-				detail,
-			}),
-		)
-		.exhaustive();
-};
-
-const toOpenAiBinaryInput = (part: DeprecatedBinaryInputContent) => {
+const toOpenAiBinaryInput = (part: DeprecatedBinaryInputContent): OpenAiUserContentPart => {
 	const filename =
 		part.filename ?? (part.url ? inferFilenameFromUrl(part.url) : undefined) ?? part.id;
 
 	if (part.url) {
 		return {
-			type: "input_file" as const,
+			type: "input_file",
 			file: {
 				url: part.url,
 			},
@@ -230,7 +384,7 @@ const toOpenAiBinaryInput = (part: DeprecatedBinaryInputContent) => {
 
 	if (part.id) {
 		return {
-			type: "input_file" as const,
+			type: "input_file",
 			file: {
 				id: part.id,
 			},
@@ -240,7 +394,7 @@ const toOpenAiBinaryInput = (part: DeprecatedBinaryInputContent) => {
 
 	if (part.data) {
 		return {
-			type: "input_file" as const,
+			type: "input_file",
 			file: part.data,
 			filename,
 		};
@@ -249,14 +403,14 @@ const toOpenAiBinaryInput = (part: DeprecatedBinaryInputContent) => {
 	throw new Error("Binary input does not contain url, id, or data.");
 };
 
-const toOpenAiInputContent = (part: AnyInputContent) => {
+const toOpenAiInputContent = (part: AnyInputContent): OpenAiUserContentPart => {
 	return match(part)
 		.with(
 			{
 				type: "text",
 			},
 			(value) => ({
-				type: "input_text" as const,
+				type: "input_text",
 				text: value.text,
 			}),
 		)
@@ -276,13 +430,8 @@ const toOpenAiInputContent = (part: AnyInputContent) => {
 			},
 			(value) => {
 				const metadata = getPartMetadata(value);
-				const filename =
-					metadata?.filename ??
-					(value.source.type === "url"
-						? inferFilenameFromUrl(value.source.value)
-						: undefined);
 
-				return toOpenAiFileInput(value.source, filename);
+				return toOpenAiAudioInput(value.source, metadata?.transcript);
 			},
 		)
 		.with(
@@ -324,33 +473,184 @@ const toOpenAiInputContent = (part: AnyInputContent) => {
 		.exhaustive();
 };
 
-const toOpenAiCurrentTurn = (body: RunAgentInput): AgentInputItem[] => {
-	const userMessage = getLastUserMessage(body);
-
-	if (typeof userMessage.content === "string") {
-		return [
-			{
-				type: "message",
-				role: "user",
-				content: [
-					{
-						type: "input_text",
-						text: userMessage.content,
-					},
-				],
-			} satisfies AgentInputItem,
-		];
+const toOpenAiUserMessage = (message: z.infer<typeof AgUiUserMessageSchema>): AgentInputItem => {
+	if (typeof message.content === "string") {
+		return {
+			type: "message",
+			id: message.id,
+			role: "user",
+			content: message.content,
+		} satisfies AgentInputItem;
 	}
 
-	const content = normalizeUserContentParts(userMessage.content).map(toOpenAiInputContent);
+	const content = normalizeUserContentParts(message.content).map(toOpenAiInputContent);
 
-	return [
-		{
-			type: "message",
-			role: "user",
-			content,
-		} satisfies AgentInputItem,
-	];
+	return {
+		type: "message",
+		id: message.id,
+		role: "user",
+		content,
+	} satisfies AgentInputItem;
+};
+
+const toOpenAiAssistantMessage = (
+	message: z.infer<typeof AgUiAssistantMessageSchema>,
+): AgentInputItem | undefined => {
+	if (!message.content) {
+		return undefined;
+	}
+
+	return {
+		type: "message",
+		id: message.id,
+		role: "assistant",
+		status: "completed",
+		content: [
+			{
+				type: "output_text",
+				text: message.content,
+			},
+		],
+	} satisfies AgentInputItem;
+};
+
+const toOpenAiFunctionCallItem = (toolCall: ParsedAgUiToolCall): AgentInputItem => {
+	return {
+		type: "function_call",
+		id: toolCall.id,
+		callId: toolCall.id,
+		name: toolCall.function.name,
+		arguments: toolCall.function.arguments,
+		status: "completed",
+	} satisfies AgentInputItem;
+};
+
+const toOpenAiFunctionCallResultItem = (
+	message: z.infer<typeof AgUiToolMessageSchema>,
+	toolCallName: string,
+): AgentInputItem => {
+	return {
+		type: "function_call_result",
+		id: message.id,
+		callId: message.toolCallId,
+		name: toolCallName,
+		output:
+			message.error === undefined
+				? message.content
+				: serializeUnknown({
+						error: message.error,
+						content: message.content,
+					}),
+		status: "completed",
+	} satisfies AgentInputItem;
+};
+
+const splitConversationAtLastUserMessage = (messages: unknown[]) => {
+	for (let index = messages.length - 1; index >= 0; index--) {
+		const parsed = AgUiUserMessageSchema.safeParse(messages.at(index));
+
+		if (parsed.success) {
+			return {
+				history: messages.slice(0, index),
+				currentTurn: parsed.data,
+			};
+		}
+	}
+
+	throw new Error("RunAgentInput.messages does not contain a user message.");
+};
+
+const toOpenAiConversationInput = (body: RunAgentInput): OpenAiConversationInput => {
+	const { history, currentTurn } = splitConversationAtLastUserMessage(body.messages);
+	const toolCallNames = new Map<string, string>();
+	const initialHistory: AgentInputItem[] = [];
+
+	for (const message of history) {
+		const userMessage = AgUiUserMessageSchema.safeParse(message);
+
+		if (userMessage.success) {
+			initialHistory.push(toOpenAiUserMessage(userMessage.data));
+			continue;
+		}
+
+		const assistantMessage = AgUiAssistantMessageSchema.safeParse(message);
+
+		if (assistantMessage.success) {
+			const assistantItem = toOpenAiAssistantMessage(assistantMessage.data);
+
+			if (assistantItem) {
+				initialHistory.push(assistantItem);
+			}
+
+			for (const toolCall of assistantMessage.data.toolCalls ?? []) {
+				toolCallNames.set(toolCall.id, toolCall.function.name);
+				initialHistory.push(toOpenAiFunctionCallItem(toolCall));
+			}
+
+			continue;
+		}
+
+		const systemMessage = AgUiSystemMessageSchema.safeParse(message);
+
+		if (systemMessage.success) {
+			initialHistory.push({
+				id: systemMessage.data.id,
+				role: "system",
+				content: systemMessage.data.content,
+			} satisfies AgentInputItem);
+			continue;
+		}
+
+		const developerMessage = AgUiDeveloperMessageSchema.safeParse(message);
+
+		if (developerMessage.success) {
+			initialHistory.push({
+				id: developerMessage.data.id,
+				role: "developer",
+				content: developerMessage.data.content,
+			} satisfies AgentInputItem);
+			continue;
+		}
+
+		const toolMessage = AgUiToolMessageSchema.safeParse(message);
+
+		if (toolMessage.success) {
+			initialHistory.push(
+				toOpenAiFunctionCallResultItem(
+					toolMessage.data,
+					toolCallNames.get(toolMessage.data.toolCallId) ?? "unknown_tool",
+				),
+			);
+		}
+	}
+
+	return {
+		initialHistory,
+		currentTurn: [
+			toOpenAiUserMessage(currentTurn),
+		],
+	};
+};
+
+const getRawEventItemId = (rawEvent: unknown): string | undefined => {
+	if (typeof rawEvent !== "object" || rawEvent === null) {
+		return undefined;
+	}
+
+	const record = rawEvent as Record<string, unknown>;
+	const value = record.item_id;
+
+	return typeof value === "string" && value.length > 0 ? value : undefined;
+};
+
+const resolveToolCallId = (
+	item: ParsedToolCalledItem | ParsedToolOutputItem | undefined,
+): string | undefined => {
+	if (!item) {
+		return undefined;
+	}
+
+	return item.callId ?? item.call_id ?? item.toolCallId ?? item.id;
 };
 
 export const Route = createFileRoute("/api/assistant")({
@@ -386,7 +686,29 @@ export const Route = createFileRoute("/api/assistant")({
 				}
 
 				const body = bodyResult.data;
-				const currentTurn = toOpenAiCurrentTurn(body);
+
+				let conversationInput: OpenAiConversationInput;
+
+				try {
+					conversationInput = toOpenAiConversationInput(body);
+				} catch (error) {
+					logger.warn("Invalid AG-UI message history", {
+						userId: user.id,
+						error,
+					});
+
+					return Response.json(
+						{
+							error:
+								error instanceof Error
+									? error.message
+									: "Invalid AG-UI message history",
+						},
+						{
+							status: 400,
+						},
+					);
+				}
 
 				return Effect.gen(function* () {
 					const dateContext = yield* DateContextFx;
@@ -394,38 +716,21 @@ export const Route = createFileRoute("/api/assistant")({
 
 					void dateContext;
 
-					const aiConfig = ServerAiSchema.parse(process.env);
-
-					const runner = new Runner({
-						model: aiConfig.SERVER_AI_MODEL,
-						modelProvider: new OpenAIProvider({
-							baseURL: aiConfig.SERVER_AI_SERVER_URL,
-							apiKey: aiConfig.SERVER_AI_TOKEN,
-						}),
-						tracingDisabled: true,
-					});
-
-					const historyRows = yield* Effect.promise(async () => {
+					const runner = getRunner();
+					const initialHistoryLength = conversationInput.initialHistory.length;
+					const maxSortRow = yield* Effect.promise(async () => {
 						return await kysely
 							.selectFrom("assistant_chat")
-							.select([
-								"payload",
-								"sort",
-							])
-							.orderBy("sort", "asc")
-							.execute();
+							.select((eb) => eb.fn.max<number>("sort").as("maxSort"))
+							.where("userId", "=", user.id)
+							.executeTakeFirst();
 					});
-
-					const initialHistory = historyRows.map(
-						({ payload }) => payload as AgentInputItem,
-					);
-					const initialHistoryLength = initialHistory.length;
-					let nextSort = historyRows.at(-1)?.sort ?? 0;
+					let nextSort = maxSortRow?.maxSort ?? 0;
 
 					return yield* Effect.promise(async () => {
 						const session = new MemorySession({
 							sessionId: body.threadId,
-							initialItems: initialHistory,
+							initialItems: conversationInput.initialHistory,
 							logger: {
 								namespace: body.threadId,
 								dontLogModelData: false,
@@ -470,6 +775,30 @@ export const Route = createFileRoute("/api/assistant")({
 
 							let textMessageId: string | null = null;
 							let reasoningMessageId: string | null = null;
+							const toolCallAliases = new Map<string, string>();
+
+							const bindToolCallAlias = (
+								alias: string | undefined,
+								canonical: string,
+							) => {
+								if (!alias) {
+									return;
+								}
+
+								toolCallAliases.set(alias, canonical);
+							};
+
+							const getCanonicalToolCallId = (
+								item: ParsedToolCalledItem | ParsedToolOutputItem | undefined,
+							) => {
+								const direct = resolveToolCallId(item);
+
+								if (!direct) {
+									return undefined;
+								}
+
+								return toolCallAliases.get(direct) ?? direct;
+							};
 
 							const closeReasoning = (): AGUIEvent[] => {
 								if (!reasoningMessageId) {
@@ -509,6 +838,45 @@ export const Route = createFileRoute("/api/assistant")({
 								return events;
 							};
 
+							const startReasoningIfNeeded = (rawEvent: unknown) => {
+								if (reasoningMessageId) {
+									return [] as AGUIEvent[];
+								}
+
+								reasoningMessageId = getRawEventItemId(rawEvent) ?? genId();
+
+								return [
+									emit({
+										type: EventType.REASONING_START,
+										messageId: reasoningMessageId,
+										rawEvent,
+									}),
+									emit({
+										type: EventType.REASONING_MESSAGE_START,
+										messageId: reasoningMessageId,
+										role: "reasoning",
+										rawEvent,
+									}),
+								];
+							};
+
+							const startTextIfNeeded = (rawEvent: unknown) => {
+								if (textMessageId) {
+									return [] as AGUIEvent[];
+								}
+
+								textMessageId = getRawEventItemId(rawEvent) ?? genId();
+
+								return [
+									emit({
+										type: EventType.TEXT_MESSAGE_START,
+										messageId: textMessageId,
+										role: "assistant",
+										rawEvent,
+									}),
+								];
+							};
+
 							const awaitCompletedOnce = async () => {
 								if (!completed || completedAwaited) {
 									return;
@@ -527,15 +895,19 @@ export const Route = createFileRoute("/api/assistant")({
 									input: body,
 								});
 
-								const stream = await runner.run(CoreAgent, currentTurn, {
-									session,
-									sessionInputCallback: (history, newItems) => [
-										...history,
-										...newItems,
-									],
-									stream: true,
-									signal: request.signal,
-								});
+								const stream = await runner.run(
+									CoreAgent,
+									conversationInput.currentTurn,
+									{
+										session,
+										sessionInputCallback: (history, newItems) => [
+											...history,
+											...newItems,
+										],
+										stream: true,
+										signal: request.signal,
+									},
+								);
 
 								completed = stream.completed;
 
@@ -543,28 +915,18 @@ export const Route = createFileRoute("/api/assistant")({
 									if (isOpenAIResponsesRawModelStreamEvent(event)) {
 										const raw = event.data.event;
 
-										if (raw.type === "response.reasoning_summary_text.delta") {
-											if (!reasoningMessageId) {
-												reasoningMessageId = genId();
-
-												yield emit({
-													type: EventType.REASONING_START,
-													messageId: reasoningMessageId,
-													rawEvent: raw,
-												});
-
-												yield emit({
-													type: EventType.REASONING_MESSAGE_START,
-													messageId: reasoningMessageId,
-													role: "reasoning",
-													rawEvent: raw,
-												});
+										if (
+											raw.type === "response.reasoning_summary_text.delta" ||
+											raw.type === "response.reasoning_text.delta"
+										) {
+											for (const agEvent of startReasoningIfNeeded(raw)) {
+												yield agEvent;
 											}
 
 											if (raw.delta) {
 												yield emit({
 													type: EventType.REASONING_MESSAGE_CONTENT,
-													messageId: reasoningMessageId,
+													messageId: reasoningMessageId!,
 													delta: raw.delta,
 													rawEvent: raw,
 												});
@@ -573,26 +935,22 @@ export const Route = createFileRoute("/api/assistant")({
 											continue;
 										}
 
-										if (raw.type === "response.output_text.delta") {
+										if (
+											raw.type === "response.output_text.delta" ||
+											raw.type === "response.refusal.delta"
+										) {
 											for (const agEvent of closeReasoning()) {
 												yield agEvent;
 											}
 
-											if (!textMessageId) {
-												textMessageId = genId();
-
-												yield emit({
-													type: EventType.TEXT_MESSAGE_START,
-													messageId: textMessageId,
-													role: "assistant",
-													rawEvent: raw,
-												});
+											for (const agEvent of startTextIfNeeded(raw)) {
+												yield agEvent;
 											}
 
 											if (raw.delta) {
 												yield emit({
 													type: EventType.TEXT_MESSAGE_CONTENT,
-													messageId: textMessageId,
+													messageId: textMessageId!,
 													delta: raw.delta,
 													rawEvent: raw,
 												});
@@ -614,7 +972,12 @@ export const Route = createFileRoute("/api/assistant")({
 													? parsed.data
 													: undefined;
 
-												const toolCallId = item?.id ?? genId();
+												const toolCallId =
+													getCanonicalToolCallId(item) ?? genId();
+												bindToolCallAlias(item?.id, toolCallId);
+												bindToolCallAlias(item?.callId, toolCallId);
+												bindToolCallAlias(item?.call_id, toolCallId);
+
 												const toolCallName = item?.name ?? "unknown_tool";
 												const args =
 													item?.arguments === undefined
@@ -651,7 +1014,12 @@ export const Route = createFileRoute("/api/assistant")({
 													: undefined;
 
 												const toolCallId =
-													item?.id ?? item?.toolCallId ?? genId();
+													getCanonicalToolCallId(item) ?? genId();
+												bindToolCallAlias(item?.id, toolCallId);
+												bindToolCallAlias(item?.callId, toolCallId);
+												bindToolCallAlias(item?.call_id, toolCallId);
+												bindToolCallAlias(item?.toolCallId, toolCallId);
+
 												const content =
 													item?.output === undefined
 														? ""
@@ -665,7 +1033,7 @@ export const Route = createFileRoute("/api/assistant")({
 													}),
 													emit({
 														type: EventType.TOOL_CALL_RESULT,
-														messageId: genId(),
+														messageId: item?.id ?? genId(),
 														toolCallId,
 														content,
 														role: "tool",
@@ -766,14 +1134,10 @@ export const Route = createFileRoute("/api/assistant")({
 										);
 									}
 
-									controller.enqueue(encoder.encode("data: [DONE]\n\n"));
 									controller.close();
 								} catch (error) {
 									controller.error(error);
 								}
-							},
-							cancel() {
-								request.signal.throwIfAborted?.();
 							},
 						});
 
