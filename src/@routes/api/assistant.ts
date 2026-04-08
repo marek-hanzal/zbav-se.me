@@ -1,8 +1,6 @@
 import type { AgentInputItem } from "@openai/agents-core";
 import { createFileRoute } from "@tanstack/react-router";
-import { Effect } from "effect";
 import { z } from "zod";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { CoreAgent } from "~/user/assistant/CoreAgent";
 import { withRunnerMiddleware } from "~/user/assistant/middleware/withRunnerMiddleware";
@@ -23,7 +21,7 @@ export const Route = createFileRoute("/api/assistant")({
 			withRunnerMiddleware,
 		],
 		handlers: {
-			async POST({ request, context: { user, database, rootLogger, runner, session } }) {
+			async POST({ request, context: { user, rootLogger, runner, session } }) {
 				const logger = rootLogger.getChild("/api/assistant");
 
 				const input = AssistantRequestSchema.safeParse(await request.json());
@@ -40,8 +38,8 @@ export const Route = createFileRoute("/api/assistant")({
 					);
 				}
 
-				return Effect.gen(function* () {
-					const responseStream = new ReadableStream<Uint8Array>({
+				return new Response(
+					new ReadableStream({
 						async start(controller) {
 							try {
 								const stream = await runner.run(CoreAgent, input.data, {
@@ -83,17 +81,16 @@ export const Route = createFileRoute("/api/assistant")({
 						async cancel() {
 							// request.signal should already propagate disconnect/abort
 						},
-					});
-
-					return new Response(responseStream, {
+					}),
+					{
 						headers: {
 							"Content-Type": "text/event-stream; charset=utf-8",
 							"Cache-Control": "no-cache, no-transform",
 							Connection: "keep-alive",
 							"X-Accel-Buffering": "no",
 						},
-					});
-				}).pipe(withKyselyFx(database), Effect.runPromise);
+					},
+				);
 			},
 		},
 	},
