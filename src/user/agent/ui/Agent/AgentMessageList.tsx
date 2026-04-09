@@ -1,19 +1,22 @@
+import type { AgentInputItem } from "@openai/agents-core";
 import { type FC, type RefObject, useRef } from "react";
 import { useAutoScroll } from "@/lib/client/auto-scroll";
 import { Container } from "@/lib/client/container";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import type { useAgent } from "~/user/agent/hook/useAgent";
+import { AgentHistoryItem } from "./AgentHistoryItem";
+import { AgentLiveRun } from "./AgentLiveRun";
 
 export namespace AgentMessageList {
 	export interface Props extends Container.Props {
 		containerRef: RefObject<HTMLDivElement | null>;
-		chat: useAgent.UseResult;
+		items: AgentInputItem[];
+		liveRunIds: string[];
 	}
 }
 
 export const AgentMessageList: FC<AgentMessageList.Props> = ({
 	containerRef,
-	chat,
+	items,
+	liveRunIds,
 	ui,
 	...props
 }) => {
@@ -23,10 +26,9 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 		contentRef,
 	});
 
-	const isBusy = chat.mutation.isPending;
-
 	return (
 		<Container
+			data-ui={"AgentMessageList"}
 			ref={contentRef}
 			ui={{
 				flow: "vertical",
@@ -36,7 +38,7 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 			}}
 			{...props}
 		>
-			{/* {chat.historyItems.map((item, index) => {
+			{items.map((item, index) => {
 				return (
 					<AgentHistoryItem
 						key={`history-${item.id ?? index}`}
@@ -45,25 +47,14 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 				);
 			})}
 
-			{chat.runs.map((run) => {
+			{liveRunIds.map((runId) => {
 				return (
-					<AgentRun
-						key={run.id}
-						run={run}
+					<AgentLiveRun
+						key={`live-${runId}`}
+						runId={runId}
 					/>
 				);
-			})} */}
-
-			{isBusy ? (
-				<SpinnerContainer
-					type={"icon"}
-					iconProps={{
-						ui: {
-							text: "md",
-						},
-					}}
-				/>
-			) : null}
+			})}
 		</Container>
 	);
 };

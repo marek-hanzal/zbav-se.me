@@ -1,40 +1,46 @@
-import type { AgentInputItem } from "@openai/agents-core";
 import type { FC } from "react";
 import { match, P } from "ts-pattern";
 import type { Container } from "@/lib/client/container";
+import { withAgentLiveItemQuery } from "~/user/agent/query/withAgentLiveItemQuery";
 import { AgentAssistantMessageItem } from "./AgentAssistantMessageItem";
+import { AgentPendingAssistantItem } from "./AgentPendingAssistantItem";
 import { AgentRawItem } from "./AgentRawItem";
 import { AgentReasoningItem } from "./AgentReasoningItem";
 import { AgentToolItem } from "./AgentToolItem";
-import { AgentUserMessageItem } from "./AgentUserMessageItem";
 
-export namespace AgentHistoryItem {
+export namespace AgentLiveItem {
 	export interface Props extends Container.Props {
-		item: AgentInputItem;
+		itemId: string;
+		runId: string;
 	}
 }
 
-export const AgentHistoryItem: FC<AgentHistoryItem.Props> = ({ item, ui, ...props }) => {
+export const AgentLiveItem: FC<AgentLiveItem.Props> = ({ itemId, runId, ui, ...props }) => {
+	const { data: item } = withAgentLiveItemQuery.useQuery({
+		runId,
+		itemId,
+	});
+
+	if (!item) {
+		return null;
+	}
+
 	return match(item)
 		.with(
 			{
-				role: "user",
-			},
-			(item) => {
-				return (
-					<AgentUserMessageItem
-						item={item}
-						ui={ui}
-						{...props}
-					/>
-				);
-			},
-		)
-		.with(
-			{
+				type: "message",
 				role: "assistant",
 			},
 			(item) => {
+				if (item.status === "in_progress" && item.content.length === 0) {
+					return (
+						<AgentPendingAssistantItem
+							ui={ui}
+							{...props}
+						/>
+					);
+				}
+
 				return (
 					<AgentAssistantMessageItem
 						item={item}
@@ -43,12 +49,6 @@ export const AgentHistoryItem: FC<AgentHistoryItem.Props> = ({ item, ui, ...prop
 					/>
 				);
 			},
-		)
-		.with(
-			{
-				role: "system",
-			},
-			() => null,
 		)
 		.with(
 			{
@@ -68,7 +68,7 @@ export const AgentHistoryItem: FC<AgentHistoryItem.Props> = ({ item, ui, ...prop
 			{
 				type: P.union(
 					"function_call",
-					"function_call_result",
+					"function_call_output",
 					"tool_search_call",
 					"tool_search_output",
 				),

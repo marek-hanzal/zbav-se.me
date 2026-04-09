@@ -14,6 +14,7 @@ import { SendMessageIcon } from "../icon";
 
 export namespace ChatInput {
 	export interface Props extends Omit<Container.Props, "onSubmit" | "onChange"> {
+		cancel?: ReactNode;
 		onSubmit(value: string): void;
 		placeholder: string;
 		maxRows?: number;
@@ -23,6 +24,7 @@ export namespace ChatInput {
 }
 
 export const ChatInput: FC<ChatInput.Props> = ({
+	cancel,
 	onSubmit,
 	placeholder,
 	maxRows = 6,
@@ -122,32 +124,36 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				})}
 			/>
 
-			<Button
-				data-action={"send chat text message"}
-				iconEnabled={SendMessageIcon}
-				iconProps={{
-					ui: {
-						text: "2xl",
-					},
-				}}
-				disabled={loading || message.length === 0}
-				loading={loading}
-				onClick={() => {
-					onSubmit(message);
-					setMessage("");
-				}}
-				ui={{
-					justify: "center",
-					items: "center",
-					tone: "brand",
-					theme: "light",
-					square: "default",
-					background: undefined,
-					border: false,
-					shadow: false,
-					color: "lead",
-				}}
-			/>
+			{loading && cancel ? (
+				cancel
+			) : (
+				<Button
+					data-action={"send chat text message"}
+					iconEnabled={SendMessageIcon}
+					iconProps={{
+						ui: {
+							text: "2xl",
+						},
+					}}
+					disabled={loading || message.length === 0}
+					loading={loading}
+					onClick={() => {
+						onSubmit(message);
+						setMessage("");
+					}}
+					ui={{
+						justify: "center",
+						items: "center",
+						tone: "brand",
+						theme: "light",
+						square: "default",
+						background: undefined,
+						border: false,
+						shadow: false,
+						color: "lead",
+					}}
+				/>
+			)}
 		</Container>
 	);
 };

@@ -3,6 +3,19 @@ import { withQuery } from "@/lib/client/query";
 import { agentStreamItemsFn } from "~/user/agent/fn/agentStreamItemsFn";
 import type { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStreamQuerySchema";
 
+export const agentStreamItemsQueryData = {
+	sort: [
+		{
+			field: "sort",
+			order: "asc",
+		},
+	],
+	cursor: {
+		page: 0,
+		size: 128,
+	},
+} satisfies AgentStreamQuerySchema.Type;
+
 /**
  * This query provides direct access to AgentInput messages, no more processing is necessary here.
  */
