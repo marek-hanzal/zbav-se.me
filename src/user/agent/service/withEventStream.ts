@@ -1,5 +1,6 @@
 import type { RunStreamEvent } from "@openai/agents-core";
 import { match } from "ts-pattern";
+import { withAgentUpdatedStreamEvent } from "~/user/agent/service/withEventStream/withAgentUpdatedStreamEvent";
 import { withRawModelStreamEvent } from "~/user/agent/service/withEventStream/withRawModelStreamEvent";
 import { withRunItemStreamEvent } from "~/user/agent/service/withEventStream/withRunItemStreamEvent";
 
@@ -36,9 +37,9 @@ export const withEventStream = (_props: withEventStream.Props) => {
 				{
 					type: "agent_updated_stream_event",
 				},
-				(event) => {
-					return console.log("Agent Updated Event", event);
-				},
+				withAgentUpdatedStreamEvent({
+					enabled: true,
+				}),
 			)
 			.exhaustive();
 	};
