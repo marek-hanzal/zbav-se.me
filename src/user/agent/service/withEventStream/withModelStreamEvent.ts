@@ -101,9 +101,6 @@ export const withModelStreamEvent = ({ eventBus }: withModelStreamEvent.Props) =
 							type: "response.reasoning_text.delta",
 							delta: P.string,
 							item_id: P.string,
-							part: {
-								type: "reasoning_text",
-							},
 						},
 						providerData: P.any,
 					},
@@ -112,6 +109,26 @@ export const withModelStreamEvent = ({ eventBus }: withModelStreamEvent.Props) =
 					eventBus.emit("model:response.reasoning.delta", {
 						id: event.data.event.item_id,
 						text: event.data.event.delta,
+						event,
+					});
+				},
+			)
+			.with(
+				{
+					data: {
+						type: "model",
+						event: {
+							type: "response.reasoning_text.done",
+							text: P.string,
+							item_id: P.string,
+						},
+						providerData: P.any,
+					},
+				},
+				(event) => {
+					eventBus.emit("model:response.reasoning.done", {
+						id: event.data.event.item_id,
+						text: event.data.event.text,
 						event,
 					});
 				},

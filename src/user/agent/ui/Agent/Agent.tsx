@@ -28,7 +28,29 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 				console.log("[response:start]", event);
 			});
 			eventBus.on("response:done", (event) => {
-				console.log("\t\t - [Event] onDone", event);
+				console.log("[response:done] onDone", event);
+			});
+		}
+
+		{
+			eventBus.on("model:response.created", (event) => {
+				console.log("\t[model:response.created]", event);
+			});
+			eventBus.on("model:response.progress", (event) => {
+				console.log("\t[model:response.progress]", event);
+			});
+
+			eventBus.on("model:response.reasoning.item.added", (event) => {
+				console.log("\t[model:response.reasoning.item.added]", event);
+			});
+			eventBus.on("model:response.reasoning.content.added", (event) => {
+				console.log("\t\t[model:response.reasoning.content.added]", event);
+			});
+			eventBus.on("model:response.reasoning.delta", (event) => {
+				console.log("\t\t\t[model:response.reasoning.delta]", event.text, event.id, event);
+			});
+			eventBus.on("model:response.reasoning.done", (event) => {
+				console.log("\t\t\t\t[model:response.reasoning.done]", event.text, event.id, event);
 			});
 		}
 

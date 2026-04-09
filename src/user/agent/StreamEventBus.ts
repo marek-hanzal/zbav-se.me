@@ -27,16 +27,22 @@ export namespace StreamEventBus {
 		"model:response.progress": WithRunRawModelStreamEvent<{
 			id: string;
 		}>;
+		//
 		"model:response.reasoning.item.added": WithRunRawModelStreamEvent<{
-			id: string;
-		}>;
-		"model:response.reasoning.part.added": WithRunRawModelStreamEvent<{
 			id: string;
 		}>;
 		"model:response.reasoning.content.added": WithRunRawModelStreamEvent<{
 			id: string;
 		}>;
+		"model:response.reasoning.content.done": WithRunRawModelStreamEvent<{
+			id: string;
+		}>;
+		//
 		"model:response.reasoning.delta": WithRunRawModelStreamEvent<{
+			id: string;
+			text: string;
+		}>;
+		"model:response.reasoning.done": WithRunRawModelStreamEvent<{
 			id: string;
 			text: string;
 		}>;
