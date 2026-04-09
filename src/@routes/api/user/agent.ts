@@ -1,9 +1,9 @@
-import type { StreamEvent } from "@openai/agents-core";
 import { createFileRoute } from "@tanstack/react-router";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { CoreAgent } from "~/user/agent/CoreAgent";
 import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { withRunnerSessionMiddleware } from "~/user/agent/server/middleware/withRunnerSessionMiddleware";
+import type { AgentEvent } from "~/user/agent/type/AgentEvent";
 import { AssistantRequestSchema } from "~/user/assistant/schema/AssistantRequestSchema";
 
 const encoder = new TextEncoder();
@@ -55,7 +55,7 @@ export const Route = createFileRoute("/api/user/agent")({
 										) {
 											controller.enqueue(
 												encoder.encode(
-													`data: ${JSON.stringify(event.data.event as StreamEvent)}\n\n`,
+													`data: ${JSON.stringify(event.data.event as AgentEvent)}\n\n`,
 												),
 											);
 										}
