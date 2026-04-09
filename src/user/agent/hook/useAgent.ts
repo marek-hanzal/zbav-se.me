@@ -1,7 +1,8 @@
 import type { RunStreamEvent } from "@openai/agents-core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
-import { EventSourceParserStream } from "eventsource-parser/stream";
+import axios from "axios";
+import { createParser } from "eventsource-parser";
 import { useEffect, useMemo, useRef } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
 
@@ -20,7 +21,6 @@ export namespace useAgent {
 export const useAgent = ({ _suspense }: useAgent.Props) => {
 	const router = useRouter();
 	const abortControllerRef = useRef<AbortController | null>(null);
-	//
 	const link = useMemo(() => {
 		return router.buildLocation({
 			to: "/api/user/agent",
@@ -44,58 +44,52 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 			}
 
 			abortControllerRef.current = new AbortController();
-
-			try {
-				const response = await fetch(link.href, {
-					method: "POST",
+			const response = await axios
+				.create({
+					adapter: "fetch",
+				})
+				.post<ReadableStream<Uint8Array>>(link.href, JSON.stringify(trimmed), {
 					headers: {
 						Accept: "text/event-stream",
 						"Content-Type": "application/json",
 					},
-					body: JSON.stringify(trimmed),
 					signal: abortControllerRef.current.signal,
+					responseType: "stream",
 				});
 
-				if (!response.ok) {
-                    throw new Error(
-						await getResponseError({
-							response,
-						}),
-					);
-				}
-
-				if (!response.body) {
-					throw new Error("Assistant stream is missing response body");
-				}
-
-				const stream = response.body
-					.pipeThrough(new TextDecoderStream())
-					.pipeThrough(new EventSourceParserStream());
-
-				const reader = stream.getReader();
-
-				for (;;) {
-					const { done, value } = await reader.read();
-
-					if (done) {
-						break;
+			const parser = createParser({
+				onEvent(event) {
+					if (!event.data) {
+						return;
 					}
 
-					if (!value.data) {
-						continue;
-					}
+					const streamEvent = JSON.parse(event.data) as RunStreamEvent;
+					void streamEvent;
+				},
+			});
 
-					const event = JSON.parse(value.data) as RunStreamEvent;
+			const reader = response.data.getReader();
+			const decoder = new TextDecoder();
 
-					//
+			for (;;) {
+				const { done, value } = await reader.read();
+
+				if (done) {
+					break;
 				}
-			} catch (error) {
-				if (error instanceof Error && error.name === "AbortError") {
-					return;
-				}
 
-				throw error;
+				parser.feed(
+					decoder.decode(value, {
+						stream: true,
+					}),
+				);
 			}
+
+			parser.feed(decoder.decode());
+
+			parser.reset({
+				consume: true,
+			});
 		},
 		onSettled() {
 			abortControllerRef.current = null;
@@ -104,5 +98,9 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 
 	return {
 		mutation,
-	};
+		cancel() {
+			abortControllerRef.current?.abort();
+			abortControllerRef.current = null;
+		},
+	} as const;
 };
