@@ -1,5 +1,4 @@
 import { type FC, useCallback, useRef } from "react";
-import { match } from "ts-pattern";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
 import { EmptyState } from "@/lib/client/empty-state";
@@ -21,20 +20,6 @@ export namespace Agent {
 export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 	const chat = useAgent({
 		_suspense: "I know",
-		onStream(event) {
-			match(event)
-				.with(
-					{
-						type: "response.created",
-					},
-					(event) => {
-						console.log("Response Created", event);
-					},
-				)
-				.otherwise((event) => {
-					console.log("[Unhandled event]", event);
-				});
-		},
 	});
 	const containerRef = useRef<HTMLDivElement | null>(null);
 

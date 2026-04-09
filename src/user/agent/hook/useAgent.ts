@@ -2,7 +2,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import axios from "axios";
 import { createParser } from "eventsource-parser";
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { match } from "ts-pattern";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { AgentEvent } from "~/user/agent/type/AgentEvent";
 
@@ -12,13 +13,13 @@ export namespace useAgent {
 	}
 
 	export interface Props extends MarkSuspense.Props {
-		onStream(event: AgentEvent): void;
+		//
 	}
 
 	export type UseResult = ReturnType<typeof useAgent>;
 }
 
-export const useAgent = ({ _suspense, onStream }: useAgent.Props) => {
+export const useAgent = ({ _suspense }: useAgent.Props) => {
 	const router = useRouter();
 	const abortControllerRef = useRef<AbortController | null>(null);
 	const link = useMemo(() => {
@@ -33,6 +34,21 @@ export const useAgent = ({ _suspense, onStream }: useAgent.Props) => {
 		return () => {
 			abortControllerRef.current?.abort();
 		};
+	}, []);
+
+	const onStream = useCallback((event: AgentEvent) => {
+		match(event)
+			.with(
+				{
+					type: "response.created",
+				},
+				(event) => {
+					console.log("Response Created", event);
+				},
+			)
+			.otherwise((event) => {
+				console.log("[Unhandled event]", event);
+			});
 	}, []);
 
 	const mutation = useMutation<void, Error, useAgent.Variables>({
