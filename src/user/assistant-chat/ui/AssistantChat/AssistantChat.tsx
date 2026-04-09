@@ -23,20 +23,20 @@ export const AssistantChat: FC<AssistantChat.Props> = ({ ui, ...props }) => {
 
 	const submit = useCallback(
 		(value: string) => {
-			if (chat.mutation.mutation.isPending) {
+			if (chat.mutation.isPending) {
 				return;
 			}
 
-			void chat.mutation.mutation.mutateAsync({
+			void chat.mutation.mutateAsync({
 				text: value,
 			});
 		},
 		[
-			chat.mutation,
+			chat,
 		],
 	);
 
-	const isBusy = chat.mutation.mutation.isPending;
+	const isBusy = chat.mutation.isPending;
 
 	return (
 		<Container
@@ -68,7 +68,7 @@ export const AssistantChat: FC<AssistantChat.Props> = ({ ui, ...props }) => {
 						check={[
 							{
 								check() {
-									return !chat.messages.length;
+									return chat.historyItems.length === 0 && chat.runs.length === 0;
 								},
 								render() {
 									return (
@@ -125,7 +125,7 @@ export const AssistantChat: FC<AssistantChat.Props> = ({ ui, ...props }) => {
 								<Button
 									data-action={"stop assistant stream"}
 									iconEnabled={CancelIcon}
-									onClick={chat.mutation.stop}
+									onClick={chat.stop}
 									ui={{
 										tone: "danger",
 										theme: "light",
