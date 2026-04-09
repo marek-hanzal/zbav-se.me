@@ -1,13 +1,16 @@
 import type { RunAgentUpdatedStreamEvent } from "@openai/agents-core";
+import type { StreamEventBus } from "~/user/agent/StreamEventBus";
 
 export namespace withAgentUpdatedStreamEvent {
 	export interface Props {
-		enabled: true;
+		eventBus: StreamEventBus;
 	}
 }
 
-export const withAgentUpdatedStreamEvent = (_props: withAgentUpdatedStreamEvent.Props) => {
-	return (event: RunAgentUpdatedStreamEvent) => {
-		console.log("withAgentUpdatedStreamEvent", event);
+export const withAgentUpdatedStreamEvent = ({ eventBus }: withAgentUpdatedStreamEvent.Props) => {
+	return <const TEvent extends RunAgentUpdatedStreamEvent>(event: TEvent) => {
+		eventBus.emit("onUnhandled", {
+			event,
+		});
 	};
 };

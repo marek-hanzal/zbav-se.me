@@ -1,13 +1,16 @@
 import type { RunItemStreamEvent } from "@openai/agents-core";
+import type { StreamEventBus } from "~/user/agent/StreamEventBus";
 
 export namespace withRunItemStreamEvent {
 	export interface Props {
-		enabled: true;
+		eventBus: StreamEventBus;
 	}
 }
 
-export const withRunItemStreamEvent = (_props: withRunItemStreamEvent.Props) => {
-	return (event: RunItemStreamEvent) => {
-		console.log("Run Item event", event);
+export const withRunItemStreamEvent = ({ eventBus }: withRunItemStreamEvent.Props) => {
+	return <const TEvent extends RunItemStreamEvent>(event: TEvent) => {
+		eventBus.emit("onUnhandled", {
+			event,
+		});
 	};
 };
