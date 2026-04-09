@@ -55,15 +55,18 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 		}
 
 		{
-			eventBus.on("unhandled:agent-update-stream-event", ({ event }) => {
-				console.log("[Unhandled Agent Update Stream Event]", event);
+			// eventBus.on("unhandled:agent-update-stream-event", ({ event }) => {
+			// 	console.log("[Unhandled Agent Update Stream Event]", event);
+			// });
+			// eventBus.on("unhandled:raw-model-stream-event", ({ event }) => {
+			// 	console.log("[Unhandled Raw Model Stream Event]", event);
+			// });
+			eventBus.on("unhandled:raw-model-stream-event.event", ({ event: { data } }) => {
+				console.log("[Unhandled Raw Model Stream Event - Event]", (data as any).event);
 			});
-			eventBus.on("unhandled:raw-model-stream-event", ({ event }) => {
-				console.log("[Unhandled Raw Model Stream Event]", event);
-			});
-			eventBus.on("unhandled:run-item-stream-event", ({ event }) => {
-				console.log("[Unhandled Run Item Stream Event]", event);
-			});
+			// eventBus.on("unhandled:run-item-stream-event", ({ event }) => {
+			// 	console.log("[Unhandled Run Item Stream Event]", event);
+			// });
 		}
 
 		return eventBus;

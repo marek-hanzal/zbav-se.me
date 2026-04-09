@@ -1,9 +1,9 @@
 import type { RunStreamEvent } from "@openai/agents-core";
 import { match } from "ts-pattern";
 import type { StreamEventBus } from "~/user/agent/StreamEventBus";
-import { withAgentUpdatedStreamEvent } from "~/user/agent/service/withEventStream/withAgentUpdatedStreamEvent";
-import { withRawModelStreamEvent } from "~/user/agent/service/withEventStream/withRawModelStreamEvent";
-import { withRunItemStreamEvent } from "~/user/agent/service/withEventStream/withRunItemStreamEvent";
+import { emitAgentUpdatedStreamEvent } from "./withEventStream/emitAgentUpdatedStreamEvent";
+import { emitRawModelStreamEvent } from "./withEventStream/emitRawModelStreamEvent";
+import { emitRunItemStreamEvent } from "./withEventStream/withRunItemStreamEvent";
 
 export namespace withEventStream {
 	export interface Props {
@@ -22,7 +22,7 @@ export const withEventStream = ({ eventBus }: withEventStream.Props) => {
 				{
 					type: "raw_model_stream_event",
 				},
-				withRawModelStreamEvent({
+				emitRawModelStreamEvent({
 					eventBus,
 				}),
 			)
@@ -30,7 +30,7 @@ export const withEventStream = ({ eventBus }: withEventStream.Props) => {
 				{
 					type: "run_item_stream_event",
 				},
-				withRunItemStreamEvent({
+				emitRunItemStreamEvent({
 					eventBus,
 				}),
 			)
@@ -38,7 +38,7 @@ export const withEventStream = ({ eventBus }: withEventStream.Props) => {
 				{
 					type: "agent_updated_stream_event",
 				},
-				withAgentUpdatedStreamEvent({
+				emitAgentUpdatedStreamEvent({
 					eventBus,
 				}),
 			)

@@ -55,6 +55,9 @@ export namespace StreamEventBus {
 		"unhandled:raw-model-stream-event": {
 			event: RunRawModelStreamEvent;
 		};
+		"unhandled:raw-model-stream-event.event": {
+			event: RunRawModelStreamEvent;
+		};
 		"unhandled:run-item-stream-event": {
 			event: RunItemStreamEvent;
 		};
