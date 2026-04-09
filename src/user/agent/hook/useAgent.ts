@@ -43,7 +43,20 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 				return;
 			}
 
+			const parser = createParser({
+				onEvent(event) {
+					if (!event.data) {
+						return;
+					}
+
+					const item = JSON.parse(event.data) as RunStreamEvent;
+
+					console.log("Event", item);
+				},
+			});
+
 			abortControllerRef.current = new AbortController();
+
 			const response = await axios
 				.create({
 					adapter: "fetch",
@@ -56,18 +69,6 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 					signal: abortControllerRef.current.signal,
 					responseType: "stream",
 				});
-
-			const parser = createParser({
-				onEvent(event) {
-					if (!event.data) {
-						return;
-					}
-
-					const item = JSON.parse(event.data) as RunStreamEvent;
-
-					console.log("Event", item);
-				},
-			});
 
 			const reader = response.data.getReader();
 			const decoder = new TextDecoder();
@@ -91,6 +92,9 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 			parser.reset({
 				consume: true,
 			});
+		},
+		onError(e) {
+			console.error(e);
 		},
 		onSettled() {
 			abortControllerRef.current = null;
