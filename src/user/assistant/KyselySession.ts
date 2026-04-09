@@ -7,6 +7,7 @@ export namespace KyselySession {
 	export interface Props {
 		kysely: Kysely<Database>;
 		userId: string;
+		threadId?: string;
 	}
 }
 
@@ -16,17 +17,19 @@ export class KyselySession implements Session {
 	}
 
 	public async getSessionId(): Promise<string> {
-		return this.props.userId;
+		return this.props.threadId ?? this.props.userId;
 	}
 
 	public async getItems(limit?: number): Promise<AgentInputItem[]> {
+		const threadId = this.props.threadId ?? this.props.userId;
 		const recent = this.props.kysely
-			.selectFrom("assistant_chat")
+			.selectFrom("agent_stream")
 			.select([
 				"payload",
 				"sort",
 			])
 			.where("userId", "=", this.props.userId)
+			.where("threadId", "=", threadId)
 			.orderBy("sort", "desc");
 
 		const rows = await this.props.kysely
@@ -45,21 +48,24 @@ export class KyselySession implements Session {
 			return;
 		}
 
+		const threadId = this.props.threadId ?? this.props.userId;
 		await this.props.kysely.transaction().execute(async (trx) => {
 			const current = await trx
-				.selectFrom("assistant_chat")
+				.selectFrom("agent_stream")
 				.select(({ fn }) => fn.max<number>("sort").as("maxSort"))
 				.where("userId", "=", this.props.userId)
+				.where("threadId", "=", threadId)
 				.executeTakeFirst();
 
 			let nextSort = current?.maxSort ?? 0;
 
 			await trx
-				.insertInto("assistant_chat")
+				.insertInto("agent_stream")
 				.values(
 					items.map((payload) => ({
 						id: genId(),
 						userId: this.props.userId,
+						threadId,
 						payload,
 						sort: ++nextSort,
 					})),
@@ -69,14 +75,16 @@ export class KyselySession implements Session {
 	}
 
 	public async popItem(): Promise<AgentInputItem | undefined> {
+		const threadId = this.props.threadId ?? this.props.userId;
 		return await this.props.kysely.transaction().execute(async (trx) => {
 			const row = await trx
-				.selectFrom("assistant_chat")
+				.selectFrom("agent_stream")
 				.select([
 					"id",
 					(eb) => eb.ref("payload").$castTo<AgentInputItem>().as("payload"),
 				])
 				.where("userId", "=", this.props.userId)
+				.where("threadId", "=", threadId)
 				.orderBy("sort", "desc")
 				.executeTakeFirst();
 
@@ -84,16 +92,22 @@ export class KyselySession implements Session {
 				return undefined;
 			}
 
-			await trx.deleteFrom("assistant_chat").where("id", "=", row.id).execute();
+			await trx
+				.deleteFrom("agent_stream")
+				.where("id", "=", row.id)
+				.where("threadId", "=", threadId)
+				.execute();
 
 			return row.payload;
 		});
 	}
 
 	public async clearSession(): Promise<void> {
+		const threadId = this.props.threadId ?? this.props.userId;
 		await this.props.kysely
-			.deleteFrom("assistant_chat")
+			.deleteFrom("agent_stream")
 			.where("userId", "=", this.props.userId)
+			.where("threadId", "=", threadId)
 			.execute();
 	}
 }

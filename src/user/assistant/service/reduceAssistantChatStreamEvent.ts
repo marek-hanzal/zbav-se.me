@@ -1,3 +1,4 @@
+import { resolveToolSearchCallId } from "@openai/agents-core/utils";
 import { match, P } from "ts-pattern";
 import { genId } from "@/lib/common/gen-id";
 import type { AssistantChatMessageSchema } from "~/user/assistant/schema/message/AssistantChatMessageSchema";
@@ -7,7 +8,6 @@ import { createAssistantChatMessage } from "./createAssistantChatMessage";
 import { getAssistantChatToolCallStatus } from "./getAssistantChatToolCallStatus";
 import { getAssistantChatToolOutputText } from "./getAssistantChatToolOutputText";
 import { getRunItemRawItem } from "./getRunItemRawItem";
-import { getToolSearchCallId } from "./getToolSearchCallId";
 import { toAssistantChatDisplayText } from "./toAssistantChatDisplayText";
 import { upsertAssistantChatMessage } from "./upsertAssistantChatMessage";
 import { upsertAssistantChatToolCall } from "./upsertAssistantChatToolCall";
@@ -244,10 +244,14 @@ export const reduceAssistantChatStreamEvent = ({
 									message: upsertAssistantChatToolCall({
 										message: assistantMessage,
 										patch: {
-											id: getToolSearchCallId({
-												item: rawItem,
-												index: 0,
-											}),
+											id: resolveToolSearchCallId(
+												rawItem as Parameters<
+													typeof resolveToolSearchCallId
+												>[0],
+												() => {
+													return "tool-search-0";
+												},
+											),
 											toolName: "tool_search",
 											status: "in_progress",
 											input: toAssistantChatDisplayText({
@@ -326,10 +330,14 @@ export const reduceAssistantChatStreamEvent = ({
 									message: upsertAssistantChatToolCall({
 										message: assistantMessage,
 										patch: {
-											id: getToolSearchCallId({
-												item: rawItem,
-												index: 0,
-											}),
+											id: resolveToolSearchCallId(
+												rawItem as Parameters<
+													typeof resolveToolSearchCallId
+												>[0],
+												() => {
+													return "tool-search-0";
+												},
+											),
 											toolName: "tool_search",
 											status: "completed",
 											output: toAssistantChatDisplayText({

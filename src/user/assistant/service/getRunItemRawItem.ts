@@ -12,24 +12,7 @@ export const getRunItemRawItem = ({ item }: getRunItemRawItem.Props): unknown =>
 			{
 				rawItem: P.any,
 			},
-			(item) => item.rawItem,
-		)
-		.with(
-			{
-				toJSON: P.instanceOf(Function),
-			},
-			(item) => {
-				const serialized = item.toJSON();
-
-				return match(serialized)
-					.with(
-						{
-							rawItem: P.any,
-						},
-						(serialized) => serialized.rawItem,
-					)
-					.otherwise(() => undefined);
-			},
+			({ rawItem }) => rawItem,
 		)
 		.otherwise(() => undefined);
 };

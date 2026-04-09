@@ -22,7 +22,7 @@ import { GitHubMigration } from "~/server/@migrations/0020-github";
 import { ThumbMigration } from "~/server/@migrations/0021-thumb";
 import { UserEventMigration } from "~/server/@migrations/0022-user-event";
 import { InboxMigration } from "~/server/@migrations/0023-inbox";
-import { AssistantChatMigration } from "~/server/@migrations/0024-assistant-chat";
+import { AgentStreamMigration } from "~/server/@migrations/0024-agent-stream";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -49,5 +49,5 @@ export const migrations = {
 	"0021-thumb": ThumbMigration,
 	"0022-user-event": UserEventMigration,
 	"0023-inbox": InboxMigration,
-	"0024-assistant-chat": AssistantChatMigration,
+	"0024-agent-stream": AgentStreamMigration,
 } as const;

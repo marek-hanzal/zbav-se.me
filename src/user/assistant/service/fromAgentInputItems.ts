@@ -1,4 +1,5 @@
 import type { AgentInputItem } from "@openai/agents-core";
+import { resolveToolSearchCallId } from "@openai/agents-core/utils";
 import { match } from "ts-pattern";
 import type { AssistantChatMessageSchema } from "~/user/assistant/schema/message/AssistantChatMessageSchema";
 import type { AssistantChatPartTypeEnumSchema } from "~/user/assistant/schema/part/AssistantChatPartTypeEnumSchema";
@@ -6,7 +7,6 @@ import { ensureAssistantMessage } from "./ensureAssistantMessage";
 import { getAssistantTextParts } from "./getAssistantTextParts";
 import { getReasoningText } from "./getReasoningText";
 import { getSystemMessageText } from "./getSystemMessageText";
-import { getToolSearchCallId } from "./getToolSearchCallId";
 import { getUserMessageText } from "./getUserMessageText";
 import type { MutableAssistantMessage } from "./MutableAssistantMessage";
 import { normalizeAssistantChatStatus } from "./normalizeAssistantChatStatus";
@@ -173,9 +173,8 @@ export const fromAgentInputItems = ({
 						messages,
 						id: `assistant-search-${index}`,
 					});
-					const toolCallId = getToolSearchCallId({
-						item,
-						index,
+					const toolCallId = resolveToolSearchCallId(item, () => {
+						return `tool-search-${index}`;
 					});
 
 					message.parts = upsertAssistantChatToolCall({
@@ -202,9 +201,8 @@ export const fromAgentInputItems = ({
 						messages,
 						id: `assistant-search-output-${index}`,
 					});
-					const toolCallId = getToolSearchCallId({
-						item,
-						index,
+					const toolCallId = resolveToolSearchCallId(item, () => {
+						return `tool-search-${index}`;
 					});
 
 					message.parts = upsertAssistantChatToolCall({
