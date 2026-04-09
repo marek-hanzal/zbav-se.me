@@ -1,3 +1,4 @@
+import type { StreamEvent } from "@openai/agents-core";
 import { createFileRoute } from "@tanstack/react-router";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { CoreAgent } from "~/user/agent/CoreAgent";
@@ -44,9 +45,20 @@ export const Route = createFileRoute("/api/user/agent")({
 
 								try {
 									for await (const event of stream) {
-										controller.enqueue(
-											encoder.encode(`data: ${JSON.stringify(event)}\n\n`),
-										);
+										if (
+											/**
+											 * Expose only raw-model events
+											 */
+											event.type === "raw_model_stream_event" &&
+											event.data.type === "model" &&
+											event.data.event
+										) {
+											controller.enqueue(
+												encoder.encode(
+													`data: ${JSON.stringify(event.data.event as StreamEvent)}\n\n`,
+												),
+											);
+										}
 									}
 
 									await stream.completed;

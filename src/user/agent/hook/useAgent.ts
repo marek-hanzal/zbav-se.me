@@ -1,10 +1,10 @@
-import type { RunStreamEvent } from "@openai/agents-core";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import axios from "axios";
 import { createParser } from "eventsource-parser";
 import { useEffect, useMemo, useRef } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
+import type { AgentEvent } from "~/user/agent/type/AgentEvent";
 
 export namespace useAgent {
 	export interface Variables {
@@ -12,7 +12,7 @@ export namespace useAgent {
 	}
 
 	export interface Props extends MarkSuspense.Props {
-		onStream(event: RunStreamEvent): void;
+		onStream(event: AgentEvent): void;
 	}
 
 	export type UseResult = ReturnType<typeof useAgent>;

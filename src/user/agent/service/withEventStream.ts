@@ -1,9 +1,6 @@
-import type { RunStreamEvent } from "@openai/agents-core";
 import { match } from "ts-pattern";
 import type { StreamEventBus } from "~/user/agent/StreamEventBus";
-import { emitAgentUpdatedStreamEvent } from "./withEventStream/emitAgentUpdatedStreamEvent";
-import { emitRawModelStreamEvent } from "./withEventStream/emitRawModelStreamEvent";
-import { emitRunItemStreamEvent } from "./withEventStream/withRunItemStreamEvent";
+import type { AgentEvent } from "~/user/agent/type/AgentEvent";
 
 export namespace withEventStream {
 	export interface Props {
@@ -16,39 +13,15 @@ export namespace withEventStream {
  * It self-manages internal state, so it's safe to use between agentic loops.
  */
 export const withEventStream = ({ eventBus }: withEventStream.Props) => {
-	return (event: RunStreamEvent) => {
-		return match(event)
-			.with(
-				{
-					type: "raw_model_stream_event",
-				},
-				emitRawModelStreamEvent({
-					eventBus,
-				}),
-			)
-			.with(
-				{
-					type: "run_item_stream_event",
-				},
-				emitRunItemStreamEvent({
-					eventBus,
-				}),
-			)
-			.with(
-				{
-					type: "agent_updated_stream_event",
-				},
-				emitAgentUpdatedStreamEvent({
-					eventBus,
-				}),
-			)
-			.otherwise((event) => {
-				eventBus.emit("unhandled:unknown", {
-					event,
-				});
-				eventBus.emit("unhandled:catch-all", {
-					event,
-				});
-			});
+	return (event: AgentEvent) => {
+		return (
+			match(event)
+				//
+				.otherwise((event) => {
+					eventBus.emit("unhandled", {
+						event,
+					});
+				})
+		);
 	};
 };
