@@ -17,7 +17,7 @@ export const AgentStreamTableSchema = z
 		 */
 		payload: z.record(z.string(), z.any()).meta({
 			description: "Payload for the agent stream",
-		}) as unknown as z.ZodType<AgentInputItem[]>,
+		}) as unknown as z.ZodType<AgentInputItem>,
 		sort: z.int().meta({
 			description: "The order of this message in the stream; sorting authority",
 		}),

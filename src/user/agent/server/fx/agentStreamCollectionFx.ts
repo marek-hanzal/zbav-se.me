@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withAgentStreamCollectionSelectFx } from "~/user/agent/server/db/withAgentStreamCollectionSelectFx";
-import { withAgentStreamQueryBuilderFx } from "~/user/agent/server/db/withAgentStreamQueryBuilderFx";
-import type { AgentStreamFilterSchema } from "~/user/agent/server/schema/AgentStreamFilterSchema";
-import type { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStreamQuerySchema";
+import { withAgentStreamCollectionSelectFx } from "../db/withAgentStreamCollectionSelectFx";
+import { withAgentStreamQueryBuilderFx } from "../db/withAgentStreamQueryBuilderFx";
+import type { AgentStreamFilterSchema } from "../schema/AgentStreamFilterSchema";
+import type { AgentStreamQuerySchema } from "../schema/AgentStreamQuerySchema";
 
 export namespace agentStreamCollectionFx {
 	export interface Props extends AgentStreamQuerySchema.Type {

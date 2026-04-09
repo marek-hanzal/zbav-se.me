@@ -12,7 +12,7 @@ import { agentStreamCollectionFx } from "~/user/agent/server/fx/agentStreamColle
 import { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStreamQuerySchema";
 import { AgentStreamSchema } from "~/user/agent/server/schema/AgentStreamSchema";
 
-export const agentStreamCollectionFn = createServerFn()
+export const agentStreamItemsFn = createServerFn()
 	.middleware([
 		withLogMiddleware,
 		withDatabaseMiddleware,
@@ -22,16 +22,11 @@ export const agentStreamCollectionFn = createServerFn()
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild(name);
 		logger.trace(name, data);
-		const where = {
-			...data.where,
-			threadId: data.where?.threadId ?? user.id,
-		};
 
 		return zodGuardFx({
 			schema: z.array(AgentStreamSchema),
 			dataFx: agentStreamCollectionFx({
 				...data,
-				where,
 				scope: {
 					userId: user.id,
 				},
@@ -47,6 +42,12 @@ export const agentStreamCollectionFn = createServerFn()
 					});
 					throw new Error("ZodError");
 				},
+			}),
+			Effect.map((items) => {
+				/**
+				 * Because TSS is quite strict about serializable output, we've to lift payload type back to Record
+				 */
+				return items.map(({ payload }) => payload as Record<string, any>);
 			}),
 			Effect.runPromise,
 		);
