@@ -42,6 +42,13 @@ export const withEventStream = ({ eventBus }: withEventStream.Props) => {
 					eventBus,
 				}),
 			)
-			.exhaustive();
+			.otherwise((event) => {
+				eventBus.emit("unhandled:unknown", {
+					event,
+				});
+				eventBus.emit("unhandled:catch-all", {
+					event,
+				});
+			});
 	};
 };

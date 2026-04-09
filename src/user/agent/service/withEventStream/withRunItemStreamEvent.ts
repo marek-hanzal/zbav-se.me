@@ -8,8 +8,11 @@ export namespace withRunItemStreamEvent {
 }
 
 export const withRunItemStreamEvent = ({ eventBus }: withRunItemStreamEvent.Props) => {
-	return <const TEvent extends RunItemStreamEvent>(event: TEvent) => {
-		eventBus.emit("_unhandled", {
+	return (event: RunItemStreamEvent) => {
+		eventBus.emit("unhandled:run-item-stream-event", {
+			event,
+		});
+		eventBus.emit("unhandled:catch-all", {
 			event,
 		});
 	};

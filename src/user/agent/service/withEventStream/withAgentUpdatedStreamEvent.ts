@@ -8,8 +8,11 @@ export namespace withAgentUpdatedStreamEvent {
 }
 
 export const withAgentUpdatedStreamEvent = ({ eventBus }: withAgentUpdatedStreamEvent.Props) => {
-	return <const TEvent extends RunAgentUpdatedStreamEvent>(event: TEvent) => {
-		eventBus.emit("_unhandled", {
+	return (event: RunAgentUpdatedStreamEvent) => {
+		eventBus.emit("unhandled:agent-update-stream-event", {
+			event,
+		});
+		eventBus.emit("unhandled:catch-all", {
 			event,
 		});
 	};

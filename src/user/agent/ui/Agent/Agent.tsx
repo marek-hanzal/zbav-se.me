@@ -23,9 +23,9 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 	const eventBus = useMemo(() => {
 		const eventBus = StreamEventBus();
 
-		// eventBus.on("onStart", ({ event }) => {
-		// 	console.log("\t\t - [Event] onStart", event);
-		// });
+		eventBus.on("response:start", ({ event }) => {
+			console.log("\t\t - [response:start]", event);
+		});
 		// eventBus.on("onDone", ({ event }) => {
 		// 	console.log("\t\t - [Event] onDone", event);
 		// });
@@ -35,7 +35,7 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 		// });
 		//
 		eventBus.on("_unhandled", ({ event }) => {
-			console.log("\t\t - [Unhandled Event]", event);
+			console.log("[Unhandled Event]", event);
 		});
 
 		return eventBus;

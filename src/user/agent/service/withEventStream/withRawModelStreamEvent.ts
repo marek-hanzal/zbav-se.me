@@ -1,5 +1,5 @@
 import type { RunRawModelStreamEvent } from "@openai/agents-core";
-import { match } from "ts-pattern";
+import { match, P } from "ts-pattern";
 import type { StreamEventBus } from "~/user/agent/StreamEventBus";
 
 export namespace withRawModelStreamEvent {
@@ -12,25 +12,25 @@ export const withRawModelStreamEvent = ({ eventBus }: withRawModelStreamEvent.Pr
 	return (event: RunRawModelStreamEvent) => {
 		return (
 			match(event)
-				// 	.with(
-				// 		{
-				// 			data: {
-				// 				type: "response_started",
-				// 				providerData: {
-				// 					type: "response.created",
-				// 					response: {
-				// 						id: P.string,
-				// 					},
-				// 				},
-				// 			},
-				// 		},
-				// 		(event) => {
-				// 			eventBus.emit("onStart", {
-				// 				id: event.data.providerData.response.id,
-				// 				event,
-				// 			});
-				// 		},
-				// 	)
+				.with(
+					{
+						data: {
+							type: "response_started",
+							providerData: {
+								type: "response.created",
+								response: {
+									id: P.string,
+								},
+							},
+						},
+					},
+					(event) => {
+						eventBus.emit("response:start", {
+							id: event.data.providerData.response.id,
+							event,
+						});
+					},
+				)
 				// .with(
 				// 	{
 				// 		data: {
@@ -117,7 +117,10 @@ export const withRawModelStreamEvent = ({ eventBus }: withRawModelStreamEvent.Pr
 				// 	},
 				// )
 				.otherwise((event) => {
-					eventBus.emit("_unhandled", {
+					eventBus.emit("unhandled:raw-model-stream-event", {
+						event,
+					});
+					eventBus.emit("unhandled:catch-all", {
 						event,
 					});
 				})
