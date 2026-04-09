@@ -15,7 +15,31 @@ export namespace StreamEventBus {
 		"response:start": WithRunRawModelStreamEvent<{
 			id: string;
 		}>;
-		"response:done": {};
+		"response:done": WithRunRawModelStreamEvent<{
+			id: string;
+		}>;
+	}
+
+	export interface ModelEvents {
+		"model:response.created": WithRunRawModelStreamEvent<{
+			id: string;
+		}>;
+		"model:response.progress": WithRunRawModelStreamEvent<{
+			id: string;
+		}>;
+		"model:response.reasoning.item.added": WithRunRawModelStreamEvent<{
+			id: string;
+		}>;
+		"model:response.reasoning.part.added": WithRunRawModelStreamEvent<{
+			id: string;
+		}>;
+		"model:response.reasoning.content.added": WithRunRawModelStreamEvent<{
+			id: string;
+		}>;
+		"model:response.reasoning.delta": WithRunRawModelStreamEvent<{
+			id: string;
+			text: string;
+		}>;
 	}
 
 	export interface UnhandledEvents {
@@ -37,7 +61,7 @@ export namespace StreamEventBus {
 		};
 	}
 
-	export type Events = ResponseEvents & UnhandledEvents;
+	export type Events = ResponseEvents & ModelEvents & UnhandledEvents;
 }
 
 export type StreamEventBus = EventBus<StreamEventBus.Events>;
