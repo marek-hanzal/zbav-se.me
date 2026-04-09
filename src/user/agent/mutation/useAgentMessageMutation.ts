@@ -2,9 +2,8 @@ import { useDebouncer } from "@tanstack/react-pacer/debouncer";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { EventSourceParserStream } from "eventsource-parser/stream";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { genId } from "@/lib/common/gen-id";
-import { withAgentStreamQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import { getResponseError } from "~/user/assistant/service/getResponseError";
 
 export namespace useAgentMessageMutation {
@@ -21,22 +20,18 @@ export namespace useAgentMessageMutation {
 
 export const useAgentMessageMutation = () => {
 	const { buildLocation } = useRouter();
-	const agentQuery = withAgentStreamQuery.useQuery({
-		sort: [
-			{
-				field: "sort",
-				order: "asc",
-			},
-		],
-	});
+	// const agentQuery = withAgentStreamQuery.useQuery({
+	// 	sort: [
+	// 		{
+	// 			field: "sort",
+	// 			order: "asc",
+	// 		},
+	// 	],
+	// });
 	const abortControllerRef = useRef<AbortController | null>(null);
 	const activeRunIdRef = useRef<string | null>(null);
 	const pendingEventsRef = useRef<unknown[]>([]);
-	const historyItems = useMemo(() => {
-		return agentQuery.data ?? [];
-	}, [
-		agentQuery.data,
-	]);
+	const historyItems = [] as any[];
 	const [runs, setRuns] = useState<useAgentMessageMutation.Run[]>([]);
 	const link = buildLocation({
 		to: "/api/user/agent",

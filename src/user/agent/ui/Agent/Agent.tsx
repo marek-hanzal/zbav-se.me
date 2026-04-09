@@ -18,7 +18,9 @@ export namespace Agent {
 }
 
 export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
-	const chat = useAgent();
+	const chat = useAgent({
+		_suspense: "I know",
+	});
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const submit = useCallback(
@@ -32,7 +34,7 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 			});
 		},
 		[
-			chat,
+			chat.mutation,
 		],
 	);
 
@@ -68,7 +70,7 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 						check={[
 							{
 								check() {
-									return chat.historyItems.length === 0 && chat.runs.length === 0;
+									return true;
 								},
 								render() {
 									return (
@@ -123,7 +125,7 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 								<Button
 									data-action={"stop agent stream"}
 									iconEnabled={CancelIcon}
-									onClick={chat.stop}
+									onClick={chat.cancel}
 									ui={{
 										tone: "danger",
 										theme: "light",

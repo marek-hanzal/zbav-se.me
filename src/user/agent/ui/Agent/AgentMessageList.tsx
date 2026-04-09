@@ -3,8 +3,6 @@ import { useAutoScroll } from "@/lib/client/auto-scroll";
 import { Container } from "@/lib/client/container";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { useAgent } from "~/user/agent/hook/useAgent";
-import { AgentHistoryItem } from "./AgentHistoryItem";
-import { AgentRun } from "./AgentRun";
 
 export namespace AgentMessageList {
 	export interface Props extends Container.Props {
@@ -38,7 +36,7 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 			}}
 			{...props}
 		>
-			{chat.historyItems.map((item, index) => {
+			{/* {chat.historyItems.map((item, index) => {
 				return (
 					<AgentHistoryItem
 						key={`history-${item.id ?? index}`}
@@ -54,7 +52,7 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 						run={run}
 					/>
 				);
-			})}
+			})} */}
 
 			{isBusy ? (
 				<SpinnerContainer

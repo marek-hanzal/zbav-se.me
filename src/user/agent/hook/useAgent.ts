@@ -63,8 +63,9 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 						return;
 					}
 
-					const streamEvent = JSON.parse(event.data) as RunStreamEvent;
-					void streamEvent;
+					const item = JSON.parse(event.data) as RunStreamEvent;
+
+					console.log("Event", item);
 				},
 			});
 
