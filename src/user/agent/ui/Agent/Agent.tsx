@@ -1,4 +1,5 @@
-import { type FC, useCallback, useMemo, useRef } from "react";
+import { type FC, useCallback, useRef } from "react";
+import { match } from "ts-pattern";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
 import { EmptyState } from "@/lib/client/empty-state";
@@ -9,8 +10,6 @@ import { translator } from "@/lib/common/translator";
 import { ChatInput } from "~/common/ui/chat";
 import { CancelIcon } from "~/common/ui/icon";
 import { useAgent } from "~/user/agent/hook/useAgent";
-import { StreamEventBus } from "~/user/agent/StreamEventBus";
-import { withEventStream } from "~/user/agent/service/withEventStream";
 import { AgentMessageList } from "./AgentMessageList";
 
 export namespace Agent {
@@ -20,31 +19,22 @@ export namespace Agent {
 }
 
 export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
-	const eventBus = useMemo(() => {
-		const eventBus = StreamEventBus();
-
-		{
-			eventBus.on("response:start", (event) => {
-				console.log("[response:start]", event);
-			});
-			eventBus.on("response:done", (event) => {
-				console.log("[response:done] onDone", event);
-			});
-		}
-
-		{
-			eventBus.on("unhandled", ({ event }) => {
-				console.log("[Unhandled Agent Update Stream Event]", event);
-			});
-		}
-
-		return eventBus;
-	}, []);
 	const chat = useAgent({
 		_suspense: "I know",
-		onStream: withEventStream({
-			eventBus,
-		}),
+		onStream(event) {
+			match(event)
+				.with(
+					{
+						type: "response.created",
+					},
+					(event) => {
+						console.log("Response Created", event);
+					},
+				)
+				.otherwise((event) => {
+					console.log("[Unhandled event]", event);
+				});
+		},
 	});
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
