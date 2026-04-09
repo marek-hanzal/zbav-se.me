@@ -23,18 +23,18 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 	const eventBus = useMemo(() => {
 		const eventBus = StreamEventBus();
 
-		eventBus.on("onStart", ({ event }) => {
-			console.log("\t\t - [Event] onStart", event);
-		});
-		eventBus.on("onDone", (e) => {
-			console.log("\t\t - [Event] onDone", event);
-		});
+		// eventBus.on("onStart", ({ event }) => {
+		// 	console.log("\t\t - [Event] onStart", event);
+		// });
+		// eventBus.on("onDone", ({ event }) => {
+		// 	console.log("\t\t - [Event] onDone", event);
+		// });
+		// //
+		// eventBus.on("onTextDelta", ({ text, event }) => {
+		// 	console.log("\t\t - [Event] onTextDelta", text, event);
+		// });
 		//
-		eventBus.on("onTextDelta", (e) => {
-			console.log("\t\t - [Event] onTextDelta", e.text);
-		});
-		//
-		eventBus.on("onUnhandled", ({ event }) => {
+		eventBus.on("_unhandled", ({ event }) => {
 			console.log("\t\t - [Unhandled Event]", event);
 		});
 

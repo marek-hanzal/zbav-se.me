@@ -8,21 +8,13 @@ export namespace StreamEventBus {
 		event: RunRawModelStreamEvent;
 	};
 
-	export interface Events {
-		onStart: WithRunRawModelStreamEvent<{}>;
-		onDone: WithRunRawModelStreamEvent<{}>;
-		//
-		onResponseCreated: WithRunRawModelStreamEvent<{}>;
-		//
-		onReasoningStart: WithRunRawModelStreamEvent<{
-			id: string;
-		}>;
-		//
-		onTextDelta: WithRunRawModelStreamEvent<{
-			text: string;
-		}>;
-		//
-		onUnhandled: {
+	export interface ResponseEvents {
+		"response.start": {};
+		"response.done": {};
+	}
+
+	export interface Events extends ResponseEvents {
+		_unhandled: {
 			event: RunStreamEvent;
 		};
 	}

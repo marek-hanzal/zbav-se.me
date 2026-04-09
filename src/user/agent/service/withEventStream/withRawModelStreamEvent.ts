@@ -9,21 +9,28 @@ export namespace withRawModelStreamEvent {
 }
 
 export const withRawModelStreamEvent = ({ eventBus }: withRawModelStreamEvent.Props) => {
-	return <const TEvent extends RunRawModelStreamEvent>(event: TEvent) => {
+	return (event: RunRawModelStreamEvent) => {
 		return (
 			match(event)
-				// .with(
-				// 	{
-				// 		data: {
-				// 			type: "response_started",
+				// 	.with(
+				// 		{
+				// 			data: {
+				// 				type: "response_started",
+				// 				providerData: {
+				// 					type: "response.created",
+				// 					response: {
+				// 						id: P.string,
+				// 					},
+				// 				},
+				// 			},
 				// 		},
-				// 	},
-				// 	(event) => {
-				// 		eventBus.emit("onStart", {
-				// 			event,
-				// 		});
-				// 	},
-				// )
+				// 		(event) => {
+				// 			eventBus.emit("onStart", {
+				// 				id: event.data.providerData.response.id,
+				// 				event,
+				// 			});
+				// 		},
+				// 	)
 				// .with(
 				// 	{
 				// 		data: {
@@ -40,11 +47,15 @@ export const withRawModelStreamEvent = ({ eventBus }: withRawModelStreamEvent.Pr
 				// .with(
 				// 	{
 				// 		data: {
+				// 			response: {
+				// 				id: P.string,
+				// 			},
 				// 			type: "response_done",
 				// 		},
 				// 	},
 				// 	(event) => {
 				// 		eventBus.emit("onDone", {
+				// 			id: event.data.response.id,
 				// 			event,
 				// 		});
 				// 	},
@@ -60,14 +71,20 @@ export const withRawModelStreamEvent = ({ eventBus }: withRawModelStreamEvent.Pr
 				// 			.with(
 				// 				{
 				// 					data: {
+				// 						item_id: P.string,
 				// 						event: {
-				// 							type: "response.created",
+				// 							type: "response.content_part.added",
+				// 							part: {
+				// 								text: P.string,
+				// 								type: "reasoning_text",
+				// 							},
 				// 						},
-				// 						providerData: P.any,
 				// 					},
 				// 				},
 				// 				(event) => {
-				// 					eventBus.emit("onResponseCreated", {
+				// 					eventBus.emit("onReasoningContent", {
+				// 						id: event.data.item_id,
+				// 						text: event.data.event.part.text,
 				// 						event,
 				// 					});
 				// 				},
@@ -93,12 +110,14 @@ export const withRawModelStreamEvent = ({ eventBus }: withRawModelStreamEvent.Pr
 				// 				},
 				// 			)
 				// 			.otherwise((event) => {
-				// 				console.log("Unhandled", event);
+				// 				eventBus.emit("onUnhandled", {
+				// 					event,
+				// 				});
 				// 			});
 				// 	},
 				// )
 				.otherwise((event) => {
-					eventBus.emit("onUnhandled", {
+					eventBus.emit("_unhandled", {
 						event,
 					});
 				})
