@@ -12,13 +12,13 @@ export namespace useAgent {
 	}
 
 	export interface Props extends MarkSuspense.Props {
-		//
+		onStream(event: RunStreamEvent): void;
 	}
 
 	export type UseResult = ReturnType<typeof useAgent>;
 }
 
-export const useAgent = ({ _suspense }: useAgent.Props) => {
+export const useAgent = ({ _suspense, onStream }: useAgent.Props) => {
 	const router = useRouter();
 	const abortControllerRef = useRef<AbortController | null>(null);
 	const link = useMemo(() => {
@@ -49,9 +49,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 						return;
 					}
 
-					const item = JSON.parse(event.data) as RunStreamEvent;
-
-					console.log("Event", item);
+					onStream(JSON.parse(event.data));
 				},
 			});
 

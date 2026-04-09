@@ -9,6 +9,7 @@ import { translator } from "@/lib/common/translator";
 import { ChatInput } from "~/common/ui/chat";
 import { CancelIcon } from "~/common/ui/icon";
 import { useAgent } from "~/user/agent/hook/useAgent";
+import { withEventStream } from "~/user/agent/service/withEventStream";
 import { AgentMessageList } from "./AgentMessageList";
 
 export namespace Agent {
@@ -20,6 +21,9 @@ export namespace Agent {
 export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 	const chat = useAgent({
 		_suspense: "I know",
+		onStream: withEventStream({
+			enabled: true,
+		}),
 	});
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
