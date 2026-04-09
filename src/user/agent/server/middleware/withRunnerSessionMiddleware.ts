@@ -1,7 +1,7 @@
 import { createMiddleware } from "@tanstack/react-start";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import { KyselySession } from "~/user/assistant/KyselySession";
+import { KyselySession } from "~/user/agent/server/session/KyselySession";
 
 export const withRunnerSessionMiddleware = createMiddleware()
 	.middleware([

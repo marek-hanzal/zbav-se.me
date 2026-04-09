@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { withRunnerSessionMiddleware } from "~/user/agent/server/middleware/withRunnerSessionMiddleware";
-import { CoreAgent } from "~/user/assistant/CoreAgent";
+import { CoreAgent } from "~/user/agent/CoreAgent";
 import { AssistantRequestSchema } from "~/user/assistant/schema/AssistantRequestSchema";
 
 const encoder = new TextEncoder();
