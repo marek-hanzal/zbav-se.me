@@ -1,10 +1,21 @@
+import type { AgentInputItem } from "@openai/agents-core";
 import { createFileRoute } from "@tanstack/react-router";
+import { z } from "zod";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { CoreAgent } from "~/user/agent/CoreAgent";
 import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { withRunnerSessionMiddleware } from "~/user/agent/server/middleware/withRunnerSessionMiddleware";
 import type { AgentEvent } from "~/user/agent/type/AgentEvent";
-import { AssistantRequestSchema } from "~/user/assistant/schema/AssistantRequestSchema";
+
+const AgentRequestSchema: z.ZodType<string | AgentInputItem[]> = z
+	.union([
+		z.string(),
+		z.array(z.unknown()).transform((items) => items as AgentInputItem[]),
+	])
+	.meta({
+		id: "AgentRequest",
+		description: "Request body accepted by the assistant streaming endpoint",
+	});
 
 const encoder = new TextEncoder();
 
@@ -19,7 +30,7 @@ export const Route = createFileRoute("/api/user/agent")({
 			async POST({ request, context: { user, rootLogger, runner, session } }) {
 				const logger = rootLogger.getChild("/api/user/agent");
 
-				const input = AssistantRequestSchema.safeParse(await request.json());
+				const input = AgentRequestSchema.safeParse(await request.json());
 
 				if (!input.success) {
 					return Response.json(
