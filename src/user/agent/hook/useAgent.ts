@@ -5,6 +5,7 @@ import { createParser } from "eventsource-parser";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { match } from "ts-pattern";
 import type { MarkSuspense } from "@/lib/client/type";
+import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import type { AgentEvent } from "~/user/agent/type/AgentEvent";
 
 export namespace useAgent {
@@ -22,6 +23,18 @@ export namespace useAgent {
 export const useAgent = ({ _suspense }: useAgent.Props) => {
 	const router = useRouter();
 	const abortControllerRef = useRef<AbortController | null>(null);
+	const { data: messages } = withAgentStreamItemsQuery.useSuspenseQuery({
+		sort: [
+			{
+				field: "sort",
+				order: "asc",
+			},
+		],
+		cursor: {
+			page: 0,
+			size: 128,
+		},
+	});
 	const link = useMemo(() => {
 		return router.buildLocation({
 			to: "/api/user/agent",
