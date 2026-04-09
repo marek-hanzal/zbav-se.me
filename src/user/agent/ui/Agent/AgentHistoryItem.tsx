@@ -4,7 +4,6 @@ import { match, P } from "ts-pattern";
 import type { Container } from "@/lib/client/container";
 import { AgentAssistantMessageItem } from "./AgentAssistantMessageItem";
 import { AgentRawItem } from "./AgentRawItem";
-import { AgentReasoningItem } from "./AgentReasoningItem";
 import { AgentToolItem } from "./AgentToolItem";
 import { AgentUserMessageItem } from "./AgentUserMessageItem";
 
@@ -54,15 +53,7 @@ export const AgentHistoryItem: FC<AgentHistoryItem.Props> = ({ item, ui, ...prop
 			{
 				type: "reasoning",
 			},
-			(item) => {
-				return (
-					<AgentReasoningItem
-						item={item}
-						ui={ui}
-						{...props}
-					/>
-				);
-			},
+			() => null,
 		)
 		.with(
 			{

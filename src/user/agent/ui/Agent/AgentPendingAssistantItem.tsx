@@ -4,11 +4,12 @@ import { Icon, SpinnerIcon } from "@/lib/client/icon";
 
 export namespace AgentPendingAssistantItem {
 	export interface Props extends Container.Props {
-		//
+		text?: string;
 	}
 }
 
 export const AgentPendingAssistantItem: FC<AgentPendingAssistantItem.Props> = ({
+	text,
 	ui,
 	...props
 }) => {
@@ -32,6 +33,7 @@ export const AgentPendingAssistantItem: FC<AgentPendingAssistantItem.Props> = ({
 					flow: "horizontal",
 					items: "center",
 					justify: "center",
+					gap: "sm",
 				}}
 			>
 				<Icon
@@ -42,6 +44,12 @@ export const AgentPendingAssistantItem: FC<AgentPendingAssistantItem.Props> = ({
 						opacity: "6",
 					}}
 				/>
+
+				{text ? (
+					<div className={"text-sm opacity-70"}>
+						{text}
+					</div>
+				) : null}
 			</Container>
 		</Container>
 	);
