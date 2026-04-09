@@ -24,6 +24,8 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 	useAutoScroll({
 		containerRef,
 		contentRef,
+		debounceMs: 32,
+		resizeBehavior: "instant",
 	});
 
 	return (
