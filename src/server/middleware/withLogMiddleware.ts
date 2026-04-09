@@ -43,8 +43,9 @@ export const withLogMiddleware = createMiddleware()
 					console: fingersCrossed(
 						getConsoleSink({
 							formatter: getPrettyFormatter({
-								categoryWidth: 42,
+								categoryWidth: 64,
 								properties: true,
+								timestamp: "date-time-tz",
 							}),
 							nonBlocking: true,
 						}),
@@ -78,8 +79,37 @@ export const withLogMiddleware = createMiddleware()
 						category: "zbav-se.me",
 						lowestLevel: level,
 						sinks: [
-							"console",
 							"file",
+						],
+					},
+					{
+						category: [
+							"zbav-se.me",
+							"middleware",
+						],
+						lowestLevel: level,
+						sinks: [
+							"file",
+						],
+					},
+					{
+						category: [
+							"zbav-se.me",
+							"fn",
+						],
+						lowestLevel: level,
+						sinks: [
+							"console",
+						],
+					},
+					{
+						category: [
+							"zbav-se.me",
+							"fx",
+						],
+						lowestLevel: level,
+						sinks: [
+							"console",
 						],
 					},
 					//

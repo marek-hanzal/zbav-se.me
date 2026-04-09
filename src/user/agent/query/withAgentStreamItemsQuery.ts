@@ -12,7 +12,7 @@ export const agentStreamItemsQueryData = {
 	],
 	cursor: {
 		page: 0,
-		size: 128,
+		size: 512,
 	},
 } satisfies AgentStreamQuerySchema.Type;
 

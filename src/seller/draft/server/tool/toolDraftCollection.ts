@@ -1,6 +1,13 @@
+import { getLogger } from "@logtape/logtape";
 import { tool } from "@openai/agents";
 import { draftCollectionFn } from "~/seller/draft/server/fn/draftCollectionFn";
 import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
+
+const logger = getLogger([
+	"agent",
+	"tool",
+	"toolDraftCollection",
+]);
 
 export const toolDraftCollection = tool({
 	name: "draft-collection",
@@ -12,8 +19,11 @@ export const toolDraftCollection = tool({
     `.trim(),
 	strict: true,
 	parameters: DraftToolQuerySchema,
-	// outputSchema: z.array(DraftSchema),
 	async execute(data) {
+		logger.trace("toolDraftCollection", {
+			data,
+		});
+
 		return draftCollectionFn({
 			data,
 		});

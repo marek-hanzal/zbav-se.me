@@ -11,7 +11,10 @@ export const withAuthMiddleware = createMiddleware()
 		withDialectMiddleware,
 	])
 	.server(async ({ next, context: { dialect, dsn, rootLogger } }) => {
-		const logger = rootLogger.getChild("withAuthMiddleware");
+		const logger = rootLogger.getChild([
+			"middleware",
+			"withAuthMiddleware",
+		]);
 		let instance = authMap.get(dsn);
 
 		if (!instance) {

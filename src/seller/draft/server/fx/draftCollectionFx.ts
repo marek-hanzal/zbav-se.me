@@ -20,7 +20,7 @@ export const draftCollectionFx = Effect.fn("draftCollectionFx")(function* ({
 	sort,
 }: draftCollectionFx.Props) {
 	const logger = yield* getLoggerFx("draftCollectionFx");
-	logger.debug("draftCollectionFx", {
+	logger.trace("draftCollectionFx", {
 		cursor,
 		filter,
 		where,

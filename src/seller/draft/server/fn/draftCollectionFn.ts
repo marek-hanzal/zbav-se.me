@@ -21,7 +21,7 @@ export const draftCollectionFn = createServerFn()
 	.inputValidator(DraftQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild(name);
-		logger.debug(name, data);
+		logger.trace(name, data);
 		return zodGuardFx({
 			schema: z.array(DraftSchema),
 			dataFx: draftCollectionFx({
