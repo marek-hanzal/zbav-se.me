@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
+import { withRunnerSessionMiddleware } from "~/user/agent/server/middleware/withRunnerSessionMiddleware";
 import { CoreAgent } from "~/user/assistant/CoreAgent";
-import { withRunnerMiddleware } from "~/user/assistant/middleware/withRunnerMiddleware";
-import { withRunnerSessionMiddleware } from "~/user/assistant/middleware/withRunnerSessionMiddleware";
 import { AssistantRequestSchema } from "~/user/assistant/schema/AssistantRequestSchema";
 
 const encoder = new TextEncoder();
