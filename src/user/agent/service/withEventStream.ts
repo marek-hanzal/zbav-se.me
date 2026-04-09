@@ -8,7 +8,11 @@ export namespace withEventStream {
 		enabled: true;
 	}
 }
-
+/**
+ * This is an entry point for single stream of events for one agentic loop (user request -> stream -> response).
+ *
+ * It self-manages internal state, so it's safe to use between agentic loops.
+ */
 export const withEventStream = (_props: withEventStream.Props) => {
 	return (event: RunStreamEvent) => {
 		return match(event)
