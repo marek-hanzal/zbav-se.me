@@ -4,6 +4,7 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
+import { getToolOutputText } from "~/user/agent/type/getToolOutputText";
 
 export namespace ToolCallItem {
 	export interface Props extends Group.Props {
@@ -17,25 +18,7 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, ui, classNam
 		(i): i is FunctionCallResultItem =>
 			i.type === "function_call_result" && i.callId === item.callId,
 	);
-
-	const output = ((result: FunctionCallResultItem | undefined) => {
-		if (!result) {
-			return undefined;
-		}
-
-		const { output } = result;
-		if (typeof output === "string") {
-			return output;
-		}
-		if (Array.isArray(output)) {
-			return undefined;
-		}
-		if (output.type === "text") {
-			return output.text;
-		}
-
-		return undefined;
-	})(result);
+	const output = getToolOutputText(result);
 
 	return (
 		<Group

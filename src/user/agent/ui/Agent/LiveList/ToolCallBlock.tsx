@@ -1,117 +1,27 @@
-import type { FunctionCallResultItem, RunStreamEvent } from "@openai/agents";
+import type { RunStreamEvent } from "@openai/agents";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
-import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
-import { getFunctionCallResultItem, getResponseStreamEvent } from "~/user/agent/type/AgentEvent";
-
-interface ToolCallState {
-	name: string;
-	input: string | null;
-	output: string | undefined;
-	isPending: boolean;
-}
-
-function getOutputText(result: FunctionCallResultItem | undefined): string | undefined {
-	if (!result) {
-		return undefined;
-	}
-
-	const { output } = result;
-
-	if (typeof output === "string") {
-		return output;
-	}
-
-	if (Array.isArray(output)) {
-		return undefined;
-	}
-
-	if (output.type === "text") {
-		return output.text;
-	}
-
-	return undefined;
-}
-
-function selectToolCallState(events: RunStreamEvent[] | undefined, itemId: string): ToolCallState {
-	const all = events ?? [];
-
-	const created = all.find((event) => {
-		const responseEvent = getResponseStreamEvent(event);
-
-		return (
-			responseEvent?.type === "response.output_item.added" &&
-			responseEvent.item.type === "function_call" &&
-			responseEvent.item.id === itemId
-		);
-	});
-
-	const done = all.find((event) => {
-		const responseEvent = getResponseStreamEvent(event);
-
-		return (
-			responseEvent?.type === "response.function_call_arguments.done" &&
-			responseEvent.item_id === itemId
-		);
-	});
-
-	const createdEvent = created ? getResponseStreamEvent(created) : null;
-	const doneEvent = done ? getResponseStreamEvent(done) : null;
-
-	const createdName =
-		createdEvent &&
-		createdEvent.type === "response.output_item.added" &&
-		createdEvent.item.type === "function_call"
-			? createdEvent.item.name
-			: "";
-
-	const doneArgs =
-		doneEvent && doneEvent.type === "response.function_call_arguments.done"
-			? doneEvent.arguments
-			: null;
-	const callId =
-		createdEvent &&
-		createdEvent.type === "response.output_item.added" &&
-		createdEvent.item.type === "function_call"
-			? createdEvent.item.call_id
-			: null;
-	const result = callId
-		? all
-				.map(getFunctionCallResultItem)
-				.find(
-					(event): event is FunctionCallResultItem =>
-						event !== null && event.callId === callId,
-				)
-		: undefined;
-
-	return {
-		name: createdName,
-		input: doneArgs,
-		output: getOutputText(result),
-		isPending: !result,
-	};
-}
+import { selectToolCallState } from "./selectToolCallState";
 
 export namespace ToolCallBlock {
 	export interface Props extends Group.Props {
+		events: RunStreamEvent[] | undefined;
 		itemId: string;
 	}
 }
 
-export const ToolCallBlock: FC<ToolCallBlock.Props> = ({ itemId, ui, className, ...props }) => {
-	const { data: state } = withAgentLiveQuery.useQuery(undefined, {
-		select: (events) => selectToolCallState(events, itemId) as unknown as RunStreamEvent[],
-	}) as unknown as {
-		data: ToolCallState | undefined;
-	};
-
-	if (!state) {
-		return null;
-	}
+export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
+	events,
+	itemId,
+	ui,
+	className,
+	...props
+}) => {
+	const state = selectToolCallState(events, itemId);
 
 	return (
 		<Group
