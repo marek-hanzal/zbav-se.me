@@ -2,6 +2,8 @@ import type { AgentInputItem } from "@openai/agents-core";
 import { type FC, type RefObject, useRef } from "react";
 import { useAutoScroll } from "@/lib/client/auto-scroll";
 import { Container } from "@/lib/client/container";
+import { HistoryList } from "./HistoryList";
+import { LiveList } from "./LiveList";
 
 export namespace AgentMessageList {
 	export interface Props extends Container.Props {
@@ -36,21 +38,8 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 			}}
 			{...props}
 		>
-			{/*
-
-                Here should be history-list implementation from "items"
-
-                ./HistoryList/HistoryList.tsx
-
-			 */}
-
-			{/*
-
-                Here should be live-stream implementation from agent stream
-
-                ./LiveList/LiveList.tsx
-
-			 */}
+			<HistoryList items={items} />
+			<LiveList />
 		</Container>
 	);
 };
