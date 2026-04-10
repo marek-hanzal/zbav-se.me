@@ -21,9 +21,6 @@ export const KnowledgeAgent = new Agent({
 		reasoning: {
 			effort: "high",
 		},
-		text: {
-			verbosity: "high",
-		},
 		toolChoice: "required",
 	},
 	tools: [

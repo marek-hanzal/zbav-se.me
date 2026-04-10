@@ -69,9 +69,6 @@ přeformulování vstupu.
 		reasoning: {
 			effort: "medium",
 		},
-		text: {
-			verbosity: "high",
-		},
 		toolChoice: "required",
 	},
 	tools: [
