@@ -69,7 +69,7 @@ export const AssistantMessage: FC<AssistantMessage.Props> = ({
 		data: LiveMessageState | undefined;
 	};
 
-	if (!state?.content.length) {
+	if (!state?.content.trim().length) {
 		return null;
 	}
 
@@ -88,13 +88,6 @@ export const AssistantMessage: FC<AssistantMessage.Props> = ({
 			{...props}
 		>
 			<Markdown>{state.content}</Markdown>
-
-			{/* {state.toolCallIds.map((callId) => (
-				<ToolCallBlock
-					key={callId}
-					callId={callId}
-				/>
-			))} */}
 		</Group>
 	);
 };

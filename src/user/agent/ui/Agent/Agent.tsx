@@ -30,93 +30,84 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 		<Container
 			data-ui={"Agent"}
 			ui={{
+				layout: "vertical-content-footer",
 				height: "full",
 				width: "full",
+				gap: "xs",
 				...ui,
 			}}
 			{...props}
 		>
-			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					gap: "xs",
-				}}
-			>
-				<EmptyState
-					check={[
-						{
-							check() {
-								return !items.length;
-							},
-							render() {
-								return (
-									<Container
-										ui={{
-											tone: "brand",
-											theme: "light",
-											layout: "vertical-centered",
-											height: "full",
-											width: "full",
-											inner: "4xl",
-										}}
-										className={[
-											"text-center",
-										]}
-									>
-										<Status
-											icon={AiIcon}
-											textTitle={translator.text("Agent welcome (title)")}
-											textMessage={translator.text("Agent welcome (message)")}
-										/>
-									</Container>
-								);
-							},
+			<EmptyState
+				check={[
+					{
+						check() {
+							return !items.length;
 						},
-					]}
-				>
-					<Container
-						ref={containerRef}
-						ui={{
-							layout: "vertical-flex",
-							gap: "default",
-							scroll: "vertical",
-							height: "full",
-						}}
-					>
-						<AgentMessageList
-							containerRef={containerRef}
-							isPending={chat.mutation.isPending}
-						/>
-					</Container>
-				</EmptyState>
-
-				<ChatInput
+						render() {
+							return (
+								<Container
+									ui={{
+										tone: "brand",
+										theme: "light",
+										layout: "vertical-centered",
+										height: "full",
+										width: "full",
+										inner: "4xl",
+									}}
+									className={[
+										"text-center",
+									]}
+								>
+									<Status
+										icon={AiIcon}
+										textTitle={translator.text("Agent welcome (title)")}
+										textMessage={translator.text("Agent welcome (message)")}
+									/>
+								</Container>
+							);
+						},
+					},
+				]}
+			>
+				<Container
+					ref={containerRef}
 					ui={{
-						width: "full",
-						inner: "default",
+						layout: "vertical-flex",
+						gap: "default",
+						scroll: "vertical",
+						height: "full",
 					}}
-					onSubmit={chat.submit}
-					placeholder={translator.text("Write to an agent")}
-					loading={chat.mutation.isPending}
-					cancel={
-						<Button
-							data-action={"stop agent stream"}
-							iconEnabled={CancelIcon}
-							onClick={chat.cancel}
-							ui={{
-								tone: "danger",
-								theme: "light",
-								square: "default",
-								background: undefined,
-								border: false,
-								shadow: false,
-								color: "lead",
-							}}
-						/>
-					}
-				/>
-			</Container>
+				>
+					<AgentMessageList containerRef={containerRef} />
+				</Container>
+			</EmptyState>
+
+			<ChatInput
+				ui={{
+					width: "full",
+					inner: "default",
+				}}
+				onSubmit={chat.submit}
+				placeholder={translator.text("Write to an agent")}
+				loading={chat.mutation.isPending}
+				cancel={
+					<Button
+						data-action={"stop agent stream"}
+						iconEnabled={CancelIcon}
+						onClick={chat.cancel}
+						ui={{
+							tone: "danger",
+							theme: "light",
+							square: "default",
+							background: undefined,
+							border: false,
+							shadow: false,
+							color: "lead",
+						}}
+					/>
+				}
+			/>
 		</Container>
 	);
 };

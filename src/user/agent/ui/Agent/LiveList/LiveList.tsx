@@ -7,11 +7,10 @@ import { ErrorMessage } from "./ErrorMessage";
 import { ThinkingIndicator } from "./ThinkingIndicator";
 
 function selectOutputIndices(events: AgentEvent[] | undefined): number[] {
-	const all = events ?? [];
 	const seen = new Set<number>();
 	const result: number[] = [];
 
-	for (const event of all) {
+	for (const event of events ?? []) {
 		if (event.type === "response.output_item.added" && !seen.has(event.output_index)) {
 			seen.add(event.output_index);
 			result.push(event.output_index);
@@ -23,22 +22,13 @@ function selectOutputIndices(events: AgentEvent[] | undefined): number[] {
 
 export namespace LiveList {
 	export interface Props extends Container.Props {
-		//
-	}
+        //
+    }
 }
 
 export const LiveList: FC<LiveList.Props> = ({ ui, ...props }) => {
-	const { data: outputIndices } = withAgentLiveQuery.useQuery(undefined, {
-		select: (events) => selectOutputIndices(events) as unknown as AgentEvent[],
-	}) as unknown as {
-		data: number[] | undefined;
-	};
-
-	const indices = outputIndices ?? [];
-
-	if (indices.length === 0) {
-		return null;
-	}
+	const { data: events } = withAgentLiveQuery.useQuery(undefined);
+	const outputIndices = selectOutputIndices(events);
 
 	return (
 		<Container
@@ -52,7 +42,7 @@ export const LiveList: FC<LiveList.Props> = ({ ui, ...props }) => {
 		>
 			<ThinkingIndicator />
 
-			{indices.map((outputIndex) => (
+			{outputIndices.map((outputIndex) => (
 				<AssistantMessage
 					key={outputIndex}
 					outputIndex={outputIndex}

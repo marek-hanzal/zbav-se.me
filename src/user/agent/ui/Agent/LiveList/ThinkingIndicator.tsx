@@ -1,33 +1,82 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
-import { SpinnerContainer } from "@/lib/client/spinner";
+import { Icon, SpinnerIcon } from "@/lib/client/icon";
+import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 import type { AgentEvent } from "~/user/agent/type/AgentEvent";
 
-function selectIsThinking(events: AgentEvent[] | undefined): boolean {
-	const all = events ?? [];
-	const last = all.findLast(
-		(e) =>
-			e.type === "response.reasoning_text.delta" || e.type === "response.reasoning_text.done",
-	);
-	return last?.type === "response.reasoning_text.delta";
+export namespace ThinkingIndicator {
+	export interface Props extends Container.Props {}
 }
 
-export namespace ThinkingIndicator {
-	export interface Props extends Container.Props {
-		//
+interface ThinkingState {
+	isVisible: boolean;
+	label: string | null;
+}
+
+function selectThinkingState(events: AgentEvent[] | undefined): ThinkingState {
+	const all = events ?? [];
+	let isVisible = false;
+	let label: string | null = null;
+	let hasOutputTextStarted = false;
+
+	for (const event of all) {
+		if (
+			event.type === "response.output_text.delta" ||
+			event.type === "response.output_text.done"
+		) {
+			hasOutputTextStarted = true;
+			isVisible = false;
+			label = null;
+			continue;
+		}
+
+		if (hasOutputTextStarted) {
+			continue;
+		}
+
+		if (event.type === "response.reasoning_text.delta") {
+			isVisible = true;
+			label = translator.text("Reasoning");
+			continue;
+		}
+
+		if (event.type === "response.reasoning_text.done") {
+			isVisible = true;
+			label = null;
+			continue;
+		}
+
+		if (event.type === "response.output_item.added" && event.item.type === "function_call") {
+			isVisible = true;
+			label = translator.text("Tool call");
+			continue;
+		}
+
+		if (event.type === "response.function_call_arguments.done") {
+			isVisible = true;
+			label = null;
+			continue;
+		}
+
+		if (event.type === "response.failed" || event.type === "error") {
+			isVisible = false;
+			label = null;
+		}
 	}
+
+	return {
+		isVisible,
+		label,
+	};
 }
 
 export const ThinkingIndicator: FC<ThinkingIndicator.Props> = ({ ui, ...props }) => {
-	const { data: isThinking } = withAgentLiveQuery.useQuery(undefined, {
-		select: (events) => selectIsThinking(events) as unknown as AgentEvent[],
-	}) as unknown as {
-		data: boolean | undefined;
-	};
+	const { data: events } = withAgentLiveQuery.useQuery(undefined);
+	const state = selectThinkingState(events);
 
-	if (!isThinking) {
+	if (!state.isVisible) {
 		return null;
 	}
 
@@ -35,24 +84,34 @@ export const ThinkingIndicator: FC<ThinkingIndicator.Props> = ({ ui, ...props })
 		<Container
 			data-ui={"LiveList-ThinkingIndicator"}
 			ui={{
-				flow: "vertical",
+				layout: "horizontal-flex",
+				items: "center",
 				gap: "xs",
+				tone: "neutral",
+				theme: "light",
+				text: "sm",
 				...ui,
 			}}
 			{...props}
 		>
-			<SpinnerContainer
-				type="icon"
-				statusProps={{
-					textMessage: translator.text("Agent is thinking"),
-				}}
+			<Icon
+				data-ui={"LiveList-ThinkingIndicator-[Spinner]"}
+				icon={SpinnerIcon}
 				ui={{
-					layout: "horizontal-flex",
-					height: undefined,
-					items: "center",
-					gap: "xs",
+					text: "sm",
 				}}
 			/>
+
+			{state.label !== null ? (
+				<Typo
+					label={state.label}
+					ui={{
+						text: "sm",
+						font: "semibold",
+						color: "lead",
+					}}
+				/>
+			) : null}
 		</Container>
 	);
 };
