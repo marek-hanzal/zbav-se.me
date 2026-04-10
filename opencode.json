@@ -11,7 +11,7 @@
 			"type": "local",
 			"command": [
 				"bunx",
-				"@modelcontextprotocol/server-playwright",
+				"@playwright/mcp@latest",
 				"--browser",
 				"chromium"
 			]

@@ -5,6 +5,7 @@
 .million
 .nitro
 .output
+.playwright-mcp
 .tanstack
 .tmp
 .turbo
@@ -18,4 +19,5 @@ playwright-report
 results
 temp
 test-results
+tmp-*
 tsconfig.tsbuildinfo
