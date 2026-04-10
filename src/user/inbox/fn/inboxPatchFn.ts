@@ -1,6 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { z } from "zod";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
@@ -8,11 +7,11 @@ import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import { inboxPatchCollectionFx } from "~/user/inbox/server/fx/inboxPatchCollectionFx";
-import { InboxPatchCollectionSchema } from "~/user/inbox/server/schema/InboxPatchCollectionSchema";
+import { inboxPatchFx } from "~/user/inbox/server/fx/inboxPatchFx";
+import { InboxPatchSchema } from "~/user/inbox/server/schema/InboxPatchSchema";
 import { InboxSchema } from "~/user/inbox/server/schema/InboxSchema";
 
-export const inboxPatchCollectionFn = createServerFn({
+export const inboxPatchFn = createServerFn({
 	method: "POST",
 })
 	.middleware([
@@ -20,14 +19,17 @@ export const inboxPatchCollectionFn = createServerFn({
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(InboxPatchCollectionSchema)
+	.inputValidator(InboxPatchSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
 		logger.debug(name, data);
 
 		return zodGuardFx({
-			schema: z.array(InboxSchema),
-			dataFx: inboxPatchCollectionFx({
+			schema: InboxSchema,
+			dataFx: inboxPatchFx({
 				...data,
 				scope: {
 					userId: user.id,
@@ -35,8 +37,14 @@ export const inboxPatchCollectionFn = createServerFn({
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
+				NotFoundErrorFx(error) {
+					logger.error("NotFoundError", {
+						message: error.message,
+					});
+					throw new Error("NotFoundError");
+				},
 				RuntimeErrorFx(error) {
 					logger.error("RuntimeError", {
 						message: error.message,

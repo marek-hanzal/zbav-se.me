@@ -1,7 +1,7 @@
 import { withMutation } from "@/lib/client/mutation";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
+import { inboxArchiveFn } from "~/user/inbox/fn/inboxArchiveFn";
 import { withInboxQuery } from "~/user/inbox/query/withInboxQuery";
-import { inboxArchiveFn } from "~/user/inbox/server/fn/inboxArchiveFn";
 import { withTransactionQuery } from "../query/withTransactionQuery";
 
 const terminalStatuses: TransactionStatusEnumSchema.Type[] = [

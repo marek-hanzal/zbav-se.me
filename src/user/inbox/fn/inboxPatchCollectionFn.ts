@@ -8,24 +8,26 @@ import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import { inboxCollectionFx } from "~/user/inbox/server/fx/inboxCollectionFx";
-import { InboxQuerySchema } from "~/user/inbox/server/schema/InboxQuerySchema";
+import { inboxPatchCollectionFx } from "~/user/inbox/server/fx/inboxPatchCollectionFx";
+import { InboxPatchCollectionSchema } from "~/user/inbox/server/schema/InboxPatchCollectionSchema";
 import { InboxSchema } from "~/user/inbox/server/schema/InboxSchema";
 
-export const inboxCollectionFn = createServerFn()
+export const inboxPatchCollectionFn = createServerFn({
+	method: "POST",
+})
 	.middleware([
 		withLogMiddleware,
 		withDatabaseMiddleware,
 		withUserMiddleware,
 	])
-	.inputValidator(InboxQuerySchema)
+	.inputValidator(InboxPatchCollectionSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild(['fn', name]);
 		logger.debug(name, data);
 
 		return zodGuardFx({
 			schema: z.array(InboxSchema),
-			dataFx: inboxCollectionFx({
+			dataFx: inboxPatchCollectionFx({
 				...data,
 				scope: {
 					userId: user.id,
@@ -33,8 +35,15 @@ export const inboxCollectionFn = createServerFn()
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
+				RuntimeErrorFx(error) {
+					logger.error("RuntimeError", {
+						message: error.message,
+						cause: error.cause,
+					});
+					throw new Error("RuntimeError");
+				},
 				ZodErrorFx({ zod, input }) {
 					logger.error("ZodError", {
 						zod,

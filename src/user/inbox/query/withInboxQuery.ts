@@ -1,9 +1,9 @@
 import { withEntityQuery } from "@/lib/client/query";
-import { inboxCollectionFn } from "~/user/inbox/server/fn/inboxCollectionFn";
-import { inboxCountFn } from "~/user/inbox/server/fn/inboxCountFn";
-import { inboxFetchFn } from "~/user/inbox/server/fn/inboxFetchFn";
-import { inboxPatchCollectionFn } from "~/user/inbox/server/fn/inboxPatchCollectionFn";
-import { inboxPatchFn } from "~/user/inbox/server/fn/inboxPatchFn";
+import { inboxCollectionFn } from "~/user/inbox/fn/inboxCollectionFn";
+import { inboxCountFn } from "~/user/inbox/fn/inboxCountFn";
+import { inboxFetchFn } from "~/user/inbox/fn/inboxFetchFn";
+import { inboxPatchCollectionFn } from "~/user/inbox/fn/inboxPatchCollectionFn";
+import { inboxPatchFn } from "~/user/inbox/fn/inboxPatchFn";
 import type { InboxCountQuerySchema } from "~/user/inbox/server/schema/InboxCountQuerySchema";
 import type { InboxPatchCollectionSchema } from "~/user/inbox/server/schema/InboxPatchCollectionSchema";
 import type { InboxPatchSchema } from "~/user/inbox/server/schema/InboxPatchSchema";
