@@ -6,6 +6,7 @@
 .nitro
 .output
 .tanstack
+.tmp
 .turbo
 .vercel
 .vscode/chrome-debug-profile

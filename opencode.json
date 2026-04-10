@@ -6,6 +6,15 @@
 			"command": [
 				"context-mode"
 			]
+		},
+		"playwright": {
+			"type": "local",
+			"command": [
+				"bunx",
+				"@modelcontextprotocol/server-playwright",
+				"--browser",
+				"chromium"
+			]
 		}
 	},
 	"plugin": [
