@@ -17,7 +17,10 @@ export const listingCountFn = createServerFn()
 	])
 	.inputValidator(ListingCountQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
 		logger.debug(name, data);
 
 		return zodGuardFx({
@@ -28,7 +31,7 @@ export const listingCountFn = createServerFn()
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
 				ZodErrorFx({ zod, input }) {
 					logger.error("ZodError", {

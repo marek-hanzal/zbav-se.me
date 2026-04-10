@@ -22,7 +22,10 @@ export const draftGalleryCreateFn = createServerFn({
 	])
 	.inputValidator(DraftGalleryCreateSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
 		logger.debug(name, data);
 
 		return zodGuardFx({
@@ -34,7 +37,7 @@ export const draftGalleryCreateFn = createServerFn({
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
 				NotFoundErrorFx(error) {
 					logger.error("NotFoundError", {

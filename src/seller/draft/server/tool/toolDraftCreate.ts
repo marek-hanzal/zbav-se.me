@@ -1,6 +1,12 @@
 import { tool } from "@openai/agents";
 import { draftCreateFn } from "~/seller/draft/fn/draftCreateFn";
 import { DraftCreateSchema } from "~/seller/draft/server/schema/DraftCreateSchema";
+import { getRootLogger } from "~/server/log/getRootLogger";
+
+const logger = getRootLogger([
+	"tool",
+	"toolDraftCreate",
+]);
 
 export const toolDraftCreate = tool({
 	name: "draft-create",
@@ -16,8 +22,11 @@ export const toolDraftCreate = tool({
         can guess title and category).
     `.trim(),
 	parameters: DraftCreateSchema,
-	// outputSchema: DraftSchema,
 	async execute(data) {
+		logger.trace("toolDraftCreate", {
+			data,
+		});
+
 		return draftCreateFn({
 			data,
 		});

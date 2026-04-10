@@ -22,7 +22,10 @@ export const locationAutocompleteFn = createServerFn()
 	])
 	.inputValidator(LocationAutocompleteSchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
 		logger.trace(name, data);
 
 		const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
@@ -39,7 +42,7 @@ export const locationAutocompleteFn = createServerFn()
 				api: "https://api.geoapify.com",
 				autocomplete: "/v1/geocode/autocomplete",
 			}),
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
 				TextTooShortErrorFx() {
 					return [];

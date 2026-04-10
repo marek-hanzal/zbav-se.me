@@ -23,7 +23,10 @@ export const transactionEntryCreateFn = createServerFn({
 	])
 	.inputValidator(TransactionEntryCreateSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
 		logger.debug(name, data);
 
 		return zodGuardFx({
@@ -36,7 +39,7 @@ export const transactionEntryCreateFn = createServerFn({
 			withKyselyFx(database),
 			withDateFx,
 			withTransactionContextFx(),
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
 				AccessDeniedErrorFx(error) {
 					logger.error("AccessDeniedError", {

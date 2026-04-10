@@ -19,7 +19,10 @@ export const categoryCountFn = createServerFn()
 	])
 	.inputValidator(CategoryCountQuerySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
 		logger.debug(name, data);
 
 		return zodGuardFx({
@@ -30,7 +33,7 @@ export const categoryCountFn = createServerFn()
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
 				ZodErrorFx({ zod, input }) {
 					logger.error("ZodError", {

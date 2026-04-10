@@ -19,7 +19,10 @@ export const userExTokenEnableFn = createServerFn({
 		withUserMiddleware,
 	])
 	.handler(async ({ context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
 		logger.debug(name);
 
 		return zodGuardFx({
@@ -29,7 +32,7 @@ export const userExTokenEnableFn = createServerFn({
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
 				ConflictErrorFx(error) {
 					logger.error("ConflictError", {

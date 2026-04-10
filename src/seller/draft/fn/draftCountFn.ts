@@ -19,7 +19,10 @@ export const draftCountFn = createServerFn()
 	])
 	.inputValidator(DraftCountQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
 		logger.debug(name, data);
 		return zodGuardFx({
 			schema: CountSchema,
@@ -31,7 +34,7 @@ export const draftCountFn = createServerFn()
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
 				ZodErrorFx({ zod, input }) {
 					logger.error("ZodError", {

@@ -1,10 +1,9 @@
-import { getLogger } from "@logtape/logtape";
 import { tool } from "@openai/agents";
 import { draftCollectionFn } from "~/seller/draft/fn/draftCollectionFn";
 import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
+import { getRootLogger } from "~/server/log/getRootLogger";
 
-const logger = getLogger([
-	"agent",
+const logger = getRootLogger([
 	"tool",
 	"toolDraftCollection",
 ]);

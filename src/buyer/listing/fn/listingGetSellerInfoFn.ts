@@ -20,7 +20,10 @@ export const listingGetSellerInfoFn = createServerFn()
 	])
 	.inputValidator(EntitySchema)
 	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
 		logger.debug(name, data);
 
 		return zodGuardFx({
@@ -31,7 +34,7 @@ export const listingGetSellerInfoFn = createServerFn()
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
 				NotFoundErrorFx(error) {
 					logger.error("NotFoundError", {

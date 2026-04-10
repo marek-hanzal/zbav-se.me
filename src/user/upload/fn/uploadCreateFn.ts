@@ -23,7 +23,10 @@ export const uploadCreateFn = createServerFn({
 	])
 	.inputValidator(UploadCreateSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
 		logger.debug(name, data);
 
 		return zodGuardFx({
@@ -38,7 +41,7 @@ export const uploadCreateFn = createServerFn({
 			withUploadFx({
 				cdn: process.env.CDN_URL ?? "",
 			}),
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
 				InvalidRequestErrorFx(error) {
 					logger.error("InvalidRequestError", {

@@ -23,7 +23,10 @@ export const listingEventCreateFn = createServerFn({
 	])
 	.inputValidator(ListingEventCreateSchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
 		logger.debug(name, data);
 		return zodGuardFx({
 			schema: ListingEventSchema,
@@ -34,7 +37,7 @@ export const listingEventCreateFn = createServerFn({
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
 				NotFoundErrorFx(error) {
 					logger.error("NotFoundError", {

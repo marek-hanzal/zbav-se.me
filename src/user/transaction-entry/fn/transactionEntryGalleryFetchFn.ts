@@ -19,7 +19,10 @@ export const transactionEntryGalleryFetchFn = createServerFn()
 	])
 	.inputValidator(TransactionEntryGalleryQuerySchema)
 	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
 		logger.debug(name, data);
 		return zodGuardFx({
 			schema: GallerySchema,
@@ -29,7 +32,7 @@ export const transactionEntryGalleryFetchFn = createServerFn()
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
 				NotFoundErrorFx(error) {
 					logger.error("NotFoundError", {

@@ -24,7 +24,10 @@ export const s3PreSignFn = createServerFn({
 	])
 	.inputValidator(S3PreSignRequestSchema)
 	.handler(async ({ data, context: { user, rootLogger }, serverFnMeta: { name } }) => {
-		const logger = rootLogger.getChild(name);
+		const logger = rootLogger.getChild([
+			"fn",
+			name,
+		]);
 		logger.debug(name, data);
 
 		const s3Config = ServerS3Schema.parse(process.env);
@@ -47,7 +50,7 @@ export const s3PreSignFn = createServerFn({
 			withUploadFx({
 				cdn: cdnConfig.SERVER_CONTENT_CDN,
 			}),
-			withLoggerFx(logger),
+			withLoggerFx(rootLogger),
 			withCatchFx({
 				ZodErrorFx({ zod, input }) {
 					logger.error("ZodError", {
