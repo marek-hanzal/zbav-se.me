@@ -33,12 +33,7 @@ export const AgentLiveItem: FC<AgentLiveItem.Props> = ({ itemId, runId, ui, ...p
 			},
 			(item) => {
 				if (item.status === "in_progress" && item.content.length === 0) {
-					return (
-						<AgentPendingAssistantItem
-							ui={ui}
-							{...props}
-						/>
-					);
+					return null;
 				}
 
 				return (
