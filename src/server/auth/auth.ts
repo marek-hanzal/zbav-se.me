@@ -1,6 +1,3 @@
-// import { passkey } from "@better-auth/passkey";
-
-import { getLogger } from "@logtape/logtape";
 import { betterAuth } from "better-auth";
 import { anonymous, customSession } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
@@ -11,8 +8,9 @@ import { genId } from "@/lib/common/gen-id";
 import type { Database } from "~/server/database/Database";
 import { ServerBetterAuthSchema } from "~/server/env/ServerBetterAuthSchema";
 import { ServerViteSchema } from "~/server/env/ServerViteSchema";
+import { getRootLogger } from "~/server/log/getRootLogger";
 
-const logger = getLogger("auth");
+const logger = getRootLogger("auth");
 
 export namespace auth {
 	export type Api = Awaited<ReturnType<typeof auth>>;
@@ -109,6 +107,11 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 		rateLimit: {
 			window: 10,
 			max: 100,
+		},
+		session: {
+			cookieCache: {
+				enabled: false,
+			},
 		},
 		emailAndPassword: {
 			enabled: true,
