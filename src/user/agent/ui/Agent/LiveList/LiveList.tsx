@@ -82,8 +82,6 @@ export const LiveList: FC<LiveList.Props> = ({ ui, ...props }) => {
 			}}
 			{...props}
 		>
-			<ThinkingIndicator />
-
 			{entries.map((entry) => {
 				if (entry.type === "tool-call") {
 					return (
@@ -101,6 +99,8 @@ export const LiveList: FC<LiveList.Props> = ({ ui, ...props }) => {
 					/>
 				);
 			})}
+
+			<ThinkingIndicator />
 
 			<ErrorMessage />
 		</Container>

@@ -5,7 +5,7 @@ import { Icon, SpinnerIcon } from "@/lib/client/icon";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
-import { getResponseStreamEvent } from "~/user/agent/type/AgentEvent";
+import { getFunctionCallResultItem, getResponseStreamEvent } from "~/user/agent/type/AgentEvent";
 
 export namespace ThinkingIndicator {
 	export interface Props extends Container.Props {
@@ -21,9 +21,14 @@ interface ThinkingState {
 function selectThinkingState(events: RunStreamEvent[] | undefined): ThinkingState {
 	let isVisible = false;
 	let label: string | null = null;
-	let hasOutputTextStarted = false;
 
 	for (const event of events ?? []) {
+		if (getFunctionCallResultItem(event)) {
+			isVisible = true;
+			label = translator.text("Reasoning");
+			continue;
+		}
+
 		const responseEvent = getResponseStreamEvent(event);
 
 		if (!responseEvent) {
@@ -34,13 +39,8 @@ function selectThinkingState(events: RunStreamEvent[] | undefined): ThinkingStat
 			responseEvent.type === "response.output_text.delta" ||
 			responseEvent.type === "response.output_text.done"
 		) {
-			hasOutputTextStarted = true;
 			isVisible = false;
 			label = null;
-			continue;
-		}
-
-		if (hasOutputTextStarted) {
 			continue;
 		}
 
@@ -53,6 +53,15 @@ function selectThinkingState(events: RunStreamEvent[] | undefined): ThinkingStat
 		if (responseEvent.type === "response.reasoning_text.done") {
 			isVisible = true;
 			label = null;
+			continue;
+		}
+
+		if (
+			responseEvent.type === "response.output_item.added" &&
+			responseEvent.item.type === "message"
+		) {
+			isVisible = true;
+			label = translator.text("Reasoning");
 			continue;
 		}
 
