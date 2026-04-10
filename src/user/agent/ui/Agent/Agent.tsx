@@ -9,6 +9,7 @@ import { translator } from "@/lib/common/translator";
 import { ChatInput } from "~/common/ui/chat";
 import { CancelIcon } from "~/common/ui/icon";
 import { useAgent } from "~/user/agent/hook/useAgent";
+import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import { AgentMessageList } from "./AgentMessageList";
 
 export namespace Agent {
@@ -20,6 +21,15 @@ export namespace Agent {
 export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 	const chat = useAgent({
 		_suspense: "I know",
+	});
+	/**
+	 * Just for checking empty component state
+	 */
+	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery({
+		cursor: {
+			page: 0,
+			size: 1,
+		},
 	});
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
