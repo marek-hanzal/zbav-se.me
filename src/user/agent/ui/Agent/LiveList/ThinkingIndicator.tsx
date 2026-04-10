@@ -21,11 +21,15 @@ interface ThinkingState {
 function selectThinkingState(events: RunStreamEvent[] | undefined): ThinkingState {
 	let isVisible = false;
 	let label: string | null = null;
+	const pendingToolCallIds = new Set<string>();
 
 	for (const event of events ?? []) {
-		if (getFunctionCallResultItem(event)) {
-			isVisible = true;
-			label = translator.text("Reasoning");
+		const result = getFunctionCallResultItem(event);
+
+		if (result) {
+			pendingToolCallIds.delete(result.callId);
+			isVisible = pendingToolCallIds.size === 0;
+			label = isVisible ? translator.text("Reasoning") : null;
 			continue;
 		}
 
@@ -69,13 +73,14 @@ function selectThinkingState(events: RunStreamEvent[] | undefined): ThinkingStat
 			responseEvent.type === "response.output_item.added" &&
 			responseEvent.item.type === "function_call"
 		) {
-			isVisible = true;
-			label = translator.text("Tool call");
+			pendingToolCallIds.add(responseEvent.item.call_id);
+			isVisible = false;
+			label = null;
 			continue;
 		}
 
 		if (responseEvent.type === "response.function_call_arguments.done") {
-			isVisible = true;
+			isVisible = pendingToolCallIds.size === 0;
 			label = null;
 			continue;
 		}
