@@ -6,5 +6,4 @@ export const AssistantModelSettings: ModelSettings = {
 	reasoning: {
 		effort: "medium",
 	},
-	toolChoice: "required",
 };

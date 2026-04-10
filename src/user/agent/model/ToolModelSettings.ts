@@ -6,5 +6,4 @@ export const ToolModelSettings: ModelSettings = {
 	reasoning: {
 		effort: "none",
 	},
-	toolChoice: "required",
 };
