@@ -1,10 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import axios from "axios";
 import { createParser } from "eventsource-parser";
 import { useEffect, useMemo, useRef } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
+import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import type { AgentEvent } from "~/user/agent/type/AgentEvent";
 
 export namespace useAgent {
@@ -21,6 +22,7 @@ export namespace useAgent {
 
 export const useAgent = ({ _suspense }: useAgent.Props) => {
 	const router = useRouter();
+	const queryClient = useQueryClient();
 	const liveQuery = withAgentLiveQuery.useSet();
 
 	const abortControllerRef = useRef<AbortController | null>(null);
@@ -46,6 +48,8 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 			if (trimmed.length === 0) {
 				return;
 			}
+
+			liveQuery(() => []);
 
 			abortControllerRef.current = new AbortController();
 			const decoder = new TextDecoder();
@@ -108,6 +112,9 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 		},
 		onError(error) {
 			console.error(error);
+		},
+		async onSuccess() {
+			await withAgentStreamItemsQuery.invalidate(queryClient);
 		},
 		onSettled() {
 			abortControllerRef.current = null;
