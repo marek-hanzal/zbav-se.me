@@ -44,13 +44,13 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			return;
 		}
 
-		const cs = getComputedStyle(el);
+		const style = getComputedStyle(el);
 
-		const lineHeight = Number.parseFloat(cs.lineHeight || "20");
-		const paddingTop = Number.parseFloat(cs.paddingTop || "0");
-		const paddingBottom = Number.parseFloat(cs.paddingBottom || "0");
-		const borderTop = Number.parseFloat(cs.borderTopWidth || "0");
-		const borderBottom = Number.parseFloat(cs.borderBottomWidth || "0");
+		const lineHeight = Number.parseFloat(style.lineHeight || "20");
+		const paddingTop = Number.parseFloat(style.paddingTop || "0");
+		const paddingBottom = Number.parseFloat(style.paddingBottom || "0");
+		const borderTop = Number.parseFloat(style.borderTopWidth || "0");
+		const borderBottom = Number.parseFloat(style.borderBottomWidth || "0");
 
 		const verticalExtras = paddingTop + paddingBottom + borderTop + borderBottom;
 		const maxHeight = lineHeight * maxRows + verticalExtras;
