@@ -9,7 +9,7 @@ export namespace UserMessage {
 	}
 }
 
-export const UserMessage: FC<UserMessage.Props> = ({ item, ui, ...props }) => {
+export const UserMessage: FC<UserMessage.Props> = ({ item, ui, className, ...props }) => {
 	const text =
 		typeof item.content === "string"
 			? item.content
@@ -22,10 +22,21 @@ export const UserMessage: FC<UserMessage.Props> = ({ item, ui, ...props }) => {
 		<Container
 			data-ui={"UserMessage"}
 			ui={{
-				flow: "vertical",
-				gap: "xs",
+				tone: "brand",
+				theme: "light",
+				border: true,
+				shadow: true,
+				background: "default",
+				round: "default",
+				inner: "default",
+				opacity: "7",
 				...ui,
 			}}
+			className={[
+				"w-4/5",
+				"ml-auto",
+				className,
+			]}
 			{...props}
 		>
 			<Markdown>{text}</Markdown>
