@@ -8,6 +8,7 @@
 .playwright-mcp
 .tanstack
 .tmp
+.tmp-*
 .turbo
 .vercel
 .vscode/chrome-debug-profile
