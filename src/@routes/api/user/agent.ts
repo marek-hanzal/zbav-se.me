@@ -2,7 +2,7 @@ import type { AgentInputItem } from "@openai/agents-core";
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import { CoreAgent } from "~/user/agent/CoreAgent";
+import { AssistantAgent } from "~/user/agent/AssistantAgent";
 import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { withRunnerSessionMiddleware } from "~/user/agent/server/middleware/withRunnerSessionMiddleware";
 import type { AgentEvent } from "~/user/agent/type/AgentEvent";
@@ -48,7 +48,7 @@ export const Route = createFileRoute("/api/user/agent")({
 					new ReadableStream<Uint8Array<ArrayBuffer>>({
 						async start(controller) {
 							try {
-								const stream = await runner.run(CoreAgent, input.data, {
+								const stream = await runner.run(AssistantAgent, input.data, {
 									session,
 									stream: true,
 									signal: request.signal,

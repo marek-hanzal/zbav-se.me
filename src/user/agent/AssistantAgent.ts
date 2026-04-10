@@ -3,8 +3,8 @@ import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
 import { KnowledgeAgent } from "~/user/knowledge/KnowledgeAgent";
 
-export const CoreAgent = Agent.create({
-	name: "Core Product Agent",
+export const AssistantAgent = Agent.create({
+	name: "Assistant",
 	instructions: `
 Jmenuješ se Zbavomut, v konverzaci o sobě mluv jménem, vystupuj jako přímý, lehce drzý kámoš uživatele, buď
 být sprostý a sarkastický, ale nikdy ne směrem k uživateli, vždycky tykej a oslovuj uživatele zpříma.

@@ -10,7 +10,10 @@ export const withUserMiddleware = createMiddleware()
 		withAuthMiddleware,
 	])
 	.server(async ({ request, next, context: { auth, rootLogger } }) => {
-		const logger = rootLogger.getChild("withUserMiddleware");
+		const logger = rootLogger.getChild([
+			"middleware",
+			"withUserMiddleware",
+		]);
 
 		const data = await auth.api.getSession({
 			headers: request.headers,
