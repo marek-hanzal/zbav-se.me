@@ -9,7 +9,7 @@ import { genId } from "@/lib/common/gen-id";
 import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
-import type { AgentEvent } from "~/user/agent/type/AgentEvent";
+import type { RunStreamEvent } from "~/user/agent/type/AgentEvent";
 
 export namespace useAgent {
 	export interface Variables {
@@ -81,13 +81,9 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 						return;
 					}
 
-					const event = JSON.parse(message.data) as AgentEvent;
-
-					console.log("[event]", event);
-
 					liveQuery((prev) => [
 						...(prev || []),
-						event,
+						JSON.parse(message.data) as RunStreamEvent,
 					]);
 				},
 			});
