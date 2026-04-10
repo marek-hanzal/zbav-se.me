@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
+import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import { AssistantMessage } from "./AssistantMessage";
 import { SystemMessage } from "./SystemMessage";
@@ -14,18 +15,7 @@ export namespace HistoryList {
 }
 
 export const HistoryList: FC<HistoryList.Props> = ({ ui, ...props }) => {
-	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery({
-		sort: [
-			{
-				field: "sort",
-				order: "asc",
-			},
-		],
-		cursor: {
-			page: 0,
-			size: 512,
-		},
-	});
+	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(AgentStreamItemsQuery);
 
 	return (
 		<Container

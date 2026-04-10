@@ -6,11 +6,9 @@ import { createParser } from "eventsource-parser";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
 import { genId } from "@/lib/common/gen-id";
+import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
-import {
-	agentStreamHistoryQuery,
-	withAgentStreamItemsQuery,
-} from "~/user/agent/query/withAgentStreamItemsQuery";
+import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import type { AgentEvent } from "~/user/agent/type/AgentEvent";
 
 export namespace useAgent {
@@ -70,7 +68,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 						content: trimmed,
 					},
 				] satisfies AgentInputItem[];
-			}, agentStreamHistoryQuery);
+			}, AgentStreamItemsQuery);
 
 			liveQuery(() => []);
 

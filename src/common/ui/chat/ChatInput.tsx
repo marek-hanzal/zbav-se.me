@@ -105,7 +105,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				id={areaId}
 				rows={1}
 				value={message}
-				disabled={ui?.disabled}
+				disabled={ui?.disabled || loading}
 				onChange={(e) => setMessage(e.target.value)}
 				onKeyDown={handleKeyDown}
 				placeholder={placeholder}

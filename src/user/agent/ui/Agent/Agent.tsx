@@ -1,4 +1,4 @@
-import { type FC, useCallback, useRef } from "react";
+import { type FC, useRef } from "react";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
 import { EmptyState } from "@/lib/client/empty-state";
@@ -9,6 +9,7 @@ import { translator } from "@/lib/common/translator";
 import { ChatInput } from "~/common/ui/chat";
 import { CancelIcon } from "~/common/ui/icon";
 import { useAgent } from "~/user/agent/hook/useAgent";
+import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import { AgentMessageList } from "./AgentMessageList";
 
@@ -22,33 +23,8 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 	const chat = useAgent({
 		_suspense: "I know",
 	});
-	/**
-	 * Just for checking empty component state
-	 */
-	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery({
-		cursor: {
-			page: 0,
-			size: 1,
-		},
-	});
+	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(AgentStreamItemsQuery);
 	const containerRef = useRef<HTMLDivElement | null>(null);
-
-	const submit = useCallback(
-		(value: string) => {
-			if (chat.mutation.isPending) {
-				return;
-			}
-
-			void chat.mutation.mutateAsync({
-				text: value,
-			});
-		},
-		[
-			chat.mutation,
-		],
-	);
-
-	const isBusy = chat.mutation.isPending;
 
 	return (
 		<Container
@@ -108,7 +84,10 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 							height: "full",
 						}}
 					>
-						<AgentMessageList containerRef={containerRef} />
+						<AgentMessageList
+							containerRef={containerRef}
+							isPending={chat.mutation.isPending}
+						/>
 					</Container>
 				</EmptyState>
 
@@ -120,9 +99,9 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 					}}
 				>
 					<ChatInput
-						onSubmit={submit}
+						onSubmit={chat.submit}
 						placeholder={translator.text("Write to an agent")}
-						loading={isBusy}
+						loading={chat.mutation.isPending}
 						cancel={
 							<Button
 								data-action={"stop agent stream"}
@@ -139,9 +118,6 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 								}}
 							/>
 						}
-						ui={{
-							disabled: isBusy,
-						}}
 					/>
 				</Container>
 			</Container>
