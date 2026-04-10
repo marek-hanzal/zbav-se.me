@@ -2,6 +2,7 @@ import {
 	type FC,
 	type KeyboardEventHandler,
 	type ReactNode,
+	type RefCallback,
 	useId,
 	useLayoutEffect,
 	useRef,
@@ -20,6 +21,7 @@ export namespace ChatInput {
 		maxRows?: number;
 		loading: boolean;
 		left?: ReactNode;
+		inputRef?: RefCallback<HTMLTextAreaElement>;
 	}
 }
 
@@ -30,6 +32,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	maxRows = 6,
 	loading,
 	left,
+	inputRef,
 	ui,
 	...props
 }) => {
@@ -101,7 +104,10 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			{left}
 
 			<textarea
-				ref={textareaRef}
+				ref={(element) => {
+					textareaRef.current = element;
+					inputRef?.(element);
+				}}
 				id={areaId}
 				rows={1}
 				value={message}
