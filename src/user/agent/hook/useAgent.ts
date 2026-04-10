@@ -1,3 +1,4 @@
+import type { RunStreamEvent } from "@openai/agents";
 import type { AgentInputItem } from "@openai/agents-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
@@ -9,7 +10,6 @@ import { genId } from "@/lib/common/gen-id";
 import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
-import type { RunStreamEvent } from "~/user/agent/type/AgentEvent";
 
 export namespace useAgent {
 	export interface Variables {
@@ -19,14 +19,6 @@ export namespace useAgent {
 	export interface Props extends MarkSuspense.Props {
 		//
 	}
-
-	export interface Result {
-		submit(text: string): Promise<void>;
-		cancel(): void;
-		isBusy: boolean;
-	}
-
-	export type UseResult = ReturnType<typeof useAgent>;
 }
 
 export const useAgent = ({ _suspense }: useAgent.Props) => {
@@ -82,7 +74,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 					}
 
 					liveQuery((prev) => [
-						...(prev || []),
+						...(prev ?? []),
 						JSON.parse(message.data) as RunStreamEvent,
 					]);
 				},
