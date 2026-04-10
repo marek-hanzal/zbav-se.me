@@ -1,31 +1,34 @@
 import type { AssistantMessageItem } from "@openai/agents-core";
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
+import { Group } from "@/lib/client/group";
 import { Markdown } from "@/lib/client/markdown";
 
 export namespace AssistantMessage {
-	export interface Props extends Container.Props {
+	export interface Props extends Group.Props {
 		item: AssistantMessageItem;
 	}
 }
 
-export const AssistantMessage: FC<AssistantMessage.Props> = ({ item, ui, ...props }) => {
+export const AssistantMessage: FC<AssistantMessage.Props> = ({ item, ui, className, ...props }) => {
 	const text = item.content
 		.filter((c) => c.type === "output_text")
 		.map((c) => c.text)
 		.join("");
 
 	return (
-		<Container
-			data-ui={"AssistantMessage"}
+		<Group
+			data-ui={"HistoryList-AssistantMessage"}
 			ui={{
-				flow: "vertical",
-				gap: "xs",
+				tone: "neutral",
+				theme: "light",
+				background: "alt",
+				inner: "default",
 				...ui,
 			}}
+			className={className}
 			{...props}
 		>
 			<Markdown>{text}</Markdown>
-		</Container>
+		</Group>
 	);
 };

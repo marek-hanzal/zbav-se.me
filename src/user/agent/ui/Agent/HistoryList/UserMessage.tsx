@@ -1,10 +1,10 @@
 import type { UserMessageItem } from "@openai/agents-core";
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
+import { Group } from "@/lib/client/group";
 import { Markdown } from "@/lib/client/markdown";
 
 export namespace UserMessage {
-	export interface Props extends Container.Props {
+	export interface Props extends Group.Props {
 		item: UserMessageItem;
 	}
 }
@@ -19,15 +19,12 @@ export const UserMessage: FC<UserMessage.Props> = ({ item, ui, className, ...pro
 					.join("");
 
 	return (
-		<Container
+		<Group
 			data-ui={"UserMessage"}
 			ui={{
 				tone: "subtle",
 				theme: "light",
-				border: true,
-				shadow: true,
 				background: "default",
-				round: "default",
 				inner: "default",
 				...ui,
 			}}
@@ -39,6 +36,6 @@ export const UserMessage: FC<UserMessage.Props> = ({ item, ui, className, ...pro
 			{...props}
 		>
 			<Markdown>{text}</Markdown>
-		</Container>
+		</Group>
 	);
 };
