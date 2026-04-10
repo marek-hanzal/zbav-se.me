@@ -8,11 +8,11 @@ import { translator } from "@/lib/common/translator";
 import { ChatInput } from "~/common/ui/chat";
 import { CancelIcon } from "~/common/ui/icon";
 import { useAgent } from "~/user/agent/hook/useAgent";
-import { withAgentLiveRunCollectionQuery } from "~/user/agent/query/withAgentLiveRunCollectionQuery";
 import {
 	agentStreamItemsQueryData,
 	withAgentStreamItemsQuery,
 } from "~/user/agent/query/withAgentStreamItemsQuery";
+import { useAgentLiveStore } from "~/user/agent/store/useAgentLiveStore";
 import { AgentMessageList } from "./AgentMessageList";
 
 export namespace Agent {
@@ -26,7 +26,7 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 		_suspense: "I know",
 	});
 	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(agentStreamItemsQueryData);
-	const { data: liveRunIds = [] } = withAgentLiveRunCollectionQuery.useQuery(undefined);
+	const liveRunIds = useAgentLiveStore((state) => state.runIds);
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const submit = useCallback(

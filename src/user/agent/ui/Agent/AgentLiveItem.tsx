@@ -1,23 +1,19 @@
 import type { FC } from "react";
 import { match, P } from "ts-pattern";
 import type { Container } from "@/lib/client/container";
-import { withAgentLiveItemQuery } from "~/user/agent/query/withAgentLiveItemQuery";
+import { useAgentLiveStore } from "~/user/agent/store/useAgentLiveStore";
 import { AgentAssistantMessageItem } from "./AgentAssistantMessageItem";
 import { AgentRawItem } from "./AgentRawItem";
 import { AgentToolItem } from "./AgentToolItem";
 
 export namespace AgentLiveItem {
 	export interface Props extends Container.Props {
-		itemId: string;
-		runId: string;
+		slotId: string;
 	}
 }
 
-export const AgentLiveItem: FC<AgentLiveItem.Props> = ({ itemId, runId, ui, ...props }) => {
-	const { data: item } = withAgentLiveItemQuery.useQuery({
-		runId,
-		itemId,
-	});
+export const AgentLiveItem: FC<AgentLiveItem.Props> = ({ slotId, ui, ...props }) => {
+	const item = useAgentLiveStore((state) => state.slotById[slotId]?.item);
 
 	if (!item) {
 		return null;
@@ -41,14 +37,6 @@ export const AgentLiveItem: FC<AgentLiveItem.Props> = ({ itemId, runId, ui, ...p
 						{...props}
 					/>
 				);
-			},
-		)
-		.with(
-			{
-				type: "reasoning",
-			},
-			() => {
-				return null;
 			},
 		)
 		.with(

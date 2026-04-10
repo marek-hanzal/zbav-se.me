@@ -6,19 +6,14 @@ import { useEffect, useMemo, useRef } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
 import { genId } from "@/lib/common/gen-id/genId";
 import {
-	type agentLiveStreamCache,
-	applyEvent,
-	clearRun,
-	markRun,
-	seedRun,
-} from "~/user/agent/fn/agentLiveStreamCache";
-import {
 	agentStreamItemsQueryData,
 	withAgentStreamItemsQuery,
 } from "~/user/agent/query/withAgentStreamItemsQuery";
+import type { AgentLiveStore } from "~/user/agent/store/AgentLiveStore";
+import { useAgentLiveStore } from "~/user/agent/store/useAgentLiveStore";
 import type { AgentEvent } from "~/user/agent/type/AgentEvent";
 
-type TerminalStatus = Exclude<agentLiveStreamCache.RunStatus, "streaming">;
+type TerminalStatus = AgentLiveStore.TerminalStatus;
 
 export namespace useAgent {
 	export interface Variables {
@@ -71,8 +66,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 					}
 
 					const event = JSON.parse(message.data) as AgentEvent;
-					const result = applyEvent({
-						queryClient,
+					const result = useAgentLiveStore.getState().applyEvent({
 						runId,
 						event,
 					});
@@ -87,8 +81,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 			cancelRequestedRef.current = false;
 			terminalStatusRef.current = undefined;
 
-			seedRun({
-				queryClient,
+			useAgentLiveStore.getState().seedRun({
 				runId,
 				userText: trimmed,
 			});
@@ -145,8 +138,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 			if (terminalStatusRef.current === "completed") {
 				await withAgentStreamItemsQuery.invalidate(queryClient, agentStreamItemsQueryData);
 
-				clearRun({
-					queryClient,
+				useAgentLiveStore.getState().clearRun({
 					runId,
 				});
 
@@ -155,8 +147,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 
 			if (cancelRequestedRef.current) {
 				if (terminalStatusRef.current === undefined) {
-					markRun({
-						queryClient,
+					useAgentLiveStore.getState().markRun({
 						runId,
 						status: "cancelled",
 					});
@@ -168,8 +159,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 			}
 
 			if (terminalStatusRef.current === undefined) {
-				markRun({
-					queryClient,
+				useAgentLiveStore.getState().markRun({
 					runId,
 					status: "incomplete",
 				});
@@ -189,8 +179,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 			}
 
 			if (runId && terminalStatusRef.current === undefined) {
-				markRun({
-					queryClient,
+				useAgentLiveStore.getState().markRun({
 					runId,
 					status: "failed",
 				});
@@ -220,8 +209,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 			cancelRequestedRef.current = true;
 
 			if (terminalStatusRef.current === undefined) {
-				markRun({
-					queryClient,
+				useAgentLiveStore.getState().markRun({
 					runId,
 					status: "cancelled",
 				});

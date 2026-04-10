@@ -1,7 +1,7 @@
 import type { UserMessageItem } from "@openai/agents-core";
 import type { FC } from "react";
 import type { Container } from "@/lib/client/container";
-import { withAgentLiveRunQuery } from "~/user/agent/query/withAgentLiveRunQuery";
+import { useAgentLiveStore } from "~/user/agent/store/useAgentLiveStore";
 import { AgentLiveItem } from "./AgentLiveItem";
 import { AgentLiveRunActivity } from "./AgentLiveRunActivity";
 import { AgentLiveRunNotice } from "./AgentLiveRunNotice";
@@ -13,19 +13,23 @@ export namespace AgentLiveRun {
 	}
 }
 
-export const AgentLiveRun: FC<AgentLiveRun.Props> = ({ runId, ui, ...props }) => {
-	const { data: run } = withAgentLiveRunQuery.useQuery({
-		runId,
-	});
+const EMPTY_SLOT_IDS: string[] = [];
 
-	if (!run) {
+export const AgentLiveRun: FC<AgentLiveRun.Props> = ({ runId, ui, ...props }) => {
+	const userText = useAgentLiveStore((state) => state.runById[runId]?.userText);
+	const orderedSlotIds = useAgentLiveStore((state) => {
+		return state.runById[runId]?.orderedSlotIds ?? EMPTY_SLOT_IDS;
+	});
+	const notice = useAgentLiveStore((state) => state.runById[runId]?.notice);
+
+	if (!userText) {
 		return null;
 	}
 
 	const userItem = {
 		type: "message",
 		role: "user",
-		content: run.userText,
+		content: userText,
 	} satisfies UserMessageItem;
 
 	return (
@@ -36,27 +40,22 @@ export const AgentLiveRun: FC<AgentLiveRun.Props> = ({ runId, ui, ...props }) =>
 				{...props}
 			/>
 
-			<AgentLiveRunActivity
-				runId={runId}
-				itemIds={run.itemIds}
-				status={run.status}
-			/>
+			<AgentLiveRunActivity runId={runId} />
 
-			{run.itemIds.map((itemId) => {
+			{orderedSlotIds.map((slotId) => {
 				return (
 					<AgentLiveItem
-						key={`${runId}-${itemId}`}
-						runId={runId}
-						itemId={itemId}
+						key={slotId}
+						slotId={slotId}
 						ui={ui}
 						{...props}
 					/>
 				);
 			})}
 
-			{run.notice ? (
+			{notice ? (
 				<AgentLiveRunNotice
-					kind={run.notice}
+					kind={notice}
 					ui={ui}
 					{...props}
 				/>

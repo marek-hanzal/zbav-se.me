@@ -2,11 +2,11 @@ import type { FC } from "react";
 import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
 import { translator } from "@/lib/common/translator";
-import type { agentLiveStreamCache } from "~/user/agent/fn/agentLiveStreamCache";
+import type { AgentLiveRunState } from "~/user/agent/store/AgentLiveRunState";
 
 export namespace AgentLiveRunNotice {
 	export interface Props extends Container.Props {
-		kind: agentLiveStreamCache.NoticeKind;
+		kind: AgentLiveRunState.Notice;
 	}
 }
 
@@ -41,7 +41,7 @@ export const AgentLiveRunNotice: FC<AgentLiveRunNotice.Props> = ({ kind, ui, ...
 	);
 };
 
-const getNoticeText = (kind: agentLiveStreamCache.NoticeKind): string => {
+const getNoticeText = (kind: AgentLiveRunState.Notice): string => {
 	return match(kind)
 		.with("cancelled", () =>
 			translator.text("Agent live run cancelled (notice)", "Run interrupted by user"),
