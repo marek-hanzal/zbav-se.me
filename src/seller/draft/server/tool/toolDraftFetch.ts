@@ -1,6 +1,12 @@
 import { tool } from "@openai/agents";
 import { draftFetchFn } from "~/seller/draft/fn/draftFetchFn";
 import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
+import { getRootLogger } from "~/server/log/getRootLogger";
+
+const logger = getRootLogger([
+	"tool",
+	"toolDraftFetch",
+]);
 
 export const toolDraftFetch = tool({
 	name: "draft-fetch",
@@ -18,8 +24,11 @@ export const toolDraftFetch = tool({
         @see draft-collection
     `.trim(),
 	parameters: DraftToolQuerySchema,
-	// outputSchema: DraftSchema,
 	async execute(data) {
+		logger.trace("toolDraftFetch", {
+			data,
+		});
+
 		return draftFetchFn({
 			data,
 		});

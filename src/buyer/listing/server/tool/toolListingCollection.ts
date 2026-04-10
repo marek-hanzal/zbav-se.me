@@ -1,6 +1,12 @@
 import { tool } from "@openai/agents";
 import { listingCollectionFn } from "~/buyer/listing/fn/listingCollectionFn";
 import { ListingToolQuerySchema } from "~/buyer/listing/server/schema/ListingToolQuerySchema";
+import { getRootLogger } from "~/server/log/getRootLogger";
+
+const logger = getRootLogger([
+	"tool",
+	"toolListingCollection",
+]);
 
 export const toolListingCollection = tool({
 	name: "listing-collection",
@@ -17,6 +23,10 @@ export const toolListingCollection = tool({
 	parameters: ListingToolQuerySchema,
 	// outputSchema: z.array(ListingSchema),
 	async execute(data) {
+		logger.trace("toolListingCollection", {
+			data,
+		});
+
 		return listingCollectionFn({
 			data,
 		});

@@ -1,9 +1,12 @@
-import { getLogger } from "@logtape/logtape";
 import { tool } from "@openai/agents";
 import { z } from "zod";
+import { getRootLogger } from "~/server/log/getRootLogger";
 import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
 
-const logger = getLogger("toolKnowledgeIndex");
+const logger = getRootLogger([
+	"tool",
+	"toolKnowledgeIndex",
+]);
 
 export const toolKnowledgeIndex = tool({
 	name: "knowledge-index",
@@ -19,9 +22,8 @@ export const toolKnowledgeIndex = tool({
 				.describe("Ignored. The tool always returns the full knowledge index."),
 		})
 		.strip(),
-	// outputSchema: z.array(KnowledgeFrontSchema),
 	async execute() {
-		logger.trace("Calling knowledge index");
+		logger.trace("toolKnowledgeIndex");
 
 		return getKnowledgeIndex().map(({ data }) => data);
 	},

@@ -1,6 +1,12 @@
 import { tool } from "@openai/agents";
+import { getRootLogger } from "~/server/log/getRootLogger";
 import { categoryCollectionFn } from "~/session/category/fn/categoryCollectionFn";
 import { CategoryQuerySchema } from "~/session/category/server/schema/CategoryQuerySchema";
+
+const logger = getRootLogger([
+	"tool",
+	"toolCategoryCollection",
+]);
 
 export const toolCategoryCollection = tool({
 	name: "category-collection",
@@ -10,8 +16,11 @@ export const toolCategoryCollection = tool({
         others who need a category.
     `.trim(),
 	parameters: CategoryQuerySchema,
-	// outputSchema: CategorySchema.array(),
 	async execute(data) {
+		logger.trace("toolCategoryCollection", {
+			data,
+		});
+
 		return categoryCollectionFn({
 			data,
 		});

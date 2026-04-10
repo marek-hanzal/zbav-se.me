@@ -1,6 +1,12 @@
 import { tool } from "@openai/agents";
+import { getRootLogger } from "~/server/log/getRootLogger";
 import { locationAutocompleteFn } from "~/session/location/fn/locationAutocompleteFn";
 import { LocationAutocompleteSchema } from "~/session/location/server/schema/LocationAutocompleteSchema";
+
+const logger = getRootLogger([
+	"tool",
+	"toolLocationAutocomplete",
+]);
 
 export const toolLocationAutocomplete = tool({
 	name: "location-autocomplete",
@@ -10,8 +16,11 @@ export const toolLocationAutocomplete = tool({
         able to translate even loose address (e.g. just a city name) if user wants so.
     `.trim(),
 	parameters: LocationAutocompleteSchema,
-	// outputSchema: z.array(LocationSchema),
 	async execute(data) {
+		logger.trace("toolLocationAutocomplete", {
+			data,
+		});
+
 		return locationAutocompleteFn({
 			data,
 		});

@@ -1,7 +1,13 @@
 import { tool } from "@openai/agents";
 import Fuse from "fuse.js";
 import { z } from "zod";
+import { getRootLogger } from "~/server/log/getRootLogger";
 import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
+
+const logger = getRootLogger([
+	"tool",
+	"toolKnowledgeSearch",
+]);
 
 export const toolKnowledgeSearch = tool({
 	name: "knowledge-search",
@@ -25,15 +31,12 @@ export const toolKnowledgeSearch = tool({
 				.describe("Optional maximum number of topics to return."),
 		})
 		.strip(),
-	// outputSchema: z.array(
-	// 	z
-	// 		.looseObject({
-	// 			...KnowledgeFrontSchema.shape,
-	// 			score: z.number(),
-	// 		})
-	// 		.strip(),
-	// ),
 	async execute({ query, limit }) {
+		logger.trace("toolKnowledgeSearch", {
+			query,
+			limit,
+		});
+
 		const normalized = query.trim();
 		const index = getKnowledgeIndex().map(
 			({ content, data }) =>

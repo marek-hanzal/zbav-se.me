@@ -1,6 +1,12 @@
 import { tool } from "@openai/agents";
 import { draftDeleteFn } from "~/seller/draft/fn/draftDeleteFn";
 import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
+import { getRootLogger } from "~/server/log/getRootLogger";
+
+const logger = getRootLogger([
+	"tool",
+	"toolDraftDelete",
+]);
 
 export const toolDraftDelete = tool({
 	name: "draft-delete",
@@ -11,8 +17,11 @@ export const toolDraftDelete = tool({
         to make sure you're about to delete draft user is about to remove.
     `.trim(),
 	parameters: DraftToolQuerySchema,
-	// outputSchema: DraftSchema,
 	async execute(data) {
+		logger.trace("toolDraftDelete", {
+			data,
+		});
+
 		return draftDeleteFn({
 			data,
 		});
