@@ -1,6 +1,7 @@
 import { type FC, useCallback, useRef } from "react";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
+import { EmptyState } from "@/lib/client/empty-state";
 import { AiIcon } from "@/lib/client/icon";
 import { Status } from "@/lib/client/status";
 import type { MarkSuspense } from "@/lib/client/type";
@@ -12,7 +13,6 @@ import {
 	agentStreamItemsQueryData,
 	withAgentStreamItemsQuery,
 } from "~/user/agent/query/withAgentStreamItemsQuery";
-import { useAgentLiveStore } from "~/user/agent/store/useAgentLiveStore";
 import { AgentMessageList } from "./AgentMessageList";
 
 export namespace Agent {
@@ -26,7 +26,6 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 		_suspense: "I know",
 	});
 	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(agentStreamItemsQueryData);
-	const liveRunIds = useAgentLiveStore((state) => state.runIds);
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const submit = useCallback(
@@ -45,7 +44,6 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 	);
 
 	const isBusy = chat.mutation.isPending;
-	const showEmptyState = items.length === 0 && liveRunIds.length === 0;
 
 	return (
 		<Container
@@ -64,43 +62,53 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 					gap: "xs",
 				}}
 			>
-				<Container
-					ref={containerRef}
-					ui={{
-						layout: "vertical-flex",
-						gap: "default",
-						scroll: "vertical",
-						height: "full",
-					}}
+				<EmptyState
+					check={[
+						{
+							check() {
+								return true;
+							},
+							render() {
+								return (
+									<Container
+										ui={{
+											tone: "brand",
+											theme: "light",
+											layout: "vertical-centered",
+											height: "full",
+											width: "full",
+											inner: "4xl",
+										}}
+										className={[
+											"text-center",
+										]}
+									>
+										<Status
+											icon={AiIcon}
+											textTitle={translator.text("Agent welcome (title)")}
+											textMessage={translator.text("Agent welcome (message)")}
+										/>
+									</Container>
+								);
+							},
+						},
+					]}
 				>
-					{showEmptyState ? (
-						<Container
-							ui={{
-								tone: "brand",
-								theme: "light",
-								layout: "vertical-centered",
-								height: "full",
-								width: "full",
-								inner: "4xl",
-							}}
-							className={[
-								"text-center",
-							]}
-						>
-							<Status
-								icon={AiIcon}
-								textTitle={translator.text("Agent welcome (title)")}
-								textMessage={translator.text("Agent welcome (message)")}
-							/>
-						</Container>
-					) : (
+					<Container
+						ref={containerRef}
+						ui={{
+							layout: "vertical-flex",
+							gap: "default",
+							scroll: "vertical",
+							height: "full",
+						}}
+					>
 						<AgentMessageList
 							containerRef={containerRef}
 							items={items}
-							liveRunIds={liveRunIds}
 						/>
-					)}
-				</Container>
+					</Container>
+				</EmptyState>
 
 				<Container
 					ui={{
