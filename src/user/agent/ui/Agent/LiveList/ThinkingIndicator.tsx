@@ -9,8 +9,8 @@ import { getResponseStreamEvent } from "~/user/agent/type/AgentEvent";
 
 export namespace ThinkingIndicator {
 	export interface Props extends Container.Props {
-        //
-    }
+		//
+	}
 }
 
 interface ThinkingState {

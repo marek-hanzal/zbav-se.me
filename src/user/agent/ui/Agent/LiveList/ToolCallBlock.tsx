@@ -1,7 +1,7 @@
 import type { FunctionCallResultItem, RunStreamEvent } from "@openai/agents";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
-import { SpinnerContainer } from "@/lib/client/spinner";
+import { Group } from "@/lib/client/group";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
@@ -9,7 +9,6 @@ import { getFunctionCallResultItem, getResponseStreamEvent } from "~/user/agent/
 
 interface ToolCallState {
 	name: string;
-	isComplete: boolean;
 	input: string | null;
 	output: string | null;
 }
@@ -89,19 +88,18 @@ function selectToolCallState(events: RunStreamEvent[] | undefined, itemId: strin
 
 	return {
 		name: createdName,
-		isComplete: !!doneEvent,
 		input: doneArgs,
 		output: getOutputText(result),
 	};
 }
 
 export namespace ToolCallBlock {
-	export interface Props extends Container.Props {
+	export interface Props extends Group.Props {
 		itemId: string;
 	}
 }
 
-export const ToolCallBlock: FC<ToolCallBlock.Props> = ({ itemId, ui, ...props }) => {
+export const ToolCallBlock: FC<ToolCallBlock.Props> = ({ itemId, ui, className, ...props }) => {
 	const { data: state } = withAgentLiveQuery.useQuery(undefined, {
 		select: (events) => selectToolCallState(events, itemId) as unknown as RunStreamEvent[],
 	}) as unknown as {
@@ -113,90 +111,75 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({ itemId, ui, ...props })
 	}
 
 	return (
-		<Container
-			data-ui={"LiveList-ToolCallBlock"}
+		<Group
+			data-ui={"ToolCallBlock"}
 			data-id={itemId}
+			data-output-id={itemId}
 			ui={{
-				flow: "vertical",
-				gap: "xs",
+				tone: "secondary",
+				theme: "light",
+				background: "alt",
+				inner: "default",
+				opacity: "8",
 				...ui,
 			}}
+			className={className}
 			{...props}
 		>
-			{!state.isComplete ? (
-				<SpinnerContainer
-					type="icon"
+			<Container
+				ui={{
+					flow: "vertical",
+					gap: "xs",
+				}}
+			>
+				<Typo
+					label={state.name}
 					ui={{
-						layout: "horizontal-flex",
-						height: undefined,
-						items: "center",
-						gap: "xs",
+						text: "sm",
+						font: "bold",
 					}}
 				/>
-			) : (
-				<Container
-					ui={{
-						flow: "vertical",
-						gap: "xs",
-					}}
-				>
-					<Typo
-						label={state.name}
-						ui={{
-							text: "sm",
-							font: "semibold",
-						}}
-					/>
-					{state.input !== null ? (
-						<Container
+
+				{state.input !== null ? (
+					<>
+						<Typo
+							label={translator.text("Tool call input (label)")}
 							ui={{
-								flow: "vertical",
-								gap: "xs",
+								text: "xs",
+								opacity: "6",
+								font: "semibold",
 							}}
-						>
-							<Typo
-								label={translator.text("Tool call input (label)")}
-								ui={{
-									text: "xs",
-									opacity: "6",
-									font: "semibold",
-								}}
-							/>
-							<Typo
-								label={state.input}
-								ui={{
-									text: "xs",
-									opacity: "6",
-								}}
-							/>
-						</Container>
-					) : null}
-					{state.output !== null ? (
-						<Container
+						/>
+						<Typo
+							label={state.input}
 							ui={{
-								flow: "vertical",
-								gap: "xs",
+								text: "xs",
+								opacity: "8",
 							}}
-						>
-							<Typo
-								label={translator.text("Tool call output (label)")}
-								ui={{
-									text: "xs",
-									opacity: "6",
-									font: "semibold",
-								}}
-							/>
-							<Typo
-								label={state.output}
-								ui={{
-									text: "xs",
-									opacity: "8",
-								}}
-							/>
-						</Container>
-					) : null}
-				</Container>
-			)}
-		</Container>
+						/>
+					</>
+				) : null}
+
+				{state.output !== null ? (
+					<>
+						<Typo
+							label={translator.text("Tool call output (label)")}
+							ui={{
+								text: "xs",
+								opacity: "6",
+								font: "semibold",
+							}}
+						/>
+						<Typo
+							label={state.output}
+							ui={{
+								text: "xs",
+								opacity: "8",
+							}}
+						/>
+					</>
+				) : null}
+			</Container>
+		</Group>
 	);
 };
