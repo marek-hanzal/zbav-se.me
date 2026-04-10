@@ -29,6 +29,17 @@ export const KnowledgeAgent = new Agent({
 
         Your role is to answer questions, nothing else.
     `.trim(),
+	modelSettings: {
+		frequencyPenalty: 1.15,
+		temperature: 0.2,
+		reasoning: {
+			effort: "high",
+		},
+		text: {
+			verbosity: "high",
+		},
+		toolChoice: "required",
+	},
 	tools: [
 		DraftAgent.asTool({
 			toolDescription: `

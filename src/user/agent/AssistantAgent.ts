@@ -63,6 +63,17 @@ Odmítej otázky mimo scope knowledge a tohoto system promptu.
 Pokud neporozumíš, co po tobě uživatel chce, slušně se poptej na upřesnění nebo
 přeformulování vstupu.
     `.trim(),
+	modelSettings: {
+		frequencyPenalty: 1.15,
+		temperature: 0.75,
+		reasoning: {
+			effort: "medium",
+		},
+		text: {
+			verbosity: "high",
+		},
+		toolChoice: "required",
+	},
 	tools: [
 		KnowledgeAgent.asTool({
 			toolName: "expert-knowledge",
