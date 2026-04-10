@@ -23,7 +23,6 @@ export const toolKnowledge = tool({
 				),
 		})
 		.strip(),
-	strict: true,
 	async execute({ key }) {
 		logger.trace("toolKnowledge", {
 			key,

@@ -40,6 +40,7 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, ui, classNam
 	return (
 		<Group
 			data-ui={"ToolCallItem"}
+			data-id={item.id}
 			ui={{
 				tone: "secondary",
 				theme: "light",
