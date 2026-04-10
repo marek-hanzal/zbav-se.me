@@ -45,6 +45,7 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, ui, classNam
 				theme: "light",
 				background: "alt",
 				inner: "default",
+				opacity: "8",
 				...ui,
 			}}
 			className={className}
