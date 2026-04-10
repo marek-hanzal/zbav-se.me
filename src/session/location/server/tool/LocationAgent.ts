@@ -1,5 +1,6 @@
 import { Agent } from "@openai/agents";
 import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
+import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 
 export const LocationAgent = new Agent({
 	name: "Location Agent",
@@ -9,11 +10,7 @@ export const LocationAgent = new Agent({
 
         If you're uncertain what an input is, try using autocomplete tool as it may be the request itself.
     `.trim(),
-	modelSettings: {
-		reasoning: {
-			effort: "none",
-		},
-	},
+	modelSettings: ToolModelSettings,
 	tools: [
 		toolLocationAutocomplete,
 	],

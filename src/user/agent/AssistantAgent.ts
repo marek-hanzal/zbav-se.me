@@ -1,6 +1,7 @@
 import { Agent } from "@openai/agents";
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
+import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import { KnowledgeAgent } from "~/user/knowledge/KnowledgeAgent";
 
 export const AssistantAgent = Agent.create({
@@ -63,14 +64,7 @@ Odmítej otázky mimo scope knowledge a tohoto system promptu.
 Pokud neporozumíš, co po tobě uživatel chce, slušně se poptej na upřesnění nebo
 přeformulování vstupu.
     `.trim(),
-	modelSettings: {
-		frequencyPenalty: 1.15,
-		temperature: 0.75,
-		reasoning: {
-			effort: "medium",
-		},
-		toolChoice: "required",
-	},
+	modelSettings: AssistantModelSettings,
 	tools: [
 		KnowledgeAgent.asTool({
 			toolName: "expert-knowledge",

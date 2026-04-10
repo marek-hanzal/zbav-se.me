@@ -1,6 +1,7 @@
 import { Agent } from "@openai/agents";
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
+import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
 import { toolKnowledgeIndex } from "~/user/knowledge/server/tool/toolKnowledgeIndex";
 import { toolKnowledgeSearch } from "~/user/knowledge/server/tool/toolKnowledgeSearch";
@@ -15,14 +16,7 @@ export const KnowledgeAgent = new Agent({
 
         Don't strip any information from the sources, but you may rephrase it.
     `.trim(),
-	modelSettings: {
-		frequencyPenalty: 1.15,
-		temperature: 0.2,
-		reasoning: {
-			effort: "high",
-		},
-		toolChoice: "required",
-	},
+	modelSettings: ToolModelSettings,
 	tools: [
 		toolKnowledge,
 		toolKnowledgeIndex,
