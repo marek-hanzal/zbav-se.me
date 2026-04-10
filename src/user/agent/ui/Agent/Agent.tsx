@@ -104,7 +104,7 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 						ui={{
 							justify: "center",
 							items: "center",
-							tone: "danger",
+							tone: "brand",
 							theme: "light",
 							square: "default",
 							background: undefined,
