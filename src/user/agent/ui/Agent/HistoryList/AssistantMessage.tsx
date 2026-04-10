@@ -13,11 +13,17 @@ export const AssistantMessage: FC<AssistantMessage.Props> = ({ item, ui, classNa
 	const text = item.content
 		.filter((c) => c.type === "output_text")
 		.map((c) => c.text)
-		.join("");
+		.join("")
+		.trim();
+
+	if (!text.length) {
+		return null;
+	}
 
 	return (
 		<Group
-			data-ui={"HistoryList-AssistantMessage"}
+			data-ui={"AssistantMessage"}
+			data-id={item.id}
 			ui={{
 				tone: "neutral",
 				theme: "light",

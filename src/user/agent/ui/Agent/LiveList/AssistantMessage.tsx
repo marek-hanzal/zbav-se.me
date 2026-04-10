@@ -1,9 +1,8 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
+import { Group } from "@/lib/client/group";
 import { Markdown } from "@/lib/client/markdown";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 import type { AgentEvent } from "~/user/agent/type/AgentEvent";
-import { ToolCallBlock } from "./ToolCallBlock";
 
 interface LiveMessageState {
 	content: string;
@@ -52,12 +51,17 @@ function selectAssistantMessageState(
 }
 
 export namespace AssistantMessage {
-	export interface Props extends Container.Props {
+	export interface Props extends Group.Props {
 		outputIndex: number;
 	}
 }
 
-export const AssistantMessage: FC<AssistantMessage.Props> = ({ outputIndex, ui, ...props }) => {
+export const AssistantMessage: FC<AssistantMessage.Props> = ({
+	outputIndex,
+	ui,
+	className,
+	...props
+}) => {
 	const { data: state } = withAgentLiveQuery.useQuery(undefined, {
 		select: (events) =>
 			selectAssistantMessageState(events, outputIndex) as unknown as AgentEvent[],
@@ -65,27 +69,32 @@ export const AssistantMessage: FC<AssistantMessage.Props> = ({ outputIndex, ui, 
 		data: LiveMessageState | undefined;
 	};
 
-	if (!state) {
+	if (!state?.content.length) {
 		return null;
 	}
 
 	return (
-		<Container
-			data-ui={"LiveList-AssistantMessage"}
+		<Group
+			data-ui={"AssistantMessage"}
+			data-id={outputIndex}
 			ui={{
-				flow: "vertical",
-				gap: "xs",
+				tone: "neutral",
+				theme: "light",
+				background: "alt",
+				inner: "default",
 				...ui,
 			}}
+			className={className}
 			{...props}
 		>
-			{state.content.length > 0 ? <Markdown>{state.content}</Markdown> : null}
-			{state.toolCallIds.map((callId) => (
+			<Markdown>{state.content}</Markdown>
+
+			{/* {state.toolCallIds.map((callId) => (
 				<ToolCallBlock
 					key={callId}
 					callId={callId}
 				/>
-			))}
-		</Container>
+			))} */}
+		</Group>
 	);
 };

@@ -114,7 +114,13 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 			console.error(error);
 		},
 		async onSuccess() {
-			await withAgentStreamItemsQuery.invalidate(queryClient);
+			liveQuery(() => []);
+			setTimeout(() => {
+				/**
+				 * Schedule after re-renders
+				 */
+				withAgentStreamItemsQuery.invalidate(queryClient);
+			}, 0);
 		},
 		onSettled() {
 			abortControllerRef.current = null;
