@@ -5,47 +5,37 @@ import { Group } from "@/lib/client/group";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
 
-function extractOutputText(result: FunctionCallResultItem): string | undefined {
-	const { output } = result;
-	if (typeof output === "string") {
-		return output;
-	}
-	if (Array.isArray(output)) {
-		return undefined;
-	}
-	if (output.type === "text") {
-		return output.text;
-	}
-	return undefined;
-}
-
 export namespace ToolCallItem {
 	export interface Props extends Group.Props {
-		callId: string;
+		item: FunctionCallItem;
 		items: AgentInputItem[];
 	}
 }
 
-export const ToolCallItem: FC<ToolCallItem.Props> = ({
-	callId,
-	items,
-	ui,
-	className,
-	...props
-}) => {
-	const call = items.find(
-		(i): i is FunctionCallItem => i.type === "function_call" && i.callId === callId,
-	);
+export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, ui, className, ...props }) => {
 	const result = items.find(
 		(i): i is FunctionCallResultItem =>
-			i.type === "function_call_result" && i.callId === callId,
+			i.type === "function_call_result" && i.callId === item.callId,
 	);
 
-	if (!call) {
-		return null;
-	}
+	const output = ((result: FunctionCallResultItem | undefined) => {
+		if (!result) {
+			return undefined;
+		}
 
-	const outputText = result ? extractOutputText(result) : undefined;
+		const { output } = result;
+		if (typeof output === "string") {
+			return output;
+		}
+		if (Array.isArray(output)) {
+			return undefined;
+		}
+		if (output.type === "text") {
+			return output.text;
+		}
+
+		return undefined;
+	})(result);
 
 	return (
 		<Group
@@ -57,10 +47,7 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({
 				inner: "default",
 				...ui,
 			}}
-			className={[
-				"w-4/5",
-				className,
-			]}
+			className={className}
 			{...props}
 		>
 			<Container
@@ -70,10 +57,10 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({
 				}}
 			>
 				<Typo
-					label={call.name}
+					label={item.name}
 					ui={{
 						text: "sm",
-						font: "semibold",
+						font: "bold",
 					}}
 				/>
 
@@ -82,28 +69,30 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({
 					ui={{
 						text: "xs",
 						opacity: "6",
+						font: "semibold",
 					}}
 				/>
 
 				<Typo
-					label={call.arguments}
+					label={item.arguments}
 					ui={{
 						text: "xs",
 						opacity: "8",
 					}}
 				/>
 
-				{outputText !== undefined ? (
+				{output !== undefined ? (
 					<>
 						<Typo
 							label={translator.text("Tool call output (label)")}
 							ui={{
 								text: "xs",
 								opacity: "6",
+								font: "semibold",
 							}}
 						/>
 						<Typo
-							label={outputText}
+							label={output}
 							ui={{
 								text: "xs",
 								opacity: "8",

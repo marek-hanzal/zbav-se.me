@@ -4,6 +4,7 @@ import { Container } from "@/lib/client/container";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import { AssistantMessage } from "./AssistantMessage";
 import { SystemMessage } from "./SystemMessage";
+import { ToolCallItem } from "./ToolCallItem";
 import { UserMessage } from "./UserMessage";
 
 export namespace HistoryList {
@@ -68,6 +69,18 @@ export const HistoryList: FC<HistoryList.Props> = ({ ui, ...props }) => {
 							<SystemMessage
 								key={`system-${item.id}`}
 								item={item}
+							/>
+						),
+					)
+					.with(
+						{
+							type: "function_call",
+						},
+						(item) => (
+							<ToolCallItem
+								key={`function-call-${item.callId}`}
+								item={item}
+								items={items}
 							/>
 						),
 					)
