@@ -1,11 +1,10 @@
-import type { AgentInputItem } from "@openai/agents-core";
+import type { AgentInputItem, RunStreamEvent } from "@openai/agents";
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { AssistantAgent } from "~/user/agent/AssistantAgent";
 import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { withRunnerSessionMiddleware } from "~/user/agent/server/middleware/withRunnerSessionMiddleware";
-import type { AgentEvent } from "~/user/agent/type/AgentEvent";
 
 const AgentRequestSchema: z.ZodType<string | AgentInputItem[]> = z
 	.union([
@@ -56,20 +55,11 @@ export const Route = createFileRoute("/api/user/agent")({
 
 								try {
 									for await (const event of stream) {
-										if (
-											/**
-											 * Expose only raw-model events
-											 */
-											event.type === "raw_model_stream_event" &&
-											event.data.type === "model" &&
-											event.data.event
-										) {
-											controller.enqueue(
-												encoder.encode(
-													`data: ${JSON.stringify(event.data.event as AgentEvent)}\n\n`,
-												),
-											);
-										}
+										controller.enqueue(
+											encoder.encode(
+												`data: ${JSON.stringify(event as RunStreamEvent)}\n\n`,
+											),
+										);
 									}
 
 									await stream.completed;
