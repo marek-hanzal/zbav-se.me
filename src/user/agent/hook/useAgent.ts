@@ -1,11 +1,16 @@
+import type { AgentInputItem } from "@openai/agents-core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import axios from "axios";
 import { createParser } from "eventsource-parser";
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
+import { genId } from "@/lib/common/gen-id";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
-import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
+import {
+	agentStreamHistoryQuery,
+	withAgentStreamItemsQuery,
+} from "~/user/agent/query/withAgentStreamItemsQuery";
 import type { AgentEvent } from "~/user/agent/type/AgentEvent";
 
 export namespace useAgent {
@@ -17,6 +22,12 @@ export namespace useAgent {
 		//
 	}
 
+	export interface Result {
+		submit(text: string): Promise<void>;
+		cancel(): void;
+		isBusy: boolean;
+	}
+
 	export type UseResult = ReturnType<typeof useAgent>;
 }
 
@@ -24,6 +35,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const liveQuery = withAgentLiveQuery.useSet();
+	const setHistoryItems = withAgentStreamItemsQuery.useSet();
 
 	const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -48,6 +60,17 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 			if (trimmed.length === 0) {
 				return;
 			}
+
+			setHistoryItems((current) => {
+				return [
+					...(current ?? []),
+					{
+						id: genId(),
+						role: "user",
+						content: trimmed,
+					},
+				] satisfies AgentInputItem[];
+			}, agentStreamHistoryQuery);
 
 			liveQuery(() => []);
 
@@ -113,25 +136,40 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 		onError(error) {
 			console.error(error);
 		},
-		async onSuccess() {
-			liveQuery(() => []);
-			setTimeout(() => {
-				/**
-				 * Schedule after re-renders
-				 */
-				withAgentStreamItemsQuery.invalidate(queryClient);
-			}, 0);
-		},
-		onSettled() {
+		async onSettled() {
 			abortControllerRef.current = null;
+			await withAgentStreamItemsQuery.invalidate(queryClient);
+			liveQuery(() => []);
 		},
 	});
 
+	const submit = useCallback(
+		async (text: string) => {
+			if (mutation.isPending) {
+				return;
+			}
+
+			try {
+				await mutation.mutateAsync({
+					text,
+				});
+			} catch (error) {
+				console.error(error);
+			}
+		},
+		[
+			mutation,
+		],
+	);
+
+	const cancel = useCallback(() => {
+		abortControllerRef.current?.abort();
+		abortControllerRef.current = null;
+	}, []);
+
 	return {
 		mutation,
-		cancel() {
-			abortControllerRef.current?.abort();
-			abortControllerRef.current = null;
-		},
+		submit,
+		cancel,
 	} as const;
 };
