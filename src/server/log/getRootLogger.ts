@@ -1,4 +1,5 @@
 import { getLogger } from "@logtape/logtape";
+import { RootLoggerName } from "~/server/log/RootLoggerName";
 
 type Category =
 	| string
@@ -11,7 +12,7 @@ type Category =
 	  ];
 
 export const getRootLogger = (category?: Category) => {
-	const logger = getLogger("zbav-se.me");
+	const logger = getLogger(RootLoggerName);
 
 	return category ? logger.getChild(category) : logger;
 };

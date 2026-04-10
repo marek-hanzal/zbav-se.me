@@ -12,6 +12,7 @@ import { getPrettyFormatter } from "@logtape/pretty";
 import { createMiddleware } from "@tanstack/react-start";
 import { genId } from "@/lib/common/gen-id";
 import { getRootLogger } from "~/server/log/getRootLogger";
+import { RootLoggerName } from "~/server/log/RootLoggerName";
 import { withDevEnvMiddleware } from "~/server/middleware/withDevEnvMiddleware";
 
 const contextLocalStorage = new AsyncLocalStorage<Record<string, unknown>>();
@@ -76,7 +77,7 @@ export const withLogMiddleware = createMiddleware()
 						],
 					},
 					{
-						category: "zbav-se.me",
+						category: RootLoggerName,
 						lowestLevel: level,
 						sinks: [
 							"file",
@@ -84,7 +85,7 @@ export const withLogMiddleware = createMiddleware()
 					},
 					{
 						category: [
-							"zbav-se.me",
+							RootLoggerName,
 							"middleware",
 						],
 						lowestLevel: level,
@@ -94,7 +95,7 @@ export const withLogMiddleware = createMiddleware()
 					},
 					{
 						category: [
-							"zbav-se.me",
+							RootLoggerName,
 							"fn",
 						],
 						lowestLevel: level,
@@ -104,7 +105,7 @@ export const withLogMiddleware = createMiddleware()
 					},
 					{
 						category: [
-							"zbav-se.me",
+							RootLoggerName,
 							"fx",
 						],
 						lowestLevel: level,
