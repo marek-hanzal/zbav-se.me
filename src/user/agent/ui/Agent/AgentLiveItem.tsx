@@ -1,10 +1,8 @@
 import type { FC } from "react";
 import { match, P } from "ts-pattern";
 import type { Container } from "@/lib/client/container";
-import { translator } from "@/lib/common/translator";
 import { withAgentLiveItemQuery } from "~/user/agent/query/withAgentLiveItemQuery";
 import { AgentAssistantMessageItem } from "./AgentAssistantMessageItem";
-import { AgentPendingAssistantItem } from "./AgentPendingAssistantItem";
 import { AgentRawItem } from "./AgentRawItem";
 import { AgentToolItem } from "./AgentToolItem";
 
@@ -49,18 +47,8 @@ export const AgentLiveItem: FC<AgentLiveItem.Props> = ({ itemId, runId, ui, ...p
 			{
 				type: "reasoning",
 			},
-			(item) => {
-				if (item.status !== "in_progress") {
-					return null;
-				}
-
-				return (
-					<AgentPendingAssistantItem
-						text={translator.text("Agent thinking", "Premyslim")}
-						ui={ui}
-						{...props}
-					/>
-				);
+			() => {
+				return null;
 			},
 		)
 		.with(

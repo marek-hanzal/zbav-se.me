@@ -98,14 +98,16 @@ export const ensureRunItem = ({
 	}
 
 	if (currentItemId) {
+		const nextItemIdsByOutputIndex = {
+			...run.itemIdsByOutputIndex,
+			[key]: itemId,
+		};
+
 		return {
 			nextRun: {
 				...run,
-				itemIds: run.itemIds.map((id) => (id === currentItemId ? itemId : id)),
-				itemIdsByOutputIndex: {
-					...run.itemIdsByOutputIndex,
-					[key]: itemId,
-				},
+				itemIds: getOrderedItemIds(nextItemIdsByOutputIndex),
+				itemIdsByOutputIndex: nextItemIdsByOutputIndex,
 				status: "streaming",
 				notice: undefined,
 			},
@@ -113,19 +115,16 @@ export const ensureRunItem = ({
 		};
 	}
 
+	const nextItemIdsByOutputIndex = {
+		...run.itemIdsByOutputIndex,
+		[key]: itemId,
+	};
+
 	return {
 		nextRun: {
 			...run,
-			itemIds: run.itemIds.includes(itemId)
-				? run.itemIds
-				: [
-						...run.itemIds,
-						itemId,
-					],
-			itemIdsByOutputIndex: {
-				...run.itemIdsByOutputIndex,
-				[key]: itemId,
-			},
+			itemIds: getOrderedItemIds(nextItemIdsByOutputIndex),
+			itemIdsByOutputIndex: nextItemIdsByOutputIndex,
 			status: "streaming",
 			notice: undefined,
 		},
@@ -690,4 +689,10 @@ const setArrayValue = <T>({
 	next[index] = valueFx(source[index]);
 
 	return next;
+};
+
+const getOrderedItemIds = (itemIdsByOutputIndex: Record<string, string>): string[] => {
+	return Object.entries(itemIdsByOutputIndex)
+		.sort(([left], [right]) => Number(left) - Number(right))
+		.map(([, itemId]) => itemId);
 };

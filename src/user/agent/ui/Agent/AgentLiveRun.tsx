@@ -3,8 +3,8 @@ import type { FC } from "react";
 import type { Container } from "@/lib/client/container";
 import { withAgentLiveRunQuery } from "~/user/agent/query/withAgentLiveRunQuery";
 import { AgentLiveItem } from "./AgentLiveItem";
+import { AgentLiveRunActivity } from "./AgentLiveRunActivity";
 import { AgentLiveRunNotice } from "./AgentLiveRunNotice";
-import { AgentPendingAssistantItem } from "./AgentPendingAssistantItem";
 import { AgentUserMessageItem } from "./AgentUserMessageItem";
 
 export namespace AgentLiveRun {
@@ -36,6 +36,12 @@ export const AgentLiveRun: FC<AgentLiveRun.Props> = ({ runId, ui, ...props }) =>
 				{...props}
 			/>
 
+			<AgentLiveRunActivity
+				runId={runId}
+				itemIds={run.itemIds}
+				status={run.status}
+			/>
+
 			{run.itemIds.map((itemId) => {
 				return (
 					<AgentLiveItem
@@ -47,13 +53,6 @@ export const AgentLiveRun: FC<AgentLiveRun.Props> = ({ runId, ui, ...props }) =>
 					/>
 				);
 			})}
-
-			{run.status === "streaming" && run.itemIds.length === 0 ? (
-				<AgentPendingAssistantItem
-					ui={ui}
-					{...props}
-				/>
-			) : null}
 
 			{run.notice ? (
 				<AgentLiveRunNotice

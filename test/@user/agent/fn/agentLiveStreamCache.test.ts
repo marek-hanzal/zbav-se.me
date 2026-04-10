@@ -252,6 +252,53 @@ describe("agentLiveStreamCache", () => {
 		});
 	});
 
+	it("orders live items by output index instead of first event arrival", () => {
+		const queryClient = createQueryClient();
+		const runId = "run-order";
+
+		seedRun({
+			queryClient,
+			runId,
+			userText: "Order matters",
+		});
+
+		applyEvent({
+			queryClient,
+			runId,
+			event: {
+				type: "response.output_text.delta",
+				item_id: "msg-late",
+				output_index: 1,
+				content_index: 0,
+				delta: "Answer",
+				logprobs: [],
+				sequence_number: 1,
+			} as AgentEvent,
+		});
+
+		applyEvent({
+			queryClient,
+			runId,
+			event: {
+				type: "response.function_call_arguments.delta",
+				item_id: "tool-early",
+				output_index: 0,
+				delta: '{"query":"draft"}',
+				sequence_number: 2,
+			} as AgentEvent,
+		});
+
+		expect(
+			getRun({
+				queryClient,
+				runId,
+			})?.itemIds,
+		).toEqual([
+			"tool-early",
+			"msg-late",
+		]);
+	});
+
 	it("keeps partial output visible when the run is cancelled", () => {
 		const queryClient = createQueryClient();
 		const runId = "run-cancelled";
