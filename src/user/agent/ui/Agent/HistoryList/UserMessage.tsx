@@ -22,14 +22,13 @@ export const UserMessage: FC<UserMessage.Props> = ({ item, ui, className, ...pro
 		<Container
 			data-ui={"UserMessage"}
 			ui={{
-				tone: "brand",
+				tone: "subtle",
 				theme: "light",
 				border: true,
 				shadow: true,
 				background: "default",
 				round: "default",
 				inner: "default",
-				opacity: "7",
 				...ui,
 			}}
 			className={[
