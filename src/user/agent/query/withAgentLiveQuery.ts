@@ -1,7 +1,7 @@
+import type { RunStreamEvent } from "@openai/agents";
 import { withQuery } from "@/lib/client/query";
-import type { AgentEvent } from "~/user/agent/type/AgentEvent";
 
-export const withAgentLiveQuery = withQuery<void, AgentEvent[]>({
+export const withAgentLiveQuery = withQuery<void, RunStreamEvent[]>({
 	keys: () => [
 		"agent",
 		"live",
