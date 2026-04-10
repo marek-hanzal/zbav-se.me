@@ -22,8 +22,8 @@ function selectOutputIndices(events: AgentEvent[] | undefined): number[] {
 
 export namespace LiveList {
 	export interface Props extends Container.Props {
-        //
-    }
+		//
+	}
 }
 
 export const LiveList: FC<LiveList.Props> = ({ ui, ...props }) => {
