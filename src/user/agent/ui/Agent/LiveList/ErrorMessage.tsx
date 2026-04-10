@@ -1,17 +1,20 @@
+import type { RunStreamEvent } from "@openai/agents";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
-import type { AgentEvent } from "~/user/agent/type/AgentEvent";
+import { getResponseStreamEvent } from "~/user/agent/type/AgentEvent";
 
 interface ErrorState {
 	message: string;
 }
 
-function selectErrorState(events: AgentEvent[] | undefined): ErrorState | null {
-	const all = events ?? [];
-	const errorEvent = all.findLast((e) => e.type === "response.failed" || e.type === "error");
+function selectErrorState(events: RunStreamEvent[] | undefined): ErrorState | null {
+	const errorEvent = (events ?? [])
+		.map(getResponseStreamEvent)
+		.filter((event) => event !== null)
+		.findLast((event) => event.type === "response.failed" || event.type === "error");
 
 	if (!errorEvent) {
 		return null;
@@ -40,7 +43,7 @@ export namespace ErrorMessage {
 
 export const ErrorMessage: FC<ErrorMessage.Props> = ({ ui, ...props }) => {
 	const { data: errorState } = withAgentLiveQuery.useQuery(undefined, {
-		select: (events) => selectErrorState(events) as unknown as AgentEvent[],
+		select: (events) => selectErrorState(events) as unknown as RunStreamEvent[],
 	}) as unknown as {
 		data: ErrorState | null | undefined;
 	};
