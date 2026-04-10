@@ -40,6 +40,9 @@
 06616f1eb298047657fcaf296af7f6364f463736858dd7db7026d021:
   ref: Inbox empty (message)
   value: Inbox empty (message)
+067456ab95df13c8f032e9a4420460ccd30e58958292fc06bafc7afd:
+  ref: Agent (label)
+  value: Agent (label)
 069a14aec9bb4a553c78c2032f6e521d3b8dccbbb4cfac68e67fa1c1:
   ref: Listing - Pros (title)
   value: Listing - Pros (title)
@@ -67,6 +70,9 @@
 0c0a4ce653f7b616d85e4445a31bdafdb550d7239869be85731a82a4:
   ref: Delete draft - confirm (button)
   value: Delete draft - confirm (button)
+0d007f2d0a4952e6301d16c66414bdf4c2840a405bdf8da19dc69d2d:
+  ref: Agent stream failed
+  value: Agent stream failed
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
   ref: Location security (hint)
   value: Location security (hint)
@@ -175,6 +181,9 @@
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
   ref: Location (title)
   value: Location (title)
+268d3fe9442f419a1b2e08be1b4b9029959db914d74549261e1df9ce:
+  ref: Write to an agent
+  value: Write to an agent
 26a562bfcfee8d3595e7d3f87dd79a4174db90edc3b52f5bdc5dc683:
   ref: First listing (title)
   value: First listing (title)
@@ -217,6 +226,9 @@
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
   ref: Age (title)
   value: Age (title)
+30b9390acd7135075710fd0a837498dd566f752c01cdae2b58eafb7e:
+  ref: Reasoning
+  value: Reasoning
 3136e34a81ab39a2fb1e4198edccbf10acf6244b0543a98136311b44:
   ref: Listing warranty (hint)
   value: Listing warranty (hint)
@@ -238,9 +250,6 @@
 356f63775751bd5232d3021e2d6775a39bb1f9a2ec6041b1e763e6b9:
   ref: Dispute transaction - confirm (button)
   value: Dispute transaction - confirm (button)
-366b3439049aa504cfaf6a357cfa29c6325205bc08bb6781cba78f65:
-  ref: Assistant (label)
-  value: Assistant (label)
 36725bc2ac5cbe7bac8e1e99ad76766f37ce4ce1e330af2152a16d6d:
   ref: Listing favourited (label)
   value: Listing favourited (label)
@@ -298,9 +307,9 @@
 4363f4fb6f819cf057645cd3a62c4560949f8c20bae08b9619b2518e:
   ref: Your favourites (title)
   value: Your favourites (title)
-4388497d37a170bfe956cd3195a9ef8f6976885f0b625b7c24e9f0d5:
-  ref: Write to a assistant
-  value: Write to a assistant
+439eb558c51e564ba48dd04ea1d248f28a4688bfe065e352c4d11b06:
+  ref: Agent (title)
+  value: Agent (title)
 43c97e37d539928f112ef93039df9510299f8c68dc170da7c864a3ba:
   ref: Draft list (label)
   value: Draft list (label)
@@ -379,6 +388,9 @@
 55672785780f3eaea6cb3ccba093853d44e33d6e4f984123c2b89a7a:
   ref: Transaction status expired (label)
   value: Transaction expired
+55c7865f503450734c7d81890ccd099fd68431c661f6abe02c533d56:
+  ref: Tool call output (label)
+  value: Tool call output (label)
 5611e161fc48366fdb56f2529712795617513c1b346552e32a53ff19:
   ref: Loading... (button)
   value: Loading... (button)
@@ -391,6 +403,9 @@
 5696a362d2b856058349f5f1d7eddcfddf637ff45f3266696b41f04a:
   ref: package
   value: package
+574e8d7959d46895c001cb1a6a5edbd5a1a94662288fdcf36ddff0e1:
+  ref: Agent welcome (message)
+  value: Agent welcome (message)
 57cf1f27b485ad4ccfff9487dc973c5a5a9d3582b03670f822646bc0:
   ref: Transaction not accepted - seller (message)
   value: Transaction not accepted - seller (message)
@@ -538,9 +553,6 @@
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
   ref: Feed name (title)
   value: Feed name
-7c7513e1fc9138518db23ced33814236e395a5e16b73ca2057ed0225:
-  ref: Assistant welcome (title)
-  value: Assistant welcome (title)
 7dbeb77d3b315a1061d4bcd83875d872181ea3f46593933720e8dc4a:
   ref: Close transaction (button)
   value: Close transaction (button)
@@ -724,6 +736,9 @@ a78ed5f38f0cf730dc1a618d9df1ca5011cc5d947d61f00075e0c5da:
 a92a914e77188202f38d6b42be76d7f92cee60d777d0c00ca5aecbde:
   ref: Package - Tracking number (placeholder)
   value: Package - Tracking number (placeholder)
+a9790b0c8d516c6185b9912ed236639eff1fd75206a534bf6f54d697:
+  ref: Tool call input (label)
+  value: Tool call input (label)
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
   ref: Photo upload placeholder (title)
   value: Photo upload placeholder (title)
@@ -790,6 +805,9 @@ b9057abdfc2947ea0f0da7b26069769bbf9c40ca4d382aae15ddbd0a:
 b9280e542386de06015c0360e53e55cfccee8b1bf03cea7ef44c26c0:
   ref: Feed delivery (label)
   value: Feed delivery (label)
+b9742c1a5d37a201816189edaafc7e95da2f3295f141bb3fbd77730a:
+  ref: Tool call
+  value: Tool call
 b9c5a03896d71b41f7828f3747be6c509689c279e60f845ab3b23480:
   ref: pending
   value: pending
@@ -852,6 +870,9 @@ cc5a2127ca406287f39de76d080bdb0177b2a7ed32304f05afde64be:
 cce3e05a5e2cf26a26d41e907d0fade717c5fbffe10b7f77fd83e8db:
   ref: Accept transaction (button)
   value: Accept transaction (button)
+ce5487f661f6e3640626eda775aaf0fe02d8763fba52ad43a04673c9:
+  ref: Agent welcome (title)
+  value: Agent welcome (title)
 ceeb32aea866f45126224f7ff0fc5a65a8fa268c581d023ffe309e03:
   ref: Unflag listing (button)
   value: Unflag listing (button)
@@ -951,9 +972,6 @@ f17512f4ea86964511c8c06419c3e45fb8a04a38bbe1ebdc8750b0de:
 f18a36932d031042735ffe9b5fbf3fad95a86de7b3b04e8ae3f43986:
   ref: Tracking number (label)
   value: Tracking number (label)
-f1d8618be0710a1c63660b921e24c74d12ec596b08c577e92d6cad30:
-  ref: Assistant welcome (message)
-  value: Assistant welcome (message)
 f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
   ref: Favourites (label)
   value: Favourites (label)
@@ -1023,9 +1041,6 @@ fc284aa9aa4a2c690a4e62463e646eb74f9af7cb7354ebf85a149a07:
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
   ref: Back to home (link)
   value: Back to home (link)
-fc4e8fe72243bd4575664eb1fb807d1ddc11eff54f0946685b664118:
-  ref: Assistant (title)
-  value: Assistant (title)
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
   ref: Listing title (label)
   value: Listing title (label)

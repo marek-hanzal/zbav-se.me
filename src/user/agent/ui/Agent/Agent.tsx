@@ -96,7 +96,14 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 						data-action={"stop agent stream"}
 						iconEnabled={CancelIcon}
 						onClick={chat.cancel}
+						iconProps={{
+							ui: {
+								text: "2xl",
+							},
+						}}
 						ui={{
+							justify: "center",
+							items: "center",
 							tone: "danger",
 							theme: "light",
 							square: "default",
