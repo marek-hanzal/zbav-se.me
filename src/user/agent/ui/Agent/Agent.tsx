@@ -9,10 +9,7 @@ import { translator } from "@/lib/common/translator";
 import { ChatInput } from "~/common/ui/chat";
 import { CancelIcon } from "~/common/ui/icon";
 import { useAgent } from "~/user/agent/hook/useAgent";
-import {
-	agentStreamItemsQueryData,
-	withAgentStreamItemsQuery,
-} from "~/user/agent/query/withAgentStreamItemsQuery";
+import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import { AgentMessageList } from "./AgentMessageList";
 
 export namespace Agent {
@@ -25,7 +22,18 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 	const chat = useAgent({
 		_suspense: "I know",
 	});
-	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(agentStreamItemsQueryData);
+	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery({
+		sort: [
+			{
+				field: "sort",
+				order: "asc",
+			},
+		],
+		cursor: {
+			page: 0,
+			size: 512,
+		},
+	});
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const submit = useCallback(
@@ -66,7 +74,7 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 					check={[
 						{
 							check() {
-								return true;
+								return !items.length;
 							},
 							render() {
 								return (
