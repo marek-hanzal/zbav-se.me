@@ -4,6 +4,7 @@ import axios from "axios";
 import { createParser } from "eventsource-parser";
 import { useEffect, useMemo, useRef } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
+import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 import type { AgentEvent } from "~/user/agent/type/AgentEvent";
 
 export namespace useAgent {
@@ -20,6 +21,7 @@ export namespace useAgent {
 
 export const useAgent = ({ _suspense }: useAgent.Props) => {
 	const router = useRouter();
+	const liveQuery = withAgentLiveQuery.useSet();
 
 	const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -45,22 +47,21 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 				return;
 			}
 
-			const controller = new AbortController();
+			abortControllerRef.current = new AbortController();
 			const decoder = new TextDecoder();
+
 			const parser = createParser({
 				onEvent: (message) => {
 					if (message.data.length === 0) {
 						return;
 					}
 
-					/**
-					 * Process this event within UI
-					 */
-					JSON.parse(message.data) as AgentEvent;
+					liveQuery((prev) => [
+						...(prev || []),
+						JSON.parse(message.data) as AgentEvent,
+					]);
 				},
 			});
-
-			abortControllerRef.current = controller;
 
 			const response = await axios
 				.create({
@@ -71,7 +72,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 						Accept: "text/event-stream",
 						"Content-Type": "application/json",
 					},
-					signal: controller.signal,
+					signal: abortControllerRef.current.signal,
 					responseType: "stream",
 				});
 
