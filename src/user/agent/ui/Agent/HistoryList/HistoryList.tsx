@@ -84,6 +84,14 @@ export const HistoryList: FC<HistoryList.Props> = ({ ui, ...props }) => {
 							/>
 						),
 					)
+					.with(
+						{
+							type: "reasoning",
+						},
+						() => {
+							return null;
+						},
+					)
 					.otherwise((event) => {
 						console.warn(event);
 						return "unknown";
