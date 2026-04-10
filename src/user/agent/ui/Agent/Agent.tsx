@@ -91,35 +91,31 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 					</Container>
 				</EmptyState>
 
-				<Container
+				<ChatInput
 					ui={{
-						layout: "vertical-flex",
 						width: "full",
 						inner: "default",
 					}}
-				>
-					<ChatInput
-						onSubmit={chat.submit}
-						placeholder={translator.text("Write to an agent")}
-						loading={chat.mutation.isPending}
-						cancel={
-							<Button
-								data-action={"stop agent stream"}
-								iconEnabled={CancelIcon}
-								onClick={chat.cancel}
-								ui={{
-									tone: "danger",
-									theme: "light",
-									square: "default",
-									background: undefined,
-									border: false,
-									shadow: false,
-									color: "lead",
-								}}
-							/>
-						}
-					/>
-				</Container>
+					onSubmit={chat.submit}
+					placeholder={translator.text("Write to an agent")}
+					loading={chat.mutation.isPending}
+					cancel={
+						<Button
+							data-action={"stop agent stream"}
+							iconEnabled={CancelIcon}
+							onClick={chat.cancel}
+							ui={{
+								tone: "danger",
+								theme: "light",
+								square: "default",
+								background: undefined,
+								border: false,
+								shadow: false,
+								color: "lead",
+							}}
+						/>
+					}
+				/>
 			</Container>
 		</Container>
 	);

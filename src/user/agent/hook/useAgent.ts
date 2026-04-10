@@ -81,9 +81,13 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 						return;
 					}
 
+					const event = JSON.parse(message.data) as AgentEvent;
+
+					console.log("[event]", event);
+
 					liveQuery((prev) => [
 						...(prev || []),
-						JSON.parse(message.data) as AgentEvent,
+						event,
 					]);
 				},
 			});
