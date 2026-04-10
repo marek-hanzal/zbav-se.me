@@ -1,18 +1,31 @@
-import type { AgentInputItem } from "@openai/agents-core";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
+import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import { AssistantMessage } from "./AssistantMessage";
 import { SystemMessage } from "./SystemMessage";
 import { UserMessage } from "./UserMessage";
 
 export namespace HistoryList {
 	export interface Props extends Container.Props {
-		items: AgentInputItem[];
+		//
 	}
 }
 
-export const HistoryList: FC<HistoryList.Props> = ({ items, ui, ...props }) => {
+export const HistoryList: FC<HistoryList.Props> = ({ ui, ...props }) => {
+	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery({
+		sort: [
+			{
+				field: "sort",
+				order: "asc",
+			},
+		],
+		cursor: {
+			page: 0,
+			size: 512,
+		},
+	});
+
 	return (
 		<Container
 			data-ui={"HistoryList"}

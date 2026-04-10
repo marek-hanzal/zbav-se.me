@@ -1,4 +1,3 @@
-import type { AgentInputItem } from "@openai/agents-core";
 import { type FC, type RefObject, useRef } from "react";
 import { useAutoScroll } from "@/lib/client/auto-scroll";
 import { Container } from "@/lib/client/container";
@@ -8,16 +7,10 @@ import { LiveList } from "./LiveList";
 export namespace AgentMessageList {
 	export interface Props extends Container.Props {
 		containerRef: RefObject<HTMLDivElement | null>;
-		items: AgentInputItem[];
 	}
 }
 
-export const AgentMessageList: FC<AgentMessageList.Props> = ({
-	containerRef,
-	items,
-	ui,
-	...props
-}) => {
+export const AgentMessageList: FC<AgentMessageList.Props> = ({ containerRef, ui, ...props }) => {
 	const contentRef = useRef<HTMLDivElement | null>(null);
 	useAutoScroll({
 		containerRef,
@@ -38,7 +31,8 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 			}}
 			{...props}
 		>
-			<HistoryList items={items} />
+			<HistoryList />
+
 			<LiveList />
 		</Container>
 	);

@@ -9,7 +9,6 @@ import { translator } from "@/lib/common/translator";
 import { ChatInput } from "~/common/ui/chat";
 import { CancelIcon } from "~/common/ui/icon";
 import { useAgent } from "~/user/agent/hook/useAgent";
-import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import { AgentMessageList } from "./AgentMessageList";
 
 export namespace Agent {
@@ -21,18 +20,6 @@ export namespace Agent {
 export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 	const chat = useAgent({
 		_suspense: "I know",
-	});
-	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery({
-		sort: [
-			{
-				field: "sort",
-				order: "asc",
-			},
-		],
-		cursor: {
-			page: 0,
-			size: 512,
-		},
 	});
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -111,10 +98,7 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 							height: "full",
 						}}
 					>
-						<AgentMessageList
-							containerRef={containerRef}
-							items={items}
-						/>
+						<AgentMessageList containerRef={containerRef} />
 					</Container>
 				</EmptyState>
 
