@@ -39,7 +39,7 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, ui, classNam
 
 	return (
 		<Group
-			data-ui={"HistoryList-ToolCallItem"}
+			data-ui={"ToolCallItem"}
 			ui={{
 				tone: "secondary",
 				theme: "light",

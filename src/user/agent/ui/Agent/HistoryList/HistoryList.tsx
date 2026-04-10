@@ -86,6 +86,20 @@ export const HistoryList: FC<HistoryList.Props> = ({ ui, ...props }) => {
 					)
 					.with(
 						{
+							/**
+							 * We're not exposing inner result from the call
+							 */
+							type: "function_call_result",
+						},
+						() => {
+							return null;
+						},
+					)
+					.with(
+						{
+							/**
+							 * Nope, reasoning is not a good stuff to user to see.
+							 */
 							type: "reasoning",
 						},
 						() => {
