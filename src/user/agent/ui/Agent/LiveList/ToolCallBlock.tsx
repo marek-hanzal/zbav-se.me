@@ -2,6 +2,7 @@ import type { FunctionCallResultItem, RunStreamEvent } from "@openai/agents";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
+import { SpinnerContainer } from "@/lib/client/spinner";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
@@ -10,12 +11,13 @@ import { getFunctionCallResultItem, getResponseStreamEvent } from "~/user/agent/
 interface ToolCallState {
 	name: string;
 	input: string | null;
-	output: string | null;
+	output: string | undefined;
+	isPending: boolean;
 }
 
-function getOutputText(result: FunctionCallResultItem | undefined): string | null {
+function getOutputText(result: FunctionCallResultItem | undefined): string | undefined {
 	if (!result) {
-		return null;
+		return undefined;
 	}
 
 	const { output } = result;
@@ -25,14 +27,14 @@ function getOutputText(result: FunctionCallResultItem | undefined): string | nul
 	}
 
 	if (Array.isArray(output)) {
-		return null;
+		return undefined;
 	}
 
 	if (output.type === "text") {
 		return output.text;
 	}
 
-	return null;
+	return undefined;
 }
 
 function selectToolCallState(events: RunStreamEvent[] | undefined, itemId: string): ToolCallState {
@@ -90,6 +92,7 @@ function selectToolCallState(events: RunStreamEvent[] | undefined, itemId: strin
 		name: createdName,
 		input: doneArgs,
 		output: getOutputText(result),
+		isPending: !result,
 	};
 }
 
@@ -160,7 +163,21 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({ itemId, ui, className, 
 					</>
 				) : null}
 
-				{state.output !== null ? (
+				{state.isPending ? (
+					<SpinnerContainer
+						data-ui={"ToolCallBlock-[Spinner]"}
+						type="icon"
+						size="md"
+						ui={{
+							layout: "horizontal-flex",
+							height: undefined,
+							width: undefined,
+							color: "lead",
+						}}
+					/>
+				) : null}
+
+				{state.output !== undefined ? (
 					<>
 						<Typo
 							label={translator.text("Tool call output (label)")}
