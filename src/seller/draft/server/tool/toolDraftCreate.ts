@@ -1,5 +1,5 @@
 import { tool } from "@openai/agents";
-import { draftCreateFn } from "~/seller/draft/server/fn/draftCreateFn";
+import { draftCreateFn } from "~/seller/draft/fn/draftCreateFn";
 import { DraftCreateSchema } from "~/seller/draft/server/schema/DraftCreateSchema";
 
 export const toolDraftCreate = tool({

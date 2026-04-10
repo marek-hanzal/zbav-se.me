@@ -1,5 +1,5 @@
 import { tool } from "@openai/agents";
-import { draftFetchFn } from "~/seller/draft/server/fn/draftFetchFn";
+import { draftFetchFn } from "~/seller/draft/fn/draftFetchFn";
 import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
 
 export const toolDraftFetch = tool({

@@ -1,7 +1,7 @@
 import { getLogger } from "@logtape/logtape";
 import { tool } from "@openai/agents";
 import { z } from "zod";
-import { getKnowledgeIndex } from "~/user/knowledge/service/getKnowledgeIndex";
+import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
 
 const logger = getLogger("toolKnowledgeIndex");
 

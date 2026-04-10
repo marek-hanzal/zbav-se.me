@@ -45,11 +45,7 @@ export const AgentPendingAssistantItem: FC<AgentPendingAssistantItem.Props> = ({
 					}}
 				/>
 
-				{text ? (
-					<div className={"text-sm opacity-70"}>
-						{text}
-					</div>
-				) : null}
+				{text ? <div className={"text-sm opacity-70"}>{text}</div> : null}
 			</Container>
 		</Container>
 	);

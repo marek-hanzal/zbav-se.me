@@ -1,6 +1,6 @@
 import { getLogger } from "@logtape/logtape";
 import { tool } from "@openai/agents";
-import { draftCollectionFn } from "~/seller/draft/server/fn/draftCollectionFn";
+import { draftCollectionFn } from "~/seller/draft/fn/draftCollectionFn";
 import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
 
 const logger = getLogger([

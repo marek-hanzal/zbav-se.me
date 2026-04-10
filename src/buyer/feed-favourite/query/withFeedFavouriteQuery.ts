@@ -1,8 +1,8 @@
 import { withEntityQuery } from "@/lib/client/query";
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
-import { feedFavouriteCollectionFn } from "~/buyer/feed-favourite/server/fn/feedFavouriteCollectionFn";
-import { feedFavouriteCountFn } from "~/buyer/feed-favourite/server/fn/feedFavouriteCountFn";
-import { feedFavouriteFetchFn } from "~/buyer/feed-favourite/server/fn/feedFavouriteFetchFn";
+import { feedFavouriteCollectionFn } from "~/buyer/feed-favourite/fn/feedFavouriteCollectionFn";
+import { feedFavouriteCountFn } from "~/buyer/feed-favourite/fn/feedFavouriteCountFn";
+import { feedFavouriteFetchFn } from "~/buyer/feed-favourite/fn/feedFavouriteFetchFn";
 import type { FeedFavouriteCountQuerySchema } from "~/buyer/feed-favourite/server/schema/FeedFavouriteCountQuerySchema";
 import type { FeedFavouriteSchema } from "~/buyer/feed-favourite/server/schema/FeedFavouriteSchema";
 

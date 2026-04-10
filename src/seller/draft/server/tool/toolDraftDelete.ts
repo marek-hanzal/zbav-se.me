@@ -1,5 +1,5 @@
 import { tool } from "@openai/agents";
-import { draftDeleteFn } from "~/seller/draft/server/fn/draftDeleteFn";
+import { draftDeleteFn } from "~/seller/draft/fn/draftDeleteFn";
 import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
 
 export const toolDraftDelete = tool({

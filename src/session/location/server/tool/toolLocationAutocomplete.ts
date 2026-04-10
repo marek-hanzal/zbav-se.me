@@ -1,5 +1,5 @@
 import { tool } from "@openai/agents";
-import { locationAutocompleteFn } from "~/session/location/server/fn/locationAutocompleteFn";
+import { locationAutocompleteFn } from "~/session/location/fn/locationAutocompleteFn";
 import { LocationAutocompleteSchema } from "~/session/location/server/schema/LocationAutocompleteSchema";
 
 export const toolLocationAutocomplete = tool({

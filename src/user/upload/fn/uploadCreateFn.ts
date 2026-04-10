@@ -8,10 +8,10 @@ import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import { withUploadFx } from "../context/withUploadFx";
-import { uploadCreateFx } from "../fx/uploadCreateFx";
-import { UploadCreateSchema } from "../schema/UploadCreateSchema";
-import { UploadSchema } from "../schema/UploadSchema";
+import { withUploadFx } from "../server/context/withUploadFx";
+import { uploadCreateFx } from "../server/fx/uploadCreateFx";
+import { UploadCreateSchema } from "../server/schema/UploadCreateSchema";
+import { UploadSchema } from "../server/schema/UploadSchema";
 
 export const uploadCreateFn = createServerFn({
 	method: "POST",

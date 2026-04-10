@@ -1,5 +1,5 @@
 import { tool } from "@openai/agents";
-import { feedCreateFn } from "~/buyer/feed/server/fn/feedCreateFn";
+import { feedCreateFn } from "~/buyer/feed/fn/feedCreateFn";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 
 export const toolFeedCreate = tool({

@@ -1,5 +1,5 @@
 import { tool } from "@openai/agents";
-import { categoryCollectionFn } from "~/session/category/server/fn/categoryCollectionFn";
+import { categoryCollectionFn } from "~/session/category/fn/categoryCollectionFn";
 import { CategoryQuerySchema } from "~/session/category/server/schema/CategoryQuerySchema";
 
 export const toolCategoryCollection = tool({

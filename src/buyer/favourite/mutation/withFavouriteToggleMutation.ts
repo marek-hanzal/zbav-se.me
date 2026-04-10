@@ -1,5 +1,5 @@
 import { withMutation } from "@/lib/client/mutation";
-import { favouriteToggleFn } from "~/buyer/favourite/server/fn/favouriteToggleFn";
+import { favouriteToggleFn } from "~/buyer/favourite/fn/favouriteToggleFn";
 import type { FavouriteToggleSchema } from "~/buyer/favourite/server/schema/FavouriteToggleSchema";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 

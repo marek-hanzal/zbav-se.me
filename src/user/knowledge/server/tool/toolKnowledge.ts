@@ -1,6 +1,6 @@
 import { tool } from "@openai/agents";
 import { z } from "zod";
-import { getKnowledgeIndex } from "~/user/knowledge/service/getKnowledgeIndex";
+import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
 
 export const toolKnowledge = tool({
 	name: "knowledge",

@@ -1,10 +1,10 @@
 import { withEntityQuery } from "@/lib/client/query";
-import { feedCollectionFn } from "~/buyer/feed/server/fn/feedCollectionFn";
-import { feedCountFn } from "~/buyer/feed/server/fn/feedCountFn";
-import { feedCreateFn } from "~/buyer/feed/server/fn/feedCreateFn";
-import { feedDeleteFn } from "~/buyer/feed/server/fn/feedDeleteFn";
-import { feedFetchFn } from "~/buyer/feed/server/fn/feedFetchFn";
-import { feedPatchFn } from "~/buyer/feed/server/fn/feedPatchFn";
+import { feedCollectionFn } from "~/buyer/feed/fn/feedCollectionFn";
+import { feedCountFn } from "~/buyer/feed/fn/feedCountFn";
+import { feedCreateFn } from "~/buyer/feed/fn/feedCreateFn";
+import { feedDeleteFn } from "~/buyer/feed/fn/feedDeleteFn";
+import { feedFetchFn } from "~/buyer/feed/fn/feedFetchFn";
+import { feedPatchFn } from "~/buyer/feed/fn/feedPatchFn";
 import type { FeedCountQuerySchema } from "~/buyer/feed/server/schema/FeedCountQuerySchema";
 import type { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import type { FeedPatchSchema } from "~/buyer/feed/server/schema/FeedPatchSchema";

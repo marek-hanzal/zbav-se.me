@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
 import Fuse from "fuse.js";
 import { z } from "zod";
-import { getKnowledgeIndex } from "~/user/knowledge/service/getKnowledgeIndex";
+import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
 
 export const toolKnowledgeSearch = tool({
 	name: "knowledge-search",

@@ -3,8 +3,8 @@ import { withMutation } from "@/lib/client/mutation";
 import { genId } from "@/lib/common/gen-id";
 import { AllowedContentTypesEnumSchema } from "~/common/schema/AllowedContentTypesEnumSchema";
 import { AllowedExtensionsEnumSchema } from "~/common/schema/AllowedExtensionsEnumSchema";
-import { s3PreSignFn } from "~/user/s3/server/fn/s3PreSignFn";
-import { uploadCreateFn } from "~/user/upload/server/fn/uploadCreateFn";
+import { s3PreSignFn } from "~/user/s3/fn/s3PreSignFn";
+import { uploadCreateFn } from "~/user/upload/fn/uploadCreateFn";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
 export namespace withUploadMutation {

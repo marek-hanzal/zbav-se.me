@@ -1,10 +1,10 @@
 import { withEntityQuery } from "@/lib/client/query";
-import { draftCollectionFn } from "~/seller/draft/server/fn/draftCollectionFn";
-import { draftCountFn } from "~/seller/draft/server/fn/draftCountFn";
-import { draftCreateFn } from "~/seller/draft/server/fn/draftCreateFn";
-import { draftDeleteFn } from "~/seller/draft/server/fn/draftDeleteFn";
-import { draftFetchFn } from "~/seller/draft/server/fn/draftFetchFn";
-import { draftPatchFn } from "~/seller/draft/server/fn/draftPatchFn";
+import { draftCollectionFn } from "~/seller/draft/fn/draftCollectionFn";
+import { draftCountFn } from "~/seller/draft/fn/draftCountFn";
+import { draftCreateFn } from "~/seller/draft/fn/draftCreateFn";
+import { draftDeleteFn } from "~/seller/draft/fn/draftDeleteFn";
+import { draftFetchFn } from "~/seller/draft/fn/draftFetchFn";
+import { draftPatchFn } from "~/seller/draft/fn/draftPatchFn";
 import type { DraftCountQuerySchema } from "~/seller/draft/server/schema/DraftCountQuerySchema";
 import type { DraftCreateSchema } from "~/seller/draft/server/schema/DraftCreateSchema";
 import type { DraftPatchSchema } from "~/seller/draft/server/schema/DraftPatchSchema";

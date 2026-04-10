@@ -1,6 +1,6 @@
 import { withQuery } from "@/lib/client/query";
 import type { EntitySchema } from "@/lib/common/schema";
-import { listingGetSellerInfoFn } from "~/buyer/listing/server/fn/listingGetSellerInfoFn";
+import { listingGetSellerInfoFn } from "~/buyer/listing/fn/listingGetSellerInfoFn";
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
 
 export const withListingSellerInfoQuery = withQuery<EntitySchema.Type, SellerInfoSchema.Type>({

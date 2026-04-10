@@ -1,8 +1,8 @@
 import { withEntityQuery } from "@/lib/client/query";
-import { listingCollectionFn } from "~/seller/listing/server/fn/listingCollectionFn";
-import { listingCountFn } from "~/seller/listing/server/fn/listingCountFn";
-import { listingCreateFn } from "~/seller/listing/server/fn/listingCreateFn";
-import { listingFetchFn } from "~/seller/listing/server/fn/listingFetchFn";
+import { listingCollectionFn } from "~/seller/listing/fn/listingCollectionFn";
+import { listingCountFn } from "~/seller/listing/fn/listingCountFn";
+import { listingCreateFn } from "~/seller/listing/fn/listingCreateFn";
+import { listingFetchFn } from "~/seller/listing/fn/listingFetchFn";
 import type { ListingCountQuerySchema } from "~/seller/listing/server/schema/ListingCountQuerySchema";
 import type { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreateSchema";
 import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";

@@ -1,6 +1,6 @@
 import { withMutation } from "@/lib/client/mutation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
-import { feedGalleryCreateFn } from "~/buyer/feed-gallery/server/fn/feedGalleryCreateFn";
+import { feedGalleryCreateFn } from "~/buyer/feed-gallery/fn/feedGalleryCreateFn";
 import type { FeedGalleryCreateSchema } from "~/buyer/feed-gallery/server/schema/FeedGalleryCreateSchema";
 import type { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 

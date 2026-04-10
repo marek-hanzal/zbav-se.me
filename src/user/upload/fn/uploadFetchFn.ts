@@ -7,9 +7,9 @@ import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import { uploadFetchFx } from "../fx/uploadFetchFx";
-import { UploadQuerySchema } from "../schema/UploadQuerySchema";
-import { UploadSchema } from "../schema/UploadSchema";
+import { uploadFetchFx } from "../server/fx/uploadFetchFx";
+import { UploadQuerySchema } from "../server/schema/UploadQuerySchema";
+import { UploadSchema } from "../server/schema/UploadSchema";
 
 export const uploadFetchFn = createServerFn()
 	.middleware([

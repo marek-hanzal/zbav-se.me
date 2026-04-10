@@ -1,5 +1,5 @@
 import { tool } from "@openai/agents";
-import { draftCountFn } from "~/seller/draft/server/fn/draftCountFn";
+import { draftCountFn } from "~/seller/draft/fn/draftCountFn";
 import { DraftToolCountQuerySchema } from "~/seller/draft/server/schema/DraftToolCountQuerySchema";
 
 export const toolDraftCount = tool({

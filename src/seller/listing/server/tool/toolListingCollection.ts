@@ -1,5 +1,5 @@
 import { tool } from "@openai/agents";
-import { listingCollectionFn } from "~/seller/listing/server/fn/listingCollectionFn";
+import { listingCollectionFn } from "~/seller/listing/fn/listingCollectionFn";
 import { ListingToolQuerySchema } from "~/seller/listing/server/schema/ListingToolQuerySchema";
 
 export const toolListingCollection = tool({

@@ -1,5 +1,5 @@
 import { withMutation } from "@/lib/client/mutation";
-import { draftGalleryCreateFn } from "~/seller/draft-gallery/server/fn/draftGalleryCreateFn";
+import { draftGalleryCreateFn } from "~/seller/draft-gallery/fn/draftGalleryCreateFn";
 import type { DraftGalleryCreateSchema } from "~/seller/draft-gallery/server/schema/DraftGalleryCreateSchema";
 import type { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 import { withDraftQuery } from "../query/withDraftQuery";

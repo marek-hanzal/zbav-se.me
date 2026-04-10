@@ -1,7 +1,7 @@
 import { withEntityQuery } from "@/lib/client/query";
-import { categoryCollectionFn } from "~/session/category/server/fn/categoryCollectionFn";
-import { categoryCountFn } from "~/session/category/server/fn/categoryCountFn";
-import { categoryFetchFn } from "~/session/category/server/fn/categoryFetchFn";
+import { categoryCollectionFn } from "~/session/category/fn/categoryCollectionFn";
+import { categoryCountFn } from "~/session/category/fn/categoryCountFn";
+import { categoryFetchFn } from "~/session/category/fn/categoryFetchFn";
 import type { CategoryCountQuerySchema } from "~/session/category/server/schema/CategoryCountQuerySchema";
 import type { CategoryQuerySchema } from "~/session/category/server/schema/CategoryQuerySchema";
 import type { CategorySchema } from "~/session/category/server/schema/CategorySchema";
