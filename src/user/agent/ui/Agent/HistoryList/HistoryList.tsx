@@ -37,18 +37,20 @@ export const HistoryList: FC<HistoryList.Props> = ({ ui, ...props }) => {
 			}}
 			{...props}
 		>
-			{items.map((item) => {
+			{items.map((item, index) => {
 				return match(item)
 					.with(
 						{
 							role: "user",
 						},
-						(item) => (
-							<UserMessage
-								key={`user-${item.id}`}
-								item={item}
-							/>
-						),
+						(item) => {
+							return (
+								<UserMessage
+									key={`user-${item.id ?? index}`}
+									item={item}
+								/>
+							);
+						},
 					)
 					.with(
 						{
