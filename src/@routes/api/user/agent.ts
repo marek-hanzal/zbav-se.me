@@ -1,9 +1,14 @@
 import type { AgentInputItem, RunStreamEvent } from "@openai/agents";
 import { createFileRoute } from "@tanstack/react-router";
+import { Effect } from "effect";
 import { z } from "zod";
+import { withLoggerFx } from "@/lib/common/log";
+import { withDateFx } from "~/server/database/fx/withDateFx";
+import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { AssistantAgent } from "~/user/agent/AssistantAgent";
 import { MaxTurns } from "~/user/agent/model/MaxTurns";
+import { agentUsageCreateFx } from "~/user/agent/server/fx/agentUsageCreateFx";
 import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { withRunnerSessionMiddleware } from "~/user/agent/server/middleware/withRunnerSessionMiddleware";
 
@@ -27,7 +32,7 @@ export const Route = createFileRoute("/api/user/agent")({
 			withRunnerMiddleware,
 		],
 		handlers: {
-			async POST({ request, context: { user, rootLogger, runner, session } }) {
+			async POST({ request, context: { database, user, rootLogger, runner, session } }) {
 				const logger = rootLogger.getChild("/api/user/agent");
 
 				const input = AgentRequestSchema.safeParse(await request.json());
@@ -47,15 +52,18 @@ export const Route = createFileRoute("/api/user/agent")({
 				return new Response(
 					new ReadableStream<Uint8Array<ArrayBuffer>>({
 						async start(controller) {
-							try {
-								const stream = await runner.run(AssistantAgent, input.data, {
-									session,
-									stream: true,
-									signal: request.signal,
-									maxTurns: MaxTurns,
-								});
+							const run = runner.run(AssistantAgent, input.data, {
+								session,
+								stream: true,
+								signal: request.signal,
+								maxTurns: MaxTurns,
+							});
 
-								try {
+							return Effect.gen(function* () {
+								const { stream, threadId } = yield* Effect.promise(async () => {
+									const stream = await run;
+									const threadId = await session.getSessionId();
+
 									for await (const event of stream) {
 										controller.enqueue(
 											encoder.encode(
@@ -66,27 +74,63 @@ export const Route = createFileRoute("/api/user/agent")({
 
 									await stream.completed;
 
-									controller.close();
-								} catch (error) {
-									try {
-										await stream.completed;
-									} catch (error) {
-										logger.error("Agent stream completion failed", {
-											userId: user.id,
-											error: error,
-										});
-									}
-
-									throw error;
-								}
-							} catch (error) {
-								logger.error("Agent stream failed", {
-									userId: user.id,
-									error,
+									return {
+										stream,
+										threadId,
+									};
 								});
 
-								controller.close();
-							}
+								yield* agentUsageCreateFx({
+									userId: user.id,
+									threadId,
+									requests: stream.state.usage.requests,
+									input: stream.state.usage.inputTokens,
+									total: stream.state.usage.totalTokens,
+									output: stream.state.usage.outputTokens,
+								}).pipe(
+									Effect.catchAll((error) =>
+										Effect.sync(() => {
+											logger.error("Agent usage persistence failed", {
+												userId: user.id,
+												threadId,
+												error,
+											});
+										}),
+									),
+								);
+
+								yield* Effect.sync(() => {
+									controller.close();
+								});
+							}).pipe(
+								withLoggerFx(rootLogger),
+								withKyselyFx(database),
+								withDateFx,
+								Effect.catchAll((error) =>
+									Effect.gen(function* () {
+										yield* Effect.promise(() =>
+											run
+												.then((stream) => stream.completed)
+												.catch((error) => {
+													logger.error("Agent stream completion failed", {
+														userId: user.id,
+														error,
+													});
+												}),
+										);
+
+										yield* Effect.sync(() => {
+											logger.error("Agent stream failed", {
+												userId: user.id,
+												error,
+											});
+
+											controller.close();
+										});
+									}),
+								),
+								Effect.runPromise,
+							);
 						},
 						async cancel() {
 							// request.signal should already propagate disconnect/abort
