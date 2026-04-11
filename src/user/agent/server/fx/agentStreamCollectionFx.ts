@@ -18,7 +18,7 @@ export const agentStreamCollectionFx = Effect.fn("agentStreamCollectionFx")(func
 	scope,
 	cursor = {
 		page: 0,
-		size: 10,
+		size: 256,
 	},
 	sort,
 }: agentStreamCollectionFx.Props) {

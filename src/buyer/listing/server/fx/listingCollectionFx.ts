@@ -23,7 +23,7 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	meta,
 }: listingCollectionFx.Props) {
 	const logger = yield* getLoggerFx("listingCollectionFx");
-	logger.debug("listingCollectionFx", {
+	logger.trace("listingCollectionFx", {
 		userId,
 		cursor,
 		filter,

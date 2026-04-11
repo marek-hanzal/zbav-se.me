@@ -18,7 +18,7 @@ export const inboxCountFx = Effect.fn("inboxCountFx")(function* ({
 	scope,
 }: inboxCountFx.Props) {
 	const logger = yield* getLoggerFx("inboxCountFx");
-	logger.debug("inboxCountFx", {
+	logger.trace("inboxCountFx", {
 		filter,
 		where,
 		scope,

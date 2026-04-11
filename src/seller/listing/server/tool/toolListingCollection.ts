@@ -17,6 +17,9 @@ export const toolListingCollection = tool({
         and other interesting stuff.
 
         This is main entry-point to listings from the seller's point of view.
+
+        Collection is already bound to the user, so you can call it with empty {} object an
+        input.
     `.trim(),
 	parameters: ListingToolQuerySchema,
 	async execute(data) {

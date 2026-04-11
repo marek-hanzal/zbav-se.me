@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
 import type { AgentStreamWhereSchema } from "~/user/agent/server/schema/AgentStreamWhereSchema";
 import type { withAgentStreamSourceSelectFx } from "./withAgentStreamSourceSelectFx";
 
@@ -18,6 +19,12 @@ export namespace withAgentStreamQueryBuilderFx {
 export const withAgentStreamQueryBuilderFx = Effect.fn("withAgentStreamQueryBuilderFx")(function* <
 	TSelect extends withAgentStreamSourceSelectFx.Select,
 >({ select, where }: withAgentStreamQueryBuilderFx.Props<TSelect>) {
+	const logger = yield* getLoggerFx("withAgentStreamQueryBuilderFx");
+
+	logger.trace("withAgentStreamQueryBuilderFx", {
+		where,
+	});
+
 	let query = select;
 
 	if (!where) {
