@@ -9,6 +9,10 @@ const logger = getRootLogger([
 	"getKnowledgeIndex",
 ]);
 
+export namespace getKnowledgeIndex {
+	export type Type = getIndexOf.Type<KnowledgeFrontSchema>;
+}
+
 export const getKnowledgeIndex = () => {
 	logger.trace("Index of proxy for Knowledge Index");
 

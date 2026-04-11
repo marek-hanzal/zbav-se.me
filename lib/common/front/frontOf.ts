@@ -9,13 +9,21 @@ const logger = getLogger([
 ]);
 
 export namespace frontOf {
+	export interface Type<TSchema extends z.ZodType>
+		extends Omit<matter.GrayMatterFile<string>, "data"> {
+		data: z.infer<TSchema>;
+	}
+
 	export interface Props<TSchema extends z.ZodType> {
 		schema: TSchema;
 		source: string;
 	}
 }
 
-export const frontOf = <TSchema extends z.ZodType>({ schema, source }: frontOf.Props<TSchema>) => {
+export const frontOf = <TSchema extends z.ZodType>({
+	schema,
+	source,
+}: frontOf.Props<TSchema>): frontOf.Type<TSchema> => {
 	const topic = matter(source);
 
 	logger.trace("frontOf", {

@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { AssistantAgent } from "~/user/agent/AssistantAgent";
+import { MaxTurns } from "~/user/agent/model/MaxTurns";
 import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { withRunnerSessionMiddleware } from "~/user/agent/server/middleware/withRunnerSessionMiddleware";
 
@@ -51,6 +52,7 @@ export const Route = createFileRoute("/api/user/agent")({
 									session,
 									stream: true,
 									signal: request.signal,
+									maxTurns: MaxTurns,
 								});
 
 								try {

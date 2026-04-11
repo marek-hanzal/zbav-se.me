@@ -1,6 +1,7 @@
 import { Agent } from "@openai/agents";
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
+import { MaxTurns } from "~/user/agent/model/MaxTurns";
 import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 
 export const ForemanAgent = new Agent({
@@ -25,12 +26,18 @@ export const ForemanAgent = new Agent({
 			toolDescription: `
                 Worker for seller listing drafts: create, list, count, patch, and delete drafts.
             `.trim(),
+			runOptions: {
+				maxTurns: MaxTurns,
+			},
 		}),
 		LocationAgent.asTool({
 			toolName: "worker-location",
 			toolDescription: `
                 Worker for location and address autocomplete, resolution, and normalization.
             `.trim(),
+			runOptions: {
+				maxTurns: MaxTurns,
+			},
 		}),
 	],
 });
