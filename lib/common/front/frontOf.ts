@@ -2,7 +2,11 @@ import { getLogger } from "@logtape/logtape";
 import matter from "gray-matter";
 import type { z } from "zod";
 
-const logger = getLogger("frontOf");
+const logger = getLogger([
+	"lib",
+	"common",
+	"frontOf",
+]);
 
 export namespace frontOf {
 	export interface Props<TSchema extends z.ZodType> {

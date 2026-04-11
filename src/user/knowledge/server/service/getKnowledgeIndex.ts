@@ -1,10 +1,13 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { getLogger } from "@logtape/logtape";
 import { getIndexOf } from "@/lib/common/front";
+import { getRootLogger } from "~/server/log/getRootLogger";
 import { KnowledgeFrontSchema } from "~/user/knowledge/server/schema/KnowledgeFrontSchema";
 
-const logger = getLogger("getKnowledgeIndex");
+const logger = getRootLogger([
+	"service",
+	"getKnowledgeIndex",
+]);
 
 export const getKnowledgeIndex = () => {
 	logger.trace("Index of proxy for Knowledge Index");
