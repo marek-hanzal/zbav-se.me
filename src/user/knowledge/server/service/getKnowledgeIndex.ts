@@ -5,6 +5,7 @@ import { getRootLogger } from "~/server/log/getRootLogger";
 import { KnowledgeFrontSchema } from "~/user/knowledge/server/schema/KnowledgeFrontSchema";
 
 const logger = getRootLogger([
+	"knowledge",
 	"service",
 	"getKnowledgeIndex",
 ]);

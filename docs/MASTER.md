@@ -1,3 +1,9 @@
+---
+key: MASTER
+title: Zdroj pravdy pro aplikaci, produkt a pravidla
+summary: Primární dokument, kde jsou popsané všechny části aplikace, co umí, pravidla a další; slouží jako hlavní zdroj pravdy.
+---
+
 # MASTER
 
 Tohle je finální „single source of truth“ pro Zbav-se.me. Je to moje produktová ústava: popisuje **co je pravda** (koncepty, pravidla, hranice) a **proč**. Neřeší, jak to technicky nakóduju.
