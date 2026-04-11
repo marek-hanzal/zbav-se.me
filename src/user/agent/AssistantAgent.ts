@@ -7,7 +7,12 @@ import { KnowledgeAgent } from "~/user/knowledge/KnowledgeAgent";
 ("Co mi reknes o tehle appce?");
 ("Pouzij nastroj pro ziskani vedomosti a shrn mi, co vis");
 
-("Napis mi rozsahly elaborat, co vis o tehle appce, nic nezkracuj, pekne se poradne rozepis a pouzij maximalne experta na znalosti; pro informace pouzij nastroj/experta");
+`
+    Napis mi rozsahly elaborat, co vis o tehle appce, nic nezkracuj, pekne se poradne rozepis a pouzij
+    maximalne experta na znalosti; pro informace pouzij nastroj/experta.
+
+    Nezkracuj vystup, chci mit komplexni prehled.
+`;
 
 export const AssistantAgent = Agent.create({
 	name: "Assistant",

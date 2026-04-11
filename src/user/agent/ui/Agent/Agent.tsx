@@ -101,7 +101,7 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 						onClick={chat.cancel}
 						iconProps={{
 							ui: {
-								text: "2xl",
+								text: "xl",
 							},
 						}}
 						ui={{

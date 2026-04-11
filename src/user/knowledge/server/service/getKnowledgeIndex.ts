@@ -9,6 +9,8 @@ const logger = getRootLogger([
 	"getKnowledgeIndex",
 ]);
 
+let cache: getKnowledgeIndex.Type | undefined;
+
 export namespace getKnowledgeIndex {
 	export type Type = getIndexOf.Type<KnowledgeFrontSchema>;
 }
@@ -16,8 +18,14 @@ export namespace getKnowledgeIndex {
 export const getKnowledgeIndex = () => {
 	logger.trace("Index of proxy for Knowledge Index");
 
-	return getIndexOf({
+	if (cache !== undefined) {
+		return cache;
+	}
+
+	cache = getIndexOf({
 		schema: KnowledgeFrontSchema,
-		source: join(dirname(fileURLToPath(import.meta.url)), "../../../../../docs"),
+		source: join(dirname(fileURLToPath(import.meta.url)), "../../../../../docs/content"),
 	});
+
+	return cache;
 };
