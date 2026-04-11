@@ -2,6 +2,7 @@ import { tool } from "@openai/agents";
 import { z } from "zod";
 import { keysOf } from "@/lib/common/keys-of";
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
+import { SellerListingAgent } from "~/seller/listing/server/tool/SellerListingAgent";
 import { getRootLogger } from "~/server/log/getRootLogger";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
 
@@ -12,6 +13,7 @@ const logger = getRootLogger([
 
 const Agents = {
 	"seller-draft": DraftAgent,
+	"seller-listing": SellerListingAgent,
 	location: LocationAgent,
 } as const;
 

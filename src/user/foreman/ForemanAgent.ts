@@ -1,5 +1,6 @@
 import { Agent } from "@openai/agents";
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
+import { SellerListingAgent } from "~/seller/listing/server/tool/SellerListingAgent";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
 import { MaxTurns } from "~/user/agent/model/MaxTurns";
 import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
@@ -21,18 +22,38 @@ export const ForemanAgent = new Agent({
     `.trim(),
 	modelSettings: ToolModelSettings,
 	tools: [
+		/**
+		 * Seller tools
+		 */
+		SellerListingAgent.asTool({
+			toolName: "worker-seller-listing",
+			toolDescription: `
+                Role - seller
+
+                Worker for seller listing stuff - you can use it to get information about current public facing listings,
+                counts and so on.
+            `.trim(),
+			runOptions: {
+				maxTurns: MaxTurns,
+			},
+		}),
 		DraftAgent.asTool({
 			toolName: "worker-seller-draft",
 			toolDescription: `
+                Role - seller
+
                 Worker for seller listing drafts: create, list, count, patch, and delete drafts.
             `.trim(),
 			runOptions: {
 				maxTurns: MaxTurns,
 			},
 		}),
+		//
 		LocationAgent.asTool({
 			toolName: "worker-location",
 			toolDescription: `
+                Role - all users    
+
                 Worker for location and address autocomplete, resolution, and normalization.
             `.trim(),
 			runOptions: {
