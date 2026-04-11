@@ -18,6 +18,6 @@ export const getKnowledgeIndex = () => {
 
 	return getIndexOf({
 		schema: KnowledgeFrontSchema,
-		source: join(dirname(fileURLToPath(import.meta.url)), "../../content"),
+		source: join(dirname(fileURLToPath(import.meta.url)), "../../../../../docs"),
 	});
 };

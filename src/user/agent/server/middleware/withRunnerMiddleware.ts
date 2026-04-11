@@ -12,7 +12,7 @@ export const withRunnerMiddleware = createMiddleware().server(async ({ next }) =
 		modelProvider: new OpenAIProvider({
 			baseURL: aiConfig.SERVER_AI_SERVER_URL,
 			apiKey: aiConfig.SERVER_AI_TOKEN,
-		}),        
+		}),
 		tracingDisabled: true,
 	});
 
