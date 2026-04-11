@@ -15,6 +15,9 @@ export const KnowledgeAgent = new Agent({
         Always use tool to check the knowledge and compile output (target is another LLM not a user).
 
         Don't strip any information from the sources, but you may rephrase it.
+
+        If the plan names a worker or maps clearly to one worker, call that worker. Do not answer from
+        your own knowledge when a worker or tool is available for the task.
     `.trim(),
 	modelSettings: ToolModelSettings,
 	tools: [
@@ -24,14 +27,14 @@ export const KnowledgeAgent = new Agent({
 		//
 		DraftAgent.asTool({
 			toolDescription: `
-                Use to get a knowledge, what tools are available for Drafts.
-            `.trim(),
+		        Use to get a knowledge, what tools are available for Drafts.
+		    `.trim(),
 		}),
 		//
 		LocationAgent.asTool({
 			toolDescription: `
-                Use to get a knowledge, what is available for location/address autocomplete/normalization.
-            `.trim(),
+		        Use to get a knowledge, what is available for location/address autocomplete/normalization.
+		    `.trim(),
 		}),
 	],
 });

@@ -44,6 +44,9 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 					flow: "vertical",
 					gap: "xs",
 				}}
+				className={[
+					"min-w-0",
+				]}
 			>
 				<Typo
 					label={state.name}
@@ -51,6 +54,9 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 						text: "sm",
 						font: "bold",
 					}}
+					className={[
+						"wrap-break-word",
+					]}
 				/>
 
 				{state.input !== null ? (
@@ -69,6 +75,10 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 								text: "xs",
 								opacity: "8",
 							}}
+							className={[
+								"wrap-break-word",
+								"whitespace-pre-wrap",
+							]}
 						/>
 					</>
 				) : null}
@@ -103,6 +113,10 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 								text: "xs",
 								opacity: "8",
 							}}
+							className={[
+								"wrap-break-word",
+								"whitespace-pre-wrap",
+							]}
 						/>
 					</>
 				) : null}

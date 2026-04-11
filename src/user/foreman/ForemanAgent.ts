@@ -17,6 +17,9 @@ export const ForemanAgent = new Agent({
 
         Don't make your own decisions, everything must go from the plan.
 
+        If the plan names a worker or maps clearly to one worker, call that worker. Do not answer from
+        your own knowledge when a worker is available for the task.
+
         You're able to do mutations (through your agents) - e.g. create or delte stuff, so you must be critically
         sure what you're doing.
     `.trim(),

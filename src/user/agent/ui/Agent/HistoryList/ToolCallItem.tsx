@@ -40,6 +40,9 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, ui, classNam
 					flow: "vertical",
 					gap: "xs",
 				}}
+				className={[
+					"min-w-0",
+				]}
 			>
 				<Typo
 					label={item.name}
@@ -47,6 +50,9 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, ui, classNam
 						text: "sm",
 						font: "bold",
 					}}
+					className={[
+						"wrap-break-word",
+					]}
 				/>
 
 				<Typo
@@ -64,6 +70,10 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, ui, classNam
 						text: "xs",
 						opacity: "8",
 					}}
+					className={[
+						"wrap-break-word",
+						"whitespace-pre-wrap",
+					]}
 				/>
 
 				{output !== undefined ? (
@@ -82,6 +92,10 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, ui, classNam
 								text: "xs",
 								opacity: "8",
 							}}
+							className={[
+								"wrap-break-word",
+								"whitespace-pre-wrap",
+							]}
 						/>
 					</>
 				) : null}
