@@ -4,7 +4,11 @@ import { getLogger } from "@logtape/logtape";
 import type { z } from "zod";
 import { frontOf } from "./frontOf";
 
-const logger = getLogger("getIndexOf");
+const logger = getLogger([
+	"lib",
+	"common",
+	"getIndexOf",
+]);
 
 export namespace getIndexOf {
 	export type Type<TSchema extends z.ZodType> = frontOf.Type<TSchema>[];
@@ -26,6 +30,10 @@ export const getIndexOf = <TSchema extends z.ZodType>({
 	return readdirSync(source)
 		.filter((file) => file.endsWith(".md"))
 		.map((file) => {
+			logger.trace("file", {
+				file,
+			});
+
 			return frontOf({
 				schema,
 				source: readFileSync(join(source, file), "utf8"),

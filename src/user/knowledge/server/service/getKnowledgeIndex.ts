@@ -27,5 +27,9 @@ export const getKnowledgeIndex = () => {
 		source: join(dirname(fileURLToPath(import.meta.url)), "../../../../../docs"),
 	});
 
+	logger.trace("Index", {
+		index: cache.map((item) => item.data.key),
+	});
+
 	return cache;
 };
