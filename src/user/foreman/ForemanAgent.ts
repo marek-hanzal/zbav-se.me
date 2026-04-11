@@ -1,6 +1,7 @@
 import { Agent } from "@openai/agents";
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
+import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 
 export const ForemanAgent = new Agent({
 	name: "Foreman Agent",
@@ -19,6 +20,7 @@ export const ForemanAgent = new Agent({
         You're able to do mutations (through your agents) - e.g. create or delte stuff, so you must be critically
         sure what you're doing.
     `.trim(),
+	modelSettings: ToolModelSettings,
 	tools: [
 		DraftAgent.asTool({
 			toolName: "worker-seller-draft",
