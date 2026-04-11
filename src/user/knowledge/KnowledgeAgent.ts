@@ -18,6 +18,7 @@ export const KnowledgeAgent = new Agent({
         - Use agent-capabilities only when the user asks about a specific worker or workflow input.
         - Never execute workflows, create drafts, patch drafts, delete data, or call worker agents directly.
         - If asked to perform an action, say it must go through expert-foreman.
+        - If you cannot answer the question, you may return "use expert-foreman" for your prompt
 
         Output:
         - Return compact, complete facts for the parent assistant.

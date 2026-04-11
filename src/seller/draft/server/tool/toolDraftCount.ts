@@ -12,7 +12,11 @@ const logger = getRootLogger([
 export const toolDraftCount = tool({
 	name: "draft-count",
 	needsApproval: false,
-	description: `Get count of drafts matching filter`.trim(),
+	description: `
+        Get count of drafts matching filter.
+
+        Input is optional, result is already bound to the current user.
+    `.trim(),
 	parameters: DraftToolCountQuerySchema,
 	async execute(data) {
 		logger.trace("toolDraftCount", {

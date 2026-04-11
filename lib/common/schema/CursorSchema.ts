@@ -10,16 +10,22 @@ export const CursorSchema = z
 		/**
 		 * Page.
 		 */
-		page: z.number().gte(0, "Page must be greater than zero"),
+		page: z
+			.number()
+			.gte(0, "Page must be greater than zero")
+			.describe("Page you want to retrieve; collections are 0-based"),
 		/**
 		 * Page size.
 		 */
-		size: z.number().gte(1, "Page size must be greater than one to get any data"),
+		size: z
+			.number()
+			.gte(1, "Page size must be greater than one to get any data")
+			.describe("Page size you want to get"),
 	})
 	.strip()
 	.meta({
 		id: "Cursor",
-		description: "Pagination cursor data",
+		description: "Pagination cursor data; for 0-based collections",
 	});
 
 export type CursorSchema = typeof CursorSchema;

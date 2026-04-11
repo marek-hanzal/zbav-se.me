@@ -25,11 +25,11 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, ui, classNam
 			data-ui={"ToolCallItem"}
 			data-id={item.id}
 			ui={{
-				tone: "secondary",
+				tone: "neutral",
 				theme: "light",
 				background: "alt",
 				inner: "default",
-				opacity: "8",
+				opacity: "6",
 				...ui,
 			}}
 			className={className}
