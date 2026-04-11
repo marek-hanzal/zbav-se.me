@@ -42,10 +42,12 @@ export const agentStreamDeleteCollectionFx = Effect.fn("agentStreamDeleteCollect
 			}
 
 			return yield* tryDbFx(async () => {
-				return kysely
+				const { numDeletedRows } = await kysely
 					.deleteFrom("agent_stream")
 					.where("id", "in", select.clearSelect().select("as.id"))
-					.execute();
+					.executeTakeFirstOrThrow();
+
+				return Number(numDeletedRows);
 			});
 		}),
 	);
