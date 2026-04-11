@@ -20,6 +20,9 @@ export const getKnowledgeIndex = () => {
 	logger.trace("Index of proxy for Knowledge Index");
 
 	if (cache !== undefined) {
+		logger.trace("Index - cache hit", {
+			index: cache.map((item) => item.data.key),
+		});
 		return cache;
 	}
 
@@ -28,7 +31,7 @@ export const getKnowledgeIndex = () => {
 		source: join(dirname(fileURLToPath(import.meta.url)), "../../../../../docs"),
 	});
 
-	logger.trace("Index", {
+	logger.trace("Index - cache miss", {
 		index: cache.map((item) => item.data.key),
 	});
 
