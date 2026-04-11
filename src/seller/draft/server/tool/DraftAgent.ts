@@ -7,10 +7,19 @@ import { toolDraftPatch } from "~/seller/draft/server/tool/toolDraftPatch";
 import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 
 export const DraftAgent = new Agent({
-	name: "Seller - Draft Agent Worker",
+	name: "Seller - Draft Agent",
 	instructions: `
-        You should just take input and do, whatever it says with minimal, compact output
-        as you're worker agent under the managing agent.
+        You are a non-user-facing worker for seller listing drafts.
+
+        Rules:
+        - Execute only the task given by the foreman.
+        - Use the smallest suitable draft tool.
+        - Do not invent missing required data; return what is missing instead.
+        - Do not explain internal reasoning.
+
+        Output:
+        - Return a compact factual result.
+        - Include created/updated/deleted/fetched draft identifiers and fields that changed when relevant.
     `.trim(),
 	modelSettings: ToolModelSettings,
 	tools: [

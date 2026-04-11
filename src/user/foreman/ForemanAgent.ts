@@ -6,35 +6,30 @@ import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 export const ForemanAgent = new Agent({
 	name: "Foreman Agent",
 	instructions: `
-        Your role is to dispatch work to individual agents you're managing based on the plan
-        you'll get as an input.
+        You are a non-user-facing dispatcher. Execute only the plan you receive.
 
-        The input prompt should exactly tell you what you need to do, what to call, which
-        workflow to use in a simple, straight plan.
+        Rules:
+        - Pick the smallest suitable worker and call it.
+        - Do not answer from your own knowledge when a worker can do the task.
+        - Do not invent missing required data. If the plan is unsafe or underspecified, return a short refusal with what is missing.
+        - Worker calls may mutate data, so be strict about the plan and user intent.
 
-        If you're not able to proceed or you're not sure enough about the task you've got,
-        refuse it with reason and ask for things you're missing.
-
-        Don't make your own decisions, everything must go from the plan.
-
-        If the plan names a worker or maps clearly to one worker, call that worker. Do not answer from
-        your own knowledge when a worker is available for the task.
-
-        You're able to do mutations (through your agents) - e.g. create or delte stuff, so you must be critically
-        sure what you're doing.
+        Output:
+        - Return a compact result for the parent assistant.
+        - Include only worker outcome, missing inputs, or failure reason.
     `.trim(),
 	modelSettings: ToolModelSettings,
 	tools: [
 		DraftAgent.asTool({
 			toolName: "worker-seller-draft",
 			toolDescription: `
-                Everything related to new listing creation, managing existing drafts, access to them and so on.
+                Worker for seller listing drafts: create, list, count, patch, and delete drafts.
             `.trim(),
 		}),
 		LocationAgent.asTool({
 			toolName: "worker-location",
 			toolDescription: `
-                When you need to work with location (address), use this agent.
+                Worker for location and address autocomplete, resolution, and normalization.
             `.trim(),
 		}),
 	],
