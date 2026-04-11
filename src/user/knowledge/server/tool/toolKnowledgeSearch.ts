@@ -72,7 +72,7 @@ export const toolKnowledgeSearch = tool({
 			threshold: 0.35,
 		});
 
-		return fuse
+		const matches = fuse
 			.search(normalized, {
 				limit: limit ?? 8,
 			})
@@ -86,5 +86,11 @@ export const toolKnowledgeSearch = tool({
 						score: score ?? 0,
 					}) as const,
 			);
+
+		return {
+			query: normalized,
+			count: matches.length,
+			matches,
+		};
 	},
 });

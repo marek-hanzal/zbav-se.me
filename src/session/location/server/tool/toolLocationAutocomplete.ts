@@ -21,8 +21,13 @@ export const toolLocationAutocomplete = tool({
 			data,
 		});
 
-		return locationAutocompleteFn({
+		const matches = await locationAutocompleteFn({
 			data,
 		});
+
+		return {
+			count: matches.length,
+			matches,
+		};
 	},
 });

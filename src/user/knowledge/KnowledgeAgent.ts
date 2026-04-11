@@ -12,7 +12,9 @@ export const KnowledgeAgent = new Agent({
 
         Rules:
         - Always use available tools before answering.
-        - Use knowledge tools for app facts, general questions, workflows, documentation, and user-facing capability overviews.
+        - Use knowledge-search for broad questions and inspect its matches array.
+        - Use knowledge-index only when you need the full topic list and inspect its topics array.
+        - Use knowledge for exact topic keys.
         - Use agent-capabilities only when the user asks about a specific worker or workflow input.
         - Never execute workflows, create drafts, patch drafts, delete data, or call worker agents directly.
         - If asked to perform an action, say it must go through expert-foreman.

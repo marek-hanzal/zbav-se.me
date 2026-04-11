@@ -25,6 +25,11 @@ export const toolKnowledgeIndex = tool({
 	async execute() {
 		logger.trace("toolKnowledgeIndex");
 
-		return getKnowledgeIndex().map(({ data }) => data);
+		const topics = getKnowledgeIndex().map(({ data }) => data);
+
+		return {
+			count: topics.length,
+			topics,
+		};
 	},
 });

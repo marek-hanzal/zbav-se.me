@@ -23,8 +23,13 @@ export const toolDraftCollection = tool({
 			data,
 		});
 
-		return draftCollectionFn({
+		const items = await draftCollectionFn({
 			data,
 		});
+
+		return {
+			count: items.length,
+			items,
+		};
 	},
 });
