@@ -616,6 +616,9 @@
 7b76eaae7e44c7090565c9a3f68a77cc082807fbf7f1c1111dfadb29:
     ref: Unignore listing (button)
     value: Zrušit ignoraci
+7b77281c6dc1a4d0b28c3aae49154ee4e5f2b98740508ea2dba60141:
+    ref: Clear chat history (label)
+    value: Smazat historii
 7b93a66595d88c60241f7eb48599cc8738e54decdbca0730a8aa958d:
     ref: Buyer load (hint)
     value: >
@@ -1214,9 +1217,6 @@ b9057abdfc2947ea0f0da7b26069769bbf9c40ca4d382aae15ddbd0a:
 b9280e542386de06015c0360e53e55cfccee8b1bf03cea7ef44c26c0:
     ref: Feed delivery (label)
     value: Možnosti předání
-b9742c1a5d37a201816189edaafc7e95da2f3295f141bb3fbd77730a:
-    ref: Tool call
-    value: Tool call
 b9c5a03896d71b41f7828f3747be6c509689c279e60f845ab3b23480:
     ref: pending
     value: pending

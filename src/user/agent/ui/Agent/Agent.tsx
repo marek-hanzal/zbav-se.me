@@ -79,7 +79,10 @@ export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
 						height: "full",
 					}}
 				>
-					<AgentMessageList containerRef={containerRef} />
+					<AgentMessageList
+						containerRef={containerRef}
+						isPending={chat.mutation.isPending}
+					/>
 				</Container>
 			</EmptyState>
 

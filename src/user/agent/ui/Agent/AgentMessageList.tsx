@@ -1,16 +1,23 @@
 import { type FC, type RefObject, useRef } from "react";
 import { useAutoScroll } from "@/lib/client/auto-scroll";
 import { Container } from "@/lib/client/container";
+import { ClearButton } from "~/user/agent/ui/Agent/ClearButton";
 import { HistoryList } from "./HistoryList";
 import { LiveList } from "./LiveList";
 
 export namespace AgentMessageList {
 	export interface Props extends Container.Props {
 		containerRef: RefObject<HTMLDivElement | null>;
+		isPending: boolean;
 	}
 }
 
-export const AgentMessageList: FC<AgentMessageList.Props> = ({ containerRef, ui, ...props }) => {
+export const AgentMessageList: FC<AgentMessageList.Props> = ({
+	containerRef,
+	isPending,
+	ui,
+	...props
+}) => {
 	const contentRef = useRef<HTMLDivElement | null>(null);
 	useAutoScroll({
 		containerRef,
@@ -34,6 +41,20 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({ containerRef, ui,
 			<HistoryList />
 
 			<LiveList />
+
+			{isPending ? null : (
+				<Container
+					ui={{
+						flow: "horizontal",
+						items: "center",
+						justify: "center",
+						inner: "default",
+						width: "full",
+					}}
+				>
+					<ClearButton />
+				</Container>
+			)}
 		</Container>
 	);
 };
