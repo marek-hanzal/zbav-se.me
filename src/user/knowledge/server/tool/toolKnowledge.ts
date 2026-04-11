@@ -4,6 +4,7 @@ import { getRootLogger } from "~/server/log/getRootLogger";
 import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
 
 const logger = getRootLogger([
+	"knowledge",
 	"tool",
 	"toolKnowledge",
 ]);
