@@ -4,6 +4,7 @@ import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuer
 import { getRootLogger } from "~/server/log/getRootLogger";
 
 const logger = getRootLogger([
+	"draft",
 	"tool",
 	"toolDraftCollection",
 ]);
