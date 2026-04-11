@@ -1,7 +1,6 @@
 import { Agent } from "@openai/agents";
-import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
-import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
 import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
+import { toolAgentCapabilities } from "~/user/knowledge/server/tool/toolAgentCapabilities";
 import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
 import { toolKnowledgeIndex } from "~/user/knowledge/server/tool/toolKnowledgeIndex";
 import { toolKnowledgeSearch } from "~/user/knowledge/server/tool/toolKnowledgeSearch";
@@ -16,25 +15,17 @@ export const KnowledgeAgent = new Agent({
 
         Don't strip any information from the sources, but you may rephrase it.
 
-        If the plan names a worker or maps clearly to one worker, call that worker. Do not answer from
-        your own knowledge when a worker or tool is available for the task.
+        You're read-only. You retrieve knowledge and inspect capabilities, but you never execute
+        user workflows, create drafts, patch drafts, delete data, or call worker agents directly.
+
+        If user asks what is needed for a workflow or what a worker can do, use agent-capabilities.
+        If user asks you to perform the workflow, refuse and say it must go through expert-foreman.
     `.trim(),
 	modelSettings: ToolModelSettings,
 	tools: [
 		toolKnowledge,
 		toolKnowledgeIndex,
 		toolKnowledgeSearch,
-		//
-		DraftAgent.asTool({
-			toolDescription: `
-		        Use to get a knowledge, what tools are available for Drafts.
-		    `.trim(),
-		}),
-		//
-		LocationAgent.asTool({
-			toolDescription: `
-		        Use to get a knowledge, what is available for location/address autocomplete/normalization.
-		    `.trim(),
-		}),
+		toolAgentCapabilities,
 	],
 });
