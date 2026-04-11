@@ -1,5 +1,4 @@
 import { tool } from "@openai/agents";
-import type { FunctionTool, Tool } from "@openai/agents-core";
 import { z } from "zod";
 import { keysOf } from "@/lib/common/keys-of";
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
@@ -17,10 +16,6 @@ const Agents = {
 } as const;
 
 const AgentKeySchema = z.enum(keysOf(Agents));
-
-function isFunctionTool(item: Tool): item is FunctionTool {
-	return item.type === "function";
-}
 
 export const toolAgentCapabilities = tool({
 	name: "agent-capabilities",
@@ -45,12 +40,14 @@ export const toolAgentCapabilities = tool({
 		return {
 			agent,
 			name: target.name,
-			tools: target.tools.filter(isFunctionTool).map((item) => ({
-				name: item.name,
-				description: item.description,
-				parameters: item.parameters,
-				strict: item.strict,
-			})),
+			tools: target.tools
+				.filter((item) => item.type === "function")
+				.map((item) => ({
+					name: item.name,
+					description: item.description,
+					parameters: item.parameters,
+					strict: item.strict,
+				})),
 		};
 	},
 });
