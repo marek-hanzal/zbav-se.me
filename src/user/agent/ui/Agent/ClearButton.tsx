@@ -15,6 +15,7 @@ export const ClearButton: FC<ClearButton.Props> = (props) => {
 
 	return (
 		<Button
+			data-action={"clear conversation history"}
 			iconEnabled={ClearIcon}
 			onClick={() => {
 				mutation.mutate({});

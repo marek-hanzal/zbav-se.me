@@ -4,6 +4,7 @@ import { ForemanAgent } from "~/user/foreman/ForemanAgent";
 import { KnowledgeAgent } from "~/user/knowledge/KnowledgeAgent";
 
 ("Co mi reknes o tehle appce?");
+("Pouzij nastroj pro ziskani vedomosti a shrn mi, co vis");
 
 export const AssistantAgent = Agent.create({
 	name: "Assistant",
