@@ -19,8 +19,13 @@ export const toolFeedCollection = tool({
 			data,
 		});
 
-		return feedCollectionFn({
+		const items = await feedCollectionFn({
 			data,
 		});
+
+		return {
+			count: items.length,
+			items,
+		};
 	},
 });

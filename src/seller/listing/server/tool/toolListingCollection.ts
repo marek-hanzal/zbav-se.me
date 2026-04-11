@@ -24,8 +24,13 @@ export const toolListingCollection = tool({
 			data,
 		});
 
-		return listingCollectionFn({
+		const items = await listingCollectionFn({
 			data,
 		});
+
+		return {
+			count: items.length,
+			items,
+		};
 	},
 });

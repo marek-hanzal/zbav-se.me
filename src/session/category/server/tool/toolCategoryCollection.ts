@@ -21,8 +21,13 @@ export const toolCategoryCollection = tool({
 			data,
 		});
 
-		return categoryCollectionFn({
+		const items = await categoryCollectionFn({
 			data,
 		});
+
+		return {
+			count: items.length,
+			items,
+		};
 	},
 });
