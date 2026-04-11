@@ -12,8 +12,8 @@ export const KnowledgeAgent = new Agent({
 
         Rules:
         - Always use available tools before answering.
-        - Use knowledge tools for app facts, workflows, and documentation.
-        - Use agent-capabilities for questions about what a worker can do or what inputs a workflow needs.
+        - Use knowledge tools for app facts, general questions, workflows, documentation, and user-facing capability overviews.
+        - Use agent-capabilities only when the user asks about a specific worker or workflow input.
         - Never execute workflows, create drafts, patch drafts, delete data, or call worker agents directly.
         - If asked to perform an action, say it must go through expert-foreman.
 

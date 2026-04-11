@@ -16,25 +16,25 @@ export const toolKnowledge = tool({
     `.trim(),
 	parameters: z
 		.looseObject({
-			key: z
+			input: z
 				.string()
 				.describe(
 					"Exact topic key returned by knowledge-index or knowledge-search. Never invent a key.",
 				),
 		})
 		.strip(),
-	async execute({ key }) {
+	async execute({ input }) {
 		logger.trace("toolKnowledge", {
-			key,
+			key: input,
 		});
 
 		const index = getKnowledgeIndex();
-		const topic = index.find((item) => item.data.key === key);
+		const topic = index.find((item) => item.data.key === input);
 
 		if (!topic) {
 			return {
 				found: false,
-				key,
+				key: input,
 				error: "Unknown knowledge key. Use knowledge-search or knowledge-index first.",
 			};
 		}

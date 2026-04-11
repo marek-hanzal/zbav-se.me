@@ -17,7 +17,7 @@ export const toolKnowledgeSearch = tool({
     `.trim(),
 	parameters: z
 		.looseObject({
-			query: z
+			input: z
 				.string()
 				.describe(
 					"User query or keywords used to search across knowledge topic keys, titles, summaries, and content.",
@@ -31,13 +31,13 @@ export const toolKnowledgeSearch = tool({
 				.describe("Optional maximum number of topics to return."),
 		})
 		.strip(),
-	async execute({ query, limit }) {
+	async execute({ input, limit }) {
 		logger.trace("toolKnowledgeSearch", {
-			query,
+			query: input,
 			limit,
 		});
 
-		const normalized = query.trim();
+		const normalized = input.trim();
 		const index = getKnowledgeIndex().map(
 			({ content, data }) =>
 				({

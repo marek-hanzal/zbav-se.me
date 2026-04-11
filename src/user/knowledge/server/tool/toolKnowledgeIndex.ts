@@ -16,7 +16,7 @@ export const toolKnowledgeIndex = tool({
     `.trim(),
 	parameters: z
 		.looseObject({
-			query: z
+			input: z
 				.string()
 				.optional()
 				.describe("Ignored. The tool always returns the full knowledge index."),
