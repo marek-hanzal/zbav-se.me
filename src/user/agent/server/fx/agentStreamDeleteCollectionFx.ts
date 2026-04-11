@@ -1,0 +1,54 @@
+import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import { withAgentStreamQueryBuilderFx } from "~/user/agent/server/db/withAgentStreamQueryBuilderFx";
+import { withAgentStreamSelectFx } from "~/user/agent/server/db/withAgentStreamSelectFx";
+import type { AgentStreamFilterSchema } from "~/user/agent/server/schema/AgentStreamFilterSchema";
+import type { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStreamQuerySchema";
+
+export namespace agentStreamDeleteCollectionFx {
+	export interface Props extends AgentStreamQuerySchema.Type {
+		scope: AgentStreamFilterSchema.Type;
+	}
+}
+
+export const agentStreamDeleteCollectionFx = Effect.fn("agentStreamDeleteCollectionFx")(function* (
+	query: agentStreamDeleteCollectionFx.Props,
+) {
+	const logger = yield* getLoggerFx("agentStreamDeleteCollectionFx");
+	logger.debug("agentStreamDeleteCollectionFx", {
+		...query,
+	});
+
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const { kysely } = yield* KyselyContextFx;
+
+			let select = yield* withAgentStreamSelectFx({
+				sort: query.sort,
+			});
+
+			for (const layer of [
+				query.filter,
+				query.where,
+				query.scope,
+			]) {
+				select = yield* withAgentStreamQueryBuilderFx({
+					select,
+					where: layer,
+				});
+			}
+
+			return yield* tryDbFx(async () => {
+				return kysely
+					.deleteFrom("agent_stream")
+					.where("id", "in", select.clearSelect().select("as.id"))
+					.execute();
+			});
+		}),
+	);
+});
+
+export type agentStreamDeleteCollectionFx = ReturnType<typeof agentStreamDeleteCollectionFx>;
