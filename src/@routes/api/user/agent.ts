@@ -33,11 +33,19 @@ export const Route = createFileRoute("/api/user/agent")({
 		],
 		handlers: {
 			async POST({ request, context: { database, user, rootLogger, runner, session } }) {
-				const logger = rootLogger.getChild("/api/user/agent");
+				const logger = rootLogger.getChild([
+					"api",
+					"user",
+					"agent",
+				]);
 
 				const input = AgentRequestSchema.safeParse(await request.json());
 
 				if (!input.success) {
+					logger.warn("Invalid request (schema validation failed)", {
+						issues: input.error.issues,
+					});
+
 					return Response.json(
 						{
 							error: "Invalid request body",
@@ -52,6 +60,8 @@ export const Route = createFileRoute("/api/user/agent")({
 				return new Response(
 					new ReadableStream<Uint8Array<ArrayBuffer>>({
 						async start(controller) {
+							logger.trace("Stream started");
+
 							const run = runner.run(AssistantAgent, input.data, {
 								session,
 								stream: true,
@@ -59,10 +69,18 @@ export const Route = createFileRoute("/api/user/agent")({
 								maxTurns: MaxTurns,
 							});
 
+							logger.trace("Run created");
+
 							return Effect.gen(function* () {
 								const { stream, threadId } = yield* Effect.promise(async () => {
+									logger.trace("Starting 'run'");
+
 									const stream = await run;
 									const threadId = await session.getSessionId();
+
+									logger.trace("Starting event stream", {
+										threadId,
+									});
 
 									for await (const event of stream) {
 										controller.enqueue(
@@ -72,7 +90,11 @@ export const Route = createFileRoute("/api/user/agent")({
 										);
 									}
 
+									logger.trace("Stream finished, about to wait for completed");
+
 									await stream.completed;
+
+									logger.trace("Stream success");
 
 									return {
 										stream,
@@ -99,6 +121,14 @@ export const Route = createFileRoute("/api/user/agent")({
 									),
 								);
 
+								console.log("Usage", {
+									threadId,
+									requests: stream.state.usage.requests,
+									input: stream.state.usage.inputTokens,
+									total: stream.state.usage.totalTokens,
+									output: stream.state.usage.outputTokens,
+								});
+
 								yield* Effect.sync(() => {
 									controller.close();
 								});
@@ -106,8 +136,8 @@ export const Route = createFileRoute("/api/user/agent")({
 								withLoggerFx(rootLogger),
 								withKyselyFx(database),
 								withDateFx,
-								Effect.catchAll((error) =>
-									Effect.gen(function* () {
+								Effect.catchAll((error) => {
+									return Effect.gen(function* () {
 										yield* Effect.promise(() =>
 											run
 												.then((stream) => stream.completed)
@@ -127,8 +157,8 @@ export const Route = createFileRoute("/api/user/agent")({
 
 											controller.close();
 										});
-									}),
-								),
+									});
+								}),
 								Effect.runPromise,
 							);
 						},
