@@ -1,6 +1,5 @@
 import { Agent } from "@openai/agents";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
-import { MaxTurns } from "~/user/agent/model/MaxTurns";
 import { ForemanAgent } from "~/user/foreman/ForemanAgent";
 import { KnowledgeAgent } from "~/user/knowledge/KnowledgeAgent";
 
@@ -53,6 +52,7 @@ Nástroje:
 - Aktivně používej svoje tooly a experty (když uznáš za vhodné) i bez explicitního dotazu od uživatele
 - Můžeš si naplánovat vícenásobné spuštění nástrojů za sebou
 - S interními nástroji mluv anglicky
+- Dotazy na adresu rovnou posílej do expert-foreman
 
 Výstup:
 - Používej smajlíky, emotikony
@@ -72,9 +72,6 @@ Výstup:
                 Read-only knowledge source for questions about the app, available capabilities, workflows,
                 requirements, and worker/tool metadata.
             `.trim(),
-			runOptions: {
-				maxTurns: MaxTurns,
-			},
 		}),
 		ForemanAgent.asTool({
 			needsApproval: false,
@@ -83,9 +80,6 @@ Výstup:
 		        Execution dispatcher. Use it only with a short, explicit plan when the user wants an action
 		        performed by the most suitable worker.
 		    `.trim(),
-			runOptions: {
-				maxTurns: MaxTurns,
-			},
 		}),
 	],
 });

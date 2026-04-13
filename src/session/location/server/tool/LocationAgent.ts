@@ -15,6 +15,7 @@ export const LocationAgent = new Agent({
         Output:
         - Return compact normalized location data or candidate list.
         - Include enough address text for the parent assistant to answer the user.
+        - When an address is successfully resolved, attach also Google Maps link
     `.trim(),
 	modelSettings: ToolModelSettings,
 	tools: [
