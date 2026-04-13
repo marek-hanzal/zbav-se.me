@@ -12,13 +12,7 @@ export const toolListingCollection = tool({
 	name: "listing-collection",
 	needsApproval: false,
 	description: `
-        Access collection of buyer listings like you're browsing the catalog.
-
-        Use this to filter, sort, and inspect listings that are visible to a buyer.
-        The collection is already bound to the user, so you can call it with an empty {}
-        input when no extra filters are needed.
-
-        When searching for listings, identify proper category and use it for filtering (e.g TV, smartphone, ...).
+        Buyer-visible listing collection. Prefer category/location filters and small cursors.
     `.trim(),
 	parameters: ListingToolQuerySchema,
 	async execute(data) {
@@ -27,7 +21,10 @@ export const toolListingCollection = tool({
 		});
 
 		const items = await listingCollectionFn({
-			data,
+			data: {
+				...data,
+				limit: 8,
+			},
 		});
 
 		return {

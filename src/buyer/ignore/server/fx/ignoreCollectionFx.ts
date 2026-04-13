@@ -17,7 +17,10 @@ export const ignoreCollectionFx = Effect.fn("ignoreCollectionFx")(function* ({
 	where,
 	scope,
 	sort,
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
 }: ignoreCollectionFx.Props) {
 	const logger = yield* getLoggerFx("ignoreCollectionFx");
 	logger.debug("ignoreCollectionFx", {
@@ -32,10 +35,7 @@ export const ignoreCollectionFx = Effect.fn("ignoreCollectionFx")(function* ({
 		selectFx: withIgnoreCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
 		filter,
 		where,
 		scope,

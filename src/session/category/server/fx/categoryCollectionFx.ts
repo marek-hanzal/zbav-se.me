@@ -14,7 +14,10 @@ export namespace categoryCollectionFx {
 }
 
 export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* ({
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
 	filter,
 	where,
 	scope,
@@ -33,10 +36,7 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 		selectFx: withCategoryCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
 		filter,
 		where,
 		scope,

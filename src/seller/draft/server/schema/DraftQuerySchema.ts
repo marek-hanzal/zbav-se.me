@@ -10,6 +10,9 @@ export const DraftQuerySchema = z
 		filter: DraftFilterSchema.optional(),
 		where: DraftWhereSchema.optional(),
 		sort: DraftSortSchema.array().optional(),
+		limit: z.int().positive().optional().meta({
+			description: "Tool-only page cap for collection results.",
+		}),
 	})
 	.strip()
 	.meta({

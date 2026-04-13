@@ -13,14 +13,17 @@ export namespace listingEventCollectionFx {
 }
 
 export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(function* ({
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
 	filter,
 	where,
 	sort,
 	scope,
 }: listingEventCollectionFx.Props) {
 	const logger = yield* getLoggerFx("listingEventCollectionFx");
-	logger.debug("listingEventCollectionFx", {
+	logger.trace("listingEventCollectionFx", {
 		cursor,
 		filter,
 		where,
@@ -32,10 +35,7 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 		selectFx: withListingEventCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
 		filter,
 		where,
 		scope,

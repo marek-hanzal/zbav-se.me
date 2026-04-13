@@ -12,14 +12,7 @@ export const toolListingCollection = tool({
 	name: "listing-collection",
 	needsApproval: false,
 	description: `
-        Here you've access to all user's published listings, it's useful for questions about
-        what is published, how long given listing remain active, which ones are about to expire
-        and other interesting stuff.
-
-        This is main entry-point to listings from the seller's point of view.
-
-        Collection is already bound to the user, so you can call it with empty {} object an
-        input.
+        Seller published listing collection. Use small cursors and requested fields only.
     `.trim(),
 	parameters: ListingToolQuerySchema,
 	async execute(data) {
@@ -28,7 +21,10 @@ export const toolListingCollection = tool({
 		});
 
 		const items = await listingCollectionFn({
-			data,
+			data: {
+				...data,
+				limit: 8,
+			},
 		});
 
 		return {

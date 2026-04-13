@@ -16,8 +16,12 @@ export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function
 	filter,
 	where,
 	scope,
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
 	sort,
+	limit,
 }: favouriteCollectionFx.Props) {
 	const logger = yield* getLoggerFx("favouriteCollectionFx");
 	logger.debug("favouriteCollectionFx", {
@@ -26,20 +30,19 @@ export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function
 		scope,
 		cursor,
 		sort,
+		limit,
 	});
 
 	return yield* withCollectionFx({
 		selectFx: withFavouriteCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
 		filter,
 		where,
 		scope,
 		queryFx: withFavouriteQueryBuilderFx,
+		limit,
 	});
 });
 

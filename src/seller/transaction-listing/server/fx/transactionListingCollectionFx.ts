@@ -13,9 +13,18 @@ export namespace transactionListingCollectionFx {
 }
 
 export const transactionListingCollectionFx = Effect.fn("transactionListingCollectionFx")(
-	function* ({ cursor, filter, where, scope, sort }: transactionListingCollectionFx.Props) {
+	function* ({
+		cursor = {
+			page: 0,
+			size: 10,
+		},
+		filter,
+		where,
+		scope,
+		sort,
+	}: transactionListingCollectionFx.Props) {
 		const logger = yield* getLoggerFx("transactionListingCollectionFx");
-		logger.debug("transactionListingCollectionFx", {
+		logger.trace("transactionListingCollectionFx", {
 			cursor,
 			filter,
 			where,
@@ -27,10 +36,7 @@ export const transactionListingCollectionFx = Effect.fn("transactionListingColle
 			selectFx: withTransactionListingCollectionSelectFx({
 				sort,
 			}),
-			cursor: cursor ?? {
-				page: 0,
-				size: 10,
-			},
+			cursor,
 			filter,
 			where,
 			scope,

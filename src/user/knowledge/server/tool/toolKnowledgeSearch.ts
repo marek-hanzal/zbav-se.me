@@ -13,7 +13,7 @@ export const toolKnowledgeSearch = tool({
 	name: "knowledge-search",
 	needsApproval: false,
 	description: `
-        Fuzzy searches all knowledge topics, including front-matter and content, and returns the best matches.
+        Compact fuzzy search across knowledge topics. Returns topic metadata, not full content.
     `.trim(),
 	parameters: z
 		.looseObject({
@@ -74,7 +74,7 @@ export const toolKnowledgeSearch = tool({
 
 		const matches = fuse
 			.search(normalized, {
-				limit: limit ?? 8,
+				limit,
 			})
 			.map(
 				({ item, score }) =>

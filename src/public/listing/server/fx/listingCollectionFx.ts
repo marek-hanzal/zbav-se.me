@@ -13,7 +13,10 @@ export namespace listingCollectionFx {
 }
 
 export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
 	filter,
 	where,
 	scope,
@@ -21,7 +24,7 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	meta,
 }: listingCollectionFx.Props) {
 	const logger = yield* getLoggerFx("listingCollectionFx");
-	logger.debug("listingCollectionFx", {
+	logger.trace("listingCollectionFx", {
 		cursor,
 		filter,
 		where,
@@ -35,10 +38,7 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 			sort,
 			meta,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
 		filter,
 		where,
 		scope,

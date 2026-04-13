@@ -18,6 +18,9 @@ export const ListingQuerySchema = z
 		}),
 		sort: ListingSortSchema.array().optional(),
 		meta: ListingMetaSchema.optional(),
+		limit: z.int().positive().optional().meta({
+			description: "Tool-only page cap for collection results.",
+		}),
 	})
 	.strip()
 	.meta({

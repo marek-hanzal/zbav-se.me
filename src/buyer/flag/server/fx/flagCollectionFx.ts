@@ -13,7 +13,10 @@ export namespace flagCollectionFx {
 }
 
 export const flagCollectionFx = Effect.fn("flagCollectionFx")(function* ({
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
 	filter,
 	where,
 	scope,
@@ -32,10 +35,7 @@ export const flagCollectionFx = Effect.fn("flagCollectionFx")(function* ({
 		selectFx: withFlagCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
 		filter,
 		where,
 		scope,

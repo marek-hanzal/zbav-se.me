@@ -16,7 +16,10 @@ export const userEventCollectionFx = Effect.fn("userEventCollectionFx")(function
 	filter,
 	where,
 	scope,
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
 	sort,
 }: userEventCollectionFx.Props) {
 	const logger = yield* getLoggerFx("userEventCollectionFx");
@@ -32,10 +35,7 @@ export const userEventCollectionFx = Effect.fn("userEventCollectionFx")(function
 		selectFx: withUserEventCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
 		filter,
 		where,
 		scope,

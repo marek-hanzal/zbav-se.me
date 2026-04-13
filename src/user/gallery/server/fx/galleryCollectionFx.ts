@@ -13,7 +13,10 @@ export namespace galleryCollectionFx {
 }
 
 export const galleryCollectionFx = Effect.fn("galleryCollectionFx")(function* ({
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
 	filter,
 	where,
 	scope,
@@ -32,10 +35,7 @@ export const galleryCollectionFx = Effect.fn("galleryCollectionFx")(function* ({
 		selectFx: withGalleryCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
 		filter,
 		where,
 		scope,

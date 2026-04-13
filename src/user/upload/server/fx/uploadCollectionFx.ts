@@ -13,7 +13,10 @@ export namespace uploadCollectionFx {
 }
 
 export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
 	filter,
 	where,
 	scope,
@@ -32,10 +35,7 @@ export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
 		selectFx: withUploadCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
 		filter,
 		where,
 		scope,

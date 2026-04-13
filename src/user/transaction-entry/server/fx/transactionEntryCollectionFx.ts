@@ -15,7 +15,10 @@ export namespace transactionEntryCollectionFx {
 
 export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectionFx")(function* ({
 	userId,
-	cursor,
+	cursor = {
+		page: 0,
+		size: 30,
+	},
 	filter,
 	where,
 	scope,
@@ -36,10 +39,7 @@ export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectio
 			userId,
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 30,
-		},
+		cursor,
 		filter,
 		where,
 		scope,

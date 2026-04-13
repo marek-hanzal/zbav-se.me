@@ -13,7 +13,10 @@ export namespace inboxCollectionFx {
 }
 
 export const inboxCollectionFx = Effect.fn("inboxCollectionFx")(function* ({
-	cursor,
+	cursor = {
+		page: 0,
+		size: 30,
+	},
 	filter,
 	where,
 	scope,
@@ -32,10 +35,7 @@ export const inboxCollectionFx = Effect.fn("inboxCollectionFx")(function* ({
 		selectFx: withInboxCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 30,
-		},
+		cursor,
 		filter,
 		where,
 		scope,

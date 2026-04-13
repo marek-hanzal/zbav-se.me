@@ -12,14 +12,7 @@ const logger = getRootLogger([
 export const toolDraftCollection = tool({
 	name: "draft-collection",
 	needsApproval: false,
-	description: `
-        Here you can access user's saved drafts (unpublished listings), so if user asks
-        what he has work-in-progress, just check this collection and show titles and a few
-        other properties.
-
-        Collection is already bound to the user, so you can call it with empty {} object an
-        input.
-    `.trim(),
+	description: "User-bound saved listing drafts. Use small cursors and requested fields only.",
 	strict: true,
 	parameters: DraftToolQuerySchema,
 	async execute(data) {
@@ -28,7 +21,10 @@ export const toolDraftCollection = tool({
 		});
 
 		const items = await draftCollectionFn({
-			data,
+			data: {
+				...data,
+				limit: 8,
+			},
 		});
 
 		return {

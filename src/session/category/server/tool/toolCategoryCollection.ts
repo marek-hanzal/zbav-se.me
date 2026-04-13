@@ -11,10 +11,7 @@ const logger = getRootLogger([
 export const toolCategoryCollection = tool({
 	name: "category-collection",
 	needsApproval: false,
-	description: `
-        Get a list of categories; usable also for resolving category candidates for listing, search and
-        others who need a category.
-    `.trim(),
+	description: "Category lookup for listing/search category resolution. Use small cursors.",
 	parameters: CategoryQuerySchema,
 	async execute(data) {
 		logger.trace("toolCategoryCollection", {
@@ -22,7 +19,10 @@ export const toolCategoryCollection = tool({
 		});
 
 		const items = await categoryCollectionFn({
-			data,
+			data: {
+				...data,
+				limit: 8,
+			},
 		});
 
 		return {

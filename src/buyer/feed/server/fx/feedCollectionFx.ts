@@ -21,15 +21,16 @@ export const feedCollectionFx = Effect.fn("feedCollectionFx")(function* ({
 		size: 10,
 	},
 	sort,
+	limit,
 }: feedCollectionFx.Props) {
 	const logger = yield* getLoggerFx("feedCollectionFx");
-
-	logger.debug("feedCollectionFx", {
+	logger.trace("feedCollectionFx", {
 		filter,
 		where,
 		scope,
 		cursor,
 		sort,
+		limit,
 	});
 
 	return yield* withCollectionFx({
@@ -41,6 +42,7 @@ export const feedCollectionFx = Effect.fn("feedCollectionFx")(function* ({
 		where,
 		scope,
 		queryFx: withFeedQueryBuilderFx,
+		limit,
 	});
 });
 

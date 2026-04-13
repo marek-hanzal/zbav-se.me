@@ -11,16 +11,18 @@ const logger = getRootLogger([
 export const toolFeedCollection = tool({
 	name: "feed-collection",
 	needsApproval: false,
-	description: "Get a list of feeds (saved searches for listings)",
+	description: "User-bound saved listing searches. Use small cursors and requested fields only.",
 	parameters: FeedQuerySchema,
-	// outputSchema: FeedSchema.array(),
 	async execute(data) {
 		logger.trace("toolFeedCollection", {
 			data,
 		});
 
 		const items = await feedCollectionFn({
-			data,
+			data: {
+				...data,
+				limit: 4,
+			},
 		});
 
 		return {
