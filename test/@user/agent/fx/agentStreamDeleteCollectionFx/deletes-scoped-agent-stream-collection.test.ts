@@ -20,7 +20,7 @@ const seedAgentStream = async (
 };
 
 describe("agentStreamDeleteCollectionFx", () => {
-	it("deletes only scoped agent stream items and returns the removed rows", async () => {
+	it("deletes only scoped agent stream items and returns the removed count", async () => {
 		const database = await testabase("agentStreamDeleteCollectionFx-contract");
 
 		return Effect.gen(function* () {
@@ -73,7 +73,7 @@ describe("agentStreamDeleteCollectionFx", () => {
 				},
 			});
 
-			expect(deleted).toHaveLength(2);
+			expect(deleted).toBe(2);
 
 			const remaining = yield* Effect.promise(() =>
 				database.kysely
