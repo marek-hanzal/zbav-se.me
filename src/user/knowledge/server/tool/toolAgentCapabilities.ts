@@ -4,8 +4,10 @@ import { keysOf } from "@/lib/common/keys-of";
 import { FeedAgent } from "~/buyer/feed/server/tool/FeedAgent";
 import { FavouriteAgent } from "~/buyer/feed-favourite/server/tool/FavouriteAgent";
 import { BuyerListingAgent } from "~/buyer/listing/server/tool/BuyerListingAgent";
+import { BuyerTransactionAgent } from "~/buyer/transaction/server/tool/BuyerTransactionAgent";
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { SellerListingAgent } from "~/seller/listing/server/tool/SellerListingAgent";
+import { SellerTransactionAgent } from "~/seller/transaction/server/tool/SellerTransactionAgent";
 import { getRootLogger } from "~/server/log/getRootLogger";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
 import { InboxAgent } from "~/user/inbox/server/tool/InboxAgent";
@@ -19,9 +21,11 @@ const Agents = {
 	"buyer-listing": BuyerListingAgent,
 	"buyer-feed": FeedAgent,
 	"buyer-favourite": FavouriteAgent,
+	"buyer-transaction": BuyerTransactionAgent,
 	//
 	"seller-draft": DraftAgent,
 	"seller-listing": SellerListingAgent,
+	"seller-transaction": SellerTransactionAgent,
 	//
 	inbox: InboxAgent,
 	location: LocationAgent,

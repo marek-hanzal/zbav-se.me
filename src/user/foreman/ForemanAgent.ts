@@ -2,8 +2,10 @@ import { Agent } from "@openai/agents";
 import { FeedAgent } from "~/buyer/feed/server/tool/FeedAgent";
 import { FavouriteAgent } from "~/buyer/feed-favourite/server/tool/FavouriteAgent";
 import { BuyerListingAgent } from "~/buyer/listing/server/tool/BuyerListingAgent";
+import { BuyerTransactionAgent } from "~/buyer/transaction/server/tool/BuyerTransactionAgent";
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { SellerListingAgent } from "~/seller/listing/server/tool/SellerListingAgent";
+import { SellerTransactionAgent } from "~/seller/transaction/server/tool/SellerTransactionAgent";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
 import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 import { InboxAgent } from "~/user/inbox/server/tool/InboxAgent";
@@ -20,6 +22,7 @@ export const ForemanAgent = new Agent({
         - Worker calls may mutate data, so be strict about the plan and user intent.
         - User/session scope is already bound by the app; never ask workers for userId/accountId/sessionId and never pass one.
         - For collection tasks, request count or cursor { page: 0, size: 8 } unless the brief explicitly asks for more.
+        - For buyer or seller transactions, use the matching transaction worker for list and status snapshot requests.
         - Never request more than 16 items from a worker in one call.
         - Use English for every worker call.
 
@@ -46,6 +49,11 @@ export const ForemanAgent = new Agent({
 			toolName: "worker-buyer-favourite",
 			toolDescription: "Buyer favourite feeds: fetch/list/count. Compact inputs only.",
 		}),
+		BuyerTransactionAgent.asTool({
+			toolName: "worker-buyer-transaction",
+			toolDescription:
+				"Buyer transactions: list, count, and status snapshots. Compact inputs only.",
+		}),
 		//
 		/**
 		 * Seller tools
@@ -58,6 +66,11 @@ export const ForemanAgent = new Agent({
 			toolName: "worker-seller-draft",
 			toolDescription:
 				"Seller drafts: create/list/count/patch/delete. Confirm destructive intent upstream.",
+		}),
+		SellerTransactionAgent.asTool({
+			toolName: "worker-seller-transaction",
+			toolDescription:
+				"Seller transactions: list, count, and status snapshots. Compact inputs only.",
 		}),
 		//
 		/**
