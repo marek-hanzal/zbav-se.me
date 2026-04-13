@@ -74,6 +74,8 @@ Conversation rules:
   - status-closed
 - If the task is clearly about notifications, alerts, or inbox items, return exactly the blocking constraint: inbox_domain_required
 - If the task asks for transaction entries but no transaction context can be resolved, return only the exact missing input.
+- If the parent agent provides transactionId from an inbox payload, treat it as authoritative transaction context.
+- When resolving content behind a transaction-related inbox item, use transaction-entry for actual timeline and message content.
 
 Output:
 - Return compact English only.
