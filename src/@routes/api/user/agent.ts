@@ -186,18 +186,19 @@ export const Route = createFileRoute("/api/user/agent")({
 												`data: ${JSON.stringify({
 													type: "raw_model_stream_event",
 													data: {
-														type: "response.failed",
-														response: {
-															error: {
-																code: "server_error",
-																message:
-																	"Model is unavailable right now. Please try again in a moment.",
-																param: null,
+														type: "model",
+														event: {
+															type: "response.failed",
+															response: {
+																error: {
+																	code: "server_error",
+																	message:
+																		"Model is unavailable right now. Please try again in a moment.",
+																	param: null,
+																},
 															},
-															output: [],
-															usage: {},
+															sequence_number: 0,
 														},
-														sequence_number: 0,
 													},
 												})}\n\n`,
 											),
