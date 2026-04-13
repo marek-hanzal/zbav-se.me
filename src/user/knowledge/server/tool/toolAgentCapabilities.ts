@@ -1,6 +1,7 @@
 import { tool } from "@openai/agents";
 import { z } from "zod";
 import { keysOf } from "@/lib/common/keys-of";
+import { FeedAgent } from "~/buyer/feed/server/tool/FeedAgent";
 import { BuyerListingAgent } from "~/buyer/listing/server/tool/BuyerListingAgent";
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { SellerListingAgent } from "~/seller/listing/server/tool/SellerListingAgent";
@@ -14,6 +15,7 @@ const logger = getRootLogger([
 
 const Agents = {
 	"buyer-listing": BuyerListingAgent,
+	"buyer-feed": FeedAgent,
 	"seller-draft": DraftAgent,
 	"seller-listing": SellerListingAgent,
 	location: LocationAgent,

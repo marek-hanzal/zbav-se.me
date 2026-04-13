@@ -1,4 +1,5 @@
 import { Agent } from "@openai/agents";
+import { FeedAgent } from "~/buyer/feed/server/tool/FeedAgent";
 import { BuyerListingAgent } from "~/buyer/listing/server/tool/BuyerListingAgent";
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { SellerListingAgent } from "~/seller/listing/server/tool/SellerListingAgent";
@@ -31,6 +32,14 @@ export const ForemanAgent = new Agent({
                 Role - buyer
 
                 Worker for buyer listing browsing, counts, filtering, and catalog discovery.
+            `.trim(),
+		}),
+		FeedAgent.asTool({
+			toolName: "worker-buyer-feed",
+			toolDescription: `
+                Role - buyer
+
+                Worker for buyer feed saved searches: list feeds, count them, and create new feed presets.
             `.trim(),
 		}),
 		//
