@@ -48,7 +48,7 @@ Feed rules:
 - If the task is about listings inside a feed, return only the feed id or feed configuration needed by the parent agent. Do not pretend to browse listings yourself.
 
 Output:
-- Return compact English only.
+- Return compact but self-describing English.
 - Include only feed ids, counts, created fields, updated fields, deleted ids, applied constraints, missing inputs, or blocking constraints.
 - If nothing matches, return exactly: empty_result
 - If the task cannot be completed, return the exact missing input or exact blocking constraint.

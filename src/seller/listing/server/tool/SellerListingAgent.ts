@@ -42,7 +42,7 @@ Domain rules:
 - If the task is about drafts or unfinished listings, return exactly the blocking constraint: draft_domain_required
 
 Output:
-- Return compact English only.
+- Return compact but self-describing English.
 - Include only listing ids, counts, requested fields, applied constraints, missing inputs, or blocking constraints.
 - If nothing matches, return exactly: empty_result
 - If the task cannot be completed, return the exact missing input or exact blocking constraint.

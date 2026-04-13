@@ -47,7 +47,7 @@ Search behavior:
 - Prefer useful partial factual results over speculation.
 
 Output:
-- Return compact English only.
+- Return compact but self-describing English.
 - Include only listing ids, counts, requested fields, applied constraints, missing inputs, or blocking constraints.
 - If nothing matches, return exactly: empty_result
 - If the task cannot be completed, return the exact missing input or exact blocking constraint.

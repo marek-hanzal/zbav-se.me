@@ -78,7 +78,7 @@ Conversation rules:
 - When resolving content behind a transaction-related inbox item, use transaction-entry for actual timeline and message content.
 
 Output:
-- Return compact English only.
+- Return compact but self-describing English.
 - Include only transaction ids, transaction-entry ids, counts, entry kinds, requested fields, applied constraints, missing inputs, or blocking constraints.
 - If nothing matches, return exactly: empty_result
 - If the task cannot be completed, return the exact missing input or exact blocking constraint.

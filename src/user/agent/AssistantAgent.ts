@@ -6,6 +6,7 @@ import { BuyerTransactionAgent } from "~/buyer/transaction/server/tool/BuyerTran
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { SellerListingAgent } from "~/seller/listing/server/tool/SellerListingAgent";
 import { SellerTransactionAgent } from "~/seller/transaction/server/tool/SellerTransactionAgent";
+import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import { InboxAgent } from "~/user/inbox/server/tool/InboxAgent";
@@ -185,5 +186,6 @@ or address normalization tasks.
 Returns normalized location data or the best candidates.
 			`.trim(),
 		}),
+		toolCategoryCollection,
 	],
 });

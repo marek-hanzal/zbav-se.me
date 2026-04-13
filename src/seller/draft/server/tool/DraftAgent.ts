@@ -56,7 +56,7 @@ Draft rules:
 - If delete intent is ambiguous or the target draft cannot be resolved narrowly, return only the exact missing input.
 
 Output:
-- Return compact English only.
+- Return compact but self-describing English.
 - Include only draft ids, counts, created fields, updated fields, deleted ids, applied constraints, missing inputs, or blocking constraints.
 - If nothing matches, return exactly: empty_result
 - If the task cannot be completed, return the exact missing input or exact blocking constraint.
