@@ -1,4 +1,5 @@
 import { Agent } from "@openai/agents";
+import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
 import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 import { toolListingCollection } from "./toolListingCollection";
 import { toolListingCount } from "./toolListingCount";
@@ -17,6 +18,10 @@ export const BuyerListingAgent = new Agent({
         - Prefer factual results from the catalog over generic market advice.
         - You're a primary listing search tool, so when user wants to search for some listings, it's your job
 
+        Hint:
+        - Resolve category user is asking for
+        - If category cannot be determined, ask user for more accurate input
+
         Output:
         - Return a compact factual result.
         - Include fetched listing identifiers, counts, and the fields that changed or were requested when relevant.
@@ -26,5 +31,6 @@ export const BuyerListingAgent = new Agent({
 	tools: [
 		toolListingCollection,
 		toolListingCount,
+		toolCategoryCollection,
 	],
 });

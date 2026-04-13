@@ -17,6 +17,8 @@ export const toolListingCollection = tool({
         Use this to filter, sort, and inspect listings that are visible to a buyer.
         The collection is already bound to the user, so you can call it with an empty {}
         input when no extra filters are needed.
+
+        When searching for listings, identify proper category and use it for filtering (e.g TV, smartphone, ...).
     `.trim(),
 	parameters: ListingToolQuerySchema,
 	async execute(data) {
