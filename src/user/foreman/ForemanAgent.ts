@@ -1,4 +1,5 @@
 import { Agent } from "@openai/agents";
+import { BuyerListingAgent } from "~/buyer/listing/server/tool/BuyerListingAgent";
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { SellerListingAgent } from "~/seller/listing/server/tool/SellerListingAgent";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
@@ -21,6 +22,18 @@ export const ForemanAgent = new Agent({
     `.trim(),
 	modelSettings: ToolModelSettings,
 	tools: [
+		/**
+		 * Buyer tools
+		 */
+		BuyerListingAgent.asTool({
+			toolName: "worker-buyer-listing",
+			toolDescription: `
+                Role - buyer
+
+                Worker for buyer listing browsing, counts, filtering, and catalog discovery.
+            `.trim(),
+		}),
+		//
 		/**
 		 * Seller tools
 		 */

@@ -23,7 +23,7 @@ export const withLocationListFx = Effect.fn("withLocationListFx")(function* ({
 	sort,
 }: withLocationListFx.Props) {
 	const logger = yield* getLoggerFx("withLocationListFx");
-	logger.debug("withLocationListFx", {
+	logger.trace("withLocationListFx", {
 		filter,
 		where,
 		scope,

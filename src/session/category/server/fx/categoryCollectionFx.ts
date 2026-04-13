@@ -21,7 +21,7 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 	sort,
 }: categoryCollectionFx.Props) {
 	const logger = yield* getLoggerFx("categoryCollectionFx");
-	logger.debug("categoryCollectionFx", {
+	logger.trace("categoryCollectionFx", {
 		cursor,
 		filter,
 		where,
