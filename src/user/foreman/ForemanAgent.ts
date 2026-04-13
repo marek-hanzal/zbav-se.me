@@ -20,6 +20,7 @@ export const ForemanAgent = new Agent({
         Output:
         - Return a compact result for the parent assistant.
         - Include only worker outcome, missing inputs, or failure reason.
+        - Never ask for full dataset as it may overflow context; always limit number of items you're working with to max. 64
     `.trim(),
 	modelSettings: ToolModelSettings,
 	tools: [
