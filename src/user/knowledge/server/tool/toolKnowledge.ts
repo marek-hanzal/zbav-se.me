@@ -30,8 +30,8 @@ export const toolKnowledge = tool({
 		.strip(),
 	async execute({ withContent, input }) {
 		logger.trace("toolKnowledge", {
-			includeContent: withContent,
-			key: input,
+			withContent,
+			input,
 		});
 
 		const index = getKnowledgeIndex();
