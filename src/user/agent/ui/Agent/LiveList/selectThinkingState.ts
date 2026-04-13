@@ -75,7 +75,7 @@ export function selectThinkingState(events: RunStreamEvent[] | undefined): Think
 			continue;
 		}
 
-		if (responseEvent.type === "response.failed" || responseEvent.type === "error") {
+		if (responseEvent.type === "response.failed") {
 			isVisible = false;
 			label = null;
 		}

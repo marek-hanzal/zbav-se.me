@@ -10,23 +10,13 @@ export function selectErrorState(events: RunStreamEvent[] | undefined): ErrorSta
 	const errorEvent = (events ?? [])
 		.map(getResponseStreamEvent)
 		.filter((event) => event !== null)
-		.findLast((event) => event.type === "response.failed" || event.type === "error");
+		.findLast((event) => event.type === "response.failed");
 
 	if (!errorEvent) {
 		return null;
 	}
 
-	if (errorEvent.type === "error") {
-		return {
-			message: errorEvent.message,
-		};
-	}
-
-	if (errorEvent.type === "response.failed") {
-		return {
-			message: translator.text("Agent stream failed"),
-		};
-	}
-
-	return null;
+	return {
+		message: translator.text(errorEvent.response.error?.message ?? "Agent stream failed"),
+	};
 }

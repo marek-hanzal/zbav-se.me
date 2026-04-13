@@ -178,6 +178,34 @@ export const Route = createFileRoute("/api/user/agent")({
 									userId: user.id,
 									error,
 								});
+
+								if (!state.closed && !abortController.signal.aborted) {
+									try {
+										controller.enqueue(
+											encoder.encode(
+												`data: ${JSON.stringify({
+													type: "raw_model_stream_event",
+													data: {
+														type: "response.failed",
+														response: {
+															error: {
+																code: "server_error",
+																message:
+																	"Model is unavailable right now. Please try again in a moment.",
+																param: null,
+															},
+															output: [],
+															usage: {},
+														},
+														sequence_number: 0,
+													},
+												})}\n\n`,
+											),
+										);
+									} catch {
+										state.closed = true;
+									}
+								}
 							} finally {
 								request.signal.removeEventListener("abort", abortListener);
 

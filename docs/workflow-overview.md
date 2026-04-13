@@ -1,6 +1,6 @@
 ---
 key: workflow-overview
-title: Workflow - Celkový přehled
+title: Workflow - Novinky/Celkový přehled
 summary: Pracovní postup, jak pro uživatele sestavit celkový přehled - zprávy, inbox, jeho inzeráty a pod.
 ---
 
