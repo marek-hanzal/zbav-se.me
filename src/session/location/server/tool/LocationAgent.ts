@@ -41,7 +41,7 @@ Resolution rules:
 - Never invent a Google Maps link if the result is not reliable enough.
 
 Output:
-- Return compact English only.
+- Return compact but self-describing English.
 - Include only normalized location data, candidate locations, requested fields, missing inputs, applied constraints, or blocking constraints.
 - If the task cannot be completed, return the exact missing input or exact blocking constraint.
 - Do not add commentary, advice, or user-facing phrasing.
