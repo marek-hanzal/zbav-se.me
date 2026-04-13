@@ -1,6 +1,6 @@
 import { Agent } from "@openai/agents";
 import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
-import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
+import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
 import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 import { toolListingCollection } from "./toolListingCollection";
 import { toolListingCount } from "./toolListingCount";
@@ -58,6 +58,15 @@ Output:
 		toolListingCollection,
 		toolListingCount,
 		toolCategoryCollection,
-		toolLocationAutocomplete,
+		LocationAgent.asTool({
+			toolName: "location",
+			toolDescription: `
+Location and address normalization.
+
+Use for autocomplete, broad or partial address input, and candidate resolution.
+
+Returns normalized location data or best candidates.
+			`.trim(),
+		}),
 	],
 });

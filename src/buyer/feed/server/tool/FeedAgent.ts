@@ -4,7 +4,7 @@ import { toolFeedCount } from "~/buyer/feed/server/tool/toolFeedCount";
 import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
 import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
 import { toolFeedPatch } from "~/buyer/feed/server/tool/toolFeedPatch";
-import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
+import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
 import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 
 export const FeedAgent = new Agent({
@@ -64,6 +64,15 @@ Output:
 		toolFeedCreate,
 		toolFeedDelete,
 		toolFeedPatch,
-		toolLocationAutocomplete,
+		LocationAgent.asTool({
+			toolName: "location",
+			toolDescription: `
+Location and address normalization.
+
+Use for autocomplete, broad or partial address input, and candidate resolution.
+
+Returns normalized location data or best candidates.
+			`.trim(),
+		}),
 	],
 });

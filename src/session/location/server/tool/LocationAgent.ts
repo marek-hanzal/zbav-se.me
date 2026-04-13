@@ -45,6 +45,7 @@ Output:
 - Include only normalized location data, candidate locations, requested fields, missing inputs, applied constraints, or blocking constraints.
 - If the task cannot be completed, return the exact missing input or exact blocking constraint.
 - Do not add commentary, advice, or user-facing phrasing.
+- Include location ID in the response
 	`.trim(),
 	modelSettings: ToolModelSettings,
 	tools: [
