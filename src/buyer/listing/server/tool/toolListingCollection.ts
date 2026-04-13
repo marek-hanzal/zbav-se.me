@@ -12,16 +12,13 @@ export const toolListingCollection = tool({
 	name: "listing-collection",
 	needsApproval: false,
 	description: `
-        Access collection of listings like you're browsing the listing catalog.
+        Access collection of buyer listings like you're browsing the catalog.
 
-        Here you can sort, filter out different listings.
-
-        This is the main entry point for buyer to find out what he wants.
-
-        Carefully read input query as it will guide you, what you can use.
+        Use this to filter, sort, and inspect listings that are visible to a buyer.
+        The collection is already bound to the user, so you can call it with an empty {}
+        input when no extra filters are needed.
     `.trim(),
 	parameters: ListingToolQuerySchema,
-	// outputSchema: z.array(ListingSchema),
 	async execute(data) {
 		logger.trace("toolListingCollection", {
 			data,

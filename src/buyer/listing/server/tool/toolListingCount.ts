@@ -12,16 +12,12 @@ export const toolListingCount = tool({
 	name: "listing-count",
 	needsApproval: false,
 	description: `
-        Get number of listings using the provided query; you may use this tool to
-        check search results before fetching the collection.
+        Get the number of buyer listings that match the provided query.
 
-        It will provide you interesting values:
-        - total: number of listings available (so you know something is there)
-        - filter: number of listings available using "filter" (and "where") you provided
-        - where: number of listings available using "where" part of the filter
+        Use this before fetching the collection when you want to know how many results are
+        available or whether the filter is too narrow.
     `.trim(),
 	parameters: ListingToolQuerySchema,
-	// outputSchema: CountSchema,
 	async execute(data) {
 		logger.trace("toolListingCount", {
 			data,
