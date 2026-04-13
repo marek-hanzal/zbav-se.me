@@ -11,10 +11,7 @@ const logger = getRootLogger([
 export const toolLocationAutocomplete = tool({
 	name: "location-autocomplete",
 	needsApproval: false,
-	description: `
-        Tool for location (address, position) autocomplete, e.g. translating street into full address. This tool is
-        able to translate even loose address (e.g. just a city name) if user wants so.
-    `.trim(),
+	description: "Location/address autocomplete. Return compact normalized candidates.",
 	parameters: LocationAutocompleteSchema,
 	async execute(data) {
 		logger.trace("toolLocationAutocomplete", {
@@ -27,7 +24,7 @@ export const toolLocationAutocomplete = tool({
 
 		return {
 			count: matches.length,
-			matches,
+			matches: matches,
 		};
 	},
 });
