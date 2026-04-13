@@ -4,6 +4,6 @@ export const ToolModelSettings: ModelSettings = {
 	temperature: 0,
 	parallelToolCalls: false,
 	reasoning: {
-		effort: "low",
+		effort: "medium",
 	},
 };
