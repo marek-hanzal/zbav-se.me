@@ -88,6 +88,8 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 						type="icon"
 						size="md"
 						ui={{
+							tone: "neutral",
+							theme: "light",
 							layout: "horizontal-flex",
 							height: undefined,
 							width: undefined,
