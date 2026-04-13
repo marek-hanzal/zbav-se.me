@@ -2,6 +2,8 @@ import { Agent } from "@openai/agents";
 import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 import { toolTransactionCollection } from "./toolTransactionCollection";
 import { toolTransactionCount } from "./toolTransactionCount";
+import { toolTransactionEntryCollection } from "./toolTransactionEntryCollection";
+import { toolTransactionEntryCount } from "./toolTransactionEntryCount";
 
 export const BuyerTransactionAgent = new Agent({
 	name: "Buyer - Transaction Agent",
@@ -11,6 +13,7 @@ export const BuyerTransactionAgent = new Agent({
         Rules:
         - Execute only the task given by the foreman.
         - Use transaction-collection for browsing buyer transactions.
+        - Use transaction-entry-collection for browsing transaction entries and transaction-entry-count for counts.
         - Stay inside the buyer transaction domain; do not touch seller flows, listings, drafts, or unrelated mutations.
         - Do not invent missing required data. If the query is underspecified, return what is missing instead.
         - Do not explain internal reasoning or add speculation.
@@ -27,5 +30,7 @@ export const BuyerTransactionAgent = new Agent({
 	tools: [
 		toolTransactionCount,
 		toolTransactionCollection,
+		toolTransactionEntryCount,
+		toolTransactionEntryCollection,
 	],
 });
