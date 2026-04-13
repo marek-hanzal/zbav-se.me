@@ -1,5 +1,6 @@
 import { Agent } from "@openai/agents";
 import { FeedAgent } from "~/buyer/feed/server/tool/FeedAgent";
+import { FavouriteAgent } from "~/buyer/feed-favourite/server/tool/FavouriteAgent";
 import { BuyerListingAgent } from "~/buyer/listing/server/tool/BuyerListingAgent";
 import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { SellerListingAgent } from "~/seller/listing/server/tool/SellerListingAgent";
@@ -39,6 +40,10 @@ export const ForemanAgent = new Agent({
 		FeedAgent.asTool({
 			toolName: "worker-buyer-feed",
 			toolDescription: "Buyer saved-search feeds: list/count/create. Compact inputs only.",
+		}),
+		FavouriteAgent.asTool({
+			toolName: "worker-buyer-favourite",
+			toolDescription: "Buyer favourite feeds: fetch/list/count. Compact inputs only.",
 		}),
 		//
 		/**
