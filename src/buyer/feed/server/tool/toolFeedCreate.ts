@@ -11,7 +11,7 @@ const logger = getRootLogger([
 export const toolFeedCreate = tool({
 	name: "feed-create",
 	needsApproval: false,
-	description: `Create a new feed (saved search for listings)`.trim(),
+	description: "Create a user-bound saved listing search from known query fields.",
 	parameters: FeedCreateSchema,
 	// outputSchema: FeedSchema,
 	async execute(data) {

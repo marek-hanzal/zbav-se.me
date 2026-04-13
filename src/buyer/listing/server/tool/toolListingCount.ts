@@ -11,12 +11,7 @@ const logger = getRootLogger([
 export const toolListingCount = tool({
 	name: "listing-count",
 	needsApproval: false,
-	description: `
-        Get the number of buyer listings that match the provided query.
-
-        Use this before fetching the collection when you want to know how many results are
-        available or whether the filter is too narrow.
-    `.trim(),
+	description: "Count buyer-visible listings matching the provided query.",
 	parameters: ListingToolQuerySchema,
 	async execute(data) {
 		logger.trace("toolListingCount", {

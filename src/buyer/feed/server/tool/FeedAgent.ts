@@ -16,10 +16,13 @@ export const FeedAgent = new Agent({
         - Do not invent missing required data. If the query is underspecified, return what is missing instead.
         - Do not explain internal reasoning or add speculation.
         - When creating a feed, make sure the provided search shape is complete enough to be saved safely.
+        - User/session scope is already bound by the app; never ask for userId/accountId/sessionId.
+        - Use cursor { page: 0, size: 8 } for feed browsing unless the foreman explicitly asks for more.
+        - Use English for all tool calls and output.
 
         Output:
-        - Return a compact factual result.
-        - Include feed identifiers, counts, and any created fields or missing inputs when relevant.
+        - Return compact English.
+        - Include only feed ids, counts, created fields, missing inputs, or constraints.
         - If the task cannot be completed, return the exact missing input or constraint.
     `.trim(),
 	modelSettings: ToolModelSettings,

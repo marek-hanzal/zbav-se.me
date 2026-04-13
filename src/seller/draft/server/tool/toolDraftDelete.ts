@@ -11,11 +11,7 @@ const logger = getRootLogger([
 export const toolDraftDelete = tool({
 	name: "draft-delete",
 	needsApproval: false,
-	description: `
-        This provides an ability to delete user's draft; it's a dangerous action,
-        so before you delete one, show user at least title and a few filled properties
-        to make sure you're about to delete draft user is about to remove.
-    `.trim(),
+	description: "Delete drafts by a narrow query only after clear upstream user intent.",
 	parameters: DraftToolQuerySchema,
 	async execute(data) {
 		logger.trace("toolDraftDelete", {

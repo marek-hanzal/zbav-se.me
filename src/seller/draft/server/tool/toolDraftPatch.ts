@@ -11,9 +11,7 @@ const logger = getRootLogger([
 export const toolDraftPatch = tool({
 	name: "draft-patch",
 	needsApproval: false,
-	description: `
-        Update an existing draft using an input query (not an ID directly)
-    `.trim(),
+	description: "Patch one existing draft selected by a narrow query.",
 	parameters: DraftToolPatchSchema,
 	async execute(data) {
 		logger.trace("toolDraftPatch", {

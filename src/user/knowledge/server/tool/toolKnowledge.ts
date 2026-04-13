@@ -13,7 +13,7 @@ export const toolKnowledge = tool({
 	name: "knowledge",
 	needsApproval: false,
 	description: `
-        Returns the full content of one knowledge topic by exact key from knowledge-index or knowledge-search.
+        Returns one knowledge topic by exact key. Full content is opt-in to keep agent context compact.
     `.trim(),
 	parameters: z
 		.looseObject({
@@ -22,10 +22,15 @@ export const toolKnowledge = tool({
 				.describe(
 					"Exact topic key returned by knowledge-index or knowledge-search. Never invent a key.",
 				),
+			withContent: z
+				.boolean()
+				.optional()
+				.describe("Set true only when title and summary are not enough."),
 		})
 		.strip(),
-	async execute({ input }) {
+	async execute({ withContent, input }) {
 		logger.trace("toolKnowledge", {
+			includeContent: withContent,
 			key: input,
 		});
 
@@ -46,7 +51,7 @@ export const toolKnowledge = tool({
 			title: topic.data.title,
 			summary: topic.data.summary,
 			related: topic.data.related ?? [],
-			content: topic.content,
+			content: withContent ? topic.content : undefined,
 		};
 	},
 });

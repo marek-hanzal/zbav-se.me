@@ -11,7 +11,7 @@ const logger = getRootLogger([
 export const toolFeedCount = tool({
 	name: "feed-count",
 	needsApproval: false,
-	description: "Get the number of buyer feeds (saved searches for listings)",
+	description: "Count user-bound saved listing searches.",
 	parameters: FeedCountQuerySchema,
 	async execute(data) {
 		logger.trace("toolFeedCount", {

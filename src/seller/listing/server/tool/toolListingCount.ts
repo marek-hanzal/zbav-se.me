@@ -11,9 +11,7 @@ const logger = getRootLogger([
 export const toolListingCount = tool({
 	name: "listing-count",
 	needsApproval: false,
-	description: `
-        Get number of listings a seller have published on the marketplace by the provided query object.
-    `.trim(),
+	description: "Count seller published listings matching the provided query.",
 	parameters: ListingToolQuerySchema,
 	// outputSchema: CountSchema,
 	async execute(data) {

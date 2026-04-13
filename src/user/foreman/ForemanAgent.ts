@@ -9,18 +9,22 @@ import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 export const ForemanAgent = new Agent({
 	name: "Foreman Agent",
 	instructions: `
-        You are a non-user-facing dispatcher. Execute only the plan you receive.
+        You are a non-user-facing dispatcher. Execute only the compact English brief you receive.
 
         Rules:
         - Pick the smallest suitable worker and call it.
         - Do not answer from your own knowledge when a worker can do the task.
         - Do not invent missing required data. If the plan is unsafe or underspecified, return a short refusal with what is missing.
         - Worker calls may mutate data, so be strict about the plan and user intent.
+        - User/session scope is already bound by the app; never ask workers for userId/accountId/sessionId and never pass one.
+        - For collection tasks, request count or cursor { page: 0, size: 8 } unless the brief explicitly asks for more.
+        - Never request more than 16 items from a worker in one call.
+        - Use English for every worker call.
 
         Output:
-        - Return a compact result for the parent assistant.
-        - Include only worker outcome, missing inputs, or failure reason.
-        - Never ask for full dataset as it may overflow context; always limit number of items you're working with to max. 64
+        - Return compact English for the parent assistant.
+        - Format: OK/MISSING/FAIL: one sentence; ids/counts/changed fields only.
+        - Do not include reasoning, user-facing tone, or full datasets.
     `.trim(),
 	modelSettings: ToolModelSettings,
 	tools: [
@@ -29,19 +33,12 @@ export const ForemanAgent = new Agent({
 		 */
 		BuyerListingAgent.asTool({
 			toolName: "worker-buyer-listing",
-			toolDescription: `
-                Role - buyer
-
-                Worker for buyer listing browsing, counts, filtering, and catalog discovery.
-            `.trim(),
+			toolDescription:
+				"Buyer catalog search/count. Use small cursors and requested fields only.",
 		}),
 		FeedAgent.asTool({
 			toolName: "worker-buyer-feed",
-			toolDescription: `
-                Role - buyer
-
-                Worker for buyer feed saved searches: list feeds, count them, and create new feed presets.
-            `.trim(),
+			toolDescription: "Buyer saved-search feeds: list/count/create. Compact inputs only.",
 		}),
 		//
 		/**
@@ -49,29 +46,18 @@ export const ForemanAgent = new Agent({
 		 */
 		SellerListingAgent.asTool({
 			toolName: "worker-seller-listing",
-			toolDescription: `
-                Role - seller
-
-                Worker for seller listing stuff - you can use it to get information about current public facing listings,
-                counts and so on.
-            `.trim(),
+			toolDescription: "Seller published listings: list/count/status. No drafts.",
 		}),
 		DraftAgent.asTool({
 			toolName: "worker-seller-draft",
-			toolDescription: `
-                Role - seller
-
-                Worker for seller listing drafts: create, list, count, patch, and delete drafts.
-            `.trim(),
+			toolDescription:
+				"Seller drafts: create/list/count/patch/delete. Confirm destructive intent upstream.",
 		}),
 		//
 		LocationAgent.asTool({
 			toolName: "worker-location",
-			toolDescription: `
-                Role - all users    
-
-                Worker for location and address autocomplete, resolution, and normalization.
-            `.trim(),
+			toolDescription:
+				"Location/address autocomplete and normalization. Return best compact candidates.",
 		}),
 	],
 });

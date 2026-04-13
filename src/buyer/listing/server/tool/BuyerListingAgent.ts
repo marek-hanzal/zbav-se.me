@@ -17,16 +17,18 @@ export const BuyerListingAgent = new Agent({
         - Do not invent missing required data. If the query is underspecified, return what is missing instead.
         - Do not explain internal reasoning or add speculation.
         - Prefer factual results from the catalog over generic market advice.
-        - You're a primary listing search tool, so when user wants to search for some listings, it's your job
+        - You are the primary listing search worker.
+        - User/session scope is already bound by the app; never ask for userId/accountId/sessionId.
+        - Use English for all tool calls and output.
 
         Hint:
-        - Resolve category user is asking for
-        - If category cannot be determined, ask user for more accurate input
-        - For any kind of address you've available location/address autocomplete tool able to resolve basically any address
+        - Resolve the requested category when possible.
+        - If category or location is ambiguous, return the missing clarification.
+        - Use cursor { page: 0, size: 8 } for listing browsing unless the foreman explicitly asks for more.
 
         Output:
-        - Return a compact factual result.
-        - Include fetched listing identifiers, counts, and the fields that changed or were requested when relevant.
+        - Return compact English.
+        - Include only listing ids, counts, requested fields, missing inputs, or constraints.
         - If the task cannot be completed, return the exact missing input or constraint.
     `.trim(),
 	modelSettings: ToolModelSettings,
