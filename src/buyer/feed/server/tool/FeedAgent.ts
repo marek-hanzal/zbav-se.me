@@ -40,6 +40,7 @@ Tool rules:
 - Use the smallest suitable tool for the task.
 - For feed browsing, use cursor { page: 0, size: 8 } unless the parent agent explicitly requests a different page or size.
 - Request only the fields needed for the current task.
+- When creating a feed, use "type: user"
 
 Feed rules:
 - A feed is a saved search definition.
