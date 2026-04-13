@@ -1,14 +1,10 @@
 import type { AgentInputItem, RunStreamEvent } from "@openai/agents";
 import { createFileRoute } from "@tanstack/react-router";
-import { Effect } from "effect";
 import { z } from "zod";
-import { withLoggerFx } from "@/lib/common/log";
-import { withDateFx } from "~/server/database/fx/withDateFx";
-import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { genId } from "@/lib/common/gen-id";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { AssistantAgent } from "~/user/agent/AssistantAgent";
 import { MaxTurns } from "~/user/agent/model/MaxTurns";
-import { agentUsageCreateFx } from "~/user/agent/server/fx/agentUsageCreateFx";
 import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { withRunnerSessionMiddleware } from "~/user/agent/server/middleware/withRunnerSessionMiddleware";
 
@@ -23,6 +19,12 @@ const AgentRequestSchema: z.ZodType<string | AgentInputItem[]> = z
 	});
 
 const encoder = new TextEncoder();
+const keepAliveIntervalMs = 15_000;
+
+type StreamState = {
+	closed: boolean;
+	heartbeat: ReturnType<typeof setInterval> | undefined;
+};
 
 export const Route = createFileRoute("/api/user/agent")({
 	server: {
@@ -57,113 +59,145 @@ export const Route = createFileRoute("/api/user/agent")({
 					);
 				}
 
+				const abortController = new AbortController();
+				const abortRunner = () => {
+					if (!abortController.signal.aborted) {
+						abortController.abort();
+					}
+				};
+
 				return new Response(
-					new ReadableStream<Uint8Array<ArrayBuffer>>({
+					new ReadableStream<Uint8Array>({
 						async start(controller) {
+							const state: StreamState = {
+								closed: false,
+								heartbeat: undefined,
+							};
+							const abortListener = () => {
+								if (request.signal.aborted) {
+									abortRunner();
+								}
+							};
+
 							logger.trace("Stream started");
 
-							const run = runner.run(AssistantAgent, input.data, {
-								session,
-								stream: true,
-								signal: request.signal,
-								maxTurns: MaxTurns,
+							request.signal.addEventListener("abort", abortListener, {
+								once: true,
 							});
+							abortListener();
 
-							logger.trace("Run created");
+							try {
+								controller.enqueue(encoder.encode(": connected\n\n"));
+							} catch {
+								state.closed = true;
+							}
 
-							return Effect.gen(function* () {
-								const { stream, threadId } = yield* Effect.promise(async () => {
-									logger.trace("Starting 'run'");
+							if (!state.closed) {
+								state.heartbeat = setInterval(() => {
+									if (state.closed) {
+										return;
+									}
 
-									const stream = await run;
-									const threadId = await session.getSessionId();
+									try {
+										controller.enqueue(encoder.encode(": keep-alive\n\n"));
+									} catch {
+										state.closed = true;
+										if (state.heartbeat !== undefined) {
+											clearInterval(state.heartbeat);
+											state.heartbeat = undefined;
+										}
+									}
+								}, keepAliveIntervalMs);
+							}
 
-									logger.trace("Starting event stream", {
-										threadId,
-									});
+							try {
+								logger.trace("Starting run");
+								const stream = await runner.run(AssistantAgent, input.data, {
+									session,
+									stream: true,
+									signal: abortController.signal,
+									maxTurns: MaxTurns,
+								});
 
-									for await (const event of stream) {
+								logger.trace("Run created");
+
+								const threadId = await session.getSessionId();
+
+								logger.trace("Starting event stream", {
+									threadId,
+								});
+
+								for await (const event of stream) {
+									if (state.closed) {
+										break;
+									}
+
+									try {
 										controller.enqueue(
 											encoder.encode(
 												`data: ${JSON.stringify(event as RunStreamEvent)}\n\n`,
 											),
 										);
+									} catch {
+										state.closed = true;
+										break;
 									}
+								}
 
-									logger.trace("Stream finished, about to wait for completed");
+								logger.trace("Stream finished, about to wait for completed", {
+									threadId,
+								});
 
-									await stream.completed;
+								await stream.completed;
 
-									logger.trace("Stream success");
+								logger.trace("Stream success", {
+									threadId,
+								});
 
-									return {
-										stream,
+								try {
+									await database.kysely
+										.insertInto("agent_usage")
+										.values({
+											id: genId(),
+											userId: user.id,
+											threadId,
+											requests: stream.state.usage.requests,
+											input: stream.state.usage.inputTokens,
+											total: stream.state.usage.totalTokens,
+											output: stream.state.usage.outputTokens,
+											createdAt: new Date(),
+										})
+										.execute();
+								} catch (error) {
+									logger.error("Agent usage persistence failed", {
+										userId: user.id,
 										threadId,
-									};
-								});
-
-								yield* agentUsageCreateFx({
-									userId: user.id,
-									threadId,
-									requests: stream.state.usage.requests,
-									input: stream.state.usage.inputTokens,
-									total: stream.state.usage.totalTokens,
-									output: stream.state.usage.outputTokens,
-								}).pipe(
-									Effect.catchAll((error) =>
-										Effect.sync(() => {
-											logger.error("Agent usage persistence failed", {
-												userId: user.id,
-												threadId,
-												error,
-											});
-										}),
-									),
-								);
-
-								console.log("Usage", {
-									threadId,
-									requests: stream.state.usage.requests,
-									input: stream.state.usage.inputTokens,
-									total: stream.state.usage.totalTokens,
-									output: stream.state.usage.outputTokens,
-								});
-
-								yield* Effect.sync(() => {
-									controller.close();
-								});
-							}).pipe(
-								withLoggerFx(rootLogger),
-								withKyselyFx(database),
-								withDateFx,
-								Effect.catchAll((error) => {
-									return Effect.gen(function* () {
-										yield* Effect.promise(() =>
-											run
-												.then((stream) => stream.completed)
-												.catch((error) => {
-													logger.error("Agent stream completion failed", {
-														userId: user.id,
-														error,
-													});
-												}),
-										);
-
-										yield* Effect.sync(() => {
-											logger.error("Agent stream failed", {
-												userId: user.id,
-												error,
-											});
-
-											controller.close();
-										});
+										error,
 									});
-								}),
-								Effect.runPromise,
-							);
+								}
+							} catch (error) {
+								logger.error("Agent stream failed", {
+									userId: user.id,
+									error,
+								});
+							} finally {
+								request.signal.removeEventListener("abort", abortListener);
+
+								clearInterval(state.heartbeat);
+								state.heartbeat = undefined;
+
+								if (!state.closed) {
+									state.closed = true;
+									try {
+										controller.close();
+									} catch {
+										//
+									}
+								}
+							}
 						},
-						async cancel() {
-							// request.signal should already propagate disconnect/abort
+						cancel() {
+							abortRunner();
 						},
 					}),
 					{
