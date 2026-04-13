@@ -19,6 +19,7 @@ export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectio
 		page: 0,
 		size: 30,
 	},
+	limit,
 	filter,
 	where,
 	scope,
@@ -28,6 +29,7 @@ export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectio
 	logger.trace("transactionEntryCollectionFx", {
 		userId,
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,
@@ -40,6 +42,7 @@ export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectio
 			sort,
 		}),
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,

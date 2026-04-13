@@ -18,6 +18,7 @@ export const transactionListingCollectionFx = Effect.fn("transactionListingColle
 			page: 0,
 			size: 10,
 		},
+		limit,
 		filter,
 		where,
 		scope,
@@ -26,6 +27,7 @@ export const transactionListingCollectionFx = Effect.fn("transactionListingColle
 		const logger = yield* getLoggerFx("transactionListingCollectionFx");
 		logger.trace("transactionListingCollectionFx", {
 			cursor,
+			limit,
 			filter,
 			where,
 			scope,
@@ -37,6 +39,7 @@ export const transactionListingCollectionFx = Effect.fn("transactionListingColle
 				sort,
 			}),
 			cursor,
+			limit,
 			filter,
 			where,
 			scope,

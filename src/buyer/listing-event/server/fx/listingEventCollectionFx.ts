@@ -17,6 +17,7 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 		page: 0,
 		size: 10,
 	},
+	limit,
 	filter,
 	where,
 	sort,
@@ -25,6 +26,7 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 	const logger = yield* getLoggerFx("listingEventCollectionFx");
 	logger.trace("listingEventCollectionFx", {
 		cursor,
+		limit,
 		filter,
 		where,
 		sort,
@@ -36,6 +38,7 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 			sort,
 		}),
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,

@@ -20,14 +20,16 @@ export const userEventCollectionFx = Effect.fn("userEventCollectionFx")(function
 		page: 0,
 		size: 10,
 	},
+	limit,
 	sort,
 }: userEventCollectionFx.Props) {
 	const logger = yield* getLoggerFx("userEventCollectionFx");
-	logger.debug("userEventCollectionFx", {
+	logger.trace("userEventCollectionFx", {
 		filter,
 		where,
 		scope,
 		cursor,
+		limit,
 		sort,
 	});
 
@@ -36,6 +38,7 @@ export const userEventCollectionFx = Effect.fn("userEventCollectionFx")(function
 			sort,
 		}),
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,

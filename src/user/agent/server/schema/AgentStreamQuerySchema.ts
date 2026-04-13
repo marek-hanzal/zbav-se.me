@@ -10,6 +10,10 @@ export const AgentStreamQuerySchema = z
 		filter: AgentStreamFilterSchema.optional(),
 		where: AgentStreamWhereSchema.optional(),
 		sort: AgentStreamSortSchema.array().optional(),
+		limit: z.int().nonnegative().optional().meta({
+			description:
+				"Guardrail limit for collection size; usually set/overridden by the system",
+		}),
 	})
 	.strip()
 	.meta({

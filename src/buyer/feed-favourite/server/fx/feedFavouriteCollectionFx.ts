@@ -22,15 +22,17 @@ export const feedFavouriteCollectionFx = Effect.fn("feedFavouriteCollectionFx")(
 		page: 0,
 		size: 10,
 	},
+	limit,
 	sort,
 }: feedFavouriteCollectionFx.Props) {
 	const logger = yield* getLoggerFx("feedFavouriteCollectionFx");
-	logger.debug("feedFavouriteCollectionFx", {
+	logger.trace("feedFavouriteCollectionFx", {
 		userId,
 		filter,
 		where,
 		scope,
 		cursor,
+		limit,
 		sort,
 	});
 
@@ -40,6 +42,7 @@ export const feedFavouriteCollectionFx = Effect.fn("feedFavouriteCollectionFx")(
 			sort,
 		}),
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,

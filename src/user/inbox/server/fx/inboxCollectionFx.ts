@@ -17,14 +17,16 @@ export const inboxCollectionFx = Effect.fn("inboxCollectionFx")(function* ({
 		page: 0,
 		size: 30,
 	},
+	limit,
 	filter,
 	where,
 	scope,
 	sort,
 }: inboxCollectionFx.Props) {
 	const logger = yield* getLoggerFx("inboxCollectionFx");
-	logger.debug("inboxCollectionFx", {
+	logger.trace("inboxCollectionFx", {
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,
@@ -36,6 +38,7 @@ export const inboxCollectionFx = Effect.fn("inboxCollectionFx")(function* ({
 			sort,
 		}),
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,

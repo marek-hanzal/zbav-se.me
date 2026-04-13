@@ -17,14 +17,16 @@ export const galleryCollectionFx = Effect.fn("galleryCollectionFx")(function* ({
 		page: 0,
 		size: 10,
 	},
+	limit,
 	filter,
 	where,
 	scope,
 	sort,
 }: galleryCollectionFx.Props) {
 	const logger = yield* getLoggerFx("galleryCollectionFx");
-	logger.debug("galleryCollectionFx", {
+	logger.trace("galleryCollectionFx", {
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,
@@ -36,6 +38,7 @@ export const galleryCollectionFx = Effect.fn("galleryCollectionFx")(function* ({
 			sort,
 		}),
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,

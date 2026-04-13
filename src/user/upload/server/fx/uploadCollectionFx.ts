@@ -17,14 +17,16 @@ export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
 		page: 0,
 		size: 10,
 	},
+	limit,
 	filter,
 	where,
 	scope,
 	sort,
 }: uploadCollectionFx.Props) {
 	const logger = yield* getLoggerFx("uploadCollectionFx");
-	logger.debug("uploadCollectionFx", {
+	logger.trace("uploadCollectionFx", {
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,
@@ -36,6 +38,7 @@ export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
 			sort,
 		}),
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,

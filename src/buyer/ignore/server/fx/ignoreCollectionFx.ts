@@ -21,14 +21,16 @@ export const ignoreCollectionFx = Effect.fn("ignoreCollectionFx")(function* ({
 		page: 0,
 		size: 10,
 	},
+	limit,
 }: ignoreCollectionFx.Props) {
 	const logger = yield* getLoggerFx("ignoreCollectionFx");
-	logger.debug("ignoreCollectionFx", {
+	logger.trace("ignoreCollectionFx", {
 		filter,
 		where,
 		scope,
 		sort,
 		cursor,
+		limit,
 	});
 
 	return yield* withCollectionFx({
@@ -36,6 +38,7 @@ export const ignoreCollectionFx = Effect.fn("ignoreCollectionFx")(function* ({
 			sort,
 		}),
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,

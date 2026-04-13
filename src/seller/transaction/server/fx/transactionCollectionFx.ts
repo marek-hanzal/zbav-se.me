@@ -20,14 +20,16 @@ export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(func
 		page: 0,
 		size: 10,
 	},
+	limit,
 	sort,
 }: transactionCollectionFx.Props) {
 	const logger = yield* getLoggerFx("transactionCollectionFx");
-	logger.debug("transactionCollectionFx", {
+	logger.trace("transactionCollectionFx", {
 		filter,
 		where,
 		scope,
 		cursor,
+		limit,
 		sort,
 	});
 
@@ -36,6 +38,7 @@ export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(func
 			sort,
 		}),
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,

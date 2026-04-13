@@ -20,6 +20,7 @@ export const agentUsageCollectionFx = Effect.fn("agentUsageCollectionFx")(functi
 		page: 0,
 		size: 256,
 	},
+	limit,
 	sort,
 }: agentUsageCollectionFx.Props) {
 	const logger = yield* getLoggerFx("agentUsageCollectionFx");
@@ -28,6 +29,7 @@ export const agentUsageCollectionFx = Effect.fn("agentUsageCollectionFx")(functi
 		where,
 		scope,
 		cursor,
+		limit,
 		sort,
 	});
 
@@ -36,6 +38,7 @@ export const agentUsageCollectionFx = Effect.fn("agentUsageCollectionFx")(functi
 			sort,
 		}),
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,

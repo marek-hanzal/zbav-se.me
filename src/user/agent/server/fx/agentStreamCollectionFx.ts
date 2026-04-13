@@ -20,6 +20,7 @@ export const agentStreamCollectionFx = Effect.fn("agentStreamCollectionFx")(func
 		page: 0,
 		size: 256,
 	},
+	limit,
 	sort,
 }: agentStreamCollectionFx.Props) {
 	const logger = yield* getLoggerFx("agentStreamCollectionFx");
@@ -28,6 +29,7 @@ export const agentStreamCollectionFx = Effect.fn("agentStreamCollectionFx")(func
 		where,
 		scope,
 		cursor,
+		limit,
 		sort,
 	});
 
@@ -36,6 +38,7 @@ export const agentStreamCollectionFx = Effect.fn("agentStreamCollectionFx")(func
 			sort,
 		}),
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,
