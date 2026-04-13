@@ -4,6 +4,7 @@ import { toolFeedCount } from "~/buyer/feed/server/tool/toolFeedCount";
 import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
 import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
 import { toolFeedPatch } from "~/buyer/feed/server/tool/toolFeedPatch";
+import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
 import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 
 export const FeedAgent = new Agent({
@@ -41,6 +42,7 @@ Tool rules:
 - For feed browsing, use cursor { page: 0, size: 8 } unless the parent agent explicitly requests a different page or size.
 - Request only the fields needed for the current task.
 - When creating a feed, use "type: user"
+- When you'll get an address, you've a tool available to resolve locationId and other fields you may need for feed
 
 Feed rules:
 - A feed is a saved search definition.
@@ -62,5 +64,6 @@ Output:
 		toolFeedCreate,
 		toolFeedDelete,
 		toolFeedPatch,
+		toolLocationAutocomplete,
 	],
 });
