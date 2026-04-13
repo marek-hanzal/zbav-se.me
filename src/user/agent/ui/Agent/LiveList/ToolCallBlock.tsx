@@ -29,11 +29,10 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 			data-id={itemId}
 			data-output-id={itemId}
 			ui={{
-				tone: "secondary",
+				tone: "neutral",
 				theme: "light",
-				background: "alt",
+				background: "default",
 				inner: "default",
-				opacity: "8",
 				...ui,
 			}}
 			className={className}

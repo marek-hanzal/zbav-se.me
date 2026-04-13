@@ -8,6 +8,7 @@ import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { SellerListingAgent } from "~/seller/listing/server/tool/SellerListingAgent";
 import { getRootLogger } from "~/server/log/getRootLogger";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
+import { InboxAgent } from "~/user/inbox/server/tool/InboxAgent";
 
 const logger = getRootLogger([
 	"tool",
@@ -22,6 +23,7 @@ const Agents = {
 	"seller-draft": DraftAgent,
 	"seller-listing": SellerListingAgent,
 	//
+	inbox: InboxAgent,
 	location: LocationAgent,
 } as const;
 

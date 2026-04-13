@@ -1,4 +1,5 @@
 import { Agent } from "@openai/agents";
+import { toolFavouriteRemove } from "~/buyer/favourite/server/tool/toolFavouriteRemove";
 import { toolFeedFavouriteCollection } from "~/buyer/feed-favourite/server/tool/toolFeedFavouriteCollection";
 import { toolFeedFavouriteCount } from "~/buyer/feed-favourite/server/tool/toolFeedFavouriteCount";
 import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
@@ -10,7 +11,7 @@ export const FavouriteAgent = new Agent({
 
         Rules:
         - Execute only the task given by the foreman.
-        - Use the smallest suitable favourite tool: favourite-collection for browsing, favourite-count for counts.
+        - Use the smallest suitable favourite tool: favourite-remove for removals, favourite-collection for browsing, favourite-count for counts.
         - Stay inside the buyer favourite feed domain; do not touch seller flows, listing mutation logic, or unrelated data.
         - Do not invent missing required data. If the query is underspecified, return what is missing instead.
         - Do not explain internal reasoning or add speculation.
@@ -25,6 +26,7 @@ export const FavouriteAgent = new Agent({
     `.trim(),
 	modelSettings: ToolModelSettings,
 	tools: [
+		toolFavouriteRemove,
 		toolFeedFavouriteCollection,
 		toolFeedFavouriteCount,
 	],

@@ -6,6 +6,7 @@ import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
 import { SellerListingAgent } from "~/seller/listing/server/tool/SellerListingAgent";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
 import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
+import { InboxAgent } from "~/user/inbox/server/tool/InboxAgent";
 
 export const ForemanAgent = new Agent({
 	name: "Foreman Agent",
@@ -57,6 +58,14 @@ export const ForemanAgent = new Agent({
 			toolName: "worker-seller-draft",
 			toolDescription:
 				"Seller drafts: create/list/count/patch/delete. Confirm destructive intent upstream.",
+		}),
+		//
+		/**
+		 * Inbox tools
+		 */
+		InboxAgent.asTool({
+			toolName: "worker-inbox",
+			toolDescription: "User inbox items: list/count only. Compact inputs only.",
 		}),
 		//
 		LocationAgent.asTool({
