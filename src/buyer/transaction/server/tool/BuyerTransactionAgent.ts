@@ -20,6 +20,7 @@ Domain model:
 - A transaction-entry is a single timeline item inside a transaction.
 - Transaction entries include user messages and structured/status timeline items.
 - Inbox is a different domain. Inbox items are notifications, not transaction entries.
+- Actual message content inside a transaction lives in transaction-entry, not in transaction.
 
 Scope:
 - Stay strictly inside the buyer transaction domain.
@@ -52,8 +53,10 @@ Tool rules:
 - Request only the fields needed for the current task.
 
 Conversation rules:
-- If the task is about threads, conversations, trades, or message overviews, start with transactions.
-- If the task is about messages, chat content, timeline items, status changes, location shares, package info, galleries, or personal details inside a conversation, use transaction-entry.
+- If the task is about threads, conversations, trades, or conversation overviews and no specific transactionId is already provided, start with transactions.
+- If the task is about messages, chat content, message history, timeline items, status changes, location shares, package info, galleries, or personal details inside a conversation, use transaction-entry.
+- If a transactionId is already provided and the task is about message content or timeline content, use transaction-entry-collection directly with that transactionId.
+- If a transactionId is already provided and the task is about counting entries or messages inside that transaction, use transaction-entry-count directly with that transactionId.
 - Treat "messages" as transaction-entry data unless the task clearly asks for inbox notifications.
 - Transaction-entry kinds may include:
   - text
@@ -75,14 +78,20 @@ Conversation rules:
 - If the task is clearly about notifications, alerts, or inbox items, return exactly the blocking constraint: inbox_domain_required
 - If the task asks for transaction entries but no transaction context can be resolved, return only the exact missing input.
 - If the parent agent provides transactionId from an inbox payload, treat it as authoritative transaction context.
-- When resolving content behind a transaction-related inbox item, use transaction-entry for actual timeline and message content.
+- When resolving content behind a transaction-related inbox item, use transaction-entry for the actual timeline and message content.
 
 Output:
 - Return compact but self-describing English.
 - Include only transaction ids, transaction-entry ids, counts, entry kinds, requested fields, applied constraints, missing inputs, or blocking constraints.
+- Every count must state exactly what is being counted.
 - If nothing matches, return exactly: empty_result
 - If the task cannot be completed, return the exact missing input or exact blocking constraint.
 - Do not add commentary, advice, or user-facing phrasing.
+
+Examples:
+- Get message content for transactionId "<id>" -> use transaction-entry-collection
+- Count messages for transactionId "<id>" -> use transaction-entry-count
+- Browse buyer conversation threads -> use transaction-collection
 	`.trim(),
 	modelSettings: ToolModelSettings,
 	tools: [
