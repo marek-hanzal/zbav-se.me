@@ -1,1 +1,1 @@
-export const MaxTurns = 32;
+export const MaxTurns = 10;
