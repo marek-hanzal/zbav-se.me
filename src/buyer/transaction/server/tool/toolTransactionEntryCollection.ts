@@ -9,10 +9,12 @@ const logger = getRootLogger([
 ]);
 
 export const toolTransactionEntryCollection = tool({
-	name: "transaction-entry-collection",
+	name: "buyer-transaction-entry-collection",
 	needsApproval: false,
 	description: `
         Buyer transaction entry collection. Use small cursors and compact filters only.
+
+        Use to get content of user's transaction (messages)
     `.trim(),
 	parameters: TransactionEntryQuerySchema,
 	async execute(data) {

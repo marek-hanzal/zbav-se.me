@@ -9,10 +9,12 @@ const logger = getRootLogger([
 ]);
 
 export const toolTransactionCollection = tool({
-	name: "transaction-collection",
+	name: "buyer-transaction-collection",
 	needsApproval: false,
 	description: `
         Buyer transaction collection. Use small cursors and compact filters only.
+
+        For getting content (timeline) use buyer-transaction-entry-collection tool.
     `.trim(),
 	parameters: TransactionQuerySchema,
 	async execute(data) {

@@ -13,6 +13,8 @@ export const toolTransactionCollection = tool({
 	needsApproval: false,
 	description: `
         Seller transaction collection. Use small cursors and compact filters only.
+
+        For getting content (timeline) use buyer-transaction-entry-collection tool.
     `.trim(),
 	parameters: TransactionQuerySchema,
 	async execute(data) {
