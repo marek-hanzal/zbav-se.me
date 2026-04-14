@@ -18,7 +18,7 @@ export const UserPagePending: FC<UserPagePending.Props> = ({ ui, ...props }) => 
 
 	return (
 		<TitleContainer
-			data-ui={"User[TitleContainer]"}
+			data-ui={"UserPagePending"}
 			textTitle={translator.text("User profile (title)")}
 			left={
 				<BackHomeButton
