@@ -24,8 +24,17 @@ export const toolFeedFavouriteCount = tool({
 			data,
 		});
 
-		return feedFavouriteCountFn({
+		const count = await feedFavouriteCountFn({
 			data,
 		});
+
+		const hasMore = await feedFavouriteCountFn({
+			data: {},
+		});
+
+		return {
+			count: count,
+			hasMore: hasMore > 0,
+		} as const;
 	},
 });

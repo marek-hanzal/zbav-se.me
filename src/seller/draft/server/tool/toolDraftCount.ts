@@ -25,8 +25,17 @@ export const toolDraftCount = tool({
 			data,
 		});
 
-		return draftCountFn({
+		const count = await draftCountFn({
 			data,
 		});
+
+		const hasMore = await draftCountFn({
+			data: {},
+		});
+
+		return {
+			count: count,
+			hasMore: hasMore > 0,
+		} as const;
 	},
 });

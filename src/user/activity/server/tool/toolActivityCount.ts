@@ -30,8 +30,17 @@ export const toolActivityCount = tool({
 			data,
 		});
 
-		return activityCountFn({
+		const count = await activityCountFn({
 			data,
 		});
+
+		const hasMore = await activityCountFn({
+			data: {},
+		});
+
+		return {
+			count: count,
+			hasMore: hasMore > 0,
+		} as const;
 	},
 });

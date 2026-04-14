@@ -31,8 +31,17 @@ export const toolTransactionCount = tool({
 			data,
 		});
 
-		return transactionCountFn({
+		const count = await transactionCountFn({
 			data,
 		});
+
+		const hasMore = await transactionCountFn({
+			data: {},
+		});
+
+		return {
+			count: count,
+			hasMore: hasMore > 0,
+		} as const;
 	},
 });

@@ -28,8 +28,17 @@ export const toolTransactionEntryCount = tool({
 			data,
 		});
 
-		return transactionEntryCountFn({
+		const count = await transactionEntryCountFn({
 			data,
 		});
+
+		const hasMore = await transactionEntryCountFn({
+			data: {},
+		});
+
+		return {
+			count: count,
+			hasMore: hasMore > 0,
+		} as const;
 	},
 });

@@ -29,8 +29,17 @@ export const toolListingCount = tool({
 			data,
 		});
 
-		return listingCountFn({
+		const count = await listingCountFn({
 			data,
 		});
+
+		const hasMore = await listingCountFn({
+			data: {},
+		});
+
+		return {
+			count: count,
+			hasMore: hasMore > 0,
+		} as const;
 	},
 });
