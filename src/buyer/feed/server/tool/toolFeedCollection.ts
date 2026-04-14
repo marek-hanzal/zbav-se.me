@@ -12,15 +12,15 @@ export const toolFeedCollection = tool({
 	name: "feed-collection",
 	needsApproval: false,
 	description: `
-        Current user's saved listing searches. Use small cursors and compact filters only.
+Current user's saved listing searches. Use small cursors and compact filters only.
 
-        Feed type values:
-        - user: User-facing feed. When the user asks about "my feeds" in general, filter type to user.
-        - search: Internal/agent-derived saved search type. Do not use this type from agent workflows.
+Feed type values:
+- user: User-facing feed. When the user asks about "my feeds" in general, filter type to user.
+- search: Internal/agent-derived saved search type. Do not use this type from agent workflows.
 
-        Sort fields:
-        - createdAt: When the feed was created.
-        - updatedAt: When the feed was last changed.
+Sort fields:
+- createdAt: When the feed was created.
+- updatedAt: When the feed was last changed.
     `.trim(),
 	parameters: FeedQuerySchema,
 	async execute(data) {
