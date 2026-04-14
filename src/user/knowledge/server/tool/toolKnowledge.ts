@@ -13,9 +13,10 @@ export const toolKnowledge = tool({
 	name: "knowledge",
 	needsApproval: false,
 	description: `
-        Return one knowledge topic by exact key.
+Return one knowledge topic by exact key.
 
-        Use after knowledge-search or knowledge-index gives you a concrete key. Full content is opt-in; set withContent only when title and summary are not enough.
+Use after knowledge-search or knowledge-index gives you a concrete key. Full content is
+opt-in; set withContent only when title and summary are not enough.
     `.trim(),
 	parameters: z
 		.looseObject({
