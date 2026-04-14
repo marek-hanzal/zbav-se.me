@@ -30,7 +30,6 @@ Listing query enum values:
 - listing sort fields: price, condition, age, createdAt, updatedAt, expiresAt, geo.
     `.trim(),
 	parameters: FeedCreateSchema,
-	// outputSchema: FeedSchema,
 	async execute(data) {
 		logger.trace("toolFeedCreate", {
 			data,
