@@ -15,7 +15,7 @@ export const locationFetchFx = Effect.fn("locationFetchFx")(function* ({
 	sort,
 }: locationFetchFx.Props) {
 	const logger = yield* getLoggerFx("locationFetchFx");
-	logger.debug("locationFetchFx", {
+	logger.trace("locationFetchFx", {
 		filter,
 		where,
 		sort,

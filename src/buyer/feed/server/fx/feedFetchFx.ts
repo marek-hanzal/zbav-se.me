@@ -19,7 +19,7 @@ export const feedFetchFx = Effect.fn("feedFetchFx")(function* ({
 	sort,
 }: feedFetchFx.Props) {
 	const logger = yield* getLoggerFx("feedFetchFx");
-	logger.debug("feedFetchFx", {
+	logger.trace("feedFetchFx", {
 		filter,
 		where,
 		scope,

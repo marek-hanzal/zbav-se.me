@@ -8,6 +8,7 @@ import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { ConflictErrorFx } from "~/server/error/ConflictErrorFx";
+import { locationFetchFx } from "~/session/location/server/fx/locationFetchFx";
 
 export namespace feedCreateFx {
 	export interface Props extends FeedCreateSchema.Type {
@@ -21,7 +22,7 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 	...data
 }: feedCreateFx.Props) {
 	const logger = yield* getLoggerFx("feedCreateFx");
-	logger.debug("feedCreateFx", {
+	logger.trace("feedCreateFx", {
 		userId,
 		query,
 		...data,
@@ -34,6 +35,30 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 
 			const id = genId();
 			const now = dateContext.now();
+
+			if (data.locationId && !query.meta?.latLon) {
+				logger.debug("Binding locationId", {
+					locationId: data.locationId,
+				});
+
+				const location = yield* locationFetchFx({
+					where: {
+						id: data.locationId,
+					},
+				});
+
+				query.meta = {
+					...query.meta,
+					latLon: {
+						lat: location.lat,
+						lon: location.lon,
+					},
+				};
+
+				logger.debug("Updated query.meta", {
+					query,
+				});
+			}
 
 			yield* tryDbFx(
 				async () =>
