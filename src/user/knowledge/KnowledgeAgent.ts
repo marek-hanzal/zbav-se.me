@@ -1,6 +1,5 @@
 import { Agent } from "@openai/agents";
 import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
-import { toolAgentCapabilities } from "~/user/knowledge/server/tool/toolAgentCapabilities";
 import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
 import { toolKnowledgeIndex } from "~/user/knowledge/server/tool/toolKnowledgeIndex";
 import { toolKnowledgeSearch } from "~/user/knowledge/server/tool/toolKnowledgeSearch";
@@ -56,6 +55,5 @@ Output:
 		toolKnowledge,
 		toolKnowledgeIndex,
 		toolKnowledgeSearch,
-		toolAgentCapabilities,
 	],
 });
