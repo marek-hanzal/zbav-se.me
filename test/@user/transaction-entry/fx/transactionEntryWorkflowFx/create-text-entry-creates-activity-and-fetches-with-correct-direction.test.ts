@@ -81,7 +81,7 @@ describe("transactionEntry workflow", () => {
 
 			expectErrorFx(outsiderFetch);
 			expect(outsiderCollection).toHaveLength(0);
-			expect(outsiderCount.total).toBe(0);
+			expect(outsiderCount).toBe(0);
 
 			const activityItems = yield* fetchActivityItemsFx({
 				database,

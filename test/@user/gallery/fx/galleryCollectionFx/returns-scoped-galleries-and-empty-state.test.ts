@@ -60,13 +60,9 @@ describe("galleryCollectionFx", () => {
 					sellerSecond.id,
 				].sort(),
 			);
-			expect(sellerCount.total).toBe(2);
-			expect(sellerCount.where).toBe(2);
-			expect(sellerCount.filter).toBe(2);
-			expect(typeof sellerCount.total).toBe("number");
+			expect(sellerCount).toBe(2);
 			expect(strangerCollection).toEqual([]);
-			expect(strangerCount.total).toBe(0);
-			expect(typeof strangerCount.total).toBe("number");
+			expect(strangerCount).toBe(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

@@ -27,10 +27,13 @@ export const toolFeedCount = tool({
 		const count = await feedCountFn({
 			data,
 		});
+		const hasMore = await feedCountFn({
+			data: {},
+		});
 
 		return {
-			count: count.filter,
-			hasMore: count.total > 0,
+			count: count,
+			hasMore: hasMore > 0,
 		} as const;
 	},
 });

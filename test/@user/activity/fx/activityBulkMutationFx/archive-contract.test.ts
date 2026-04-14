@@ -127,8 +127,8 @@ describe("activity bulk mutation archive contract", () => {
 				},
 			});
 
-			expect(ownerActive.where).toBe(1);
-			expect(strangerActive.where).toBe(1);
+			expect(ownerActive).toBe(1);
+			expect(strangerActive).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

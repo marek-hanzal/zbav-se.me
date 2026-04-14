@@ -37,9 +37,7 @@ describe("seller listingCountFx", () => {
 			});
 
 			expect(collection).toHaveLength(2);
-			expect(count.total).toBe(2);
-			expect(count.filter).toBe(2);
-			expect(count.where).toBe(2);
+			expect(count).toBe(2);
 
 			const empty = yield* listingCountFx({
 				filter: {
@@ -50,7 +48,7 @@ describe("seller listingCountFx", () => {
 				},
 			});
 
-			expect(empty.filter).toBe(0);
+			expect(empty).toBe(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

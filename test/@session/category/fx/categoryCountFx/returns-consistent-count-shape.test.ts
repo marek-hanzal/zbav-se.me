@@ -16,12 +16,8 @@ describe("categoryCountFx", () => {
 				scope: {},
 			});
 
-			expect(typeof count.total).toBe("number");
-			expect(typeof count.where).toBe("number");
-			expect(typeof count.filter).toBe("number");
-			expect(count.total).toBeGreaterThan(0);
-			expect(count.where).toBe(1);
-			expect(count.filter).toBe(1);
+			expect(typeof count).toBe("number");
+			expect(count).toBeGreaterThan(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

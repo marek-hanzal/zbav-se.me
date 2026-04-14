@@ -127,7 +127,7 @@ describe("activityPatchFx", () => {
 				},
 			});
 
-			expect(activeCount.filter).toBe(0);
+			expect(activeCount).toBe(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

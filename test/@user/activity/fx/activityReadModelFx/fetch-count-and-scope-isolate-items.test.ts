@@ -128,8 +128,8 @@ describe("activity read model", () => {
 			]);
 			expect(fetched.id).toBe("activity-read-thumb-b");
 			expect(fetched.userId).toBe(user.id);
-			expect(reactionCount.where).toBe(2);
-			expect(archivedCount.where).toBe(1);
+			expect(reactionCount).toBe(2);
+			expect(archivedCount).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 

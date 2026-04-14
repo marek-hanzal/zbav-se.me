@@ -20,7 +20,7 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	scope,
 }: listingCountFx.Props) {
 	const logger = yield* getLoggerFx("listingCountFx");
-	logger.debug("listingCountFx", {
+	logger.trace("listingCountFx", {
 		filter,
 		where,
 		scope,
@@ -41,13 +41,7 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 			return query.select(sql<number>`count(*)::int`.as("count")).executeTakeFirstOrThrow();
 		});
 
-		return {
-			total: count,
-			filter: count,
-			where: count,
-			isEmpty: count === 0,
-			isFilterEmpty: false,
-		};
+		return count;
 	}
 
 	return yield* withCountFx({

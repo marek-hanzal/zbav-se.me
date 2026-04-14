@@ -91,7 +91,7 @@ describe("favouriteCollectionFx", () => {
 			expect(byListing[0]?.id).toBe(firstFavourite.id);
 			expect(byIds).toHaveLength(1);
 			expect(byIds[0]?.id).toBe(firstFavourite.id);
-			expect(count.where).toBe(1);
+			expect(count).toBe(1);
 			expect(strangerCollection).toEqual([]);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

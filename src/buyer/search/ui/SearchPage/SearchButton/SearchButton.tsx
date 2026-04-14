@@ -22,7 +22,7 @@ export const SearchButton = withFallback(
 		const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 		const { data: listingCount } = withListingQuery.useCountQuery(feed.query);
 
-		const hasListings = listingCount.filter > 0;
+		const hasListings = listingCount > 0;
 
 		return (
 			<LinkTo
@@ -85,10 +85,10 @@ export const SearchButton = withFallback(
 								badge: "xs",
 							}}
 						>
-							{listingCount.filter > 9
+							{listingCount > 9
 								? "9+"
 								: toLocaleNumber({
-										number: listingCount.filter,
+										number: listingCount,
 										locale,
 									})}
 						</Badge>

@@ -57,8 +57,7 @@ describe("seller transaction read model", () => {
 				},
 			});
 
-			expect(count.total).toBe(1);
-			expect(count.where).toBe(1);
+			expect(count).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

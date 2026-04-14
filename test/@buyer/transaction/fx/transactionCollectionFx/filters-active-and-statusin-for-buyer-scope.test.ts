@@ -185,7 +185,7 @@ describe("buyer transactionCollectionFx", () => {
 					successScenario.transactionId,
 				].sort(),
 			);
-			expect(statusCount.where).toBe(2);
+			expect(statusCount).toBe(2);
 			expect(inactiveOnly.every((item) => typeof item.unreadCount === "number")).toBe(true);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

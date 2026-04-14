@@ -68,7 +68,7 @@ describe("seller transaction-listing read model fetch and count", () => {
 					openScenario.listingId,
 				].sort(),
 			);
-			expect(nonTerminalCount.where).toBe(2);
+			expect(nonTerminalCount).toBe(2);
 			expect(fetched.id).toBe(openScenario.listingId);
 			expect(typeof fetched.count).toBe("number");
 			expect(typeof fetched.unreadCount).toBe("number");

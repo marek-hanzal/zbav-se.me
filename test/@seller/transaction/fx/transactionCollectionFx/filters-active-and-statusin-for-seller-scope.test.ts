@@ -89,7 +89,7 @@ describe("seller transactionCollectionFx", () => {
 			expect(inactiveOnly.map((item) => item.id).sort()).toEqual([
 				archivedScenario.transactionId,
 			]);
-			expect(statusCount.where).toBe(3);
+			expect(statusCount).toBe(3);
 			expect(typeof activeOnly[0]?.unreadCount).toBe("number");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

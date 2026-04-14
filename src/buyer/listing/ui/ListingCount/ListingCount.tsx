@@ -11,19 +11,18 @@ export namespace ListingCount {
 	export interface Props extends MarkSuspense.Props {
 		query: ListingQuerySchema.Type;
 		textEmpty?: string;
-		//
 	}
 }
 
 export const ListingCount = withFallback(
 	({ _suspense, textEmpty, query }: ListingCount.Props) => {
 		const locale = useLocale();
-		const { data } = withListingQuery.useCountQuery(query);
+		const { data: count } = withListingQuery.useCountQuery(query);
 
-		return data.filter > 0
+		return count > 0
 			? toLocaleNumber({
 					locale,
-					number: data.filter,
+					number: count,
 				})
 			: (textEmpty ?? translator.text("Listing count - empty (label)"));
 	},

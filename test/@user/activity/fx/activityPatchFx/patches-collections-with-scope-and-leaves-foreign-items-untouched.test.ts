@@ -120,7 +120,7 @@ describe("activityPatchCollectionFx", () => {
 				},
 			});
 
-			expect(ownerActive.filter).toBe(1);
+			expect(ownerActive).toBe(1);
 
 			const strangerActive = yield* activityCountFx({
 				scope: {
@@ -131,7 +131,7 @@ describe("activityPatchCollectionFx", () => {
 				},
 			});
 
-			expect(strangerActive.filter).toBe(1);
+			expect(strangerActive).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

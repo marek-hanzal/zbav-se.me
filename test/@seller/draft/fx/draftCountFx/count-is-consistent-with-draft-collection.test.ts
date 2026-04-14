@@ -35,9 +35,7 @@ describe("draftCountFx", () => {
 				},
 			});
 
-			expect(count.total).toBe(collection.length);
-			expect(count.where).toBe(collection.length);
-			expect(count.filter).toBe(collection.length);
+			expect(count).toBe(collection.length);
 
 			const empty = yield* draftCountFx({
 				where: {
@@ -48,7 +46,7 @@ describe("draftCountFx", () => {
 				},
 			});
 
-			expect(empty.where).toBe(0);
+			expect(empty).toBe(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

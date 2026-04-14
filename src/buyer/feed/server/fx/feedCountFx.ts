@@ -44,13 +44,7 @@ export const feedCountFx = Effect.fn("feedCountFx")(function* ({
 			return query.select(sql<number>`count(*)::int`.as("count")).executeTakeFirstOrThrow();
 		});
 
-		return {
-			total: count,
-			filter: count,
-			where: count,
-			isEmpty: count === 0,
-			isFilterEmpty: false,
-		};
+		return count;
 	}
 
 	return yield* withCountFx({

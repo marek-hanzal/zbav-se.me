@@ -119,7 +119,7 @@ describe("transactionEntry read model", () => {
 			expect(idSubset.map((item) => item.id)).toEqual([
 				sellerLocation.id,
 			]);
-			expect(textCount.where).toBe(2);
+			expect(textCount).toBe(2);
 			expect(fetched.id).toBe(sellerLocation.id);
 			expect(fetched.kind).toBe("location");
 			expect(fetched.direction).toBe("in");
@@ -177,7 +177,7 @@ describe("transactionEntry read model", () => {
 				tag: "NotFoundErrorFx",
 			});
 			expect(outsiderCollection).toHaveLength(0);
-			expect(outsiderCount.where).toBe(0);
+			expect(outsiderCount).toBe(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

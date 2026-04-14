@@ -59,7 +59,7 @@ export const NotificationLink = withFallback(
 				})}
 				{...uiMenuButton({
 					ui: {
-						tone: highCount.filter > 0 ? "secondary" : "neutral",
+						tone: highCount > 0 ? "secondary" : "neutral",
 						theme: "light",
 					},
 					className: [],
@@ -85,7 +85,7 @@ export const NotificationLink = withFallback(
 					>
 						<Tx label={"Notifications (label)"} />
 
-						{highCount.filter > 0 ? (
+						{highCount > 0 ? (
 							<Badge
 								ui={{
 									tone: "secondary",
@@ -93,10 +93,10 @@ export const NotificationLink = withFallback(
 									badge: "xs",
 								}}
 							>
-								{highCount.filter > 9
+								{highCount > 9
 									? "9+"
 									: toLocaleNumber({
-											number: highCount.filter,
+											number: highCount,
 											locale,
 										})}
 							</Badge>

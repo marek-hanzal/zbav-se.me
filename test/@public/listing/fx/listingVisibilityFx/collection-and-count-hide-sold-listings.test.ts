@@ -40,7 +40,7 @@ describe("public listing visibility", () => {
 				scope: {},
 			});
 
-			expect(count.where).toBe(1);
+			expect(count).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

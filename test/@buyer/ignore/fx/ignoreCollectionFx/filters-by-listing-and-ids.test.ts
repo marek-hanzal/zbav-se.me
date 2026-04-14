@@ -82,7 +82,7 @@ describe("ignoreCollectionFx", () => {
 			expect(byListing[0]?.id).toBe(firstIgnore.id);
 			expect(byIds).toHaveLength(1);
 			expect(byIds[0]?.id).toBe(firstIgnore.id);
-			expect(count.where).toBe(1);
+			expect(count).toBe(1);
 			expect(strangerCollection).toEqual([]);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

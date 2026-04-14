@@ -54,7 +54,7 @@ describe("feedFavouriteReadModelFx", () => {
 				scope: {},
 			});
 
-			expect(count.total).toBe(0);
+			expect(count).toBe(0);
 
 			const fetched = yield* Effect.either(
 				feedFavouriteFetchFx({

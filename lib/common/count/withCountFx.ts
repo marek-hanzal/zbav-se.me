@@ -46,64 +46,26 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 	where,
 	scope,
 }: withCountFx.Props<TSelect, TFilter, TSelectError, TSelectContext, TQueryError, TQueryContext>) {
-	const select = yield* selectFx;
+	const layers = [
+		filter,
+		where,
+		scope,
+	] as const;
 
-	const hasFilter = !!(filter && Object.keys(filter).length > 0);
-	const hasWhere = !!(where && Object.keys(where).length > 0);
-	const countAll = !hasFilter && !hasWhere;
+	let qb = yield* selectFx;
+	for (const layer of layers) {
+		qb = yield* queryFx({
+			select: qb,
+			where: layer,
+		});
+	}
 
-	const scopeSelect = yield* queryFx({
-		select,
-		where: scope,
-	});
-
-	const whereSelect = yield* queryFx({
-		select: yield* queryFx({
-			select,
-			where,
-		}),
-		where: scope,
-	});
-
-	const filterSelect = yield* queryFx({
-		select: yield* queryFx({
-			select: yield* queryFx({
-				select,
-				where: filter,
-			}),
-			where,
-		}),
-		where: scope,
-	});
-
-	const countTotal = yield* Effect.promise(async () => {
-		return scopeSelect
+	const { count } = yield* Effect.promise(async () => {
+		return qb
 			.clearSelect()
 			.select(sql<number>`count(*)::int`.as("count"))
 			.executeTakeFirstOrThrow();
 	});
 
-	const countFilter = countAll
-		? countTotal
-		: yield* Effect.promise(async () => {
-				return filterSelect
-					.clearSelect()
-					.select(sql<number>`count(*)::int`.as("count"))
-					.executeTakeFirstOrThrow();
-			});
-
-	const countWhere = countAll
-		? countTotal
-		: yield* Effect.promise(async () => {
-				return whereSelect
-					.clearSelect()
-					.select(sql<number>`count(*)::int`.as("count"))
-					.executeTakeFirstOrThrow();
-			});
-
-	return {
-		total: countTotal.count,
-		filter: countFilter.count,
-		where: countWhere.count,
-	};
+	return count;
 });

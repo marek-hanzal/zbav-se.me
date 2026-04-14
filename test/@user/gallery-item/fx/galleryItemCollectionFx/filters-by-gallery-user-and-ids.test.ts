@@ -98,7 +98,7 @@ describe("galleryItemCollectionFx", () => {
 			expect(sellerItems).toHaveLength(2);
 			expect(filteredByIds).toHaveLength(1);
 			expect(filteredByIds[0]?.id).toBe(firstSellerItem.id);
-			expect(sellerCount.where).toBe(2);
+			expect(sellerCount).toBe(2);
 			expect(strangerItems).toEqual([]);
 			expect(buyerOwnItems).toHaveLength(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
