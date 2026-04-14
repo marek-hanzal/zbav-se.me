@@ -49,11 +49,16 @@ export const toolActivityCollection = tool({
 			data,
 		});
 
-		return activityCollectionFn({
+		const items = await activityCollectionFn({
 			data: {
 				...data,
 				limit: 64,
 			},
 		});
+
+		return {
+			count: items.length,
+			items,
+		};
 	},
 });

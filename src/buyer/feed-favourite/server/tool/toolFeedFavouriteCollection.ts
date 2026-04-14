@@ -28,11 +28,16 @@ export const toolFeedFavouriteCollection = tool({
 			data,
 		});
 
-		return feedFavouriteCollectionFn({
+		const items = await feedFavouriteCollectionFn({
 			data: {
 				...data,
 				limit: 32,
 			},
 		});
+
+		return {
+			count: items.length,
+			items,
+		};
 	},
 });
