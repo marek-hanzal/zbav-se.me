@@ -18,6 +18,7 @@ Prefer an exact feed id in query. Do not invent patch fields; patch only fields 
 
 Hint:
 - If the user provides an address, fill locationId
+- Resolve latLon from locationId and fill also query.meta.latLon
 
 Feed type values:
 - user: User-facing feed. When the user asks about "my feeds" in general, filter type to user.

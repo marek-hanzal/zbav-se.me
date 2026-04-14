@@ -18,6 +18,7 @@ Use only when the user wants to save search criteria. Do not invent the feed nam
 
 Hint:
 - If the user provides an address, normalize it and fill locationId
+- Resolve latLon from locationId and fill also query.meta.latLon
 
 Feed type values:
 - user: User-facing feed. When creating a feed from agent workflows, use this type.
