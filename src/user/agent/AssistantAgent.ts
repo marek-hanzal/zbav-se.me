@@ -26,9 +26,9 @@ import { toolTransactionEntryCollection as toolSellerTransactionEntryCollection 
 import { toolTransactionEntryCount as toolSellerTransactionEntryCount } from "~/seller/transaction/server/tool/toolTransactionEntryCount";
 import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
 import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
+import { toolActivityCollection } from "~/user/activity/server/tool/toolActivityCollection";
+import { toolActivityCount } from "~/user/activity/server/tool/toolActivityCount";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
-import { toolInboxCollection } from "~/user/inbox/server/tool/toolInboxCollection";
-import { toolInboxCount } from "~/user/inbox/server/tool/toolInboxCount";
 import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
 import { toolKnowledgeIndex } from "~/user/knowledge/server/tool/toolKnowledgeIndex";
 import { toolKnowledgeSearch } from "~/user/knowledge/server/tool/toolKnowledgeSearch";
@@ -47,7 +47,7 @@ Language and tone
 
 Scope
 - zbav-se.me is a marketplace app.
-- It supports listings, saved searches, favourites, drafts, transactions, inbox notifications, category lookup, location lookup, and internal system knowledge.
+- It supports listings, saved searches, favourites, drafts, transactions, activity notifications, category lookup, location lookup, and internal system knowledge.
 - It does not handle payments.
 - Only help with tasks related to the app, its features, and the user's data inside it.
 
@@ -80,9 +80,9 @@ Normalization and routing
 - Use knowledge for app behavior, concepts, rules, limits, and capabilities.
 - Use buyer workers for buyer-side listings, saved searches, favourites, and transactions.
 - Use seller workers for seller-side drafts, listings, and transactions.
-- Use inbox for inbox items, alerts, and notification-based counts.
-- Inbox is not actual chat content.
-- If the user wants the real content behind an inbox item, read inbox first, then follow its payload reference to the correct transaction worker.
+- Use activity for activity items, alerts, and notification-based counts.
+- Activity is not actual chat content.
+- If the user wants the real content behind an activity item, read activity first, then follow its payload reference to the correct transaction worker.
 
 Tool-call rules
 - Never invent app data.
@@ -101,15 +101,15 @@ Examples of correct tool selection
 - "What is a draft?" -> knowledge
 - "How many drafts do I have?" -> seller-draft
 - "How do drafts work and how many do I have?" -> knowledge + seller-draft
-- "What can inbox do?" -> knowledge
-- "How many thumbs did I get last week?" -> inbox
-- "What is behind this inbox item?" -> inbox + buyer-transaction or seller-transaction
+- "What can activity do?" -> knowledge
+- "How many thumbs did I get last week?" -> activity
+- "What is behind this activity item?" -> activity + buyer-transaction or seller-transaction
 
 Examples of good internal calls
 - Explain what a draft is and how it differs from a published listing.
 - Resolve category for product term "television" and return best matching category.
 - Browse public listings for categoryId "<id>" and return id, title, price, and location.
-- Count inbox items of type "thumb" in the last 7 days.
+- Count activity items of type "thumb" in the last 7 days.
 - Fetch transaction entries for transactionId "<id>" and return recent text messages.
 
 Boundaries
@@ -174,8 +174,8 @@ Response style
 		/**
 		 * Common user-related tools
 		 */
-		toolInboxCollection,
-		toolInboxCount,
+		toolActivityCollection,
+		toolActivityCount,
 		/**
 		 * Utility tools for both human and models
 		 */

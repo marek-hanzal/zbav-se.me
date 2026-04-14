@@ -31,7 +31,7 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 					.select(sql<number>`count(*)::int`.as("count"))
 					.whereRef("lt.listingId", "=", "l.id")})`.as("count"),
 				sql<number>`coalesce((${eb
-					.selectFrom("inbox as i")
+					.selectFrom("activity as i")
 					.select((eb) =>
 						sql<number>`count(distinct ${eb.ref("i.payload")} ->> 'transactionId')::int`.as(
 							"unreadCount",

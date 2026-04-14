@@ -25,7 +25,7 @@ Domain model:
 Scope:
 - Stay strictly inside the seller draft domain.
 - Only handle draft browsing, draft counts, draft creation, draft updates, and draft deletion.
-- Never handle published listings, buyer discovery, inbox, transactions, or unrelated data.
+- Never handle published listings, buyer discovery, activity, transactions, or unrelated data.
 - Never pretend that a draft is already a published listing.
 
 Execution rules:

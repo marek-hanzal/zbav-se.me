@@ -7,7 +7,7 @@ import { listingCheckIfOwnFx } from "~/buyer/listing/server/fx/listingCheckIfOwn
 import { listingFetchFx } from "~/buyer/listing/server/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { inboxCreateFx } from "~/user/inbox/server/fx/inboxCreateFx";
+import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
 
 export namespace ignoreToggleFx {
 	export interface Props extends IgnoreToggleSchema.Type {
@@ -49,7 +49,7 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 							event: "ignore",
 						}).pipe(Effect.ignore);
 
-						yield* inboxCreateFx({
+						yield* activityCreateFx({
 							userId: listingUserId,
 							reference: [
 								listingId,
@@ -84,7 +84,7 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 							event: "unignore",
 						}).pipe(Effect.ignore);
 
-						yield* inboxCreateFx({
+						yield* activityCreateFx({
 							userId: listingUserId,
 							reference: [
 								listingId,

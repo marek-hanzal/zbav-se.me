@@ -12,8 +12,8 @@ import { TransactionChat } from "~/user/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/user/transaction-entry/ui/TransactionEntryList";
 import { withTransactionQuery } from "../query/withTransactionQuery";
-import { archiveSellerMessageInbox } from "../service/archiveSellerMessageInbox";
-import { withArchiveSellerMessageInboxMutation } from "../service/withArchiveSellerMessageInboxMutation";
+import { archiveSellerMessageActivity } from "../service/archiveSellerMessageActivity";
+import { withArchiveSellerMessageActivityMutation } from "../service/withArchiveSellerMessageActivityMutation";
 import { PendingMessage } from "./status/PendingMessage";
 import { TransactionMenu } from "./TransactionMenu";
 
@@ -37,7 +37,7 @@ export const Transaction: FC<Transaction.Props> = ({
 	});
 	const [, setDetail] = useState(false);
 	const hero = useUpload(transaction.gallery.items);
-	const archiveMutation = withArchiveSellerMessageInboxMutation.useMutation();
+	const archiveMutation = withArchiveSellerMessageActivityMutation.useMutation();
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
 	useEffect(() => {
@@ -139,7 +139,7 @@ export const Transaction: FC<Transaction.Props> = ({
 						hooks={{
 							async onPostMutation() {
 								try {
-									await archiveSellerMessageInbox({
+									await archiveSellerMessageActivity({
 										queryClient,
 										transactionId: transaction.id,
 									});

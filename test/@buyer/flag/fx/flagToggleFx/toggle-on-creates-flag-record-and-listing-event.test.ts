@@ -45,19 +45,19 @@ describe("flagToggleFx", () => {
 			assertRecordOn: () => {},
 			onEvent: "flag",
 			offEvent: "unflag",
-			inboxOnFx: ({ database, users }) =>
+			activityOnFx: ({ database, users }) =>
 				Effect.promise(() =>
 					database.kysely
-						.selectFrom("inbox")
+						.selectFrom("activity")
 						.select("type")
 						.where("userId", "=", users.seller.id)
 						.where("type", "=", "flag")
 						.executeTakeFirst(),
 				),
-			inboxOffFx: ({ database, users }) =>
+			activityOffFx: ({ database, users }) =>
 				Effect.promise(() =>
 					database.kysely
-						.selectFrom("inbox")
+						.selectFrom("activity")
 						.select("type")
 						.where("userId", "=", users.seller.id)
 						.where("type", "=", "unflag")

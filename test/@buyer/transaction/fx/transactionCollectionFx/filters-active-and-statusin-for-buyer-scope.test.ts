@@ -10,11 +10,11 @@ import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCr
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
+import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 
 describe("buyer transactionCollectionFx", () => {
-	it("filters active transactions by inbox state within buyer scope", async () => {
+	it("filters active transactions by activity state within buyer scope", async () => {
 		const database = await testabase("buyer-transactionCollection-active");
 
 		return Effect.gen(function* () {
@@ -49,7 +49,7 @@ describe("buyer transactionCollectionFx", () => {
 					text: "Seller ping",
 				},
 			});
-			yield* inboxArchiveFx({
+			yield* activityArchiveFx({
 				scope: {
 					userId: buyer.id,
 				},
@@ -136,7 +136,7 @@ describe("buyer transactionCollectionFx", () => {
 				transactionId: successScenario.transactionId,
 				userId: buyer.id,
 			});
-			yield* inboxArchiveFx({
+			yield* activityArchiveFx({
 				scope: {
 					userId: buyer.id,
 				},
@@ -145,7 +145,7 @@ describe("buyer transactionCollectionFx", () => {
 					reference: openScenario.transactionId,
 				},
 			});
-			yield* inboxArchiveFx({
+			yield* activityArchiveFx({
 				scope: {
 					userId: buyer.id,
 				},

@@ -18,7 +18,7 @@ Purpose:
 
 Scope:
 - Only handle system knowledge, indexed knowledge topics, searchable knowledge content, and agent capability metadata.
-- Never handle user data, listings, drafts, transactions, inbox items, or any write action.
+- Never handle user data, listings, drafts, transactions, activity items, or any write action.
 - Never execute workflows or call domain workers directly.
 
 Execution rules:

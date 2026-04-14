@@ -13,7 +13,7 @@ export const TransactionFilterSchema = z
 		}),
 		active: z.boolean().optional().meta({
 			description:
-				"When true, match transactions with unread inbox activity for the current side; when false, match transactions without unread inbox activity for the current side",
+				"When true, match transactions with unread activity activity for the current side; when false, match transactions without unread activity activity for the current side",
 		}),
 		terminal: z.boolean().optional().meta({
 			description:

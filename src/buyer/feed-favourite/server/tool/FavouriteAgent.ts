@@ -20,7 +20,7 @@ Scope:
   - feeds that contain favourite listings,
   - counts of feeds that contain favourite listings,
   - removal of favourite listings.
-- Never handle seller flows, feed CRUD, public listing discovery, inbox, transactions, or unrelated data.
+- Never handle seller flows, feed CRUD, public listing discovery, activity, transactions, or unrelated data.
 
 Execution rules:
 - Execute only the task given by the parent agent.

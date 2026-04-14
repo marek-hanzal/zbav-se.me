@@ -59,7 +59,7 @@ export const withTransactionListingQueryBuilderFx = Effect.fn(
 
 	if (where.active !== undefined) {
 		query = query.where(({ exists, not, selectFrom }) => {
-			const unreadSelect = selectFrom("inbox as i")
+			const unreadSelect = selectFrom("activity as i")
 				.select("i.id")
 				.whereRef("i.userId", "=", "l.userId")
 				.where("i.family", "=", "transaction")

@@ -25,7 +25,7 @@ export const TransactionSchema = z
 		currency: CurrencyEnumSchema,
 		entry: TransactionEntrySchema,
 		unreadCount: z.coerce.number().int().nonnegative().meta({
-			description: "Unread inbox buyer-message count for this transaction",
+			description: "Unread activity buyer-message count for this transaction",
 			type: "number",
 		}),
 		//

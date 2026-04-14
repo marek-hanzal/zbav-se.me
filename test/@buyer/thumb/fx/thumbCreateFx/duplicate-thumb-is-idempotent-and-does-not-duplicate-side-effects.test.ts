@@ -50,9 +50,9 @@ describe("thumbCreateFx", () => {
 					.where("event", "=", "like")
 					.execute(),
 			);
-			const inboxItems = yield* Effect.promise(() =>
+			const activityItems = yield* Effect.promise(() =>
 				database.kysely
-					.selectFrom("inbox")
+					.selectFrom("activity")
 					.select("id")
 					.where("userId", "=", seller.id)
 					.where("type", "=", "thumb")
@@ -66,7 +66,7 @@ describe("thumbCreateFx", () => {
 				type: "like",
 			});
 			expect(events).toHaveLength(1);
-			expect(inboxItems).toHaveLength(1);
+			expect(activityItems).toHaveLength(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

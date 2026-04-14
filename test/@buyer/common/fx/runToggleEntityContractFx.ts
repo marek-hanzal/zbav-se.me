@@ -11,7 +11,7 @@ namespace runToggleEntityContractFx {
 		extra: Extra;
 	}
 
-	export interface ToggleProps<Extra, RecordShape, InboxShape, Runtime> {
+	export interface ToggleProps<Extra, RecordShape, ActivityShape, Runtime> {
 		databaseName: string;
 		userSlug: string;
 		createExtraFx?: (context: BaseContext) => Effect.Effect<Extra, unknown, Runtime>;
@@ -24,18 +24,18 @@ namespace runToggleEntityContractFx {
 		assertRecordOn: (record: RecordShape, context: ToggleContext<Extra>) => void;
 		onEvent: string;
 		offEvent: string;
-		inboxOnFx?: (
+		activityOnFx?: (
 			context: ToggleContext<Extra>,
-		) => Effect.Effect<InboxShape | undefined, unknown, Runtime>;
-		inboxOffFx?: (
+		) => Effect.Effect<ActivityShape | undefined, unknown, Runtime>;
+		activityOffFx?: (
 			context: ToggleContext<Extra>,
-		) => Effect.Effect<InboxShape | undefined, unknown, Runtime>;
-		assertInboxOn?: (inbox: InboxShape, context: ToggleContext<Extra>) => void;
-		assertInboxOff?: (inbox: InboxShape, context: ToggleContext<Extra>) => void;
+		) => Effect.Effect<ActivityShape | undefined, unknown, Runtime>;
+		assertActivityOn?: (activity: ActivityShape, context: ToggleContext<Extra>) => void;
+		assertActivityOff?: (activity: ActivityShape, context: ToggleContext<Extra>) => void;
 	}
 }
 
-export const runToggleEntityContractFx = async <Extra, RecordShape, InboxShape, Runtime>({
+export const runToggleEntityContractFx = async <Extra, RecordShape, ActivityShape, Runtime>({
 	databaseName,
 	userSlug,
 	createExtraFx,
@@ -46,11 +46,11 @@ export const runToggleEntityContractFx = async <Extra, RecordShape, InboxShape, 
 	assertRecordOn,
 	onEvent,
 	offEvent,
-	inboxOnFx,
-	inboxOffFx,
-	assertInboxOn,
-	assertInboxOff,
-}: runToggleEntityContractFx.ToggleProps<Extra, RecordShape, InboxShape, Runtime>) => {
+	activityOnFx,
+	activityOffFx,
+	assertActivityOn,
+	assertActivityOff,
+}: runToggleEntityContractFx.ToggleProps<Extra, RecordShape, ActivityShape, Runtime>) => {
 	const database = await testabase(databaseName);
 
 	return Effect.gen(function* () {
@@ -78,15 +78,15 @@ export const runToggleEntityContractFx = async <Extra, RecordShape, InboxShape, 
 		const eventsAfterOn = yield* eventsFx(context);
 		expect(eventsAfterOn).toContain(onEvent);
 
-		if (inboxOnFx) {
-			const inboxOn = yield* inboxOnFx(context);
-			expect(inboxOn).toBeDefined();
+		if (activityOnFx) {
+			const activityOn = yield* activityOnFx(context);
+			expect(activityOn).toBeDefined();
 
-			if (!inboxOn) {
-				throw new Error("Expected toggle-on inbox to exist");
+			if (!activityOn) {
+				throw new Error("Expected toggle-on activity to exist");
 			}
 
-			assertInboxOn?.(inboxOn, context);
+			assertActivityOn?.(activityOn, context);
 		}
 
 		yield* toggleOffFx(context);
@@ -98,15 +98,15 @@ export const runToggleEntityContractFx = async <Extra, RecordShape, InboxShape, 
 		expect(eventsAfterOff).toContain(onEvent);
 		expect(eventsAfterOff).toContain(offEvent);
 
-		if (inboxOffFx) {
-			const inboxOff = yield* inboxOffFx(context);
-			expect(inboxOff).toBeDefined();
+		if (activityOffFx) {
+			const activityOff = yield* activityOffFx(context);
+			expect(activityOff).toBeDefined();
 
-			if (!inboxOff) {
-				throw new Error("Expected toggle-off inbox to exist");
+			if (!activityOff) {
+				throw new Error("Expected toggle-off activity to exist");
 			}
 
-			assertInboxOff?.(inboxOff, context);
+			assertActivityOff?.(activityOff, context);
 		}
 		return undefined;
 	}).pipe((effect) =>

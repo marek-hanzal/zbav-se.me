@@ -75,9 +75,9 @@ describe("transactionCreateFx", () => {
 					.where("event", "=", "transaction.create")
 					.execute(),
 			);
-			const sellerInbox = yield* Effect.promise(() =>
+			const sellerActivity = yield* Effect.promise(() =>
 				database.kysely
-					.selectFrom("inbox")
+					.selectFrom("activity")
 					.select([
 						"id",
 						"type",
@@ -119,7 +119,7 @@ describe("transactionCreateFx", () => {
 				userEvents.some((event) => event.userId === seller.id && event.scope === "foreign"),
 			).toBe(true);
 			expect(
-				sellerInbox.some(
+				sellerActivity.some(
 					(item) =>
 						item.type === "buyer-message" &&
 						"transactionId" in item.payload &&

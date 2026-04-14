@@ -56,7 +56,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 				.$castTo<TransactionEntrySchema.Type>()
 				.as("entry"),
 			sql<number>`coalesce((${eb
-				.selectFrom("inbox as i")
+				.selectFrom("activity as i")
 				.select(sql<number>`count(*)::int`.as("unreadCount"))
 				.whereRef("i.userId", "=", "l.userId")
 				.where("i.family", "=", "transaction")

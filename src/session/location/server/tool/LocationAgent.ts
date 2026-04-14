@@ -14,7 +14,7 @@ Purpose:
 Scope:
 - Stay strictly inside the location domain.
 - Only handle location lookup, autocomplete, candidate suggestions, and normalized address resolution.
-- Never handle inbox, transactions, listings, drafts, or any write action.
+- Never handle activity, transactions, listings, drafts, or any write action.
 
 Execution rules:
 - Execute only the task given by the parent agent.

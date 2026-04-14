@@ -8,10 +8,10 @@ import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCr
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { inboxArchiveFx } from "~/user/inbox/server/fx/inboxArchiveFx";
+import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
 
 describe("seller transactionCollectionFx", () => {
-	it("filters by active inbox state and statusIn within seller scope", async () => {
+	it("filters by active activity state and statusIn within seller scope", async () => {
 		const database = await testabase("seller-transactionCollection-active-statusIn");
 
 		return Effect.gen(function* () {
@@ -34,7 +34,7 @@ describe("seller transactionCollectionFx", () => {
 				listing,
 			});
 
-			yield* inboxArchiveFx({
+			yield* activityArchiveFx({
 				scope: {
 					userId: seller.id,
 				},

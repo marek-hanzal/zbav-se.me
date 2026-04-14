@@ -42,7 +42,7 @@
     ref: Feed sorting (label)
     value: Řazení inzerátů
 06616f1eb298047657fcaf296af7f6364f463736858dd7db7026d021:
-    ref: Inbox empty (message)
+    ref: Activity empty (message)
     value: ...ale až se něco zajímavého objeví, budeš o tom vědět!
 067456ab95df13c8f032e9a4420460ccd30e58958292fc06bafc7afd:
     ref: Agent (label)
@@ -314,7 +314,7 @@
     ref: No my listings (title)
     value: Zatím nic neprodáváš
 3c46c4d48f1a7f0f11b7131be79bb300ff4358446736ad106a935168:
-    ref: Inbox (title)
+    ref: Activity (title)
     value: Oznámení
 3ca78530a9e9985ed4678eeb359e23a9c8e913ec6de9f637c0f53e46:
     ref: Price - free
@@ -399,7 +399,7 @@
         Nastav si svůj název seznamu, abys poznal, co v něm očekáváš (např. zimní
         pneu).
 4c71066d8f9db4647c7ce0049724adb35f4b87cfd7a602bad98b84af:
-    ref: Inbox empty (title)
+    ref: Activity empty (title)
     value: Zatím tu nic není...
 4d603e3fca4e9f047b0fd3fdd009a1808b0b50eda2aa6f12c206a9c7:
     ref: Share location (button)
@@ -1114,7 +1114,7 @@ a1308b7983fef7def9ffd06bed7ff767fa4216baf9d9d911af1e7e2e:
     ref: Password
     value: Heslo
 a139f46f59f778256c981865c1f30e87d2f787451118cbd9fc8d3699:
-    ref: Inbox - nothing new (label)
+    ref: Activity - nothing new (label)
     value: Vše vyřízeno 👍
 a1afd40fa760408a3d789acdbaf42d52d40d45f34dcc9af5fccedffc:
     ref: Age not selected
@@ -1301,8 +1301,8 @@ buyer - Transaction successful (message):
         Dál už tu nic není.
     static: true
 c1027406c1e7f916add90ca2c8f0bf30253d4f1caf9dd10bf5789b1c:
-    ref: Inbox thumb (title)
-    value: Inbox thumb (title)
+    ref: Activity thumb (title)
+    value: Activity thumb (title)
 c25e8a6359df6fbcc11434b2d0bcaf641237490f399adfa91cd8702b:
     ref: Home (label)
     value: Domů

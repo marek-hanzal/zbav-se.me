@@ -16,7 +16,7 @@ Purpose:
 Scope:
 - Stay strictly inside the seller published listings domain.
 - Only handle browsing and counting published seller listings.
-- Never handle drafts, buyer public listing discovery, inbox, transactions, or any write action.
+- Never handle drafts, buyer public listing discovery, activity, transactions, or any write action.
 - Never treat drafts as published listings.
 
 Execution rules:

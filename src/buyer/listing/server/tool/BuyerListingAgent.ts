@@ -18,7 +18,7 @@ Purpose:
 Scope:
 - Stay strictly inside the buyer public catalog domain.
 - Only handle public listing discovery and listing counts.
-- Never handle seller drafts, seller-only management flows, inbox, transactions, or any write action.
+- Never handle seller drafts, seller-only management flows, activity, transactions, or any write action.
 
 Execution rules:
 - Execute only the task given by the parent agent.

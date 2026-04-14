@@ -15,7 +15,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { TypoIcon } from "~/common/ui/typo";
 import { uiMenuButton } from "~/common/ui/ui";
-import { withInboxQuery } from "~/user/inbox/query/withInboxQuery";
+import { withActivityQuery } from "~/user/activity/query/withActivityQuery";
 
 export namespace NotificationLink {
 	export interface Props extends MarkSuspense.Props {
@@ -27,7 +27,7 @@ export namespace NotificationLink {
 export const NotificationLink = withFallback(
 	({ _suspense, iconProps, onLinkClick }: NotificationLink.Props) => {
 		const locale = useLocale();
-		const { data: highCount } = withInboxQuery.useCountQuery(
+		const { data: highCount } = withActivityQuery.useCountQuery(
 			{
 				where: {
 					priority: "high",
@@ -42,7 +42,7 @@ export const NotificationLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open notifications"}
-				to={"/$locale/app/inbox/$priority"}
+				to={"/$locale/app/activity/$priority"}
 				icon={NotificationIcon}
 				iconProps={iconProps}
 				onClick={onLinkClick}
@@ -102,7 +102,7 @@ export const NotificationLink = withFallback(
 							</Badge>
 						) : (
 							<Tx
-								label={"Inbox - nothing new (label)"}
+								label={"Activity - nothing new (label)"}
 								ui={{
 									opacity: "6",
 								}}
@@ -119,7 +119,7 @@ export const NotificationLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open notifications"}
-				to={"/$locale/app/inbox/$priority"}
+				to={"/$locale/app/activity/$priority"}
 				icon={NotificationIcon}
 				iconProps={iconProps}
 				onClick={onLinkClick}

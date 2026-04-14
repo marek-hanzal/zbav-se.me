@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { fetchActivityItemsFx } from "~/test/activity/fx/fetchActivityItemsFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { fetchInboxItemsFx } from "~/test/inbox/fx/fetchInboxItemsFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 
 describe("transactionEntry workflow", () => {
-	it("rejects empty gallery payload and does not create touch, inbox or entry side effects", async () => {
+	it("rejects empty gallery payload and does not create touch, activity or entry side effects", async () => {
 		const database = await testabase("transactionEntry-empty-gallery");
 
 		return Effect.gen(function* () {
@@ -36,7 +36,7 @@ describe("transactionEntry workflow", () => {
 					.where("transactionId", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
-			const beforeSellerInbox = yield* fetchInboxItemsFx({
+			const beforeSellerActivity = yield* fetchActivityItemsFx({
 				database,
 				userId: seller.id,
 				type: "buyer-message",
@@ -75,7 +75,7 @@ describe("transactionEntry workflow", () => {
 					.where("transactionId", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
-			const sellerInbox = yield* fetchInboxItemsFx({
+			const sellerActivity = yield* fetchActivityItemsFx({
 				database,
 				userId: seller.id,
 				type: "buyer-message",
@@ -88,7 +88,7 @@ describe("transactionEntry workflow", () => {
 				beforeTransaction.expiresAt.getTime(),
 			);
 			expect(afterEntryCount.count).toBe(beforeEntryCount.count);
-			expect(sellerInbox).toHaveLength(beforeSellerInbox.length);
+			expect(sellerActivity).toHaveLength(beforeSellerActivity.length);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

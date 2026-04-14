@@ -20,7 +20,7 @@ Purpose:
 Scope:
 - Stay strictly inside the buyer feed domain.
 - Only handle feed browsing, feed counts, feed creation, feed updates, and feed deletion.
-- Never handle seller flows, inbox, transactions, public listing browsing, or unrelated data.
+- Never handle seller flows, activity, transactions, public listing browsing, or unrelated data.
 - Never perform listing mutations or seller-side actions.
 
 Execution rules:

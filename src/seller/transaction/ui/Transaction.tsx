@@ -10,8 +10,8 @@ import { TransactionChat } from "~/user/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/user/transaction-entry/ui/TransactionEntryList";
 import { withTransactionQuery } from "../query/withTransactionQuery";
-import { archiveBuyerMessageInbox } from "../service/archiveBuyerMessageInbox";
-import { withArchiveBuyerMessageInboxMutation } from "../service/withArchiveBuyerMessageInboxMutation";
+import { archiveBuyerMessageActivity } from "../service/archiveBuyerMessageActivity";
+import { withArchiveBuyerMessageActivityMutation } from "../service/withArchiveBuyerMessageActivityMutation";
 import { PendingMessage } from "./status/PendingMessage";
 import { TransactionMenu } from "./TransactionMenu";
 
@@ -34,7 +34,7 @@ export const Transaction: FC<Transaction.Props> = ({
 		refetchInterval: refresh,
 	});
 	const hero = useUpload(transaction.gallery.items);
-	const archiveMutation = withArchiveBuyerMessageInboxMutation.useMutation();
+	const archiveMutation = withArchiveBuyerMessageActivityMutation.useMutation();
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
 	useEffect(() => {
@@ -127,7 +127,7 @@ export const Transaction: FC<Transaction.Props> = ({
 						hooks={{
 							async onPostMutation() {
 								try {
-									await archiveBuyerMessageInbox({
+									await archiveBuyerMessageActivity({
 										queryClient,
 										transactionId: transaction.id,
 										listingId: transaction.listingId,

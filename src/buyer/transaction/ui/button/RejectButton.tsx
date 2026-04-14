@@ -6,7 +6,7 @@ import type { TransactionSchema } from "~/buyer/transaction/server/schema/Transa
 import { CancelIcon } from "~/common/ui/icon";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionRejectMutation } from "../../mutation/withTransactionRejectMutation";
-import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";
+import { archiveSellerMessageActivity } from "../../service/archiveSellerMessageActivity";
 
 export namespace RejectButton {
 	export interface Props extends Partial<ConfirmButton.Props> {
@@ -20,7 +20,7 @@ export const RejectButton: FC<RejectButton.Props> = ({ close, transaction, ...pr
 	const mutation = withTransactionRejectMutation.useMutation({
 		async onPostMutation() {
 			try {
-				await archiveSellerMessageInbox({
+				await archiveSellerMessageActivity({
 					queryClient,
 					transactionId: transaction.id,
 				});

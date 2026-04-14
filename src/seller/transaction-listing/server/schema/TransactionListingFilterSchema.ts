@@ -6,7 +6,7 @@ export const TransactionListingFilterSchema = z
 		...FilterSchema.shape,
 		active: z.boolean().optional().meta({
 			description:
-				"When true, match listings with unread buyer-message inbox activity; when false, match listings without unread buyer-message inbox activity",
+				"When true, match listings with unread buyer-message activity activity; when false, match listings without unread buyer-message activity activity",
 		}),
 		terminal: z.boolean().optional().meta({
 			description:

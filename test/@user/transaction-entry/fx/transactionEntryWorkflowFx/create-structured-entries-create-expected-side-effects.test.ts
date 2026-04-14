@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { keyOf } from "@/lib/common/key-of";
+import { fetchActivityItemsFx } from "~/test/activity/fx/fetchActivityItemsFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { fetchInboxItemsFx } from "~/test/inbox/fx/fetchInboxItemsFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 
 describe("transactionEntry workflow", () => {
-	it("creates buyer structured entries with seller inbox and interaction side effects", async () => {
+	it("creates buyer structured entries with seller activity and interaction side effects", async () => {
 		const database = await testabase("transactionEntry-structured-workflow-buyer");
 
 		return Effect.gen(function* () {
@@ -72,7 +72,7 @@ describe("transactionEntry workflow", () => {
 					.where("id", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
-			const sellerInbox = yield* fetchInboxItemsFx({
+			const sellerActivity = yield* fetchActivityItemsFx({
 				database,
 				userId: seller.id,
 				type: "buyer-message",
@@ -98,14 +98,14 @@ describe("transactionEntry workflow", () => {
 				beforeTransaction.expiresAt.getTime(),
 			);
 			expect(
-				sellerInbox.some(
+				sellerActivity.some(
 					(item) =>
 						"transactionEntryId" in item.payload &&
 						item.payload.transactionEntryId === locationEntry.id,
 				),
 			).toBe(true);
 			expect(
-				sellerInbox.some(
+				sellerActivity.some(
 					(item) =>
 						"transactionEntryId" in item.payload &&
 						item.payload.transactionEntryId === personalEntry.id,
@@ -125,7 +125,7 @@ describe("transactionEntry workflow", () => {
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 
-	it("creates seller package entries with buyer inbox and interaction side effects", async () => {
+	it("creates seller package entries with buyer activity and interaction side effects", async () => {
 		const database = await testabase("transactionEntry-structured-workflow-seller");
 
 		return Effect.gen(function* () {
@@ -171,7 +171,7 @@ describe("transactionEntry workflow", () => {
 					.where("id", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
-			const buyerInbox = yield* fetchInboxItemsFx({
+			const buyerActivity = yield* fetchActivityItemsFx({
 				database,
 				userId: buyer.id,
 				type: "seller-message",
@@ -197,7 +197,7 @@ describe("transactionEntry workflow", () => {
 				beforeTransaction.expiresAt.getTime(),
 			);
 			expect(
-				buyerInbox.some(
+				buyerActivity.some(
 					(item) =>
 						"transactionEntryId" in item.payload &&
 						item.payload.transactionEntryId === packageEntry.id,

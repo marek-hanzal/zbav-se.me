@@ -34,8 +34,8 @@ import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
 import { Route as LocaleAppHomeRouteImport } from './@routes/$locale/app/home'
 import { Route as LocaleAppAgentRouteImport } from './@routes/$locale/app/agent'
 import { Route as ApiPublicMigrationRunRouteImport } from './@routes/api/public/migration/run'
-import { Route as LocaleAppInboxPriorityRouteImport } from './@routes/$locale/app/inbox/$priority'
 import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
+import { Route as LocaleAppActivityPriorityRouteImport } from './@routes/$locale/app/activity/$priority'
 import { Route as LocaleAppSellerTransactionListRouteImport } from './@routes/$locale/app/seller/transaction/list'
 import { Route as LocaleAppSellerListingMyRouteImport } from './@routes/$locale/app/seller/listing/my'
 import { Route as LocaleAppSellerDraftResolveRouteImport } from './@routes/$locale/app/seller/draft/resolve'
@@ -176,16 +176,17 @@ const ApiPublicMigrationRunRoute = ApiPublicMigrationRunRouteImport.update({
   path: '/public/migration/run',
   getParentRoute: () => ApiRoute,
 } as any)
-const LocaleAppInboxPriorityRoute = LocaleAppInboxPriorityRouteImport.update({
-  id: '/inbox/$priority',
-  path: '/inbox/$priority',
-  getParentRoute: () => LocaleAppRoute,
-} as any)
 const LocaleAppBuyerSearchRoute = LocaleAppBuyerSearchRouteImport.update({
   id: '/buyer/search',
   path: '/buyer/search',
   getParentRoute: () => LocaleAppRoute,
 } as any)
+const LocaleAppActivityPriorityRoute =
+  LocaleAppActivityPriorityRouteImport.update({
+    id: '/activity/$priority',
+    path: '/activity/$priority',
+    getParentRoute: () => LocaleAppRoute,
+  } as any)
 const LocaleAppSellerTransactionListRoute =
   LocaleAppSellerTransactionListRouteImport.update({
     id: '/seller/transaction/list',
@@ -295,8 +296,8 @@ export interface FileRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/user/agent': typeof ApiUserAgentRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
+  '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
-  '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
@@ -336,8 +337,8 @@ export interface FileRoutesByTo {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/user/agent': typeof ApiUserAgentRoute
   '/$locale/app': typeof LocaleAppIndexRoute
+  '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
-  '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
@@ -380,8 +381,8 @@ export interface FileRoutesById {
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/user/agent': typeof ApiUserAgentRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
+  '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
-  '/$locale/app/inbox/$priority': typeof LocaleAppInboxPriorityRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
@@ -425,8 +426,8 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/api/user/agent'
     | '/$locale/app/'
+    | '/$locale/app/activity/$priority'
     | '/$locale/app/buyer/search'
-    | '/$locale/app/inbox/$priority'
     | '/api/public/migration/run'
     | '/$locale/app/buyer/favourite/list'
     | '/$locale/app/buyer/feed/default'
@@ -466,8 +467,8 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/api/user/agent'
     | '/$locale/app'
+    | '/$locale/app/activity/$priority'
     | '/$locale/app/buyer/search'
-    | '/$locale/app/inbox/$priority'
     | '/api/public/migration/run'
     | '/$locale/app/buyer/favourite/list'
     | '/$locale/app/buyer/feed/default'
@@ -509,8 +510,8 @@ export interface FileRouteTypes {
     | '/api/auth/$'
     | '/api/user/agent'
     | '/$locale/app/'
+    | '/$locale/app/activity/$priority'
     | '/$locale/app/buyer/search'
-    | '/$locale/app/inbox/$priority'
     | '/api/public/migration/run'
     | '/$locale/app/buyer/favourite/list'
     | '/$locale/app/buyer/feed/default'
@@ -714,18 +715,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicMigrationRunRouteImport
       parentRoute: typeof ApiRoute
     }
-    '/$locale/app/inbox/$priority': {
-      id: '/$locale/app/inbox/$priority'
-      path: '/inbox/$priority'
-      fullPath: '/$locale/app/inbox/$priority'
-      preLoaderRoute: typeof LocaleAppInboxPriorityRouteImport
-      parentRoute: typeof LocaleAppRoute
-    }
     '/$locale/app/buyer/search': {
       id: '/$locale/app/buyer/search'
       path: '/buyer/search'
       fullPath: '/$locale/app/buyer/search'
       preLoaderRoute: typeof LocaleAppBuyerSearchRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/activity/$priority': {
+      id: '/$locale/app/activity/$priority'
+      path: '/activity/$priority'
+      fullPath: '/$locale/app/activity/$priority'
+      preLoaderRoute: typeof LocaleAppActivityPriorityRouteImport
       parentRoute: typeof LocaleAppRoute
     }
     '/$locale/app/seller/transaction/list': {
@@ -836,8 +837,8 @@ interface LocaleAppRouteChildren {
   LocaleAppUserRoute: typeof LocaleAppUserRoute
   LocaleAppWelcomeRoute: typeof LocaleAppWelcomeRoute
   LocaleAppIndexRoute: typeof LocaleAppIndexRoute
+  LocaleAppActivityPriorityRoute: typeof LocaleAppActivityPriorityRoute
   LocaleAppBuyerSearchRoute: typeof LocaleAppBuyerSearchRoute
-  LocaleAppInboxPriorityRoute: typeof LocaleAppInboxPriorityRoute
   LocaleAppBuyerFavouriteListRoute: typeof LocaleAppBuyerFavouriteListRoute
   LocaleAppBuyerFeedDefaultRoute: typeof LocaleAppBuyerFeedDefaultRoute
   LocaleAppBuyerFeedListRoute: typeof LocaleAppBuyerFeedListRoute
@@ -861,8 +862,8 @@ const LocaleAppRouteChildren: LocaleAppRouteChildren = {
   LocaleAppUserRoute: LocaleAppUserRoute,
   LocaleAppWelcomeRoute: LocaleAppWelcomeRoute,
   LocaleAppIndexRoute: LocaleAppIndexRoute,
+  LocaleAppActivityPriorityRoute: LocaleAppActivityPriorityRoute,
   LocaleAppBuyerSearchRoute: LocaleAppBuyerSearchRoute,
-  LocaleAppInboxPriorityRoute: LocaleAppInboxPriorityRoute,
   LocaleAppBuyerFavouriteListRoute: LocaleAppBuyerFavouriteListRoute,
   LocaleAppBuyerFeedDefaultRoute: LocaleAppBuyerFeedDefaultRoute,
   LocaleAppBuyerFeedListRoute: LocaleAppBuyerFeedListRoute,

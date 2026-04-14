@@ -21,7 +21,7 @@ import { TransactionUserMigration } from "~/server/@migrations/0019-transaction-
 import { GitHubMigration } from "~/server/@migrations/0020-github";
 import { ThumbMigration } from "~/server/@migrations/0021-thumb";
 import { UserEventMigration } from "~/server/@migrations/0022-user-event";
-import { InboxMigration } from "~/server/@migrations/0023-inbox";
+import { ActivityMigration } from "~/server/@migrations/0023-activity";
 import { AgentStreamMigration } from "~/server/@migrations/0024-agent-stream";
 import { AgentUsageMigration } from "~/server/@migrations/0025-agent-usage";
 
@@ -49,7 +49,7 @@ export const migrations = {
 	"0020-github": GitHubMigration,
 	"0021-thumb": ThumbMigration,
 	"0022-user-event": UserEventMigration,
-	"0023-inbox": InboxMigration,
+	"0023-activity": ActivityMigration,
 	"0024-agent-stream": AgentStreamMigration,
 	"0025-agent-usage": AgentUsageMigration,
 } as const;

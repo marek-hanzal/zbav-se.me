@@ -10,7 +10,7 @@ import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMen
 import { withTransactionEntryGalleryCreateMutation } from "~/user/transaction-entry/mutation/withTransactionEntryGalleryCreateMutation";
 import { LocationButton } from "~/user/transaction-entry/ui/button/LocationButton";
 import { PersonalButton } from "~/user/transaction-entry/ui/button/PersonalButton";
-import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";
+import { archiveSellerMessageActivity } from "../../service/archiveSellerMessageActivity";
 
 export namespace OpenMessage {
 	export interface Props extends Container.Props {
@@ -23,8 +23,8 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ close, transaction, ui, ...
 	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
-	const archiveInbox = useCallback(async () => {
-		await archiveSellerMessageInbox({
+	const archiveActivity = useCallback(async () => {
+		await archiveSellerMessageActivity({
 			queryClient,
 			transactionId: transaction.id,
 		});
@@ -47,14 +47,14 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ close, transaction, ui, ...
 				<PersonalButton
 					close={close}
 					transactionId={transaction.id}
-					onPostMutation={archiveInbox}
+					onPostMutation={archiveActivity}
 					{...MessageButtonUi}
 				/>
 
 				<LocationButton
 					close={close}
 					transactionId={transaction.id}
-					onPostMutation={archiveInbox}
+					onPostMutation={archiveActivity}
 					{...MessageButtonUi}
 				/>
 
@@ -70,7 +70,7 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ close, transaction, ui, ...
 						uploadIds,
 					})}
 					onSuccess={async () => {
-						await archiveInbox();
+						await archiveActivity();
 						setIsGalleryOpen(false);
 						close();
 					}}

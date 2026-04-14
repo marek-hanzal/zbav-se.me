@@ -30,9 +30,9 @@ describe("buyer transaction invalid transitions", () => {
 					.where("transactionId", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
-			const beforeInbox = yield* Effect.promise(() =>
+			const beforeActivity = yield* Effect.promise(() =>
 				database.kysely
-					.selectFrom("inbox")
+					.selectFrom("activity")
 					.select((eb) => eb.fn.countAll<number>().as("count"))
 					.where(sql<boolean>`reference @> ARRAY[${transactionId}]::text[]`)
 					.executeTakeFirstOrThrow(),
@@ -84,9 +84,9 @@ describe("buyer transaction invalid transitions", () => {
 					.where("transactionId", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
-			const afterInbox = yield* Effect.promise(() =>
+			const afterActivity = yield* Effect.promise(() =>
 				database.kysely
-					.selectFrom("inbox")
+					.selectFrom("activity")
 					.select((eb) => eb.fn.countAll<number>().as("count"))
 					.where(sql<boolean>`reference @> ARRAY[${transactionId}]::text[]`)
 					.executeTakeFirstOrThrow(),
@@ -94,7 +94,7 @@ describe("buyer transaction invalid transitions", () => {
 
 			expect(afterTransaction.status).toBe("open");
 			expect(afterEntries.count).toBe(beforeEntries.count);
-			expect(afterInbox.count).toBe(beforeInbox.count);
+			expect(afterActivity.count).toBe(beforeActivity.count);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

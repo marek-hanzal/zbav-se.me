@@ -20,7 +20,7 @@ export const TransactionListingSchema = z
 			description: "Total number of transactions for this listing (within the current scope)",
 		}),
 		unreadCount: z.coerce.number().int().nonnegative().meta({
-			description: "Unread inbox transaction-event count for this listing",
+			description: "Unread activity transaction-event count for this listing",
 			type: "number",
 		}),
 		entry: TransactionEntrySchema,

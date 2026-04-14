@@ -9,7 +9,7 @@ import type { ThumbCreateSchema } from "~/buyer/thumb/server/schema/ThumbCreateS
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { inboxCreateFx } from "~/user/inbox/server/fx/inboxCreateFx";
+import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
 
 export namespace thumbCreateFx {
 	export interface Props extends ThumbCreateSchema.Type {
@@ -75,7 +75,7 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 					event: type,
 				}).pipe(Effect.ignore);
 
-				yield* inboxCreateFx({
+				yield* activityCreateFx({
 					userId: listing.userId,
 					reference: [
 						listingId,

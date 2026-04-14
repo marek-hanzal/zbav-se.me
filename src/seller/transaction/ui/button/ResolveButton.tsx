@@ -6,7 +6,7 @@ import { CheckIcon } from "~/common/ui/icon";
 import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionResolveMutation } from "../../mutation/withTransactionResolveMutation";
-import { archiveBuyerMessageInbox } from "../../service/archiveBuyerMessageInbox";
+import { archiveBuyerMessageActivity } from "../../service/archiveBuyerMessageActivity";
 
 export namespace ResolveButton {
 	export interface Props extends Button.Props {
@@ -20,7 +20,7 @@ export const ResolveButton: FC<ResolveButton.Props> = ({ close, transaction, ...
 	const mutation = withTransactionResolveMutation.useMutation({
 		async onPostMutation() {
 			try {
-				await archiveBuyerMessageInbox({
+				await archiveBuyerMessageActivity({
 					queryClient,
 					transactionId: transaction.id,
 					listingId: transaction.listingId,

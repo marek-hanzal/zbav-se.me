@@ -10,7 +10,7 @@ import { SellerListingAgent } from "~/seller/listing/server/tool/SellerListingAg
 import { SellerTransactionAgent } from "~/seller/transaction/server/tool/SellerTransactionAgent";
 import { getRootLogger } from "~/server/log/getRootLogger";
 import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
-import { InboxAgent } from "~/user/inbox/server/tool/InboxAgent";
+import { ActivityAgent } from "~/user/activity/server/tool/ActivityAgent";
 
 const logger = getRootLogger([
 	"tool",
@@ -27,7 +27,7 @@ const Agents = {
 	"seller-listing": SellerListingAgent,
 	"seller-transaction": SellerTransactionAgent,
 	//
-	inbox: InboxAgent,
+	activity: ActivityAgent,
 	location: LocationAgent,
 } as const;
 
