@@ -186,7 +186,7 @@
     value: Udává čas, za jak dlouho kupující obvykle zavře zprávu bez další interakce.
 1e2c52ff0279d0ad26557c2235b137106f4d5a45187461bba1242a01:
     ref: Listing condition not selected
-    value: Listing condition not selected
+    value: Jakýkoli stav
 1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
     ref: Agreement with (label)
     value: "Registrací souhlasíš s:"
