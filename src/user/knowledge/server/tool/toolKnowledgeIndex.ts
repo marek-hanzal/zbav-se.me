@@ -12,9 +12,10 @@ export const toolKnowledgeIndex = tool({
 	name: "knowledge-index",
 	needsApproval: false,
 	description: `
-        Return metadata for all available knowledge topics.
+Return metadata for all available knowledge topics.
 
-        Use when you need to browse the topic catalog. For user-language lookup, prefer knowledge-search; for full content of one topic, use knowledge with the exact key.
+Use when you need to browse the topic catalog. For user-language lookup, prefer
+knowledge-search; for full content of one topic, use knowledge with the exact key.
     `.trim(),
 	parameters: z
 		.looseObject({
