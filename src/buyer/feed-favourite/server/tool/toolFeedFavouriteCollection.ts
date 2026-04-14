@@ -11,7 +11,17 @@ const logger = getRootLogger([
 export const toolFeedFavouriteCollection = tool({
 	name: "feed-favourite-collection",
 	needsApproval: false,
-	description: "User-bound favourite feeds. Use small cursors and requested fields only.",
+	description: `
+        Current user's favourite saved listing searches. Use small cursors and compact filters only.
+
+        Feed type values:
+        - user: User-facing feed. When the user asks about "my feeds" in general, filter type to user.
+        - search: Internal/agent-derived saved search type. Do not use this type from agent workflows.
+
+        Sort fields:
+        - createdAt: When the feed was created.
+        - updatedAt: When the feed was last changed.
+    `.trim(),
 	parameters: FeedQuerySchema,
 	async execute(data) {
 		logger.trace("toolFeedFavouriteCollection", {

@@ -11,7 +11,13 @@ const logger = getRootLogger([
 export const toolFeedCount = tool({
 	name: "feed-count",
 	needsApproval: false,
-	description: "Count user-bound saved listing searches.",
+	description: `
+        Count current user's saved listing searches matching the query.
+
+        Feed type values:
+        - user: User-facing feed. When the user asks about "my feeds" in general, filter type to user.
+        - search: Internal/agent-derived saved search type. Do not use this type from agent workflows.
+    `.trim(),
 	parameters: FeedCountQuerySchema,
 	async execute(data) {
 		logger.trace("toolFeedCount", {

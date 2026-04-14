@@ -12,7 +12,9 @@ export const toolTransactionCollection = tool({
 	name: "seller-transaction-collection",
 	needsApproval: false,
 	description: `
-        Seller transaction collection. Use small cursors and compact filters only.
+        Seller-side transaction collection. Use small cursors and compact filters only.
+
+        Use for finding transactions and reading transaction metadata. For message/timeline content, use seller-transaction-entry-collection with the transactionId.
 
         Transaction statuses:
         - pending: New, fresh transaction.
@@ -25,7 +27,12 @@ export const toolTransactionCollection = tool({
         - success: Buyer confirmed they are happy with the result.
         - closed: Explicitly closed without a success or rejection outcome.
 
-        For getting content (timeline) use seller-transaction-entry-collection tool.
+        Sort fields:
+        - createdAt: When the transaction was created.
+        - updatedAt: When the transaction was last updated.
+        - expiresAt: When the transaction expires.
+        - lastAt: Last transaction activity timestamp.
+        - status: Current transaction status.
     `.trim(),
 	parameters: TransactionQuerySchema,
 	async execute(data) {

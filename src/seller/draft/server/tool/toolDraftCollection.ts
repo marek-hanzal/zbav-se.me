@@ -12,7 +12,15 @@ const logger = getRootLogger([
 export const toolDraftCollection = tool({
 	name: "draft-collection",
 	needsApproval: false,
-	description: "User-bound saved listing drafts. Use small cursors and requested fields only.",
+	description: `
+        Current seller user's saved listing drafts. Use small cursors and compact filters only.
+
+        Use to find draft ids before patching, fetching, or deleting.
+
+        Sort fields:
+        - createdAt: When the draft was created.
+        - updatedAt: When the draft was last changed.
+    `.trim(),
 	strict: true,
 	parameters: DraftToolQuerySchema,
 	async execute(data) {

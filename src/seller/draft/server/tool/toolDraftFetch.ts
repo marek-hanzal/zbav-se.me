@@ -12,16 +12,13 @@ export const toolDraftFetch = tool({
 	name: "draft-fetch",
 	needsApproval: false,
 	description: `
-        Fetch a draft by the query object, e.g. filter by name,
-        filter by an ID and so on.
+        Fetch exactly one current seller user's saved listing draft by query.
 
-        Use this tool only if you're sure a draft exists (e.g. you've an ID) as this
-        tool will fail for drafts not found.
+        Use only when you are sure a single draft exists, ideally because you have a draft id. This tool fails when no draft matches. For exploratory lookup, use draft-collection first.
 
-        If you want safer way to fetch a draft, use draft-collection which have the
-        same input query but returns a collection of items or an empty array.
-
-        @see draft-collection
+        Sort fields:
+        - createdAt: When the draft was created.
+        - updatedAt: When the draft was last changed.
     `.trim(),
 	parameters: DraftToolQuerySchema,
 	async execute(data) {

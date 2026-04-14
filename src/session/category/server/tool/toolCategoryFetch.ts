@@ -12,8 +12,14 @@ export const toolCategoryFetch = tool({
 	name: "category-fetch",
 	needsApproval: false,
 	description: `
-        Get a single category by filter; can be also used to search for a category, but this query will
-        fail if there is no match; for resolving an optional category use category-collection instead.
+        Fetch exactly one category by query.
+
+        Use only when you expect one exact category match, ideally by category id. This tool fails when there is no match; for optional or ambiguous category resolution use category-collection instead.
+
+        Sort fields:
+        - group: Category group name/order.
+        - category: Category name.
+        - sort: Explicit category sort order.
     `.trim(),
 	parameters: CategoryQuerySchema,
 	async execute(data) {

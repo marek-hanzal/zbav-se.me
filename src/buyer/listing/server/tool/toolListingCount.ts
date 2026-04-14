@@ -11,7 +11,17 @@ const logger = getRootLogger([
 export const toolListingCount = tool({
 	name: "buyer-listing-count",
 	needsApproval: false,
-	description: "Count buyer-visible listings matching the provided query.",
+	description: `
+        Count buyer-visible listings matching the provided query.
+
+        Use the same filters as buyer-listing-collection when the user asks for totals or whether anything exists.
+
+        Enum values:
+        - delivery: personal, post, package, other.
+        - warranty: warranty, no-warranty, custom.
+        - currency: CZK.
+        - sort fields: price, condition, age, createdAt, updatedAt, expiresAt, geo.
+    `.trim(),
 	parameters: ListingToolQuerySchema,
 	async execute(data) {
 		logger.trace("toolListingCount", {

@@ -13,7 +13,9 @@ export const toolKnowledgeSearch = tool({
 	name: "knowledge-search",
 	needsApproval: false,
 	description: `
-        Compact fuzzy search across knowledge topics. Returns topic metadata, not full content.
+        Compact fuzzy search across knowledge topics.
+
+        Use when the user asks a domain/process question and you need the most relevant internal knowledge topic. Returns topic metadata, not full content; call knowledge with an exact key when you need the body.
     `.trim(),
 	parameters: z
 		.looseObject({

@@ -13,7 +13,9 @@ export const toolKnowledge = tool({
 	name: "knowledge",
 	needsApproval: false,
 	description: `
-        Returns one knowledge topic by exact key. Full content is opt-in to keep agent context compact.
+        Return one knowledge topic by exact key.
+
+        Use after knowledge-search or knowledge-index gives you a concrete key. Full content is opt-in; set withContent only when title and summary are not enough.
     `.trim(),
 	parameters: z
 		.looseObject({

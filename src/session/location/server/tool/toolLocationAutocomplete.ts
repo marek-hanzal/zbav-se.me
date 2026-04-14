@@ -11,7 +11,11 @@ const logger = getRootLogger([
 export const toolLocationAutocomplete = tool({
 	name: "location-autocomplete",
 	needsApproval: false,
-	description: "Location/address autocomplete. Return compact normalized candidates.",
+	description: `
+        Location/address autocomplete for listing drafts, saved searches, and marketplace filters.
+
+        Use when the user gives a place name or address and you need normalized location candidates or a location id. Return compact candidates; do not guess an id when multiple candidates are plausible.
+    `.trim(),
 	parameters: LocationAutocompleteSchema,
 	async execute(data) {
 		logger.trace("toolLocationAutocomplete", {

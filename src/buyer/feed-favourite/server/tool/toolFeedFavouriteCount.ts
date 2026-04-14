@@ -11,7 +11,13 @@ const logger = getRootLogger([
 export const toolFeedFavouriteCount = tool({
 	name: "feed-favourite-count",
 	needsApproval: false,
-	description: "Count favourite feeds for the current user scope.",
+	description: `
+        Count current user's favourite saved listing searches matching the query.
+
+        Feed type values:
+        - user: User-facing feed. When the user asks about "my feeds" in general, filter type to user.
+        - search: Internal/agent-derived saved search type. Do not use this type from agent workflows.
+    `.trim(),
 	parameters: FeedFavouriteCountQuerySchema,
 	async execute(data) {
 		logger.trace("toolFeedFavouriteCount", {
