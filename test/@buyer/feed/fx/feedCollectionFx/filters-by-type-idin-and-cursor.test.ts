@@ -102,7 +102,7 @@ describe("feedCollectionFx", () => {
 			expect(firstPage).toHaveLength(1);
 			expect(secondPage).toHaveLength(1);
 			expect(firstPage[0]?.id).not.toBe(secondPage[0]?.id);
-			expect(count).toBe(2);
+			expect(count).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

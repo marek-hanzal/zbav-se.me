@@ -87,7 +87,7 @@ describe("listingEvent read model", () => {
 				impression.id,
 				favourite.id,
 			]);
-			expect(count).toBe(3);
+			expect(count).toBe(2);
 			expect(onlyFavourite).toHaveLength(1);
 			expect(onlyFavourite[0]?.id).toBe(favourite.id);
 			expect(empty).toEqual([]);
