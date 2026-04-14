@@ -16,6 +16,9 @@ Category lookup for listing drafts and listing/search category resolution. Use s
 
 Use when the user names a category in natural language and you need a category id or candidate list. Prefer this over category-fetch when the category might not exist or may be ambiguous.
 
+Hint:
+- use filter.fulltext to normalize user's input
+
 Sort fields:
 - group: Category group name/order.
 - category: Category name.

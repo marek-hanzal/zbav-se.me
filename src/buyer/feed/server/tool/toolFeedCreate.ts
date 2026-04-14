@@ -17,7 +17,7 @@ Create a saved listing search for the current buyer from known query fields.
 Use only when the user wants to save search criteria. Do not invent the feed name, location, category, price range, or other listing query details.
 
 Hint:
-- If the user provides an address, fill locationId
+- If the user provides an address, normalize it and fill locationId
 
 Feed type values:
 - user: User-facing feed. When creating a feed from agent workflows, use this type.
