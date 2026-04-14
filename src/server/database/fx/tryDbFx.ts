@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DatabaseError } from "pg";
+import { DatabaseError } from "~/server/database/pg";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 
 export namespace tryDbFx {
