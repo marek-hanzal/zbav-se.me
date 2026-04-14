@@ -1315,6 +1315,9 @@ c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
 c4b158980cb127ec4b61c7409fd02fabe867d223c95b7884ecf64f78:
     ref: Email
     value: Email
+c4c98e156a51e38164366287403b789f58946d52233bcd81ca07947d:
+    ref: Token usage (label)
+    value: Propálené tokeny
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
     ref: Price (title)
     value: Nastav cenu

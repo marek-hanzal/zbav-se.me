@@ -12,7 +12,7 @@ import { agentUsageCollectionFx } from "~/user/agent/server/fx/agentUsageCollect
 import { AgentUsageQuerySchema } from "~/user/agent/server/schema/AgentUsageQuerySchema";
 import { AgentUsageSchema } from "~/user/agent/server/schema/AgentUsageSchema";
 
-export const agentUsageItemsFn = createServerFn()
+export const agentUsageCollectionFn = createServerFn()
 	.middleware([
 		withLogMiddleware,
 		withDatabaseMiddleware,
