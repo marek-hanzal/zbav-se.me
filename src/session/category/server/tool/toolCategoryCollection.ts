@@ -12,14 +12,14 @@ export const toolCategoryCollection = tool({
 	name: "category-collection",
 	needsApproval: false,
 	description: `
-        Category lookup for listing drafts and listing/search category resolution. Use small cursors.
+Category lookup for listing drafts and listing/search category resolution. Use small cursors.
 
-        Use when the user names a category in natural language and you need a category id or candidate list. Prefer this over category-fetch when the category might not exist or may be ambiguous.
+Use when the user names a category in natural language and you need a category id or candidate list. Prefer this over category-fetch when the category might not exist or may be ambiguous.
 
-        Sort fields:
-        - group: Category group name/order.
-        - category: Category name.
-        - sort: Explicit category sort order.
+Sort fields:
+- group: Category group name/order.
+- category: Category name.
+- sort: Explicit category sort order.
     `.trim(),
 	parameters: CategoryQuerySchema,
 	async execute(data) {
