@@ -33,28 +33,6 @@ export default defineConfig(({ mode }) => {
 			external,
 			noExternal,
 		},
-		// environments: {
-		// 	ssr: {
-		// 		resolve: {
-		// 			external: [
-		// 				...serverNativeExternals,
-		// 			],
-		// 			noExternal: [
-		// 				...serverNoExternals,
-		// 			],
-		// 		},
-		// 	},
-		// 	rsc: {
-		// 		resolve: {
-		// 			external: [
-		// 				...serverNativeExternals,
-		// 			],
-		// 			noExternal: [
-		// 				...serverNoExternals,
-		// 			],
-		// 		},
-		// 	},
-		// },
 		plugins: [
 			tanstackStart({
 				router: {
