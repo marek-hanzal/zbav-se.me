@@ -66,7 +66,6 @@ describe("galleryCollectionFx", () => {
 			expect(typeof sellerCount.total).toBe("number");
 			expect(strangerCollection).toEqual([]);
 			expect(strangerCount.total).toBe(0);
-			expect(strangerCount.isEmpty).toBe(true);
 			expect(typeof strangerCount.total).toBe("number");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

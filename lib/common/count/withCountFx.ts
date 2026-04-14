@@ -105,7 +105,5 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 		total: countTotal.count,
 		filter: countFilter.count,
 		where: countWhere.count,
-		isEmpty: countTotal.count === 0,
-		isFilterEmpty: countFilter.count === 0 && countTotal.count > 0,
 	};
 });

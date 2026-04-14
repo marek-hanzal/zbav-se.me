@@ -22,8 +22,6 @@ describe("categoryCountFx", () => {
 			expect(count.total).toBeGreaterThan(0);
 			expect(count.where).toBe(1);
 			expect(count.filter).toBe(1);
-			expect(count.isEmpty).toBe(false);
-			expect(count.isFilterEmpty).toBe(false);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

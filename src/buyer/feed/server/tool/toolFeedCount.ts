@@ -24,8 +24,13 @@ export const toolFeedCount = tool({
 			data,
 		});
 
-		return feedCountFn({
+		const count = await feedCountFn({
 			data,
 		});
+
+		return {
+			count: count.filter,
+			hasMore: count.total > 0,
+		} as const;
 	},
 });

@@ -51,7 +51,6 @@ describe("seller listingCountFx", () => {
 			});
 
 			expect(empty.filter).toBe(0);
-			expect(empty.isFilterEmpty).toBe(true);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

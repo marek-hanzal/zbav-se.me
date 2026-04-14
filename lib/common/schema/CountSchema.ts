@@ -2,11 +2,16 @@ import { z } from "zod";
 
 export const CountSchema = z
 	.looseObject({
-		where: z.coerce.number(),
-		filter: z.coerce.number(),
-		total: z.coerce.number(),
-		isEmpty: z.boolean(),
-		isFilterEmpty: z.boolean(),
+		where: z.coerce.number().meta({
+			description: "Number of items filtered out by 'where' filter",
+		}),
+		filter: z.coerce.number().meta({
+			description:
+				"Actual number of items returned by the  query ('where' + 'filter' / other system-wide conditions)",
+		}),
+		total: z.coerce.number().meta({
+			description: "Actual total available (unfiltered) items to the user",
+		}),
 	})
 	.strip()
 	.meta({

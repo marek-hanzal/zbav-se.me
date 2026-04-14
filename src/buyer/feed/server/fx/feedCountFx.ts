@@ -20,7 +20,7 @@ export const feedCountFx = Effect.fn("feedCountFx")(function* ({
 	scope,
 }: feedCountFx.Props) {
 	const logger = yield* getLoggerFx("feedCountFx");
-	logger.debug("feedCountFx", {
+	logger.trace("feedCountFx", {
 		filter,
 		where,
 		scope,
