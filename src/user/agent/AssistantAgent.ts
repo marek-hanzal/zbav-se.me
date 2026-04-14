@@ -1,16 +1,37 @@
 import { Agent } from "@openai/agents";
-import { FeedAgent } from "~/buyer/feed/server/tool/FeedAgent";
-import { FavouriteAgent } from "~/buyer/feed-favourite/server/tool/FavouriteAgent";
-import { BuyerListingAgent } from "~/buyer/listing/server/tool/BuyerListingAgent";
-import { BuyerTransactionAgent } from "~/buyer/transaction/server/tool/BuyerTransactionAgent";
-import { DraftAgent } from "~/seller/draft/server/tool/DraftAgent";
-import { SellerListingAgent } from "~/seller/listing/server/tool/SellerListingAgent";
-import { SellerTransactionAgent } from "~/seller/transaction/server/tool/SellerTransactionAgent";
+import { toolFavouriteRemove } from "~/buyer/favourite/server/tool/toolFavouriteRemove";
+import { toolFeedCollection } from "~/buyer/feed/server/tool/toolFeedCollection";
+import { toolFeedCount } from "~/buyer/feed/server/tool/toolFeedCount";
+import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
+import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
+import { toolFeedPatch } from "~/buyer/feed/server/tool/toolFeedPatch";
+import { toolFeedFavouriteCollection } from "~/buyer/feed-favourite/server/tool/toolFeedFavouriteCollection";
+import { toolFeedFavouriteCount } from "~/buyer/feed-favourite/server/tool/toolFeedFavouriteCount";
+import { toolListingCollection as toolBuyerListingCollection } from "~/buyer/listing/server/tool/toolListingCollection";
+import { toolListingCount as toolBuyerListingCount } from "~/buyer/listing/server/tool/toolListingCount";
+import { toolTransactionCollection as toolBuyerTransactionCollection } from "~/buyer/transaction/server/tool/toolTransactionCollection";
+import { toolTransactionCount as toolBuyerTransactionCount } from "~/buyer/transaction/server/tool/toolTransactionCount";
+import { toolTransactionEntryCollection as toolBuyerTransactionEntryCollection } from "~/buyer/transaction/server/tool/toolTransactionEntryCollection";
+import { toolTransactionEntryCount as toolBuyerTransactionEntryCount } from "~/buyer/transaction/server/tool/toolTransactionEntryCount";
+import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
+import { toolDraftCount } from "~/seller/draft/server/tool/toolDraftCount";
+import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
+import { toolDraftDelete } from "~/seller/draft/server/tool/toolDraftDelete";
+import { toolDraftPatch } from "~/seller/draft/server/tool/toolDraftPatch";
+import { toolListingCollection as toolSellerListingCollection } from "~/seller/listing/server/tool/toolListingCollection";
+import { toolListingCount as toolSellerListingCount } from "~/seller/listing/server/tool/toolListingCount";
+import { toolTransactionCollection as toolSellerTransactionCollection } from "~/seller/transaction/server/tool/toolTransactionCollection";
+import { toolTransactionCount as toolSellerTransactionCount } from "~/seller/transaction/server/tool/toolTransactionCount";
+import { toolTransactionEntryCollection as toolSellerTransactionEntryCollection } from "~/seller/transaction/server/tool/toolTransactionEntryCollection";
+import { toolTransactionEntryCount as toolSellerTransactionEntryCount } from "~/seller/transaction/server/tool/toolTransactionEntryCount";
 import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
-import { LocationAgent } from "~/session/location/server/tool/LocationAgent";
+import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
-import { InboxAgent } from "~/user/inbox/server/tool/InboxAgent";
-import { KnowledgeAgent } from "~/user/knowledge/KnowledgeAgent";
+import { toolInboxCollection } from "~/user/inbox/server/tool/toolInboxCollection";
+import { toolInboxCount } from "~/user/inbox/server/tool/toolInboxCount";
+import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
+import { toolKnowledgeIndex } from "~/user/knowledge/server/tool/toolKnowledgeIndex";
+import { toolKnowledgeSearch } from "~/user/knowledge/server/tool/toolKnowledgeSearch";
 
 export const AssistantAgent = Agent.create({
 	name: "Assistant",
@@ -108,116 +129,57 @@ Response style
 	`.trim(),
 	modelSettings: AssistantModelSettings,
 	tools: [
-		KnowledgeAgent.asTool({
-			toolName: "knowledge",
-			toolDescription: `
-System knowledge and capability lookup.
-
-Use for app behavior, concepts, rules, limits, flows,
-supported features, unsupported features, and worker or domain capabilities.
-
-Do not use for user-specific counts, lists, statuses, details, or actions
-when a domain worker can answer directly.
-			`.trim(),
-		}),
-		BuyerListingAgent.asTool({
-			toolName: "buyer-listing",
-			toolDescription: `
-Public buyer listing search and counts.
-
-Use for finding things to buy, browsing public listings,
-applying filters, and counting matching listings.
-
-Not for seller listings, drafts, inbox, or chat.
-			`.trim(),
-		}),
-		FeedAgent.asTool({
-			toolName: "buyer-feed",
-			toolDescription: `
-Saved-search feed management.
-
-Use for listing, counting, creating, updating, or deleting saved searches.
-
-Not for browsing actual marketplace listing results.
-			`.trim(),
-		}),
-		FavouriteAgent.asTool({
-			toolName: "buyer-favourite",
-			toolDescription: `
-Favourite-related views and removals.
-
-Use for feeds that contain favourite listings,
-counting those feeds, or removing a favourite listing.
-
-Not for public search or generic saved-search management.
-			`.trim(),
-		}),
-		BuyerTransactionAgent.asTool({
-			toolName: "buyer-transaction",
-			toolDescription: `
-Buyer-side conversation threads and message timelines.
-
-Use for buyer transactions, transaction entries,
-chat history, and related counts.
-
-Not for inbox notifications.
-			`.trim(),
-		}),
-		SellerListingAgent.asTool({
-			toolName: "seller-listing",
-			toolDescription: `
-Seller's own published listings.
-
-Use for browsing, counting, and checking status
-of already published seller listings.
-
-Not for drafts or public buyer search.
-			`.trim(),
-		}),
-		DraftAgent.asTool({
-			toolName: "seller-draft",
-			toolDescription: `
-Seller drafts only.
-
-Use for creating, listing, counting, updating, or deleting
-unfinished saved listings.
-
-Draft != published listing.
-			`.trim(),
-		}),
-		SellerTransactionAgent.asTool({
-			toolName: "seller-transaction",
-			toolDescription: `
-Seller-side conversation threads and message timelines.
-
-Use for seller transactions, transaction entries,
-chat history, and related counts.
-
-Not for inbox notifications.
-			`.trim(),
-		}),
-		InboxAgent.asTool({
-			toolName: "inbox",
-			toolDescription: `
-Inbox notifications and notification-based counts.
-
-Use for alerts, inbox items, thumbs, favourites,
-flags, ignores, and similar event counts.
-
-Inbox is notification-only, not real chat content.
-			`.trim(),
-		}),
-		LocationAgent.asTool({
-			toolName: "location",
-			toolDescription: `
-Location and address normalization.
-
-Use for autocomplete, broad or partial address input,
-and candidate resolution.
-
-Returns normalized location data or best candidates.
-			`.trim(),
-		}),
+		/**
+		 * Internal model tools
+		 */
+		toolKnowledge,
+		toolKnowledgeIndex,
+		toolKnowledgeSearch,
+		/**
+		 * Buyer related tools
+		 */
+		toolFeedCollection,
+		toolFeedCount,
+		toolFeedCreate,
+		toolFeedDelete,
+		toolFeedPatch,
+		//
+		toolBuyerListingCollection,
+		toolBuyerListingCount,
+		//
+		toolFavouriteRemove,
+		toolFeedFavouriteCollection,
+		toolFeedFavouriteCount,
+		//
+		toolBuyerTransactionCollection,
+		toolBuyerTransactionCount,
+		toolBuyerTransactionEntryCollection,
+		toolBuyerTransactionEntryCount,
+		/**
+		 * Seller related tools
+		 */
+		toolSellerListingCollection,
+		toolSellerListingCount,
+		//
+		toolSellerTransactionCount,
+		toolSellerTransactionCollection,
+		toolSellerTransactionEntryCount,
+		toolSellerTransactionEntryCollection,
+		//
+		toolDraftCollection,
+		toolDraftCount,
+		toolDraftCreate,
+		toolDraftDelete,
+		toolDraftPatch,
+		/**
+		 * Common user-related tools
+		 */
+		toolInboxCollection,
+		toolInboxCount,
+		/**
+		 * Utility tools for both human and models
+		 */
+		toolLocationAutocomplete,
 		toolCategoryCollection,
 	],
 });

@@ -9,7 +9,7 @@ const logger = getRootLogger([
 ]);
 
 export const toolListingCollection = tool({
-	name: "listing-collection",
+	name: "seller-listing-collection",
 	needsApproval: false,
 	description: `
         Seller published listing collection. Use small cursors and requested fields only.

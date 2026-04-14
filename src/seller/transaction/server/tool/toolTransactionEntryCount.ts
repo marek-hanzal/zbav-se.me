@@ -9,7 +9,7 @@ const logger = getRootLogger([
 ]);
 
 export const toolTransactionEntryCount = tool({
-	name: "transaction-entry-count",
+	name: "seller-transaction-entry-count",
 	needsApproval: false,
 	description: "Count seller transaction entries matching the provided query.",
 	parameters: TransactionEntryCountQuerySchema,

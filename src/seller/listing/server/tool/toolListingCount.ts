@@ -9,7 +9,7 @@ const logger = getRootLogger([
 ]);
 
 export const toolListingCount = tool({
-	name: "listing-count",
+	name: "seller-listing-count",
 	needsApproval: false,
 	description: "Count seller published listings matching the provided query.",
 	parameters: ListingToolQuerySchema,

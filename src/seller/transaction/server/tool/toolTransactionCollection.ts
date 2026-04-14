@@ -9,7 +9,7 @@ const logger = getRootLogger([
 ]);
 
 export const toolTransactionCollection = tool({
-	name: "transaction-collection",
+	name: "seller-transaction-collection",
 	needsApproval: false,
 	description: `
         Seller transaction collection. Use small cursors and compact filters only.

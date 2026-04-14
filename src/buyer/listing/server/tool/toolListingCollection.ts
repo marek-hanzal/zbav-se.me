@@ -9,7 +9,7 @@ const logger = getRootLogger([
 ]);
 
 export const toolListingCollection = tool({
-	name: "listing-collection",
+	name: "buyer-listing-collection",
 	needsApproval: false,
 	description: `
         Buyer-visible listing collection. Prefer category/location filters and small cursors.
