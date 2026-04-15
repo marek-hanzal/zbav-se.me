@@ -22,6 +22,11 @@ Hint:
 - Add 'filter.withOwn: false' if user not states otherwise; tell user you're filtering out his own listings
 - To get favourite listings, use 'filter.isFavourite: true'
 
+How to:
+"Give me listings in my feed"
+- Resolve feed, get it's feed.query object
+- Use that feed.query object as direct input into this tool
+
 Enums:
 - delivery: personal, post, package, other.
 - warranty: warranty, no-warranty, custom.

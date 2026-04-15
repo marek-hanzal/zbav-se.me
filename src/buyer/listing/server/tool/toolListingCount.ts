@@ -21,6 +21,11 @@ Hint:
 - Add 'filter.withOwn: false' if user not states otherwise; tell user you're filtering out his own listings
 - To get favourite listings, use 'filter.isFavourite: true'
 
+Guide (user question + agent steps):
+"Do I have any listings in my feed?" / "How many listings do I have in my feed?"
+- Resolve feed, get it's feed.query object
+- Use that feed.query object as direct input into this tool
+
 Enum values:
 - delivery: personal, post, package, other.
 - warranty: warranty, no-warranty, custom.
