@@ -6,7 +6,10 @@ import { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 export const FeedSchema = z
 	.looseObject({
 		...FeedTableSchema.shape,
-		query: ListingQuerySchema,
+		query: ListingQuerySchema.meta({
+			id: "FeedListingQuery",
+			description: "A query usable directly with Listing domain (fetch, collection, ...)",
+		}),
 		upload: UploadSchema.nullable().meta({
 			description: "Hero banner for this feed",
 		}),
