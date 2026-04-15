@@ -1,12 +1,9 @@
 import { Effect } from "effect";
 import { list, rangedom, sample } from "@/lib/common/rangedom";
 import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";
-import Cons from "~/server/@system/seed/data/listing-cons.json" with { type: "json" };
-import Descriptions from "~/server/@system/seed/data/listing-description.json" with {
+import CategorySeed from "~/server/@system/seed/data/listing-category-seed.json" with {
 	type: "json",
 };
-import Pros from "~/server/@system/seed/data/listing-pros.json" with { type: "json" };
-import Titles from "~/server/@system/seed/data/listing-title.json" with { type: "json" };
 import { withSeedConcurrency } from "~/server/@system/seed/fx/core/seedConcurrency";
 import { seedDraftInsertFx } from "~/server/@system/seed/fx/core/seedDraftInsertFx";
 import { seedListingInsertFx } from "~/server/@system/seed/fx/core/seedListingInsertFx";
@@ -34,13 +31,21 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 	const { kysely } = yield* KyselyContextFx;
 
 	const categories = yield* tryDbFx(async () =>
-		kysely.selectFrom("category").select("id").limit(512).execute(),
+		kysely
+			.selectFrom("category")
+			.select([
+				"id",
+				"slug",
+			])
+			.limit(512)
+			.execute(),
 	);
 	const locations = yield* tryDbFx(async () =>
 		kysely.selectFrom("location").select("id").limit(10000).execute(),
 	);
 
 	const categoryIds = categories.map((item) => item.id);
+	const categorySlugs = categories.map((item) => item.slug);
 	const locationIds = locations.map((item) => item.id);
 	if (categoryIds.length === 0 || locationIds.length === 0) {
 		yield* progress.log({
@@ -49,14 +54,22 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 		return;
 	}
 
-	const withProsCons = () => {
+	const getCategorySeedData = (categorySlug: string) => {
+		const seedData = CategorySeed[categorySlug as keyof typeof CategorySeed];
+		if (seedData) {
+			return seedData;
+		}
+		return CategorySeed.default;
+	};
+
+	const withProsCons = (seedData: { pros: string[]; cons: string[] }) => {
 		const prosCount = rangedom(0, 5);
 		const consCount = rangedom(0, 5);
 
 		return {
-			pros: sample(Pros, prosCount),
-			cons: sample(Cons, consCount),
-		} as const;
+			pros: sample(seedData.pros, prosCount),
+			cons: sample(seedData.cons, consCount),
+		};
 	};
 
 	const toChunks = (size: number) => (total: number) => {
@@ -78,13 +91,21 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 					yield* Effect.forEach(chunk, () =>
 						Effect.gen(function* () {
 							const categoryId = list(categoryIds);
+
+							const categoryIndex = categoryIds.indexOf(categoryId);
+							const categorySlug = categorySlugs[categoryIndex] ?? "default";
+							const seedData = getCategorySeedData(categorySlug);
+
 							const locationId = list(locationIds);
 
 							yield* seedDraftInsertFx({
-								...withProsCons(),
+								...withProsCons(seedData),
 								userId,
-								title: Titles.length > 0 ? list(Titles) : "Item",
-								description: Descriptions.length > 0 ? list(Descriptions) : "",
+								title: seedData.titles.length > 0 ? list(seedData.titles) : "Item",
+								description:
+									seedData.descriptions.length > 0
+										? list(seedData.descriptions)
+										: "",
 								categoryId,
 								locationId,
 								expiresAt: list([
@@ -117,18 +138,29 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 					yield* Effect.forEach(chunk, () =>
 						Effect.gen(function* () {
 							const categoryId = list(categoryIds);
+
+							const categoryIndex = categoryIds.indexOf(categoryId);
+							const categorySlug = categorySlugs[categoryIndex] ?? "default";
+							const seedData = getCategorySeedData(categorySlug);
+
 							const locationId = list(locationIds);
 
 							yield* seedListingInsertFx({
-								...withProsCons(),
+								...withProsCons(seedData),
 								userId,
-								title: Titles.length > 0 ? list(Titles) : "Item",
-								description: Descriptions.length > 0 ? list(Descriptions) : null,
+								title: seedData.titles.length > 0 ? list(seedData.titles) : "Item",
+								description:
+									seedData.descriptions.length > 0
+										? list(seedData.descriptions)
+										: null,
 								categoryId,
 								locationId,
 								age: rangedom(1, 6),
 								condition: rangedom(1, 6),
-								price: rangedom(1, 100_000),
+								price:
+									seedData.priceSpikes && rangedom(0, 10) > 8
+										? list(seedData.priceSpikes)
+										: rangedom(seedData.priceMin, seedData.priceMax),
 								priceType: list([
 									"closed",
 									"open",

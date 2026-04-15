@@ -1,0 +1,493 @@
+{
+	"default": {
+		"titles": [
+			"Produkt v top stavu",
+			"Nabízím kvalitní zboží",
+			"Používané, ale funkční",
+			"Bazar - výprodej"
+		],
+		"descriptions": [
+			"Stav: plně funkční, viz foto. Důvod prodeje: nevyužívám.",
+			"Výborný stav, možno vyzkoušet. Platba hotově."
+		],
+		"pros": [
+			"stav je výborný",
+			"funkční bez vad",
+			"kompletní příslušenství",
+			"rychlé předání"
+		],
+		"cons": [
+			"lehce opotřebované",
+			"bez původní krabice",
+			"drobná vada na povrchu"
+		],
+		"priceMin": 100,
+		"priceMax": 2000,
+		"priceSpikes": [
+			5000,
+			8000
+		]
+	},
+	"mobily-a-prislusenstvi--smartphone": {
+		"titles": [
+			"iPhone 15 Pro Max 256GB",
+			"Samsung Galaxy S24 Ultra",
+			"Xiaomi 14 Pro",
+			"Google Pixel 8",
+			"OnePlus 12 5G"
+		],
+		"descriptions": [
+			"Mobilní telefon, stav jako nový. Záruka 12 měsíců včetně.",
+			"Originál Samsung/iPhone. Stav 95%, kompletní balení.",
+			"Odblokovaný na všechny operátory. Nový displej."
+		],
+		"pros": [
+			"záruka 12 měsíců",
+			"originální balení",
+			"odblokovaný",
+			"stav jako nový"
+		],
+		"cons": [
+			"drobné škrábance",
+			"bez sluchátka",
+			"chybí orig. nabíječka"
+		],
+		"priceMin": 5000,
+		"priceMax": 35000,
+		"priceSpikes": [
+			45000,
+			55000
+		]
+	},
+	"mobily-a-prislusenstvi--tlacitkovy-telefon": {
+		"titles": [
+			"Nokia 3310",
+			"Nokia 6310",
+			"Samsung Galaxy XCover",
+			"Cat B25",
+			"Rugged telefon"
+		],
+		"descriptions": [
+			"Klasický tlačítkový telefon. Výdrž baterie perfektní.",
+			"Odolný telefon, funkční. Ideální jako záložní telefon.",
+			"Nokia originál. Nová baterie, plně funkční."
+		],
+		"pros": [
+			"dlouhá výdrž baterie",
+			"jednoduché ovládání",
+			"odolný",
+			"ideální jako záložní"
+		],
+		"cons": [
+			"bez fotoaparátu",
+			"malý displej",
+			"málo funkcí"
+		],
+		"priceMin": 500,
+		"priceMax": 3000,
+		"priceSpikes": [
+			4500
+		]
+	},
+	"mobily-a-prislusenstvi--chytre-hodinky": {
+		"titles": [
+			"Apple Watch Series 9",
+			"Samsung Galaxy Watch 6",
+			"Garmin Fenix 7",
+			"Fitbit Sense 2",
+			"Amazfit GTR 4"
+		],
+		"descriptions": [
+			"Chytré hodinky, plně funkční. Originální balení včetně.",
+			"Sportovní hodinky. Stav nový, nošené jen párkrát.",
+			"Herní/sportovní hodinky. Všechny senzory funkční."
+		],
+		"pros": [
+			"originální balení",
+			"vodotěsné",
+			"dlouhá výdrž baterie",
+			"všechny senzory funkční"
+		],
+		"cons": [
+			"lehce opotřebovaný pásek",
+			"bez orig. krabice",
+			"drobné vady na sklíčku"
+		],
+		"priceMin": 2000,
+		"priceMax": 12000,
+		"priceSpikes": [
+			15000,
+			20000
+		]
+	},
+	"pocitace-a-kancelar--notebook": {
+		"titles": [
+			"MacBook Pro 14\" M3",
+			"Dell XPS 15 OLED",
+			"Lenovo ThinkPad X1 Carbon",
+			"ASUS ROG Strix",
+			"HP Spectre x360"
+		],
+		"descriptions": [
+			"Herní/kancelářský notebook. Intel i7, 16GB RAM, 512GB SSD.",
+			"MacBook Air M2. Stav nový, nepoužívaný.",
+			"Pro notebook, i5, 8GB RAM, 256GB SSD."
+		],
+		"pros": [
+			"výkonný procesor",
+			"velká RAM",
+			"rychlé SSD",
+			"podsvícená klávesnice"
+		],
+		"cons": [
+			"lehce opotřebovaný",
+			"chybí orig. nabíječka",
+			"drobné škrábance"
+		],
+		"priceMin": 8000,
+		"priceMax": 50000,
+		"priceSpikes": [
+			80000,
+			120000
+		]
+	},
+	"pocitace-a-kancelar--monitor": {
+		"titles": [
+			"LG UltraWide 34\"",
+			"Samsung Odyssey G7",
+			"Dell UltraSharp 27\"",
+			"ASUS ProArt 32\"",
+			"BenQ PD3200U"
+		],
+		"descriptions": [
+			"Herní monitor 144Hz. IPS panel, 4K rozlišení.",
+			"Profesionální monitor. Barvy přesné, kalibrovaný.",
+			"Kancelářský monitor. Full HD, ideální na práci."
+		],
+		"pros": [
+			"vysoká obnovovací frekvence",
+			"IPS/VA panel",
+			"4K rozlišení",
+			"kalibrované barvy"
+		],
+		"cons": [
+			"lehce poškrábaný stojan",
+			"bez kabelů",
+			"chybí orig. krabice"
+		],
+		"priceMin": 3000,
+		"priceMax": 15000,
+		"priceSpikes": [
+			25000,
+			35000
+		]
+	},
+	"nabytek--pohovky-a-sedaci-soupravy": {
+		"titles": [
+			"Rohová pohovka Delta",
+			"Sedací souprava Modern",
+			"Gauč 3-dílný",
+			"Kožená sedací souprava",
+			"Rozkládací pohovka"
+		],
+		"descriptions": [
+			"Masivní dubový nábytek. Stav nový, nesestavený.",
+			"Čalouněný nábytek, možno vyzkoušet.",
+			"Rohová pohovka, minimálně používaná. Výborný stav."
+		],
+		"pros": [
+			"kvalitní materiál",
+			"výborný stav",
+			"pohodlné",
+			"moderní design"
+		],
+		"cons": [
+			"bez potahu",
+			"chybí nožičky",
+			"potřebuje vyčištění"
+		],
+		"priceMin": 5000,
+		"priceMax": 35000,
+		"priceSpikes": [
+			50000,
+			80000
+		]
+	},
+	"nabytek--postele-a-matrace": {
+		"titles": [
+			"Postel 160x200",
+			"Matrace viscoelastická",
+			"Postel s úložným prostorem",
+			"Manželská postel",
+			"Dětská postýlka"
+		],
+		"descriptions": [
+			"Masivní dubová postel. Stav nový, nesestavená.",
+			"Ortopedická matrace. Výborný stav, nepoužívaná.",
+			"Postel včetně roštu. Rozložená, ideální k odvozu."
+		],
+		"pros": [
+			"kvalitní dřevo",
+			"ortopedická matrace",
+			"úložný prostor",
+			"nový stav"
+		],
+		"cons": [
+			"chybí šrouby",
+			"bez roštu",
+			"lehce poškrábaná"
+		],
+		"priceMin": 3000,
+		"priceMax": 20000,
+		"priceSpikes": [
+			30000,
+			45000
+		]
+	},
+	"detske-zbozi--kocarky": {
+		"titles": [
+			"Kočárek sportovní",
+			"Golfový kočárek",
+			"Kombinovaný kočárek",
+			"Hluboký kočárek",
+			"Trojkombinace"
+		],
+		"descriptions": [
+			"Dětský výrobek, certifikace ČR/EU. Stav 95%.",
+			"Používané, ale čisté a funkční. Kompletní výbava.",
+			"Kočárek 2v1. Výborný stav, včetně fusaku."
+		],
+		"pros": [
+			"certifikace ČR/EU",
+			"čistý stav",
+			"kompletní výbava",
+			"lehký"
+		],
+		"cons": [
+			"lehce opotřebovaný",
+			"chybí plena",
+			"opotřebované kola"
+		],
+		"priceMin": 2000,
+		"priceMax": 15000,
+		"priceSpikes": [
+			25000,
+			35000
+		]
+	},
+	"detske-zbozi--autosedacky": {
+		"titles": [
+			"Autosedačka 9-36kg",
+			"Autosedačka i-Size",
+			"Sedačka 0-18kg",
+			"Sedačka 15-36kg",
+			"Sedačka basefix"
+		],
+		"descriptions": [
+			"Dětská autosedačka, certifikovaná. Stav výborný.",
+			"Používaná autosedačka. Čistá, bez vad, funkční.",
+			"Autosedačka i-Size. Nikdy nepoužívaná, v krabici."
+		],
+		"pros": [
+			"certifikace ECE",
+			"čistá",
+			"výborný stav",
+			"bezpečnostní testy prošly"
+		],
+		"cons": [
+			"chybí návod",
+			"lehce zašpiněná",
+			"oprášená"
+		],
+		"priceMin": 2000,
+		"priceMax": 10000,
+		"priceSpikes": [
+			15000
+		]
+	},
+	"sport-a-outdoor--kola-a-prislusenstvi": {
+		"titles": [
+			"Kolo horské 29\"",
+			"Elektrokolo 500W",
+			"Silniční kolo",
+			"Kolo merida",
+			"Kolo kellys"
+		],
+		"descriptions": [
+			"Sportovní kolo, stav servisováno. Nové brzdy, pláště.",
+			"Elektrokolo, plně funkční. Baterie nová.",
+			"Kvalitní horské kolo. Stav perfektní, málo najeto."
+		],
+		"pros": [
+			"nový stav",
+			"kvalitní komponenty",
+			"servisované",
+			"lehký rám"
+		],
+		"cons": [
+			"chybí pedály",
+			"opotřebované pláště",
+			"drobné vady"
+		],
+		"priceMin": 5000,
+		"priceMax": 40000,
+		"priceSpikes": [
+			60000,
+			90000
+		]
+	},
+	"sport-a-outdoor--lyze-a-snowboard": {
+		"titles": [
+			"Lyže sjezdové",
+			"Snowboard Burton",
+			"Běžky Fischer",
+			"Lyže Atomic",
+			"Lyže Salomon"
+		],
+		"descriptions": [
+			"Lyže snowboard, stav servisovaný. Ostřené, voskované.",
+			"Snowboard. Stav výborný, včetně vázání.",
+			"Běžecké lyže. Vynikající stav, málo používané."
+		],
+		"pros": [
+			"kvalitní značka",
+			"servisované",
+			"nové vázání",
+			"výborný stav"
+		],
+		"cons": [
+			"bez pytle",
+			"opotřebované",
+			"drobné rýhy"
+		],
+		"priceMin": 2000,
+		"priceMax": 15000,
+		"priceSpikes": [
+			22000,
+			28000
+		]
+	},
+	"auto-moto--osobni-auta": {
+		"titles": [
+			"Audi A4 2.0 TDI",
+			"BMW 320d xDrive",
+			"Škoda Octavia 1.5 TSI",
+			"Volkswagen Golf 1.5 TSI",
+			"Mercedes C 220d"
+		],
+		"descriptions": [
+			"Osobní automobil, najeto 150000 km, STK nová.",
+			"Servisní historie kompletní. Výměna oleje, gumy nové.",
+			"Cizí stav. Najeto málo, provozován jen sezónně."
+		],
+		"pros": [
+			"servisní knížka",
+			"nová STK",
+			"nízký nájezd",
+			" perfektní stav"
+		],
+		"cons": [
+			"kosmetické vady",
+			"lehce poškrábané",
+			"nutný servis"
+		],
+		"priceMin": 50000,
+		"priceMax": 500000,
+		"priceSpikes": [
+			700000,
+			1000000
+		]
+	},
+	"auto-moto--motocykly-a-skutry": {
+		"titles": [
+			"Kawasaki Ninja",
+			"Honda CBR",
+			"Yamaha MT-07",
+			"Kymco skútr",
+			"Piaggio skútr"
+		],
+		"descriptions": [
+			"Motocykl, upravený výfuk, plně funkční. Stav výborný.",
+			"Sportovní motocykl. Vynikající stav, málo najeto.",
+			"Skútr. Nová baterie, plně funkční. Ideální do města."
+		],
+		"pros": [
+			"nízký nájezd",
+			"výborný stav",
+			"upravený výfuk",
+			"plně funkční"
+		],
+		"cons": [
+			"lehce poškrábané kryty",
+			"opotřebované pláště",
+			"chybí dokumentace"
+		],
+		"priceMin": 20000,
+		"priceMax": 200000,
+		"priceSpikes": [
+			300000,
+			450000
+		]
+	},
+	"hobby-a-kreativita--deskovky-a-puzzle": {
+		"titles": [
+			"Desková hra Catan",
+			"Puzzle 1000 dílků",
+			"Osadníci z Katanu",
+			"Ticket to Ride",
+			"Carcassonne"
+		],
+		"descriptions": [
+			"Desková hra voriginálním balení. Nová, nikdy hraná.",
+			"Strategická hra. Stav perfektní, všechny díly kompletní.",
+			"Puzzle. Rozválené, chybí jen pár dílků."
+		],
+		"pros": [
+			"originální balení",
+			"kompletní díly",
+			"nová",
+			"zajímavá hra"
+		],
+		"cons": [
+			"chybí pravidla",
+			"lehce opotřebovaná krabička",
+			"rozbalená"
+		],
+		"priceMin": 200,
+		"priceMax": 1500,
+		"priceSpikes": [
+			2500
+		]
+	},
+	"knihy-filmy-a-hudba--knihy": {
+		"titles": [
+			"Bohumil Hrabal - Ostře sledované vlaky",
+			"Karel Čapek - R.U.R.",
+			"Harry Potter - komplet",
+			"Stmívání - komplet",
+			"Lord of the Rings"
+		],
+		"descriptions": [
+			"Knihy, stav nové. Nikdy nepřečtené.",
+			"Používané knihy. Čisté, bez podtržených míst.",
+			"Starší vydání. Stav dobrý, drobné opotřebení."
+		],
+		"pros": [
+			"nové",
+			"přečtené jednou",
+			"zajímavý příběh",
+			"kvalitní tisk"
+		],
+		"cons": [
+			"ohýbané rohy",
+			"podepsané autorem",
+			"chybné stránky"
+		],
+		"priceMin": 50,
+		"priceMax": 500,
+		"priceSpikes": [
+			800,
+			1200
+		]
+	}
+}
