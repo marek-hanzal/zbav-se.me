@@ -8,6 +8,10 @@ export const ListingToolQuerySchema = z
 		filter: ListingToolFilterSchema.optional(),
 		where: ListingToolFilterSchema.optional(),
 	})
+	.omit({
+		where: true,
+		limit: true,
+	})
 	.strip()
 	.meta({
 		id: "ListingToolQuery",

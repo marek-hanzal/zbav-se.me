@@ -5,6 +5,10 @@ export const ListingToolFilterSchema = z
 	.looseObject({
 		...ListingFilterSchema.shape,
 	})
+	.omit({
+		idIn: true,
+		userId: true,
+	})
 	.strip();
 
 export type ListingToolFilterSchema = typeof ListingToolFilterSchema;
