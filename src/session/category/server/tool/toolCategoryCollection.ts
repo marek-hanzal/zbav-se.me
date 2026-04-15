@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
 import { getRootLogger } from "~/server/log/getRootLogger";
 import { categoryCollectionFn } from "~/session/category/fn/categoryCollectionFn";
-import { CategoryQuerySchema } from "~/session/category/server/schema/CategoryQuerySchema";
+import { CategoryToolQuerySchema } from "~/session/category/server/schema/CategoryToolQuerySchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -25,7 +25,7 @@ Sort:
 - category: Category name.
 - sort: Explicit category sort order.
     `.trim(),
-	parameters: CategoryQuerySchema,
+	parameters: CategoryToolQuerySchema,
 	async execute(data) {
 		logger.trace("toolCategoryCollection", {
 			data,

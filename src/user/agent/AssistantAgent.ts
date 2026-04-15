@@ -13,7 +13,7 @@ import { toolTransactionCollection as toolBuyerTransactionCollection } from "~/b
 import { toolTransactionCount as toolBuyerTransactionCount } from "~/buyer/transaction/server/tool/toolTransactionCount";
 import { toolTransactionCreate as toolBuyerTransactionCreate } from "~/buyer/transaction/server/tool/toolTransactionCreate";
 import { toolTransactionDispute as toolBuyerTransactionDispute } from "~/buyer/transaction/server/tool/toolTransactionDispute";
-import { toolTransactionEntryCollection as toolBuyerTxEntries } from "~/buyer/transaction/server/tool/toolTransactionEntryCollection";
+import { toolTransactionEntryCollection as toolBuyerTransactionEntryCollection } from "~/buyer/transaction/server/tool/toolTransactionEntryCollection";
 import { toolTransactionEntryCount as toolBuyerTransactionEntryCount } from "~/buyer/transaction/server/tool/toolTransactionEntryCount";
 import { toolTransactionReject as toolBuyerTransactionReject } from "~/buyer/transaction/server/tool/toolTransactionReject";
 import { toolTransactionSuccess as toolBuyerTransactionSuccess } from "~/buyer/transaction/server/tool/toolTransactionSuccess";
@@ -28,7 +28,7 @@ import { toolTransactionAccept as toolSellerTransactionAccept } from "~/seller/t
 import { toolTransactionCollection as toolSellerTransactionCollection } from "~/seller/transaction/server/tool/toolTransactionCollection";
 import { toolTransactionCount as toolSellerTransactionCount } from "~/seller/transaction/server/tool/toolTransactionCount";
 import { toolTransactionDispute as toolSellerTransactionDispute } from "~/seller/transaction/server/tool/toolTransactionDispute";
-import { toolTransactionEntryCollection as toolSellerTxEntries } from "~/seller/transaction/server/tool/toolTransactionEntryCollection";
+import { toolTransactionEntryCollection as toolSellerTransactionEntryCollection } from "~/seller/transaction/server/tool/toolTransactionEntryCollection";
 import { toolTransactionEntryCount as toolSellerTransactionEntryCount } from "~/seller/transaction/server/tool/toolTransactionEntryCount";
 import { toolTransactionReject as toolSellerTransactionReject } from "~/seller/transaction/server/tool/toolTransactionReject";
 import { toolTransactionResolve as toolSellerTransactionResolve } from "~/seller/transaction/server/tool/toolTransactionResolve";
@@ -189,7 +189,7 @@ Response style
 		toolBuyerTransactionCollection,
 		toolBuyerTransactionCount,
 		toolBuyerTransactionCreate,
-		toolBuyerTxEntries,
+		toolBuyerTransactionEntryCollection,
 		toolBuyerTransactionEntryCount,
 		toolBuyerTransactionReject,
 		toolBuyerTransactionDispute,
@@ -204,7 +204,7 @@ Response style
 		toolSellerTransactionCount,
 		toolSellerTransactionCollection,
 		toolSellerTransactionEntryCount,
-		toolSellerTxEntries,
+		toolSellerTransactionEntryCollection,
 		toolSellerTransactionAccept,
 		toolSellerTransactionReject,
 		toolSellerTransactionResolve,
