@@ -30,6 +30,24 @@ export function selectThinkingState(events: RunStreamEvent[] | undefined): Think
 		}
 
 		if (
+			responseEvent.type === "response.created" ||
+			responseEvent.type === "response.in_progress"
+		) {
+			isVisible = true;
+			label = null;
+			continue;
+		}
+
+		if (
+			responseEvent.type === "response.completed" ||
+			responseEvent.type === "response.failed"
+		) {
+			isVisible = false;
+			label = null;
+			continue;
+		}
+
+		if (
 			responseEvent.type === "response.output_text.delta" ||
 			responseEvent.type === "response.output_text.done"
 		) {
@@ -71,12 +89,6 @@ export function selectThinkingState(events: RunStreamEvent[] | undefined): Think
 
 		if (responseEvent.type === "response.function_call_arguments.done") {
 			isVisible = pendingToolCallIds.size === 0;
-			label = null;
-			continue;
-		}
-
-		if (responseEvent.type === "response.failed") {
-			isVisible = false;
 			label = null;
 		}
 	}
