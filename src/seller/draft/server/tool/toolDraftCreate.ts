@@ -12,21 +12,21 @@ export const toolDraftCreate = tool({
 	name: "draft-create",
 	needsApproval: false,
 	description: `
-        Create a saved listing draft for the current seller from known fields.
+Create a saved listing draft for the current seller from known fields.
 
-        Do not invent required listing details. Leave optional fields absent when the user did not provide them.
+Do not invent required listing details. Leave optional fields absent when the user did not provide them.
 
-        Enum values:
-        - priceType closed: Fixed price.
-        - priceType open: Open/negotiable price.
-        - delivery: personal, post, package, other.
-        - warranty: warranty, no-warranty, custom.
-        - restriction none: Normal content.
-        - restriction adult-relaxed: Adult-ish content with relaxed handling.
-        - restriction adult: Adult content.
-        - restriction sensitive: Sensitive content.
-        - restriction restricted: Strongly restricted content.
-        - expiresAt: 7-days, 14-days, 1-month.
+Enum values:
+- priceType closed: Fixed price.
+- priceType open: Open/negotiable price.
+- delivery: personal, post, package, other.
+- warranty: warranty, no-warranty, custom.
+- restriction none: Normal content.
+- restriction adult-relaxed: Adult-ish content with relaxed handling.
+- restriction adult: Adult content.
+- restriction sensitive: Sensitive content.
+- restriction restricted: Strongly restricted content.
+- expiresAt: 7-days, 14-days, 1-month.
     `.trim(),
 	parameters: DraftCreateSchema,
 	async execute(data) {

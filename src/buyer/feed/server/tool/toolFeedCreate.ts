@@ -19,16 +19,9 @@ Use only when the user wants to save search criteria. Do not invent the feed nam
 Hint:
 - If the user provides an address, normalize it and fill locationId
 - Resolve latLon from locationId and fill also query.meta.latLon
-
-Feed type values:
-- user: User-facing feed. When creating a feed from agent workflows, use this type.
-- search: Internal/agent-derived saved search type. Do not use this type from agent workflows.
-
-Listing query enum values:
-- delivery: personal, post, package, other.
-- warranty: warranty, no-warranty, custom.
-- currency: CZK.
-- listing sort fields: price, condition, age, createdAt, updatedAt, expiresAt, geo.
+- 'type: user': User-facing feed. When the user asks about "my feeds" in general, filter type to user (always use this filter).
+- 'type: search': Internal/agent-derived saved search type. Do not use this type from agent workflows.
+- Pay attention to available fields in 'query' field, also in 'query.meta'
     `.trim(),
 	parameters: FeedCreateSchema,
 	async execute(data) {

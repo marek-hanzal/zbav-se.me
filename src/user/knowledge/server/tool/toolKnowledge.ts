@@ -15,16 +15,18 @@ export const toolKnowledge = tool({
 	description: `
 Return one knowledge topic by exact key.
 
-Use after knowledge-search or knowledge-index gives you a concrete key. Full content is
-opt-in; set withContent only when title and summary are not enough.
+Usage:
+- Retrieve exact key from 'knowledge-search' if you don't know it already
+- If you need complete content, use 'withContent: true'
+
+Boundaries:
+- Never guess a key
     `.trim(),
 	parameters: z
 		.looseObject({
 			input: z
 				.string()
-				.describe(
-					"Exact topic key returned by knowledge-index or knowledge-search. Never invent a key.",
-				),
+				.describe("Exact topic key returned by 'knowledge-search'. Never invent a key."),
 			withContent: z
 				.boolean()
 				.optional()
@@ -44,7 +46,7 @@ opt-in; set withContent only when title and summary are not enough.
 			return {
 				found: false,
 				key: input,
-				error: "Unknown knowledge key. Use knowledge-search or knowledge-index first.",
+				error: "Unknown knowledge key. Use 'knowledge-search' first.",
 			};
 		}
 

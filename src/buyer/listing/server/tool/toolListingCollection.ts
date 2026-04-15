@@ -17,7 +17,10 @@ Buyer-visible listings matching the query. Use for browsing/searching listings, 
 Prefer category, location/range, price, delivery, warranty, favourite, ignored, feed, or transaction filters
 when available. The tool caps results to a small page.
 
-Enum values:
+Hint:
+- You may use feed.query as an input to this tool, so you can response to e.g. "Do I have any listings in this feed?"
+
+Enums:
 - delivery: personal, post, package, other.
 - warranty: warranty, no-warranty, custom.
 - currency: CZK.

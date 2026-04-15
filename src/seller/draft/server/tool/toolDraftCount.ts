@@ -13,11 +13,7 @@ export const toolDraftCount = tool({
 	name: "draft-count",
 	needsApproval: false,
 	description: `
-        Count current seller user's saved listing drafts matching the query.
-
-        Sort fields:
-        - createdAt: When the draft was created.
-        - updatedAt: When the draft was last changed.
+Count current seller user's saved listing drafts matching the query.
     `.trim(),
 	parameters: DraftToolCountQuerySchema,
 	async execute(data) {

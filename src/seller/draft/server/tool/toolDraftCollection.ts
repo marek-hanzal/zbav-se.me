@@ -13,13 +13,13 @@ export const toolDraftCollection = tool({
 	name: "draft-collection",
 	needsApproval: false,
 	description: `
-        Current seller user's saved listing drafts. Use small cursors and compact filters only.
+Current seller user's saved listing drafts. Use small cursors and compact filters only.
 
-        Use to find draft ids before patching, fetching, or deleting.
+Use to find draft ids before patching, fetching, or deleting.
 
-        Sort fields:
-        - createdAt: When the draft was created.
-        - updatedAt: When the draft was last changed.
+Sort:
+- createdAt: When the draft was created.
+- updatedAt: When the draft was last changed.
     `.trim(),
 	strict: true,
 	parameters: DraftToolQuerySchema,

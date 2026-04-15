@@ -5,6 +5,7 @@ import { getRootLogger } from "~/server/log/getRootLogger";
 import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
 
 const logger = getRootLogger([
+	"knowledge",
 	"tool",
 	"toolKnowledgeSearch",
 ]);
@@ -13,10 +14,15 @@ export const toolKnowledgeSearch = tool({
 	name: "knowledge-search",
 	needsApproval: false,
 	description: `
-Compact fuzzy search across knowledge topics.
+Tool to get any knowledge about the app, features, capabilities.
 
-Use when the user asks a domain/process question and you need the most
-relevant internal knowledge topic. Returns topic metadata, not full content; call knowledge with an exact key when you need the body.
+Hint:
+- It's a fuzzy search based on all the content
+- You may use a simple search term, eventually fallback to single word
+- If you get no results, try again with English/Czech
+
+Boundaries:
+- This tool does not answer data-related questions, e.g. "how many listings I've?" or "do I've any feed"?
     `.trim(),
 	parameters: z
 		.looseObject({

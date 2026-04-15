@@ -14,21 +14,16 @@ export const toolFeedPatch = tool({
 	description: `
 Patch one existing saved listing search selected by a narrow query.
 
-Prefer an exact feed id in query. Do not invent patch fields; patch only fields the user asked to change.
-
 Hint:
+- 'type: user': User-facing feed. When the user asks about "my feeds" in general, filter type to user (always use this filter).
+- 'type: search': Internal/agent-derived saved search type. Do not use this type from agent workflows.
+- Use exact 'query.filter.id' to select feed to patch
 - If the user provides an address, fill locationId
 - Resolve latLon from locationId and fill also query.meta.latLon
 
-Feed type values:
-- user: User-facing feed. When the user asks about "my feeds" in general, filter type to user.
-- search: Internal/agent-derived saved search type. Do not use this type from agent workflows.
-
-Listing query enum values:
-- delivery: personal, post, package, other.
-- warranty: warranty, no-warranty, custom.
-- currency: CZK.
-- listing sort fields: price, condition, age, createdAt, updatedAt, expiresAt, geo.
+Boundaries:
+- Do not invent new patch fields
+- Patch only fields you're asked for
     `.trim(),
 	parameters: FeedPatchSchema,
 	async execute(data) {

@@ -12,31 +12,31 @@ export const toolTransactionEntryCollection = tool({
 	name: "buyer-transaction-entry-collection",
 	needsApproval: false,
 	description: `
-        Buyer-side transaction timeline/message entries. Use small cursors and compact filters only.
+Buyer-side transaction timeline/message entries. Use small cursors and compact filters only.
 
-        Use this when the user asks about message content, timeline content, package/location/personal exchange data, or status history inside a transaction. Prefer an exact transactionId.
+Use this when the user asks about message content, timeline content, package/location/personal exchange data, or status history inside a transaction. Prefer an exact transactionId.
 
-        Entry kind values:
-        - text: Plain message entry.
-        - gallery: Gallery/media entry.
-        - location: Location/address entry.
-        - package: Package/shipping entry.
-        - personal: Personal handover/contact entry.
-        - status-pending: Transaction became pending.
-        - status-open: Transaction became open/accepted.
-        - status-resolved: Seller resolved the transaction.
-        - status-dispute-buyer: Buyer opened dispute.
-        - status-dispute-seller: Seller opened dispute.
-        - status-rejected-buyer: Buyer rejected/closed the transaction.
-        - status-rejected-seller: Seller rejected/closed the transaction.
-        - status-sold: Transaction was marked sold.
-        - status-expired: Transaction expired.
-        - status-success: Buyer confirmed success.
-        - status-closed: Transaction was closed without success/rejection.
+Entry kind values:
+- text: Plain message entry.
+- gallery: Gallery/media entry.
+- location: Location/address entry.
+- package: Package/shipping entry.
+- personal: Personal handover/contact entry.
+- status-pending: Transaction became pending.
+- status-open: Transaction became open/accepted.
+- status-resolved: Seller resolved the transaction.
+- status-dispute-buyer: Buyer opened dispute.
+- status-dispute-seller: Seller opened dispute.
+- status-rejected-buyer: Buyer rejected/closed the transaction.
+- status-rejected-seller: Seller rejected/closed the transaction.
+- status-sold: Transaction was marked sold.
+- status-expired: Transaction expired.
+- status-success: Buyer confirmed success.
+- status-closed: Transaction was closed without success/rejection.
 
-        Sort fields:
-        - id: Entry id order.
-        - createdAt: Entry creation time.
+Sort:
+- id: Entry id order.
+- createdAt: Entry creation time.
     `.trim(),
 	parameters: TransactionEntryQuerySchema,
 	async execute(data) {

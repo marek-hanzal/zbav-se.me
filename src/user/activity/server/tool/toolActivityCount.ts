@@ -12,17 +12,29 @@ export const toolActivityCount = tool({
 	name: "activity-count",
 	needsApproval: false,
 	description: `
-        Count current user's activity/inbox items matching the query.
+Count current user's activity/inbox items matching the query.
 
-        Activity family values:
-        - transaction: Activity related to a transaction or transaction message.
-        - reaction: Activity related to listing reactions such as favourite, flag, ignore, or thumb.
+Activity family values:
+- transaction: Activity related to a transaction or transaction message.
+- reaction: Activity related to listing reactions such as favourite, flag, ignore, or thumb.
 
-        Activity type values: buyer-message, seller-message, transaction, system, unknown, thumb, favourite, unfavourite, flag, unflag, ignore, unignore.
+Activity type values:
+- buyer-message: Buyer sent a message.
+- seller-message: Seller sent a message.
+- transaction: Generic transaction activity.
+- system: System-generated activity.
+- unknown: Fallback/unknown activity.
+- thumb: Thumb/reaction activity.
+- favourite: Listing was favourited.
+- unfavourite: Listing was removed from favourites.
+- flag: Listing was flagged.
+- unflag: Listing flag was removed.
+- ignore: Listing was ignored.
+- unignore: Listing ignore was removed.
 
-        Priority values:
-        - common: Normal priority.
-        - high: High priority.
+Priority values:
+- common: Normal priority (e.g. interactions on listings).
+- high: High priority (usually messages/transactions between users).
     `.trim(),
 	parameters: ActivityCountQuerySchema,
 	async execute(data) {

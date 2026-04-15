@@ -4,6 +4,7 @@ import { getRootLogger } from "~/server/log/getRootLogger";
 import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
 
 const logger = getRootLogger([
+	"knowledge",
 	"tool",
 	"toolKnowledgeIndex",
 ]);
@@ -14,8 +15,12 @@ export const toolKnowledgeIndex = tool({
 	description: `
 Return metadata for all available knowledge topics.
 
-Use when you need to browse the topic catalog. For user-language lookup, prefer
-knowledge-search; for full content of one topic, use knowledge with the exact key.
+Hint:
+- Returns complete knowledge index (context heavy)
+- It's cheaper to use multiple calls to 'knowledge-search' than using 'knowledge-index'
+
+Boundaries:
+- Prefer using 'knowledge-search' over 'knowledge-index'
     `.trim(),
 	parameters: z
 		.looseObject({
