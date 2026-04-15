@@ -38,10 +38,7 @@ import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
 import { toolKnowledgeIndex } from "~/user/knowledge/server/tool/toolKnowledgeIndex";
 import { toolKnowledgeSearch } from "~/user/knowledge/server/tool/toolKnowledgeSearch";
 import { toolTransactionEntryCollection } from "~/user/transaction-entry/server/tool/toolTransactionEntryCollection";
-import {
-	toolTransactionEntryCount as toolBuyerTransactionEntryCount,
-	toolTransactionEntryCount as toolSellerTransactionEntryCount,
-} from "~/user/transaction-entry/server/tool/toolTransactionEntryCount";
+import { toolTransactionEntryCount } from "~/user/transaction-entry/server/tool/toolTransactionEntryCount";
 import { toolTransactionEntryCreate } from "~/user/transaction-entry/server/tool/toolTransactionEntryCreate";
 
 export const AssistantAgent = Agent.create({
@@ -190,7 +187,6 @@ Response style
 		toolBuyerTransactionCollection,
 		toolBuyerTransactionCount,
 		toolBuyerTransactionCreate,
-		toolBuyerTransactionEntryCount,
 		toolBuyerTransactionReject,
 		toolBuyerTransactionDispute,
 		toolBuyerTransactionSuccess,
@@ -203,7 +199,6 @@ Response style
 		//
 		toolSellerTransactionCount,
 		toolSellerTransactionCollection,
-		toolSellerTransactionEntryCount,
 		toolSellerTransactionAccept,
 		toolSellerTransactionReject,
 		toolSellerTransactionResolve,
@@ -222,6 +217,7 @@ Response style
 		//
 		toolTransactionEntryCollection,
 		toolTransactionEntryCreate,
+		toolTransactionEntryCount,
 		/**
 		 * Utility tools for both human and models
 		 */
