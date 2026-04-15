@@ -37,9 +37,6 @@
 065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
   ref: Feed sorting (label)
   value: Feed sorting (label)
-06616f1eb298047657fcaf296af7f6364f463736858dd7db7026d021:
-  ref: Activity empty (message)
-  value: Activity empty (message)
 067456ab95df13c8f032e9a4420460ccd30e58958292fc06bafc7afd:
   ref: Agent (label)
   value: Agent (label)
@@ -277,9 +274,6 @@
 3c053b1e31a27b42457f488aabe08c89ccd7268700f1cc41b5c77f2f:
   ref: No my listings (title)
   value: No my listings (title)
-3c46c4d48f1a7f0f11b7131be79bb300ff4358446736ad106a935168:
-  ref: Activity (title)
-  value: Activity (title)
 3ca78530a9e9985ed4678eeb359e23a9c8e913ec6de9f637c0f53e46:
   ref: Price - free
   value: Price - free
@@ -346,9 +340,6 @@
 4a6d672731040044ea10a6210d1d72de8ce2a49c57e6eab1ba45eb66:
   ref: Feed name (required)
   value: Feed name (required)
-4c71066d8f9db4647c7ce0049724adb35f4b87cfd7a602bad98b84af:
-  ref: Activity empty (title)
-  value: Activity empty (title)
 4d603e3fca4e9f047b0fd3fdd009a1808b0b50eda2aa6f12c206a9c7:
   ref: Share location (button)
   value: Share location (button)
@@ -613,6 +604,9 @@
 8a1aa12fd03400172454828dba4c0e3bf755d16c69c73449f540cbb7:
   ref: No items in favourites (message)
   value: No items in favourites (message)
+8a40e02544d020ff1b150abb6ddfaf2071cd71c1a9ef3f64b9b758d5:
+  ref: Activity thumb (title)
+  value: Activity thumb (title)
 8ad39860649daeaa240849b5f8b11601c75b062f71eb258cc4557169:
   ref: Feed sorting (hint)
   value: Feed sorting (hint)
@@ -649,6 +643,9 @@
 93580224c5f7a548173e9671932098b0671d7deae93ab57295cb300b:
   ref: Transaction status success (label)
   value: Transaction completed
+936a3f1877bdacfa22a7eecdafd8a90cf0773d976e62d73d13b39abf:
+  ref: Activity empty (message)
+  value: Activity empty (message)
 93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
   ref: Listing title (title)
   value: Listing title (title)
@@ -709,9 +706,6 @@ a0d2788aec3760e59aa4f698966708ab8ece9b28608ff2bef10db62d:
 a1308b7983fef7def9ffd06bed7ff767fa4216baf9d9d911af1e7e2e:
   ref: Password
   value: Password
-a139f46f59f778256c981865c1f30e87d2f787451118cbd9fc8d3699:
-  ref: Activity - nothing new (label)
-  value: Activity - nothing new (label)
 a1afd40fa760408a3d789acdbaf42d52d40d45f34dcc9af5fccedffc:
   ref: Age not selected
   value: Age not selected
@@ -733,6 +727,9 @@ a64e91c4e68c901ac59593d15028b96e00c9b01c7163080eb97502c2:
 a67ea5aaab8eb99644b1412ae291882a3d6e0ddefd49b19cc413abaf:
   ref: Listing description (label)
   value: Listing description (label)
+a6e86b3291a545db816776356f5caf38299d6b03627d9a5ce926df1b:
+  ref: Activity - nothing new (label)
+  value: Activity - nothing new (label)
 a78ed5f38f0cf730dc1a618d9df1ca5011cc5d947d61f00075e0c5da:
   ref: Expired rate (hint)
   value: Expired rate (hint)
@@ -834,9 +831,6 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     message than this :(
   value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
     better message than this :(
-c1027406c1e7f916add90ca2c8f0bf30253d4f1caf9dd10bf5789b1c:
-  ref: Activity thumb (title)
-  value: Activity thumb (title)
 c25e8a6359df6fbcc11434b2d0bcaf641237490f399adfa91cd8702b:
   ref: Home (label)
   value: Home (label)
@@ -903,6 +897,9 @@ d5fb36eeef11375839f9b27cd328ac9d4705d04c04417cc2d3b4d093:
 d60d6c00507c0ff00445c84999529eb3c9da48141213ff1a5396cc72:
   ref: You got dislike (label)
   value: You got dislike (label)
+d6e1619a7bfceff09655bc0ff1c4960af12b203be4b4fc387bb85bad:
+  ref: Activity empty (title)
+  value: Activity empty (title)
 d8afcd78535d2c0ab7b58dfcc92c11456c55fe96dab19a1de6a24218:
   ref: Closer rate (hint)
   value: Closer rate (hint)
@@ -945,6 +942,9 @@ e6ae675232ef4ec304588531c21f87323fba1e262aff12e5dccf22d5:
 e6e98190c9dcd8856d75c6344e46e58cb61850f74e3d39859ead2035:
   ref: No transactions, no listings (message)
   value: No transactions, no listings (message)
+e6eeb3e62553d5dd4ea8cc04ca5739bba6dfde2ff7f7b7262d62aa30:
+  ref: Activity (title)
+  value: Activity (title)
 e71d354084e447c188977c94dd32b5163d009bd889d26e8819df7ead:
   ref: Feed - end of road (message)
   value: Feed - end of road (message)
