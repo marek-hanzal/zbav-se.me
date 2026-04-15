@@ -17,7 +17,7 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 	listingId,
 }: flagCreateFx.Props) {
 	const logger = yield* getLoggerFx("flagCreateFx");
-	logger.debug("flagCreateFx", {
+	logger.trace("flagCreateFx", {
 		userId,
 		listingId,
 	});

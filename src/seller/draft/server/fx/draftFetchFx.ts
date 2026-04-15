@@ -19,7 +19,7 @@ export const draftFetchFx = Effect.fn("draftFetchFx")(function* ({
 	sort,
 }: draftFetchFx.Props) {
 	const logger = yield* getLoggerFx("draftFetchFx");
-	logger.debug("draftFetchFx", {
+	logger.trace("draftFetchFx", {
 		filter,
 		where,
 		scope,

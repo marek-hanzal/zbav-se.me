@@ -24,7 +24,7 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 	...data
 }: thumbCreateFx.Props) {
 	const logger = yield* getLoggerFx("thumbCreateFx");
-	logger.debug("thumbCreateFx", {
+	logger.trace("thumbCreateFx", {
 		userId,
 		listingId,
 		type,

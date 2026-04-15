@@ -24,7 +24,7 @@ export const activityArchiveFn = createServerFn({
 			"fn",
 			name,
 		]);
-		logger.debug(name, data);
+		logger.trace(name, data);
 
 		return activityArchiveFx({
 			...data,

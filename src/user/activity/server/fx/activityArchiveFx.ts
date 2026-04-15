@@ -23,7 +23,7 @@ export const activityArchiveFx = Effect.fn("activityArchiveFx")(function* ({
 	sort,
 }: activityArchiveFx.Props) {
 	const logger = yield* getLoggerFx("activityArchiveFx");
-	logger.debug("activityArchiveFx", {
+	logger.trace("activityArchiveFx", {
 		cursor,
 		filter,
 		where,

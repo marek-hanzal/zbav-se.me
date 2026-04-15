@@ -17,7 +17,7 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 	listingId,
 }: listingGetSellerInfoFx.Props) {
 	const logger = yield* getLoggerFx("listingGetSellerInfoFx");
-	logger.debug("listingGetSellerInfoFx", {
+	logger.trace("listingGetSellerInfoFx", {
 		listingId,
 	});
 

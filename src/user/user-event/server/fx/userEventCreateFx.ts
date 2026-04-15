@@ -20,7 +20,7 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 	...data
 }: userEventCreateFx.Props) {
 	const logger = yield* getLoggerFx("userEventCreateFx");
-	logger.debug("userEventCreateFx", {
+	logger.trace("userEventCreateFx", {
 		userId,
 		group,
 		...data,

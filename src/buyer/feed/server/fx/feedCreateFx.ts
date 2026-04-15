@@ -37,7 +37,7 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 			const now = dateContext.now();
 
 			if (data.locationId && !query.meta?.latLon) {
-				logger.debug("Binding locationId", {
+				logger.trace("Binding locationId", {
 					locationId: data.locationId,
 				});
 
@@ -55,7 +55,7 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 					},
 				};
 
-				logger.debug("Updated query.meta", {
+				logger.trace("Updated query.meta", {
 					query,
 				});
 			}

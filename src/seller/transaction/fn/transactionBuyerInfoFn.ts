@@ -25,7 +25,7 @@ export const transactionBuyerInfoFn = createServerFn()
 			"fn",
 			name,
 		]);
-		logger.debug(name, data);
+		logger.trace(name, data);
 
 		return Effect.gen(function* () {
 			const transaction = yield* transactionFetchFx({

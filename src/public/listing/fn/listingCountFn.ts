@@ -21,7 +21,7 @@ export const listingCountFn = createServerFn()
 			"fn",
 			name,
 		]);
-		logger.debug(name, data);
+		logger.trace(name, data);
 
 		return zodGuardFx({
 			schema: CountSchema,

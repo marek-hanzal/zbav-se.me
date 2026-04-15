@@ -23,7 +23,7 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 	uploadIds,
 }: feedGalleryCreateFx.Props) {
 	const logger = yield* getLoggerFx("feedGalleryCreateFx");
-	logger.debug("feedGalleryCreateFx", {
+	logger.trace("feedGalleryCreateFx", {
 		userId,
 		feedId,
 		uploadIds,

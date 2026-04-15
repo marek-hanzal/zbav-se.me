@@ -21,7 +21,7 @@ export const agentUsageCreateFx = Effect.fn("agentUsageCreateFx")(function* ({
 	output,
 }: agentUsageCreateFx.Props) {
 	const logger = yield* getLoggerFx("agentUsageCreateFx");
-	logger.debug("agentUsageCreateFx", {
+	logger.trace("agentUsageCreateFx", {
 		userId,
 		threadId,
 		requests,

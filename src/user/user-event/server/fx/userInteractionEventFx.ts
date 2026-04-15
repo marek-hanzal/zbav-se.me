@@ -17,7 +17,7 @@ export const userInteractionEventFx = Effect.fn("userInteractionEventFx")(functi
 	...props
 }: userInteractionEventFx.Props) {
 	const logger = yield* getLoggerFx("userInteractionEventFx");
-	logger.debug("userInteractionEventFx", {
+	logger.trace("userInteractionEventFx", {
 		userId,
 		targetId,
 		...props,

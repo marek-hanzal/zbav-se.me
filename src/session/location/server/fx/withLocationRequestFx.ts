@@ -40,7 +40,7 @@ export const withLocationRequestFx = Effect.fn("withLocationRequestFx")(function
 	limit = 5,
 }: withLocationRequestFx.Props) {
 	const logger = yield* getLoggerFx("withLocationRequestFx");
-	logger.debug("withLocationRequestFx", {
+	logger.trace("withLocationRequestFx", {
 		text,
 		lang,
 		limit,

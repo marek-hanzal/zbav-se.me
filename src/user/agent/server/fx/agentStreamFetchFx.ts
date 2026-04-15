@@ -19,7 +19,7 @@ export const agentStreamFetchFx = Effect.fn("agentStreamFetchFx")(function* ({
 	sort,
 }: agentStreamFetchFx.Props) {
 	const logger = yield* getLoggerFx("agentStreamFetchFx");
-	logger.debug("agentStreamFetchFx", {
+	logger.trace("agentStreamFetchFx", {
 		filter,
 		where,
 		scope,

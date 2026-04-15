@@ -19,7 +19,7 @@ export const draftResolveFx = Effect.fn("draftResolveFx")(function* ({
 	message = "You are not allowed to access this draft",
 }: draftResolveFx.Props) {
 	const logger = yield* getLoggerFx("draftResolveFx");
-	logger.debug("draftResolveFx", {
+	logger.trace("draftResolveFx", {
 		userId,
 		draftId,
 		message,

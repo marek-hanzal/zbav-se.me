@@ -28,7 +28,7 @@ export const s3PreSignFn = createServerFn({
 			"fn",
 			name,
 		]);
-		logger.debug(name, data);
+		logger.trace(name, data);
 
 		const s3Config = ServerS3Schema.parse(process.env);
 		const cdnConfig = ServerCdnSchema.parse(process.env);

@@ -20,7 +20,7 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 	meta,
 }: listingFetchFx.Props) {
 	const logger = yield* getLoggerFx("listingFetchFx");
-	logger.debug("listingFetchFx", {
+	logger.trace("listingFetchFx", {
 		filter,
 		where,
 		scope,

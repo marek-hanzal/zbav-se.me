@@ -38,7 +38,7 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 			});
 
 			if (patch.locationId && !feed.query.meta?.latLon) {
-				logger.debug("Binding locationId", {
+				logger.trace("Binding locationId", {
 					locationId: patch.locationId,
 				});
 
@@ -59,7 +59,7 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 					},
 				};
 
-				logger.debug("Updated query.meta", {
+				logger.trace("Updated query.meta", {
 					query: patch.query,
 				});
 			}

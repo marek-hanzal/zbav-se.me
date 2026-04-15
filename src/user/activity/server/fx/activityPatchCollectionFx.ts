@@ -22,7 +22,7 @@ export const activityPatchCollectionFx = Effect.fn("activityPatchCollectionFx")(
 	scope,
 }: activityPatchCollectionFx.Props) {
 	const logger = yield* getLoggerFx("activityPatchCollectionFx");
-	logger.debug("activityPatchCollectionFx", {
+	logger.trace("activityPatchCollectionFx", {
 		patch,
 		query,
 		scope,

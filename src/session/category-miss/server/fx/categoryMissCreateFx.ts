@@ -18,7 +18,7 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 	limit = 4,
 }: categoryMissCreateFx.Props) {
 	const logger = yield* getLoggerFx("categoryMissCreateFx");
-	logger.debug("categoryMissCreateFx", {
+	logger.trace("categoryMissCreateFx", {
 		fulltext,
 		limit,
 	});

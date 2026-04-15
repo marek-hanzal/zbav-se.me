@@ -21,7 +21,7 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 	listingId,
 }: ignoreToggleFx.Props) {
 	const logger = yield* getLoggerFx("ignoreToggleFx");
-	logger.debug("ignoreToggleFx", {
+	logger.trace("ignoreToggleFx", {
 		userId,
 		toggle,
 		listingId,

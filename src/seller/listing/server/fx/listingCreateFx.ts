@@ -27,7 +27,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 	...data
 }: listingCreateFx.Props) {
 	const logger = yield* getLoggerFx("listingCreateFx");
-	logger.debug("listingCreateFx", {
+	logger.trace("listingCreateFx", {
 		userId,
 		uploadIds,
 		...data,

@@ -23,7 +23,7 @@ export const userExTokenDisableFn = createServerFn({
 			"fn",
 			name,
 		]);
-		logger.debug(name);
+		logger.trace(name);
 
 		return zodGuardFx({
 			schema: UserExSchema,

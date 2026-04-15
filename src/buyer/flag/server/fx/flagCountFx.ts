@@ -18,7 +18,7 @@ export const flagCountFx = Effect.fn("flagCountFx")(function* ({
 	scope,
 }: flagCountFx.Props) {
 	const logger = yield* getLoggerFx("flagCountFx");
-	logger.debug("flagCountFx", {
+	logger.trace("flagCountFx", {
 		filter,
 		where,
 		scope,

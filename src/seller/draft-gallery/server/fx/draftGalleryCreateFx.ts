@@ -21,7 +21,7 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 	uploadIds,
 }: draftGalleryCreateFx.Props) {
 	const logger = yield* getLoggerFx("draftGalleryCreateFx");
-	logger.debug("draftGalleryCreateFx", {
+	logger.trace("draftGalleryCreateFx", {
 		userId,
 		draftId,
 		uploadIds,

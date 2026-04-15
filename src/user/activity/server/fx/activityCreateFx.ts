@@ -21,7 +21,7 @@ export const activityCreateFx = Effect.fn("activityCreateFx")(function* ({
 	priority,
 }: activityCreateFx.Props) {
 	const logger = yield* getLoggerFx("activityCreateFx");
-	logger.debug("activityCreateFx", {
+	logger.trace("activityCreateFx", {
 		userId,
 		reference,
 		family,

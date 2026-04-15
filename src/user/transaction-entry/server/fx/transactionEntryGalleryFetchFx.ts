@@ -16,7 +16,7 @@ export namespace transactionEntryGalleryFetchFx {
 export const transactionEntryGalleryFetchFx = Effect.fn("transactionEntryGalleryFetchFx")(
 	function* ({ userId, where }: transactionEntryGalleryFetchFx.Props) {
 		const logger = yield* getLoggerFx("transactionEntryGalleryFetchFx");
-		logger.debug("transactionEntryGalleryFetchFx", {
+		logger.trace("transactionEntryGalleryFetchFx", {
 			userId,
 			where,
 		});

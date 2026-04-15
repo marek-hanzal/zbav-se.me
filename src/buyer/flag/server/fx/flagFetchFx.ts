@@ -19,7 +19,7 @@ export const flagFetchFx = Effect.fn("flagFetchFx")(function* ({
 	scope,
 }: flagFetchFx.Props) {
 	const logger = yield* getLoggerFx("flagFetchFx");
-	logger.debug("flagFetchFx", {
+	logger.trace("flagFetchFx", {
 		filter,
 		where,
 		sort,

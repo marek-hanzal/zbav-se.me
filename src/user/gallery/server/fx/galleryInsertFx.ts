@@ -19,7 +19,7 @@ export const galleryInsertFx = Effect.fn("galleryInsertFx")(function* ({
 	...props
 }: galleryInsertFx.Props) {
 	const logger = yield* getLoggerFx("galleryInsertFx");
-	logger.debug("galleryInsertFx", {
+	logger.trace("galleryInsertFx", {
 		userId,
 		id,
 		...props,

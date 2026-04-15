@@ -43,7 +43,7 @@ export const transactionStatusMessageFx = Effect.fn("transactionStatusMessageFx"
 	userId,
 }: transactionStatusMessageFx.Props) {
 	const logger = yield* getLoggerFx("transactionStatusMessageFx");
-	logger.debug("transactionStatusMessageFx", {
+	logger.trace("transactionStatusMessageFx", {
 		transactionId,
 		request,
 		target,

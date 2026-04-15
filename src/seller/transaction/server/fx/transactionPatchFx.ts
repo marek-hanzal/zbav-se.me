@@ -23,7 +23,7 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 	scope,
 }: transactionPatchFx.Props) {
 	const logger = yield* getLoggerFx("transactionPatchFx");
-	logger.debug("transactionPatchFx", {
+	logger.trace("transactionPatchFx", {
 		userId,
 		patch,
 		query,

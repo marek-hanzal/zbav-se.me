@@ -19,7 +19,7 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 	transactionId,
 }: transactionGetBuyerInfoFx.Props) {
 	const logger = yield* getLoggerFx("transactionGetBuyerInfoFx");
-	logger.debug("transactionGetBuyerInfoFx", {
+	logger.trace("transactionGetBuyerInfoFx", {
 		userId,
 		transactionId,
 	});

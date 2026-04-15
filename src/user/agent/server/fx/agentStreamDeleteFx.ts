@@ -17,7 +17,7 @@ export const agentStreamDeleteFx = Effect.fn("agentStreamDeleteFx")(function* (
 	query: agentStreamDeleteFx.Props,
 ) {
 	const logger = yield* getLoggerFx("agentStreamDeleteFx");
-	logger.debug("agentStreamDeleteFx", {
+	logger.trace("agentStreamDeleteFx", {
 		...query,
 	});
 

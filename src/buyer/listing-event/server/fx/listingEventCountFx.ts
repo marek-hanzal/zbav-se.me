@@ -18,7 +18,7 @@ export const listingEventCountFx = Effect.fn("listingEventCountFx")(function* ({
 	scope,
 }: listingEventCountFx.Props) {
 	const logger = yield* getLoggerFx("listingEventCountFx");
-	logger.debug("listingEventCountFx", {
+	logger.trace("listingEventCountFx", {
 		filter,
 		where,
 		scope,

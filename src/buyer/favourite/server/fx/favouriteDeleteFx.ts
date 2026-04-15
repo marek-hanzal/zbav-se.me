@@ -17,7 +17,7 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 	listingId,
 }: favouriteDeleteFx.Props) {
 	const logger = yield* getLoggerFx("favouriteDeleteFx");
-	logger.debug("favouriteDeleteFx", {
+	logger.trace("favouriteDeleteFx", {
 		userId,
 		listingId,
 	});

@@ -13,7 +13,7 @@ export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* (
 	data: galleryItemCreateFx.Props,
 ) {
 	const logger = yield* getLoggerFx("galleryItemCreateFx");
-	logger.debug("galleryItemCreateFx", {
+	logger.trace("galleryItemCreateFx", {
 		...data,
 	});
 

@@ -398,7 +398,7 @@ export const transactionTransitionFx = Effect.fn("transactionTransitionFx")(func
 	props: transactionTransitionFx.Props,
 ) {
 	const logger = yield* getLoggerFx("transactionTransitionFx");
-	logger.debug("transactionTransitionFx", {
+	logger.trace("transactionTransitionFx", {
 		...props,
 	});
 

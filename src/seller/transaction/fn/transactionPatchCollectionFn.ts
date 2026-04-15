@@ -28,7 +28,7 @@ export const transactionPatchCollectionFn = createServerFn({
 			"fn",
 			name,
 		]);
-		logger.debug(name, data);
+		logger.trace(name, data);
 
 		return zodGuardFx({
 			schema: z.array(TransactionSchema),

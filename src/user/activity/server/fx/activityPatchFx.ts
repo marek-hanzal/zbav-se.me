@@ -19,7 +19,7 @@ export const activityPatchFx = Effect.fn("activityPatchFx")(function* ({
 	scope,
 }: activityPatchFx.Props) {
 	const logger = yield* getLoggerFx("activityPatchFx");
-	logger.debug("activityPatchFx", {
+	logger.trace("activityPatchFx", {
 		patch,
 		query,
 		scope,

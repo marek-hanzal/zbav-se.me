@@ -21,7 +21,7 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 	listingId,
 }: flagToggleFx.Props) {
 	const logger = yield* getLoggerFx("flagToggleFx");
-	logger.debug("flagToggleFx", {
+	logger.trace("flagToggleFx", {
 		userId,
 		toggle,
 		listingId,

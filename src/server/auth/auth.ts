@@ -62,7 +62,7 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 						return logger.warn(message);
 					})
 					.with("debug", () => {
-						return logger.debug(message);
+						return logger.trace(message);
 					})
 					.exhaustive();
 			},

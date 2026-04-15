@@ -20,7 +20,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 	scope,
 }: draftPatchFx.Props) {
 	const logger = yield* getLoggerFx("draftPatchFx");
-	logger.debug("draftPatchFx", {
+	logger.trace("draftPatchFx", {
 		patch,
 		query,
 		scope,

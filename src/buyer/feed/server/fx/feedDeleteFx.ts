@@ -15,7 +15,7 @@ export namespace feedDeleteFx {
 
 export const feedDeleteFx = Effect.fn("feedDeleteFx")(function* (query: feedDeleteFx.Props) {
 	const logger = yield* getLoggerFx("feedDeleteFx");
-	logger.debug("feedDeleteFx", {
+	logger.trace("feedDeleteFx", {
 		...query,
 	});
 

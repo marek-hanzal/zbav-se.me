@@ -18,7 +18,7 @@ export const favouriteCountFx = Effect.fn("favouriteCountFx")(function* ({
 	scope,
 }: favouriteCountFx.Props) {
 	const logger = yield* getLoggerFx("favouriteCountFx");
-	logger.debug("favouriteCountFx", {
+	logger.trace("favouriteCountFx", {
 		filter,
 		where,
 		scope,

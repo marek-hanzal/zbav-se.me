@@ -15,7 +15,7 @@ export namespace transactionEntryCleanupSensitiveFx {
 export const transactionEntryCleanupSensitiveFx = Effect.fn("transactionEntryCleanupSensitiveFx")(
 	function* ({ transactionId, status }: transactionEntryCleanupSensitiveFx.Props) {
 		const logger = yield* getLoggerFx("transactionEntryCleanupSensitiveFx");
-		logger.debug("transactionEntryCleanupSensitiveFx", {
+		logger.trace("transactionEntryCleanupSensitiveFx", {
 			transactionId,
 			status,
 		});
