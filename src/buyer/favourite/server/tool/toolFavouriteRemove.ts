@@ -12,9 +12,9 @@ export const toolFavouriteRemove = tool({
 	name: "favourite-remove",
 	needsApproval: false,
 	description: `
-        Remove a listing from the current buyer user's favourites.
+Remove a listing from the current buyer user's favourites.
 
-        Use only when the user clearly wants to unfavourite/remove one listing. Requires a concrete listing identifier.
+Use only when the user clearly wants to unfavourite/remove one listing. Requires a concrete listing identifier.
     `.trim(),
 	parameters: FavouriteToggleSchema,
 	async execute(data) {
