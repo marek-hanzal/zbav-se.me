@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
 import { getRootLogger } from "~/server/log/getRootLogger";
 import { activityCollectionFn } from "~/user/activity/fn/activityCollectionFn";
-import { ActivityQuerySchema } from "~/user/activity/server/schema/ActivityQuerySchema";
+import { ActivityToolQuerySchema } from "~/user/activity/server/schema/ActivityToolQuerySchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -43,7 +43,7 @@ Sort:
 - archivedAt: Archive timestamp.
 - priority: Activity priority.
     `.trim(),
-	parameters: ActivityQuerySchema,
+	parameters: ActivityToolQuerySchema,
 	async execute(data) {
 		logger.trace("toolActivityCollection", {
 			data,

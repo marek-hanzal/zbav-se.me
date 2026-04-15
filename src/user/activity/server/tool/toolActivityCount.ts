@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
 import { getRootLogger } from "~/server/log/getRootLogger";
 import { activityCountFn } from "~/user/activity/fn/activityCountFn";
-import { ActivityCountQuerySchema } from "~/user/activity/server/schema/ActivityCountQuerySchema";
+import { ActivityToolQuerySchema } from "~/user/activity/server/schema/ActivityToolQuerySchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -36,7 +36,9 @@ Priority values:
 - common: Normal priority (e.g. interactions on listings).
 - high: High priority (usually messages/transactions between users).
     `.trim(),
-	parameters: ActivityCountQuerySchema,
+	parameters: ActivityToolQuerySchema.pick({
+		filter: true,
+	}),
 	async execute(data) {
 		logger.trace("toolActivityCount", {
 			data,
