@@ -1,6 +1,6 @@
 import { tool } from "@openai/agents";
 import { feedCreateFn } from "~/buyer/feed/fn/feedCreateFn";
-import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
+import { FeedToolCreateSchema } from "~/buyer/feed/server/schema/FeedToolCreateSchema";
 import { getRootLogger } from "~/server/log/getRootLogger";
 
 const logger = getRootLogger([
@@ -23,7 +23,7 @@ Hint:
 - 'type: search': Internal/agent-derived saved search type. Do not use this type from agent workflows.
 - Pay attention to available fields in 'query' field, also in 'query.meta'
     `.trim(),
-	parameters: FeedCreateSchema,
+	parameters: FeedToolCreateSchema,
 	async execute(data) {
 		logger.trace("toolFeedCreate", {
 			data,
