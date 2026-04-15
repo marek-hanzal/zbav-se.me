@@ -39,10 +39,7 @@ import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSetting
 import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
 import { toolKnowledgeIndex } from "~/user/knowledge/server/tool/toolKnowledgeIndex";
 import { toolKnowledgeSearch } from "~/user/knowledge/server/tool/toolKnowledgeSearch";
-import {
-	toolTransactionEntryCollection as toolBuyerTransactionEntryCollection,
-	toolTransactionEntryCollection as toolSellerTransactionEntryCollection,
-} from "~/user/transaction-entry/server/tool/toolTransactionEntryCollection";
+import { toolTransactionEntryCollection } from "~/user/transaction-entry/server/tool/toolTransactionEntryCollection";
 import { toolTransactionEntryCreate } from "~/user/transaction-entry/server/tool/toolTransactionEntryCreate";
 
 export const AssistantAgent = Agent.create({
@@ -191,7 +188,6 @@ Response style
 		toolBuyerTransactionCollection,
 		toolBuyerTransactionCount,
 		toolBuyerTransactionCreate,
-		toolBuyerTransactionEntryCollection,
 		toolBuyerTransactionEntryCount,
 		toolBuyerTransactionReject,
 		toolBuyerTransactionDispute,
@@ -206,7 +202,6 @@ Response style
 		toolSellerTransactionCount,
 		toolSellerTransactionCollection,
 		toolSellerTransactionEntryCount,
-		toolSellerTransactionEntryCollection,
 		toolSellerTransactionAccept,
 		toolSellerTransactionReject,
 		toolSellerTransactionResolve,
@@ -222,6 +217,8 @@ Response style
 		 */
 		toolActivityCollection,
 		toolActivityCount,
+		//
+		toolTransactionEntryCollection,
 		toolTransactionEntryCreate,
 		/**
 		 * Utility tools for both human and models
