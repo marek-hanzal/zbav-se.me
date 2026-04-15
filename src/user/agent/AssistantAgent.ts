@@ -1,6 +1,5 @@
 import { Agent } from "@openai/agents";
-import { toolFavouriteCreate } from "~/buyer/favourite/server/tool/toolFavouriteCreate";
-import { toolFavouriteRemove } from "~/buyer/favourite/server/tool/toolFavouriteRemove";
+import { toolFavouriteToggle } from "~/buyer/favourite/server/tool/toolFavouriteToggle";
 import { toolFeedCollection } from "~/buyer/feed/server/tool/toolFeedCollection";
 import { toolFeedCount } from "~/buyer/feed/server/tool/toolFeedCount";
 import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
@@ -8,13 +7,10 @@ import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
 import { toolFeedPatch } from "~/buyer/feed/server/tool/toolFeedPatch";
 import { toolListingCollection as toolBuyerListingCollection } from "~/buyer/listing/server/tool/toolListingCollection";
 import { toolListingCount as toolBuyerListingCount } from "~/buyer/listing/server/tool/toolListingCount";
-import { toolTransactionClose as toolBuyerTransactionClose } from "~/buyer/transaction/server/tool/toolTransactionClose";
 import { toolTransactionCollection as toolBuyerTransactionCollection } from "~/buyer/transaction/server/tool/toolTransactionCollection";
 import { toolTransactionCount as toolBuyerTransactionCount } from "~/buyer/transaction/server/tool/toolTransactionCount";
 import { toolTransactionCreate as toolBuyerTransactionCreate } from "~/buyer/transaction/server/tool/toolTransactionCreate";
-import { toolTransactionDispute as toolBuyerTransactionDispute } from "~/buyer/transaction/server/tool/toolTransactionDispute";
-import { toolTransactionReject as toolBuyerTransactionReject } from "~/buyer/transaction/server/tool/toolTransactionReject";
-import { toolTransactionSuccess as toolBuyerTransactionSuccess } from "~/buyer/transaction/server/tool/toolTransactionSuccess";
+import { toolTransactionWorkflow as toolBuyerTransactionWorkflow } from "~/buyer/transaction/server/tool/toolTransactionWorkflow";
 import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
 import { toolDraftCount } from "~/seller/draft/server/tool/toolDraftCount";
 import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
@@ -35,8 +31,6 @@ import { toolActivityCollection } from "~/user/activity/server/tool/toolActivity
 import { toolActivityCount } from "~/user/activity/server/tool/toolActivityCount";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
-import { toolKnowledgeIndex } from "~/user/knowledge/server/tool/toolKnowledgeIndex";
-import { toolKnowledgeSearch } from "~/user/knowledge/server/tool/toolKnowledgeSearch";
 import { toolTransactionEntryCollection } from "~/user/transaction-entry/server/tool/toolTransactionEntryCollection";
 import { toolTransactionEntryCount } from "~/user/transaction-entry/server/tool/toolTransactionEntryCount";
 import { toolTransactionEntryCreate } from "~/user/transaction-entry/server/tool/toolTransactionEntryCreate";
@@ -167,8 +161,6 @@ Response style
 		 * Internal model tools
 		 */
 		toolKnowledge,
-		toolKnowledgeIndex,
-		toolKnowledgeSearch,
 		/**
 		 * Buyer related tools
 		 */
@@ -181,16 +173,12 @@ Response style
 		toolBuyerListingCollection,
 		toolBuyerListingCount,
 		//
-		toolFavouriteCreate,
-		toolFavouriteRemove,
+		toolFavouriteToggle,
 		//
 		toolBuyerTransactionCollection,
 		toolBuyerTransactionCount,
 		toolBuyerTransactionCreate,
-		toolBuyerTransactionReject,
-		toolBuyerTransactionDispute,
-		toolBuyerTransactionSuccess,
-		toolBuyerTransactionClose,
+		toolBuyerTransactionWorkflow,
 		/**
 		 * Seller related tools
 		 */

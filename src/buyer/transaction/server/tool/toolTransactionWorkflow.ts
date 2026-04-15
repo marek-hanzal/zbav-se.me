@@ -1,0 +1,86 @@
+import { tool } from "@openai/agents";
+import { match } from "ts-pattern";
+import { z } from "zod";
+import { transactionCloseFn } from "~/buyer/transaction/fn/transactionCloseFn";
+import { transactionDisputeFn } from "~/buyer/transaction/fn/transactionDisputeFn";
+import { transactionRejectFn } from "~/buyer/transaction/fn/transactionRejectFn";
+import { transactionSuccessFn } from "~/buyer/transaction/fn/transactionSuccessFn";
+import { getRootLogger } from "~/server/log/getRootLogger";
+
+const logger = getRootLogger([
+	"tool",
+	"toolTransactionWorkflow",
+]);
+
+export const toolTransactionWorkflow = tool({
+	name: "buyer-transaction-workflow",
+	needsApproval: false,
+	description: `
+Buyer-side transaction workflow action.
+
+Use only when the current user is acting as the buyer in this transaction.
+If the user's side is unknown, first fetch the transaction and confirm the perspective.
+
+Supported actions:
+- reject: buyer rejects the transaction
+- dispute: buyer opens a dispute/complaint
+- success: buyer confirms the transaction was completed successfully
+- close: buyer closes the transaction
+
+Requires the exact buyer-side transaction id.
+	`.trim(),
+	parameters: z
+		.looseObject({
+			transactionId: z.string().meta({
+				description: "Exact buyer-side transaction ID",
+			}),
+			type: z
+				.enum([
+					"close",
+					"dispute",
+					"reject",
+					"success",
+				])
+				.meta({
+					description: "Buyer workflow action to execute",
+				}),
+		})
+		.strip(),
+	async execute({ type, transactionId }) {
+		logger.trace("toolTransactionWorkflow", {
+			type,
+			transactionId,
+		});
+
+		return match(type)
+			.with("close", () => {
+				return transactionCloseFn({
+					data: {
+						id: transactionId,
+					},
+				});
+			})
+			.with("dispute", () => {
+				return transactionDisputeFn({
+					data: {
+						id: transactionId,
+					},
+				});
+			})
+			.with("success", () => {
+				return transactionSuccessFn({
+					data: {
+						id: transactionId,
+					},
+				});
+			})
+			.with("reject", () => {
+				return transactionRejectFn({
+					data: {
+						id: transactionId,
+					},
+				});
+			})
+			.exhaustive();
+	},
+});

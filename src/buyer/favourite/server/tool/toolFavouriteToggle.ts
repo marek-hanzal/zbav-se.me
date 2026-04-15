@@ -5,28 +5,23 @@ import { getRootLogger } from "~/server/log/getRootLogger";
 
 const logger = getRootLogger([
 	"tool",
-	"toolFavouriteCreate",
+	"toolFavouriteToggle",
 ]);
 
-export const toolFavouriteCreate = tool({
-	name: "favourite-create",
+export const toolFavouriteToggle = tool({
+	name: "favourite-toggle",
 	needsApproval: false,
 	description: `
-Add a listing to the current buyer user's favourites.
-
-Use only when the user clearly wants to save or favourite one listing. Requires a concrete listing identifier and feed identifier.
+Toggles concrete listing as favourite/unfavourite.
     `.trim(),
 	parameters: FavouriteToggleSchema,
 	async execute(data) {
-		logger.trace("toolFavouriteCreate", {
+		logger.trace("toolFavouriteToggle", {
 			data,
 		});
 
 		return favouriteToggleFn({
-			data: {
-				...data,
-				toggle: true,
-			},
+			data,
 		});
 	},
 });

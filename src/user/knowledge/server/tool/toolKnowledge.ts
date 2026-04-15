@@ -1,4 +1,5 @@
 import { tool } from "@openai/agents";
+import Fuse from "fuse.js";
 import { z } from "zod";
 import { getRootLogger } from "~/server/log/getRootLogger";
 import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
@@ -13,38 +14,79 @@ export const toolKnowledge = tool({
 	name: "knowledge",
 	needsApproval: false,
 	description: `
-Get one knowledge topic by exact key. Use 'knowledge-search' first if the key is unknown.
+Search knowledge topics by query or exact key.
+Return the best matching topics.
+Set withContent to include full topic content.
     `.trim(),
 	parameters: z
 		.looseObject({
-			input: z.string().describe("Exact key from 'knowledge-search'."),
-			withContent: z.boolean().optional().describe("Include full content."),
+			input: z.string().describe("Search query."),
+			limit: z.coerce.number().int().positive().max(20).optional().describe("Max results."),
+			withContent: z.boolean().optional().default(false),
 		})
 		.strip(),
-	async execute({ withContent, input }) {
+	async execute({ input, limit, withContent }) {
 		logger.trace("toolKnowledge", {
-			withContent,
 			input,
+			limit,
+			withContent,
 		});
 
-		const index = getKnowledgeIndex();
-		const topic = index.find((item) => item.data.key === input);
+		const normalized = input.trim();
+		const index = getKnowledgeIndex().map(
+			({ content, data }) =>
+				({
+					...data,
+					content,
+				}) as const,
+		);
 
-		if (!topic) {
-			return {
-				found: false,
-				key: input,
-				error: "Unknown knowledge key. Use 'knowledge-search' first.",
-			};
-		}
+		const fuse = new Fuse(index, {
+			keys: [
+				{
+					name: "key",
+					weight: 0.35,
+				},
+				{
+					name: "title",
+					weight: 0.25,
+				},
+				{
+					name: "summary",
+					weight: 0.2,
+				},
+				{
+					name: "content",
+					weight: 0.2,
+				},
+			],
+			includeScore: true,
+			ignoreLocation: true,
+			ignoreFieldNorm: true,
+			minMatchCharLength: 1,
+			threshold: 0.35,
+		});
+
+		const matches = fuse
+			.search(normalized, {
+				limit,
+			})
+			.map(
+				({ item, score }) =>
+					({
+						key: item.key,
+						title: item.title,
+						summary: item.summary,
+						related: item.related ?? [],
+						content: withContent ? item.content : undefined,
+						score: score ?? 0,
+					}) as const,
+			);
 
 		return {
-			found: true,
-			key: topic.data.key,
-			title: topic.data.title,
-			summary: topic.data.summary,
-			related: topic.data.related ?? [],
-			content: withContent ? topic.content : undefined,
+			query: normalized,
+			count: matches.length,
+			matches,
 		};
 	},
 });
