@@ -1,6 +1,6 @@
 import { tool } from "@openai/agents";
 import { feedPatchFn } from "~/buyer/feed/fn/feedPatchFn";
-import { FeedPatchSchema } from "~/buyer/feed/server/schema/FeedPatchSchema";
+import { FeedToolPatchSchema } from "~/buyer/feed/server/schema/FeedToolPatchSchema";
 import { getRootLogger } from "~/server/log/getRootLogger";
 
 const logger = getRootLogger([
@@ -25,7 +25,7 @@ Boundaries:
 - Do not invent new patch fields
 - Patch only fields you're asked for
     `.trim(),
-	parameters: FeedPatchSchema,
+	parameters: FeedToolPatchSchema,
 	async execute(data) {
 		logger.trace("toolFeedPatch", {
 			data,

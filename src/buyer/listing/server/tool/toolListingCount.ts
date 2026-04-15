@@ -32,7 +32,10 @@ Enum values:
 - currency: CZK.
 - sort fields: price, condition, age, createdAt, updatedAt, expiresAt, geo.
     `.trim(),
-	parameters: ListingToolQuerySchema,
+	parameters: ListingToolQuerySchema.pick({
+		filter: true,
+		meta: true,
+	}),
 	async execute(data) {
 		logger.trace("toolListingCount", {
 			data,
