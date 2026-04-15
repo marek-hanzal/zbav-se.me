@@ -56,6 +56,7 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 				api: "https://api.geoapify.com",
 				autocomplete: "/v1/geocode/autocomplete",
 				geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
+				route: "/v1/routematrix",
 			}),
 			withS3Fx({
 				api: s3Config.SERVER_S3_API,

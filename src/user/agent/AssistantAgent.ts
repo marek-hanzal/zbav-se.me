@@ -34,6 +34,7 @@ import { toolTransactionReject as toolSellerTransactionReject } from "~/seller/t
 import { toolTransactionResolve as toolSellerTransactionResolve } from "~/seller/transaction/server/tool/toolTransactionResolve";
 import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
 import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
+import { toolRoute } from "~/session/location/server/tool/toolRoute";
 import { toolActivityCollection } from "~/user/activity/server/tool/toolActivityCollection";
 import { toolActivityCount } from "~/user/activity/server/tool/toolActivityCount";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
@@ -259,6 +260,7 @@ Response style
 		 * Utility tools for both human and models
 		 */
 		toolLocationAutocomplete,
+		toolRoute,
 		toolCategoryCollection,
 	],
 });

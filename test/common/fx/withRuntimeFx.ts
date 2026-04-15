@@ -36,6 +36,7 @@ export const withRuntimeFx = (database: TestDatabase) => {
 				api: "https://api.geoapify.com",
 				autocomplete: "/v1/geocode/autocomplete",
 				geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
+				route: "/v1/routematrix",
 			}),
 		);
 };
