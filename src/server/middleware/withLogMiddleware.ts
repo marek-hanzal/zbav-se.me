@@ -47,6 +47,7 @@ export const withLogMiddleware = createMiddleware()
 								categoryWidth: 64,
 								properties: true,
 								timestamp: "date-time-tz",
+								messageColor: "white",
 							}),
 							nonBlocking: true,
 						}),
