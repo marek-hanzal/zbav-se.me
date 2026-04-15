@@ -1,25 +1,40 @@
 {
 	"default": {
 		"titles": [
-			"Produkt v top stavu",
-			"Nabízím kvalitní zboží",
-			"Používané, ale funkční",
-			"Bazar - výprodej"
+			"iPhone 15 Pro Max 256GB Natural Titanium",
+			"Samsung Galaxy S24 Ultra 512GB Titan Gray",
+			"Xiaomi 14 Pro 512GB White",
+			"Google Pixel 8 Pro 256GB Obsidian",
+			"OnePlus 12 5G 256GB Flowy Emerald",
+			"MacBook Pro 14\" M3 Pro",
+			"Dell XPS 15 9530 OLED",
+			"Apple Watch Ultra 2",
+			"Samsung Galaxy Watch 6 Classic",
+			"LG 34\" UltraWide IPS"
 		],
 		"descriptions": [
-			"Stav: plně funkční, viz foto. Důvod prodeje: nevyužívám.",
-			"Výborný stav, možno vyzkoušet. Platba hotově."
+			"iPhone 15 Pro Max – 256GB, Natural Titanium, 88% baterie, plná záruka Apple do 2025, originál BOX a nabíječka",
+			"Samsung Galaxy S24 Ultra – 512GB, Titan Gray, nový, nerozbalený, záruka Samsung 2 roky",
+			"Xiaomi 14 Pro – 512GB White, MIUI 14, všechna LTE/5G pásma, originální příslušenství",
+			"Google Pixel 8 Pro – 256GB Obsidian, čistý Android 14, Originál unlock, záruka Google",
+			"MacBook Pro 14\" – M3 Pro, 18GB RAM, 512GB SSD, Space Black, náhradní nabíječka v balení",
+			" Dell XPS 15 9530 – i7-13700H, 32GB RAM, 1TB SSD, OLED 3.5K, Touch, Windows 11"
 		],
 		"pros": [
-			"stav je výborný",
-			"funkční bez vad",
+			"originální CZ distribuce",
+			"100% funkční",
+			"baterie 85%+",
+			"plná záruka",
+			"čistý originál bez repa",
 			"kompletní příslušenství",
 			"rychlé předání"
 		],
 		"cons": [
-			"lehce opotřebované",
-			"bez původní krabice",
-			"drobná vada na povrchu"
+			"micro škrábance na rámečku",
+			"83% baterie",
+			"bez originální nabíječky",
+			"lehce osazený displej",
+			"drobné vady na povrchu"
 		],
 		"priceMin": 100,
 		"priceMax": 2000,
@@ -30,27 +45,60 @@
 	},
 	"mobily-a-prislusenstvi--smartphone": {
 		"titles": [
-			"iPhone 15 Pro Max 256GB",
-			"Samsung Galaxy S24 Ultra",
-			"Xiaomi 14 Pro",
-			"Google Pixel 8",
-			"OnePlus 12 5G"
+			"iPhone 15 Pro Max 256GB Natural Titanium",
+			"iPhone 15 128GB Blue",
+			"iPhone 14 Pro 256GB Space Black",
+			"iPhone 13 128GB Midnight",
+			"Samsung Galaxy S24 Ultra 512GB Titan Gray",
+			"Samsung Galaxy S23 FE Mint",
+			"Samsung Galaxy S22+ 128GB Green",
+			"Samsung Galaxy A54 128GB Awesome White",
+			"Xiaomi 14 Pro 512GB White",
+			"Xiaomi 13T Pro 256GB Black",
+			"Google Pixel 8 Pro 256GB Obsidian",
+			"Google Pixel 7a 128GB Snow",
+			"OnePlus 12 5G 256GB Flowy Emerald",
+			"OnePlus 11 256GB Titan Black"
 		],
 		"descriptions": [
-			"Mobilní telefon, stav jako nový. Záruka 12 měsíců včetně.",
-			"Originál Samsung/iPhone. Stav 95%, kompletní balení.",
-			"Odblokovaný na všechny operátory. Nový displej."
+			"iPhone 15 Pro Max – 256GB, Natural Titanium, 88% baterie, plná záruka Apple do 2025, originál BOX a nabíječka",
+			"iPhone 15 – 128GB Blue, 91% baterie, Face ID funkční, CZ distribuce, originál krabice a nabíječka",
+			"iPhone 14 Pro – 256GB Space Black, 85% baterie, Dynamic Island, všechny Apple služby active, záruka do 2024",
+			"iPhone 13 – 128GB Midnight, 84% baterie, čistý iOS 17, vymeněný displej – originál OLED",
+			"Samsung Galaxy S24 Ultra – 512GB, Titan Gray, nový, nerozbalený, záruka Samsung 2 roky",
+			"Samsung Galaxy S23 FE – Mint, 128GB, 86% baterie, S-Pen v balení, One UI 5.1",
+			"Samsung Galaxy S22+ – 128GB Green, 82% baterie, IP68, bez repa, originál nabíječka",
+			"Samsung Galaxy A54 – 128GB Awesome White, nový, nerozbalený, záruka Samsung 2 roky, AMOLED 120Hz",
+			"Xiaomi 14 Pro – 512GB White, MIUI 14, všechna LTE/5G pásma, originální příslušenství, Dolby Atmos",
+			"Xiaomi 13T Pro – 256GB Black, 100% baterie, 144Hz AMOLED, 120W nabíjení, originál CZ",
+			"Google Pixel 8 Pro – 256GB Obsidian, čistý Android 14, Originál unlock, záruka Google do 2026, Tensor G3",
+			"Google Pixel 7a – 128GB Snow, 92% baterie, čistý Android 14, Face Unlock, záruka Google",
+			"OnePlus 12 5G – 256GB Flowy Emerald, 99% baterie, 100W SuperVOOC, OxygenOS 14, CZ distribuce",
+			"OnePlus 11 – 256GB Titan Black, 100% baterie, 80W nabíjení, Snapdragon 8 Gen 2"
 		],
 		"pros": [
-			"záruka 12 měsíců",
-			"originální balení",
-			"odblokovaný",
-			"stav jako nový"
+			"originální CZ distribuce",
+			"100% funkční Face ID / S-Pen",
+			"baterie 88%+",
+			"plná záruka",
+			"čistý originál bez repa",
+			"Kompletní originální příslušenství",
+			"odblokovaný na všechny operátory",
+			"vodotěsný IP68/IP69K",
+			"výměna baterie možná",
+			"dlouhá softwarová podpora"
 		],
 		"cons": [
-			"drobné škrábance",
-			"bez sluchátka",
-			"chybí orig. nabíječka"
+			"micro škrábance na rámečku",
+			"83% baterie",
+			"bez originální nabíječky",
+			"lehce osazený displej (burn-in)",
+			"jedna prasklina v rohu",
+			"chybí SIM ejection tool",
+			"nekryjíící sluchátka",
+			"nutná výměna baterie",
+			"reprofilovaný displej",
+			"bez originální krabice"
 		],
 		"priceMin": 5000,
 		"priceMax": 35000,
@@ -61,27 +109,56 @@
 	},
 	"mobily-a-prislusenstvi--tlacitkovy-telefon": {
 		"titles": [
-			"Nokia 3310",
-			"Nokia 6310",
-			"Samsung Galaxy XCover",
+			"Nokia 3310 3G Dual SIM",
+			"Nokia 6310 4G",
+			"Nokia 8210 4G",
+			"Nokia 2660 Flip",
+			"Samsung Galaxy XCover 5",
+			"Samsung Galaxy XCover 6 Pro",
 			"Cat B25",
-			"Rugged telefon"
+			"Cat S62 Pro",
+			"Rugged telefon Ulefone Armor",
+			"Rugged telefon Doogee S88 Pro",
+			"Xiaomi Qin F21 Pro",
+			"Aligator A670 Senior"
 		],
 		"descriptions": [
-			"Klasický tlačítkový telefon. Výdrž baterie perfektní.",
-			"Odolný telefon, funkční. Ideální jako záložní telefon.",
-			"Nokia originál. Nová baterie, plně funkční."
+			"Nokia 3310 3G – modrá, Dual SIM, původní balení, nová baterie, funkční 100%",
+			"Nokia 6310 4G – copper, klasický design, FM rádio, bluetooth, nová - v krabici",
+			"Nokia 8210 4G – sand, kompaktní, výdrž až 19 dní, originál příslušenství CZ",
+			"Nokia 2660 Flip – flip telefon, velká tlačítka, SOS tlačítko, pro seniory ideální",
+			"Samsung Galaxy XCover 5 – černý, IP68, MIL-STD-810H, rozbitelné, dotykový + fyzické tlačítka",
+			"Samsung Galaxy XCover 6 Pro – černý, 5G, IP68, vykládací displej, snímač čárových kódů, nový",
+			"Cat B25 – černo/oranžový, odolný, voděodolný IP67, flashlight, funkční, používán na stavbě",
+			"Cat S62 Pro – černý, termokamera FLIR, IP68, výdrž baterie 2 týdny, servo historie",
+			"Ulefone Armor – oranžový, IP68, 5000mAh baterie, NFC, kompas, outdoor, nový",
+			"Doogee S88 Pro – černý, IP68, 10000mAh, reverzní nabíjení, solární panel, outdoor ideální",
+			"Xiaomi Qin F21 Pro – černý, infračervený ovladač, AI asistent, dlouhá výdrž, USB-C",
+			"Aligator A670 Senior – stříbrný, SOS tlačítko, velký displej, pro seniory, nový v krabici"
 		],
 		"pros": [
-			"dlouhá výdrž baterie",
+			"výdrž baterie až 3 týdny",
 			"jednoduché ovládání",
-			"odolný",
-			"ideální jako záložní"
+			"voděodolný IP67/IP68",
+			"ideální jako záložní telefon",
+			"velká tlačítka",
+			"dlouhá výdrž na jedno nabití",
+			"odolný proti pádu",
+			"Funkční FM rádio",
+			"Dual SIM",
+			"SOS tlačítko"
 		],
 		"cons": [
-			"bez fotoaparátu",
+			"bez fotoaparátu (některé modely)",
 			"malý displej",
-			"málo funkcí"
+			"bez smart funkcí",
+			"chybí aplikace",
+			"pouze 2G/3G sítě",
+			"bez dotykového displeje",
+			"nutná microm SD karta",
+			"bez GPS",
+			"starý software",
+			"nutná výměna baterie"
 		],
 		"priceMin": 500,
 		"priceMax": 3000,
@@ -91,27 +168,60 @@
 	},
 	"mobily-a-prislusenstvi--chytre-hodinky": {
 		"titles": [
-			"Apple Watch Series 9",
-			"Samsung Galaxy Watch 6",
-			"Garmin Fenix 7",
+			"Apple Watch Series 9 45mm Starlight",
+			"Apple Watch Series 9 41mm Midnight",
+			"Apple Watch Ultra 2 49mm",
+			"Apple Watch SE 2 44mm",
+			"Samsung Galaxy Watch 6 Classic 47mm",
+			"Samsung Galaxy Watch 6 44mm",
+			"Samsung Galaxy Watch 5 Pro 45mm",
+			"Garmin Fenix 7X Pro",
+			"Garmin Forerunner 965",
+			"Garmin Epix Pro",
 			"Fitbit Sense 2",
-			"Amazfit GTR 4"
+			"Fitbit Charge 6",
+			"Amazfit GTR 4",
+			"Amazfit T-Rex 2"
 		],
 		"descriptions": [
-			"Chytré hodinky, plně funkční. Originální balení včetně.",
-			"Sportovní hodinky. Stav nový, nošené jen párkrát.",
-			"Herní/sportovní hodinky. Všechny senzory funkční."
+			"Apple Watch Series 9 – 45mm Starlight, nový, nerozbalený, záruka Apple do 2025, GPS + Cellular",
+			"Apple Watch Series 9 – 41mm Midnight, 88% maximální kapacity baterie, originál pásek, krát se sundává",
+			"Apple Watch Ultra 2 – 49mm, Titan, nový, nerozbalený, záruka Apple 2 roky, LTE",
+			"Apple Watch SE 2 – 44mm, Space Gray, použité 2 měsíce, 100% stav, originál nabíječka",
+			"Samsung Galaxy Watch 6 Classic – 47mm Black, Super AMOLED, rotující bezel, nový, v originál krabici",
+			"Samsung Galaxy Watch 6 – 44mm Graphite, používán 3 měsíce, 95% baterie, Samsung Health",
+			"Samsung Galaxy Watch 5 Pro – 45mm Black, Sapphire glass, GPS, dlouhá výdrž, nový",
+			"Garmin Fenix 7X Pro – 51mm, Solar, TOPO mapy, mult-GNSS, nerez ocel, nový",
+			"Garmin Forerunner 965 – 46mm, AMOLED, mapování, music, dlaňové nabíjení, používán 6 měsíců",
+			"Garmin Epix Pro – 47mm, Sapphire, mapování v celé Evropě, LED svítilna, nový",
+			"Fitbit Sense 2 – charcoal, EDA senzor, teplota kůže, 6+ dní výdrž, originál pásek",
+			"Fitbit Charge 6 – coral, Google integrace, GPS, AMOLED, nový v originál krabici",
+			"Amazfit GTR 4 – Race, 14 dní výdrž, dual-band GPS, offline mapy, nový",
+			"Amazfit T-Rex 2 – desert, outdoor, 10 ATM, dual-band GPS,军用 odolnost, nový"
 		],
 		"pros": [
+			"originální CZ distribuce",
+			"vodotěsné 5-10 ATM",
+			"výdrž baterie 7-14 dní",
+			"GPS + GLONASS",
+			"srdeční tep EKG",
 			"originální balení",
-			"vodotěsné",
-			"dlouhá výdrž baterie",
-			"všechny senzory funkční"
+			"plná záruka",
+			"kompletní senzory",
+			"mobilní platby",
+			"dlouhá výdrž"
 		],
 		"cons": [
-			"lehce opotřebovaný pásek",
-			"bez orig. krabice",
-			"drobné vady na sklíčku"
+			"lehce opotřebovaný silikonový pásek",
+			"bez originální krabice",
+			"drobné škrábance na sklíčku (ne funkční)",
+			"82% kapacity baterie",
+			"chybí originální nabíječka",
+			"osené hodinkový pásek",
+			"nutná výměna baterie po 2 letech",
+			"bez celodenního nošení na kůži",
+			"špatný kontakt senzoru",
+			"pouze 180 mAh baterie"
 		],
 		"priceMin": 2000,
 		"priceMax": 12000,
@@ -122,27 +232,60 @@
 	},
 	"pocitace-a-kancelar--notebook": {
 		"titles": [
-			"MacBook Pro 14\" M3",
-			"Dell XPS 15 OLED",
-			"Lenovo ThinkPad X1 Carbon",
-			"ASUS ROG Strix",
-			"HP Spectre x360"
+			"MacBook Pro 14\" M3 Pro 512GB",
+			"MacBook Pro 16\" M3 Max 1TB",
+			"MacBook Air 13\" M3",
+			"MacBook Air 15\" M2",
+			"Dell XPS 15 9530 OLED",
+			"Dell XPS 13 Plus 9320",
+			"Lenovo ThinkPad X1 Carbon Gen 11",
+			"Lenovo ThinkPad T14s Gen 4",
+			"ASUS ROG Strix G16",
+			"ASUS ProArt Studiobook 16",
+			"HP Spectre x360 14",
+			"HP EliteBook 840 G10",
+			"Microsoft Surface Laptop 5",
+			"Microsoft Surface Pro 9"
 		],
 		"descriptions": [
-			"Herní/kancelářský notebook. Intel i7, 16GB RAM, 512GB SSD.",
-			"MacBook Air M2. Stav nový, nepoužívaný.",
-			"Pro notebook, i5, 8GB RAM, 256GB SSD."
+			"MacBook Pro 14\" – M3 Pro (12CPU/18GPU), 18GB RAM, 512GB SSD, Space Black, AppleCare+ do 2026",
+			"MacBook Pro 16\" – M3 Max (16CPU/40GPU), 64GB RAM, 1TB SSD, Silver, Mini-LED, nový",
+			"MacBook Air 13\" – M3, 8GB RAM, 256GB SSD, Midnight, tichý chod, nový nerozbalený",
+			"MacBook Air 15\" – M2, 16GB RAM, 512GB SSD, Starlight, 15.3\" Liquid Retina, nový",
+			"Dell XPS 15 9530 – i7-13700H, 32GB RAM, 1TB SSD, OLED 3.5K, Touch, RTX 4060, Windows 11",
+			"Dell XPS 13 Plus 9320 – i7-1260P, 16GB RAM, 512GB SSD, 13.4\" OLED 3.5K, nový",
+			"Lenovo ThinkPad X1 Carbon Gen 11 – i7-1365U, 32GB RAM, 1TB SSD, 14\" 2.8K OLED, 5G, nový",
+			"Lenovo ThinkPad T14s Gen 4 – i7-1355U, 16GB RAM, 512GB SSD, 14\" IPS FHD, TrackPoint, nový",
+			"ASUS ROG Strix G16 – i9-13980HX, 32GB RAM, 1TB SSD, RTX 4070, 240Hz, Mech Evo klávesnice",
+			"ASUS ProArt Studiobook 16 – i9-13900H, 32GB RAM, 2TB SSD, RTX 4070, OLED 16\" 4K, nový",
+			"HP Spectre x360 14 – i7-1355U, 16GB RAM, 512GB SSD, 13.5\" OLED, konvertibilní, nový",
+			"HP EliteBook 840 G10 – i5-1345U, 16GB RAM, 512GB SSD, 14\" FHD IPS, 5G modul, nový",
+			"Microsoft Surface Laptop 5 – i7-1255U, 16GB RAM, 512GB SSD, 13.5\" PixelSense, Alcantara, nový",
+			"Microsoft Surface Pro 9 – i7-1255U, 16GB RAM, 256GB SSD, 13\" PixelSense, Type Cover, nový"
 		],
 		"pros": [
-			"výkonný procesor",
-			"velká RAM",
-			"rychlé SSD",
-			"podsvícená klávesnice"
+			"výkonný procesor M3/i7/i9",
+			"velká RAM 16-64GB",
+			"rychlé NVMe SSD 512GB-2TB",
+			"podsvícená klávesnice",
+			"4K/OLED displej",
+			"Dedikovaná RTX grafika",
+			"Čtečka otisků prstů",
+			"Čtečka SD karet",
+			"5G/LTE modul",
+			"TBang & Olufsen reproduktory"
 		],
 		"cons": [
 			"lehce opotřebovaný",
-			"chybí orig. nabíječka",
-			"drobné škrábance"
+			"chybí originální nabíječka",
+			"drobné škrábance na víku",
+			"82% zdraví baterie (cycles 500+)",
+			"bez Type Cover / nabíječky",
+			"Nutná výměna termopasty",
+			"chybí originální box",
+			"špatné chlazení - nutný servis",
+			"prasklý pant",
+			"chybí Windows license"
 		],
 		"priceMin": 8000,
 		"priceMax": 50000,
@@ -153,27 +296,56 @@
 	},
 	"pocitace-a-kancelar--monitor": {
 		"titles": [
-			"LG UltraWide 34\"",
-			"Samsung Odyssey G7",
-			"Dell UltraSharp 27\"",
-			"ASUS ProArt 32\"",
-			"BenQ PD3200U"
+			"LG UltraWide 34WN80C-B",
+			"LG 27UK850-W 4K IPS",
+			"Samsung Odyssey G7 S28AG70",
+			"Samsung Odyssey G9 49\"",
+			"Dell UltraSharp U2723QE",
+			"Dell UltraSharp U3223QE",
+			"ASUS ProArt PA32UCXR",
+			"ASUS ROG Swift PG259QN",
+			"BenQ PD3200U 32\" 4K",
+			"BenQ EX3501R",
+			"AOC AGON AG254FGZ",
+			"MSI Optix MPG321QRF"
 		],
 		"descriptions": [
-			"Herní monitor 144Hz. IPS panel, 4K rozlišení.",
-			"Profesionální monitor. Barvy přesné, kalibrovaný.",
-			"Kancelářský monitor. Full HD, ideální na práci."
+			"LG UltraWide 34WN80C-B – 34\" UW-QHD, IPS, 144Hz, USB-C 60W, HDR10, pivot, kalibrovaný, nový",
+			"LG 27UK850-W – 27\" 4K UHD, IPS, USB-C, HDR400, FreeSync, Barevně přesný, nový",
+			"Samsung Odyssey G7 S28AG70 – 28\" 4K UHD, IPS, 144Hz, HDR400, G-Sync, HGELD podsvícení, nový",
+			"Samsung Odyssey G9 – 49\" DQHD, VA, 240Hz, HDR1000, Super Ultrawide, curved 1000R, nový",
+			"Dell UltraSharp U2723QE – 27\" 4K UHD, IPS Black, USB-C KVM, 90W, calibrace, nový",
+			"Dell UltraSharp U3223QE – 32\" 4K UHD, IPS Black, USB-C KVM, 90W, pro grafiiku, nový",
+			"ASUS ProArt PA32UCXR – 32\" 4K UHD, Mini-LED, HDR1400, Thunderbolt 3, calibrace, nový",
+			"ASUS ROG Swift PG259QN – 24.5\" FHD, OLED, 360Hz, G-Sync, Esports, nový",
+			"BenQ PD3200U – 32\" 4K UHD, IPS, CAD mode, KVM, ergonomický stojan, nový",
+			"BenQ EX3501R – 35\" UW-QHD, VA, 100Hz, HDR, FreeSync2, curved, nový",
+			"AOC AGON AG254FGZ – 24.5\" FHD, Fast IPS, 360Hz, G-Sync, RGB osvětlení, nový",
+			"MSI Optix MPG321QRF – 32\" UW-QHD, Fast IPS, 175Hz, KVM, USB-C, herní, nový"
 		],
 		"pros": [
-			"vysoká obnovovací frekvence",
-			"IPS/VA panel",
-			"4K rozlišení",
-			"kalibrované barvy"
+			"vysoká obnovovací frekvence 144-360Hz",
+			"4K UHD rozlišení",
+			"IPS/VA/Mini-LED panely",
+			"HDR10/HDR1000",
+			"USB-C KVM switch",
+			"90W napájení přes USB-C",
+			"kalibrované barvy",
+			"pivot/height adjust",
+			"FreeSync/G-Sync",
+			"Low Blue Light"
 		],
 		"cons": [
 			"lehce poškrábaný stojan",
-			"bez kabelů",
-			"chybí orig. krabice"
+			"bez HDMI/DisplayPort kabelů",
+			"chybí originální krabice",
+			"dead pixel v rohu",
+			"lehce žlutý nádech podsvícení",
+			"oslabený backlight",
+			"chybí USB-C kabel",
+			"nutná rekalibrace",
+			"špatné pozorovací úhly",
+			"bez VESA mount"
 		],
 		"priceMin": 3000,
 		"priceMax": 15000,
@@ -184,27 +356,52 @@
 	},
 	"nabytek--pohovky-a-sedaci-soupravy": {
 		"titles": [
-			"Rohová pohovka Delta",
-			"Sedací souprava Modern",
-			"Gauč 3-dílný",
-			"Kožená sedací souprava",
-			"Rozkládací pohovka"
+			"Rohová sedací souprava Alpha šedá",
+			"Rohová pohovka Milan L-konfigurace",
+			"Kožená sedací souprava Roma černá",
+			"Kožená rohová pohovka Napoli",
+			"Rozkládací pohovka Erik s úložným prostorem",
+			"Relaxační pohovka Massager",
+			"Čalouněná sedací souprava Cosmo 3-dílná",
+			"Moderní gauč Berlin šedý melír",
+			"Fotelína křesílka 2ks + taburet",
+			"Sedací souprava Esme béžová"
 		],
 		"descriptions": [
-			"Masivní dubový nábytek. Stav nový, nesestavený.",
-			"Čalouněný nábytek, možno vyzkoušet.",
-			"Rohová pohovka, minimálně používaná. Výborný stav."
+			"Rohová sedací souprava Alpha – šedá, 280x180cm, L-konfigurace, rozkládací, úložný box, minimálně používaná",
+			"Rohová pohovka Milan – šedá, pravý roh, rozklad na spaní 140x200, potah metráž, nový stav",
+			"Kožená sedací souprava Roma – pravá kůže, černá, 3-dílná, kožené nožičky, rozkládací, super stav",
+			"Kožená rohová pohovka Napoli – bílá kůže, pravý roh, chrom nožičky, vysoký zád, perfektní stav",
+			"Rozkládací pohovka Erik – šedá, rozklad na 200x140, úložný prostor v bocích, 2x polštář, nová",
+			"Relaxační pohovka Massager – šedá, motorové polohování, bluetooth reproduktory, USB nabíječka, nová",
+			"Čalouněná sedací souprava Cosmo – béžová, 3+dílná, hřejivý potah, nosnost 300kg, minimálně použita",
+			"Moderní gauč Berlin – šedý melír, 200cm, měkké sedáky, rozkládací, potah pratelný, perfektní stav",
+			"Fotelína křesílka + taburet – 2x křesílko + taburetka, šedá metráž, dřevěné nohy, komplet",
+			"Sedací souprava Esme – béžová, 260x180, pravý roh, rozklad, úložný prostor, nosnost 260kg"
 		],
 		"pros": [
-			"kvalitní materiál",
+			"kvalitní potahová metráž/kůže",
 			"výborný stav",
-			"pohodlné",
-			"moderní design"
+			"pohodlné sedáky",
+			"rozkládací na spaní",
+			"úložný prostor",
+			"moderní design",
+			"robustní construct",
+			"pratelný potah",
+			"nosnost 250-350kg",
+			"včetně polštářů"
 		],
 		"cons": [
-			"bez potahu",
+			"bez potahového návleku",
 			"chybí nožičky",
-			"potřebuje vyčištění"
+			"potřebuje vyčištění",
+			"prosedlé sedáky",
+			"opotřebovaný potah",
+			"chybí úložný box",
+			"nutná oprava zipu",
+			"chybí polštáře",
+			"roztržený šev",
+			"špatné provedení dřeva"
 		],
 		"priceMin": 5000,
 		"priceMax": 35000,
@@ -215,27 +412,52 @@
 	},
 	"nabytek--postele-a-matrace": {
 		"titles": [
-			"Postel 160x200",
-			"Matrace viscoelastická",
-			"Postel s úložným prostorem",
-			"Manželská postel",
-			"Dětská postýlka"
+			"Postel Dublin dub 160x200",
+			"Postel Aida 180x200 bříza",
+			"Postel s úložným prostorem Torino",
+			"Manželská postel Colorado 180x200",
+			"Dětská postýlka Juna + rošt",
+			"Matrace Tempur Contour Elite",
+			"Matrace viscoelastická 90x200",
+			"Matrace Dormia latex 140x200",
+			"Matrace Auronica pěnová 160x200",
+			"Postel rozkládací pro hosty 140x200"
 		],
 		"descriptions": [
-			"Masivní dubová postel. Stav nový, nesestavená.",
-			"Ortopedická matrace. Výborný stav, nepoužívaná.",
-			"Postel včetně roštu. Rozložená, ideální k odvozu."
+			"Postel Dublin – dub masiv, 160x200, přírodní lak, nosnost 150kg, včetně laťkového roštu, nová nesestavená",
+			"Postel Aida – bříza, 180x200, bílý lazúr, úložný prostor v otvíracím dně, nová",
+			"Postel s úložným prostorem Torino – buk masiv, 160x200, 2x úložný box, zvedací rošt, nová",
+			"Manželská postel Colorado – 180x200, dub/bříza, přírodní, nosnost 200kg, včetně roštu, nová",
+			"Dětská postýlka Juna – 2v1, bříza, sestavená, včetně roštu a zábrany, 2x šuplík, nová",
+			"Matrace Tempur Contour Elite – 90x200, viscoelastická, výška 25cm, ortopedická, originál potah, nová",
+			"Matrace viscoelastická – 90x200, pěna 50kg/m³, výška 18cm, prodyšná, pro bolesti zad, nová",
+			"Matrace Dormia latex – 140x200, 100% latex, výška 20cm, antibakteriální, oboustranná, nová",
+			"Matrace Auronica pěnová – 160x200, studená pěna HR40, výška 22cm, potah zip, nová",
+			"Postel rozkládací pro hoste – 140x200, rozklad na 200x140, 2x matrace, dub nohy, nová"
 		],
 		"pros": [
-			"kvalitní dřevo",
+			"masivní dub/buk dřevo",
 			"ortopedická matrace",
 			"úložný prostor",
-			"nový stav"
+			"nový stav",
+			"včetně roštu",
+			"robustní construct",
+			"jednoduchá montáž",
+			"moderní design",
+			"dlouhá záruka",
+			"přírodní materiály"
 		],
 		"cons": [
-			"chybí šrouby",
+			"chybí šrouby k montáži",
 			"bez roštu",
-			"lehce poškrábaná"
+			"lehce poškrábaná",
+			"nutná impregnace",
+			"chybí nožičky",
+			"nekompatibilní rošt",
+			"prosedlá matrace",
+			"opotřebovaný potah",
+			"špatný rozměr",
+			"chybí úchyty"
 		],
 		"priceMin": 3000,
 		"priceMax": 20000,
@@ -246,27 +468,52 @@
 	},
 	"detske-zbozi--kocarky": {
 		"titles": [
-			"Kočárek sportovní",
-			"Golfový kočárek",
-			"Kombinovaný kočárek",
-			"Hluboký kočárek",
-			"Trojkombinace"
+			"Čtyřkolový kočárek Bugaboo Fox 2",
+			"Sportovní kočárek Joolz Aer+",
+			"Golfový kočárek Joolz Geo 3",
+			"Kombinovaný kočárek Cybex Mios 3",
+			"Hluboký kočárek Stokke Xplory X",
+			"Trojkombinace Britax Römer + autosedačka",
+			"Kočárek Emmaljunga Easygo",
+			"Kočárek Moon FF buggy",
+			"Kočárek EasyWalker Mini",
+			"Dvojkombinace ABC Design Sprinter"
 		],
 		"descriptions": [
-			"Dětský výrobek, certifikace ČR/EU. Stav 95%.",
-			"Používané, ale čisté a funkční. Kompletní výbava.",
-			"Kočárek 2v1. Výborný stav, včetně fusaku."
+			"Čtyřkolový kočárek Bugaboo Fox 2 – Midnight black, 4x pěnová kola, kompatibilní s vajíčkem, nový, nerozbalený",
+			"Sportovní kočárek Joolz Aer+ – graphite, 6kg váha, kompaktní skládání, protažená stříška, nový",
+			"Golfový kočárek Joolz Geo 3 – blue sky, 2x velká kola, XL košík, nastavitelná rukojeť, nový",
+			"Kombinovaný kočárek Cybex Mios 3 – Manhattan grey, kompatibilní s Cybex, nastavitelná zádová opěrka, nový",
+			"Hluboký kočárek Stokke Xplory X – black, nastavitelná výška sedáku, prošívání, XXL stříška, komplet",
+			"Trojkombinace Britax Römer – incl. autosedačka + isofix báze, Journey Pro + Go Safe, certifikace i-Size, nový",
+			"Kočárek Emmaljunga Easygo – navy, kompaktní, 3-pozicová zádová opěrka, nastavitelná rukojeť, nový",
+			"Kočárek Moon FF buggy – grey, lehký 5.5kg, recline 180°, jednoruční skládání, nový",
+			"Kočárek EasyWalker Mini – storm grey, golfový, XXL kola, madlo, nánožník v ceně, nový",
+			"Dvojkombinace ABC Design Sprinter – stone grey, kombinace hluboký+sportovní, košík, nová"
 		],
 		"pros": [
 			"certifikace ČR/EU",
 			"čistý stav",
 			"kompletní výbava",
-			"lehký"
+			"nízká váha",
+			"včetně fusaku",
+			"nastavitelná rukojeť",
+			"velký nákupní košík",
+			"kompaktní skládání",
+			"proti-sluneční stříška",
+			"včetně pláštěnky"
 		],
 		"cons": [
 			"lehce opotřebovaný",
-			"chybí plena",
-			"opotřebované kola"
+			"chybí plena na nohy",
+			"opotřebovaná kola",
+			"chybí dekorace",
+			"chybí adaptér na autosedačku",
+			"promáčklý rám",
+			"špatné zipy",
+			"opotřebovaný potah",
+			"chybí nánožník",
+			"jiná barva než na foto"
 		],
 		"priceMin": 2000,
 		"priceMax": 15000,
@@ -277,27 +524,52 @@
 	},
 	"detske-zbozi--autosedacky": {
 		"titles": [
-			"Autosedačka 9-36kg",
-			"Autosedačka i-Size",
-			"Sedačka 0-18kg",
-			"Sedačka 15-36kg",
-			"Sedačka basefix"
+			"Autosedačka Cybex Sirona Z i-Size",
+			"Autosedačka Britax Römer Dualfix 3 i-Size",
+			"Autosedačka JoIEVER Plus i-Size",
+			"Autosedačka BeSafe iZi Go Modular i-Size",
+			"Autosedačka Maxi-Cosi Mica Pro",
+			"Autosedačka Cybex Solution Z i-Size",
+			"Autosedačka Britax Römer Advansafix IVRT",
+			"Autosedačka Recaro Sadena",
+			"Autosedačka Nuna Rebl Basefix",
+			"Autosedačka Safety 1st Pro"
 		],
 		"descriptions": [
-			"Dětská autosedačka, certifikovaná. Stav výborný.",
-			"Používaná autosedačka. Čistá, bez vad, funkční.",
-			"Autosedačka i-Size. Nikdy nepoužívaná, v krabici."
+			"Autosedačka Cybex Sirona Z i-Size – 45-105cm, rotace 360°, 5-bodový pás, Energy-absorbing, nová, nerozbalená",
+			"Autosedačka Britax Römer Dualfix 3 i-Size – 61-105cm, ISOFIX+, SICT, Pivot Pro, nová, v originál krabici",
+			"Autosedačka JoIEVER Plus i-Size – 40-125cm, i-Size, boční ochrana, 12-pozicová opěrka hlavy, nová",
+			"Autosedačka BeSafe iZi Go Modular i-Size – 61-105cm, modular báze, SIP+, hliníkový rám, nová",
+			"Autosedačka Maxi-Cosi Mica Pro – 45-120cm, 360° rotace, G-CELL boční ochrana, Clima-flow, nová",
+			"Autosedačka Cybex Solution Z i-Size – 100-150cm,patentovaná opěrka hlavy, ISOFIX, napínací pás, nová",
+			"Autosedačka Britax Römer Advansafafix IVRT – 9-18kg, 5-bodový pás, SICT, ClickTight, používána 1 rok",
+			"Autosedačka Recaro Sadena – 9-18kg, ervoklu, XP-PAD, Isofix, prošlé crash testy, nová bez krabice",
+			"Autosedačka Nuna Rebl Basefix – 40-105cm, instalace pouze s bází, rebound bar, True-lock, nová",
+			"Autosedačka Safety 1st Pro – 9-36kg, Isofix, nastavitelná opěrka, 5-bodový pás, používána 6 měsíců"
 		],
 		"pros": [
-			"certifikace ECE",
-			"čistá",
+			"certifikace ECE R129 i-Size",
+			"čistý stav",
 			"výborný stav",
-			"bezpečnostní testy prošly"
+			"prošlé crash testy",
+			"Isofix instalace",
+			"boční ochrana",
+			"včetně návodu",
+			"kompletní orig. balení",
+			"Kompatibilní s vozidlem",
+			"regulovatelná opěrka"
 		],
 		"cons": [
-			"chybí návod",
-			"lehce zašpiněná",
-			"oprášená"
+			"chybí návod k použití",
+			"lehce zašpiněný potah",
+			"oprášená",
+			"chybí Isofix úchyty",
+			"prošlá záruka",
+			"chybné zapínání pásu",
+			"potřebuje vyprat potah",
+			"nutná výměna pásu",
+			"špatný stav krytek",
+			"bez originální krabice"
 		],
 		"priceMin": 2000,
 		"priceMax": 10000,
@@ -307,27 +579,52 @@
 	},
 	"sport-a-outdoor--kola-a-prislusenstvi": {
 		"titles": [
-			"Kolo horské 29\"",
-			"Elektrokolo 500W",
-			"Silniční kolo",
-			"Kolo merida",
-			"Kolo kellys"
+			"Horské kolo Specialized Rockhopper Expert",
+			"Horské kolo Merida Big Seven 90",
+			"Elektrokolo Giant Talon E+ 1",
+			"Elektrokolo Cube Kathmandu Hybrid 500",
+			"Silniční kolo Canyon Endurace CF 8",
+			"Silniční kolo Scott Addict RC 30",
+			"Gravitální koloYT Tues AL",
+			"Horský elektrocybus R+M Nevo GT",
+			"Dětské kolo Cube Acid 24\"",
+			"Městské kolo Van Moof X3"
 		],
 		"descriptions": [
-			"Sportovní kolo, stav servisováno. Nové brzdy, pláště.",
-			"Elektrokolo, plně funkční. Baterie nová.",
-			"Kvalitní horské kolo. Stav perfektní, málo najeto."
+			"Horské kolo Specialized Rockhopper Expert – 29\" M, vidlice RockShox Judy, Deore 12-speed, hydraulincké brzdy, nové pláště, servisováno",
+			"Horské kolo Merida Big Seven 90 – 29\" L, vidlice Suntour, Deore 10-speed, kotoučové brzdy, perfektní stav",
+			"Elektrokolo Giant Talon E+ 1 – střední motor, 500Wh baterie, 29\", Shimano STEPS, nový",
+			"Elektrokolo Cube Kathmandu Hybrid 500 – střední Bosch, 500Wh, 28\", nosič, světla, nový",
+			"Silniční kolo Canyon Endurace CF 8 – karbon rám, 105 12-speed, karbon vidlice, diskové brzdy, nový",
+			"Silniční kolo Scott Addict RC 30 – karbon, Ultegra 11-speed, karbon kola, aero, nový",
+			"Gravitální kolo YT Tues AL – 29\" M, odpružená vidlice, 4-pistent Brzdy, DH ready, nový",
+			"Horské elektrocybus R+M Nevo GT – Bosch Cargo, 2x 500Wh, nosič 80kg, XL, nový",
+			"Dětské kolo Cube Acid 24\" – 24\", 8-speed, odpružená vidlice, kotoučové brzdy, nové",
+			"Městské kolo Van Moof X3 – 28\", integrované osvětlení, 3-speed automat, zámek v ceně, používáno 6 měsíců"
 		],
 		"pros": [
 			"nový stav",
 			"kvalitní komponenty",
 			"servisované",
-			"lehký rám"
+			"karbon rám",
+			"hydraulincké brzdy",
+			"včetně pedálů",
+			"Dlouhá záruka",
+			"300mm kotouče",
+			"110km dojezd",
+			"Full suspension"
 		],
 		"cons": [
 			"chybí pedály",
 			"opotřebované pláště",
-			"drobné vady"
+			"nutná výměna řetězu",
+			"chybí náhradní duše",
+			"špatní přehazovačka",
+			"nutný servis vidlice",
+			"80% baterie",
+			"chybí nabíječka",
+			"poškrábaný rám",
+			"nutná údržba"
 		],
 		"priceMin": 5000,
 		"priceMax": 40000,
@@ -338,27 +635,52 @@
 	},
 	"sport-a-outdoor--lyze-a-snowboard": {
 		"titles": [
-			"Lyže sjezdové",
-			"Snowboard Burton",
-			"Běžky Fischer",
-			"Lyže Atomic",
-			"Lyže Salomon"
+			"Lyže Atomic Redster X9 WB",
+			"Lyže Salomon S/Race 120",
+			"Lyže Fischer RC4 The Curv",
+			"Lyže Head Supershape",
+			"Snowboard Burton Custom X",
+			"Snowboard Jones Mountain Twin",
+			"Snowboard Salomon Huck Knife",
+			"Běžky Fischer Speedmax 3D",
+			"Běžky Salomon S/Lab Shift",
+			"Příslušenství - vázání, boty, hole"
 		],
 		"descriptions": [
-			"Lyže snowboard, stav servisovaný. Ostřené, voskované.",
-			"Snowboard. Stav výborný, včetně vázání.",
-			"Běžecké lyže. Vynikající stav, málo používané."
+			"Lyže Atomic Redster X9 WB – 177cm, titanål, Multi Radius Sidecut, servírované, voskované, nové vázání Marker",
+			"Lyže Salomon S/Race 120 – 170cm, karbon, závodní, Originál vázání, perfektní stav, servisováno",
+			"Lyže Fischer RC4 The Curv – 170cm, dřevěné jádro, sidecut, špičkový stav, nové vázání",
+			"Lyže Head Supershape – 163cm, Graphene, GripZone, používané 2 sezóny, ostré, voskované",
+			"Snowboard Burton Custom X – 158cm, Camber, Fenix krojení, karbon, nový",
+			"Snowboard Jones Mountain Twin – 156cm,MTNP, Traction Tech, eco-bio pryskyřice, nový",
+			"Snowboard Salomon Huck Knife �� 154cm, Rock Out Camber, BAP, freestyle, nový",
+			"Bežky Fischer Speedmax 3D – 191cm, 3D konstrukce, WC paste, Skintex, závodní, nové",
+			"Běžky Salomon S/Lab Shift – 187cm, skin compatible, turnamic, závodní, použité",
+			"Set vázání Marker + boty Rossignol 27.5 + hole Leki – kompletní set, vše funkční"
 		],
 		"pros": [
-			"kvalitní značka",
-			"servisované",
+			"závodní kvalita",
 			"nové vázání",
-			"výborný stav"
+			"servisované",
+			"ostré hrany",
+			"voskované",
+			"karbon konstrukce",
+			"nízká váha",
+			"moderní sidecut",
+			"originální krytky",
+			"plná záruka"
 		],
 		"cons": [
-			"bez pytle",
+			"bez pytle na lyže",
 			"opotřebované",
-			"drobné rýhy"
+			"drobné rýhy",
+			"nutný servis",
+			"bez hrubého vosku",
+			"80% hrany",
+			"chybí šrouby",
+			"nutná oprava vázání",
+			"nefunkční set",
+			"špatné ložiska"
 		],
 		"priceMin": 2000,
 		"priceMax": 15000,
@@ -369,27 +691,52 @@
 	},
 	"auto-moto--osobni-auta": {
 		"titles": [
-			"Audi A4 2.0 TDI",
-			"BMW 320d xDrive",
-			"Škoda Octavia 1.5 TSI",
-			"Volkswagen Golf 1.5 TSI",
-			"Mercedes C 220d"
+			"Audi A4 AVANT 2.0 TDI 140kW S-tronic",
+			"BMW 320d xDrive touring",
+			"Škoda Octavia 1.5 TSI 110kW DSG",
+			"VW Golf 1.5 TSI 96kW DSG",
+			"Mercedes C 220d 4MATIC",
+			"VW Passat Variant 2.0 TDI",
+			"Kia Ceed 1.4 T-GDI",
+			"Hyundai i30 1.5 DPI",
+			"Ford Focus 1.0 EcoBoost",
+			"Toyota Corolla 2.0 Hybrid"
 		],
 		"descriptions": [
-			"Osobní automobil, najeto 150000 km, STK nová.",
-			"Servisní historie kompletní. Výměna oleje, gumy nové.",
-			"Cizí stav. Najeto málo, provozován jen sezónně."
+			"Audi A4 AVANT – 2.0 TDI 140kW, S-tronic, 4x4, LED, Virtual Cockpit, najeto 185tkm, STK do 12/26",
+			"BMW 320d xDrive touring – xDrive, automat, LED, navigace, el. víka, najeto 165tkm, kompletní servisní knížka",
+			"Škoda Octavia – 1.5 TSI 110kW DSG, LED, Virtual Cockpit, climatronic, najeto 95tkm, nová STK, 1. majitel",
+			"VW Golf – 1.5 TSI 96kW DSG, 7-kvalt, LED, Apple CarPlay, najeto 88tkm, garanční knížka, 2. majitel",
+			"Mercedes C 220d – 4MATIC 9G-Tronic, LED, COMMAND, ambientní osvětlení, najeto 142tkm, servis v Mercedes",
+			"VW Passat Variant – 2.0 TDI 110kW, 6-stup. manuál, Proace naftu, tempomat, najeto 210tkm, STK platná",
+			"Kia Ceed – 1.4 T-GDI 103kW, 7 DCT, LED, záruka do 2028, najeto 45tkm, nový stav",
+			"Hyundai i30 – 1.5 DPI 81kW, manuál, LED, záruka 5 let, najeto 38tkm, nerozbalený",
+			"Ford Focus – 1.0 EcoBoost 74kW, 6-stup., LED, SYNC3, najeto 78tkm, servisní historie kompletní",
+			"Toyota Corolla – 2.0 Hybrid 135kW, eCVT, Toyota Safety Sense, najeto 52tkm, nový stav"
 		],
 		"pros": [
-			"servisní knížka",
+			"servisní knížka razítka",
 			"nová STK",
 			"nízký nájezd",
-			" perfektní stav"
+			"perfektní stav",
+			"originální náhradní klíč",
+			"xDrive/4MATIC",
+			"LED světla",
+			"automat/DSG",
+			"nízká spotřeba",
+			"Kompletní výbava"
 		],
 		"cons": [
 			"kosmetické vady",
 			"lehce poškrábané",
-			"nutný servis"
+			"nutný servis brzd",
+			"opotřebované pneumatiky",
+			"chyba v motoru",
+			"korozní rzi",
+			"nutná výměna rozvodů",
+			"nefunkční klimatizace",
+			"havarovaný vůz",
+			" stoichi"
 		],
 		"priceMin": 50000,
 		"priceMax": 500000,
@@ -400,27 +747,52 @@
 	},
 	"auto-moto--motocykly-a-skutry": {
 		"titles": [
-			"Kawasaki Ninja",
-			"Honda CBR",
+			"Kawasaki Ninja 1000SX",
+			"Honda CBR650R",
 			"Yamaha MT-07",
-			"Kymco skútr",
-			"Piaggio skútr"
+			"Yamaha Tracer 9 GT",
+			"Kawasaki Versys 650",
+			"Kymco People GT 300i",
+			"Piaggio Liberty 150",
+			"Sym Jet 14 125",
+			"BMW R 1250 GS",
+			"Ducati Multistrada V2"
 		],
 		"descriptions": [
-			"Motocykl, upravený výfuk, plně funkční. Stav výborný.",
-			"Sportovní motocykl. Vynikající stav, málo najeto.",
-			"Skútr. Nová baterie, plně funkční. Ideální do města."
+			"Kawasaki Ninja 1000SX – sportovní, 1000cc, Akrapovič, prošlý servis, najeto 35tkm, perfektní stav",
+			"Honda CBR650R – supersport, 650cc, full LED, quickshifter, najeto 28tkm, záruka Honda",
+			"Yamaha MT-07 – naked, 700cc, slip-on Akrapovič, service done, najeto 42tkm, vynikající stav",
+			"Yamaha Tracer 9 GT – adventure, 890cc, plná výbava, kufry, top case, najeto 18tkm, nový",
+			"Kawasaki Versys 650 – adventure, 650cc, panniery, nárazník, najeto 31tkm, servisní historie kompletní",
+			"Kymco People GT 300i – skútr, 278cc, ABS, LED, zavazadlový prostor, najeto 12tkm, nový",
+			"Piaggio Liberty 150 – skútr, 150cc, ABS, LED, plochý podlaha, najeto 15tkm, perfektní stav",
+			"Sym Jet 14 125 – skútr, 125cc, sportovní, diskové brzdy, najeto 8tkm, servírovaný",
+			"BMW R 1250 GS – enduro, 1250cc, ESA, DCT, navigace, najeto 22tkm, plná výbava",
+			"Ducati Multistrada V2 – adventure, 937cc, Skyhook, quickshifter, najeto 25tkm, záruka Ducati"
 		],
 		"pros": [
 			"nízký nájezd",
 			"výborný stav",
-			"upravený výfuk",
-			"plně funkční"
+			"Akrapovič výfuk",
+			"plná výbava",
+			"včetně kufry",
+			"servisní historie",
+			"ABS",
+			"quickshifter",
+			"LED osvětlení",
+			"záruka"
 		],
 		"cons": [
 			"lehce poškrábané kryty",
 			"opotřebované pláště",
-			"chybí dokumentace"
+			"chybí dokumentace",
+			"nutná výměna oleje",
+			"špatné brzdy",
+			"nefunkční ECU",
+			"havarovaný",
+			"korozi na šroubech",
+			"chyba v převodovce",
+			"bez klíčů"
 		],
 		"priceMin": 20000,
 		"priceMax": 200000,
@@ -432,26 +804,51 @@
 	"hobby-a-kreativita--deskovky-a-puzzle": {
 		"titles": [
 			"Desková hra Catan",
-			"Puzzle 1000 dílků",
 			"Osadníci z Katanu",
-			"Ticket to Ride",
-			"Carcassonne"
+			"Ticket to Ride: Evropa",
+			"Carcassonne",
+			"Pandemic",
+			"7 Wonders",
+			"Azul",
+			"Wingspan",
+			"Puzzle 1000 dílků - České Budějovice",
+			"Puzzle 2000 dílků - Praha"
 		],
 		"descriptions": [
-			"Desková hra voriginálním balení. Nová, nikdy hraná.",
-			"Strategická hra. Stav perfektní, všechny díly kompletní.",
-			"Puzzle. Rozválené, chybí jen pár dílků."
+			"Desková hra Catan – originálníCZ verze, nová, nikdy hraná, kompletní s rozšířením Moři",
+			"Osadníci z Katanu – klasik, 3-4 hráči, rozšíření města a rytíři, nový stav",
+			"Ticket to Ride: Evropa – pan-řevropská mapa, 5 rozšíření, nová, v originál krabici",
+			"Carcassonne – základní hra + 7 rozšíření, kompletní, nová",
+			"Pandemic – kooperativní, nákaza, 4 hráči, nová, CZ lokalizace",
+			"7 Wonders – civilizace, 3-7 hráčů, nová v originál krabici",
+			"Azul – dlaždičky, abstract, Family Game of the Year, nová",
+			"Wingspan – ptáci, automatea, orig. CZ verze, nová",
+			"Puzzle 1000 dílků – pohlednice České Budějovice, nové, v tubě",
+			"Puzzle 2000 dílků – panorama Prahy, nové, rozložené v krabici"
 		],
 		"pros": [
-			"originální balení",
-			"kompletní díly",
-			"nová",
-			"zajímavá hra"
+			"originální CZ distribuce",
+			"kompletní všechny dílky",
+			"nová, nikdy hraná",
+			"originální krabice",
+			"kvalitní provedení",
+			"CZ lokalizace",
+			"s rozšířeními",
+			"výherní cena",
+			"nadčasový hit",
+			"rodinná hra"
 		],
 		"cons": [
 			"chybí pravidla",
 			"lehce opotřebovaná krabička",
-			"rozbalená"
+			"rozbalená",
+			"chybí figurky",
+			"potrhané karty",
+			"pár chybějících dílků",
+			"prasklé tokeny",
+			"špatná kvalita",
+			"bez návodu",
+			"nekompletní"
 		],
 		"priceMin": 200,
 		"priceMax": 1500,
@@ -463,25 +860,50 @@
 		"titles": [
 			"Bohumil Hrabal - Ostře sledované vlaky",
 			"Karel Čapek - R.U.R.",
-			"Harry Potter - komplet",
-			"Stmívání - komplet",
-			"Lord of the Rings"
+			"Harry Potter komplet 1-7 - J.K. Rowling",
+			"Stephen King - It",
+			"George Orwell - 1984",
+			"Andrej Krypto - KonecCivilizace",
+			"Lorden of the Rings komplet - Tolkien",
+			"Stmívání komplet - S. Meyer",
+			"Paulo Coelho - Alchymista",
+			"Milan Kundera - Nesnesitelná lehkost bytí"
 		],
 		"descriptions": [
-			"Knihy, stav nové. Nikdy nepřečtené.",
-			"Používané knihy. Čisté, bez podtržených míst.",
-			"Starší vydání. Stav dobrý, drobné opotřebení."
+			"Bohumil Hrabal – Ostře sledované vlaky, první vydání 1975, voriginál obálce, perfektní stav",
+			"Karel Čapek – R.U.R., kompletní vydání 2012, úvod, perfektní stav",
+			"Harry Potter 1-7 – komplet vCZ překladu, nové, nerozbalené, voriginál krabici, ilustrované",
+			"Stephen King – It, 1200 stran, CZ vydání, nové, voriginál obálce",
+			"George Orwell – 1984, moderní překlad, nové, přečtené jednou",
+			"Andrej Krypto – KonecCivilizace, sci-fi, podepsáno autorem, limitka",
+			"Lord of the Rings 1-3 – komplet, ilustrované, původní překlad, nové",
+			"Stmívání 1-5 – kompletní edice, CZ překlad, nové, v krabičce",
+			"Paulo Coelho – Alchymista, 30. výročí, nové, s podpisem",
+			"Milan Kundera – Nesnesitelná lehkost bytí, francouzský orig., nové"
 		],
 		"pros": [
 			"nové",
 			"přečtené jednou",
-			"zajímavý příběh",
-			"kvalitní tisk"
+			"první vydání",
+			"kvalitní tisk",
+			"originální obálka",
+			"ilustrované vydání",
+			"CZ lokalizace",
+			"limitní edice",
+			"s podpisem autograf",
+			"kompletní řada"
 		],
 		"cons": [
 			"ohýbané rohy",
-			"podepsané autorem",
-			"chybné stránky"
+			"podtržené pasáže",
+			"chybné stránky",
+			"chybí obálka",
+			"zažloutlé stránky",
+			"rozpadlá vazba",
+			"skvrny na stránkách",
+			"staré vydání",
+			"neprodejné",
+			"pouze kopie"
 		],
 		"priceMin": 50,
 		"priceMax": 500,
