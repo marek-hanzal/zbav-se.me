@@ -1,45 +1,9 @@
 import { Agent } from "@openai/agents";
-import { toolFavouriteCreate } from "~/buyer/favourite/server/tool/toolFavouriteCreate";
-import { toolFavouriteRemove } from "~/buyer/favourite/server/tool/toolFavouriteRemove";
-import { toolFeedCollection } from "~/buyer/feed/server/tool/toolFeedCollection";
-import { toolFeedCount } from "~/buyer/feed/server/tool/toolFeedCount";
-import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
-import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
-import { toolFeedPatch } from "~/buyer/feed/server/tool/toolFeedPatch";
-import { toolListingCollection as toolBuyerListingCollection } from "~/buyer/listing/server/tool/toolListingCollection";
-import { toolListingCount as toolBuyerListingCount } from "~/buyer/listing/server/tool/toolListingCount";
-import { toolTransactionClose as toolBuyerTransactionClose } from "~/buyer/transaction/server/tool/toolTransactionClose";
-import { toolTransactionCollection as toolBuyerTransactionCollection } from "~/buyer/transaction/server/tool/toolTransactionCollection";
-import { toolTransactionCount as toolBuyerTransactionCount } from "~/buyer/transaction/server/tool/toolTransactionCount";
-import { toolTransactionCreate as toolBuyerTransactionCreate } from "~/buyer/transaction/server/tool/toolTransactionCreate";
-import { toolTransactionDispute as toolBuyerTransactionDispute } from "~/buyer/transaction/server/tool/toolTransactionDispute";
-import { toolTransactionReject as toolBuyerTransactionReject } from "~/buyer/transaction/server/tool/toolTransactionReject";
-import { toolTransactionSuccess as toolBuyerTransactionSuccess } from "~/buyer/transaction/server/tool/toolTransactionSuccess";
-import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
-import { toolDraftCount } from "~/seller/draft/server/tool/toolDraftCount";
-import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
-import { toolDraftDelete } from "~/seller/draft/server/tool/toolDraftDelete";
-import { toolDraftPatch } from "~/seller/draft/server/tool/toolDraftPatch";
-import { toolListingCollection as toolSellerListingCollection } from "~/seller/listing/server/tool/toolListingCollection";
-import { toolListingCount as toolSellerListingCount } from "~/seller/listing/server/tool/toolListingCount";
-import { toolTransactionAccept as toolSellerTransactionAccept } from "~/seller/transaction/server/tool/toolTransactionAccept";
-import { toolTransactionCollection as toolSellerTransactionCollection } from "~/seller/transaction/server/tool/toolTransactionCollection";
-import { toolTransactionCount as toolSellerTransactionCount } from "~/seller/transaction/server/tool/toolTransactionCount";
-import { toolTransactionDispute as toolSellerTransactionDispute } from "~/seller/transaction/server/tool/toolTransactionDispute";
-import { toolTransactionReject as toolSellerTransactionReject } from "~/seller/transaction/server/tool/toolTransactionReject";
-import { toolTransactionResolve as toolSellerTransactionResolve } from "~/seller/transaction/server/tool/toolTransactionResolve";
-import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
-import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
-import { toolRoute } from "~/session/location/server/tool/toolRoute";
-import { toolActivityCollection } from "~/user/activity/server/tool/toolActivityCollection";
-import { toolActivityCount } from "~/user/activity/server/tool/toolActivityCount";
+import { BuyerAgent } from "~/buyer/server/tool/BuyerAgent";
+import { SellerAgent } from "~/seller/server/tool/SellerAgent";
+import { SessionAgent } from "~/session/server/tool/SessionAgent";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
-import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
-import { toolKnowledgeIndex } from "~/user/knowledge/server/tool/toolKnowledgeIndex";
-import { toolKnowledgeSearch } from "~/user/knowledge/server/tool/toolKnowledgeSearch";
-import { toolTransactionEntryCollection } from "~/user/transaction-entry/server/tool/toolTransactionEntryCollection";
-import { toolTransactionEntryCount } from "~/user/transaction-entry/server/tool/toolTransactionEntryCount";
-import { toolTransactionEntryCreate } from "~/user/transaction-entry/server/tool/toolTransactionEntryCreate";
+import { UserAgent } from "~/user/server/tool/UserAgent";
 
 export const AssistantAgent = Agent.create({
 	name: "Assistant",
@@ -163,66 +127,44 @@ Response style
 	`.trim(),
 	modelSettings: AssistantModelSettings,
 	tools: [
-		/**
-		 * Internal model tools
-		 */
-		toolKnowledge,
-		toolKnowledgeIndex,
-		toolKnowledgeSearch,
-		/**
-		 * Buyer related tools
-		 */
-		toolFeedCollection,
-		toolFeedCount,
-		toolFeedCreate,
-		toolFeedDelete,
-		toolFeedPatch,
-		//
-		toolBuyerListingCollection,
-		toolBuyerListingCount,
-		//
-		toolFavouriteCreate,
-		toolFavouriteRemove,
-		//
-		toolBuyerTransactionCollection,
-		toolBuyerTransactionCount,
-		toolBuyerTransactionCreate,
-		toolBuyerTransactionReject,
-		toolBuyerTransactionDispute,
-		toolBuyerTransactionSuccess,
-		toolBuyerTransactionClose,
-		/**
-		 * Seller related tools
-		 */
-		toolSellerListingCollection,
-		toolSellerListingCount,
-		//
-		toolSellerTransactionCount,
-		toolSellerTransactionCollection,
-		toolSellerTransactionAccept,
-		toolSellerTransactionReject,
-		toolSellerTransactionResolve,
-		toolSellerTransactionDispute,
-		//
-		toolDraftCollection,
-		toolDraftCount,
-		toolDraftCreate,
-		toolDraftDelete,
-		toolDraftPatch,
-		/**
-		 * Common user-related tools
-		 */
-		toolActivityCollection,
-		toolActivityCount,
-		//
-		toolTransactionEntryCollection,
-		toolTransactionEntryCreate,
-		toolTransactionEntryCount,
-		/**
-		 * Utility tools for both human and models
-		 */
-		toolLocationAutocomplete,
-		toolRoute,
-		toolCategoryCollection,
+		BuyerAgent.asTool({
+			toolName: "buyer",
+			toolDescription: `
+Buyer-side operations: feeds (saved searches), favourites, buyer listings, buyer transactions
+(create/reject/dispute/success/close). Use when user is the buyer in a trade or wants to
+manage their buyer-side data.
+
+Inputs: buyer_domain (always 'buyer'), request (compact task description)
+			`.trim(),
+		}),
+		SellerAgent.asTool({
+			toolName: "seller",
+			toolDescription: `
+Seller-side operations: drafts, seller listings, seller transactions (accept/reject/
+resolve/dispute). Use when user is the seller/owner of listings or wants to manage their
+seller-side data.
+
+Inputs: seller_domain (always 'seller'), request (compact task description)
+			`.trim(),
+		}),
+		UserAgent.asTool({
+			toolName: "user",
+			toolDescription: `
+User activity and transaction entries: activity notifications, alerts, transaction
+message entries. Use to check what's new, notification counts, or read/send messages in trades.
+
+Inputs: user_domain (always 'user'), request (compact task description)
+			`.trim(),
+		}),
+		SessionAgent.asTool({
+			toolName: "session",
+			toolDescription: `
+Utility lookups: category resolution, location/autocomplete, route planning. Use when
+user mentions a category term that needs to be resolved to marketplace category, or when
+address/place lookup is needed.
+
+Inputs: session_domain (always 'session'), request (compact task description)
+			`.trim(),
+		}),
 	],
 });
