@@ -1,6 +1,6 @@
 import { tool } from "@openai/agents";
 import { transactionCollectionFn } from "~/buyer/transaction/fn/transactionCollectionFn";
-import { TransactionQuerySchema } from "~/buyer/transaction/server/schema/TransactionQuerySchema";
+import { TransactionToolQuerySchema } from "~/buyer/transaction/server/schema/TransactionToolQuerySchema";
 import { getRootLogger } from "~/server/log/getRootLogger";
 
 const logger = getRootLogger([
@@ -34,7 +34,7 @@ Sort:
 - lastAt: Last transaction activity timestamp.
 - status: Current transaction status.
     `.trim(),
-	parameters: TransactionQuerySchema,
+	parameters: TransactionToolQuerySchema,
 	async execute(data) {
 		logger.trace("toolTransactionCollection", {
 			data,

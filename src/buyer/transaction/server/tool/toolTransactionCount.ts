@@ -1,6 +1,6 @@
 import { tool } from "@openai/agents";
 import { transactionCountFn } from "~/buyer/transaction/fn/transactionCountFn";
-import { TransactionCountQuerySchema } from "~/buyer/transaction/server/schema/TransactionCountQuerySchema";
+import { TransactionToolQuerySchema } from "~/buyer/transaction/server/schema/TransactionToolQuerySchema";
 import { getRootLogger } from "~/server/log/getRootLogger";
 
 const logger = getRootLogger([
@@ -25,7 +25,9 @@ Enum: Transaction status:
 - success: Buyer confirmed they are happy with the result.
 - closed: Explicitly closed without a success or rejection outcome.
     `.trim(),
-	parameters: TransactionCountQuerySchema,
+	parameters: TransactionToolQuerySchema.pick({
+		filter: true,
+	}),
 	async execute(data) {
 		logger.trace("toolTransactionCount", {
 			data,
