@@ -8,10 +8,14 @@ import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
 import { toolFeedPatch } from "~/buyer/feed/server/tool/toolFeedPatch";
 import { toolListingCollection as toolBuyerListingCollection } from "~/buyer/listing/server/tool/toolListingCollection";
 import { toolListingCount as toolBuyerListingCount } from "~/buyer/listing/server/tool/toolListingCount";
+import { toolTransactionClose as toolBuyerTransactionClose } from "~/buyer/transaction/server/tool/toolTransactionClose";
 import { toolTransactionCollection as toolBuyerTransactionCollection } from "~/buyer/transaction/server/tool/toolTransactionCollection";
 import { toolTransactionCount as toolBuyerTransactionCount } from "~/buyer/transaction/server/tool/toolTransactionCount";
+import { toolTransactionDispute as toolBuyerTransactionDispute } from "~/buyer/transaction/server/tool/toolTransactionDispute";
 import { toolTransactionEntryCollection as toolBuyerTransactionEntryCollection } from "~/buyer/transaction/server/tool/toolTransactionEntryCollection";
 import { toolTransactionEntryCount as toolBuyerTransactionEntryCount } from "~/buyer/transaction/server/tool/toolTransactionEntryCount";
+import { toolTransactionReject as toolBuyerTransactionReject } from "~/buyer/transaction/server/tool/toolTransactionReject";
+import { toolTransactionSuccess as toolBuyerTransactionSuccess } from "~/buyer/transaction/server/tool/toolTransactionSuccess";
 import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
 import { toolDraftCount } from "~/seller/draft/server/tool/toolDraftCount";
 import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
@@ -19,10 +23,14 @@ import { toolDraftDelete } from "~/seller/draft/server/tool/toolDraftDelete";
 import { toolDraftPatch } from "~/seller/draft/server/tool/toolDraftPatch";
 import { toolListingCollection as toolSellerListingCollection } from "~/seller/listing/server/tool/toolListingCollection";
 import { toolListingCount as toolSellerListingCount } from "~/seller/listing/server/tool/toolListingCount";
+import { toolTransactionAccept as toolSellerTransactionAccept } from "~/seller/transaction/server/tool/toolTransactionAccept";
 import { toolTransactionCollection as toolSellerTransactionCollection } from "~/seller/transaction/server/tool/toolTransactionCollection";
 import { toolTransactionCount as toolSellerTransactionCount } from "~/seller/transaction/server/tool/toolTransactionCount";
+import { toolTransactionDispute as toolSellerTransactionDispute } from "~/seller/transaction/server/tool/toolTransactionDispute";
 import { toolTransactionEntryCollection as toolSellerTransactionEntryCollection } from "~/seller/transaction/server/tool/toolTransactionEntryCollection";
 import { toolTransactionEntryCount as toolSellerTransactionEntryCount } from "~/seller/transaction/server/tool/toolTransactionEntryCount";
+import { toolTransactionReject as toolSellerTransactionReject } from "~/seller/transaction/server/tool/toolTransactionReject";
+import { toolTransactionResolve as toolSellerTransactionResolve } from "~/seller/transaction/server/tool/toolTransactionResolve";
 import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
 import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
 import { toolActivityCollection } from "~/user/activity/server/tool/toolActivityCollection";
@@ -83,6 +91,11 @@ Normalization and routing
 - Use knowledge for app behavior, concepts, rules, limits, and capabilities.
 - Use buyer workers for buyer-side listings, saved searches, favourites, and transactions.
 - Use seller workers for seller-side drafts, listings, and transactions.
+- Before changing a transaction status/action, you must know the current user's transaction perspective.
+- If the current user is the buyer, use buyer transaction action tools.
+- If the current user is the seller/listing owner, use seller transaction action tools.
+- If perspective is unknown, fetch the transaction through buyer/seller transaction tools first, then choose the matching action tool.
+- Legal user-clickable transaction actions are: buyer reject/dispute/success/close and seller accept/reject/resolve/dispute.
 - Use activity for activity items, alerts, and notification-based counts.
 - Activity is not actual chat content.
 - If the user wants the real content behind an activity item, read activity first, then follow its payload reference to the correct transaction worker.
@@ -159,6 +172,10 @@ Response style
 		toolBuyerTransactionCount,
 		toolBuyerTransactionEntryCollection,
 		toolBuyerTransactionEntryCount,
+		toolBuyerTransactionReject,
+		toolBuyerTransactionDispute,
+		toolBuyerTransactionSuccess,
+		toolBuyerTransactionClose,
 		/**
 		 * Seller related tools
 		 */
@@ -169,6 +186,10 @@ Response style
 		toolSellerTransactionCollection,
 		toolSellerTransactionEntryCount,
 		toolSellerTransactionEntryCollection,
+		toolSellerTransactionAccept,
+		toolSellerTransactionReject,
+		toolSellerTransactionResolve,
+		toolSellerTransactionDispute,
 		//
 		toolDraftCollection,
 		toolDraftCount,

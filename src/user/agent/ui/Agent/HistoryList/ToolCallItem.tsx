@@ -10,10 +10,22 @@ export namespace ToolCallItem {
 	export interface Props extends Group.Props {
 		item: FunctionCallItem;
 		items: AgentInputItem[];
+		inline: boolean;
 	}
 }
 
-export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, ui, className, ...props }) => {
+export const ToolCallItem: FC<ToolCallItem.Props> = ({
+	item,
+	items,
+	inline,
+	ui,
+	className,
+	...props
+}) => {
+	if (inline) {
+		return null;
+	}
+
 	const result = items.find(
 		(i): i is FunctionCallResultItem =>
 			i.type === "function_call_result" && i.callId === item.callId,

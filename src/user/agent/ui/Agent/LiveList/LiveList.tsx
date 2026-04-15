@@ -34,6 +34,7 @@ export const LiveList: FC<LiveList.Props> = ({ ui, ...props }) => {
 							key={`tool-call-${entry.itemId}`}
 							events={events}
 							itemId={entry.itemId}
+							inline
 						/>
 					);
 				}

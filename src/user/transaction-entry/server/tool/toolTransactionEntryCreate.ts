@@ -58,7 +58,9 @@ export const toolTransactionEntryCreate = tool({
 	description: `
 Create a user-authored transaction timeline entry for the current user.
 
-Use this only when the user clearly wants to send, share, or add something to an existing transaction conversation. Requires an exact transactionId. If the user only references "that order", "the buyer", "the seller", or a listing, first find the correct transaction with buyer/seller transaction collection tools and then use the resolved transactionId.
+Use this only when the user clearly wants to send, share, or add something to an existing transaction conversation. Requires an exact
+transactionId. If the user only references "that order", "the buyer", "the seller", or a listing, first find the correct transaction with
+buyer/seller transaction collection tools and then use the resolved transactionId.
 
 Allowed user-authored entry kinds:
 - text: Normal message. Use for plain chat content. Preserve the user's meaning; do not invent commitments, prices, contact details, or shipping promises.

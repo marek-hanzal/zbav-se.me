@@ -73,6 +73,7 @@ export const HistoryList: FC<HistoryList.Props> = ({ ui, ...props }) => {
 								key={`function-call-${item.callId}`}
 								item={item}
 								items={items}
+								inline
 							/>
 						),
 					)

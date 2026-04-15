@@ -831,6 +831,12 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     message than this :(
   value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
     better message than this :(
+c0356d674d6ff3e7f1de6cf2a8940b040ca908c94752e07587ffd093:
+  ref: Active tool call - inline (label)
+  value: Active tool call - inline (label)
+c17021dbfa5fcc968c8b82045f9aef54d8867a6abff73af85809ae47:
+  ref: Tool call - inline (label)
+  value: Tool call - inline (label)
 c25e8a6359df6fbcc11434b2d0bcaf641237490f399adfa91cd8702b:
   ref: Home (label)
   value: Home (label)

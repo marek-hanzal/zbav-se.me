@@ -11,16 +11,22 @@ export namespace ToolCallBlock {
 	export interface Props extends Group.Props {
 		events: RunStreamEvent[] | undefined;
 		itemId: string;
+		inline: boolean;
 	}
 }
 
 export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 	events,
 	itemId,
+	inline,
 	ui,
 	className,
 	...props
 }) => {
+	if (inline) {
+		return null;
+	}
+
 	const state = selectToolCallState(events, itemId);
 
 	return (
