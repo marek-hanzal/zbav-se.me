@@ -18,3 +18,5 @@ export const Container: FC<Container.Props> = ({ ui, className, ...props }) => {
 		/>
 	);
 };
+
+export type Container = typeof Container;

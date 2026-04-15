@@ -10,6 +10,7 @@ import { genId } from "@/lib/common/gen-id";
 import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
+import { withAgentUsageQuery } from "~/user/agent/query/withAgentUsageQuery";
 
 export namespace useAgent {
 	export interface Variables {
@@ -26,6 +27,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 	const queryClient = useQueryClient();
 	const liveQuery = withAgentLiveQuery.useSet();
 	const setHistoryItems = withAgentStreamItemsQuery.useSet();
+	const usageQueryInvalidator = withAgentUsageQuery.useInvalidate();
 
 	const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -130,6 +132,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 			abortControllerRef.current = null;
 			await withAgentStreamItemsQuery.invalidate(queryClient);
 			liveQuery(() => []);
+			await usageQueryInvalidator();
 		},
 	});
 

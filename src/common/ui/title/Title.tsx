@@ -1,3 +1,4 @@
+import { isString } from "effect/Predicate";
 import type { FC, ReactNode } from "react";
 import { Container } from "@/lib/client/container";
 import { Tx } from "@/lib/client/tx";
@@ -6,7 +7,7 @@ export namespace Title {
 	export interface Props extends Container.Props {
 		textTitle: string;
 		textTitleProps?: Tx.PropsEx;
-		textSubtitle?: string;
+		textSubtitle?: string | ReactNode;
 		right?: ReactNode;
 		left?: ReactNode;
 	}
@@ -71,14 +72,18 @@ export const Title: FC<Title.Props> = ({
 				</Container>
 
 				{textSubtitle ? (
-					<Tx
-						label={textSubtitle}
-						ui={{
-							tone: "secondary",
-							theme: "light",
-							text: "md",
-						}}
-					/>
+					isString(textSubtitle) ? (
+						<Tx
+							label={textSubtitle}
+							ui={{
+								tone: "secondary",
+								theme: "light",
+								text: "md",
+							}}
+						/>
+					) : (
+						textSubtitle
+					)
 				) : null}
 			</Container>
 
