@@ -6,3 +6,5 @@
 {"stamp":"2026-04-07T07:44:50.681Z","kind":"core","count":250,"totalCount":22282,"runtimePerItemMs":128.016}
 {"stamp":"2026-04-07T07:48:31.721Z","kind":"core","count":1500,"totalCount":21729,"runtimePerItemMs":74.431}
 {"stamp":"2026-04-07T07:54:36.883Z","kind":"core","count":1500,"totalCount":43327,"runtimePerItemMs":51.404}
+{"stamp":"2026-04-15T20:38:44.411Z","kind":"core","count":50000,"totalCount":757097,"runtimePerItemMs":3.586}
+{"stamp":"2026-04-15T20:57:22.810Z","kind":"core","count":150000,"totalCount":2858356,"runtimePerItemMs":5.957}
