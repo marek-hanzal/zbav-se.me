@@ -9,13 +9,12 @@ const logger = getRootLogger([
 ]);
 
 export const toolTransactionEntryCollection = tool({
-	name: "seller-transaction-entry-collection",
+	name: "transaction-entry-collection",
 	needsApproval: false,
 	description: `
-Seller-side transaction timeline/message entries. Use small cursors and compact filters only.
+Transaction timeline/message entries. Use small cursors and compact filters only.
 
-Use this when the user asks about message content, timeline content, package/location/personal exchange data,
-or status history inside a transaction. Prefer an exact transactionId.
+Use this when the user asks about message content, timeline content, package/location/personal exchange data, or status history inside a transaction. Prefer an exact transactionId.
 
 Entry kind values:
 - text: Plain message entry.
