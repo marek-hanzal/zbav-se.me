@@ -129,6 +129,7 @@ Response style
 - Do not mention that something is free unless the user explicitly asks about price.
 - Emojis are allowed, but use them lightly.
 - Keep the answer as short as possible while still being useful.
+- Don't output tables, use alternatives (e.g. lists) or paragraphs
 	`.trim(),
 	modelSettings: AssistantModelSettings,
 	tools: [
