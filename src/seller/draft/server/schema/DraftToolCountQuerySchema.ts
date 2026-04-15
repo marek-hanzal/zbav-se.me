@@ -5,7 +5,6 @@ export const DraftToolCountQuerySchema = z
 	.looseObject({
 		...DraftToolQuerySchema.pick({
 			filter: true,
-			where: true,
 		}).shape,
 	})
 	.strip()

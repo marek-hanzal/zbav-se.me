@@ -8,6 +8,10 @@ export const DraftToolQuerySchema = z
 		filter: DraftToolFilterSchema.optional(),
 		where: DraftToolFilterSchema.optional(),
 	})
+	.omit({
+		where: true,
+		limit: true,
+	})
 	.strip();
 
 export type DraftToolQuerySchema = typeof DraftToolQuerySchema;

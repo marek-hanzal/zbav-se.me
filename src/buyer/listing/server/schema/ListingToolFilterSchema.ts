@@ -13,6 +13,10 @@ export const ListingToolFilterSchema = z
 			type: "string",
 		}),
 	})
+	.omit({
+		userId: true,
+		idIn: true,
+	})
 	.strip();
 
 export type ListingToolFilterSchema = typeof ListingToolFilterSchema;

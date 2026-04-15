@@ -22,8 +22,9 @@ Sort:
 - updatedAt: When the listing was last changed.
 - expiresAt: When the listing expires.
     `.trim(),
-	parameters: ListingToolQuerySchema,
-	// outputSchema: CountSchema,
+	parameters: ListingToolQuerySchema.pick({
+		filter: true,
+	}),
 	async execute(data) {
 		logger.trace("toolListingCount", {
 			data,

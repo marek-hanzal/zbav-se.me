@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
 import { getRootLogger } from "~/server/log/getRootLogger";
 import { transactionEntryCountFn } from "~/user/transaction-entry/fn/transactionEntryCountFn";
-import { TransactionEntryCountQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryCountQuerySchema";
+import { TransactionEntryToolQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryToolQuerySchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -22,7 +22,9 @@ Entry kind values:
 - personal: Personal handover/contact entry.
 - status-pending/status-open/status-resolved/status-dispute-buyer/status-dispute-seller/status-rejected-buyer/status-rejected-seller/status-sold/status-expired/status-success/status-closed: Status change entries.
     `.trim(),
-	parameters: TransactionEntryCountQuerySchema,
+	parameters: TransactionEntryToolQuerySchema.pick({
+		filter: true,
+	}),
 	async execute(data) {
 		logger.trace("toolTransactionEntryCount", {
 			data,

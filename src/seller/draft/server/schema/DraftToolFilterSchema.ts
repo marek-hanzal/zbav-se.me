@@ -13,6 +13,10 @@ export const DraftToolFilterSchema = z
 				"This filter matches drafts with updatedAt less than or equal to the provided date",
 		}),
 	})
+	.omit({
+		idIn: true,
+		userId: true,
+	})
 	.strip();
 
 export type DraftToolFilterSchema = typeof DraftToolFilterSchema;

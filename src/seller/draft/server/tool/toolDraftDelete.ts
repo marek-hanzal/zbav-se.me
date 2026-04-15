@@ -17,7 +17,9 @@ Delete saved listing drafts selected by a narrow query.
 Use only after clear user intent to delete. Prefer an exact draft
 id; if using name/title-like filters, first confirm the target with draft-collection.
     `.trim(),
-	parameters: DraftToolQuerySchema,
+	parameters: DraftToolQuerySchema.pick({
+		filter: true,
+	}),
 	async execute(data) {
 		logger.trace("toolDraftDelete", {
 			data,

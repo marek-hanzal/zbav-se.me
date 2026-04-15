@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
 import { getRootLogger } from "~/server/log/getRootLogger";
 import { transactionEntryCollectionFn } from "~/user/transaction-entry/fn/transactionEntryCollectionFn";
-import { TransactionEntryQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryQuerySchema";
+import { TransactionEntryToolQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryToolQuerySchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -39,7 +39,7 @@ Sort:
 - id: Entry id order.
 - createdAt: Entry creation time.
     `.trim(),
-	parameters: TransactionEntryQuerySchema,
+	parameters: TransactionEntryToolQuerySchema,
 	async execute(data) {
 		logger.trace("toolTransactionEntryCollection", {
 			data,
