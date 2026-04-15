@@ -13,24 +13,12 @@ export const toolKnowledge = tool({
 	name: "knowledge",
 	needsApproval: false,
 	description: `
-Return one knowledge topic by exact key.
-
-Usage:
-- Retrieve exact key from 'knowledge-search' if you don't know it already
-- If you need complete content, use 'withContent: true'
-
-Boundaries:
-- Never guess a key
+Get one knowledge topic by exact key. Use 'knowledge-search' first if the key is unknown.
     `.trim(),
 	parameters: z
 		.looseObject({
-			input: z
-				.string()
-				.describe("Exact topic key returned by 'knowledge-search'. Never invent a key."),
-			withContent: z
-				.boolean()
-				.optional()
-				.describe("Set true only when title and summary are not enough."),
+			input: z.string().describe("Exact key from 'knowledge-search'."),
+			withContent: z.boolean().optional().describe("Include full content."),
 		})
 		.strip(),
 	async execute({ withContent, input }) {

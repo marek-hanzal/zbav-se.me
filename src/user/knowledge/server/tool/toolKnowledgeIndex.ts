@@ -13,14 +13,7 @@ export const toolKnowledgeIndex = tool({
 	name: "knowledge-index",
 	needsApproval: false,
 	description: `
-Return metadata for all available knowledge topics.
-
-Hint:
-- Returns complete knowledge index (context heavy)
-- It's cheaper to use multiple calls to 'knowledge-search' than using 'knowledge-index'
-
-Boundaries:
-- Prefer using 'knowledge-search' over 'knowledge-index'
+Return metadata for all knowledge topics. Prefer 'knowledge-search' when possible.
     `.trim(),
 	parameters: z
 		.looseObject({

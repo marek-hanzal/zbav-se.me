@@ -14,30 +14,12 @@ export const toolKnowledgeSearch = tool({
 	name: "knowledge-search",
 	needsApproval: false,
 	description: `
-Tool to get any knowledge about the app, features, capabilities.
-
-Hint:
-- It's a fuzzy search based on all the content
-- You may use a simple search term, eventually fallback to single word
-- If you get no results, try again with English/Czech
-
-Boundaries:
-- This tool does not answer data-related questions, e.g. "how many listings I've?" or "do I've any feed"?
+Search app knowledge topics by query. Use for app behavior, features, rules, and capabilities. Not for user data.
     `.trim(),
 	parameters: z
 		.looseObject({
-			input: z
-				.string()
-				.describe(
-					"User query or keywords used to search across knowledge topic keys, titles, summaries, and content.",
-				),
-			limit: z.coerce
-				.number()
-				.int()
-				.positive()
-				.max(20)
-				.optional()
-				.describe("Optional maximum number of topics to return."),
+			input: z.string().describe("Search query."),
+			limit: z.coerce.number().int().positive().max(20).optional().describe("Max results."),
 		})
 		.strip(),
 	async execute({ input, limit }) {
