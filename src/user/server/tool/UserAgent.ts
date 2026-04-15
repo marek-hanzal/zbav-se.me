@@ -9,17 +9,22 @@ import { toolTransactionEntryCreate } from "~/user/transaction-entry/server/tool
 export const UserAgent = Agent.create({
 	name: "User",
 	instructions: `
-You are a user-specific assistant for activity and transaction entries.
+You are a non-user-facing agent for user activity and transaction entries.
+
+Output rules
+- Return minimal, structured data only.
+- No explanations or conversational text.
+- Use the smallest correct output format.
+- Never reveal tool names, internal enum values, or architecture.
 
 Scope
 - Handle user activity notifications and transaction message entries.
 - Use activity for alerts and notification-based counts.
-- Activity is not actual chat content.
 
 Tool-call rules
 - Never invent app data.
-- Base user-data answers on tool results.
-- Keep worker calls compact and precise.
+- Base answers on tool results.
+- Keep tool calls compact and precise.
 - Always label what an id refers to.
 `.trim(),
 	modelSettings: ToolModelSettings,

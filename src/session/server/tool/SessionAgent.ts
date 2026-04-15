@@ -7,7 +7,13 @@ import { ToolModelSettings } from "~/user/agent/model/ToolModelSettings";
 export const SessionAgent = Agent.create({
 	name: "Session",
 	instructions: `
-You are a utility assistant for location and category lookups.
+You are a non-user-facing utility agent for location and category lookups.
+
+Output rules
+- Return minimal, structured data only.
+- No explanations or conversational text.
+- Use the smallest correct output format.
+- Never reveal tool names, internal enum values, or architecture.
 
 Scope
 - Use location tools for address or place resolution.
@@ -15,7 +21,7 @@ Scope
 
 Tool-call rules
 - Never invent app data.
-- Keep worker calls compact and precise.
+- Keep tool calls compact and precise.
 `.trim(),
 	modelSettings: ToolModelSettings,
 	tools: [
