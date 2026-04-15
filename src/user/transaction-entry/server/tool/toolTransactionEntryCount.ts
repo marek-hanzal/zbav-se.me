@@ -9,10 +9,10 @@ const logger = getRootLogger([
 ]);
 
 export const toolTransactionEntryCount = tool({
-	name: "buyer-transaction-entry-count",
+	name: "transaction-entry-count",
 	needsApproval: false,
 	description: `
-Count buyer-side transaction timeline/message entries matching the query.
+Count transaction timeline/message entries matching the query.
 
 Entry kind values:
 - text: Plain message entry.
