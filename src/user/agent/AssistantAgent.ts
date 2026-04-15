@@ -1,12 +1,11 @@
 import { Agent } from "@openai/agents";
+import { toolFavouriteCreate } from "~/buyer/favourite/server/tool/toolFavouriteCreate";
 import { toolFavouriteRemove } from "~/buyer/favourite/server/tool/toolFavouriteRemove";
 import { toolFeedCollection } from "~/buyer/feed/server/tool/toolFeedCollection";
 import { toolFeedCount } from "~/buyer/feed/server/tool/toolFeedCount";
 import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
 import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
 import { toolFeedPatch } from "~/buyer/feed/server/tool/toolFeedPatch";
-import { toolFeedFavouriteCollection } from "~/buyer/feed-favourite/server/tool/toolFeedFavouriteCollection";
-import { toolFeedFavouriteCount } from "~/buyer/feed-favourite/server/tool/toolFeedFavouriteCount";
 import { toolListingCollection as toolBuyerListingCollection } from "~/buyer/listing/server/tool/toolListingCollection";
 import { toolListingCount as toolBuyerListingCount } from "~/buyer/listing/server/tool/toolListingCount";
 import { toolTransactionCollection as toolBuyerTransactionCollection } from "~/buyer/transaction/server/tool/toolTransactionCollection";
@@ -150,9 +149,8 @@ Response style
 		toolBuyerListingCollection,
 		toolBuyerListingCount,
 		//
+		toolFavouriteCreate,
 		toolFavouriteRemove,
-		toolFeedFavouriteCollection,
-		toolFeedFavouriteCount,
 		//
 		toolBuyerTransactionCollection,
 		toolBuyerTransactionCount,

@@ -1,11 +1,9 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/lib/client/button";
 import { withFallback } from "@/lib/client/fallback";
 import { FavouriteIcon, FavouriteOffIcon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { withFavouriteToggleMutation } from "~/buyer/favourite/mutation/withFavouriteToggleMutation";
-import { withFeedFavouriteQuery } from "~/buyer/feed-favourite/query/withFeedFavouriteQuery";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 
 export namespace FavouriteButton {
@@ -17,17 +15,10 @@ export namespace FavouriteButton {
 
 export const FavouriteButton = withFallback(
 	({ _suspense, feedId, listingId, ui, ...props }: FavouriteButton.Props) => {
-		const queryClient = useQueryClient();
 		const update = withListingQuery.useUpdate();
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
 		const favouriteToggle = withFavouriteToggleMutation.useMutation({
-			onSuccess(listing) {
-				update(listing);
-				withFeedFavouriteQuery.invalidator(queryClient, [
-					"collection",
-					"count",
-				]);
-			},
+			onSuccess: update,
 			meta: {
 				mutationId: listingId,
 			},
