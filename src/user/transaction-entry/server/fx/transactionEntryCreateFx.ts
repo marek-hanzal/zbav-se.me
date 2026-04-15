@@ -32,7 +32,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 	...entry
 }: transactionEntryCreateFx.Props) {
 	const logger = yield* getLoggerFx("transactionEntryCreateFx");
-	logger.debug("transactionEntryCreateFx", {
+	logger.trace("transactionEntryCreateFx", {
 		userId,
 		transactionId,
 		...entry,

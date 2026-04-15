@@ -31,6 +31,7 @@ import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSetting
 import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
 import { toolKnowledgeIndex } from "~/user/knowledge/server/tool/toolKnowledgeIndex";
 import { toolKnowledgeSearch } from "~/user/knowledge/server/tool/toolKnowledgeSearch";
+import { toolTransactionEntryCreate } from "~/user/transaction-entry/server/tool/toolTransactionEntryCreate";
 
 export const AssistantAgent = Agent.create({
 	name: "Assistant",
@@ -179,6 +180,7 @@ Response style
 		 */
 		toolActivityCollection,
 		toolActivityCount,
+		toolTransactionEntryCreate,
 		/**
 		 * Utility tools for both human and models
 		 */
