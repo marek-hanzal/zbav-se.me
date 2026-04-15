@@ -1,6 +1,6 @@
 import { tool } from "@openai/agents";
 import { feedCollectionFn } from "~/buyer/feed/fn/feedCollectionFn";
-import { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
+import { FeedToolQuerySchema } from "~/buyer/feed/server/schema/FeedToolQuerySchema";
 import { getRootLogger } from "~/server/log/getRootLogger";
 
 const logger = getRootLogger([
@@ -12,16 +12,9 @@ export const toolFeedCollection = tool({
 	name: "feed-collection",
 	needsApproval: false,
 	description: `
-Current user's saved listing searches. Use small cursors and compact filters only.
-
-Hint:
-- 'type: user': User-facing feed. When the user asks about "my feeds" in general, filter type to user (always use this filter).
-- 'type: search': Internal/agent-derived saved search type. Do not use this type from agent workflows.
-
-Boundary:
-- If the user asks for "feed" and "listing/ad" in a simple prompt, you may need to combine feed + listing tools to get an answer
+Get the current user's saved feeds. Use only user-facing feeds (type: user), not internal search feeds (type: search).
     `.trim(),
-	parameters: FeedQuerySchema,
+	parameters: FeedToolQuerySchema,
 	async execute(data) {
 		logger.trace("toolFeedCollection", {
 			data,
