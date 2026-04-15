@@ -20,7 +20,7 @@ export const transactionCloseFx = Effect.fn("transactionCloseFx")(function* ({
 	transactionId,
 }: transactionCloseFx.Props) {
 	const logger = yield* getLoggerFx("transactionCloseFx");
-	logger.debug("transactionCloseFx", {
+	logger.trace("transactionCloseFx", {
 		userId,
 		transactionId,
 	});

@@ -23,7 +23,7 @@ export const transactionFetchFn = createServerFn()
 			"fn",
 			name,
 		]);
-		logger.debug(name, data);
+		logger.trace(name, data);
 
 		return zodGuardFx({
 			schema: TransactionSchema,
@@ -38,17 +38,17 @@ export const transactionFetchFn = createServerFn()
 			withLoggerFx(rootLogger),
 			withCatchFx({
 				NotFoundErrorFx(error) {
-					logger.error("NotFoundError", {
+					logger.error("NotFoundErrorFx", {
 						message: error.message,
 					});
-					throw new Error("NotFoundError");
+					throw new Error("NotFoundErrorFx");
 				},
 				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
+					logger.error("ZodErrorFx", {
 						zod,
 						input,
 					});
-					throw new Error("ZodError");
+					throw new Error("ZodErrorFx");
 				},
 			}),
 			Effect.runPromise,

@@ -27,7 +27,7 @@ export const transactionSuccessFn = createServerFn({
 			"fn",
 			name,
 		]);
-		logger.debug(name, data);
+		logger.trace(name, data);
 
 		return zodGuardFx({
 			schema: TransactionSchema,
@@ -42,36 +42,36 @@ export const transactionSuccessFn = createServerFn({
 			withLoggerFx(rootLogger),
 			withCatchFx({
 				NotFoundErrorFx(error) {
-					logger.error("NotFoundError", {
+					logger.error("NotFoundErrorFx", {
 						message: error.message,
 					});
-					throw new Error("NotFoundError");
+					throw new Error("NotFoundErrorFx");
 				},
 				AccessDeniedErrorFx(error) {
-					logger.error("AccessDeniedError", {
+					logger.error("AccessDeniedErrorFx", {
 						message: error.message,
 					});
-					throw new Error("AccessDeniedError");
+					throw new Error("AccessDeniedErrorFx");
 				},
 				InvalidRequestErrorFx(error) {
-					logger.error("InvalidRequestError", {
+					logger.error("InvalidRequestErrorFx", {
 						message: error.message,
 					});
-					throw new Error("InvalidRequestError");
+					throw new Error("InvalidRequestErrorFx");
 				},
 				RuntimeErrorFx(error) {
-					logger.error("RuntimeError", {
+					logger.error("RuntimeErrorFx", {
 						message: error.message,
 						cause: error.cause,
 					});
-					throw new Error("RuntimeError");
+					throw new Error("RuntimeErrorFx");
 				},
 				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
+					logger.error("ZodErrorFx", {
 						zod,
 						input,
 					});
-					throw new Error("ZodError");
+					throw new Error("ZodErrorFx");
 				},
 			}),
 			Effect.runPromise,

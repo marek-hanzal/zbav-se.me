@@ -20,7 +20,7 @@ export const transactionSuccessFx = Effect.fn("transactionSuccessFx")(function* 
 	transactionId,
 }: transactionSuccessFx.Props) {
 	const logger = yield* getLoggerFx("transactionSuccessFx");
-	logger.debug("transactionSuccessFx", {
+	logger.trace("transactionSuccessFx", {
 		userId,
 		transactionId,
 	});
