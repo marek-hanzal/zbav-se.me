@@ -24,7 +24,7 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 	...props
 }) => {
 	if (inline) {
-		return null;
+		// return null;
 	}
 
 	const state = selectToolCallState(events, itemId);

@@ -123,48 +123,54 @@ Response style
 - Do not mention that something is free unless the user explicitly asks about price.
 - Emojis are allowed, but use them lightly.
 - Keep answers as short as possible while still useful.
+- User-facing emojis are allowed.
 - Do not output tables.
-	`.trim(),
+    `.trim(),
 	modelSettings: AssistantModelSettings,
 	tools: [
 		BuyerAgent.asTool({
 			toolName: "buyer",
 			toolDescription: `
-Buyer-side operations: feeds (saved searches), favourites, buyer listings, buyer transactions
-(create/reject/dispute/success/close). Use when user is the buyer in a trade or wants to
-manage their buyer-side data.
-
-Inputs: buyer_domain (always 'buyer'), request (compact task description)
-			`.trim(),
+Buyer domain only.
+Use for saved searches, favourites, buyer-side listings, and buyer-side trade actions.
+Use when the user is buying or managing buyer-side data.
+Input:
+- buyer_domain: always "buyer"
+- request: compact task description with target and expected result
+            `.trim(),
 		}),
 		SellerAgent.asTool({
 			toolName: "seller",
 			toolDescription: `
-Seller-side operations: drafts, seller listings, seller transactions (accept/reject/
-resolve/dispute). Use when user is the seller/owner of listings or wants to manage their
-seller-side data.
-
-Inputs: seller_domain (always 'seller'), request (compact task description)
-			`.trim(),
+Seller domain only.
+Use for drafts, seller-side listings, and seller-side trade actions.
+Use when the user is selling, managing own listings, or acting as the seller in a trade.
+Input:
+- seller_domain: always "seller"
+- request: compact task description with target and expected result
+            `.trim(),
 		}),
 		UserAgent.asTool({
 			toolName: "user",
 			toolDescription: `
-User activity and transaction entries: activity notifications, alerts, transaction
-message entries. Use to check what's new, notification counts, or read/send messages in trades.
-
-Inputs: user_domain (always 'user'), request (compact task description)
-			`.trim(),
+User domain only.
+Use for activity items, alerts, notification-style counts, and trade message entries.
+Use when the user wants to know what is new, what needs handling, or wants to read or send trade messages.
+Input:
+- user_domain: always "user"
+- request: compact task description with target and expected result
+            `.trim(),
 		}),
 		SessionAgent.asTool({
 			toolName: "session",
 			toolDescription: `
-Utility lookups: category resolution, location/autocomplete, route planning. Use when
-user mentions a category term that needs to be resolved to marketplace category, or when
-address/place lookup is needed.
-
-Inputs: session_domain (always 'session'), request (compact task description)
-			`.trim(),
+Utility domain only.
+Use for category resolution, location lookup, and route planning before another domain step.
+Use when a term, place, or address must be normalized first.
+Input:
+- session_domain: always "session"
+- request: compact task description with target and expected result
+            `.trim(),
 		}),
 	],
 });

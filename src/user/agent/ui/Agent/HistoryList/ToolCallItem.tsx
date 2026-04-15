@@ -23,7 +23,7 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({
 	...props
 }) => {
 	if (inline) {
-		return null;
+		// return null;
 	}
 
 	const result = items.find(
