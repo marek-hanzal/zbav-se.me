@@ -1,6 +1,6 @@
 import { tool } from "@openai/agents";
 import { feedCountFn } from "~/buyer/feed/fn/feedCountFn";
-import { FeedCountQuerySchema } from "~/buyer/feed/server/schema/FeedCountQuerySchema";
+import { FeedToolCountQuerySchema } from "~/buyer/feed/server/schema/FeedToolCountQuerySchema";
 import { getRootLogger } from "~/server/log/getRootLogger";
 
 const logger = getRootLogger([
@@ -21,7 +21,7 @@ Hint:
 Boundary:
 - If the user asks for "feed" and "listing/ad" in a simple prompt, you may need to combine feed + listing tools to get an answer
     `.trim(),
-	parameters: FeedCountQuerySchema,
+	parameters: FeedToolCountQuerySchema,
 	async execute(data) {
 		logger.trace("toolFeedCount", {
 			data,
