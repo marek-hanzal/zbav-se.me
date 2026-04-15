@@ -16,6 +16,16 @@ import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 const LISTING_SEED_CONCURRENCY = withSeedConcurrency("SEED_LISTING_CONCURRENCY");
 const LISTING_TX_CHUNK_SIZE = 25;
 
+type ListingCategorySeedItem = {
+	title: string;
+	description: string;
+	pros: string[];
+	cons: string[];
+	priceMin: number;
+	priceMax: number;
+	priceSpikes: number[];
+};
+
 export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 	userId,
 	uploadIds,
@@ -54,21 +64,21 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 		return;
 	}
 
-	const getCategorySeedData = (categorySlug: string) => {
+	const getCategorySeedItems = (categorySlug: string) => {
 		const seedData = CategorySeed[categorySlug as keyof typeof CategorySeed];
-		if (seedData) {
+		if (seedData && seedData.length > 0) {
 			return seedData;
 		}
 		return CategorySeed.default;
 	};
 
-	const withProsCons = (seedData: { pros: string[]; cons: string[] }) => {
+	const withProsCons = (seedItem: ListingCategorySeedItem) => {
 		const prosCount = rangedom(0, 5);
 		const consCount = rangedom(0, 5);
 
 		return {
-			pros: sample(seedData.pros, prosCount),
-			cons: sample(seedData.cons, consCount),
+			pros: sample(seedItem.pros, prosCount),
+			cons: sample(seedItem.cons, consCount),
 		};
 	};
 
@@ -94,18 +104,17 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 
 							const categoryIndex = categoryIds.indexOf(categoryId);
 							const categorySlug = categorySlugs[categoryIndex] ?? "default";
-							const seedData = getCategorySeedData(categorySlug);
+							const seedItem = list(
+								getCategorySeedItems(categorySlug),
+							) as ListingCategorySeedItem;
 
 							const locationId = list(locationIds);
 
 							yield* seedDraftInsertFx({
-								...withProsCons(seedData),
+								...withProsCons(seedItem),
 								userId,
-								title: seedData.titles.length > 0 ? list(seedData.titles) : "Item",
-								description:
-									seedData.descriptions.length > 0
-										? list(seedData.descriptions)
-										: "",
+								title: seedItem.title,
+								description: seedItem.description,
 								categoryId,
 								locationId,
 								expiresAt: list([
@@ -141,26 +150,25 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 
 							const categoryIndex = categoryIds.indexOf(categoryId);
 							const categorySlug = categorySlugs[categoryIndex] ?? "default";
-							const seedData = getCategorySeedData(categorySlug);
+							const seedItem = list(
+								getCategorySeedItems(categorySlug),
+							) as ListingCategorySeedItem;
 
 							const locationId = list(locationIds);
 
 							yield* seedListingInsertFx({
-								...withProsCons(seedData),
+								...withProsCons(seedItem),
 								userId,
-								title: seedData.titles.length > 0 ? list(seedData.titles) : "Item",
-								description:
-									seedData.descriptions.length > 0
-										? list(seedData.descriptions)
-										: null,
+								title: seedItem.title,
+								description: seedItem.description,
 								categoryId,
 								locationId,
 								age: rangedom(1, 6),
 								condition: rangedom(1, 6),
 								price:
-									seedData.priceSpikes && rangedom(0, 10) > 8
-										? list(seedData.priceSpikes)
-										: rangedom(seedData.priceMin, seedData.priceMax),
+									seedItem.priceSpikes.length > 0 && rangedom(0, 10) > 8
+										? list(seedItem.priceSpikes)
+										: rangedom(seedItem.priceMin, seedItem.priceMax),
 								priceType: list([
 									"closed",
 									"open",
