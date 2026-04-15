@@ -18,8 +18,8 @@ Prefer category, location/range, price, delivery, warranty, favourite, ignored, 
 when available. The tool caps results to a small page.
 
 Hint:
-- You may use feed.query as an input to this tool, so you can response to e.g. "Do I have any listings in this feed?"
 - Always add 'filter.withIgnored: false'
+- Add 'filter.withOwn: false' if user not states otherwise; tell user you're filtering out his own listings
 - To get favourite listings, use 'filter.isFavourite: true'
 
 Enums:

@@ -94,14 +94,6 @@ export const ListingFilterSchema = z
 		isFavourite: z.boolean().optional().meta({
 			description: "Show listing that are in the user's favourites",
 		}),
-		feedId: z.string().min(1, "Feed ID is required").optional().meta({
-			id: "FeedId",
-			description: "ID of the feed",
-		}),
-		feedIdIn: z.array(z.string().min(1, "Feed ID is required")).optional().meta({
-			id: "FeedIdIn",
-			description: "Filter listings based on the provided feed IDs",
-		}),
 		//
 		transaction: z.boolean().optional().meta({
 			description: "Show listings that are in the user's transaction",

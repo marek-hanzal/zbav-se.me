@@ -25,6 +25,7 @@ export const listingCollectionFn = createServerFn()
 			name,
 		]);
 		logger.trace(name, data);
+
 		return zodGuardFx({
 			schema: z.array(ListingSchema),
 			dataFx: listingCollectionFx({

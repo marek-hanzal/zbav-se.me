@@ -16,6 +16,11 @@ Count buyer-visible listings matching the provided query.
 
 Use the same filters as buyer-listing-collection when the user asks for totals or whether anything exists.
 
+Hint:
+- Always add 'filter.withIgnored: false'
+- Add 'filter.withOwn: false' if user not states otherwise; tell user you're filtering out his own listings
+- To get favourite listings, use 'filter.isFavourite: true'
+
 Enum values:
 - delivery: personal, post, package, other.
 - warranty: warranty, no-warranty, custom.

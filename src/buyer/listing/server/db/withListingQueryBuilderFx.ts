@@ -162,31 +162,5 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 		) as TSelect;
 	}
 
-	if (where.feedId) {
-		const feedId = where.feedId;
-		query = query.where(({ exists, selectFrom }) =>
-			exists(
-				selectFrom("favourite as f")
-					.select("f.listingId")
-					.whereRef("f.listingId", "=", "l.id")
-					.where("f.userId", "=", userId)
-					.where("f.feedId", "=", feedId),
-			),
-		) as TSelect;
-	}
-
-	if (where.feedIdIn && where.feedIdIn.length > 0) {
-		const feedIdIn = where.feedIdIn;
-		query = query.where(({ exists, selectFrom }) =>
-			exists(
-				selectFrom("favourite as f")
-					.select("f.listingId")
-					.whereRef("f.listingId", "=", "l.id")
-					.where("f.userId", "=", userId)
-					.where("f.feedId", "in", feedIdIn),
-			),
-		) as TSelect;
-	}
-
 	return yield* Effect.succeed(query);
 });
