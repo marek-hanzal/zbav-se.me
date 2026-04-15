@@ -11,6 +11,7 @@ import { toolListingCount as toolBuyerListingCount } from "~/buyer/listing/serve
 import { toolTransactionClose as toolBuyerTransactionClose } from "~/buyer/transaction/server/tool/toolTransactionClose";
 import { toolTransactionCollection as toolBuyerTransactionCollection } from "~/buyer/transaction/server/tool/toolTransactionCollection";
 import { toolTransactionCount as toolBuyerTransactionCount } from "~/buyer/transaction/server/tool/toolTransactionCount";
+import { toolTransactionCreate as toolBuyerTransactionCreate } from "~/buyer/transaction/server/tool/toolTransactionCreate";
 import { toolTransactionDispute as toolBuyerTransactionDispute } from "~/buyer/transaction/server/tool/toolTransactionDispute";
 import { toolTransactionEntryCollection as toolBuyerTransactionEntryCollection } from "~/buyer/transaction/server/tool/toolTransactionEntryCollection";
 import { toolTransactionEntryCount as toolBuyerTransactionEntryCount } from "~/buyer/transaction/server/tool/toolTransactionEntryCount";
@@ -95,7 +96,8 @@ Normalization and routing
 - If the current user is the buyer, use buyer transaction action tools.
 - If the current user is the seller/listing owner, use seller transaction action tools.
 - If perspective is unknown, fetch the transaction through buyer/seller transaction tools first, then choose the matching action tool.
-- Legal user-clickable transaction actions are: buyer reject/dispute/success/close and seller accept/reject/resolve/dispute.
+- Legal user-clickable transaction actions are: buyer create/reject/dispute/success/close and seller accept/reject/resolve/dispute.
+- Only buyers create transactions, and only for a concrete listingId. If a listing already has transactionId, use the existing transaction.
 - Use activity for activity items, alerts, and notification-based counts.
 - Activity is not actual chat content.
 - If the user wants the real content behind an activity item, read activity first, then follow its payload reference to the correct transaction worker.
@@ -170,6 +172,7 @@ Response style
 		//
 		toolBuyerTransactionCollection,
 		toolBuyerTransactionCount,
+		toolBuyerTransactionCreate,
 		toolBuyerTransactionEntryCollection,
 		toolBuyerTransactionEntryCount,
 		toolBuyerTransactionReject,
