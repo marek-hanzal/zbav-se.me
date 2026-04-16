@@ -8,14 +8,14 @@ import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
 const external = [
-	"pg",
-];
+	// "pg",
+] as string[];
 
 const noExternal = [
 	"react",
 	"react-dom",
 	"server-only",
-];
+] as string[];
 
 export default defineConfig(({ mode }) => {
 	const isProduction = mode === "production";
