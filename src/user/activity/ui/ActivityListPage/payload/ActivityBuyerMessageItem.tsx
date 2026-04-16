@@ -9,7 +9,6 @@ import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListItem } from "~/common/list-item/ListItem";
 import { withTransactionQuery } from "~/seller/transaction/query/withTransactionQuery";
 import type { BuyerMessageSchema } from "~/server/database/@table/ActivityTableSchema/BuyerMessageSchema";
-import { withActivityQuery } from "~/user/activity/query/withActivityQuery";
 
 export namespace ActivityBuyerMessageItem {
 	export interface Props {
@@ -21,36 +20,16 @@ export const ActivityBuyerMessageItem: FC<ActivityBuyerMessageItem.Props> = ({ i
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(item.payload.transactionId);
 	const hero = useUpload(transaction.gallery.items);
-	const patchMutation = withActivityQuery.usePatchMutation({
-		invalidate: [
-			"count",
-		],
-	});
 
 	return (
 		<LinkTo
 			data-id={item.id}
-			data-ui={"ActivityBuyerMessageItem[Link]"}
+			data-ui={"ActivityBuyerMessageItem"}
 			data-action={"open buyer activity message"}
 			to="/$locale/app/seller/transaction/$transactionId/detail"
 			params={{
 				locale,
 				transactionId: transaction.id,
-			}}
-			onClick={() => {
-				if (item.archivedAt) {
-					return;
-				}
-				patchMutation.mutate({
-					patch: {
-						archivedAt: new Date(),
-					},
-					query: {
-						where: {
-							id: item.id,
-						},
-					},
-				});
 			}}
 		>
 			<ListItem
