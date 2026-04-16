@@ -192,7 +192,7 @@ async function syncVercel(parsedEnvFile: ParsedEnvFile, projectId: string) {
 		throw new Error("Missing VERCEL_TOKEN or VERCEL_ORG_ID.");
 	}
 
-	const target = environment === "production" ? "production" : "preview";
+	const target = "production";
 
 	const allKeys = Object.keys(variables).concat(Object.keys(secrets));
 	const sensitiveKeys = new Set(Object.keys(secrets));
