@@ -7,16 +7,6 @@ import rsc from "@vitejs/plugin-rsc";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
-const external = [
-	// "pg",
-] as string[];
-
-const noExternal = [
-	"react",
-	"react-dom",
-	"server-only",
-] as string[];
-
 export default defineConfig(({ mode }) => {
 	const isProduction = mode === "production";
 
@@ -30,8 +20,16 @@ export default defineConfig(({ mode }) => {
 			},
 		},
 		ssr: {
-			external,
-			noExternal,
+			external: isProduction
+				? []
+				: [
+						"pg",
+					],
+			noExternal: [
+				"react",
+				"react-dom",
+				"server-only",
+			],
 		},
 		plugins: [
 			tanstackStart({
