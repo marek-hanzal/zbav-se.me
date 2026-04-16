@@ -22,10 +22,10 @@ Use only when the current user is acting as the buyer in this transaction.
 If the user's side is unknown, first fetch the transaction and confirm the perspective.
 
 Supported actions:
-- reject: buyer rejects the transaction
+- reject: buyer rejects the transaction (he does not want to continue a transaction)
 - dispute: buyer opens a dispute/complaint
-- success: buyer confirms the transaction was completed successfully
-- close: buyer closes the transaction
+- success: buyer confirms the transaction (happy path, buyer is happy with the trade)
+- close: buyer closes the transaction (this is neutral state - it's just I'm OK, close it)
 
 Requires the exact buyer-side transaction id.
 	`.trim(),

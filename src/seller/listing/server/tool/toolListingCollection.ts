@@ -1,5 +1,8 @@
 import { tool } from "@openai/agents";
+import { match } from "ts-pattern";
+import { z } from "zod";
 import { listingCollectionFn } from "~/seller/listing/fn/listingCollectionFn";
+import { listingCountFn } from "~/seller/listing/fn/listingCountFn";
 import { ListingToolQuerySchema } from "~/seller/listing/server/schema/ListingToolQuerySchema";
 import { getRootLogger } from "~/server/log/getRootLogger";
 
@@ -12,34 +15,58 @@ export const toolListingCollection = tool({
 	name: "seller-listing-collection",
 	needsApproval: false,
 	description: `
-Current seller user's published listings matching the query. Use for seller-owned listing management and lookup.
+Current seller user's published listings matching the query.
 
-The tool caps results to a small page. For buyer-visible marketplace search, use buyer-listing-collection instead.
+Modes:
+- collection: return a small page of matching listings
+- count: return how many matching listings exist
 
-Sort:
-- price: Listing price.
-- condition: Item condition score.
-- age: Item age score.
-- createdAt: When the listing was created.
-- updatedAt: When the listing was last changed.
-- expiresAt: When the listing expires.
+Use for seller-owned listing lookup and management.
+Do not use for buyer-visible marketplace search.
     `.trim(),
-	parameters: ListingToolQuerySchema,
-	async execute(data) {
+	parameters: z
+		.looseObject({
+			type: z.enum([
+				"count",
+				"collection",
+			]),
+			query: ListingToolQuerySchema,
+		})
+		.strip(),
+	async execute({ type, query }) {
 		logger.trace("toolListingCollection", {
-			data,
+			type,
+			query,
 		});
 
-		const items = await listingCollectionFn({
-			data: {
-				...data,
-				limit: 8,
-			},
-		});
+		return match(type)
+			.with("count", async () => {
+				const count = await listingCountFn({
+					data: query,
+				});
 
-		return {
-			count: items.length,
-			items,
-		};
+				const hasMore = await listingCountFn({
+					data: {},
+				});
+
+				return {
+					count: count,
+					hasMore: hasMore > 0,
+				} as const;
+			})
+			.with("collection", async () => {
+				const items = await listingCollectionFn({
+					data: {
+						...query,
+						limit: 8,
+					},
+				});
+
+				return {
+					count: items.length,
+					items,
+				};
+			})
+			.exhaustive();
 	},
 });
