@@ -5,6 +5,8 @@ import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 import { ServerE2eSchema } from "~/server/env/ServerE2eSchema";
 
 export const withDsnMiddleware = createMiddleware().server(async ({ next, request }) => {
+	console.log(process.env);
+
 	const e2eConfig = ServerE2eSchema.parse(process.env);
 	const databaseConfig = ServerDatabaseSchema.parse(process.env);
 	//
