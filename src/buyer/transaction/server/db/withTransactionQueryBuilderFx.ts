@@ -100,6 +100,46 @@ export const withTransactionQueryBuilderFx = Effect.fn("withTransactionQueryBuil
 		})
 		.exhaustive();
 
+	query = match(where.activity)
+		.with("unread", () => {
+			return query.where((eb) => {
+				return eb.exists(
+					eb
+						.selectFrom("activity as i")
+						.select("i.id")
+						.whereRef("i.userId", "=", "lt.userId")
+						.where("i.family", "=", "transaction")
+						.where("i.type", "=", "seller-message")
+						.where("i.archivedAt", "is", null)
+						.where((eb) => {
+							return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
+						}),
+				);
+			}) as TSelect;
+		})
+		.with("archived", () => {
+			return query.where((eb) => {
+				return eb.not(
+					eb.exists(
+						eb
+							.selectFrom("activity as i")
+							.select("i.id")
+							.whereRef("i.userId", "=", "lt.userId")
+							.where("i.family", "=", "transaction")
+							.where("i.type", "=", "seller-message")
+							.where("i.archivedAt", "is", null)
+							.where((eb) => {
+								return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
+							}),
+					),
+				);
+			}) as TSelect;
+		})
+		.with(undefined, () => {
+			return query;
+		})
+		.exhaustive();
+
 	if (where.status) {
 		query = query.where("lt.status", "=", where.status) as TSelect;
 	}

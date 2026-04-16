@@ -65,6 +65,7 @@ describe("transactionResolveFx — sold status entry", () => {
 			);
 
 			expect(soldEntries).toHaveLength(1);
+			// biome-ignore lint/style/noNonNullAssertion: Ssst
 			expect(soldEntries[0]!.kind).toBe("status-sold");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

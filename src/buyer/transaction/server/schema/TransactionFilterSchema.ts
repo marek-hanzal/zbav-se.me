@@ -20,6 +20,16 @@ export const TransactionFilterSchema = z
 				"This filter matches any of the provided statuses for the current status of the transaction",
 		}),
 		flow: TransactionFlowEnumSchema.optional(),
+		activity: z
+			.enum([
+				"unread",
+				"archived",
+			])
+			.optional()
+			.meta({
+				description:
+					"Controls if the transaction must also have an activity (user's notification)",
+			}),
 	})
 	.strip()
 	.meta({

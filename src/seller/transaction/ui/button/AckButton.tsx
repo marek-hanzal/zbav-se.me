@@ -5,7 +5,7 @@ import { Button } from "@/lib/client/button";
 import { CheckIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
-import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
+import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
 import { archiveBuyerMessageActivity } from "~/seller/transaction/service/archiveBuyerMessageActivity";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 
