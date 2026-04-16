@@ -195,7 +195,6 @@ async function syncVercel(parsedEnvFile: ParsedEnvFile, projectId: string) {
 	const target = "production";
 
 	const allKeys = Object.keys(variables).concat(Object.keys(secrets));
-	const sensitiveKeys = new Set(Object.keys(secrets));
 
 	const existingEnvs = fetchExistingEnvs(projectId, orgId, token);
 	const existingToDelete = existingEnvs.filter(
@@ -221,7 +220,7 @@ async function syncVercel(parsedEnvFile: ParsedEnvFile, projectId: string) {
 				target: [
 					target,
 				] as const,
-				type: sensitiveKeys.has(key) ? ("sensitive" as const) : ("plain" as const),
+				type: "plain" as const,
 				value: value ?? "",
 			};
 		});
