@@ -82,10 +82,26 @@ const LittleMachine = {
 		},
 		// terminal
 		{
+			request: "success",
+			side: "buyer",
+		},
+		{
+			request: "closed",
+			side: "buyer",
+		},
+		{
 			request: "expired",
 			side: null,
 		},
 		// status
+		{
+			request: "status-success",
+			side: "buyer",
+		},
+		{
+			request: "status-closed",
+			side: "buyer",
+		},
 		{
 			request: "status-expired",
 			side: null,
@@ -130,11 +146,6 @@ const LittleMachine = {
 		},
 	],
 	resolved: [
-		// entries
-		{
-			request: "text",
-			side: "buyer",
-		},
 		// resolved
 		{
 			request: "dispute",
