@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { type FC, useEffect, useRef, useState } from "react";
+import { type FC, useRef, useState } from "react";
 import { Container } from "@/lib/client/container";
 import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
@@ -13,7 +13,6 @@ import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButt
 import { TransactionEntryList } from "~/user/transaction-entry/ui/TransactionEntryList";
 import { withTransactionQuery } from "../query/withTransactionQuery";
 import { archiveSellerMessageActivity } from "../service/archiveSellerMessageActivity";
-import { withArchiveSellerMessageActivityMutation } from "../service/withArchiveSellerMessageActivityMutation";
 import { PendingMessage } from "./status/PendingMessage";
 import { TransactionMenu } from "./TransactionMenu";
 
@@ -28,6 +27,7 @@ export const Transaction: FC<Transaction.Props> = ({
 	_suspense,
 	transactionId,
 	refresh,
+	ui,
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -40,130 +40,125 @@ export const Transaction: FC<Transaction.Props> = ({
 
 	return (
 		<Container
-			data-ui="Transaction"
+			data-ui={"Transaction"}
 			ui={{
+				layout: "vertical-content-footer",
 				height: "full",
+				gap: "xs",
+				...ui,
 			}}
 			{...props}
 		>
 			<Container
+				ref={containerRef}
 				ui={{
-					layout: "vertical-content-footer",
+					layout: "vertical-header-content",
 					height: "full",
-					gap: "xs",
+					scroll: "vertical",
 				}}
 			>
 				<Container
-					ref={containerRef}
+					data-action={"open transaction detail"}
 					ui={{
-						layout: "vertical-header-content",
-						height: "full",
-						scroll: "vertical",
+						position: "relative",
+						height: "content",
 					}}
+					onClick={() => setDetail((prev) => !prev)}
 				>
-					<Container
-						data-action={"open transaction detail"}
+					<HeroImage
+						src={hero.url}
+						alt={`Hero image for transaction ${transaction.id}`}
+						className={"h-42"}
+					/>
+
+					<ListingPrice
+						price={transaction.price}
+						priceType={transaction.priceType}
+						currency={transaction.currency}
 						ui={{
-							position: "relative",
-							height: "content",
+							snapTo: "top-center",
+							opacity: "8",
+							zIndex: true,
 						}}
-						onClick={() => setDetail((prev) => !prev)}
-					>
-						<HeroImage
-							src={hero.url}
-							alt={`Hero image for transaction ${transaction.id}`}
-							className={"h-42"}
-						/>
+					/>
 
-						<ListingPrice
-							price={transaction.price}
-							priceType={transaction.priceType}
-							currency={transaction.currency}
-							ui={{
-								snapTo: "top-center",
-								opacity: "8",
-								zIndex: true,
-							}}
-						/>
-
-						<LocationBadge
-							location={transaction.location}
-							distance={null}
-							ui={{
-								snapTo: "bottom",
-								opacity: "8",
-								zIndex: true,
-							}}
-						/>
-					</Container>
-
-					<TransactionEntryList
-						_suspense={"I know"}
-						side={UserSideEnumSchema.enum.buyer}
-						containerRef={containerRef}
-						transactionId={transaction.id}
-						refresh={refresh}
+					<LocationBadge
+						location={transaction.location}
+						distance={null}
 						ui={{
-							inner: "default",
+							snapTo: "bottom",
+							opacity: "8",
+							zIndex: true,
 						}}
 					/>
 				</Container>
 
-				{transaction.status === "pending" ? (
-					<Container
-						ui={{
-							flow: "vertical",
-							inner: "default",
-							gap: "default",
-						}}
-					>
-						<PendingMessage
-							close={() => {}}
-							transaction={transaction}
-						/>
-					</Container>
-				) : (
-					<TransactionChat
-						hooks={{
-							async onPostMutation() {
-								try {
-									await archiveSellerMessageActivity({
-										queryClient,
-										transactionId: transaction.id,
-									});
-								} catch {
-									// Keep message send flow usable even if unread archival fails.
-								}
-							},
-						}}
-						transaction={transaction}
-						left={
-							<TransactionMenuButton>
-								{(close) => (
-									<TransactionMenu
-										close={close}
-										transaction={transaction}
-									/>
-								)}
-							</TransactionMenuButton>
-						}
-						text={{
-							pending: translator.text("Transaction not accepted - buyer (message)"),
-							open: translator.text("Transaction - send a message (placeholder)"),
-							dispute: translator.text(
-								"Transaction - dispute - send a message (placeholder)",
-							),
-							resolved: translator.text(
-								"Transaction - resolved -send a message (placeholder)",
-							),
-							closed: translator.text("Chat - transaction closed (message)"),
-						}}
-						ui={{
-							inner: "default",
-						}}
-					/>
-				)}
+				<TransactionEntryList
+					_suspense={"I know"}
+					side={UserSideEnumSchema.enum.buyer}
+					containerRef={containerRef}
+					transactionId={transaction.id}
+					refresh={refresh}
+					ui={{
+						inner: "default",
+					}}
+				/>
 			</Container>
+
+			{transaction.status === "pending" ? (
+				<Container
+					ui={{
+						flow: "vertical",
+						inner: "default",
+						gap: "default",
+					}}
+				>
+					<PendingMessage
+						close={() => {}}
+						transaction={transaction}
+					/>
+				</Container>
+			) : (
+				<TransactionChat
+					hooks={{
+						async onPostMutation() {
+							try {
+								await archiveSellerMessageActivity({
+									queryClient,
+									transactionId: transaction.id,
+								});
+							} catch {
+								// Keep message send flow usable even if unread archival fails.
+							}
+						},
+					}}
+					transaction={transaction}
+					left={
+						<TransactionMenuButton>
+							{(close) => (
+								<TransactionMenu
+									close={close}
+									transaction={transaction}
+								/>
+							)}
+						</TransactionMenuButton>
+					}
+					text={{
+						pending: translator.text("Transaction not accepted - buyer (message)"),
+						open: translator.text("Transaction - send a message (placeholder)"),
+						dispute: translator.text(
+							"Transaction - dispute - send a message (placeholder)",
+						),
+						resolved: translator.text(
+							"Transaction - resolved -send a message (placeholder)",
+						),
+						closed: translator.text("Chat - transaction closed (message)"),
+					}}
+					ui={{
+						inner: "default",
+					}}
+				/>
+			)}
 		</Container>
 	);
 };

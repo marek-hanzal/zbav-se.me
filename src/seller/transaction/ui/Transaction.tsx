@@ -25,6 +25,7 @@ export const Transaction: FC<Transaction.Props> = ({
 	_suspense,
 	transactionId,
 	refresh,
+	ui,
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -36,122 +37,117 @@ export const Transaction: FC<Transaction.Props> = ({
 
 	return (
 		<Container
+			data-ui={"Transaction"}
 			ui={{
+				layout: "vertical-content-footer",
 				height: "full",
+				gap: "xs",
+				...ui,
 			}}
 			{...props}
 		>
 			<Container
-				data-ui={"TransactionSheet-[Container]"}
+				data-ui="Transaction-[MessageListContainer]"
+				ref={containerRef}
 				ui={{
-					layout: "vertical-content-footer",
+					layout: "vertical-header-content",
 					height: "full",
-					gap: "xs",
+					scroll: "vertical",
 				}}
 			>
 				<Container
-					data-ui="Transaction-[MessageListContainer]"
-					ref={containerRef}
+					data-ui="Transaction-[HeroContainer]"
 					ui={{
-						layout: "vertical-header-content",
-						height: "full",
-						scroll: "vertical",
+						position: "relative",
+						height: "content",
 					}}
 				>
-					<Container
-						data-ui="Transaction-[HeroContainer]"
-						ui={{
-							position: "relative",
-							height: "content",
-						}}
-					>
-						<HeroImage
-							src={hero.url}
-							alt={`Hero image for transaction ${transaction.id}`}
-							className={"h-42"}
-						/>
+					<HeroImage
+						src={hero.url}
+						alt={`Hero image for transaction ${transaction.id}`}
+						className={"h-42"}
+					/>
 
-						<ListingPrice
-							data-ui={"ListingOverlay-[ListingPrice]"}
-							price={transaction.price}
-							priceType={transaction.priceType}
-							currency={transaction.currency}
-							ui={{
-								snapTo: "top-center",
-								opacity: "8",
-								zIndex: true,
-							}}
-						/>
-					</Container>
-
-					<TransactionEntryList
-						_suspense={"I know"}
-						side={"seller"}
-						containerRef={containerRef}
-						transactionId={transaction.id}
-						refresh={refresh}
+					<ListingPrice
+						data-ui={"ListingOverlay-[ListingPrice]"}
+						price={transaction.price}
+						priceType={transaction.priceType}
+						currency={transaction.currency}
 						ui={{
-							inner: "default",
+							snapTo: "top-center",
+							opacity: "8",
+							zIndex: true,
 						}}
 					/>
 				</Container>
 
-				{transaction.status === "pending" ? (
-					<Container
-						ui={{
-							flow: "vertical",
-							inner: "default",
-							gap: "default",
-						}}
-					>
-						<PendingMessage
-							close={() => {}}
-							transaction={transaction}
-						/>
-					</Container>
-				) : (
-					<TransactionChat
-						hooks={{
-							async onPostMutation() {
-								try {
-									await archiveBuyerMessageActivity({
-										queryClient,
-										transactionId: transaction.id,
-										listingId: transaction.listingId,
-									});
-								} catch {
-									// Keep message send flow usable even if unread archival fails.
-								}
-							},
-						}}
-						transaction={transaction}
-						left={
-							<TransactionMenuButton>
-								{(close) => (
-									<TransactionMenu
-										close={close}
-										transaction={transaction}
-									/>
-								)}
-							</TransactionMenuButton>
-						}
-						text={{
-							open: translator.text("Transaction - send a message (placeholder)"),
-							dispute: translator.text(
-								"Transaction - dispute - send a message (placeholder)",
-							),
-							pending: translator.text("Transaction not accepted - seller (message)"),
-							resolved: translator.text(
-								"Chat - transaction resolved - seller cannot write (message)",
-							),
-							closed: translator.text("Chat - transaction closed (message)"),
-						}}
-						ui={{
-							inner: "default",
-						}}
-					/>
-				)}
+				<TransactionEntryList
+					_suspense={"I know"}
+					side={"seller"}
+					containerRef={containerRef}
+					transactionId={transaction.id}
+					refresh={refresh}
+					ui={{
+						inner: "default",
+					}}
+				/>
 			</Container>
+
+			{transaction.status === "pending" ? (
+				<Container
+					ui={{
+						flow: "vertical",
+						inner: "default",
+						gap: "default",
+					}}
+				>
+					<PendingMessage
+						close={() => {}}
+						transaction={transaction}
+					/>
+				</Container>
+			) : (
+				<TransactionChat
+					hooks={{
+						async onPostMutation() {
+							try {
+								await archiveBuyerMessageActivity({
+									queryClient,
+									transactionId: transaction.id,
+									listingId: transaction.listingId,
+								});
+							} catch {
+								// Keep message send flow usable even if unread archival fails.
+							}
+						},
+					}}
+					transaction={transaction}
+					left={
+						<TransactionMenuButton>
+							{(close) => (
+								<TransactionMenu
+									close={close}
+									transaction={transaction}
+								/>
+							)}
+						</TransactionMenuButton>
+					}
+					text={{
+						open: translator.text("Transaction - send a message (placeholder)"),
+						dispute: translator.text(
+							"Transaction - dispute - send a message (placeholder)",
+						),
+						pending: translator.text("Transaction not accepted - seller (message)"),
+						resolved: translator.text(
+							"Chat - transaction resolved - seller cannot write (message)",
+						),
+						closed: translator.text("Chat - transaction closed (message)"),
+					}}
+					ui={{
+						inner: "default",
+					}}
+				/>
+			)}
 		</Container>
 	);
 };
