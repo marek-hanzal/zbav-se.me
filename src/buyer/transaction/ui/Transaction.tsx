@@ -1,8 +1,10 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { type FC, useRef, useState } from "react";
+import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
 import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
+import { RejectedMessage } from "~/buyer/transaction/ui/status/RejectedMessage";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/common/location/ui/LocationBadge";
@@ -105,60 +107,84 @@ export const Transaction: FC<Transaction.Props> = ({
 				/>
 			</Container>
 
-			{transaction.status === "interest" ? (
-				<Container
-					ui={{
-						flow: "vertical",
-						inner: "default",
-						gap: "default",
-					}}
-				>
-					<InterestMessage
-						close={() => {}}
-						transaction={transaction}
-					/>
-				</Container>
-			) : (
-				<TransactionChat
-					hooks={{
-						async onPostMutation() {
-							try {
-								await archiveSellerMessageActivity({
-									queryClient,
-									transactionId: transaction.id,
-								});
-							} catch {
-								// Keep message send flow usable even if unread archival fails.
+			{match(transaction.status)
+				.with("interest", () => {
+					return (
+						<Container
+							ui={{
+								flow: "vertical",
+								inner: "default",
+								gap: "default",
+							}}
+						>
+							<InterestMessage
+								close={() => {}}
+								transaction={transaction}
+							/>
+						</Container>
+					);
+				})
+				.with("rejected", () => {
+					return (
+						<Container
+							ui={{
+								flow: "vertical",
+								inner: "default",
+								gap: "default",
+							}}
+						>
+							<RejectedMessage
+								close={() => {}}
+								transaction={transaction}
+							/>
+						</Container>
+					);
+				})
+				.otherwise(() => {
+					return (
+						<TransactionChat
+							hooks={{
+								async onPostMutation() {
+									try {
+										await archiveSellerMessageActivity({
+											queryClient,
+											transactionId: transaction.id,
+										});
+									} catch {
+										// Keep message send flow usable even if unread archival fails.
+									}
+								},
+							}}
+							transaction={transaction}
+							left={
+								<TransactionMenuButton>
+									{(close) => (
+										<TransactionMenu
+											close={close}
+											transaction={transaction}
+										/>
+									)}
+								</TransactionMenuButton>
 							}
-						},
-					}}
-					transaction={transaction}
-					left={
-						<TransactionMenuButton>
-							{(close) => (
-								<TransactionMenu
-									close={close}
-									transaction={transaction}
-								/>
-							)}
-						</TransactionMenuButton>
-					}
-					text={{
-						pending: translator.text("Transaction not accepted - buyer (message)"),
-						open: translator.text("Transaction - send a message (placeholder)"),
-						dispute: translator.text(
-							"Transaction - dispute - send a message (placeholder)",
-						),
-						resolved: translator.text(
-							"Transaction - resolved -send a message (placeholder)",
-						),
-						closed: translator.text("Chat - transaction closed (message)"),
-					}}
-					ui={{
-						inner: "default",
-					}}
-				/>
-			)}
+							text={{
+								pending: translator.text(
+									"Transaction not accepted - buyer (message)",
+								),
+								open: translator.text("Transaction - send a message (placeholder)"),
+								dispute: translator.text(
+									"Transaction - dispute - send a message (placeholder)",
+								),
+								resolved: translator.text(
+									"Transaction - resolved -send a message (placeholder)",
+								),
+								closed: translator.text("Chat - transaction closed (message)"),
+							}}
+							ui={{
+								inner: "default",
+							}}
+						/>
+					);
+				})}
 		</Container>
 	);
 };

@@ -71,7 +71,7 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 					}}
 				>
 					<ListGroup
-						label={translator.text("Messages active listings section (title)")}
+						label={translator.text("Transactions - attention - buyer (title)")}
 						filter={{
 							flow: "attention",
 						}}
@@ -83,7 +83,7 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 					/>
 
 					<ListGroup
-						label={translator.text("Messages inactive listings section (title)")}
+						label={translator.text("Transactions - resolved - buyer (title)")}
 						filter={{
 							flow: "resolved",
 						}}
@@ -96,7 +96,7 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 					/>
 
 					<ListGroup
-						label={translator.text("Messages closed listings section (title)")}
+						label={translator.text("Transactions - archived - buyer (title)")}
 						filter={{
 							flow: "archived",
 						}}

@@ -187,6 +187,9 @@
 1e2c52ff0279d0ad26557c2235b137106f4d5a45187461bba1242a01:
     ref: Listing condition not selected
     value: Jakýkoli stav
+1e968f93ae83a641b74f4ac6861264c02056db6cda410d1f67e65805:
+    ref: Acknowledge transaction (button)
+    value: Hotovo
 1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
     ref: Agreement with (label)
     value: "Registrací souhlasíš s:"
@@ -492,6 +495,9 @@
     ref: About me (message)
     value: |
         Bez keců. Bez ojebů
+5e5b269c280f203ff31ad389ea64645b59fca601bf81571607a92e29:
+    ref: Transactions - resolved - buyer (title)
+    value: Čeká na prodejce
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
     ref: Listing age (label)
     value: Životnost
@@ -569,6 +575,9 @@
 69ecfcc9f50466ecbb4da735d6b6f5a55898fe06c4befd118f245ad9:
     ref: Messages active listings section (title)
     value: K odbavení
+6bbd2722b17cbc1010710165d9f64e9eedb97f531b8b931d45040ed5:
+    ref: Transactions - attention - buyer (title)
+    value: Zpracuj si
 6ca3f3546da9df7cda3ed2984fd874d81938723ee09b0116ce96825a:
     ref: Search (button)
     value: Hledat
@@ -578,6 +587,9 @@
 6facc75794554d433accb2f240799b65ee08b763fef727c9bf711dc7:
     ref: Login (hero)
     value: Už se známe
+70314354b3f9429b5ad2152154bd2a7f641ac9cd0aec5e53bb8582ff:
+    ref: Transactions - archived - buyer (title)
+    value: Archivováno
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
     value: Výchozí řazení
