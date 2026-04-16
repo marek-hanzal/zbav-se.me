@@ -16,9 +16,8 @@ export namespace TransactionList {
 	}
 }
 
-interface Group extends Partial<Omit<ListGroup.Props, "filter" | "label" | "refetchInterval">> {
+interface Group extends Partial<Omit<ListGroup.Props, "label" | "refetchInterval">> {
 	label: string;
-	statuses: TransactionStatusEnumSchema.Type[];
 }
 
 export const TransactionList: FC<TransactionList.Props> = ({
@@ -50,10 +49,20 @@ export const TransactionList: FC<TransactionList.Props> = ({
 		() =>
 			[
 				{
+					label: translator.text("Transaction - buyer-to-seller - seller (title)"),
+					filter: {
+						statusIn: [],
+						activity: "unread",
+					},
+				},
+				{
 					label: toStatusLabel(TransactionStatusEnumSchema.enum.interest),
-					statuses: [
-						TransactionStatusEnumSchema.enum.interest,
-					],
+					filter: {
+						statusIn: [
+							TransactionStatusEnumSchema.enum.interest,
+						],
+						activity: "archived",
+					},
 					typoUi: {
 						tone: "neutral",
 						theme: "light",
@@ -61,31 +70,43 @@ export const TransactionList: FC<TransactionList.Props> = ({
 				},
 				{
 					label: toStatusLabel(TransactionStatusEnumSchema.enum.trade),
-					statuses: [
-						TransactionStatusEnumSchema.enum.trade,
-					],
+					filter: {
+						statusIn: [
+							TransactionStatusEnumSchema.enum.trade,
+						],
+						activity: "archived",
+					},
 				},
 				{
 					label: toStatusLabel(TransactionStatusEnumSchema.enum.dispute),
-					statuses: [
-						TransactionStatusEnumSchema.enum.dispute,
-					],
+					filter: {
+						statusIn: [
+							TransactionStatusEnumSchema.enum.dispute,
+						],
+						activity: "archived",
+					},
 				},
 				{
 					label: toStatusLabel(TransactionStatusEnumSchema.enum.resolved),
-					statuses: [
-						TransactionStatusEnumSchema.enum.resolved,
-					],
+					filter: {
+						statusIn: [
+							TransactionStatusEnumSchema.enum.resolved,
+						],
+						activity: "archived",
+					},
 				},
 				{
 					label: translator.text("Messages closed listings section (title)"),
-					statuses: [
-						TransactionStatusEnumSchema.enum.success,
-						TransactionStatusEnumSchema.enum.rejected,
-						TransactionStatusEnumSchema.enum.sold,
-						TransactionStatusEnumSchema.enum.closed,
-						TransactionStatusEnumSchema.enum.expired,
-					],
+					filter: {
+						statusIn: [
+							TransactionStatusEnumSchema.enum.success,
+							TransactionStatusEnumSchema.enum.rejected,
+							TransactionStatusEnumSchema.enum.sold,
+							TransactionStatusEnumSchema.enum.closed,
+							TransactionStatusEnumSchema.enum.expired,
+						],
+						activity: "archived",
+					},
 					ui: {
 						opacity: "7",
 					},
@@ -123,15 +144,15 @@ export const TransactionList: FC<TransactionList.Props> = ({
 					},
 				]}
 			>
-				{groups.map(({ statuses, label, ...props }) => {
+				{groups.map(({ label, filter, ...props }) => {
 					return (
 						<ListGroup
-							key={statuses.join(":")}
+							key={filter.statusIn.join(":")}
 							_suspense={_suspense}
 							label={label}
 							filter={{
+								...filter,
 								listingId,
-								statusIn: statuses,
 							}}
 							refetchInterval={refetchInterval}
 							{...props}

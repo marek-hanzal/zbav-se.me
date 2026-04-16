@@ -11,14 +11,16 @@ export const TransactionFilterSchema = z
 		listingId: z.string().optional().meta({
 			description: "This filter matches the exact listingId",
 		}),
-		active: z.boolean().optional().meta({
-			description:
-				"When true, match transactions with unread activity activity for the current side; when false, match transactions without unread activity activity for the current side",
-		}),
-		terminal: z.boolean().optional().meta({
-			description:
-				"When true, match transactions already in a terminal status; when false, match transactions that still have a non-terminal status",
-		}),
+		activity: z
+			.enum([
+				"unread",
+				"archived",
+			])
+			.optional()
+			.meta({
+				description:
+					"Controls if the transaction must also have an activity (user's notification)",
+			}),
 		status: TransactionStatusEnumSchema.optional().meta({
 			description: "This filter matches the current status of the transaction",
 		}),
