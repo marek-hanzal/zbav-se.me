@@ -17,3 +17,4 @@
 {"stamp":"2026-04-16T12:57:32.808Z","kind":"core","count":40000,"totalCount":2804024,"runtimePerItemMs":3.226}
 {"stamp":"2026-04-16T13:00:22.331Z","kind":"core","count":50000,"totalCount":3504675,"runtimePerItemMs":3.154}
 {"stamp":"2026-04-16T13:36:14.709Z","kind":"core","count":250000,"totalCount":7005740,"runtimePerItemMs":8.555}
+{"stamp":"2026-04-16T14:33:34.128Z","kind":"core","count":250000,"totalCount":10507937,"runtimePerItemMs":8.501}
