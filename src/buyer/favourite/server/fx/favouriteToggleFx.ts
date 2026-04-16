@@ -21,8 +21,8 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 	listingId,
 	toggle,
 }: favouriteToggleFx.Props) {
-	const logger = yield* getLoggerFx("favouriteToggleFx");
-	logger.trace("favouriteToggleFx", {
+	const logger = yield* getLoggerFx("favouriteToggleFx", "favourite");
+	logger.trace("Request", {
 		userId,
 		feedId,
 		listingId,

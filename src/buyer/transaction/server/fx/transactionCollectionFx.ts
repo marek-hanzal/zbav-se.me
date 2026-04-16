@@ -23,7 +23,7 @@ export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(func
 	limit,
 	sort,
 }: transactionCollectionFx.Props) {
-	const logger = yield* getLoggerFx("transactionCollectionFx");
+	const logger = yield* getLoggerFx("transactionCollectionFx", "transaction");
 	logger.trace("transactionCollectionFx", {
 		filter,
 		where,

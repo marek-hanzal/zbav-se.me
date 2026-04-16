@@ -23,8 +23,8 @@ export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function
 	sort,
 	limit,
 }: favouriteCollectionFx.Props) {
-	const logger = yield* getLoggerFx("favouriteCollectionFx");
-	logger.trace("favouriteCollectionFx", {
+	const logger = yield* getLoggerFx("favouriteCollectionFx", "favourite");
+	logger.trace("Request", {
 		filter,
 		where,
 		scope,

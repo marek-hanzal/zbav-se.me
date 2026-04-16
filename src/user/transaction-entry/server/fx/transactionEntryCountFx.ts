@@ -19,7 +19,7 @@ export const transactionEntryCountFx = Effect.fn("transactionEntryCountFx")(func
 	where,
 	scope,
 }: transactionEntryCountFx.Props) {
-	const logger = yield* getLoggerFx("transactionEntryCountFx");
+	const logger = yield* getLoggerFx("transactionEntryCountFx", "transaction-entry");
 	logger.trace("transactionEntryCountFx", {
 		userId,
 		filter,

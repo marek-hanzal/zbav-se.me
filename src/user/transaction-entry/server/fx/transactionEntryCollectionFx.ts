@@ -25,7 +25,7 @@ export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectio
 	scope,
 	sort,
 }: transactionEntryCollectionFx.Props) {
-	const logger = yield* getLoggerFx("transactionEntryCollectionFx");
+	const logger = yield* getLoggerFx("transactionEntryCollectionFx", "transaction-entry");
 	logger.trace("transactionEntryCollectionFx", {
 		userId,
 		cursor,

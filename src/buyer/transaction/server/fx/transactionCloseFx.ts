@@ -19,8 +19,8 @@ export const transactionCloseFx = Effect.fn("transactionCloseFx")(function* ({
 	userId,
 	transactionId,
 }: transactionCloseFx.Props) {
-	const logger = yield* getLoggerFx("transactionCloseFx");
-	logger.trace("transactionCloseFx", {
+	const logger = yield* getLoggerFx("transactionCloseFx", "transaction");
+	logger.trace("Request", {
 		userId,
 		transactionId,
 	});

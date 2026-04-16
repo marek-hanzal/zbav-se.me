@@ -19,7 +19,7 @@ export const transactionRejectFx = Effect.fn("transactionRejectFx")(function* ({
 	userId,
 	transactionId,
 }: transactionRejectFx.Props) {
-	const logger = yield* getLoggerFx("transactionRejectFx");
+	const logger = yield* getLoggerFx("transactionRejectFx", "transaction");
 	logger.trace("transactionRejectFx", {
 		userId,
 		transactionId,

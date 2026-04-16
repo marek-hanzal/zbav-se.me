@@ -65,10 +65,9 @@ export const withTransactionListingQueryBuilderFx = Effect.fn(
 				.where("i.family", "=", "transaction")
 				.where("i.type", "=", "buyer-message")
 				.where("i.archivedAt", "is", null)
-				.where(
-					(eb) =>
-						sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`,
-				);
+				.where((eb) => {
+					return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
+				});
 
 			return where.active ? exists(unreadSelect) : not(exists(unreadSelect));
 		}) as TSelect;
