@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { FilterSchema } from "@/lib/common/schema";
+import { TransactionFlowEnumSchema } from "~/common/user-transaction/enum/TransactionFlowEnumSchema";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
-import { TransactionFlowEnumSchema } from "./TransactionFlowEnumSchema";
 
 export const TransactionFilterSchema = z
 	.looseObject({

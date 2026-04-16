@@ -37,7 +37,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 
 	return (
 		<Group
-			data-ui={"DisputeMessage[Group]"}
+			data-ui={"DisputeMessage"}
 			ui={{
 				round: "default",
 				flow: "vertical",

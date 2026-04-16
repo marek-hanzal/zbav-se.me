@@ -54,7 +54,7 @@ export const withTransactionListingQueryBuilderFx = Effect.fn(
 	}
 
 	query = match(where.flow)
-		.with("attention", () => {
+		.with("buyer-to-seller", () => {
 			return query.where((eb) => {
 				return eb.exists(
 					eb
@@ -70,34 +70,68 @@ export const withTransactionListingQueryBuilderFx = Effect.fn(
 				);
 			}) as TSelect;
 		})
-		.with("resolved", () => {
+		.with("seller-to-buyer", () => {
 			return query.where((eb) => {
-				return eb.exists(
-					eb
-						.selectFrom("transaction as lt")
-						.select("lt.id")
-						.whereRef("lt.listingId", "=", "l.id")
-						.where("lt.status", "in", [
-							"resolved",
-						]),
-				);
+				return eb.and([
+					eb.exists(
+						eb
+							.selectFrom("transaction as lt")
+							.select("lt.id")
+							.whereRef("lt.listingId", "=", "l.id")
+							.where("lt.status", "in", [
+								"trade",
+								"dispute",
+								"resolved",
+							]),
+					),
+					eb.not(
+						eb.exists(
+							eb
+								.selectFrom("activity as i")
+								.select("i.id")
+								.whereRef("i.userId", "=", "l.userId")
+								.where("i.family", "=", "transaction")
+								.where("i.type", "=", "buyer-message")
+								.where("i.archivedAt", "is", null)
+								.where((eb) => {
+									return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
+								}),
+						),
+					),
+				]);
 			}) as TSelect;
 		})
 		.with("archived", () => {
 			return query.where((eb) => {
-				return eb.exists(
-					eb
-						.selectFrom("transaction as lt")
-						.select("lt.id")
-						.whereRef("lt.listingId", "=", "l.id")
-						.where("lt.status", "in", [
-							"closed",
-							"expired",
-							"rejected",
-							"sold",
-							"success",
-						]),
-				);
+				return eb.and([
+					eb.exists(
+						eb
+							.selectFrom("transaction as lt")
+							.select("lt.id")
+							.whereRef("lt.listingId", "=", "l.id")
+							.where("lt.status", "in", [
+								"closed",
+								"expired",
+								"rejected",
+								"sold",
+								"success",
+							]),
+					),
+					eb.not(
+						eb.exists(
+							eb
+								.selectFrom("activity as i")
+								.select("i.id")
+								.whereRef("i.userId", "=", "l.userId")
+								.where("i.family", "=", "transaction")
+								.where("i.type", "=", "buyer-message")
+								.where("i.archivedAt", "is", null)
+								.where((eb) => {
+									return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
+								}),
+						),
+					),
+				]);
 			}) as TSelect;
 		})
 		.with(undefined, () => {

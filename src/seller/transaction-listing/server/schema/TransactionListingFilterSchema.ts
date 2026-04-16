@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { FilterSchema } from "@/lib/common/schema";
-import { TransactionListingFlowEnumSchema } from "~/seller/transaction-listing/server/enum/TransactionListingFlowEnumSchema";
+import { TransactionFlowEnumSchema } from "~/common/user-transaction/enum/TransactionFlowEnumSchema";
 
 export const TransactionListingFilterSchema = z
 	.looseObject({
 		...FilterSchema.shape,
-		flow: TransactionListingFlowEnumSchema.optional(),
+		flow: TransactionFlowEnumSchema.optional(),
 		userId: z.string().optional().meta({
 			description: "This filter matches listings of a specific seller (by userId)",
 		}),

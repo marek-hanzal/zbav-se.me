@@ -367,6 +367,9 @@
 4f04083c52884888c6258c7fe83a35ff1ce96d78ee8c600a0397392c:
   ref: Seller info (button)
   value: Seller info (button)
+4f2586af923fb04a218b4a80292633b9b5bece873f002fdf0dadab7b:
+  ref: Transactions - seller-to-buyer - buyer (title)
+  value: Transactions - seller-to-buyer - buyer (title)
 4ff4882e934b1e4c4ed0e5873160931aeada352a1001061997555d13:
   ref: Transaction status dispute (label)
   value: Issue reported
@@ -433,9 +436,6 @@
 5dff2c312c85487ff5ee3fb9ac4ef2e1d4a492a52eeb2f1d0333c94a:
   ref: About me (message)
   value: About me (message)
-5e5b269c280f203ff31ad389ea64645b59fca601bf81571607a92e29:
-  ref: Transactions - resolved - buyer (title)
-  value: Transactions - resolved - buyer (title)
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
   ref: Listing age (label)
   value: Listing age (label)
@@ -505,12 +505,9 @@
 69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
   ref: Feed category not selected
   value: Feed category not selected
-69ecfcc9f50466ecbb4da735d6b6f5a55898fe06c4befd118f245ad9:
-  ref: Messages active listings section (title)
-  value: Needs attention
-6bbd2722b17cbc1010710165d9f64e9eedb97f531b8b931d45040ed5:
-  ref: Transactions - attention - buyer (title)
-  value: Transactions - attention - buyer (title)
+6b995a341f6e953b965e3423dab8d7d6cbce6665e1c1868a0e921958:
+  ref: Transactions - buyer-to-seller - buyer (title)
+  value: Transactions - buyer-to-seller - buyer (title)
 6ca3f3546da9df7cda3ed2984fd874d81938723ee09b0116ce96825a:
   ref: Search (button)
   value: Search (button)
@@ -709,9 +706,6 @@
 9ec0c5126167d5163918eaad873d557770c9bf65cd72b2ee8bd27c29:
   ref: Share package (button)
   value: Share package (button)
-9ee5f3bd7911a7eeba1208301fcf3964b7f1e029bb39480bef8a63c5:
-  ref: Messages inactive listings section (title)
-  value: Waiting
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
   ref: Fulltext (placeholder)
   value: Fulltext (placeholder)
@@ -763,6 +757,9 @@ aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
 ac1247f9e2a8fcba4db03d65dbefe4199b1c6a62d16df9e7738793fb:
   ref: ToS agreement (label)
   value: ToS agreement (label)
+ac4cd504ba92bb8fc1b8e2d1d536a6e865cc2758e61bc93b0e2336f7:
+  ref: Transactions - buyer-to-seller - seller (title)
+  value: Transactions - buyer-to-seller - seller (title)
 ac4e887fc8f3f64d662b6a940ff6e823894c748bf103185448f43afa:
   ref: personal
   value: personal
@@ -805,6 +802,9 @@ b46060e6e02e9a672bd27f869c2d7206d0c7a0584e298065557d7954:
 b48018d27bcd6409768ac5c0dd69a1a716d97c25a2dbfe6713cf393b:
   ref: success
   value: success
+b4834535ee202bf1b2d47757757f24d96fd7be51903cca9c626ad59e:
+  ref: Transactions - seller-to-buyer - seller (title)
+  value: Transactions - seller-to-buyer - seller (title)
 b65d42611ff7cab6a942af611b0d58db85dbce7be2cfd00067877d4d:
   ref: Password is required
   value: Password is required
@@ -864,6 +864,9 @@ c4c98e156a51e38164366287403b789f58946d52233bcd81ca07947d:
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
   ref: Price (title)
   value: Price (title)
+c603f91f1019a74485b5ed466c9f3a264fd51e5e09ed76163057f26c:
+  ref: Transactions - archived - seller (title)
+  value: Transactions - archived - seller (title)
 c63c18d024c71d5ed991f81e9b237b7cdaad5e667ad64a22fc0614de:
   ref: Privacy policy not available in this language (description)
   value: Privacy policy not available in this language (description)

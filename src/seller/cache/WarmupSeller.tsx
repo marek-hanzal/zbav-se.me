@@ -41,7 +41,7 @@ export const WarmupSeller: FC<WarmupSeller.Props> = () => {
 			size: 1000,
 		},
 		filter: {
-			flow: "attention",
+			flow: "seller-to-buyer",
 		},
 		sort: [
 			{
@@ -71,7 +71,7 @@ export const WarmupSeller: FC<WarmupSeller.Props> = () => {
 			size: 1000,
 		},
 		filter: {
-			flow: "resolved",
+			flow: "buyer-to-seller",
 		},
 		sort: [
 			{

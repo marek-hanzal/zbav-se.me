@@ -1,11 +1,13 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { type FC, useRef } from "react";
+import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
 import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { HeroImage } from "~/common/ui/img";
+import { AckMessage } from "~/seller/transaction/ui/status/AckMessage";
 import { TransactionChat } from "~/user/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/user/transaction-entry/ui/TransactionEntryList";
@@ -93,61 +95,85 @@ export const Transaction: FC<Transaction.Props> = ({
 				/>
 			</Container>
 
-			{transaction.status === "interest" ? (
-				<Container
-					ui={{
-						flow: "vertical",
-						inner: "default",
-						gap: "default",
-					}}
-				>
-					<InterestMessage
-						close={() => {}}
-						transaction={transaction}
-					/>
-				</Container>
-			) : (
-				<TransactionChat
-					hooks={{
-						async onPostMutation() {
-							try {
-								await archiveBuyerMessageActivity({
-									queryClient,
-									transactionId: transaction.id,
-									listingId: transaction.listingId,
-								});
-							} catch {
-								// Keep message send flow usable even if unread archival fails.
+			{match(transaction.status)
+				.with("interest", () => {
+					return (
+						<Container
+							ui={{
+								flow: "vertical",
+								inner: "default",
+								gap: "default",
+							}}
+						>
+							<InterestMessage
+								close={() => {}}
+								transaction={transaction}
+							/>
+						</Container>
+					);
+				})
+				.with("success", "closed", "rejected", () => {
+					return (
+						<Container
+							ui={{
+								flow: "vertical",
+								inner: "default",
+								gap: "default",
+							}}
+						>
+							<AckMessage
+								close={close}
+								transaction={transaction}
+							/>
+						</Container>
+					);
+				})
+				.otherwise(() => {
+					return (
+						<TransactionChat
+							hooks={{
+								async onPostMutation() {
+									try {
+										await archiveBuyerMessageActivity({
+											queryClient,
+											transactionId: transaction.id,
+											listingId: transaction.listingId,
+										});
+									} catch {
+										// Keep message send flow usable even if unread archival fails.
+									}
+								},
+							}}
+							transaction={transaction}
+							left={
+								<TransactionMenuButton>
+									{(close) => (
+										<TransactionMenu
+											close={close}
+											transaction={transaction}
+										/>
+									)}
+								</TransactionMenuButton>
 							}
-						},
-					}}
-					transaction={transaction}
-					left={
-						<TransactionMenuButton>
-							{(close) => (
-								<TransactionMenu
-									close={close}
-									transaction={transaction}
-								/>
-							)}
-						</TransactionMenuButton>
-					}
-					text={{
-						open: translator.text("Transaction - send a message (placeholder)"),
-						dispute: translator.text(
-							"Transaction - dispute - send a message (placeholder)",
-						),
-						pending: translator.text("Transaction not accepted - seller (message)"),
-						resolved: translator.text(
-							"Chat - transaction resolved - seller cannot write (message)",
-						),
-						closed: translator.text("Chat - transaction closed (message)"),
-					}}
-					ui={{
-						inner: "default",
-					}}
-				/>
-			)}
+							text={{
+								open: translator.text("Transaction - send a message (placeholder)"),
+								dispute: translator.text(
+									"Transaction - dispute - send a message (placeholder)",
+								),
+								pending: translator.text(
+									"Transaction not accepted - seller (message)",
+								),
+								resolved: translator.text(
+									"Chat - transaction resolved - seller cannot write (message)",
+								),
+								closed: translator.text("Chat - transaction closed (message)"),
+							}}
+							ui={{
+								inner: "default",
+							}}
+						/>
+					);
+				})}
 		</Container>
 	);
 };

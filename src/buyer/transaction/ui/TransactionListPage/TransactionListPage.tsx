@@ -71,9 +71,9 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 					}}
 				>
 					<ListGroup
-						label={translator.text("Transactions - attention - buyer (title)")}
+						label={translator.text("Transactions - seller-to-buyer - buyer (title)")}
 						filter={{
-							flow: "attention",
+							flow: "seller-to-buyer",
 						}}
 						refetchInterval={refetchInterval}
 						typoUi={{
@@ -83,9 +83,9 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 					/>
 
 					<ListGroup
-						label={translator.text("Transactions - resolved - buyer (title)")}
+						label={translator.text("Transactions - buyer-to-seller - buyer (title)")}
 						filter={{
-							flow: "resolved",
+							flow: "buyer-to-seller",
 						}}
 						refetchInterval={refetchInterval}
 						typoUi={{

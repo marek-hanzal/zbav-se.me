@@ -45,7 +45,7 @@ export const withTransactionQueryBuilderFx = Effect.fn("withTransactionQueryBuil
 	}
 
 	query = match(where.flow)
-		.with("attention", () => {
+		.with("seller-to-buyer", () => {
 			return query.where((eb) => {
 				return eb.exists(
 					eb
@@ -61,12 +61,13 @@ export const withTransactionQueryBuilderFx = Effect.fn("withTransactionQueryBuil
 				);
 			}) as TSelect;
 		})
-		.with("resolved", () => {
+		.with("buyer-to-seller", () => {
 			return query.where((eb) =>
 				eb.and([
 					eb("lt.status", "in", [
 						"trade",
 						"interest",
+						"dispute",
 					]),
 					eb.not(
 						eb.exists(
@@ -87,7 +88,6 @@ export const withTransactionQueryBuilderFx = Effect.fn("withTransactionQueryBuil
 		})
 		.with("archived", () => {
 			return query.where("lt.status", "in", [
-				//
 				"closed",
 				"expired",
 				"rejected",

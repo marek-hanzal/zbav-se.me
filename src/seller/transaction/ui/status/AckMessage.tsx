@@ -1,31 +1,25 @@
 import type { FC } from "react";
-import type { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
-import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
-import { AckButton } from "~/buyer/transaction/ui/button/AckButton";
+import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
+import { AckButton } from "~/seller/transaction/ui/button/AckButton";
 import { MessageButtonUi } from "~/user/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 
-export namespace RejectedMessage {
-	export interface Props extends Container.Props {
+export namespace AckMessage {
+	export interface Props extends Group.Props {
 		close: TransactionMenuButton.Close;
 		transaction: TransactionSchema.Type;
 	}
 }
 
-export const RejectedMessage: FC<RejectedMessage.Props> = ({
-	close,
-	transaction,
-	ui,
-	...props
-}) => {
+export const AckMessage: FC<AckMessage.Props> = ({ close, transaction, ui, ...props }) => {
 	return (
 		<Group
-			data-ui={"RejectedMessage"}
+			data-ui={"AckMessage"}
 			ui={{
 				round: "default",
 				flow: "vertical",
-				tone: "primary",
+				tone: "link",
 				...ui,
 			}}
 			{...props}
