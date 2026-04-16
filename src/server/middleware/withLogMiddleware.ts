@@ -43,12 +43,14 @@ export const withLogMiddleware = createMiddleware()
 						: () => {},
 					console: fingersCrossed(
 						getConsoleSink({
-							formatter: getPrettyFormatter({
-								categoryWidth: 64,
-								properties: true,
-								timestamp: "date-time-tz",
-								messageColor: "white",
-							}),
+							formatter: isDev
+								? getPrettyFormatter({
+										categoryWidth: 64,
+										properties: true,
+										timestamp: "date-time-tz",
+										messageColor: "white",
+									})
+								: undefined,
 							nonBlocking: true,
 						}),
 						{
