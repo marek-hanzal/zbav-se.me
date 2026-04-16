@@ -11,7 +11,7 @@ import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButt
 import { TransactionEntryList } from "~/user/transaction-entry/ui/TransactionEntryList";
 import { withTransactionQuery } from "../query/withTransactionQuery";
 import { archiveBuyerMessageActivity } from "../service/archiveBuyerMessageActivity";
-import { PendingMessage } from "./status/PendingMessage";
+import { InterestMessage } from "./status/InterestMessage";
 import { TransactionMenu } from "./TransactionMenu";
 
 export namespace Transaction {
@@ -93,7 +93,7 @@ export const Transaction: FC<Transaction.Props> = ({
 				/>
 			</Container>
 
-			{transaction.status === "pending" ? (
+			{transaction.status === "interest" ? (
 				<Container
 					ui={{
 						flow: "vertical",
@@ -101,7 +101,7 @@ export const Transaction: FC<Transaction.Props> = ({
 						gap: "default",
 					}}
 				>
-					<PendingMessage
+					<InterestMessage
 						close={() => {}}
 						transaction={transaction}
 					/>

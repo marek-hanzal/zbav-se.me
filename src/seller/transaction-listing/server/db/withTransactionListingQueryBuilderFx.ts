@@ -24,8 +24,8 @@ export const withTransactionListingQueryBuilderFx = Effect.fn(
 	where,
 }: withTransactionListingQueryBuilderFx.Props<TSelect>) {
 	const openStatuses = [
-		"pending",
-		"open",
+		"interest",
+		"trade",
 		"resolved",
 		"dispute",
 	] as const;

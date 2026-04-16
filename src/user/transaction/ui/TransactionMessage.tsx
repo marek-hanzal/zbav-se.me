@@ -8,8 +8,8 @@ export namespace TransactionMessage {
 		closed?: ReactNode;
 		dispute?: ReactNode;
 		expired?: ReactNode;
-		open?: ReactNode;
-		pending?: ReactNode;
+		trade?: ReactNode;
+		interest?: ReactNode;
 		rejected?: ReactNode;
 		resolved?: ReactNode;
 		sold?: ReactNode;
@@ -22,8 +22,8 @@ export const TransactionMessage: FC<TransactionMessage.Props> = ({
 	closed,
 	dispute,
 	expired,
-	open,
-	pending,
+	trade,
+	interest,
 	rejected,
 	resolved,
 	sold,
@@ -33,8 +33,8 @@ export const TransactionMessage: FC<TransactionMessage.Props> = ({
 	...props
 }) => {
 	const message = match(status)
-		.with("pending", () => pending ?? null)
-		.with("open", () => open ?? null)
+		.with("interest", () => interest ?? null)
+		.with("trade", () => trade ?? null)
 		.with("dispute", () => dispute ?? null)
 		.with("rejected", () => rejected ?? null)
 		.with("resolved", () => resolved ?? null)

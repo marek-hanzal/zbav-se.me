@@ -45,8 +45,8 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 					filter: {
 						listingId: transaction.listingId,
 						statusIn: [
-							"pending",
-							"open",
+							"interest",
+							"trade",
 						],
 					},
 				},

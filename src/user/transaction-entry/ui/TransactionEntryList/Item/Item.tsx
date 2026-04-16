@@ -35,10 +35,10 @@ export const Item = withFallback(({ _suspense, side, transactionEntryId }: Item.
 		)
 		.with(
 			{
-				kind: "status-pending",
+				kind: "status-interest",
 			},
 			{
-				kind: "status-open",
+				kind: "status-trade",
 			},
 			{
 				kind: "status-resolved",

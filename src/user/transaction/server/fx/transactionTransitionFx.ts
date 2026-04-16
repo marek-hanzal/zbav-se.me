@@ -13,15 +13,15 @@ import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
  * remains `Transitions.Machine` below.
  */
 const LittleMachine = {
-	pending: [
-		// pending
+	interest: [
+		// interest
 		{
-			request: "open",
+			request: "trade",
 			side: "seller",
 		},
 		// status
 		{
-			request: "status-open",
+			request: "status-trade",
 			side: "seller",
 		},
 		{
@@ -52,8 +52,8 @@ const LittleMachine = {
 			side: null,
 		},
 	],
-	open: [
-		// open
+	trade: [
+		// trade
 		{
 			request: "resolved",
 			side: "seller",
@@ -258,8 +258,8 @@ export namespace Transitions {
 	 * Every recognized input the machine can validate.
 	 *
 	 * This intentionally includes both:
-	 * - transaction statuses (`pending`, `open`, ...)
-	 * - transaction entry kinds (`text`, `gallery`, `status-open`, ...)
+	 * - transaction statuses (`interest`, `trade`, ...)
+	 * - transaction entry kinds (`text`, `gallery`, `status-trade`, ...)
 	 *
 	 * Reason:
 	 * the same gate is used both for validating status transitions and for
@@ -306,20 +306,20 @@ export namespace Transitions {
 		null: [
 			// bootstrap
 			{
-				request: "pending",
+				request: "interest",
 				side: "buyer",
 			},
 			// status
 			{
-				request: "status-pending",
+				request: "status-interest",
 				side: "buyer",
 			},
 		],
 		//
-		pending: LittleMachine.pending,
-		"status-pending": LittleMachine.pending,
-		open: LittleMachine.open,
-		"status-open": LittleMachine.open,
+		interest: LittleMachine.interest,
+		"status-interest": LittleMachine.interest,
+		trade: LittleMachine.trade,
+		"status-trade": LittleMachine.trade,
 		resolved: LittleMachine.resolved,
 		"status-resolved": LittleMachine.resolved,
 		dispute: LittleMachine.dispute,

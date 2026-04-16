@@ -202,10 +202,10 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				// common
 				.with(
 					{
-						kind: "status-open",
+						kind: "status-trade",
 					},
 					{
-						kind: "status-pending",
+						kind: "status-interest",
 					},
 					{
 						kind: "status-resolved",

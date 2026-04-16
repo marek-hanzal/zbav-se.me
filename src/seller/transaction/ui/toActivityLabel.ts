@@ -16,8 +16,8 @@ export const toActivityLabel = ({ entry }: toActivityLabel.Props) => {
 			const { payload } = TransactionEntryText.parse(entry);
 			return payload.text;
 		})
-		.with("status-pending", () => toStatusLabel("pending"))
-		.with("status-open", () => toStatusLabel("open"))
+		.with("status-interest", () => toStatusLabel("interest"))
+		.with("status-trade", () => toStatusLabel("trade"))
 		.with("status-resolved", () => toStatusLabel("resolved"))
 		.with("status-dispute-buyer", "status-dispute-seller", () => toStatusLabel("dispute"))
 		.with("status-rejected-buyer", "status-rejected-seller", () => toStatusLabel("rejected"))

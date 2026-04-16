@@ -50,9 +50,9 @@ export const TransactionList: FC<TransactionList.Props> = ({
 		() =>
 			[
 				{
-					label: toStatusLabel(TransactionStatusEnumSchema.enum.pending),
+					label: toStatusLabel(TransactionStatusEnumSchema.enum.interest),
 					statuses: [
-						TransactionStatusEnumSchema.enum.pending,
+						TransactionStatusEnumSchema.enum.interest,
 					],
 					typoUi: {
 						tone: "neutral",
@@ -60,9 +60,9 @@ export const TransactionList: FC<TransactionList.Props> = ({
 					},
 				},
 				{
-					label: toStatusLabel(TransactionStatusEnumSchema.enum.open),
+					label: toStatusLabel(TransactionStatusEnumSchema.enum.trade),
 					statuses: [
-						TransactionStatusEnumSchema.enum.open,
+						TransactionStatusEnumSchema.enum.trade,
 					],
 				},
 				{

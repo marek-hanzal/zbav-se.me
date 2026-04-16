@@ -47,9 +47,9 @@ export const withTransactionSourceSelectFx = Effect.fn("withTransactionSourceSel
 					(eb) =>
 						eb
 							.case(eb.ref("lt.status"))
-							.when("pending")
+							.when("interest")
 							.then(10)
-							.when("open")
+							.when("trade")
 							.then(20)
 							.when("resolved")
 							.then(30)

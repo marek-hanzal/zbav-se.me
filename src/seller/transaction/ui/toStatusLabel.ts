@@ -4,8 +4,8 @@ import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum
 
 export const toStatusLabel = (status: TransactionStatusEnumSchema.Type) => {
 	return match(status)
-		.with("pending", () => translator.text("Transaction status pending (label)"))
-		.with("open", () => translator.text("Transaction status open (label)"))
+		.with("interest", () => translator.text("Transaction status interest (label)"))
+		.with("trade", () => translator.text("Transaction status trade (label)"))
 		.with("resolved", () => translator.text("Transaction status resolved (label)"))
 		.with("dispute", () => translator.text("Transaction status dispute (label)"))
 		.with("rejected", () => translator.text("Transaction status rejected (label)"))

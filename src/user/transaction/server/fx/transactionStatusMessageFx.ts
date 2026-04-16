@@ -9,8 +9,8 @@ import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 
 const KindMap = {
-	"pending:buyer": "status-pending",
-	"open:seller": "status-open",
+	"interest:buyer": "status-interest",
+	"trade:seller": "status-trade",
 	"resolved:seller": "status-resolved",
 	"dispute:buyer": "status-dispute-buyer",
 	"dispute:seller": "status-dispute-seller",

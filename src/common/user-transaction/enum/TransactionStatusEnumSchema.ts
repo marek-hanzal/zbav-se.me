@@ -6,15 +6,15 @@ export const TransactionStatusEnumSchema = z
 		 * Initial states
 		 */
 
-		// New, fresh transaction
-		"pending",
+		// New, fresh transaction - buyer has expressed interest
+		"interest",
 
 		/**
-		 * Running (open) states
+		 * Running (trade) states
 		 */
 
 		// Accepted (running) transaction; all the stuff happens here
-		"open",
+		"trade",
 		// Resolved by seller (only) - e.g. package sent
 		"resolved",
 		// Running, but switched to dispute mode (e.g. buyer has a complaint)

@@ -9,8 +9,8 @@ export const TransactionMigration: Migration = {
 			.createType("transaction_status_enum")
 			.asEnum(
 				toEnumGuard<TransactionStatusEnumSchema.Type>()([
-					"pending",
-					"open",
+					"interest",
+					"trade",
 					"resolved",
 					"dispute",
 					"sold",

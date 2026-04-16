@@ -103,8 +103,8 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			.whereRef("lt.listingId", "=", "l.id")
 			.where("lt.userId", "=", userId)
 			.where("lt.status", "in", [
-				"pending",
-				"open",
+				"interest",
+				"trade",
 				"rejected",
 				"resolved",
 				"success",

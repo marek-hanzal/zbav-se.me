@@ -43,13 +43,13 @@ export const transactionAcceptFx = Effect.fn("transactionAcceptFx")(function* ({
 			yield* transactionUpdateStatusFx({
 				transactionId: transaction.id,
 				status: transaction.status,
-				request: "open",
+				request: "trade",
 				target: "seller",
 			});
 
 			yield* transactionStatusMessageFx({
 				transactionId: transaction.id,
-				request: "open",
+				request: "trade",
 				target: "seller",
 				userId,
 			});

@@ -12,14 +12,14 @@ import { LocationButton } from "~/user/transaction-entry/ui/button/LocationButto
 import { PersonalButton } from "~/user/transaction-entry/ui/button/PersonalButton";
 import { archiveSellerMessageActivity } from "../../service/archiveSellerMessageActivity";
 
-export namespace OpenMessage {
+export namespace TradeMessage {
 	export interface Props extends Container.Props {
 		close: TransactionMenuButton.Close;
 		transaction: TransactionSchema.Type;
 	}
 }
 
-export const OpenMessage: FC<OpenMessage.Props> = ({ close, transaction, ui, ...props }) => {
+export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ui, ...props }) => {
 	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 

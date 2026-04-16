@@ -1,55 +1,51 @@
 import type { FC } from "react";
 import type { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
-import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
-import { BuyerInfoButton } from "~/seller/transaction/ui/button/BuyerInfoButton";
+import { SellerInfoButton } from "~/buyer/listing/SellerInfo/SellerInfoButton";
+import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
 import { MessageButtonUi } from "~/user/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
-import { AcceptButton } from "../button/AcceptButton";
 import { RejectButton } from "../button/RejectButton";
 
-export namespace PendingMessage {
+export namespace InterestMessage {
 	export interface Props extends Container.Props {
 		close: TransactionMenuButton.Close;
 		transaction: TransactionSchema.Type;
 	}
 }
 
-export const PendingMessage: FC<PendingMessage.Props> = ({ close, transaction, ui, ...props }) => {
+export const InterestMessage: FC<InterestMessage.Props> = ({
+	close,
+	transaction,
+	ui,
+	...props
+}) => {
 	return (
 		<>
 			<Group
-				data-ui={"PendingMessage[Group].Info"}
 				ui={{
 					round: "default",
 					flow: "vertical",
-					tone: "link",
+					tone: "primary",
 					...ui,
 				}}
 				{...props}
 			>
-				<BuyerInfoButton
-					transactionId={transaction.id}
+				<SellerInfoButton
+					listingId={transaction.listingId}
 					{...MessageButtonUi}
 				/>
 			</Group>
 
 			<Group
-				data-ui={"PendingMessage[Group].Buttons"}
 				ui={{
 					round: "default",
 					flow: "vertical",
-					tone: "link",
+					tone: "primary",
 					...ui,
 				}}
 				{...props}
 			>
-				<AcceptButton
-					close={close}
-					transaction={transaction}
-					{...MessageButtonUi}
-				/>
-
 				<RejectButton
 					close={close}
 					transaction={transaction}

@@ -73,7 +73,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 						listingId,
 						createdAt: now.toJSDate(),
 						updatedAt: now.toJSDate(),
-						status: "pending",
+						status: "interest",
 						statusUpdatedAt: now.toJSDate(),
 						expiresAt: now
 							.plus({
@@ -88,13 +88,13 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			yield* transactionUpdateStatusFx({
 				transactionId: id,
 				status: null,
-				request: "pending",
+				request: "interest",
 				target: "buyer",
 			});
 
 			yield* transactionStatusMessageFx({
 				transactionId: id,
-				request: "pending",
+				request: "interest",
 				target: "buyer",
 				userId,
 			});

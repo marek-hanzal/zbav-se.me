@@ -8,8 +8,8 @@ export namespace TransactionToolbar {
 		closed?: ReactNode;
 		dispute?: ReactNode;
 		expired?: ReactNode;
-		open?: ReactNode;
-		pending?: ReactNode;
+		trade?: ReactNode;
+		interest?: ReactNode;
 		rejected?: ReactNode;
 		resolved?: ReactNode;
 		sold?: ReactNode;
@@ -22,8 +22,8 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 	closed,
 	dispute,
 	expired,
-	open,
-	pending,
+	trade,
+	interest,
 	rejected,
 	resolved,
 	sold,
@@ -33,10 +33,10 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 	...props
 }) => {
 	const toolbar = match(status)
-		.with("open", () => open ?? null)
+		.with("trade", () => trade ?? null)
 		.with("resolved", () => resolved ?? null)
 		.with("dispute", () => dispute ?? null)
-		.with("pending", () => pending ?? null)
+		.with("interest", () => interest ?? null)
 		.with("rejected", () => rejected ?? null)
 		.with("sold", () => sold ?? null)
 		.with("expired", () => expired ?? null)

@@ -13,14 +13,14 @@ import { PackageButton } from "~/user/transaction-entry/ui/button/PackageButton"
 import { PersonalButton } from "~/user/transaction-entry/ui/button/PersonalButton";
 import { archiveBuyerMessageActivity } from "../../service/archiveBuyerMessageActivity";
 
-export namespace OpenMessage {
+export namespace TradeMessage {
 	export interface Props extends Container.Props {
 		close: TransactionMenuButton.Close;
 		transaction: TransactionSchema.Type;
 	}
 }
 
-export const OpenMessage: FC<OpenMessage.Props> = ({ close, transaction, ui, ...props }) => {
+export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ui, ...props }) => {
 	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
@@ -39,7 +39,7 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ close, transaction, ui, ...
 	return (
 		<>
 			<Group
-				data-ui={"OpenMessage"}
+				data-ui={"TradeMessage"}
 				ui={{
 					round: "default",
 					flow: "vertical",
@@ -93,7 +93,7 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ close, transaction, ui, ...
 			</Group>
 
 			<Group
-				data-ui={"OpenMessage"}
+				data-ui={"TradeMessage"}
 				ui={{
 					round: "default",
 					flow: "vertical",
