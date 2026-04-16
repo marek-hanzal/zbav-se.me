@@ -1,8 +1,6 @@
 import { withMutation } from "@/lib/client/mutation";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { activityArchiveFn } from "~/user/activity/fn/activityArchiveFn";
-import { withActivityQuery } from "~/user/activity/query/withActivityQuery";
-import { withTransactionQuery } from "../query/withTransactionQuery";
 
 const terminalStatuses: TransactionStatusEnumSchema.Type[] = [
 	TransactionStatusEnumSchema.enum.rejected,
@@ -52,20 +50,4 @@ export const withArchiveSellerMessageActivityMutation = withMutation<
 			},
 		});
 	},
-	invalidate: [
-		{
-			async invalidate(queryClient) {
-				await Promise.all([
-					withTransactionQuery.invalidator(queryClient, [
-						"collection",
-						"count",
-					]),
-					withActivityQuery.invalidator(queryClient, [
-						"collection",
-						"count",
-					]),
-				]);
-			},
-		},
-	],
 });

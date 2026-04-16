@@ -37,18 +37,6 @@ export const Transaction: FC<Transaction.Props> = ({
 	});
 	const [, setDetail] = useState(false);
 	const hero = useUpload(transaction.gallery.items);
-	const archiveMutation = withArchiveSellerMessageActivityMutation.useMutation();
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
-	useEffect(() => {
-		archiveMutation.mutate({
-			transactionId: transaction.id,
-			listingId: transaction.listingId,
-			status: transaction.status,
-		});
-	}, [
-		transaction,
-	]);
 
 	return (
 		<Container

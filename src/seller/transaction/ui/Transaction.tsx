@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { type FC, useEffect, useRef } from "react";
+import { type FC, useRef } from "react";
 import { Container } from "@/lib/client/container";
 import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
@@ -9,7 +9,6 @@ import { HeroImage } from "~/common/ui/img";
 import { TransactionChat } from "~/user/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/user/transaction-entry/ui/TransactionEntryList";
-import { withArchiveBuyerMessageActivityMutation } from "../mutation/withArchiveBuyerMessageActivityMutation";
 import { withTransactionQuery } from "../query/withTransactionQuery";
 import { archiveBuyerMessageActivity } from "../service/archiveBuyerMessageActivity";
 import { PendingMessage } from "./status/PendingMessage";
@@ -34,18 +33,6 @@ export const Transaction: FC<Transaction.Props> = ({
 		refetchInterval: refresh,
 	});
 	const hero = useUpload(transaction.gallery.items);
-	const archiveMutation = withArchiveBuyerMessageActivityMutation.useMutation();
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
-	useEffect(() => {
-		archiveMutation.mutate({
-			transactionId: transaction.id,
-			listingId: transaction.listingId,
-			status: transaction.status,
-		});
-	}, [
-		transaction,
-	]);
 
 	return (
 		<Container
