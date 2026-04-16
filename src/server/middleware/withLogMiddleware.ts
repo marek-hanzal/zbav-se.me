@@ -50,7 +50,7 @@ export const withLogMiddleware = createMiddleware()
 										timestamp: "date-time-tz",
 										messageColor: "white",
 									})
-								: undefined,
+								: jsonLinesFormatter,
 							nonBlocking: true,
 						}),
 						{
