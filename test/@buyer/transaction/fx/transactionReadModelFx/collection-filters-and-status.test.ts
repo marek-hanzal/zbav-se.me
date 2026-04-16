@@ -69,7 +69,7 @@ describe("buyer transaction read model collection filters", () => {
 					userId: buyer.id,
 				},
 				where: {
-					status: "open",
+					status: "trade",
 				},
 			});
 			const terminalOnly = yield* transactionCollectionFx({

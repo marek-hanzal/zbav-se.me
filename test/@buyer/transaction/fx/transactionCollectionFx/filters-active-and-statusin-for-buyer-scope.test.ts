@@ -162,7 +162,7 @@ describe("buyer transactionCollectionFx", () => {
 				where: {
 					active: false,
 					statusIn: [
-						"open",
+						"trade",
 						"success",
 					],
 				},
@@ -173,7 +173,7 @@ describe("buyer transactionCollectionFx", () => {
 				},
 				where: {
 					statusIn: [
-						"open",
+						"trade",
 						"success",
 					],
 				},

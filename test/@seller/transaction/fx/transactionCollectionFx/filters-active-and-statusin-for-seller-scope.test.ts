@@ -63,8 +63,8 @@ describe("seller transactionCollectionFx", () => {
 				where: {
 					active: false,
 					statusIn: [
-						"pending",
-						"open",
+						"interest",
+						"trade",
 					],
 				},
 			});
@@ -74,8 +74,8 @@ describe("seller transactionCollectionFx", () => {
 				},
 				where: {
 					statusIn: [
-						"pending",
-						"open",
+						"interest",
+						"trade",
 					],
 				},
 			});

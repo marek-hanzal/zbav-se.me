@@ -37,7 +37,7 @@ describe("transactionStatusMessageFx", () => {
 
 			yield* transactionStatusMessageFx({
 				transactionId: transaction.id,
-				request: "open",
+				request: "trade",
 				target: "buyer",
 				userId: buyer.id,
 			});

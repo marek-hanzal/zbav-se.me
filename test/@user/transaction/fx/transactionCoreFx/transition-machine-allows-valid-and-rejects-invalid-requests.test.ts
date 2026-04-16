@@ -12,16 +12,16 @@ describe("transaction core", () => {
 		return Effect.gen(function* () {
 			const allowed = yield* Effect.either(
 				transactionTransitionFx({
-					status: "pending",
-					request: "open",
+					status: "interest",
+					request: "trade",
 					side: "seller",
 				}),
 			);
 
 			const denied = yield* Effect.either(
 				transactionTransitionFx({
-					status: "pending",
-					request: "open",
+					status: "interest",
+					request: "trade",
 					side: "buyer",
 				}),
 			);

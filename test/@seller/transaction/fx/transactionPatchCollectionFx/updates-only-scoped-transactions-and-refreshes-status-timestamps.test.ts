@@ -50,7 +50,7 @@ describe("transactionPatchCollectionFx", () => {
 
 			const updated = yield* transactionPatchCollectionFx({
 				patch: {
-					status: "open",
+					status: "trade",
 				},
 				query: {
 					where: {

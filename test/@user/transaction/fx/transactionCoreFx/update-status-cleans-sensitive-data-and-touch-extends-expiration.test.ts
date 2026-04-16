@@ -82,7 +82,7 @@ describe("transaction core", () => {
 
 			yield* transactionUpdateStatusFx({
 				transactionId,
-				status: "open",
+				status: "trade",
 				request: "rejected",
 				target: "seller",
 			});

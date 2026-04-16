@@ -30,7 +30,7 @@ describe("transactionStatusMessageFx", () => {
 
 			yield* transactionStatusMessageFx({
 				transactionId: transaction.id,
-				request: "open",
+				request: "trade",
 				target: "seller",
 				userId: seller.id,
 			});
@@ -51,7 +51,7 @@ describe("transactionStatusMessageFx", () => {
 					])
 					.where("transactionId", "=", transaction.id)
 					.where("kind", "in", [
-						"status-open",
+						"status-trade",
 						"status-expired",
 					])
 					.orderBy("createdAt", "asc")
