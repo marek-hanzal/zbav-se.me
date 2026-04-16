@@ -22,7 +22,6 @@ import { toolActivityCollection } from "~/user/activity/server/tool/toolActivity
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
 import { toolTransactionEntryCollection } from "~/user/transaction-entry/server/tool/toolTransactionEntryCollection";
-import { toolTransactionEntryCount } from "~/user/transaction-entry/server/tool/toolTransactionEntryCount";
 import { toolTransactionEntryCreate } from "~/user/transaction-entry/server/tool/toolTransactionEntryCreate";
 
 export const AssistantAgent = Agent.create({
@@ -184,7 +183,6 @@ Response style
 		toolActivityCollection,
 		//
 		toolTransactionEntryCollection,
-		toolTransactionEntryCount,
 		toolTransactionEntryCreate,
 		/**
 		 * Utility tools for both human and models
