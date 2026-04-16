@@ -111,34 +111,5 @@ export const withTransactionListingQueryBuilderFx = Effect.fn(
 		})
 		.exhaustive();
 
-	if (where.active !== undefined) {
-		query = query.where(({ exists, not, selectFrom }) => {
-			const unreadSelect = selectFrom("activity as i")
-				.select("i.id")
-				.whereRef("i.userId", "=", "l.userId")
-				.where("i.family", "=", "transaction")
-				.where("i.type", "=", "buyer-message")
-				.where("i.archivedAt", "is", null)
-				.where((eb) => {
-					return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
-				});
-
-			return where.active ? exists(unreadSelect) : not(exists(unreadSelect));
-		}) as TSelect;
-	}
-
-	if (where.terminal !== undefined) {
-		query = query.where(({ exists, not, selectFrom }) => {
-			const openTransactionSelect = selectFrom("transaction as lt")
-				.select("lt.id")
-				.whereRef("lt.listingId", "=", "l.id")
-				.where("lt.status", "in", openStatuses);
-
-			return where.terminal
-				? not(exists(openTransactionSelect))
-				: exists(openTransactionSelect);
-		}) as TSelect;
-	}
-
 	return yield* Effect.succeed(query);
 });
