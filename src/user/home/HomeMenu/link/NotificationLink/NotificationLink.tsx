@@ -27,12 +27,22 @@ export namespace NotificationLink {
 export const NotificationLink = withFallback(
 	({ _suspense, iconProps, onLinkClick }: NotificationLink.Props) => {
 		const locale = useLocale();
-		const { data: highCount } = withActivityQuery.useCountQuery(
+		const { data: hightList } = withActivityQuery.useCollectionQuery(
 			{
 				where: {
 					priority: "high",
 					archivedAtIsNull: true,
 				},
+				cursor: {
+					page: 0,
+					size: 1000,
+				},
+				sort: [
+					{
+						field: "timestamp",
+						order: "desc",
+					},
+				],
 			},
 			{
 				refetchInterval: 5_000,
@@ -59,7 +69,7 @@ export const NotificationLink = withFallback(
 				})}
 				{...uiMenuButton({
 					ui: {
-						tone: highCount > 0 ? "secondary" : "neutral",
+						tone: hightList.length > 0 ? "secondary" : "neutral",
 						theme: "light",
 					},
 					className: [],
@@ -85,7 +95,7 @@ export const NotificationLink = withFallback(
 					>
 						<Tx label={"Notifications (label)"} />
 
-						{highCount > 0 ? (
+						{hightList.length > 0 ? (
 							<Badge
 								ui={{
 									tone: "secondary",
@@ -93,10 +103,10 @@ export const NotificationLink = withFallback(
 									badge: "xs",
 								}}
 							>
-								{highCount > 9
+								{hightList.length > 9
 									? "9+"
 									: toLocaleNumber({
-											number: highCount,
+											number: hightList.length,
 											locale,
 										})}
 							</Badge>
