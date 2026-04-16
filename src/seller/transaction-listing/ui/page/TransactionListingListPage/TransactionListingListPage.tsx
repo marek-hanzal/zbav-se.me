@@ -119,7 +119,7 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 					<ListGroup
 						label={translator.text("Messages closed listings section (title)")}
 						filter={{
-							flow: "resolved",
+							flow: "archived",
 						}}
 						refetchInterval={refetchInterval}
 						ui={{
