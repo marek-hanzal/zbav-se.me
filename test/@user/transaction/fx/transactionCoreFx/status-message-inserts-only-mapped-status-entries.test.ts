@@ -62,7 +62,7 @@ describe("transaction core", () => {
 			const kinds = entries.map((entry) => entry.kind);
 
 			expect(after).toBe(Number(before.count) + 1);
-			expect(kinds).toContain("status-open");
+			expect(kinds).toContain("status-trade");
 			expect(kinds).not.toContain("status-resolved");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

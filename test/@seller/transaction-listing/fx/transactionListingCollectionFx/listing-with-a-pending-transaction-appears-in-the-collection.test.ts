@@ -7,8 +7,8 @@ import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScen
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionListingCollectionFx (seller dashboard)", () => {
-	it("listing with a pending transaction appears in the collection", async () => {
-		const database = await testabase("txListing-with-pending");
+	it("listing with an interest transaction appears in the collection", async () => {
+		const database = await testabase("txListing-with-interest");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});

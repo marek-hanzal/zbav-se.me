@@ -98,8 +98,8 @@ describe("transactionResolveFx — sold behavior", () => {
 				database,
 				transactionId: txB.id,
 			});
-			expect(kindsB).toContain("status-pending");
-			expect(kindsB).toContain("status-open");
+			expect(kindsB).toContain("status-interest");
+			expect(kindsB).toContain("status-trade");
 			expect(kindsB).toContain("status-resolved");
 			expect(kindsB).not.toContain("status-sold");
 
@@ -107,7 +107,7 @@ describe("transactionResolveFx — sold behavior", () => {
 				database,
 				transactionId: txC.id,
 			});
-			expect(kindsC).toContain("status-pending");
+			expect(kindsC).toContain("status-interest");
 			expect(kindsC).toContain("status-sold");
 			expect(kindsC).not.toContain("status-resolved");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);

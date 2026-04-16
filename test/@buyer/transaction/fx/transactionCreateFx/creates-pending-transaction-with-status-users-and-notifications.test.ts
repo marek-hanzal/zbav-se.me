@@ -8,7 +8,7 @@ import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("transactionCreateFx", () => {
-	it("creates pending transaction with status entry, participants and seller notifications", async () => {
+	it("creates interest transaction with status entry, participants and seller notifications", async () => {
 		const database = await testabase("transactionCreateFx-direct");
 
 		return Effect.gen(function* () {
@@ -22,7 +22,7 @@ describe("transactionCreateFx", () => {
 				listingId: listing.id,
 			});
 
-			expect(transaction.status).toBe("pending");
+			expect(transaction.status).toBe("interest");
 			expect(transaction.userId).toBe(buyer.id);
 			expect(transaction.listingId).toBe(listing.id);
 			expect(transaction.expiresAt.getTime()).toBeGreaterThan(
@@ -91,10 +91,10 @@ describe("transactionCreateFx", () => {
 
 			expect(statusEntries).toHaveLength(1);
 			expect(statusEntries[0]).toMatchObject({
-				kind: "status-pending",
+				kind: "status-interest",
 				userId: buyer.id,
 				payload: {
-					text: "status-pending",
+					text: "status-interest",
 				},
 			});
 			expect(participants).toHaveLength(2);

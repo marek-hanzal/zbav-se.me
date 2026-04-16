@@ -60,10 +60,10 @@ describe("transactionStatusMessageFx", () => {
 
 			expect(entries).toHaveLength(2);
 			expect(entries[0]).toMatchObject({
-				kind: "status-open",
+				kind: "status-trade",
 				userId: seller.id,
 				payload: {
-					text: "status-open",
+					text: "status-trade",
 				},
 			});
 			expect(entries[1]).toMatchObject({

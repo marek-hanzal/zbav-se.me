@@ -8,8 +8,8 @@ import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScen
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionResolveFx", () => {
-	it("invalid: cannot resolve a pending transaction", async () => {
-		const database = await testabase("sellerResolveFx-invalid-pending");
+	it("invalid: cannot resolve an interest transaction", async () => {
+		const database = await testabase("sellerResolveFx-invalid-interest");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -50,7 +50,7 @@ describe("transactionResolveFx", () => {
 			expectTaggedErrorFx(result, {
 				tag: "InvalidRequestErrorFx",
 				message:
-					"Invalid transaction status transition from pending to resolved for seller",
+					"Invalid transaction status transition from interest to resolved for seller",
 			});
 
 			const afterTransaction = yield* Effect.promise(() =>
@@ -68,7 +68,7 @@ describe("transactionResolveFx", () => {
 					.executeTakeFirstOrThrow(),
 			);
 
-			expect(afterTransaction.status).toBe("pending");
+			expect(afterTransaction.status).toBe("interest");
 			expect(afterEntries.count).toBe(beforeEntries.count);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
