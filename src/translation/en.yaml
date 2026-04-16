@@ -61,6 +61,9 @@
 0ad19851932e8a648ab674bd1e2c9d2b8057d4f4136877c7eb288b32:
   ref: Transaction buyer info not available (message)
   value: Transaction buyer info not available (message)
+0b8dcf5beb60f43c6dbc40c14784ae9f54429a0e0f229089f09071d4:
+  ref: Transaction status interest (label)
+  value: Transaction status interest (label)
 0bfcff0fd8397bbe2de9284b3fe89a16ac4fbf192d890b04a396258b:
   ref: Draft edit (title)
   value: Draft edit (title)
@@ -316,6 +319,9 @@
 45260cbfb1db18e4526fef4cc251c0564b693545bec5e2fa17efea67:
   ref: New buyer message (label)
   value: New buyer message (label)
+454e4b4d8fe28d37da4444a8c1194db02e8c53ad37b17b22cf534d7a:
+  ref: Transaction status trade (label)
+  value: Transaction status trade (label)
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
   ref: Uploading photo (title)
   value: Uploading photo (title)
@@ -343,9 +349,6 @@
 4d603e3fca4e9f047b0fd3fdd009a1808b0b50eda2aa6f12c206a9c7:
   ref: Share location (button)
   value: Share location (button)
-4d83e7c062f2a34e98c8953735ec95520b6b39a4300df4c9742f5cb7:
-  ref: Transaction status pending (label)
-  value: New buyer interest
 4de936d4b1f35fb13cdfb1640a634d4d7225802275960a2a2abdf6ad:
   ref: Create new feed (button)
   value: Create new feed (button)
@@ -610,6 +613,9 @@
 8ad39860649daeaa240849b5f8b11601c75b062f71eb258cc4557169:
   ref: Feed sorting (hint)
   value: Feed sorting (hint)
+8afb8bcc16148e76b1e8e6b2014cf118026b3adc818a4b95c53630fd:
+  ref: trade
+  value: trade
 8b45608bd106d13d544cc9d7aa8d9c7fdb279ac083715341bc1afbb8:
   ref: User registered (label)
   value: User registered (label)
@@ -805,9 +811,6 @@ b9057abdfc2947ea0f0da7b26069769bbf9c40ca4d382aae15ddbd0a:
 b9280e542386de06015c0360e53e55cfccee8b1bf03cea7ef44c26c0:
   ref: Feed delivery (label)
   value: Feed delivery (label)
-b9c5a03896d71b41f7828f3747be6c509689c279e60f845ab3b23480:
-  ref: pending
-  value: pending
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
   ref: My listings (label)
   value: My listings (label)
@@ -831,12 +834,6 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     message than this :(
   value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
     better message than this :(
-c0356d674d6ff3e7f1de6cf2a8940b040ca908c94752e07587ffd093:
-  ref: Active tool call - inline (label)
-  value: Active tool call - inline (label)
-c17021dbfa5fcc968c8b82045f9aef54d8867a6abff73af85809ae47:
-  ref: Tool call - inline (label)
-  value: Tool call - inline (label)
 c25e8a6359df6fbcc11434b2d0bcaf641237490f399adfa91cd8702b:
   ref: Home (label)
   value: Home (label)
@@ -867,6 +864,9 @@ c7147aaa47c54e90b7023be8ee57d73010a71c259e352067aaad48e6:
 cbac5f835956010c5b45bed61ee098674baef1e75ef17acc19462ac1:
   ref: Flag listing (button)
   value: Flag listing (button)
+cbbae5a0c49c889d67c3b99eb74cb514053761c4d1ec96a6b1ee9229:
+  ref: interest
+  value: interest
 cc5a2127ca406287f39de76d080bdb0177b2a7ed32304f05afde64be:
   ref: Listing seller info not available (empty)
   value: Listing seller info not available (empty)
@@ -1065,9 +1065,3 @@ ff16f6190259edb2dc944cd87e70410856d658de53880f79b4e9c403:
 ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
   ref: No categories found (title)
   value: No categories found (title)
-ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
-  ref: open
-  value: open
-ffbc6be860a399d98c4f2dba58bd6deca4118189f2befade5e28ce2f:
-  ref: Transaction status open (label)
-  value: Transaction accepted
