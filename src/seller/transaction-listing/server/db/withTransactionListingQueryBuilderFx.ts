@@ -58,11 +58,27 @@ export const withTransactionListingQueryBuilderFx = Effect.fn(
 		query = query.where("l.userId", "=", where.userId) as TSelect;
 	}
 
-	if (where.flow) {
-		query = match(where.flow)
-			.with("attention", () => {
-				return query.where((eb) => {
-					return eb.exists(
+	query = match(where.flow)
+		.with("attention", () => {
+			return query.where((eb) => {
+				return eb.exists(
+					eb
+						.selectFrom("activity as i")
+						.select("i.id")
+						.whereRef("i.userId", "=", "l.userId")
+						.where("i.family", "=", "transaction")
+						.where("i.type", "=", "buyer-message")
+						.where("i.archivedAt", "is", null)
+						.where((eb) => {
+							return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
+						}),
+				);
+			}) as TSelect;
+		})
+		.with("resolved", () => {
+			return query.where((eb) => {
+				return eb.not(
+					eb.exists(
 						eb
 							.selectFrom("activity as i")
 							.select("i.id")
@@ -73,42 +89,27 @@ export const withTransactionListingQueryBuilderFx = Effect.fn(
 							.where((eb) => {
 								return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
 							}),
-					);
-				}) as TSelect;
-			})
-			.with("resolved", () => {
-				return query.where((eb) => {
-					return eb.not(
-						eb.exists(
-							eb
-								.selectFrom("activity as i")
-								.select("i.id")
-								.whereRef("i.userId", "=", "l.userId")
-								.where("i.family", "=", "transaction")
-								.where("i.type", "=", "buyer-message")
-								.where("i.archivedAt", "is", null)
-								.where((eb) => {
-									return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
-								}),
-						),
-					);
-				}) as TSelect;
-			})
-			.with("archived", () => {
-				return query.where((eb) => {
-					return eb.not(
-						eb.exists(
-							eb
-								.selectFrom("transaction as lt")
-								.select("lt.id")
-								.whereRef("lt.listingId", "=", "l.id")
-								.where("lt.status", "in", openStatuses),
-						),
-					);
-				}) as TSelect;
-			})
-			.exhaustive();
-	}
+					),
+				);
+			}) as TSelect;
+		})
+		.with("archived", () => {
+			return query.where((eb) => {
+				return eb.not(
+					eb.exists(
+						eb
+							.selectFrom("transaction as lt")
+							.select("lt.id")
+							.whereRef("lt.listingId", "=", "l.id")
+							.where("lt.status", "in", openStatuses),
+					),
+				);
+			}) as TSelect;
+		})
+		.with(undefined, () => {
+			return query;
+		})
+		.exhaustive();
 
 	if (where.active !== undefined) {
 		query = query.where(({ exists, not, selectFrom }) => {
