@@ -99,6 +99,7 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 						label={translator.text("Transactions - archived - buyer (title)")}
 						filter={{
 							flow: "archived",
+							activity: "archived",
 						}}
 						refetchInterval={refetchInterval}
 						ui={{
