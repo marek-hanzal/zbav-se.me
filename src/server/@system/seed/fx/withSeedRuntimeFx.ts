@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
-import { Pool } from "pg";
+import Pool from "pg-pool";
 import { withDialectFx } from "@/lib/common/database";
 import { withLoggerFx } from "@/lib/common/log";
 import { withS3Fx } from "~/common/s3/server/context/withS3Fx";
@@ -26,19 +26,19 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 
 	return Effect.gen(function* () {
 		const pool = yield* Effect.acquireRelease(
-			Effect.sync(
-				() =>
-					new Pool({
-						connectionString: databaseConfig.SERVER_DATABASE_URL,
-						max: 3,
-						allowExitOnIdle: true,
-						idleTimeoutMillis: 1000,
-					}),
-			),
-			(pool) =>
-				Effect.promise(async () => {
+			Effect.sync(() => {
+				return new Pool({
+					connectionString: databaseConfig.SERVER_DATABASE_URL,
+					max: 3,
+					allowExitOnIdle: true,
+					idleTimeoutMillis: 1000,
+				});
+			}),
+			(pool) => {
+				return Effect.promise(async () => {
 					await pool.end();
-				}),
+				});
+			},
 		);
 
 		const kysely = yield* databaseFx.pipe(
