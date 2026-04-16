@@ -41,7 +41,7 @@ export const WarmupSeller: FC<WarmupSeller.Props> = () => {
 			size: 1000,
 		},
 		filter: {
-			active: true,
+			flow: "attention",
 		},
 		sort: [
 			{
@@ -56,7 +56,22 @@ export const WarmupSeller: FC<WarmupSeller.Props> = () => {
 			size: 1000,
 		},
 		filter: {
-			active: false,
+			flow: "archived",
+		},
+		sort: [
+			{
+				field: "lastAt",
+				order: "desc",
+			},
+		],
+	});
+	withTransactionListingQuery.useCollectionQuery({
+		cursor: {
+			page: 0,
+			size: 1000,
+		},
+		filter: {
+			flow: "resolved",
 		},
 		sort: [
 			{
