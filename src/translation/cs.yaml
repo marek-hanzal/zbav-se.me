@@ -43,7 +43,7 @@
     value: Řazení inzerátů
 067456ab95df13c8f032e9a4420460ccd30e58958292fc06bafc7afd:
     ref: Agent (label)
-    value: Osobní asistent
+    value: Asistent
 069a14aec9bb4a553c78c2032f6e521d3b8dccbbb4cfac68e67fa1c1:
     ref: Listing - Pros (title)
     value: Co chci vyzdvihnout
@@ -340,7 +340,7 @@
     value: Oblíbené
 439eb558c51e564ba48dd04ea1d248f28a4688bfe065e352c4d11b06:
     ref: Agent (title)
-    value: Osobní Asistent
+    value: Asistent
 43c97e37d539928f112ef93039df9510299f8c68dc170da7c864a3ba:
     ref: Draft list (label)
     value: Rozpracované inzeráty
@@ -1279,7 +1279,7 @@ buyer - Transaction dispute (message):
 
         Buď prosím ohleduplný, pořád jsme lidi a chyby se mohou stát.
     static: true
-buyer - Transaction pending (message):
+buyer - Transaction interest (message):
     value: >
         **Projevil jsi zájem o inzerát.**
 
@@ -1587,7 +1587,7 @@ seller - Transaction dispute (message):
 
         Teď máte prostor spolu najít řešení, případně odladit nesrovnalosti.
     static: true
-seller - Transaction pending (message):
+seller - Transaction interest (message):
     value: >
         **Máš nového zájemce!**
 
@@ -1618,13 +1618,13 @@ transaction - buyer - status-dispute-seller:
         _Prodejce si žádá vyřešit problém - společně se na to podívejte a domluvte
         se._
     static: true
-transaction - buyer - status-open:
+transaction - buyer - status-trade:
     value: |
         **Prodejce otevřel obchod**
 
         _Teď se do toho můžete společně pustit!_
     static: true
-transaction - buyer - status-pending:
+transaction - buyer - status-interest:
     value: |
         **Obchod se otevře, až ho prodejce přijme**
 
@@ -1670,13 +1670,13 @@ transaction - seller - status-dispute-seller:
 
         _Domluvte se, co je špatně a společně problém rozlouskněte._
     static: true
-transaction - seller - status-open:
+transaction - seller - status-trade:
     value: |
         **Otevřel jsi obchod**
 
         _Teď se do toho můžete společně pustit!_
     static: true
-transaction - seller - status-pending:
+transaction - seller - status-interest:
     value: |
         **Kupující čeká na tvoje potvrzení**
 
