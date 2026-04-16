@@ -1,10 +1,9 @@
 import type { FC } from "react";
 import { Group } from "@/lib/client/group";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
+import { RejectButton } from "~/buyer/transaction/ui/button/RejectButton";
 import { TransactionButtonUi } from "~/user/transaction/ui/TransactionButtonUi";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
-import { CloseButton } from "../button/CloseButton";
-import { SuccessButton } from "../button/SuccessButton";
 
 export namespace OpenToolbar {
 	export interface Props {
@@ -16,13 +15,7 @@ export namespace OpenToolbar {
 export const OpenToolbar: FC<OpenToolbar.Props> = ({ close, transaction }) => {
 	return (
 		<Group>
-			<SuccessButton
-				close={close}
-				transaction={transaction}
-				{...TransactionButtonUi}
-			/>
-
-			<CloseButton
+			<RejectButton
 				close={close}
 				transaction={transaction}
 				{...TransactionButtonUi}

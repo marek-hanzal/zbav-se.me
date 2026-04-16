@@ -4,6 +4,7 @@ import type { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { GalleryUploadButton } from "~/common/gallery/ui/GalleryUploadButton";
 import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
+import { BuyerInfoButton } from "~/seller/transaction/ui/button/BuyerInfoButton";
 import { MessageButtonUi } from "~/user/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionEntryGalleryCreateMutation } from "~/user/transaction-entry/mutation/withTransactionEntryGalleryCreateMutation";
@@ -36,58 +37,76 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ close, transaction, ui, ...
 	]);
 
 	return (
-		<Group
-			data-ui={"OpenMessage[Group]"}
-			ui={{
-				round: "default",
-				flow: "vertical",
-				tone: "link",
-				...ui,
-			}}
-			{...props}
-		>
-			<PackageButton
-				close={close}
-				transactionId={transaction.id}
-				onPostMutation={archiveActivity}
-				{...MessageButtonUi}
-			/>
-
-			<PersonalButton
-				close={close}
-				transactionId={transaction.id}
-				onPostMutation={archiveActivity}
-				{...MessageButtonUi}
-			/>
-
-			<LocationButton
-				close={close}
-				transactionId={transaction.id}
-				onPostMutation={archiveActivity}
-				{...MessageButtonUi}
-			/>
-
-			<GalleryUploadButton
-				defaultUploadIds={[]}
-				state={{
-					value: isGalleryOpen,
-					set: setIsGalleryOpen,
+		<>
+			<Group
+				data-ui={"OpenMessage"}
+				ui={{
+					round: "default",
+					flow: "vertical",
+					tone: "neutral",
+					...ui,
 				}}
-				withMutation={withTransactionEntryGalleryCreateMutation}
-				toMutation={(uploadIds) => ({
-					transactionId: transaction.id,
-					uploadIds,
-				})}
-				onSuccess={async () => {
-					await archiveActivity();
-					setIsGalleryOpen(false);
-					close();
+				{...props}
+			>
+				<PackageButton
+					close={close}
+					transactionId={transaction.id}
+					onPostMutation={archiveActivity}
+					{...MessageButtonUi}
+				/>
+
+				<PersonalButton
+					close={close}
+					transactionId={transaction.id}
+					onPostMutation={archiveActivity}
+					{...MessageButtonUi}
+				/>
+
+				<LocationButton
+					close={close}
+					transactionId={transaction.id}
+					onPostMutation={archiveActivity}
+					{...MessageButtonUi}
+				/>
+
+				<GalleryUploadButton
+					defaultUploadIds={[]}
+					state={{
+						value: isGalleryOpen,
+						set: setIsGalleryOpen,
+					}}
+					withMutation={withTransactionEntryGalleryCreateMutation}
+					toMutation={(uploadIds) => ({
+						transactionId: transaction.id,
+						uploadIds,
+					})}
+					onSuccess={async () => {
+						await archiveActivity();
+						setIsGalleryOpen(false);
+						close();
+					}}
+					onCancel={() => {
+						setIsGalleryOpen(false);
+					}}
+					{...MessageButtonUi}
+				/>
+			</Group>
+
+			<Group
+				data-ui={"OpenMessage"}
+				ui={{
+					round: "default",
+					flow: "vertical",
+					tone: "neutral",
+					...ui,
 				}}
-				onCancel={() => {
-					setIsGalleryOpen(false);
-				}}
-				{...MessageButtonUi}
-			/>
-		</Group>
+				{...props}
+			>
+				<BuyerInfoButton
+					transactionId={transaction.id}
+					{...MessageButtonUi}
+				/>
+			</Group>
+		</>
 	);
 };
