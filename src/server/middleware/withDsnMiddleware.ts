@@ -5,10 +5,10 @@ import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 import { ServerE2eSchema } from "~/server/env/ServerE2eSchema";
 
 export const withDsnMiddleware = createMiddleware().server(async ({ next, request }) => {
-	console.log(process.env);
-
+	console.log("SERVER_DATABASE_URL", process.env.SERVER_DATABASE_URL);
 	const e2eConfig = ServerE2eSchema.parse(process.env);
 	const databaseConfig = ServerDatabaseSchema.parse(process.env);
+	console.log("Parsed DB", databaseConfig);
 	//
 	const isE2e = e2eConfig.SERVER_E2E === "e2e";
 	const db = isE2e ? (request.headers.get("x-e2e-db") ?? undefined) : undefined;
