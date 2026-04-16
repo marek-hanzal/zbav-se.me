@@ -11,7 +11,7 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
 
 describe("seller transactionCollectionFx", () => {
-	it("filters by active activity state and statusIn within seller scope", async () => {
+	it("filters by activity state and statusIn within seller scope", async () => {
 		const database = await testabase("seller-transactionCollection-active-statusIn");
 
 		return Effect.gen(function* () {
@@ -53,7 +53,7 @@ describe("seller transactionCollectionFx", () => {
 					userId: seller.id,
 				},
 				where: {
-					active: true,
+					activity: "unread",
 				},
 			});
 			const inactiveOnly = yield* transactionCollectionFx({
@@ -61,7 +61,7 @@ describe("seller transactionCollectionFx", () => {
 					userId: seller.id,
 				},
 				where: {
-					active: false,
+					activity: "archived",
 					statusIn: [
 						"interest",
 						"trade",
