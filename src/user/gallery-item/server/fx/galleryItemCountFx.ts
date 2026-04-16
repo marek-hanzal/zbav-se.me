@@ -18,7 +18,7 @@ export const galleryItemCountFx = Effect.fn("galleryItemCountFx")(function* ({
 	scope,
 }: galleryItemCountFx.Props) {
 	const logger = yield* getLoggerFx("galleryItemCountFx");
-	logger.debug("galleryItemCountFx", {
+	logger.trace("galleryItemCountFx", {
 		filter,
 		where,
 		scope,

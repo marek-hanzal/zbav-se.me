@@ -50,7 +50,7 @@ describe("transactionPatchCollectionFx", () => {
 
 			const updated = yield* transactionPatchCollectionFx({
 				patch: {
-					status: "open",
+					status: "trade",
 				},
 				query: {
 					where: {
@@ -64,7 +64,7 @@ describe("transactionPatchCollectionFx", () => {
 
 			expect(updated).toHaveLength(1);
 			expect(updated[0]?.id).toBe(ownBefore.id);
-			expect(updated[0]?.status).toBe("open");
+			expect(updated[0]?.status).toBe("trade");
 
 			const ownAfter = yield* Effect.promise(() =>
 				database.kysely
@@ -87,7 +87,7 @@ describe("transactionPatchCollectionFx", () => {
 					.executeTakeFirstOrThrow(),
 			);
 
-			expect(ownAfter.status).toBe("open");
+			expect(ownAfter.status).toBe("trade");
 			expect(ownAfter.statusUpdatedAt.getTime()).toBeGreaterThan(
 				ownBefore.statusUpdatedAt.getTime(),
 			);

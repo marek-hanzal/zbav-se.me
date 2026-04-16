@@ -15,16 +15,21 @@ export namespace transactionEntryCollectionFx {
 
 export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectionFx")(function* ({
 	userId,
-	cursor,
+	cursor = {
+		page: 0,
+		size: 30,
+	},
+	limit,
 	filter,
 	where,
 	scope,
 	sort,
 }: transactionEntryCollectionFx.Props) {
-	const logger = yield* getLoggerFx("transactionEntryCollectionFx");
-	logger.debug("transactionEntryCollectionFx", {
+	const logger = yield* getLoggerFx("transactionEntryCollectionFx", "transaction-entry");
+	logger.trace("transactionEntryCollectionFx", {
 		userId,
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,
@@ -36,10 +41,8 @@ export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectio
 			userId,
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 30,
-		},
+		cursor,
+		limit,
 		filter,
 		where,
 		scope,

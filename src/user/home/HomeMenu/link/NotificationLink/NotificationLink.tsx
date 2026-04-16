@@ -15,7 +15,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { TypoIcon } from "~/common/ui/typo";
 import { uiMenuButton } from "~/common/ui/ui";
-import { withInboxQuery } from "~/user/inbox/query/withInboxQuery";
+import { withActivityQuery } from "~/user/activity/query/withActivityQuery";
 
 export namespace NotificationLink {
 	export interface Props extends MarkSuspense.Props {
@@ -27,12 +27,22 @@ export namespace NotificationLink {
 export const NotificationLink = withFallback(
 	({ _suspense, iconProps, onLinkClick }: NotificationLink.Props) => {
 		const locale = useLocale();
-		const { data: highCount } = withInboxQuery.useCountQuery(
+		const { data: hightList } = withActivityQuery.useCollectionQuery(
 			{
 				where: {
 					priority: "high",
 					archivedAtIsNull: true,
 				},
+				cursor: {
+					page: 0,
+					size: 1000,
+				},
+				sort: [
+					{
+						field: "timestamp",
+						order: "desc",
+					},
+				],
 			},
 			{
 				refetchInterval: 5_000,
@@ -42,7 +52,7 @@ export const NotificationLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open notifications"}
-				to={"/$locale/app/inbox/$priority"}
+				to={"/$locale/app/activity/$priority"}
 				icon={NotificationIcon}
 				iconProps={iconProps}
 				onClick={onLinkClick}
@@ -59,7 +69,7 @@ export const NotificationLink = withFallback(
 				})}
 				{...uiMenuButton({
 					ui: {
-						tone: highCount.filter > 0 ? "secondary" : "neutral",
+						tone: hightList.length > 0 ? "secondary" : "neutral",
 						theme: "light",
 					},
 					className: [],
@@ -85,7 +95,7 @@ export const NotificationLink = withFallback(
 					>
 						<Tx label={"Notifications (label)"} />
 
-						{highCount.filter > 0 ? (
+						{hightList.length > 0 ? (
 							<Badge
 								ui={{
 									tone: "secondary",
@@ -93,16 +103,16 @@ export const NotificationLink = withFallback(
 									badge: "xs",
 								}}
 							>
-								{highCount.filter > 9
+								{hightList.length > 9
 									? "9+"
 									: toLocaleNumber({
-											number: highCount.filter,
+											number: hightList.length,
 											locale,
 										})}
 							</Badge>
 						) : (
 							<Tx
-								label={"Inbox - nothing new (label)"}
+								label={"Activity - nothing new (label)"}
 								ui={{
 									opacity: "6",
 								}}
@@ -119,7 +129,7 @@ export const NotificationLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open notifications"}
-				to={"/$locale/app/inbox/$priority"}
+				to={"/$locale/app/activity/$priority"}
 				icon={NotificationIcon}
 				iconProps={iconProps}
 				onClick={onLinkClick}

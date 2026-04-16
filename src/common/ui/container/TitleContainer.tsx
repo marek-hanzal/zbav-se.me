@@ -8,13 +8,15 @@ export namespace TitleContainer {
 	export interface Props extends Container.Props {
 		textTitle?: string;
 		textTitleProps?: Tx.PropsEx;
-		textSubtitle?: string;
+		textSubtitle?: Title.Props["textSubtitle"];
 		titleProps?: Omit<Title.Props, "textTitle">;
 		left?: ReactNode;
 		right?: ReactNode;
 		bottom?: ReactNode;
 	}
 }
+
+export type TitleContainer = typeof TitleContainer;
 
 export const TitleContainer: FC<TitleContainer.Props> = ({
 	textTitle,

@@ -1,3 +1,9 @@
+---
+key: MASTER
+title: Zdroj pravdy pro aplikaci, produkt a pravidla
+summary: Primární dokument, kde jsou popsané všechny části aplikace, co umí, pravidla a další; slouží jako hlavní zdroj pravdy.
+---
+
 # MASTER
 
 Tohle je finální „single source of truth“ pro Zbav-se.me. Je to moje produktová ústava: popisuje **co je pravda** (koncepty, pravidla, hranice) a **proč**. Neřeší, jak to technicky nakóduju.
@@ -66,7 +72,7 @@ Pozn.: **Obsah je autorita pořadí.** Pořadí kapitol a konceptů v dokumentu 
   - [Flag uživatele](#koncept-flag-uzivatele)
   - [Transakce](#koncept-transakce)
   - [Zprávy](#koncept-zpravy)
-  - [Notifikace (Inbox)](#koncept-notifikace)
+  - [Notifikace (Activity)](#koncept-notifikace)
   - [Dispute](#koncept-dispute)
   - [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu)
   - [Pass: Delší expirace inzerátu (Za měsíc)](#koncept-pass-delsi-expirace-inzeratu)
@@ -434,14 +440,14 @@ Pravidlo proti duplicitám (znovu a naposled):
 ### Uživatel
 ← [předchozí](#co-nedelam) | [další](#koncept-kategorie) →
 
-Uživatel je core entita. Je na něj navázaný skoro všechno (inzeráty, drafty, feedy, transakce, inbox), ale **PII držím na minimu** (typicky email). Zároveň pro funkci produktu ukládám doménový data účtu (feedy, drafty, transakce, inbox, eventy/metriky, flagy…). Všechno navíc je jen riziko a dluh.
+Uživatel je core entita. Je na něj navázaný skoro všechno (inzeráty, drafty, feedy, transakce, activity), ale **PII držím na minimu** (typicky email). Zároveň pro funkci produktu ukládám doménový data účtu (feedy, drafty, transakce, activity, eventy/metriky, flagy…). Všechno navíc je jen riziko a dluh.
 
 Co uživatel reálně ovládá:
 - kontext trhu přes [Feedy](#koncept-feed),
 - rozpracovaný věci přes [Drafty](#koncept-draft),
 - publikovaný věci přes [Inzeráty](#koncept-inzerat),
 - obchodní kontext přes [Transakce](#koncept-transakce) a [Zprávy](#koncept-zpravy),
-- „co se stalo“ přes [Inbox](#koncept-notifikace),
+- „co se stalo“ přes [Activity](#koncept-notifikace),
 - hranice obsahu přes [Citlivost](#koncept-citlivost-inzeratu) a osobní úklid přes [Ignor](#koncept-ignorace-inzeratu),
 - aktivace a limity přes [Ekonomiku](#ekonomika) a [Limit počtu feedů](#koncept-limit-poctu-feedu), [Limit fotek](#koncept-limit-poctu-fotek), [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu).
 
@@ -456,7 +462,7 @@ Related:
 - [Inzeráty](#koncept-inzerat)
 - [Transakce](#koncept-transakce)
 - [Zprávy](#koncept-zpravy)
-- [Inbox](#koncept-notifikace)
+- [Activity](#koncept-notifikace)
 
 ---
 
@@ -1318,7 +1324,7 @@ Related:
 ---
 
 <a id="koncept-notifikace"></a>
-### Notifikace (Inbox)
+### Notifikace (Activity)
 ← [předchozí](#koncept-zpravy) | [další](#koncept-dispute) →
 
 Notifikace nejsou nástroj na otravování. Jsou to **zrcadlo reality**, aby člověk věděl, co se stalo, a nemusel paranoidně refreshovat appku.
@@ -1327,19 +1333,19 @@ Filosofie ticha:
 - Defaultní stav je ticho. Žádný umělý FOMO.
 - Notifikace vzniká jen z reálný události (typicky změna stavu [Transakce](#koncept-transakce) nebo příchozí [Zpráva](#koncept-zpravy)).
 
-Inbox First:
-- Inbox je jediný zdroj pravdy pro „co se stalo“.
-- Všechno ostatní (push/email) je jen mirror toho, co už existuje v Inboxu.
-- Inbox musí umět nést realitu transakce: zprávu od kupujícího, zprávu od prodávajícího, systémovou transaction událost i čistě systémovou událost.
+Activity First:
+- Activity je jediný zdroj pravdy pro „co se stalo“.
+- Všechno ostatní (push/email) je jen mirror toho, co už existuje v Activity.
+- Activity musí umět nést realitu transakce: zprávu od kupujícího, zprávu od prodávajícího, systémovou transaction událost i čistě systémovou událost.
 
 Email jako zrcadlo:
-- Email není primární kanál. Je to volitelný forward/digest toho, co už je v Inboxu.
-- Když email nedojde, nic se „neztratilo“. Autorita je Inbox.
+- Email není primární kanál. Je to volitelný forward/digest toho, co už je v Activity.
+- Když email nedojde, nic se „neztratilo“. Autorita je Activity.
 
 Kontrakt:
-- Notifikace se nesmí stát další paralelní svět. Když něco umím zjistit v Inboxu, nesmím k tomu psát nový pravidla do emailu/pushe.
+- Notifikace se nesmí stát další paralelní svět. Když něco umím zjistit v Activity, nesmím k tomu psát nový pravidla do emailu/pushe.
 - Deduplikace je normální (nebudu spamovat ten samej fakt víckrát, jen protože to jde).
-- Inbox typ události musí odpovídat tomu, odkud ta věc reálně přišla: buyer / seller / transaction / system. `unknown` je jen nouzovej fallback, ne běžná realita.
+- Activity typ události musí odpovídat tomu, odkud ta věc reálně přišla: buyer / seller / transaction / system. `unknown` je jen nouzovej fallback, ne běžná realita.
 
 Kritické výjimky:
 - Některý věci se neptají a jdou vždy (reset hesla, bezpečnostní alerty).
@@ -2296,7 +2302,7 @@ Kontrakt:
 
 Related:
 - [Předplatné](#koncept-predplatne)
-- [Notifikace (Inbox)](#koncept-notifikace)
+- [Notifikace (Activity)](#koncept-notifikace)
 - [Ekonomika](#ekonomika)
 
 ---
@@ -2556,7 +2562,7 @@ Related:
 - [Draft](#koncept-draft)
 - [Feed](#koncept-feed)
 - [Hledat](#koncept-hledat)
-- [Notifikace (Inbox)](#koncept-notifikace)
+- [Notifikace (Activity)](#koncept-notifikace)
 - [Můj účet](#koncept-muj-ucet)
 - [Ekonomika](#ekonomika)
 
@@ -2570,7 +2576,7 @@ Můj účet není sociální profil. Je to místo pro preference a hranice: kdo 
 
 Co tu řeším:
 - maximum [Citlivosti](#koncept-citlivost-inzeratu),
-- nastavení ticha a přeposílání/digestu pro [Inbox](#koncept-notifikace),
+- nastavení ticha a přeposílání/digestu pro [Activity](#koncept-notifikace),
 - základní účetní věci typu email (minimum identit, žádný „profilovky pro pocit“).
 
 Kontrakt:
@@ -2579,7 +2585,7 @@ Kontrakt:
 Related:
 - [Uživatel](#koncept-uzivatel)
 - [Citlivost](#koncept-citlivost-inzeratu)
-- [Notifikace (Inbox)](#koncept-notifikace)
+- [Notifikace (Activity)](#koncept-notifikace)
 - [Ekonomika](#ekonomika)
 
 ---
@@ -2618,7 +2624,7 @@ Co tu je:
 - Rychlý skoky: typicky „Inzeráty“ a „Nový inzerát“ (vstupy do existujících konceptů, ne vlastní svět).
 
 Related:
-- [Notifikace (Inbox)](#koncept-notifikace)
+- [Notifikace (Activity)](#koncept-notifikace)
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
 - [Draft](#koncept-draft)
 
@@ -2859,7 +2865,7 @@ Fázování:
 
 Kontrakt komunikace:
 - Neučím. Nevysvětluju. Rozdíl se má projevit chováním UI (viz [Landing](#koncept-landing), [Navigace](#koncept-navigace)).
-- “Ticho” je default i v růstu: žádnej spam. Inbox je autorita (viz [Notifikace](#koncept-notifikace)).
+- “Ticho” je default i v růstu: žádnej spam. Activity je autorita (viz [Notifikace](#koncept-notifikace)).
 
 Slogany:
 - „Hoď to sem taky.“
@@ -3043,7 +3049,7 @@ Related:
   - [Flag uživatele](#koncept-flag-uzivatele)
   - [Transakce](#koncept-transakce)
   - [Zprávy](#koncept-zpravy)
-  - [Notifikace (Inbox)](#koncept-notifikace)
+  - [Notifikace (Activity)](#koncept-notifikace)
   - [Dispute](#koncept-dispute)
   - [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu)
   - [Pass: Delší expirace inzerátu (Za měsíc)](#koncept-pass-delsi-expirace-inzeratu)

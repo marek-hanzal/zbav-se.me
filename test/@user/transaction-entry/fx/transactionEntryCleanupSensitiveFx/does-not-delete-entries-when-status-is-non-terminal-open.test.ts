@@ -40,7 +40,7 @@ describe("transactionEntryCleanupSensitiveFx", () => {
 
 			yield* transactionEntryCleanupSensitiveFx({
 				transactionId,
-				status: "open",
+				status: "trade",
 			});
 
 			const entries = yield* Effect.promise(() =>

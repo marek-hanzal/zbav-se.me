@@ -3,8 +3,19 @@ import ViteYaml from "@modyfi/vite-plugin-yaml";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
+import rsc from "@vitejs/plugin-rsc";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
+
+const external = [
+	"pg",
+];
+
+const noExternal = [
+	"react",
+	"react-dom",
+	"server-only",
+];
 
 export default defineConfig(({ mode }) => {
 	const isProduction = mode === "production";
@@ -18,13 +29,21 @@ export default defineConfig(({ mode }) => {
 				"@/lib": path.resolve(__dirname, "./lib"),
 			},
 		},
+		ssr: {
+			external,
+			noExternal,
+		},
 		plugins: [
 			tanstackStart({
 				router: {
 					routesDirectory: "./@routes",
 					generatedRouteTree: "./_route.ts",
 				},
+				rsc: {
+					enabled: true,
+				},
 			}),
+			rsc(),
 			react({}),
 			tailwindcss(),
 			ViteYaml(),
@@ -35,11 +54,6 @@ export default defineConfig(({ mode }) => {
 					})
 				: undefined,
 		],
-		ssr: isProduction
-			? {
-					noExternal: true,
-				}
-			: undefined,
 		worker: {
 			format: "es",
 		},

@@ -10,6 +10,10 @@ export const CategoryQuerySchema = z
 		filter: CategoryFilterSchema.optional(),
 		where: CategoryWhereSchema.optional(),
 		sort: CategorySortSchema.array().optional(),
+		limit: z.int().nonnegative().optional().meta({
+			description:
+				"Guardrail limit for collection size; usually set/overridden by the system",
+		}),
 	})
 	.strip()
 	.meta({

@@ -10,7 +10,7 @@ import { withTransactionEntryGalleryCreateMutation } from "~/user/transaction-en
 import { LocationButton } from "~/user/transaction-entry/ui/button/LocationButton";
 import { PackageButton } from "~/user/transaction-entry/ui/button/PackageButton";
 import { PersonalButton } from "~/user/transaction-entry/ui/button/PersonalButton";
-import { archiveBuyerMessageInbox } from "../../service/archiveBuyerMessageInbox";
+import { archiveBuyerMessageActivity } from "../../service/archiveBuyerMessageActivity";
 
 export namespace DisputeMessage {
 	export interface Props extends Container.Props {
@@ -23,8 +23,8 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
-	const archiveInbox = useCallback(async () => {
-		await archiveBuyerMessageInbox({
+	const archiveActivity = useCallback(async () => {
+		await archiveBuyerMessageActivity({
 			queryClient,
 			transactionId: transaction.id,
 			listingId: transaction.listingId,
@@ -37,7 +37,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 
 	return (
 		<Group
-			data-ui={"DisputeMessage[Group]"}
+			data-ui={"DisputeMessage"}
 			ui={{
 				round: "default",
 				flow: "vertical",
@@ -49,7 +49,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 			<PackageButton
 				close={close}
 				transactionId={transaction.id}
-				onPostMutation={archiveInbox}
+				onPostMutation={archiveActivity}
 				{...MessageButtonUi}
 			/>
 
@@ -65,7 +65,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 					uploadIds,
 				})}
 				onSuccess={async () => {
-					await archiveInbox();
+					await archiveActivity();
 					setIsGalleryOpen(false);
 					close();
 				}}
@@ -78,14 +78,14 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 			<LocationButton
 				close={close}
 				transactionId={transaction.id}
-				onPostMutation={archiveInbox}
+				onPostMutation={archiveActivity}
 				{...MessageButtonUi}
 			/>
 
 			<PersonalButton
 				close={close}
 				transactionId={transaction.id}
-				onPostMutation={archiveInbox}
+				onPostMutation={archiveActivity}
 				{...MessageButtonUi}
 			/>
 		</Group>

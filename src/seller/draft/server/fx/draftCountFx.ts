@@ -18,7 +18,7 @@ export const draftCountFx = Effect.fn("draftCountFx")(function* ({
 	scope,
 }: draftCountFx.Props) {
 	const logger = yield* getLoggerFx("draftCountFx");
-	logger.debug("draftCountFx", {
+	logger.trace("draftCountFx", {
 		filter,
 		where,
 		scope,

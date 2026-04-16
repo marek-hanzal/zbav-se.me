@@ -18,7 +18,7 @@ export const ignoreCountFx = Effect.fn("ignoreCountFx")(function* ({
 	scope,
 }: ignoreCountFx.Props) {
 	const logger = yield* getLoggerFx("ignoreCountFx");
-	logger.debug("ignoreCountFx", {
+	logger.trace("ignoreCountFx", {
 		filter,
 		where,
 		scope,

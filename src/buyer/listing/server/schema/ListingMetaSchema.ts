@@ -12,7 +12,8 @@ export const ListingMetaSchema = z
 	.strip()
 	.meta({
 		id: "ListingMeta",
-		description: "Meta data for listing collection",
+		description:
+			"Important metadata for e.g. location targeting of listings and related feedId.",
 	});
 
 export type ListingMetaSchema = typeof ListingMetaSchema;

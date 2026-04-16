@@ -38,8 +38,8 @@ describe("flagToggleFx", () => {
 						.where("listingId", "=", listing.id)
 						.where("event", "=", "flag")
 						.execute();
-					const inbox = await database.kysely
-						.selectFrom("inbox")
+					const activity = await database.kysely
+						.selectFrom("activity")
 						.select("id")
 						.where("userId", "=", users.seller.id)
 						.where("type", "=", "flag")
@@ -47,7 +47,7 @@ describe("flagToggleFx", () => {
 
 					expect(rows).toHaveLength(1);
 					expect(events).toHaveLength(1);
-					expect(inbox).toHaveLength(1);
+					expect(activity).toHaveLength(1);
 				}),
 		});
 	});

@@ -13,6 +13,10 @@ export const ListingQuerySchema = z
 		filter: ListingFilterSchema.optional(),
 		where: ListingWhereSchema.optional(),
 		sort: ListingSortSchema.array().optional(),
+		limit: z.int().nonnegative().optional().meta({
+			description:
+				"Guardrail limit for collection size; usually set/overridden by the system",
+		}),
 	})
 	.strip()
 	.meta({

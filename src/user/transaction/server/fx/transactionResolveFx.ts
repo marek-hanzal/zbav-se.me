@@ -19,7 +19,7 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	message = "You are not allowed to access this transaction",
 }: transactionResolveFx.Props) {
 	const logger = yield* getLoggerFx("transactionResolveFx");
-	logger.debug("transactionResolveFx", {
+	logger.trace("transactionResolveFx", {
 		userId,
 		transactionId,
 		message,

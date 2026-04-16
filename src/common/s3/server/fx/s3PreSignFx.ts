@@ -21,7 +21,7 @@ export const s3PreSignFx = Effect.fn("s3PreSignFx")(function* ({
 	extension,
 }: s3PreSignFx.Props) {
 	const logger = yield* getLoggerFx("s3PreSignFx");
-	logger.debug("s3PreSignFx", {
+	logger.trace("s3PreSignFx", {
 		userId,
 		path,
 		extension,

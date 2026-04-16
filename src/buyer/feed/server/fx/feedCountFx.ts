@@ -20,7 +20,7 @@ export const feedCountFx = Effect.fn("feedCountFx")(function* ({
 	scope,
 }: feedCountFx.Props) {
 	const logger = yield* getLoggerFx("feedCountFx");
-	logger.debug("feedCountFx", {
+	logger.trace("feedCountFx", {
 		filter,
 		where,
 		scope,
@@ -44,13 +44,7 @@ export const feedCountFx = Effect.fn("feedCountFx")(function* ({
 			return query.select(sql<number>`count(*)::int`.as("count")).executeTakeFirstOrThrow();
 		});
 
-		return {
-			total: count,
-			filter: count,
-			where: count,
-			isEmpty: count === 0,
-			isFilterEmpty: false,
-		};
+		return count;
 	}
 
 	return yield* withCountFx({

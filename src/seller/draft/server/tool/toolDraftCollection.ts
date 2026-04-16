@@ -1,19 +1,73 @@
-import { tool } from "ai";
+import { tool } from "@openai/agents";
+import { match } from "ts-pattern";
 import { z } from "zod";
-import { draftCollectionFn } from "~/seller/draft/server/fn/draftCollectionFn";
-import { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
-import { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
+import { draftCollectionFn } from "~/seller/draft/fn/draftCollectionFn";
+import { draftCountFn } from "~/seller/draft/fn/draftCountFn";
+import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
+import { getRootLogger } from "~/server/log/getRootLogger";
+
+const logger = getRootLogger([
+	"draft",
+	"tool",
+	"toolDraftCollection",
+]);
 
 export const toolDraftCollection = tool({
-	title: "draft-collection",
-	type: "function",
+	name: "draft-collection",
 	needsApproval: false,
-	description: "Access user's drafts",
-	inputSchema: DraftQuerySchema,
-	outputSchema: z.array(DraftSchema),
-	async execute(data) {
-		return draftCollectionFn({
-			data,
+	description: `
+Current seller user's saved listing drafts.
+
+Modes:
+- collection: return a small page of matching drafts
+- count: return how many matching drafts exist
+
+Use for draft lookup and for finding draft ids before update or delete.
+    `.trim(),
+	strict: true,
+	parameters: z
+		.looseObject({
+			type: z.enum([
+				"count",
+				"collection",
+			]),
+			query: DraftToolQuerySchema,
+		})
+		.strip(),
+	async execute({ type, query }) {
+		logger.trace("toolDraftCollection", {
+			type,
+			query,
 		});
+
+		return match(type)
+			.with("count", async () => {
+				const count = await draftCountFn({
+					data: query,
+				});
+
+				const hasMore = await draftCountFn({
+					data: {},
+				});
+
+				return {
+					count: count,
+					hasMore: hasMore > 0,
+				} as const;
+			})
+			.with("collection", async () => {
+				const items = await draftCollectionFn({
+					data: {
+						...query,
+						limit: 8,
+					},
+				});
+
+				return {
+					count: items.length,
+					items,
+				} as const;
+			})
+			.exhaustive();
 	},
 });

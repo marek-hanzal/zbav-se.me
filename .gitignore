@@ -5,7 +5,10 @@
 .million
 .nitro
 .output
+.playwright-mcp
 .tanstack
+.tmp
+.tmp-*
 .turbo
 .vercel
 .vscode/chrome-debug-profile
@@ -13,8 +16,10 @@
 coverage
 dist
 node_modules
+node-compile-cache
 playwright-report
 results
 temp
 test-results
+tmp-*
 tsconfig.tsbuildinfo

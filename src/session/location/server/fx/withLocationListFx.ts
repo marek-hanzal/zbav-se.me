@@ -20,14 +20,16 @@ export const withLocationListFx = Effect.fn("withLocationListFx")(function* ({
 		page: 0,
 		size: 30,
 	},
+	limit,
 	sort,
 }: withLocationListFx.Props) {
 	const logger = yield* getLoggerFx("withLocationListFx");
-	logger.debug("withLocationListFx", {
+	logger.trace("withLocationListFx", {
 		filter,
 		where,
 		scope,
 		cursor,
+		limit,
 		sort,
 	});
 
@@ -39,6 +41,7 @@ export const withLocationListFx = Effect.fn("withLocationListFx")(function* ({
 		where,
 		scope,
 		cursor,
+		limit,
 		queryFx: withLocationQueryBuilderFx,
 	});
 });

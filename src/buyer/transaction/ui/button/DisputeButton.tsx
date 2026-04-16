@@ -6,7 +6,7 @@ import type { TransactionSchema } from "~/buyer/transaction/server/schema/Transa
 import { FlagIcon } from "~/common/ui/icon";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionDisputeMutation } from "../../mutation/withTransactionDisputeMutation";
-import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";
+import { archiveSellerMessageActivity } from "../../service/archiveSellerMessageActivity";
 
 export namespace DisputeButton {
 	export interface Props extends ConfirmButton.Props {
@@ -20,7 +20,7 @@ export const DisputeButton: FC<DisputeButton.Props> = ({ close, transaction, ...
 	const mutation = withTransactionDisputeMutation.useMutation({
 		async onPostMutation() {
 			try {
-				await archiveSellerMessageInbox({
+				await archiveSellerMessageActivity({
 					queryClient,
 					transactionId: transaction.id,
 				});

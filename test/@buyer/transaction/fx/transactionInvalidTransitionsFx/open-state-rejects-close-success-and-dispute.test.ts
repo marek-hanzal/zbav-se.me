@@ -30,9 +30,9 @@ describe("buyer transaction invalid transitions", () => {
 					.where("transactionId", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
-			const beforeInbox = yield* Effect.promise(() =>
+			const beforeActivity = yield* Effect.promise(() =>
 				database.kysely
-					.selectFrom("inbox")
+					.selectFrom("activity")
 					.select((eb) => eb.fn.countAll<number>().as("count"))
 					.where(sql<boolean>`reference @> ARRAY[${transactionId}]::text[]`)
 					.executeTakeFirstOrThrow(),
@@ -59,15 +59,15 @@ describe("buyer transaction invalid transitions", () => {
 
 			expectTaggedErrorFx(closeResult, {
 				tag: "InvalidRequestErrorFx",
-				message: "Invalid transaction status transition from open to closed for buyer",
+				message: "Invalid transaction status transition from trade to closed for buyer",
 			});
 			expectTaggedErrorFx(successResult, {
 				tag: "InvalidRequestErrorFx",
-				message: "Invalid transaction status transition from open to success for buyer",
+				message: "Invalid transaction status transition from trade to success for buyer",
 			});
 			expectTaggedErrorFx(disputeResult, {
 				tag: "InvalidRequestErrorFx",
-				message: "Invalid transaction status transition from open to dispute for buyer",
+				message: "Invalid transaction status transition from trade to dispute for buyer",
 			});
 
 			const afterTransaction = yield* Effect.promise(() =>
@@ -84,17 +84,17 @@ describe("buyer transaction invalid transitions", () => {
 					.where("transactionId", "=", transactionId)
 					.executeTakeFirstOrThrow(),
 			);
-			const afterInbox = yield* Effect.promise(() =>
+			const afterActivity = yield* Effect.promise(() =>
 				database.kysely
-					.selectFrom("inbox")
+					.selectFrom("activity")
 					.select((eb) => eb.fn.countAll<number>().as("count"))
 					.where(sql<boolean>`reference @> ARRAY[${transactionId}]::text[]`)
 					.executeTakeFirstOrThrow(),
 			);
 
-			expect(afterTransaction.status).toBe("open");
+			expect(afterTransaction.status).toBe("trade");
 			expect(afterEntries.count).toBe(beforeEntries.count);
-			expect(afterInbox.count).toBe(beforeInbox.count);
+			expect(afterActivity.count).toBe(beforeActivity.count);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

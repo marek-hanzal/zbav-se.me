@@ -13,15 +13,20 @@ export namespace uploadCollectionFx {
 }
 
 export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
+	limit,
 	filter,
 	where,
 	scope,
 	sort,
 }: uploadCollectionFx.Props) {
 	const logger = yield* getLoggerFx("uploadCollectionFx");
-	logger.debug("uploadCollectionFx", {
+	logger.trace("uploadCollectionFx", {
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,
@@ -32,10 +37,8 @@ export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
 		selectFx: withUploadCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
+		limit,
 		filter,
 		where,
 		scope,

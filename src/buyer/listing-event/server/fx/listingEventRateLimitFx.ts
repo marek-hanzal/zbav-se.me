@@ -20,7 +20,7 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 	minutes = 10,
 }: listingEventRateLimitFx.Props) {
 	const logger = yield* getLoggerFx("listingEventRateLimitFx");
-	logger.debug("listingEventRateLimitFx", {
+	logger.trace("listingEventRateLimitFx", {
 		listingId,
 		event,
 		minutes,

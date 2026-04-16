@@ -1,5 +1,5 @@
-import { useDebouncedCallback } from "@tanstack/react-pacer";
-import { type RefObject, useLayoutEffect } from "react";
+import { useThrottledCallback } from "@tanstack/react-pacer";
+import { type RefObject, useLayoutEffect, useRef } from "react";
 
 export namespace useAutoScroll {
 	export interface Props {
@@ -20,15 +20,24 @@ export function useAutoScroll({
 	containerRef,
 	contentRef,
 	enabled = true,
-	debounceMs = 150,
+	debounceMs = 100,
 	initialBehavior = "instant",
 	resizeBehavior = "smooth",
 }: useAutoScroll.Props): useAutoScroll.Result {
-	const scrollToEnd = useDebouncedCallback(
+	const frameRef = useRef<number>(0);
+	const scrollToEnd = useThrottledCallback(
 		(behavior: ScrollBehavior) => {
-			containerRef.current?.scrollTo({
-				top: containerRef.current?.scrollHeight,
-				behavior,
+			if (frameRef.current) {
+				cancelAnimationFrame(frameRef.current);
+			}
+
+			frameRef.current = requestAnimationFrame(() => {
+				frameRef.current = 0;
+
+				containerRef.current?.scrollTo({
+					top: containerRef.current.scrollHeight,
+					behavior,
+				});
 			});
 		},
 		{
@@ -38,6 +47,14 @@ export function useAutoScroll({
 			trailing: true,
 		},
 	);
+
+	useLayoutEffect(() => {
+		return () => {
+			if (frameRef.current) {
+				cancelAnimationFrame(frameRef.current);
+			}
+		};
+	}, []);
 
 	useLayoutEffect(() => {
 		if (!enabled) {

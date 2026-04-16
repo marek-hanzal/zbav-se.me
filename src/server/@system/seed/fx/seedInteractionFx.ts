@@ -176,19 +176,20 @@ export const seedInteractionFx = Effect.fn("seedInteractionFx")(function* ({
 
 		const batchResults = yield* Effect.forEach(
 			batch,
-			(listing, index) =>
-				seedInteractionScenarioFx({
+			(listing, index) => {
+				return seedInteractionScenarioFx({
 					actorUserId: current.id,
 					listingId: listing.id,
 					sellerId: listing.userId,
 					locationId: listing.locationId,
 					feedId,
 					timeline: withInteractionTimeline({
-						from: DateTime.fromISO(listing.createdAt),
+						from: DateTime.fromJSDate(listing.createdAt),
 						offsetMinutes:
 							(planned + index) * Math.max(1, INTERACTION_SCENARIO_GAP_MINUTES),
 					}),
-				}).pipe(Effect.either),
+				}).pipe(Effect.either);
+			},
 			{
 				concurrency: INTERACTION_SEED_CONCURRENCY,
 			},

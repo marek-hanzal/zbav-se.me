@@ -7,7 +7,7 @@ import { Group } from "@/lib/client/group";
 import type { uiIcon } from "@/lib/client/icon";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
-import { AssistantLink } from "~/user/home/HomeMenu/link/AssistantLink";
+import { AgentLink } from "~/user/home/HomeMenu/link/AgentLink";
 import { DraftLink } from "./link/DraftLink";
 import { DraftListLink } from "./link/DraftListLink";
 import { FavouritesLink } from "./link/FavouritesLink";
@@ -82,7 +82,7 @@ export const HomeMenu = withFallback(({ _suspense, ui, onLinkClick, ...props }: 
 				)}
 
 				<Group>
-					<AssistantLink
+					<AgentLink
 						_suspense={"I know"}
 						iconProps={{
 							ui: {

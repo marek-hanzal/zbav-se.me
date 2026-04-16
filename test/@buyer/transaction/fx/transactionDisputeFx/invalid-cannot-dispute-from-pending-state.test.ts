@@ -9,8 +9,8 @@ import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionDisputeFx (buyer)", () => {
-	it("invalid: cannot dispute from pending state", async () => {
-		const database = await testabase("buyerDisputeFx-invalid-from-pending");
+	it("invalid: cannot dispute from interest state", async () => {
+		const database = await testabase("buyerDisputeFx-invalid-from-interest");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -49,7 +49,7 @@ describe("transactionDisputeFx (buyer)", () => {
 
 			expectTaggedErrorFx(result, {
 				tag: "InvalidRequestErrorFx",
-				message: "Invalid transaction status transition from pending to dispute for buyer",
+				message: "Invalid transaction status transition from interest to dispute for buyer",
 			});
 
 			const afterTransaction = yield* Effect.promise(() =>

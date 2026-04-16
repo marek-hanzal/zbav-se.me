@@ -8,9 +8,9 @@ import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
+import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
-import { inboxCreateFx } from "~/user/inbox/server/fx/inboxCreateFx";
 import { transactionResolveFx } from "~/user/transaction/server/fx/transactionResolveFx";
 import { transactionTouchFx } from "~/user/transaction/server/fx/transactionTouchFx";
 import { transactionTransitionFx } from "~/user/transaction/server/fx/transactionTransitionFx";
@@ -31,8 +31,8 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 	transactionId,
 	...entry
 }: transactionEntryCreateFx.Props) {
-	const logger = yield* getLoggerFx("transactionEntryCreateFx");
-	logger.debug("transactionEntryCreateFx", {
+	const logger = yield* getLoggerFx("transactionEntryCreateFx", "transaction-entry");
+	logger.trace("transactionEntryCreateFx", {
 		userId,
 		transactionId,
 		...entry,
@@ -202,10 +202,10 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				// common
 				.with(
 					{
-						kind: "status-open",
+						kind: "status-trade",
 					},
 					{
-						kind: "status-pending",
+						kind: "status-interest",
 					},
 					{
 						kind: "status-resolved",
@@ -248,7 +248,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 
 			yield* match(transaction.side)
 				.with("buyer", () =>
-					inboxCreateFx({
+					activityCreateFx({
 						userId: transaction.sellerId,
 						reference: [
 							transaction.listingId,
@@ -264,7 +264,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 					}),
 				)
 				.with("seller", () =>
-					inboxCreateFx({
+					activityCreateFx({
 						userId: transaction.buyerId,
 						reference: [
 							transaction.listingId,
@@ -281,7 +281,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				)
 				.with("transaction", () =>
 					Effect.all([
-						inboxCreateFx({
+						activityCreateFx({
 							userId: transaction.sellerId,
 							reference: [
 								transaction.listingId,
@@ -297,7 +297,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							},
 							priority: "high",
 						}),
-						inboxCreateFx({
+						activityCreateFx({
 							userId: transaction.buyerId,
 							reference: [
 								transaction.listingId,
@@ -317,7 +317,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				)
 				.with("system", () =>
 					Effect.all([
-						inboxCreateFx({
+						activityCreateFx({
 							userId: transaction.sellerId,
 							reference: [
 								transaction.listingId,
@@ -333,7 +333,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							},
 							priority: "high",
 						}),
-						inboxCreateFx({
+						activityCreateFx({
 							userId: transaction.buyerId,
 							reference: [
 								transaction.listingId,

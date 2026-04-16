@@ -78,7 +78,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 			{...props}
 		>
 			{match(transaction.status)
-				.with("pending", () => {
+				.with("interest", () => {
 					return (
 						<Container
 							ui={{
@@ -100,7 +100,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 						</Container>
 					);
 				})
-				.with("open", () => {
+				.with("trade", () => {
 					return (
 						<ChatInput
 							onSubmit={submit}

@@ -38,7 +38,7 @@ describe("transactionPatchFx", () => {
 				transactionPatchFx({
 					userId: stranger.id,
 					patch: {
-						status: "open",
+						status: "trade",
 					},
 					query: {
 						where: {

@@ -1,6 +1,6 @@
 import { withQuery } from "@/lib/client/query";
 import type { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
-import { transactionEntryGalleryFetchFn } from "~/user/transaction-entry/server/fn/transactionEntryGalleryFetchFn";
+import { transactionEntryGalleryFetchFn } from "~/user/transaction-entry/fn/transactionEntryGalleryFetchFn";
 import type { TransactionEntryGalleryQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryGalleryQuerySchema";
 
 export const withTransactionEntryGalleryFetchQuery = withQuery<

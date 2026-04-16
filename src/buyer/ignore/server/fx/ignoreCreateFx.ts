@@ -17,7 +17,7 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 	listingId,
 }: ignoreCreateFx.Props) {
 	const logger = yield* getLoggerFx("ignoreCreateFx");
-	logger.debug("ignoreCreateFx", {
+	logger.trace("ignoreCreateFx", {
 		userId,
 		listingId,
 	});

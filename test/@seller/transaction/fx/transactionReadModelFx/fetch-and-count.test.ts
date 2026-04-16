@@ -68,10 +68,10 @@ describe("seller transaction read model fetch and count", () => {
 					openScenario.transactionId,
 				].sort(),
 			);
-			expect(resolvedCount.where).toBe(0);
+			expect(resolvedCount).toBe(0);
 			expect(fetched.id).toBe(openScenario.transactionId);
 			expect(typeof fetched.unreadCount).toBe("number");
-			expect(fetched.status).toBe("open");
+			expect(fetched.status).toBe("trade");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

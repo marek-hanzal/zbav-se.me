@@ -37,7 +37,7 @@ export const TransactionDetailPage: FC<TransactionDetailPage.Props> = ({
 			<Transaction
 				_suspense={_suspense}
 				transactionId={transactionId}
-				refresh={1_000 * 5}
+				refresh={5 * 1_000}
 			/>
 		</TitleContainer>
 	);

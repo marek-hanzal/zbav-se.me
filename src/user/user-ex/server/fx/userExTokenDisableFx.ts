@@ -12,7 +12,7 @@ export const userExTokenDisableFx = Effect.fn("userExTokenDisableFx")(function* 
 	userId,
 }: userExTokenDisableFx.Props) {
 	const logger = yield* getLoggerFx("userExTokenDisableFx");
-	logger.debug("userExTokenDisableFx", {
+	logger.trace("userExTokenDisableFx", {
 		userId,
 	});
 

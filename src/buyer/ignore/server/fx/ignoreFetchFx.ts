@@ -19,7 +19,7 @@ export const ignoreFetchFx = Effect.fn("ignoreFetchFx")(function* ({
 	sort,
 }: ignoreFetchFx.Props) {
 	const logger = yield* getLoggerFx("ignoreFetchFx");
-	logger.debug("ignoreFetchFx", {
+	logger.trace("ignoreFetchFx", {
 		filter,
 		where,
 		scope,

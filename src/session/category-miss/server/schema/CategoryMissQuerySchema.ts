@@ -10,6 +10,10 @@ export const CategoryMissQuerySchema = z
 		filter: CategoryMissFilterSchema.optional(),
 		where: CategoryMissWhereSchema.optional(),
 		sort: CategoryMissSortSchema.array().optional(),
+		limit: z.int().nonnegative().optional().meta({
+			description:
+				"Guardrail limit for collection size; usually set/overridden by the system",
+		}),
 	})
 	.strip()
 	.meta({

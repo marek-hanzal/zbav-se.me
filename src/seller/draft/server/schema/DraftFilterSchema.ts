@@ -7,11 +7,11 @@ export const DraftFilterSchema = z
 		userId: z.string().optional().meta({
 			description: "This filter matches drafts with the exact userId",
 		}),
-		updatedAtGte: z.iso.datetime().optional().meta({
+		updatedAtGte: z.coerce.date().optional().meta({
 			description:
 				"This filter matches drafts with updatedAt greater than or equal to the provided date",
 		}),
-		updatedAtLte: z.iso.datetime().optional().meta({
+		updatedAtLte: z.coerce.date().optional().meta({
 			description:
 				"This filter matches drafts with updatedAt less than or equal to the provided date",
 		}),

@@ -4,13 +4,15 @@ import {
 	configure,
 	fingersCrossed,
 	getConsoleSink,
-	getLogger,
 	jsonLinesFormatter,
+	type LogLevel,
 	withContext,
 } from "@logtape/logtape";
 import { getPrettyFormatter } from "@logtape/pretty";
 import { createMiddleware } from "@tanstack/react-start";
 import { genId } from "@/lib/common/gen-id";
+import { getRootLogger } from "~/server/log/getRootLogger";
+import { RootLoggerName } from "~/server/log/RootLoggerName";
 import { withDevEnvMiddleware } from "~/server/middleware/withDevEnvMiddleware";
 
 const contextLocalStorage = new AsyncLocalStorage<Record<string, unknown>>();
@@ -22,6 +24,8 @@ export const withLogMiddleware = createMiddleware()
 		withDevEnvMiddleware,
 	])
 	.server(async ({ next, context: { isDev } }) => {
+		const level: LogLevel = "trace";
+
 		flag &&
 			(await configure({
 				reset: true,
@@ -40,8 +44,10 @@ export const withLogMiddleware = createMiddleware()
 					console: fingersCrossed(
 						getConsoleSink({
 							formatter: getPrettyFormatter({
-								categoryWidth: 42,
+								categoryWidth: 64,
 								properties: true,
+								timestamp: "date-time-tz",
+								messageColor: "white",
 							}),
 							nonBlocking: true,
 						}),
@@ -65,20 +71,50 @@ export const withLogMiddleware = createMiddleware()
 						 * Root logger
 						 */
 						category: [],
-						lowestLevel: "trace",
+						lowestLevel: level,
 						sinks: [
 							"console",
 							"file",
 						],
 					},
 					{
-						category: "zbav-se.me",
-						lowestLevel: "trace",
+						category: RootLoggerName,
+						lowestLevel: level,
 						sinks: [
-							"console",
 							"file",
 						],
 					},
+					{
+						category: [
+							RootLoggerName,
+							"middleware",
+						],
+						lowestLevel: level,
+						sinks: [
+							"file",
+						],
+					},
+					{
+						category: [
+							RootLoggerName,
+							"fn",
+						],
+						lowestLevel: level,
+						sinks: [
+							"console",
+						],
+					},
+					{
+						category: [
+							RootLoggerName,
+							"fx",
+						],
+						lowestLevel: level,
+						sinks: [
+							"console",
+						],
+					},
+					//
 					{
 						category: [
 							"logtape",
@@ -99,7 +135,7 @@ export const withLogMiddleware = createMiddleware()
 		return withContext(context, async () => {
 			return next({
 				context: {
-					rootLogger: getLogger("zbav-se.me").with(context),
+					rootLogger: getRootLogger().with(context),
 				},
 			});
 		});

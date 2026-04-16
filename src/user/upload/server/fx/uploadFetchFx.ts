@@ -19,7 +19,7 @@ export const uploadFetchFx = Effect.fn("uploadFetchFx")(function* ({
 	sort,
 }: uploadFetchFx.Props) {
 	const logger = yield* getLoggerFx("uploadFetchFx");
-	logger.debug("uploadFetchFx", {
+	logger.trace("uploadFetchFx", {
 		filter,
 		where,
 		scope,

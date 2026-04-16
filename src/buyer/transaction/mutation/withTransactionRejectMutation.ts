@@ -1,6 +1,6 @@
 import { withMutation } from "@/lib/client/mutation";
 import type { EntitySchema } from "@/lib/common/schema";
-import { transactionRejectFn } from "~/buyer/transaction/server/fn/transactionRejectFn";
+import { transactionRejectFn } from "~/buyer/transaction/fn/transactionRejectFn";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
 import { withTransactionQuery } from "../query/withTransactionQuery";
 

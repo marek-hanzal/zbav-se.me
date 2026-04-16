@@ -92,9 +92,9 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 					}}
 				>
 					<ListGroup
-						label={translator.text("Messages active listings section (title)")}
+						label={translator.text("Transactions - buyer-to-seller - seller (title)")}
 						filter={{
-							active: true,
+							flow: "buyer-to-seller",
 						}}
 						refetchInterval={refetchInterval}
 						typoUi={{
@@ -104,10 +104,9 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 					/>
 
 					<ListGroup
-						label={translator.text("Messages inactive listings section (title)")}
+						label={translator.text("Transactions - seller-to-buyer - seller (title)")}
 						filter={{
-							active: false,
-							terminal: false,
+							flow: "seller-to-buyer",
 						}}
 						refetchInterval={refetchInterval}
 						typoUi={{
@@ -118,10 +117,9 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 					/>
 
 					<ListGroup
-						label={translator.text("Messages closed listings section (title)")}
+						label={translator.text("Transactions - archived - seller (title)")}
 						filter={{
-							active: false,
-							terminal: true,
+							flow: "archived",
 						}}
 						refetchInterval={refetchInterval}
 						ui={{

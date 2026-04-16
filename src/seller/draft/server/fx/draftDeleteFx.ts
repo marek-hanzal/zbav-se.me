@@ -15,7 +15,7 @@ export namespace draftDeleteFx {
 
 export const draftDeleteFx = Effect.fn("draftDeleteFx")(function* (query: draftDeleteFx.Props) {
 	const logger = yield* getLoggerFx("draftDeleteFx");
-	logger.debug("draftDeleteFx", {
+	logger.trace("draftDeleteFx", {
 		...query,
 	});
 

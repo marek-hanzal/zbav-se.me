@@ -1,4 +1,3 @@
-import { getLogger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
@@ -13,6 +12,7 @@ import { ServerCdnSchema } from "~/server/env/ServerCdnSchema";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
 import { ServerS3Schema } from "~/server/env/ServerS3Schema";
+import { getRootLogger } from "~/server/log/getRootLogger";
 import { withLocationFx } from "~/session/location/server/fx/withLocationFx";
 import { withTransactionContextFx } from "~/user/transaction/server/context/withTransactionContextFx";
 import { withUploadFx } from "~/user/upload/server/context/withUploadFx";
@@ -22,7 +22,7 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 	const s3Config = ServerS3Schema.parse(process.env);
 	const cdnConfig = ServerCdnSchema.parse(process.env);
 	const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
-	const logger = getLogger("zbav-se.me");
+	const logger = getRootLogger();
 
 	return Effect.gen(function* () {
 		const pool = yield* Effect.acquireRelease(
@@ -56,6 +56,7 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 				api: "https://api.geoapify.com",
 				autocomplete: "/v1/geocode/autocomplete",
 				geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
+				route: "/v1/routematrix",
 			}),
 			withS3Fx({
 				api: s3Config.SERVER_S3_API,

@@ -12,6 +12,10 @@ export const TransactionEntryGalleryQuerySchema = z
 				id: "TransactionEntryGalleryWhere",
 				description: "Gallery lookup scoped by transaction entry identifier",
 			}),
+		limit: z.int().nonnegative().optional().meta({
+			description:
+				"Guardrail limit for collection size; usually set/overridden by the system",
+		}),
 	})
 	.strip()
 	.meta({

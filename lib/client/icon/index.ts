@@ -1,4 +1,5 @@
 export { ActionMenuIcon } from "./ActionMenuIcon";
+export { AiIcon } from "./AiIcon";
 export { ArrowDownIcon } from "./ArrowDownIcon";
 export { ArrowLeftIcon } from "./ArrowLeftIcon";
 export { ArrowRightIcon } from "./ArrowRightIcon";

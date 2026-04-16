@@ -41,6 +41,11 @@ export namespace withCollectionFx {
 		scope?: TFilter;
 		//
 		cursor: CursorSchema.Type;
+		/**
+		 * This prop limits the page size, so even thou "cursor" may ask for more, this is a guardrail
+		 * to prevent overflowing the system/database.
+		 */
+		limit?: number;
 	}
 }
 
@@ -60,6 +65,7 @@ export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 	where,
 	scope,
 	cursor,
+	limit,
 }: withCollectionFx.Props<
 	TDB,
 	TTable,
@@ -84,10 +90,12 @@ export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 		});
 	}
 
+	const size = Math.min(limit ?? cursor.size, cursor.size);
+
 	return yield* Effect.promise(async () => {
 		return qb
-			.limit(cursor.size)
-			.offset(cursor.page * cursor.size)
+			.limit(size)
+			.offset(cursor.page * size)
 			.execute();
 	});
 });

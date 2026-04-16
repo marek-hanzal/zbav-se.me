@@ -1,5 +1,5 @@
 import { withQuery } from "@/lib/client/query";
-import { historyFn } from "~/public/github/server/fn/historyFn";
+import { historyFn } from "~/public/github/fn/historyFn";
 import type { GitHubHistorySchema } from "~/public/github/server/schema/GitHubHistorySchema";
 
 type GithubHistoryQuery = {

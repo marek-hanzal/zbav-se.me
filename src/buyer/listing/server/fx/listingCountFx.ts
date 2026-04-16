@@ -23,7 +23,7 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	meta,
 }: listingCountFx.Props) {
 	const logger = yield* getLoggerFx("listingCountFx");
-	logger.debug("listingCountFx", {
+	logger.trace("listingCountFx", {
 		userId,
 		filter,
 		where,
@@ -52,13 +52,7 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 				.executeTakeFirstOrThrow();
 		});
 
-		return {
-			total: count,
-			filter: count,
-			where: count,
-			isEmpty: count === 0,
-			isFilterEmpty: false,
-		};
+		return count;
 	}
 
 	return yield* withCountFx({

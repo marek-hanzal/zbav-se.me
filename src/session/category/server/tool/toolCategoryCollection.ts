@@ -1,28 +1,46 @@
-import { tool } from "ai";
-import { categoryCollectionFn } from "~/session/category/server/fn/categoryCollectionFn";
-import { CategoryQuerySchema } from "~/session/category/server/schema/CategoryQuerySchema";
-import { CategorySchema } from "~/session/category/server/schema/CategorySchema";
+import { tool } from "@openai/agents";
+import { getRootLogger } from "~/server/log/getRootLogger";
+import { categoryCollectionFn } from "~/session/category/fn/categoryCollectionFn";
+import { CategoryToolQuerySchema } from "~/session/category/server/schema/CategoryToolQuerySchema";
+
+const logger = getRootLogger([
+	"tool",
+	"toolCategoryCollection",
+]);
 
 export const toolCategoryCollection = tool({
-	title: "category-collection",
-	type: "function",
+	name: "category-collection",
 	needsApproval: false,
-	description:
-		"Get a list of categories; usable also for resolving category candidates for listing, search and others who need a category",
-	inputExamples: [
-		{
-			input: {
-				filter: {
-					fulltext: "Television",
-				},
-			},
-		},
-	],
-	inputSchema: CategoryQuerySchema,
-	outputSchema: CategorySchema.array(),
+	description: `
+Category lookup for listing drafts and listing/search category resolution. Use small cursors.
+
+Use when the user names a category in natural language and you need a category id or candidate
+list. Prefer this over category-fetch when the category might not exist or may be ambiguous.
+
+Hint:
+- use filter.fulltext to normalize user's input
+
+Sort:
+- group: Category group name/order.
+- category: Category name.
+- sort: Explicit category sort order.
+    `.trim(),
+	parameters: CategoryToolQuerySchema,
 	async execute(data) {
-		return categoryCollectionFn({
+		logger.trace("toolCategoryCollection", {
 			data,
 		});
+
+		const items = await categoryCollectionFn({
+			data: {
+				...data,
+				limit: 8,
+			},
+		});
+
+		return {
+			count: items.length,
+			items,
+		};
 	},
 });

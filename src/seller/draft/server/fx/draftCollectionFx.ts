@@ -13,33 +13,36 @@ export namespace draftCollectionFx {
 }
 
 export const draftCollectionFx = Effect.fn("draftCollectionFx")(function* ({
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
 	filter,
 	where,
 	scope,
 	sort,
+	limit,
 }: draftCollectionFx.Props) {
 	const logger = yield* getLoggerFx("draftCollectionFx");
-	logger.debug("draftCollectionFx", {
+	logger.trace("draftCollectionFx", {
 		cursor,
 		filter,
 		where,
 		scope,
 		sort,
+		limit,
 	});
 
 	return yield* withCollectionFx({
 		selectFx: withDraftCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
 		filter,
 		where,
 		scope,
 		queryFx: withDraftQueryBuilderFx,
+		limit,
 	});
 });
 

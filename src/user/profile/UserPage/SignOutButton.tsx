@@ -1,13 +1,14 @@
 import { useNavigate } from "@tanstack/react-router";
 import type { FC } from "react";
 import { Button } from "@/lib/client/button";
-import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { LockIcon } from "~/common/ui/icon";
 import { withSignOutMutation } from "~/user/auth/mutation/withSignOutMutation";
 
 export namespace SignOutButton {
-	export interface Props extends Button.Props {}
+	export interface Props extends Button.Props {
+		locale: string;
+	}
 }
 
 /**
@@ -16,8 +17,7 @@ export namespace SignOutButton {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const SignOutButton: FC<SignOutButton.Props> = ({ ui, ...props }) => {
-	const locale = useLocale();
+export const SignOutButton: FC<SignOutButton.Props> = ({ locale, ui, ...props }) => {
 	const navigate = useNavigate();
 	const signOutMutation = withSignOutMutation.useMutation({
 		async onPostMutation() {

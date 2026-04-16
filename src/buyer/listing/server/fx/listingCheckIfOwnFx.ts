@@ -23,7 +23,7 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 	message,
 }: listingCheckIfOwnFx.Props) {
 	const logger = yield* getLoggerFx("listingCheckIfOwnFx");
-	logger.debug("listingCheckIfOwnFx", {
+	logger.trace("listingCheckIfOwnFx", {
 		userId,
 		listingId,
 		message,

@@ -13,15 +13,20 @@ export namespace galleryItemCollectionFx {
 }
 
 export const galleryItemCollectionFx = Effect.fn("galleryItemCollectionFx")(function* ({
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
+	limit,
 	filter,
 	where,
 	scope,
 	sort,
 }: galleryItemCollectionFx.Props) {
 	const logger = yield* getLoggerFx("galleryItemCollectionFx");
-	logger.debug("galleryItemCollectionFx", {
+	logger.trace("galleryItemCollectionFx", {
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,
@@ -32,10 +37,8 @@ export const galleryItemCollectionFx = Effect.fn("galleryItemCollectionFx")(func
 		selectFx: withGalleryItemCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
+		limit,
 		filter,
 		where,
 		scope,

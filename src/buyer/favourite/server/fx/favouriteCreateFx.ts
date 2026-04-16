@@ -19,8 +19,8 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 	feedId,
 	...data
 }: favouriteCreateFx.Props) {
-	const logger = yield* getLoggerFx("favouriteCreateFx");
-	logger.debug("favouriteCreateFx", {
+	const logger = yield* getLoggerFx("favouriteCreateFx", "favourite");
+	logger.trace("Request", {
 		userId,
 		feedId,
 		...data,

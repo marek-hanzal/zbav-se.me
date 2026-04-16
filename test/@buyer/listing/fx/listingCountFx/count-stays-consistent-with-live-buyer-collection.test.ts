@@ -35,9 +35,7 @@ describe("buyer listingCountFx", () => {
 			});
 
 			expect(collection).toHaveLength(1);
-			expect(count.total).toBe(collection.length);
-			expect(count.where).toBe(collection.length);
-			expect(count.filter).toBe(collection.length);
+			expect(count).toBe(collection.length);
 
 			const empty = yield* listingCountFx({
 				userId: users.buyer.id,
@@ -47,8 +45,7 @@ describe("buyer listingCountFx", () => {
 				scope: {},
 			});
 
-			expect(empty.filter).toBe(0);
-			expect(empty.isFilterEmpty).toBe(true);
+			expect(empty).toBe(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

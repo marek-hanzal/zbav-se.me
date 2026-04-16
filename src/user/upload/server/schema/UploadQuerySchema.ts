@@ -10,6 +10,10 @@ export const UploadQuerySchema = z
 		filter: UploadFilterSchema.optional(),
 		where: UploadWhereSchema.optional(),
 		sort: UploadSortSchema.array().optional(),
+		limit: z.int().nonnegative().optional().meta({
+			description:
+				"Guardrail limit for collection size; usually set/overridden by the system",
+		}),
 	})
 	.strip()
 	.meta({

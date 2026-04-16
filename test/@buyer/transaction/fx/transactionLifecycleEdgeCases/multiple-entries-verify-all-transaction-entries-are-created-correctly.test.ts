@@ -58,7 +58,7 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 			});
 
 			const kinds = entries.map((e) => e.kind);
-			expect(kinds).toContain("status-pending");
+			expect(kinds).toContain("status-interest");
 			expect(kinds).toContain("status-resolved");
 			expect(kinds).toContain("status-closed");
 			expect(entries.length).toBeGreaterThanOrEqual(3);

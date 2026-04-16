@@ -21,7 +21,7 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 	event,
 }: listingEventCreateFx.Props) {
 	const logger = yield* getLoggerFx("listingEventCreateFx");
-	logger.debug("listingEventCreateFx", {
+	logger.trace("listingEventCreateFx", {
 		userId,
 		listingId,
 		event,

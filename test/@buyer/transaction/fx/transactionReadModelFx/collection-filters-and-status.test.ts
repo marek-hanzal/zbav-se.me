@@ -11,7 +11,7 @@ import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScen
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("buyer transaction read model collection filters", () => {
-	it("filters collection rows by status, terminal and listing inside buyer scope", async () => {
+	it("filters collection rows by status, flow and listing inside buyer scope", async () => {
 		const database = await testabase("buyerTransactionReadModelFx-filters-collection");
 
 		return Effect.gen(function* () {
@@ -69,7 +69,7 @@ describe("buyer transaction read model collection filters", () => {
 					userId: buyer.id,
 				},
 				where: {
-					status: "open",
+					status: "trade",
 				},
 			});
 			const terminalOnly = yield* transactionCollectionFx({
@@ -77,7 +77,7 @@ describe("buyer transaction read model collection filters", () => {
 					userId: buyer.id,
 				},
 				where: {
-					terminal: true,
+					flow: "archived",
 				},
 			});
 

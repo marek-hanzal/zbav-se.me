@@ -22,7 +22,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 	...data
 }: draftCreateFx.Props) {
 	const logger = yield* getLoggerFx("draftCreateFx");
-	logger.debug("draftCreateFx", {
+	logger.trace("draftCreateFx", {
 		userId,
 		uploadIds,
 		...data,
@@ -34,7 +34,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 			const dateContext = yield* DateContextFx;
 
 			const id = genId();
-			const now = dateContext.now().toJSDate().toISOString();
+			const now = dateContext.now().toJSDate();
 
 			const gallery = yield* galleryInsertFx({
 				userId,

@@ -7,6 +7,7 @@ import type { FeedPatchSchema } from "~/buyer/feed/server/schema/FeedPatchSchema
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import { locationFetchFx } from "~/session/location/server/fx/locationFetchFx";
 
 export namespace feedPatchFx {
 	export interface Props extends FeedPatchSchema.Type {
@@ -20,7 +21,7 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 	scope,
 }: feedPatchFx.Props) {
 	const logger = yield* getLoggerFx("feedPatchFx");
-	logger.debug("feedPatchFx", {
+	logger.trace("feedPatchFx", {
 		patch,
 		query,
 		scope,
@@ -35,6 +36,33 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 				...query,
 				scope,
 			});
+
+			if (patch.locationId && !feed.query.meta?.latLon) {
+				logger.trace("Binding locationId", {
+					locationId: patch.locationId,
+				});
+
+				const location = yield* locationFetchFx({
+					where: {
+						id: patch.locationId,
+					},
+				});
+
+				patch.query = {
+					...patch.query,
+					meta: {
+						...patch.query?.meta,
+						latLon: {
+							lat: location.lat,
+							lon: location.lon,
+						},
+					},
+				};
+
+				logger.trace("Updated query.meta", {
+					query: patch.query,
+				});
+			}
 
 			yield* tryDbFx(async () =>
 				kysely

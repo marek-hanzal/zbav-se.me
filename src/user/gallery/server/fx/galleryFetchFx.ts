@@ -19,7 +19,7 @@ export const galleryFetchFx = Effect.fn("galleryFetchFx")(function* ({
 	sort,
 }: galleryFetchFx.Props) {
 	const logger = yield* getLoggerFx("galleryFetchFx");
-	logger.debug("galleryFetchFx", {
+	logger.trace("galleryFetchFx", {
 		filter,
 		where,
 		scope,

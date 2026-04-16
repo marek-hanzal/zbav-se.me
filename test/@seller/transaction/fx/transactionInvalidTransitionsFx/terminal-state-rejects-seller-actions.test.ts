@@ -56,7 +56,7 @@ describe("seller transaction invalid transitions", () => {
 
 			expectTaggedErrorFx(acceptResult, {
 				tag: "InvalidRequestErrorFx",
-				message: "Invalid transaction status transition from success to open for seller",
+				message: "Invalid transaction status transition from success to trade for seller",
 			});
 			expectTaggedErrorFx(rejectResult, {
 				tag: "InvalidRequestErrorFx",

@@ -20,7 +20,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 	scope,
 }: draftPatchFx.Props) {
 	const logger = yield* getLoggerFx("draftPatchFx");
-	logger.debug("draftPatchFx", {
+	logger.trace("draftPatchFx", {
 		patch,
 		query,
 		scope,
@@ -41,7 +41,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 					.updateTable("draft")
 					.set({
 						...patch,
-						updatedAt: dateContext.now().toJSDate().toISOString(),
+						updatedAt: dateContext.now().toJSDate(),
 					})
 					.where("id", "=", draft.id)
 					.executeTakeFirst(),

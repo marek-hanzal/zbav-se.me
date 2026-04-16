@@ -2,6 +2,7 @@ import {
 	type FC,
 	type KeyboardEventHandler,
 	type ReactNode,
+	type RefCallback,
 	useId,
 	useLayoutEffect,
 	useRef,
@@ -14,20 +15,24 @@ import { SendMessageIcon } from "../icon";
 
 export namespace ChatInput {
 	export interface Props extends Omit<Container.Props, "onSubmit" | "onChange"> {
+		cancel?: ReactNode;
 		onSubmit(value: string): void;
 		placeholder: string;
 		maxRows?: number;
 		loading: boolean;
 		left?: ReactNode;
+		inputRef?: RefCallback<HTMLTextAreaElement>;
 	}
 }
 
 export const ChatInput: FC<ChatInput.Props> = ({
+	cancel,
 	onSubmit,
 	placeholder,
 	maxRows = 6,
 	loading,
 	left,
+	inputRef,
 	ui,
 	...props
 }) => {
@@ -42,13 +47,13 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			return;
 		}
 
-		const cs = getComputedStyle(el);
+		const style = getComputedStyle(el);
 
-		const lineHeight = Number.parseFloat(cs.lineHeight || "20");
-		const paddingTop = Number.parseFloat(cs.paddingTop || "0");
-		const paddingBottom = Number.parseFloat(cs.paddingBottom || "0");
-		const borderTop = Number.parseFloat(cs.borderTopWidth || "0");
-		const borderBottom = Number.parseFloat(cs.borderBottomWidth || "0");
+		const lineHeight = Number.parseFloat(style.lineHeight || "20");
+		const paddingTop = Number.parseFloat(style.paddingTop || "0");
+		const paddingBottom = Number.parseFloat(style.paddingBottom || "0");
+		const borderTop = Number.parseFloat(style.borderTopWidth || "0");
+		const borderBottom = Number.parseFloat(style.borderBottomWidth || "0");
 
 		const verticalExtras = paddingTop + paddingBottom + borderTop + borderBottom;
 		const maxHeight = lineHeight * maxRows + verticalExtras;
@@ -86,7 +91,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 
 	return (
 		<Container
-			data-ui={"ChatInput-Container"}
+			data-ui={"ChatInput"}
 			ui={{
 				layout: "horizontal-flex",
 				items: "center",
@@ -99,11 +104,14 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			{left}
 
 			<textarea
-				ref={textareaRef}
+				ref={(element) => {
+					textareaRef.current = element;
+					inputRef?.(element);
+				}}
 				id={areaId}
 				rows={1}
 				value={message}
-				disabled={ui?.disabled}
+				disabled={ui?.disabled || loading}
 				onChange={(e) => setMessage(e.target.value)}
 				onKeyDown={handleKeyDown}
 				placeholder={placeholder}
@@ -122,32 +130,36 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				})}
 			/>
 
-			<Button
-				data-ui={"ChatInput-Button-send"}
-				iconEnabled={SendMessageIcon}
-				iconProps={{
-					ui: {
-						text: "2xl",
-					},
-				}}
-				disabled={loading || message.length === 0}
-				loading={loading}
-				onClick={() => {
-					onSubmit(message);
-					setMessage("");
-				}}
-				ui={{
-					justify: "center",
-					items: "center",
-					tone: "brand",
-					theme: "light",
-					square: "default",
-					background: undefined,
-					border: false,
-					shadow: false,
-					color: "lead",
-				}}
-			/>
+			{loading && cancel ? (
+				cancel
+			) : (
+				<Button
+					data-action={"send chat text message"}
+					iconEnabled={SendMessageIcon}
+					iconProps={{
+						ui: {
+							text: "2xl",
+						},
+					}}
+					disabled={loading || message.length === 0}
+					loading={loading}
+					onClick={() => {
+						onSubmit(message);
+						setMessage("");
+					}}
+					ui={{
+						justify: "center",
+						items: "center",
+						tone: "brand",
+						theme: "light",
+						square: "default",
+						background: undefined,
+						border: false,
+						shadow: false,
+						color: "lead",
+					}}
+				/>
+			)}
 		</Container>
 	);
 };

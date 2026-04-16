@@ -1,5 +1,5 @@
 import { withQuery } from "@/lib/client/query";
-import { locationAutocompleteFn } from "~/session/location/server/fn/locationAutocompleteFn";
+import { locationAutocompleteFn } from "~/session/location/fn/locationAutocompleteFn";
 import type { LocationAutocompleteSchema } from "~/session/location/server/schema/LocationAutocompleteSchema";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 

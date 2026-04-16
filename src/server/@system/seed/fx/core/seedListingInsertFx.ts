@@ -66,8 +66,8 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 				id,
 				userId,
 				galleryId: gallery.id,
-				createdAt: now.toJSDate().toISOString(),
-				updatedAt: now.toJSDate().toISOString(),
+				createdAt: now.toJSDate(),
+				updatedAt: now.toJSDate(),
 				currency: "CZK",
 				status: "live",
 				...data,
@@ -89,8 +89,7 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 						}),
 					)
 					.exhaustive()
-					.toJSDate()
-					.toISOString(),
+					.toJSDate(),
 			})
 			.execute(),
 	);
@@ -101,8 +100,8 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 			kysely
 				.updateTable("draft")
 				.set({
-					usedAt: now.toJSDate().toISOString(),
-					updatedAt: now.toJSDate().toISOString(),
+					usedAt: now.toJSDate(),
+					updatedAt: now.toJSDate(),
 				})
 				.where("id", "=", draftId)
 				.where("userId", "=", userId)

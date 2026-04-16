@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
+import { match } from "ts-pattern";
 import type { withTransactionSourceSelectFx } from "~/buyer/transaction/server/db/withTransactionSourceSelectFx";
 import type { TransactionFilterSchema } from "~/buyer/transaction/server/schema/TransactionFilterSchema";
 
@@ -19,13 +20,6 @@ export namespace withTransactionQueryBuilderFx {
 export const withTransactionQueryBuilderFx = Effect.fn("withTransactionQueryBuilderFx")(function* <
 	TSelect extends withTransactionSourceSelectFx.Select,
 >({ select, where }: withTransactionQueryBuilderFx.Props<TSelect>) {
-	const terminalStatuses = [
-		"rejected",
-		"sold",
-		"expired",
-		"success",
-		"closed",
-	] as const;
 	let query = select;
 
 	if (!where) {
@@ -50,30 +44,101 @@ export const withTransactionQueryBuilderFx = Effect.fn("withTransactionQueryBuil
 		query = query.where("lt.listingId", "=", where.listingId) as TSelect;
 	}
 
-	if (where.active !== undefined) {
-		query = query.where(({ exists, not, selectFrom }) => {
-			const unreadSelect = selectFrom("inbox as i")
-				.select("i.id")
-				.whereRef("i.userId", "=", "lt.userId")
-				.where("i.family", "=", "transaction")
-				.where("i.type", "=", "seller-message")
-				.where("i.archivedAt", "is", null)
-				.where(
-					(eb) =>
-						sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`,
+	query = match(where.flow)
+		.with("seller-to-buyer", () => {
+			return query.where((eb) => {
+				return eb.exists(
+					eb
+						.selectFrom("activity as i")
+						.select("i.id")
+						.whereRef("i.userId", "=", "lt.userId")
+						.where("i.family", "=", "transaction")
+						.where("i.type", "=", "seller-message")
+						.where("i.archivedAt", "is", null)
+						.where((eb) => {
+							return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
+						}),
 				);
+			}) as TSelect;
+		})
+		.with("buyer-to-seller", () => {
+			return query.where((eb) =>
+				eb.and([
+					eb("lt.status", "in", [
+						"trade",
+						"interest",
+						"dispute",
+					]),
+					eb.not(
+						eb.exists(
+							eb
+								.selectFrom("activity as i")
+								.select("i.id")
+								.whereRef("i.userId", "=", "lt.userId")
+								.where("i.family", "=", "transaction")
+								.where("i.type", "=", "seller-message")
+								.where("i.archivedAt", "is", null)
+								.where((eb) => {
+									return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
+								}),
+						),
+					),
+				]),
+			) as TSelect;
+		})
+		.with("archived", () => {
+			return query.where("lt.status", "in", [
+				"closed",
+				"expired",
+				"rejected",
+				"sold",
+				"success",
+			]) as TSelect;
+		})
+		.with(undefined, () => {
+			return query;
+		})
+		.exhaustive();
 
-			return where.active ? exists(unreadSelect) : not(exists(unreadSelect));
-		}) as TSelect;
-	}
-
-	if (where.terminal !== undefined) {
-		query = query.where(
-			"lt.status",
-			where.terminal ? "in" : "not in",
-			terminalStatuses,
-		) as TSelect;
-	}
+	query = match(where.activity)
+		.with("unread", () => {
+			return query.where((eb) => {
+				return eb.exists(
+					eb
+						.selectFrom("activity as i")
+						.select("i.id")
+						.whereRef("i.userId", "=", "lt.userId")
+						.where("i.family", "=", "transaction")
+						.where("i.type", "=", "seller-message")
+						.where("i.archivedAt", "is", null)
+						.where((eb) => {
+							return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
+						}),
+				);
+			}) as TSelect;
+		})
+		.with("archived", () => {
+			return query.where((eb) => {
+				return eb.not(
+					eb.exists(
+						eb
+							.selectFrom("activity as i")
+							.select("i.id")
+							.whereRef("i.userId", "=", "lt.userId")
+							.where("i.family", "=", "transaction")
+							.where("i.type", "=", "seller-message")
+							.where("i.archivedAt", "is", null)
+							.where((eb) => {
+								return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
+							}),
+					),
+				);
+			}) as TSelect;
+		})
+		.with(undefined, () => {
+			return query;
+		})
+		.exhaustive();
 
 	if (where.status) {
 		query = query.where("lt.status", "=", where.status) as TSelect;

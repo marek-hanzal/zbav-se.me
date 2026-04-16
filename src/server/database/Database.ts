@@ -1,5 +1,7 @@
 import type { auth } from "~/server/auth/auth";
-import type { AssistantChatTableSchema } from "~/server/database/@table/AssistantChatTableSchema";
+import type { ActivityTableSchema } from "~/server/database/@table/ActivityTableSchema";
+import type { AgentStreamTableSchema } from "~/server/database/@table/AgentStreamTableSchema";
+import type { AgentUsageTableSchema } from "~/server/database/@table/AgentUsageTableSchema";
 import type { CategoryMissTableSchema } from "~/server/database/@table/CategoryMissTableSchema";
 import type { CategorySpotlightTableSchema } from "~/server/database/@table/CategorySpotlightTableSchema";
 import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
@@ -11,7 +13,6 @@ import type { GalleryItemTableSchema } from "~/server/database/@table/GalleryIte
 import type { GalleryTableSchema } from "~/server/database/@table/GalleryTableSchema";
 import type { GitHubTableSchema } from "~/server/database/@table/GitHubTableSchema";
 import type { IgnoreTableSchema } from "~/server/database/@table/IgnoreTableSchema";
-import type { InboxTableSchema } from "~/server/database/@table/InboxTableSchema";
 import type { ListingEventTableSchema } from "~/server/database/@table/ListingEventTableSchema";
 import type { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
@@ -24,26 +25,27 @@ import type { UserEventTableSchema } from "~/server/database/@table/UserEventTab
 import type { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
 
 export interface Database {
-	assistant_chat: AssistantChatTableSchema.Type;
+	activity: ActivityTableSchema.Type;
+	agent_stream: AgentStreamTableSchema.Type;
+	agent_usage: AgentUsageTableSchema.Type;
 	category_miss: CategoryMissTableSchema.Type;
 	category_spotlight: CategorySpotlightTableSchema.Type;
 	category: CategoryTableSchema.Type;
 	draft: DraftTableSchema.Type;
 	favourite: FavouriteTableSchema.Type;
 	feed: FeedTableSchema.Type;
-	thumb: ThumbTableSchema.Type;
 	flag: FlagTableSchema.Type;
 	gallery_item: GalleryItemTableSchema.Type;
 	gallery: GalleryTableSchema.Type;
 	github: GitHubTableSchema.Type;
 	ignore: IgnoreTableSchema.Type;
-	inbox: InboxTableSchema.Type;
 	listing_event: ListingEventTableSchema.Type;
 	listing: ListingTableSchema.Type;
 	location: LocationTableSchema.Type;
+	thumb: ThumbTableSchema.Type;
 	transaction_entry: TransactionEntryTableSchema.Type;
-	transaction: TransactionTableSchema.Type;
 	transaction_user: TransactionUserTableSchema.Type;
+	transaction: TransactionTableSchema.Type;
 	upload: UploadTableSchema.Type;
 	user_event: UserEventTableSchema.Type;
 	user_ex: UserExTableSchema.Type;

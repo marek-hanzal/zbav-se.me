@@ -7,8 +7,8 @@ import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScen
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionAcceptFx", () => {
-	it("pending → open: status changes and status-open entry is created", async () => {
-		const database = await testabase("transactionAcceptFx-pending-to-open");
+	it("interest → open: status changes and status-trade entry is created", async () => {
+		const database = await testabase("transactionAcceptFx-interest-to-open");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -40,7 +40,7 @@ describe("transactionAcceptFx", () => {
 					.executeTakeFirstOrThrow(),
 			);
 
-			expect(status).toBe("open");
+			expect(status).toBe("trade");
 
 			const entries = yield* Effect.promise(() =>
 				database.kysely
@@ -51,8 +51,8 @@ describe("transactionAcceptFx", () => {
 			);
 
 			const kinds = entries.map((e) => e.kind);
-			expect(kinds).toContain("status-pending");
-			expect(kinds).toContain("status-open");
+			expect(kinds).toContain("status-interest");
+			expect(kinds).toContain("status-trade");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

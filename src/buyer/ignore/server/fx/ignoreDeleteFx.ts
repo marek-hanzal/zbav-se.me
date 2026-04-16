@@ -17,7 +17,7 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 	listingId,
 }: ignoreDeleteFx.Props) {
 	const logger = yield* getLoggerFx("ignoreDeleteFx");
-	logger.debug("ignoreDeleteFx", {
+	logger.trace("ignoreDeleteFx", {
 		userId,
 		listingId,
 	});

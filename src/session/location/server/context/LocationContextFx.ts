@@ -10,6 +10,10 @@ export interface LocationContext {
 	 * Autocomplete path (relative to api)
 	 */
 	autocomplete: string;
+	/**
+	 * Route path (relative to api)
+	 */
+	route: string;
 }
 
 export class LocationContextFx extends Context.Tag("LocationContextFx")<

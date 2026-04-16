@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { expect } from "vitest";
+import type { CountSchema } from "@/lib/common/schema";
 import type { EntitySchema } from "@/lib/common/schema/EntitySchema";
 import { createToggleBaseContextFx } from "~/test/@buyer/common/fx/createToggleBaseContextFx";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
@@ -13,10 +14,7 @@ namespace runToggleReadModelContractFx {
 		extra: Extra;
 	}
 
-	export interface CountShape {
-		total: number;
-		where: number;
-	}
+	export type CountShape = CountSchema.Type;
 
 	export interface Props<
 		Extra,
@@ -94,7 +92,7 @@ export const runToggleReadModelContractFx = async <
 		assertFetched(fetched, context);
 
 		const count = yield* countFx(context, context.users.buyer.id);
-		expect(count.total).toBe(1);
+		expect(count).toBe(1);
 
 		const filteredCollection = yield* filteredCollectionFx(
 			context,
@@ -105,7 +103,7 @@ export const runToggleReadModelContractFx = async <
 		expect(filteredCollection[0]?.id).toBe(fetched.id);
 
 		const filteredCount = yield* filteredCountFx(context, context.users.buyer.id);
-		expect(filteredCount.where).toBe(1);
+		expect(filteredCount).toBe(1);
 
 		const strangerCollection = yield* collectionFx(context, context.users.stranger.id);
 		expect(strangerCollection).toEqual([]);
@@ -117,7 +115,7 @@ export const runToggleReadModelContractFx = async <
 		const afterFetch = yield* Effect.either(fetchFx(context, context.users.buyer.id));
 
 		expect(afterCollection).toEqual([]);
-		expect(afterCount.total).toBe(0);
+		expect(afterCount).toBe(0);
 		expectErrorFx(afterFetch);
 		return undefined;
 	}).pipe((effect) =>

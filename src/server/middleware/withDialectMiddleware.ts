@@ -12,12 +12,15 @@ export const withDialectMiddleware = createMiddleware()
 		withDsnMiddleware,
 	])
 	.server(async ({ next, context: { dsn, rootLogger } }) => {
-		const logger = rootLogger.getChild("withDialectMiddleware");
+		const logger = rootLogger.getChild([
+			"middleware",
+			"withDialectMiddleware",
+		]);
 
 		let instance = dialectMap.get(dsn);
 
 		if (!instance) {
-			logger.debug("Creating dialect instance", {
+			logger.trace("Creating dialect instance", {
 				dsn,
 			});
 

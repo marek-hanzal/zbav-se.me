@@ -35,7 +35,7 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				},
 			});
 
-			expect(countBefore.where).toBe(2);
+			expect(countBefore).toBe(2);
 
 			const tx1 = yield* Effect.promise(() => {
 				return database.kysely
@@ -84,7 +84,7 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 				},
 			});
 
-			expect(countAfter.where).toBe(2);
+			expect(countAfter).toBe(2);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

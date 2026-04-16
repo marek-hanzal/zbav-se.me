@@ -17,7 +17,7 @@ export const feedResolveFx = Effect.fn("feedResolveFx")(function* ({
 	message = "You are not allowed to access this feed",
 }: feedResolveFx.Props) {
 	const logger = yield* getLoggerFx("feedResolveFx");
-	logger.debug("feedResolveFx", {
+	logger.trace("feedResolveFx", {
 		userId,
 		feedId,
 		message,

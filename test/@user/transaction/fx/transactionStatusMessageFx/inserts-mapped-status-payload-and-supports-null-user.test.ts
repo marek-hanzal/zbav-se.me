@@ -30,7 +30,7 @@ describe("transactionStatusMessageFx", () => {
 
 			yield* transactionStatusMessageFx({
 				transactionId: transaction.id,
-				request: "open",
+				request: "trade",
 				target: "seller",
 				userId: seller.id,
 			});
@@ -51,7 +51,7 @@ describe("transactionStatusMessageFx", () => {
 					])
 					.where("transactionId", "=", transaction.id)
 					.where("kind", "in", [
-						"status-open",
+						"status-trade",
 						"status-expired",
 					])
 					.orderBy("createdAt", "asc")
@@ -60,10 +60,10 @@ describe("transactionStatusMessageFx", () => {
 
 			expect(entries).toHaveLength(2);
 			expect(entries[0]).toMatchObject({
-				kind: "status-open",
+				kind: "status-trade",
 				userId: seller.id,
 				payload: {
-					text: "status-open",
+					text: "status-trade",
 				},
 			});
 			expect(entries[1]).toMatchObject({

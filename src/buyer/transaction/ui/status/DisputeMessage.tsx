@@ -10,7 +10,7 @@ import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMen
 import { withTransactionEntryGalleryCreateMutation } from "~/user/transaction-entry/mutation/withTransactionEntryGalleryCreateMutation";
 import { LocationButton } from "~/user/transaction-entry/ui/button/LocationButton";
 import { PersonalButton } from "~/user/transaction-entry/ui/button/PersonalButton";
-import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";
+import { archiveSellerMessageActivity } from "../../service/archiveSellerMessageActivity";
 
 export namespace DisputeMessage {
 	export interface Props extends Container.Props {
@@ -23,8 +23,8 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
-	const archiveInbox = useCallback(async () => {
-		await archiveSellerMessageInbox({
+	const archiveActivity = useCallback(async () => {
+		await archiveSellerMessageActivity({
 			queryClient,
 			transactionId: transaction.id,
 		});
@@ -56,7 +56,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 						uploadIds,
 					})}
 					onSuccess={async () => {
-						await archiveInbox();
+						await archiveActivity();
 						setIsGalleryOpen(false);
 						close();
 					}}
@@ -69,14 +69,14 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 				<LocationButton
 					close={close}
 					transactionId={transaction.id}
-					onPostMutation={archiveInbox}
+					onPostMutation={archiveActivity}
 					{...MessageButtonUi}
 				/>
 
 				<PersonalButton
 					close={close}
 					transactionId={transaction.id}
-					onPostMutation={archiveInbox}
+					onPostMutation={archiveActivity}
 					{...MessageButtonUi}
 				/>
 			</Group>

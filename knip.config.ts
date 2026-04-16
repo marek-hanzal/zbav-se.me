@@ -24,6 +24,7 @@ const config: KnipConfig = {
 		"@iconify/json",
 		"@iconify/tailwind4",
 		"@tanstack/router-plugin",
+		"@vitejs/plugin-rsc",
 		"tailwindcss",
 	],
 };

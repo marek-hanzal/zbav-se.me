@@ -10,6 +10,10 @@ export const GalleryQuerySchema = z
 		filter: GalleryFilterSchema.optional(),
 		where: GalleryWhereSchema.optional(),
 		sort: GallerySortSchema.array().optional(),
+		limit: z.int().nonnegative().optional().meta({
+			description:
+				"Guardrail limit for collection size; usually set/overridden by the system",
+		}),
 	})
 	.strip()
 	.meta({

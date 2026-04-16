@@ -16,7 +16,7 @@ export const transactionTouchFx = Effect.fn("transactionTouchFx")(function* ({
 	transactionId,
 }: transactionTouchFx.Props) {
 	const logger = yield* getLoggerFx("transactionTouchFx");
-	logger.debug("transactionTouchFx", {
+	logger.trace("transactionTouchFx", {
 		transactionId,
 	});
 

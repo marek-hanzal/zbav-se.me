@@ -1,8 +1,8 @@
 import { withEntityQuery } from "@/lib/client/query";
-import { transactionEntryCollectionFn } from "~/user/transaction-entry/server/fn/transactionEntryCollectionFn";
-import { transactionEntryCountFn } from "~/user/transaction-entry/server/fn/transactionEntryCountFn";
-import { transactionEntryCreateFn } from "~/user/transaction-entry/server/fn/transactionEntryCreateFn";
-import { transactionEntryFetchFn } from "~/user/transaction-entry/server/fn/transactionEntryFetchFn";
+import { transactionEntryCollectionFn } from "~/user/transaction-entry/fn/transactionEntryCollectionFn";
+import { transactionEntryCountFn } from "~/user/transaction-entry/fn/transactionEntryCountFn";
+import { transactionEntryCreateFn } from "~/user/transaction-entry/fn/transactionEntryCreateFn";
+import { transactionEntryFetchFn } from "~/user/transaction-entry/fn/transactionEntryFetchFn";
 import type { TransactionEntryCountQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryCountQuerySchema";
 import type { TransactionEntryCreateSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema";
 import type { TransactionEntryQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryQuerySchema";

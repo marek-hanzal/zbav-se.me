@@ -17,8 +17,8 @@ export const transactionCountFx = Effect.fn("transactionCountFx")(function* ({
 	where,
 	scope,
 }: transactionCountFx.Props) {
-	const logger = yield* getLoggerFx("transactionCountFx");
-	logger.debug("transactionCountFx", {
+	const logger = yield* getLoggerFx("transactionCountFx", "transaction");
+	logger.trace("transactionCountFx", {
 		filter,
 		where,
 		scope,

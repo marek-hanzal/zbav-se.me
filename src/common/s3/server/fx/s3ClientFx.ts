@@ -5,7 +5,7 @@ import { S3ContextFx } from "~/common/s3/server/context/S3ContextFx";
 
 export const s3ClientFx = Effect.fn("s3ClientFx")(function* () {
 	const logger = yield* getLoggerFx("s3ClientFx");
-	logger.debug("s3ClientFx");
+	logger.trace("s3ClientFx");
 
 	const context = yield* S3ContextFx;
 

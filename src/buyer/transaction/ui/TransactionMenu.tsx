@@ -6,10 +6,10 @@ import { TransactionMessage } from "~/user/transaction/ui/TransactionMessage";
 import { TransactionToolbar } from "~/user/transaction/ui/TransactionToolbar";
 import { DisputeMessage } from "./status/DisputeMessage";
 import { DisputeToolbar } from "./status/DisputeToolbar";
-import { OpenMessage } from "./status/OpenMessage";
-import { OpenToolbar } from "./status/OpenToolbar";
-import { PendingMessage } from "./status/PendingMessage";
+import { InterestMessage } from "./status/InterestMessage";
 import { ResolvedToolbar } from "./status/ResolvedToolbar";
+import { TradeMessage } from "./status/TradeMessage";
+import { TradeToolbar } from "./status/TradeToolbar";
 
 export namespace TransactionMenu {
 	export interface Props extends Container.Props {
@@ -39,14 +39,14 @@ export const TransactionMenu: FC<TransactionMenu.Props> = ({
 		>
 			<TransactionMessage
 				status={transaction.status}
-				pending={
-					<PendingMessage
+				interest={
+					<InterestMessage
 						close={close}
 						transaction={transaction}
 					/>
 				}
-				open={
-					<OpenMessage
+				trade={
+					<TradeMessage
 						close={close}
 						transaction={transaction}
 					/>
@@ -61,8 +61,8 @@ export const TransactionMenu: FC<TransactionMenu.Props> = ({
 
 			<TransactionToolbar
 				status={transaction.status}
-				open={
-					<OpenToolbar
+				trade={
+					<TradeToolbar
 						close={close}
 						transaction={transaction}
 					/>

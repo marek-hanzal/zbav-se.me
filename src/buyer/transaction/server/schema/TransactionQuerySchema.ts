@@ -10,6 +10,10 @@ export const TransactionQuerySchema = z
 		filter: TransactionFilterSchema.optional(),
 		where: TransactionWhereSchema.optional(),
 		sort: TransactionSortSchema.array().optional(),
+		limit: z.int().nonnegative().optional().meta({
+			description:
+				"Guardrail limit for collection size; usually set/overridden by the system",
+		}),
 	})
 	.strip()
 	.meta({

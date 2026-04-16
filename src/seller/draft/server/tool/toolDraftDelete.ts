@@ -1,16 +1,30 @@
-import { tool } from "ai";
-import { draftDeleteFn } from "~/seller/draft/server/fn/draftDeleteFn";
-import { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
-import { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
+import { tool } from "@openai/agents";
+import { draftDeleteFn } from "~/seller/draft/fn/draftDeleteFn";
+import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
+import { getRootLogger } from "~/server/log/getRootLogger";
+
+const logger = getRootLogger([
+	"tool",
+	"toolDraftDelete",
+]);
 
 export const toolDraftDelete = tool({
-	title: "draft-delete",
-	type: "function",
+	name: "draft-delete",
 	needsApproval: false,
-	description: "Delete a draft",
-	inputSchema: DraftQuerySchema,
-	outputSchema: DraftSchema,
+	description: `
+Delete saved listing drafts selected by a narrow query.
+
+Use only after clear user intent to delete. Prefer an exact draft
+id; if using name/title-like filters, first confirm the target with draft-collection.
+    `.trim(),
+	parameters: DraftToolQuerySchema.pick({
+		filter: true,
+	}),
 	async execute(data) {
+		logger.trace("toolDraftDelete", {
+			data,
+		});
+
 		return draftDeleteFn({
 			data,
 		});

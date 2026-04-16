@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { FilterSchema } from "@/lib/common/schema";
+import { TransactionFlowEnumSchema } from "~/common/user-transaction/enum/TransactionFlowEnumSchema";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 
 export const TransactionFilterSchema = z
@@ -11,14 +12,6 @@ export const TransactionFilterSchema = z
 		listingId: z.string().optional().meta({
 			description: "This filter matches the exact listingId",
 		}),
-		active: z.boolean().optional().meta({
-			description:
-				"When true, match transactions with unread inbox activity for the current side; when false, match transactions without unread inbox activity for the current side",
-		}),
-		terminal: z.boolean().optional().meta({
-			description:
-				"When true, match transactions already in a terminal status; when false, match transactions that still have a non-terminal status",
-		}),
 		status: TransactionStatusEnumSchema.optional().meta({
 			description: "This filter matches the current status of the transaction",
 		}),
@@ -26,6 +19,17 @@ export const TransactionFilterSchema = z
 			description:
 				"This filter matches any of the provided statuses for the current status of the transaction",
 		}),
+		flow: TransactionFlowEnumSchema.optional(),
+		activity: z
+			.enum([
+				"unread",
+				"archived",
+			])
+			.optional()
+			.meta({
+				description:
+					"Controls if the transaction must also have an activity (user's notification)",
+			}),
 	})
 	.strip()
 	.meta({

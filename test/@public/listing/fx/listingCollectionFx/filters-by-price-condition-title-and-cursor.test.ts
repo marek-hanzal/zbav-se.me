@@ -111,9 +111,7 @@ describe("public listingCollectionFx", () => {
 			expect(secondPage).toHaveLength(1);
 			expect(firstPage[0]?.id).toBe(alpha.id);
 			expect(secondPage[0]?.id).toBe(beta.id);
-			expect(count.total).toBe(2);
-			expect(count.where).toBe(2);
-			expect(count.filter).toBe(2);
+			expect(count).toBe(2);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

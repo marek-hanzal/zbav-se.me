@@ -3,7 +3,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
-import { inboxCreateFx } from "~/user/inbox/server/fx/inboxCreateFx";
+import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
 import { transactionResolveFx } from "~/user/transaction/server/fx/transactionResolveFx";
 import { transactionStatusMessageFx } from "~/user/transaction/server/fx/transactionStatusMessageFx";
 import { transactionUpdateStatusFx } from "~/user/transaction/server/fx/transactionUpdateStatusFx";
@@ -21,7 +21,7 @@ export const transactionAcceptFx = Effect.fn("transactionAcceptFx")(function* ({
 	transactionId,
 }: transactionAcceptFx.Props) {
 	const logger = yield* getLoggerFx("transactionAcceptFx");
-	logger.debug("transactionAcceptFx", {
+	logger.trace("transactionAcceptFx", {
 		userId,
 		transactionId,
 	});
@@ -43,18 +43,18 @@ export const transactionAcceptFx = Effect.fn("transactionAcceptFx")(function* ({
 			yield* transactionUpdateStatusFx({
 				transactionId: transaction.id,
 				status: transaction.status,
-				request: "open",
+				request: "trade",
 				target: "seller",
 			});
 
 			yield* transactionStatusMessageFx({
 				transactionId: transaction.id,
-				request: "open",
+				request: "trade",
 				target: "seller",
 				userId,
 			});
 
-			yield* inboxCreateFx({
+			yield* activityCreateFx({
 				userId: transaction.buyerId,
 				reference: [
 					transaction.listingId,

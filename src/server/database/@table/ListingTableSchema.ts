@@ -53,7 +53,7 @@ export const ListingTableSchema = z
 		draftId: z.string().nullable().meta({
 			description: "ID of the draft this listing was created from",
 		}),
-		expiresAt: z.iso.date().meta({
+		expiresAt: z.coerce.date().meta({
 			description: "Expiration timestamp",
 		}),
 		//
@@ -75,10 +75,10 @@ export const ListingTableSchema = z
 			description: "Cons of the item",
 		}),
 		//
-		createdAt: z.iso.date().meta({
+		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",
 		}),
-		updatedAt: z.iso.date().meta({
+		updatedAt: z.coerce.date().meta({
 			description: "Last update timestamp",
 		}),
 	})

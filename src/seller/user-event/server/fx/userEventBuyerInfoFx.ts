@@ -486,7 +486,7 @@ export const userEventBuyerInfoFx = Effect.fn("userEventBuyerInfoFx")(function* 
 	userId,
 }: userEventBuyerInfoFx.Props) {
 	const logger = yield* getLoggerFx("userEventBuyerInfoFx");
-	logger.debug("userEventBuyerInfoFx", {
+	logger.trace("userEventBuyerInfoFx", {
 		userId,
 	});
 

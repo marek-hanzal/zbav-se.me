@@ -11,7 +11,7 @@ import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScen
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("seller transaction read model collection filters", () => {
-	it("filters collection rows by status, terminal and listing inside seller scope", async () => {
+	it("filters collection rows by status and listing inside seller scope", async () => {
 		const database = await testabase("sellerTransactionReadModelFx-filters-collection");
 
 		return Effect.gen(function* () {
@@ -69,15 +69,7 @@ describe("seller transaction read model collection filters", () => {
 					userId: seller.id,
 				},
 				where: {
-					status: "open",
-				},
-			});
-			const terminalOnly = yield* transactionCollectionFx({
-				scope: {
-					userId: seller.id,
-				},
-				where: {
-					terminal: true,
+					status: "trade",
 				},
 			});
 
@@ -92,8 +84,6 @@ describe("seller transaction read model collection filters", () => {
 			expect(byListing[0]?.id).toBe(openScenario.transactionId);
 			expect(openOnly).toHaveLength(1);
 			expect(openOnly[0]?.id).toBe(openScenario.transactionId);
-			expect(terminalOnly).toHaveLength(1);
-			expect(terminalOnly[0]?.id).toBe(resolvedScenario.transactionId);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

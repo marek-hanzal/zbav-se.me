@@ -17,7 +17,7 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 	listingId,
 }: flagDeleteFx.Props) {
 	const logger = yield* getLoggerFx("flagDeleteFx");
-	logger.debug("flagDeleteFx", {
+	logger.trace("flagDeleteFx", {
 		userId,
 		listingId,
 	});

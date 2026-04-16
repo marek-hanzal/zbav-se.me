@@ -1,22 +1,38 @@
-import { tool } from "ai";
-import { z } from "zod";
-import { locationAutocompleteFn } from "~/session/location/server/fn/locationAutocompleteFn";
+import { tool } from "@openai/agents";
+import { getRootLogger } from "~/server/log/getRootLogger";
+import { locationAutocompleteFn } from "~/session/location/fn/locationAutocompleteFn";
 import { LocationAutocompleteSchema } from "~/session/location/server/schema/LocationAutocompleteSchema";
-import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
+
+const logger = getRootLogger([
+	"tool",
+	"toolLocationAutocomplete",
+]);
 
 export const toolLocationAutocomplete = tool({
-	title: "location-autocomplete",
-	type: "function",
+	name: "location-autocomplete",
 	needsApproval: false,
 	description: `
-        Tool for location (address, position) autocomplete, e.g. translating street into full address. This tool is
-        able to translate even loose address (e.g. just a city name) if user wants so.
+Location/address autocomplete for listing drafts, saved searches, and marketplace filters.
+
+Use when the user gives a place name or address and you need normalized location candidates
+or a location id. Return compact candidates; do not guess an id when multiple candidates are plausible.
+
+Boundaries:
+- Guess a "lang" from the user's language
     `.trim(),
-	inputSchema: LocationAutocompleteSchema,
-	outputSchema: z.array(LocationSchema),
+	parameters: LocationAutocompleteSchema,
 	async execute(data) {
-		return locationAutocompleteFn({
+		logger.trace("toolLocationAutocomplete", {
 			data,
 		});
+
+		const matches = await locationAutocompleteFn({
+			data,
+		});
+
+		return {
+			count: matches.length,
+			matches: matches,
+		};
 	},
 });

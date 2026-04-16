@@ -29,7 +29,7 @@ describe("transactionAcceptFx", () => {
 
 			expectTaggedErrorFx(result, {
 				tag: "InvalidRequestErrorFx",
-				message: "Invalid transaction status transition from resolved to open for seller",
+				message: "Invalid transaction status transition from resolved to trade for seller",
 			});
 
 			const transaction = yield* Effect.promise(() =>

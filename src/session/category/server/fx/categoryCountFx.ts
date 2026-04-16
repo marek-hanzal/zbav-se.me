@@ -18,7 +18,7 @@ export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
 	scope,
 }: categoryCountFx.Props) {
 	const logger = yield* getLoggerFx("categoryCountFx");
-	logger.debug("categoryCountFx", {
+	logger.trace("categoryCountFx", {
 		filter,
 		where,
 		scope,

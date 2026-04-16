@@ -1,6 +1,6 @@
 import { withMutation } from "@/lib/client/mutation";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
-import { thumbCreateFn } from "~/buyer/thumb/server/fn/thumbCreateFn";
+import { thumbCreateFn } from "~/buyer/thumb/fn/thumbCreateFn";
 import type { ThumbCreateSchema } from "~/buyer/thumb/server/schema/ThumbCreateSchema";
 
 export const withThumbCreateMutation = withMutation<

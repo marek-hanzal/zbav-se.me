@@ -18,8 +18,8 @@ export const favouriteFetchFx = Effect.fn("favouriteFetchFx")(function* ({
 	scope,
 	sort,
 }: favouriteFetchFx.Props) {
-	const logger = yield* getLoggerFx("favouriteFetchFx");
-	logger.debug("favouriteFetchFx", {
+	const logger = yield* getLoggerFx("favouriteFetchFx", "favourite");
+	logger.trace("Request", {
 		filter,
 		where,
 		scope,

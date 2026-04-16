@@ -6,7 +6,7 @@ import { Tx } from "@/lib/client/tx";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionCloseMutation } from "../../mutation/withTransactionCloseMutation";
-import { archiveSellerMessageInbox } from "../../service/archiveSellerMessageInbox";
+import { archiveSellerMessageActivity } from "../../service/archiveSellerMessageActivity";
 
 export namespace CloseButton {
 	export interface Props extends Button.Props {
@@ -20,7 +20,7 @@ export const CloseButton: FC<CloseButton.Props> = ({ close, transaction, ...prop
 	const mutation = withTransactionCloseMutation.useMutation({
 		async onPostMutation() {
 			try {
-				await archiveSellerMessageInbox({
+				await archiveSellerMessageActivity({
 					queryClient,
 					transactionId: transaction.id,
 				});

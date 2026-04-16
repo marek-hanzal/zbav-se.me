@@ -18,7 +18,7 @@ export const userExPatchFx = Effect.fn("userExPatchFx")(function* ({
 	patch,
 }: userExPatchFx.Props) {
 	const logger = yield* getLoggerFx("userExPatchFx");
-	logger.debug("userExPatchFx", {
+	logger.trace("userExPatchFx", {
 		userId,
 		patch,
 	});

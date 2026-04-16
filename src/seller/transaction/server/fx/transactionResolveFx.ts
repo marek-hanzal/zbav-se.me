@@ -6,7 +6,7 @@ import { transactionPatchCollectionFx } from "~/seller/transaction/server/fx/tra
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { inboxCreateFx } from "~/user/inbox/server/fx/inboxCreateFx";
+import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
 import { transactionResolveFx as resolveTransactionFx } from "~/user/transaction/server/fx/transactionResolveFx";
 import { transactionStatusMessageFx } from "~/user/transaction/server/fx/transactionStatusMessageFx";
 import { transactionUpdateStatusFx } from "~/user/transaction/server/fx/transactionUpdateStatusFx";
@@ -24,7 +24,7 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	transactionId,
 }: transactionResolveFx.Props) {
 	const logger = yield* getLoggerFx("transactionResolveFx");
-	logger.debug("transactionResolveFx", {
+	logger.trace("transactionResolveFx", {
 		userId,
 		transactionId,
 	});
@@ -45,8 +45,8 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 					filter: {
 						listingId: transaction.listingId,
 						statusIn: [
-							"pending",
-							"open",
+							"interest",
+							"trade",
 						],
 					},
 				},
@@ -90,13 +90,13 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 					.updateTable("listing")
 					.set({
 						status: "sold",
-						updatedAt: now.toISOString(),
+						updatedAt: now,
 					})
 					.where("id", "=", transaction.listingId)
 					.executeTakeFirstOrThrow(),
 			);
 
-			yield* inboxCreateFx({
+			yield* activityCreateFx({
 				userId: transaction.buyerId,
 				reference: [
 					transaction.listingId,

@@ -9,7 +9,7 @@ import type { TransactionCreateSchema } from "~/buyer/transaction/server/schema/
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { inboxCreateFx } from "~/user/inbox/server/fx/inboxCreateFx";
+import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
 import { TransactionContextFx } from "~/user/transaction/server/context/TransactionContextFx";
 import { transactionStatusMessageFx } from "~/user/transaction/server/fx/transactionStatusMessageFx";
 import { transactionUpdateStatusFx } from "~/user/transaction/server/fx/transactionUpdateStatusFx";
@@ -27,8 +27,8 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 	listingId,
 	...data
 }: transactionCreateFx.Props) {
-	const logger = yield* getLoggerFx("transactionCreateFx");
-	logger.debug("transactionCreateFx", {
+	const logger = yield* getLoggerFx("transactionCreateFx", "transaction");
+	logger.trace("transactionCreateFx", {
 		userId,
 		listingId,
 		...data,
@@ -73,7 +73,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 						listingId,
 						createdAt: now.toJSDate(),
 						updatedAt: now.toJSDate(),
-						status: "pending",
+						status: "interest",
 						statusUpdatedAt: now.toJSDate(),
 						expiresAt: now
 							.plus({
@@ -88,13 +88,13 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			yield* transactionUpdateStatusFx({
 				transactionId: id,
 				status: null,
-				request: "pending",
+				request: "interest",
 				target: "buyer",
 			});
 
 			yield* transactionStatusMessageFx({
 				transactionId: id,
-				request: "pending",
+				request: "interest",
 				target: "buyer",
 				userId,
 			});
@@ -119,7 +119,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				event: "transaction",
 			}).pipe(Effect.ignore);
 
-			yield* inboxCreateFx({
+			yield* activityCreateFx({
 				userId: listing.userId,
 				reference: [
 					listingId,

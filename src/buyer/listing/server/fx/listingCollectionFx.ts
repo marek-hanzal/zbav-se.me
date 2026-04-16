@@ -15,15 +15,19 @@ export namespace listingCollectionFx {
 
 export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	userId,
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
 	filter,
 	where,
 	scope,
 	sort,
 	meta,
+	limit,
 }: listingCollectionFx.Props) {
 	const logger = yield* getLoggerFx("listingCollectionFx");
-	logger.debug("listingCollectionFx", {
+	logger.trace("listingCollectionFx", {
 		userId,
 		cursor,
 		filter,
@@ -31,6 +35,7 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 		scope,
 		sort,
 		meta,
+		limit,
 	});
 
 	return yield* withCollectionFx({
@@ -39,10 +44,7 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 			sort,
 			meta,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
 		filter,
 		where,
 		scope,
@@ -53,6 +55,7 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 				meta,
 			});
 		},
+		limit,
 	});
 });
 

@@ -28,8 +28,8 @@ export const StatusIcon: FC<StatusIcon.Props> = ({ status }) => {
 		>
 			<Icon
 				icon={match(status)
-					.with("pending", () => "icon-[solar--clock-circle-linear]")
-					.with("open", () => "icon-[solar--dialog-linear]")
+					.with("interest", () => "icon-[solar--clock-circle-linear]")
+					.with("trade", () => "icon-[solar--dialog-linear]")
 					.with("resolved", "success", "sold", () => "icon-[solar--check-circle-linear]")
 					.with("dispute", () => "icon-[solar--danger-circle-linear]")
 					.with(

@@ -14,15 +14,20 @@ export namespace categoryCollectionFx {
 }
 
 export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* ({
-	cursor,
+	cursor = {
+		page: 0,
+		size: 10,
+	},
+	limit,
 	filter,
 	where,
 	scope,
 	sort,
 }: categoryCollectionFx.Props) {
 	const logger = yield* getLoggerFx("categoryCollectionFx");
-	logger.debug("categoryCollectionFx", {
+	logger.trace("categoryCollectionFx", {
 		cursor,
+		limit,
 		filter,
 		where,
 		scope,
@@ -33,10 +38,8 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 		selectFx: withCategoryCollectionSelectFx({
 			sort,
 		}),
-		cursor: cursor ?? {
-			page: 0,
-			size: 10,
-		},
+		cursor,
+		limit,
 		filter,
 		where,
 		scope,

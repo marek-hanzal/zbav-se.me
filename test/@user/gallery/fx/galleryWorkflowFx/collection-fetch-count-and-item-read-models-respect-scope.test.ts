@@ -69,7 +69,7 @@ describe("gallery workflow", () => {
 					userId: seller.id,
 				},
 			});
-			expect(galleryCount.total).toBe(1);
+			expect(galleryCount).toBe(1);
 
 			const itemCollection = yield* galleryItemCollectionFx({
 				scope: {
@@ -91,7 +91,7 @@ describe("gallery workflow", () => {
 					galleryId: draft.galleryId,
 				},
 			});
-			expect(itemCount.total).toBe(2);
+			expect(itemCount).toBe(2);
 
 			const firstItem = yield* galleryItemFetchFx({
 				scope: {
@@ -193,9 +193,9 @@ describe("gallery workflow", () => {
 				tag: "NotFoundErrorFx",
 			});
 			expect(strangerGalleryCollection).toHaveLength(0);
-			expect(strangerGalleryCount.total).toBe(0);
+			expect(strangerGalleryCount).toBe(0);
 			expect(strangerItemCollection).toHaveLength(0);
-			expect(strangerItemCount.total).toBe(0);
+			expect(strangerItemCount).toBe(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

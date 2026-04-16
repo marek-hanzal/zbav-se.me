@@ -20,7 +20,7 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	...data
 }: uploadCreateFx.Props) {
 	const logger = yield* getLoggerFx("uploadCreateFx");
-	logger.debug("uploadCreateFx", {
+	logger.trace("uploadCreateFx", {
 		userId,
 		url,
 		...data,

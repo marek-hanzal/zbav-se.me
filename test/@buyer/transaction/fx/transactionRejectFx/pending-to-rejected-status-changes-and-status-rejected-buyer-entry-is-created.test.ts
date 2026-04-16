@@ -7,8 +7,8 @@ import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScen
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("transactionRejectFx (buyer)", () => {
-	it("pending → rejected: status changes and status-rejected-buyer entry is created", async () => {
-		const database = await testabase("buyerRejectFx-pending");
+	it("interest → rejected: status changes and status-rejected-buyer entry is created", async () => {
+		const database = await testabase("buyerRejectFx-interest");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -51,7 +51,7 @@ describe("transactionRejectFx (buyer)", () => {
 			);
 
 			const kinds = entries.map((e) => e.kind);
-			expect(kinds).toContain("status-pending");
+			expect(kinds).toContain("status-interest");
 			expect(kinds).toContain("status-rejected-buyer");
 			expect(kinds).not.toContain("status-rejected-seller");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);

@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
 import { transactionFetchFx } from "~/buyer/transaction/server/fx/transactionFetchFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { inboxCreateFx } from "~/user/inbox/server/fx/inboxCreateFx";
+import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
 import { transactionResolveFx } from "~/user/transaction/server/fx/transactionResolveFx";
 import { transactionStatusMessageFx } from "~/user/transaction/server/fx/transactionStatusMessageFx";
 import { transactionUpdateStatusFx } from "~/user/transaction/server/fx/transactionUpdateStatusFx";
@@ -19,8 +19,8 @@ export const transactionRejectFx = Effect.fn("transactionRejectFx")(function* ({
 	userId,
 	transactionId,
 }: transactionRejectFx.Props) {
-	const logger = yield* getLoggerFx("transactionRejectFx");
-	logger.debug("transactionRejectFx", {
+	const logger = yield* getLoggerFx("transactionRejectFx", "transaction");
+	logger.trace("transactionRejectFx", {
 		userId,
 		transactionId,
 	});
@@ -47,7 +47,7 @@ export const transactionRejectFx = Effect.fn("transactionRejectFx")(function* ({
 				userId,
 			});
 
-			yield* inboxCreateFx({
+			yield* activityCreateFx({
 				userId: transaction.sellerId,
 				reference: [
 					transaction.listingId,

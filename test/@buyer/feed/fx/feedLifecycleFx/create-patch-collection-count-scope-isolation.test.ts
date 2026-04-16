@@ -113,7 +113,7 @@ describe("feedLifecycleFx", () => {
 				},
 			});
 
-			expect(count.where).toBe(2);
+			expect(count).toBe(2);
 
 			const foreignFetch = yield* Effect.either(
 				feedFetchFx({
