@@ -9,9 +9,9 @@ import { HeroImage } from "~/common/ui/img";
 import { TransactionChat } from "~/user/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/user/transaction-entry/ui/TransactionEntryList";
+import { withArchiveBuyerMessageActivityMutation } from "../mutation/withArchiveBuyerMessageActivityMutation";
 import { withTransactionQuery } from "../query/withTransactionQuery";
 import { archiveBuyerMessageActivity } from "../service/archiveBuyerMessageActivity";
-import { withArchiveBuyerMessageActivityMutation } from "../service/withArchiveBuyerMessageActivityMutation";
 import { PendingMessage } from "./status/PendingMessage";
 import { TransactionMenu } from "./TransactionMenu";
 

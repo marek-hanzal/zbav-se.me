@@ -1,5 +1,8 @@
 import { tool } from "@openai/agents";
+import { match } from "ts-pattern";
+import { z } from "zod";
 import { listingCollectionFn } from "~/buyer/listing/fn/listingCollectionFn";
+import { listingCountFn } from "~/buyer/listing/fn/listingCountFn";
 import { ListingToolQuerySchema } from "~/buyer/listing/server/schema/ListingToolQuerySchema";
 import { getRootLogger } from "~/server/log/getRootLogger";
 
@@ -12,43 +15,60 @@ export const toolListingCollection = tool({
 	name: "buyer-listing-collection",
 	needsApproval: false,
 	description: `
-Buyer-visible listings matching the query. Use for browsing/searching listings, not for seller-owned listing management.
+Buyer-visible listings matching the query.
 
-Prefer category, location/range, price, delivery, warranty, favourite, ignored, feed, or transaction filters
-when available. The tool caps results to a small page.
+Modes:
+- collection: return a small page of matching listings
+- count: return how many matching listings exist
 
-Hint:
-- Always add 'filter.withIgnored: false'
-- Add 'filter.withOwn: false' if user not states otherwise; tell user you're filtering out his own listings
-- To get favourite listings, use 'filter.isFavourite: true'
+Use for buyer-side browsing and search.
+Do not use for seller-owned listing management.
 
-How to:
-"Give me listings in my feed"
-- Resolve feed, get it's feed.query object
-- Use that feed.query object as direct input into this tool
-
-Enums:
-- delivery: personal, post, package, other.
-- warranty: warranty, no-warranty, custom.
-- currency: CZK.
-- sort fields: price, condition, age, createdAt, updatedAt, expiresAt, geo.
+Prefer query filters such as category, location, price, favourite, ignored, feed, or transaction when relevant.
     `.trim(),
-	parameters: ListingToolQuerySchema,
-	async execute(data) {
+	parameters: z
+		.looseObject({
+			type: z.enum([
+				"count",
+				"collection",
+			]),
+			query: ListingToolQuerySchema,
+		})
+		.strip(),
+	async execute({ type, query }) {
 		logger.trace("toolListingCollection", {
-			data,
+			type,
+			query,
 		});
 
-		const items = await listingCollectionFn({
-			data: {
-				...data,
-				limit: 8,
-			},
-		});
+		return match(type)
+			.with("count", async () => {
+				const count = await listingCountFn({
+					data: query,
+				});
 
-		return {
-			count: items.length,
-			items,
-		};
+				const hasMore = await listingCountFn({
+					data: {},
+				});
+
+				return {
+					count: count,
+					hasMore: hasMore > 0,
+				} as const;
+			})
+			.with("collection", async () => {
+				const items = await listingCollectionFn({
+					data: {
+						...query,
+						limit: 8,
+					},
+				});
+
+				return {
+					count: items.length,
+					items,
+				} as const;
+			})
+			.exhaustive();
 	},
 });

@@ -1,5 +1,8 @@
 import { tool } from "@openai/agents";
+import { match } from "ts-pattern";
+import { z } from "zod";
 import { transactionCollectionFn } from "~/seller/transaction/fn/transactionCollectionFn";
+import { transactionCountFn } from "~/seller/transaction/fn/transactionCountFn";
 import { TransactionToolQuerySchema } from "~/seller/transaction/server/schema/TransactionToolQuerySchema";
 import { getRootLogger } from "~/server/log/getRootLogger";
 
@@ -12,44 +15,58 @@ export const toolTransactionCollection = tool({
 	name: "seller-transaction-collection",
 	needsApproval: false,
 	description: `
-Seller-side transaction collection. Use small cursors and compact filters only.
+Current seller user's transactions matching the query.
 
-Use for finding transactions and reading transaction metadata. For message/timeline content, use seller-transaction-entry-collection with the transactionId.
+Modes:
+- collection: return a small page of matching transactions
+- count: return how many matching transactions exist
 
-Transaction statuses:
-- pending: New, fresh transaction.
-- open: Accepted and active transaction; normal transaction work happens here.
-- resolved: Resolved by the seller, for example when the package was sent.
-- dispute: Active transaction switched to dispute mode, for example when the buyer has a complaint.
-- sold: Marked as sold outside of the standard happy-path result flow.
-- rejected: Explicitly closed by the seller or buyer.
-- expired: Expired with no action received from either side.
-- success: Buyer confirmed they are happy with the result.
-- closed: Explicitly closed without a success or rejection outcome.
-
-Sort:
-- createdAt: When the transaction was created.
-- updatedAt: When the transaction was last updated.
-- expiresAt: When the transaction expires.
-- lastAt: Last transaction activity timestamp.
-- status: Current transaction status.
+Use for seller-side transaction lookup and transaction metadata.
+Do not use for trade message/timeline content.
     `.trim(),
-	parameters: TransactionToolQuerySchema,
-	async execute(data) {
+	parameters: z
+		.looseObject({
+			type: z.enum([
+				"count",
+				"collection",
+			]),
+			query: TransactionToolQuerySchema,
+		})
+		.strip(),
+	async execute({ type, query }) {
 		logger.trace("toolTransactionCollection", {
-			data,
+			type,
+			query,
 		});
 
-		const items = await transactionCollectionFn({
-			data: {
-				...data,
-				limit: 8,
-			},
-		});
+		return match(type)
+			.with("count", async () => {
+				const count = await transactionCountFn({
+					data: query,
+				});
 
-		return {
-			count: items.length,
-			items,
-		};
+				const hasMore = await transactionCountFn({
+					data: {},
+				});
+
+				return {
+					count: count,
+					hasMore: hasMore > 0,
+				} as const;
+			})
+			.with("collection", async () => {
+				const items = await transactionCollectionFn({
+					data: {
+						...query,
+						limit: 8,
+					},
+				});
+
+				return {
+					count: items.length,
+					items,
+				};
+			})
+			.exhaustive();
 	},
 });

@@ -1,6 +1,9 @@
 import { tool } from "@openai/agents";
+import { match } from "ts-pattern";
+import { z } from "zod";
 import { getRootLogger } from "~/server/log/getRootLogger";
 import { activityCollectionFn } from "~/user/activity/fn/activityCollectionFn";
+import { activityCountFn } from "~/user/activity/fn/activityCountFn";
 import { ActivityToolQuerySchema } from "~/user/activity/server/schema/ActivityToolQuerySchema";
 
 const logger = getRootLogger([
@@ -12,53 +15,58 @@ export const toolActivityCollection = tool({
 	name: "activity-collection",
 	needsApproval: false,
 	description: `
-Current user's activity/inbox items. Use small cursors and compact filters only.
+Current user's activity items.
 
-Use for notifications, unread-style activity, reactions, and transaction-related activity summaries. For full transaction message content, use the appropriate transaction-entry-collection tool.
+Modes:
+- collection: return matching activity items
+- count: return how many matching activity items exist
 
-Activity family values:
-- transaction: Activity related to a transaction or transaction message.
-- reaction: Activity related to listing reactions such as favourite, flag, ignore, or thumb.
-
-Activity type values:
-- buyer-message: Buyer sent a message.
-- seller-message: Seller sent a message.
-- transaction: Generic transaction activity.
-- system: System-generated activity.
-- unknown: Fallback/unknown activity.
-- thumb: Thumb/reaction activity.
-- favourite: Listing was favourited.
-- unfavourite: Listing was removed from favourites.
-- flag: Listing was flagged.
-- unflag: Listing flag was removed.
-- ignore: Listing was ignored.
-- unignore: Listing ignore was removed.
-
-Priority values:
-- common: Normal priority (e.g. interactions on listings).
-- high: High priority (usually messages/transactions between users).
-
-Sort:
-- timestamp: Activity time.
-- archivedAt: Archive timestamp.
-- priority: Activity priority.
+Use for notifications, unread-style activity, reactions, and transaction-related activity summaries.
+Do not use for full trade message content.
     `.trim(),
-	parameters: ActivityToolQuerySchema,
-	async execute(data) {
+	parameters: z
+		.looseObject({
+			type: z.enum([
+				"count",
+				"collection",
+			]),
+			query: ActivityToolQuerySchema,
+		})
+		.strip(),
+	async execute({ type, query }) {
 		logger.trace("toolActivityCollection", {
-			data,
+			type,
+			query,
 		});
 
-		const items = await activityCollectionFn({
-			data: {
-				...data,
-				limit: 64,
-			},
-		});
+		return match(type)
+			.with("count", async () => {
+				const count = await activityCountFn({
+					data: query,
+				});
 
-		return {
-			count: items.length,
-			items,
-		};
+				const hasMore = await activityCountFn({
+					data: {},
+				});
+
+				return {
+					count: count,
+					hasMore: hasMore > 0,
+				} as const;
+			})
+			.with("collection", async () => {
+				const items = await activityCollectionFn({
+					data: {
+						...query,
+						limit: 64,
+					},
+				});
+
+				return {
+					count: items.length,
+					items,
+				} as const;
+			})
+			.exhaustive();
 	},
 });

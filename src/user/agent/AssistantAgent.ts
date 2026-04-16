@@ -1,29 +1,24 @@
 import { Agent } from "@openai/agents";
 import { toolFavouriteToggle } from "~/buyer/favourite/server/tool/toolFavouriteToggle";
 import { toolFeedCollection } from "~/buyer/feed/server/tool/toolFeedCollection";
-import { toolFeedCount } from "~/buyer/feed/server/tool/toolFeedCount";
 import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
 import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
 import { toolFeedPatch } from "~/buyer/feed/server/tool/toolFeedPatch";
 import { toolListingCollection as toolBuyerListingCollection } from "~/buyer/listing/server/tool/toolListingCollection";
-import { toolListingCount as toolBuyerListingCount } from "~/buyer/listing/server/tool/toolListingCount";
 import { toolTransactionCollection as toolBuyerTransactionCollection } from "~/buyer/transaction/server/tool/toolTransactionCollection";
 import { toolTransactionCreate as toolBuyerTransactionCreate } from "~/buyer/transaction/server/tool/toolTransactionCreate";
 import { toolTransactionWorkflow as toolBuyerTransactionWorkflow } from "~/buyer/transaction/server/tool/toolTransactionWorkflow";
 import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
-import { toolDraftCount } from "~/seller/draft/server/tool/toolDraftCount";
 import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
 import { toolDraftDelete } from "~/seller/draft/server/tool/toolDraftDelete";
 import { toolDraftPatch } from "~/seller/draft/server/tool/toolDraftPatch";
 import { toolListingCollection as toolSellerListingCollection } from "~/seller/listing/server/tool/toolListingCollection";
 import { toolTransactionCollection as toolSellerTransactionCollection } from "~/seller/transaction/server/tool/toolTransactionCollection";
-import { toolTransactionCount as toolSellerTransactionCount } from "~/seller/transaction/server/tool/toolTransactionCount";
 import { toolTransactionWorkflow as toolSellerTransactionWorkflow } from "~/seller/transaction/server/tool/toolTransactionWorkflow";
 import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
 import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
 import { toolRoute } from "~/session/location/server/tool/toolRoute";
 import { toolActivityCollection } from "~/user/activity/server/tool/toolActivityCollection";
-import { toolActivityCount } from "~/user/activity/server/tool/toolActivityCount";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
 import { toolTransactionEntryCollection } from "~/user/transaction-entry/server/tool/toolTransactionEntryCollection";
@@ -160,13 +155,11 @@ Response style
 		 * Buyer related tools
 		 */
 		toolFeedCollection,
-		toolFeedCount,
 		toolFeedCreate,
 		toolFeedDelete,
 		toolFeedPatch,
 		//
 		toolBuyerListingCollection,
-		toolBuyerListingCount,
 		//
 		toolFavouriteToggle,
 		//
@@ -178,12 +171,10 @@ Response style
 		 */
 		toolSellerListingCollection,
 		//
-		toolSellerTransactionCount,
 		toolSellerTransactionCollection,
 		toolSellerTransactionWorkflow,
 		//
 		toolDraftCollection,
-		toolDraftCount,
 		toolDraftCreate,
 		toolDraftDelete,
 		toolDraftPatch,
@@ -191,11 +182,10 @@ Response style
 		 * Common user-related tools
 		 */
 		toolActivityCollection,
-		toolActivityCount,
 		//
 		toolTransactionEntryCollection,
-		toolTransactionEntryCreate,
 		toolTransactionEntryCount,
+		toolTransactionEntryCreate,
 		/**
 		 * Utility tools for both human and models
 		 */
