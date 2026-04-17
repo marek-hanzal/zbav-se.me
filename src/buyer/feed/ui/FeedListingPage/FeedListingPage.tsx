@@ -69,7 +69,7 @@ export const FeedListingPage: FC<FeedListingPage.Props> = ({
 					square: "default",
 					zIndex: true,
 					round: "full",
-					snapTo: "bottom-right",
+					snapTo: "right-center",
 					text: "xl",
 					opacity: isLast ? "full" : "8",
 				}}
