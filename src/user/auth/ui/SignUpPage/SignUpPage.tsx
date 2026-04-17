@@ -1,8 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
-import { type FC, useRef } from "react";
+import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
-import { Fade } from "@/lib/client/fade";
 import { FormField } from "@/lib/client/form";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
@@ -53,7 +52,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
 
-	const registerMutation = withRegisterMutation.useMutation({
+	const mutation = withRegisterMutation.useMutation({
 		async onPostMutation() {
 			return navigate({
 				to: "/$locale/app/welcome",
@@ -74,15 +73,13 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 			onSubmit: RegisterSchema,
 		},
 		onSubmit: onSubmit({
-			mutation: registerMutation,
+			mutation: mutation,
 		}),
 	});
 
-	const scrollerRef = useRef<HTMLDivElement>(null);
-
 	return (
 		<Container
-			data-ui="SignUpPage[Container]"
+			data-ui="SignUpPage"
 			ui={{
 				layout: "vertical-centered",
 				position: "relative",
@@ -92,10 +89,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 			}}
 			{...props}
 		>
-			<Fade scrollableRef={scrollerRef} />
-
 			<Container
-				ref={scrollerRef}
 				ui={{
 					layout: "vertical-flex",
 					scroll: "vertical",
@@ -217,7 +211,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 									<form.SubmitButton
 										data-action={"sign up"}
 										data-ui={"SignUpPage[SubmitButton]"}
-										iconEnabled={"icon-[eos-icons--system-re-registered]"}
+										iconEnabled={"icon-[solar--user-hand-up-linear]"}
 										disabled={!isValid || isSubmitting}
 									>
 										{isSubmitting ? (
@@ -262,6 +256,11 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 								params={{
 									locale,
 								}}
+								iconProps={{
+									ui: {
+										text: "xl",
+									},
+								}}
 							>
 								<Tx
 									label={"ToS agreement (label)"}
@@ -277,6 +276,11 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 								to={"/$locale/privacy"}
 								params={{
 									locale,
+								}}
+								iconProps={{
+									ui: {
+										text: "xl",
+									},
 								}}
 							>
 								<Tx
