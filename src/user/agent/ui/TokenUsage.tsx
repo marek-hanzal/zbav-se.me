@@ -13,7 +13,7 @@ export namespace TokenUsage {
 }
 
 export const TokenUsage = withFallback<TokenUsage.Props, Container>(
-	(props) => {
+	({ ui, ...props }) => {
 		const locale = useLocale();
 		const { data: tokens } = withAgentTokensQuery.useSuspenseQuery({});
 
@@ -24,6 +24,7 @@ export const TokenUsage = withFallback<TokenUsage.Props, Container>(
 					gap: "xs",
 					items: "center",
 					justify: "center",
+					...ui,
 				}}
 				{...props}
 			>

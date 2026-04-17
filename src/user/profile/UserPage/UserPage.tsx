@@ -75,7 +75,13 @@ export const UserPage: FC<UserPage.Props> = ({ ui, ...props }) => {
 						<Group>
 							<LabelValue
 								textLabel={translator.text("Token usage (label)")}
-								textValue={<TokenUsage />}
+								textValue={
+									<TokenUsage
+										ui={{
+											text: "default",
+										}}
+									/>
+								}
 							/>
 						</Group>
 					</Container>
