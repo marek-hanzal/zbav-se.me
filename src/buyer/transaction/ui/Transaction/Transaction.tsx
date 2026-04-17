@@ -64,7 +64,6 @@ export const Transaction: FC<Transaction.Props> = ({
 			<TransactionInput
 				_suspense={_suspense}
 				transactionId={transactionId}
-				refresh={refresh}
 			/>
 		</Container>
 	);

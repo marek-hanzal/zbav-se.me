@@ -21,6 +21,11 @@ export async function getRouter() {
 					formatter: getPrettyFormatter({
 						categoryWidth: 42,
 						properties: true,
+						timestamp: "date-time-tz",
+						inspectOptions: {
+							compact: true,
+							colors: true,
+						},
 					}),
 					nonBlocking: true,
 				}),

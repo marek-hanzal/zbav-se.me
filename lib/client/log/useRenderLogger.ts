@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { getRootLogger } from "./getRootLogger";
 
 export function useRenderLogger(name: string) {
-	const renderCount = useRef(0);
+	const count = useRef(0);
 	const logger = useMemo(() => {
 		return getRootLogger([
 			"re-render",
@@ -11,7 +11,7 @@ export function useRenderLogger(name: string) {
 	}, [
 		name,
 	]);
-	renderCount.current += 1;
+	count.current += 1;
 
 	useEffect(() => {
 		logger.trace("Mount");
@@ -24,9 +24,9 @@ export function useRenderLogger(name: string) {
 	]);
 
 	useEffect(() => {
-		if (renderCount.current > 1) {
-			logger.trace("Re-render", {
-				renderCount: renderCount.current,
+		if (count.current > 1) {
+			logger.trace("Render", {
+				count: count.current,
 			});
 		}
 	});

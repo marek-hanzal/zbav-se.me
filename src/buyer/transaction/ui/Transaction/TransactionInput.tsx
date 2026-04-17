@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
+import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
@@ -15,19 +16,14 @@ import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButt
 export namespace TransactionInput {
 	export interface Props extends MarkSuspense.Props {
 		transactionId: string;
-		refresh: number;
 	}
 }
 
-export const TransactionInput: FC<TransactionInput.Props> = ({
-	_suspense,
-	transactionId,
-	refresh,
-}) => {
+export const TransactionInput: FC<TransactionInput.Props> = ({ _suspense, transactionId }) => {
 	const queryClient = useQueryClient();
-	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId, {
-		refetchInterval: refresh,
-	});
+	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
+
+	useRenderLogger("TransactionInput");
 
 	return match(transaction.status)
 		.with("interest", () => {
