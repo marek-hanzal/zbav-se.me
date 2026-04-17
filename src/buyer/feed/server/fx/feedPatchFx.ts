@@ -64,6 +64,16 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 				});
 			}
 
+			if (patch.locationId === null) {
+				patch.query = {
+					...patch.query,
+					meta: {
+						...patch.query?.meta,
+						latLon: undefined,
+					},
+				};
+			}
+
 			yield* tryDbFx(async () =>
 				kysely
 					.updateTable("feed")

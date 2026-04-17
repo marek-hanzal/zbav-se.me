@@ -163,7 +163,7 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, u
 										<LocationSelect
 											value={field.state.value ?? null}
 											onChange={(value) => {
-												field.handleChange(value);
+												field.handleChange(value ?? "");
 											}}
 											textHint={""}
 											warningStatusProps={{

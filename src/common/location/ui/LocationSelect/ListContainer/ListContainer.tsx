@@ -16,7 +16,8 @@ export namespace ListContainer {
 			Pick<Default.Props, "textHint" | "warningStatusProps"> {
 		search: Fulltext.Value;
 		value: string | undefined | null;
-		onChange(value: string): void;
+		onChange(value: string | null): void;
+		allowClear?: boolean;
 		onLocation?(value: LocationSchema.Type): void;
 	}
 }
@@ -33,6 +34,7 @@ export const ListContainer = withFallback(
 		search,
 		value,
 		onChange,
+		allowClear,
 		onLocation,
 		ui,
 		warningStatusProps,
@@ -81,6 +83,11 @@ export const ListContainer = withFallback(
 							<Button
 								key={item.id}
 								onClick={() => {
+									if (allowClear && value === item.id) {
+										onChange(null);
+										return;
+									}
+
 									onChange(item.id);
 									onLocation?.(item);
 								}}
