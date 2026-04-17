@@ -97,29 +97,29 @@ export const FlagButton = withFallback(
 					/>
 				</ConfirmButton>
 
-				{listing.hasFlag ? null : (
-					<Mx
-						label={"Listing ignore (hint)"}
-						ui={
-							isConfirm
-								? {
-										tone: "danger",
-										theme: "light",
-										color: "lead",
-										text: "sm",
-										background: "default",
-										inner: "default",
-									}
-								: {
-										tone: "neutral",
-										theme: "light",
-										text: "sm",
-										background: "default",
-										inner: "default",
-									}
-						}
-					/>
-				)}
+				<Mx
+					label={"Listing ignore (hint)"}
+					ui={
+						isConfirm
+							? {
+									tone: "danger",
+									theme: "light",
+									color: "lead",
+									text: "sm",
+									background: "default",
+									inner: "default",
+									opacity: listing.hasFlag ? "4" : undefined,
+								}
+							: {
+									tone: "neutral",
+									theme: "light",
+									text: "sm",
+									background: "default",
+									inner: "default",
+									opacity: disabled ? "4" : listing.hasFlag ? "4" : undefined,
+								}
+					}
+				/>
 			</>
 		);
 	},
