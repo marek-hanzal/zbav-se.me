@@ -1,3 +1,4 @@
+import type { Logger } from "@logtape/logtape";
 import {
 	type QueryClient,
 	type QueryKey,
@@ -48,6 +49,12 @@ export namespace withMutation {
 	 * @property invalidator - Optional array of functions that, when called, perform additional invalidation logic using the QueryClient. Each function is awaited in sequence.
 	 */
 	export interface Props<TVariables, TResult> {
+		/**
+		 * Where to send logs if this mutation.
+		 *
+		 * Users only "trace" to prevent higher-level spams.
+		 */
+		logger: Logger;
 		/**
 		 * Function to perform the mutation.
 		 * @param variables - The input data for the mutation.
@@ -114,6 +121,7 @@ export namespace withMutation {
  *   - invalidate: A function to run all invalidators with a provided QueryClient (for non-hook usage).
  */
 export function withMutation<TVariables, TResult, TError>({
+	logger,
 	mutationFn,
 	keys,
 	invalidate: $invalidate = [],
@@ -152,6 +160,10 @@ export function withMutation<TVariables, TResult, TError>({
 			return useMutation<TResult, TError, TVariables, TContext>({
 				mutationKey: keys(),
 				async mutationFn(variables) {
+					logger.trace("useMutation::mutationFn", {
+						variables,
+					});
+
 					clearCache(queryClient);
 
 					await onPreMutation?.({
@@ -190,6 +202,10 @@ export function withMutation<TVariables, TResult, TError>({
 		 * @returns The result of the mutation.
 		 */
 		async mutate(queryClient: QueryClient, variables: TVariables): Promise<TResult> {
+			logger.trace("useMutation::mutate", {
+				variables,
+			});
+
 			const data = await mutationFn(variables);
 			clearCache(queryClient);
 			await invalidate(queryClient);
@@ -202,6 +218,8 @@ export function withMutation<TVariables, TResult, TError>({
 		useInvalidate() {
 			const queryClient = useQueryClient();
 			return async () => {
+				logger.trace("useMutation::useInvalidate::invalidate");
+
 				return invalidate(queryClient);
 			};
 		},

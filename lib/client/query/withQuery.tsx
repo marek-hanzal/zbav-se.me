@@ -1,3 +1,4 @@
+import type { Logger } from "@logtape/logtape";
 import {
 	type OmitKeyof,
 	type QueryClient,
@@ -21,6 +22,7 @@ export namespace withQuery {
 	 * @template TResult - Result type returned by the query function.
 	 */
 	export interface Props<TData, TResult> {
+		logger: Logger;
 		/**
 		 * Function to generate the query key for React Query.
 		 * @param data - The input data for the query.
@@ -99,6 +101,7 @@ export namespace withQuery {
  * @returns Query helpers and hooks.
  */
 export function withQuery<TData, TResult>({
+	logger,
 	queryFn,
 	keys,
 	defaultOptions,
@@ -136,8 +139,14 @@ export function withQuery<TData, TResult>({
 	 * @returns Promise that resolves when invalidation is complete.
 	 */
 	const invalidate = async (queryClient: QueryClient, data?: TData) => {
+		const queryKey = $keys(data);
+
+		logger.trace("withQuery::invalidate", {
+			queryKey,
+		});
+
 		return queryClient.invalidateQueries({
-			queryKey: $keys(data),
+			queryKey,
 			refetchType: "all",
 		});
 	};
