@@ -205,6 +205,7 @@ export const withEntityQuery = <
 	const TDeleteRequest,
 	const TPatchCollectionRequest,
 >({
+	logger,
 	keys,
 	toIdKey,
 	fetchFn,
@@ -246,7 +247,16 @@ export const withEntityQuery = <
 	 * use the same key strategy.
 	 */
 	function $updateFn(queryClient: QueryClient, item: TEntity) {
-		queryClient.setQueryData($keys("fetch", toIdKey(item.id)), item);
+		const request = toIdKey(item.id);
+		const queryKey = $keys("fetch", request);
+
+		logger.trace("withEntityQuery::$updateFn", {
+			item,
+			request,
+			queryKey,
+		});
+
+		queryClient.setQueryData(queryKey, item);
 
 		return item;
 	}
@@ -271,7 +281,13 @@ export const withEntityQuery = <
 	function useUpdate() {
 		const queryClient = useQueryClient();
 
-		return (item: TEntity) => $updateFn(queryClient, item);
+		return (item: TEntity) => {
+			logger.trace("withEntityQuery::useUpdate::()", {
+				item,
+			});
+
+			$updateFn(queryClient, item);
+		};
 	}
 
 	/**
@@ -286,6 +302,11 @@ export const withEntityQuery = <
 		invalidate?: withEntityQuery.Invalidator.Type[],
 		data?: withEntityQuery.Invalidator.Data<TFetchRequest, TCollectionRequest, TCountRequest>,
 	): Promise<unknown> {
+		logger.trace("withEntityQuery::invalidator", {
+			data,
+			invalidate,
+		});
+
 		if (!invalidate) {
 			return;
 		}
