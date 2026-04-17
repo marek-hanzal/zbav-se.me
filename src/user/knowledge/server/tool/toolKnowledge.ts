@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
 import Fuse from "fuse.js";
 import { z } from "zod";
-import { getRootLogger } from "~/server/log/getRootLogger";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
 
 const logger = getRootLogger([

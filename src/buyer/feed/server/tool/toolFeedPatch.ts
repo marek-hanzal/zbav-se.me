@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
 import { feedPatchFn } from "~/buyer/feed/fn/feedPatchFn";
 import { FeedToolPatchSchema } from "~/buyer/feed/server/schema/FeedToolPatchSchema";
-import { getRootLogger } from "~/server/log/getRootLogger";
+import { getRootLogger } from "~/common/log/getRootLogger";
 
 const logger = getRootLogger([
 	"tool",

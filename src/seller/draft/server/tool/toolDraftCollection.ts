@@ -1,10 +1,10 @@
 import { tool } from "@openai/agents";
 import { match } from "ts-pattern";
 import { z } from "zod";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { draftCollectionFn } from "~/seller/draft/fn/draftCollectionFn";
 import { draftCountFn } from "~/seller/draft/fn/draftCountFn";
 import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
-import { getRootLogger } from "~/server/log/getRootLogger";
 
 const logger = getRootLogger([
 	"draft",

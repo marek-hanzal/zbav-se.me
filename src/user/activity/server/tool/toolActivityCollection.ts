@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
 import { match } from "ts-pattern";
 import { z } from "zod";
-import { getRootLogger } from "~/server/log/getRootLogger";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { activityCollectionFn } from "~/user/activity/fn/activityCollectionFn";
 import { activityCountFn } from "~/user/activity/fn/activityCountFn";
 import { ActivityToolQuerySchema } from "~/user/activity/server/schema/ActivityToolQuerySchema";

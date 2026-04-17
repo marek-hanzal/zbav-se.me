@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { draftDeleteFn } from "~/seller/draft/fn/draftDeleteFn";
 import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
-import { getRootLogger } from "~/server/log/getRootLogger";
 
 const logger = getRootLogger([
 	"tool",

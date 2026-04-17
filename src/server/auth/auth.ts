@@ -5,10 +5,10 @@ import { type Dialect, Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { genId } from "@/lib/common/gen-id";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import type { Database } from "~/server/database/Database";
 import { ServerBetterAuthSchema } from "~/server/env/ServerBetterAuthSchema";
 import { ServerViteSchema } from "~/server/env/ServerViteSchema";
-import { getRootLogger } from "~/server/log/getRootLogger";
 
 const logger = getRootLogger("auth");
 

@@ -1,5 +1,5 @@
 import { tool } from "@openai/agents";
-import { getRootLogger } from "~/server/log/getRootLogger";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { routeFn } from "~/session/location/fn/routeFn";
 import { RouteSchema } from "~/session/location/server/schema/RouteSchema";
 

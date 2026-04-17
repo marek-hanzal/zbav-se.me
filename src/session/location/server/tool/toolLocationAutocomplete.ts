@@ -1,5 +1,5 @@
 import { tool } from "@openai/agents";
-import { getRootLogger } from "~/server/log/getRootLogger";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { locationAutocompleteFn } from "~/session/location/fn/locationAutocompleteFn";
 import { LocationAutocompleteSchema } from "~/session/location/server/schema/LocationAutocompleteSchema";
 
