@@ -18,9 +18,7 @@ export const withUploadFetchQuery = withQuery<UploadQuerySchema.Type, UploadSche
 		];
 	},
 	async queryFn(data) {
-		logger.trace("queryFn", {
-			data,
-		});
+		logger.trace("queryFn", data);
 
 		return uploadFetchFn({
 			data,

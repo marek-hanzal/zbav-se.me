@@ -19,7 +19,7 @@ export async function getRouter() {
 			sinks: {
 				console: getConsoleSink({
 					formatter: getPrettyFormatter({
-						categoryWidth: 32,
+						categoryWidth: 42,
 						properties: true,
 					}),
 					nonBlocking: true,

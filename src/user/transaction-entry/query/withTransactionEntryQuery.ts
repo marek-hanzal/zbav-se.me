@@ -32,8 +32,11 @@ export const withTransactionEntryQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data) {
-		logger.trace("fetchFn", data);
+	async fetchFn(data, context) {
+		logger.trace("fetchFn", {
+			data,
+			context,
+		});
 
 		return transactionEntryFetchFn({
 			data,

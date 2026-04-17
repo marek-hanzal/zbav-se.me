@@ -18,9 +18,7 @@ export const withListingSellerInfoQuery = withQuery<EntitySchema.Type, SellerInf
 		];
 	},
 	async queryFn(data) {
-		logger.trace("queryFn", {
-			data,
-		});
+		logger.trace("queryFn", data);
 
 		return listingGetSellerInfoFn({
 			data,

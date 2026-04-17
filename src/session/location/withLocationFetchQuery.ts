@@ -18,9 +18,7 @@ export const withLocationFetchQuery = withQuery<LocationQuerySchema.Type, Locati
 		];
 	},
 	async queryFn(data) {
-		logger.trace("queryFn", {
-			data,
-		});
+		logger.trace("queryFn", data);
 
 		return locationFetchFn({
 			data,

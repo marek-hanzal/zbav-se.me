@@ -33,9 +33,10 @@ export const withTransactionQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data) {
+	async fetchFn(data, context) {
 		logger.trace("fetchFn", {
 			data,
+			context,
 		});
 
 		return transactionFetchFn({
@@ -43,27 +44,21 @@ export const withTransactionQuery = withEntityQuery<
 		});
 	},
 	async collectionFn(data) {
-		logger.trace("collectionFn", {
-			data,
-		});
+		logger.trace("collectionFn", data);
 
 		return transactionCollectionFn({
 			data,
 		});
 	},
 	async countFn(data) {
-		logger.trace("countFn", {
-			data,
-		});
+		logger.trace("countFn", data);
 
 		return transactionCountFn({
 			data,
 		});
 	},
 	async createFn(data) {
-		logger.trace("createFn", {
-			data,
-		});
+		logger.trace("createFn", data);
 
 		return transactionCreateFn({
 			data,

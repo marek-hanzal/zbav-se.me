@@ -32,27 +32,21 @@ export const withTransactionListingQuery = withEntityQuery<
 		},
 	}),
 	async fetchFn(data) {
-		logger.trace("fetchFn", {
-			data,
-		});
+		logger.trace("fetchFn", data);
 
 		return transactionListingFetchFn({
 			data,
 		});
 	},
 	async collectionFn(data) {
-		logger.trace("collectionFn", {
-			data,
-		});
+		logger.trace("collectionFn", data);
 
 		return transactionListingCollectionFn({
 			data,
 		});
 	},
 	async countFn(data) {
-		logger.trace("countFn", {
-			data,
-		});
+		logger.trace("countFn", data);
 
 		return transactionListingCountFn({
 			data,

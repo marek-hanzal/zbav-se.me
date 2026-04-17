@@ -35,27 +35,21 @@ export const withActivityQuery = withEntityQuery<
 		},
 	}),
 	async fetchFn(data) {
-		logger.trace("fetchFn", {
-			data,
-		});
+		logger.trace("fetchFn", data);
 
 		return activityFetchFn({
 			data,
 		});
 	},
 	async collectionFn(data) {
-		logger.trace("collectionFn", {
-			data,
-		});
+		logger.trace("collectionFn", data);
 
 		return activityCollectionFn({
 			data,
 		});
 	},
 	async countFn(data) {
-		logger.trace("countFn", {
-			data,
-		});
+		logger.trace("countFn", data);
 
 		return activityCountFn({
 			data,
@@ -68,18 +62,14 @@ export const withActivityQuery = withEntityQuery<
 		throw new Error("Activity delete is not supported.");
 	},
 	async patchFn(data) {
-		logger.trace("patchFn", {
-			data,
-		});
+		logger.trace("patchFn", data);
 
 		return activityPatchFn({
 			data,
 		});
 	},
 	async patchCollectionFn(data) {
-		logger.trace("patchCollectionFn", {
-			data,
-		});
+		logger.trace("patchCollectionFn", data);
 
 		return activityPatchCollectionFn({
 			data,

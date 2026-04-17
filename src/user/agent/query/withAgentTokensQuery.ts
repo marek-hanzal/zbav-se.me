@@ -22,9 +22,7 @@ export const withAgentTokensQuery = withQuery<
 		];
 	},
 	async queryFn(data) {
-		logger.trace("queryFn", {
-			data,
-		});
+		logger.trace("queryFn", data);
 
 		const source = await agentUsageCollectionFn({
 			data,

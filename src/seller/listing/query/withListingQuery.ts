@@ -34,36 +34,28 @@ export const withListingQuery = withEntityQuery<
 		},
 	}),
 	async fetchFn(data) {
-		logger.trace("fetchFn", {
-			data,
-		});
+		logger.trace("fetchFn", data);
 
 		return listingFetchFn({
 			data,
 		});
 	},
 	async collectionFn(data) {
-		logger.trace("collectionFn", {
-			data,
-		});
+		logger.trace("collectionFn", data);
 
 		return listingCollectionFn({
 			data,
 		});
 	},
 	async countFn(data) {
-		logger.trace("countFn", {
-			data,
-		});
+		logger.trace("countFn", data);
 
 		return listingCountFn({
 			data,
 		});
 	},
 	async createFn(data) {
-		logger.trace("createFn", {
-			data,
-		});
+		logger.trace("createFn", data);
 
 		return listingCreateFn({
 			data,

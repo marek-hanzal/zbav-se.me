@@ -22,9 +22,7 @@ export const withTransactionEntryGalleryFetchQuery = withQuery<
 		];
 	},
 	async queryFn(data) {
-		logger.trace("queryFn", {
-			data,
-		});
+		logger.trace("queryFn", data);
 
 		return transactionEntryGalleryFetchFn({
 			data,

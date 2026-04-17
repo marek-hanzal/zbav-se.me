@@ -18,9 +18,7 @@ export const withAgentUsageQuery = withQuery<AgentUsageQuerySchema.Type, AgentUs
 		];
 	},
 	async queryFn(data) {
-		logger.trace("queryFn", {
-			data,
-		});
+		logger.trace("queryFn", data);
 
 		return agentUsageCollectionFn({
 			data,

@@ -31,27 +31,21 @@ export const withCategoryQuery = withEntityQuery<
 		},
 	}),
 	async fetchFn(data) {
-		logger.trace("fetchFn", {
-			data,
-		});
+		logger.trace("fetchFn", data);
 
 		return categoryFetchFn({
 			data,
 		});
 	},
 	async collectionFn(data) {
-		logger.trace("collectionFn", {
-			data,
-		});
+		logger.trace("collectionFn", data);
 
 		return categoryCollectionFn({
 			data,
 		});
 	},
 	async countFn(data) {
-		logger.trace("countFn", {
-			data,
-		});
+		logger.trace("countFn", data);
 
 		return categoryCountFn({
 			data,

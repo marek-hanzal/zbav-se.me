@@ -21,9 +21,7 @@ export const withLocationAutocompleteQuery = withQuery<
 		];
 	},
 	async queryFn(data) {
-		logger.trace("queryFn", {
-			data,
-		});
+		logger.trace("queryFn", data);
 
 		return locationAutocompleteFn({
 			data,

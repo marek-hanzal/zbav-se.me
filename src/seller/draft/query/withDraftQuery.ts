@@ -36,54 +36,42 @@ export const withDraftQuery = withEntityQuery<
 		},
 	}),
 	async fetchFn(data) {
-		logger.trace("fetchFn", {
-			data,
-		});
+		logger.trace("fetchFn", data);
 
 		return draftFetchFn({
 			data,
 		});
 	},
 	async collectionFn(data) {
-		logger.trace("collectionFn", {
-			data,
-		});
+		logger.trace("collectionFn", data);
 
 		return draftCollectionFn({
 			data,
 		});
 	},
 	async countFn(data) {
-		logger.trace("countFn", {
-			data,
-		});
+		logger.trace("countFn", data);
 
 		return draftCountFn({
 			data,
 		});
 	},
 	async createFn(data) {
-		logger.trace("createFn", {
-			data,
-		});
+		logger.trace("createFn", data);
 
 		return draftCreateFn({
 			data,
 		});
 	},
 	async deleteFn(data) {
-		logger.trace("deleteFn", {
-			data,
-		});
+		logger.trace("deleteFn", data);
 
 		return draftDeleteFn({
 			data,
 		});
 	},
 	async patchFn(data) {
-		logger.trace("patchFn", {
-			data,
-		});
+		logger.trace("patchFn", data);
 
 		return draftPatchFn({
 			data,

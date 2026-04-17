@@ -36,54 +36,42 @@ export const withFeedQuery = withEntityQuery<
 		},
 	}),
 	async fetchFn(data) {
-		logger.trace("fetchFn", {
-			data,
-		});
+		logger.trace("fetchFn", data);
 
 		return feedFetchFn({
 			data,
 		});
 	},
 	async collectionFn(data) {
-		logger.trace("collectionFn", {
-			data,
-		});
+		logger.trace("collectionFn", data);
 
 		return feedCollectionFn({
 			data,
 		});
 	},
 	async countFn(data) {
-		logger.trace("countFn", {
-			data,
-		});
+		logger.trace("countFn", data);
 
 		return feedCountFn({
 			data,
 		});
 	},
 	async createFn(data) {
-		logger.trace("createFn", {
-			data,
-		});
+		logger.trace("createFn", data);
 
 		return feedCreateFn({
 			data,
 		});
 	},
 	async deleteFn(data) {
-		logger.trace("deleteFn", {
-			data,
-		});
+		logger.trace("deleteFn", data);
 
 		return feedDeleteFn({
 			data,
 		});
 	},
 	async patchFn(data) {
-		logger.trace("patchFn", {
-			data,
-		});
+		logger.trace("patchFn", data);
 
 		return feedPatchFn({
 			data,

@@ -21,9 +21,7 @@ export const withGithubHistoryQuery = withQuery<GithubHistoryQuery, GitHubHistor
 		];
 	},
 	async queryFn(data) {
-		logger.trace("queryFn", {
-			data,
-		});
+		logger.trace("queryFn", data);
 
 		return historyFn({
 			data,

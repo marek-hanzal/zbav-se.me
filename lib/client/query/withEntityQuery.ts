@@ -35,6 +35,11 @@ export namespace withEntityQuery {
 		}
 	}
 
+	export interface FnContext {
+		queryKey: string[];
+		options?: QueryOptions<any>;
+	}
+
 	/**
 	 * Static definition of an entity resource handled by this helper.
 	 *
@@ -45,7 +50,7 @@ export namespace withEntityQuery {
 	 * - patch an entity and synchronize cache
 	 */
 	export interface Props<
-		out TEntity extends EntitySchema.Type,
+		TEntity extends EntitySchema.Type,
 		in out TFetchRequest,
 		in TCollectionRequest,
 		in TCountRequest,
@@ -65,7 +70,7 @@ export namespace withEntityQuery {
 		/**
 		 * Loads a single entity by fetch request.
 		 */
-		fetchFn(data: TFetchRequest): Promise<TEntity>;
+		fetchFn(data: TFetchRequest, options: FnContext): Promise<TEntity>;
 		/**
 		 * Loads a collection of entities.
 		 */
@@ -233,7 +238,7 @@ export const withEntityQuery = <
 			...keys(),
 			part,
 			data,
-		]) as QueryKey;
+		]) as string[];
 	}
 
 	/**
@@ -325,10 +330,15 @@ export const withEntityQuery = <
 		data: TFetchRequest,
 		opts?: withEntityQuery.QueryOptions<TEntity>,
 	) {
+		const queryKey = $keys("fetch", data);
+
 		return queryClient.ensureQueryData({
-			queryKey: $keys("fetch", data),
+			queryKey,
 			queryFn() {
-				return fetchFn(data);
+				return fetchFn(data, {
+					queryKey,
+					options: opts,
+				});
 			},
 			...opts,
 		});
@@ -338,10 +348,15 @@ export const withEntityQuery = <
 	 * Internal suspense fetch hook by canonical fetch request payload.
 	 */
 	function useEntityQuery(data: TFetchRequest, opts?: withEntityQuery.QueryOptions<TEntity>) {
+		const queryKey = $keys("fetch", data);
+
 		return useSuspenseQuery({
-			queryKey: $keys("fetch", data),
+			queryKey,
 			queryFn() {
-				return fetchFn(data);
+				return fetchFn(data, {
+					queryKey,
+					options: opts,
+				});
 			},
 			...opts,
 		});
@@ -351,11 +366,16 @@ export const withEntityQuery = <
 		data: TFetchRequest,
 		opts?: withEntityQuery.QueryOptions<TEntity | null>,
 	) {
+		const queryKey = $keys("fetch", data);
+
 		return useSuspenseQuery({
-			queryKey: $keys("fetch", data),
+			queryKey,
 			async queryFn() {
 				try {
-					return await fetchFn(data);
+					return await fetchFn(data, {
+						queryKey,
+						options: opts,
+					});
 				} catch {
 					return null;
 				}
@@ -369,12 +389,16 @@ export const withEntityQuery = <
 		id: string,
 		opts?: withEntityQuery.QueryOptions<TEntity>,
 	) {
-		const request = toIdKey(id);
+		const data = toIdKey(id);
+		const queryKey = $keys("fetch", data);
 
 		return queryClient.ensureQueryData({
-			queryKey: $keys("fetch", request),
+			queryKey,
 			queryFn() {
-				return fetchFn(request);
+				return fetchFn(data, {
+					queryKey,
+					options: opts,
+				});
 			},
 			...opts,
 		});

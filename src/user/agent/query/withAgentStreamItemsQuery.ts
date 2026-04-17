@@ -20,9 +20,7 @@ export const withAgentStreamItemsQuery = withQuery<AgentStreamQuerySchema.Type, 
 		data,
 	],
 	async queryFn(data) {
-		logger.trace("queryFn", {
-			data,
-		});
+		logger.trace("queryFn", data);
 
 		/**
 		 * Because TSS is strict about wire-types, we're getting Record from server, thus we've to

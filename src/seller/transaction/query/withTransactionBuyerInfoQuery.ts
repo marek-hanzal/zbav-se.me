@@ -22,9 +22,7 @@ export const withTransactionBuyerInfoQuery = withQuery<
 		];
 	},
 	async queryFn(data) {
-		logger.trace("queryFn", {
-			data,
-		});
+		logger.trace("queryFn", data);
 
 		return transactionBuyerInfoFn({
 			data,
