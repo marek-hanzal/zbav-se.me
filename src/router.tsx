@@ -1,10 +1,4 @@
-import {
-	configure,
-	getConfig,
-	getConsoleSink,
-	getTextFormatter,
-	type LogLevel,
-} from "@logtape/logtape";
+import { configure, getConfig, getConsoleSink, getTextFormatter, type LogLevel } from "@logtape/logtape";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import { keepPreviousData, QueryClient } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";

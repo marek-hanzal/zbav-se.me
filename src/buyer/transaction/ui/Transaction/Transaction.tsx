@@ -1,5 +1,6 @@
 import { type FC, useRef } from "react";
 import { Container } from "@/lib/client/container";
+import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
 import { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
 import { TransactionEntryList } from "~/user/transaction-entry/ui/TransactionEntryList";
@@ -21,6 +22,8 @@ export const Transaction: FC<Transaction.Props> = ({
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
+
+	useRenderLogger("Transaction");
 
 	return (
 		<Container
