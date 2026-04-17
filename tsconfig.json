@@ -18,9 +18,6 @@
 		"module": "ESNext",
 		"noEmit": true,
 		"moduleResolution": "Bundler",
-		"customConditions": [
-			"@tanstack/custom-condition"
-		],
 		"lib": [
 			"DOM",
 			"DOM.Iterable",
