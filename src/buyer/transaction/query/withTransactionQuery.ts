@@ -43,34 +43,43 @@ export const withTransactionQuery = withEntityQuery<
 			data,
 		});
 	},
-	async collectionFn(data) {
-		logger.trace("collectionFn", data);
+	async collectionFn(data, context) {
+		logger.trace("collectionFn", {
+			data,
+			context,
+		});
 
 		return transactionCollectionFn({
 			data,
 		});
 	},
-	async countFn(data) {
-		logger.trace("countFn", data);
+	async countFn(data, context) {
+		logger.trace("countFn", {
+			data,
+			context,
+		});
 
 		return transactionCountFn({
 			data,
 		});
 	},
-	async createFn(data) {
-		logger.trace("createFn", data);
+	async createFn(data, context) {
+		logger.trace("createFn", {
+			data,
+			context,
+		});
 
 		return transactionCreateFn({
 			data,
 		});
 	},
-	async deleteFn(_data) {
+	async deleteFn(_data, _context) {
 		throw new Error("Transaction delete is not supported.");
 	},
-	async patchFn(_data) {
+	async patchFn(_data, _context) {
 		throw new Error("Transaction patch is not supported.");
 	},
-	async patchCollectionFn(_data) {
+	async patchCollectionFn(_data, _context) {
 		throw new Error("Transaction collection patch is not supported.");
 	},
 });

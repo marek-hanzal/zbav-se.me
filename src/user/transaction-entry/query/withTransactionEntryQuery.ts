@@ -42,34 +42,43 @@ export const withTransactionEntryQuery = withEntityQuery<
 			data,
 		});
 	},
-	async collectionFn(data) {
-		logger.trace("collectionFn", data);
+	async collectionFn(data, context) {
+		logger.trace("collectionFn", {
+			data,
+			context,
+		});
 
 		return transactionEntryCollectionFn({
 			data,
 		});
 	},
-	async countFn(data) {
-		logger.trace("countFn", data);
+	async countFn(data, context) {
+		logger.trace("countFn", {
+			data,
+			context,
+		});
 
 		return transactionEntryCountFn({
 			data,
 		});
 	},
-	async createFn(data) {
-		logger.trace("createFn", data);
+	async createFn(data, context) {
+		logger.trace("createFn", {
+			data,
+			context,
+		});
 
 		return transactionEntryCreateFn({
 			data,
 		});
 	},
-	async patchFn(_data) {
+	async patchFn(_data, _context) {
 		throw new Error("Transaction entry patch is not supported.");
 	},
-	async patchCollectionFn(_data) {
+	async patchCollectionFn(_data, _context) {
 		throw new Error("Transaction entry collection patch is not supported.");
 	},
-	async deleteFn(_data) {
+	async deleteFn(_data, _context) {
 		throw new Error("Transaction entry delete is not supported.");
 	},
 });

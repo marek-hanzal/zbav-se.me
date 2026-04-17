@@ -30,37 +30,46 @@ export const withCategoryQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data) {
-		logger.trace("fetchFn", data);
+	async fetchFn(data, context) {
+		logger.trace("fetchFn", {
+			data,
+			context,
+		});
 
 		return categoryFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data) {
-		logger.trace("collectionFn", data);
+	async collectionFn(data, context) {
+		logger.trace("collectionFn", {
+			data,
+			context,
+		});
 
 		return categoryCollectionFn({
 			data,
 		});
 	},
-	async countFn(data) {
-		logger.trace("countFn", data);
+	async countFn(data, context) {
+		logger.trace("countFn", {
+			data,
+			context,
+		});
 
 		return categoryCountFn({
 			data,
 		});
 	},
-	async createFn(_data) {
+	async createFn(_data, _context) {
 		throw new Error("Category create is not supported.");
 	},
-	async deleteFn(_data) {
+	async deleteFn(_data, _context) {
 		throw new Error("Category delete is not supported.");
 	},
-	async patchFn(_data) {
+	async patchFn(_data, _context) {
 		throw new Error("Category patch is not supported.");
 	},
-	async patchCollectionFn(_data) {
+	async patchCollectionFn(_data, _context) {
 		throw new Error("Category collection patch is not supported.");
 	},
 });

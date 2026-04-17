@@ -34,42 +34,57 @@ export const withActivityQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data) {
-		logger.trace("fetchFn", data);
+	async fetchFn(data, context) {
+		logger.trace("fetchFn", {
+			data,
+			context,
+		});
 
 		return activityFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data) {
-		logger.trace("collectionFn", data);
+	async collectionFn(data, context) {
+		logger.trace("collectionFn", {
+			data,
+			context,
+		});
 
 		return activityCollectionFn({
 			data,
 		});
 	},
-	async countFn(data) {
-		logger.trace("countFn", data);
+	async countFn(data, context) {
+		logger.trace("countFn", {
+			data,
+			context,
+		});
 
 		return activityCountFn({
 			data,
 		});
 	},
-	async createFn(_data) {
+	async createFn(_data, _context) {
 		throw new Error("Activity create is not supported.");
 	},
-	async deleteFn(_data) {
+	async deleteFn(_data, _context) {
 		throw new Error("Activity delete is not supported.");
 	},
-	async patchFn(data) {
-		logger.trace("patchFn", data);
+	async patchFn(data, context) {
+		logger.trace("patchFn", {
+			data,
+			context,
+		});
 
 		return activityPatchFn({
 			data,
 		});
 	},
-	async patchCollectionFn(data) {
-		logger.trace("patchCollectionFn", data);
+	async patchCollectionFn(data, context) {
+		logger.trace("patchCollectionFn", {
+			data,
+			context,
+		});
 
 		return activityPatchCollectionFn({
 			data,

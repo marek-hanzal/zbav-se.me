@@ -35,49 +35,67 @@ export const withDraftQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data) {
-		logger.trace("fetchFn", data);
+	async fetchFn(data, context) {
+		logger.trace("fetchFn", {
+			data,
+			context,
+		});
 
 		return draftFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data) {
-		logger.trace("collectionFn", data);
+	async collectionFn(data, context) {
+		logger.trace("collectionFn", {
+			data,
+			context,
+		});
 
 		return draftCollectionFn({
 			data,
 		});
 	},
-	async countFn(data) {
-		logger.trace("countFn", data);
+	async countFn(data, context) {
+		logger.trace("countFn", {
+			data,
+			context,
+		});
 
 		return draftCountFn({
 			data,
 		});
 	},
-	async createFn(data) {
-		logger.trace("createFn", data);
+	async createFn(data, context) {
+		logger.trace("createFn", {
+			data,
+			context,
+		});
 
 		return draftCreateFn({
 			data,
 		});
 	},
-	async deleteFn(data) {
-		logger.trace("deleteFn", data);
+	async deleteFn(data, context) {
+		logger.trace("deleteFn", {
+			data,
+			context,
+		});
 
 		return draftDeleteFn({
 			data,
 		});
 	},
-	async patchFn(data) {
-		logger.trace("patchFn", data);
+	async patchFn(data, context) {
+		logger.trace("patchFn", {
+			data,
+			context,
+		});
 
 		return draftPatchFn({
 			data,
 		});
 	},
-	async patchCollectionFn(_data) {
+	async patchCollectionFn(_data, _context) {
 		throw new Error("Draft collection patch is not supported.");
 	},
 });
