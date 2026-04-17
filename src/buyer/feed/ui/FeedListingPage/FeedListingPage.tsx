@@ -40,7 +40,7 @@ export const FeedListingPage: FC<FeedListingPage.Props> = ({
 			ref={containerRef}
 			left={
 				<BackHomeButton
-					to="/$locale/app/home"
+					to="/$locale/app/buyer/feed/list"
 					params={{
 						locale,
 					}}
