@@ -44,6 +44,9 @@ export const ListingCard = withFallback(
 			},
 		});
 
+		const disableThump = listing.isIgnored || listing.hasFlag || listing.my;
+		const disableFlags = listing.isFavourite || listing.thumb === "like" || listing.my;
+
 		return (
 			<Container
 				data-ui={"ListingCard"}
@@ -68,79 +71,83 @@ export const ListingCard = withFallback(
 					onView={onView}
 				/>
 
-				{listing.isIgnored || listing.hasFlag || listing.my ? null : (
-					<Container
-						ui={{
-							layout: "horizontal-flex",
-							width: "full",
-							items: "center",
-							justify: "space-evenly",
-						}}
+				<Container
+					ui={{
+						layout: "horizontal-flex",
+						width: "full",
+						items: "center",
+						justify: "space-evenly",
+					}}
+				>
+					<Suspense
+						fallback={
+							<ThumbLikeButton.Fallback
+								listingId={listingId}
+								meta={undefined}
+								disabled={disableThump}
+							/>
+						}
 					>
-						<Suspense
-							fallback={
-								<ThumbLikeButton.Fallback
-									listingId={listingId}
-									meta={undefined}
-								/>
-							}
-						>
-							<ThumbLikeButton
-								_suspense={"I know"}
+						<ThumbLikeButton
+							_suspense={"I know"}
+							listingId={listingId}
+							meta={feed.query.meta}
+							disabled={disableThump}
+						/>
+					</Suspense>
+					<Suspense
+						fallback={
+							<ThumbDislikeButton.Fallback
 								listingId={listingId}
-								meta={feed.query.meta}
+								meta={undefined}
+								disabled={disableThump}
 							/>
-						</Suspense>
-						<Suspense
-							fallback={
-								<ThumbDislikeButton.Fallback
-									listingId={listingId}
-									meta={undefined}
-								/>
-							}
-						>
-							<ThumbDislikeButton
-								_suspense={"I know"}
-								listingId={listingId}
-								meta={feed.query.meta}
-							/>
-						</Suspense>
-					</Container>
-				)}
+						}
+					>
+						<ThumbDislikeButton
+							_suspense={"I know"}
+							listingId={listingId}
+							meta={feed.query.meta}
+							disabled={disableThump}
+						/>
+					</Suspense>
+				</Container>
 
-				{listing.isFavourite || listing.thumb === "like" || listing.my ? null : (
-					<Group>
-						<Suspense
-							fallback={
-								<IgnoreButton.Fallback
-									listingId={listingId}
-									meta={undefined}
-								/>
-							}
-						>
-							<IgnoreButton
-								_suspense={"I know"}
+				<Group>
+					<Suspense
+						fallback={
+							<IgnoreButton.Fallback
 								listingId={listingId}
-								meta={feed.query.meta}
+								meta={undefined}
+								disabled={disableFlags}
 							/>
-						</Suspense>
+						}
+					>
+						<IgnoreButton
+							_suspense={"I know"}
+							listingId={listingId}
+							meta={feed.query.meta}
+							disabled={disableFlags}
+						/>
+					</Suspense>
 
-						<Suspense
-							fallback={
-								<FlagButton.Fallback
-									listingId={listingId}
-									meta={undefined}
-								/>
-							}
-						>
-							<FlagButton
-								_suspense={"I know"}
+					<Suspense
+						fallback={
+							<FlagButton.Fallback
 								listingId={listingId}
-								meta={feed.query.meta}
+								meta={undefined}
+								disabled={disableFlags}
 							/>
-						</Suspense>
-					</Group>
-				)}
+						}
+					>
+						<FlagButton
+							_suspense={"I know"}
+							listingId={listingId}
+							meta={feed.query.meta}
+							disabled={disableFlags}
+						/>
+					</Suspense>
+				</Group>
 			</Container>
 		);
 	},
