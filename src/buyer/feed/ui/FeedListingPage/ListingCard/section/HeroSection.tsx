@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
+import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { useUpload } from "~/common/gallery/hook/useUpload";
@@ -19,6 +20,8 @@ export namespace HeroSection {
 
 export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) => {
 	const hero = useUpload(listing.gallery.items);
+
+	useRenderLogger("HeroSection");
 
 	return (
 		<>
@@ -69,6 +72,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 							size: undefined,
 							inner: undefined,
 							snapTo: "top-right",
+							zIndex: true,
 						}}
 					/>
 				)}
