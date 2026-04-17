@@ -2,9 +2,10 @@ import { type FC, type PropsWithChildren, Suspense, useCallback, useMemo, useSta
 import { CloseIcon } from "@/lib/client/icon";
 import { SheetView } from "@/lib/client/sheet-view";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
+import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { SellerInfo } from "~/buyer/listing/SellerInfo/SellerInfo";
-import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { CloseButton } from "~/common/ui/button";
 import { ListingCard } from "../ListingCard";
@@ -12,19 +13,21 @@ import { ListingCard } from "../ListingCard";
 export namespace ListingSheet {
 	export type View = "default" | "gallery" | "seller-info";
 
-	export interface Props extends PropsWithChildren, SheetView.PropsEx<View> {
+	export interface Props extends PropsWithChildren, SheetView.PropsEx<View>, MarkSuspense.Props {
 		feedId: string;
-		listing: ListingSchema.Type;
+		listingId: string;
 	}
 }
 
 export const ListingSheet: FC<ListingSheet.Props> = ({
+	_suspense,
 	feedId,
-	listing,
+	listingId,
 	onClose,
 	children,
 	...props
 }) => {
+	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const [view, setView] = useState<ListingSheet.View>("default");
 
 	const $onClose = useCallback(() => {
@@ -40,9 +43,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 						feedId={feedId}
 						listingId={listing.id}
 						onView={setView}
-					>
-						{children}
-					</ListingCard>
+					/>
 				),
 				header: ({ close }) => ({
 					title: listing.title,
@@ -73,7 +74,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				children: (
 					<SellerInfo
 						_suspense={"I know"}
-						listingId={listing.id}
+						listingId={listingId}
 						ui={{
 							inner: "default",
 						}}
@@ -93,9 +94,9 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 		};
 	}, [
 		feedId,
+		listingId,
 		listing,
 		$onClose,
-		children,
 	]);
 
 	return (

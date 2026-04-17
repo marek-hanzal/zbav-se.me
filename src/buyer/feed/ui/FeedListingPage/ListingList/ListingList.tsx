@@ -117,6 +117,7 @@ export const ListingList = withFallback(
 						>
 							<Suspense fallback={<Item.Fallback />}>
 								<Item
+									_suspense={"I know"}
 									listingId={listingId}
 									feedId={feedId}
 								/>
