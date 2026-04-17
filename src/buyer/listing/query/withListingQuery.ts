@@ -1,4 +1,5 @@
 import { withEntityQuery } from "@/lib/client/query";
+import { sleep } from "@/lib/common/sleep";
 import { listingCollectionFn } from "~/buyer/listing/fn/listingCollectionFn";
 import { listingCountFn } from "~/buyer/listing/fn/listingCountFn";
 import { listingFetchFn } from "~/buyer/listing/fn/listingFetchFn";
@@ -35,6 +36,8 @@ export const withListingQuery = withEntityQuery<
 		});
 	},
 	async countFn(data) {
+		await sleep(1250 * 1);
+
 		return listingCountFn({
 			data,
 		});
