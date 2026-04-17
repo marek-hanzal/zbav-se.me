@@ -38,14 +38,14 @@ export const ListingCard = withFallback(
 				{...props}
 			>
 				<HeroSection
-					_suspense={"I know"}
+					_suspense={_suspense}
 					feedId={feedId}
 					listing={listing}
 					onView={onView}
 				/>
 
 				<InfoSection
-					_suspense={"I know"}
+					_suspense={_suspense}
 					listing={listing}
 					onView={onView}
 				/>
