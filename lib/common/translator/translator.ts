@@ -41,6 +41,7 @@ export const translator: translator.Translator = {
 		}
 
 		if ((text = fallback)) {
+			console.warn(`translator: fallback for [${key}] > [${fallback}]`);
 			return {
 				text,
 				type: "fallback",

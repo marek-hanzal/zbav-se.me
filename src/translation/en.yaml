@@ -412,6 +412,9 @@
 57cf1f27b485ad4ccfff9487dc973c5a5a9d3582b03670f822646bc0:
   ref: Transaction not accepted - seller (message)
   value: Transaction not accepted - seller (message)
+57e19e04862377578a00c73fa06fac857bb8fa3017c1fe3bd5f084ec:
+  ref: Something went wrong (error)
+  value: Something went wrong (error)
 591b812973b8193e4ba322d124037a7e66dfb4eedbbd74a82a527d6a:
   ref: Feed name (label)
   value: Feed name (label)

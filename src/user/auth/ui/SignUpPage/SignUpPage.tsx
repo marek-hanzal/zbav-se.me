@@ -2,6 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
+import { ErrorBadge } from "@/lib/client/error";
 import { FormField } from "@/lib/client/form";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
@@ -110,7 +111,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 					}
 					textTitle={translator.text("Register (title)")}
 					ui={{
-						inner: "xl",
+						inner: "default",
 					}}
 				>
 					<form
@@ -129,7 +130,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 									label={<Tx label={"Email"} />}
 									meta={field.state.meta}
 								>
-									{(fieldProps) => (
+									{(props) => (
 										<field.TextInput
 											data-ui={"SignUpPage[EmailInput]"}
 											type={"email"}
@@ -138,7 +139,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 											value={field.state.value ?? ""}
 											onBlur={field.handleBlur}
 											onChange={(e) => field.handleChange(e.target.value)}
-											{...fieldProps}
+											{...props}
 										/>
 									)}
 								</FormField>
@@ -153,7 +154,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 									label={<Tx label={"Password"} />}
 									meta={field.state.meta}
 								>
-									{(fieldProps) => (
+									{(props) => (
 										<field.TextInput
 											data-ui={"SignUpPage[PasswordInput]"}
 											type={"password"}
@@ -162,7 +163,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 											onChange={(e) => field.handleChange(e.target.value)}
 											onBlur={field.handleBlur}
 											placeholder={translator.text("Enter your password")}
-											{...fieldProps}
+											{...props}
 										/>
 									)}
 								</FormField>
@@ -177,7 +178,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 									label={<Tx label={"Confirm Password"} />}
 									meta={field.state.meta}
 								>
-									{(fieldProps) => (
+									{(props) => (
 										<field.TextInput
 											data-ui={"SignUpPage[ConfirmPasswordInput]"}
 											type={"password"}
@@ -186,7 +187,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 											onChange={(e) => field.handleChange(e.target.value)}
 											onBlur={field.handleBlur}
 											placeholder={translator.text("Confirm your password")}
-											{...fieldProps}
+											{...props}
 										/>
 									)}
 								</FormField>
@@ -197,8 +198,8 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 							ui={{
 								layout: "vertical-flex",
 								width: "full",
-								items: "end",
-								gap: "lg",
+								items: "center",
+								gap: "default",
 							}}
 						>
 							<form.Subscribe
@@ -207,20 +208,29 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 									isSubmitting: state.isSubmitting,
 								})}
 							>
-								{({ isValid, isSubmitting }) => (
-									<form.SubmitButton
-										data-action={"sign up"}
-										data-ui={"SignUpPage[SubmitButton]"}
-										iconEnabled={"icon-[solar--user-hand-up-linear]"}
-										disabled={!isValid || isSubmitting}
-									>
-										{isSubmitting ? (
-											<Tx label={"Please wait..."} />
-										) : (
-											<Tx label={"Register"} />
-										)}
-									</form.SubmitButton>
-								)}
+								{({ isValid, isSubmitting }) => {
+									return (
+										<>
+											<form.SubmitButton
+												data-action={"sign up"}
+												data-ui={"SignUpPage[SubmitButton]"}
+												iconEnabled={"icon-[solar--user-hand-up-linear]"}
+												disabled={!isValid || isSubmitting}
+											>
+												{isSubmitting ? (
+													<Tx label={"Please wait..."} />
+												) : (
+													<Tx label={"Register"} />
+												)}
+											</form.SubmitButton>
+
+											<ErrorBadge
+												placeholder
+												error={mutation.error}
+											/>
+										</>
+									);
+								}}
 							</form.Subscribe>
 
 							<LinkTo
@@ -241,7 +251,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 							</LinkTo>
 						</Container>
 
-						<div className={"flex flex-col gap-2 w-full"}>
+						<div className={"flex flex-col gap-1 w-full"}>
 							<Tx
 								label={"Agreement with (label)"}
 								ui={{

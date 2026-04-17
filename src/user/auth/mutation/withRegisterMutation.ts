@@ -8,7 +8,7 @@ export namespace withRegisterMutation {
 	}
 }
 
-export const withRegisterMutation = withMutation<withRegisterMutation.Props, unknown, unknown>({
+export const withRegisterMutation = withMutation<withRegisterMutation.Props, unknown, Error>({
 	keys(variables) {
 		return [
 			"register",
