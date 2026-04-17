@@ -22,6 +22,9 @@ export async function getRouter() {
 						categoryWidth: 42,
 						properties: true,
 						timestamp: "date-time-tz",
+						messageColor: "red",
+						messageStyle: "bold",
+						levelStyle: "reset",
 						inspectOptions: {
 							compact: true,
 							colors: true,
