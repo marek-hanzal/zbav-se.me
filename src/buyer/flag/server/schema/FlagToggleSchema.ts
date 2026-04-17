@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 
 export const FlagToggleSchema = z
 	.looseObject({
@@ -8,6 +9,7 @@ export const FlagToggleSchema = z
 		listingId: z.string().meta({
 			description: "ID of the listing to toggle",
 		}),
+		meta: ListingMetaSchema.optional(),
 	})
 	.strip()
 	.meta({

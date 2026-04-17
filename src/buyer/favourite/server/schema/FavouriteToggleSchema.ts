@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 
 export const FavouriteToggleSchema = z
 	.looseObject({
@@ -11,6 +12,11 @@ export const FavouriteToggleSchema = z
 		listingId: z.string().meta({
 			description: "ID of the listing to toggle",
 		}),
+		/**
+		 * Because we're doing optimistic update, so we eventually need the meta from the source
+		 * query/collection to return back proper listing data.
+		 */
+		meta: ListingMetaSchema.optional(),
 	})
 	.strip()
 	.meta({

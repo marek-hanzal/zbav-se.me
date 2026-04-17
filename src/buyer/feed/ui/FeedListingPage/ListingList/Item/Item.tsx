@@ -2,13 +2,16 @@ import { Suspense, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
+import { useRenderLogger } from "@/lib/client/log";
 import { Overlay } from "@/lib/client/overlay";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { useListingEvent } from "~/buyer/listing/hook/useListingEvent";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/common/location/ui/LocationBadge";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroImage } from "~/common/ui/img";
 import { FlagButton } from "../../FlagButton";
 import { IgnoreButton } from "../../IgnoreButton";
@@ -25,6 +28,7 @@ export namespace Item {
 
 export const Item = withFallback(({ listingId, feedId, ...props }: Item.Props) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
+	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 	const [detail, setDetail] = useState<boolean>(false);
 	const hero = useUpload(listing.gallery.items);
 
@@ -33,6 +37,14 @@ export const Item = withFallback(({ listingId, feedId, ...props }: Item.Props) =
 		listingId: listing.id,
 		event: "impression",
 		timeoutMs: 1_600,
+	});
+
+	useRenderLogger({
+		logger: getRootLogger(),
+		name: "Item",
+		meta: {
+			listingId,
+		},
 	});
 
 	return (
@@ -101,16 +113,32 @@ export const Item = withFallback(({ listingId, feedId, ...props }: Item.Props) =
 							justify: "space-evenly",
 						}}
 					>
-						<Suspense fallback={<ThumbLikeButton.Fallback listingId={listingId} />}>
+						<Suspense
+							fallback={
+								<ThumbLikeButton.Fallback
+									listingId={listingId}
+									meta={undefined}
+								/>
+							}
+						>
 							<ThumbLikeButton
 								_suspense={"I know"}
 								listingId={listingId}
+								meta={feed.query.meta}
 							/>
 						</Suspense>
-						<Suspense fallback={<ThumbDislikeButton.Fallback listingId={listingId} />}>
+						<Suspense
+							fallback={
+								<ThumbDislikeButton.Fallback
+									listingId={listingId}
+									meta={undefined}
+								/>
+							}
+						>
 							<ThumbDislikeButton
 								_suspense={"I know"}
 								listingId={listingId}
+								meta={feed.query.meta}
 							/>
 						</Suspense>
 					</Container>
@@ -118,17 +146,33 @@ export const Item = withFallback(({ listingId, feedId, ...props }: Item.Props) =
 
 				{listing.isFavourite || listing.thumb === "like" || listing.my ? null : (
 					<Group>
-						<Suspense fallback={<IgnoreButton.Fallback listingId={listingId} />}>
+						<Suspense
+							fallback={
+								<IgnoreButton.Fallback
+									listingId={listingId}
+									meta={undefined}
+								/>
+							}
+						>
 							<IgnoreButton
 								_suspense={"I know"}
 								listingId={listingId}
+								meta={feed.query.meta}
 							/>
 						</Suspense>
 
-						<Suspense fallback={<FlagButton.Fallback listingId={listingId} />}>
+						<Suspense
+							fallback={
+								<FlagButton.Fallback
+									listingId={listingId}
+									meta={undefined}
+								/>
+							}
+						>
 							<FlagButton
 								_suspense={"I know"}
 								listingId={listingId}
+								meta={feed.query.meta}
 							/>
 						</Suspense>
 					</Group>

@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
+import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
@@ -21,6 +22,7 @@ export namespace HeroSection {
 
 export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) => {
 	const hero = useUpload(listing.gallery.items);
+	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 
 	useRenderLogger({
 		logger: getRootLogger(),
@@ -82,6 +84,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 							snapTo: "top-right",
 							zIndex: true,
 						}}
+						meta={feed.query.meta}
 					/>
 				)}
 

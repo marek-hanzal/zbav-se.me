@@ -19,12 +19,14 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 	userId,
 	toggle,
 	listingId,
+	meta,
 }: flagToggleFx.Props) {
 	const logger = yield* getLoggerFx("flagToggleFx");
 	logger.trace("flagToggleFx", {
 		userId,
 		toggle,
 		listingId,
+		meta,
 	});
 
 	return yield* withTransactionFx(
@@ -68,6 +70,7 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 								id: listingId,
 							},
 							scope: {},
+							meta,
 						});
 					});
 				},
@@ -103,6 +106,7 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 								id: listingId,
 							},
 							scope: {},
+							meta,
 						});
 					});
 				},

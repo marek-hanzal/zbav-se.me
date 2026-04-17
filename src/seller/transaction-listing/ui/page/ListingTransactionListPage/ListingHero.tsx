@@ -1,10 +1,12 @@
 import type { FC } from "react";
 import { useState } from "react";
 import { Container } from "@/lib/client/container";
+import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroImage } from "~/common/ui/img";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 import { ListingSheet } from "~/seller/listing/ui/ListingSheet";
@@ -19,6 +21,14 @@ export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ui, .
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const [isOpen, setIsOpen] = useState(false);
 	const hero = useUpload(listing.gallery.items);
+
+	useRenderLogger({
+		logger: getRootLogger(),
+		name: "ListingHero",
+		meta: {
+			listingId,
+		},
+	});
 
 	return (
 		<>

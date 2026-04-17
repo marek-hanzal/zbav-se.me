@@ -6,11 +6,13 @@ import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { withFlagToggleMutation } from "~/buyer/flag/mutation/withFlagToggleMutation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
+import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import { FlagIcon } from "~/common/ui/icon";
 
 export namespace FlagButton {
 	export interface Props extends ConfirmButton.Props, MarkSuspense.Props {
 		listingId: string;
+		meta: ListingMetaSchema.Type | undefined;
 	}
 }
 
@@ -18,6 +20,7 @@ export const FlagButton = withFallback(
 	({
 		_suspense,
 		listingId,
+		meta,
 		buttonProps,
 		confirmProps,
 		onReset,
@@ -66,6 +69,7 @@ export const FlagButton = withFallback(
 							flagToggleMutation.mutate({
 								toggle: !listing.hasFlag,
 								listingId: listing.id,
+								meta,
 							});
 							setIsConfirm(false);
 							confirmProps?.onClick?.(e);

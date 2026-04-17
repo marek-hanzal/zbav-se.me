@@ -19,12 +19,14 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 	userId,
 	toggle,
 	listingId,
+	meta,
 }: ignoreToggleFx.Props) {
 	const logger = yield* getLoggerFx("ignoreToggleFx");
 	logger.trace("ignoreToggleFx", {
 		userId,
 		toggle,
 		listingId,
+		meta,
 	});
 
 	return yield* withTransactionFx(
@@ -68,6 +70,7 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 								id: listingId,
 							},
 							scope: {},
+							meta,
 						});
 					});
 				},
@@ -103,6 +106,7 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 								id: listingId,
 							},
 							scope: {},
+							meta,
 						});
 					});
 				},

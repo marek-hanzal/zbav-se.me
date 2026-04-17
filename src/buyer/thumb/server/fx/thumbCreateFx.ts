@@ -21,6 +21,7 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 	userId,
 	listingId,
 	type,
+	meta,
 	...data
 }: thumbCreateFx.Props) {
 	const logger = yield* getLoggerFx("thumbCreateFx");
@@ -28,6 +29,7 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 		userId,
 		listingId,
 		type,
+		meta,
 		...data,
 	});
 
@@ -101,6 +103,7 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 					id: listingId,
 				},
 				scope: {},
+				meta,
 			});
 		}),
 	);

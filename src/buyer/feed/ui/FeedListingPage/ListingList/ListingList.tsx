@@ -4,6 +4,7 @@ import { withFallback } from "@/lib/client/fallback";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
+import { useRenderLogger } from "@/lib/client/log";
 import { useMergeRefs } from "@/lib/client/ref";
 import { useScrollTo } from "@/lib/client/scroll-to";
 import { SpinnerContainer } from "@/lib/client/spinner";
@@ -17,6 +18,7 @@ import {
 import { translator } from "@/lib/common/translator";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 import { DeadEndIcon } from "~/common/ui/icon";
 import { uiCtaLinkButton } from "~/common/ui/ui";
@@ -76,6 +78,18 @@ export const ListingList = withFallback(
 		const placeholder = useCallback(() => {
 			return <SpinnerContainer />;
 		}, []);
+
+		useRenderLogger({
+			logger: getRootLogger(),
+			name: "ListingList",
+			meta: {
+				...feed.query,
+				cursor: {
+					page: 0,
+					size: 256,
+				},
+			},
+		});
 
 		return (
 			<Container
