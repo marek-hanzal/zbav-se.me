@@ -8,11 +8,7 @@ export namespace withEmailSignInMutation {
 	}
 }
 
-export const withEmailSignInMutation = withMutation<
-	withEmailSignInMutation.Props,
-	unknown,
-	unknown
->({
+export const withEmailSignInMutation = withMutation<withEmailSignInMutation.Props, unknown, Error>({
 	keys(variables) {
 		return [
 			"sign-in",

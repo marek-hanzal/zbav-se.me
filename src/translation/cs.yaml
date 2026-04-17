@@ -1724,3 +1724,6 @@ transaction - seller - status-trade:
 
         _Teď se do toho můžete společně pustit!_
     static: true
+Invalid email or password:
+    value: Email, heslo, něco hapruje.
+    static: true

@@ -2,6 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { type FC, useRef } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
+import { ErrorBadge } from "@/lib/client/error";
 import { Fade } from "@/lib/client/fade";
 import { FormField } from "@/lib/client/form";
 import { ChevronRightIcon } from "@/lib/client/icon";
@@ -71,7 +72,7 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 
 	return (
 		<Container
-			data-ui="SignInPage[Container]"
+			data-ui="SignInPage"
 			ui={{
 				position: "relative",
 				height: "full",
@@ -132,7 +133,7 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 										label={<Tx label={"Email"} />}
 										meta={field.state.meta}
 									>
-										{(fieldProps) => (
+										{(props) => (
 											<field.TextInput
 												data-ui={"SignInPage[EmailInput]"}
 												type={"email"}
@@ -141,7 +142,7 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 												value={field.state.value ?? ""}
 												onBlur={field.handleBlur}
 												onChange={(e) => field.handleChange(e.target.value)}
-												{...fieldProps}
+												{...props}
 											/>
 										)}
 									</FormField>
@@ -156,7 +157,7 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 										label={<Tx label={"Password"} />}
 										meta={field.state.meta}
 									>
-										{(fieldProps) => (
+										{(props) => (
 											<field.TextInput
 												data-ui={"SignInPage[PasswordInput]"}
 												type={"password"}
@@ -165,28 +166,18 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 												onChange={(e) => field.handleChange(e.target.value)}
 												onBlur={field.handleBlur}
 												placeholder={translator.text("Enter your password")}
-												{...fieldProps}
+												{...props}
 											/>
 										)}
 									</FormField>
 								)}
 							</form.AppField>
 
-							{signInMutation.isError && (
-								<div className={"rounded-md bg-red-50 p-3 text-red-700"}>
-									{signInMutation.error instanceof Error ? (
-										signInMutation.error.message
-									) : (
-										<Tx label={"Login failed"} />
-									)}
-								</div>
-							)}
-
 							<Container
 								ui={{
 									layout: "vertical-flex",
 									width: "full",
-									items: "end",
+									items: "center",
 									gap: "lg",
 								}}
 							>
@@ -197,19 +188,26 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 									})}
 								>
 									{({ isValid, isSubmitting }) => (
-										<form.SubmitButton
-											data-action={"sign in"}
-											data-ui={"SignInPage[SubmitButton]"}
-											iconEnabled={ChevronRightIcon}
-											iconPosition={"right"}
-											disabled={!isValid || isSubmitting}
-										>
-											{signInMutation.isPending ? (
-												<Tx label={"Please wait..."} />
-											) : (
-												<Tx label={"Sign in (button)"} />
-											)}
-										</form.SubmitButton>
+										<>
+											<form.SubmitButton
+												data-action={"sign in"}
+												data-ui={"SignInPage[SubmitButton]"}
+												iconEnabled={ChevronRightIcon}
+												iconPosition={"right"}
+												disabled={!isValid || isSubmitting}
+											>
+												{signInMutation.isPending ? (
+													<Tx label={"Please wait..."} />
+												) : (
+													<Tx label={"Sign in (button)"} />
+												)}
+											</form.SubmitButton>
+
+											<ErrorBadge
+												placeholder
+												error={signInMutation.error}
+											/>
+										</>
 									)}
 								</form.Subscribe>
 

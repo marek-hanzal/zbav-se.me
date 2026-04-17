@@ -71,10 +71,11 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 			confirmPassword: "",
 		} satisfies z.infer<RegisterSchema>,
 		validators: {
+			onMount: RegisterSchema,
 			onSubmit: RegisterSchema,
 		},
 		onSubmit: onSubmit({
-			mutation: mutation,
+			mutation,
 		}),
 	});
 
