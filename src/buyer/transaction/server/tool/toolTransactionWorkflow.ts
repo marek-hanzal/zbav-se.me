@@ -5,7 +5,7 @@ import { transactionCloseFn } from "~/buyer/transaction/fn/transactionCloseFn";
 import { transactionDisputeFn } from "~/buyer/transaction/fn/transactionDisputeFn";
 import { transactionRejectFn } from "~/buyer/transaction/fn/transactionRejectFn";
 import { transactionSuccessFn } from "~/buyer/transaction/fn/transactionSuccessFn";
-import { getRootLogger } from "~/server/log/getRootLogger";
+import { getRootLogger } from "~/common/log/getRootLogger";
 
 const logger = getRootLogger([
 	"tool",

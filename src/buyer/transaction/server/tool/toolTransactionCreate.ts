@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
 import { transactionCreateFn } from "~/buyer/transaction/fn/transactionCreateFn";
 import { TransactionCreateSchema } from "~/buyer/transaction/server/schema/TransactionCreateSchema";
-import { getRootLogger } from "~/server/log/getRootLogger";
+import { getRootLogger } from "~/common/log/getRootLogger";
 
 const logger = getRootLogger([
 	"tool",

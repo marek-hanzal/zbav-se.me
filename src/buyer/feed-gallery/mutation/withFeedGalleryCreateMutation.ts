@@ -2,6 +2,7 @@ import { withMutation } from "@/lib/client/mutation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { feedGalleryCreateFn } from "~/buyer/feed-gallery/fn/feedGalleryCreateFn";
 import type { FeedGalleryCreateSchema } from "~/buyer/feed-gallery/server/schema/FeedGalleryCreateSchema";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import type { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 
 export const withFeedGalleryCreateMutation = withMutation<
@@ -9,6 +10,10 @@ export const withFeedGalleryCreateMutation = withMutation<
 	GallerySchema.Type,
 	Error
 >({
+	logger: getRootLogger([
+		"mutation",
+		"withFeedGalleryCreateMutation",
+	]),
 	keys(variables) {
 		return [
 			"feed-gallery",

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { withMutation } from "@/lib/client/mutation";
 import { genId } from "@/lib/common/gen-id";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { AllowedContentTypesEnumSchema } from "~/common/schema/AllowedContentTypesEnumSchema";
 import { AllowedExtensionsEnumSchema } from "~/common/schema/AllowedExtensionsEnumSchema";
 import { s3PreSignFn } from "~/user/s3/fn/s3PreSignFn";
@@ -17,6 +18,10 @@ export namespace withUploadMutation {
 }
 
 export const withUploadMutation = withMutation<withUploadMutation.Props, UploadSchema.Type, Error>({
+	logger: getRootLogger([
+		"mutation",
+		"withUploadMutation",
+	]),
 	keys(variables) {
 		return [
 			"upload",

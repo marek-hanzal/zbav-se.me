@@ -4,7 +4,7 @@ import { z } from "zod";
 import { feedCollectionFn } from "~/buyer/feed/fn/feedCollectionFn";
 import { feedCountFn } from "~/buyer/feed/fn/feedCountFn";
 import { FeedToolQuerySchema } from "~/buyer/feed/server/schema/FeedToolQuerySchema";
-import { getRootLogger } from "~/server/log/getRootLogger";
+import { getRootLogger } from "~/common/log/getRootLogger";
 
 const logger = getRootLogger([
 	"tool",

@@ -1,5 +1,5 @@
 import { getLogger } from "@logtape/logtape";
-import { RootLoggerName } from "~/server/log/RootLoggerName";
+import { RootLoggerName } from "./RootLoggerName";
 
 type Category =
 	| string

@@ -1,5 +1,5 @@
-import { getRootLogger } from "@/lib/client/log";
 import { withEntityQuery } from "@/lib/client/query";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { listingCollectionFn } from "~/seller/listing/fn/listingCollectionFn";
 import { listingCountFn } from "~/seller/listing/fn/listingCountFn";
 import { listingCreateFn } from "~/seller/listing/fn/listingCreateFn";
@@ -8,11 +8,6 @@ import type { ListingCountQuerySchema } from "~/seller/listing/server/schema/Lis
 import type { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreateSchema";
 import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
-
-const logger = getRootLogger([
-	"query",
-	"withListingQuery",
-]);
 
 export const withListingQuery = withEntityQuery<
 	ListingSchema.Type,
@@ -24,6 +19,10 @@ export const withListingQuery = withEntityQuery<
 	never,
 	never
 >({
+	logger: getRootLogger([
+		"query",
+		"withListingQuery",
+	]),
 	keys: () => [
 		"seller",
 		"listing",
@@ -33,53 +32,33 @@ export const withListingQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data, context) {
-		logger.trace("fetchFn", {
-			data,
-			context,
-		});
-
+	async fetchFn(data) {
 		return listingFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data, context) {
-		logger.trace("collectionFn", {
-			data,
-			context,
-		});
-
+	async collectionFn(data) {
 		return listingCollectionFn({
 			data,
 		});
 	},
-	async countFn(data, context) {
-		logger.trace("countFn", {
-			data,
-			context,
-		});
-
+	async countFn(data) {
 		return listingCountFn({
 			data,
 		});
 	},
-	async createFn(data, context) {
-		logger.trace("createFn", {
-			data,
-			context,
-		});
-
+	async createFn(data) {
 		return listingCreateFn({
 			data,
 		});
 	},
-	async deleteFn(_data, _context) {
+	async deleteFn(_data) {
 		throw new Error("Listing delete is not supported.");
 	},
-	async patchFn(_data, _context) {
+	async patchFn(_data) {
 		throw new Error("Listing patch is not supported.");
 	},
-	async patchCollectionFn(_data, _context) {
+	async patchCollectionFn(_data) {
 		throw new Error("Listing collection patch is not supported.");
 	},
 });

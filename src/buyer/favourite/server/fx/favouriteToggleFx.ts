@@ -20,6 +20,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 	feedId,
 	listingId,
 	toggle,
+	meta,
 }: favouriteToggleFx.Props) {
 	const logger = yield* getLoggerFx("favouriteToggleFx", "favourite");
 	logger.trace("Request", {
@@ -27,6 +28,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 		feedId,
 		listingId,
 		toggle,
+		meta,
 	});
 
 	return yield* withTransactionFx(
@@ -71,6 +73,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 								id: listingId,
 							},
 							scope: {},
+							meta,
 						});
 					});
 				},
@@ -106,6 +109,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 								id: listingId,
 							},
 							scope: {},
+							meta,
 						});
 					});
 				},

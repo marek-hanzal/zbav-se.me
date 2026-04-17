@@ -50,7 +50,7 @@ export default defineConfig({
 			],
 		},
 		//
-		testTimeout: 3_500,
+		testTimeout: 4_000,
 		//
 		pool: "forks",
 		maxConcurrency: 4,

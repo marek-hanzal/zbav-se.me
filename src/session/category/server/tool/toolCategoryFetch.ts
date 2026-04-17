@@ -1,5 +1,5 @@
 import { tool } from "@openai/agents";
-import { getRootLogger } from "~/server/log/getRootLogger";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { categoryFetchFn } from "~/session/category/fn/categoryFetchFn";
 import { CategoryQuerySchema } from "~/session/category/server/schema/CategoryQuerySchema";
 

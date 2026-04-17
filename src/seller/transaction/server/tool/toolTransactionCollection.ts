@@ -1,10 +1,10 @@
 import { tool } from "@openai/agents";
 import { match } from "ts-pattern";
 import { z } from "zod";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { transactionCollectionFn } from "~/seller/transaction/fn/transactionCollectionFn";
 import { transactionCountFn } from "~/seller/transaction/fn/transactionCountFn";
 import { TransactionToolQuerySchema } from "~/seller/transaction/server/schema/TransactionToolQuerySchema";
-import { getRootLogger } from "~/server/log/getRootLogger";
 
 const logger = getRootLogger([
 	"tool",

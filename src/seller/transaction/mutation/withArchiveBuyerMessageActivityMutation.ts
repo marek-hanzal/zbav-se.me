@@ -1,4 +1,5 @@
 import { withMutation } from "@/lib/client/mutation";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { activityArchiveFn } from "~/user/activity/fn/activityArchiveFn";
 
@@ -23,6 +24,10 @@ export const withArchiveBuyerMessageActivityMutation = withMutation<
 	void,
 	Error
 >({
+	logger: getRootLogger([
+		"mutation",
+		"withArchiveBuyerMessageActivityMutation",
+	]),
 	keys(variables) {
 		return [
 			"activity",

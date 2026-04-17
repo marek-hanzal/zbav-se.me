@@ -1,13 +1,12 @@
-import { getRootLogger } from "@/lib/client/log";
 import { withQuery } from "@/lib/client/query";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { getSessionFn } from "../fn/getSessionFn";
 
-const logger = getRootLogger([
-	"query",
-	"withSessionQuery",
-]);
-
 export const withSessionQuery = withQuery<void, Awaited<ReturnType<typeof getSessionFn>>>({
+	logger: getRootLogger([
+		"query",
+		"withSessionQuery",
+	]),
 	keys() {
 		return [
 			"session",
@@ -15,8 +14,6 @@ export const withSessionQuery = withQuery<void, Awaited<ReturnType<typeof getSes
 		];
 	},
 	async queryFn() {
-		logger.trace("queryFn");
-
 		return getSessionFn();
 	},
 	defaultOptions: {

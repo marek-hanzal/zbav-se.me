@@ -1,31 +1,39 @@
+import type { Logger } from "@logtape/logtape";
 import { useEffect, useMemo, useRef } from "react";
-import { getRootLogger } from "./getRootLogger";
 
-export function useRenderLogger(name: string) {
+export namespace useRenderLogger {
+	export interface Props {
+		logger: Logger;
+		name: string;
+		meta?: Record<string, unknown>;
+	}
+}
+
+export function useRenderLogger({ logger, name, meta }: useRenderLogger.Props) {
 	const count = useRef(0);
-	const logger = useMemo(() => {
-		return getRootLogger([
-			"re-render",
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Frozen at first time
+	const $logger = useMemo(() => {
+		return logger.getChild([
+			"useRenderLogger",
 			name,
 		]);
-	}, [
-		name,
-	]);
+	}, []);
 	count.current += 1;
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: One-time
 	useEffect(() => {
-		logger.trace("Mount");
+		$logger.trace("Mount", meta);
 
 		return () => {
-			logger.trace("Unmount");
+			$logger.trace("Unmount", meta);
 		};
-	}, [
-		logger,
-	]);
+	}, []);
 
 	useEffect(() => {
 		if (count.current > 1) {
-			logger.trace("Render", {
+			$logger.trace("Render", {
+				...meta,
 				count: count.current,
 			});
 		}

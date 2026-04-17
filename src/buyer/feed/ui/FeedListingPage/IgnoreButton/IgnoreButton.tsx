@@ -5,10 +5,12 @@ import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { withIgnoreToggleMutation } from "~/buyer/ignore/mutation/withIgnoreToggleMutation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
+import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 
 export namespace IgnoreButton {
 	export interface Props extends ConfirmButton.Props, MarkSuspense.Props {
 		listingId: string;
+		meta: ListingMetaSchema.Type | undefined;
 	}
 }
 
@@ -16,6 +18,7 @@ export const IgnoreButton = withFallback(
 	({
 		_suspense,
 		listingId,
+		meta,
 		confirmProps,
 		onReset,
 		disabled = false,
@@ -54,6 +57,7 @@ export const IgnoreButton = withFallback(
 						ignoreToggleMutation.mutate({
 							toggle: !listing.isIgnored,
 							listingId: listing.id,
+							meta,
 						});
 						confirmProps?.onClick?.(e);
 					},

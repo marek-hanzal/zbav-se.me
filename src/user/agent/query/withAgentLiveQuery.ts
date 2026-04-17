@@ -1,20 +1,17 @@
 import type { RunStreamEvent } from "@openai/agents";
-import { getRootLogger } from "@/lib/client/log";
 import { withQuery } from "@/lib/client/query";
-
-const logger = getRootLogger([
-	"query",
-	"withAgentLiveQuery",
-]);
+import { getRootLogger } from "~/common/log/getRootLogger";
 
 export const withAgentLiveQuery = withQuery<void, RunStreamEvent[]>({
+	logger: getRootLogger([
+		"query",
+		"withAgentLiveQuery",
+	]),
 	keys: () => [
 		"agent",
 		"live",
 	],
 	async queryFn() {
-		logger.trace("queryFn");
-
 		return [];
 	},
 });

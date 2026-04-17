@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
 import { favouriteToggleFn } from "~/buyer/favourite/fn/favouriteToggleFn";
 import { FavouriteToggleSchema } from "~/buyer/favourite/server/schema/FavouriteToggleSchema";
-import { getRootLogger } from "~/server/log/getRootLogger";
+import { getRootLogger } from "~/common/log/getRootLogger";
 
 const logger = getRootLogger([
 	"tool",

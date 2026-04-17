@@ -1,7 +1,7 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getIndexOf } from "@/lib/common/front";
-import { getRootLogger } from "~/server/log/getRootLogger";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { KnowledgeFrontSchema } from "~/user/knowledge/server/schema/KnowledgeFrontSchema";
 
 const logger = getRootLogger([

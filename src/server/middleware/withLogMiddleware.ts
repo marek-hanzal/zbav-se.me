@@ -11,8 +11,8 @@ import {
 import { getPrettyFormatter } from "@logtape/pretty";
 import { createMiddleware } from "@tanstack/react-start";
 import { genId } from "@/lib/common/gen-id";
-import { getRootLogger } from "~/server/log/getRootLogger";
-import { RootLoggerName } from "~/server/log/RootLoggerName";
+import { getRootLogger } from "~/common/log/getRootLogger";
+import { RootLoggerName } from "~/common/log/RootLoggerName";
 import { withDevEnvMiddleware } from "~/server/middleware/withDevEnvMiddleware";
 
 const contextLocalStorage = new AsyncLocalStorage<Record<string, unknown>>();

@@ -1,16 +1,11 @@
-import { getRootLogger } from "@/lib/client/log";
 import { withEntityQuery } from "@/lib/client/query";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { transactionCollectionFn } from "~/seller/transaction/fn/transactionCollectionFn";
 import { transactionCountFn } from "~/seller/transaction/fn/transactionCountFn";
 import { transactionFetchFn } from "~/seller/transaction/fn/transactionFetchFn";
 import type { TransactionCountQuerySchema } from "~/seller/transaction/server/schema/TransactionCountQuerySchema";
 import type { TransactionQuerySchema } from "~/seller/transaction/server/schema/TransactionQuerySchema";
 import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
-
-const logger = getRootLogger([
-	"query",
-	"withTransactionQuery",
-]);
 
 export const withTransactionQuery = withEntityQuery<
 	TransactionSchema.Type,
@@ -22,6 +17,10 @@ export const withTransactionQuery = withEntityQuery<
 	never,
 	never
 >({
+	logger: getRootLogger([
+		"query",
+		"withTransactionQuery",
+	]),
 	keys: () => [
 		"seller",
 		"transaction",
@@ -31,46 +30,31 @@ export const withTransactionQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data, context) {
-		logger.trace("fetchFn", {
-			data,
-			context,
-		});
-
+	async fetchFn(data) {
 		return transactionFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data, context) {
-		logger.trace("collectionFn", {
-			data,
-			context,
-		});
-
+	async collectionFn(data) {
 		return transactionCollectionFn({
 			data,
 		});
 	},
-	async countFn(data, context) {
-		logger.trace("countFn", {
-			data,
-			context,
-		});
-
+	async countFn(data) {
 		return transactionCountFn({
 			data,
 		});
 	},
-	async createFn(_data, _context) {
+	async createFn(_data) {
 		throw new Error("Transaction create is not supported.");
 	},
-	async deleteFn(_data, _context) {
+	async deleteFn(_data) {
 		throw new Error("Transaction delete is not supported.");
 	},
-	async patchFn(_data, _context) {
+	async patchFn(_data) {
 		throw new Error("Transaction patch is not supported.");
 	},
-	async patchCollectionFn(_data, _context) {
+	async patchCollectionFn(_data) {
 		throw new Error("Transaction collection patch is not supported.");
 	},
 });

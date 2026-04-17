@@ -6,6 +6,7 @@ import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQ
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/common/location/ui/LocationBadge";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroImage } from "~/common/ui/img";
 
 export namespace TransactionHero {
@@ -19,7 +20,10 @@ export const TransactionHero: FC<TransactionHero.Props> = ({ transactionId, ui, 
 	const [, setDetail] = useState(false);
 	const hero = useUpload(transaction.gallery.items);
 
-	useRenderLogger("TransactionHero");
+	useRenderLogger({
+		logger: getRootLogger(),
+		name: "TransactionHero",
+	});
 
 	return (
 		<Container

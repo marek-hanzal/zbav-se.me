@@ -3,6 +3,7 @@ import { useLocale } from "@/lib/client/locale";
 import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
@@ -21,7 +22,10 @@ export const TransactionDetailPage: FC<TransactionDetailPage.Props> = ({
 }) => {
 	const locale = useLocale();
 
-	useRenderLogger("TransactionDetailPage");
+	useRenderLogger({
+		logger: getRootLogger(),
+		name: "TransactionDetailPage",
+	});
 
 	return (
 		<TitleContainer

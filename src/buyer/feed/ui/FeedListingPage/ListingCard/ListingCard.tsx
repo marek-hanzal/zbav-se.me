@@ -1,9 +1,11 @@
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
+import { useRenderLogger } from "@/lib/client/log";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { useListingEvent } from "~/buyer/listing/hook/useListingEvent";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroSection } from "./section/HeroSection";
 import { InfoSection } from "./section/InfoSection";
 
@@ -26,6 +28,14 @@ export const ListingCard = withFallback(
 			timeoutMs: 2_500,
 		});
 
+		useRenderLogger({
+			logger: getRootLogger(),
+			name: "ListingCard",
+			meta: {
+				listingId,
+			},
+		});
+
 		return (
 			<Container
 				data-ui={"ListingCard"}
@@ -38,14 +48,14 @@ export const ListingCard = withFallback(
 				{...props}
 			>
 				<HeroSection
-					_suspense={"I know"}
+					_suspense={_suspense}
 					feedId={feedId}
 					listing={listing}
 					onView={onView}
 				/>
 
 				<InfoSection
-					_suspense={"I know"}
+					_suspense={_suspense}
 					listing={listing}
 					onView={onView}
 				/>

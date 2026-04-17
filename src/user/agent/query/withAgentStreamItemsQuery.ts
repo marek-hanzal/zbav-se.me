@@ -1,18 +1,17 @@
 import type { AgentInputItem } from "@openai/agents-core";
-import { getRootLogger } from "@/lib/client/log";
 import { withQuery } from "@/lib/client/query";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { agentStreamItemsFn } from "~/user/agent/fn/agentStreamItemsFn";
 import type { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStreamQuerySchema";
 
 /**
  * This query provides direct access to AgentInput messages, no more processing is necessary here.
  */
-const logger = getRootLogger([
-	"query",
-	"withAgentStreamItemsQuery",
-]);
-
 export const withAgentStreamItemsQuery = withQuery<AgentStreamQuerySchema.Type, AgentInputItem[]>({
+	logger: getRootLogger([
+		"query",
+		"withAgentStreamItemsQuery",
+	]),
 	keys: (data) => [
 		"agent",
 		"stream",
@@ -20,8 +19,6 @@ export const withAgentStreamItemsQuery = withQuery<AgentStreamQuerySchema.Type, 
 		data,
 	],
 	async queryFn(data) {
-		logger.trace("queryFn", data);
-
 		/**
 		 * Because TSS is strict about wire-types, we're getting Record from server, thus we've to
 		 * recast it to real type.

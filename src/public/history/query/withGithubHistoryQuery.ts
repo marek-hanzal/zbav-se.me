@@ -1,5 +1,5 @@
-import { getRootLogger } from "@/lib/client/log";
 import { withQuery } from "@/lib/client/query";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { historyFn } from "~/public/github/fn/historyFn";
 import type { GitHubHistorySchema } from "~/public/github/server/schema/GitHubHistorySchema";
 
@@ -7,12 +7,11 @@ type GithubHistoryQuery = {
 	weeks: number;
 };
 
-const logger = getRootLogger([
-	"query",
-	"withGithubHistoryQuery",
-]);
-
 export const withGithubHistoryQuery = withQuery<GithubHistoryQuery, GitHubHistorySchema.Type[]>({
+	logger: getRootLogger([
+		"query",
+		"withGithubHistoryQuery",
+	]),
 	keys(data) {
 		return [
 			"github",
@@ -21,8 +20,6 @@ export const withGithubHistoryQuery = withQuery<GithubHistoryQuery, GitHubHistor
 		];
 	},
 	async queryFn(data) {
-		logger.trace("queryFn", data);
-
 		return historyFn({
 			data,
 		});

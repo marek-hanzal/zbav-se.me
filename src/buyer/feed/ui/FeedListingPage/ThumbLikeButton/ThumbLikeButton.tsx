@@ -4,16 +4,18 @@ import { LikeIcon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
+import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import { withThumbCreateMutation } from "~/buyer/thumb/mutation/withThumbCreateMutation";
 
 export namespace ThumbLikeButton {
 	export interface Props extends Button.Props, MarkSuspense.Props {
 		listingId: string;
+		meta: ListingMetaSchema.Type | undefined;
 	}
 }
 
 export const ThumbLikeButton = withFallback(
-	({ _suspense, listingId, ui, ...props }: ThumbLikeButton.Props) => {
+	({ _suspense, listingId, meta, ui, ...props }: ThumbLikeButton.Props) => {
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
 		const update = withListingQuery.useUpdate();
 		const thumbCreateMutation = withThumbCreateMutation.useMutation({
@@ -45,6 +47,7 @@ export const ThumbLikeButton = withFallback(
 					thumbCreateMutation.mutate({
 						listingId: listing.id,
 						type: "like",
+						meta,
 					});
 				}}
 				ui={{

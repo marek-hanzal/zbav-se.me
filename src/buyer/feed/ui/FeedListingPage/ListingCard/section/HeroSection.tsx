@@ -1,10 +1,13 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
+import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
+import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/common/location/ui/LocationBadge";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroImage } from "~/common/ui/img";
 import { FavouriteButton } from "../../FavouriteButton";
 import { TransactionButton } from "../../TransactionButton";
@@ -19,6 +22,16 @@ export namespace HeroSection {
 
 export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) => {
 	const hero = useUpload(listing.gallery.items);
+	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
+
+	useRenderLogger({
+		logger: getRootLogger(),
+		name: "HeroSection",
+		meta: {
+			listingId: listing.id,
+			feedId,
+		},
+	});
 
 	return (
 		<>
@@ -69,7 +82,9 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 							size: undefined,
 							inner: undefined,
 							snapTo: "top-right",
+							zIndex: true,
 						}}
+						meta={feed.query.meta}
 					/>
 				)}
 
@@ -85,7 +100,12 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 				/>
 			</Container>
 
-			{listing.my ? null : <TransactionButton listing={listing} />}
+			{listing.my ? null : (
+				<TransactionButton
+					listing={listing}
+					meta={feed.query.meta}
+				/>
+			)}
 		</>
 	);
 };

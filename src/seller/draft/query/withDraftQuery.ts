@@ -1,5 +1,5 @@
-import { getRootLogger } from "@/lib/client/log";
 import { withEntityQuery } from "@/lib/client/query";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { draftCollectionFn } from "~/seller/draft/fn/draftCollectionFn";
 import { draftCountFn } from "~/seller/draft/fn/draftCountFn";
 import { draftCreateFn } from "~/seller/draft/fn/draftCreateFn";
@@ -12,11 +12,6 @@ import type { DraftPatchSchema } from "~/seller/draft/server/schema/DraftPatchSc
 import type { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 
-const logger = getRootLogger([
-	"query",
-	"withDraftQuery",
-]);
-
 export const withDraftQuery = withEntityQuery<
 	DraftSchema.Type,
 	DraftQuerySchema.Type,
@@ -27,6 +22,10 @@ export const withDraftQuery = withEntityQuery<
 	DraftQuerySchema.Type,
 	never
 >({
+	logger: getRootLogger([
+		"query",
+		"withDraftQuery",
+	]),
 	keys: () => [
 		"draft",
 	],
@@ -35,67 +34,37 @@ export const withDraftQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data, context) {
-		logger.trace("fetchFn", {
-			data,
-			context,
-		});
-
+	async fetchFn(data) {
 		return draftFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data, context) {
-		logger.trace("collectionFn", {
-			data,
-			context,
-		});
-
+	async collectionFn(data) {
 		return draftCollectionFn({
 			data,
 		});
 	},
-	async countFn(data, context) {
-		logger.trace("countFn", {
-			data,
-			context,
-		});
-
+	async countFn(data) {
 		return draftCountFn({
 			data,
 		});
 	},
-	async createFn(data, context) {
-		logger.trace("createFn", {
-			data,
-			context,
-		});
-
+	async createFn(data) {
 		return draftCreateFn({
 			data,
 		});
 	},
-	async deleteFn(data, context) {
-		logger.trace("deleteFn", {
-			data,
-			context,
-		});
-
+	async deleteFn(data) {
 		return draftDeleteFn({
 			data,
 		});
 	},
-	async patchFn(data, context) {
-		logger.trace("patchFn", {
-			data,
-			context,
-		});
-
+	async patchFn(data) {
 		return draftPatchFn({
 			data,
 		});
 	},
-	async patchCollectionFn(_data, _context) {
+	async patchCollectionFn(_data) {
 		throw new Error("Draft collection patch is not supported.");
 	},
 });

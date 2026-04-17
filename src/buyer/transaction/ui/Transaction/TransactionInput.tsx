@@ -10,6 +10,7 @@ import { archiveSellerMessageActivity } from "~/buyer/transaction/service/archiv
 import { InterestMessage } from "~/buyer/transaction/ui/status/InterestMessage";
 import { RejectedMessage } from "~/buyer/transaction/ui/status/RejectedMessage";
 import { TransactionMenu } from "~/buyer/transaction/ui/TransactionMenu";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { TransactionChat } from "~/user/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 
@@ -23,7 +24,10 @@ export const TransactionInput: FC<TransactionInput.Props> = ({ _suspense, transa
 	const queryClient = useQueryClient();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 
-	useRenderLogger("TransactionInput");
+	useRenderLogger({
+		logger: getRootLogger(),
+		name: "TransactionInput",
+	});
 
 	return match(transaction.status)
 		.with("interest", () => {

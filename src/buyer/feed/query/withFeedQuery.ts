@@ -1,4 +1,3 @@
-import { getRootLogger } from "@/lib/client/log";
 import { withEntityQuery } from "@/lib/client/query";
 import { feedCollectionFn } from "~/buyer/feed/fn/feedCollectionFn";
 import { feedCountFn } from "~/buyer/feed/fn/feedCountFn";
@@ -11,11 +10,7 @@ import type { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSche
 import type { FeedPatchSchema } from "~/buyer/feed/server/schema/FeedPatchSchema";
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
-
-const logger = getRootLogger([
-	"query",
-	"withFeedQuery",
-]);
+import { getRootLogger } from "~/common/log/getRootLogger";
 
 export const withFeedQuery = withEntityQuery<
 	FeedSchema.Type,
@@ -27,6 +22,10 @@ export const withFeedQuery = withEntityQuery<
 	FeedQuerySchema.Type,
 	never
 >({
+	logger: getRootLogger([
+		"query",
+		"withFeedQuery",
+	]),
 	keys: () => [
 		"feed",
 	],
@@ -35,67 +34,37 @@ export const withFeedQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data, context) {
-		logger.trace("fetchFn", {
-			data,
-			context,
-		});
-
+	async fetchFn(data) {
 		return feedFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data, context) {
-		logger.trace("collectionFn", {
-			data,
-			context,
-		});
-
+	async collectionFn(data) {
 		return feedCollectionFn({
 			data,
 		});
 	},
-	async countFn(data, context) {
-		logger.trace("countFn", {
-			data,
-			context,
-		});
-
+	async countFn(data) {
 		return feedCountFn({
 			data,
 		});
 	},
-	async createFn(data, context) {
-		logger.trace("createFn", {
-			data,
-			context,
-		});
-
+	async createFn(data) {
 		return feedCreateFn({
 			data,
 		});
 	},
-	async deleteFn(data, context) {
-		logger.trace("deleteFn", {
-			data,
-			context,
-		});
-
+	async deleteFn(data) {
 		return feedDeleteFn({
 			data,
 		});
 	},
-	async patchFn(data, context) {
-		logger.trace("patchFn", {
-			data,
-			context,
-		});
-
+	async patchFn(data) {
 		return feedPatchFn({
 			data,
 		});
 	},
-	async patchCollectionFn(_data, _context) {
+	async patchCollectionFn(_data) {
 		throw new Error("Feed collection patch is not supported.");
 	},
 });

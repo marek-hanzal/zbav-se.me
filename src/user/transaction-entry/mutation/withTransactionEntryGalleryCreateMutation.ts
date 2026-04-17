@@ -1,4 +1,5 @@
 import { withMutation } from "@/lib/client/mutation";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { transactionEntryCreateFn } from "~/user/transaction-entry/fn/transactionEntryCreateFn";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 import { withTransactionEntryQuery } from "../query/withTransactionEntryQuery";
@@ -15,6 +16,10 @@ export const withTransactionEntryGalleryCreateMutation = withMutation<
 	TransactionEntrySchema.Type,
 	Error
 >({
+	logger: getRootLogger([
+		"mutation",
+		"withTransactionEntryGalleryCreateMutation",
+	]),
 	keys(variables) {
 		return [
 			"transaction-entry",

@@ -26,7 +26,6 @@ export async function getRouter() {
 						messageStyle: "bold",
 						levelStyle: "reset",
 						inspectOptions: {
-							compact: true,
 							colors: true,
 						},
 					}),
