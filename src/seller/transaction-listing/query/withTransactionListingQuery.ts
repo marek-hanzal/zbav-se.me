@@ -1,3 +1,4 @@
+import { getRootLogger } from "@/lib/client/log";
 import { withEntityQuery } from "@/lib/client/query";
 import { transactionListingCollectionFn } from "~/seller/transaction-listing/fn/transactionListingCollectionFn";
 import { transactionListingCountFn } from "~/seller/transaction-listing/fn/transactionListingCountFn";
@@ -5,6 +6,11 @@ import { transactionListingFetchFn } from "~/seller/transaction-listing/fn/trans
 import type { TransactionListingCountQuerySchema } from "~/seller/transaction-listing/server/schema/TransactionListingCountQuerySchema";
 import type { TransactionListingQuerySchema } from "~/seller/transaction-listing/server/schema/TransactionListingQuerySchema";
 import type { TransactionListingSchema } from "~/seller/transaction-listing/server/schema/TransactionListingSchema";
+
+const logger = getRootLogger([
+	"query",
+	"withTransactionListingQuery",
+]);
 
 export const withTransactionListingQuery = withEntityQuery<
 	TransactionListingSchema.Type,
@@ -26,16 +32,28 @@ export const withTransactionListingQuery = withEntityQuery<
 		},
 	}),
 	async fetchFn(data) {
+		logger.trace("fetchFn", {
+			data,
+		});
+
 		return transactionListingFetchFn({
 			data,
 		});
 	},
 	async collectionFn(data) {
+		logger.trace("collectionFn", {
+			data,
+		});
+
 		return transactionListingCollectionFn({
 			data,
 		});
 	},
 	async countFn(data) {
+		logger.trace("countFn", {
+			data,
+		});
+
 		return transactionListingCountFn({
 			data,
 		});

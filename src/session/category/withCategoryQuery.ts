@@ -1,3 +1,4 @@
+import { getRootLogger } from "@/lib/client/log";
 import { withEntityQuery } from "@/lib/client/query";
 import { categoryCollectionFn } from "~/session/category/fn/categoryCollectionFn";
 import { categoryCountFn } from "~/session/category/fn/categoryCountFn";
@@ -5,6 +6,11 @@ import { categoryFetchFn } from "~/session/category/fn/categoryFetchFn";
 import type { CategoryCountQuerySchema } from "~/session/category/server/schema/CategoryCountQuerySchema";
 import type { CategoryQuerySchema } from "~/session/category/server/schema/CategoryQuerySchema";
 import type { CategorySchema } from "~/session/category/server/schema/CategorySchema";
+
+const logger = getRootLogger([
+	"query",
+	"withCategoryQuery",
+]);
 
 export const withCategoryQuery = withEntityQuery<
 	CategorySchema.Type,
@@ -25,16 +31,28 @@ export const withCategoryQuery = withEntityQuery<
 		},
 	}),
 	async fetchFn(data) {
+		logger.trace("fetchFn", {
+			data,
+		});
+
 		return categoryFetchFn({
 			data,
 		});
 	},
 	async collectionFn(data) {
+		logger.trace("collectionFn", {
+			data,
+		});
+
 		return categoryCollectionFn({
 			data,
 		});
 	},
 	async countFn(data) {
+		logger.trace("countFn", {
+			data,
+		});
+
 		return categoryCountFn({
 			data,
 		});

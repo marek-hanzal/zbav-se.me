@@ -1,3 +1,4 @@
+import { getRootLogger } from "@/lib/client/log";
 import { withEntityQuery } from "@/lib/client/query";
 import { transactionEntryCollectionFn } from "~/user/transaction-entry/fn/transactionEntryCollectionFn";
 import { transactionEntryCountFn } from "~/user/transaction-entry/fn/transactionEntryCountFn";
@@ -7,6 +8,11 @@ import type { TransactionEntryCountQuerySchema } from "~/user/transaction-entry/
 import type { TransactionEntryCreateSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema";
 import type { TransactionEntryQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryQuerySchema";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
+
+const logger = getRootLogger([
+	"query",
+	"withTransactionEntryQuery",
+]);
 
 export const withTransactionEntryQuery = withEntityQuery<
 	TransactionEntrySchema.Type,
@@ -27,21 +33,37 @@ export const withTransactionEntryQuery = withEntityQuery<
 		},
 	}),
 	async fetchFn(data) {
+		logger.trace("fetchFn", {
+			data,
+		});
+
 		return transactionEntryFetchFn({
 			data,
 		});
 	},
 	async collectionFn(data) {
+		logger.trace("collectionFn", {
+			data,
+		});
+
 		return transactionEntryCollectionFn({
 			data,
 		});
 	},
 	async countFn(data) {
+		logger.trace("countFn", {
+			data,
+		});
+
 		return transactionEntryCountFn({
 			data,
 		});
 	},
 	async createFn(data) {
+		logger.trace("createFn", {
+			data,
+		});
+
 		return transactionEntryCreateFn({
 			data,
 		});

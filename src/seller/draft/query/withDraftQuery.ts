@@ -1,3 +1,4 @@
+import { getRootLogger } from "@/lib/client/log";
 import { withEntityQuery } from "@/lib/client/query";
 import { draftCollectionFn } from "~/seller/draft/fn/draftCollectionFn";
 import { draftCountFn } from "~/seller/draft/fn/draftCountFn";
@@ -10,6 +11,11 @@ import type { DraftCreateSchema } from "~/seller/draft/server/schema/DraftCreate
 import type { DraftPatchSchema } from "~/seller/draft/server/schema/DraftPatchSchema";
 import type { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
+
+const logger = getRootLogger([
+	"query",
+	"withDraftQuery",
+]);
 
 export const withDraftQuery = withEntityQuery<
 	DraftSchema.Type,
@@ -30,31 +36,55 @@ export const withDraftQuery = withEntityQuery<
 		},
 	}),
 	async fetchFn(data) {
+		logger.trace("fetchFn", {
+			data,
+		});
+
 		return draftFetchFn({
 			data,
 		});
 	},
 	async collectionFn(data) {
+		logger.trace("collectionFn", {
+			data,
+		});
+
 		return draftCollectionFn({
 			data,
 		});
 	},
 	async countFn(data) {
+		logger.trace("countFn", {
+			data,
+		});
+
 		return draftCountFn({
 			data,
 		});
 	},
 	async createFn(data) {
+		logger.trace("createFn", {
+			data,
+		});
+
 		return draftCreateFn({
 			data,
 		});
 	},
 	async deleteFn(data) {
+		logger.trace("deleteFn", {
+			data,
+		});
+
 		return draftDeleteFn({
 			data,
 		});
 	},
 	async patchFn(data) {
+		logger.trace("patchFn", {
+			data,
+		});
+
 		return draftPatchFn({
 			data,
 		});

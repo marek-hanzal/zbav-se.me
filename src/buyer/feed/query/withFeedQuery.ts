@@ -1,3 +1,4 @@
+import { getRootLogger } from "@/lib/client/log";
 import { withEntityQuery } from "@/lib/client/query";
 import { feedCollectionFn } from "~/buyer/feed/fn/feedCollectionFn";
 import { feedCountFn } from "~/buyer/feed/fn/feedCountFn";
@@ -10,6 +11,11 @@ import type { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSche
 import type { FeedPatchSchema } from "~/buyer/feed/server/schema/FeedPatchSchema";
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
+
+const logger = getRootLogger([
+	"query",
+	"withFeedQuery",
+]);
 
 export const withFeedQuery = withEntityQuery<
 	FeedSchema.Type,
@@ -30,31 +36,55 @@ export const withFeedQuery = withEntityQuery<
 		},
 	}),
 	async fetchFn(data) {
+		logger.trace("fetchFn", {
+			data,
+		});
+
 		return feedFetchFn({
 			data,
 		});
 	},
 	async collectionFn(data) {
+		logger.trace("collectionFn", {
+			data,
+		});
+
 		return feedCollectionFn({
 			data,
 		});
 	},
 	async countFn(data) {
+		logger.trace("countFn", {
+			data,
+		});
+
 		return feedCountFn({
 			data,
 		});
 	},
 	async createFn(data) {
+		logger.trace("createFn", {
+			data,
+		});
+
 		return feedCreateFn({
 			data,
 		});
 	},
 	async deleteFn(data) {
+		logger.trace("deleteFn", {
+			data,
+		});
+
 		return feedDeleteFn({
 			data,
 		});
 	},
 	async patchFn(data) {
+		logger.trace("patchFn", {
+			data,
+		});
+
 		return feedPatchFn({
 			data,
 		});

@@ -1,5 +1,6 @@
 import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
+import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
@@ -17,6 +18,8 @@ export const TransactionHero: FC<TransactionHero.Props> = ({ transactionId, ui, 
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 	const [, setDetail] = useState(false);
 	const hero = useUpload(transaction.gallery.items);
+
+	useRenderLogger("TransactionHero");
 
 	return (
 		<Container
