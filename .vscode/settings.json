@@ -11,6 +11,29 @@
 	"files.associations": {
 		"*.css": "tailwindcss"
 	},
+	"todo-tree.tree.scanMode": "open files",
+	"editor.codeActionsOnSave": {
+		"source.organizeImports.biome": "always",
+		"source.fixAll.biome": "explicit",
+		"source.removeUnusedImports": "always"
+	},
+	"editor.defaultFormatter": "biomejs.biome",
+	"files.trimFinalNewlines": true,
+	"editor.formatOnSave": true,
+	"biome.requireConfiguration": true,
+	"[yaml]": {
+		"editor.defaultFormatter": "redhat.vscode-yaml"
+	},
+	"[toml]": {
+		"editor.defaultFormatter": "tamasfe.even-better-toml"
+	},
+	"[mdx]": {
+		"editor.defaultFormatter": "unifiedjs.vscode-mdx"
+	},
+	"typescript.experimental.useTsgo": false,
+	"chatgpt.commentCodeLensEnabled": false,
+	"typescript.preferences.importModuleSpecifier": "shortest",
+	"javascript.preferences.importModuleSpecifier": "shortest",
 	"cSpell.words": [
 		"adduser",
 		"admina",
@@ -955,26 +978,5 @@
 		"žijou",
 		"žiju",
 		"Živej"
-	],
-	"todo-tree.tree.scanMode": "open files",
-	"editor.codeActionsOnSave": {
-		"source.organizeImports.biome": "always",
-		"source.fixAll.biome": "explicit",
-		"source.removeUnusedImports": "always"
-	},
-	"editor.defaultFormatter": "biomejs.biome",
-	"files.trimFinalNewlines": true,
-	"editor.formatOnSave": true,
-	"biome.requireConfiguration": true,
-	"[yaml]": {
-		"editor.defaultFormatter": "redhat.vscode-yaml"
-	},
-	"[toml]": {
-		"editor.defaultFormatter": "tamasfe.even-better-toml"
-	},
-	"[mdx]": {
-		"editor.defaultFormatter": "unifiedjs.vscode-mdx"
-	},
-	"typescript.experimental.useTsgo": false,
-	"chatgpt.commentCodeLensEnabled": false
+	]
 }

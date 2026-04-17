@@ -2,10 +2,10 @@ import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
 import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
-import { Transaction } from "~/buyer/transaction/ui/Transaction";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
+import { Transaction } from "../Transaction/Transaction";
 
 export namespace TransactionDetailPage {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
@@ -22,6 +22,7 @@ export const TransactionDetailPage: FC<TransactionDetailPage.Props> = ({
 
 	return (
 		<TitleContainer
+			data-ui={"TransactionDetailPage"}
 			textTitle={translator.text("Messages (title)")}
 			left={
 				<BackHomeButton
