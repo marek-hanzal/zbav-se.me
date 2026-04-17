@@ -21,7 +21,10 @@ export namespace HeroSection {
 export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) => {
 	const hero = useUpload(listing.gallery.items);
 
-	useRenderLogger("HeroSection");
+	useRenderLogger("HeroSection", {
+		listingId: listing.id,
+		feedId,
+	});
 
 	return (
 		<>
