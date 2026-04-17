@@ -3,6 +3,7 @@ import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
 import { Overlay } from "@/lib/client/overlay";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense, StateType } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
@@ -80,6 +81,7 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 						flow: "horizontal",
 						justify: "space-between",
 						items: "center",
+						gap: "default",
 					}}
 				>
 					<Typo
@@ -89,20 +91,27 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 							theme: "light",
 							font: "bold",
 							color: "lead",
+							text: "sm",
 						}}
 					/>
 
-					<Typo
-						label={`${toLocaleNumber({
-							locale,
-							number: listing.distance,
-							maximumFractionDigits: 1,
-						})}km`}
-						ui={{
-							text: "sm",
-							font: "light",
-						}}
-					/>
+					{listing.distance ? (
+						listing.distance >= 1 ? (
+							<Typo
+								label={`${toLocaleNumber({
+									locale,
+									number: listing.distance,
+									maximumFractionDigits: 1,
+								})}km`}
+								ui={{
+									text: "sm",
+									font: "light",
+								}}
+							/>
+						) : (
+							<Tx label={"Behind corner (label)"} />
+						)
+					) : null}
 				</Container>
 			</Container>
 		</Container>
