@@ -8,7 +8,7 @@ import { toTimeDiff } from "@/lib/common/time";
 import { translator } from "@/lib/common/translator";
 import { SendPackageIcon } from "~/common/ui/icon";
 import type { TransactionEntryPackage } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/PackageSchema";
-import { TypeContainer } from "../TypeContainer";
+import { TypeContainer } from "./TypeContainer";
 
 export namespace Package {
 	export interface Props extends Container.Props {
@@ -23,6 +23,7 @@ export const Package: FC<Package.Props> = ({ transactionEntry, ...props }) => {
 
 	return (
 		<TypeContainer
+			data-ui={"Package"}
 			direction={transactionEntry.direction}
 			ui={{
 				flow: "vertical",

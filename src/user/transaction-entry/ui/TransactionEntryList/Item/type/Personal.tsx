@@ -8,7 +8,7 @@ import { Typo } from "@/lib/client/typo";
 import { toTimeDiff } from "@/lib/common/time";
 import { withLocationFetchQuery } from "~/session/location/withLocationFetchQuery";
 import type { TransactionEntryPersonal } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/PersonalSchema";
-import { TypeContainer } from "../TypeContainer";
+import { TypeContainer } from "./TypeContainer";
 
 export namespace Personal {
 	export interface Props extends ContainerType.Props, MarkSuspense.Props {
@@ -27,6 +27,7 @@ export const Personal = withFallback(
 
 		return (
 			<TypeContainer
+				data-ui={"Personal"}
 				direction={transactionEntry.direction}
 				ui={{
 					flow: "vertical",

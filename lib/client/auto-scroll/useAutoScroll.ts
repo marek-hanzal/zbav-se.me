@@ -25,6 +25,7 @@ export function useAutoScroll({
 	resizeBehavior = "smooth",
 }: useAutoScroll.Props): useAutoScroll.Result {
 	const frameRef = useRef<number>(0);
+
 	const scrollToEnd = useThrottledCallback(
 		(behavior: ScrollBehavior) => {
 			if (frameRef.current) {
@@ -113,8 +114,6 @@ export function useAutoScroll({
 			ro.observe(contentRef.current);
 			mo.observe(contentRef.current, {
 				childList: true,
-				subtree: true,
-				characterData: true,
 			});
 
 			disconnect = () => {

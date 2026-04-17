@@ -92,6 +92,7 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 							tone: "neutral",
 							theme: "light",
 							opacity: "7",
+							font: "normal",
 						}}
 					/>
 
@@ -109,6 +110,7 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 							tone: "neutral",
 							theme: "light",
 							opacity: "7",
+							font: "normal",
 						}}
 					/>
 				</Container>

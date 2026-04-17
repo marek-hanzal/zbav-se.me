@@ -11,7 +11,7 @@ import { GalleryPreviewSheet } from "~/common/gallery/ui/GalleryPreviewSheet";
 import { HeroImage } from "~/common/ui/img";
 import { withTransactionEntryGalleryFetchQuery } from "~/user/transaction-entry/query/withTransactionEntryGalleryFetchQuery";
 import type { TransactionEntryGallery } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/GallerySchema";
-import { TypeContainer } from "../TypeContainer";
+import { TypeContainer } from "./TypeContainer";
 
 export namespace Gallery {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -32,6 +32,7 @@ export const Gallery = withFallback(
 
 		return (
 			<TypeContainer
+				data-ui={"Gallery"}
 				direction={transactionEntry.direction}
 				ui={{
 					position: "relative",
@@ -88,6 +89,7 @@ export const Gallery = withFallback(
 	}) {
 		return (
 			<TypeContainer
+				data-ui={"Gallery"}
 				direction={transactionEntry.direction}
 				ui={{
 					tone: "neutral",

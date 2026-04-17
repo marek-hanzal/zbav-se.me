@@ -76,6 +76,9 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						],
 						activity: "archived",
 					},
+					typoUi: {
+						font: "normal",
+					},
 				},
 				{
 					label: toStatusLabel(TransactionStatusEnumSchema.enum.dispute),
@@ -85,6 +88,9 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						],
 						activity: "archived",
 					},
+					typoUi: {
+						font: "normal",
+					},
 				},
 				{
 					label: toStatusLabel(TransactionStatusEnumSchema.enum.resolved),
@@ -93,6 +99,9 @@ export const TransactionList: FC<TransactionList.Props> = ({
 							TransactionStatusEnumSchema.enum.resolved,
 						],
 						activity: "archived",
+					},
+					typoUi: {
+						font: "normal",
 					},
 				},
 				{
@@ -114,6 +123,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						tone: "neutral",
 						theme: "light",
 						opacity: "7",
+						font: "normal",
 					},
 				},
 			] satisfies Group[],

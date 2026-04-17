@@ -1,1 +1,0 @@
-export { Personal } from "./Personal";

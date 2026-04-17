@@ -13,7 +13,7 @@ export const archiveSellerMessageActivity = async ({
 	queryClient,
 	transactionId,
 }: archiveSellerMessageActivity.Props): Promise<void> => {
-	const transaction = await withTransactionQuery.fetchFn({
+	const transaction = await withTransactionQuery.ensureEntityQuery(queryClient, {
 		where: {
 			id: transactionId,
 		},

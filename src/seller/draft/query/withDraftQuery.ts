@@ -1,3 +1,4 @@
+import { getRootLogger } from "@/lib/client/log";
 import { withEntityQuery } from "@/lib/client/query";
 import { draftCollectionFn } from "~/seller/draft/fn/draftCollectionFn";
 import { draftCountFn } from "~/seller/draft/fn/draftCountFn";
@@ -10,6 +11,11 @@ import type { DraftCreateSchema } from "~/seller/draft/server/schema/DraftCreate
 import type { DraftPatchSchema } from "~/seller/draft/server/schema/DraftPatchSchema";
 import type { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
+
+const logger = getRootLogger([
+	"query",
+	"withDraftQuery",
+]);
 
 export const withDraftQuery = withEntityQuery<
 	DraftSchema.Type,
@@ -29,37 +35,67 @@ export const withDraftQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data) {
+	async fetchFn(data, context) {
+		logger.trace("fetchFn", {
+			data,
+			context,
+		});
+
 		return draftFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data) {
+	async collectionFn(data, context) {
+		logger.trace("collectionFn", {
+			data,
+			context,
+		});
+
 		return draftCollectionFn({
 			data,
 		});
 	},
-	async countFn(data) {
+	async countFn(data, context) {
+		logger.trace("countFn", {
+			data,
+			context,
+		});
+
 		return draftCountFn({
 			data,
 		});
 	},
-	async createFn(data) {
+	async createFn(data, context) {
+		logger.trace("createFn", {
+			data,
+			context,
+		});
+
 		return draftCreateFn({
 			data,
 		});
 	},
-	async deleteFn(data) {
+	async deleteFn(data, context) {
+		logger.trace("deleteFn", {
+			data,
+			context,
+		});
+
 		return draftDeleteFn({
 			data,
 		});
 	},
-	async patchFn(data) {
+	async patchFn(data, context) {
+		logger.trace("patchFn", {
+			data,
+			context,
+		});
+
 		return draftPatchFn({
 			data,
 		});
 	},
-	async patchCollectionFn(_data) {
+	async patchCollectionFn(_data, _context) {
 		throw new Error("Draft collection patch is not supported.");
 	},
 });

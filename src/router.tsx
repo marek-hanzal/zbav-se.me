@@ -1,3 +1,5 @@
+import { configure, getConfig, getConsoleSink, type LogLevel } from "@logtape/logtape";
+import { getPrettyFormatter } from "@logtape/pretty";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import { keepPreviousData, QueryClient } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
@@ -8,7 +10,51 @@ import { Logo } from "~/common/ui/logo";
 import { routeTree } from "./_route";
 
 export async function getRouter() {
+	const level: LogLevel = "trace";
 	const staleTime = 5 * 60 * 1_000;
+
+	!getConfig() &&
+		(await configure({
+			reset: true,
+			sinks: {
+				console: getConsoleSink({
+					formatter: getPrettyFormatter({
+						categoryWidth: 42,
+						properties: true,
+						timestamp: "date-time-tz",
+						messageColor: "red",
+						messageStyle: "bold",
+						levelStyle: "reset",
+						inspectOptions: {
+							compact: true,
+							colors: true,
+						},
+					}),
+					nonBlocking: true,
+				}),
+			},
+			loggers: [
+				{
+					/**
+					 * Root logger
+					 */
+					category: [],
+					lowestLevel: level,
+					sinks: [
+						"console",
+					],
+				},
+
+				{
+					category: [
+						"logtape",
+						"meta",
+					],
+					lowestLevel: "error",
+					sinks: [],
+				},
+			],
+		}));
 
 	const queryClient = new QueryClient({
 		defaultOptions: {

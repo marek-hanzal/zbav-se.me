@@ -6,7 +6,7 @@ import { Typo } from "@/lib/client/typo";
 import { toTimeDiff } from "@/lib/common/time";
 import type { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
 import type { TransactionEntryCommon } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/CommonSchema";
-import { TypeContainer } from "../TypeContainer";
+import { TypeContainer } from "./TypeContainer";
 
 export namespace Common {
 	export interface Props extends Container.Props {
@@ -20,7 +20,7 @@ export const Common: FC<Common.Props> = ({ side, transactionEntry, ...props }) =
 
 	return (
 		<TypeContainer
-			data-ui={"CommonEntry[TypeContainer]"}
+			data-ui={"Common"}
 			direction={transactionEntry.direction}
 			className={"w-full"}
 			{...props}
