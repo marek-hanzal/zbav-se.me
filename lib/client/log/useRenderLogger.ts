@@ -25,7 +25,7 @@ export function useRenderLogger(name: string) {
 
 	useEffect(() => {
 		if (renderCount.current > 1) {
-			logger.trace("Re-render {*}", {
+			logger.trace("Re-render", {
 				renderCount: renderCount.current,
 			});
 		}

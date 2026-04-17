@@ -1,4 +1,5 @@
-import { configure, getConfig, getConsoleSink, getTextFormatter, type LogLevel } from "@logtape/logtape";
+import { configure, getConfig, getConsoleSink, type LogLevel } from "@logtape/logtape";
+import { getPrettyFormatter } from "@logtape/pretty";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import { keepPreviousData, QueryClient } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
@@ -17,8 +18,9 @@ export async function getRouter() {
 			reset: true,
 			sinks: {
 				console: getConsoleSink({
-					formatter: getTextFormatter({
-						//
+					formatter: getPrettyFormatter({
+						categoryWidth: 32,
+						properties: true,
 					}),
 					nonBlocking: true,
 				}),
