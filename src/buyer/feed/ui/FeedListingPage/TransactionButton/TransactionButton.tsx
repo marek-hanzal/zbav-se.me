@@ -21,14 +21,24 @@ export namespace TransactionButton {
 export const TransactionButton: FC<TransactionButton.Props> = ({ listing, meta, ui, ...props }) => {
 	const locale = useLocale();
 	const queryClient = useQueryClient();
+	const updateListing = withListingQuery.useUpdate();
 	const transactionCreateMutation = withTransactionQuery.useCreateMutation({
 		async onPostMutation() {
-			await withListingQuery.ensureEntityQuery(queryClient, {
-				where: {
-					id: listing.id,
-				},
-				meta,
-			});
+			/**
+			 * We've to manually refetch listing with meta and update it.
+			 *
+			 * I'm not proud of this solution, but it's at least interesting to see,
+			 * how nicely the stuff here works as a lego.
+			 */
+			updateListing(
+				await withListingQuery.fetchFn({
+					where: {
+						id: listing.id,
+					},
+					meta,
+				}),
+			);
+
 			await withTransactionQuery.invalidator(queryClient, [
 				"collection",
 				"count",
