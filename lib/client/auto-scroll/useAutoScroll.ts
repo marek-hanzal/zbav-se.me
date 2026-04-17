@@ -114,8 +114,6 @@ export function useAutoScroll({
 			ro.observe(contentRef.current);
 			mo.observe(contentRef.current, {
 				childList: true,
-				// subtree: true,
-				// characterData: true,
 			});
 
 			disconnect = () => {
