@@ -6,6 +6,7 @@ import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
+import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
 import { TransactionIcon } from "~/common/ui/icon";
@@ -13,27 +14,21 @@ import { TransactionIcon } from "~/common/ui/icon";
 export namespace TransactionButton {
 	export interface Props extends Button.Props {
 		listing: ListingSchema.Type;
+		meta: ListingMetaSchema.Type | undefined;
 	}
 }
 
-export const TransactionButton: FC<TransactionButton.Props> = ({ listing, ui, ...props }) => {
+export const TransactionButton: FC<TransactionButton.Props> = ({ listing, meta, ui, ...props }) => {
 	const locale = useLocale();
 	const queryClient = useQueryClient();
 	const transactionCreateMutation = withTransactionQuery.useCreateMutation({
 		async onPostMutation() {
-			await withListingQuery.invalidator(
-				queryClient,
-				[
-					"fetch",
-				],
-				{
-					fetch: {
-						where: {
-							id: listing.id,
-						},
-					},
+			await withListingQuery.ensureEntityQuery(queryClient, {
+				where: {
+					id: listing.id,
 				},
-			);
+				meta,
+			});
 			await withTransactionQuery.invalidator(queryClient, [
 				"collection",
 				"count",

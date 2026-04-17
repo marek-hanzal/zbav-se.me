@@ -350,9 +350,21 @@ export const withEntityQuery = <
 	) {
 		const queryKey = $keys("fetch", data);
 
+		logger.trace("withEntityQuery::ensureEntityQuery", {
+			queryKey,
+			data,
+			opts,
+		});
+
 		return queryClient.ensureQueryData({
 			queryKey,
 			queryFn() {
+				logger.trace("withEntityQuery::ensureEntityQuery::queryFn", {
+					queryKey,
+					data,
+					opts,
+				});
+
 				return fetchFn(data);
 			},
 			...opts,
@@ -365,9 +377,21 @@ export const withEntityQuery = <
 	function useEntityQuery(data: TFetchRequest, opts?: withEntityQuery.QueryOptions<TEntity>) {
 		const queryKey = $keys("fetch", data);
 
+		logger.trace("withEntityQuery::useEntityQuery", {
+			queryKey,
+			data,
+			opts,
+		});
+
 		return useSuspenseQuery({
 			queryKey,
 			queryFn() {
+				logger.trace("withEntityQuery::useEntityQuery::queryFn", {
+					queryKey,
+					data,
+					opts,
+				});
+
 				return fetchFn(data);
 			},
 			...opts,
@@ -596,6 +620,10 @@ export const withEntityQuery = <
 
 		return useMutation({
 			async mutationFn(request) {
+				logger.trace("withEntityQuery::usePatchMutation::mutateFn", {
+					request,
+				});
+
 				await onPreMutation?.({
 					variables: request,
 				});
@@ -682,6 +710,10 @@ export const withEntityQuery = <
 
 		return useMutation({
 			async mutationFn(request) {
+				logger.trace("withEntityQuery::useCreateMutation::mutateFn", {
+					request,
+				});
+
 				await onPreMutation?.({
 					variables: request,
 				});

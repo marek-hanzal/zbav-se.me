@@ -100,7 +100,12 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 				/>
 			</Container>
 
-			{listing.my ? null : <TransactionButton listing={listing} />}
+			{listing.my ? null : (
+				<TransactionButton
+					listing={listing}
+					meta={feed.query.meta}
+				/>
+			)}
 		</>
 	);
 };
