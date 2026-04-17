@@ -70,7 +70,7 @@ export namespace withEntityQuery {
 		/**
 		 * Loads a single entity by fetch request.
 		 */
-		fetchFn(data: TFetchRequest, options: FnContext): Promise<TEntity>;
+		fetchFn(data: TFetchRequest, context: FnContext): Promise<TEntity>;
 		/**
 		 * Loads a collection of entities.
 		 */
