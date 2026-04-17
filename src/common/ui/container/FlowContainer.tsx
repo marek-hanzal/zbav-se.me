@@ -7,6 +7,7 @@ export namespace FlowContainer {
 		 * Optional node rendered in a sticky positioned wrapper on the left edge, e.g. flow-level actions.
 		 */
 		left?: ReactNode;
+		right?: ReactNode;
 	}
 }
 
@@ -15,7 +16,7 @@ export namespace FlowContainer {
  *
  * @param props Props extending `Container.Props`, supporting an optional `left` node for sticky actions.
  */
-export const FlowContainer: FC<FlowContainer.Props> = ({ left, children, ui, ...props }) => {
+export const FlowContainer: FC<FlowContainer.Props> = ({ left, right, children, ui, ...props }) => {
 	return (
 		<Container
 			data-ui={"FlowContainer[Container]"}
@@ -29,13 +30,25 @@ export const FlowContainer: FC<FlowContainer.Props> = ({ left, children, ui, ...
 		>
 			{left ? (
 				<Container
-					data-ui={"FlowContainer-[Container.left]"}
 					ui={{
 						snapTo: "top-left",
 						zIndex: true,
 					}}
+					className={"z-200"}
 				>
 					{left}
+				</Container>
+			) : null}
+
+			{right ? (
+				<Container
+					ui={{
+						snapTo: "top-right",
+						zIndex: true,
+					}}
+					className={"z-200"}
+				>
+					{right}
 				</Container>
 			) : null}
 

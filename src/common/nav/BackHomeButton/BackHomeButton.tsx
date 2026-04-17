@@ -24,10 +24,7 @@ const BaseBackHomeButton: FC<uiBackButton.Component<ComponentProps<"a">>> = ({
 			})}
 			{...props}
 		>
-			<Icon
-				data-ui={"BackHomeButton-[Icon]"}
-				icon={ArrowLeftIcon}
-			/>
+			<Icon icon={ArrowLeftIcon} />
 		</a>
 	);
 };
