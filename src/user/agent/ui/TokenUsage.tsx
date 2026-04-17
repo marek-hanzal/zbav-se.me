@@ -1,11 +1,10 @@
-import { useMemo } from "react";
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Typo } from "@/lib/client/typo";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
-import { withAgentUsageQuery } from "~/user/agent/query/withAgentUsageQuery";
+import { withAgentTokensQuery } from "~/user/agent/query/withAgentTokensQuery";
 
 export namespace TokenUsage {
 	export interface Props extends Container.Props {
@@ -16,23 +15,7 @@ export namespace TokenUsage {
 export const TokenUsage = withFallback<TokenUsage.Props, Container>(
 	(props) => {
 		const locale = useLocale();
-		const query = withAgentUsageQuery.useSuspenseQuery({});
-		const tokens = useMemo(() => {
-			const input = query.data.reduce((acc, item) => {
-				return acc + item.input;
-			}, 0);
-			const output = query.data.reduce((acc, item) => {
-				return acc + item.output;
-			}, 0);
-
-			return {
-				input,
-				output,
-				total: input + output,
-			} as const;
-		}, [
-			query.data,
-		]);
+		const { data: tokens } = withAgentTokensQuery.useSuspenseQuery({});
 
 		return (
 			<Container
