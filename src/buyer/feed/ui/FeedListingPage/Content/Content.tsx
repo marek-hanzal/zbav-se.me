@@ -1,14 +1,11 @@
-import { type Ref, useMemo, useState } from "react";
-import { Button } from "@/lib/client/button";
+import { type Ref, useMemo } from "react";
 import { EmptyState } from "@/lib/client/empty-state";
 import { withFallback } from "@/lib/client/fallback";
-import { SettingsIcon } from "@/lib/client/icon";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
+import { ListingList } from "~/buyer/feed/ui/FeedListingPage/ListingList";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
-import { FeedEditorSheet } from "../../FeedEditor/FeedEditorSheet";
-import { ListingList } from "../ListingList";
 import { Empty } from "./Empty";
 import { FilterEmpty } from "./FilterEmpty";
 
@@ -17,25 +14,22 @@ export namespace Content {
 		feedId: string;
 		scrollToId: string | undefined;
 		sentinelRef: Ref<HTMLDivElement | null>;
-		isLast: boolean;
 	}
 }
 
 export const Content = withFallback(
-	({ _suspense, feedId, scrollToId, sentinelRef, isLast }: Content.Props) => {
-		const [isEditor, setIsEditor] = useState(false);
+	({ _suspense, feedId, scrollToId, sentinelRef }: Content.Props) => {
 		const { data: feed } = withFeedQuery.useFetchQuery(feedId);
-		const { data: anyListingCollection } = withListingQuery.useCollectionQuery({
-			cursor: {
-				page: 0,
-				size: 1,
-			},
-		});
-		const { data: currentListingCollection } = withListingQuery.useCollectionQuery({
+		const { data: anyListingCount } = withListingQuery.useCountQuery({});
+		/**
+		 * "useIdsQuery" - intentional, because we're practically pre-warming the query here
+		 * for the real listing list to prevent firing duplicate queries.
+		 */
+		const { data: currentListingCollection } = withListingQuery.useIdsQuery({
 			...feed.query,
 			cursor: {
 				page: 0,
-				size: 1,
+				size: 256,
 			},
 		});
 
@@ -43,7 +37,7 @@ export const Content = withFallback(
 			return [
 				{
 					check() {
-						return !anyListingCollection.length;
+						return !anyListingCount;
 					},
 					render() {
 						return <Empty />;
@@ -57,51 +51,21 @@ export const Content = withFallback(
 						return <FilterEmpty />;
 					},
 				},
-			] as EmptyState.Check[];
+			] satisfies EmptyState.Check[];
 		}, [
-			anyListingCollection,
+			anyListingCount,
 			currentListingCollection,
 		]);
 
 		return (
-			<>
-				<EmptyState check={check}>
-					<Button
-						data-action={isEditor ? "close feed setup" : "open feed setup"}
-						iconEnabled={SettingsIcon}
-						onClick={() => setIsEditor((prev) => !prev)}
-						ui={{
-							tone: "secondary",
-							theme: "light",
-							background: "default",
-							justify: "center",
-							items: "center",
-							square: "default",
-							zIndex: true,
-							round: "full",
-							snapTo: "top-right",
-							text: "xl",
-							opacity: isLast ? "full" : "8",
-						}}
-						className={"transition-all"}
-					/>
-
-					<ListingList
-						_suspense={"I know"}
-						feedId={feedId}
-						scrollToId={scrollToId}
-						sentinelRef={sentinelRef}
-					/>
-				</EmptyState>
-
-				<FeedEditorSheet
+			<EmptyState check={check}>
+				<ListingList
+					_suspense={"I know"}
 					feedId={feedId}
-					state={{
-						value: isEditor,
-						set: setIsEditor,
-					}}
+					scrollToId={scrollToId}
+					sentinelRef={sentinelRef}
 				/>
-			</>
+			</EmptyState>
 		);
 	},
 	SpinnerContainer,

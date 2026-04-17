@@ -1,13 +1,15 @@
 import type { FC } from "react";
-import { LinkTo } from "@/lib/client/link-to";
+import { LinkTo, type uiLinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { HomeIcon } from "~/common/ui/icon";
 
 export namespace HomeMenuButton {
-	export type Props = {};
+	export interface Props extends uiLinkTo.Component<{}> {
+		//
+	}
 }
 
-export const HomeMenuButton: FC<HomeMenuButton.Props> = () => {
+export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ ui, className }) => {
 	const locale = useLocale();
 
 	return (
@@ -30,7 +32,9 @@ export const HomeMenuButton: FC<HomeMenuButton.Props> = () => {
 				border: true,
 				inner: "md",
 				opacity: "8",
+				...ui,
 			}}
+			className={className}
 		/>
 	);
 };
