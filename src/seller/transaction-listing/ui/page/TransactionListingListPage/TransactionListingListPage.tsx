@@ -113,6 +113,7 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 							tone: "neutral",
 							theme: "light",
 							opacity: "7",
+							font: "normal",
 						}}
 					/>
 
@@ -129,6 +130,7 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 							tone: "neutral",
 							theme: "light",
 							opacity: "7",
+							font: "normal",
 						}}
 					/>
 				</Container>
