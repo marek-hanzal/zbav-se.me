@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
+import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
@@ -19,6 +20,8 @@ export const TransactionDetailPage: FC<TransactionDetailPage.Props> = ({
 	...props
 }) => {
 	const locale = useLocale();
+
+	useRenderLogger("TransactionDetailPage");
 
 	return (
 		<TitleContainer
