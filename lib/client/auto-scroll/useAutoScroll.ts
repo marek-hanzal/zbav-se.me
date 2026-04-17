@@ -1,11 +1,5 @@
 import { useThrottledCallback } from "@tanstack/react-pacer";
 import { type RefObject, useLayoutEffect, useRef } from "react";
-import { getRootLogger } from "../log";
-
-const logger = getRootLogger([
-	"hook",
-	"useAutoScroll",
-]);
 
 export namespace useAutoScroll {
 	export interface Props {
@@ -39,8 +33,6 @@ export function useAutoScroll({
 			}
 
 			frameRef.current = requestAnimationFrame(() => {
-				logger.trace("scrollToEnd - requestAnimationFrame");
-
 				frameRef.current = 0;
 
 				containerRef.current?.scrollTo({
@@ -113,11 +105,9 @@ export function useAutoScroll({
 			}
 
 			const ro = new ResizeObserver(() => {
-				logger.trace("Scheduled from ResizeObserver");
 				scrollToEnd(resizeBehavior);
 			});
 			const mo = new MutationObserver(() => {
-				logger.trace("Scheduled from MutationObserver");
 				scrollToEnd(resizeBehavior);
 			});
 
