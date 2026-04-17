@@ -74,7 +74,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				children: (
 					<SellerInfo
 						_suspense={"I know"}
-						listingId={listing.id}
+						listingId={listingId}
 						ui={{
 							inner: "default",
 						}}
@@ -94,6 +94,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 		};
 	}, [
 		feedId,
+		listingId,
 		listing,
 		$onClose,
 	]);
