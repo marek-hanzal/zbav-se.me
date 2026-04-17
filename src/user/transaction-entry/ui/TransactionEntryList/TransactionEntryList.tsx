@@ -3,6 +3,7 @@ import { useAutoScroll } from "@/lib/client/auto-scroll";
 import { Container } from "@/lib/client/container";
 import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import type { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
 import { withTransactionEntryQuery } from "~/user/transaction-entry/query/withTransactionEntryQuery";
 import { Item } from "./Item";
@@ -52,7 +53,10 @@ export const TransactionEntryList: FC<TransactionEntryList.Props> = ({
 		},
 	);
 
-	useRenderLogger("TransactionEntryList");
+	useRenderLogger({
+		logger: getRootLogger(),
+		name: "TransactionEntryList",
+	});
 
 	return (
 		<Container

@@ -1,18 +1,17 @@
-import { getRootLogger } from "@/lib/client/log";
 import { withQuery } from "@/lib/client/query";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { locationAutocompleteFn } from "~/session/location/fn/locationAutocompleteFn";
 import type { LocationAutocompleteSchema } from "~/session/location/server/schema/LocationAutocompleteSchema";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
-
-const logger = getRootLogger([
-	"query",
-	"withLocationAutocompleteQuery",
-]);
 
 export const withLocationAutocompleteQuery = withQuery<
 	LocationAutocompleteSchema.Type,
 	LocationSchema.Type[]
 >({
+	logger: getRootLogger([
+		"query",
+		"withLocationAutocompleteQuery",
+	]),
 	keys(data) {
 		return [
 			"location",
@@ -21,8 +20,6 @@ export const withLocationAutocompleteQuery = withQuery<
 		];
 	},
 	async queryFn(data) {
-		logger.trace("queryFn", data);
-
 		return locationAutocompleteFn({
 			data,
 		});

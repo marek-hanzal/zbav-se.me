@@ -1,4 +1,5 @@
 import { withMutation } from "@/lib/client/mutation";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { draftGalleryCreateFn } from "~/seller/draft-gallery/fn/draftGalleryCreateFn";
 import type { DraftGalleryCreateSchema } from "~/seller/draft-gallery/server/schema/DraftGalleryCreateSchema";
 import type { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
@@ -9,6 +10,10 @@ export const withDraftGalleryCreateMutation = withMutation<
 	GallerySchema.Type,
 	Error
 >({
+	logger: getRootLogger([
+		"mutation",
+		"withDraftGalleryCreateMutation",
+	]),
 	keys() {
 		return [
 			"seller",

@@ -1,5 +1,5 @@
-import { getRootLogger } from "@/lib/client/log";
 import { withEntityQuery } from "@/lib/client/query";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { transactionEntryCollectionFn } from "~/user/transaction-entry/fn/transactionEntryCollectionFn";
 import { transactionEntryCountFn } from "~/user/transaction-entry/fn/transactionEntryCountFn";
 import { transactionEntryCreateFn } from "~/user/transaction-entry/fn/transactionEntryCreateFn";
@@ -8,11 +8,6 @@ import type { TransactionEntryCountQuerySchema } from "~/user/transaction-entry/
 import type { TransactionEntryCreateSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema";
 import type { TransactionEntryQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryQuerySchema";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
-
-const logger = getRootLogger([
-	"query",
-	"withTransactionEntryQuery",
-]);
 
 export const withTransactionEntryQuery = withEntityQuery<
 	TransactionEntrySchema.Type,
@@ -24,6 +19,10 @@ export const withTransactionEntryQuery = withEntityQuery<
 	never,
 	never
 >({
+	logger: getRootLogger([
+		"query",
+		"withTransactionEntryQuery",
+	]),
 	keys: () => [
 		"transaction-entry",
 	],
@@ -32,53 +31,33 @@ export const withTransactionEntryQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data, context) {
-		logger.trace("fetchFn", {
-			data,
-			context,
-		});
-
+	async fetchFn(data) {
 		return transactionEntryFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data, context) {
-		logger.trace("collectionFn", {
-			data,
-			context,
-		});
-
+	async collectionFn(data) {
 		return transactionEntryCollectionFn({
 			data,
 		});
 	},
-	async countFn(data, context) {
-		logger.trace("countFn", {
-			data,
-			context,
-		});
-
+	async countFn(data) {
 		return transactionEntryCountFn({
 			data,
 		});
 	},
-	async createFn(data, context) {
-		logger.trace("createFn", {
-			data,
-			context,
-		});
-
+	async createFn(data) {
 		return transactionEntryCreateFn({
 			data,
 		});
 	},
-	async patchFn(_data, _context) {
+	async patchFn(_data) {
 		throw new Error("Transaction entry patch is not supported.");
 	},
-	async patchCollectionFn(_data, _context) {
+	async patchCollectionFn(_data) {
 		throw new Error("Transaction entry collection patch is not supported.");
 	},
-	async deleteFn(_data, _context) {
+	async deleteFn(_data) {
 		throw new Error("Transaction entry delete is not supported.");
 	},
 });

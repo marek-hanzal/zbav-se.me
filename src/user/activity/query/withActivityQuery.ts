@@ -1,5 +1,5 @@
-import { getRootLogger } from "@/lib/client/log";
 import { withEntityQuery } from "@/lib/client/query";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { activityCollectionFn } from "~/user/activity/fn/activityCollectionFn";
 import { activityCountFn } from "~/user/activity/fn/activityCountFn";
 import { activityFetchFn } from "~/user/activity/fn/activityFetchFn";
@@ -11,11 +11,6 @@ import type { ActivityPatchSchema } from "~/user/activity/server/schema/Activity
 import type { ActivityQuerySchema } from "~/user/activity/server/schema/ActivityQuerySchema";
 import type { ActivitySchema } from "~/user/activity/server/schema/ActivitySchema";
 
-const logger = getRootLogger([
-	"query",
-	"withActivityQuery",
-]);
-
 export const withActivityQuery = withEntityQuery<
 	ActivitySchema.Type,
 	ActivityQuerySchema.Type,
@@ -26,6 +21,10 @@ export const withActivityQuery = withEntityQuery<
 	never,
 	ActivityPatchCollectionSchema.Type
 >({
+	logger: getRootLogger([
+		"query",
+		"withActivityQuery",
+	]),
 	keys: () => [
 		"activity",
 	],
@@ -34,58 +33,33 @@ export const withActivityQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetchFn(data, context) {
-		logger.trace("fetchFn", {
-			data,
-			context,
-		});
-
+	async fetchFn(data) {
 		return activityFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data, context) {
-		logger.trace("collectionFn", {
-			data,
-			context,
-		});
-
+	async collectionFn(data) {
 		return activityCollectionFn({
 			data,
 		});
 	},
-	async countFn(data, context) {
-		logger.trace("countFn", {
-			data,
-			context,
-		});
-
+	async countFn(data) {
 		return activityCountFn({
 			data,
 		});
 	},
-	async createFn(_data, _context) {
+	async createFn(_data) {
 		throw new Error("Activity create is not supported.");
 	},
-	async deleteFn(_data, _context) {
+	async deleteFn(_data) {
 		throw new Error("Activity delete is not supported.");
 	},
-	async patchFn(data, context) {
-		logger.trace("patchFn", {
-			data,
-			context,
-		});
-
+	async patchFn(data) {
 		return activityPatchFn({
 			data,
 		});
 	},
-	async patchCollectionFn(data, context) {
-		logger.trace("patchCollectionFn", {
-			data,
-			context,
-		});
-
+	async patchCollectionFn(data) {
 		return activityPatchCollectionFn({
 			data,
 		});

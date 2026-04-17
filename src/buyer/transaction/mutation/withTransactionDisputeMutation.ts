@@ -2,6 +2,7 @@ import { withMutation } from "@/lib/client/mutation";
 import type { EntitySchema } from "@/lib/common/schema";
 import { transactionDisputeFn } from "~/buyer/transaction/fn/transactionDisputeFn";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { withTransactionQuery } from "../query/withTransactionQuery";
 
 export const withTransactionDisputeMutation = withMutation<
@@ -9,6 +10,10 @@ export const withTransactionDisputeMutation = withMutation<
 	TransactionSchema.Type,
 	Error
 >({
+	logger: getRootLogger([
+		"mutation",
+		"withTransactionDisputeMutation",
+	]),
 	keys() {
 		return [
 			"buyer",

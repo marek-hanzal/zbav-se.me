@@ -1,19 +1,18 @@
-import { getRootLogger } from "@/lib/client/log";
 import { withMutation } from "@/lib/client/mutation";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { thumbCreateFn } from "~/buyer/thumb/fn/thumbCreateFn";
 import type { ThumbCreateSchema } from "~/buyer/thumb/server/schema/ThumbCreateSchema";
-
-const logger = getRootLogger([
-	"mutation",
-	"withThumbCreateMutation",
-]);
+import { getRootLogger } from "~/common/log/getRootLogger";
 
 export const withThumbCreateMutation = withMutation<
 	ThumbCreateSchema.Type,
 	ListingSchema.Type,
 	Error
 >({
+	logger: getRootLogger([
+		"mutation",
+		"withThumbCreateMutation",
+	]),
 	keys(variables) {
 		return [
 			"thumb",
@@ -22,8 +21,6 @@ export const withThumbCreateMutation = withMutation<
 		];
 	},
 	async mutationFn(data) {
-		logger.trace("withThumbCreateMutation", data);
-
 		return thumbCreateFn({
 			data,
 		});

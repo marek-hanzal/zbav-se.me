@@ -6,6 +6,7 @@ import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema"
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/common/location/ui/LocationBadge";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroImage } from "~/common/ui/img";
 import { FavouriteButton } from "../../FavouriteButton";
 import { TransactionButton } from "../../TransactionButton";
@@ -21,9 +22,13 @@ export namespace HeroSection {
 export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) => {
 	const hero = useUpload(listing.gallery.items);
 
-	useRenderLogger("HeroSection", {
-		listingId: listing.id,
-		feedId,
+	useRenderLogger({
+		logger: getRootLogger(),
+		name: "HeroSection",
+		meta: {
+			listingId: listing.id,
+			feedId,
+		},
 	});
 
 	return (
