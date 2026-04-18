@@ -96,8 +96,8 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 						}}
 						refetchInterval={refetchInterval}
 						typoProps={{
-							tone: "neutral",
-							theme: "light",
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
 						}}
 					/>
 
@@ -108,10 +108,10 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 						}}
 						refetchInterval={refetchInterval}
 						typoProps={{
-							tone: "neutral",
-							theme: "light",
-							opacity: "7",
-							font: "normal",
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+							"data-ui-opacity": "7",
+							"data-ui-font": "normal",
 						}}
 					/>
 
@@ -123,10 +123,10 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 						refetchInterval={refetchInterval}
 						data-ui-opacity="7"
 						typoProps={{
-							tone: "neutral",
-							theme: "light",
-							opacity: "7",
-							font: "normal",
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+							"data-ui-opacity": "7",
+							"data-ui-font": "normal",
 						}}
 					/>
 				</Container>
