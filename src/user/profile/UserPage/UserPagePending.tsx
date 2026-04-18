@@ -36,10 +36,8 @@ export const UserPagePending: FC<UserPagePending.Props> = ({ ui, ...props }) => 
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-centered",
-					height: "full",
-				}}
+				data-ui-layout="vertical-centered"
+				data-ui-height="full"
 			>
 				<SpinnerContainer />
 			</Container>
