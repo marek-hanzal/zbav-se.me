@@ -12,11 +12,10 @@ export namespace Badge {
 	}
 }
 
-export const Badge: FC<Badge.Props> = ({ ui, className, ...props }) => {
+export const Badge: FC<Badge.Props> = ({ className, ...props }) => {
 	return (
 		<div
 			{...uiBadge({
-				ui,
 				className,
 			})}
 			{...props}
