@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { list, rangedom, sample } from "@/lib/common/rangedom";
+import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";
 import CategorySeed from "~/server/@system/seed/data/listing-category-seed.json" with {
 	type: "json",
@@ -24,6 +25,7 @@ type ListingCategorySeedItem = {
 	priceMin: number;
 	priceMax: number;
 	priceSpikes: number[];
+	delivery: ListingDeliveryEnumSchema.Type[];
 };
 
 export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
@@ -82,6 +84,9 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 		};
 	};
 
+	const withDelivery = (seedItem: ListingCategorySeedItem) =>
+		sample(seedItem.delivery, rangedom(1, seedItem.delivery.length));
+
 	const toChunks = (size: number) => (total: number) => {
 		const indices = Array.from({
 			length: total,
@@ -117,6 +122,7 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 								description: seedItem.description,
 								categoryId,
 								locationId,
+								delivery: withDelivery(seedItem),
 								expiresAt: list([
 									"7-days",
 									"14-days",
@@ -174,9 +180,7 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 									"open",
 								]),
 								restriction: "none",
-								delivery: [
-									"personal",
-								],
+								delivery: withDelivery(seedItem),
 								warranty: null,
 								expiresAt: list([
 									"7-days",
