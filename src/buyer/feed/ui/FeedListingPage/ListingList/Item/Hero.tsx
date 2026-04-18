@@ -1,6 +1,5 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
-import { useLocale } from "@/lib/client/locale";
 import { Overlay } from "@/lib/client/overlay";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense, StateType } from "@/lib/client/type";
@@ -19,7 +18,6 @@ export namespace Hero {
 }
 
 export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
-	const locale = useLocale();
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const hero = useUpload(listing.gallery.items);
 
@@ -27,12 +25,11 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 		<Container
 			data-id={listing.id}
 			data-ui={"Item"}
-			ui={{
-				flow: "vertical",
-				height: "full",
-				width: "full",
-				position: "relative",
-			}}
+			//
+			data-ui-flow={"vertical"}
+			data-ui-height={"full"}
+			data-ui-width={"full"}
+			//
 			data-action={"open listing detail"}
 			onClick={() => listingState.set((prev) => !prev)}
 			{...props}
@@ -45,24 +42,16 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 				/>
 			) : null}
 
-			<Container
-				ui={{
-					height: "full",
-				}}
-			>
-				<HeroImage
-					src={hero.url}
-					alt={`Hero image for listing ${listing.id}`}
-					visible
-					invisible={<SpinnerContainer />}
-				/>
-			</Container>
+			<HeroImage
+				src={hero.url}
+				alt={`Hero image for listing ${listing.id}`}
+				visible
+				invisible={<SpinnerContainer />}
+			/>
 
 			<Container
-				ui={{
-					flow: "vertical",
-					inner: "sm",
-				}}
+				data-ui-flow={"vertical"}
+				data-ui-inner={"sm"}
 			>
 				<Container
 					ui={{

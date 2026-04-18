@@ -10,7 +10,7 @@ export namespace Container {
 export const Container: FC<Container.Props> = ({ ui, className, ...props }) => {
 	return (
 		<div
-			{...uiContainer({
+        	{...uiContainer({
 				ui,
 				className,
 			})}

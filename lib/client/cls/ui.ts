@@ -30,7 +30,6 @@ export namespace ui {
 		keyof TProps
 	> &
 		Omit<TRest, "className"> & {
-			ui?: TProps;
 			/**
 			 * Optional class names, uses tailwind merge under the hood.
 			 */
