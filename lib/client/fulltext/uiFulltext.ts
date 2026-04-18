@@ -18,9 +18,9 @@ export namespace uiFulltext {
 	}
 }
 
-export const uiFulltext = ({ className, ...ui }: uiFulltext.Props) => {
+export const uiFulltext = ({ name = "Fulltext", className, ...ui }: uiFulltext.Props) => {
 	return coolUi<uiFulltext.Ui>({
-		name: "Fulltext",
+		name,
 		ui: {
 			"data-ui-tone": "primary",
 			"data-ui-theme": "light",

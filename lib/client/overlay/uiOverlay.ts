@@ -14,9 +14,9 @@ export namespace uiOverlay {
 	}
 }
 
-export const uiOverlay = ({ className, ...ui }: uiOverlay.Props) => {
+export const uiOverlay = ({ name = "Overlay", className, ...ui }: uiOverlay.Props) => {
 	return coolUi<uiOverlay.Ui>({
-		name: "Overlay",
+		name,
 		ui,
 		className,
 	});

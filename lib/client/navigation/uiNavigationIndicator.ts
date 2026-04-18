@@ -15,9 +15,13 @@ export namespace uiNavigationIndicator {
 	}
 }
 
-export const uiNavigationIndicator = ({ className, ...ui }: uiNavigationIndicator.Props) => {
+export const uiNavigationIndicator = ({
+	name = "NavigationIndicator",
+	className,
+	...ui
+}: uiNavigationIndicator.Props) => {
 	return coolUi<uiNavigationIndicator.Ui>({
-		name: "NavigationIndicator",
+		name,
 		ui,
 		className,
 	});
