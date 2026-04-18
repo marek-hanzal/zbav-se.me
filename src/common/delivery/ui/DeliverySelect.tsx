@@ -23,13 +23,10 @@ export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ...props }
 	return (
 		<Container
 			data-ui="DeliverySelect[Container]"
-			ui={{
-				layout: "vertical-flex",
-				height: "auto",
-				width: "full",
-				gap: "lg",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-height="auto"
+			data-ui-width="full"
+			data-ui-gap="lg"
 			{...props}
 		>
 			{Object.values(ListingDeliveryEnumSchema.enum).map((delivery) => {
@@ -46,10 +43,8 @@ export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ...props }
 						}}
 						{...uiSelectButton({
 							isSelected,
-							ui: {
-								flow: "horizontal",
-								justify: "start",
-							},
+							"data-ui-flow": "horizontal",
+							"data-ui-justify": "start",
 							className: [],
 						})}
 						data-ui={`DeliverySelect-[Button.${delivery}]`}

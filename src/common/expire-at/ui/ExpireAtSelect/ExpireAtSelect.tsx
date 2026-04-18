@@ -20,13 +20,10 @@ export const ExpireAtSelect: FC<ExpireAtSelect.Props> = ({ value, onChange, ...p
 	return (
 		<Container
 			data-ui={"ExpireAtSelect[Container]"}
-			ui={{
-				layout: "vertical-flex",
-				height: "auto",
-				width: "full",
-				gap: "lg",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-height="auto"
+			data-ui-width="full"
+			data-ui-gap="lg"
 			{...props}
 		>
 			{Object.values(ListingExpireEnumSchema.enum).map((expire) => {

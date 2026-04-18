@@ -17,12 +17,9 @@ export const RejectedMessage: FC<RejectedMessage.Props> = ({ close, transaction,
 	return (
 		<Group
 			data-ui={"RejectedMessage"}
-			ui={{
-				round: "default",
-				flow: "vertical",
-				tone: "primary",
-				...ui,
-			}}
+			data-ui-round="default"
+			data-ui-flow="vertical"
+			data-ui-tone="primary"
 			{...props}
 		>
 			<AckButton

@@ -23,10 +23,8 @@ export const Item: FC<Item.Props> = ({ expire, isSelected, onChange }) => {
 			}}
 			{...uiSelectButton({
 				isSelected,
-				ui: {
-					flow: "horizontal",
-					justify: "space-between",
-				},
+				"data-ui-flow": "horizontal",
+				"data-ui-justify": "space-between",
 				className: [],
 			})}
 			data-ui={`ExpireAtSelect-[Button.${expire}]`}

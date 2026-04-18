@@ -31,12 +31,9 @@ export const Transaction: FC<Transaction.Props> = ({
 	return (
 		<Container
 			data-ui={"Transaction"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				gap: "xs",
-				...ui,
-			}}
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-gap="xs"
 			{...props}
 		>
 			<Container

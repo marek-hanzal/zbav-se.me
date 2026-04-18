@@ -29,11 +29,8 @@ export const TransactionHero: FC<TransactionHero.Props> = ({ transactionId, ...p
 		<Container
 			data-ui={"TransactionHero"}
 			data-action={"open transaction detail"}
-			ui={{
-				position: "relative",
-				height: "content",
-				...ui,
-			}}
+			data-ui-position="relative"
+			data-ui-height="content"
 			onClick={() => setDetail((prev) => !prev)}
 			{...props}
 		>
@@ -47,21 +44,17 @@ export const TransactionHero: FC<TransactionHero.Props> = ({ transactionId, ...p
 				price={transaction.price}
 				priceType={transaction.priceType}
 				currency={transaction.currency}
-				ui={{
-					snapTo: "top-center",
-					opacity: "8",
-					zIndex: true,
-				}}
+				data-ui-snap-to="top-center"
+				data-ui-opacity="8"
+				data-ui-z-index
 			/>
 
 			<LocationBadge
 				location={transaction.location}
 				distance={null}
-				ui={{
-					snapTo: "bottom",
-					opacity: "8",
-					zIndex: true,
-				}}
+				data-ui-snap-to="bottom"
+				data-ui-opacity="8"
+				data-ui-z-index
 			/>
 		</Container>
 	);

@@ -17,7 +17,6 @@ export const ConditionIcon: FC<ConditionIcon.Props> = ({ condition, ...props }) 
 	return (
 		<RatingIcon
 			rating={condition}
-			ui={ui}
 			{...props}
 		/>
 	);
