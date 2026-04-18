@@ -20,27 +20,19 @@ export const ProfileLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open profile"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={UserIcon}
 				to="/$locale/app/user"
 				params={{
 					locale,
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 				})}
 				{...uiMenuButton({
-					ui: {
-						tone: "neutral",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "neutral",
+					"data-ui-theme": "light",
 				})}
 				{...props}
 			>
@@ -48,9 +40,7 @@ export const ProfileLink = withFallback(
 					flip
 					icon={ChevronRightIcon}
 					iconProps={{
-						ui: {
-							opacity: "5",
-						},
+						"data-ui-opacity": "5",
 					}}
 				>
 					<Tx label="My profile (label)" />
@@ -64,20 +54,15 @@ export const ProfileLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open profile"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={UserIcon}
 				to="/$locale/app/user"
 				params={{
 					locale,
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 				})}
 				{...props}
 			>

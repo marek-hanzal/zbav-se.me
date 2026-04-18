@@ -20,9 +20,7 @@ export const ListingsLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open listings"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={CartIcon}
 				to="/$locale/app/buyer/feed/default"
 				params={{
@@ -34,9 +32,7 @@ export const ListingsLink = withFallback(
 					flip
 					icon={ChevronRightIcon}
 					iconProps={{
-						ui: {
-							opacity: "5",
-						},
+						"data-ui-opacity": "5",
 					}}
 				>
 					<Tx label="Listings (label)" />
@@ -50,9 +46,7 @@ export const ListingsLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open listings"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={CartIcon}
 				to="/$locale/app/buyer/feed/default"
 				params={{

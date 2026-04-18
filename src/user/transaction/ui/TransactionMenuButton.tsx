@@ -24,23 +24,19 @@ export const TransactionMenuButton: FC<TransactionMenuButton.Props> = ({ childre
 				data-ui={"TransactionMenuButton[Button]"}
 				iconEnabled={PaperclipIcon}
 				iconProps={{
-					ui: {
-						text: "xl",
-					},
+					"data-ui-text": "xl",
 				}}
 				onClick={() => {
 					setIsOpen(true);
 				}}
-				ui={{
-					tone: "link",
-					theme: "light",
-					square: "sm",
-					justify: "center",
-					items: "center",
-					border: false,
-					shadow: false,
-					background: undefined,
-				}}
+				data-ui-tone="link"
+				data-ui-theme="light"
+				data-ui-square="sm"
+				data-ui-justify="center"
+				data-ui-items="center"
+				data-ui-border={false}
+				data-ui-shadow={false}
+				data-ui-background={undefined}
 				{...props}
 			/>
 

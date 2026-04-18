@@ -29,10 +29,7 @@ export const UserPagePending: FC<UserPagePending.Props> = ({ ...props }) => {
 				/>
 			}
 			right={<HomeMenuButton />}
-			ui={{
-				layout: "vertical-header-content",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
 			{...props}
 		>
 			<Container

@@ -21,19 +21,16 @@ export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ className }) => {
 			params={{
 				locale,
 			}}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				text: "xl",
-				color: "icon",
-				round: "full",
-				background: "default",
-				shadow: true,
-				border: true,
-				inner: "md",
-				opacity: "8",
-				...ui,
-			}}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-text="xl"
+			data-ui-color="icon"
+			data-ui-round="full"
+			data-ui-background="default"
+			data-ui-shadow
+			data-ui-border
+			data-ui-inner="md"
+			data-ui-opacity="8"
 			className={className}
 		/>
 	);

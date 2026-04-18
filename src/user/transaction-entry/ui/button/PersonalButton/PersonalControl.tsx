@@ -44,19 +44,14 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 			}}
 		>
 			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					inner: "default",
-					...ui,
-				}}
+				data-ui-layout="vertical-content-footer"
+				data-ui-height="full"
+				data-ui-inner="default"
 				{...props}
 			>
 				<Container
-					ui={{
-						scroll: "vertical",
-						height: "full",
-					}}
+					data-ui-scroll="vertical"
+					data-ui-height="full"
 				>
 					<Status
 						icon={WarningIcon}
@@ -70,10 +65,8 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 					/>
 
 					<Container
-						ui={{
-							layout: "vertical-flex",
-							gap: "default",
-						}}
+						data-ui-layout="vertical-flex"
+						data-ui-gap="default"
 					>
 						<form.AppField name={"name"}>
 							{(field) => (

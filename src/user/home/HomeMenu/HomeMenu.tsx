@@ -46,12 +46,9 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 	return (
 		<Container
 			data-ui="HomeMenu"
-			ui={{
-				position: "relative",
-				height: "full",
-				width: "full",
-				...ui,
-			}}
+			data-ui-position="relative"
+			data-ui-height="full"
+			data-ui-width="full"
 			{...props}
 		>
 			<Fade scrollableRef={containerRef} />
@@ -59,24 +56,18 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 			<Container
 				ref={containerRef}
 				className={"min-h-0"}
-				ui={{
-					layout: "vertical-flex",
-					scroll: "vertical",
-					height: "full",
-					inner: "default",
-					items: "center",
-					gap: "md",
-				}}
+				data-ui-layout="vertical-flex"
+				data-ui-scroll="vertical"
+				data-ui-height="full"
+				data-ui-inner="default"
+				data-ui-items="center"
+				data-ui-gap="md"
 			>
 				{isHome ? null : (
 					<Group>
 						<HomeLink
 							_suspense={"I know"}
-							iconProps={{
-								ui: {
-									...icon,
-								},
-							}}
+							iconProps={icon}
 						/>
 					</Group>
 				)}
@@ -84,11 +75,7 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 				<Group>
 					<AgentLink
 						_suspense={"I know"}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
+						iconProps={icon}
 					/>
 				</Group>
 
@@ -96,99 +83,59 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 					<NotificationLink
 						_suspense={"I know"}
 						onLinkClick={onLinkClick}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
+						iconProps={icon}
 					/>
 				</Group>
 
 				<Group>
 					<SearchLink
 						_suspense={"I know"}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
+						iconProps={icon}
 					/>
 				</Group>
 
 				<Group>
 					<ListingsLink
 						_suspense={"I know"}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
+						iconProps={icon}
 					/>
 					<DraftLink
 						_suspense={"I know"}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
+						iconProps={icon}
 					/>
 				</Group>
 
 				<Group>
 					<MyListingsLink
 						_suspense={"I know"}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
+						iconProps={icon}
 					/>
 					<DraftListLink
 						_suspense={"I know"}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
+						iconProps={icon}
 					/>
 				</Group>
 
 				<Group>
 					<FeedLink
 						_suspense={"I know"}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
+						iconProps={icon}
 					/>
 					<FavouritesLink
 						_suspense={"I know"}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
+						iconProps={icon}
 					/>
 				</Group>
 
 				<MessageLink
 					_suspense={"I know"}
-					iconProps={{
-						ui: {
-							...icon,
-						},
-					}}
+					iconProps={icon}
 				/>
 
 				<Group>
 					<ProfileLink
 						_suspense={"I know"}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
+						iconProps={icon}
 					/>
 				</Group>
 			</Container>

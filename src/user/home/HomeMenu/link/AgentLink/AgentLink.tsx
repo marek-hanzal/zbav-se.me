@@ -29,17 +29,13 @@ export const AgentLink = withFallback(
 					locale,
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 					className: [],
 				})}
 				{...uiMenuButton({
-					ui: {
-						tone: "neutral",
-						theme: "light",
-					},
+					"data-ui-tone": "neutral",
+					"data-ui-theme": "light",
 					className: [],
 				})}
 				{...props}
@@ -48,9 +44,7 @@ export const AgentLink = withFallback(
 					flip
 					icon={ChevronRightIcon}
 					iconProps={{
-						ui: {
-							opacity: "5",
-						},
+						"data-ui-opacity": "5",
 					}}
 				>
 					<Tx label="Agent (label)" />
@@ -73,10 +67,8 @@ export const AgentLink = withFallback(
 					locale,
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 					className: [],
 				})}
 				{...props}

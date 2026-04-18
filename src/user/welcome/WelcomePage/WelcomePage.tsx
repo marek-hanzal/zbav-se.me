@@ -47,13 +47,10 @@ export const WelcomePage: FC<WelcomePage.Props> = ({ ...props }) => {
 							locale,
 						}}
 						{...uiButton({
-							ui: {
-								tone: "link",
-								theme: "light",
-								text: "md",
-								size: "lg",
-							},
-							className: [],
+							"data-ui-tone": "link",
+							"data-ui-theme": "light",
+							"data-ui-text": "md",
+							"data-ui-size": "lg",
 						})}
 					>
 						<Tx label={"Go home (welcome)"} />

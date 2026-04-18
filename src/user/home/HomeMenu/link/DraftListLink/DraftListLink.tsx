@@ -30,17 +30,13 @@ export const DraftListLink = withFallback(
 					locale,
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 					className: [],
 				})}
 				{...uiMenuButton({
-					ui: {
-						tone: "neutral",
-						theme: "light",
-					},
+					"data-ui-tone": "neutral",
+					"data-ui-theme": "light",
 					className: [],
 				})}
 				{...props}
@@ -49,9 +45,7 @@ export const DraftListLink = withFallback(
 					flip
 					icon={ChevronRightIcon}
 					iconProps={{
-						ui: {
-							opacity: "5",
-						},
+						"data-ui-opacity": "5",
 					}}
 				>
 					<Tx label={"Draft list (label)"} />
@@ -74,10 +68,8 @@ export const DraftListLink = withFallback(
 					locale,
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 					className: [],
 				})}
 				{...props}

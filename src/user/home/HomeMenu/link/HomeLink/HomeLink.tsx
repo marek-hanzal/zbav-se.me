@@ -21,9 +21,7 @@ export const HomeLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"go home"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={HomeIcon}
 				to="/$locale/app/home"
 				params={{
@@ -35,9 +33,7 @@ export const HomeLink = withFallback(
 					flip
 					icon={ChevronRightIcon}
 					iconProps={{
-						ui: {
-							opacity: "5",
-						},
+						"data-ui-opacity": "5",
 					}}
 				>
 					<Tx label="Home (label)" />
@@ -51,9 +47,7 @@ export const HomeLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"go home"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={HomeIcon}
 				to="/$locale/app/home"
 				params={{

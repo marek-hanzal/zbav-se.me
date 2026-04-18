@@ -61,10 +61,8 @@ export const DraftLink = withFallback(
 					to: "/$locale/app/seller/draft/$id/edit",
 				})
 					? uiMenuButton({
-							ui: {
-								tone: "primary",
-								theme: "light",
-							},
+							"data-ui-tone": "primary",
+							"data-ui-theme": "light",
 							className: [],
 						})
 					: {})}
@@ -74,9 +72,7 @@ export const DraftLink = withFallback(
 					flip
 					icon={ChevronRightIcon}
 					iconProps={{
-						ui: {
-							opacity: "5",
-						},
+						"data-ui-opacity": "5",
 					}}
 				>
 					<Tx
@@ -103,10 +99,8 @@ export const DraftLink = withFallback(
 					locale,
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 					className: [],
 				})}
 				{...props}

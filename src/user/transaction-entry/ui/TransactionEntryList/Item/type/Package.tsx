@@ -25,10 +25,8 @@ export const Package: FC<Package.Props> = ({ transactionEntry, ...props }) => {
 		<TypeContainer
 			data-ui={"Package"}
 			direction={transactionEntry.direction}
-			ui={{
-				flow: "vertical",
-				gap: "xs",
-			}}
+			data-ui-flow="vertical"
+			data-ui-gap="xs"
 			{...props}
 		>
 			<LabelValue
@@ -39,9 +37,7 @@ export const Package: FC<Package.Props> = ({ transactionEntry, ...props }) => {
 						target="_blank"
 						rel="noopener noreferrer"
 						{...uiTypo({
-							ui: {
-								wrap: "wrap",
-							},
+							"data-ui-wrap": "wrap",
 							className: [
 								"block underline",
 							],
@@ -53,14 +49,10 @@ export const Package: FC<Package.Props> = ({ transactionEntry, ...props }) => {
 				action={
 					<Icon
 						icon={ExternalIcon}
-						ui={{
-							text: "lg",
-						}}
+						data-ui-text="lg"
 					/>
 				}
-				ui={{
-					shadow: undefined,
-				}}
+				data-ui-shadow={undefined}
 			/>
 
 			<LabelValue
@@ -70,14 +62,10 @@ export const Package: FC<Package.Props> = ({ transactionEntry, ...props }) => {
 				action={
 					<Icon
 						icon={SendPackageIcon}
-						ui={{
-							text: "lg",
-						}}
+						data-ui-text="lg"
 					/>
 				}
-				ui={{
-					shadow: undefined,
-				}}
+				data-ui-shadow={undefined}
 			/>
 
 			<Typo
@@ -86,10 +74,8 @@ export const Package: FC<Package.Props> = ({ transactionEntry, ...props }) => {
 					time: transactionEntry.createdAt,
 					type: "relative",
 				})}
-				ui={{
-					text: "sm",
-					opacity: "6",
-				}}
+				data-ui-text="sm"
+				data-ui-opacity="6"
 			/>
 		</TypeContainer>
 	);

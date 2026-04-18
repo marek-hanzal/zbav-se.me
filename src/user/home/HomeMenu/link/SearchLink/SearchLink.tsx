@@ -21,27 +21,19 @@ export const SearchLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"search listings"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={FindListingsIcon}
 				to="/$locale/app/buyer/search"
 				params={{
 					locale,
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 				})}
 				{...uiMenuButton({
-					ui: {
-						tone: "neutral",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "neutral",
+					"data-ui-theme": "light",
 				})}
 				{...props}
 			>
@@ -49,9 +41,7 @@ export const SearchLink = withFallback(
 					flip
 					icon={ChevronRightIcon}
 					iconProps={{
-						ui: {
-							opacity: "5",
-						},
+						"data-ui-opacity": "5",
 					}}
 				>
 					<Tx label="Find listings (label)" />
@@ -65,20 +55,15 @@ export const SearchLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"search listings"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={FindListingsIcon}
 				to="/$locale/app/buyer/search"
 				params={{
 					locale,
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 				})}
 				{...props}
 			>

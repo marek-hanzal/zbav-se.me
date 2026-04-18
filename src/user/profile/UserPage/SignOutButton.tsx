@@ -37,14 +37,11 @@ export const SignOutButton: FC<SignOutButton.Props> = ({ ...props }) => {
 			onClick={() => signOutMutation.mutate({})}
 			disabled={signOutMutation.isPending}
 			loading={signOutMutation.isPending}
-			ui={{
-				tone: "secondary",
-				theme: "light",
-				size: "md",
-				width: "content",
-				text: "md",
-				...ui,
-			}}
+			data-ui-tone="secondary"
+			data-ui-theme="light"
+			data-ui-size="md"
+			data-ui-width="content"
+			data-ui-text="md"
 			{...props}
 		>
 			<Tx label="Sign out" />

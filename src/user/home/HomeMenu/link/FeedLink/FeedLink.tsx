@@ -20,27 +20,19 @@ export const FeedLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open feed list"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={"icon-[solar--archive-up-minimlistic-linear]"}
 				to="/$locale/app/buyer/feed/list"
 				params={{
 					locale,
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 				})}
 				{...uiMenuButton({
-					ui: {
-						tone: "neutral",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "neutral",
+					"data-ui-theme": "light",
 				})}
 				{...props}
 			>
@@ -48,9 +40,7 @@ export const FeedLink = withFallback(
 					flip
 					icon={ChevronRightIcon}
 					iconProps={{
-						ui: {
-							opacity: "5",
-						},
+						"data-ui-opacity": "5",
 					}}
 				>
 					<Tx label="Feed (label)" />
@@ -64,20 +54,15 @@ export const FeedLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open feed list"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={"icon-[solar--archive-up-minimlistic-linear]"}
 				to="/$locale/app/buyer/feed/list"
 				params={{
 					locale,
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 				})}
 				{...props}
 			>

@@ -38,29 +38,22 @@ export const PackageControl: FC<PackageControl.Props> = ({ onCancel, onSave, ...
 		>
 			<Container
 				data-ui="PackageControl[Container]"
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					...ui,
-				}}
+				data-ui-layout="vertical-content-footer"
+				data-ui-height="full"
+				data-ui-width="full"
 				{...props}
 			>
 				<Container
-					ui={{
-						layout: "vertical-flex",
-						height: "auto",
-						width: "full",
-						gap: "lg",
-					}}
+					data-ui-layout="vertical-flex"
+					data-ui-height="auto"
+					data-ui-width="full"
+					data-ui-gap="lg"
 				>
 					<Container
-						ui={{
-							layout: "vertical-flex",
-							height: "auto",
-							width: "full",
-							gap: "lg",
-						}}
+						data-ui-layout="vertical-flex"
+						data-ui-height="auto"
+						data-ui-width="full"
+						data-ui-gap="lg"
 					>
 						<form.AppField name={"link"}>
 							{(field) => (

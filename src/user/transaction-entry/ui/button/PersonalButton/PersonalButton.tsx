@@ -72,9 +72,7 @@ export const PersonalButton: FC<PersonalButton.Props> = ({
 							payload,
 						});
 					}}
-					ui={{
-						inner: "default",
-					}}
+					data-ui-inner="default"
 				/>
 			</BottomSheet>
 		</>

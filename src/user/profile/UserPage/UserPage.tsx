@@ -43,10 +43,7 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 				/>
 			}
 			right={<HomeMenuButton />}
-			ui={{
-				layout: "vertical-header-content",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
 			{...props}
 		>
 			<Container
