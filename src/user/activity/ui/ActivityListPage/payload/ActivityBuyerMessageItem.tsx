@@ -37,35 +37,25 @@ export const ActivityBuyerMessageItem: FC<ActivityBuyerMessageItem.Props> = ({ i
 				title={
 					<Tx
 						label={"New buyer message (label)"}
-						ui={{
-							tone: item.archivedAt ? "neutral" : "secondary",
-							theme: "light",
-							font: item.archivedAt ? "normal" : "bold",
-							color: "lead",
-						}}
+						data-ui-tone={item.archivedAt ? "neutral" : "secondary"}
+						data-ui-theme="light"
+						data-ui-font={item.archivedAt ? "normal" : "bold"}
+						data-ui-color="lead"
 					/>
 				}
 				bottom={
-					<Container
-						ui={{
-							flow: "vertical",
-						}}
-					>
+					<Container data-ui-flow="vertical">
 						<Typo
 							label={transaction.title}
-							ui={{
-								text: "sm",
-							}}
+							data-ui-text="sm"
 						/>
 						<Typo
 							label={toTimeDiff({
 								locale,
 								time: item.timestamp,
 							})}
-							ui={{
-								text: "xs",
-								opacity: "7",
-							}}
+							data-ui-text="xs"
+							data-ui-opacity="7"
 						/>
 					</Container>
 				}

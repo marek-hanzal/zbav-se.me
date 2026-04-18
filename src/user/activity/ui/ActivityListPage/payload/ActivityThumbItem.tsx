@@ -40,39 +40,31 @@ export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
 								? "You got like (label)"
 								: "You got dislike (label)"
 						}
-						ui={{
-							tone: item.archivedAt
+						data-ui-tone={
+							item.archivedAt
 								? "neutral"
 								: item.payload.thumb === "like"
 									? "secondary"
-									: "neutral",
-							theme: "light",
-							font: item.archivedAt ? "normal" : "bold",
-							color: "lead",
-						}}
+									: "neutral"
+						}
+						data-ui-theme="light"
+						data-ui-font={item.archivedAt ? "normal" : "bold"}
+						data-ui-color="lead"
 					/>
 				}
 				bottom={
-					<Container
-						ui={{
-							flow: "vertical",
-						}}
-					>
+					<Container data-ui-flow="vertical">
 						<Typo
 							label={listing.title}
-							ui={{
-								text: "sm",
-							}}
+							data-ui-text="sm"
 						/>
 						<Typo
 							label={toTimeDiff({
 								locale,
 								time: item.timestamp,
 							})}
-							ui={{
-								text: "xs",
-								opacity: "7",
-							}}
+							data-ui-text="xs"
+							data-ui-opacity="7"
 						/>
 					</Container>
 				}
@@ -107,11 +99,9 @@ export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
 			>
 				<Container
 					data-ui="ActivityThumbItem-[ListingCard]"
-					ui={{
-						inner: "default",
-						flow: "vertical",
-						gap: "default",
-					}}
+					data-ui-inner="default"
+					data-ui-flow="vertical"
+					data-ui-gap="default"
 				>
 					<Tx label={listing.title} />
 					<Tx label={`#${listing.id}`} />

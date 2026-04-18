@@ -40,17 +40,13 @@ export const CategoryItem = withFallback(
 			>
 				<Typo
 					label={item.group}
-					ui={{
-						text: "sm",
-					}}
+					data-ui-text="sm"
 				/>
 
 				<Typo
 					label={item.category}
-					ui={{
-						text: "lg",
-						font: isSelected ? "bold" : "normal",
-					}}
+					data-ui-text="lg"
+					data-ui-font={isSelected ? "bold" : "normal"}
 				/>
 			</Button>
 		);

@@ -24,12 +24,9 @@ export const CategorySelect: FC<CategorySelect.Props> = ({ selection, categoryId
 	return (
 		<Container
 			data-ui={"CategorySelect[Container]"}
-			ui={{
-				layout: "vertical-header-content",
-				height: "full",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
+			data-ui-height="full"
+			data-ui-gap="default"
 			{...props}
 		>
 			<Fulltext
