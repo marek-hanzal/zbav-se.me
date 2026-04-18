@@ -15,7 +15,7 @@ export namespace ui {
 	/**
 	 * @internal
 	 */
-	export type Data<TProps, T extends keyof TProps> = Record<string, unknown> & {
+	export type Data<TProps, T extends keyof TProps> = {
 		[K in T as `data-ui-${KebabCase<K & string>}`]?: TProps[K];
 	};
 

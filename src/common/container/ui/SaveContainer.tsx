@@ -34,7 +34,6 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 	disabled,
 	textCancel,
 	textSave,
-	ui,
 	cancelProps,
 	saveProps,
 	...props
@@ -42,13 +41,10 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 	return (
 		<Container
 			data-ui="SaveContainer[Container]"
-			ui={{
-				flow: "horizontal",
-				items: "center",
-				justify: "space-evenly",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-flow="horizontal"
+			data-ui-items="center"
+			data-ui-justify="space-evenly"
+			data-ui-gap="default"
 			{...props}
 		>
 			<Button
