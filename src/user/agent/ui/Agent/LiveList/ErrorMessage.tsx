@@ -10,7 +10,7 @@ export namespace ErrorMessage {
 	}
 }
 
-export const ErrorMessage: FC<ErrorMessage.Props> = ({ events, ui, ...props }) => {
+export const ErrorMessage: FC<ErrorMessage.Props> = ({ events, ...props }) => {
 	const errorState = selectErrorState(events);
 
 	if (!errorState) {
@@ -19,21 +19,16 @@ export const ErrorMessage: FC<ErrorMessage.Props> = ({ events, ui, ...props }) =
 
 	return (
 		<Container
-			data-ui={"LiveList-ErrorMessage"}
-			ui={{
-				flow: "vertical",
-				gap: "xs",
-				tone: "danger",
-				...ui,
-			}}
+			data-ui="ErrorMessage"
+			data-ui-flow="vertical"
+			data-ui-gap="xs"
+			data-ui-tone="danger"
 			{...props}
 		>
 			<Typo
 				label={errorState.message}
-				ui={{
-					text: "sm",
-					color: "lead",
-				}}
+				data-ui-text="sm"
+				data-ui-color="lead"
 			/>
 		</Container>
 	);

@@ -27,48 +27,36 @@ export const Personal = withFallback(
 
 		return (
 			<TypeContainer
-				data-ui={"Personal"}
+				data-ui="Personal"
 				direction={transactionEntry.direction}
-				ui={{
-					flow: "vertical",
-				}}
+				data-ui-flow="vertical"
 				{...props}
 			>
 				<Container
-					ui={{
-						layout: "vertical-flex",
-						gap: "xs",
-					}}
+					data-ui-layout="vertical-flex"
+					data-ui-gap="xs"
 				>
 					<Typo
 						label={transactionEntry.payload.name}
-						ui={{
-							wrap: "wrap",
-							font: "bold",
-						}}
+						data-ui-wrap="wrap"
+						data-ui-font="bold"
 						className={"py-1"}
 					/>
 
 					<Typo
 						label={transactionEntry.payload.phone}
-						ui={{
-							wrap: "wrap",
-						}}
+						data-ui-wrap="wrap"
 					/>
 
 					<Typo
 						label={transactionEntry.payload.email}
-						ui={{
-							wrap: "wrap",
-						}}
+						data-ui-wrap="wrap"
 						className={"py-1"}
 					/>
 
 					<Typo
 						label={location.address}
-						ui={{
-							wrap: "wrap",
-						}}
+						data-ui-wrap="wrap"
 						className={"py-1"}
 					/>
 				</Container>
@@ -93,9 +81,7 @@ export const Personal = withFallback(
 		return (
 			<TypeContainer
 				direction={transactionEntry.direction}
-				ui={{
-					flow: "vertical",
-				}}
+				data-ui-flow="vertical"
 				className={"min-h-44"}
 			>
 				<SpinnerContainer />

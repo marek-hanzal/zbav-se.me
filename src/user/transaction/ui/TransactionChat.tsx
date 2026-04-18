@@ -69,10 +69,8 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 	return (
 		<Container
 			data-ui="TransactionChat"
-			ui={{
-				layout: "vertical-flex",
-				width: "full",
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-width="full"
 			{...props}
 		>
 			{match(transaction.status)

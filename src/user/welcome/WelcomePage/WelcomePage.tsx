@@ -21,17 +21,14 @@ export namespace WelcomePage {
  *
  * @see src/@routes
  */
-export const WelcomePage: FC<WelcomePage.Props> = ({ ui, ...props }) => {
+export const WelcomePage: FC<WelcomePage.Props> = ({ ...props }) => {
 	const locale = useLocale();
 
 	return (
 		<Container
-			data-ui={"WelcomePage"}
-			ui={{
-				layout: "vertical-centered",
-				height: "full",
-				...ui,
-			}}
+			data-ui="WelcomePage"
+			data-ui-layout="vertical-centered"
+			data-ui-height="full"
 			{...props}
 		>
 			<Status
