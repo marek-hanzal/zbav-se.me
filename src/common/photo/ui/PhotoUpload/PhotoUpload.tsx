@@ -95,7 +95,9 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 
 			{controller.isPending ? <UploadPending progress={controller.progress} /> : null}
 
-			{!value && !controller.isPending ? <Placeholder disabled={ui?.disabled} /> : null}
+			{!value && !controller.isPending ? (
+				<Placeholder disabled={props["data-ui-disabled"]} />
+			) : null}
 
 			{value && !controller.isPending ? (
 				<Suspense fallback={<Preview.Fallback />}>
