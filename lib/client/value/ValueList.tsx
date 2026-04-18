@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { EntitySchema } from "@/lib/common/schema";
 import { Container } from "../container/Container";
 import { Group } from "../group/Group";
+import { Icon } from "../icon";
 import { SpinnerContainer } from "../spinner/SpinnerContainer";
 import { Tx } from "../tx/Tx";
 
@@ -112,8 +113,15 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 							data-ui-shadow={false}
 							data-ui-round="default"
 							data-ui-inner="default"
+							data-ui-flow={"horizontal"}
+							data-ui-items={"center"}
+							data-ui-gap={"default"}
 							className={"px-0"}
 						>
+							<Icon
+								icon={"icon-[proicons--checkmark]"}
+								data-ui-text={"xl"}
+							/>
 							{renderFn(item)}
 						</Container>
 					))}
