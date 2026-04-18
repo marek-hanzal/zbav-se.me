@@ -19,8 +19,6 @@ export const Title: FC<Title.Props> = ({
 	textSubtitle,
 	right,
 	left,
-	//
-	ui,
 	...props
 }) => {
 	return (

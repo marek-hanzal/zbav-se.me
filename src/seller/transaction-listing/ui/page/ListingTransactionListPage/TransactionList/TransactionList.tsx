@@ -63,8 +63,8 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						activity: "archived",
 					},
 					typoProps: {
-						tone: "neutral",
-						theme: "light",
+						"data-ui-tone": "neutral",
+						"data-ui-theme": "light",
 					},
 				},
 				{
@@ -76,7 +76,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						activity: "archived",
 					},
 					typoProps: {
-						font: "normal",
+						"data-ui-font": "normal",
 					},
 				},
 				{
@@ -88,7 +88,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						activity: "archived",
 					},
 					typoProps: {
-						font: "normal",
+						"data-ui-font": "normal",
 					},
 				},
 				{
@@ -100,7 +100,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						activity: "archived",
 					},
 					typoProps: {
-						font: "normal",
+						"data-ui-font": "normal",
 					},
 				},
 				{
@@ -117,10 +117,10 @@ export const TransactionList: FC<TransactionList.Props> = ({
 					},
 					"data-ui-opacity": "7",
 					typoProps: {
-						tone: "neutral",
-						theme: "light",
-						opacity: "7",
-						font: "normal",
+						"data-ui-tone": "neutral",
+						"data-ui-theme": "light",
+						"data-ui-opacity": "7",
+						"data-ui-font": "normal",
 					},
 				},
 			] satisfies Group[],

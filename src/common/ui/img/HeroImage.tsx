@@ -77,7 +77,6 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	onLoad,
 	onError,
 	//
-	ui,
 	className,
 	//
 	...props
@@ -112,6 +111,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	return (
 		<Container
 			{...uiContainer({
+				name: "HeroImage",
 				"data-ui-height": "full",
 				"data-ui-width": "full",
 				"data-ui-position": "relative",
@@ -120,7 +120,6 @@ export const HeroImage: FC<HeroImage.Props> = ({
 					className,
 				],
 			})}
-			data-ui={"HeroImage"}
 		>
 			{/** biome-ignore lint/a11y/useAltText: Should go from props */}
 			<img

@@ -53,6 +53,7 @@ export namespace ui {
 	}
 
 	export type PropsEx<TProps extends object> = Data<TProps, keyof TProps> & {
+		name?: string;
 		className?: tvc.ClassName;
 	};
 }
