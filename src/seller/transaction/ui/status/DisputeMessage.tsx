@@ -38,12 +38,9 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, .
 	return (
 		<Group
 			data-ui={"DisputeMessage"}
-			ui={{
-				round: "default",
-				flow: "vertical",
-				tone: "link",
-				...ui,
-			}}
+			data-ui-round="default"
+			data-ui-flow="vertical"
+			data-ui-tone="link"
 			{...props}
 		>
 			<PackageButton

@@ -35,11 +35,8 @@ export const BuyerInfo = withFallback(({ _suspense, transactionId, ...props }: B
 
 	return (
 		<Container
-			ui={{
-				flow: "vertical",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-flow="vertical"
+			data-ui-gap="default"
 			{...props}
 		>
 			<LabelValue
@@ -61,12 +58,10 @@ export const BuyerInfo = withFallback(({ _suspense, transactionId, ...props }: B
 					icon={SearchIcon}
 					textTitle={translator.text("Transaction buyer info not available (title)")}
 					textMessage={translator.text("Transaction buyer info not available (message)")}
-					ui={{
-						tone: "brand",
-						theme: "light",
-						inner: "2xl",
-						opacity: "6",
-					}}
+					data-ui-tone="brand"
+					data-ui-theme="light"
+					data-ui-inner="2xl"
+					data-ui-opacity="6"
 					className={"text-center"}
 				/>
 			)}

@@ -40,12 +40,9 @@ export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ...pr
 		<>
 			<Group
 				data-ui={"TradeMessage"}
-				ui={{
-					round: "default",
-					flow: "vertical",
-					tone: "neutral",
-					...ui,
-				}}
+				data-ui-round="default"
+				data-ui-flow="vertical"
+				data-ui-tone="neutral"
 				{...props}
 			>
 				<PackageButton
@@ -94,12 +91,9 @@ export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ...pr
 
 			<Group
 				data-ui={"TradeMessage"}
-				ui={{
-					round: "default",
-					flow: "vertical",
-					tone: "neutral",
-					...ui,
-				}}
+				data-ui-round="default"
+				data-ui-flow="vertical"
+				data-ui-tone="neutral"
 				{...props}
 			>
 				<BuyerInfoButton

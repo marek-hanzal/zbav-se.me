@@ -29,9 +29,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ _suspense, listing, state
 						_suspense={"I know"}
 						data-ui={"ListingSheet-[ListingCardContainer]"}
 						listing={listing}
-						ui={{
-							inner: "default",
-						}}
+						data-ui-inner="default"
 						hooks={{
 							onGallery: () => setView("gallery"),
 						}}

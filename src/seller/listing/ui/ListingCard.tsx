@@ -31,11 +31,8 @@ export const ListingCard: FC<ListingCard.Props> = ({ _suspense, listing, hooks, 
 	return (
 		<Container
 			data-ui={"ListingCard[Container]"}
-			ui={{
-				layout: "vertical-flex",
-				gap: "xl",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-gap="xl"
 			{...props}
 		>
 			<Container
@@ -73,10 +70,8 @@ export const ListingCard: FC<ListingCard.Props> = ({ _suspense, listing, hooks, 
 						<CategoryInline
 							_suspense={"I know"}
 							categoryId={listing.category.id}
-							ui={{
-								tone: "secondary",
-								theme: "light",
-							}}
+							data-ui-tone="secondary"
+							data-ui-theme="light"
 						/>
 					}
 				/>

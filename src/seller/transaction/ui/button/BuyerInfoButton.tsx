@@ -51,9 +51,7 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({ transactionId, ...p
 					<BuyerInfo
 						_suspense={"I know"}
 						transactionId={transactionId}
-						ui={{
-							inner: "default",
-						}}
+						data-ui-inner="default"
 					/>
 				</Suspense>
 			</BottomSheet>
