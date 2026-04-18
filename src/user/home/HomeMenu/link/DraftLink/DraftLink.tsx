@@ -1,7 +1,7 @@
 import { useMatchRoute } from "@tanstack/react-router";
 import { withFallback } from "@/lib/client/fallback";
 import { ChevronRightIcon } from "@/lib/client/icon";
-import { LinkTo } from "@/lib/client/link-to";
+import { LinkTo, type uiLinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
@@ -17,7 +17,9 @@ import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
  * @see src/@user/home/page/HomePage.tsx
  */
 export namespace DraftLink {
-	export interface Props extends Pick<LinkTo.Props, "ui" | "iconProps">, MarkSuspense.Props {
+	export interface Props
+		extends uiLinkTo.Component<Pick<LinkTo.Props, "iconProps">>,
+			MarkSuspense.Props {
 		//
 	}
 }
@@ -45,9 +47,7 @@ export const DraftLink = withFallback(
 		return (
 			<LinkTo
 				data-action={data.length > 0 ? "continue listing" : "create listing"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={
 					data.length > 0
 						? "icon-[solar--bill-check-linear]"
@@ -63,7 +63,6 @@ export const DraftLink = withFallback(
 					? uiMenuButton({
 							"data-ui-tone": "primary",
 							"data-ui-theme": "light",
-							className: [],
 						})
 					: {})}
 				{...props}
@@ -90,9 +89,7 @@ export const DraftLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"create listing"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={DraftIcon}
 				to="/$locale/app/seller/draft/resolve"
 				params={{
@@ -101,7 +98,6 @@ export const DraftLink = withFallback(
 				activeProps={uiMenuButton({
 					"data-ui-tone": "primary",
 					"data-ui-theme": "light",
-					className: [],
 				})}
 				{...props}
 			>
