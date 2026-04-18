@@ -44,7 +44,7 @@ export namespace uiBadge {
 	}
 }
 
-export const uiBadge = ({ className }: uiBadge.Props) => {
+export const uiBadge = ({ className, ...ui }: uiBadge.Props) => {
 	return coolUi<uiBadge.Ui>({
 		name: "Badge",
 		ui: {
@@ -55,6 +55,7 @@ export const uiBadge = ({ className }: uiBadge.Props) => {
 			"data-ui-round": "default",
 			"data-ui-border": true,
 			"data-ui-shadow": true,
+			...ui,
 		},
 		className,
 	});
