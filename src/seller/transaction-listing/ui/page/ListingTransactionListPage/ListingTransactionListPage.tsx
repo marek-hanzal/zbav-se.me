@@ -46,9 +46,7 @@ export const ListingTransactionListPage: FC<ListingTransactionListPage.Props> = 
 				<TransactionList
 					_suspense={_suspense}
 					listingId={listingId}
-					ui={{
-						inner: "default",
-					}}
+					data-ui-inner="default"
 				/>
 			</Container>
 		</TitleContainer>

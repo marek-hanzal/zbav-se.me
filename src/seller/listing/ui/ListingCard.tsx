@@ -40,20 +40,16 @@ export const ListingCard: FC<ListingCard.Props> = ({ _suspense, listing, ui, hoo
 		>
 			<Container
 				data-ui={"ListingCard-[Container.hero]"}
-				ui={{
-					position: "relative",
-				}}
+				data-ui-position="relative"
 			>
 				<ListingPrice
 					data-ui={"ListingOverlay-[ListingPrice]"}
 					price={listing.price}
 					priceType={listing.priceType}
 					currency={listing.currency}
-					ui={{
-						snapTo: "top-center",
-						opacity: "8",
-						zIndex: true,
-					}}
+					data-ui-snap-to="top-center"
+					data-ui-opacity="8"
+					data-ui-z-index
 				/>
 
 				<HeroImage
@@ -61,19 +57,15 @@ export const ListingCard: FC<ListingCard.Props> = ({ _suspense, listing, ui, hoo
 					src={hero.url}
 					alt={`Hero image for listing ${listing.id}`}
 					onClick={hooks.onGallery}
-					ui={{
-						round: "default",
-					}}
+					data-ui-round="default"
 					className={"h-64"}
 				/>
 			</Container>
 
 			<Container
 				data-ui={"ListingCard-[Container.info]"}
-				ui={{
-					layout: "vertical-flex",
-					gap: "default",
-				}}
+				data-ui-layout="vertical-flex"
+				data-ui-gap="default"
 			>
 				<LabelValue
 					textLabel={translator.text("Listing category (label)")}

@@ -32,12 +32,10 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({
 				textTitle={textTitle}
 				textMessage={textMessage}
 				action={action}
-				ui={{
-					tone: "brand",
-					theme: "light",
-					color: "lead",
-					inner: "4xl",
-				}}
+				data-ui-tone="brand"
+				data-ui-theme="light"
+				data-ui-color="lead"
+				data-ui-inner="4xl"
 				className={"text-center"}
 			/>
 		</Container>

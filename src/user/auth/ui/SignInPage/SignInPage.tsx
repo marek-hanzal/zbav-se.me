@@ -174,12 +174,10 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 							</form.AppField>
 
 							<Container
-								ui={{
-									layout: "vertical-flex",
-									width: "full",
-									items: "center",
-									gap: "lg",
-								}}
+								data-ui-layout="vertical-flex"
+								data-ui-width="full"
+								data-ui-items="center"
+								data-ui-gap="lg"
 							>
 								<form.Subscribe
 									selector={(store) => ({

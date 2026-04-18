@@ -10,7 +10,9 @@ import { translator } from "@/lib/common/translator";
 import { Logo } from "~/common/ui/logo";
 
 export namespace WelcomePage {
-	export interface Props extends Container.Props {}
+	export interface Props extends Container.Props {
+		//
+	}
 }
 
 /**
@@ -36,9 +38,7 @@ export const WelcomePage: FC<WelcomePage.Props> = ({ ui, ...props }) => {
 				icon={<Logo />}
 				textTitle={translator.text("Welcome (title)")}
 				titleProps={{
-					ui: {
-						text: "md",
-					},
+					"data-ui-text": "md",
 				}}
 				action={
 					<LinkTo
@@ -62,11 +62,9 @@ export const WelcomePage: FC<WelcomePage.Props> = ({ ui, ...props }) => {
 						<Tx label={"Go home (welcome)"} />
 					</LinkTo>
 				}
-				ui={{
-					tone: "brand",
-					theme: "light",
-					inner: "4xl",
-				}}
+				data-ui-tone="brand"
+				data-ui-theme="light"
+				data-ui-inner="4xl"
 				className={[
 					"text-center",
 				]}

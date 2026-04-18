@@ -42,11 +42,9 @@ export const Transaction: FC<Transaction.Props> = ({
 		>
 			<Container
 				ref={containerRef}
-				ui={{
-					layout: "vertical-header-content",
-					height: "full",
-					scroll: "vertical",
-				}}
+				data-ui-layout="vertical-header-content"
+				data-ui-height="full"
+				data-ui-scroll="vertical"
 			>
 				<TransactionHero
 					_suspense={_suspense}
@@ -59,9 +57,7 @@ export const Transaction: FC<Transaction.Props> = ({
 					containerRef={containerRef}
 					transactionId={transactionId}
 					refresh={refresh}
-					ui={{
-						inner: "default",
-					}}
+					data-ui-inner="default"
 				/>
 			</Container>
 

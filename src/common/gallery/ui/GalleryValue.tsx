@@ -19,13 +19,7 @@ export namespace GalleryValue {
  *
  * @see src/draft/ui/DraftEditor/patch/GalleryPatch.tsx
  */
-export const GalleryValue: FC<GalleryValue.Props> = ({
-	uploads,
-	label,
-	statusProps,
-	ui,
-	...props
-}) => {
+export const GalleryValue: FC<GalleryValue.Props> = ({ uploads, label, statusProps, ...props }) => {
 	return (
 		<Container
 			data-ui={"GalleryValue[Container]"}
@@ -40,7 +34,6 @@ export const GalleryValue: FC<GalleryValue.Props> = ({
 				background: "default",
 				shadow: false,
 				border: false,
-				...ui,
 			}}
 			className="h-42"
 			{...props}

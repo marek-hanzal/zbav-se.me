@@ -57,9 +57,7 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 				disabled={loading}
 				iconEnabled={ArrowLeftIcon}
 				iconProps={{
-					ui: {
-						text: "xl",
-					},
+					"data-ui-text": "xl",
 				}}
 				{...uiCancelButton({
 					className: [],
@@ -76,9 +74,7 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 				loading={loading}
 				iconEnabled={SaveIcon}
 				iconProps={{
-					ui: {
-						text: "xl",
-					},
+					"data-ui-text": "xl",
 				}}
 				{...uiSaveButton({
 					className: [],

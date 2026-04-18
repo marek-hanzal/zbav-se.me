@@ -47,10 +47,8 @@ export const Location = withFallback(
 						time: transactionEntry.createdAt,
 						type: "relative",
 					})}
-					ui={{
-						text: "sm",
-						opacity: "6",
-					}}
+					data-ui-text="sm"
+					data-ui-opacity="6"
 				/>
 			</TypeContainer>
 		);

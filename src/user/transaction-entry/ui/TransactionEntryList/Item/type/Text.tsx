@@ -32,10 +32,8 @@ export const Text: FC<Text.Props> = ({ side, transactionEntry, ...props }) => {
 					time: transactionEntry.createdAt,
 					type: "relative",
 				})}
-				ui={{
-					text: "sm",
-					opacity: "6",
-				}}
+				data-ui-text="sm"
+				data-ui-opacity="6"
 			/>
 		</TypeContainer>
 	);

@@ -64,10 +64,8 @@ export const ListingPrice: FC<ListingPrice.Props> = ({
 							return (
 								<Tx
 									label={`Listing price - ${priceType}`}
-									ui={{
-										text: "sm",
-										opacity: "6",
-									}}
+									data-ui-text="sm"
+									data-ui-opacity="6"
 								/>
 							);
 						})
