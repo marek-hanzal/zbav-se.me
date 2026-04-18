@@ -26,10 +26,10 @@ export const TypoIcon: FC<TypoIcon.Props> = ({
 			data-ui-justify="space-between"
 			data-ui-gap="sm"
 			data-ui-width="full"
-			className={tvc([
+			className={[
 				flip && "flex-row-reverse",
 				className,
-			])}
+			]}
 			{...props}
 		>
 			<Icon
@@ -43,8 +43,8 @@ export const TypoIcon: FC<TypoIcon.Props> = ({
 					"flex-col",
 					"items-start",
 					"w-full",
-					ui?.items === "start" && "items-start",
-					ui?.items === "center" && "items-center",
+					props["data-ui-items"] === "start" && "items-start",
+					props["data-ui-items"] === "center" && "items-center",
 				])}
 			>
 				{children}
