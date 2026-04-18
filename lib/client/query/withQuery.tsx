@@ -290,10 +290,7 @@ export function withQuery<TData, TResult, TErrors extends withQuery.Errors = wit
 			 * @param value - The value to set in the cache.
 			 * @param data - Optional input data for the query.
 			 */
-			return (
-				value: (value: TResult | undefined) => TResult | undefined,
-				data: TData | undefined,
-			) => {
+			return (value: (value: TResult | undefined) => TResult | undefined, data?: TData) => {
 				queryClient.setQueryData($keys(data), value);
 			};
 		},
