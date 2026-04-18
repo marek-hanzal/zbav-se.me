@@ -25,19 +25,17 @@ export namespace ui {
 			className?: string;
 		};
 
-	export type Component<TProps extends object, TRest extends object = object> = Omit<
-		TRest,
-		"className"
-	> & {
-		/**
-		 * UI configuration (data-ui-* attributes) of the element.
-		 */
-		ui?: TProps;
-		/**
-		 * Optional class names, uses tailwind merge under the hood.
-		 */
-		className?: tvc.ClassName;
-	};
+	export type Component<TProps extends object, TRest extends object = object> = Data<
+		TProps,
+		keyof TProps
+	> &
+		Omit<TRest, "className"> & {
+			ui?: TProps;
+			/**
+			 * Optional class names, uses tailwind merge under the hood.
+			 */
+			className?: tvc.ClassName;
+		};
 
 	/**
 	 * Internal props used for "ui" method; this should not be used outside
