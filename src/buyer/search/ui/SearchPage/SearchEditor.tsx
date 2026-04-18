@@ -22,10 +22,7 @@ export const SearchEditor = withFallback(({ _suspense, feedId, ...props }: Searc
 	return (
 		<Container
 			data-ui={"SearchEditor[Container]"}
-			ui={{
-				height: "full",
-				...ui,
-			}}
+			data-ui-height="full"
 			{...props}
 		>
 			<FeedEditor
@@ -35,10 +32,8 @@ export const SearchEditor = withFallback(({ _suspense, feedId, ...props }: Searc
 			>
 				<Container
 					data-ui={"SearchEditor-[Container.actions]"}
-					ui={{
-						flow: "vertical",
-						gap: "default",
-					}}
+					data-ui-flow="vertical"
+					data-ui-gap="default"
 				>
 					<Group>
 						<SearchButton

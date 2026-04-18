@@ -53,19 +53,16 @@ export const ResetButton: FC<ResetButton.Props> = ({ feedId, className, ...props
 			iconProps={{
 				"data-ui-text": "xl",
 			}}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				size: "default",
-				justify: "start",
-				items: "center",
-				background: "default",
-				round: undefined,
-				shadow: false,
-				border: false,
-				width: "full",
-				...ui,
-			}}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-size="default"
+			data-ui-justify="start"
+			data-ui-items="center"
+			data-ui-background="default"
+			data-ui-round={undefined}
+			data-ui-shadow={false}
+			data-ui-border={false}
+			data-ui-width="full"
 			className={className}
 			{...props}
 		>

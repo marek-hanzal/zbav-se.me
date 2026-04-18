@@ -33,10 +33,7 @@ export const SearchPage: FC<SearchPage.Props> = ({ feedId, ...props }) => {
 					}}
 				/>
 			}
-			ui={{
-				layout: "vertical-header-content",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
 			right={<HomeMenuButton />}
 			{...props}
 		>

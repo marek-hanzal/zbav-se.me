@@ -49,13 +49,11 @@ export const FeedList = withFallback(({ _suspense, ...props }: FeedList.Props) =
 	return (
 		<Container
 			data-ui={"FeedList"}
-			ui={{
-				flow: "vertical",
-				scroll: "vertical",
-				gap: "default",
-				inner: "default",
-				height: "full",
-			}}
+			data-ui-flow="vertical"
+			data-ui-scroll="vertical"
+			data-ui-gap="default"
+			data-ui-inner="default"
+			data-ui-height="full"
 			{...props}
 		>
 			<EmptyState check={check}>

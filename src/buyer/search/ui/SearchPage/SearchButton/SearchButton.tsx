@@ -39,49 +39,40 @@ export const SearchButton = withFallback(
 					"data-ui-color": "lead",
 					"data-ui-text": "xl",
 				}}
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					size: "default",
-					justify: "start",
-					items: "center",
-					background: "default",
-					round: undefined,
-					shadow: false,
-					border: false,
-					width: "full",
-					...ui,
-				}}
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-size="default"
+				data-ui-justify="start"
+				data-ui-items="center"
+				data-ui-background="default"
+				data-ui-round={undefined}
+				data-ui-shadow={false}
+				data-ui-border={false}
+				data-ui-width="full"
 				className={className}
 				{...props}
 			>
 				<Container
-					ui={{
-						flow: "horizontal",
-						items: "center",
-						justify: "space-between",
-						tone: "primary",
-						theme: "light",
-						color: "lead",
-						width: "full",
-					}}
+					data-ui-flow="horizontal"
+					data-ui-items="center"
+					data-ui-justify="space-between"
+					data-ui-tone="primary"
+					data-ui-theme="light"
+					data-ui-color="lead"
+					data-ui-width="full"
 				>
 					<Tx
 						label={"Search (button)"}
-						ui={{
-							text: "lg",
-							font: "bold",
-						}}
+						data-ui-text="lg"
+						data-ui-font="bold"
 					/>
 
 					{hasListings ? (
 						<Badge
-							ui={{
-								tone: "secondary",
-								theme: "light",
-								color: "text",
-								badge: "xs",
-							}}
+							data-ui-tone="secondary"
+							data-ui-theme="light"
+							data-ui-color="text"
+							data-ui-badge="xs"
 						>
 							{listingCount > 9
 								? "9+"
@@ -93,9 +84,7 @@ export const SearchButton = withFallback(
 					) : (
 						<Tx
 							label={"Search - empty (label)"}
-							ui={{
-								text: "sm",
-							}}
+							data-ui-text="sm"
 						/>
 					)}
 				</Container>
@@ -120,51 +109,42 @@ export const SearchButton = withFallback(
 					"data-ui-color": "lead",
 					"data-ui-text": "xl",
 				}}
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					size: "default",
-					justify: "center",
-					items: "center",
-					background: "default",
-					round: undefined,
-					shadow: false,
-					border: false,
-					width: "full",
-					...ui,
-				}}
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-size="default"
+				data-ui-justify="center"
+				data-ui-items="center"
+				data-ui-background="default"
+				data-ui-round={undefined}
+				data-ui-shadow={false}
+				data-ui-border={false}
+				data-ui-width="full"
 				className={className}
 				{...props}
 			>
 				<Container
 					data-ui={"SearchButton-[Container.content.pending]"}
-					ui={{
-						flow: "horizontal",
-						items: "center",
-						gap: "default",
-						justify: "space-between",
-						width: "full",
-					}}
+					data-ui-flow="horizontal"
+					data-ui-items="center"
+					data-ui-gap="default"
+					data-ui-justify="space-between"
+					data-ui-width="full"
 				>
 					<Tx
 						label="Search (button)"
-						ui={{
-							tone: "primary",
-							theme: "light",
-							color: "lead",
-							text: "xl",
-						}}
+						data-ui-tone="primary"
+						data-ui-theme="light"
+						data-ui-color="lead"
+						data-ui-text="xl"
 					/>
 
 					<Tx
 						label="Loading... (label)"
-						ui={{
-							tone: "neutral",
-							theme: "light",
-							color: "lead",
-							text: "xs",
-							opacity: "6",
-						}}
+						data-ui-tone="neutral"
+						data-ui-theme="light"
+						data-ui-color="lead"
+						data-ui-text="xs"
+						data-ui-opacity="6"
 					/>
 				</Container>
 			</LinkTo>

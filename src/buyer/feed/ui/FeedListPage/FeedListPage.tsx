@@ -33,10 +33,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ ...props }) => {
 					}}
 				/>
 			}
-			ui={{
-				layout: "vertical-header-content",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
 			right={<HomeMenuButton />}
 			{...props}
 		>

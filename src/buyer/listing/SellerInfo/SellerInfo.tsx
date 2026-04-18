@@ -29,12 +29,9 @@ export const SellerInfo = withFallback(({ _suspense, listingId, ...props }: Sell
 
 	return (
 		<Container
-			ui={{
-				flow: "vertical",
-				gap: "default",
-				height: "full",
-				...ui,
-			}}
+			data-ui-flow="vertical"
+			data-ui-gap="default"
+			data-ui-height="full"
 			{...props}
 		>
 			<Header sellerInfo={sellerInfo} />
@@ -48,12 +45,10 @@ export const SellerInfo = withFallback(({ _suspense, listingId, ...props }: Sell
 					icon={SearchIcon}
 					textTitle={translator.text("Listing seller info not available (title)")}
 					textMessage={translator.text("Listing seller info not available (message)")}
-					ui={{
-						tone: "brand",
-						theme: "light",
-						inner: "2xl",
-						opacity: "6",
-					}}
+					data-ui-tone="brand"
+					data-ui-theme="light"
+					data-ui-inner="2xl"
+					data-ui-opacity="6"
 					className={"text-center"}
 				/>
 			)}

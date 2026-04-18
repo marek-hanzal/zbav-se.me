@@ -51,9 +51,7 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ listingId, ...pro
 					<SellerInfo
 						_suspense={"I know"}
 						listingId={listingId}
-						ui={{
-							inner: "default",
-						}}
+						data-ui-inner="default"
 					/>
 				</Suspense>
 			</BottomSheet>

@@ -27,10 +27,7 @@ export const SearchPagePending: FC<SearchPagePending.Props> = ({ ...props }) => 
 					}}
 				/>
 			}
-			ui={{
-				layout: "vertical-header-content",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
 			right={<HomeMenuButton />}
 			{...props}
 		>
