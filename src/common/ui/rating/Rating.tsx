@@ -96,24 +96,18 @@ export const Rating: FC<Rating.Props> = ({
 						})}
 					>
 						<Container
-							ui={{
-								flow: "vertical",
-								items: "start",
-							}}
+							data-ui-flow="vertical"
+							data-ui-items="start"
 						>
 							<Tx
 								label={textRatingFn?.(value)}
-								ui={{
-									display: "block",
-								}}
+								data-ui-display="block"
 							/>
 							<Tx
 								label={textHintFn?.(value)}
-								ui={{
-									display: "block",
-									text: "sm",
-									opacity: "6",
-								}}
+								data-ui-display="block"
+								data-ui-text="sm"
+								data-ui-opacity="6"
 							/>
 						</Container>
 					</Button>
@@ -124,9 +118,7 @@ export const Rating: FC<Rating.Props> = ({
 				<Button
 					iconEnabled={TrashIcon}
 					iconProps={{
-						ui: {
-							text: "xl",
-						},
+						"data-ui-text": "xl",
 					}}
 					onClick={() => {
 						selection.clear();

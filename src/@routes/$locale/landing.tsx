@@ -19,32 +19,26 @@ export const Route = createFileRoute("/$locale/landing")({
 
 		return (
 			<Container
-				ui={{
-					layout: "vertical-full",
-					width: "full",
-					height: "full",
-					gap: "xl",
-					snap: "vertical",
-					snapAlign: "center",
-				}}
+				data-ui-layout={"vertical-full"}
+				data-ui-width={"full"}
+				data-ui-height={"full"}
+				data-ui-gap={"xl"}
+				data-ui-snap={"vertical"}
+				data-ui-snap-align={"center"}
 			>
 				<Container
-					ui={{
-						layout: "vertical-centered",
-						flow: "vertical",
-						tone: "brand",
-						theme: "light",
-						background: "alt",
-						inner: "xl",
-						gap: "xl",
-					}}
+					data-ui-layout={"vertical-centered"}
+					data-ui-flow={"vertical"}
+					data-ui-tone={"brand"}
+					data-ui-theme={"light"}
+					data-ui-background={"alt"}
+					data-ui-inner={"xl"}
+					data-ui-gap={"xl"}
 				>
 					<Container
-						ui={{
-							layout: "horizontal",
-							height: "auto",
-							width: "full",
-						}}
+						data-ui-layout="horizontal"
+						data-ui-height="auto"
+						data-ui-width="full"
 					>
 						<Logo />
 					</Container>
@@ -54,37 +48,32 @@ export const Route = createFileRoute("/$locale/landing")({
 						messageProps={{
 							className: "text-center",
 						}}
-						ui={{
-							tone: "primary",
-							theme: "light",
-							color: "lead",
-						}}
+						data-ui-tone="primary"
+						data-ui-theme="light"
+						data-ui-color="lead"
 					>
 						<Container
-							ui={{
-								layout: "vertical-flex",
-								inner: "4xl",
-								gap: "xl",
-							}}
+							data-ui-layout="vertical-flex"
+							data-ui-inner="4xl"
+							data-ui-gap="xl"
 						>
 							<LinkTo
 								data-action={"goto sign-in"}
 								{...uiButton({
-									ui: {
-										tone: "secondary",
-										theme: "light",
-										size: "default",
-										text: "xl",
-										justify: "center",
-									},
+									ui: {},
 									className: [],
 								})}
+								//
+								data-ui-tone={"secondary"}
+								data-ui-theme={"light"}
+								data-ui-size={"default"}
+								data-ui-text={"xl"}
+								data-ui-justify={"center"}
+								//
 								icon={ChevronRightIcon}
 								iconPosition={"right"}
 								iconProps={{
-									ui: {
-										text: "2xl",
-									},
+									"data-ui-text": "2xl",
 								}}
 								preload={"intent"}
 								to={"/$locale/sign-in"}
@@ -98,21 +87,20 @@ export const Route = createFileRoute("/$locale/landing")({
 							<LinkTo
 								data-action={"goto sign-up"}
 								{...uiButton({
-									ui: {
-										tone: "primary",
-										theme: "light",
-										size: "default",
-										text: "xl",
-										justify: "center",
-									},
+									ui: {},
 									className: [],
 								})}
+								//
+								data-ui-tone={"primary"}
+								data-ui-theme={"light"}
+								data-ui-size={"default"}
+								data-ui-text={"xl"}
+								data-ui-justify={"center"}
+								//
 								icon={ChevronRightIcon}
 								iconPosition={"right"}
 								iconProps={{
-									ui: {
-										text: "2xl",
-									},
+									"data-ui-text": "2xl",
 								}}
 								preload={"intent"}
 								to={"/$locale/sign-up"}
@@ -127,24 +115,20 @@ export const Route = createFileRoute("/$locale/landing")({
 				</Container>
 
 				<Container
-					ui={{
-						layout: "vertical-centered",
-						height: "full",
-						width: "full",
-					}}
+					data-ui-layout="vertical-centered"
+					data-ui-height="full"
+					data-ui-width="full"
 				>
 					<Status
 						icon={
 							<HeroImage
 								src={face}
 								visible
-								ui={{
-									tone: "brand",
-									theme: "dark",
-									border: true,
-									shadow: true,
-									round: "full",
-								}}
+								data-ui-tone="brand"
+								data-ui-theme="dark"
+								data-ui-border
+								data-ui-shadow
+								data-ui-round="full"
 								className={[
 									"aspect-square",
 									"w-[85%]",
@@ -157,9 +141,7 @@ export const Route = createFileRoute("/$locale/landing")({
 						textTitle={translator.text("About me (title)")}
 						textMessage={translator.text("About me (message)")}
 						messageProps={{
-							ui: {
-								color: "text",
-							},
+							"data-ui-color": "text",
 						}}
 						action={
 							<a
@@ -171,26 +153,20 @@ export const Route = createFileRoute("/$locale/landing")({
 							>
 								<Icon
 									icon={GitHubIcon}
-									ui={{
-										text: "2xl",
-									}}
+									data-ui-text={"2xl"}
 								/>
 							</a>
 						}
-						ui={{
-							tone: "brand",
-							theme: "light",
-							color: "lead",
-						}}
+						data-ui-tone={"brand"}
+						data-ui-theme={"light"}
+						data-ui-color={"lead"}
 					/>
 				</Container>
 
 				<Container
-					ui={{
-						height: "full",
-						width: "full",
-						inner: "xl",
-					}}
+					data-ui-height="full"
+					data-ui-width="full"
+					data-ui-inner="xl"
 				>
 					<Suspense fallback={<HistoryPending />}>
 						<History _suspense={"I know"} />

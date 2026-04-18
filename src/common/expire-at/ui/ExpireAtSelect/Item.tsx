@@ -33,9 +33,7 @@ export const Item: FC<Item.Props> = ({ expire, isSelected, onChange }) => {
 		>
 			<Tx
 				label={`Expire in ${expire}`}
-				ui={{
-					font: "bold",
-				}}
+				data-ui-font="bold"
 			/>
 
 			<Typo
@@ -62,9 +60,7 @@ export const Item: FC<Item.Props> = ({ expire, isSelected, onChange }) => {
 							.toFormat("dd.MM.yyyy"),
 					)
 					.exhaustive()}
-				ui={{
-					text: "md",
-				}}
+				data-ui-text="md"
 			/>
 		</Button>
 	);

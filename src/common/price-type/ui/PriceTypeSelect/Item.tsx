@@ -35,20 +35,16 @@ export const Item: FC<Item.Props> = ({ priceType, selection }) => {
 			data-ui={`PriceTypeSelect-[Button.${priceType}]`}
 		>
 			<Container
-				ui={{
-					layout: "vertical-flex",
-					items: "start",
-					gap: "xs",
-				}}
+				data-ui-layout="vertical-flex"
+				data-ui-items="start"
+				data-ui-gap="xs"
 			>
 				<Tx label={`Listing price - ${priceType}`} />
 
 				<Tx
 					label={`Listing price - ${priceType} (hint)`}
-					ui={{
-						text: "sm",
-						color: "icon",
-					}}
+					data-ui-text="sm"
+					data-ui-color="icon"
 				/>
 			</Container>
 		</Button>

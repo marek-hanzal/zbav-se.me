@@ -51,18 +51,14 @@ export const Transaction: FC<Transaction.Props> = ({
 			<Container
 				data-ui="Transaction-[MessageListContainer]"
 				ref={containerRef}
-				ui={{
-					layout: "vertical-header-content",
-					height: "full",
-					scroll: "vertical",
-				}}
+				data-ui-layout="vertical-header-content"
+				data-ui-height="full"
+				data-ui-scroll="vertical"
 			>
 				<Container
 					data-ui="Transaction-[HeroContainer]"
-					ui={{
-						position: "relative",
-						height: "content",
-					}}
+					data-ui-position="relative"
+					data-ui-height="content"
 				>
 					<HeroImage
 						src={hero.url}

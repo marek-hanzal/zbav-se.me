@@ -25,12 +25,10 @@ const UploadPending: FC<{
 	return (
 		<Container
 			data-ui={"PhotoUpload-[Container.spinner]"}
-			ui={{
-				flow: "vertical",
-				height: "full",
-				items: "center",
-				justify: "center",
-			}}
+			data-ui-flow="vertical"
+			data-ui-height="full"
+			data-ui-items="center"
+			data-ui-justify="center"
 		>
 			<Status
 				data-ui={"PhotoUpload-[Status.spinner]"}
@@ -39,17 +37,13 @@ const UploadPending: FC<{
 				action={
 					<Progress
 						value={progress * 100}
-						ui={{
-							size: "lg",
-							tone: "primary",
-							theme: "dark",
-						}}
+						data-ui-size="lg"
+						data-ui-tone="primary"
+						data-ui-theme="dark"
 					/>
 				}
-				ui={{
-					tone: "primary",
-					theme: "light",
-				}}
+				data-ui-tone="primary"
+				data-ui-theme="light"
 			/>
 		</Container>
 	);
