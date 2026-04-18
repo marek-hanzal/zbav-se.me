@@ -44,11 +44,9 @@ export const FormField: FC<FormField.Props> = (props) => {
 		required = false,
 		disabled = false,
 		meta,
-		ui,
-		children = ({ ui, className, ...props }) => (
+		children = ({ className, ...props }) => (
 			<input
 				{...uiInput({
-					ui,
 					className,
 				})}
 				{...props}
@@ -67,48 +65,39 @@ export const FormField: FC<FormField.Props> = (props) => {
 	return (
 		<Container
 			data-ui="FormField[Container]"
-			ui={{
-				tone: "neutral",
-				theme,
-				layout: "vertical-flex",
-				items: "start",
-				justify: "center",
-				gap: "xs",
-				width: "full",
-				...ui,
-			}}
+			data-ui-tone="neutral"
+			data-ui-theme={theme}
+			data-ui-layout="vertical-flex"
+			data-ui-items="start"
+			data-ui-justify="center"
+			data-ui-gap="xs"
+			data-ui-width="full"
 			{...rest}
 		>
 			{label || hint ? (
 				<Container
 					data-ui="FormField-[Container.header]"
-					ui={{
-						layout: "vertical-flex",
-						gap: "xs",
-					}}
+					data-ui-layout="vertical-flex"
+					data-ui-gap="xs"
 				>
 					{label ? (
 						<Typo
 							label={label}
-							ui={{
-								tone,
-								theme,
-								text: "md",
-								font: "normal",
-								color: "lead",
-							}}
+							data-ui-tone={tone}
+							data-ui-theme={theme}
+							data-ui-text="md"
+							data-ui-font="normal"
+							data-ui-color="lead"
 						/>
 					) : null}
 
 					{hint ? (
 						<Typo
 							label={hint}
-							ui={{
-								tone: "subtle",
-								text: "md",
-								color: "lead",
-								italic: true,
-							}}
+							data-ui-tone="subtle"
+							data-ui-text="md"
+							data-ui-color="lead"
+							data-ui-italic
 						/>
 					) : null}
 				</Container>
@@ -121,11 +110,9 @@ export const FormField: FC<FormField.Props> = (props) => {
 				name,
 				ref,
 				required,
-				ui: {
-					tone: "neutral",
-					theme,
-					width: "full",
-				},
+				"data-ui-tone": "neutral",
+				"data-ui-theme": theme,
+				"data-ui-width": "full",
 				className: [],
 			})}
 

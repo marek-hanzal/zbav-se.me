@@ -38,7 +38,6 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 	left,
 	text,
 	transaction,
-	ui,
 	...props
 }) => {
 	const messageMutation = withTransactionEntryQuery.useCreateMutation({
@@ -70,31 +69,24 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 	return (
 		<Container
 			data-ui="TransactionChat"
-			ui={{
-				layout: "vertical-flex",
-				width: "full",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-width="full"
 			{...props}
 		>
 			{match(transaction.status)
 				.with("interest", () => {
 					return (
 						<Container
-							ui={{
-								layout: "horizontal-flex",
-								items: "center",
-								gap: "md",
-								width: "full",
-							}}
+							data-ui-layout="horizontal-flex"
+							data-ui-items="center"
+							data-ui-gap="md"
+							data-ui-width="full"
 						>
 							<Tx
 								label={text.pending}
-								ui={{
-									width: "full",
-									text: "sm",
-									opacity: "6",
-								}}
+								data-ui-width="full"
+								data-ui-text="sm"
+								data-ui-opacity="6"
 								className="text-center"
 							/>
 						</Container>
@@ -113,22 +105,18 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 				.with("resolved", () => {
 					return (
 						<Container
-							ui={{
-								layout: "horizontal-flex",
-								items: "center",
-								gap: "md",
-								width: "full",
-							}}
+							data-ui-layout="horizontal-flex"
+							data-ui-items="center"
+							data-ui-gap="md"
+							data-ui-width="full"
 						>
 							{left}
 
 							<Tx
 								label={text.resolved}
-								ui={{
-									width: "full",
-									text: "sm",
-									opacity: "6",
-								}}
+								data-ui-width="full"
+								data-ui-text="sm"
+								data-ui-opacity="6"
 								className="text-center"
 							/>
 						</Container>
@@ -148,11 +136,9 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 					return (
 						<Tx
 							label={text.closed}
-							ui={{
-								width: "full",
-								text: "sm",
-								opacity: "6",
-							}}
+							data-ui-width="full"
+							data-ui-text="sm"
+							data-ui-opacity="6"
 							className="text-center"
 						/>
 					);

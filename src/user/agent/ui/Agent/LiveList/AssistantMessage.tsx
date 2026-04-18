@@ -11,13 +11,7 @@ export namespace AssistantMessage {
 	}
 }
 
-export const AssistantMessage: FC<AssistantMessage.Props> = ({
-	events,
-	itemId,
-	ui,
-	className,
-	...props
-}) => {
+export const AssistantMessage: FC<AssistantMessage.Props> = ({ events, itemId, ...props }) => {
 	const state = selectAssistantMessageState(events, itemId);
 
 	if (!state.content.trim().length) {
@@ -28,14 +22,10 @@ export const AssistantMessage: FC<AssistantMessage.Props> = ({
 		<Group
 			data-ui={"AssistantMessage"}
 			data-id={itemId}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				background: "alt",
-				inner: "default",
-				...ui,
-			}}
-			className={className}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-background="alt"
+			data-ui-inner="default"
 			{...props}
 		>
 			<Markdown>{state.content}</Markdown>

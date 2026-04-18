@@ -42,19 +42,16 @@ export const SortValue: FC<SortValue.Props> = ({ sort, ...props }) => {
 			renderFn={(sortItem) => (
 				<Tx
 					label={`Listing common sort value ${sortItem.field} - ${sortItem.order}`}
-					ui={{
-						tone: "secondary",
-					}}
+					data-ui-tone="secondary"
 				/>
 			)}
 			wrapperProps={{
-				ui:
-					sort.length > 0
-						? {
-								tone: "neutral",
-								theme: "light",
-							}
-						: undefined,
+				...(sort.length > 0
+					? {
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+						}
+					: undefined),
 			}}
 			{...props}
 		/>

@@ -19,55 +19,43 @@ export const Title: FC<Title.Props> = ({
 	textSubtitle,
 	right,
 	left,
-	//
-	ui,
 	...props
 }) => {
 	return (
 		<Container
 			data-ui={"Title"}
-			ui={{
-				layout: "horizontal-flex",
-				items: "center",
-				justify: "space-between",
-				inner: "xl",
-				width: "full",
-				color: "lead",
-				tone: "brand",
-				theme: "light",
-				background: "alt",
-				shadow: true,
-				...ui,
-			}}
+			data-ui-layout="horizontal-flex"
+			data-ui-items="center"
+			data-ui-justify="space-between"
+			data-ui-inner="xl"
+			data-ui-width="full"
+			data-ui-color="lead"
+			data-ui-tone="brand"
+			data-ui-theme="light"
+			data-ui-background="alt"
+			data-ui-shadow
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-flex",
-					items: "start",
-					justify: "center",
-				}}
+				data-ui-layout="vertical-flex"
+				data-ui-items="start"
+				data-ui-justify="center"
 			>
 				<Container
-					ui={{
-						layout: "horizontal-flex",
-						items: "center",
-						justify: "center",
-						gap: "sm",
-					}}
+					data-ui-layout="horizontal-flex"
+					data-ui-items="center"
+					data-ui-justify="center"
+					data-ui-gap="sm"
 				>
 					{left}
 
 					<Tx
 						label={textTitle}
+						data-ui-text="lg"
+						data-ui-font="bold"
+						data-ui-display="block"
+						data-ui-truncate
 						{...textTitleProps}
-						ui={{
-							text: "lg",
-							font: "bold",
-							display: "block",
-							truncate: true,
-							...textTitleProps?.ui,
-						}}
 					/>
 				</Container>
 
@@ -75,11 +63,9 @@ export const Title: FC<Title.Props> = ({
 					isString(textSubtitle) ? (
 						<Tx
 							label={textSubtitle}
-							ui={{
-								tone: "secondary",
-								theme: "light",
-								text: "md",
-							}}
+							data-ui-tone="secondary"
+							data-ui-theme="light"
+							data-ui-text="md"
 						/>
 					) : (
 						textSubtitle

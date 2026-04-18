@@ -21,11 +21,9 @@ export const Events: FC<Events.Props> = ({ events }) => {
 	return (
 		<>
 			<Container
-				ui={{
-					flow: "vertical",
-					inner: "default",
-					gap: "default",
-				}}
+				data-ui-flow="vertical"
+				data-ui-inner="default"
+				data-ui-gap="default"
 				className={"px-0"}
 			>
 				<LabelValue
@@ -50,11 +48,9 @@ export const Events: FC<Events.Props> = ({ events }) => {
 			</Container>
 
 			<Container
-				ui={{
-					flow: "vertical",
-					inner: "default",
-					gap: "default",
-				}}
+				data-ui-flow="vertical"
+				data-ui-inner="default"
+				data-ui-gap="default"
 				className={"px-0"}
 			>
 				<LabelValue
@@ -91,11 +87,9 @@ export const Events: FC<Events.Props> = ({ events }) => {
 			/>
 
 			<Container
-				ui={{
-					flow: "vertical",
-					inner: "default",
-					gap: "default",
-				}}
+				data-ui-flow="vertical"
+				data-ui-inner="default"
+				data-ui-gap="default"
 				className={"px-0"}
 			>
 				<LabelValue

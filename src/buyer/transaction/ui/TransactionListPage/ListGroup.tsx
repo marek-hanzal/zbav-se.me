@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
-import { Typo, type uiTypo } from "@/lib/client/typo";
+import { Typo } from "@/lib/client/typo";
 import type { TransactionFilterSchema } from "~/buyer/transaction/server/schema/TransactionFilterSchema";
 import { withTransactionQuery } from "../../query/withTransactionQuery";
 import { TransactionList } from "../TransactionList";
@@ -10,7 +10,7 @@ export namespace ListGroup {
 		label: string;
 		filter: TransactionFilterSchema.Type;
 		refetchInterval: number;
-		typoUi?: uiTypo.Ui;
+		typoProps?: Typo.PropsEx;
 	}
 }
 
@@ -18,8 +18,7 @@ export const ListGroup: FC<ListGroup.Props> = ({
 	label,
 	filter,
 	refetchInterval,
-	typoUi,
-	ui,
+	typoProps,
 	...props
 }) => {
 	const { data: transactionCollection } = withTransactionQuery.useIdsQuery(
@@ -48,21 +47,16 @@ export const ListGroup: FC<ListGroup.Props> = ({
 	return (
 		<Container
 			data-ui={"ListGroup"}
-			ui={{
-				layout: "vertical-flex",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-gap="default"
 			{...props}
 		>
 			<Typo
 				label={label}
-				ui={{
-					text: "lg",
-					font: "bold",
-					...typoUi,
-				}}
+				data-ui-text="lg"
+				data-ui-font="bold"
 				className={"text-center"}
+				{...typoProps}
 			/>
 
 			<TransactionList transactionIds={transactionCollection} />

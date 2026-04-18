@@ -13,11 +13,10 @@ export namespace ConditionIcon {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const ConditionIcon: FC<ConditionIcon.Props> = ({ condition, ui, ...props }) => {
+export const ConditionIcon: FC<ConditionIcon.Props> = ({ condition, ...props }) => {
 	return (
 		<RatingIcon
 			rating={condition}
-			ui={ui}
 			{...props}
 		/>
 	);

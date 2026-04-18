@@ -33,20 +33,16 @@ export const Editor: FC<Editor.Props> = ({
 	feed,
 	onView,
 	hidden,
-	ui,
 	children,
 	...props
 }) => {
 	return (
 		<Container
 			data-ui={"FeedEditor-[Container.content]"}
-			ui={{
-				flow: "vertical",
-				inner: "default",
-				width: "full",
-				gap: "lg",
-				...ui,
-			}}
+			data-ui-flow="vertical"
+			data-ui-inner="default"
+			data-ui-width="full"
+			data-ui-gap="lg"
 			{...props}
 		>
 			{hidden?.includes("header") ? null : (
@@ -70,15 +66,11 @@ export const Editor: FC<Editor.Props> = ({
 						action={
 							<Icon
 								icon={ChevronRightIcon}
-								ui={{
-									text: "xl",
-								}}
+								data-ui-text="xl"
 							/>
 						}
 						wrapperProps={{
-							ui: {
-								tone: feed.name ? "neutral" : "secondary",
-							},
+							"data-ui-tone": feed.name ? "neutral" : "secondary",
 						}}
 						onClick={() => onView("name")}
 					/>
@@ -95,18 +87,14 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
-						ui: {
-							tone:
-								(feed.query?.filter?.categoryIdIn ?? []).length > 0
-									? "neutral"
-									: "secondary",
-						},
+						"data-ui-tone":
+							(feed.query?.filter?.categoryIdIn ?? []).length > 0
+								? "neutral"
+								: "secondary",
 					}}
 					onClick={() => onView("category")}
 				/>
@@ -123,15 +111,11 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
-						ui: {
-							tone: feed.locationId ? "neutral" : "secondary",
-						},
+						"data-ui-tone": feed.locationId ? "neutral" : "secondary",
 					}}
 					onClick={() => onView("location")}
 				/>
@@ -139,21 +123,15 @@ export const Editor: FC<Editor.Props> = ({
 				<RangeValue
 					data-action={"edit feed range"}
 					range={feed.query?.filter?.range}
-					ui={{
-						disabled: !feed.query?.meta?.latLon,
-					}}
+					data-ui-disabled={!feed.query?.meta?.latLon}
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
-						ui: {
-							tone: feed.query?.filter?.range ? "neutral" : "secondary",
-						},
+						"data-ui-tone": feed.query?.filter?.range ? "neutral" : "secondary",
 					}}
 					onClick={() => onView("range")}
 				/>
@@ -166,15 +144,12 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
-						ui: {
-							tone: (feed.query?.sort ?? []).length > 0 ? "neutral" : "secondary",
-						},
+						"data-ui-tone":
+							(feed.query?.sort ?? []).length > 0 ? "neutral" : "secondary",
 					}}
 					onClick={() => onView("sort")}
 				/>
@@ -187,18 +162,14 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
-						ui: {
-							tone:
-								(feed.query?.filter?.conditionIn ?? []).length > 0
-									? "neutral"
-									: "secondary",
-						},
+						"data-ui-tone":
+							(feed.query?.filter?.conditionIn ?? []).length > 0
+								? "neutral"
+								: "secondary",
 					}}
 					onClick={() => onView("condition")}
 				/>
@@ -209,18 +180,12 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
-						ui: {
-							tone:
-								(feed.query?.filter?.ageIn ?? []).length > 0
-									? "neutral"
-									: "secondary",
-						},
+						"data-ui-tone":
+							(feed.query?.filter?.ageIn ?? []).length > 0 ? "neutral" : "secondary",
 					}}
 					onClick={() => onView("age")}
 				/>
@@ -233,18 +198,14 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
-						ui: {
-							tone:
-								(feed.query?.filter?.deliveryIn ?? []).length > 0
-									? "neutral"
-									: "secondary",
-						},
+						"data-ui-tone":
+							(feed.query?.filter?.deliveryIn ?? []).length > 0
+								? "neutral"
+								: "secondary",
 					}}
 					onClick={() => onView("delivery")}
 				/>
@@ -257,18 +218,14 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
-						ui: {
-							tone:
-								(feed.query?.filter?.warrantyIn ?? []).length > 0
-									? "neutral"
-									: "secondary",
-						},
+						"data-ui-tone":
+							(feed.query?.filter?.warrantyIn ?? []).length > 0
+								? "neutral"
+								: "secondary",
 					}}
 					onClick={() => onView("warranty")}
 				/>
@@ -284,15 +241,11 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
-						ui: {
-							tone: feed.query?.filter?.title ? "neutral" : "secondary",
-						},
+						"data-ui-tone": feed.query?.filter?.title ? "neutral" : "secondary",
 					}}
 					onClick={() => onView("title")}
 				/>

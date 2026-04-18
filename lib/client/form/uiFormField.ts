@@ -27,9 +27,9 @@ export namespace uiFormField {
 	}
 }
 
-export const uiFormField = ({ ui, className }: uiFormField.Props) => {
+export const uiFormField = ({ name = "FormField", className, ...ui }: uiFormField.Props) => {
 	return coolUi<uiFormField.Ui>({
-		name: "FormField",
+		name,
 		ui,
 		className,
 	});

@@ -18,20 +18,16 @@ export const Score: FC<Score.Props> = ({ rank }) => {
 			textHint={translator.text("User score (hint)")}
 			textValue={
 				<Container
-					ui={{
-						flow: "horizontal",
-						items: "center",
-						justify: "space-between",
-						gap: "default",
-					}}
+					data-ui-flow="horizontal"
+					data-ui-items="center"
+					data-ui-justify="space-between"
+					data-ui-gap="default"
 				>
 					<RatingIcon rating={rank} />
 
 					<Tx
 						label={translator.text(`Buyer score ${rank}`)}
-						ui={{
-							wrap: "wrap",
-						}}
+						data-ui-wrap="wrap"
 					/>
 				</Container>
 			}

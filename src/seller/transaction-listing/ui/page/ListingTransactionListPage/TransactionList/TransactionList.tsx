@@ -24,7 +24,6 @@ export const TransactionList: FC<TransactionList.Props> = ({
 	_suspense,
 	listingId,
 	refetchInterval = 5_000,
-	ui,
 	...props
 }) => {
 	const { data: hasTransaction } = withTransactionQuery.useCollectionQuery(
@@ -63,9 +62,9 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						],
 						activity: "archived",
 					},
-					typoUi: {
-						tone: "neutral",
-						theme: "light",
+					typoProps: {
+						"data-ui-tone": "neutral",
+						"data-ui-theme": "light",
 					},
 				},
 				{
@@ -76,8 +75,8 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						],
 						activity: "archived",
 					},
-					typoUi: {
-						font: "normal",
+					typoProps: {
+						"data-ui-font": "normal",
 					},
 				},
 				{
@@ -88,8 +87,8 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						],
 						activity: "archived",
 					},
-					typoUi: {
-						font: "normal",
+					typoProps: {
+						"data-ui-font": "normal",
 					},
 				},
 				{
@@ -100,8 +99,8 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						],
 						activity: "archived",
 					},
-					typoUi: {
-						font: "normal",
+					typoProps: {
+						"data-ui-font": "normal",
 					},
 				},
 				{
@@ -116,14 +115,12 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						],
 						activity: "archived",
 					},
-					ui: {
-						opacity: "7",
-					},
-					typoUi: {
-						tone: "neutral",
-						theme: "light",
-						opacity: "7",
-						font: "normal",
+					"data-ui-opacity": "7",
+					typoProps: {
+						"data-ui-tone": "neutral",
+						"data-ui-theme": "light",
+						"data-ui-opacity": "7",
+						"data-ui-font": "normal",
 					},
 				},
 			] satisfies Group[],
@@ -133,13 +130,10 @@ export const TransactionList: FC<TransactionList.Props> = ({
 	return (
 		<Container
 			data-ui={"TransactionList"}
-			ui={{
-				scroll: "vertical",
-				height: "full",
-				layout: "vertical-flex",
-				gap: "2xl",
-				...ui,
-			}}
+			data-ui-scroll="vertical"
+			data-ui-height="full"
+			data-ui-layout="vertical-flex"
+			data-ui-gap="2xl"
 			{...props}
 		>
 			<EmptyState

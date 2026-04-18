@@ -35,11 +35,9 @@ export const View = <TView extends string, TProps = {}>({
 			return (
 				<Container
 					key={key}
-					ui={{
-						scroll: scroller === false ? undefined : scroller,
-						height: "full",
-						width: "full",
-					}}
+					data-ui-scroll={scroller === false ? undefined : scroller}
+					data-ui-height="full"
+					data-ui-width="full"
 					className={state.value === key ? undefined : "hidden"}
 				>
 					{children}

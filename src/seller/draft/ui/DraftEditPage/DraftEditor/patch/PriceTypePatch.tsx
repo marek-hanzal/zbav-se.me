@@ -89,13 +89,11 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, onVi
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					inner: "default",
-					gap: "default",
-				}}
+				data-ui-layout="vertical-content-footer"
+				data-ui-height="full"
+				data-ui-width="full"
+				data-ui-inner="default"
+				data-ui-gap="default"
 			>
 				<form.AppField name={"priceType"}>
 					{(_field) => <PriceTypeSelect selection={selection} />}

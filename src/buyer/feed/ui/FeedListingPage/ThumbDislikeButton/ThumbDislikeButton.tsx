@@ -15,7 +15,7 @@ export namespace ThumbDislikeButton {
 }
 
 export const ThumbDislikeButton = withFallback(
-	({ _suspense, listingId, meta, ui, ...props }: ThumbDislikeButton.Props) => {
+	({ _suspense, listingId, meta, ...props }: ThumbDislikeButton.Props) => {
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
 		const update = withListingQuery.useUpdate();
 		const thumbCreateMutation = withThumbCreateMutation.useMutation({
@@ -37,9 +37,7 @@ export const ThumbDislikeButton = withFallback(
 				data-action={"dislike listing"}
 				iconEnabled={DislikeIcon}
 				iconProps={{
-					ui: {
-						text: "xl",
-					},
+					"data-ui-text": "xl",
 				}}
 				disabled={hasThumb || isMutating}
 				loading={thumbCreateMutation.isPending}
@@ -50,29 +48,23 @@ export const ThumbDislikeButton = withFallback(
 						meta,
 					});
 				}}
-				ui={{
-					tone: isDisliked ? "secondary" : "neutral",
-					theme: "light",
-					size: "default",
-					justify: "start",
-					...ui,
-				}}
+				data-ui-tone={isDisliked ? "secondary" : "neutral"}
+				data-ui-theme="light"
+				data-ui-size="default"
+				data-ui-justify="start"
 				{...props}
 			/>
 		);
 	},
-	({ ui, ...props }: Omit<ThumbDislikeButton.Props, "_suspense">) => {
+	({ ...props }: Omit<ThumbDislikeButton.Props, "_suspense">) => {
 		return (
 			<Button
 				disabled
 				loading
-				ui={{
-					tone: "secondary",
-					theme: "light",
-					size: "default",
-					justify: "start",
-					...ui,
-				}}
+				data-ui-tone="secondary"
+				data-ui-theme="light"
+				data-ui-size="default"
+				data-ui-justify="start"
 				{...props}
 			>
 				<Tx label="Loading... (button)" />

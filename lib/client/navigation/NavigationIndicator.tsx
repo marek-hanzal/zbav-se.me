@@ -37,9 +37,7 @@ export const NavigationIndicator: FC<NavigationIndicator.Props> = ({ className, 
 	return (
 		<div
 			{...uiNavigationIndicator({
-				ui: {
-					visible,
-				},
+				"data-ui-visible": visible,
 				className,
 			})}
 			{...props}

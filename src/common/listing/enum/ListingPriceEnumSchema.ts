@@ -4,6 +4,7 @@ export const ListingPriceEnumSchema = z
 	.enum([
 		"closed",
 		"open",
+		"offer",
 	])
 	.meta({
 		id: "ListingPriceEnum",

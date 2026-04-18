@@ -1,7 +1,6 @@
 import type { ComponentProps, FC } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { tvc } from "@/lib/client/cls";
 import { uiButton } from "../button/uiButton";
 import { Container } from "../container/Container";
 import { uiContainer } from "../container/uiContainer";
@@ -23,14 +22,13 @@ export namespace Markdown {
 	}
 }
 
-export const Markdown: FC<Markdown.Props> = ({ ui, className, components, ...props }) => {
+export const Markdown: FC<Markdown.Props> = ({ className, components, ...props }) => {
 	/**
 	 * Wrapper div is used only to setup global CSS variables on top of inner components of markdown.
 	 */
 	return (
 		<div
 			{...uiMarkdown({
-				ui,
 				className,
 			})}
 		>
@@ -44,10 +42,8 @@ export const Markdown: FC<Markdown.Props> = ({ ui, className, components, ...pro
 						return (
 							<Typo
 								label={children}
-								ui={{
-									text: "xl",
-									font: "bold",
-								}}
+								data-ui-text="xl"
+								data-ui-font="bold"
 								{...components?.h1}
 							/>
 						);
@@ -56,10 +52,8 @@ export const Markdown: FC<Markdown.Props> = ({ ui, className, components, ...pro
 						return (
 							<Typo
 								label={children}
-								ui={{
-									text: "lg",
-									font: "normal",
-								}}
+								data-ui-text="lg"
+								data-ui-font="normal"
 								{...components?.h2}
 							/>
 						);
@@ -71,8 +65,8 @@ export const Markdown: FC<Markdown.Props> = ({ ui, className, components, ...pro
 								target="_blank"
 								rel="noopener noreferrer"
 								{...uiButton({
-									ui: components?.a?.ui,
-									className: components?.a?.className ?? [],
+									className: [],
+									...components?.a,
 								})}
 							/>
 						);
@@ -91,9 +85,7 @@ export const Markdown: FC<Markdown.Props> = ({ ui, className, components, ...pro
 						return (
 							<Typo
 								label={children}
-								ui={{
-									font: "bold",
-								}}
+								data-ui-font="bold"
 								{...components?.strong}
 							/>
 						);
@@ -113,9 +105,7 @@ export const Markdown: FC<Markdown.Props> = ({ ui, className, components, ...pro
 						return (
 							<Typo
 								label={children}
-								ui={{
-									italic: true,
-								}}
+								data-ui-italic
 							/>
 						);
 					},
@@ -125,17 +115,14 @@ export const Markdown: FC<Markdown.Props> = ({ ui, className, components, ...pro
 					hr() {
 						return (
 							<div
-								className={tvc([
-									"border-t",
-									"h-px",
-									"w-full",
-									"my-4",
-								])}
 								{...uiContainer({
-									ui: {
-										background: "default",
-									},
-									className: [],
+									"data-ui-background": "default",
+									className: [
+										"border-t",
+										"h-px",
+										"w-full",
+										"my-4",
+									],
 								})}
 							/>
 						);

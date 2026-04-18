@@ -38,7 +38,6 @@ export const Rating: FC<Rating.Props> = ({
 	textHintFn,
 	selection,
 	allowClear = false,
-	ui,
 	...props
 }) => {
 	const limit = 6;
@@ -48,13 +47,10 @@ export const Rating: FC<Rating.Props> = ({
 	return (
 		<Container
 			data-ui={"Rating-root"}
-			ui={{
-				scroll: "vertical",
-				height: "auto",
-				flow: "vertical",
-				gap: "lg",
-				...ui,
-			}}
+			data-ui-scroll="vertical"
+			data-ui-height="auto"
+			data-ui-flow="vertical"
+			data-ui-gap="lg"
 			{...props}
 		>
 			{ratingItems.map((item) => {
@@ -74,21 +70,17 @@ export const Rating: FC<Rating.Props> = ({
 						}}
 						iconEnabled={icon}
 						iconProps={{
-							ui: {
-								text: "2xl",
-								color: selected ? "lead" : "icon",
-							},
+							"data-ui-text": "2xl",
+							"data-ui-color": selected ? "lead" : "icon",
 						}}
 						{...uiSelectButton({
 							isSelected: selected,
-							ui: {
-								flow: "horizontal",
-								justify: "start",
-								items: "center",
-								gap: "sm",
-								size: "default",
-								text: "lg",
-							},
+							"data-ui-flow": "horizontal",
+							"data-ui-justify": "start",
+							"data-ui-items": "center",
+							"data-ui-gap": "sm",
+							"data-ui-size": "default",
+							"data-ui-text": "lg",
 							className: [
 								"text-left",
 								"shrink-0",
@@ -96,24 +88,18 @@ export const Rating: FC<Rating.Props> = ({
 						})}
 					>
 						<Container
-							ui={{
-								flow: "vertical",
-								items: "start",
-							}}
+							data-ui-flow="vertical"
+							data-ui-items="start"
 						>
 							<Tx
 								label={textRatingFn?.(value)}
-								ui={{
-									display: "block",
-								}}
+								data-ui-display="block"
 							/>
 							<Tx
 								label={textHintFn?.(value)}
-								ui={{
-									display: "block",
-									text: "sm",
-									opacity: "6",
-								}}
+								data-ui-display="block"
+								data-ui-text="sm"
+								data-ui-opacity="6"
 							/>
 						</Container>
 					</Button>
@@ -124,18 +110,14 @@ export const Rating: FC<Rating.Props> = ({
 				<Button
 					iconEnabled={TrashIcon}
 					iconProps={{
-						ui: {
-							text: "xl",
-						},
+						"data-ui-text": "xl",
 					}}
 					onClick={() => {
 						selection.clear();
 					}}
-					ui={{
-						tone: "warning",
-						theme: "light",
-						size: "default",
-					}}
+					data-ui-tone="warning"
+					data-ui-theme="light"
+					data-ui-size="default"
 				>
 					<Tx label={"Clear all (button)"} />
 				</Button>

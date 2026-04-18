@@ -15,7 +15,7 @@ export namespace AgePatch {
 	}
 }
 
-export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ui, ...props }) => {
+export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "multi",
@@ -27,14 +27,11 @@ export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ui, ..
 	return (
 		<Container
 			data-ui={"AgePatch[Container]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				width: "full",
-				inner: "default",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-width="full"
+			data-ui-inner="default"
+			data-ui-gap="default"
 			{...props}
 		>
 			<AgeSelection

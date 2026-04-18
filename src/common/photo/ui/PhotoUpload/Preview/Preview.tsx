@@ -28,9 +28,7 @@ export const Preview = withFallback(({ _suspense, uploadId }: Preview.Props) => 
 			src={data.url}
 			alt={data.id}
 			visible
-			ui={{
-				round: "default",
-			}}
+			data-ui-round="default"
 		/>
 	);
 }, SpinnerContainer);

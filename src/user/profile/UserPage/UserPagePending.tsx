@@ -13,7 +13,7 @@ export namespace UserPagePending {
 	}
 }
 
-export const UserPagePending: FC<UserPagePending.Props> = ({ ui, ...props }) => {
+export const UserPagePending: FC<UserPagePending.Props> = ({ ...props }) => {
 	const locale = useLocale();
 
 	return (
@@ -29,17 +29,12 @@ export const UserPagePending: FC<UserPagePending.Props> = ({ ui, ...props }) => 
 				/>
 			}
 			right={<HomeMenuButton />}
-			ui={{
-				layout: "vertical-header-content",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-centered",
-					height: "full",
-				}}
+				data-ui-layout="vertical-centered"
+				data-ui-height="full"
 			>
 				<SpinnerContainer />
 			</Container>

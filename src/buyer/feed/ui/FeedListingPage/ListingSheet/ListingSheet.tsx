@@ -75,9 +75,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					<SellerInfo
 						_suspense={"I know"}
 						listingId={listingId}
-						ui={{
-							inner: "default",
-						}}
+						data-ui-inner="default"
 					/>
 				),
 				header: () => ({

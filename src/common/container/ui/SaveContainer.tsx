@@ -34,7 +34,6 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 	disabled,
 	textCancel,
 	textSave,
-	ui,
 	cancelProps,
 	saveProps,
 	...props
@@ -42,13 +41,10 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 	return (
 		<Container
 			data-ui="SaveContainer[Container]"
-			ui={{
-				flow: "horizontal",
-				items: "center",
-				justify: "space-evenly",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-flow="horizontal"
+			data-ui-items="center"
+			data-ui-justify="space-evenly"
+			data-ui-gap="default"
 			{...props}
 		>
 			<Button
@@ -57,13 +53,9 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 				disabled={loading}
 				iconEnabled={ArrowLeftIcon}
 				iconProps={{
-					ui: {
-						text: "xl",
-					},
+					"data-ui-text": "xl",
 				}}
-				{...uiCancelButton({
-					className: [],
-				})}
+				{...uiCancelButton({})}
 				{...cancelProps}
 			>
 				{textCancel ?? <Tx label="Back (label)" />}
@@ -76,13 +68,9 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 				loading={loading}
 				iconEnabled={SaveIcon}
 				iconProps={{
-					ui: {
-						text: "xl",
-					},
+					"data-ui-text": "xl",
 				}}
-				{...uiSaveButton({
-					className: [],
-				})}
+				{...uiSaveButton({})}
 				{...saveProps}
 			>
 				{textSave ?? <Tx label="Save (button)" />}

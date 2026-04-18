@@ -22,44 +22,36 @@ export namespace SellerInfo {
  *
  * @see src/listing/ui/SellerInfoButton.tsx
  */
-export const SellerInfo = withFallback(
-	({ _suspense, listingId, ui, ...props }: SellerInfo.Props) => {
-		const { data: sellerInfo } = withListingSellerInfoQuery.useSuspenseQuery({
-			id: listingId,
-		});
+export const SellerInfo = withFallback(({ _suspense, listingId, ...props }: SellerInfo.Props) => {
+	const { data: sellerInfo } = withListingSellerInfoQuery.useSuspenseQuery({
+		id: listingId,
+	});
 
-		return (
-			<Container
-				ui={{
-					flow: "vertical",
-					gap: "default",
-					height: "full",
-					...ui,
-				}}
-				{...props}
-			>
-				<Header sellerInfo={sellerInfo} />
+	return (
+		<Container
+			data-ui-flow="vertical"
+			data-ui-gap="default"
+			data-ui-height="full"
+			{...props}
+		>
+			<Header sellerInfo={sellerInfo} />
 
-				{sellerInfo.events ? (
-					<Group>
-						<Score rank={sellerInfo.events.score.rank} />
-					</Group>
-				) : (
-					<Status
-						icon={SearchIcon}
-						textTitle={translator.text("Listing seller info not available (title)")}
-						textMessage={translator.text("Listing seller info not available (message)")}
-						ui={{
-							tone: "brand",
-							theme: "light",
-							inner: "2xl",
-							opacity: "6",
-						}}
-						className={"text-center"}
-					/>
-				)}
-			</Container>
-		);
-	},
-	SpinnerContainer,
-);
+			{sellerInfo.events ? (
+				<Group>
+					<Score rank={sellerInfo.events.score.rank} />
+				</Group>
+			) : (
+				<Status
+					icon={SearchIcon}
+					textTitle={translator.text("Listing seller info not available (title)")}
+					textMessage={translator.text("Listing seller info not available (message)")}
+					data-ui-tone="brand"
+					data-ui-theme="light"
+					data-ui-inner="2xl"
+					data-ui-opacity="6"
+					className={"text-center"}
+				/>
+			)}
+		</Container>
+	);
+}, SpinnerContainer);

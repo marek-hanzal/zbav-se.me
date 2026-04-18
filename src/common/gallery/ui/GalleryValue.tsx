@@ -19,38 +19,27 @@ export namespace GalleryValue {
  *
  * @see src/draft/ui/DraftEditor/patch/GalleryPatch.tsx
  */
-export const GalleryValue: FC<GalleryValue.Props> = ({
-	uploads,
-	label,
-	statusProps,
-	ui,
-	...props
-}) => {
+export const GalleryValue: FC<GalleryValue.Props> = ({ uploads, label, statusProps, ...props }) => {
 	return (
 		<Container
 			data-ui={"GalleryValue[Container]"}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				round: undefined,
-				width: "full",
-				flow: "horizontal",
-				items: "center",
-				justify: "center",
-				background: "default",
-				shadow: false,
-				border: false,
-				...ui,
-			}}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-round={undefined}
+			data-ui-width="full"
+			data-ui-flow="horizontal"
+			data-ui-items="center"
+			data-ui-justify="center"
+			data-ui-background="default"
+			data-ui-shadow={false}
+			data-ui-border={false}
 			className="h-42"
 			{...props}
 		>
 			{uploads.length > 0 && uploads[0] ? (
 				<HeroImage
 					src={uploads[0].url}
-					ui={{
-						round: "default",
-					}}
+					data-ui-round="default"
 				/>
 			) : null}
 
@@ -59,22 +48,16 @@ export const GalleryValue: FC<GalleryValue.Props> = ({
 					data-ui={"GalleryValue-[Status.photo-hint]"}
 					icon={PhotoIcon}
 					iconProps={{
-						ui: {
-							text: "3xl",
-						},
+						"data-ui-text": "3xl",
 					}}
 					textTitle={label}
 					titleProps={{
-						ui: {
-							font: "normal",
-							text: "lg",
-						},
+						"data-ui-font": "normal",
+						"data-ui-text": "lg",
 					}}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						text: "default",
-					}}
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-text="default"
 					{...statusProps}
 				/>
 			)}

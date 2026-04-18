@@ -41,25 +41,21 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 						label={toActivityLabel({
 							entry: transaction.entry,
 						})}
-						ui={{
-							tone: "neutral",
-							theme: "light",
-							color: "text",
-							text: "sm",
-						}}
+						data-ui-tone="neutral"
+						data-ui-theme="light"
+						data-ui-color="text"
+						data-ui-text="sm"
 					/>
 				}
 				bottom={
 					<Container
-						ui={{
-							tone: "neutral",
-							theme: "light",
-							color: "text",
-							flow: "horizontal",
-							width: "full",
-							justify: "space-between",
-							items: "center",
-						}}
+						data-ui-tone="neutral"
+						data-ui-theme="light"
+						data-ui-color="text"
+						data-ui-flow="horizontal"
+						data-ui-width="full"
+						data-ui-justify="space-between"
+						data-ui-items="center"
 					>
 						{unreadCount > 0 ? (
 							<TypoIcon icon={MessageIcon}>
@@ -74,11 +70,9 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 								locale,
 								time: transaction.updatedAt,
 							})}
-							ui={{
-								text: "xs",
-								opacity: isUnread ? undefined : "7",
-								font: "normal",
-							}}
+							data-ui-text="xs"
+							data-ui-opacity={isUnread ? undefined : "7"}
+							data-ui-font="normal"
 							className={"min-w-fit"}
 						/>
 					</Container>

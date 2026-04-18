@@ -26,7 +26,6 @@ export namespace Icon {
 export const Icon: FC<Icon.Props> = ({
 	icon,
 	//
-	ui,
 	className,
 	//
 	...props
@@ -34,8 +33,6 @@ export const Icon: FC<Icon.Props> = ({
 	return isString(icon) ? (
 		<span
 			{...uiIcon({
-				ui,
-				//
 				className: [
 					icon,
 					className,

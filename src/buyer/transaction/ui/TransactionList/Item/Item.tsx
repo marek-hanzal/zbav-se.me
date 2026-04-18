@@ -36,49 +36,41 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 				hero={hero}
 				title={
 					<Container
-						ui={{
-							flow: "vertical",
-							width: "full",
-						}}
+						data-ui-flow="vertical"
+						data-ui-width="full"
 					>
 						<Tx
 							label={transaction.title}
-							ui={{
-								tone: "neutral",
-								theme: "light",
-								color: "text",
-								text: "sm",
-								width: "full",
-								truncate: true,
-							}}
+							data-ui-tone="neutral"
+							data-ui-theme="light"
+							data-ui-color="text"
+							data-ui-text="sm"
+							data-ui-width="full"
+							data-ui-truncate
 						/>
 
 						<Tx
 							label={transaction.location.address}
-							ui={{
-								tone: "neutral",
-								theme: "light",
-								color: "text",
-								text: "xs",
-								width: "full",
-								truncate: true,
-								opacity: "6",
-							}}
+							data-ui-tone="neutral"
+							data-ui-theme="light"
+							data-ui-color="text"
+							data-ui-text="xs"
+							data-ui-width="full"
+							data-ui-truncate
+							data-ui-opacity="6"
 						/>
 					</Container>
 				}
 				bottom={
 					<Container
-						ui={{
-							tone: "neutral",
-							theme: "light",
-							color: "text",
-							flow: "horizontal",
-							items: "center",
-							justify: "space-between",
-							text: "sm",
-							width: "full",
-						}}
+						data-ui-tone="neutral"
+						data-ui-theme="light"
+						data-ui-color="text"
+						data-ui-flow="horizontal"
+						data-ui-items="center"
+						data-ui-justify="space-between"
+						data-ui-text="sm"
+						data-ui-width="full"
 					>
 						<PriceInline
 							price={transaction.price}
@@ -91,9 +83,7 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 								locale,
 								time: transaction.entry.createdAt,
 							})}
-							ui={{
-								opacity: "6",
-							}}
+							data-ui-opacity="6"
 						/>
 					</Container>
 				}

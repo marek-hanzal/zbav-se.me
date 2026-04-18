@@ -10,7 +10,6 @@ export namespace BackHomeButton {
 }
 
 const BaseBackHomeButton: FC<uiBackButton.Component<ComponentProps<"a">>> = ({
-	ui,
 	className,
 	...props
 }) => {
@@ -19,7 +18,6 @@ const BaseBackHomeButton: FC<uiBackButton.Component<ComponentProps<"a">>> = ({
 			data-root={"BackHomeButton"}
 			data-action={"go back home"}
 			{...uiBackButton({
-				ui,
 				className,
 			})}
 			{...props}

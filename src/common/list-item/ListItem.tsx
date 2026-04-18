@@ -21,7 +21,6 @@ export const ListItem: FC<ListItem.Props> = ({
 	hero,
 	title,
 	bottom,
-	ui,
 	className,
 	children,
 	...props
@@ -35,16 +34,14 @@ export const ListItem: FC<ListItem.Props> = ({
 		) : (
 			<Container
 				className={"aspect-square h-full shrink-0 overflow-hidden"}
-				ui={{
-					tone: "subtle",
-					theme: "light",
-					round: "md",
-					height: "full",
-					flow: "horizontal",
-					items: "center",
-					justify: "center",
-					background: "default",
-				}}
+				data-ui-tone="subtle"
+				data-ui-theme="light"
+				data-ui-round="md"
+				data-ui-height="full"
+				data-ui-flow="horizontal"
+				data-ui-items="center"
+				data-ui-justify="center"
+				data-ui-background="default"
 			>
 				{hero as ReactNode}
 			</Container>
@@ -61,35 +58,28 @@ export const ListItem: FC<ListItem.Props> = ({
 				"relative",
 				className,
 			]}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				width: "full",
-				background: "default",
-				...ui,
-			}}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-width="full"
+			data-ui-background="default"
 			{...props}
 		>
 			<Container
-				ui={{
-					flow: "horizontal",
-					position: "relative",
-					height: "full",
-					width: "full",
-				}}
+				data-ui-flow="horizontal"
+				data-ui-position="relative"
+				data-ui-height="full"
+				data-ui-width="full"
 			>
 				{image}
 
 				<Container
 					className={"min-w-0 flex-1"}
-					ui={{
-						flow: "vertical",
-						items: "start",
-						justify: "space-between",
-						height: "full",
-						inner: "xs",
-						width: "full",
-					}}
+					data-ui-flow="vertical"
+					data-ui-items="start"
+					data-ui-justify="space-between"
+					data-ui-height="full"
+					data-ui-inner="xs"
+					data-ui-width="full"
 				>
 					{title}
 
@@ -98,13 +88,11 @@ export const ListItem: FC<ListItem.Props> = ({
 
 				<Icon
 					icon={ChevronRightIcon}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						snapTo: "right-center",
-						text: "xl",
-						color: "lead",
-					}}
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-snap-to="right-center"
+					data-ui-text="xl"
+					data-ui-color="lead"
 				/>
 
 				{children}

@@ -76,10 +76,8 @@ export async function getRouter() {
 		defaultNotFoundComponent() {
 			return (
 				<Container
-					ui={{
-						layout: "vertical-centered",
-						height: "full",
-					}}
+					data-ui-layout="vertical-centered"
+					data-ui-height="full"
 				>
 					<div>4😞4</div>
 				</Container>
@@ -88,10 +86,8 @@ export async function getRouter() {
 		defaultPendingComponent() {
 			return (
 				<Container
-					ui={{
-						layout: "vertical-centered",
-						height: "full",
-					}}
+					data-ui-layout="vertical-centered"
+					data-ui-height="full"
 				>
 					<Logo logo />
 				</Container>

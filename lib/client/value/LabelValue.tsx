@@ -37,51 +37,41 @@ export const LabelValue: FC<LabelValue.Props> = ({
 	textEmpty,
 	textHint,
 	action,
-	wrapperProps: { ui: wrapperUi, ...wrapperPropsRest } = {},
-	//
-	ui,
+	wrapperProps,
 	...props
 }) => {
 	return (
 		<Container
 			data-ui={"LabelValue[Container]"}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				inner: "default",
-				round: undefined,
-				background: "default",
-				flow: "vertical",
-				gap: "xs",
-				border: false,
-				shadow: false,
-				width: "full",
-				...ui,
-			}}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-inner="default"
+			data-ui-round={undefined}
+			data-ui-background="default"
+			data-ui-flow="vertical"
+			data-ui-gap="xs"
+			data-ui-border={false}
+			data-ui-shadow={false}
+			data-ui-width="full"
 			{...props}
 		>
 			<Container
 				data-ui={"LabelValue-[Container.label-wrapper]"}
-				ui={{
-					tone: "primary",
-					theme: "light",
-					flow: "horizontal",
-					items: "center",
-					justify: "space-between",
-					gap: "default",
-					color: "lead",
-					width: "full",
-					...wrapperUi,
-				}}
-				{...wrapperPropsRest}
+				data-ui-tone="primary"
+				data-ui-theme="light"
+				data-ui-flow="horizontal"
+				data-ui-items="center"
+				data-ui-justify="space-between"
+				data-ui-gap="default"
+				data-ui-color="lead"
+				data-ui-width="full"
+				{...wrapperProps}
 			>
 				<Tx
 					label={textLabel}
 					preset={"label"}
-					ui={{
-						font: "semibold",
-						color: "lead",
-					}}
+					data-ui-font="semibold"
+					data-ui-color="lead"
 					{...textLabelProps}
 				/>
 
@@ -91,25 +81,21 @@ export const LabelValue: FC<LabelValue.Props> = ({
 			{textHint ? (
 				<Tx
 					label={textHint}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						text: "xs",
-						color: "icon",
-						italic: true,
-					}}
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-text="xs"
+					data-ui-color="icon"
+					data-ui-italic={true}
 				/>
 			) : null}
 
 			{isString(textValue) ? (
 				<Tx
 					label={textValue}
-					ui={{
-						tone: "secondary",
-						theme: "light",
-						text: "default",
-						truncate: true,
-					}}
+					data-ui-tone="secondary"
+					data-ui-theme="light"
+					data-ui-text="default"
+					data-ui-truncate={true}
 					{...textValueProps}
 				/>
 			) : (
@@ -119,11 +105,9 @@ export const LabelValue: FC<LabelValue.Props> = ({
 			{textValue === null ? (
 				<Tx
 					label={textEmpty}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						opacity: "6",
-					}}
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-opacity="6"
 				/>
 			) : null}
 		</Container>

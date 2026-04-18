@@ -2,19 +2,15 @@ import type { ConfirmButton } from "@/lib/client/button";
 
 export const TransactionButtonUi: ConfirmButton.Props = {
 	iconProps: {
-		ui: {
-			text: "2xl",
-		},
+		"data-ui-text": "2xl",
 	},
-	ui: {
-		tone: "neutral",
-		theme: "light",
-		round: undefined,
-		background: "default",
-		text: "lg",
-		border: false,
-		shadow: false,
-		width: "full",
-		size: "md",
-	},
+	"data-ui-tone": "neutral",
+	"data-ui-theme": "light",
+	"data-ui-round": undefined,
+	"data-ui-background": "default",
+	"data-ui-text": "lg",
+	"data-ui-border": false,
+	"data-ui-shadow": false,
+	"data-ui-width": "full",
+	"data-ui-size": "md",
 };

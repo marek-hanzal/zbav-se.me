@@ -34,20 +34,20 @@ export namespace uiInput {
 	}
 }
 
-export const uiInput = ({ ui, className }: uiInput.Props) => {
+export const uiInput = ({ name = "Input", className, ...ui }: uiInput.Props) => {
 	return coolUi<uiInput.Ui>({
-		name: "Input",
+		name,
 		ui: {
-			tone: "neutral",
-			theme: "light",
-			text: "default",
-			color: "text",
-			background: "default",
-			border: true,
-			shadow: true,
-			round: "default",
-			width: "full",
-			inner: "default",
+			"data-ui-tone": "neutral",
+			"data-ui-theme": "light",
+			"data-ui-text": "default",
+			"data-ui-color": "text",
+			"data-ui-background": "default",
+			"data-ui-border": true,
+			"data-ui-shadow": true,
+			"data-ui-round": "default",
+			"data-ui-width": "full",
+			"data-ui-inner": "default",
 			...ui,
 		},
 		className,

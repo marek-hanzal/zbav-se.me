@@ -12,7 +12,6 @@ export namespace ToolbarContainer {
 export const ToolbarContainer: FC<ToolbarContainer.Props> = ({
 	horizontal = false,
 	flip = false,
-	ui,
 	...props
 }) => {
 	return (
@@ -25,14 +24,12 @@ export const ToolbarContainer: FC<ToolbarContainer.Props> = ({
 			className={[
 				"ToolbarContainer",
 			]}
-			ui={{
-				layout: "vertical-flex",
-				snapTo: "right-center",
-				inner: "default",
-				gap: "lg",
-				height: "full",
-				width: "full",
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-snap-to="right-center"
+			data-ui-inner="default"
+			data-ui-gap="lg"
+			data-ui-height="full"
+			data-ui-width="full"
 			{...props}
 		/>
 	);

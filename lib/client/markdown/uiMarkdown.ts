@@ -20,11 +20,11 @@ export namespace uiMarkdown {
 	}
 }
 
-export const uiMarkdown = ({ ui, className }: uiMarkdown.Props) => {
+export const uiMarkdown = ({ name = "Markdown", className, ...ui }: uiMarkdown.Props) => {
 	return coolUi<uiMarkdown.Ui>({
-		name: "Markdown",
+		name,
 		ui: {
-			text: "default",
+			"data-ui-text": "default",
 			...ui,
 		},
 		className,

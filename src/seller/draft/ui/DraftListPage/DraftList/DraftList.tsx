@@ -21,7 +21,7 @@ export namespace DraftList {
  *
  * @see src/draft/page/DraftListPage.tsx
  */
-export const DraftList = withFallback(({ _suspense, ui, ...props }: DraftList.Props) => {
+export const DraftList = withFallback(({ _suspense, ...props }: DraftList.Props) => {
 	const { data: draftCollection } = withDraftQuery.useIdsQuery({
 		where: {
 			usedAtIsNull: true,
@@ -52,13 +52,10 @@ export const DraftList = withFallback(({ _suspense, ui, ...props }: DraftList.Pr
 	return (
 		<Container
 			data-ui="DraftList[Container]"
-			ui={{
-				scroll: "vertical",
-				height: "full",
-				layout: "vertical-flex",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-scroll="vertical"
+			data-ui-height="full"
+			data-ui-layout="vertical-flex"
+			data-ui-gap="default"
 			{...props}
 		>
 			<EmptyState check={check}>

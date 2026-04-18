@@ -27,16 +27,14 @@ export const Item = withFallback(({ _suspense, listingId }: Item.Props) => {
 			title={
 				<Typo
 					label={listing.title}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						color: "lead",
-						font: "semibold",
-						text: "sm",
-						display: "block",
-						width: "full",
-						truncate: true,
-					}}
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-color="lead"
+					data-ui-font="semibold"
+					data-ui-text="sm"
+					data-ui-display="block"
+					data-ui-width="full"
+					data-ui-truncate
 					className={[
 						"block",
 						"w-full",
@@ -51,14 +49,12 @@ export const Item = withFallback(({ _suspense, listingId }: Item.Props) => {
 						locale,
 						time: listing.updatedAt,
 					})}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						text: "xs",
-						font: "normal",
-						color: "text",
-						opacity: "5",
-					}}
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-text="xs"
+					data-ui-font="normal"
+					data-ui-color="text"
+					data-ui-opacity="5"
 				/>
 			}
 		/>

@@ -32,9 +32,7 @@ export const Empty: FC<Empty.Props> = (props) => {
 					params={{
 						locale,
 					}}
-					{...uiCtaLinkButton({
-						className: [],
-					})}
+					{...uiCtaLinkButton({})}
 				>
 					<Tx label={"Go to listings (button)"} />
 				</LinkTo>

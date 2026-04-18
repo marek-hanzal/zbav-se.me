@@ -18,23 +18,15 @@ export namespace CategorySelect {
  *
  * @see src/draft/ui/DraftEditor/patch/CategoryPatch.tsx
  */
-export const CategorySelect: FC<CategorySelect.Props> = ({
-	selection,
-	categoryId,
-	ui,
-	...props
-}) => {
+export const CategorySelect: FC<CategorySelect.Props> = ({ selection, categoryId, ...props }) => {
 	const [fulltext, setFulltext] = useState<Fulltext.Value>();
 
 	return (
 		<Container
 			data-ui={"CategorySelect[Container]"}
-			ui={{
-				layout: "vertical-header-content",
-				height: "full",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
+			data-ui-height="full"
+			data-ui-gap="default"
 			{...props}
 		>
 			<Fulltext

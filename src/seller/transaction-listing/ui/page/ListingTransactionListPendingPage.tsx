@@ -32,11 +32,9 @@ export const ListingTransactionListPendingPage: FC<ListingTransactionListPending
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-centered",
-					height: "full",
-					inner: "default",
-				}}
+				data-ui-layout="vertical-centered"
+				data-ui-height="full"
+				data-ui-inner="default"
 			>
 				<SpinnerContainer />
 			</Container>

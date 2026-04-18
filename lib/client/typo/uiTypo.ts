@@ -36,11 +36,11 @@ export namespace uiTypo {
 	}
 }
 
-export const uiTypo = ({ ui, className }: uiTypo.Props) => {
+export const uiTypo = ({ name = "Typo", className, ...ui }: uiTypo.Props) => {
 	return coolUi({
-		name: "Typo",
+		name,
 		ui: {
-			display: "inline",
+			"data-ui-display": "inline",
 			...ui,
 		},
 		className,

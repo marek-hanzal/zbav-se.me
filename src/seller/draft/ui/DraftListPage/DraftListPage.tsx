@@ -38,9 +38,7 @@ export const DraftListPage: FC<DraftListPage.Props> = (props) => {
 			<Suspense fallback={<DraftList.Fallback />}>
 				<DraftList
 					_suspense={"I know"}
-					ui={{
-						inner: "default",
-					}}
+					data-ui-inner="default"
 				/>
 			</Suspense>
 		</TitleContainer>

@@ -11,7 +11,7 @@ export namespace ThinkingIndicator {
 	}
 }
 
-export const ThinkingIndicator: FC<ThinkingIndicator.Props> = ({ events, ui, ...props }) => {
+export const ThinkingIndicator: FC<ThinkingIndicator.Props> = ({ events, ...props }) => {
 	const state = selectThinkingState(events);
 
 	if (!state.isVisible) {
@@ -21,33 +21,26 @@ export const ThinkingIndicator: FC<ThinkingIndicator.Props> = ({ events, ui, ...
 	return (
 		<Container
 			data-ui={"LiveList-ThinkingIndicator"}
-			ui={{
-				layout: "horizontal-flex",
-				items: "center",
-				gap: "xs",
-				tone: "neutral",
-				theme: "light",
-				text: "sm",
-				...ui,
-			}}
+			data-ui-layout="horizontal-flex"
+			data-ui-items="center"
+			data-ui-gap="xs"
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-text="sm"
 			{...props}
 		>
 			<Icon
 				data-ui={"LiveList-ThinkingIndicator-[Spinner]"}
 				icon={SpinnerIcon}
-				ui={{
-					text: "sm",
-				}}
+				data-ui-text="sm"
 			/>
 
 			{state.label !== null ? (
 				<Typo
 					label={state.label}
-					ui={{
-						text: "sm",
-						font: "semibold",
-						color: "lead",
-					}}
+					data-ui-text="sm"
+					data-ui-font="semibold"
+					data-ui-color="lead"
 				/>
 			) : null}
 		</Container>

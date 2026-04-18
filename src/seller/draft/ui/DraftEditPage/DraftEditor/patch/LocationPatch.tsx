@@ -67,13 +67,11 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ draft, onCancel, onView
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					inner: "default",
-					gap: "default",
-				}}
+				data-ui-layout="vertical-content-footer"
+				data-ui-height="full"
+				data-ui-width="full"
+				data-ui-inner="default"
+				data-ui-gap="default"
 			>
 				<form.AppField name={"locationId"}>
 					{(field) => (

@@ -83,13 +83,11 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 		>
 			<EmptyState check={check}>
 				<Container
-					ui={{
-						scroll: "vertical",
-						height: "full",
-						layout: "vertical-flex",
-						gap: "2xl",
-						inner: "default",
-					}}
+					data-ui-scroll="vertical"
+					data-ui-height="full"
+					data-ui-layout="vertical-flex"
+					data-ui-gap="2xl"
+					data-ui-inner="default"
 				>
 					<ListGroup
 						label={translator.text("Transactions - buyer-to-seller - seller (title)")}
@@ -97,9 +95,9 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 							flow: "buyer-to-seller",
 						}}
 						refetchInterval={refetchInterval}
-						typoUi={{
-							tone: "neutral",
-							theme: "light",
+						typoProps={{
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
 						}}
 					/>
 
@@ -109,11 +107,11 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 							flow: "seller-to-buyer",
 						}}
 						refetchInterval={refetchInterval}
-						typoUi={{
-							tone: "neutral",
-							theme: "light",
-							opacity: "7",
-							font: "normal",
+						typoProps={{
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+							"data-ui-opacity": "7",
+							"data-ui-font": "normal",
 						}}
 					/>
 
@@ -123,14 +121,12 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 							flow: "archived",
 						}}
 						refetchInterval={refetchInterval}
-						ui={{
-							opacity: "7",
-						}}
-						typoUi={{
-							tone: "neutral",
-							theme: "light",
-							opacity: "7",
-							font: "normal",
+						data-ui-opacity="7"
+						typoProps={{
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+							"data-ui-opacity": "7",
+							"data-ui-font": "normal",
 						}}
 					/>
 				</Container>

@@ -29,7 +29,6 @@ export const TransactionMessage: FC<TransactionMessage.Props> = ({
 	sold,
 	status,
 	success,
-	ui,
 	...props
 }) => {
 	const message = match(status)
@@ -46,12 +45,9 @@ export const TransactionMessage: FC<TransactionMessage.Props> = ({
 
 	return message ? (
 		<Container
-			data-ui={"TransactionMessage[Container]"}
-			ui={{
-				flow: "vertical",
-				gap: "default",
-				...ui,
-			}}
+			data-ui="TransactionMessage[Container]"
+			data-ui-flow="vertical"
+			data-ui-gap="default"
 			{...props}
 		>
 			{message}

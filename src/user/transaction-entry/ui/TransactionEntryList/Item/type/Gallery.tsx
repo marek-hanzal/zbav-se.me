@@ -34,25 +34,21 @@ export const Gallery = withFallback(
 			<TypeContainer
 				data-ui={"Gallery"}
 				direction={transactionEntry.direction}
-				ui={{
-					position: "relative",
-					theme: undefined,
-					background: undefined,
-					round: undefined,
-					inner: undefined,
-				}}
+				data-ui-position="relative"
+				data-ui-theme={undefined}
+				data-ui-background={undefined}
+				data-ui-round={undefined}
+				data-ui-inner={undefined}
 				className={"h-48"}
 				{...props}
 			>
 				<HeroImage
 					src={hero.url}
 					visible
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						background: "default",
-						round: "default",
-					}}
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-background="default"
+					data-ui-round="default"
 					onClick={() => setIsGalleryOpen((prev) => !prev)}
 				/>
 
@@ -62,16 +58,14 @@ export const Gallery = withFallback(
 						time: transactionEntry.createdAt,
 						type: "relative",
 					})}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						background: "default",
-						text: "sm",
-						round: "default",
-						inner: "default",
-						opacity: "8",
-						snapTo: "bottom-left",
-					}}
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-background="default"
+					data-ui-text="sm"
+					data-ui-round="default"
+					data-ui-inner="default"
+					data-ui-opacity="8"
+					data-ui-snap-to="bottom-left"
 				/>
 
 				<GalleryPreviewSheet
@@ -91,11 +85,9 @@ export const Gallery = withFallback(
 			<TypeContainer
 				data-ui={"Gallery"}
 				direction={transactionEntry.direction}
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					background: "default",
-				}}
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-background="default"
 				className={"h-48"}
 			>
 				<SpinnerContainer />

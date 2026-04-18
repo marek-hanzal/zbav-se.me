@@ -1,6 +1,6 @@
 import { withFallback } from "@/lib/client/fallback";
 import { ChevronRightIcon } from "@/lib/client/icon";
-import { LinkTo } from "@/lib/client/link-to";
+import { LinkTo, type uiLinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
@@ -9,7 +9,9 @@ import { TypoIcon } from "~/common/ui/typo";
 import { uiMenuButton } from "~/common/ui/ui";
 
 export namespace SearchLink {
-	export interface Props extends Pick<LinkTo.Props, "ui" | "iconProps">, MarkSuspense.Props {
+	export interface Props
+		extends uiLinkTo.Component<Pick<LinkTo.Props, "iconProps">>,
+			MarkSuspense.Props {
 		//
 	}
 }
@@ -21,27 +23,19 @@ export const SearchLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"search listings"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={FindListingsIcon}
 				to="/$locale/app/buyer/search"
 				params={{
 					locale,
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 				})}
 				{...uiMenuButton({
-					ui: {
-						tone: "neutral",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "neutral",
+					"data-ui-theme": "light",
 				})}
 				{...props}
 			>
@@ -49,9 +43,7 @@ export const SearchLink = withFallback(
 					flip
 					icon={ChevronRightIcon}
 					iconProps={{
-						ui: {
-							opacity: "5",
-						},
+						"data-ui-opacity": "5",
 					}}
 				>
 					<Tx label="Find listings (label)" />
@@ -65,20 +57,15 @@ export const SearchLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"search listings"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={FindListingsIcon}
 				to="/$locale/app/buyer/search"
 				params={{
 					locale,
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 				})}
 				{...props}
 			>

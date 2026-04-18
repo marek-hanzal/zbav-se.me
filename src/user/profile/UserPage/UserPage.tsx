@@ -26,7 +26,7 @@ export namespace UserPage {
  *
  * @see src/@routes
  */
-export const UserPage: FC<UserPage.Props> = ({ ui, ...props }) => {
+export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
 	const user = useUser();
 
@@ -43,45 +43,28 @@ export const UserPage: FC<UserPage.Props> = ({ ui, ...props }) => {
 				/>
 			}
 			right={<HomeMenuButton />}
-			ui={{
-				layout: "vertical-header-content",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-centered",
-					height: "full",
-				}}
+				data-ui-layout="vertical-centered"
+				data-ui-height="full"
 			>
 				<Status
 					icon={UserIcon}
 					textTitle={user.email}
 					textMessage={user.name}
 					action={<SignOutButton />}
-					ui={{
-						tone: "brand",
-						theme: "light",
-						color: "lead",
-						text: "3xl",
-					}}
+					data-ui-tone="brand"
+					data-ui-theme="light"
+					data-ui-color="lead"
+					data-ui-text="3xl"
 				>
-					<Container
-						ui={{
-							inner: "4xl",
-						}}
-					>
+					<Container data-ui-inner="4xl">
 						<Group>
 							<LabelValue
 								textLabel={translator.text("Token usage (label)")}
-								textValue={
-									<TokenUsage
-										ui={{
-											text: "default",
-										}}
-									/>
-								}
+								textValue={<TokenUsage data-ui-text="default" />}
 							/>
 						</Group>
 					</Container>

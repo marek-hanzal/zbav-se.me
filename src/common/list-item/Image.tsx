@@ -13,9 +13,7 @@ export const Image: FC<Image.Props> = ({ src }) => {
 	return (
 		<Container
 			className={"aspect-square h-full shrink-0 overflow-hidden"}
-			ui={{
-				round: "md",
-			}}
+			data-ui-round="md"
 		>
 			{src ? (
 				<HeroImage
@@ -23,31 +21,25 @@ export const Image: FC<Image.Props> = ({ src }) => {
 					src={src}
 					alt={`Hero image for draft`}
 					visible
-					ui={{
-						width: "full",
-						height: "full",
-					}}
+					data-ui-width="full"
+					data-ui-height="full"
 				/>
 			) : (
 				<Container
-					ui={{
-						tone: "subtle",
-						theme: "light",
-						width: "full",
-						height: "full",
-						flow: "horizontal",
-						items: "center",
-						justify: "center",
-						background: "default",
-					}}
+					data-ui-tone="subtle"
+					data-ui-theme="light"
+					data-ui-width="full"
+					data-ui-height="full"
+					data-ui-flow="horizontal"
+					data-ui-items="center"
+					data-ui-justify="center"
+					data-ui-background="default"
 				>
 					<Icon
 						icon={"icon-[solar--question-square-linear]"}
-						ui={{
-							text: "2xl",
-							color: "text",
-							opacity: "2",
-						}}
+						data-ui-text="2xl"
+						data-ui-color="text"
+						data-ui-opacity="2"
 					/>
 				</Container>
 			)}

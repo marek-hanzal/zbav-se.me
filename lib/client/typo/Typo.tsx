@@ -1,29 +1,30 @@
 import type { ComponentProps, FC, ReactNode } from "react";
+import type { ui } from "../cls";
 import { uiTypo } from "./uiTypo";
 
-const presets: Record<Typo.Preset, uiTypo.Ui> = {
+const presets = {
 	none: {},
 	label: {
-		text: "lg",
-		font: "bold",
+		"data-ui-text": "lg",
+		"data-ui-font": "bold",
 	},
 	header: {
-		tone: "brand",
-		theme: "light",
-		text: "lg",
-		color: "lead",
-		font: "bold",
-		display: "block",
-		opacity: "8",
+		"data-ui-tone": "brand",
+		"data-ui-theme": "light",
+		"data-ui-text": "lg",
+		"data-ui-color": "lead",
+		"data-ui-font": "bold",
+		"data-ui-display": "block",
+		"data-ui-opacity": "8",
 	},
 	subheader: {
-		text: "lg",
-		font: "semibold",
-		display: "block",
+		"data-ui-text": "lg",
+		"data-ui-font": "semibold",
+		"data-ui-display": "block",
 	},
 	blockquote: {},
 	paragraph: {},
-};
+} satisfies Record<Typo.Preset, ui.Data<uiTypo.Ui, keyof uiTypo.Ui>>;
 
 export namespace Typo {
 	export type Value = ReactNode;
@@ -42,18 +43,13 @@ export const Typo: FC<Typo.Props> = ({
 	label,
 	preset = "none",
 	//
-	ui,
 	className,
 	...props
 }) => {
 	return (
 		<span
 			{...uiTypo({
-				ui: {
-					...presets[preset],
-					...ui,
-				},
-				//
+				...presets[preset],
 				className,
 			})}
 			//

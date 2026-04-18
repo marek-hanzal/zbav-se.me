@@ -55,12 +55,10 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 		>
 			<Container
 				data-ui={"GalleryUploadSheet[Container]"}
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					gap: "default",
-					inner: "default",
-				}}
+				data-ui-layout="vertical-content-footer"
+				data-ui-height="full"
+				data-ui-gap="default"
+				data-ui-inner="default"
 			>
 				<GalleryUpload
 					state={{

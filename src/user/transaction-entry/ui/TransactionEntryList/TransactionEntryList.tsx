@@ -22,7 +22,6 @@ export const TransactionEntryList: FC<TransactionEntryList.Props> = ({
 	side,
 	transactionId,
 	containerRef,
-	ui,
 	children,
 	refresh,
 	...props
@@ -62,11 +61,8 @@ export const TransactionEntryList: FC<TransactionEntryList.Props> = ({
 		<Container
 			data-ui="TransactionEntryList"
 			ref={contentRef}
-			ui={{
-				flow: "vertical",
-				gap: "lg",
-				...ui,
-			}}
+			data-ui-flow="vertical"
+			data-ui-gap="lg"
 			{...props}
 		>
 			{data.map((transactionEntryId) => {

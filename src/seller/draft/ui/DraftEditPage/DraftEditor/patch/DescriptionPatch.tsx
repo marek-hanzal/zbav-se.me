@@ -47,12 +47,10 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					inner: "default",
-				}}
+				data-ui-layout="vertical-content-footer"
+				data-ui-height="full"
+				data-ui-width="full"
+				data-ui-inner="default"
 			>
 				<Status
 					action={
@@ -67,9 +65,6 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 									maxLength={DESCRIPTION_MAX_LENGTH}
 									rows={10}
 									{...uiInput({
-										ui: {
-											...props.ui,
-										},
 										className: [
 											"resize-none",
 											"outline-none",
@@ -85,10 +80,8 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 				>
 					<Mx
 						label={"Listing description (hint)"}
-						ui={{
-							tone: "secondary",
-							theme: "light",
-						}}
+						data-ui-tone="secondary"
+						data-ui-theme="light"
 					/>
 				</Status>
 

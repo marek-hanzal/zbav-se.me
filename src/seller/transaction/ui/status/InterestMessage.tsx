@@ -15,22 +15,14 @@ export namespace InterestMessage {
 	}
 }
 
-export const InterestMessage: FC<InterestMessage.Props> = ({
-	close,
-	transaction,
-	ui,
-	...props
-}) => {
+export const InterestMessage: FC<InterestMessage.Props> = ({ close, transaction, ...props }) => {
 	return (
 		<>
 			<Group
 				data-ui={"InterestMessage[Group].Info"}
-				ui={{
-					round: "default",
-					flow: "vertical",
-					tone: "link",
-					...ui,
-				}}
+				data-ui-round="default"
+				data-ui-flow="vertical"
+				data-ui-tone="link"
 				{...props}
 			>
 				<BuyerInfoButton
@@ -41,12 +33,9 @@ export const InterestMessage: FC<InterestMessage.Props> = ({
 
 			<Group
 				data-ui={"InterestMessage[Group].Buttons"}
-				ui={{
-					round: "default",
-					flow: "vertical",
-					tone: "link",
-					...ui,
-				}}
+				data-ui-round="default"
+				data-ui-flow="vertical"
+				data-ui-tone="link"
 				{...props}
 			>
 				<AcceptButton

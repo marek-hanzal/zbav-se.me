@@ -13,6 +13,7 @@ export const DraftMigration: Migration = {
 				toEnumGuard<ListingPriceEnumSchema.Type>()([
 					"closed",
 					"open",
+					"offer",
 				] as const),
 			)
 			.execute();

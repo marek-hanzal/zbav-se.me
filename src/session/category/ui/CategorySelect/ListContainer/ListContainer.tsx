@@ -78,18 +78,14 @@ export const ListContainer = withFallback(
 
 		return (
 			<Container
-				ui={{
-					scroll: "vertical",
-					height: "full",
-				}}
+				data-ui-scroll="vertical"
+				data-ui-height="full"
 			>
 				<Container
 					data-ui="ListContainer[Container.content]"
 					ref={mergedRef}
-					ui={{
-						flow: "vertical",
-						gap: "default",
-					}}
+					data-ui-flow="vertical"
+					data-ui-gap="default"
 					{...props}
 				>
 					{categoryIds.map((categoryId) => {

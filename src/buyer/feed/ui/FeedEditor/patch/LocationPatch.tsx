@@ -5,7 +5,6 @@ import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { LocationSelect } from "~/common/location/ui/LocationSelect";
-import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 
 export namespace LocationPatch {
 	export interface Props extends Container.Props {
@@ -18,33 +17,25 @@ export namespace LocationPatch {
 export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
 	const [locationId, setLocationId] = useState<string | undefined | null>(feed.locationId);
-	const [location, setLocation] = useState<LocationSchema.Type | undefined>(undefined);
 
 	return (
 		<Container
 			data-ui={"LocationPatch[Container]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				inner: "default",
-				...props.ui,
-			}}
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-inner="default"
 			{...props}
 		>
 			<LocationSelect
 				value={locationId}
-				onLocation={setLocation}
 				onChange={setLocationId}
 				textHint={translator.text("Feed location security (hint)")}
+				allowClear
 			/>
 
 			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
-					if (!locationId || !location) {
-						return;
-					}
-
 					patchMutation.mutate(
 						{
 							query: {
@@ -54,13 +45,6 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCanc
 							},
 							patch: {
 								locationId,
-								query: {
-									...feed.query,
-									meta: {
-										...feed.query?.meta,
-										latLon: location,
-									},
-								},
 							},
 						},
 						{
@@ -69,7 +53,7 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCanc
 					);
 				}}
 				loading={patchMutation.isPending}
-				disabled={!locationId || !location}
+				disabled={false}
 			/>
 		</Container>
 	);

@@ -20,7 +20,7 @@ export namespace ListingList {
  *
  * @see src/listing/page/MyListingPage.tsx
  */
-export const ListingList = withFallback(({ ui, ...props }: ListingList.Props) => {
+export const ListingList = withFallback(({ ...props }: ListingList.Props) => {
 	const { data: listingCollection } = withListingQuery.useIdsQuery({
 		cursor: {
 			page: 0,
@@ -62,14 +62,11 @@ export const ListingList = withFallback(({ ui, ...props }: ListingList.Props) =>
 		<Container
 			data-ui={"MyListing[Container]"}
 			ref={scrollerRef}
-			ui={{
-				flow: "vertical",
-				scroll: "vertical",
-				height: "full",
-				gap: "default",
-				inner: "default",
-				...ui,
-			}}
+			data-ui-flow="vertical"
+			data-ui-scroll="vertical"
+			data-ui-height="full"
+			data-ui-gap="default"
+			data-ui-inner="default"
 			{...props}
 		>
 			<EmptyState check={check}>

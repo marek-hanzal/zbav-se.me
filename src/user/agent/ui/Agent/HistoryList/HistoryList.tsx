@@ -14,17 +14,14 @@ export namespace HistoryList {
 	}
 }
 
-export const HistoryList: FC<HistoryList.Props> = ({ ui, ...props }) => {
+export const HistoryList: FC<HistoryList.Props> = (props) => {
 	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(AgentStreamItemsQuery);
 
 	return (
 		<Container
 			data-ui={"HistoryList"}
-			ui={{
-				flow: "vertical",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-flow="vertical"
+			data-ui-gap="default"
 			{...props}
 		>
 			{items.map((item, index) => {

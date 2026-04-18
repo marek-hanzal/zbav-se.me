@@ -79,13 +79,11 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onView, ...p
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					inner: "default",
-					gap: "default",
-				}}
+				data-ui-layout="vertical-content-footer"
+				data-ui-height="full"
+				data-ui-width="full"
+				data-ui-inner="default"
+				data-ui-gap="default"
 			>
 				<form.AppField name={"price"}>
 					{(field) => (
@@ -102,9 +100,7 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onView, ...p
 								field.handleBlur();
 							}}
 							placeholder={translator.text("Price (placeholder)")}
-							ui={{
-								inner: "default",
-							}}
+							data-ui-inner="default"
 						/>
 					)}
 				</form.AppField>

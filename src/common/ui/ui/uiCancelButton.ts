@@ -13,18 +13,17 @@ export namespace uiCancelButton {
 	}
 }
 
-export const uiCancelButton = ({ ui, className }: uiCancelButton.Props) => {
+export const uiCancelButton = ({ name, className, ...ui }: uiCancelButton.Props) => {
 	return uiButton({
-		ui: {
-			tone: "neutral",
-			theme: "light",
-			inner: "md",
-			text: "lg",
-			justify: "center",
-			items: "center",
-			width: "full",
-			...ui,
-		},
+		name,
+		"data-ui-tone": "neutral",
+		"data-ui-theme": "light",
+		"data-ui-inner": "md",
+		"data-ui-text": "lg",
+		"data-ui-justify": "center",
+		"data-ui-items": "center",
+		"data-ui-width": "full",
+		...ui,
 		className,
 	});
 };

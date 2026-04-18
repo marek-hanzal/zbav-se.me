@@ -14,7 +14,7 @@ export namespace Empty {
 	}
 }
 
-export const Empty: FC<Empty.Props> = ({ ui, ...props }) => {
+export const Empty: FC<Empty.Props> = (props) => {
 	const locale = useLocale();
 
 	return (
@@ -31,14 +31,11 @@ export const Empty: FC<Empty.Props> = ({ ui, ...props }) => {
 					params={{
 						locale,
 					}}
-					{...uiCtaLinkButton({
-						className: [],
-					})}
+					{...uiCtaLinkButton({})}
 				>
 					<Tx label="Go to my feed (button)" />
 				</LinkTo>
 			}
-			ui={ui}
 			{...props}
 		/>
 	);

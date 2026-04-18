@@ -7,23 +7,18 @@ export namespace SubmitButton {
 	}
 }
 
-export const SubmitButton: FC<SubmitButton.Props> = ({ ui, ...props }) => {
+export const SubmitButton: FC<SubmitButton.Props> = (props) => {
 	return (
 		<Button
 			type={"submit"}
-			ui={{
-				tone: "primary",
-				theme: "light",
-				size: "default",
-				text: "lg",
-				justify: "center",
-				width: "full",
-				...ui,
-			}}
+			data-ui-tone="primary"
+			data-ui-theme="light"
+			data-ui-size="default"
+			data-ui-text="lg"
+			data-ui-justify="center"
+			data-ui-width="full"
 			iconProps={{
-				ui: {
-					text: "xl",
-				},
+				"data-ui-text": "xl",
 			}}
 			{...props}
 		/>

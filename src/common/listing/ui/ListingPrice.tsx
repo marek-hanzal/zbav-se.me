@@ -20,31 +20,22 @@ export namespace ListingPrice {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const ListingPrice: FC<ListingPrice.Props> = ({
-	price,
-	priceType,
-	currency,
-	ui,
-	...props
-}) => {
+export const ListingPrice: FC<ListingPrice.Props> = ({ price, priceType, currency, ...props }) => {
 	const locale = useLocale();
 
 	return (
 		<Badge
 			data-ui={"ListingPrice"}
 			className="max-w-1/2"
-			ui={{
-				tone: "secondary",
-				theme: "light",
-				font: "bold",
-				text: "lg",
-				size: "sm",
-				color: "lead",
-				flow: "vertical",
-				items: "center",
-				justify: "center",
-				...ui,
-			}}
+			data-ui-tone="secondary"
+			data-ui-theme="light"
+			data-ui-font="bold"
+			data-ui-text="lg"
+			data-ui-size="sm"
+			data-ui-color="lead"
+			data-ui-flow="vertical"
+			data-ui-items="center"
+			data-ui-justify="center"
 			{...props}
 		>
 			{price > 0 ? (
@@ -60,14 +51,12 @@ export const ListingPrice: FC<ListingPrice.Props> = ({
 						 * This hack only marks the place with dynamic translation, so it's easy to find it when source
 						 * changes.
 						 */
-						.with("closed", "open", () => {
+						.with("closed", "open", "offer", () => {
 							return (
 								<Tx
 									label={`Listing price - ${priceType}`}
-									ui={{
-										text: "sm",
-										opacity: "6",
-									}}
+									data-ui-text="sm"
+									data-ui-opacity="6"
 								/>
 							);
 						})

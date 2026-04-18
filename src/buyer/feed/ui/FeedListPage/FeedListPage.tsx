@@ -18,7 +18,7 @@ export namespace FeedListPage {
  *
  * @see src/@routes
  */
-export const FeedListPage: FC<FeedListPage.Props> = ({ ui, ...props }) => {
+export const FeedListPage: FC<FeedListPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
 
 	return (
@@ -33,10 +33,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ ui, ...props }) => {
 					}}
 				/>
 			}
-			ui={{
-				layout: "vertical-header-content",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
 			right={<HomeMenuButton />}
 			{...props}
 		>

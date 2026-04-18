@@ -39,7 +39,7 @@ export namespace SignInPage {
 	}
 }
 
-export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
+export const SignInPage: FC<SignInPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
 
@@ -73,11 +73,8 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 	return (
 		<Container
 			data-ui="SignInPage"
-			ui={{
-				position: "relative",
-				height: "full",
-				...ui,
-			}}
+			data-ui-position="relative"
+			data-ui-height="full"
 			{...props}
 		>
 			<Fade scrollableRef={rootRef} />
@@ -85,21 +82,17 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 			<Container
 				data-ui="SignInPage-[Container.scrollable]"
 				ref={rootRef}
-				ui={{
-					layout: "vertical-full",
-					gap: "default",
-					snap: "vertical",
-					snapAlign: "center",
-					height: "full",
-				}}
+				data-ui-layout="vertical-full"
+				data-ui-gap="default"
+				data-ui-snap="vertical"
+				data-ui-snap-align="center"
+				data-ui-height="full"
 			>
 				<Container
 					data-ui="SignInPage-[Container.content]"
-					ui={{
-						layout: "vertical-centered",
-						height: "full",
-						width: "full",
-					}}
+					data-ui-layout="vertical-centered"
+					data-ui-height="full"
+					data-ui-width="full"
 				>
 					<Status
 						icon={
@@ -112,10 +105,8 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 								<Logo />
 							</LinkTo>
 						}
-						ui={{
-							width: "full",
-							inner: "xl",
-						}}
+						data-ui-width="full"
+						data-ui-inner="xl"
 					>
 						<form
 							onSubmit={(e) => {
@@ -174,12 +165,10 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 							</form.AppField>
 
 							<Container
-								ui={{
-									layout: "vertical-flex",
-									width: "full",
-									items: "center",
-									gap: "lg",
-								}}
+								data-ui-layout="vertical-flex"
+								data-ui-width="full"
+								data-ui-items="center"
+								data-ui-gap="lg"
 							>
 								<form.Subscribe
 									selector={(store) => ({
@@ -219,12 +208,10 @@ export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
 								>
 									<Tx
 										label={"Register (link)"}
-										ui={{
-											tone: "link",
-											theme: "light",
-											text: "md",
-											color: "lead",
-										}}
+										data-ui-tone="link"
+										data-ui-theme="light"
+										data-ui-text="md"
+										data-ui-color="lead"
 									/>
 								</LinkTo>
 							</Container>

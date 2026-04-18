@@ -12,16 +12,13 @@ export namespace AckMessage {
 	}
 }
 
-export const AckMessage: FC<AckMessage.Props> = ({ close, transaction, ui, ...props }) => {
+export const AckMessage: FC<AckMessage.Props> = ({ close, transaction, ...props }) => {
 	return (
 		<Group
 			data-ui={"AckMessage"}
-			ui={{
-				round: "default",
-				flow: "vertical",
-				tone: "link",
-				...ui,
-			}}
+			data-ui-round="default"
+			data-ui-flow="vertical"
+			data-ui-tone="link"
 			{...props}
 		>
 			<AckButton

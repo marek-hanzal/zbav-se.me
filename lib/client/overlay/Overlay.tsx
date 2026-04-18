@@ -7,11 +7,10 @@ export namespace Overlay {
 	}
 }
 
-export const Overlay: FC<Overlay.Props> = ({ ui, className, ...props }) => {
+export const Overlay: FC<Overlay.Props> = ({ className, ...props }) => {
 	return (
 		<div
 			{...uiOverlay({
-				ui,
 				className,
 			})}
 			{...props}

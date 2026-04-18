@@ -71,9 +71,7 @@ export const PackageButton: FC<PackageButton.Props> = ({
 							payload,
 						});
 					}}
-					ui={{
-						inner: "default",
-					}}
+					data-ui-inner="default"
 				/>
 			</BottomSheet>
 		</>

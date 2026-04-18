@@ -24,57 +24,47 @@ export namespace BuyerInfo {
  *
  * @see src/transaction/ui/BuyerInfoButton.tsx
  */
-export const BuyerInfo = withFallback(
-	({ _suspense, transactionId, ui, ...props }: BuyerInfo.Props) => {
-		const locale = useLocale();
-		const { data } = withTransactionBuyerInfoQuery.useSuspenseQuery({
-			where: {
-				id: transactionId,
-			},
-		});
-		const events = data.events;
+export const BuyerInfo = withFallback(({ _suspense, transactionId, ...props }: BuyerInfo.Props) => {
+	const locale = useLocale();
+	const { data } = withTransactionBuyerInfoQuery.useSuspenseQuery({
+		where: {
+			id: transactionId,
+		},
+	});
+	const events = data.events;
 
-		return (
-			<Container
-				ui={{
-					flow: "vertical",
-					gap: "default",
-					...ui,
-				}}
-				{...props}
-			>
-				<LabelValue
-					textLabel={translator.text("User registered (label)")}
-					textValue={toTimeDiff({
-						locale,
-						time: data.registered,
-						type: "relative",
-					})}
+	return (
+		<Container
+			data-ui-flow="vertical"
+			data-ui-gap="default"
+			{...props}
+		>
+			<LabelValue
+				textLabel={translator.text("User registered (label)")}
+				textValue={toTimeDiff({
+					locale,
+					time: data.registered,
+					type: "relative",
+				})}
+			/>
+
+			{events ? (
+				<>
+					<Events events={events} />
+					<Score rank={events.score.rank} />
+				</>
+			) : (
+				<Status
+					icon={SearchIcon}
+					textTitle={translator.text("Transaction buyer info not available (title)")}
+					textMessage={translator.text("Transaction buyer info not available (message)")}
+					data-ui-tone="brand"
+					data-ui-theme="light"
+					data-ui-inner="2xl"
+					data-ui-opacity="6"
+					className={"text-center"}
 				/>
-
-				{events ? (
-					<>
-						<Events events={events} />
-						<Score rank={events.score.rank} />
-					</>
-				) : (
-					<Status
-						icon={SearchIcon}
-						textTitle={translator.text("Transaction buyer info not available (title)")}
-						textMessage={translator.text(
-							"Transaction buyer info not available (message)",
-						)}
-						ui={{
-							tone: "brand",
-							theme: "light",
-							inner: "2xl",
-							opacity: "6",
-						}}
-						className={"text-center"}
-					/>
-				)}
-			</Container>
-		);
-	},
-	SpinnerContainer,
-);
+			)}
+		</Container>
+	);
+}, SpinnerContainer);

@@ -17,18 +17,15 @@ export namespace RestrictionSelect {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const RestrictionSelect: FC<RestrictionSelect.Props> = ({ selection, ui, ...props }) => {
+export const RestrictionSelect: FC<RestrictionSelect.Props> = ({ selection, ...props }) => {
 	return (
 		<Container
 			data-ui="RestrictionSelect[Container]"
-			ui={{
-				layout: "vertical-flex",
-				height: "full",
-				width: "full",
-				scroll: "vertical",
-				gap: "lg",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-height="full"
+			data-ui-width="full"
+			data-ui-scroll="vertical"
+			data-ui-gap="lg"
 			{...props}
 		>
 			{Object.values(ListingRestrictionEnumSchema.enum).map((restriction) => {

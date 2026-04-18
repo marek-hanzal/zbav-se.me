@@ -36,32 +36,27 @@ export namespace Dial {
 	}
 }
 
-export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ui, ...props }) => {
+export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ...props }) => {
 	return (
 		<Container
 			data-ui={"Dial"}
-			ui={{
-				layout: "vertical-header-content",
-				height: "full",
-				gap: "sm",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
+			data-ui-height="full"
+			data-ui-gap="sm"
 			{...props}
 		>
 			<Container
 				data-ui={"Dial-Badge-value-wrapper"}
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					flow: "horizontal",
-					justify: "space-between",
-					items: "center",
-					inner: "lg",
-					background: "default",
-					shadow: true,
-					border: true,
-					round: "default",
-				}}
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-flow="horizontal"
+				data-ui-justify="space-between"
+				data-ui-items="center"
+				data-ui-inner="lg"
+				data-ui-background="default"
+				data-ui-shadow
+				data-ui-border
+				data-ui-round="default"
 			>
 				<Value
 					value={value}
@@ -74,12 +69,10 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ui, ...prop
 					onClick={() => {
 						onChange(value?.slice(0, -1) || undefined);
 					}}
-					ui={{
-						tone: "secondary",
-						theme: "light",
-						disabled: !value,
-						text: "2xl",
-					}}
+					data-ui-tone="secondary"
+					data-ui-theme="light"
+					data-ui-disabled={!value}
+					data-ui-text="2xl"
 				/>
 			</Container>
 

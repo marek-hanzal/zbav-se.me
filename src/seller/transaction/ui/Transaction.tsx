@@ -27,7 +27,6 @@ export const Transaction: FC<Transaction.Props> = ({
 	_suspense,
 	transactionId,
 	refresh,
-	ui,
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -40,29 +39,22 @@ export const Transaction: FC<Transaction.Props> = ({
 	return (
 		<Container
 			data-ui={"Transaction"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				gap: "xs",
-				...ui,
-			}}
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-gap="xs"
 			{...props}
 		>
 			<Container
 				data-ui="Transaction-[MessageListContainer]"
 				ref={containerRef}
-				ui={{
-					layout: "vertical-header-content",
-					height: "full",
-					scroll: "vertical",
-				}}
+				data-ui-layout="vertical-header-content"
+				data-ui-height="full"
+				data-ui-scroll="vertical"
 			>
 				<Container
 					data-ui="Transaction-[HeroContainer]"
-					ui={{
-						position: "relative",
-						height: "content",
-					}}
+					data-ui-position="relative"
+					data-ui-height="content"
 				>
 					<HeroImage
 						src={hero.url}
@@ -75,11 +67,9 @@ export const Transaction: FC<Transaction.Props> = ({
 						price={transaction.price}
 						priceType={transaction.priceType}
 						currency={transaction.currency}
-						ui={{
-							snapTo: "top-center",
-							opacity: "8",
-							zIndex: true,
-						}}
+						data-ui-snap-to="top-center"
+						data-ui-opacity="8"
+						data-ui-z-index
 					/>
 				</Container>
 
@@ -89,9 +79,7 @@ export const Transaction: FC<Transaction.Props> = ({
 					containerRef={containerRef}
 					transactionId={transaction.id}
 					refresh={refresh}
-					ui={{
-						inner: "default",
-					}}
+					data-ui-inner="default"
 				/>
 			</Container>
 
@@ -99,11 +87,9 @@ export const Transaction: FC<Transaction.Props> = ({
 				.with("interest", () => {
 					return (
 						<Container
-							ui={{
-								flow: "vertical",
-								inner: "default",
-								gap: "default",
-							}}
+							data-ui-flow="vertical"
+							data-ui-inner="default"
+							data-ui-gap="default"
 						>
 							<InterestMessage
 								close={() => {}}
@@ -115,11 +101,9 @@ export const Transaction: FC<Transaction.Props> = ({
 				.with("success", "closed", "rejected", () => {
 					return (
 						<Container
-							ui={{
-								flow: "vertical",
-								inner: "default",
-								gap: "default",
-							}}
+							data-ui-flow="vertical"
+							data-ui-inner="default"
+							data-ui-gap={"default"}
 						>
 							<AckMessage
 								close={close}
@@ -168,9 +152,7 @@ export const Transaction: FC<Transaction.Props> = ({
 								),
 								closed: translator.text("Chat - transaction closed (message)"),
 							}}
-							ui={{
-								inner: "default",
-							}}
+							data-ui-inner="default"
 						/>
 					);
 				})}

@@ -57,18 +57,14 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onView, ...pro
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-header-content-footer",
-					height: "full",
-					scroll: "vertical",
-					inner: "default",
-				}}
+				data-ui-layout="vertical-header-content-footer"
+				data-ui-height="full"
+				data-ui-scroll="vertical"
+				data-ui-inner="default"
 			>
 				<Container
-					ui={{
-						flow: "vertical",
-						width: "full",
-					}}
+					data-ui-flow="vertical"
+					data-ui-width="full"
 				>
 					{Array.from({
 						length: PROS_CONS_MAX_ITEMS,
@@ -93,11 +89,9 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onView, ...pro
 
 				<Tx
 					label={"Listing - Pros (message)"}
-					ui={{
-						text: "md",
-						opacity: "6",
-						color: "text",
-					}}
+					data-ui-text="md"
+					data-ui-opacity="6"
+					data-ui-color="text"
 					className={"text-center"}
 				/>
 

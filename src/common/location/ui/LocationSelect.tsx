@@ -9,7 +9,8 @@ import type { LocationSchema } from "~/session/location/server/schema/LocationSc
 export namespace LocationSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {
 		value: string | undefined | null;
-		onChange(value: string): void;
+		onChange(value: string | null): void;
+		allowClear?: boolean;
 		onLocation?(value: LocationSchema.Type): void;
 		onSearchChange?(value: Fulltext.Value): void;
 		textHint: string;
@@ -26,10 +27,10 @@ export namespace LocationSelect {
 export const LocationSelect: FC<LocationSelect.Props> = ({
 	value,
 	onChange,
+	allowClear,
 	onLocation,
 	onSearchChange,
 	textHint,
-	ui,
 	warningStatusProps,
 	...props
 }) => {
@@ -42,12 +43,9 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 	return (
 		<Container
 			data-ui="LocationSelect[Container]"
-			ui={{
-				layout: "vertical-header-content",
-				height: "full",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
+			data-ui-height="full"
+			data-ui-gap="default"
 			{...props}
 		>
 			<Fulltext
@@ -64,6 +62,7 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 					search={search}
 					value={value}
 					onChange={onChange}
+					allowClear={allowClear}
 					onLocation={onLocation}
 					warningStatusProps={warningStatusProps}
 				/>

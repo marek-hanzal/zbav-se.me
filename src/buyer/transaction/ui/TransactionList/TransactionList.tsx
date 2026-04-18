@@ -8,15 +8,12 @@ export namespace TransactionList {
 	}
 }
 
-export const TransactionList: FC<TransactionList.Props> = ({ transactionIds, ui, ...props }) => {
+export const TransactionList: FC<TransactionList.Props> = ({ transactionIds, ...props }) => {
 	return (
 		<Container
 			data-ui={"TransactionList"}
-			ui={{
-				layout: "vertical-flex",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-gap="default"
 			{...props}
 		>
 			{transactionIds.map((transactionId) => {

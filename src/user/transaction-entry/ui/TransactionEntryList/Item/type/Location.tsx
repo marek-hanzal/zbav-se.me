@@ -28,16 +28,12 @@ export const Location = withFallback(
 			<TypeContainer
 				data-ui={"Location"}
 				direction={transactionEntry.direction}
-				ui={{
-					flow: "vertical",
-				}}
+				data-ui-flow="vertical"
 				{...props}
 			>
 				<Typo
 					label={location.address}
-					ui={{
-						wrap: "wrap",
-					}}
+					data-ui-wrap="wrap"
 					className={"py-1"}
 				/>
 
@@ -47,10 +43,8 @@ export const Location = withFallback(
 						time: transactionEntry.createdAt,
 						type: "relative",
 					})}
-					ui={{
-						text: "sm",
-						opacity: "6",
-					}}
+					data-ui-text="sm"
+					data-ui-opacity="6"
 				/>
 			</TypeContainer>
 		);
@@ -63,9 +57,7 @@ export const Location = withFallback(
 		return (
 			<TypeContainer
 				direction={transactionEntry.direction}
-				ui={{
-					flow: "vertical",
-				}}
+				data-ui-flow="vertical"
 				className={"min-h-24"}
 			>
 				<SpinnerContainer />

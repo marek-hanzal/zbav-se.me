@@ -19,7 +19,7 @@ export namespace DisputeMessage {
 	}
 }
 
-export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, ui, ...props }) => {
+export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, ...props }) => {
 	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
@@ -36,12 +36,9 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 	return (
 		<>
 			<Group
-				ui={{
-					round: "default",
-					flow: "vertical",
-					tone: "primary",
-					...ui,
-				}}
+				data-ui-round="default"
+				data-ui-flow="vertical"
+				data-ui-tone="primary"
 				{...props}
 			>
 				<GalleryUploadButton
@@ -82,12 +79,9 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 			</Group>
 
 			<Group
-				ui={{
-					round: "default",
-					flow: "vertical",
-					tone: "primary",
-					...ui,
-				}}
+				data-ui-round="default"
+				data-ui-flow="vertical"
+				data-ui-tone="primary"
 				{...props}
 			>
 				<SellerInfoButton

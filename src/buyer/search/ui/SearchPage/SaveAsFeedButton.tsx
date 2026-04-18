@@ -31,7 +31,6 @@ export namespace SaveAsFeedButton {
 export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 	_suspense,
 	feedId,
-	ui,
 	className,
 	...props
 }) => {
@@ -78,23 +77,18 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 				onClick={() => setIsOpen(true)}
 				iconEnabled={SaveIcon}
 				iconProps={{
-					ui: {
-						text: "xl",
-					},
+					"data-ui-text": "xl",
 				}}
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					size: "default",
-					justify: "start",
-					items: "center",
-					background: "default",
-					round: undefined,
-					shadow: false,
-					border: false,
-					width: "full",
-					...ui,
-				}}
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-size="default"
+				data-ui-justify="start"
+				data-ui-items="center"
+				data-ui-background="default"
+				data-ui-round={undefined}
+				data-ui-shadow={false}
+				data-ui-border={false}
+				data-ui-width="full"
 				className={className}
 				{...props}
 			>
@@ -115,18 +109,14 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 					}}
 				>
 					<Container
-						ui={{
-							layout: "vertical-content-footer",
-							height: "full",
-							width: "full",
-							inner: "default",
-						}}
+						data-ui-layout="vertical-content-footer"
+						data-ui-height="full"
+						data-ui-width="full"
+						data-ui-inner="default"
 					>
 						<Container
-							ui={{
-								layout: "vertical-centered",
-								height: "full",
-							}}
+							data-ui-layout="vertical-centered"
+							data-ui-height="full"
 						>
 							<Status
 								textTitle={translator.text("Feed name (title)")}
@@ -156,17 +146,13 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 										)}
 									</form.AppField>
 								}
-								ui={{
-									text: "md",
-									inner: "4xl",
-								}}
+								data-ui-text="md"
+								data-ui-inner="4xl"
 							>
 								<Mx
 									label={translator.text("Feed name (required)")}
-									ui={{
-										tone: "neutral",
-										theme: "light",
-									}}
+									data-ui-tone="neutral"
+									data-ui-theme="light"
 								/>
 							</Status>
 						</Container>

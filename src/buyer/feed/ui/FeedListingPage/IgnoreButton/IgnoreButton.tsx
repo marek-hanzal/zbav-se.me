@@ -22,7 +22,6 @@ export const IgnoreButton = withFallback(
 		confirmProps,
 		onReset,
 		disabled = false,
-		ui,
 		...props
 	}: IgnoreButton.Props) => {
 		const update = withListingQuery.useUpdate();
@@ -40,17 +39,13 @@ export const IgnoreButton = withFallback(
 				data-action={listing.isIgnored ? "unignore listing" : "ignore listing"}
 				iconEnabled={TrashIcon}
 				iconProps={{
-					ui: {
-						text: "xl",
-					},
+					"data-ui-text": "xl",
 				}}
 				loading={ignoreToggleMutation.isPending}
 				disabled={listing.isFavourite || disabled}
 				confirmProps={{
-					ui: {
-						tone: "warning",
-						theme: "light",
-					},
+					"data-ui-tone": "warning",
+					"data-ui-theme": "light",
 					children: <Tx label="Ignore listing - confirm (button)" />,
 					...confirmProps,
 					onClick(e) {
@@ -63,15 +58,12 @@ export const IgnoreButton = withFallback(
 					},
 				}}
 				onReset={onReset}
-				ui={{
-					tone: listing.isIgnored ? "primary" : "neutral",
-					theme: "light",
-					size: "default",
-					justify: "start",
-					round: undefined,
-					width: "full",
-					...ui,
-				}}
+				data-ui-tone={listing.isIgnored ? "primary" : "neutral"}
+				data-ui-theme="light"
+				data-ui-size="default"
+				data-ui-justify="start"
+				data-ui-round={undefined}
+				data-ui-width="full"
 				{...props}
 			>
 				<Tx
@@ -82,17 +74,14 @@ export const IgnoreButton = withFallback(
 			</ConfirmButton>
 		);
 	},
-	({ ui, ...props }: Omit<IgnoreButton.Props, "_suspense">) => {
+	({ ...props }: Omit<IgnoreButton.Props, "_suspense">) => {
 		return (
 			<ConfirmButton
 				loading
-				ui={{
-					round: undefined,
-					border: false,
-					shadow: false,
-					width: "full",
-					...ui,
-				}}
+				data-ui-round={undefined}
+				data-ui-border={false}
+				data-ui-shadow={false}
+				data-ui-width="full"
 				{...props}
 			>
 				<Tx label="Loading... (button)" />

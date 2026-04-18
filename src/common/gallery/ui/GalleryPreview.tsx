@@ -16,19 +16,16 @@ export namespace GalleryPreview {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const GalleryPreview: FC<GalleryPreview.Props> = ({ uploads, ui, ...props }) => {
+export const GalleryPreview: FC<GalleryPreview.Props> = ({ uploads, ...props }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
 		<Container
 			data-ui={"GalleryButton-[Container.wrapper]"}
-			ui={{
-				position: "relative",
-				height: "full",
-				inner: "default",
-				round: "default",
-				...ui,
-			}}
+			data-ui-position="relative"
+			data-ui-height="full"
+			data-ui-inner="default"
+			data-ui-round="default"
 			{...props}
 		>
 			<Fade scrollableRef={containerRef} />
@@ -36,13 +33,11 @@ export const GalleryPreview: FC<GalleryPreview.Props> = ({ uploads, ui, ...props
 			<Container
 				ref={containerRef}
 				data-ui={"GalleryButton-[Container.content]"}
-				ui={{
-					layout: "vertical-full",
-					height: "full",
-					snap: "vertical",
-					snapAlign: "center",
-					gap: "default",
-				}}
+				data-ui-layout="vertical-full"
+				data-ui-height="full"
+				data-ui-snap="vertical"
+				data-ui-snap-align="center"
+				data-ui-gap="default"
 			>
 				{uploads.map((upload) => {
 					return (
@@ -50,10 +45,8 @@ export const GalleryPreview: FC<GalleryPreview.Props> = ({ uploads, ui, ...props
 							key={upload.id}
 							src={upload.url}
 							alt={"Gallery image"}
-							ui={{
-								height: "full",
-								round: "default",
-							}}
+							data-ui-height="full"
+							data-ui-round="default"
 						/>
 					);
 				})}

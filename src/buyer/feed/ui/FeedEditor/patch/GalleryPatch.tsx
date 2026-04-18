@@ -46,12 +46,10 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({ feed, onSettled, onCancel
 	return (
 		<Container
 			data-ui={"FeedDetailContainer-[GalleryUploadSheet]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				gap: "default",
-				inner: "default",
-			}}
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-gap="default"
+			data-ui-inner="default"
 		>
 			<GalleryUpload
 				state={{

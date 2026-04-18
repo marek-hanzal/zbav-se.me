@@ -15,16 +15,14 @@ export const StatusIcon: FC<StatusIcon.Props> = ({ status }) => {
 		<Container
 			data-ui="StatusIcon"
 			className={"aspect-square h-full shrink-0 overflow-hidden"}
-			ui={{
-				tone: "subtle",
-				theme: "light",
-				round: "md",
-				height: "full",
-				flow: "horizontal",
-				items: "center",
-				justify: "center",
-				background: "default",
-			}}
+			data-ui-tone="subtle"
+			data-ui-theme="light"
+			data-ui-round="md"
+			data-ui-height="full"
+			data-ui-flow="horizontal"
+			data-ui-items="center"
+			data-ui-justify="center"
+			data-ui-background="default"
 		>
 			<Icon
 				icon={match(status)
@@ -39,11 +37,9 @@ export const StatusIcon: FC<StatusIcon.Props> = ({ status }) => {
 						() => "icon-[solar--lock-keyhole-linear]",
 					)
 					.exhaustive()}
-				ui={{
-					text: "2xl",
-					color: "text",
-					opacity: "7",
-				}}
+				data-ui-text="2xl"
+				data-ui-color="text"
+				data-ui-opacity="7"
 			/>
 		</Container>
 	);

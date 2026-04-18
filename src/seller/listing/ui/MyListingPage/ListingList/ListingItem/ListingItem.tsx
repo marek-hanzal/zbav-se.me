@@ -29,16 +29,14 @@ export const ListingItem = withFallback(({ listingId }: ListingItem.Props) => {
 			title={
 				<Typo
 					label={listing.title ?? "Draft (label)"}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						color: "lead",
-						font: "semibold",
-						text: "sm",
-						display: "block",
-						width: "full",
-						truncate: true,
-					}}
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-color="lead"
+					data-ui-font="semibold"
+					data-ui-text="sm"
+					data-ui-display="block"
+					data-ui-width="full"
+					data-ui-truncate
 					className={[
 						"block",
 						"w-full",

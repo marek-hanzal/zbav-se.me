@@ -16,7 +16,6 @@ export namespace CreateListingButton {
 
 export const CreateListingButton: FC<CreateListingButton.Props> = ({
 	draft,
-	ui,
 	className,
 	...props
 }) => {
@@ -40,9 +39,7 @@ export const CreateListingButton: FC<CreateListingButton.Props> = ({
 			data-action={"publish listing"}
 			iconEnabled={"icon-[solar--globus-linear]"}
 			iconProps={{
-				ui: {
-					text: "2xl",
-				},
+				"data-ui-text": "2xl",
 			}}
 			disabled={!valid.isValid || listingCreateMutation.isPending}
 			loading={listingCreateMutation.isPending}
@@ -52,11 +49,8 @@ export const CreateListingButton: FC<CreateListingButton.Props> = ({
 				}
 			}}
 			{...uiSaveButton({
-				ui: {
-					tone: valid ? "secondary" : "neutral",
-					justify: "start",
-					...ui,
-				},
+				"data-ui-tone": valid ? "secondary" : "neutral",
+				"data-ui-justify": "start",
 				className,
 			})}
 			{...props}

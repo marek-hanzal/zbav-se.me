@@ -33,11 +33,9 @@ export const TransactionInput: FC<TransactionInput.Props> = ({ _suspense, transa
 		.with("interest", () => {
 			return (
 				<Container
-					ui={{
-						flow: "vertical",
-						inner: "default",
-						gap: "default",
-					}}
+					data-ui-flow="vertical"
+					data-ui-inner="default"
+					data-ui-gap="default"
 				>
 					<InterestMessage
 						close={() => {}}
@@ -49,11 +47,9 @@ export const TransactionInput: FC<TransactionInput.Props> = ({ _suspense, transa
 		.with("rejected", () => {
 			return (
 				<Container
-					ui={{
-						flow: "vertical",
-						inner: "default",
-						gap: "default",
-					}}
+					data-ui-flow="vertical"
+					data-ui-inner="default"
+					data-ui-gap="default"
 				>
 					<RejectedMessage
 						close={() => {}}
@@ -99,9 +95,7 @@ export const TransactionInput: FC<TransactionInput.Props> = ({ _suspense, transa
 						),
 						closed: translator.text("Chat - transaction closed (message)"),
 					}}
-					ui={{
-						inner: "default",
-					}}
+					data-ui-inner="default"
 				/>
 			);
 		});

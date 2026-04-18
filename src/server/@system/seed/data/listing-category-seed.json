@@ -24,6 +24,12 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -50,6 +56,12 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -76,6 +88,12 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -102,6 +120,12 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -128,6 +152,12 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -154,6 +184,12 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -182,6 +218,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -208,6 +248,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -234,6 +278,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -260,6 +308,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -286,6 +338,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -312,6 +368,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -340,6 +400,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -366,6 +430,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -392,6 +460,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -418,6 +490,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -444,6 +520,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -470,6 +550,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -498,6 +582,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -524,6 +612,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -550,6 +642,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -576,6 +672,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -602,6 +702,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -628,6 +732,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -656,6 +764,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -682,6 +795,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -708,6 +826,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -734,6 +857,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -760,6 +888,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -786,6 +919,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -814,6 +952,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -840,6 +982,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -866,6 +1012,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -892,6 +1042,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -918,6 +1072,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -944,6 +1102,10 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -972,6 +1134,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -998,6 +1165,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1024,6 +1196,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1050,6 +1227,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1076,6 +1258,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1102,6 +1289,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -1130,6 +1322,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1156,6 +1353,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1182,6 +1384,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1208,6 +1415,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1234,6 +1446,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1260,6 +1477,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -1288,6 +1510,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1314,6 +1541,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1340,6 +1572,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1366,6 +1603,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1392,6 +1634,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -1418,6 +1665,11 @@
 			"priceSpikes": [
 				25000,
 				35000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -1446,6 +1698,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1472,6 +1728,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1498,6 +1758,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1524,6 +1788,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1550,6 +1818,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1576,6 +1848,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -1604,6 +1880,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1630,6 +1910,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1656,6 +1940,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1682,6 +1970,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1708,6 +2000,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1734,6 +2030,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -1762,6 +2062,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1788,6 +2092,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1814,6 +2122,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1840,6 +2152,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1866,6 +2182,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1892,6 +2212,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -1920,6 +2244,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1946,6 +2274,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1972,6 +2304,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -1998,6 +2334,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2024,6 +2364,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2050,6 +2394,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -2078,6 +2426,11 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -2104,6 +2457,11 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -2130,6 +2488,11 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -2156,6 +2519,11 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -2182,6 +2550,11 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -2208,6 +2581,11 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -2236,6 +2614,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2262,6 +2644,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2288,6 +2674,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2314,6 +2704,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2340,6 +2734,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2366,6 +2764,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -2394,6 +2796,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2420,6 +2826,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2446,6 +2856,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2472,6 +2886,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2498,6 +2916,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2524,6 +2946,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -2552,6 +2978,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2578,6 +3008,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2604,6 +3038,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2630,6 +3068,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2656,6 +3098,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -2682,6 +3128,10 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -2710,6 +3160,9 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"other"
 			]
 		},
 		{
@@ -2736,6 +3189,9 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"other"
 			]
 		},
 		{
@@ -2762,6 +3218,9 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"other"
 			]
 		},
 		{
@@ -2788,6 +3247,9 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"other"
 			]
 		},
 		{
@@ -2814,6 +3276,9 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"other"
 			]
 		},
 		{
@@ -2840,6 +3305,9 @@
 			"priceSpikes": [
 				45000,
 				70000
+			],
+			"delivery": [
+				"other"
 			]
 		}
 	],
@@ -2868,6 +3336,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -2894,6 +3367,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -2920,6 +3398,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -2946,6 +3429,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -2972,6 +3460,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -2998,6 +3491,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -3026,6 +3524,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3052,6 +3555,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3078,6 +3586,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3104,6 +3617,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3130,6 +3648,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3156,6 +3679,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -3184,6 +3712,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3210,6 +3743,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3236,6 +3774,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3262,6 +3805,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3288,6 +3836,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3314,6 +3867,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -3342,6 +3900,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3368,6 +3931,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3394,6 +3962,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3420,6 +3993,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3446,6 +4024,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3472,6 +4055,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -3500,6 +4088,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3526,6 +4119,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3552,6 +4150,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3578,6 +4181,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3604,6 +4212,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3630,6 +4243,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -3658,6 +4276,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3684,6 +4307,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3710,6 +4338,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3736,6 +4369,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3762,6 +4400,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3788,6 +4431,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -3816,6 +4464,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3842,6 +4495,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3868,6 +4526,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3894,6 +4557,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3920,6 +4588,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -3946,6 +4619,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -3974,6 +4652,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4000,6 +4683,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4026,6 +4714,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4052,6 +4745,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4078,6 +4776,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4104,6 +4807,11 @@
 			"priceSpikes": [
 				10000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -4132,6 +4840,10 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -4158,6 +4870,10 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -4184,6 +4900,10 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -4210,6 +4930,10 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -4236,6 +4960,10 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -4262,6 +4990,10 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -4290,6 +5022,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4316,6 +5053,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4342,6 +5084,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4368,6 +5115,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4394,6 +5146,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4420,6 +5177,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -4448,6 +5210,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4474,6 +5241,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4500,6 +5272,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4526,6 +5303,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4552,6 +5334,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4578,6 +5365,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -4606,6 +5398,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4632,6 +5429,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4658,6 +5460,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4684,6 +5491,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4710,6 +5522,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4736,6 +5553,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -4764,6 +5586,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4790,6 +5617,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4816,6 +5648,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4842,6 +5679,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4868,6 +5710,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4894,6 +5741,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -4922,6 +5774,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4948,6 +5805,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -4974,6 +5836,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -5000,6 +5867,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -5026,6 +5898,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -5052,6 +5929,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -5080,6 +5962,10 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5106,6 +5992,10 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5132,6 +6022,10 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5158,6 +6052,10 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5184,6 +6082,10 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5210,6 +6112,10 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -5238,6 +6144,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -5264,6 +6174,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -5290,6 +6204,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -5316,6 +6234,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -5342,6 +6264,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -5368,6 +6294,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		}
 	],
@@ -5396,6 +6326,11 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -5422,6 +6357,11 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -5448,6 +6388,11 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -5474,6 +6419,11 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -5500,6 +6450,11 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -5526,6 +6481,11 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -5554,6 +6514,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5580,6 +6544,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5606,6 +6574,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5632,6 +6604,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5658,6 +6634,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5684,6 +6664,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -5712,6 +6696,11 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -5738,6 +6727,11 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -5764,6 +6758,11 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -5790,6 +6789,11 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -5816,6 +6820,11 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -5842,6 +6851,11 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -5870,6 +6884,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5896,6 +6914,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5922,6 +6944,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5948,6 +6974,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -5974,6 +7004,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6000,6 +7034,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -6028,6 +7066,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6054,6 +7096,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6080,6 +7126,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6106,6 +7156,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6132,6 +7186,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6158,6 +7216,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -6186,6 +7248,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6212,6 +7278,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6238,6 +7308,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6264,6 +7338,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6290,6 +7368,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6316,6 +7398,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -6344,6 +7430,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6370,6 +7460,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6396,6 +7490,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6422,6 +7520,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6448,6 +7550,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -6474,6 +7580,10 @@
 			"priceSpikes": [
 				40000,
 				80000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -6502,6 +7612,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6528,6 +7641,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6554,6 +7670,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6580,6 +7699,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6606,6 +7728,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6632,6 +7757,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -6660,6 +7788,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6686,6 +7817,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6712,6 +7846,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6738,6 +7875,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6764,6 +7904,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6790,6 +7933,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -6818,6 +7964,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6844,6 +7993,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6870,6 +8022,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6896,6 +8051,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6922,6 +8080,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -6948,6 +8109,9 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -6976,6 +8140,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7002,6 +8171,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7028,6 +8202,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7054,6 +8233,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7080,6 +8264,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7106,6 +8295,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -7134,6 +8328,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7160,6 +8359,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7186,6 +8390,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7212,6 +8421,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7238,6 +8452,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7264,6 +8483,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -7292,6 +8516,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7318,6 +8547,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7344,6 +8578,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7370,6 +8609,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7396,6 +8640,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7422,6 +8671,11 @@
 			"priceSpikes": [
 				18000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -7450,6 +8704,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7476,6 +8735,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7502,6 +8766,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7528,6 +8797,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7554,6 +8828,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7580,6 +8859,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -7608,6 +8892,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7634,6 +8923,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7660,6 +8954,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7686,6 +8985,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7712,6 +9016,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7738,6 +9047,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -7766,6 +9080,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7792,6 +9111,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7818,6 +9142,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7844,6 +9173,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7870,6 +9204,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7896,6 +9235,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -7924,6 +9268,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7950,6 +9299,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -7976,6 +9330,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -8002,6 +9361,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -8028,6 +9392,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -8054,6 +9423,11 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -8082,6 +9456,10 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -8108,6 +9486,10 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -8134,6 +9516,10 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -8160,6 +9546,10 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -8186,6 +9576,10 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -8212,6 +9606,10 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -8240,6 +9638,10 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -8266,6 +9668,10 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -8292,6 +9698,10 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -8318,6 +9728,10 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -8344,6 +9758,10 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -8370,6 +9788,10 @@
 			"priceSpikes": [
 				15000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -8398,6 +9820,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8424,6 +9849,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8450,6 +9878,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8476,6 +9907,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8502,6 +9936,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8528,6 +9965,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -8556,6 +9996,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8582,6 +10025,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8608,6 +10054,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8634,6 +10083,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8660,6 +10112,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8686,6 +10141,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -8714,6 +10172,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8740,6 +10201,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8766,6 +10230,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8792,6 +10259,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8818,6 +10288,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8844,6 +10317,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -8872,6 +10348,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8898,6 +10377,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8924,6 +10406,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8950,6 +10435,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -8976,6 +10464,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9002,6 +10493,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -9030,6 +10524,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9056,6 +10553,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9082,6 +10582,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9108,6 +10611,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9134,6 +10640,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9160,6 +10669,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -9188,6 +10700,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9214,6 +10729,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9240,6 +10758,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9266,6 +10787,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9292,6 +10816,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9318,6 +10845,9 @@
 			"priceSpikes": [
 				40000,
 				65000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -9346,6 +10876,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9372,6 +10905,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9398,6 +10934,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9424,6 +10963,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9450,6 +10992,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9476,6 +11021,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -9504,6 +11052,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9530,6 +11081,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9556,6 +11110,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9582,6 +11139,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9608,6 +11168,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9634,6 +11197,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -9662,6 +11228,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9688,6 +11257,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9714,6 +11286,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9740,6 +11315,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9766,6 +11344,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9792,6 +11373,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -9820,6 +11404,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9846,6 +11433,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9872,6 +11462,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9898,6 +11491,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9924,6 +11520,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -9950,6 +11549,9 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -9978,6 +11580,11 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -10004,6 +11611,11 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -10030,6 +11642,11 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -10056,6 +11673,11 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -10082,6 +11704,11 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -10108,6 +11735,11 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -10136,6 +11768,11 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -10162,6 +11799,11 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -10188,6 +11830,11 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -10214,6 +11861,11 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -10240,6 +11892,11 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -10266,6 +11923,11 @@
 			"priceSpikes": [
 				28000,
 				45000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -10294,6 +11956,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10320,6 +11987,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10346,6 +12018,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10372,6 +12049,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10398,6 +12080,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10424,6 +12111,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -10452,6 +12144,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10478,6 +12175,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10504,6 +12206,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10530,6 +12237,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10556,6 +12268,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10582,6 +12299,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -10610,6 +12332,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10636,6 +12363,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10662,6 +12394,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10688,6 +12425,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10714,6 +12456,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -10740,6 +12487,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -10768,6 +12520,10 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -10794,6 +12550,10 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -10820,6 +12580,10 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -10846,6 +12610,10 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -10872,6 +12640,10 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -10898,6 +12670,10 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -10926,6 +12702,10 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -10952,6 +12732,10 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -10978,6 +12762,10 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -11004,6 +12792,10 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -11030,6 +12822,10 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -11056,6 +12852,10 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -11084,6 +12884,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11110,6 +12915,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11136,6 +12946,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11162,6 +12977,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11188,6 +13008,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11214,6 +13039,11 @@
 			"priceSpikes": [
 				12000,
 				20000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -11242,6 +13072,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11268,6 +13103,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11294,6 +13134,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11320,6 +13165,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11346,6 +13196,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11372,6 +13227,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -11400,6 +13260,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11426,6 +13291,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11452,6 +13322,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11478,6 +13353,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11504,6 +13384,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11530,6 +13415,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -11558,6 +13448,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11584,6 +13479,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11610,6 +13510,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11636,6 +13541,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11662,6 +13572,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11688,6 +13603,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -11716,6 +13636,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11742,6 +13667,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11768,6 +13698,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11794,6 +13729,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11820,6 +13760,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11846,6 +13791,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -11874,6 +13824,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11900,6 +13855,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11926,6 +13886,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11952,6 +13917,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -11978,6 +13948,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12004,6 +13979,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -12032,6 +14012,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12058,6 +14043,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12084,6 +14074,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12110,6 +14105,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12136,6 +14136,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12162,6 +14167,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -12190,6 +14200,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12216,6 +14231,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12242,6 +14262,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12268,6 +14293,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12294,6 +14324,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12320,6 +14355,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -12348,6 +14388,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12374,6 +14419,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12400,6 +14450,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12426,6 +14481,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12452,6 +14512,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12478,6 +14543,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -12506,6 +14576,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12532,6 +14607,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12558,6 +14638,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12584,6 +14669,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12610,6 +14700,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12636,6 +14731,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -12664,6 +14764,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12690,6 +14795,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12716,6 +14826,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12742,6 +14857,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12768,6 +14888,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -12794,6 +14919,11 @@
 			"priceSpikes": [
 				2500,
 				5000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -12822,6 +14952,11 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -12848,6 +14983,11 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -12874,6 +15014,11 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -12900,6 +15045,11 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -12926,6 +15076,11 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -12952,6 +15107,11 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -12980,6 +15140,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13006,6 +15170,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13032,6 +15200,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13058,6 +15230,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13084,6 +15260,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13110,6 +15290,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -13138,6 +15322,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -13164,6 +15352,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -13190,6 +15382,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -13216,6 +15412,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -13242,6 +15442,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -13268,6 +15472,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		}
 	],
@@ -13296,6 +15504,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13322,6 +15534,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13348,6 +15564,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13374,6 +15594,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13400,6 +15624,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13426,6 +15654,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -13454,6 +15686,11 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -13480,6 +15717,11 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -13506,6 +15748,11 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -13532,6 +15779,11 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -13558,6 +15810,11 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -13584,6 +15841,11 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -13612,6 +15874,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13638,6 +15904,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13664,6 +15934,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13690,6 +15964,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13716,6 +15994,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -13742,6 +16024,10 @@
 			"priceSpikes": [
 				30000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -13770,6 +16056,9 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -13796,6 +16085,9 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -13822,6 +16114,9 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -13848,6 +16143,9 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -13874,6 +16172,9 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -13900,6 +16201,9 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -13928,6 +16232,9 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -13954,6 +16261,9 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -13980,6 +16290,9 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -14006,6 +16319,9 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -14032,6 +16348,9 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -14058,6 +16377,9 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -14086,6 +16408,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -14112,6 +16439,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -14138,6 +16470,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -14164,6 +16501,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -14190,6 +16532,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -14216,6 +16563,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -14244,6 +16596,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -14270,6 +16627,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -14296,6 +16658,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -14322,6 +16689,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -14348,6 +16720,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -14374,6 +16751,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -14402,6 +16784,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -14428,6 +16815,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -14454,6 +16846,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -14480,6 +16877,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -14506,6 +16908,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -14532,6 +16939,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -14560,6 +16972,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -14586,6 +17003,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -14612,6 +17034,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -14638,6 +17065,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -14664,6 +17096,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -14690,6 +17127,11 @@
 			"priceSpikes": [
 				450000,
 				800000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -14718,6 +17160,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -14744,6 +17190,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -14770,6 +17220,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -14796,6 +17250,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -14822,6 +17280,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -14848,6 +17310,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		}
 	],
@@ -14876,6 +17342,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -14902,6 +17372,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -14928,6 +17402,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -14954,6 +17432,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -14980,6 +17462,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -15006,6 +17492,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		}
 	],
@@ -15034,6 +17524,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -15060,6 +17554,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -15086,6 +17584,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -15112,6 +17614,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -15138,6 +17644,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -15164,6 +17674,10 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -15192,6 +17706,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -15218,6 +17737,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -15244,6 +17768,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -15270,6 +17799,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -15296,6 +17830,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -15322,6 +17861,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -15350,6 +17894,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15376,6 +17925,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15402,6 +17956,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15428,6 +17987,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15454,6 +18018,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15480,6 +18049,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -15508,6 +18082,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15534,6 +18113,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15560,6 +18144,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15586,6 +18175,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15612,6 +18206,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15638,6 +18237,11 @@
 			"priceSpikes": [
 				28000,
 				50000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -15666,6 +18270,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15692,6 +18301,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15718,6 +18332,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15744,6 +18363,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15770,6 +18394,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -15796,6 +18425,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -15824,6 +18458,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -15850,6 +18489,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -15876,6 +18520,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -15902,6 +18551,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -15928,6 +18582,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -15954,6 +18613,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -15982,6 +18646,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -16008,6 +18677,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -16034,6 +18708,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -16060,6 +18739,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -16086,6 +18770,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -16112,6 +18801,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -16140,6 +18834,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -16166,6 +18865,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -16192,6 +18896,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -16218,6 +18927,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -16244,6 +18958,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -16270,6 +18989,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -16298,6 +19022,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -16324,6 +19052,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -16350,6 +19082,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -16376,6 +19112,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -16402,6 +19142,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -16428,6 +19172,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		}
 	],
@@ -16456,6 +19204,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -16482,6 +19234,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -16508,6 +19264,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -16534,6 +19294,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -16560,6 +19324,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		},
 		{
@@ -16586,6 +19354,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"other"
 			]
 		}
 	],
@@ -16614,6 +19386,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -16640,6 +19415,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -16666,6 +19444,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -16692,6 +19473,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -16718,6 +19502,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -16744,6 +19531,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -16772,6 +19562,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -16798,6 +19591,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -16824,6 +19620,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -16850,6 +19649,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -16876,6 +19678,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -16902,6 +19707,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -16930,6 +19738,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -16956,6 +19767,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -16982,6 +19796,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17008,6 +19825,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17034,6 +19854,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17060,6 +19883,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -17088,6 +19914,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17114,6 +19943,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17140,6 +19972,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17166,6 +20001,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17192,6 +20030,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17218,6 +20059,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -17246,6 +20090,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17272,6 +20119,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17298,6 +20148,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17324,6 +20177,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17350,6 +20206,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17376,6 +20235,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -17404,6 +20266,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17430,6 +20295,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17456,6 +20324,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17482,6 +20353,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17508,6 +20382,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17534,6 +20411,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -17562,6 +20442,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17588,6 +20471,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17614,6 +20500,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17640,6 +20529,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17666,6 +20558,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17692,6 +20587,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -17720,6 +20618,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17746,6 +20647,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17772,6 +20676,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17798,6 +20705,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17824,6 +20734,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17850,6 +20763,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -17878,6 +20794,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17904,6 +20823,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17930,6 +20852,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17956,6 +20881,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -17982,6 +20910,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -18008,6 +20939,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -18036,6 +20970,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -18062,6 +20999,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -18088,6 +21028,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -18114,6 +21057,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -18140,6 +21086,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -18166,6 +21115,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -18194,6 +21146,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -18220,6 +21175,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -18246,6 +21204,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -18272,6 +21233,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -18298,6 +21262,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -18324,6 +21291,9 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -18352,6 +21322,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18378,6 +21353,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18404,6 +21384,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18430,6 +21415,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18456,6 +21446,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18482,6 +21477,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -18510,6 +21510,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18536,6 +21541,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18562,6 +21572,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18588,6 +21603,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18614,6 +21634,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18640,6 +21665,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -18668,6 +21698,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18694,6 +21729,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18720,6 +21760,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18746,6 +21791,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18772,6 +21822,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18798,6 +21853,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -18826,6 +21886,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18852,6 +21917,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18878,6 +21948,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18904,6 +21979,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18930,6 +22010,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -18956,6 +22041,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -18984,6 +22074,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19010,6 +22105,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19036,6 +22136,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19062,6 +22167,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19088,6 +22198,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19114,6 +22229,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -19142,6 +22262,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19168,6 +22293,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19194,6 +22324,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19220,6 +22355,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19246,6 +22386,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19272,6 +22417,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -19300,6 +22450,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19326,6 +22481,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19352,6 +22512,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19378,6 +22543,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19404,6 +22574,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19430,6 +22605,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -19458,6 +22638,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19484,6 +22669,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19510,6 +22700,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19536,6 +22731,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19562,6 +22762,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19588,6 +22793,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -19616,6 +22826,10 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -19642,6 +22856,10 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -19668,6 +22886,10 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -19694,6 +22916,10 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -19720,6 +22946,10 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -19746,6 +22976,10 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -19774,6 +23008,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19800,6 +23039,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19826,6 +23070,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19852,6 +23101,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19878,6 +23132,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19904,6 +23163,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -19932,6 +23196,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19958,6 +23227,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -19984,6 +23258,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20010,6 +23289,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20036,6 +23320,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20062,6 +23351,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -20090,6 +23384,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20116,6 +23415,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20142,6 +23446,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20168,6 +23477,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20194,6 +23508,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20220,6 +23539,11 @@
 			"priceSpikes": [
 				5000,
 				12000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -20248,6 +23572,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20274,6 +23603,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20300,6 +23634,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20326,6 +23665,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20352,6 +23696,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20378,6 +23727,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -20406,6 +23760,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -20432,6 +23790,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -20458,6 +23820,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -20484,6 +23850,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -20510,6 +23880,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -20536,6 +23910,10 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -20564,6 +23942,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20590,6 +23973,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20616,6 +24004,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20642,6 +24035,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20668,6 +24066,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20694,6 +24097,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -20722,6 +24130,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20748,6 +24161,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20774,6 +24192,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20800,6 +24223,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20826,6 +24254,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20852,6 +24285,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -20880,6 +24318,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20906,6 +24349,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20932,6 +24380,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20958,6 +24411,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -20984,6 +24442,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21010,6 +24473,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -21038,6 +24506,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21064,6 +24537,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21090,6 +24568,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21116,6 +24599,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21142,6 +24630,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21168,6 +24661,11 @@
 			"priceSpikes": [
 				12000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -21196,6 +24694,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21222,6 +24725,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21248,6 +24756,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21274,6 +24787,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21300,6 +24818,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21326,6 +24849,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -21354,6 +24882,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21380,6 +24913,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21406,6 +24944,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21432,6 +24975,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21458,6 +25006,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21484,6 +25037,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -21512,6 +25070,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21538,6 +25101,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21564,6 +25132,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21590,6 +25163,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21616,6 +25194,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21642,6 +25225,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -21670,6 +25258,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21696,6 +25289,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21722,6 +25320,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21748,6 +25351,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21774,6 +25382,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21800,6 +25413,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -21828,6 +25446,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21854,6 +25477,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21880,6 +25508,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21906,6 +25539,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21932,6 +25570,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -21958,6 +25601,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -21986,6 +25634,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -22012,6 +25665,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -22038,6 +25696,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -22064,6 +25727,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -22090,6 +25758,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -22116,6 +25789,11 @@
 			"priceSpikes": [
 				9000,
 				15000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -22144,6 +25822,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22170,6 +25853,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22196,6 +25884,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22222,6 +25915,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22248,6 +25946,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22274,6 +25977,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -22302,6 +26010,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22328,6 +26041,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22354,6 +26072,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22380,6 +26103,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22406,6 +26134,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22432,6 +26165,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -22460,6 +26198,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22486,6 +26229,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22512,6 +26260,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22538,6 +26291,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22564,6 +26322,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22590,6 +26353,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -22618,6 +26386,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22644,6 +26417,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22670,6 +26448,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22696,6 +26479,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22722,6 +26510,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -22748,6 +26541,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -22776,6 +26574,10 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -22802,6 +26604,10 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -22828,6 +26634,10 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -22854,6 +26664,10 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -22880,6 +26694,10 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -22906,6 +26724,10 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -22934,6 +26756,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -22960,6 +26787,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -22986,6 +26818,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23012,6 +26849,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23038,6 +26880,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23064,6 +26911,11 @@
 			"priceSpikes": [
 				45000,
 				90000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -23092,6 +26944,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23118,6 +26975,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23144,6 +27006,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23170,6 +27037,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23196,6 +27068,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23222,6 +27099,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -23250,6 +27132,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23276,6 +27163,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23302,6 +27194,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23328,6 +27225,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23354,6 +27256,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23380,6 +27287,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -23408,6 +27320,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23434,6 +27351,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23460,6 +27382,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23486,6 +27413,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23512,6 +27444,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23538,6 +27475,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -23566,6 +27508,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23592,6 +27539,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23618,6 +27570,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23644,6 +27601,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23670,6 +27632,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -23696,6 +27663,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -23724,6 +27696,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -23750,6 +27727,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -23776,6 +27758,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -23802,6 +27789,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -23828,6 +27820,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -23854,6 +27851,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -23882,6 +27884,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -23908,6 +27915,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -23934,6 +27946,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -23960,6 +27977,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -23986,6 +28008,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -24012,6 +28039,11 @@
 			"priceSpikes": [
 				50000,
 				120000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -24040,6 +28072,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24066,6 +28102,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24092,6 +28132,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24118,6 +28162,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24144,6 +28192,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24170,6 +28222,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -24198,6 +28254,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24224,6 +28284,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24250,6 +28314,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24276,6 +28344,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24302,6 +28374,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24328,6 +28404,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -24356,6 +28436,11 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -24382,6 +28467,11 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -24408,6 +28498,11 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -24434,6 +28529,11 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -24460,6 +28560,11 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -24486,6 +28591,11 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -24514,6 +28624,11 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -24540,6 +28655,11 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -24566,6 +28686,11 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -24592,6 +28717,11 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -24618,6 +28748,11 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -24644,6 +28779,11 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -24672,6 +28812,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24698,6 +28842,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24724,6 +28872,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24750,6 +28902,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24776,6 +28932,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24802,6 +28962,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -24830,6 +28994,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24856,6 +29024,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24882,6 +29054,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24908,6 +29084,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24934,6 +29114,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		},
 		{
@@ -24960,6 +29144,10 @@
 			"priceSpikes": [
 				25000,
 				60000
+			],
+			"delivery": [
+				"personal",
+				"package"
 			]
 		}
 	],
@@ -24988,6 +29176,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25014,6 +29205,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25040,6 +29234,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25066,6 +29263,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25092,6 +29292,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25118,6 +29321,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -25146,6 +29352,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25172,6 +29381,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25198,6 +29410,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25224,6 +29439,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25250,6 +29468,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25276,6 +29497,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -25304,6 +29528,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25330,6 +29557,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25356,6 +29586,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25382,6 +29615,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25408,6 +29644,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25434,6 +29673,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -25462,6 +29704,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25488,6 +29733,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25514,6 +29762,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25540,6 +29791,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25566,6 +29820,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25592,6 +29849,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -25620,6 +29880,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25646,6 +29909,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25672,6 +29938,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25698,6 +29967,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25724,6 +29996,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25750,6 +30025,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -25778,6 +30056,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25804,6 +30085,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25830,6 +30114,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25856,6 +30143,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25882,6 +30172,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25908,6 +30201,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -25936,6 +30232,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25962,6 +30261,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -25988,6 +30290,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -26014,6 +30319,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -26040,6 +30348,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -26066,6 +30377,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -26094,6 +30408,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -26120,6 +30437,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -26146,6 +30466,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -26172,6 +30495,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -26198,6 +30524,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -26224,6 +30553,9 @@
 			"priceSpikes": [
 				12000000,
 				25000000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -26252,6 +30584,9 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"other"
 			]
 		},
 		{
@@ -26278,6 +30613,9 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"other"
 			]
 		},
 		{
@@ -26304,6 +30642,9 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"other"
 			]
 		},
 		{
@@ -26330,6 +30671,9 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"other"
 			]
 		},
 		{
@@ -26356,6 +30700,9 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"other"
 			]
 		},
 		{
@@ -26382,6 +30729,9 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"other"
 			]
 		}
 	],
@@ -26410,6 +30760,9 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -26436,6 +30789,9 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -26462,6 +30818,9 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -26488,6 +30847,9 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -26514,6 +30876,9 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		},
 		{
@@ -26540,6 +30905,9 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal"
 			]
 		}
 	],
@@ -26568,6 +30936,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26594,6 +30967,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26620,6 +30998,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26646,6 +31029,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26672,6 +31060,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26698,6 +31091,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -26726,6 +31124,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26752,6 +31155,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26778,6 +31186,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26804,6 +31217,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26830,6 +31248,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26856,6 +31279,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -26884,6 +31312,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26910,6 +31343,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26936,6 +31374,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26962,6 +31405,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -26988,6 +31436,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		},
 		{
@@ -27014,6 +31467,11 @@
 			"priceSpikes": [
 				10000,
 				25000
+			],
+			"delivery": [
+				"personal",
+				"package",
+				"other"
 			]
 		}
 	],
@@ -27042,6 +31500,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27068,6 +31531,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27094,6 +31562,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27120,6 +31593,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27146,6 +31624,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27172,6 +31655,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -27200,6 +31688,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27226,6 +31719,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27252,6 +31750,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27278,6 +31781,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27304,6 +31812,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27330,6 +31843,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -27358,6 +31876,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27384,6 +31907,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27410,6 +31938,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27436,6 +31969,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27462,6 +32000,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27488,6 +32031,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -27516,6 +32064,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27542,6 +32095,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27568,6 +32126,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27594,6 +32157,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27620,6 +32188,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27646,6 +32219,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -27674,6 +32252,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27700,6 +32283,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27726,6 +32314,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27752,6 +32345,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27778,6 +32376,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27804,6 +32407,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -27832,6 +32440,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27858,6 +32471,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27884,6 +32502,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27910,6 +32533,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27936,6 +32564,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -27962,6 +32595,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -27990,6 +32628,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28016,6 +32659,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28042,6 +32690,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28068,6 +32721,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28094,6 +32752,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28120,6 +32783,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -28148,6 +32816,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28174,6 +32847,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28200,6 +32878,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28226,6 +32909,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28252,6 +32940,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28278,6 +32971,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -28306,6 +33004,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28332,6 +33035,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28358,6 +33066,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28384,6 +33097,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28410,6 +33128,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28436,6 +33159,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -28464,6 +33192,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28490,6 +33223,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28516,6 +33254,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28542,6 +33285,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28568,6 +33316,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28594,6 +33347,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -28622,6 +33380,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28648,6 +33411,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28674,6 +33442,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28700,6 +33473,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28726,6 +33504,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28752,6 +33535,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -28780,6 +33568,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28806,6 +33599,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28832,6 +33630,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28858,6 +33661,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28884,6 +33692,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28910,6 +33723,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	],
@@ -28938,6 +33756,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28964,6 +33787,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -28990,6 +33818,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -29016,6 +33849,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -29042,6 +33880,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		},
 		{
@@ -29068,6 +33911,11 @@
 			"priceSpikes": [
 				10000,
 				18000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	]

@@ -18,23 +18,15 @@ export namespace TransactionMenu {
 	}
 }
 
-export const TransactionMenu: FC<TransactionMenu.Props> = ({
-	close,
-	transaction,
-	ui,
-	...props
-}) => {
+export const TransactionMenu: FC<TransactionMenu.Props> = ({ close, transaction, ...props }) => {
 	return (
 		<Container
 			data-ui={"TransactionMenu[Container]"}
 			data-transaction={transaction.status}
-			ui={{
-				flow: "vertical",
-				gap: "md",
-				width: "full",
-				inner: "default",
-				...ui,
-			}}
+			data-ui-flow="vertical"
+			data-ui-gap="md"
+			data-ui-width="full"
+			data-ui-inner="default"
 			{...props}
 		>
 			<TransactionMessage

@@ -16,7 +16,7 @@ export namespace SignOutButton {
  * Encapsulates a focused sign out action behind shared app styling and behavior.
  * Use it when the sign out action should stay consistent across screens.
  */
-export const SignOutButton: FC<SignOutButton.Props> = ({ ui, ...props }) => {
+export const SignOutButton: FC<SignOutButton.Props> = ({ ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
 	const signOutMutation = withSignOutMutation.useMutation({
@@ -37,14 +37,11 @@ export const SignOutButton: FC<SignOutButton.Props> = ({ ui, ...props }) => {
 			onClick={() => signOutMutation.mutate({})}
 			disabled={signOutMutation.isPending}
 			loading={signOutMutation.isPending}
-			ui={{
-				tone: "secondary",
-				theme: "light",
-				size: "md",
-				width: "content",
-				text: "md",
-				...ui,
-			}}
+			data-ui-tone="secondary"
+			data-ui-theme="light"
+			data-ui-size="md"
+			data-ui-width="content"
+			data-ui-text="md"
 			{...props}
 		>
 			<Tx label="Sign out" />

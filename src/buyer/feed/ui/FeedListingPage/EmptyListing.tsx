@@ -21,21 +21,17 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 	return (
 		<Container
 			data-ui={"EmptyListing"}
-			ui={{
-				layout: "vertical-centered",
-				height: "full",
-				tone: "brand",
-				theme: "light",
-				inner: "4xl",
-			}}
+			data-ui-layout="vertical-centered"
+			data-ui-height="full"
+			data-ui-tone="brand"
+			data-ui-theme="light"
+			data-ui-inner="4xl"
 			{...props}
 		>
 			<Status
 				icon={FirstIcon}
 				iconProps={{
-					ui: {
-						text: "4xl",
-					},
+					"data-ui-text": "4xl",
 				}}
 				textTitle={translator.text("First listing (title)")}
 				textMessage={translator.text("First listing (message)")}
@@ -53,14 +49,11 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 								locale,
 							}}
 							{...uiButton({
-								ui: {
-									tone: "brand",
-									theme: "light",
-									text: "lg",
-									size: "default",
-									font: "bold",
-								},
-								className: [],
+								"data-ui-tone": "brand",
+								"data-ui-theme": "light",
+								"data-ui-text": "lg",
+								"data-ui-size": "default",
+								"data-ui-font": "bold",
 							})}
 						>
 							<Tx label="Create first listing (button)" />
@@ -75,16 +68,13 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 								locale,
 							}}
 							{...uiButton({
-								ui: {
-									tone: "link",
-									theme: "light",
-									text: "sm",
-									size: "sm",
-									background: undefined,
-									border: false,
-									shadow: false,
-								},
-								className: [],
+								"data-ui-tone": "link",
+								"data-ui-theme": "light",
+								"data-ui-text": "sm",
+								"data-ui-size": "sm",
+								"data-ui-background": undefined,
+								"data-ui-border": false,
+								"data-ui-shadow": false,
 							})}
 						>
 							<Tx label="Back to home (link)" />

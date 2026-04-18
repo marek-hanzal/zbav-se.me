@@ -47,48 +47,39 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 	action,
 	loading,
 	wrapperProps,
-	ui,
 	...props
 }: ValueList.Props<TItem>) => {
 	return (
 		<Container
 			data-root="ValueList[Container]"
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				inner: "default",
-				round: undefined,
-				background: "default",
-				border: false,
-				shadow: false,
-				flow: "vertical",
-				gap: "xs",
-				...ui,
-			}}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-inner="default"
+			data-ui-round={undefined}
+			data-ui-background="default"
+			data-ui-border={false}
+			data-ui-shadow={false}
+			data-ui-flow="vertical"
+			data-ui-gap="xs"
 			{...props}
 		>
 			<Container
 				data-ui={"ValueList-[Container.label-wrapper]"}
+				data-ui-tone="primary"
+				data-ui-theme="light"
+				data-ui-flow="horizontal"
+				data-ui-items="center"
+				data-ui-justify="space-between"
+				data-ui-gap="default"
+				data-ui-color="lead"
 				{...wrapperProps}
-				ui={{
-					tone: "primary",
-					theme: "light",
-					flow: "horizontal",
-					items: "center",
-					justify: "space-between",
-					gap: "default",
-					color: "lead",
-					...wrapperProps?.ui,
-				}}
 			>
 				<Tx
 					label={textLabel}
 					preset={"label"}
-					ui={{
-						font: "semibold",
-						display: "block",
-						color: "lead",
-					}}
+					data-ui-font="semibold"
+					data-ui-display="block"
+					data-ui-color="lead"
 				/>
 
 				{action}
@@ -97,13 +88,11 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 			{textHint ? (
 				<Tx
 					label={textHint}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						text: "xs",
-						color: "icon",
-						italic: true,
-					}}
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-text="xs"
+					data-ui-color="icon"
+					data-ui-italic={true}
 				/>
 			) : null}
 
@@ -113,15 +102,13 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 						<Container
 							key={item.id}
 							data-ui="ValueList-[Container.item]"
-							ui={{
-								tone: "subtle",
-								theme: "light",
-								background: "default",
-								border: false,
-								shadow: false,
-								round: "default",
-								inner: "default",
-							}}
+							data-ui-tone="subtle"
+							data-ui-theme="light"
+							data-ui-background="default"
+							data-ui-border={false}
+							data-ui-shadow={false}
+							data-ui-round="default"
+							data-ui-inner="default"
 						>
 							{renderFn(item)}
 						</Container>
@@ -132,20 +119,16 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 			{loading && (
 				<SpinnerContainer
 					size={"md"}
-					ui={{
-						height: "content",
-					}}
+					data-ui-height="content"
 				/>
 			)}
 
 			{!loading && items.length === 0 && (
 				<Tx
 					label={textEmpty}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						opacity: "6",
-					}}
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-opacity="6"
 				/>
 			)}
 		</Container>

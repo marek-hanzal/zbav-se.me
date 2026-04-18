@@ -25,12 +25,10 @@ const UploadPending: FC<{
 	return (
 		<Container
 			data-ui={"PhotoUpload-[Container.spinner]"}
-			ui={{
-				flow: "vertical",
-				height: "full",
-				items: "center",
-				justify: "center",
-			}}
+			data-ui-flow="vertical"
+			data-ui-height="full"
+			data-ui-items="center"
+			data-ui-justify="center"
 		>
 			<Status
 				data-ui={"PhotoUpload-[Status.spinner]"}
@@ -39,17 +37,13 @@ const UploadPending: FC<{
 				action={
 					<Progress
 						value={progress * 100}
-						ui={{
-							size: "lg",
-							tone: "primary",
-							theme: "dark",
-						}}
+						data-ui-size="lg"
+						data-ui-tone="primary"
+						data-ui-theme="dark"
 					/>
 				}
-				ui={{
-					tone: "primary",
-					theme: "light",
-				}}
+				data-ui-tone="primary"
+				data-ui-theme="light"
 			/>
 		</Container>
 	);
@@ -65,7 +59,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	camera = false,
 	value,
 	onChange,
-	ui,
 	...props
 }) => {
 	const controller = useController({
@@ -76,19 +69,16 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	return (
 		<Container
 			data-ui={"PhotoUpload[Container]"}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				round: "default",
-				background: "default",
-				border: true,
-				shadow: true,
-				position: "relative",
-				disabled: controller.isPending ?? undefined,
-				width: "full",
-				height: "full",
-				...ui,
-			}}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-round="default"
+			data-ui-background="default"
+			data-ui-border
+			data-ui-shadow
+			data-ui-position="relative"
+			data-ui-disabled={controller.isPending ?? undefined}
+			data-ui-width="full"
+			data-ui-height="full"
 			onClick={controller.pick}
 			onKeyDown={controller.onKeyDown}
 			{...props}
@@ -105,7 +95,9 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 
 			{controller.isPending ? <UploadPending progress={controller.progress} /> : null}
 
-			{!value && !controller.isPending ? <Placeholder disabled={ui?.disabled} /> : null}
+			{!value && !controller.isPending ? (
+				<Placeholder disabled={props["data-ui-disabled"]} />
+			) : null}
 
 			{value && !controller.isPending ? (
 				<Suspense fallback={<Preview.Fallback />}>

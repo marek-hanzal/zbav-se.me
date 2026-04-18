@@ -53,7 +53,6 @@ export const Button: FC<Button.Props> = ({
 	truncate,
 	children,
 	//
-	ui,
 	className,
 	//
 	...props
@@ -76,10 +75,7 @@ export const Button: FC<Button.Props> = ({
 			disabled={disabled}
 			//
 			{...uiButton({
-				ui: {
-					disabled,
-					...ui,
-				},
+				"data-ui-disabled": disabled,
 				className,
 			})}
 			{...props}

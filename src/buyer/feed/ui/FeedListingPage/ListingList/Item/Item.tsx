@@ -38,7 +38,7 @@ export const Item = withFallback(({ _suspense, listingId, feedId }: Item.Props) 
 			<Hero
 				_suspense={_suspense}
 				listingId={listingId}
-				state={{
+				listingState={{
 					value: detail,
 					set: setDetail,
 				}}

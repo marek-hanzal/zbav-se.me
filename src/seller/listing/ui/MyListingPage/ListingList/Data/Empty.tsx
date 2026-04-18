@@ -24,9 +24,7 @@ export const Empty: FC = () => {
 					params={{
 						locale,
 					}}
-					{...uiCtaLinkButton({
-						className: [],
-					})}
+					{...uiCtaLinkButton({})}
 				>
 					<Tx label={"Create listing (label)"} />
 				</LinkTo>

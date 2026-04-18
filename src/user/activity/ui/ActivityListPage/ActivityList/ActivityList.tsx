@@ -58,13 +58,11 @@ export const ActivityList = withFallback(
 		return (
 			<Container
 				data-ui="ActivityList[Container]"
-				ui={{
-					flow: "vertical",
-					gap: "default",
-					height: "full",
-					scroll: "vertical",
-					inner: "default",
-				}}
+				data-ui-flow="vertical"
+				data-ui-gap="default"
+				data-ui-height="full"
+				data-ui-scroll="vertical"
+				data-ui-inner="default"
 				{...props}
 			>
 				<EmptyState check={check}>

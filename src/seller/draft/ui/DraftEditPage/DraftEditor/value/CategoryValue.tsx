@@ -26,10 +26,8 @@ export const CategoryValue: FC<CategoryValue.Props> = ({ _suspense, categoryId, 
 					<CategoryInline
 						_suspense={"I know"}
 						categoryId={categoryId}
-						ui={{
-							tone: "secondary",
-							theme: "light",
-						}}
+						data-ui-tone="secondary"
+						data-ui-theme="light"
 					/>
 				) : null
 			}

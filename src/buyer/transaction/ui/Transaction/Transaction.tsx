@@ -19,7 +19,6 @@ export const Transaction: FC<Transaction.Props> = ({
 	_suspense,
 	transactionId,
 	refresh,
-	ui,
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -32,21 +31,16 @@ export const Transaction: FC<Transaction.Props> = ({
 	return (
 		<Container
 			data-ui={"Transaction"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				gap: "xs",
-				...ui,
-			}}
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-gap="xs"
 			{...props}
 		>
 			<Container
 				ref={containerRef}
-				ui={{
-					layout: "vertical-header-content",
-					height: "full",
-					scroll: "vertical",
-				}}
+				data-ui-layout="vertical-header-content"
+				data-ui-height="full"
+				data-ui-scroll="vertical"
 			>
 				<TransactionHero
 					_suspense={_suspense}
@@ -59,9 +53,7 @@ export const Transaction: FC<Transaction.Props> = ({
 					containerRef={containerRef}
 					transactionId={transactionId}
 					refresh={refresh}
-					ui={{
-						inner: "default",
-					}}
+					data-ui-inner="default"
 				/>
 			</Container>
 

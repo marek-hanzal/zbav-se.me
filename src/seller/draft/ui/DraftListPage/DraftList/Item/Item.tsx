@@ -42,16 +42,14 @@ export const Item = withFallback(
 					title={
 						<Tx
 							label={draft.title ?? "Draft (label)"}
-							ui={{
-								tone: "neutral",
-								theme: "light",
-								color: "lead",
-								font: "semibold",
-								text: "sm",
-								display: "block",
-								width: "full",
-								truncate: true,
-							}}
+							data-ui-tone="neutral"
+							data-ui-theme="light"
+							data-ui-color="lead"
+							data-ui-font="semibold"
+							data-ui-text="sm"
+							data-ui-display="block"
+							data-ui-width="full"
+							data-ui-truncate
 							className={[
 								"block",
 								"w-full",
@@ -66,33 +64,29 @@ export const Item = withFallback(
 								locale,
 								time: draft.updatedAt,
 							})}
-							ui={{
-								tone: "neutral",
-								theme: "light",
-								text: "xs",
-								font: "normal",
-								color: "text",
-								opacity: "5",
-							}}
+							data-ui-tone="neutral"
+							data-ui-theme="light"
+							data-ui-text="xs"
+							data-ui-font="normal"
+							data-ui-color="text"
+							data-ui-opacity="5"
 						/>
 					}
 					{...props}
 				>
 					{valid.isValid ? (
 						<Container
-							ui={{
-								tone: "primary",
-								theme: "light",
-								round: "full",
-								background: "default",
-								snapTo: "bottom-left",
-								flow: "vertical",
-								items: "center",
-								justify: "center",
-								opacity: "8",
-								shadow: true,
-								border: true,
-							}}
+							data-ui-tone="primary"
+							data-ui-theme="light"
+							data-ui-round="full"
+							data-ui-background="default"
+							data-ui-snap-to="bottom-left"
+							data-ui-flow="vertical"
+							data-ui-items="center"
+							data-ui-justify="center"
+							data-ui-opacity="8"
+							data-ui-shadow
+							data-ui-border
 							className={[
 								"h-7",
 								"w-7",
@@ -100,12 +94,10 @@ export const Item = withFallback(
 						>
 							<Icon
 								icon={CheckIcon}
-								ui={{
-									tone: valid.isValid ? "primary" : "secondary",
-									theme: "light",
-									text: "lg",
-									color: "lead",
-								}}
+								data-ui-tone={valid.isValid ? "primary" : "secondary"}
+								data-ui-theme="light"
+								data-ui-text="lg"
+								data-ui-color="lead"
 							/>
 						</Container>
 					) : null}

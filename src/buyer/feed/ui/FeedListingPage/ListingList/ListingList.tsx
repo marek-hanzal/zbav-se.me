@@ -95,12 +95,10 @@ export const ListingList = withFallback(
 			<Container
 				ref={mergedRef}
 				data-ui={"ListingList"}
-				ui={{
-					layout: "vertical-full",
-					snap: "vertical",
-					snapAlign: "center",
-					height: "full",
-				}}
+				data-ui-layout="vertical-full"
+				data-ui-snap="vertical"
+				data-ui-snap-align="center"
+				data-ui-height="full"
 				{...props}
 			>
 				<VisibilityProvider store={visibility}>
@@ -110,10 +108,8 @@ export const ListingList = withFallback(
 							id={listingId}
 							data-id={listingId}
 							placeholder={placeholder}
-							ui={{
-								height: "full",
-								width: "full",
-							}}
+							data-ui-height="full"
+							data-ui-width="full"
 						>
 							<Suspense fallback={<Item.Fallback />}>
 								<Item
@@ -149,9 +145,7 @@ export const ListingList = withFallback(
 									params={{
 										locale,
 									}}
-									{...uiCtaLinkButton({
-										className: [],
-									})}
+									{...uiCtaLinkButton({})}
 								>
 									<Tx label={"See other feeds (link)"} />
 								</LinkTo>

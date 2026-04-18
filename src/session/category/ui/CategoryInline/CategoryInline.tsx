@@ -22,7 +22,6 @@ export namespace CategoryInline {
 export const CategoryInline = withFallback(
 	({
 		_suspense,
-		ui,
 		categoryId,
 		textGroupProps,
 		textCategoryProps,
@@ -33,32 +32,25 @@ export const CategoryInline = withFallback(
 		return (
 			<Container
 				data-ui="CategoryInline"
-				ui={{
-					flow: "vertical",
-					gap: "xs",
-					items: "start",
-					...ui,
-				}}
+				data-ui-flow="vertical"
+				data-ui-gap="xs"
+				data-ui-items="start"
 				{...props}
 			>
 				<Typo
 					label={category.group}
-					ui={{
-						tone: "secondary",
-						theme: "light",
-						text: "default",
-						opacity: "6",
-					}}
+					data-ui-tone="secondary"
+					data-ui-theme="light"
+					data-ui-text="default"
+					data-ui-opacity="6"
 					{...textGroupProps}
 				/>
 
 				<Typo
 					label={category.category}
-					ui={{
-						tone: "secondary",
-						theme: "light",
-						text: "default",
-					}}
+					data-ui-tone="secondary"
+					data-ui-theme="light"
+					data-ui-text="default"
 					{...textCategoryProps}
 				/>
 			</Container>

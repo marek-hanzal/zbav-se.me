@@ -19,17 +19,14 @@ export namespace DeliverySelect {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ui, ...props }) => {
+export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ...props }) => {
 	return (
 		<Container
 			data-ui="DeliverySelect[Container]"
-			ui={{
-				layout: "vertical-flex",
-				height: "auto",
-				width: "full",
-				gap: "lg",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-height="auto"
+			data-ui-width="full"
+			data-ui-gap="lg"
 			{...props}
 		>
 			{Object.values(ListingDeliveryEnumSchema.enum).map((delivery) => {
@@ -46,11 +43,8 @@ export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ui, ...pro
 						}}
 						{...uiSelectButton({
 							isSelected,
-							ui: {
-								flow: "horizontal",
-								justify: "start",
-							},
-							className: [],
+							"data-ui-flow": "horizontal",
+							"data-ui-justify": "start",
 						})}
 						data-ui={`DeliverySelect-[Button.${delivery}]`}
 					>

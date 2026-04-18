@@ -29,7 +29,6 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 	sold,
 	status,
 	success,
-	ui,
 	...props
 }) => {
 	const toolbar = match(status)
@@ -46,16 +45,13 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 
 	return toolbar ? (
 		<Container
-			data-ui={"TransactionToolbar[Group]"}
-			ui={{
-				flow: "vertical",
-				opacity: "8",
-				justify: "center",
-				items: "center",
-				width: "full",
-				gap: "default",
-				...ui,
-			}}
+			data-ui="TransactionToolbar[Group]"
+			data-ui-flow="vertical"
+			data-ui-opacity="8"
+			data-ui-justify="center"
+			data-ui-items="center"
+			data-ui-width="full"
+			data-ui-gap="default"
 			{...props}
 		>
 			{toolbar}

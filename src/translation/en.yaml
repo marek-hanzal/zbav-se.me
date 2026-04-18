@@ -595,6 +595,9 @@
 836b19fc748e6429a7591712239acea4d936fab1b0671f538ba91660:
   ref: Listing unfavourited (label)
   value: Listing unfavourited (label)
+83986605d9083e9070c115dd6c600f8b3b5cc67f1565228fa79615c6:
+  ref: Price - offer
+  value: Price - offer
 83b634826d57876d245185f68ced81274d52163ed8a9af640530ab71:
   ref: You got like (label)
   value: You got like (label)
@@ -924,6 +927,9 @@ d5fb36eeef11375839f9b27cd328ac9d4705d04c04417cc2d3b4d093:
 d60d6c00507c0ff00445c84999529eb3c9da48141213ff1a5396cc72:
   ref: You got dislike (label)
   value: You got dislike (label)
+d6c97032653b4eb21c501dbb0f119593f92e88d4b91dd1d0f44b603c:
+  ref: Behind corner (label)
+  value: Behind corner (label)
 d6e1619a7bfceff09655bc0ff1c4960af12b203be4b4fc387bb85bad:
   ref: Activity empty (title)
   value: Activity empty (title)
@@ -936,9 +942,6 @@ d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
 d95b6247e69f90b9f6f613b62be4396f37f5c45acb205f993f42dd18:
   ref: Reaction rate (label)
   value: Reaction rate (label)
-d9b33cbea0db22bdc23b80834ef175837c4db97d6e48eb1405ab9917:
-  ref: Login failed
-  value: Login failed
 dbb55f0c704298dbeda11ddad88ff05b151057e984bf244f0d09c4d9:
   ref: No listings with transactions (title)
   value: Nothing here yet
@@ -984,6 +987,9 @@ e8a19177576d520c7d0b09d78bf7abc632de0b6f07d3a579f3822693:
 e9774c347a82dce48b5bee9adf2b79476ec38d3a3ed0b65d50c3391e:
   ref: Register (link)
   value: Register (link)
+e9cee0fe7795232e7e3900beb14e8a8a6d87f0fcf0bb28f4a517a78f:
+  ref: offer
+  value: offer
 eb18c941e11fe2d241983a0df227512b3e3691c12cc66af2303bc987:
   ref: Draft (label)
   value: Draft (label)
@@ -1086,3 +1092,6 @@ ff16f6190259edb2dc944cd87e70410856d658de53880f79b4e9c403:
 ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
   ref: No categories found (title)
   value: No categories found (title)
+ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
+  ref: open
+  value: open

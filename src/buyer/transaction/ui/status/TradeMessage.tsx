@@ -19,7 +19,7 @@ export namespace TradeMessage {
 	}
 }
 
-export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ui, ...props }) => {
+export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ...props }) => {
 	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
@@ -36,12 +36,9 @@ export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ui, .
 	return (
 		<>
 			<Group
-				ui={{
-					round: "default",
-					flow: "vertical",
-					tone: "primary",
-					...ui,
-				}}
+				data-ui-round="default"
+				data-ui-flow="vertical"
+				data-ui-tone="primary"
 				{...props}
 			>
 				<PersonalButton
@@ -82,12 +79,9 @@ export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ui, .
 			</Group>
 
 			<Group
-				ui={{
-					round: "default",
-					flow: "vertical",
-					tone: "primary",
-					...ui,
-				}}
+				data-ui-round="default"
+				data-ui-flow="vertical"
+				data-ui-tone="primary"
 				{...props}
 			>
 				<SellerInfoButton

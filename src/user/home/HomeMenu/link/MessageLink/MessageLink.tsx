@@ -21,30 +21,24 @@ export const MessageLink = withFallback(
 
 		return (
 			<Group
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					background: "default",
-				}}
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-background="default"
 			>
 				<TypoIcon
 					icon={MessageIcon}
 					iconProps={iconProps}
-					ui={{
-						inner: "lg",
-						justify: "start",
-						text: "lg",
-					}}
+					data-ui-inner="lg"
+					data-ui-justify="start"
+					data-ui-text="lg"
 				>
 					<Tx label={"Messages (label)"} />
 				</TypoIcon>
 
 				<Container
-					ui={{
-						flow: "horizontal",
-						justify: "space-evenly",
-						inner: "default",
-					}}
+					data-ui-flow="horizontal"
+					data-ui-justify="space-evenly"
+					data-ui-inner="default"
 				>
 					<LinkTo
 						data-action={"open seller messages"}
@@ -55,25 +49,19 @@ export const MessageLink = withFallback(
 							locale,
 						}}
 						activeProps={uiMenuButton({
-							ui: {
-								flow: "horizontal",
-								justify: "center",
-								items: "center",
-								tone: "primary",
-								theme: "light",
-							},
-							className: [],
+							"data-ui-flow": "horizontal",
+							"data-ui-justify": "center",
+							"data-ui-items": "center",
+							"data-ui-tone": "primary",
+							"data-ui-theme": "light",
 						})}
 						{...uiMenuButton({
-							ui: {
-								flow: "horizontal",
-								justify: "center",
-								items: "center",
-								tone: "neutral",
-								theme: "light",
-								text: "lg",
-							},
-							className: [],
+							"data-ui-flow": "horizontal",
+							"data-ui-justify": "center",
+							"data-ui-items": "center",
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+							"data-ui-text": "lg",
 						})}
 					>
 						<Tx label={"Messages - seller (label)"} />
@@ -88,25 +76,19 @@ export const MessageLink = withFallback(
 							locale,
 						}}
 						activeProps={uiMenuButton({
-							ui: {
-								flow: "horizontal",
-								justify: "center",
-								items: "center",
-								tone: "primary",
-								theme: "light",
-							},
-							className: [],
+							"data-ui-flow": "horizontal",
+							"data-ui-justify": "center",
+							"data-ui-items": "center",
+							"data-ui-tone": "primary",
+							"data-ui-theme": "light",
 						})}
 						{...uiMenuButton({
-							ui: {
-								flow: "horizontal",
-								justify: "center",
-								items: "center",
-								tone: "neutral",
-								theme: "light",
-								text: "lg",
-							},
-							className: [],
+							"data-ui-flow": "horizontal",
+							"data-ui-justify": "center",
+							"data-ui-items": "center",
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+							"data-ui-text": "lg",
 						})}
 					>
 						<Tx label={"Messages - buyer (label)"} />
@@ -120,30 +102,24 @@ export const MessageLink = withFallback(
 
 		return (
 			<Group
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					background: "default",
-				}}
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-background="default"
 			>
 				<TypoIcon
 					icon={MessageIcon}
 					iconProps={iconProps}
-					ui={{
-						inner: "lg",
-						justify: "start",
-						text: "lg",
-					}}
+					data-ui-inner="lg"
+					data-ui-justify="start"
+					data-ui-text="lg"
 				>
 					<Tx label={"Loading... (label)"} />
 				</TypoIcon>
 
 				<Container
-					ui={{
-						flow: "horizontal",
-						justify: "space-evenly",
-						inner: "default",
-					}}
+					data-ui-flow="horizontal"
+					data-ui-justify="space-evenly"
+					data-ui-inner="default"
 				>
 					<LinkTo
 						data-action={"open seller messages"}
@@ -154,25 +130,19 @@ export const MessageLink = withFallback(
 							locale,
 						}}
 						activeProps={uiMenuButton({
-							ui: {
-								flow: "horizontal",
-								justify: "center",
-								items: "center",
-								tone: "primary",
-								theme: "light",
-							},
-							className: [],
+							"data-ui-flow": "horizontal",
+							"data-ui-justify": "center",
+							"data-ui-items": "center",
+							"data-ui-tone": "primary",
+							"data-ui-theme": "light",
 						})}
 						{...uiMenuButton({
-							ui: {
-								flow: "horizontal",
-								justify: "center",
-								items: "center",
-								tone: "neutral",
-								theme: "light",
-								text: "lg",
-							},
-							className: [],
+							"data-ui-flow": "horizontal",
+							"data-ui-justify": "center",
+							"data-ui-items": "center",
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+							"data-ui-text": "lg",
 						})}
 					>
 						<Tx label={"Loading... (label)"} />
@@ -187,25 +157,19 @@ export const MessageLink = withFallback(
 							locale,
 						}}
 						activeProps={uiMenuButton({
-							ui: {
-								flow: "horizontal",
-								justify: "center",
-								items: "center",
-								tone: "primary",
-								theme: "light",
-							},
-							className: [],
+							"data-ui-flow": "horizontal",
+							"data-ui-justify": "center",
+							"data-ui-items": "center",
+							"data-ui-tone": "primary",
+							"data-ui-theme": "light",
 						})}
 						{...uiMenuButton({
-							ui: {
-								flow: "horizontal",
-								justify: "center",
-								items: "center",
-								tone: "neutral",
-								theme: "light",
-								text: "lg",
-							},
-							className: [],
+							"data-ui-flow": "horizontal",
+							"data-ui-justify": "center",
+							"data-ui-items": "center",
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+							"data-ui-text": "lg",
 						})}
 					>
 						<Tx label={"Loading... (label)"} />

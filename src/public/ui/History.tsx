@@ -77,7 +77,7 @@ export namespace History {
 	}
 }
 
-export const History: FC<History.Props> = ({ _suspense, ui, className, ...props }) => {
+export const History: FC<History.Props> = ({ _suspense, className, ...props }) => {
 	const historyRootId = useId();
 	const threshold = 4;
 	const weeks = 8;
@@ -87,12 +87,9 @@ export const History: FC<History.Props> = ({ _suspense, ui, className, ...props 
 
 	return (
 		<Container
-			ui={{
-				layout: "vertical-centered",
-				height: "full",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-centered"
+			data-ui-height="full"
+			data-ui-gap="default"
 			className={className}
 			{...props}
 		>
@@ -126,12 +123,10 @@ export const History: FC<History.Props> = ({ _suspense, ui, className, ...props 
 
 			<Tx
 				label={"History activity (hint)"}
-				ui={{
-					text: "sm",
-					color: "icon",
-					opacity: "6",
-					inner: "2xl",
-				}}
+				data-ui-text="sm"
+				data-ui-color="icon"
+				data-ui-opacity="6"
+				data-ui-inner="2xl"
 				className={"text-center"}
 			/>
 		</Container>

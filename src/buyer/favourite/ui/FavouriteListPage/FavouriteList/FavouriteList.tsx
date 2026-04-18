@@ -62,13 +62,11 @@ export const FavouriteList = withFallback(
 			<Container
 				data-ui={"FavouriteList"}
 				ref={scrollerRef}
-				ui={{
-					flow: "vertical",
-					scroll: "vertical",
-					height: "full",
-					gap: "default",
-					inner: "default",
-				}}
+				data-ui-flow="vertical"
+				data-ui-scroll="vertical"
+				data-ui-height="full"
+				data-ui-gap="default"
+				data-ui-inner="default"
 				{...props}
 			>
 				<EmptyState check={check}>

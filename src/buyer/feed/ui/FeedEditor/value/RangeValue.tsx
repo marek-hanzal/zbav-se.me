@@ -35,13 +35,12 @@ export const RangeValue: FC<RangeValue.Props> = ({ range, ...props }) => {
 			textEmpty={translator.text("Feed range not set")}
 			textHint={translator.text("Feed range (hint)")}
 			wrapperProps={{
-				ui:
-					range !== undefined
-						? {
-								tone: "neutral",
-								theme: "light",
-							}
-						: undefined,
+				...(range !== undefined
+					? {
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+						}
+					: undefined),
 			}}
 			{...props}
 		/>

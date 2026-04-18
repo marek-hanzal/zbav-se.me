@@ -45,19 +45,19 @@ export namespace uiButton {
 	}
 }
 
-export const uiButton = ({ ui, className }: uiButton.Props) => {
+export const uiButton = ({ name = "Button", className, ...ui }: uiButton.Props) => {
 	return coolUi<uiButton.Ui>({
-		name: "Button",
+		name,
 		ui: {
-			justify: "start",
-			items: "center",
-			flow: "horizontal",
-			round: "default",
-			gap: "sm",
-			color: "text",
-			background: "default",
-			border: true,
-			shadow: true,
+			"data-ui-justify": "start",
+			"data-ui-items": "center",
+			"data-ui-flow": "horizontal",
+			"data-ui-round": "default",
+			"data-ui-gap": "sm",
+			"data-ui-color": "text",
+			"data-ui-background": "default",
+			"data-ui-border": true,
+			"data-ui-shadow": true,
 			...ui,
 		},
 		className: [

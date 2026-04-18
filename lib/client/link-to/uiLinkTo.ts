@@ -34,18 +34,18 @@ export namespace uiLinkTo {
 	}
 }
 
-export const uiLinkTo = ({ ui, className }: uiLinkTo.Props) => {
+export const uiLinkTo = ({ name = "LinkTo", className, ...ui }: uiLinkTo.Props) => {
 	return coolUi<uiLinkTo.Ui>({
-		name: "LinkTo",
+		name,
 		ui: {
-			tone: "link",
-			theme: "light",
-			text: "default",
-			color: "lead",
-			flow: "horizontal",
-			gap: "default",
-			items: "center",
-			justify: "start",
+			"data-ui-tone": "link",
+			"data-ui-theme": "light",
+			"data-ui-text": "default",
+			"data-ui-color": "lead",
+			"data-ui-flow": "horizontal",
+			"data-ui-gap": "default",
+			"data-ui-items": "center",
+			"data-ui-justify": "start",
 			...ui,
 		},
 		className,

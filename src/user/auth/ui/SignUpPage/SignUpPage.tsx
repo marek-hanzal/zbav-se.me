@@ -49,7 +49,7 @@ export namespace SignUpPage {
 	}
 }
 
-export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
+export const SignUpPage: FC<SignUpPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
 
@@ -82,22 +82,17 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 	return (
 		<Container
 			data-ui="SignUpPage"
-			ui={{
-				layout: "vertical-centered",
-				position: "relative",
-				height: "full",
-				width: "full",
-				...ui,
-			}}
+			data-ui-layout="vertical-centered"
+			data-ui-position="relative"
+			data-ui-height="full"
+			data-ui-width="full"
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-flex",
-					scroll: "vertical",
-					width: "full",
-					height: "full",
-				}}
+				data-ui-layout="vertical-flex"
+				data-ui-scroll="vertical"
+				data-ui-width="full"
+				data-ui-height="full"
 			>
 				<Status
 					icon={
@@ -111,9 +106,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 						</LinkTo>
 					}
 					textTitle={translator.text("Register (title)")}
-					ui={{
-						inner: "default",
-					}}
+					data-ui-inner="default"
 				>
 					<form
 						onSubmit={(e) => {
@@ -196,12 +189,10 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 						</form.AppField>
 
 						<Container
-							ui={{
-								layout: "vertical-flex",
-								width: "full",
-								items: "center",
-								gap: "default",
-							}}
+							data-ui-layout="vertical-flex"
+							data-ui-width="full"
+							data-ui-items="center"
+							data-ui-gap="default"
 						>
 							<form.Subscribe
 								selector={(state) => ({
@@ -242,12 +233,10 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 							>
 								<Tx
 									label={"Login (link)"}
-									ui={{
-										tone: "link",
-										theme: "light",
-										text: "md",
-										color: "lead",
-									}}
+									data-ui-tone="link"
+									data-ui-theme="light"
+									data-ui-text="md"
+									data-ui-color="lead"
 								/>
 							</LinkTo>
 						</Container>
@@ -255,10 +244,8 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 						<div className={"flex flex-col gap-1 w-full"}>
 							<Tx
 								label={"Agreement with (label)"}
-								ui={{
-									text: "sm",
-									font: "bold",
-								}}
+								data-ui-text="sm"
+								data-ui-font="bold"
 							/>
 
 							<LinkTo
@@ -268,17 +255,13 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 									locale,
 								}}
 								iconProps={{
-									ui: {
-										text: "xl",
-									},
+									"data-ui-text": "xl",
 								}}
 							>
 								<Tx
 									label={"ToS agreement (label)"}
-									ui={{
-										tone: "link",
-										text: "lg",
-									}}
+									data-ui-tone="link"
+									data-ui-text="lg"
 								/>
 							</LinkTo>
 
@@ -289,17 +272,13 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
 									locale,
 								}}
 								iconProps={{
-									ui: {
-										text: "xl",
-									},
+									"data-ui-text": "xl",
 								}}
 							>
 								<Tx
 									label={"Privacy policy (label)"}
-									ui={{
-										tone: "link",
-										text: "lg",
-									}}
+									data-ui-tone="link"
+									data-ui-text="lg"
 								/>
 							</LinkTo>
 						</div>

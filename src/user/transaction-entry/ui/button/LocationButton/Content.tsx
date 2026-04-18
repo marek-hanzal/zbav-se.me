@@ -22,18 +22,14 @@ export const Content: FC<Content.Props> = ({
 	loading,
 	onSave,
 	onCancel,
-	ui,
 	...props
 }) => {
 	return (
 		<Container
 			data-ui="LocationButton[LocationSelectContainer]"
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				inner: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-inner="default"
 			{...props}
 		>
 			<LocationSelect

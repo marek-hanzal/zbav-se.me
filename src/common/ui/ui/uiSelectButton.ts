@@ -13,20 +13,19 @@ export namespace uiSelectButton {
 	}
 }
 
-export const uiSelectButton = ({ isSelected, ui, className }: uiSelectButton.Props) => {
+export const uiSelectButton = ({ name, isSelected, className, ...ui }: uiSelectButton.Props) => {
 	return uiButton({
-		ui: {
-			tone: isSelected ? "secondary" : "neutral",
-			theme: "light",
-			flow: "vertical",
-			items: "start",
-			justify: "center",
-			size: "default",
-			font: isSelected ? "bold" : "normal",
-			width: "full",
-			height: "content",
-			...ui,
-		},
+		name,
+		"data-ui-tone": isSelected ? "secondary" : "neutral",
+		"data-ui-theme": "light",
+		"data-ui-flow": "vertical",
+		"data-ui-items": "start",
+		"data-ui-justify": "center",
+		"data-ui-size": "default",
+		"data-ui-font": isSelected ? "bold" : "normal",
+		"data-ui-width": "full",
+		"data-ui-height": "content",
+		...ui,
 		className,
 	});
 };

@@ -61,47 +61,35 @@ export const NotificationLink = withFallback(
 					priority: "high",
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 				})}
 				{...uiMenuButton({
-					ui: {
-						tone: hightList.length > 0 ? "secondary" : "neutral",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": hightList.length > 0 ? "secondary" : "neutral",
+					"data-ui-theme": "light",
 				})}
 			>
 				<TypoIcon
 					flip
 					icon={ChevronRightIcon}
 					iconProps={{
-						ui: {
-							opacity: "5",
-						},
+						"data-ui-opacity": "5",
 					}}
 				>
 					<Container
-						ui={{
-							flow: "horizontal",
-							items: "center",
-							gap: "default",
-							justify: "space-between",
-							width: "full",
-						}}
+						data-ui-flow="horizontal"
+						data-ui-items="center"
+						data-ui-gap="default"
+						data-ui-justify="space-between"
+						data-ui-width="full"
 					>
 						<Tx label={"Notifications (label)"} />
 
 						{hightList.length > 0 ? (
 							<Badge
-								ui={{
-									tone: "secondary",
-									theme: "light",
-									badge: "xs",
-								}}
+								data-ui-tone="secondary"
+								data-ui-theme="light"
+								data-ui-badge="xs"
 							>
 								{hightList.length > 9
 									? "9+"
@@ -113,9 +101,7 @@ export const NotificationLink = withFallback(
 						) : (
 							<Tx
 								label={"Activity - nothing new (label)"}
-								ui={{
-									opacity: "6",
-								}}
+								data-ui-opacity="6"
 							/>
 						)}
 					</Container>
@@ -138,37 +124,27 @@ export const NotificationLink = withFallback(
 					priority: "high",
 				}}
 				activeProps={uiMenuButton({
-					ui: {
-						tone: "primary",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
 				})}
 				{...uiMenuButton({
-					ui: {
-						tone: "neutral",
-						theme: "light",
-					},
-					className: [],
+					"data-ui-tone": "neutral",
+					"data-ui-theme": "light",
 				})}
 			>
 				<TypoIcon
 					flip
 					icon={ChevronRightIcon}
 					iconProps={{
-						ui: {
-							opacity: "5",
-						},
+						"data-ui-opacity": "5",
 					}}
 				>
 					<Container
-						ui={{
-							flow: "horizontal",
-							items: "center",
-							gap: "default",
-							justify: "space-between",
-							width: "full",
-						}}
+						data-ui-flow="horizontal"
+						data-ui-items="center"
+						data-ui-gap="default"
+						data-ui-justify="space-between"
+						data-ui-width="full"
 					>
 						<Tx label={"Notifications (label)"} />
 

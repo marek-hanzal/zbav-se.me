@@ -22,10 +22,8 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView 
 	return (
 		<Container
 			data-ui={"InfoSection"}
-			ui={{
-				layout: "vertical-flex",
-				gap: "default",
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-gap="default"
 		>
 			<Group>
 				<LabelValue
@@ -34,10 +32,8 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView 
 						<CategoryInline
 							_suspense={"I know"}
 							categoryId={listing.category.id}
-							ui={{
-								tone: "secondary",
-								theme: "light",
-							}}
+							data-ui-tone="secondary"
+							data-ui-theme="light"
 						/>
 					}
 				/>

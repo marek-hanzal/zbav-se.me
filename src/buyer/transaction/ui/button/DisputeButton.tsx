@@ -38,9 +38,7 @@ export const DisputeButton: FC<DisputeButton.Props> = ({ close, transaction, ...
 			data-action={"dispute transaction"}
 			iconEnabled={FlagIcon}
 			confirmProps={{
-				ui: {
-					tone: "danger",
-				},
+				"data-ui-tone": "danger",
 				children: <Tx label="Dispute transaction - confirm (button)" />,
 				onClick() {
 					mutation.mutate({

@@ -25,7 +25,6 @@ export const FlagButton = withFallback(
 		confirmProps,
 		onReset,
 		disabled = false,
-		ui,
 		...props
 	}: FlagButton.Props) => {
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
@@ -45,9 +44,7 @@ export const FlagButton = withFallback(
 					data-action={listing.hasFlag ? "unflag listing" : "flag listing"}
 					iconEnabled={FlagIcon}
 					iconProps={{
-						ui: {
-							text: "xl",
-						},
+						"data-ui-text": "xl",
 					}}
 					loading={flagToggleMutation.isPending}
 					disabled={listing.isFavourite || listing.isIgnored || disabled}
@@ -59,10 +56,8 @@ export const FlagButton = withFallback(
 						...buttonProps,
 					}}
 					confirmProps={{
-						ui: {
-							tone: "danger",
-							theme: "light",
-						},
+						"data-ui-tone": "danger",
+						"data-ui-theme": "light",
 						children: <Tx label="Flag listing - confirm (button)" />,
 						...confirmProps,
 						onClick(e) {
@@ -79,15 +74,12 @@ export const FlagButton = withFallback(
 						setIsConfirm(false);
 						onReset?.();
 					}}
-					ui={{
-						tone: listing.hasFlag ? "primary" : "neutral",
-						theme: "light",
-						size: "default",
-						justify: "start",
-						round: undefined,
-						width: "full",
-						...ui,
-					}}
+					data-ui-tone={listing.hasFlag ? "primary" : "neutral"}
+					data-ui-theme="light"
+					data-ui-size="default"
+					data-ui-justify="start"
+					data-ui-round={undefined}
+					data-ui-width="full"
 					{...props}
 				>
 					<Tx
@@ -99,46 +91,45 @@ export const FlagButton = withFallback(
 
 				<Mx
 					label={"Listing ignore (hint)"}
-					ui={
-						isConfirm
-							? {
-									tone: "danger",
-									theme: "light",
-									color: "lead",
-									text: "sm",
-									background: "default",
-									inner: "default",
-									opacity: listing.hasFlag ? "4" : undefined,
-								}
-							: {
-									tone: "neutral",
-									theme: "light",
-									text: "sm",
-									background: "default",
-									inner: "default",
-									opacity: disabled ? "4" : listing.hasFlag ? "4" : undefined,
-								}
-					}
+					{...(isConfirm
+						? {
+								"data-ui-tone": "danger",
+								"data-ui-theme": "light",
+								"data-ui-color": "lead",
+								"data-ui-text": "sm",
+								"data-ui-background": "default",
+								"data-ui-inner": "default",
+								"data-ui-opacity": listing.hasFlag ? "4" : undefined,
+							}
+						: {
+								"data-ui-tone": "neutral",
+								"data-ui-theme": "light",
+								"data-ui-text": "sm",
+								"data-ui-background": "default",
+								"data-ui-inner": "default",
+								"data-ui-opacity": disabled
+									? "4"
+									: listing.hasFlag
+										? "4"
+										: undefined,
+							})}
 				/>
 			</>
 		);
 	},
-	({ ui, ...props }: Omit<FlagButton.Props, "_suspense">) => {
+	({ ...props }: Omit<FlagButton.Props, "_suspense">) => {
 		return (
 			<ConfirmButton
 				disabled
 				loading
-				ui={{
-					tone: "primary",
-					theme: "light",
-					size: "xl",
-					justify: "start",
-					round: undefined,
-					border: false,
-					shadow: false,
-					width: "full",
-					...ui,
-				}}
+				data-ui-tone="primary"
+				data-ui-theme="light"
+				data-ui-size="xl"
+				data-ui-justify="start"
+				data-ui-round={undefined}
+				data-ui-border={false}
+				data-ui-shadow={false}
+				data-ui-width="full"
 				{...props}
 			>
 				<Tx label="Loading... (button)" />

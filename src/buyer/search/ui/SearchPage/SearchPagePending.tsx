@@ -12,7 +12,7 @@ export namespace SearchPagePending {
 	}
 }
 
-export const SearchPagePending: FC<SearchPagePending.Props> = ({ ui, ...props }) => {
+export const SearchPagePending: FC<SearchPagePending.Props> = ({ ...props }) => {
 	const locale = useLocale();
 
 	return (
@@ -27,10 +27,7 @@ export const SearchPagePending: FC<SearchPagePending.Props> = ({ ui, ...props })
 					}}
 				/>
 			}
-			ui={{
-				layout: "vertical-header-content",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
 			right={<HomeMenuButton />}
 			{...props}
 		>

@@ -29,10 +29,8 @@ export const Empty: FC<Empty.Props> = () => {
 						params={{
 							locale,
 						}}
-						ui={{
-							tone: "link",
-							theme: "light",
-						}}
+						data-ui-tone="link"
+						data-ui-theme="light"
 					>
 						<Tx label="Back to home (link)" />
 					</LinkTo>
@@ -45,9 +43,7 @@ export const Empty: FC<Empty.Props> = () => {
 						params={{
 							locale,
 						}}
-						{...uiCtaLinkButton({
-							className: [],
-						})}
+						{...uiCtaLinkButton({})}
 					>
 						<Tx label={"Go to drafts (link)"} />
 					</LinkTo>

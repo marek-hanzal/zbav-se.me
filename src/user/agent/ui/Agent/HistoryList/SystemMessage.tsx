@@ -9,23 +9,18 @@ export namespace SystemMessage {
 	}
 }
 
-export const SystemMessage: FC<SystemMessage.Props> = ({ item, ui, ...props }) => {
+export const SystemMessage: FC<SystemMessage.Props> = ({ item, ...props }) => {
 	return (
 		<Container
 			data-ui={"SystemMessage"}
-			ui={{
-				flow: "vertical",
-				gap: "xs",
-				...ui,
-			}}
+			data-ui-flow="vertical"
+			data-ui-gap="xs"
 			{...props}
 		>
 			<Typo
 				label={item.content}
-				ui={{
-					text: "sm",
-					opacity: "6",
-				}}
+				data-ui-text="sm"
+				data-ui-opacity="6"
 			/>
 		</Container>
 	);

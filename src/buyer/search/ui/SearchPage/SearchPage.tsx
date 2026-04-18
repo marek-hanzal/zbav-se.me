@@ -18,7 +18,7 @@ export namespace SearchPage {
  *
  * @see src/@routes
  */
-export const SearchPage: FC<SearchPage.Props> = ({ feedId, ui, ...props }) => {
+export const SearchPage: FC<SearchPage.Props> = ({ feedId, ...props }) => {
 	const locale = useLocale();
 
 	return (
@@ -33,10 +33,7 @@ export const SearchPage: FC<SearchPage.Props> = ({ feedId, ui, ...props }) => {
 					}}
 				/>
 			}
-			ui={{
-				layout: "vertical-header-content",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
 			right={<HomeMenuButton />}
 			{...props}
 		>

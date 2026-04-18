@@ -13,16 +13,15 @@ export namespace uiCtaLinkButton {
 	}
 }
 
-export const uiCtaLinkButton = ({ ui, className }: uiCtaLinkButton.Props) => {
+export const uiCtaLinkButton = ({ name, className, ...ui }: uiCtaLinkButton.Props) => {
 	return uiButton({
-		ui: {
-			tone: "link",
-			theme: "light",
-			text: "lg",
-			color: "text",
-			inner: "default",
-			...ui,
-		},
+		name,
+		"data-ui-tone": "link",
+		"data-ui-theme": "light",
+		"data-ui-text": "lg",
+		"data-ui-color": "text",
+		"data-ui-inner": "default",
+		...ui,
 		className,
 	});
 };

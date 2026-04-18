@@ -7,16 +7,13 @@ export namespace Group {
 	}
 }
 
-export const Group: FC<Group.Props> = ({ children, ui, className, ...props }) => {
+export const Group: FC<Group.Props> = ({ children, className, ...props }) => {
 	return (
 		<Container
 			data-ui="Group[Container]"
-			ui={{
-				shadow: true,
-				round: "default",
-				width: "full",
-				...ui,
-			}}
+			data-ui-shadow
+			data-ui-round={"default"}
+			data-ui-width={"full"}
 			className={[
 				/**
 				 * Keep class name "Group" here - it's used by styles

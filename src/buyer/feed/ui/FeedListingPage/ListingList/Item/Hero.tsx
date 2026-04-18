@@ -3,20 +3,22 @@ import { Container } from "@/lib/client/container";
 import { Overlay } from "@/lib/client/overlay";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense, StateType } from "@/lib/client/type";
+import { Typo } from "@/lib/client/typo";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
-import { ListingPrice } from "~/common/listing/ui/ListingPrice";
-import { LocationBadge } from "~/common/location/ui/LocationBadge";
 import { HeroImage } from "~/common/ui/img";
+import { Delivery } from "./Delivery";
+import { Distance } from "./Distance";
+import { Price } from "./Price";
 
 export namespace Hero {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		listingId: string;
-		state: StateType.State<boolean>;
+		listingState: StateType.State<boolean>;
 	}
 }
 
-export const Hero: FC<Hero.Props> = ({ listingId, state, ...props }) => {
+export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const hero = useUpload(listing.gallery.items);
 
@@ -24,43 +26,16 @@ export const Hero: FC<Hero.Props> = ({ listingId, state, ...props }) => {
 		<Container
 			data-id={listing.id}
 			data-ui={"Item"}
+			//
+			data-ui-flow={"vertical"}
+			data-ui-height={"full"}
+			data-ui-width={"full"}
+			//
 			data-action={"open listing detail"}
-			ui={{
-				height: "full",
-				width: "full",
-				position: "relative",
-			}}
-			onClick={() => state.set((prev) => !prev)}
+			onClick={() => listingState.set((prev) => !prev)}
 			{...props}
 		>
-			{listing.isIgnored ? (
-				<Overlay
-					ui={{
-						type: "subtle",
-					}}
-				/>
-			) : null}
-
-			<ListingPrice
-				price={listing.price}
-				priceType={listing.priceType}
-				currency={listing.currency}
-				ui={{
-					snapTo: "top-center",
-					opacity: "8",
-					zIndex: true,
-				}}
-			/>
-
-			<LocationBadge
-				location={listing.location}
-				distance={listing.distance}
-				ui={{
-					snapTo: "bottom",
-					opacity: "8",
-					zIndex: true,
-				}}
-			/>
+			{listing.isIgnored ? <Overlay data-ui-type="subtle" /> : null}
 
 			<HeroImage
 				src={hero.url}
@@ -68,6 +43,43 @@ export const Hero: FC<Hero.Props> = ({ listingId, state, ...props }) => {
 				visible
 				invisible={<SpinnerContainer />}
 			/>
+
+			<Container
+				data-ui-flow={"vertical"}
+				data-ui-inner={"sm"}
+			>
+				<Container
+					data-ui-flow="horizontal"
+					data-ui-justify="space-between"
+					data-ui-items="center"
+					data-ui-gap="default"
+				>
+					<Typo
+						label={listing.title}
+						data-ui-tone="neutral"
+						data-ui-theme="light"
+						data-ui-font="semibold"
+						data-ui-color="lead"
+						data-ui-text="default"
+						data-ui-truncate
+					/>
+
+					<Distance distance={listing.distance} />
+				</Container>
+
+				<Container
+					data-ui-flow={"horizontal"}
+					data-ui-justify={"space-between"}
+				>
+					<Price
+						price={listing.price}
+						type={listing.priceType}
+						currency={listing.currency}
+					/>
+
+					<Delivery delivery={listing.delivery} />
+				</Container>
+			</Container>
 		</Container>
 	);
 };

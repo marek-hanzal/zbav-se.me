@@ -10,7 +10,9 @@ import { translator } from "@/lib/common/translator";
 import { Logo } from "~/common/ui/logo";
 
 export namespace WelcomePage {
-	export interface Props extends Container.Props {}
+	export interface Props extends Container.Props {
+		//
+	}
 }
 
 /**
@@ -19,26 +21,21 @@ export namespace WelcomePage {
  *
  * @see src/@routes
  */
-export const WelcomePage: FC<WelcomePage.Props> = ({ ui, ...props }) => {
+export const WelcomePage: FC<WelcomePage.Props> = ({ ...props }) => {
 	const locale = useLocale();
 
 	return (
 		<Container
-			data-ui={"WelcomePage"}
-			ui={{
-				layout: "vertical-centered",
-				height: "full",
-				...ui,
-			}}
+			data-ui="WelcomePage"
+			data-ui-layout="vertical-centered"
+			data-ui-height="full"
 			{...props}
 		>
 			<Status
 				icon={<Logo />}
 				textTitle={translator.text("Welcome (title)")}
 				titleProps={{
-					ui: {
-						text: "md",
-					},
+					"data-ui-text": "md",
 				}}
 				action={
 					<LinkTo
@@ -50,23 +47,18 @@ export const WelcomePage: FC<WelcomePage.Props> = ({ ui, ...props }) => {
 							locale,
 						}}
 						{...uiButton({
-							ui: {
-								tone: "link",
-								theme: "light",
-								text: "md",
-								size: "lg",
-							},
-							className: [],
+							"data-ui-tone": "link",
+							"data-ui-theme": "light",
+							"data-ui-text": "md",
+							"data-ui-size": "lg",
 						})}
 					>
 						<Tx label={"Go home (welcome)"} />
 					</LinkTo>
 				}
-				ui={{
-					tone: "brand",
-					theme: "light",
-					inner: "4xl",
-				}}
+				data-ui-tone="brand"
+				data-ui-theme="light"
+				data-ui-inner="4xl"
 				className={[
 					"text-center",
 				]}

@@ -25,7 +25,6 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	draft,
 	onCancel,
 	onView,
-	ui,
 	defaultUploadIds,
 	...props
 }) => {
@@ -56,21 +55,16 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 			data-ui={"GalleryPatch-[TitleContainer]"}
 			textTitle={translator.text("Listing gallery (title)")}
 			left={<EditAction />}
-			ui={{
-				layout: "vertical-header-content",
-				height: "full",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
+			data-ui-height="full"
 			{...props}
 		>
 			<Container
 				data-ui={"GalleryPatch-[Container]"}
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					gap: "default",
-					inner: "default",
-				}}
+				data-ui-layout="vertical-content-footer"
+				data-ui-height="full"
+				data-ui-gap="default"
+				data-ui-inner="default"
 			>
 				<GalleryUpload
 					state={{

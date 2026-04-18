@@ -10,7 +10,7 @@ export namespace CreateButton {
 	}
 }
 
-export const CreateButton: FC<CreateButton.Props> = ({ ui, className, ...props }) => {
+export const CreateButton: FC<CreateButton.Props> = ({ className, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
@@ -21,28 +21,22 @@ export const CreateButton: FC<CreateButton.Props> = ({ ui, className, ...props }
 				hero={
 					<Icon
 						icon={PlusIcon}
-						ui={{
-							text: "2xl",
-							color: "lead",
-							opacity: "6",
-						}}
+						data-ui-text="2xl"
+						data-ui-color="lead"
+						data-ui-opacity="6"
 					/>
 				}
 				title={
 					<Tx
 						label={"Create new feed (title)"}
-						ui={{
-							font: "bold",
-						}}
+						data-ui-font="bold"
 					/>
 				}
 				bottom={
 					<Tx
 						label={"Create new feed (hint)"}
-						ui={{
-							text: "sm",
-							opacity: "6",
-						}}
+						data-ui-text="sm"
+						data-ui-opacity="6"
 					/>
 				}
 				onClick={() => setIsOpen(true)}

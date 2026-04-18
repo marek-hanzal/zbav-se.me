@@ -10,14 +10,13 @@ export namespace Empty {
 	}
 }
 
-export const Empty: FC<Empty.Props> = ({ ui, ...props }) => {
+export const Empty: FC<Empty.Props> = (props) => {
 	return (
 		<EmptyStatus
 			data-ui="ActivityList[Empty]"
 			icon={NotificationIcon}
 			textTitle={translator.text("Activity empty (title)")}
 			textMessage={translator.text("Activity empty (message)")}
-			ui={ui}
 			{...props}
 		/>
 	);

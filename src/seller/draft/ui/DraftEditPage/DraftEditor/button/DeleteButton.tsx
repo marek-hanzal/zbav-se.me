@@ -19,7 +19,6 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 	draft,
 	buttonProps,
 	confirmProps,
-	ui,
 	className,
 	...props
 }) => {
@@ -43,29 +42,22 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 		<ConfirmButton
 			iconEnabled={TrashIcon}
 			iconProps={{
-				ui: {
-					text: "2xl",
-				},
+				"data-ui-text": "2xl",
 			}}
 			disabled={deleteMutation.isPending}
 			loading={deleteMutation.isPending}
 			buttonProps={{
+				"data-ui-justify": "start",
+				"data-ui-items": "center",
 				...buttonProps,
-				ui: {
-					justify: "start",
-					items: "center",
-					...buttonProps?.ui,
-				},
 			}}
 			confirmProps={{
+				"data-ui-tone": "danger",
+				"data-ui-theme": "light",
+				"data-ui-justify": "start",
+				"data-ui-items": "center",
 				...confirmProps,
-				ui: {
-					tone: "danger",
-					theme: "light",
-					justify: "start",
-					items: "center",
-					...confirmProps?.ui,
-				},
+
 				onClick() {
 					deleteMutation.mutate({
 						where: {
@@ -76,10 +68,7 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 				children: translator.text("Delete draft - confirm (button)"),
 			}}
 			{...uiSaveButton({
-				ui: {
-					tone: "neutral",
-					...ui,
-				},
+				"data-ui-tone": "neutral",
 				className,
 			})}
 			{...props}

@@ -14,12 +14,12 @@ export namespace uiFade {
 	}
 }
 
-export const uiFade = ({ ui, className }: uiFade.Props) => {
+export const uiFade = ({ name = "Fade", className, ...ui }: uiFade.Props) => {
 	return coolUi<uiFade.Ui>({
-		name: "Fade",
+		name,
 		ui: {
-			theme: "light",
-			tone: "primary",
+			"data-ui-theme": "light",
+			"data-ui-tone": "primary",
 			...ui,
 		},
 		className,
