@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
@@ -21,21 +22,35 @@ export const Distance: FC<Distance.Props> = ({ distance, ...props }) => {
 		return (
 			<Tx
 				label={"Behind corner (label)"}
+				data-ui-text="default"
+				data-ui-font="normal"
 				{...props}
 			/>
 		);
 	}
 
 	return (
-		<Typo
-			label={`${toLocaleNumber({
-				locale,
-				number: distance,
-				maximumFractionDigits: 1,
-			})}km`}
-			data-ui-text="sm"
-			data-ui-font="light"
-			{...props}
-		/>
+		<Container
+			data-ui-flow={"horizontal"}
+			data-ui-gap={"xs"}
+			data-ui-items={"center"}
+		>
+			<Typo
+				label={toLocaleNumber({
+					locale,
+					number: distance,
+					maximumFractionDigits: 1,
+				})}
+				data-ui-text="default"
+				data-ui-font="normal"
+				{...props}
+			/>
+
+			<Typo
+				label={"km"}
+				data-ui-text="xs"
+				data-ui-font="light"
+			/>
+		</Container>
 	);
 };

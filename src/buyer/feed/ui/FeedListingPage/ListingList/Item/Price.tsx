@@ -21,7 +21,12 @@ export const Price: FC<Price.Props> = ({ price, currency, type, ...props }) => {
 	const locale = useLocale();
 
 	return (
-		<Container {...props}>
+		<Container
+			data-ui-flow={"horizontal"}
+			data-ui-gap={"default"}
+			data-ui-items={"center"}
+			{...props}
+		>
 			{match(type)
 				.with("open", "closed", () => {
 					if (!price) {

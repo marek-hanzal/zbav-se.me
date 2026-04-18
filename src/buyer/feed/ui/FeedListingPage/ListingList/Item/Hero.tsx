@@ -7,6 +7,7 @@ import { Typo } from "@/lib/client/typo";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { HeroImage } from "~/common/ui/img";
+import { Delivery } from "./Delivery";
 import { Distance } from "./Distance";
 import { Price } from "./Price";
 
@@ -55,21 +56,29 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 				>
 					<Typo
 						label={listing.title}
-						data-ui-tone="brand"
+						data-ui-tone="neutral"
 						data-ui-theme="light"
-						data-ui-font="bold"
+						data-ui-font="semibold"
 						data-ui-color="lead"
-						data-ui-text="sm"
+						data-ui-text="default"
+						data-ui-truncate
 					/>
 
 					<Distance distance={listing.distance} />
 				</Container>
 
-				<Price
-					price={listing.price}
-					type={listing.priceType}
-					currency={listing.currency}
-				/>
+				<Container
+					data-ui-flow={"horizontal"}
+					data-ui-justify={"space-between"}
+				>
+					<Price
+						price={listing.price}
+						type={listing.priceType}
+						currency={listing.currency}
+					/>
+
+					<Delivery delivery={listing.delivery} />
+				</Container>
 			</Container>
 		</Container>
 	);
