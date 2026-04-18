@@ -7,7 +7,7 @@ type GithubHistoryQuery = {
 	weeks: number;
 };
 
-export const withGithubHistoryQuery = withQuery<GithubHistoryQuery, GitHubHistorySchema.Type[]>({
+export const withGithubHistoryQuery = withQuery({
 	logger: getRootLogger([
 		"query",
 		"withGithubHistoryQuery",
@@ -19,7 +19,7 @@ export const withGithubHistoryQuery = withQuery<GithubHistoryQuery, GitHubHistor
 			data,
 		];
 	},
-	async queryFn(data) {
+	async queryFn(data: GithubHistoryQuery): Promise<GitHubHistorySchema.Type[]> {
 		return historyFn({
 			data,
 		});

@@ -4,15 +4,14 @@ import { locationAutocompleteFn } from "~/session/location/fn/locationAutocomple
 import type { LocationAutocompleteSchema } from "~/session/location/server/schema/LocationAutocompleteSchema";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 
-export const withLocationAutocompleteQuery = withQuery<
-	LocationAutocompleteSchema.Type,
-	LocationSchema.Type[],
-	locationAutocompleteFn.Error
->({
+export const withLocationAutocompleteQuery = withQuery({
 	logger: getRootLogger([
 		"query",
 		"withLocationAutocompleteQuery",
 	]),
+	errors: {} as {
+		query: locationAutocompleteFn.Error;
+	},
 	keys(data) {
 		return [
 			"location",
@@ -20,7 +19,7 @@ export const withLocationAutocompleteQuery = withQuery<
 			data,
 		];
 	},
-	async queryFn(data) {
+	async queryFn(data: LocationAutocompleteSchema.Type): Promise<LocationSchema.Type[]> {
 		return locationAutocompleteFn({
 			data,
 		});

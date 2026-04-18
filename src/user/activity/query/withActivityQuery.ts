@@ -11,55 +11,59 @@ import type { ActivityPatchSchema } from "~/user/activity/server/schema/Activity
 import type { ActivityQuerySchema } from "~/user/activity/server/schema/ActivityQuerySchema";
 import type { ActivitySchema } from "~/user/activity/server/schema/ActivitySchema";
 
-export const withActivityQuery = withEntityQuery<
-	ActivitySchema.Type,
-	ActivityQuerySchema.Type,
-	ActivityQuerySchema.Type,
-	ActivityCountQuerySchema.Type,
-	ActivityPatchSchema.Type,
-	never,
-	never,
-	ActivityPatchCollectionSchema.Type
->({
+export const withActivityQuery = withEntityQuery({
 	logger: getRootLogger([
 		"query",
 		"withActivityQuery",
 	]),
-	keys: () => [
-		"activity",
-	],
-	toIdKey: (id) => ({
-		where: {
-			id,
-		},
-	}),
-	async fetchFn(data) {
+	errors: {} as {
+		fetch: activityFetchFn.Error;
+		collection: activityCollectionFn.Error;
+		count: activityCountFn.Error;
+		patch: activityPatchFn.Error;
+		create: Error;
+		delete: Error;
+		patchCollection: activityPatchCollectionFn.Error;
+	},
+	keys() {
+		return [
+			"activity",
+		];
+	},
+	toIdKey(id): ActivityQuerySchema.Type {
+		return {
+			where: {
+				id,
+			},
+		};
+	},
+	async fetchFn(data: ActivityQuerySchema.Type) {
 		return activityFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data) {
+	async collectionFn(data: ActivityQuerySchema.Type) {
 		return activityCollectionFn({
 			data,
 		});
 	},
-	async countFn(data) {
+	async countFn(data: ActivityCountQuerySchema.Type) {
 		return activityCountFn({
 			data,
 		});
 	},
-	async createFn(_data) {
+	async createFn(_data: never): Promise<ActivitySchema.Type> {
 		throw new Error("Activity create is not supported.");
 	},
-	async deleteFn(_data) {
+	async deleteFn(_data: never): Promise<ActivitySchema.Type> {
 		throw new Error("Activity delete is not supported.");
 	},
-	async patchFn(data) {
+	async patchFn(data: ActivityPatchSchema.Type) {
 		return activityPatchFn({
 			data,
 		});
 	},
-	async patchCollectionFn(data) {
+	async patchCollectionFn(data: ActivityPatchCollectionSchema.Type) {
 		return activityPatchCollectionFn({
 			data,
 		});

@@ -12,59 +12,63 @@ import type { DraftPatchSchema } from "~/seller/draft/server/schema/DraftPatchSc
 import type { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 
-export const withDraftQuery = withEntityQuery<
-	DraftSchema.Type,
-	DraftQuerySchema.Type,
-	DraftQuerySchema.Type,
-	DraftCountQuerySchema.Type,
-	DraftPatchSchema.Type,
-	DraftCreateSchema.Type,
-	DraftQuerySchema.Type,
-	never
->({
+export const withDraftQuery = withEntityQuery({
 	logger: getRootLogger([
 		"query",
 		"withDraftQuery",
 	]),
-	keys: () => [
-		"draft",
-	],
-	toIdKey: (id) => ({
-		where: {
-			id,
-		},
-	}),
-	async fetchFn(data) {
+	errors: {} as {
+		fetch: draftFetchFn.Error;
+		collection: draftCollectionFn.Error;
+		count: draftCountFn.Error;
+		patch: draftPatchFn.Error;
+		create: draftCreateFn.Error;
+		delete: draftDeleteFn.Error;
+		patchCollection: Error;
+	},
+	keys() {
+		return [
+			"draft",
+		];
+	},
+	toIdKey(id): DraftQuerySchema.Type {
+		return {
+			where: {
+				id,
+			},
+		};
+	},
+	async fetchFn(data: DraftQuerySchema.Type) {
 		return draftFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data) {
+	async collectionFn(data: DraftQuerySchema.Type) {
 		return draftCollectionFn({
 			data,
 		});
 	},
-	async countFn(data) {
+	async countFn(data: DraftCountQuerySchema.Type) {
 		return draftCountFn({
 			data,
 		});
 	},
-	async createFn(data) {
+	async createFn(data: DraftCreateSchema.Type) {
 		return draftCreateFn({
 			data,
 		});
 	},
-	async deleteFn(data) {
+	async deleteFn(data: DraftQuerySchema.Type) {
 		return draftDeleteFn({
 			data,
 		});
 	},
-	async patchFn(data) {
+	async patchFn(data: DraftPatchSchema.Type) {
 		return draftPatchFn({
 			data,
 		});
 	},
-	async patchCollectionFn(_data) {
+	async patchCollectionFn(_data: never): Promise<DraftSchema.Type[]> {
 		throw new Error("Draft collection patch is not supported.");
 	},
 });

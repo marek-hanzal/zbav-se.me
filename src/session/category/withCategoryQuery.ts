@@ -7,53 +7,57 @@ import type { CategoryCountQuerySchema } from "~/session/category/server/schema/
 import type { CategoryQuerySchema } from "~/session/category/server/schema/CategoryQuerySchema";
 import type { CategorySchema } from "~/session/category/server/schema/CategorySchema";
 
-export const withCategoryQuery = withEntityQuery<
-	CategorySchema.Type,
-	CategoryQuerySchema.Type,
-	CategoryQuerySchema.Type,
-	CategoryCountQuerySchema.Type,
-	never,
-	never,
-	never,
-	never
->({
+export const withCategoryQuery = withEntityQuery({
 	logger: getRootLogger([
 		"query",
 		"withCategoryQuery",
 	]),
-	keys: () => [
-		"category",
-	],
-	toIdKey: (id) => ({
-		where: {
-			id,
-		},
-	}),
-	async fetchFn(data) {
+	errors: {} as {
+		fetch: categoryFetchFn.Error;
+		collection: categoryCollectionFn.Error;
+		count: categoryCountFn.Error;
+		patch: Error;
+		create: Error;
+		delete: Error;
+		patchCollection: Error;
+	},
+	keys() {
+		return [
+			"category",
+		];
+	},
+	toIdKey(id): CategoryQuerySchema.Type {
+		return {
+			where: {
+				id,
+			},
+		};
+	},
+	async fetchFn(data: CategoryQuerySchema.Type) {
 		return categoryFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data) {
+	async collectionFn(data: CategoryQuerySchema.Type) {
 		return categoryCollectionFn({
 			data,
 		});
 	},
-	async countFn(data) {
+	async countFn(data: CategoryCountQuerySchema.Type) {
 		return categoryCountFn({
 			data,
 		});
 	},
-	async createFn(_data) {
+	async createFn(_data: never): Promise<CategorySchema.Type> {
 		throw new Error("Category create is not supported.");
 	},
-	async deleteFn(_data) {
+	async deleteFn(_data: never): Promise<CategorySchema.Type> {
 		throw new Error("Category delete is not supported.");
 	},
-	async patchFn(_data) {
+	async patchFn(_data: never): Promise<CategorySchema.Type> {
 		throw new Error("Category patch is not supported.");
 	},
-	async patchCollectionFn(_data) {
+	async patchCollectionFn(_data: never): Promise<CategorySchema.Type[]> {
 		throw new Error("Category collection patch is not supported.");
 	},
 });

@@ -4,15 +4,14 @@ import { uploadFetchFn } from "~/user/upload/fn/uploadFetchFn";
 import type { UploadQuerySchema } from "~/user/upload/server/schema/UploadQuerySchema";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
-export const withUploadFetchQuery = withQuery<
-	UploadQuerySchema.Type,
-	UploadSchema.Type,
-	uploadFetchFn.Error
->({
+export const withUploadFetchQuery = withQuery({
 	logger: getRootLogger([
 		"query",
 		"withUploadFetchQuery",
 	]),
+	errors: {} as {
+		query: uploadFetchFn.Error;
+	},
 	keys(data) {
 		return [
 			"upload",
@@ -20,7 +19,7 @@ export const withUploadFetchQuery = withQuery<
 			data,
 		];
 	},
-	async queryFn(data) {
+	async queryFn(data: UploadQuerySchema.Type): Promise<UploadSchema.Type> {
 		return uploadFetchFn({
 			data,
 		});

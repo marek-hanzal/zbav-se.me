@@ -4,15 +4,14 @@ import { listingGetSellerInfoFn } from "~/buyer/listing/fn/listingGetSellerInfoF
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 
-export const withListingSellerInfoQuery = withQuery<
-	EntitySchema.Type,
-	SellerInfoSchema.Type,
-	listingGetSellerInfoFn.Error
->({
+export const withListingSellerInfoQuery = withQuery({
 	logger: getRootLogger([
 		"query",
 		"withListingSellerInfoQuery",
 	]),
+	errors: {} as {
+		query: listingGetSellerInfoFn.Error;
+	},
 	keys(variables) {
 		return [
 			"listing",
@@ -20,7 +19,7 @@ export const withListingSellerInfoQuery = withQuery<
 			variables,
 		];
 	},
-	async queryFn(data) {
+	async queryFn(data: EntitySchema.Type): Promise<SellerInfoSchema.Type> {
 		return listingGetSellerInfoFn({
 			data,
 		});

@@ -31,7 +31,7 @@ export const withFeedQuery = withEntityQuery({
 			"feed",
 		];
 	},
-	toIdKey(id) {
+	toIdKey(id): FeedQuerySchema.Type {
 		return {
 			where: {
 				id,

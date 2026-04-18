@@ -14,7 +14,7 @@ export namespace LiveList {
 }
 
 export const LiveList: FC<LiveList.Props> = ({ ...props }) => {
-	const { data: events } = withAgentLiveQuery.useQuery(undefined);
+	const { data: events } = withAgentLiveQuery.useQuery("No input data here, bro");
 	const entries = selectLiveEntries(events);
 
 	return (

@@ -15,14 +15,19 @@ import { cleanOf } from "@/lib/common/clean-of";
 import type { withInvalidator } from "../invalidator/withInvalidator";
 
 export namespace withQuery {
+	export interface Errors {
+		query: Error;
+	}
+
 	/**
 	 * Props for configuring a generic query.
 	 *
 	 * @template TData - Input data type for the query.
 	 * @template TResult - Result type returned by the query function.
 	 */
-	export interface Props<TData, TResult, TError = Error> {
+	export interface Props<TData, TResult, TErrors extends Errors = Errors> {
 		logger: Logger;
+		errors?: TErrors;
 		/**
 		 * Function to generate the query key for React Query.
 		 * @param data - The input data for the query.
@@ -38,11 +43,11 @@ export namespace withQuery {
 		/**
 		 * Default options used for every query-related call.
 		 */
-		defaultOptions?: QueryOptions<TResult, TError>;
+		defaultOptions?: QueryOptions<TResult, TErrors["query"]>;
 	}
 
-	export type PropsEx<TData, TResult, TError = Error> = Omit<
-		Props<TData, TResult, TError>,
+	export type PropsEx<TData, TResult, TErrors extends Errors = Errors> = Omit<
+		Props<TData, TResult, TErrors>,
 		"queryFn" | "keys"
 	>;
 
@@ -90,8 +95,8 @@ export namespace withQuery {
 	 * the application. The implementation is pure TanStack Query, providing full
 	 * compatibility with all TanStack Query features and behaviors.
 	 */
-	export type Api<TData, TResult, TError = Error> = ReturnType<
-		typeof withQuery<TData, TResult, TError>
+	export type Api<TData, TResult, TErrors extends Errors = Errors> = ReturnType<
+		typeof withQuery<TData, TResult, TErrors>
 	>;
 }
 
@@ -105,12 +110,12 @@ export namespace withQuery {
  * @param props - Query configuration and helpers.
  * @returns Query helpers and hooks.
  */
-export function withQuery<TData, TResult, TError = Error>({
+export function withQuery<TData, TResult, TErrors extends withQuery.Errors = withQuery.Errors>({
 	logger,
 	queryFn,
 	keys,
 	defaultOptions,
-}: withQuery.Props<TData, TResult, TError>) {
+}: withQuery.Props<TData, TResult, TErrors>) {
 	/**
 	 * Internal key generator function that cleans and formats query keys.
 	 * @param data - Optional input data for the query.
@@ -126,10 +131,10 @@ export function withQuery<TData, TResult, TError = Error>({
 	 * @param opts - Optional query options to pass to queryOptions.
 	 * @returns Query options object compatible with TanStack Query.
 	 */
-	const options = (data: TData, opts?: withQuery.QueryOptions<TResult, TError>) => {
+	const options = (data: TData, opts?: withQuery.QueryOptions<TResult, TErrors["query"]>) => {
 		const queryKey = $keys(data);
 
-		return queryOptions<TResult, TError, TResult, QueryKey>({
+		return queryOptions<TResult, TErrors["query"], TResult, QueryKey>({
 			queryKey,
 			queryFn: () => queryFn(data),
 			...defaultOptions,
@@ -158,8 +163,8 @@ export function withQuery<TData, TResult, TError = Error>({
 
 	const useSuspenseQuery$ = (
 		data: TData,
-		opts?: withQuery.QueryOptions<TResult, TError>,
-	): UseSuspenseQueryResult<TResult, TError> => {
+		opts?: withQuery.QueryOptions<TResult, TErrors["query"]>,
+	): UseSuspenseQueryResult<TResult, TErrors["query"]> => {
 		return useSuspenseQuery(options(data, opts));
 	};
 
@@ -185,8 +190,8 @@ export function withQuery<TData, TResult, TError = Error>({
 		 */
 		useQuery(
 			data: TData,
-			opts?: withQuery.QueryOptions<TResult, TError>,
-		): UseQueryResult<TResult, TError> {
+			opts?: withQuery.QueryOptions<TResult, TErrors["query"]>,
+		): UseQueryResult<TResult, TErrors["query"]> {
 			return useQuery(options(data, opts));
 		},
 		/**
@@ -256,7 +261,7 @@ export function withQuery<TData, TResult, TError = Error>({
 		async prefetch(
 			queryClient: QueryClient,
 			data: TData,
-			opts?: withQuery.QueryOptions<TResult, TError>,
+			opts?: withQuery.QueryOptions<TResult, TErrors["query"]>,
 		) {
 			await queryClient.prefetchQuery(options(data, opts));
 		},
@@ -270,7 +275,7 @@ export function withQuery<TData, TResult, TError = Error>({
 		async ensure(
 			queryClient: QueryClient,
 			data: TData,
-			opts?: withQuery.QueryOptions<TResult, TError>,
+			opts?: withQuery.QueryOptions<TResult, TErrors["query"]>,
 		) {
 			return queryClient.ensureQueryData(options(data, opts));
 		},
