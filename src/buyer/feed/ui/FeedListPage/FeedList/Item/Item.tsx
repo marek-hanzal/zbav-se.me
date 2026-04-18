@@ -32,11 +32,8 @@ export const Item = withFallback(
 			<Container
 				data-ui={"Item[Container]"}
 				data-id={feed.id}
-				ui={{
-					position: "relative",
-					width: "full",
-					...ui,
-				}}
+				data-ui-position="relative"
+				data-ui-width="full"
 				{...props}
 			>
 				<LinkTo
@@ -47,26 +44,22 @@ export const Item = withFallback(
 						locale,
 						id: feedId,
 					}}
-					ui={{
-						display: "block",
-						height: "full",
-					}}
+					data-ui-display="block"
+					data-ui-height="full"
 				>
 					<ListItem
 						hero={feed.upload}
 						title={
 							<Tx
 								label={feed.name}
-								ui={{
-									tone: "neutral",
-									theme: "light",
-									color: "lead",
-									font: "semibold",
-									display: "block",
-									width: "full",
-									text: "sm",
-									truncate: true,
-								}}
+								data-ui-tone="neutral"
+								data-ui-theme="light"
+								data-ui-color="lead"
+								data-ui-font="semibold"
+								data-ui-display="block"
+								data-ui-width="full"
+								data-ui-text="sm"
+								data-ui-truncate
 								className={[
 									"block",
 									"w-full",
@@ -85,12 +78,10 @@ export const Item = withFallback(
 										/>
 									</Suspense>
 								}
-								ui={{
-									tone: "neutral",
-									theme: "light",
-									color: "lead",
-									text: "xs",
-								}}
+								data-ui-tone="neutral"
+								data-ui-theme="light"
+								data-ui-color="lead"
+								data-ui-text="xs"
 							/>
 						}
 					/>
@@ -104,21 +95,19 @@ export const Item = withFallback(
 						"data-ui-text": "lg",
 					}}
 					onClick={() => setIsEditor((prev) => !prev)}
-					ui={{
-						tone: "secondary",
-						theme: "light",
-						background: "default",
-						border: true,
-						shadow: true,
-						size: "sm",
-						snapTo: "bottom-left",
-						items: "center",
-						justify: "center",
-						color: "lead",
-						round: "full",
-						square: "sm",
-						opacity: "8",
-					}}
+					data-ui-tone="secondary"
+					data-ui-theme="light"
+					data-ui-background="default"
+					data-ui-border
+					data-ui-shadow
+					data-ui-size="sm"
+					data-ui-snap-to="bottom-left"
+					data-ui-items="center"
+					data-ui-justify="center"
+					data-ui-color="lead"
+					data-ui-round="full"
+					data-ui-square="sm"
+					data-ui-opacity="8"
 				/>
 
 				<FeedEditorSheet

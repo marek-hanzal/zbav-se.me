@@ -21,9 +21,6 @@ export const Distance: FC<Distance.Props> = ({ distance, ...props }) => {
 		return (
 			<Tx
 				label={"Behind corner (label)"}
-				ui={{
-					...ui,
-				}}
 				{...props}
 			/>
 		);
@@ -36,11 +33,8 @@ export const Distance: FC<Distance.Props> = ({ distance, ...props }) => {
 				number: distance,
 				maximumFractionDigits: 1,
 			})}km`}
-			ui={{
-				text: "sm",
-				font: "light",
-				...ui,
-			}}
+			data-ui-text="sm"
+			data-ui-font="light"
 			{...props}
 		/>
 	);

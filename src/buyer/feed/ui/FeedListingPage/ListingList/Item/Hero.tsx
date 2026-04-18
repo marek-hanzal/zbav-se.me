@@ -34,13 +34,7 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 			onClick={() => listingState.set((prev) => !prev)}
 			{...props}
 		>
-			{listing.isIgnored ? (
-				<Overlay
-					ui={{
-						type: "subtle",
-					}}
-				/>
-			) : null}
+			{listing.isIgnored ? <Overlay data-ui-type="subtle" /> : null}
 
 			<HeroImage
 				src={hero.url}
@@ -54,22 +48,18 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 				data-ui-inner={"sm"}
 			>
 				<Container
-					ui={{
-						flow: "horizontal",
-						justify: "space-between",
-						items: "center",
-						gap: "default",
-					}}
+					data-ui-flow="horizontal"
+					data-ui-justify="space-between"
+					data-ui-items="center"
+					data-ui-gap="default"
 				>
 					<Typo
 						label={listing.title}
-						ui={{
-							tone: "brand",
-							theme: "light",
-							font: "bold",
-							color: "lead",
-							text: "sm",
-						}}
+						data-ui-tone="brand"
+						data-ui-theme="light"
+						data-ui-font="bold"
+						data-ui-color="lead"
+						data-ui-text="sm"
 					/>
 
 					<Distance distance={listing.distance} />
@@ -79,14 +69,12 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 					price={listing.price}
 					priceType={listing.priceType}
 					currency={listing.currency}
-					ui={{
-						tone: "neutral",
-						flow: "horizontal",
-						background: undefined,
-						shadow: false,
-						border: false,
-						opacity: "8",
-					}}
+					data-ui-tone="neutral"
+					data-ui-flow="horizontal"
+					data-ui-background={undefined}
+					data-ui-shadow={false}
+					data-ui-border={false}
+					data-ui-opacity="8"
 				/>
 			</Container>
 		</Container>

@@ -21,13 +21,11 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 	return (
 		<Container
 			data-ui={"EmptyListing"}
-			ui={{
-				layout: "vertical-centered",
-				height: "full",
-				tone: "brand",
-				theme: "light",
-				inner: "4xl",
-			}}
+			data-ui-layout="vertical-centered"
+			data-ui-height="full"
+			data-ui-tone="brand"
+			data-ui-theme="light"
+			data-ui-inner="4xl"
 			{...props}
 		>
 			<Status

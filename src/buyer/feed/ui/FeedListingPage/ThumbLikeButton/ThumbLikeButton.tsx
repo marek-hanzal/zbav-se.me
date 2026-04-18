@@ -48,13 +48,10 @@ export const ThumbLikeButton = withFallback(
 						meta,
 					});
 				}}
-				ui={{
-					tone: isLiked ? "secondary" : "neutral",
-					theme: "light",
-					size: "default",
-					justify: "start",
-					...ui,
-				}}
+				data-ui-tone={isLiked ? "secondary" : "neutral"}
+				data-ui-theme="light"
+				data-ui-size="default"
+				data-ui-justify="start"
 				{...props}
 			/>
 		);
@@ -64,13 +61,10 @@ export const ThumbLikeButton = withFallback(
 			<Button
 				disabled
 				loading
-				ui={{
-					tone: "secondary",
-					theme: "light",
-					size: "default",
-					justify: "start",
-					...ui,
-				}}
+				data-ui-tone="secondary"
+				data-ui-theme="light"
+				data-ui-size="default"
+				data-ui-justify="start"
 				{...props}
 			>
 				<Tx label="Loading... (button)" />

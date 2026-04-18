@@ -90,13 +90,10 @@ export const TransactionButton: FC<TransactionButton.Props> = ({ listing, meta, 
 					listingId: listing.id,
 				});
 			}}
-			ui={{
-				tone: "secondary",
-				theme: "light",
-				size: "default",
-				text: "lg",
-				...ui,
-			}}
+			data-ui-tone="secondary"
+			data-ui-theme="light"
+			data-ui-size="default"
+			data-ui-text="lg"
 			{...props}
 		>
 			<Tx label="Create transaction (button)" />
