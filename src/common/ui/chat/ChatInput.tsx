@@ -76,7 +76,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 		if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
 			e.preventDefault();
 
-			if (ui?.disabled) {
+			if (props["data-ui-disabled"]) {
 				return;
 			}
 
@@ -107,7 +107,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				id={areaId}
 				rows={1}
 				value={message}
-				disabled={ui?.disabled || loading}
+				disabled={props["data-ui-disabled"] || loading}
 				onChange={(e) => setMessage(e.target.value)}
 				onKeyDown={handleKeyDown}
 				placeholder={placeholder}
