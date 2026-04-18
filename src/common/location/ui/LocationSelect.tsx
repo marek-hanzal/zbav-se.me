@@ -43,12 +43,9 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 	return (
 		<Container
 			data-ui="LocationSelect[Container]"
-			ui={{
-				layout: "vertical-header-content",
-				height: "full",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-header-content"
+			data-ui-height="full"
+			data-ui-gap="default"
 			{...props}
 		>
 			<Fulltext

@@ -46,7 +46,6 @@ export const ListContainer = withFallback(
 				<Default
 					textHint={textHint}
 					warningStatusProps={warningStatusProps}
-					ui={ui}
 				/>
 			);
 		}
@@ -58,24 +57,19 @@ export const ListContainer = withFallback(
 		});
 
 		if (data.length === 0) {
-			return <Empty ui={ui} />;
+			return <Empty />;
 		}
 
 		return (
 			<Container
 				data-ui="ListContainer"
-				ui={{
-					scroll: "vertical",
-					height: "full",
-					...ui,
-				}}
+				data-ui-scroll="vertical"
+				data-ui-height="full"
 				{...props}
 			>
 				<Container
-					ui={{
-						layout: "vertical-flex",
-						gap: "default",
-					}}
+					data-ui-layout="vertical-flex"
+					data-ui-gap="default"
 				>
 					{data.map((item) => {
 						return (

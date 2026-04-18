@@ -34,23 +34,18 @@ export const LocationBadge: FC<LocationBadge.Props> = ({
 				"flex flex-col h-fit py-2 gap-0",
 				className,
 			]}
-			ui={{
-				tone: "secondary",
-				theme: "light",
-				size: "md",
-				color: "lead",
-				font: "semibold",
-				...ui,
-			}}
+			data-ui-tone="secondary"
+			data-ui-theme="light"
+			data-ui-size="md"
+			data-ui-color="lead"
+			data-ui-font="semibold"
 			{...props}
 		>
 			<Container
-				ui={{
-					flow: "horizontal",
-					items: "center",
-					justify: "space-between",
-					gap: "default",
-				}}
+				data-ui-flow="horizontal"
+				data-ui-items="center"
+				data-ui-justify="space-between"
+				data-ui-gap="default"
 			>
 				<Container>{location.address}</Container>
 				{distance ? (

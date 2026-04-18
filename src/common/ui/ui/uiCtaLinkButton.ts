@@ -15,14 +15,12 @@ export namespace uiCtaLinkButton {
 
 export const uiCtaLinkButton = ({ className, ...ui }: uiCtaLinkButton.Props) => {
 	return uiButton({
-		ui: {
-			tone: "link",
-			theme: "light",
-			text: "lg",
-			color: "text",
-			inner: "default",
-			...ui,
-		},
+		"data-ui-tone": "link",
+		"data-ui-theme": "light",
+		"data-ui-text": "lg",
+		"data-ui-color": "text",
+		"data-ui-inner": "default",
+		...ui,
 		className,
 	});
 };

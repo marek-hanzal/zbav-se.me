@@ -112,12 +112,9 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	return (
 		<Container
 			{...uiContainer({
-				ui: {
-					height: "full",
-					width: "full",
-					position: "relative",
-					...ui,
-				},
+				"data-ui-height": "full",
+				"data-ui-width": "full",
+				"data-ui-position": "relative",
 				className: [
 					"overflow-hidden",
 					className,
@@ -162,12 +159,10 @@ export const HeroImage: FC<HeroImage.Props> = ({
 
 			{status === "loading" ? (
 				<Container
-					ui={{
-						height: "full",
-						width: "full",
-						position: "absolute",
-						layout: "vertical-centered",
-					}}
+					data-ui-height="full"
+					data-ui-width="full"
+					data-ui-position="absolute"
+					data-ui-layout="vertical-centered"
 					className={"inset-0"}
 					data-ui={"HeroImage-[LoadingOverlay]"}
 				>
@@ -177,14 +172,12 @@ export const HeroImage: FC<HeroImage.Props> = ({
 
 			{status === "error" ? (
 				<Container
-					ui={{
-						layout: "vertical-centered",
-						tone: "primary",
-						theme: "light",
-						height: "full",
-						width: "full",
-						position: "absolute",
-					}}
+					data-ui-layout="vertical-centered"
+					data-ui-tone="primary"
+					data-ui-theme="light"
+					data-ui-height="full"
+					data-ui-width="full"
+					data-ui-position="absolute"
 					className={"inset-0"}
 					data-ui={"HeroImage-[ErrorOverlay]"}
 				>

@@ -26,11 +26,8 @@ export const Item: FC<Item.Props> = ({ priceType, selection }) => {
 			}}
 			{...uiSelectButton({
 				isSelected,
-				ui: {
-					flow: "horizontal",
-					justify: "start",
-				},
-				className: [],
+				"data-ui-flow": "horizontal",
+				"data-ui-justify": "start",
 			})}
 			data-ui={`PriceTypeSelect-[Button.${priceType}]`}
 		>

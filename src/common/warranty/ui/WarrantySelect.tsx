@@ -23,13 +23,10 @@ export const WarrantySelect: FC<WarrantySelect.Props> = ({ selection, ...props }
 	return (
 		<Container
 			data-ui="WarrantySelect[Container]"
-			ui={{
-				layout: "vertical-flex",
-				height: "auto",
-				width: "full",
-				gap: "lg",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-height="auto"
+			data-ui-width="full"
+			data-ui-gap="lg"
 			{...props}
 		>
 			{Object.values(ListingWarrantyEnumSchema.enum).map((warranty) => {
@@ -46,11 +43,8 @@ export const WarrantySelect: FC<WarrantySelect.Props> = ({ selection, ...props }
 						}}
 						{...uiSelectButton({
 							isSelected,
-							ui: {
-								flow: "horizontal",
-								justify: "start",
-							},
-							className: [],
+							"data-ui-flow": "horizontal",
+							"data-ui-justify": "start",
 						})}
 						data-ui={`WarrantySelect-[Button.${warranty}]`}
 					>

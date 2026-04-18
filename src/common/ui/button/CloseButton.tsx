@@ -13,14 +13,10 @@ export const CloseButton: FC<CloseButton.Props> = ({ className, ...props }) => {
 	return (
 		<Button
 			iconEnabled={CloseDrawerIcon}
-			onClick={close}
 			{...uiBackButton({
-				ui: {
-					background: undefined,
-					shadow: false,
-					border: false,
-					...ui,
-				},
+				"data-ui-background": undefined,
+				"data-ui-shadow": false,
+				"data-ui-border": false,
 				className,
 			})}
 			{...props}

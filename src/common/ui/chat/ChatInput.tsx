@@ -91,13 +91,10 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	return (
 		<Container
 			data-ui={"ChatInput"}
-			ui={{
-				layout: "horizontal-flex",
-				items: "center",
-				justify: "center",
-				gap: "md",
-				...ui,
-			}}
+			data-ui-layout="horizontal-flex"
+			data-ui-items="center"
+			data-ui-justify="center"
+			data-ui-gap="md"
 			{...props}
 		>
 			{left}
@@ -115,9 +112,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				onKeyDown={handleKeyDown}
 				placeholder={placeholder}
 				{...uiInput({
-					ui: {
-						round: "default",
-					},
+					"data-ui-round": "default",
 					className: [
 						"resize-none",
 						"outline-none",
@@ -136,9 +131,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 					data-action={"send chat text message"}
 					iconEnabled={SendMessageIcon}
 					iconProps={{
-						ui: {
-							text: "2xl",
-						},
+						"data-ui-text": "2xl",
 					}}
 					disabled={loading || message.length === 0}
 					loading={loading}
@@ -146,17 +139,15 @@ export const ChatInput: FC<ChatInput.Props> = ({
 						onSubmit(message);
 						setMessage("");
 					}}
-					ui={{
-						justify: "center",
-						items: "center",
-						tone: "brand",
-						theme: "light",
-						square: "default",
-						background: undefined,
-						border: false,
-						shadow: false,
-						color: "lead",
-					}}
+					data-ui-justify="center"
+					data-ui-items="center"
+					data-ui-tone="brand"
+					data-ui-theme="light"
+					data-ui-square="default"
+					data-ui-background={undefined}
+					data-ui-border={false}
+					data-ui-shadow={false}
+					data-ui-color="lead"
 				/>
 			)}
 		</Container>

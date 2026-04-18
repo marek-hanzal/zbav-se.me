@@ -21,14 +21,11 @@ export const TypoIcon: FC<TypoIcon.Props> = ({
 }) => {
 	return (
 		<Container
-			ui={{
-				flow: "horizontal",
-				items: "center",
-				justify: "space-between",
-				gap: "sm",
-				width: "full",
-				...ui,
-			}}
+			data-ui-flow="horizontal"
+			data-ui-items="center"
+			data-ui-justify="space-between"
+			data-ui-gap="sm"
+			data-ui-width="full"
 			className={tvc([
 				flip && "flex-row-reverse",
 				className,

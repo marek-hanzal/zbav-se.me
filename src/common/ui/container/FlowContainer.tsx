@@ -20,20 +20,15 @@ export const FlowContainer: FC<FlowContainer.Props> = ({ left, right, children, 
 	return (
 		<Container
 			data-ui={"FlowContainer[Container]"}
-			ui={{
-				position: "relative",
-				height: "full",
-				width: "full",
-				...ui,
-			}}
+			data-ui-position="relative"
+			data-ui-height="full"
+			data-ui-width="full"
 			{...props}
 		>
 			{left ? (
 				<Container
-					ui={{
-						snapTo: "top-left",
-						zIndex: true,
-					}}
+					data-ui-snap-to="top-left"
+					data-ui-z-index
 					className={"z-200"}
 				>
 					{left}
@@ -42,10 +37,8 @@ export const FlowContainer: FC<FlowContainer.Props> = ({ left, right, children, 
 
 			{right ? (
 				<Container
-					ui={{
-						snapTo: "top-right",
-						zIndex: true,
-					}}
+					data-ui-snap-to="top-right"
+					data-ui-z-index
 					className={"z-200"}
 				>
 					{right}

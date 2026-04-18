@@ -17,9 +17,7 @@ export namespace uiToolbarContainer {
 export const uiToolbarContainer = ({ className, ...ui }: uiToolbarContainer.Props) => {
 	return coolUi<uiToolbarContainer.Ui>({
 		name: "ToolbarContainer",
-		ui: {
-			...ui,
-		},
+		ui,
 		className: [
 			"Container",
 			className,

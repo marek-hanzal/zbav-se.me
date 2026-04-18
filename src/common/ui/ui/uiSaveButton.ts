@@ -15,16 +15,14 @@ export namespace uiSaveButton {
 
 export const uiSaveButton = ({ className, ...ui }: uiSaveButton.Props) => {
 	return uiButton({
-		ui: {
-			tone: "secondary",
-			theme: "light",
-			inner: "md",
-			text: "lg",
-			justify: "center",
-			items: "center",
-			width: "full",
-			...ui,
-		},
+		"data-ui-tone": "secondary",
+		"data-ui-theme": "light",
+		"data-ui-inner": "md",
+		"data-ui-text": "lg",
+		"data-ui-justify": "center",
+		"data-ui-items": "center",
+		"data-ui-width": "full",
+		...ui,
 		className,
 	});
 };

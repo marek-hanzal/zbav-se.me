@@ -14,25 +14,20 @@ export namespace uiMenuButton {
 
 export const uiMenuButton = ({ className, ...ui }: uiMenuButton.Props) => {
 	return uiButton({
-		ui: {
-			flow: "horizontal",
-			tone: "neutral",
-			theme: "light",
-			width: "full",
-			//
-			items: "center",
-			justify: "start",
-			//
-			background: "default",
-			border: false,
-			//
-			color: "lead",
-			text: "lg",
-			size: "md",
-			shadow: false,
-			round: undefined,
-			...ui,
-		},
+		"data-ui-flow": "horizontal",
+		"data-ui-tone": "neutral",
+		"data-ui-theme": "light",
+		"data-ui-width": "full",
+		"data-ui-items": "center",
+		"data-ui-justify": "start",
+		"data-ui-background": "default",
+		"data-ui-border": false,
+		"data-ui-color": "lead",
+		"data-ui-text": "lg",
+		"data-ui-size": "md",
+		"data-ui-shadow": false,
+		"data-ui-round": undefined,
+		...ui,
 		className: [
 			"tone-neutral-light-bg",
 			className,

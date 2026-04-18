@@ -21,13 +21,10 @@ export const PriceTypeSelect: FC<PriceTypeSelect.Props> = ({ selection, ...props
 	return (
 		<Container
 			data-ui="PriceTypeSelect[Container]"
-			ui={{
-				layout: "vertical-flex",
-				height: "auto",
-				width: "full",
-				gap: "lg",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-height="auto"
+			data-ui-width="full"
+			data-ui-gap="lg"
 			{...props}
 		>
 			{Object.values(ListingPriceEnumSchema.enum).map((priceType) => {

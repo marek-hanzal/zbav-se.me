@@ -25,11 +25,9 @@ export const Item: FC<Item.Props> = ({ restriction, selection }) => {
 			}}
 			{...uiSelectButton({
 				isSelected,
-				ui: {
-					flow: "vertical",
-					items: "start",
-					gap: "xs",
-				},
+				"data-ui-flow": "vertical",
+				"data-ui-items": "start",
+				"data-ui-gap": "xs",
 				className: [
 					"text-left",
 					"shrink-0",
@@ -41,10 +39,8 @@ export const Item: FC<Item.Props> = ({ restriction, selection }) => {
 
 			<Tx
 				label={`Listing restriction - ${restriction} (hint)`}
-				ui={{
-					text: "sm",
-					color: "icon",
-				}}
+				data-ui-text="sm"
+				data-ui-color="icon"
 			/>
 		</Button>
 	);

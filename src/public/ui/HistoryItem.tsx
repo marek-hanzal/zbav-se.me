@@ -53,10 +53,8 @@ export const HistoryItem: FC<HistoryItem.Props> = ({
 	return (
 		<Container
 			title={`${item.date}: ${item.count}`}
-			ui={{
-				square: "md",
-				round: "default",
-			}}
+			data-ui-square="md"
+			data-ui-round="default"
 			className={[
 				"flex items-center justify-center",
 				"border",
@@ -67,11 +65,9 @@ export const HistoryItem: FC<HistoryItem.Props> = ({
 		>
 			<Typo
 				label={item.count > 0 ? item.count : "-"}
-				ui={{
-					text: "sm",
-					opacity: "6",
-					font: "bold",
-				}}
+				data-ui-text="sm"
+				data-ui-opacity="6"
+				data-ui-font="bold"
 			/>
 		</Container>
 	);

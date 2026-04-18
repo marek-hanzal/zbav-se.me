@@ -69,19 +69,16 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	return (
 		<Container
 			data-ui={"PhotoUpload[Container]"}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				round: "default",
-				background: "default",
-				border: true,
-				shadow: true,
-				position: "relative",
-				disabled: controller.isPending ?? undefined,
-				width: "full",
-				height: "full",
-				...ui,
-			}}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-round="default"
+			data-ui-background="default"
+			data-ui-border
+			data-ui-shadow
+			data-ui-position="relative"
+			data-ui-disabled={controller.isPending ?? undefined}
+			data-ui-width="full"
+			data-ui-height="full"
 			onClick={controller.pick}
 			onKeyDown={controller.onKeyDown}
 			{...props}

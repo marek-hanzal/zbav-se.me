@@ -16,20 +16,15 @@ export const Item: FC<Item.Props> = ({ icon, ...props }) => {
 			data-ui={"Item[Button]"}
 			iconEnabled={icon}
 			iconProps={{
-				ui: {
-					text: "2xl",
-				},
+				"data-ui-text": "2xl",
 			}}
-			ui={{
-				tone: "subtle",
-				theme: "light",
-				size: "xl",
-				items: "center",
-				justify: "center",
-				height: "full",
-				width: "full",
-				...ui,
-			}}
+			data-ui-tone="subtle"
+			data-ui-theme="light"
+			data-ui-size="xl"
+			data-ui-items="center"
+			data-ui-justify="center"
+			data-ui-height="full"
+			data-ui-width="full"
 			{...props}
 		/>
 	);

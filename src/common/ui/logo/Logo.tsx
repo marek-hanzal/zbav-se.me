@@ -14,38 +14,31 @@ export const Logo: FC<Logo.Props> = ({ logo = false, ...props }) => {
 			className={[
 				"font-limelight",
 			]}
-			ui={{
-				layout: "vertical-flex",
-				items: "center",
-				justify: "center",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-items="center"
+			data-ui-justify="center"
 			{...props}
 		>
 			<Tx
 				data-ui="Logo-[Tx.primary]"
 				label={"zbav-se.me"}
-				ui={{
-					tone: "brand",
-					theme: "light",
-					text: "2xl",
-					display: "block",
-					color: "lead",
-				}}
+				data-ui-tone="brand"
+				data-ui-theme="light"
+				data-ui-text="2xl"
+				data-ui-display="block"
+				data-ui-color="lead"
 			/>
 
 			{logo === true ? null : (
 				<Tx
 					data-ui="Logo-[Tx.motto]"
 					label="Logo motto (label)"
-					ui={{
-						tone: "secondary",
-						theme: "light",
-						text: "lg",
-						display: "block",
-						color: "lead",
-						position: "relative",
-					}}
+					data-ui-tone="secondary"
+					data-ui-theme="light"
+					data-ui-text="lg"
+					data-ui-display="block"
+					data-ui-color="lead"
+					data-ui-position="relative"
 					className={[
 						"-rotate-3",
 						"-top-2",

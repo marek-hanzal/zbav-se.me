@@ -20,10 +20,7 @@ export const RatingIcon: FC<RatingIcon.Props> = ({ rating, ...props }) => {
 	return (
 		<Icon
 			icon={RatingToIcon[value as RatingToIcon.Value]}
-			ui={{
-				text: "2xl",
-				...ui,
-			}}
+			data-ui-text="2xl"
 			{...props}
 		/>
 	);

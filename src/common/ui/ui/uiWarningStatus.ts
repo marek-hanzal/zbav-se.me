@@ -15,14 +15,12 @@ export namespace uiWarningStatus {
 
 export const uiWarningStatus = ({ className, ...ui }: uiWarningStatus.Props) => {
 	return uiStatus({
-		ui: {
-			tone: "brand",
-			theme: "light",
-			color: "lead",
-			text: "4xl",
-			inner: "4xl",
-			...ui,
-		},
+		"data-ui-tone": "brand",
+		"data-ui-theme": "light",
+		"data-ui-color": "lead",
+		"data-ui-text": "4xl",
+		"data-ui-inner": "4xl",
+		...ui,
 		className: [
 			"text-center",
 			className,
