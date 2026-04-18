@@ -49,11 +49,11 @@ export namespace ui {
 		/**
 		 * Optional additional CSS classes to merge with the base `ui` class
 		 */
-		className: tvc.ClassName;
+		className?: tvc.ClassName;
 	}
 
 	export type PropsEx<TProps extends object> = Data<TProps, keyof TProps> & {
-		className: tvc.ClassName;
+		className?: tvc.ClassName;
 	};
 }
 

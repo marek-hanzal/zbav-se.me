@@ -20,13 +20,9 @@ export const ListItemPending: FC<ListItemPending.Props> = (props) => {
 			<SpinnerContainer
 				type={"icon"}
 				iconProps={{
-					ui: {
-						text: "xl",
-					},
+					"data-ui-text": "xl",
 				}}
-				ui={{
-					snapTo: "middle",
-				}}
+				data-ui-snap-to="middle"
 			/>
 		</ListItem>
 	);

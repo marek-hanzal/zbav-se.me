@@ -34,13 +34,10 @@ export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads>({
 			<Button
 				iconEnabled={PhotoIcon}
 				onClick={() => state.set((prev) => !prev)}
-				ui={{
-					tone: "primary",
-					theme: "light",
-					size: "xl",
-					justify: "start",
-					...ui,
-				}}
+				data-ui-tone="primary"
+				data-ui-theme="light"
+				data-ui-size="xl"
+				data-ui-justify="start"
 				{...props}
 			>
 				<Tx label="Upload photos (button)" />
