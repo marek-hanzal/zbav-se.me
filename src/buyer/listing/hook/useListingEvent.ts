@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { useVisible } from "@/lib/client/visibility";
 import { withListingEventCreateMutation } from "~/buyer/listing-event/mutation/withListingEventCreateMutation";
 import type { ListingEventEnumSchema } from "~/common/listing/enum/ListingEventEnumSchema";
+import { useLogger } from "~/common/log/hook/useLogger";
 
 export namespace useListingEvent {
 	export interface Props {
@@ -21,15 +22,28 @@ export const useListingEvent = ({
 	event,
 	timeoutMs,
 }: useListingEvent.Props) => {
+	const logger = useLogger({
+		name: [
+			"hook",
+			"useListingEvent",
+		],
+	});
 	const useStore = useVisible();
 	const visible = useStore((state) => state.getById(listingId)?.visible ?? false);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
 	const listingEventCreateMutation = withListingEventCreateMutation.useMutation({
 		retry(_, error) {
+			logger.trace("Retry", {
+				visible,
+				error,
+			});
 			return visible && error.type !== "error";
 		},
 		retryDelay(count) {
+			logger.trace("Retrying", {
+				count,
+			});
 			if (count >= 3) {
 				return 0;
 			}
@@ -59,6 +73,11 @@ export const useListingEvent = ({
 
 		if (visible) {
 			timerRef.current = setTimeout(() => {
+				logger.trace("Scheduling event", {
+					listingId,
+					event,
+					timeoutMs,
+				});
 				create(listingId, event);
 			}, timeoutMs);
 		}
