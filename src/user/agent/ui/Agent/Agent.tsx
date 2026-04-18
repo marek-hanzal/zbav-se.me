@@ -29,13 +29,10 @@ export const Agent: FC<Agent.Props> = ({ ...props }) => {
 	return (
 		<Container
 			data-ui={"Agent"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				width: "full",
-				gap: "xs",
-				...ui,
-			}}
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-width="full"
+			data-ui-gap="xs"
 			{...props}
 		>
 			<EmptyState
@@ -47,14 +44,12 @@ export const Agent: FC<Agent.Props> = ({ ...props }) => {
 						render() {
 							return (
 								<Container
-									ui={{
-										tone: "brand",
-										theme: "light",
-										layout: "vertical-centered",
-										height: "full",
-										width: "full",
-										inner: "4xl",
-									}}
+									data-ui-tone="brand"
+									data-ui-theme="light"
+									data-ui-layout="vertical-centered"
+									data-ui-height="full"
+									data-ui-width="full"
+									data-ui-inner="4xl"
 									className={[
 										"text-center",
 									]}
@@ -72,12 +67,10 @@ export const Agent: FC<Agent.Props> = ({ ...props }) => {
 			>
 				<Container
 					ref={containerRef}
-					ui={{
-						layout: "vertical-flex",
-						gap: "default",
-						scroll: "vertical",
-						height: "full",
-					}}
+					data-ui-layout="vertical-flex"
+					data-ui-gap="default"
+					data-ui-scroll="vertical"
+					data-ui-height="full"
 				>
 					<AgentMessageList
 						containerRef={containerRef}
@@ -87,10 +80,8 @@ export const Agent: FC<Agent.Props> = ({ ...props }) => {
 			</EmptyState>
 
 			<ChatInput
-				ui={{
-					width: "full",
-					inner: "default",
-				}}
+				data-ui-width="full"
+				data-ui-inner="default"
 				onSubmit={chat.submit}
 				placeholder={translator.text("Write to an agent")}
 				loading={chat.mutation.isPending}
@@ -100,21 +91,17 @@ export const Agent: FC<Agent.Props> = ({ ...props }) => {
 						iconEnabled={CancelIcon}
 						onClick={chat.cancel}
 						iconProps={{
-							ui: {
-								text: "xl",
-							},
+							"data-ui-text": "xl",
 						}}
-						ui={{
-							justify: "center",
-							items: "center",
-							tone: "brand",
-							theme: "light",
-							square: "default",
-							background: undefined,
-							border: false,
-							shadow: false,
-							color: "lead",
-						}}
+						data-ui-justify="center"
+						data-ui-items="center"
+						data-ui-tone="brand"
+						data-ui-theme="light"
+						data-ui-square="default"
+						data-ui-background={undefined}
+						data-ui-border={false}
+						data-ui-shadow={false}
+						data-ui-color="lead"
 					/>
 				}
 			/>

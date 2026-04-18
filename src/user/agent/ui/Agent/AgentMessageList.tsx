@@ -29,12 +29,9 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 		<Container
 			data-ui={"AgentMessageList"}
 			ref={contentRef}
-			ui={{
-				flow: "vertical",
-				inner: "default",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-flow="vertical"
+			data-ui-inner="default"
+			data-ui-gap="default"
 			{...props}
 		>
 			<HistoryList />
@@ -43,13 +40,11 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 
 			{isPending ? null : (
 				<Container
-					ui={{
-						flow: "horizontal",
-						items: "center",
-						justify: "center",
-						inner: "default",
-						width: "full",
-					}}
+					data-ui-flow="horizontal"
+					data-ui-items="center"
+					data-ui-justify="center"
+					data-ui-inner="default"
+					data-ui-width="full"
 				>
 					<ClearButton />
 				</Container>

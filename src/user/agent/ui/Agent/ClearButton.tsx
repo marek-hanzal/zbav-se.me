@@ -22,12 +22,10 @@ export const ClearButton: FC<ClearButton.Props> = (props) => {
 			}}
 			loading={mutation.isPending}
 			disabled={mutation.isPending}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				inner: "default",
-				width: "content",
-			}}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-inner="default"
+			data-ui-width="content"
 			{...props}
 		>
 			<Tx label={"Clear chat history (label)"} />

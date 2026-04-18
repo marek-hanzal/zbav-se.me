@@ -19,13 +19,10 @@ export const TokenUsage = withFallback<TokenUsage.Props, Container>(
 
 		return (
 			<Container
-				ui={{
-					flow: "horizontal",
-					gap: "xs",
-					items: "center",
-					justify: "center",
-					...ui,
-				}}
+				data-ui-flow="horizontal"
+				data-ui-gap="xs"
+				data-ui-items="center"
+				data-ui-justify="center"
 				{...props}
 			>
 				<Typo
@@ -33,15 +30,11 @@ export const TokenUsage = withFallback<TokenUsage.Props, Container>(
 						locale,
 						number: tokens.input,
 					})}
-					ui={{
-						font: "bold",
-					}}
+					data-ui-font="bold"
 				/>
 				<Typo
 					label={"/"}
-					ui={{
-						opacity: "4",
-					}}
+					data-ui-opacity="4"
 				/>
 				<Typo
 					label={toLocaleNumber({
