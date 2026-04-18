@@ -14,19 +14,15 @@ export namespace ErrorBadge {
 	}
 }
 
-export const ErrorBadge: FC<ErrorBadge.Props> = ({ error, placeholder, ui, ...props }) => {
+export const ErrorBadge: FC<ErrorBadge.Props> = ({ error, placeholder, ...props }) => {
 	if (placeholder && !error) {
 		return (
 			<Badge
 				data-ui={"ErrorBadge"}
-				ui={{
-					text: "default",
-					badge: "xs",
-					background: undefined,
-					shadow: false,
-					border: false,
-					...ui,
-				}}
+				data-ui-text="default"
+				data-ui-badge="xs"
+				data-ui-shadow={false}
+				data-ui-border={false}
 				{...props}
 			>
 				&nbsp;
@@ -40,13 +36,10 @@ export const ErrorBadge: FC<ErrorBadge.Props> = ({ error, placeholder, ui, ...pr
 	return (
 		<Badge
 			data-ui={"ErrorBadge"}
-			ui={{
-				tone: "danger",
-				text: "default",
-				badge: "xs",
-				color: "lead",
-				...ui,
-			}}
+			data-ui-tone="danger"
+			data-ui-text="default"
+			data-ui-badge="xs"
+			data-ui-color="lead"
 			{...props}
 		>
 			<TypoIcon icon={"icon-[solar--adhesive-plaster-linear]"}>

@@ -81,27 +81,23 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 					>
 						<Container
 							data-ui={"BottomSheet-[Container.header-wrapper]"}
-							ui={{
-								tone: "neutral",
-								theme: "light",
-								layout: "horizontal-flex",
-								items: "center",
-								justify: "space-between",
-								gap: "default",
-								inner: "default",
-								shadow: true,
-							}}
+							data-ui-tone="neutral"
+							data-ui-theme="light"
+							data-ui-layout="horizontal-flex"
+							data-ui-items="center"
+							data-ui-justify="space-between"
+							data-ui-gap="default"
+							data-ui-inner="default"
+							data-ui-shadow
 						>
 							{$header.title ? (
 								<Tx
 									label={$header.title}
 									preset={"subheader"}
-									ui={{
-										tone: "primary",
-										theme: "light",
-										color: "lead",
-										truncate: true,
-									}}
+									data-ui-tone="primary"
+									data-ui-theme="light"
+									data-ui-color="lead"
+									data-ui-truncate
 								/>
 							) : null}
 

@@ -7,11 +7,10 @@ export namespace Progress {
 	}
 }
 
-export const Progress: FC<Progress.Props> = ({ value, ui, className, ...props }) => {
+export const Progress: FC<Progress.Props> = ({ value, className, ...props }) => {
 	return (
 		<div
 			{...uiProgress({
-				ui,
 				className,
 			})}
 			{...props}

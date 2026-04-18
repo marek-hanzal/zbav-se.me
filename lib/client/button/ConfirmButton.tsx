@@ -31,7 +31,6 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 	confirmProps,
 	confirmTimeout = 3000,
 	onReset,
-	ui,
 	...props
 }) => {
 	const [isConfirm, setIsConfirm] = useState(false);
@@ -72,10 +71,6 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 			{...props}
 			{...conditionalProps}
 			{...uiButton({
-				ui: {
-					...ui,
-					...conditionalProps?.ui,
-				},
 				className: [],
 			})}
 			onClick={handleClick}

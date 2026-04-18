@@ -8,13 +8,12 @@ export namespace TextInput {
 	}
 }
 
-export const TextInput: FC<TextInput.Props> = ({ placeholder, ui, className, ...props }) => {
+export const TextInput: FC<TextInput.Props> = ({ placeholder, className, ...props }) => {
 	return (
 		<input
 			type={"text"}
 			placeholder={placeholder ? translator.text(placeholder) : undefined}
 			{...uiInput({
-				ui,
 				className,
 			})}
 			{...props}

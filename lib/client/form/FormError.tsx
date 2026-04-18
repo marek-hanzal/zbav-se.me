@@ -31,9 +31,7 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 		return (
 			<Typo
 				label={"\u00A0"}
-				ui={{
-					text: "xs",
-				}}
+				data-ui-text="xs"
 			/>
 		);
 	}
@@ -46,12 +44,10 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 		return (
 			<Tx
 				label={error.message}
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					color: "text",
-					text: "xs",
-				}}
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-color="text"
+				data-ui-text="xs"
 			/>
 		);
 	}
@@ -59,9 +55,7 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 	return (
 		<Typo
 			label={"&nbsp;"}
-			ui={{
-				text: "xs",
-			}}
+			data-ui-text="xs"
 		/>
 	);
 };

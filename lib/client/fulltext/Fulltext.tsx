@@ -32,7 +32,6 @@ export const Fulltext: FC<Fulltext.Props> = ({
 	textPlaceholder,
 	withSubmit = false,
 	limit = 3,
-	ui,
 	className,
 	...props
 }) => {
@@ -59,15 +58,12 @@ export const Fulltext: FC<Fulltext.Props> = ({
 	return (
 		<div
 			{...uiFulltext({
-				ui,
 				className,
 			})}
 		>
 			<Icon
 				icon={"icon-[material-symbols-light--search]"}
-				ui={{
-					text: "xl",
-				}}
+				data-ui-text="xl"
 				className={[
 					"absolute",
 					"left-2",
@@ -97,7 +93,6 @@ export const Fulltext: FC<Fulltext.Props> = ({
 					}
 				}}
 				{...uiInput({
-					ui,
 					className: [
 						"px-8",
 						className,
@@ -126,10 +121,8 @@ export const Fulltext: FC<Fulltext.Props> = ({
 										"cursor-pointer",
 									]
 						}
-						ui={{
-							tone: "neutral",
-							text: "sm",
-						}}
+						data-ui-tone="neutral"
+						data-ui-text="sm"
 					/>
 				</div>
 			) : (
@@ -145,10 +138,8 @@ export const Fulltext: FC<Fulltext.Props> = ({
 								set(undefined);
 								inputRef.current?.focus();
 							}}
-							ui={{
-								tone: "secondary",
-								text: "sm",
-							}}
+							data-ui-tone="secondary"
+							data-ui-text="sm"
 						/>
 					</div>
 				)

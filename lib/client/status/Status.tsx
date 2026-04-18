@@ -36,7 +36,6 @@ export const Status: FC<Status.Props> = ({
 	titleProps,
 	messageProps,
 	//
-	ui,
 	className,
 	//
 	children,
@@ -45,8 +44,6 @@ export const Status: FC<Status.Props> = ({
 	return (
 		<div
 			{...uiStatus({
-				ui,
-				//
 				className,
 			})}
 			//
@@ -54,12 +51,10 @@ export const Status: FC<Status.Props> = ({
 		>
 			<Container
 				data-ui="Status-[Container.wrapper]"
-				ui={{
-					layout: "vertical-flex",
-					items: "center",
-					width: "full",
-					gap: "lg",
-				}}
+				data-ui-layout="vertical-flex"
+				data-ui-items="center"
+				data-ui-width="full"
+				data-ui-gap="lg"
 			>
 				<Icon
 					data-ui="Status-[Icon]"
@@ -69,21 +64,17 @@ export const Status: FC<Status.Props> = ({
 
 				<Container
 					data-ui="Status-[Container.title-wrapper]"
-					ui={{
-						layout: "vertical-flex",
-						items: "center",
-						width: "full",
-					}}
+					data-ui-layout="vertical-flex"
+					data-ui-items="center"
+					data-ui-width="full"
 				>
 					<Tx
 						data-ui="Status-[Tx-title]"
 						label={textTitle}
-						ui={{
-							font: "semibold",
-							display: "block",
-							wrap: "wrap",
-							text: "lg",
-						}}
+						data-ui-font="semibold"
+						data-ui-display="block"
+						data-ui-wrap="wrap"
+						data-ui-text="lg"
 						{...titleProps}
 					/>
 
@@ -98,12 +89,10 @@ export const Status: FC<Status.Props> = ({
 			{action && (
 				<Container
 					data-ui="Status-[Container.action]"
-					ui={{
-						layout: "vertical-flex",
-						items: "center",
-						justify: "center",
-						gap: "default",
-					}}
+					data-ui-layout="vertical-flex"
+					data-ui-items="center"
+					data-ui-justify="center"
+					data-ui-gap="default"
 				>
 					{action}
 				</Container>
