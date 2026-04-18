@@ -14,11 +14,9 @@ export const Value: FC<Value.Props> = ({ value, placeholder }) => {
 			<Typo
 				data-ui={"Dial-Typo-value"}
 				label={value}
-				ui={{
-					text: "xl",
-					font: "bold",
-					display: "block",
-				}}
+				data-ui-text="xl"
+				data-ui-font="bold"
+				data-ui-display="block"
 			/>
 		);
 	}
@@ -27,12 +25,10 @@ export const Value: FC<Value.Props> = ({ value, placeholder }) => {
 		<Typo
 			data-ui={"Dial-Typo-value-placeholder"}
 			label={placeholder}
-			ui={{
-				text: "xl",
-				font: "bold",
-				display: "block",
-				color: "icon",
-			}}
+			data-ui-text="xl"
+			data-ui-font="bold"
+			data-ui-display="block"
+			data-ui-color="icon"
 		/>
 	);
 };
