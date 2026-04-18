@@ -32,17 +32,11 @@ export const Default: FC<Default.Props> = ({ textHint, warningStatusProps, ui })
 				})}
 				{...warningStatusProps}
 			>
-				<Container
-					ui={{
-						text: "default",
-					}}
-				>
+				<Container data-ui-text="default">
 					<Mx
 						label={textHint}
-						ui={{
-							tone: "secondary",
-							theme: "light",
-						}}
+						data-ui-tone="secondary"
+						data-ui-theme="light"
 					/>
 				</Container>
 			</Status>

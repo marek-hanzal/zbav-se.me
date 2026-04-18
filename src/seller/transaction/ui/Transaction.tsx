@@ -83,9 +83,7 @@ export const Transaction: FC<Transaction.Props> = ({
 					containerRef={containerRef}
 					transactionId={transaction.id}
 					refresh={refresh}
-					ui={{
-						inner: "default",
-					}}
+					data-ui-inner="default"
 				/>
 			</Container>
 
@@ -93,11 +91,9 @@ export const Transaction: FC<Transaction.Props> = ({
 				.with("interest", () => {
 					return (
 						<Container
-							ui={{
-								flow: "vertical",
-								inner: "default",
-								gap: "default",
-							}}
+							data-ui-flow="vertical"
+							data-ui-inner="default"
+							data-ui-gap="default"
 						>
 							<InterestMessage
 								close={() => {}}
@@ -109,11 +105,9 @@ export const Transaction: FC<Transaction.Props> = ({
 				.with("success", "closed", "rejected", () => {
 					return (
 						<Container
-							ui={{
-								flow: "vertical",
-								inner: "default",
-								gap: "default",
-							}}
+							data-ui-flow="vertical"
+							data-ui-inner="default"
+							data-ui-gap={"default"}
 						>
 							<AckMessage
 								close={close}
