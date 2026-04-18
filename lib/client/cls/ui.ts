@@ -57,8 +57,8 @@ export namespace ui {
 
 export const ui = <const TProps extends object>({ name, className, ui }: ui.Props<TProps>) => {
 	return {
-		"data-ui": name,
 		...ui,
+		"data-ui": name,
 		className: tvc(name, className),
 	} satisfies ui.Result<TProps>;
 };
