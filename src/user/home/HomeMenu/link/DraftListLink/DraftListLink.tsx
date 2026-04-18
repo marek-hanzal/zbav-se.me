@@ -23,9 +23,7 @@ export const DraftListLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open draft list"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={DraftIcon}
 				to="/$locale/app/seller/draft/list"
 				params={{
@@ -34,12 +32,10 @@ export const DraftListLink = withFallback(
 				activeProps={uiMenuButton({
 					"data-ui-tone": "primary",
 					"data-ui-theme": "light",
-					className: [],
 				})}
 				{...uiMenuButton({
 					"data-ui-tone": "neutral",
 					"data-ui-theme": "light",
-					className: [],
 				})}
 				{...props}
 			>
@@ -61,9 +57,7 @@ export const DraftListLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open draft list"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={DraftIcon}
 				to="/$locale/app/seller/draft/list"
 				params={{
@@ -72,7 +66,6 @@ export const DraftListLink = withFallback(
 				activeProps={uiMenuButton({
 					"data-ui-tone": "primary",
 					"data-ui-theme": "light",
-					className: [],
 				})}
 				{...props}
 			>

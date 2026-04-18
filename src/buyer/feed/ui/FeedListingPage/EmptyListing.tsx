@@ -54,7 +54,6 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 								"data-ui-text": "lg",
 								"data-ui-size": "default",
 								"data-ui-font": "bold",
-								className: [],
 							})}
 						>
 							<Tx label="Create first listing (button)" />
@@ -76,7 +75,6 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 								"data-ui-background": undefined,
 								"data-ui-border": false,
 								"data-ui-shadow": false,
-								className: [],
 							})}
 						>
 							<Tx label="Back to home (link)" />

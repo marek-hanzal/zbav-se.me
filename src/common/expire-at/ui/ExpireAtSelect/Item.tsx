@@ -22,12 +22,11 @@ export const Item: FC<Item.Props> = ({ expire, isSelected, onChange }) => {
 				onChange(expire);
 			}}
 			{...uiSelectButton({
+                name: `ExpireAtSelect-[Button.${expire}]`,
 				isSelected,
 				"data-ui-flow": "horizontal",
 				"data-ui-justify": "space-between",
-				className: [],
 			})}
-			data-ui={`ExpireAtSelect-[Button.${expire}]`}
 		>
 			<Tx
 				label={`Expire in ${expire}`}

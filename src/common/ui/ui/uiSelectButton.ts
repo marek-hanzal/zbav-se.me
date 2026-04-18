@@ -13,8 +13,9 @@ export namespace uiSelectButton {
 	}
 }
 
-export const uiSelectButton = ({ isSelected, className, ...ui }: uiSelectButton.Props) => {
+export const uiSelectButton = ({ name, isSelected, className, ...ui }: uiSelectButton.Props) => {
 	return uiButton({
+		name,
 		"data-ui-tone": isSelected ? "secondary" : "neutral",
 		"data-ui-theme": "light",
 		"data-ui-flow": "vertical",

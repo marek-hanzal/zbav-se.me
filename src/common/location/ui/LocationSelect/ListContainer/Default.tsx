@@ -25,9 +25,7 @@ export const Default: FC<Default.Props> = ({ textHint, warningStatusProps, ...pr
 		>
 			<Status
 				icon={WarningIcon}
-				{...uiWarningStatus({
-					className: [],
-				})}
+				{...uiWarningStatus({})}
 				{...warningStatusProps}
 			>
 				<Container data-ui-text="default">

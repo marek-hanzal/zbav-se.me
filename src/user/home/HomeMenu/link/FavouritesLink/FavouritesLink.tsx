@@ -57,9 +57,7 @@ export const FavouritesLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open favourites"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={FavouriteIcon}
 				to="/$locale/app/buyer/favourite/list"
 				params={{

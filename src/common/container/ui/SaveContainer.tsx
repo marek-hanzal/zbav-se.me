@@ -55,9 +55,7 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 				iconProps={{
 					"data-ui-text": "xl",
 				}}
-				{...uiCancelButton({
-					className: [],
-				})}
+				{...uiCancelButton({})}
 				{...cancelProps}
 			>
 				{textCancel ?? <Tx label="Back (label)" />}
@@ -72,9 +70,7 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 				iconProps={{
 					"data-ui-text": "xl",
 				}}
-				{...uiSaveButton({
-					className: [],
-				})}
+				{...uiSaveButton({})}
 				{...saveProps}
 			>
 				{textSave ?? <Tx label="Save (button)" />}

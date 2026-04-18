@@ -59,9 +59,7 @@ export const Route = createFileRoute("/$locale/landing")({
 						>
 							<LinkTo
 								data-action={"goto sign-in"}
-								{...uiButton({
-									className: [],
-								})}
+								{...uiButton({})}
 								//
 								data-ui-tone={"secondary"}
 								data-ui-theme={"light"}
@@ -85,9 +83,7 @@ export const Route = createFileRoute("/$locale/landing")({
 
 							<LinkTo
 								data-action={"goto sign-up"}
-								{...uiButton({
-									className: [],
-								})}
+								{...uiButton({})}
 								//
 								data-ui-tone={"primary"}
 								data-ui-theme={"light"}
@@ -145,9 +141,7 @@ export const Route = createFileRoute("/$locale/landing")({
 							<a
 								href={"https://github.com/marek-hanzal/zbav-se.me"}
 								target={"blank"}
-								{...uiLinkTo({
-									className: [],
-								})}
+								{...uiLinkTo({})}
 							>
 								<Icon
 									icon={GitHubIcon}

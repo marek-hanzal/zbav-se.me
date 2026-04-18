@@ -84,7 +84,6 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 						{...uiSelectButton({
 							isSelected: Boolean(current?.order),
 							"data-ui-size": "default",
-							className: [],
 						})}
 					>
 						<Container

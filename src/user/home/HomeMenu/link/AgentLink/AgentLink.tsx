@@ -22,9 +22,7 @@ export const AgentLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open agent chat"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={AiIcon}
 				to="/$locale/app/agent"
 				params={{
@@ -33,12 +31,10 @@ export const AgentLink = withFallback(
 				activeProps={uiMenuButton({
 					"data-ui-tone": "primary",
 					"data-ui-theme": "light",
-					className: [],
 				})}
 				{...uiMenuButton({
 					"data-ui-tone": "neutral",
 					"data-ui-theme": "light",
-					className: [],
 				})}
 				{...props}
 			>
@@ -60,9 +56,7 @@ export const AgentLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"open agent chat"}
-				{...uiMenuButton({
-					className: [],
-				})}
+				{...uiMenuButton({})}
 				icon={AiIcon}
 				to="/$locale/app/agent"
 				params={{
@@ -71,7 +65,6 @@ export const AgentLink = withFallback(
 				activeProps={uiMenuButton({
 					"data-ui-tone": "primary",
 					"data-ui-theme": "light",
-					className: [],
 				})}
 				{...props}
 			>

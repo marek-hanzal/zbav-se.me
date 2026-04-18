@@ -45,7 +45,6 @@ export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ...props }
 							isSelected,
 							"data-ui-flow": "horizontal",
 							"data-ui-justify": "start",
-							className: [],
 						})}
 						data-ui={`DeliverySelect-[Button.${delivery}]`}
 					>

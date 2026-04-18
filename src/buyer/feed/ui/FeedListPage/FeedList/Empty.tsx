@@ -29,9 +29,7 @@ export const Empty: FC<Empty.Props> = (props) => {
 						iconEnabled={ChevronRightIcon}
 						iconPosition={"right"}
 						onClick={() => setIsOpen(true)}
-						{...uiCtaLinkButton({
-							className: [],
-						})}
+						{...uiCtaLinkButton({})}
 					>
 						<Tx label={"Create new feed (button)"} />
 					</Button>

@@ -43,9 +43,7 @@ export const Empty: FC<Empty.Props> = () => {
 						params={{
 							locale,
 						}}
-						{...uiCtaLinkButton({
-							className: [],
-						})}
+						{...uiCtaLinkButton({})}
 					>
 						<Tx label={"Go to drafts (link)"} />
 					</LinkTo>

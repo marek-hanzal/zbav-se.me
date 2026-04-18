@@ -145,9 +145,7 @@ export const ListingList = withFallback(
 									params={{
 										locale,
 									}}
-									{...uiCtaLinkButton({
-										className: [],
-									})}
+									{...uiCtaLinkButton({})}
 								>
 									<Tx label={"See other feeds (link)"} />
 								</LinkTo>

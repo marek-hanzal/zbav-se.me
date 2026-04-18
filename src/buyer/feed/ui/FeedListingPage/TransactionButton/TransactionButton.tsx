@@ -65,7 +65,6 @@ export const TransactionButton: FC<TransactionButton.Props> = ({ listing, meta, 
 					"data-ui-theme": "light",
 					"data-ui-size": "default",
 					"data-ui-text": "lg",
-					className: [],
 				})}
 				data-ui={"TransactionButton"}
 				data-action={"open transactions"}
