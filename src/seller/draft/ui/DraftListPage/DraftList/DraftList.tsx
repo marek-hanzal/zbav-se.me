@@ -52,13 +52,10 @@ export const DraftList = withFallback(({ _suspense, ...props }: DraftList.Props)
 	return (
 		<Container
 			data-ui="DraftList[Container]"
-			ui={{
-				scroll: "vertical",
-				height: "full",
-				layout: "vertical-flex",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-scroll="vertical"
+			data-ui-height="full"
+			data-ui-layout="vertical-flex"
+			data-ui-gap="default"
 			{...props}
 		>
 			<EmptyState check={check}>

@@ -68,12 +68,10 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onView, ...p
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					inner: "default",
-				}}
+				data-ui-layout="vertical-content-footer"
+				data-ui-height="full"
+				data-ui-width="full"
+				data-ui-inner="default"
 			>
 				<Status
 					action={
@@ -115,10 +113,8 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onView, ...p
 				>
 					<Mx
 						label={"Listing title (required)"}
-						ui={{
-							tone: "secondary",
-							theme: "light",
-						}}
+						data-ui-tone="secondary"
+						data-ui-theme="light"
 					/>
 				</Status>
 

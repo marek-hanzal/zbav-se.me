@@ -35,13 +35,11 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 
 			<Tx
 				label="Draft - bunch of required (title)"
-				ui={{
-					tone: "brand",
-					theme: "light",
-					text: "md",
-					color: "lead",
-					opacity: "8",
-				}}
+				data-ui-tone="brand"
+				data-ui-theme="light"
+				data-ui-text="md"
+				data-ui-color="lead"
+				data-ui-opacity="8"
 				className={"text-center"}
 			/>
 
@@ -54,9 +52,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 					action={<ChevronAction />}
 					onClick={() => onView("title")}
 					wrapperProps={{
-						ui: {
-							tone: draft.title ? "neutral" : "primary",
-						},
+						"data-ui-tone": draft.title ? "neutral" : "primary",
 					}}
 				/>
 
@@ -67,9 +63,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 					action={<ChevronAction />}
 					onClick={() => onView("category")}
 					wrapperProps={{
-						ui: {
-							tone: draft.categoryId ? "neutral" : "primary",
-						},
+						"data-ui-tone": draft.categoryId ? "neutral" : "primary",
 					}}
 				/>
 
@@ -81,9 +75,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 					textEmpty={translator.text("Listing location not selected")}
 					textHint={translator.text("Listing location (hint)")}
 					wrapperProps={{
-						ui: {
-							tone: draft.locationId ? "neutral" : "primary",
-						},
+						"data-ui-tone": draft.locationId ? "neutral" : "primary",
 					}}
 					action={<ChevronAction />}
 					onClick={() => onView("location")}
@@ -98,9 +90,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 					action={<ChevronAction />}
 					onClick={() => onView("price")}
 					wrapperProps={{
-						ui: {
-							tone: draft.price !== null ? "neutral" : "primary",
-						},
+						"data-ui-tone": draft.price !== null ? "neutral" : "primary",
 					}}
 				/>
 
@@ -110,9 +100,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 					action={<ChevronAction />}
 					onClick={() => onView("priceType")}
 					wrapperProps={{
-						ui: {
-							tone: draft.priceType ? "neutral" : "primary",
-						},
+						"data-ui-tone": draft.priceType ? "neutral" : "primary",
 					}}
 				/>
 			</Group>
@@ -124,9 +112,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 					action={<ChevronAction />}
 					onClick={() => onView("expireAt")}
 					wrapperProps={{
-						ui: {
-							tone: draft.expiresAt ? "neutral" : "primary",
-						},
+						"data-ui-tone": draft.expiresAt ? "neutral" : "primary",
 					}}
 				/>
 			</Group>
@@ -138,9 +124,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 					action={<ChevronAction />}
 					onClick={() => onView("restriction")}
 					wrapperProps={{
-						ui: {
-							tone: draft.restriction ? "neutral" : "primary",
-						},
+						"data-ui-tone": draft.restriction ? "neutral" : "primary",
 					}}
 				/>
 			</Group>

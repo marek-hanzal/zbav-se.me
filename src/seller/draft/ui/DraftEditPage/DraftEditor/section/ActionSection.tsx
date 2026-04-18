@@ -21,24 +21,20 @@ export const ActionSection: FC<ActionSection.Props> = ({ draft }) => {
 		<>
 			<Tx
 				label="Draft - action section (title)"
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					text: "md",
-					color: "lead",
-					opacity: "8",
-				}}
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-text="md"
+				data-ui-color="lead"
+				data-ui-opacity="8"
 				className={"text-center"}
 			/>
 
 			<Group>
 				<CreateListingButton
 					draft={draft}
-					ui={{
-						round: undefined,
-						shadow: false,
-						inner: "lg",
-					}}
+					data-ui-round={undefined}
+					data-ui-shadow={false}
+					data-ui-inner="lg"
 				/>
 
 				<LinkTo
@@ -48,33 +44,25 @@ export const ActionSection: FC<ActionSection.Props> = ({ draft }) => {
 					}}
 					icon={"icon-[solar--alarm-linear]"}
 					iconProps={{
-						ui: {
-							text: "2xl",
-						},
+						"data-ui-text": "2xl",
 					}}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						inner: "lg",
-						background: "default",
-						border: false,
-						shadow: false,
-					}}
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-inner="lg"
+					data-ui-background="default"
+					data-ui-border={false}
+					data-ui-shadow={false}
 				>
 					<Container
-						ui={{
-							flow: "vertical",
-							height: "full",
-						}}
+						data-ui-flow="vertical"
+						data-ui-height="full"
 					>
 						<Tx label="Close draft (button)" />
 
 						<Tx
 							label="Close draft (hint)"
-							ui={{
-								text: "xs",
-								color: "icon",
-							}}
+							data-ui-text="xs"
+							data-ui-color="icon"
 						/>
 					</Container>
 				</LinkTo>
@@ -82,20 +70,16 @@ export const ActionSection: FC<ActionSection.Props> = ({ draft }) => {
 				<DeleteButton
 					draft={draft}
 					buttonProps={{
-						ui: {
-							round: undefined,
-							border: false,
-							shadow: false,
-							inner: "lg",
-						},
+						"data-ui-round": undefined,
+						"data-ui-border": false,
+						"data-ui-shadow": false,
+						"data-ui-inner": "lg",
 					}}
 					confirmProps={{
-						ui: {
-							round: undefined,
-							shadow: false,
-							border: false,
-							inner: "lg",
-						},
+						"data-ui-round": undefined,
+						"data-ui-shadow": false,
+						"data-ui-border": false,
+						"data-ui-inner": "lg",
 					}}
 				/>
 			</Group>

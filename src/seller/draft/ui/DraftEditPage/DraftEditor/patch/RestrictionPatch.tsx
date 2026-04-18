@@ -94,13 +94,11 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					inner: "default",
-					gap: "default",
-				}}
+				data-ui-layout="vertical-content-footer"
+				data-ui-height="full"
+				data-ui-width="full"
+				data-ui-inner="default"
+				data-ui-gap="default"
 			>
 				<form.AppField name={"restriction"}>
 					{(_field) => <RestrictionSelect selection={selection} />}

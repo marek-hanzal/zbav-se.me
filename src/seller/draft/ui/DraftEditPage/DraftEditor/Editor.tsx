@@ -35,13 +35,11 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draft, locale, onView }) =
 		>
 			<Container
 				data-ui={"DraftEditor-[Container.content]"}
-				ui={{
-					flow: "vertical",
-					scroll: "vertical",
-					inner: "default",
-					width: "full",
-					gap: "lg",
-				}}
+				data-ui-flow="vertical"
+				data-ui-scroll="vertical"
+				data-ui-inner="default"
+				data-ui-width="full"
+				data-ui-gap="lg"
 			>
 				<RequiredSection
 					_suspense={"I know"}

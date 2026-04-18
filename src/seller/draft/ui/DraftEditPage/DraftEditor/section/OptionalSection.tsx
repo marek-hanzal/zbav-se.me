@@ -24,13 +24,11 @@ export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) =>
 		<>
 			<Tx
 				label="Draft - those others (title)"
-				ui={{
-					tone: "secondary",
-					theme: "light",
-					text: "md",
-					color: "lead",
-					opacity: "8",
-				}}
+				data-ui-tone="secondary"
+				data-ui-theme="light"
+				data-ui-text="md"
+				data-ui-color="lead"
+				data-ui-opacity="8"
 				className={"text-center"}
 			/>
 
@@ -40,9 +38,7 @@ export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) =>
 					action={<ChevronAction />}
 					onClick={() => onView("description")}
 					wrapperProps={{
-						ui: {
-							tone: draft.description ? "neutral" : "secondary",
-						},
+						"data-ui-tone": draft.description ? "neutral" : "secondary",
 					}}
 				/>
 			</Group>
@@ -53,9 +49,7 @@ export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) =>
 					action={<ChevronAction />}
 					onClick={() => onView("pros")}
 					wrapperProps={{
-						ui: {
-							tone: (draft.pros ?? []).length > 0 ? "neutral" : "secondary",
-						},
+						"data-ui-tone": (draft.pros ?? []).length > 0 ? "neutral" : "secondary",
 					}}
 				/>
 
@@ -64,9 +58,7 @@ export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) =>
 					action={<ChevronAction />}
 					onClick={() => onView("cons")}
 					wrapperProps={{
-						ui: {
-							tone: (draft.cons ?? []).length > 0 ? "neutral" : "secondary",
-						},
+						"data-ui-tone": (draft.cons ?? []).length > 0 ? "neutral" : "secondary",
 					}}
 				/>
 			</Group>
@@ -77,9 +69,7 @@ export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) =>
 					action={<ChevronAction />}
 					onClick={() => onView("delivery")}
 					wrapperProps={{
-						ui: {
-							tone: (draft.delivery ?? []).length > 0 ? "neutral" : "secondary",
-						},
+						"data-ui-tone": (draft.delivery ?? []).length > 0 ? "neutral" : "secondary",
 					}}
 				/>
 			</Group>
@@ -90,9 +80,7 @@ export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) =>
 					action={<ChevronAction />}
 					onClick={() => onView("warranty")}
 					wrapperProps={{
-						ui: {
-							tone: draft.warranty ? "neutral" : "secondary",
-						},
+						"data-ui-tone": draft.warranty ? "neutral" : "secondary",
 					}}
 				/>
 			</Group>
@@ -103,9 +91,7 @@ export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) =>
 					action={<ChevronAction />}
 					onClick={() => onView("condition")}
 					wrapperProps={{
-						ui: {
-							tone: draft.condition !== null ? "neutral" : "secondary",
-						},
+						"data-ui-tone": draft.condition !== null ? "neutral" : "secondary",
 					}}
 				/>
 
@@ -114,9 +100,7 @@ export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) =>
 					action={<ChevronAction />}
 					onClick={() => onView("age")}
 					wrapperProps={{
-						ui: {
-							tone: draft.age !== null ? "neutral" : "secondary",
-						},
+						"data-ui-tone": draft.age !== null ? "neutral" : "secondary",
 					}}
 				/>
 			</Group>

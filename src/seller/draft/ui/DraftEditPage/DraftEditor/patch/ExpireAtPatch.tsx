@@ -68,13 +68,11 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({ draft, onCancel, onView
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					inner: "default",
-					gap: "default",
-				}}
+				data-ui-layout="vertical-content-footer"
+				data-ui-height="full"
+				data-ui-width="full"
+				data-ui-inner="default"
+				data-ui-gap="default"
 			>
 				<form.AppField name={"expiresAt"}>
 					{(field) => (
@@ -89,13 +87,11 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({ draft, onCancel, onView
 
 							<Mx
 								label={"Listing expiration (hint)"}
-								ui={{
-									tone: "neutral",
-									theme: "light",
-									inner: "default",
-									color: "lead",
-									opacity: "7",
-								}}
+								data-ui-tone="neutral"
+								data-ui-theme="light"
+								data-ui-inner="default"
+								data-ui-color="lead"
+								data-ui-opacity="7"
 							/>
 						</Container>
 					)}
