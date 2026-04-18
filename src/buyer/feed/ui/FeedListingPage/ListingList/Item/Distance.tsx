@@ -39,7 +39,7 @@ export const Distance: FC<Distance.Props> = ({ distance, ...props }) => {
 				label={toLocaleNumber({
 					locale,
 					number: distance,
-					maximumFractionDigits: 1,
+					maximumFractionDigits: 0,
 				})}
 				data-ui-text="default"
 				data-ui-font="normal"
