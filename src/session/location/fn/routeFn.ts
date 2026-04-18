@@ -3,13 +3,16 @@ import { Effect } from "effect";
 import { z } from "zod";
 import { zodFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { routeFx } from "~/session/location/server/fx/routeFx";
 import { withLocationFx } from "~/session/location/server/fx/withLocationFx";
 import { RouteSchema } from "~/session/location/server/schema/RouteSchema";
+
+export namespace routeFn {
+	export type Error = Effect.Effect.Error<routeFx>;
+}
 
 export const routeFn = createServerFn()
 	.middleware([
@@ -39,20 +42,12 @@ export const routeFn = createServerFn()
 				route: "/v1/routematrix",
 			}),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				InvalidRequestErrorFx(error) {
-					logger.error("InvalidRequestErrorFx", {
-						message: error.message,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("InvalidRequestErrorFx");
-				},
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
-					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

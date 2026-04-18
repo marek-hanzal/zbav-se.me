@@ -6,10 +6,13 @@ import { draftDeleteFx } from "~/seller/draft/server/fx/draftDeleteFx";
 import { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
 import { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export namespace draftDeleteFn {
+	export type Error = Effect.Effect.Error<draftDeleteFx>;
+}
 
 export const draftDeleteFn = createServerFn({
 	method: "POST",
@@ -37,27 +40,12 @@ export const draftDeleteFn = createServerFn({
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				NotFoundErrorFx(error) {
-					logger.error("NotFoundError", {
-						message: error.message,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("NotFoundErrorFx");
-				},
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodErrorFx", {
-						zod,
-						input,
-					});
-					throw new Error("ZodErrorFx");
-				},
-				RuntimeErrorFx(error) {
-					logger.error("RuntimeError", {
-						message: error.message,
-						cause: error.cause,
-					});
-					throw new Error("RuntimeErrorFx");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

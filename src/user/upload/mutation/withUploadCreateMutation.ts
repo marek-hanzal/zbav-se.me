@@ -7,7 +7,7 @@ import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 export const withUploadCreateMutation = withMutation<
 	UploadCreateSchema.Type,
 	UploadSchema.Type,
-	Error
+	uploadCreateFn.Error
 >({
 	logger: getRootLogger([
 		"mutation",

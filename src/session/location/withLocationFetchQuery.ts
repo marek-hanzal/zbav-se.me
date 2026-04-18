@@ -4,7 +4,11 @@ import { locationFetchFn } from "~/session/location/fn/locationFetchFn";
 import type { LocationQuerySchema } from "~/session/location/server/schema/LocationQuerySchema";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 
-export const withLocationFetchQuery = withQuery<LocationQuerySchema.Type, LocationSchema.Type>({
+export const withLocationFetchQuery = withQuery<
+	LocationQuerySchema.Type,
+	LocationSchema.Type,
+	locationFetchFn.Error
+>({
 	logger: getRootLogger([
 		"query",
 		"withLocationFetchQuery",

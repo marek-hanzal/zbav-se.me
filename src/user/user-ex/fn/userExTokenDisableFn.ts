@@ -3,12 +3,15 @@ import { Effect } from "effect";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { userExTokenDisableFx } from "~/user/user-ex/server/fx/userExTokenDisableFx";
 import { UserExSchema } from "~/user/user-ex/server/schema/UserExSchema";
+
+export namespace userExTokenDisableFn {
+	export type Error = Effect.Effect.Error<userExTokenDisableFx>;
+}
 
 export const userExTokenDisableFn = createServerFn({
 	method: "POST",
@@ -33,27 +36,12 @@ export const userExTokenDisableFn = createServerFn({
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				ConflictErrorFx(error) {
-					logger.error("ConflictError", {
-						message: error.message,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("ConflictError");
-				},
-				RuntimeErrorFx(error) {
-					logger.error("RuntimeError", {
-						message: error.message,
-						cause: error.cause,
-					});
-					throw new Error("RuntimeError");
-				},
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
-					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

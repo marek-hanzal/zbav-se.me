@@ -8,7 +8,7 @@ import { withDraftQuery } from "../query/withDraftQuery";
 export const withDraftGalleryCreateMutation = withMutation<
 	DraftGalleryCreateSchema.Type,
 	GallerySchema.Type,
-	Error
+	draftGalleryCreateFn.Error
 >({
 	logger: getRootLogger([
 		"mutation",

@@ -7,10 +7,13 @@ import { draftCollectionFx } from "~/seller/draft/server/fx/draftCollectionFx";
 import { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
 import { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export namespace draftCollectionFn {
+	export type Error = Effect.Effect.Error<draftCollectionFx>;
+}
 
 export const draftCollectionFn = createServerFn()
 	.middleware([
@@ -36,14 +39,12 @@ export const draftCollectionFn = createServerFn()
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

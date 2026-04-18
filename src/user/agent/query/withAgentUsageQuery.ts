@@ -4,7 +4,11 @@ import { agentUsageCollectionFn } from "~/user/agent/fn/agentUsageCollectionFn";
 import type { AgentUsageQuerySchema } from "~/user/agent/server/schema/AgentUsageQuerySchema";
 import type { AgentUsageSchema } from "~/user/agent/server/schema/AgentUsageSchema";
 
-export const withAgentUsageQuery = withQuery<AgentUsageQuerySchema.Type, AgentUsageSchema.Type[]>({
+export const withAgentUsageQuery = withQuery<
+	AgentUsageQuerySchema.Type,
+	AgentUsageSchema.Type[],
+	agentUsageCollectionFn.Error
+>({
 	logger: getRootLogger([
 		"query",
 		"withAgentUsageQuery",

@@ -6,7 +6,8 @@ import type { AgentUsageSchema } from "~/user/agent/server/schema/AgentUsageSche
 
 export const withAgentTokensQuery = withQuery<
 	AgentUsageQuerySchema.Type,
-	Pick<AgentUsageSchema.Type, "input" | "output" | "total">
+	Pick<AgentUsageSchema.Type, "input" | "output" | "total">,
+	agentUsageCollectionFn.Error
 >({
 	logger: getRootLogger([
 		"query",

@@ -357,3 +357,5 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 		}),
 	);
 });
+
+export type transactionEntryCreateFx = ReturnType<typeof transactionEntryCreateFx>;

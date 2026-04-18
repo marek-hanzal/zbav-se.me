@@ -7,7 +7,7 @@ import type { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStr
 export const withAgentStreamDeleteCollectionMutation = withMutation<
 	AgentStreamQuerySchema.Type,
 	number,
-	Error
+	agentStreamDeleteCollectionFn.Error
 >({
 	logger: getRootLogger([
 		"mutation",

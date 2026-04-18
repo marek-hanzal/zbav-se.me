@@ -4,7 +4,6 @@ import { z } from "zod";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -13,6 +12,10 @@ import { locationAutocompleteFx } from "~/session/location/server/fx/locationAut
 import { withLocationFx } from "~/session/location/server/fx/withLocationFx";
 import { LocationAutocompleteSchema } from "~/session/location/server/schema/LocationAutocompleteSchema";
 import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
+
+export namespace locationAutocompleteFn {
+	export type Error = Effect.Effect.Error<locationAutocompleteFx>;
+}
 
 export const locationAutocompleteFn = createServerFn()
 	.middleware([
@@ -44,20 +47,12 @@ export const locationAutocompleteFn = createServerFn()
 				route: "/v1/routematrix",
 			}),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				TextTooShortErrorFx() {
-					return [];
-				},
-				RuntimeErrorFx() {
-					throw new Error("RuntimeError");
-				},
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

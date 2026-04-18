@@ -6,7 +6,8 @@ import type { TransactionQuerySchema } from "~/seller/transaction/server/schema/
 
 export const withTransactionBuyerInfoQuery = withQuery<
 	TransactionQuerySchema.Type,
-	TransactionBuyerInfoSchema.Type
+	TransactionBuyerInfoSchema.Type,
+	transactionBuyerInfoFn.Error
 >({
 	logger: getRootLogger([
 		"query",

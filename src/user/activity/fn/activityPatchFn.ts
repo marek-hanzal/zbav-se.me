@@ -3,13 +3,16 @@ import { Effect } from "effect";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { activityPatchFx } from "~/user/activity/server/fx/activityPatchFx";
 import { ActivityPatchSchema } from "~/user/activity/server/schema/ActivityPatchSchema";
 import { ActivitySchema } from "~/user/activity/server/schema/ActivitySchema";
+
+export namespace activityPatchFn {
+	export type Error = Effect.Effect.Error<activityPatchFx>;
+}
 
 export const activityPatchFn = createServerFn({
 	method: "POST",
@@ -38,27 +41,12 @@ export const activityPatchFn = createServerFn({
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				NotFoundErrorFx(error) {
-					logger.error("NotFoundError", {
-						message: error.message,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("NotFoundError");
-				},
-				RuntimeErrorFx(error) {
-					logger.error("RuntimeError", {
-						message: error.message,
-						cause: error.cause,
-					});
-					throw new Error("RuntimeError");
-				},
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
-					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

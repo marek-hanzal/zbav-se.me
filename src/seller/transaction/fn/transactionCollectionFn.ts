@@ -7,10 +7,13 @@ import { transactionCollectionFx } from "~/seller/transaction/server/fx/transact
 import { TransactionQuerySchema } from "~/seller/transaction/server/schema/TransactionQuerySchema";
 import { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export namespace transactionCollectionFn {
+	export type Error = Effect.Effect.Error<transactionCollectionFx>;
+}
 
 export const transactionCollectionFn = createServerFn()
 	.middleware([
@@ -37,14 +40,12 @@ export const transactionCollectionFn = createServerFn()
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

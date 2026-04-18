@@ -7,7 +7,7 @@ import { getRootLogger } from "~/common/log/getRootLogger";
 export const withIgnoreToggleMutation = withMutation<
 	IgnoreToggleSchema.Type,
 	ListingSchema.Type,
-	Error
+	ignoreToggleFn.Error
 >({
 	logger: getRootLogger([
 		"mutation",

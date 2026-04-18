@@ -7,7 +7,7 @@ import { getRootLogger } from "~/common/log/getRootLogger";
 export const withThumbCreateMutation = withMutation<
 	ThumbCreateSchema.Type,
 	ListingSchema.Type,
-	Error
+	thumbCreateFn.Error
 >({
 	logger: getRootLogger([
 		"mutation",

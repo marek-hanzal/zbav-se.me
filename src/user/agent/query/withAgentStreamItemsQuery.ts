@@ -7,7 +7,11 @@ import type { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStr
 /**
  * This query provides direct access to AgentInput messages, no more processing is necessary here.
  */
-export const withAgentStreamItemsQuery = withQuery<AgentStreamQuerySchema.Type, AgentInputItem[]>({
+export const withAgentStreamItemsQuery = withQuery<
+	AgentStreamQuerySchema.Type,
+	AgentInputItem[],
+	agentStreamItemsFn.Error
+>({
 	logger: getRootLogger([
 		"query",
 		"withAgentStreamItemsQuery",

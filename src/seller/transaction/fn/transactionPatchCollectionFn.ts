@@ -8,11 +8,14 @@ import { TransactionPatchCollectionSchema } from "~/seller/transaction/server/sc
 import { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { withTransactionContextFx } from "~/user/transaction/server/context/withTransactionContextFx";
+
+export namespace transactionPatchCollectionFn {
+	export type Error = Effect.Effect.Error<transactionPatchCollectionFx>;
+}
 
 export const transactionPatchCollectionFn = createServerFn({
 	method: "POST",
@@ -43,21 +46,12 @@ export const transactionPatchCollectionFn = createServerFn({
 			withDateFx,
 			withTransactionContextFx(),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("ZodError");
-				},
-				RuntimeErrorFx(error) {
-					logger.error("RuntimeError", {
-						message: error.message,
-						cause: error.cause,
-					});
-					throw new Error("RuntimeError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

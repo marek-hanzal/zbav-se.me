@@ -6,7 +6,8 @@ import type { LocationSchema } from "~/session/location/server/schema/LocationSc
 
 export const withLocationAutocompleteQuery = withQuery<
 	LocationAutocompleteSchema.Type,
-	LocationSchema.Type[]
+	LocationSchema.Type[],
+	locationAutocompleteFn.Error
 >({
 	logger: getRootLogger([
 		"query",

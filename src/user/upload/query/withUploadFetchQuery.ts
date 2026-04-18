@@ -4,7 +4,11 @@ import { uploadFetchFn } from "~/user/upload/fn/uploadFetchFn";
 import type { UploadQuerySchema } from "~/user/upload/server/schema/UploadQuerySchema";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
-export const withUploadFetchQuery = withQuery<UploadQuerySchema.Type, UploadSchema.Type>({
+export const withUploadFetchQuery = withQuery<
+	UploadQuerySchema.Type,
+	UploadSchema.Type,
+	uploadFetchFn.Error
+>({
 	logger: getRootLogger([
 		"query",
 		"withUploadFetchQuery",

@@ -4,7 +4,11 @@ import { listingGetSellerInfoFn } from "~/buyer/listing/fn/listingGetSellerInfoF
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 
-export const withListingSellerInfoQuery = withQuery<EntitySchema.Type, SellerInfoSchema.Type>({
+export const withListingSellerInfoQuery = withQuery<
+	EntitySchema.Type,
+	SellerInfoSchema.Type,
+	listingGetSellerInfoFn.Error
+>({
 	logger: getRootLogger([
 		"query",
 		"withListingSellerInfoQuery",

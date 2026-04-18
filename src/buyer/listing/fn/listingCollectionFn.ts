@@ -7,10 +7,13 @@ import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollection
 import { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
 import { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export namespace listingCollectionFn {
+	export type Error = Effect.Effect.Error<listingCollectionFx>;
+}
 
 export const listingCollectionFn = createServerFn()
 	.middleware([
@@ -36,14 +39,12 @@ export const listingCollectionFn = createServerFn()
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

@@ -6,7 +6,8 @@ import type { TransactionEntryGalleryQuerySchema } from "~/user/transaction-entr
 
 export const withTransactionEntryGalleryFetchQuery = withQuery<
 	TransactionEntryGalleryQuerySchema.Type,
-	GallerySchema.Type
+	GallerySchema.Type,
+	transactionEntryGalleryFetchFn.Error
 >({
 	logger: getRootLogger([
 		"query",

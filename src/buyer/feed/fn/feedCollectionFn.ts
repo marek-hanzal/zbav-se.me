@@ -7,10 +7,13 @@ import { feedCollectionFx } from "~/buyer/feed/server/fx/feedCollectionFx";
 import { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
 import { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export namespace feedCollectionFn {
+	export type Error = Effect.Effect.Error<feedCollectionFx>;
+}
 
 export const feedCollectionFn = createServerFn()
 	.middleware([
@@ -37,14 +40,12 @@ export const feedCollectionFn = createServerFn()
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

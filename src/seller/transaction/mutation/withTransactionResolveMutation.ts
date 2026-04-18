@@ -9,7 +9,7 @@ import { withTransactionQuery } from "../query/withTransactionQuery";
 export const withTransactionResolveMutation = withMutation<
 	EntitySchema.Type,
 	TransactionSchema.Type,
-	Error
+	transactionResolveFn.Error
 >({
 	logger: getRootLogger([
 		"mutation",
