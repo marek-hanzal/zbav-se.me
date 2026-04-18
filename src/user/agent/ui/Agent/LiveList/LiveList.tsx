@@ -20,11 +20,8 @@ export const LiveList: FC<LiveList.Props> = ({ ...props }) => {
 	return (
 		<Container
 			data-ui={"LiveList"}
-			ui={{
-				flow: "vertical",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-flow="vertical"
+			data-ui-gap="default"
 			{...props}
 		>
 			{entries.map((entry) => {

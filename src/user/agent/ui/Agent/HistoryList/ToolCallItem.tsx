@@ -14,13 +14,7 @@ export namespace ToolCallItem {
 	}
 }
 
-export const ToolCallItem: FC<ToolCallItem.Props> = ({
-	item,
-	items,
-	inline,
-	className,
-	...props
-}) => {
+export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, inline, ...props }) => {
 	if (inline) {
 		// return null;
 	}
@@ -35,32 +29,24 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({
 		<Group
 			data-ui={"ToolCallItem"}
 			data-id={item.id}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				background: "alt",
-				inner: "default",
-				opacity: "6",
-				...ui,
-			}}
-			className={className}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-background="alt"
+			data-ui-inner="default"
+			data-ui-opacity="6"
 			{...props}
 		>
 			<Container
-				ui={{
-					flow: "vertical",
-					gap: "xs",
-				}}
+				data-ui-flow="vertical"
+				data-ui-gap="xs"
 				className={[
 					"min-w-0",
 				]}
 			>
 				<Typo
 					label={item.name}
-					ui={{
-						text: "sm",
-						font: "bold",
-					}}
+					data-ui-text="sm"
+					data-ui-font="bold"
 					className={[
 						"wrap-break-word",
 					]}
@@ -68,19 +54,15 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({
 
 				<Typo
 					label={translator.text("Tool call input (label)")}
-					ui={{
-						text: "xs",
-						opacity: "6",
-						font: "semibold",
-					}}
+					data-ui-text="xs"
+					data-ui-opacity="6"
+					data-ui-font="semibold"
 				/>
 
 				<Typo
 					label={item.arguments}
-					ui={{
-						text: "xs",
-						opacity: "8",
-					}}
+					data-ui-text="xs"
+					data-ui-opacity="8"
 					className={[
 						"wrap-break-word",
 						"whitespace-pre-wrap",
@@ -91,18 +73,14 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({
 					<>
 						<Typo
 							label={translator.text("Tool call output (label)")}
-							ui={{
-								text: "xs",
-								opacity: "6",
-								font: "semibold",
-							}}
+							data-ui-text="xs"
+							data-ui-opacity="6"
+							data-ui-font="semibold"
 						/>
 						<Typo
 							label={output}
-							ui={{
-								text: "xs",
-								opacity: "8",
-							}}
+							data-ui-text="xs"
+							data-ui-opacity="8"
 							className={[
 								"wrap-break-word",
 								"whitespace-pre-wrap",

@@ -33,31 +33,24 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 			data-ui={"ToolCallBlock"}
 			data-id={itemId}
 			data-output-id={itemId}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				background: "default",
-				inner: "default",
-				...ui,
-			}}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-background="default"
+			data-ui-inner="default"
 			className={className}
 			{...props}
 		>
 			<Container
-				ui={{
-					flow: "vertical",
-					gap: "xs",
-				}}
+				data-ui-flow="vertical"
+				data-ui-gap="xs"
 				className={[
 					"min-w-0",
 				]}
 			>
 				<Typo
 					label={state.name}
-					ui={{
-						text: "sm",
-						font: "bold",
-					}}
+					data-ui-text="sm"
+					data-ui-font="bold"
 					className={[
 						"wrap-break-word",
 					]}
@@ -67,18 +60,14 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 					<>
 						<Typo
 							label={translator.text("Tool call input (label)")}
-							ui={{
-								text: "xs",
-								opacity: "6",
-								font: "semibold",
-							}}
+							data-ui-text="xs"
+							data-ui-opacity="6"
+							data-ui-font="semibold"
 						/>
 						<Typo
 							label={state.input}
-							ui={{
-								text: "xs",
-								opacity: "8",
-							}}
+							data-ui-text="xs"
+							data-ui-opacity="8"
 							className={[
 								"wrap-break-word",
 								"whitespace-pre-wrap",
@@ -92,14 +81,12 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 						data-ui={"ToolCallBlock-[Spinner]"}
 						type="icon"
 						size="md"
-						ui={{
-							tone: "neutral",
-							theme: "light",
-							layout: "horizontal-flex",
-							height: undefined,
-							width: undefined,
-							color: "lead",
-						}}
+						data-ui-tone="neutral"
+						data-ui-theme="light"
+						data-ui-layout="horizontal-flex"
+						data-ui-height={undefined}
+						data-ui-width={undefined}
+						data-ui-color="lead"
 					/>
 				) : null}
 
@@ -107,18 +94,14 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 					<>
 						<Typo
 							label={translator.text("Tool call output (label)")}
-							ui={{
-								text: "xs",
-								opacity: "6",
-								font: "semibold",
-							}}
+							data-ui-text="xs"
+							data-ui-opacity="6"
+							data-ui-font="semibold"
 						/>
 						<Typo
 							label={state.output}
-							ui={{
-								text: "xs",
-								opacity: "8",
-							}}
+							data-ui-text="xs"
+							data-ui-opacity="8"
 							className={[
 								"wrap-break-word",
 								"whitespace-pre-wrap",

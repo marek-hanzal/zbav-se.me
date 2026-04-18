@@ -21,13 +21,10 @@ export const UserMessage: FC<UserMessage.Props> = ({ item, className, ...props }
 	return (
 		<Group
 			data-ui={"UserMessage"}
-			ui={{
-				tone: "subtle",
-				theme: "light",
-				background: "default",
-				inner: "default",
-				...ui,
-			}}
+			data-ui-tone="subtle"
+			data-ui-theme="light"
+			data-ui-background="default"
+			data-ui-inner="default"
 			className={[
 				"w-4/5",
 				"ml-auto",

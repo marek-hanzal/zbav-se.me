@@ -9,7 +9,7 @@ export namespace AssistantMessage {
 	}
 }
 
-export const AssistantMessage: FC<AssistantMessage.Props> = ({ item, className, ...props }) => {
+export const AssistantMessage: FC<AssistantMessage.Props> = ({ item, ...props }) => {
 	const text = item.content
 		.filter((c) => c.type === "output_text")
 		.map((c) => c.text)
@@ -24,14 +24,10 @@ export const AssistantMessage: FC<AssistantMessage.Props> = ({ item, className, 
 		<Group
 			data-ui={"AssistantMessage"}
 			data-id={item.id}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				background: "alt",
-				inner: "default",
-				...ui,
-			}}
-			className={className}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-background="alt"
+			data-ui-inner="default"
 			{...props}
 		>
 			<Markdown>{text}</Markdown>
