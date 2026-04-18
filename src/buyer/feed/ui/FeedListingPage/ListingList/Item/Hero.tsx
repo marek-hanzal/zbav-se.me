@@ -3,14 +3,13 @@ import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
 import { Overlay } from "@/lib/client/overlay";
 import { SpinnerContainer } from "@/lib/client/spinner";
-import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense, StateType } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { HeroImage } from "~/common/ui/img";
+import { Distance } from "./Distance";
 
 export namespace Hero {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -51,17 +50,6 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 					height: "full",
 				}}
 			>
-				<ListingPrice
-					price={listing.price}
-					priceType={listing.priceType}
-					currency={listing.currency}
-					ui={{
-						snapTo: "top-center",
-						opacity: "8",
-						zIndex: true,
-					}}
-				/>
-
 				<HeroImage
 					src={hero.url}
 					alt={`Hero image for listing ${listing.id}`}
@@ -95,24 +83,22 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 						}}
 					/>
 
-					{listing.distance ? (
-						listing.distance >= 1 ? (
-							<Typo
-								label={`${toLocaleNumber({
-									locale,
-									number: listing.distance,
-									maximumFractionDigits: 1,
-								})}km`}
-								ui={{
-									text: "sm",
-									font: "light",
-								}}
-							/>
-						) : (
-							<Tx label={"Behind corner (label)"} />
-						)
-					) : null}
+					<Distance distance={listing.distance} />
 				</Container>
+
+				<ListingPrice
+					price={listing.price}
+					priceType={listing.priceType}
+					currency={listing.currency}
+					ui={{
+						tone: "neutral",
+						flow: "horizontal",
+						background: undefined,
+						shadow: false,
+						border: false,
+						opacity: "8",
+					}}
+				/>
 			</Container>
 		</Container>
 	);
