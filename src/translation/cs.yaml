@@ -668,6 +668,9 @@
 836b19fc748e6429a7591712239acea4d936fab1b0671f538ba91660:
     ref: Listing unfavourited (label)
     value: Inzerát už není v oblíbených
+83986605d9083e9070c115dd6c600f8b3b5cc67f1565228fa79615c6:
+    ref: Price - offer
+    value: Price - offer
 83b634826d57876d245185f68ced81274d52163ed8a9af640530ab71:
     ref: You got like (label)
     value: Někomu se líbí tvůj inzerát!
@@ -1056,6 +1059,12 @@ Listing price - open (hint):
 Listing price - open:
     static: true
     value: K vyjednávání
+Listing price - offer (hint):
+    static: true
+    value: Nech kupující navrhnout cenu
+Listing price - offer:
+    static: true
+    value: Nabídni
 Listing restriction - adult (hint):
     static: true
     value: Obsah jen pro dospělé; není možné obejít.
@@ -1469,6 +1478,9 @@ e8a19177576d520c7d0b09d78bf7abc632de0b6f07d3a579f3822693:
 e9774c347a82dce48b5bee9adf2b79476ec38d3a3ed0b65d50c3391e:
     ref: Register (link)
     value: Jsi tu nový? Přidej se!
+e9cee0fe7795232e7e3900beb14e8a8a6d87f0fcf0bb28f4a517a78f:
+    ref: offer
+    value: offer
 eb18c941e11fe2d241983a0df227512b3e3691c12cc66af2303bc987:
     ref: Draft (label)
     value: (Bez názvu)
@@ -1575,6 +1587,9 @@ ff16f6190259edb2dc944cd87e70410856d658de53880f79b4e9c403:
 ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
     ref: No categories found (title)
     value: Ajajaj, nic jsme nenašli!
+ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
+    ref: open
+    value: open
 seller - Buyer rejected the transaction (message):
     value: |
         **Kupující odmítl obchod.**

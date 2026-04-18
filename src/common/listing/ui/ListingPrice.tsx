@@ -51,7 +51,7 @@ export const ListingPrice: FC<ListingPrice.Props> = ({ price, priceType, currenc
 						 * This hack only marks the place with dynamic translation, so it's easy to find it when source
 						 * changes.
 						 */
-						.with("closed", "open", () => {
+						.with("closed", "open", "offer", () => {
 							return (
 								<Tx
 									label={`Listing price - ${priceType}`}
