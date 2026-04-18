@@ -18,8 +18,8 @@ export const uiFade = ({ ui, className }: uiFade.Props) => {
 	return coolUi<uiFade.Ui>({
 		name: "Fade",
 		ui: {
-			theme: "light",
-			tone: "primary",
+			"data-ui-theme": "light",
+			"data-ui-tone": "primary",
 			...ui,
 		},
 		className,

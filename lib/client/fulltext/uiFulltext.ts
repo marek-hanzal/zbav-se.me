@@ -22,10 +22,10 @@ export const uiFulltext = ({ ui, className }: uiFulltext.Props) => {
 	return coolUi<uiFulltext.Ui>({
 		name: "Fulltext",
 		ui: {
-			tone: "primary",
-			theme: "light",
-			width: "full",
-			position: "relative",
+			"data-ui-tone": "primary",
+			"data-ui-theme": "light",
+			"data-ui-width": "full",
+			"data-ui-position": "relative",
 			...ui,
 		},
 		className,

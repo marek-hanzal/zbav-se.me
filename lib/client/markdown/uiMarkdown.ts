@@ -24,7 +24,7 @@ export const uiMarkdown = ({ ui, className }: uiMarkdown.Props) => {
 	return coolUi<uiMarkdown.Ui>({
 		name: "Markdown",
 		ui: {
-			text: "default",
+			"data-ui-text": "default",
 			...ui,
 		},
 		className,

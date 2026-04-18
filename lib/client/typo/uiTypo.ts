@@ -40,7 +40,7 @@ export const uiTypo = ({ ui, className }: uiTypo.Props) => {
 	return coolUi({
 		name: "Typo",
 		ui: {
-			display: "inline",
+			"data-ui-display": "inline",
 			...ui,
 		},
 		className,
