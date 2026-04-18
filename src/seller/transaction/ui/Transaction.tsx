@@ -71,11 +71,9 @@ export const Transaction: FC<Transaction.Props> = ({
 						price={transaction.price}
 						priceType={transaction.priceType}
 						currency={transaction.currency}
-						ui={{
-							snapTo: "top-center",
-							opacity: "8",
-							zIndex: true,
-						}}
+						data-ui-snap-to="top-center"
+						data-ui-opacity="8"
+						data-ui-z-index
 					/>
 				</Container>
 
