@@ -13,8 +13,9 @@ export namespace uiSaveButton {
 	}
 }
 
-export const uiSaveButton = ({ className, ...ui }: uiSaveButton.Props) => {
+export const uiSaveButton = ({ name, className, ...ui }: uiSaveButton.Props) => {
 	return uiButton({
+		name,
 		"data-ui-tone": "secondary",
 		"data-ui-theme": "light",
 		"data-ui-inner": "md",

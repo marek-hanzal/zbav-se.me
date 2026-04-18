@@ -13,8 +13,9 @@ export namespace uiCancelButton {
 	}
 }
 
-export const uiCancelButton = ({ className, ...ui }: uiCancelButton.Props) => {
+export const uiCancelButton = ({ name, className, ...ui }: uiCancelButton.Props) => {
 	return uiButton({
+		name,
 		"data-ui-tone": "neutral",
 		"data-ui-theme": "light",
 		"data-ui-inner": "md",

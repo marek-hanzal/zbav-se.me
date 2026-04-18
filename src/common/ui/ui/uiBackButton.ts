@@ -13,8 +13,9 @@ export namespace uiBackButton {
 	}
 }
 
-export const uiBackButton = ({ className, ...ui }: uiBackButton.Props) => {
+export const uiBackButton = ({ name, className, ...ui }: uiBackButton.Props) => {
 	return uiButton({
+		name,
 		"data-ui-tone": "neutral",
 		"data-ui-theme": "light",
 		"data-ui-justify": "center",

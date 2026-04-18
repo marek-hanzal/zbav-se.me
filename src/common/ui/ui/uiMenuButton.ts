@@ -12,8 +12,9 @@ export namespace uiMenuButton {
 	}
 }
 
-export const uiMenuButton = ({ className, ...ui }: uiMenuButton.Props) => {
+export const uiMenuButton = ({ name, className, ...ui }: uiMenuButton.Props) => {
 	return uiButton({
+		name,
 		"data-ui-flow": "horizontal",
 		"data-ui-tone": "neutral",
 		"data-ui-theme": "light",

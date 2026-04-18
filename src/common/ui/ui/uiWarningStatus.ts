@@ -13,8 +13,9 @@ export namespace uiWarningStatus {
 	}
 }
 
-export const uiWarningStatus = ({ className, ...ui }: uiWarningStatus.Props) => {
+export const uiWarningStatus = ({ name, className, ...ui }: uiWarningStatus.Props) => {
 	return uiStatus({
+		name,
 		"data-ui-tone": "brand",
 		"data-ui-theme": "light",
 		"data-ui-color": "lead",
