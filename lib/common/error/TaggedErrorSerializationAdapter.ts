@@ -11,7 +11,6 @@ export namespace TaggedErrorSerializationAdapter {
 
 	export interface Wire {
 		message: string;
-		name: string;
 		tag: string;
 	}
 }
@@ -55,7 +54,6 @@ export const TaggedErrorSerializationAdapter = createSerializationAdapter<
 
 		return {
 			message: error.message,
-			name: error.name,
 			tag: error._tag,
 		};
 	},
