@@ -33,12 +33,18 @@ export const useListingEvent = ({
 	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
 	const listingEventCreateMutation = withListingEventCreateMutation.useMutation({
-		retry(_, error) {
+		retry(count, error) {
 			logger.trace("Retry", {
 				visible,
 				error,
+				count,
 			});
-			return visible && error._tag !== "TooManyRequestsFx";
+			if (error._tag === "InvalidRequestErrorFx") {
+				return false;
+			} else if (error._tag === "TooManyRequestsFx") {
+				return false;
+			}
+			return visible;
 		},
 		retryDelay(count) {
 			logger.trace("Retrying", {
