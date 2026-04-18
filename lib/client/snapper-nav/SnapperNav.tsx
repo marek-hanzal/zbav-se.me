@@ -1,15 +1,16 @@
 import { type FC, useCallback, useId, useMemo } from "react";
+import type { ui } from "../cls";
 import { Container } from "../container/Container";
 import { useDoubleTap } from "../double-tap/useDoubleTap";
+import type { uiIcon } from "../icon";
 import { DotIcon } from "../icon/DotIcon";
 import { Icon } from "../icon/Icon";
-import type { uiIcon } from "../icon/uiIcon";
 import type { useSnapperNav } from "../snapper/useSnapperNav";
 
-const activeIconUi: uiIcon.Ui = {
-	text: "lg",
-	color: "lead",
-};
+const activeIconUi = {
+	"data-ui-text": "lg",
+	"data-ui-color": "lead",
+} satisfies ui.Data<uiIcon.Ui, keyof uiIcon.Ui>;
 
 export namespace SnapperNav {
 	export namespace IconProps {
@@ -52,8 +53,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 	//
 	iconProps,
 	limit = 5,
-	//
-	ui,
 	//
 	...props
 }) => {
@@ -139,9 +138,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					onClick={snapperNav.api.prev}
 					onTouchStart={firstDoubleTap.onTouchStart}
 					icon={leftIcon}
-					ui={{
-						text: "md",
-					}}
+					data-ui-text="md"
 					{...iconProps?.({
 						limit: true,
 						active: false,
@@ -164,14 +161,12 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 							key={page.id}
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
-							ui={
-								isActive
-									? activeIconUi
-									: {
-											text: "md",
-											color: "icon",
-										}
-							}
+							{...(isActive
+								? activeIconUi
+								: {
+										"data-ui-text": "md",
+										"data-ui-color": "icon",
+									})}
 							{...iconProps?.({
 								limit: false,
 								active: isActive,
@@ -192,9 +187,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					onDoubleClick={snapperNav.api.end}
 					onTouchStart={lastDoubleTap.onTouchStart}
 					icon={rightIcon}
-					ui={{
-						text: "md",
-					}}
+					data-ui-text="md"
 					{...iconProps?.({
 						limit: true,
 						active: false,
@@ -226,13 +219,11 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 							key={page.id}
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
-							ui={
-								isActive
-									? activeIconUi
-									: {
-											text: "md",
-										}
-							}
+							{...(isActive
+								? activeIconUi
+								: {
+										"data-ui-text": "md",
+									})}
 							//
 							data-active={isActive}
 							//
@@ -256,24 +247,21 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 	return snapperNav.state.count > 1 ? (
 		<Container
 			data-ui="SnapperNav[Container]"
-			ui={{
-				tone: "primary",
-				theme: "light",
-				border: true,
-				shadow: true,
-				round: "xl",
-				inner: "default",
-				snapTo: "bottom-center",
-				flow: "horizontal",
-				items: "center",
-				justify: "center",
-				gap: "default",
-				background: "default",
-				zIndex: true,
-				color: "lead",
-				opacity: "6",
-				...ui,
-			}}
+			data-ui-tone="primary"
+			data-ui-theme="light"
+			data-ui-border
+			data-ui-shadow
+			data-ui-round="xl"
+			data-ui-inner="default"
+			data-ui-snap-to="bottom-center"
+			data-ui-flow="horizontal"
+			data-ui-items="center"
+			data-ui-justify="center"
+			data-ui-gap="default"
+			data-ui-background="default"
+			data-ui-z-index
+			data-ui-color="lead"
+			data-ui-opacity="6"
 			className={"transition-all tone-neutral-light-bg"}
 			{...props}
 		>
