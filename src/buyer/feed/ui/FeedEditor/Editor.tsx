@@ -70,15 +70,11 @@ export const Editor: FC<Editor.Props> = ({
 						action={
 							<Icon
 								icon={ChevronRightIcon}
-								ui={{
-									text: "xl",
-								}}
+								data-ui-text="xl"
 							/>
 						}
 						wrapperProps={{
-							ui: {
-								tone: feed.name ? "neutral" : "secondary",
-							},
+							"data-ui-tone": feed.name ? "neutral" : "secondary",
 						}}
 						onClick={() => onView("name")}
 					/>
@@ -95,9 +91,7 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
@@ -123,9 +117,7 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
@@ -145,9 +137,7 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
@@ -166,9 +156,7 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
@@ -187,9 +175,7 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
@@ -209,9 +195,7 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
@@ -233,9 +217,7 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
@@ -257,9 +239,7 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{
@@ -284,9 +264,7 @@ export const Editor: FC<Editor.Props> = ({
 					action={
 						<Icon
 							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
+							data-ui-text="xl"
 						/>
 					}
 					wrapperProps={{

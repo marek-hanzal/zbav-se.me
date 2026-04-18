@@ -24,11 +24,9 @@ export const FeedEditorSheet: FC<FeedEditorSheet.Props> = ({ state, ...props }) 
 					<CloseButton
 						data-action={"close feed editor"}
 						onClick={close}
-						ui={{
-							background: undefined,
-							shadow: false,
-							border: false,
-						}}
+						data-ui-background={undefined}
+						data-ui-shadow={false}
+						data-ui-border={false}
 					/>
 				),
 			})}
