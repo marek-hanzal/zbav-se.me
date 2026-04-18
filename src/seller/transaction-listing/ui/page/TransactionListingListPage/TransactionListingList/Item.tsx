@@ -41,24 +41,20 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 			<ListItem
 				hero={
 					<Container
-						ui={{
-							position: "relative",
-							height: "full",
-						}}
+						data-ui-position="relative"
+						data-ui-height="full"
 					>
 						<Image src={hero.url} />
 
 						{isUnread ? (
 							<Badge
-								ui={{
-									snapTo: "bottom-left",
-									tone: "secondary",
-									theme: "light",
-									badge: "xs",
-									font: "bold",
-									opacity: "8",
-									text: "xs",
-								}}
+								data-ui-snap-to="bottom-left"
+								data-ui-tone="secondary"
+								data-ui-theme="light"
+								data-ui-badge="xs"
+								data-ui-font="bold"
+								data-ui-opacity="8"
+								data-ui-text="xs"
 							>
 								{unreadCount > 9
 									? "9+"
@@ -72,50 +68,42 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 				}
 				title={
 					<Container
-						ui={{
-							flow: "vertical",
-							width: "full",
-						}}
+						data-ui-flow="vertical"
+						data-ui-width="full"
 					>
 						<Typo
 							label={transactionListing.title}
-							ui={{
-								tone: "neutral",
-								theme: "light",
-								color: "lead",
-								display: "block",
-								width: "full",
-								text: "sm",
-							}}
+							data-ui-tone="neutral"
+							data-ui-theme="light"
+							data-ui-color="lead"
+							data-ui-display="block"
+							data-ui-width="full"
+							data-ui-text="sm"
 						/>
 
 						<Typo
 							label={toActivityLabel({
 								entry: transactionListing.entry,
 							})}
-							ui={{
-								text: "xs",
-								tone: "neutral",
-								theme: "light",
-								font: "normal",
-								color: "text",
-								opacity: "6",
-							}}
+							data-ui-text="xs"
+							data-ui-tone="neutral"
+							data-ui-theme="light"
+							data-ui-font="normal"
+							data-ui-color="text"
+							data-ui-opacity="6"
 						/>
 					</Container>
 				}
 				bottom={
 					<Container
-						ui={{
-							tone: "neutral",
-							theme: "light",
-							color: "text",
-							flow: "horizontal",
-							items: "center",
-							justify: "space-between",
-							text: "sm",
-							width: "full",
-						}}
+						data-ui-tone="neutral"
+						data-ui-theme="light"
+						data-ui-color="text"
+						data-ui-flow="horizontal"
+						data-ui-items="center"
+						data-ui-justify="space-between"
+						data-ui-text="sm"
+						data-ui-width="full"
 					>
 						<div />
 
@@ -124,9 +112,7 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 								locale,
 								time: transactionListing.entry.createdAt,
 							})}
-							ui={{
-								opacity: "6",
-							}}
+							data-ui-opacity="6"
 						/>
 					</Container>
 				}

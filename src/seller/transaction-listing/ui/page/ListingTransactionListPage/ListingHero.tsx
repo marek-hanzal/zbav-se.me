@@ -34,11 +34,8 @@ export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ...pr
 		<>
 			<Container
 				data-ui="ListingHero"
-				ui={{
-					position: "relative",
-					height: "content",
-					...ui,
-				}}
+				data-ui-position="relative"
+				data-ui-height="content"
 				onClick={() => {
 					setIsOpen(true);
 				}}
@@ -54,37 +51,31 @@ export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ...pr
 					price={listing.price}
 					priceType={listing.priceType}
 					currency={listing.currency}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						snapTo: "top-center",
-					}}
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-snap-to="top-center"
 				/>
 
 				<Container
 					className={"pointer-events-none"}
-					ui={{
-						snapTo: "bottom-center",
-						inner: "default",
-						tone: "neutral",
-						theme: "light",
-						background: "default",
-						opacity: "8",
-						items: "center",
-						zIndex: true,
-						width: "full",
-					}}
+					data-ui-snap-to="bottom-center"
+					data-ui-inner="default"
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-background="default"
+					data-ui-opacity="8"
+					data-ui-items="center"
+					data-ui-z-index
+					data-ui-width="full"
 				>
 					<Typo
 						label={listing.title}
-						ui={{
-							tone: "neutral",
-							theme: "light",
-							color: "text",
-							font: "bold",
-							display: "block",
-							width: "full",
-						}}
+						data-ui-tone="neutral"
+						data-ui-theme="light"
+						data-ui-color="text"
+						data-ui-font="bold"
+						data-ui-display="block"
+						data-ui-width="full"
 						className={[
 							"line-clamp-2",
 							"text-center",

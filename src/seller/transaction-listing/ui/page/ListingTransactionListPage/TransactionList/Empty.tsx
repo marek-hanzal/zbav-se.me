@@ -29,13 +29,11 @@ export const Empty: FC<Empty.Props> = (props) => {
 					params={{
 						locale,
 					}}
-					ui={{
-						background: "default",
-						border: true,
-						shadow: true,
-						round: "default",
-						size: "default",
-					}}
+					data-ui-background="default"
+					data-ui-border
+					data-ui-shadow
+					data-ui-round="default"
+					data-ui-size="default"
 				>
 					<Tx label="Go to my listings (button)" />
 				</LinkTo>

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import type { MarkSuspense } from "@/lib/client/type";
-import { Typo, type uiTypo } from "@/lib/client/typo";
+import { Typo } from "@/lib/client/typo";
 import { withTransactionQuery } from "~/seller/transaction/query/withTransactionQuery";
 import type { TransactionFilterSchema } from "~/seller/transaction/server/schema/TransactionFilterSchema";
 import { List } from "./List";
@@ -11,7 +11,7 @@ export namespace ListGroup {
 		filter: TransactionFilterSchema.Type;
 		label: string;
 		refetchInterval: number;
-		typoUi?: uiTypo.Ui;
+		typoProps?: Typo.PropsEx;
 	}
 }
 
@@ -20,7 +20,7 @@ export const ListGroup: FC<ListGroup.Props> = ({
 	filter,
 	label,
 	refetchInterval,
-	typoUi,
+	typoProps,
 	...props
 }) => {
 	const { data: transactionCollection } = withTransactionQuery.useIdsQuery(
@@ -49,24 +49,19 @@ export const ListGroup: FC<ListGroup.Props> = ({
 	return (
 		<Container
 			data-ui={"ListGroup"}
-			ui={{
-				layout: "vertical-flex",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-gap="default"
 			{...props}
 		>
 			<Typo
 				label={label}
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					text: "lg",
-					font: "bold",
-					color: "text",
-					...typoUi,
-				}}
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-text="lg"
+				data-ui-font="bold"
+				data-ui-color="text"
 				className={"text-center"}
+				{...typoProps}
 			/>
 
 			<List

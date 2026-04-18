@@ -14,11 +14,8 @@ export const List: FC<List.Props> = ({ _suspense, transactionIds, ...props }) =>
 	return (
 		<Container
 			data-ui={"List"}
-			ui={{
-				layout: "vertical-flex",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-gap="default"
 			{...props}
 		>
 			{transactionIds.map((transactionId) => {

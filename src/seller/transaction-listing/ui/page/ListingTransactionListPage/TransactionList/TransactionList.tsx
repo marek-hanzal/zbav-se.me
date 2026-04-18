@@ -62,7 +62,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						],
 						activity: "archived",
 					},
-					typoUi: {
+					typoProps: {
 						tone: "neutral",
 						theme: "light",
 					},
@@ -75,7 +75,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						],
 						activity: "archived",
 					},
-					typoUi: {
+					typoProps: {
 						font: "normal",
 					},
 				},
@@ -87,7 +87,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						],
 						activity: "archived",
 					},
-					typoUi: {
+					typoProps: {
 						font: "normal",
 					},
 				},
@@ -99,7 +99,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						],
 						activity: "archived",
 					},
-					typoUi: {
+					typoProps: {
 						font: "normal",
 					},
 				},
@@ -115,10 +115,8 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						],
 						activity: "archived",
 					},
-					ui: {
-						opacity: "7",
-					},
-					typoUi: {
+					"data-ui-opacity": "7",
+					typoProps: {
 						tone: "neutral",
 						theme: "light",
 						opacity: "7",
@@ -132,13 +130,10 @@ export const TransactionList: FC<TransactionList.Props> = ({
 	return (
 		<Container
 			data-ui={"TransactionList"}
-			ui={{
-				scroll: "vertical",
-				height: "full",
-				layout: "vertical-flex",
-				gap: "2xl",
-				...ui,
-			}}
+			data-ui-scroll="vertical"
+			data-ui-height="full"
+			data-ui-layout="vertical-flex"
+			data-ui-gap="2xl"
 			{...props}
 		>
 			<EmptyState

@@ -15,11 +15,8 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 	return (
 		<Container
 			data-ui={"TransactionListingList"}
-			ui={{
-				layout: "vertical-flex",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-gap="default"
 			{...props}
 		>
 			{transactionListingIds.map((transactionListingId) => {
