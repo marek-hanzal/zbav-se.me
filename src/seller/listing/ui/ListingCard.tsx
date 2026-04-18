@@ -25,7 +25,7 @@ export namespace ListingCard {
 	}
 }
 
-export const ListingCard: FC<ListingCard.Props> = ({ _suspense, listing, ui, hooks, ...props }) => {
+export const ListingCard: FC<ListingCard.Props> = ({ _suspense, listing, hooks, ...props }) => {
 	const hero = useUpload(listing.gallery.items);
 
 	return (

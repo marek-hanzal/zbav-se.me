@@ -9,7 +9,7 @@ export namespace SystemMessage {
 	}
 }
 
-export const SystemMessage: FC<SystemMessage.Props> = ({ item, ui, ...props }) => {
+export const SystemMessage: FC<SystemMessage.Props> = ({ item, ...props }) => {
 	return (
 		<Container
 			data-ui={"SystemMessage"}

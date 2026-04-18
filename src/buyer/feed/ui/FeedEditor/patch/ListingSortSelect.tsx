@@ -20,13 +20,11 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 	return (
 		<Container
 			data-ui={"ListingSortSelect[Container]"}
-			ui={{
-				layout: "vertical-flex",
-				scroll: "vertical",
-				gap: "sm",
-				height: "auto",
-				width: "full",
-			}}
+			data-ui-layout="vertical-flex"
+			data-ui-scroll="vertical"
+			data-ui-gap="sm"
+			data-ui-height="auto"
+			data-ui-width="full"
 			{...props}
 		>
 			{(
@@ -85,26 +83,20 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 						}}
 						{...uiSelectButton({
 							isSelected: Boolean(current?.order),
-							ui: {
-								size: "default",
-							},
+							"data-ui-size": "default",
 							className: [],
 						})}
 					>
 						<Container
-							ui={{
-								flow: "horizontal",
-								justify: "space-between",
-								items: "center",
-								gap: "sm",
-								width: "full",
-							}}
+							data-ui-flow="horizontal"
+							data-ui-justify="space-between"
+							data-ui-items="center"
+							data-ui-gap="sm"
+							data-ui-width="full"
 						>
 							<Tx
 								label={`Listing common sort value ${sortValue} - ${current?.order ?? "unused"}`}
-								ui={{
-									font: position ? "bold" : "normal",
-								}}
+								data-ui-font={position ? "bold" : "normal"}
 							/>
 
 							{position}
@@ -119,11 +111,9 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 				onClick={() => {
 					state.set([]);
 				}}
-				ui={{
-					tone: "warning",
-					theme: "light",
-					size: "default",
-				}}
+				data-ui-tone="warning"
+				data-ui-theme="light"
+				data-ui-size="default"
 			>
 				<Tx label="Clear all sorts (button)" />
 			</Button>

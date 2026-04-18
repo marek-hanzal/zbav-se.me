@@ -34,13 +34,12 @@ export const AgeValueList: FC<AgeValueList.Props> = ({ ageIn, ...props }) => {
 			}))}
 			renderFn={(item) => translator.text(`Age ${item.age} (label)`)}
 			wrapperProps={{
-				ui:
-					ageIn.length > 0
-						? {
-								tone: "neutral",
-								theme: "light",
-							}
-						: undefined,
+				...(ageIn.length > 0
+					? {
+							"data-ui-tone": "neutral",
+							"data-ui-theme": "light",
+						}
+					: undefined),
 			}}
 			{...props}
 		/>

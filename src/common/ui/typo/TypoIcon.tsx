@@ -16,7 +16,6 @@ export const TypoIcon: FC<TypoIcon.Props> = ({
 	iconProps,
 	flip,
 	children,
-	ui,
 	className,
 	...props
 }) => {

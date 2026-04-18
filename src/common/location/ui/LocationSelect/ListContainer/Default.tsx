@@ -14,7 +14,7 @@ export namespace Default {
 	}
 }
 
-export const Default: FC<Default.Props> = ({ textHint, warningStatusProps, ui }) => {
+export const Default: FC<Default.Props> = ({ textHint, warningStatusProps }) => {
 	return (
 		<Container
 			data-ui="ListContainer[Container.default]"

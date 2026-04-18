@@ -16,13 +16,7 @@ export namespace DeliveryPatch {
 	}
 }
 
-export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
-	feed,
-	onSettled,
-	onCancel,
-	ui,
-	...props
-}) => {
+export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
@@ -34,14 +28,11 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
 	return (
 		<Container
 			data-ui={"DeliveryPatch[Container]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				width: "full",
-				inner: "default",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-width="full"
+			data-ui-inner="default"
+			data-ui-gap="default"
 			{...props}
 		>
 			<DeliverySelect selection={selection} />

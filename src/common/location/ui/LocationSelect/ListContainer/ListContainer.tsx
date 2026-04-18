@@ -36,7 +36,6 @@ export const ListContainer = withFallback(
 		onChange,
 		allowClear,
 		onLocation,
-		ui,
 		warningStatusProps,
 		...props
 	}: ListContainer.Props) => {
@@ -94,7 +93,6 @@ export const ListContainer = withFallback(
 								truncate
 								{...uiSelectButton({
 									isSelected: value === item.id,
-									ui,
 									className: [
 										"text-left",
 									],

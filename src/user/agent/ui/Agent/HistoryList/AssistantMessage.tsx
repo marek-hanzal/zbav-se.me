@@ -9,7 +9,7 @@ export namespace AssistantMessage {
 	}
 }
 
-export const AssistantMessage: FC<AssistantMessage.Props> = ({ item, ui, className, ...props }) => {
+export const AssistantMessage: FC<AssistantMessage.Props> = ({ item, className, ...props }) => {
 	const text = item.content
 		.filter((c) => c.type === "output_text")
 		.map((c) => c.text)

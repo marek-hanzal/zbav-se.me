@@ -16,7 +16,7 @@ export namespace FavouriteButton {
 }
 
 export const FavouriteButton = withFallback(
-	({ _suspense, feedId, listingId, meta, ui, ...props }: FavouriteButton.Props) => {
+	({ _suspense, feedId, listingId, meta, ...props }: FavouriteButton.Props) => {
 		const update = withListingQuery.useUpdate();
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
 		const favouriteToggle = withFavouriteToggleMutation.useMutation({
@@ -43,34 +43,28 @@ export const FavouriteButton = withFallback(
 						meta,
 					});
 				}}
-				ui={{
-					tone: "primary",
-					theme: "light",
-					size: "xl",
-					justify: "start",
-					...ui,
-				}}
+				data-ui-tone="primary"
+				data-ui-theme="light"
+				data-ui-size="xl"
+				data-ui-justify="start"
 				{...props}
 			/>
 		);
 	},
-	({ ui, ...props }: Omit<FavouriteButton.Props, "_suspense">) => {
+	({ ...props }: Omit<FavouriteButton.Props, "_suspense">) => {
 		return (
 			<Button
 				disabled
 				loading
-				ui={{
-					tone: "secondary",
-					theme: "light",
-					round: "full",
-					square: "md",
-					justify: "center",
-					items: "center",
-					size: undefined,
-					inner: undefined,
-					snapTo: "top-right",
-					...ui,
-				}}
+				data-ui-tone="secondary"
+				data-ui-theme="light"
+				data-ui-round="full"
+				data-ui-square="md"
+				data-ui-justify="center"
+				data-ui-items="center"
+				data-ui-size={undefined}
+				data-ui-inner={undefined}
+				data-ui-snap-to="top-right"
 				{...props}
 			>
 				<Tx label="Loading... (button)" />

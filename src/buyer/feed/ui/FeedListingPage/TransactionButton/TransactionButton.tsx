@@ -18,7 +18,7 @@ export namespace TransactionButton {
 	}
 }
 
-export const TransactionButton: FC<TransactionButton.Props> = ({ listing, meta, ui, ...props }) => {
+export const TransactionButton: FC<TransactionButton.Props> = ({ listing, meta, ...props }) => {
 	const locale = useLocale();
 	const queryClient = useQueryClient();
 	const updateListing = withListingQuery.useUpdate();
@@ -57,18 +57,14 @@ export const TransactionButton: FC<TransactionButton.Props> = ({ listing, meta, 
 				icon={ChevronRightIcon}
 				iconPosition={"right"}
 				iconProps={{
-					ui: {
-						text: "xl",
-					},
+					"data-ui-text": "xl",
 				}}
 				{...uiButton({
-					ui: {
-						justify: "space-between",
-						tone: "neutral",
-						theme: "light",
-						size: "default",
-						text: "lg",
-					},
+					"data-ui-justify": "space-between",
+					"data-ui-tone": "neutral",
+					"data-ui-theme": "light",
+					"data-ui-size": "default",
+					"data-ui-text": "lg",
 					className: [],
 				})}
 				data-ui={"TransactionButton"}
@@ -85,9 +81,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({ listing, meta, 
 			data-action={"create transaction"}
 			iconEnabled={TransactionIcon}
 			iconProps={{
-				ui: {
-					text: "xl",
-				},
+				"data-ui-text": "xl",
 			}}
 			disabled={transactionCreateMutation.isPending}
 			loading={transactionCreateMutation.isPending}

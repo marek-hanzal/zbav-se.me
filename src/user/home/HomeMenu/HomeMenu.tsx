@@ -37,7 +37,7 @@ export namespace HomeMenu {
  *
  * @see src/@user/home/page/HomePage.tsx
  */
-export const HomeMenu = withFallback(({ _suspense, ui, onLinkClick, ...props }: HomeMenu.Props) => {
+export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: HomeMenu.Props) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const isHome = useMatchRoute()({
 		to: "/$locale/app/home",

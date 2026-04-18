@@ -31,7 +31,6 @@ export namespace SaveAsFeedButton {
 export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 	_suspense,
 	feedId,
-	ui,
 	className,
 	...props
 }) => {
@@ -78,9 +77,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 				onClick={() => setIsOpen(true)}
 				iconEnabled={SaveIcon}
 				iconProps={{
-					ui: {
-						text: "xl",
-					},
+					"data-ui-text": "xl",
 				}}
 				ui={{
 					tone: "neutral",

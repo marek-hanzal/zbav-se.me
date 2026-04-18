@@ -18,7 +18,7 @@ export namespace FeedListPage {
  *
  * @see src/@routes
  */
-export const FeedListPage: FC<FeedListPage.Props> = ({ ui, ...props }) => {
+export const FeedListPage: FC<FeedListPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
 
 	return (

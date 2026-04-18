@@ -10,7 +10,7 @@ export namespace Distance {
 	}
 }
 
-export const Distance: FC<Distance.Props> = ({ distance, ui, ...props }) => {
+export const Distance: FC<Distance.Props> = ({ distance, ...props }) => {
 	const locale = useLocale();
 
 	if (distance === null) {

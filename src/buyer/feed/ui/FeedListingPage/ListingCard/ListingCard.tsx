@@ -25,7 +25,7 @@ export namespace ListingCard {
 }
 
 export const ListingCard = withFallback(
-	({ _suspense, feedId, listingId, onView, ui, children, ...props }: ListingCard.Props) => {
+	({ _suspense, feedId, listingId, onView, children, ...props }: ListingCard.Props) => {
 		const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
 
@@ -50,12 +50,9 @@ export const ListingCard = withFallback(
 		return (
 			<Container
 				data-ui={"ListingCard"}
-				ui={{
-					layout: "vertical-flex",
-					gap: "xl",
-					inner: "default",
-					...ui,
-				}}
+				data-ui-layout="vertical-flex"
+				data-ui-gap="xl"
+				data-ui-inner="default"
 				{...props}
 			>
 				<HeroSection
@@ -74,12 +71,10 @@ export const ListingCard = withFallback(
 				{listing.my ? null : (
 					<>
 						<Container
-							ui={{
-								layout: "horizontal-flex",
-								width: "full",
-								items: "center",
-								justify: "space-evenly",
-							}}
+							data-ui-layout="horizontal-flex"
+							data-ui-width="full"
+							data-ui-items="center"
+							data-ui-justify="space-evenly"
 						>
 							<Suspense
 								fallback={

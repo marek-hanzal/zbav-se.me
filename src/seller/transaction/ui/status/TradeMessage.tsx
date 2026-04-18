@@ -20,7 +20,7 @@ export namespace TradeMessage {
 	}
 }
 
-export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ui, ...props }) => {
+export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ...props }) => {
 	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 

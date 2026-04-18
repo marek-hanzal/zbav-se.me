@@ -23,7 +23,7 @@ export namespace NamePatch {
 	}
 }
 
-export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, onCancel, ui, ...props }) => {
+export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation({
 		onSettled,
 	});
@@ -56,20 +56,15 @@ export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, onCancel, ui, 
 		>
 			<Container
 				data-ui={"NamePatch"}
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					inner: "default",
-					...ui,
-				}}
+				data-ui-layout="vertical-content-footer"
+				data-ui-height="full"
+				data-ui-width="full"
+				data-ui-inner="default"
 				{...props}
 			>
 				<Container
-					ui={{
-						layout: "vertical-centered",
-						height: "full",
-					}}
+					data-ui-layout="vertical-centered"
+					data-ui-height="full"
 				>
 					<Status
 						textTitle={translator.text("Feed name (title)")}
@@ -98,17 +93,13 @@ export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, onCancel, ui, 
 								)}
 							</form.AppField>
 						}
-						ui={{
-							text: "md",
-							inner: "4xl",
-						}}
+						data-ui-text="md"
+						data-ui-inner="4xl"
 					>
 						<Mx
 							label={translator.text("Feed name (required)")}
-							ui={{
-								tone: "neutral",
-								theme: "light",
-							}}
+							data-ui-tone="neutral"
+							data-ui-theme="light"
 						/>
 					</Status>
 				</Container>

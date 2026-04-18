@@ -19,7 +19,6 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 	draft,
 	buttonProps,
 	confirmProps,
-	ui,
 	className,
 	...props
 }) => {

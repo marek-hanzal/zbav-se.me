@@ -60,7 +60,6 @@ export const Route = createFileRoute("/$locale/landing")({
 							<LinkTo
 								data-action={"goto sign-in"}
 								{...uiButton({
-									ui: {},
 									className: [],
 								})}
 								//
@@ -87,7 +86,6 @@ export const Route = createFileRoute("/$locale/landing")({
 							<LinkTo
 								data-action={"goto sign-up"}
 								{...uiButton({
-									ui: {},
 									className: [],
 								})}
 								//

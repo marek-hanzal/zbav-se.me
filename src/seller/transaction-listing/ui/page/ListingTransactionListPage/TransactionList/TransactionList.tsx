@@ -24,7 +24,6 @@ export const TransactionList: FC<TransactionList.Props> = ({
 	_suspense,
 	listingId,
 	refetchInterval = 5_000,
-	ui,
 	...props
 }) => {
 	const { data: hasTransaction } = withTransactionQuery.useCollectionQuery(

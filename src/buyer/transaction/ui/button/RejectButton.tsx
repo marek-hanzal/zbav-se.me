@@ -38,9 +38,7 @@ export const RejectButton: FC<RejectButton.Props> = ({ close, transaction, ...pr
 			data-action={"reject transaction"}
 			iconEnabled={CancelIcon}
 			confirmProps={{
-				ui: {
-					tone: "danger",
-				},
+				"data-ui-tone": "danger",
 				children: <Tx label="Reject transaction - confirm (button)" />,
 				onClick() {
 					mutation.mutate({

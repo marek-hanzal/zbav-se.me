@@ -19,7 +19,7 @@ export namespace Agent {
 	}
 }
 
-export const Agent: FC<Agent.Props> = ({ ui, ...props }) => {
+export const Agent: FC<Agent.Props> = ({ ...props }) => {
 	const chat = useAgent({
 		_suspense: "I know",
 	});

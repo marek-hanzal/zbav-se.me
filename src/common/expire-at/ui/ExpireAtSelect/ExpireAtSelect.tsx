@@ -16,7 +16,7 @@ export namespace ExpireAtSelect {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const ExpireAtSelect: FC<ExpireAtSelect.Props> = ({ value, onChange, ui, ...props }) => {
+export const ExpireAtSelect: FC<ExpireAtSelect.Props> = ({ value, onChange, ...props }) => {
 	return (
 		<Container
 			data-ui={"ExpireAtSelect[Container]"}

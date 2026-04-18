@@ -59,7 +59,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	camera = false,
 	value,
 	onChange,
-	ui,
 	...props
 }) => {
 	const controller = useController({

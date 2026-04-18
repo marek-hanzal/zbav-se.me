@@ -13,7 +13,7 @@ export namespace LiveList {
 	}
 }
 
-export const LiveList: FC<LiveList.Props> = ({ ui, ...props }) => {
+export const LiveList: FC<LiveList.Props> = ({ ...props }) => {
 	const { data: events } = withAgentLiveQuery.useQuery(undefined);
 	const entries = selectLiveEntries(events);
 

@@ -37,29 +37,23 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 		<>
 			<Container
 				data-ui={"HeroSection"}
-				ui={{
-					position: "relative",
-				}}
+				data-ui-position="relative"
 			>
 				<ListingPrice
 					price={listing.price}
 					priceType={listing.priceType}
 					currency={listing.currency}
-					ui={{
-						snapTo: "top-center",
-						opacity: "8",
-						zIndex: true,
-					}}
+					data-ui-snap-to="top-center"
+					data-ui-opacity="8"
+					data-ui-z-index
 				/>
 
 				<LocationBadge
 					location={listing.location}
 					distance={listing.distance}
-					ui={{
-						snapTo: "bottom",
-						opacity: "8",
-						zIndex: true,
-					}}
+					data-ui-snap-to="bottom"
+					data-ui-opacity="8"
+					data-ui-z-index
 				/>
 
 				{listing.my ? null : (
@@ -68,22 +62,18 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 						feedId={feedId}
 						listingId={listing.id}
 						iconProps={{
-							ui: {
-								text: "xl",
-							},
+							"data-ui-text": "xl",
 						}}
-						ui={{
-							tone: "secondary",
-							theme: "light",
-							round: "full",
-							square: "md",
-							justify: "center",
-							items: "center",
-							size: undefined,
-							inner: undefined,
-							snapTo: "top-right",
-							zIndex: true,
-						}}
+						data-ui-tone="secondary"
+						data-ui-theme="light"
+						data-ui-round="full"
+						data-ui-square="md"
+						data-ui-justify="center"
+						data-ui-items="center"
+						data-ui-size={undefined}
+						data-ui-inner={undefined}
+						data-ui-snap-to="top-right"
+						data-ui-z-index
 						meta={feed.query.meta}
 					/>
 				)}
@@ -93,9 +83,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 					alt={`Hero image for listing ${listing.id}`}
 					data-action={"open listing gallery"}
 					onClick={() => onView("gallery")}
-					ui={{
-						round: "default",
-					}}
+					data-ui-round="default"
 					className={"h-64"}
 				/>
 			</Container>

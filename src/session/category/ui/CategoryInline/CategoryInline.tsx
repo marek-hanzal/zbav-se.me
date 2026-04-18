@@ -22,7 +22,6 @@ export namespace CategoryInline {
 export const CategoryInline = withFallback(
 	({
 		_suspense,
-		ui,
 		categoryId,
 		textGroupProps,
 		textCategoryProps,

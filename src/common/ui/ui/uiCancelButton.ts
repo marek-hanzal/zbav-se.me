@@ -13,7 +13,7 @@ export namespace uiCancelButton {
 	}
 }
 
-export const uiCancelButton = ({ ui, className }: uiCancelButton.Props) => {
+export const uiCancelButton = ({ className, ...ui }: uiCancelButton.Props) => {
 	return uiButton({
 		ui: {
 			tone: "neutral",

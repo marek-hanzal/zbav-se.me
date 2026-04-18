@@ -17,7 +17,7 @@ export namespace SearchButton {
 }
 
 export const SearchButton = withFallback(
-	({ _suspense, feedId, ui, className, ...props }: SearchButton.Props) => {
+	({ _suspense, feedId, className, ...props }: SearchButton.Props) => {
 		const locale = useLocale();
 		const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 		const { data: listingCount } = withListingQuery.useCountQuery(feed.query);
@@ -34,12 +34,10 @@ export const SearchButton = withFallback(
 				}}
 				icon={SearchIcon}
 				iconProps={{
-					ui: {
-						tone: "primary",
-						theme: "light",
-						color: "lead",
-						text: "xl",
-					},
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
+					"data-ui-color": "lead",
+					"data-ui-text": "xl",
 				}}
 				ui={{
 					tone: "neutral",
@@ -104,7 +102,7 @@ export const SearchButton = withFallback(
 			</LinkTo>
 		);
 	},
-	({ feedId, ui, className, ...props }: Omit<SearchButton.Props, "_suspense">) => {
+	({ feedId, className, ...props }: Omit<SearchButton.Props, "_suspense">) => {
 		const locale = useLocale();
 
 		return (
@@ -117,12 +115,10 @@ export const SearchButton = withFallback(
 				}}
 				icon={SearchIcon}
 				iconProps={{
-					ui: {
-						tone: "primary",
-						theme: "light",
-						color: "lead",
-						text: "xl",
-					},
+					"data-ui-tone": "primary",
+					"data-ui-theme": "light",
+					"data-ui-color": "lead",
+					"data-ui-text": "xl",
 				}}
 				ui={{
 					tone: "neutral",

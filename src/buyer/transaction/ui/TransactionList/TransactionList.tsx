@@ -8,7 +8,7 @@ export namespace TransactionList {
 	}
 }
 
-export const TransactionList: FC<TransactionList.Props> = ({ transactionIds, ui, ...props }) => {
+export const TransactionList: FC<TransactionList.Props> = ({ transactionIds, ...props }) => {
 	return (
 		<Container
 			data-ui={"TransactionList"}

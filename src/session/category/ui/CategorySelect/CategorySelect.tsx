@@ -18,12 +18,7 @@ export namespace CategorySelect {
  *
  * @see src/draft/ui/DraftEditor/patch/CategoryPatch.tsx
  */
-export const CategorySelect: FC<CategorySelect.Props> = ({
-	selection,
-	categoryId,
-	ui,
-	...props
-}) => {
+export const CategorySelect: FC<CategorySelect.Props> = ({ selection, categoryId, ...props }) => {
 	const [fulltext, setFulltext] = useState<Fulltext.Value>();
 
 	return (

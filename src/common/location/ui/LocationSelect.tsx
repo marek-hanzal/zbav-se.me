@@ -31,7 +31,6 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 	onLocation,
 	onSearchChange,
 	textHint,
-	ui,
 	warningStatusProps,
 	...props
 }) => {

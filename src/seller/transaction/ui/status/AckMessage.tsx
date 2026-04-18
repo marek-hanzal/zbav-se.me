@@ -12,7 +12,7 @@ export namespace AckMessage {
 	}
 }
 
-export const AckMessage: FC<AckMessage.Props> = ({ close, transaction, ui, ...props }) => {
+export const AckMessage: FC<AckMessage.Props> = ({ close, transaction, ...props }) => {
 	return (
 		<Group
 			data-ui={"AckMessage"}

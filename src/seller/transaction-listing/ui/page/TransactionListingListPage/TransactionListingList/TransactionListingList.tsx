@@ -10,7 +10,6 @@ export namespace TransactionListingList {
 
 export const TransactionListingList: FC<TransactionListingList.Props> = ({
 	transactionListingIds,
-	ui,
 	...props
 }) => {
 	return (

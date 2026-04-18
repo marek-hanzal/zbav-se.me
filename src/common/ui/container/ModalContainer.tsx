@@ -18,7 +18,6 @@ export const ModalContainer: FC<ModalContainer.Props> = ({
 	iconProps,
 	close,
 	children,
-	ui,
 	...props
 }) => {
 	return (

@@ -19,7 +19,6 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 	feed,
 	onSettled,
 	onCancel,
-	ui,
 	...props
 }) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
@@ -33,14 +32,11 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 	return (
 		<Container
 			data-ui={"ConditionPatch[Container]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				width: "full",
-				inner: "default",
-				gap: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-width="full"
+			data-ui-inner="default"
+			data-ui-gap="default"
 			{...props}
 		>
 			<ConditionSelect

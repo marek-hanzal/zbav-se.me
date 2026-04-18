@@ -26,7 +26,7 @@ export namespace UserPage {
  *
  * @see src/@routes
  */
-export const UserPage: FC<UserPage.Props> = ({ ui, ...props }) => {
+export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
 	const user = useUser();
 

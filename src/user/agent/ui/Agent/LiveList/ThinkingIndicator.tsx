@@ -11,7 +11,7 @@ export namespace ThinkingIndicator {
 	}
 }
 
-export const ThinkingIndicator: FC<ThinkingIndicator.Props> = ({ events, ui, ...props }) => {
+export const ThinkingIndicator: FC<ThinkingIndicator.Props> = ({ events, ...props }) => {
 	const state = selectThinkingState(events);
 
 	if (!state.isVisible) {

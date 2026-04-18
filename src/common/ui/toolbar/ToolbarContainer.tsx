@@ -12,7 +12,6 @@ export namespace ToolbarContainer {
 export const ToolbarContainer: FC<ToolbarContainer.Props> = ({
 	horizontal = false,
 	flip = false,
-	ui,
 	...props
 }) => {
 	return (

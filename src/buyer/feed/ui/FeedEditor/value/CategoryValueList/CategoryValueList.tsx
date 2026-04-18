@@ -53,10 +53,8 @@ export const CategoryValueList = withFallback(
 					id,
 				}))}
 				wrapperProps={{
-					ui: {
-						tone: "neutral",
-						theme: "light",
-					},
+					"data-ui-tone": "neutral",
+					"data-ui-theme": "light",
 				}}
 				{...props}
 			/>

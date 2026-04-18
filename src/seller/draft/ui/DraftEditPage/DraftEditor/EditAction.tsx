@@ -7,7 +7,7 @@ export namespace EditAction {
 	}
 }
 
-export const EditAction: FC<EditAction.Props> = ({ ui, ...props }) => {
+export const EditAction: FC<EditAction.Props> = ({ ...props }) => {
 	return (
 		<Icon
 			icon={EditIcon}

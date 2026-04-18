@@ -13,7 +13,7 @@ export namespace uiWarningStatus {
 	}
 }
 
-export const uiWarningStatus = ({ ui, className }: uiWarningStatus.Props) => {
+export const uiWarningStatus = ({ className, ...ui }: uiWarningStatus.Props) => {
 	return uiStatus({
 		ui: {
 			tone: "brand",

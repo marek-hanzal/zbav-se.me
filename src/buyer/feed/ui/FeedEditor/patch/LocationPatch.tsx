@@ -21,12 +21,9 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCanc
 	return (
 		<Container
 			data-ui={"LocationPatch[Container]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				inner: "default",
-				...props.ui,
-			}}
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-inner="default"
 			{...props}
 		>
 			<LocationSelect

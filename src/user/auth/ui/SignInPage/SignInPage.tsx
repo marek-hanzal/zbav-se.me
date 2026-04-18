@@ -39,7 +39,7 @@ export namespace SignInPage {
 	}
 }
 
-export const SignInPage: FC<SignInPage.Props> = ({ ui, ...props }) => {
+export const SignInPage: FC<SignInPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
 

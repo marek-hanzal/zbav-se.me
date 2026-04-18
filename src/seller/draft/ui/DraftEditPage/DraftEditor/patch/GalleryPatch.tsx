@@ -25,7 +25,6 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	draft,
 	onCancel,
 	onView,
-	ui,
 	defaultUploadIds,
 	...props
 }) => {

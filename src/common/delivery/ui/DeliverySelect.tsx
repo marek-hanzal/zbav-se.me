@@ -19,7 +19,7 @@ export namespace DeliverySelect {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ui, ...props }) => {
+export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ...props }) => {
 	return (
 		<Container
 			data-ui="DeliverySelect[Container]"

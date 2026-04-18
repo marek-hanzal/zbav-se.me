@@ -16,7 +16,7 @@ export namespace FlowContainer {
  *
  * @param props Props extending `Container.Props`, supporting an optional `left` node for sticky actions.
  */
-export const FlowContainer: FC<FlowContainer.Props> = ({ left, right, children, ui, ...props }) => {
+export const FlowContainer: FC<FlowContainer.Props> = ({ left, right, children, ...props }) => {
 	return (
 		<Container
 			data-ui={"FlowContainer[Container]"}

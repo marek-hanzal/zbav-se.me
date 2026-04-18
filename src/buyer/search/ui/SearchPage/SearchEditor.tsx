@@ -18,44 +18,41 @@ export namespace SearchEditor {
 	}
 }
 
-export const SearchEditor = withFallback(
-	({ _suspense, feedId, ui, ...props }: SearchEditor.Props) => {
-		return (
-			<Container
-				data-ui={"SearchEditor[Container]"}
-				ui={{
-					height: "full",
-					...ui,
-				}}
-				{...props}
+export const SearchEditor = withFallback(({ _suspense, feedId, ...props }: SearchEditor.Props) => {
+	return (
+		<Container
+			data-ui={"SearchEditor[Container]"}
+			ui={{
+				height: "full",
+				...ui,
+			}}
+			{...props}
+		>
+			<FeedEditor
+				_suspense={"I know"}
+				feedId={feedId}
+				hidden={hidden}
 			>
-				<FeedEditor
-					_suspense={"I know"}
-					feedId={feedId}
-					hidden={hidden}
+				<Container
+					data-ui={"SearchEditor-[Container.actions]"}
+					ui={{
+						flow: "vertical",
+						gap: "default",
+					}}
 				>
-					<Container
-						data-ui={"SearchEditor-[Container.actions]"}
-						ui={{
-							flow: "vertical",
-							gap: "default",
-						}}
-					>
-						<Group>
-							<SearchButton
-								_suspense={"I know"}
-								feedId={feedId}
-							/>
-							<SaveAsFeedButton
-								_suspense={"I know"}
-								feedId={feedId}
-							/>
-							<ResetButton feedId={feedId} />
-						</Group>
-					</Container>
-				</FeedEditor>
-			</Container>
-		);
-	},
-	SpinnerContainer,
-);
+					<Group>
+						<SearchButton
+							_suspense={"I know"}
+							feedId={feedId}
+						/>
+						<SaveAsFeedButton
+							_suspense={"I know"}
+							feedId={feedId}
+						/>
+						<ResetButton feedId={feedId} />
+					</Group>
+				</Container>
+			</FeedEditor>
+		</Container>
+	);
+}, SpinnerContainer);

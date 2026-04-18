@@ -33,9 +33,7 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 			<Status
 				icon={FirstIcon}
 				iconProps={{
-					ui: {
-						text: "4xl",
-					},
+					"data-ui-text": "4xl",
 				}}
 				textTitle={translator.text("First listing (title)")}
 				textMessage={translator.text("First listing (message)")}
@@ -53,13 +51,11 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 								locale,
 							}}
 							{...uiButton({
-								ui: {
-									tone: "brand",
-									theme: "light",
-									text: "lg",
-									size: "default",
-									font: "bold",
-								},
+								"data-ui-tone": "brand",
+								"data-ui-theme": "light",
+								"data-ui-text": "lg",
+								"data-ui-size": "default",
+								"data-ui-font": "bold",
 								className: [],
 							})}
 						>
@@ -75,15 +71,13 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 								locale,
 							}}
 							{...uiButton({
-								ui: {
-									tone: "link",
-									theme: "light",
-									text: "sm",
-									size: "sm",
-									background: undefined,
-									border: false,
-									shadow: false,
-								},
+								"data-ui-tone": "link",
+								"data-ui-theme": "light",
+								"data-ui-text": "sm",
+								"data-ui-size": "sm",
+								"data-ui-background": undefined,
+								"data-ui-border": false,
+								"data-ui-shadow": false,
 								className: [],
 							})}
 						>

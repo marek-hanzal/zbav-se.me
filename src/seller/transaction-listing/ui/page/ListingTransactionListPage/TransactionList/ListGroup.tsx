@@ -21,7 +21,6 @@ export const ListGroup: FC<ListGroup.Props> = ({
 	label,
 	refetchInterval,
 	typoUi,
-	ui,
 	...props
 }) => {
 	const { data: transactionCollection } = withTransactionQuery.useIdsQuery(

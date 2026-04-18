@@ -9,7 +9,7 @@ export namespace HomeMenuButton {
 	}
 }
 
-export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ ui, className }) => {
+export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ className }) => {
 	const locale = useLocale();
 
 	return (

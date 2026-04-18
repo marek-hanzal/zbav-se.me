@@ -14,7 +14,7 @@ export namespace PackageControl {
 	}
 }
 
-export const PackageControl: FC<PackageControl.Props> = ({ onCancel, onSave, ui, ...props }) => {
+export const PackageControl: FC<PackageControl.Props> = ({ onCancel, onSave, ...props }) => {
 	const form = useAppForm({
 		defaultValues: {
 			link: "",

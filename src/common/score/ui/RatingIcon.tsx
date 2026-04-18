@@ -14,7 +14,7 @@ export namespace RatingIcon {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const RatingIcon: FC<RatingIcon.Props> = ({ rating, ui, ...props }) => {
+export const RatingIcon: FC<RatingIcon.Props> = ({ rating, ...props }) => {
 	const value = Number(rating);
 
 	return (

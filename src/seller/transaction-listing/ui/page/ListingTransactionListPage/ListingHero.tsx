@@ -17,7 +17,7 @@ export namespace ListingHero {
 	}
 }
 
-export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ui, ...props }) => {
+export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ...props }) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const [isOpen, setIsOpen] = useState(false);
 	const hero = useUpload(listing.gallery.items);

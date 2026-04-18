@@ -8,7 +8,7 @@ export namespace Logo {
 	}
 }
 
-export const Logo: FC<Logo.Props> = ({ logo = false, ui, ...props }) => {
+export const Logo: FC<Logo.Props> = ({ logo = false, ...props }) => {
 	return (
 		<Container
 			className={[

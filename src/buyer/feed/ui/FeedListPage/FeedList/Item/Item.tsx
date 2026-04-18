@@ -23,7 +23,7 @@ export namespace Item {
 }
 
 export const Item = withFallback(
-	({ feedId, ui, ...props }: Item.Props) => {
+	({ feedId, ...props }: Item.Props) => {
 		const locale = useLocale();
 		const [isEditor, setIsEditor] = useState(false);
 		const { data: feed } = withFeedQuery.useFetchQuery(feedId);
@@ -101,9 +101,7 @@ export const Item = withFallback(
 					data-action={isEditor ? "close feed editor" : "open feed editor"}
 					iconEnabled={EditIcon}
 					iconProps={{
-						ui: {
-							text: "lg",
-						},
+						"data-ui-text": "lg",
 					}}
 					onClick={() => setIsEditor((prev) => !prev)}
 					ui={{

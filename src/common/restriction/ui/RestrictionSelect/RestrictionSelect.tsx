@@ -17,7 +17,7 @@ export namespace RestrictionSelect {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const RestrictionSelect: FC<RestrictionSelect.Props> = ({ selection, ui, ...props }) => {
+export const RestrictionSelect: FC<RestrictionSelect.Props> = ({ selection, ...props }) => {
 	return (
 		<Container
 			data-ui="RestrictionSelect[Container]"

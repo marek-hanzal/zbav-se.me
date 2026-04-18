@@ -33,7 +33,6 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	loading,
 	left,
 	inputRef,
-	ui,
 	...props
 }) => {
 	const [message, setMessage] = useState("");

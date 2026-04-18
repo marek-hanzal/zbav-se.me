@@ -13,7 +13,7 @@ export namespace uiCtaLinkButton {
 	}
 }
 
-export const uiCtaLinkButton = ({ ui, className }: uiCtaLinkButton.Props) => {
+export const uiCtaLinkButton = ({ className, ...ui }: uiCtaLinkButton.Props) => {
 	return uiButton({
 		ui: {
 			tone: "link",

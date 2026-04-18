@@ -21,7 +21,7 @@ export namespace DraftList {
  *
  * @see src/draft/page/DraftListPage.tsx
  */
-export const DraftList = withFallback(({ _suspense, ui, ...props }: DraftList.Props) => {
+export const DraftList = withFallback(({ _suspense, ...props }: DraftList.Props) => {
 	const { data: draftCollection } = withDraftQuery.useIdsQuery({
 		where: {
 			usedAtIsNull: true,

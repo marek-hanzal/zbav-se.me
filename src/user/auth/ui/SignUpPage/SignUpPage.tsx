@@ -49,7 +49,7 @@ export namespace SignUpPage {
 	}
 }
 
-export const SignUpPage: FC<SignUpPage.Props> = ({ ui, ...props }) => {
+export const SignUpPage: FC<SignUpPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
 

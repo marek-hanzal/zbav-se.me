@@ -9,7 +9,7 @@ export namespace CloseButton {
 	}
 }
 
-export const CloseButton: FC<CloseButton.Props> = ({ ui, className, ...props }) => {
+export const CloseButton: FC<CloseButton.Props> = ({ className, ...props }) => {
 	return (
 		<Button
 			iconEnabled={CloseDrawerIcon}

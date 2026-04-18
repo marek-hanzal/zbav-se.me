@@ -36,7 +36,7 @@ export namespace Dial {
 	}
 }
 
-export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ui, ...props }) => {
+export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ...props }) => {
 	return (
 		<Container
 			data-ui={"Dial"}

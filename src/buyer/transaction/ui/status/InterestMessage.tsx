@@ -14,12 +14,7 @@ export namespace InterestMessage {
 	}
 }
 
-export const InterestMessage: FC<InterestMessage.Props> = ({
-	close,
-	transaction,
-	ui,
-	...props
-}) => {
+export const InterestMessage: FC<InterestMessage.Props> = ({ close, transaction, ...props }) => {
 	return (
 		<>
 			<Group

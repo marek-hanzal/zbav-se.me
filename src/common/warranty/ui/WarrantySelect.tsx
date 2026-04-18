@@ -19,7 +19,7 @@ export namespace WarrantySelect {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const WarrantySelect: FC<WarrantySelect.Props> = ({ selection, ui, ...props }) => {
+export const WarrantySelect: FC<WarrantySelect.Props> = ({ selection, ...props }) => {
 	return (
 		<Container
 			data-ui="WarrantySelect[Container]"

@@ -16,7 +16,7 @@ export namespace GalleryPreview {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const GalleryPreview: FC<GalleryPreview.Props> = ({ uploads, ui, ...props }) => {
+export const GalleryPreview: FC<GalleryPreview.Props> = ({ uploads, ...props }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (

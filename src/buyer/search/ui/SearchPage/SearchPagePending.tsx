@@ -12,7 +12,7 @@ export namespace SearchPagePending {
 	}
 }
 
-export const SearchPagePending: FC<SearchPagePending.Props> = ({ ui, ...props }) => {
+export const SearchPagePending: FC<SearchPagePending.Props> = ({ ...props }) => {
 	const locale = useLocale();
 
 	return (

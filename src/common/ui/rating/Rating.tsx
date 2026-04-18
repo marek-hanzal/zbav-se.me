@@ -38,7 +38,6 @@ export const Rating: FC<Rating.Props> = ({
 	textHintFn,
 	selection,
 	allowClear = false,
-	ui,
 	...props
 }) => {
 	const limit = 6;

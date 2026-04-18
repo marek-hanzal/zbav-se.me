@@ -23,7 +23,6 @@ export const LocationBadge: FC<LocationBadge.Props> = ({
 	distance,
 	children,
 	className,
-	ui,
 	...props
 }) => {
 	const locale = useLocale();

@@ -13,7 +13,7 @@ export namespace uiSelectButton {
 	}
 }
 
-export const uiSelectButton = ({ isSelected, ui, className }: uiSelectButton.Props) => {
+export const uiSelectButton = ({ isSelected, className, ...ui }: uiSelectButton.Props) => {
 	return uiButton({
 		ui: {
 			tone: isSelected ? "secondary" : "neutral",

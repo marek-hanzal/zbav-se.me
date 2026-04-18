@@ -17,7 +17,7 @@ export namespace PriceTypeSelect {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const PriceTypeSelect: FC<PriceTypeSelect.Props> = ({ selection, ui, ...props }) => {
+export const PriceTypeSelect: FC<PriceTypeSelect.Props> = ({ selection, ...props }) => {
 	return (
 		<Container
 			data-ui="PriceTypeSelect[Container]"

@@ -22,7 +22,6 @@ export const Content: FC<Content.Props> = ({
 	loading,
 	onSave,
 	onCancel,
-	ui,
 	...props
 }) => {
 	return (

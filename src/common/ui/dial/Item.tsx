@@ -10,7 +10,7 @@ export namespace Item {
 	}
 }
 
-export const Item: FC<Item.Props> = ({ icon, ui, ...props }) => {
+export const Item: FC<Item.Props> = ({ icon, ...props }) => {
 	return (
 		<Button
 			data-ui={"Item[Button]"}

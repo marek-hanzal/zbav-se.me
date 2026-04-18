@@ -14,7 +14,7 @@ export namespace HistoryList {
 	}
 }
 
-export const HistoryList: FC<HistoryList.Props> = ({ ui, ...props }) => {
+export const HistoryList: FC<HistoryList.Props> = ({ ...props }) => {
 	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(AgentStreamItemsQuery);
 
 	return (

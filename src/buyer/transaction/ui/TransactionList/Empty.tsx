@@ -14,7 +14,7 @@ export namespace Empty {
 	}
 }
 
-export const Empty: FC<Empty.Props> = ({ ui, ...props }) => {
+export const Empty: FC<Empty.Props> = ({ ...props }) => {
 	const locale = useLocale();
 
 	return (

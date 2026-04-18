@@ -9,7 +9,7 @@ export namespace UserMessage {
 	}
 }
 
-export const UserMessage: FC<UserMessage.Props> = ({ item, ui, className, ...props }) => {
+export const UserMessage: FC<UserMessage.Props> = ({ item, className, ...props }) => {
 	const text =
 		typeof item.content === "string"
 			? item.content

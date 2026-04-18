@@ -27,7 +27,6 @@ export const Transaction: FC<Transaction.Props> = ({
 	_suspense,
 	transactionId,
 	refresh,
-	ui,
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);

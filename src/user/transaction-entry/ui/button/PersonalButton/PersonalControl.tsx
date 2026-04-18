@@ -18,7 +18,7 @@ export namespace PersonalControl {
 	}
 }
 
-export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, ui, ...props }) => {
+export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, ...props }) => {
 	const form = useAppForm({
 		defaultValues: {
 			name: "",

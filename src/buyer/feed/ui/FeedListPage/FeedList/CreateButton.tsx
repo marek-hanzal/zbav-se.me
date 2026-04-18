@@ -10,7 +10,7 @@ export namespace CreateButton {
 	}
 }
 
-export const CreateButton: FC<CreateButton.Props> = ({ ui, className, ...props }) => {
+export const CreateButton: FC<CreateButton.Props> = ({ className, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (

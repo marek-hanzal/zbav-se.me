@@ -13,7 +13,7 @@ export namespace TokenUsage {
 }
 
 export const TokenUsage = withFallback<TokenUsage.Props, Container>(
-	({ ui, ...props }) => {
+	({ ...props }) => {
 		const locale = useLocale();
 		const { data: tokens } = withAgentTokensQuery.useSuspenseQuery({});
 

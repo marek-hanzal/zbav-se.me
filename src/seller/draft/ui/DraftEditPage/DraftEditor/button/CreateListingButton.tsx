@@ -16,7 +16,6 @@ export namespace CreateListingButton {
 
 export const CreateListingButton: FC<CreateListingButton.Props> = ({
 	draft,
-	ui,
 	className,
 	...props
 }) => {

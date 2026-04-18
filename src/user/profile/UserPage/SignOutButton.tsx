@@ -16,7 +16,7 @@ export namespace SignOutButton {
  * Encapsulates a focused sign out action behind shared app styling and behavior.
  * Use it when the sign out action should stay consistent across screens.
  */
-export const SignOutButton: FC<SignOutButton.Props> = ({ ui, ...props }) => {
+export const SignOutButton: FC<SignOutButton.Props> = ({ ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
 	const signOutMutation = withSignOutMutation.useMutation({

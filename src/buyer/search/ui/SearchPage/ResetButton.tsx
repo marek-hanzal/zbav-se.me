@@ -14,7 +14,7 @@ export namespace ResetButton {
 	}
 }
 
-export const ResetButton: FC<ResetButton.Props> = ({ feedId, ui, className, ...props }) => {
+export const ResetButton: FC<ResetButton.Props> = ({ feedId, className, ...props }) => {
 	const navigate = useNavigate();
 	const locale = useLocale();
 	const createMutation = withFeedQuery.useCreateMutation({
@@ -51,9 +51,7 @@ export const ResetButton: FC<ResetButton.Props> = ({ feedId, ui, className, ...p
 			loading={deleteMutation.isPending || createMutation.isPending}
 			iconEnabled={RefreshIcon}
 			iconProps={{
-				ui: {
-					text: "xl",
-				},
+				"data-ui-text": "xl",
 			}}
 			ui={{
 				tone: "neutral",

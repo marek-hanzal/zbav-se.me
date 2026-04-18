@@ -10,7 +10,7 @@ export namespace TypeContainer {
 	}
 }
 
-export const TypeContainer: FC<TypeContainer.Props> = ({ direction, ui, className, ...props }) => {
+export const TypeContainer: FC<TypeContainer.Props> = ({ direction, className, ...props }) => {
 	return (
 		<Group
 			ui={{

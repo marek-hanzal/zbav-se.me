@@ -15,7 +15,7 @@ export namespace ThumbLikeButton {
 }
 
 export const ThumbLikeButton = withFallback(
-	({ _suspense, listingId, meta, ui, ...props }: ThumbLikeButton.Props) => {
+	({ _suspense, listingId, meta, ...props }: ThumbLikeButton.Props) => {
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
 		const update = withListingQuery.useUpdate();
 		const thumbCreateMutation = withThumbCreateMutation.useMutation({
@@ -37,9 +37,7 @@ export const ThumbLikeButton = withFallback(
 				data-action={"like listing"}
 				iconEnabled={LikeIcon}
 				iconProps={{
-					ui: {
-						text: "xl",
-					},
+					"data-ui-text": "xl",
 				}}
 				disabled={hasThumb || isMutating}
 				loading={thumbCreateMutation.isPending}
@@ -61,7 +59,7 @@ export const ThumbLikeButton = withFallback(
 			/>
 		);
 	},
-	({ ui, ...props }: Omit<ThumbLikeButton.Props, "_suspense">) => {
+	({ ...props }: Omit<ThumbLikeButton.Props, "_suspense">) => {
 		return (
 			<Button
 				disabled

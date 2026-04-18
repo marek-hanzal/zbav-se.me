@@ -13,7 +13,7 @@ export namespace uiBackButton {
 	}
 }
 
-export const uiBackButton = ({ ui, className }: uiBackButton.Props) => {
+export const uiBackButton = ({ className, ...ui }: uiBackButton.Props) => {
 	return uiButton({
 		ui: {
 			tone: "neutral",

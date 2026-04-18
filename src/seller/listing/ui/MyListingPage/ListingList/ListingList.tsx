@@ -20,7 +20,7 @@ export namespace ListingList {
  *
  * @see src/listing/page/MyListingPage.tsx
  */
-export const ListingList = withFallback(({ ui, ...props }: ListingList.Props) => {
+export const ListingList = withFallback(({ ...props }: ListingList.Props) => {
 	const { data: listingCollection } = withListingQuery.useIdsQuery({
 		cursor: {
 			page: 0,

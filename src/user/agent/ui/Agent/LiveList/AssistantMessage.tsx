@@ -14,7 +14,6 @@ export namespace AssistantMessage {
 export const AssistantMessage: FC<AssistantMessage.Props> = ({
 	events,
 	itemId,
-	ui,
 	className,
 	...props
 }) => {

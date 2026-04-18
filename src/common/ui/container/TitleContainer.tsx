@@ -27,7 +27,6 @@ export const TitleContainer: FC<TitleContainer.Props> = ({
 	right,
 	bottom,
 	children,
-	ui,
 	...props
 }) => {
 	return (

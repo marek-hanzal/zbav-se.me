@@ -18,7 +18,6 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({
 	item,
 	items,
 	inline,
-	ui,
 	className,
 	...props
 }) => {

@@ -10,7 +10,7 @@ export namespace List {
 	}
 }
 
-export const List: FC<List.Props> = ({ _suspense, transactionIds, ui, ...props }) => {
+export const List: FC<List.Props> = ({ _suspense, transactionIds, ...props }) => {
 	return (
 		<Container
 			data-ui={"List"}

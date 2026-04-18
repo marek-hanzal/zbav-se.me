@@ -15,7 +15,6 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 	feedId,
 	onDelete,
 	confirmProps,
-	ui,
 	...props
 }) => {
 	const deleteMutation = withFeedQuery.useDeleteMutation({
@@ -31,19 +30,15 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 			data-action={"delete feed"}
 			iconEnabled={TrashIcon}
 			iconProps={{
-				ui: {
-					text: "xl",
-				},
+				"data-ui-text": "xl",
 			}}
 			buttonProps={{
 				children: <Tx label="Delete feed (button)" />,
 			}}
 			confirmProps={{
 				iconEnabled: TrashIcon,
-				ui: {
-					tone: "danger",
-					theme: "light",
-				},
+				"data-ui-tone": "danger",
+				"data-ui-theme": "light",
 				children: <Tx label="Really delete feed (button)" />,
 				onClick() {
 					deleteMutation.mutate({

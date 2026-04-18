@@ -27,7 +27,6 @@ export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads>({
 	onCancel,
 	state,
 	defaultUploadIds,
-	ui,
 	...props
 }: GalleryUploadButton.Props<TData>) => {
 	return (

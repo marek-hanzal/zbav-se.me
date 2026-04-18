@@ -77,7 +77,7 @@ export namespace History {
 	}
 }
 
-export const History: FC<History.Props> = ({ _suspense, ui, className, ...props }) => {
+export const History: FC<History.Props> = ({ _suspense, className, ...props }) => {
 	const historyRootId = useId();
 	const threshold = 4;
 	const weeks = 8;

@@ -17,27 +17,22 @@ export namespace TitlePatch {
 	}
 }
 
-export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ui, ...props }) => {
+export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
 	const [title, setTitle] = useState(feed.query?.filter?.title ?? "");
 
 	return (
 		<Container
 			data-ui={"TitlePatch[TextInputContainer]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				width: "full",
-				inner: "default",
-				...ui,
-			}}
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-width="full"
+			data-ui-inner="default"
 			{...props}
 		>
 			<Container
-				ui={{
-					layout: "vertical-centered",
-					height: "full",
-				}}
+				data-ui-layout="vertical-centered"
+				data-ui-height="full"
 			>
 				<Status
 					textTitle={translator.text("Feed title (title)")}
@@ -56,17 +51,13 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ui
 							)}
 						</FormField>
 					}
-					ui={{
-						text: "md",
-						inner: "4xl",
-					}}
+					data-ui-text="md"
+					data-ui-inner="4xl"
 				>
 					<Mx
 						label={translator.text("Feed title (hint)")}
-						ui={{
-							tone: "neutral",
-							theme: "light",
-						}}
+						data-ui-tone="neutral"
+						data-ui-theme="light"
 					/>
 				</Status>
 			</Container>

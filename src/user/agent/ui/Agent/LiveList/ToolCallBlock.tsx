@@ -19,7 +19,6 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 	events,
 	itemId,
 	inline,
-	ui,
 	className,
 	...props
 }) => {

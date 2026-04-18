@@ -13,7 +13,7 @@ export namespace UserPagePending {
 	}
 }
 
-export const UserPagePending: FC<UserPagePending.Props> = ({ ui, ...props }) => {
+export const UserPagePending: FC<UserPagePending.Props> = ({ ...props }) => {
 	const locale = useLocale();
 
 	return (

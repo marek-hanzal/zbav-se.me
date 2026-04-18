@@ -15,7 +15,6 @@ export namespace AgentMessageList {
 export const AgentMessageList: FC<AgentMessageList.Props> = ({
 	containerRef,
 	isPending,
-	ui,
 	...props
 }) => {
 	const contentRef = useRef<HTMLDivElement | null>(null);
