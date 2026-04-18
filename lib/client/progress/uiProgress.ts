@@ -15,9 +15,9 @@ export namespace uiProgress {
 	}
 }
 
-export const uiProgress = ({ className, ...ui }: uiProgress.Props) => {
+export const uiProgress = ({ name = "Progress", className, ...ui }: uiProgress.Props) => {
 	return coolUi<uiProgress.Ui>({
-		name: "Progress",
+		name,
 		ui,
 		className,
 	});
