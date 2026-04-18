@@ -5,5 +5,13 @@ export class NotFoundErrorFx extends Data.TaggedError("NotFoundErrorFx")<{
 	resourceId?: string;
 	message: string;
 }> {
-	//
+	toJSON() {
+		return {
+			message: this.message,
+			name: this.name,
+			tag: this._tag,
+			resource: this.resource,
+			resourceId: this.resourceId,
+		};
+	}
 }

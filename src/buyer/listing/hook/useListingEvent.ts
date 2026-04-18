@@ -38,7 +38,7 @@ export const useListingEvent = ({
 				visible,
 				error,
 			});
-			return visible && error.type !== "error";
+			return visible && error._tag !== "TooManyRequestsFx";
 		},
 		retryDelay(count) {
 			logger.trace("Retrying", {

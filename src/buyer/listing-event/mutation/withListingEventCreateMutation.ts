@@ -7,7 +7,7 @@ import { getRootLogger } from "~/common/log/getRootLogger";
 export const withListingEventCreateMutation = withMutation<
 	ListingEventCreateSchema.Type,
 	ListingEventSchema.Type,
-	Error
+	listingEventCreateFn.Error
 >({
 	logger: getRootLogger([
 		"mutation",

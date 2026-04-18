@@ -10,5 +10,12 @@ export class ConflictErrorFx extends Data.TaggedError("ConflictErrorFx")<{
 	 */
 	cause?: unknown;
 }> {
-	//
+	toJSON() {
+		return {
+			message: this.message,
+			name: this.name,
+			tag: this._tag,
+			cause: this.cause,
+		};
+	}
 }
