@@ -52,7 +52,7 @@ export namespace ui {
 		className: tvc.ClassName;
 	}
 
-	export type PropsEx<TProps extends object> = Omit<Props<TProps>, "name" | "ui">;
+	export type PropsEx<TProps extends object> = Omit<Props<TProps>, "name">;
 }
 
 export const ui = <const TProps extends object>({ name, className, ui }: ui.Props<TProps>) => {
