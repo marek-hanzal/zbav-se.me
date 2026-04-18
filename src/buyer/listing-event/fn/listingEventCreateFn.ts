@@ -5,7 +5,6 @@ import { withLoggerFx } from "@/lib/common/log";
 import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
 import { ListingEventCreateSchema } from "~/buyer/listing-event/server/schema/ListingEventCreateSchema";
 import { ListingEventSchema } from "~/buyer/listing-event/server/schema/ListingEventSchema";
-import { noticeError } from "~/common/notice/noticeError";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withCatchFx } from "~/server/effect/withCatchFx";
@@ -42,34 +41,31 @@ export const listingEventCreateFn = createServerFn({
 			withCatchFx({
 				NotFoundErrorFx(error) {
 					logger.error("NotFoundError", {
-						message: error.message,
+						error,
 					});
-					throw new Error("NotFoundErrorFx");
+					throw error;
 				},
-				ZodErrorFx({ zod, input }) {
+				ZodErrorFx(error) {
 					logger.error("ZodErrorFx", {
-						zod,
-						input,
+						error,
 					});
-					throw new Error("ZodErrorFx");
+					throw error;
 				},
 				RuntimeErrorFx(error) {
 					logger.error("RuntimeError", {
 						message: error.message,
 						cause: error.cause,
 					});
-					throw new Error("RuntimeErrorFx");
+					throw error;
 				},
 				InvalidRequestErrorFx(error) {
 					logger.error("InvalidRequestError", {
 						message: error.message,
 					});
-					throw new Error("InvalidRequestErrorFx");
+					throw error;
 				},
-				TooManyRequestsFx() {
-					throw noticeError({
-						message: "Wait little bit, bro",
-					});
+				TooManyRequestsFx(error) {
+					throw error;
 				},
 			}),
 			Effect.runPromise,
