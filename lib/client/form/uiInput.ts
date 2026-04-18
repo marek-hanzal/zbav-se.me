@@ -34,9 +34,9 @@ export namespace uiInput {
 	}
 }
 
-export const uiInput = ({ className, ...ui }: uiInput.Props) => {
+export const uiInput = ({ name = "Input", className, ...ui }: uiInput.Props) => {
 	return coolUi<uiInput.Ui>({
-		name: "Input",
+		name,
 		ui: {
 			"data-ui-tone": "neutral",
 			"data-ui-theme": "light",

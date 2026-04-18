@@ -28,9 +28,9 @@ export namespace uiStatus {
 	}
 }
 
-export const uiStatus = ({ className, ...ui }: uiStatus.Props) => {
+export const uiStatus = ({ name = "Status", className, ...ui }: uiStatus.Props) => {
 	return coolUi<uiStatus.Ui>({
-		name: "Status",
+		name,
 		ui: {
 			"data-ui-flow": "vertical",
 			"data-ui-color": "lead",

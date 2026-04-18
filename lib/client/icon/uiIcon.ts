@@ -25,9 +25,9 @@ export namespace uiIcon {
 	}
 }
 
-export const uiIcon = ({ className, ...ui }: uiIcon.Props) => {
+export const uiIcon = ({ name = "Icon", className, ...ui }: uiIcon.Props) => {
 	return coolUi<uiIcon.Ui>({
-		name: "Icon",
+		name,
 		ui,
 		className,
 	});
