@@ -15,12 +15,10 @@ export namespace uiProgress {
 	}
 }
 
-export const uiProgress = ({ ui, className }: uiProgress.Props) => {
+export const uiProgress = ({ className, ...ui }: uiProgress.Props) => {
 	return coolUi<uiProgress.Ui>({
 		name: "Progress",
-		ui: {
-			...ui,
-		},
+		ui,
 		className,
 	});
 };

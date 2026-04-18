@@ -45,7 +45,7 @@ export namespace uiButton {
 	}
 }
 
-export const uiButton = ({ ui, className }: uiButton.Props) => {
+export const uiButton = ({ className, ...ui }: uiButton.Props) => {
 	return coolUi<uiButton.Ui>({
 		name: "Button",
 		ui: {

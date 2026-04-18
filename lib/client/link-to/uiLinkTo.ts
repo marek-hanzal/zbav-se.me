@@ -34,7 +34,7 @@ export namespace uiLinkTo {
 	}
 }
 
-export const uiLinkTo = ({ ui, className }: uiLinkTo.Props) => {
+export const uiLinkTo = ({ className, ...ui }: uiLinkTo.Props) => {
 	return coolUi<uiLinkTo.Ui>({
 		name: "LinkTo",
 		ui: {

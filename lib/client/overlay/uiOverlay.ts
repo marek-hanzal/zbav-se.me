@@ -14,12 +14,10 @@ export namespace uiOverlay {
 	}
 }
 
-export const uiOverlay = ({ ui, className }: uiOverlay.Props) => {
+export const uiOverlay = ({ className, ...ui }: uiOverlay.Props) => {
 	return coolUi<uiOverlay.Ui>({
 		name: "Overlay",
-		ui: {
-			...ui,
-		},
+		ui,
 		className,
 	});
 };

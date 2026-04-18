@@ -25,12 +25,10 @@ export namespace uiIcon {
 	}
 }
 
-export const uiIcon = ({ ui, className }: uiIcon.Props) => {
+export const uiIcon = ({ className, ...ui }: uiIcon.Props) => {
 	return coolUi<uiIcon.Ui>({
 		name: "Icon",
-		ui: {
-			...ui,
-		},
+		ui,
 		className,
 	});
 };

@@ -34,7 +34,7 @@ export namespace uiInput {
 	}
 }
 
-export const uiInput = ({ ui, className }: uiInput.Props) => {
+export const uiInput = ({ className, ...ui }: uiInput.Props) => {
 	return coolUi<uiInput.Ui>({
 		name: "Input",
 		ui: {

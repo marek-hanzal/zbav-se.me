@@ -14,7 +14,7 @@ export namespace uiFade {
 	}
 }
 
-export const uiFade = ({ ui, className }: uiFade.Props) => {
+export const uiFade = ({ className, ...ui }: uiFade.Props) => {
 	return coolUi<uiFade.Ui>({
 		name: "Fade",
 		ui: {

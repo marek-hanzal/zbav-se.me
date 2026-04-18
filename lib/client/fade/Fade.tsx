@@ -16,7 +16,6 @@ export const Fade: FC<Fade.Props> = ({
 	fade = height * 2,
 	scrollableRef,
 	//
-	ui,
 	className,
 }) => {
 	const topFadeRef = useRef<HTMLDivElement>(null);
@@ -104,7 +103,6 @@ export const Fade: FC<Fade.Props> = ({
 				ref={topFadeRef}
 				aria-hidden
 				{...uiFade({
-					ui,
 					className,
 				})}
 				data-ui="Fade-top"
@@ -117,7 +115,6 @@ export const Fade: FC<Fade.Props> = ({
 				ref={bottomFadeRef}
 				aria-hidden
 				{...uiFade({
-					ui,
 					className,
 				})}
 				data-ui="Fade-bottom"

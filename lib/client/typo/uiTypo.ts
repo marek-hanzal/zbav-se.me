@@ -36,7 +36,7 @@ export namespace uiTypo {
 	}
 }
 
-export const uiTypo = ({ ui, className }: uiTypo.Props) => {
+export const uiTypo = ({ className, ...ui }: uiTypo.Props) => {
 	return coolUi({
 		name: "Typo",
 		ui: {

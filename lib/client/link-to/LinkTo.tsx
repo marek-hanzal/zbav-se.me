@@ -24,7 +24,6 @@ const BaseLinkTo: FC<BaseLinkToProps> = ({
 	iconProps,
 	iconPosition = "left",
 	children,
-	ui,
 	className,
 	...props
 }) => {
@@ -32,7 +31,6 @@ const BaseLinkTo: FC<BaseLinkToProps> = ({
 		<a
 			data-root={"LinkTo"}
 			{...uiLinkTo({
-				ui,
 				className,
 			})}
 			{...props}
