@@ -61,12 +61,10 @@ export namespace uiContainer {
 	}
 }
 
-export const uiContainer = ({ ui, className }: uiContainer.Props) => {
+export const uiContainer = ({ className, ...ui }: uiContainer.Props) => {
 	return coolUi<uiContainer.Ui>({
 		name: "Container",
-		ui: {
-			...ui,
-		},
+		ui,
 		className,
 	});
 };

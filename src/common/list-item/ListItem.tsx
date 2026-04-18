@@ -34,16 +34,14 @@ export const ListItem: FC<ListItem.Props> = ({
 		) : (
 			<Container
 				className={"aspect-square h-full shrink-0 overflow-hidden"}
-				ui={{
-					tone: "subtle",
-					theme: "light",
-					round: "md",
-					height: "full",
-					flow: "horizontal",
-					items: "center",
-					justify: "center",
-					background: "default",
-				}}
+				data-ui-tone="subtle"
+				data-ui-theme="light"
+				data-ui-round="md"
+				data-ui-height="full"
+				data-ui-flow="horizontal"
+				data-ui-items="center"
+				data-ui-justify="center"
+				data-ui-background="default"
 			>
 				{hero as ReactNode}
 			</Container>
@@ -60,12 +58,10 @@ export const ListItem: FC<ListItem.Props> = ({
 				"relative",
 				className,
 			]}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				width: "full",
-				background: "default",
-			}}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-width="full"
+			data-ui-background="default"
 			{...props}
 		>
 			<Container

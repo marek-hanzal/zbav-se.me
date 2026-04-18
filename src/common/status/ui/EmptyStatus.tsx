@@ -15,16 +15,12 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({
 	icon,
 	textMessage,
 	textTitle,
-	ui,
 	...props
 }) => {
 	return (
 		<Container
-			ui={{
-				layout: "vertical-centered",
-				height: "full",
-				...ui,
-			}}
+			data-ui-layout="vertical-centered"
+			data-ui-height="full"
 			{...props}
 		>
 			<Status
