@@ -65,7 +65,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 		>
 			<Container
 				data-ui={"ValueList-[Container.label-wrapper]"}
-				data-ui-tone="primary"
+				data-ui-tone="neutral"
 				data-ui-theme="light"
 				data-ui-flow="horizontal"
 				data-ui-items="center"
@@ -97,18 +97,22 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 			) : null}
 
 			{loading ? null : (
-				<Group data-ui="ValueList-[Container.content]">
+				<Group
+					data-ui="ValueList-[Container.content]"
+					data-ui-shadow={false}
+				>
 					{items.map((item) => (
 						<Container
 							key={item.id}
 							data-ui="ValueList-[Container.item]"
-							data-ui-tone="subtle"
+							data-ui-tone="neutral"
 							data-ui-theme="light"
 							data-ui-background="default"
 							data-ui-border={false}
 							data-ui-shadow={false}
 							data-ui-round="default"
 							data-ui-inner="default"
+							className={"px-0"}
 						>
 							{renderFn(item)}
 						</Container>

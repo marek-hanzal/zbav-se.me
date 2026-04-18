@@ -60,13 +60,13 @@ export const TransactionButton: FC<TransactionButton.Props> = ({ listing, meta, 
 					"data-ui-text": "xl",
 				}}
 				{...uiButton({
+					name: "TransactionButton",
 					"data-ui-justify": "space-between",
 					"data-ui-tone": "neutral",
 					"data-ui-theme": "light",
 					"data-ui-size": "default",
 					"data-ui-text": "lg",
 				})}
-				data-ui={"TransactionButton"}
 				data-action={"open transactions"}
 			>
 				<Tx label="View transactions (button)" />
@@ -89,7 +89,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({ listing, meta, 
 					listingId: listing.id,
 				});
 			}}
-			data-ui-tone="secondary"
+			data-ui-tone="neutral"
 			data-ui-theme="light"
 			data-ui-size="default"
 			data-ui-text="lg"

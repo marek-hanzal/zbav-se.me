@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ConfirmButton } from "@/lib/client/button";
+import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { Mx } from "@/lib/client/mx";
 import { Tx } from "@/lib/client/tx";
@@ -89,31 +90,28 @@ export const FlagButton = withFallback(
 					/>
 				</ConfirmButton>
 
-				<Mx
-					label={"Listing ignore (hint)"}
-					{...(isConfirm
-						? {
-								"data-ui-tone": "danger",
-								"data-ui-theme": "light",
-								"data-ui-color": "lead",
-								"data-ui-text": "sm",
-								"data-ui-background": "default",
-								"data-ui-inner": "default",
-								"data-ui-opacity": listing.hasFlag ? "4" : undefined,
-							}
-						: {
-								"data-ui-tone": "neutral",
-								"data-ui-theme": "light",
-								"data-ui-text": "sm",
-								"data-ui-background": "default",
-								"data-ui-inner": "default",
-								"data-ui-opacity": disabled
-									? "4"
-									: listing.hasFlag
+				<Container data-ui-inner={"default"}>
+					<Mx
+						label={"Listing ignore (hint)"}
+						data-ui-theme={"light"}
+						data-ui-text={"sm"}
+						data-ui-background={"default"}
+						{...(isConfirm
+							? {
+									"data-ui-tone": "danger",
+									"data-ui-color": "lead",
+									"data-ui-opacity": listing.hasFlag ? "4" : undefined,
+								}
+							: {
+									"data-ui-tone": "neutral",
+									"data-ui-opacity": disabled
 										? "4"
-										: undefined,
-							})}
-				/>
+										: listing.hasFlag
+											? "4"
+											: undefined,
+								})}
+					/>
+				</Container>
 			</>
 		);
 	},
