@@ -25,12 +25,23 @@ export const withProxyMutation = withMutation<
 		];
 	},
 	async mutationFn({ uploadIds }) {
-		return uploadCollectionFn({
+		const uploads = await uploadCollectionFn({
 			data: {
 				where: {
 					idIn: uploadIds,
 				},
 			},
+		});
+
+		const uploadOrder = new Map(
+			uploadIds.map((id, index) => [
+				id,
+				index,
+			]),
+		);
+
+		return uploads.sort((left, right) => {
+			return (uploadOrder.get(left.id) ?? 0) - (uploadOrder.get(right.id) ?? 0);
 		});
 	},
 });

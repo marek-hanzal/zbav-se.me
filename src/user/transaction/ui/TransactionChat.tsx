@@ -51,8 +51,8 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 	});
 
 	const submit = useCallback(
-		(message: string) => {
-			messageMutation.mutate({
+		async (message: string) => {
+			await messageMutation.mutateAsync({
 				transactionId: transaction.id,
 				kind: "text",
 				payload: {

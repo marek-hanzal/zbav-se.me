@@ -21,46 +21,46 @@ export namespace AgentInput {
 export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 	const [uploads, setUploads] = useState<UploadSchema.Type[]>([]);
+	const uploadIds = uploads.map(({ id }) => id);
 
 	return (
 		<Container>
 			{uploads.length > 0 ? (
-				<>
-					<Container
-						className={"h-32"}
-						data-ui-inner={"default"}
-						onClick={() => {
-							setIsGalleryOpen(true);
-						}}
-					>
-						<GalleryPreview
-							uploads={uploads}
-							data-ui-inner={undefined}
-						/>
-					</Container>
-
-					<GalleryUploadSheet
-						state={{
-							value: isGalleryOpen,
-							set: setIsGalleryOpen,
-						}}
-						withMutation={withProxyMutation}
-						toMutation={(uploadIds) => ({
-							uploadIds,
-						})}
-						onSuccess={async (result) => {
-							setUploads(result);
-							setIsGalleryOpen(false);
-						}}
-						onCancel={() => {
-							setIsGalleryOpen(false);
-						}}
-						defaultUploadIds={uploads.map(({ id }) => id)}
-						detent={"default"}
-						limit={5}
+				<Container
+					className={"h-32"}
+					data-ui-inner={"default"}
+					onClick={() => {
+						setIsGalleryOpen(true);
+					}}
+				>
+					<GalleryPreview
+						uploads={uploads}
+						data-ui-inner={undefined}
 					/>
-				</>
+				</Container>
 			) : null}
+
+			<GalleryUploadSheet
+				key={uploadIds.join(":")}
+				state={{
+					value: isGalleryOpen,
+					set: setIsGalleryOpen,
+				}}
+				withMutation={withProxyMutation}
+				toMutation={(uploadIds) => ({
+					uploadIds,
+				})}
+				onSuccess={async (result) => {
+					setUploads(result);
+					setIsGalleryOpen(false);
+				}}
+				onCancel={() => {
+					setIsGalleryOpen(false);
+				}}
+				defaultUploadIds={uploadIds}
+				detent={"default"}
+				limit={5}
+			/>
 
 			<ChatInput
 				data-ui-width="full"
@@ -102,7 +102,10 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 						{(close) => (
 							<AgentMenu
 								close={close}
-								onUpload={setUploads}
+								galleryState={{
+									value: isGalleryOpen,
+									set: setIsGalleryOpen,
+								}}
 							/>
 						)}
 					</TransactionMenuButton>
