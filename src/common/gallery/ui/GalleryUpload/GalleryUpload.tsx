@@ -8,6 +8,7 @@ import { Toolbar } from "./Toolbar";
 
 export namespace GalleryUpload {
 	export interface Props extends Container.Props {
+		allowClear?: boolean;
 		state: StateType.State<string[]>;
 		limit: number;
 	}
@@ -19,7 +20,7 @@ export namespace GalleryUpload {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props }) => {
+export const GalleryUpload: FC<GalleryUpload.Props> = ({ allowClear, state, limit, ...props }) => {
 	const snapperRef = useRef<HTMLDivElement>(null);
 	const snapperNav = useSnapperNav({
 		containerRef: snapperRef,
@@ -53,6 +54,7 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 					length: limit,
 				}).map((_, slot) => {
 					const uploadId = state.value[slot];
+					const canDelete = allowClear || state.value.length > 1;
 					const previousUploadId = state.value[slot - 1];
 					const nextUploadId = state.value[slot + 1];
 					const disabled = slot > 0 && !state.value[slot - 1];
@@ -85,6 +87,7 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 
 							{uploadId ? (
 								<Toolbar
+									canDelete={canDelete}
 									canMoveLeft={!!previousUploadId}
 									canMoveRight={!!nextUploadId}
 									hooks={{

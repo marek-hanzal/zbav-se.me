@@ -25,6 +25,10 @@ export const withProxyMutation = withMutation<
 		];
 	},
 	async mutationFn({ uploadIds }) {
+		if (uploadIds.length === 0) {
+			return [];
+		}
+
 		const uploads = await uploadCollectionFn({
 			data: {
 				where: {

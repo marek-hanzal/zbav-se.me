@@ -12,13 +12,20 @@ export namespace Toolbar {
 	}
 
 	export interface Props extends Container.Props {
+		canDelete: boolean;
 		canMoveLeft: boolean;
 		canMoveRight: boolean;
 		hooks: Hooks;
 	}
 }
 
-export const Toolbar: FC<Toolbar.Props> = ({ canMoveLeft, canMoveRight, hooks, ...props }) => {
+export const Toolbar: FC<Toolbar.Props> = ({
+	canDelete,
+	canMoveLeft,
+	canMoveRight,
+	hooks,
+	...props
+}) => {
 	return (
 		<Container
 			data-ui={"GalleryUpload-[Toolbar]"}
@@ -64,6 +71,7 @@ export const Toolbar: FC<Toolbar.Props> = ({ canMoveLeft, canMoveRight, hooks, .
 				data-ui={"GalleryUpload-[ButtonDelete]"}
 				aria-label={translator.text("Delete photo (button)")}
 				iconEnabled={TrashIcon}
+				disabled={!canDelete}
 				iconProps={{
 					"data-ui-text": "xl",
 				}}

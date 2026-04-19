@@ -15,6 +15,7 @@ export namespace GalleryUploadSheet {
 		extends Omit<BottomSheet.Props, "isOpen" | "onClose"> {
 		withMutation: withMutation.Api<TData, TResult, any>;
 		toMutation(uploadIds: string[]): TData;
+		allowClear?: boolean;
 		defaultUploadIds: string[];
 		limit?: number;
 		//
@@ -35,6 +36,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, con
 	onSuccess,
 	onCancel,
 	state,
+	allowClear,
 	defaultUploadIds,
 	limit = 1,
 	...props
@@ -61,6 +63,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, con
 				data-ui-inner="default"
 			>
 				<GalleryUpload
+					allowClear={allowClear}
 					state={{
 						value: uploadIds,
 						set: setUploadIds,
@@ -77,7 +80,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, con
 						mutation.mutateAsync(toMutation(uploadIds));
 					}}
 					loading={mutation.isPending}
-					disabled={uploadIds.length === 0}
+					disabled={!allowClear && uploadIds.length === 0}
 				/>
 			</Container>
 		</BottomSheet>
