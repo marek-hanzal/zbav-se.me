@@ -11,10 +11,11 @@ import { ClearButton } from "./ClearButton";
 export namespace AgentMenu {
 	export interface Props extends Container.Props {
 		close: TransactionMenuButton.Close;
+		onUpload?(uploads: string[]): void;
 	}
 }
 
-export const AgentMenu: FC<AgentMenu.Props> = ({ close, ...props }) => {
+export const AgentMenu: FC<AgentMenu.Props> = ({ close, onUpload, ...props }) => {
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
@@ -39,6 +40,7 @@ export const AgentMenu: FC<AgentMenu.Props> = ({ close, ...props }) => {
 					})}
 					onSuccess={async ({ uploadIds }) => {
 						setIsGalleryOpen(false);
+						onUpload?.(uploadIds);
 						close();
 					}}
 					onCancel={() => {

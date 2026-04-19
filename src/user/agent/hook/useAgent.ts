@@ -16,6 +16,8 @@ export namespace useAgent {
 	export interface Props extends MarkSuspense.Props {
 		//
 	}
+
+	export type Use = ReturnType<typeof useAgent>;
 }
 
 export const useAgent = ({ _suspense }: useAgent.Props) => {

@@ -23,6 +23,8 @@ export namespace ChatInput {
 		left?: ReactNode;
 		inputRef?: RefCallback<HTMLTextAreaElement>;
 	}
+
+	export type PropsEx = Omit<Props, "loading" | "placeholder" | "onSubmit">;
 }
 
 export const ChatInput: FC<ChatInput.Props> = ({

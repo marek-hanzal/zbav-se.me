@@ -67,10 +67,11 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 									];
 									next[slot] = uploadId;
 
-									const compact: string[] = next.filter((f): f is string => !!f);
-
-									return compact;
+									return next.filter((f): f is string => !!f);
 								});
+							}}
+							onUpload={(upload) => {
+								//
 							}}
 							data-ui-disabled={disabled}
 						/>

@@ -72,7 +72,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 						onCancel();
 					}}
 					onSave={() => {
-						mutation.mutate(toMutation(uploadIds));
+						mutation.mutateAsync(toMutation(uploadIds));
 					}}
 					loading={mutation.isPending}
 					disabled={uploadIds.length === 0}
