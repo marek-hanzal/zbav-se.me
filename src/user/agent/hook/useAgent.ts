@@ -138,7 +138,12 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 				await mutation.mutateAsync({
 					id: genId(),
 					role: "user",
-					content: text.trim(),
+					content: [
+						{
+							type: "input_text",
+							text: text.trim(),
+						},
+					],
 				});
 			} catch (error) {
 				console.error(error);
