@@ -1,10 +1,14 @@
+import { CopyIconAction } from "@/lib/client/clipboard/CopyIconAction";
 import type { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
+import { LabelValue } from "@/lib/client/value";
+import { ofLatLonText } from "@/lib/common/location";
 import { toTimeDiff } from "@/lib/common/time";
+import { translator } from "@/lib/common/translator";
 import { withLocationFetchQuery } from "~/session/location/withLocationFetchQuery";
 import type { TransactionEntryLocation } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/LocationSchema";
 import { TypeContainer } from "./TypeContainer";
@@ -31,10 +35,35 @@ export const Location = withFallback(
 				data-ui-flow="vertical"
 				{...props}
 			>
-				<Typo
-					label={location.address}
-					data-ui-wrap="wrap"
-					className={"py-1"}
+				<LabelValue
+					textLabel={translator.text("Personal - location")}
+					textValue={location.address}
+					textLabelProps={{
+						"data-ui-text": "default",
+						"data-ui-font": "normal",
+					}}
+					data-ui-background={undefined}
+					action={<CopyIconAction text={location.address} />}
+				/>
+				<LabelValue
+					textLabel={translator.text("Personal - lat-lon")}
+					textValue={ofLatLonText({
+						mode: "text",
+						latLon: location,
+					})}
+					textLabelProps={{
+						"data-ui-text": "default",
+						"data-ui-font": "normal",
+					}}
+					data-ui-background={undefined}
+					action={
+						<CopyIconAction
+							text={ofLatLonText({
+								mode: "map",
+								latLon: location,
+							})}
+						/>
+					}
 				/>
 
 				<Typo
