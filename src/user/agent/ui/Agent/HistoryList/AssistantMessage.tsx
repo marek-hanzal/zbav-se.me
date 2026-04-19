@@ -1,7 +1,7 @@
 import type { AssistantMessageItem } from "@openai/agents-core";
 import type { FC } from "react";
 import { Group } from "@/lib/client/group";
-import { Markdown } from "@/lib/client/markdown";
+import { MessageContent } from "./MessageContent";
 
 export namespace AssistantMessage {
 	export interface Props extends Group.Props {
@@ -10,13 +10,7 @@ export namespace AssistantMessage {
 }
 
 export const AssistantMessage: FC<AssistantMessage.Props> = ({ item, ...props }) => {
-	const text = item.content
-		.filter((c) => c.type === "output_text")
-		.map((c) => c.text)
-		.join("")
-		.trim();
-
-	if (!text.length) {
+	if (!item.content.length) {
 		return null;
 	}
 
@@ -30,7 +24,7 @@ export const AssistantMessage: FC<AssistantMessage.Props> = ({ item, ...props })
 			data-ui-inner="default"
 			{...props}
 		>
-			<Markdown>{text}</Markdown>
+			<MessageContent content={item.content} />
 		</Group>
 	);
 };
