@@ -47,114 +47,106 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 					data-ui-layout="vertical-flex"
 					data-ui-gap="default"
 				>
-					<form
-						data-ui="PersonalControl"
-						onSubmit={(e) => {
-							e.preventDefault();
-							form.handleSubmit();
-						}}
-					>
-						<form.AppField name={"name"}>
-							{(field) => (
-								<FormField
-									id={field.name}
-									name={field.name}
-									label={<Tx label={"Personal - Name (label)"} />}
-									meta={field.state.meta}
-									required
-								>
-									{(props) => (
-										<field.TextInput
-											placeholder={translator.text(
-												"Personal - Name (placeholder)",
-											)}
-											value={field.state.value ?? ""}
-											onBlur={field.handleBlur}
-											onChange={(e) => field.handleChange(e.target.value)}
-											autoFocus
-											{...props}
-										/>
-									)}
-								</FormField>
-							)}
-						</form.AppField>
+					<form.AppField name={"name"}>
+						{(field) => (
+							<FormField
+								id={field.name}
+								name={field.name}
+								label={<Tx label={"Personal - Name (label)"} />}
+								meta={field.state.meta}
+								required
+							>
+								{(props) => (
+									<field.TextInput
+										placeholder={translator.text(
+											"Personal - Name (placeholder)",
+										)}
+										value={field.state.value ?? ""}
+										onBlur={field.handleBlur}
+										onChange={(e) => field.handleChange(e.target.value)}
+										autoFocus
+										{...props}
+									/>
+								)}
+							</FormField>
+						)}
+					</form.AppField>
 
-						<form.AppField name={"phone"}>
-							{(field) => (
-								<FormField
-									id={field.name}
-									name={field.name}
-									label={<Tx label={"Personal - Phone (label)"} />}
-									meta={field.state.meta}
-									required
-								>
-									{(props) => (
-										<field.TextInput
-											type="tel"
-											placeholder={translator.text(
-												"Personal - Phone (placeholder)",
-											)}
-											value={field.state.value ?? ""}
-											onBlur={field.handleBlur}
-											onChange={(e) => field.handleChange(e.target.value)}
-											{...props}
-										/>
-									)}
-								</FormField>
-							)}
-						</form.AppField>
+					<form.AppField name={"phone"}>
+						{(field) => (
+							<FormField
+								id={field.name}
+								name={field.name}
+								label={<Tx label={"Personal - Phone (label)"} />}
+								meta={field.state.meta}
+								required
+							>
+								{(props) => (
+									<field.TextInput
+										type="tel"
+										placeholder={translator.text(
+											"Personal - Phone (placeholder)",
+										)}
+										value={field.state.value ?? ""}
+										onBlur={field.handleBlur}
+										onChange={(e) => field.handleChange(e.target.value)}
+										{...props}
+									/>
+								)}
+							</FormField>
+						)}
+					</form.AppField>
 
-						<form.AppField name={"email"}>
-							{(field) => (
-								<FormField
-									id={field.name}
-									name={field.name}
-									label={<Tx label={"Personal - Email (label)"} />}
-									meta={field.state.meta}
-									required
-								>
-									{(props) => (
-										<field.TextInput
-											type="email"
-											placeholder={translator.text(
-												"Personal - Email (placeholder)",
-											)}
-											value={field.state.value ?? ""}
-											onBlur={field.handleBlur}
-											onChange={(e) => field.handleChange(e.target.value)}
-											{...props}
-										/>
-									)}
-								</FormField>
-							)}
-						</form.AppField>
+					<form.AppField name={"email"}>
+						{(field) => (
+							<FormField
+								id={field.name}
+								name={field.name}
+								label={<Tx label={"Personal - Email (label)"} />}
+								meta={field.state.meta}
+								required
+							>
+								{(props) => (
+									<field.TextInput
+										type="email"
+										placeholder={translator.text(
+											"Personal - Email (placeholder)",
+										)}
+										value={field.state.value ?? ""}
+										onBlur={field.handleBlur}
+										onChange={(e) => field.handleChange(e.target.value)}
+										{...props}
+									/>
+								)}
+							</FormField>
+						)}
+					</form.AppField>
 
-						<form.AppField name={"locationId"}>
-							{(field) => (
-								<FormField
-									id={field.name}
-									name={field.name}
-									label={<Tx label={"Personal - Location (label)"} />}
-									meta={field.state.meta}
-									required
-								>
-									{(props) => (
-										<LocationSelect
-											value={field.state.value ?? null}
-											onChange={(value) => {
-												field.handleChange(value ?? "");
-											}}
-											textHint={""}
-											warningStatusProps={{
-												icon: null,
-											}}
-											{...props}
-										/>
-									)}
-								</FormField>
-							)}
-						</form.AppField>
-					</form>
+					<form.AppField name={"locationId"}>
+						{(field) => (
+							<FormField
+								id={field.name}
+								name={field.name}
+								label={<Tx label={"Personal - Location (label)"} />}
+								meta={field.state.meta}
+								required
+							>
+								{(props) => (
+									<LocationSelect
+										value={field.state.value ?? null}
+										onChange={(value) => {
+											field.handleChange(value ?? "");
+										}}
+										textHint={""}
+										warningStatusProps={{
+											icon: null,
+										}}
+										{...props}
+									/>
+								)}
+							</FormField>
+						)}
+					</form.AppField>
 				</Container>
 			</Container>
 
