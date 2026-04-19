@@ -29,11 +29,6 @@ export const Location = withFallback(
 			},
 		});
 
-		const position = ofLatLonText({
-			mode: "map",
-			latLon: location,
-		});
-
 		return (
 			<TypeContainer
 				data-ui={"Location"}
