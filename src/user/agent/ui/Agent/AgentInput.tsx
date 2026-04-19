@@ -65,7 +65,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 				data-ui-width="full"
 				data-ui-inner="default"
 				onSubmit={async (text) => {
-					await chat.submit(
+					chat.submit(
 						uploads.length > 0
 							? [
 									// biome-ignore lint/style/noNonNullAssertion: Ssst, mother fucker
