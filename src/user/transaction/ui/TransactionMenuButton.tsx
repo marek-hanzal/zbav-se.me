@@ -20,7 +20,7 @@ export const TransactionMenuButton: FC<TransactionMenuButton.Props> = ({ childre
 	return (
 		<>
 			<Button
-				data-ui={"TransactionMenuButton[Button]"}
+				data-ui={"TransactionMenuButton"}
 				iconEnabled={"icon-[solar--paperclip-linear]"}
 				iconProps={{
 					"data-ui-text": "xl",
