@@ -200,7 +200,7 @@ Důvěra u mě není odměna ani razítko po „ověření identity“. Je to vl
 Co z toho plyne:
 - Nehoním lidi přes občanky. Držím rámec, ve kterým se dá chovat normálně.
 - Hranice jsou jasný a vymahatelný: co nejde, prostě nejde (a nejde to obcházet).
-- Odpovědnost začíná přijetím: nezájem není zločin, přijetí je závazek. (Viz [Transakce](#koncept-transakce).)
+- Odpovědnost začíná otevřením obchodu: zájem není závazek, obchod je závazek. (Viz [Transakce](#koncept-transakce).)
 - „Zavřeno je zavřeno“ je fyzika systému, ne prosba. (Viz [Transakce](#koncept-transakce).)
 
 <a id="ferova-monetizace"></a>
@@ -369,7 +369,7 @@ Poloha je součást inzerátu, vzdálenost je signál, radius je nástroj. (Viz 
 Transakce má začátek a konec. Konec je definitivní. Další kontakt = nová transakce. (Viz [Transakce](#koncept-transakce).)
 
 5) **Ochrana prodejce jako feature**
-Odpovědnost začíná až přijetím. `pending` není kanál pro spam. (Viz [Transakce](#koncept-transakce).)
+Odpovědnost začíná až obchodem. Kupující může psát hned, ale `interest` není kanál na prodejce: prodejce zprávy neuvidí, dokud z toho neudělá `trade`. (Viz [Transakce](#koncept-transakce).)
 
 6) **Transparentnost jako systémová vlastnost**
 Pravidla jsou pojmenovaný. Když něco omezím, má to čitelnej důvod. (Viz [Seznam inzerátů](#koncept-seznam-inzeratu), [Kodex](#kodex).)
@@ -393,7 +393,7 @@ Nové inzeráty mají [Release window](#koncept-release-window) (baseline férov
 Kupující si můžou vypnout zvýraznění ([Anti-topper](#koncept-anti-topper)) bez toho, aby tím „okrádali“ prodejce. Systém to vidí a prodejce dostane [Payback](#koncept-payback). Boosty existují, ale důvěra v systém zůstává. (Viz [Anti-topper](#koncept-anti-topper), [Payback](#koncept-payback).)
 
 13) **Automatické ukončování všeho, co by jinde hnilo**
-Inzeráty, transakce i předplatné mají tvrdý kontrakt konce. Žádný zombie inzeráty, žádný nekonečný „pending“, žádný suby běžící na mrtvolky. (Viz [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu), [Automatické ukončení: Transakce](#koncept-automaticke-ukonceni-transakce), [Automatické ukončení: Předplatné (neaktivita)](#koncept-automaticke-ukonceni-predplatneho).)
+Inzeráty, transakce i předplatné mají tvrdý kontrakt konce. Žádný zombie inzeráty, žádný nekonečný „interest“, žádný suby běžící na mrtvolky. (Viz [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu), [Automatické ukončení: Transakce](#koncept-automaticke-ukonceni-transakce), [Automatické ukončení: Předplatné (neaktivita)](#koncept-automaticke-ukonceni-predplatneho).)
 
 14) **Ekonomika čitelná z jednoho místa**
 Jednotný model [Tokeny](#koncept-tokeny) / [Kupón](#koncept-kupon) / [Pass](#koncept-pass). [Ceník](#koncept-cenik) obsahuje všechno. [Exclusive](#koncept-exclusive) je jen viditelné označení, ne tajná výjimka. Když něco existuje, je v ceníku. Když je zamčené, je u toho nápis. (Viz [Ceník](#koncept-cenik), [Exclusive](#koncept-exclusive), [Aktivace](#koncept-aktivace), [Ekonomika](#ekonomika).)
@@ -662,7 +662,7 @@ Related:
 ### Inzerát: Cena
 ← [předchozí](#koncept-inzerat-titulek) | [další](#koncept-inzerat-delivery) →
 
-Cena je povinná. Bez ceny je to jen „piš mi do zpráv“ a to je přesně ten chaos, kterej chci zabít ještě dřív, než vznikne.
+Cena je povinná. Typ ceny jen říká, jak pevně se prodávající té částky drží. Nesmí vzniknout mlha typu „piš mi do zpráv“.
 
 Položky:
 - **Cena**: konkrétní částka.
@@ -671,9 +671,12 @@ Položky:
 Typ ceny:
 - `closed` = pevná cena („nesmlouvám“)
 - `open` = výchozí cena („můžeme se domluvit“)
+- `offer` = představa prodávajícího („takovou mám představu, nabídni mi“)
 
 Tvrdý pravidlo:
-- I u `open` je cena pořád povinná. Žádný „dohodou“ jako únik z reality.
+- U všech typů ceny (`closed`, `open`, `offer`) je konkrétní částka povinná.
+- `offer` není „bez ceny“. Je to cenová představa prodávajícího a výzva, aby kupující přišel s vlastní nabídkou.
+- `offer` nesmí být maskovaný „dohodou“ bordel. Musí být jasně pojmenovaný v UI i ve feedu, aby kupující předem věděl, do čeho leze.
 
 Related:
 - [Inzerát](#koncept-inzerat)
@@ -1225,7 +1228,7 @@ Related:
 Nahlásit člověka bez kontextu je toxická zbraň. Proto to gateuju chováním systému.
 
 Kontrakt:
-- Je to tvrdá akce dostupná **jen v rámci transakce** a až po `open`.
+- Je to tvrdá akce dostupná **jen v rámci transakce** a až po `trade`.
 - Není to toggle.
 - Stejně jako u inzerátu: žádný auto-efekt, jen signál a metrika.
 
@@ -1252,8 +1255,8 @@ Stavový model (prakticky):
 
 | Stav       | Kdy                                                                                          | Co je povolený                                                                                                                                                   |
 | ---------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pending`  | kupující klikne „Mám zájem“                                                                  | kupující **nemůže psát**, ale může **couvnout** (zrušit zájem → `rejected`); prodejce jen **Přijmout** / **Odmítnout**                                           |
-| `open`     | prodejce přijme                                                                              | odemknou se zprávy + strukturovaný widgety                                                                                                                       |
+| `interest` | kupující klikne „Mám zájem“                                                                  | kupující může psát a posílat user-authored záznamy do timeline, ale **jen pro sebe**; prodejce je neuvidí a nedostane z nich notifikace, dokud z toho neudělá obchod; kupující může **couvnout** (zrušit zájem → `rejected`); prodejce jen **Obchod** / **Odmítnout** |
+| `trade`    | prodejce otevře obchod                                                                       | prodejci se odkryje dosavadní buyer-side komunikace a dál běží zprávy + strukturovaný widgety pro obě strany                                                     |
 | `resolved` | prodejce označí „vyřešeno“                                                                   | tahle transakce běží dál, dokud kupující nedá finále (`success`/`closed`); strukturovaná komunikace se omezí a zůstává jen to, co dává smysl pro dotažení konce    |
 | `dispute`  | někdo přepne do sporu                                                                        | běží dál (řeší se), dokud kupující nedá finále (`success`/`closed`)                                                                                              |
 | `rejected` | kupující nebo prodejce odmítne („bez emocí“)                                                 | read-only                                                                                                                                                        |
@@ -1268,9 +1271,10 @@ Poznámky ke koncům:
 - `sold` = systémová stopka „už prodáno“ (bez emocí, bez dohadů).
 
 Anti-spam a ochrana prodejce:
-- Prodejce může zájem **ignorovat bez postihu**. Odpovědnost začíná až přijetím.
-- Kupující v `pending` **nemůže spamovat zprávama**.
-- Kupující může v `pending` couvnout — a je to signál do metrik (viz [Metrika: Closer rate](#koncept-metrika-closer-rate)).
+- Prodejce může zájem **ignorovat bez postihu**. Odpovědnost začíná až obchodem.
+- Kupující v `interest` může psát, ale je to **buyer-side buffer**, ne inbox prodejce.
+- Zprávy a user-authored záznamy z `interest` se prodejci zobrazí až po `trade`; do té doby prodejce nevidí obsah, náhledy, počet zpráv ani z nich nedostává notifikace.
+- Kupující může v `interest` couvnout — a je to signál do metrik (viz [Metrika: Closer rate](#koncept-metrika-closer-rate)).
 - Odmítnutí je legitimní volba bez vysvětlování. Žádnej mentální dluh.
 
 Timeline místo chatu:
@@ -1303,8 +1307,9 @@ Co v transaction timeline žije:
 - systémové/status záznamy jako fakt „co se stalo“.
 
 Kontrakt:
-- V `pending` se user-authored komunikace neposílá.
-- `open` a `dispute` dovolují text i strukturovaný zápisy podle role.
+- V `interest` může kupující vytvářet user-authored komunikaci bez omezení, ale vidí ji jen kupující.
+- `trade` odkryje prodejci buyer-side komunikaci z `interest` a dál dovoluje text i strukturovaný zápisy podle role.
+- `dispute` dovoluje text i strukturovaný zápisy podle role.
 - `resolved` nechává už jen to, co dává smysl pro dotažení konce.
 - Terminal stavy jsou read-only.
 - Systémové/status záznamy vznikají automaticky ze změn stavu a nesmí se tvářit jako samostatnej chat.
@@ -1563,7 +1568,7 @@ Related:
 Karma je hodnocení člověka v kontextu konkrétní transakce. Žádný hvězdičky, žádnej román.
 
 Kontrakt:
-- Karma existuje jen v rámci transakce a až po `open`.
+- Karma existuje jen v rámci transakce a až po `trade`.
 - Dvě volby: Like (Dobrý) / Dislike (Špatný).
 - Kdo nehlasuje = neutrál (žádná penalizace za „nechci to řešit“).
 - Karma != [Flag uživatele](#koncept-flag-uzivatele). Karma je zkušenost. Flag je průser.
@@ -1608,7 +1613,7 @@ Proč existuje:
 - Chci dát prodejci signál „jak se lidem obchodovalo“. Ne román. Jedno kliknutí.
 
 Kontrakt:
-- Karma se uděluje v rámci transakce a až po `open`.
+- Karma se uděluje v rámci transakce a až po `trade`.
 - Je to agregovaná metrika, která se **zobrazuje u prodávajícího** (v rámci jeho metrik).
 - Kdo nehlasuje = neutrál.
 - Karma není [Flag uživatele](#koncept-flag-uzivatele). Karma je zkušenost. Flag je průser.
@@ -1647,7 +1652,7 @@ Eventy, se kterýma počítám (dnes):
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `listing`     | `listing.create`, `listing.sold`                                                                                                                                                                        |
 | `user`        | `user.active` (heartbeat: 1× za hodinu při pobytu v appce, počítáno od prvního otevření)                                                                                                                |
-| `transaction` | `transaction.create`, `transaction.open`, `transaction.message`, `transaction.resolved`, `transaction.sold`, `transaction.success`, `transaction.rejected`, `transaction.closed`, `transaction.expired` |
+| `transaction` | `transaction.create`, `transaction.trade`, `transaction.message`, `transaction.resolved`, `transaction.sold`, `transaction.success`, `transaction.rejected`, `transaction.closed`, `transaction.expired` |
 
 Na co to používám:
 - výpočet [Metrik prodávajícího](#koncept-metriky-prodavaciho) a [Metrik kupujícího](#koncept-metriky-kupujiciho),
@@ -1775,7 +1780,7 @@ Proč existuje:
 - Rozlišuju „člověk se podíval a odmítl“ vs. „člověk to jen mechanicky zavírá“. To je kvalita trhu.
 
 Kontrakt:
-- Počítám odmítnutí, který proběhly bez toho, aby došlo k reálný interakci v `open`.
+- Počítám odmítnutí, který proběhly bez toho, aby došlo k reálný interakci v `trade`.
 - Odmítnutí je legitimní volba (viz `rejected` v [Transakcích](#koncept-transakce)); metrika je jenom popis chování, ne moralizování.
 
 Related:
@@ -1792,7 +1797,7 @@ Proč existuje:
 - Chci vidět, jak často protistrana dotahuje obchody do „vyřešenýho“ stavu, ne jak často nechává věci hnít.
 
 Kontrakt:
-- Metrika se vztahuje jen na transakce, který se reálně rozjely (`open` a dál).
+- Metrika se vztahuje jen na transakce, který se reálně rozjely (`trade` a dál).
 - Neexistuje tu žádnej „tajnej downgrade“ — definice musí být čitelná.
 
 Related:
@@ -1883,7 +1888,7 @@ Proč existuje:
 Kontrakt:
 - Metrika popisuje rychlý ukončování bez smysluplný interakce.
 - Neplete se to s `rejected` jako legitimní stopkou (hlavně když odmítá prodejce). Je to chování v čase.
-- Výjimka: couvnutí kupujícího v `pending` (`rejected`) se do closer počítá (otevření obchodu není random klik, je to vědomý rozhodnutí).
+- Výjimka: couvnutí kupujícího v `interest` (`rejected`) se do closer počítá (projevení zájmu není random klik, je to vědomý rozhodnutí).
 
 Related:
 - [Metriky kupujícího](#koncept-metriky-kupujiciho)
