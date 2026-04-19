@@ -54,8 +54,8 @@ export const CopyIconAction: FC<CopyIconAction.Props> = ({ text, ...props }) => 
 			icon={CopyIcon}
 			data-ui-text={"xl"}
 			onClick={() => {
-				copy.mutate({
-					text: "Lizu picu cely den",
+				copy.mutateAsync({
+					text,
 				});
 			}}
 			{...props}
