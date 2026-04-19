@@ -43,7 +43,7 @@ export namespace PhotoUpload {
 		camera?: boolean;
 		value: useController.Value;
 		onChange: useController.OnChangeFn;
-		onUpload: useController.OnUploadFn;
+		onUpload?: useController.OnUploadFn;
 	}
 }
 

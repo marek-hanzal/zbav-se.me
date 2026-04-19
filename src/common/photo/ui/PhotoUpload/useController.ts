@@ -18,7 +18,7 @@ export namespace useController {
 	export interface Props {
 		value: Value;
 		onChange: OnChangeFn;
-		onUpload: OnUploadFn;
+		onUpload?: OnUploadFn;
 	}
 
 	export interface Result {
@@ -73,7 +73,7 @@ export function useController({
 				},
 			});
 			onChange(result.id);
-			onUpload(result);
+			onUpload?.(result);
 		},
 	});
 

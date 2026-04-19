@@ -70,9 +70,6 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 									return next.filter((f): f is string => !!f);
 								});
 							}}
-							onUpload={(upload) => {
-								//
-							}}
 							data-ui-disabled={disabled}
 						/>
 					);

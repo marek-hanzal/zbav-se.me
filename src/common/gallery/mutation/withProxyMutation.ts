@@ -1,5 +1,7 @@
 import { withMutation } from "@/lib/client/mutation";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { uploadCollectionFn } from "~/user/upload/fn/uploadCollectionFn";
+import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import type { GalleryUploadSheet } from "../ui/GalleryUploadSheet";
 
 /**
@@ -8,7 +10,7 @@ import type { GalleryUploadSheet } from "../ui/GalleryUploadSheet";
  */
 export const withProxyMutation = withMutation<
 	GalleryUploadSheet.Uploads,
-	GalleryUploadSheet.Uploads,
+	UploadSchema.Type[],
 	Error
 >({
 	logger: getRootLogger([
@@ -22,7 +24,13 @@ export const withProxyMutation = withMutation<
 			variables,
 		];
 	},
-	async mutationFn(uploads) {
-		return uploads;
+	async mutationFn({ uploadIds }) {
+		return uploadCollectionFn({
+			data: {
+				where: {
+					idIn: uploadIds,
+				},
+			},
+		});
 	},
 });
