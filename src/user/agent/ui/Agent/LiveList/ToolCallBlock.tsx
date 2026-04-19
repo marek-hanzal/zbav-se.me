@@ -27,7 +27,7 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 
 	if (inline) {
 		<Group
-			data-ui={"ToolCallItem"}
+			data-ui={"ToolCallBlock"}
 			data-id={itemId}
 			data-ui-tone="neutral"
 			data-ui-theme="light"
