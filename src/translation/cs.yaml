@@ -1735,3 +1735,21 @@ transaction - seller - status-trade:
 
         _Teď se do toho můžete společně pustit!_
     static: true
+Agent tool - upload_create:
+    value: Nahrávám obsah
+    static: true
+Agent tool - transaction_entry_create:
+    value: Posílám zprávu
+    static: true
+Agent tool - activity_collection:
+    value: Zkoumám novinky
+    static: true
+Agent tool - buyer_transaction_collection:
+    value: Zkoumám zprávy v tvých nákupech
+    static: true
+Agent tool - seller_transaction_collection:
+    value: Zkoumám zprávy v tvých prodejích
+    static: true
+Agent tool - transaction_entry_collection:
+    value: Čtu si obsah zpráv
+    static: true

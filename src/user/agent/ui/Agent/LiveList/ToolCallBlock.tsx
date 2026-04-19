@@ -3,6 +3,7 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
 import { selectToolCallState } from "./selectToolCallState";
@@ -22,11 +23,29 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 	className,
 	...props
 }) => {
-	if (inline) {
-		// return null;
-	}
-
 	const state = selectToolCallState(events, itemId);
+
+	if (inline) {
+		<Group
+			data-ui={"ToolCallItem"}
+			data-id={itemId}
+			data-ui-tone="neutral"
+			data-ui-theme="light"
+			data-ui-background="alt"
+			data-ui-inner="default"
+			data-ui-opacity="6"
+			{...props}
+		>
+			<Tx
+				label={`Agent tool - ${state.name}`}
+				data-ui-text="sm"
+				data-ui-font="bold"
+				className={[
+					"wrap-break-word",
+				]}
+			/>
+		</Group>;
+	}
 
 	return (
 		<Group

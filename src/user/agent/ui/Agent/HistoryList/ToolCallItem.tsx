@@ -5,6 +5,7 @@ import { Group } from "@/lib/client/group";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
 import { getToolOutputText } from "~/user/agent/type/getToolOutputText";
+import { Tx } from "@/lib/client/tx";
 
 export namespace ToolCallItem {
 	export interface Props extends Group.Props {
@@ -16,7 +17,27 @@ export namespace ToolCallItem {
 
 export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, inline, ...props }) => {
 	if (inline) {
-		// return null;
+		return (
+			<Group
+				data-ui={"ToolCallItem"}
+				data-id={item.id}
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-background="alt"
+				data-ui-inner="default"
+				data-ui-opacity="6"
+				{...props}
+			>
+				<Tx
+					label={`Agent tool - ${item.name}`}
+					data-ui-text="sm"
+					data-ui-font="bold"
+					className={[
+						"wrap-break-word",
+					]}
+				/>
+			</Group>
+		);
 	}
 
 	const result = items.find(
