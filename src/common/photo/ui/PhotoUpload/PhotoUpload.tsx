@@ -61,7 +61,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	...props
 }) => {
 	const controller = useController({
-		value,
 		onChange,
 		onUpload,
 	});
