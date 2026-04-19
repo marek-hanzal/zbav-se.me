@@ -19,9 +19,6 @@ export const PersonalSchema = z
 				email: z.email().meta({
 					description: "Contact email",
 				}),
-				locationId: z.string().meta({
-					description: "Contact location identifier",
-				}),
 			})
 			.strip(),
 	})
