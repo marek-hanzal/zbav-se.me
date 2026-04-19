@@ -23,7 +23,7 @@ describe("seller transaction read model", () => {
 				buyerId: buyer.id,
 				listing,
 			});
-			yield* transactionEntryCreateFx({
+			const hiddenTextEntry = yield* transactionEntryCreateFx({
 				userId: buyer.id,
 				transactionId: ownScenario.transactionId,
 				kind: "text",
@@ -48,6 +48,12 @@ describe("seller transaction read model", () => {
 			expect(typeof collection[0]?.unreadCount).toBe("number");
 			expect(collection[0]?.unreadCount).toBeGreaterThan(0);
 			expect(collection[0]?.entry.kind).toBe("status-interest");
+			expect(collection[0]?.lastAt.getTime()).toBe(
+				new Date(collection[0]?.entry.createdAt ?? 0).getTime(),
+			);
+			expect(collection[0]?.lastAt.getTime()).toBeLessThan(
+				hiddenTextEntry.createdAt.getTime(),
+			);
 
 			const fetched = yield* transactionFetchFx({
 				scope: {
@@ -61,6 +67,8 @@ describe("seller transaction read model", () => {
 			expect(fetched.id).toBe(ownScenario.transactionId);
 			expect(typeof fetched.unreadCount).toBe("number");
 			expect(fetched.entry.kind).toBe("status-interest");
+			expect(fetched.lastAt.getTime()).toBe(new Date(fetched.entry.createdAt).getTime());
+			expect(fetched.lastAt.getTime()).toBeLessThan(hiddenTextEntry.createdAt.getTime());
 
 			const count = yield* transactionCountFx({
 				scope: {

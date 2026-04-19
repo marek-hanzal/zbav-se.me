@@ -24,6 +24,9 @@ export const TransactionSchema = z
 		priceType: ListingPriceEnumSchema,
 		currency: CurrencyEnumSchema,
 		entry: TransactionEntrySchema,
+		lastAt: z.coerce.date().meta({
+			description: "Timestamp of the latest seller-visible transaction activity",
+		}),
 		unreadCount: z.coerce.number().int().nonnegative().meta({
 			description: "Unread activity buyer-message count for this transaction",
 			type: "number",
