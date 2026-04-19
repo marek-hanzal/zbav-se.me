@@ -7,7 +7,7 @@ import {
 	useState,
 } from "react";
 import { withUploadMutation } from "~/user/upload/mutation/withUploadMutation";
-import { withUploadFetchQuery } from "~/user/upload/query/withUploadFetchQuery";
+import { withUploadQuery } from "~/user/upload/query/withUploadQuery";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
 export namespace useController {
@@ -16,7 +16,6 @@ export namespace useController {
 	export type OnUploadFn = (upload: UploadSchema.Type | undefined) => void;
 
 	export interface Props {
-		value: Value;
 		onChange: OnChangeFn;
 		onUpload?: OnUploadFn;
 	}
@@ -31,14 +30,10 @@ export namespace useController {
 	}
 }
 
-export function useController({
-	value,
-	onChange,
-	onUpload,
-}: useController.Props): useController.Result {
+export function useController({ onChange, onUpload }: useController.Props): useController.Result {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [progress, setProgress] = useState(0);
-	const setUpload = withUploadFetchQuery.useSet();
+	const setUpload = withUploadQuery.useUpdate();
 
 	const pick = useCallback(() => {
 		inputRef.current?.click();
@@ -54,24 +49,9 @@ export function useController({
 	const uploadMutation = withUploadMutation.useMutation({
 		async onPreMutation() {
 			setProgress(0);
-
-			setUpload(
-				() => {
-					return undefined;
-				},
-				{
-					where: {
-						id: value,
-					},
-				},
-			);
 		},
 		async onPostMutation({ result }) {
-			setUpload(() => result, {
-				where: {
-					id: result.id,
-				},
-			});
+			setUpload(result);
 			onChange(result.id);
 			onUpload?.(result);
 		},

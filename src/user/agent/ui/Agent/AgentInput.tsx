@@ -2,10 +2,11 @@ import { type FC, useState } from "react";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
 import { translator } from "@/lib/common/translator";
+import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { ChatInput } from "~/common/ui/chat";
 import { CancelIcon } from "~/common/ui/icon";
-import { HeroImage } from "~/common/ui/img";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
+import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import type { useAgent } from "../../hook/useAgent";
 import { AgentMenu } from "./AgentMenu";
 
@@ -16,15 +17,13 @@ export namespace AgentInput {
 }
 
 export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
-	const [uploads, setUploads] = useState<string[]>([]);
-
-	console.log("Some uploads?", uploads);
+	const [uploads, setUploads] = useState<UploadSchema.Type[]>([]);
 
 	return (
 		<Container>
 			{uploads.length > 0 ? (
-				<Container className={"min-h-24"}>
-					<HeroImage src={uploads[0]} />
+				<Container className={"h-24"}>
+					<GalleryPreview uploads={uploads} />
 				</Container>
 			) : null}
 

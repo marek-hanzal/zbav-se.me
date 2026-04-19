@@ -11,15 +11,15 @@ export namespace GalleryUploadSheet {
 		uploadIds: string[];
 	}
 
-	export interface Props<TData extends Uploads>
+	export interface Props<TData extends Uploads, TResult>
 		extends Omit<BottomSheet.Props, "isOpen" | "onClose"> {
-		withMutation: withMutation.Api<TData, any, any>;
+		withMutation: withMutation.Api<TData, TResult, any>;
 		toMutation(uploadIds: string[]): TData;
 		defaultUploadIds: string[];
 		//
 		state: StateType.State<boolean>;
 		//
-		onSuccess(uploads: TData): void;
+		onSuccess(result: TResult): void;
 		onCancel(): void;
 	}
 }
@@ -28,7 +28,7 @@ export namespace GalleryUploadSheet {
  * Coordinates the gallery upload flow in a bottom sheet, including local state, mutation submit, and cancel reset.
  * Use it when photo changes should be edited in an isolated overlay and persisted only after explicit save.
  */
-export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
+export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, const TResult>({
 	withMutation,
 	toMutation,
 	onSuccess,
@@ -36,11 +36,11 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 	state,
 	defaultUploadIds,
 	...props
-}: GalleryUploadSheet.Props<TData>) => {
+}: GalleryUploadSheet.Props<TData, TResult>) => {
 	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
 	const mutation = withMutation.useMutation({
-		async onPostMutation({ variables }) {
-			onSuccess(variables);
+		async onPostMutation({ result }) {
+			onSuccess(result);
 		},
 	});
 

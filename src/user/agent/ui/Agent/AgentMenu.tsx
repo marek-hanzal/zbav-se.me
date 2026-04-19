@@ -6,12 +6,13 @@ import { GalleryUploadButton } from "~/common/gallery/ui/GalleryUploadButton";
 import { MessageButtonUi } from "~/user/transaction/ui/MessageButtonUi";
 import { TransactionButtonUi } from "~/user/transaction/ui/TransactionButtonUi";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
+import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import { ClearButton } from "./ClearButton";
 
 export namespace AgentMenu {
 	export interface Props extends Container.Props {
 		close: TransactionMenuButton.Close;
-		onUpload?(uploads: string[]): void;
+		onUpload?(uploads: UploadSchema.Type[]): void;
 	}
 }
 
@@ -38,9 +39,9 @@ export const AgentMenu: FC<AgentMenu.Props> = ({ close, onUpload, ...props }) =>
 					toMutation={(uploadIds) => ({
 						uploadIds,
 					})}
-					onSuccess={async ({ uploadIds }) => {
+					onSuccess={async (result) => {
 						setIsGalleryOpen(false);
-						onUpload?.(uploadIds);
+						onUpload?.(result);
 						close();
 					}}
 					onCancel={() => {
