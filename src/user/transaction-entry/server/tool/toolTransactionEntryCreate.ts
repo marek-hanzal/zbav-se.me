@@ -68,8 +68,7 @@ Allowed user-authored entry kinds:
 - gallery: Share uploaded media. Use only when uploadIds already exist. Keep uploadIds in the user's intended order.
 - location: Share a location/address. Use only with a concrete locationId; if the user gives a human address, normalize it with
   the location tool first.
-- personal: Share handover/contact details. Use only when the user explicitly provided name, phone, email, and location.
-  Normalize the location to locationId first.
+- personal: Share handover/contact details. Use only when the user explicitly provided (optional) name, phone or email.
 - package: Share shipping/tracking details. Seller-only. Requires a valid tracking link. Use number when known, otherwise set
   number to null.
 
