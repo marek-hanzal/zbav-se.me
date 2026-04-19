@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { LatLonSchema } from "~/common/schema/LatLonSchema";
+import { LatLonSchema } from "@/lib/common/location";
 
 export const ListingMetaSchema = z
 	.looseObject({

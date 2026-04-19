@@ -1,1 +1,1 @@
-export const CheckIcon = "icon-[ei--check]";
+export const CheckIcon = "icon-[solar--check-circle-linear]";

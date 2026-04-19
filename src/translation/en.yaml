@@ -28,6 +28,9 @@
 050d325dc0ab4741ff8dd2e315e563bf0a746ea997e21d31bc54f8dd:
   ref: Listing category not selected
   value: Listing category not selected
+05222c72d8e46e315cfc05b0a13edcf266e0b81f58e5179b08c0ffd7:
+  ref: Personal - location
+  value: Personal - location
 053186ab8ac076e257afc816ae62151a4fb7bc87e4e1927dc5312e2b:
   ref: No listings - all empty (message)
   value: No listings - all empty (message)
@@ -181,9 +184,6 @@
 23609a4b2bc2ea2da20065b7286ff1892586974ad83ab17bf92ab7f0:
   ref: Resolve transaction (button)
   value: Resolve transaction (button)
-23d96471b4cb8b94656db913455c655d345ce88c217df03f385d2750:
-  ref: Personal - Location (label)
-  value: Personal - Location (label)
 255174a1e467263f9445031755d0c4df78c9c89f4835c67fe40b7e2d:
   ref: Buyer activity (label)
   value: Buyer activity (label)
@@ -289,6 +289,9 @@
 3ca78530a9e9985ed4678eeb359e23a9c8e913ec6de9f637c0f53e46:
   ref: Price - free
   value: Price - free
+3dc34d77b3a23a2bc84aa64a0a17e65843037cff2fc4d511a6c4ded3:
+  ref: Personal - name
+  value: Personal - name
 3df09c51e95ae8860071d5aa5bdab57a73ecc7c25ae2f25373ac5da3:
   ref: Privacy policy not available in this language (title)
   value: Privacy policy not available in this language (title)
@@ -343,9 +346,6 @@
 47babec012e4f310636ec7ddbcd6e5b33dbe7fe9f946fde7d3cb0d48:
   ref: Package - Link (placeholder)
   value: Package - Link (placeholder)
-486106a7527d8d2727d2c29ae0bf04b30c60032b353b74b4c1abf20a:
-  ref: Personal - Warning (message)
-  value: Personal - Warning (message)
 489d00517dfd05ee3a0d97637b9717d03aa5ae79bab228d5eed3e1e4:
   ref: Loading... (label)
   value: Loading... (label)
@@ -481,6 +481,9 @@
 62323b76d8ec615cba6e105b1c5c1e2e4f6e9f89de5a251ed565809f:
   ref: Transaction row - personal activity (label)
   value: Shared handoff details
+62f79d721e1f64279cdb9c76ae70447c285af806b3d67a6223a7aa14:
+  ref: Share contact info (title)
+  value: Share contact info (title)
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
   ref: View transactions (button)
   value: View transactions (button)
@@ -778,9 +781,6 @@ acca87272a911bd673bc0f526d8ddaf4bedf8c4d04a375401d80df47:
 ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba48:
   ref: Search (title)
   value: Search
-acf5cd0bee4e6bd74eea745c51c41f0b3a17a1de314afd2d76eb056c:
-  ref: Personal - Warning (title)
-  value: Personal - Warning (title)
 ad463b7f3d6f1eaa5308848bc97d5f303534c5cd5e2ddeed8fd6b57b:
   ref: Package - Tracking number (label)
   value: Package - Tracking number (label)
@@ -847,6 +847,9 @@ bbd8808bf4c28cd66cc606e6a7d8c4ab0c2cd43a8f8ae2aace45a73b:
 bcd9934e20e9f9156bc934d5ff4ae78c96d19fdc0ec072a3a20e1371:
   ref: Listing - Pros (label)
   value: Listing - Pros (label)
+bce3e1275a3bf736748b56423b72c3e6c36ebb60fed5b600b81fc486:
+  ref: Personal - map
+  value: Personal - map
 bda14ae9f8cb30b7b7440f39407eb24b991ad4b512e8118780fac091:
   ref: Expiration date not set
   value: Expiration date not set
@@ -885,6 +888,9 @@ c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
 c7147aaa47c54e90b7023be8ee57d73010a71c259e352067aaad48e6:
   ref: Reject transaction (button)
   value: Reject transaction (button)
+cb3a34c7200192f3cf99f4312074d252b890df7647e1e65c2ee986ab:
+  ref: Share location (title)
+  value: Share location (title)
 cbac5f835956010c5b45bed61ee098674baef1e75ef17acc19462ac1:
   ref: Flag listing (button)
   value: Flag listing (button)
@@ -1011,6 +1017,9 @@ f18a36932d031042735ffe9b5fbf3fad95a86de7b3b04e8ae3f43986:
 f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
   ref: Favourites (label)
   value: Favourites (label)
+f3f7b74c586e4bc7fff67cd348751ca929ed627420e6662d5e9a322d:
+  ref: Personal - phone
+  value: Personal - phone
 f3f9c0a66a107af2911fa0f9019dc4526940d1afe4a957e1445e3447:
   ref: Condition not selected
   value: Condition not selected
@@ -1026,6 +1035,9 @@ f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
 f614ee6abd82ea21f37d43a4669a4ccdcda5dfb0553501b5cd572420:
   ref: No transactions as buyer (title)
   value: No transactions as buyer (title)
+f6ad9463741af76056b52e94393690183d61ce5cedfae42ded3fcded:
+  ref: Personal - email
+  value: Personal - email
 f718d2ba74693c352dc2c17cc74e1b23c47ed2051d1c31598d0dd766:
   ref: sold
   value: sold

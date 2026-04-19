@@ -42,7 +42,7 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 
 	return (
 		<Container
-			data-ui="LocationSelect[Container]"
+			data-ui="LocationSelect"
 			data-ui-layout="vertical-header-content"
 			data-ui-height="full"
 			data-ui-gap="default"

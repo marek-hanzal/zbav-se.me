@@ -55,7 +55,6 @@ describe("transactionEntry workflow", () => {
 					name: "Buyer Contact",
 					phone: "+420777888999",
 					email: "buyer-contact@test.cz",
-					locationId: listing.locationId,
 				},
 			});
 

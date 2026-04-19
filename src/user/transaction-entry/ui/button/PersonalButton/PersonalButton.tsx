@@ -3,8 +3,8 @@ import { useState } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { Button } from "@/lib/client/button";
 import { Tx } from "@/lib/client/tx";
+import { translator } from "@/lib/common/translator";
 import { CloseButton } from "~/common/ui/button";
-import { EmailIcon } from "~/common/ui/icon";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionEntryQuery } from "~/user/transaction-entry/query/withTransactionEntryQuery";
 import { PersonalControl } from "./PersonalControl";
@@ -40,7 +40,7 @@ export const PersonalButton: FC<PersonalButton.Props> = ({
 		<>
 			<Button
 				data-ui="PersonalButton"
-				iconEnabled={EmailIcon}
+				iconEnabled={"icon-[solar--card-2-linear]"}
 				onClick={() => {
 					setIsOpen(true);
 				}}
@@ -57,7 +57,7 @@ export const PersonalButton: FC<PersonalButton.Props> = ({
 				detent={"default"}
 				withHeader
 				header={({ close }) => ({
-					title: "Share contact info (title)",
+					title: translator.text("Share contact info (title)"),
 					right: <CloseButton onClick={close} />,
 				})}
 			>
@@ -72,7 +72,6 @@ export const PersonalButton: FC<PersonalButton.Props> = ({
 							payload,
 						});
 					}}
-					data-ui-inner="default"
 				/>
 			</BottomSheet>
 		</>

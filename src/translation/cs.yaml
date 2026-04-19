@@ -28,6 +28,9 @@
 050d325dc0ab4741ff8dd2e315e563bf0a746ea997e21d31bc54f8dd:
     ref: Listing category not selected
     value: Kategorii nemáš vybranou
+05222c72d8e46e315cfc05b0a13edcf266e0b81f58e5179b08c0ffd7:
+    ref: Personal - location
+    value: Adresa
 053186ab8ac076e257afc816ae62151a4fb7bc87e4e1927dc5312e2b:
     ref: No listings - all empty (message)
     value: Máš tu čest vystavit úplně první inzerát a vyzkoušet, jak systém funguje!
@@ -61,8 +64,7 @@
     value: Nastavení omezení
 0a0e1258e91df9fa887eb547e6dd2bb4f6445b495d72d8ba321244cc:
     ref: Feed list empty (message)
-    value:
-        ...ale můžeš si nějaký seznam vytvořit - třeba pro sebe, děti, auto, co
+    value: ...ale můžeš si nějaký seznam vytvořit - třeba pro sebe, děti, auto, co
         tě napadne.
 0a5c73cd28c41a15c8769a38be34b6d388bcba18e90ca7e28b762bc9:
     ref: Listing - Cons (title)
@@ -108,14 +110,14 @@
 1088c3fcabd70b4e385443272326be10f59a63b577e719b5ac8c5821:
     ref: Listing ignore (hint)
     value: >
-        Pokud vidíš něco nezákonného, nahlas to. Inzerát musí vysloveně porušovat
-        zákon nebo podmínky
+        Pokud vidíš něco nezákonného, nahlas to. Inzerát musí vysloveně
+        porušovat zákon nebo podmínky
 
         používání.
 
 
-        _**Hlášení jsou kontrolována na obou stranách - zneužití může vést k postihu
-        (např. omezení účtu).**_
+        _**Hlášení jsou kontrolována na obou stranách - zneužití může vést k
+        postihu (např. omezení účtu).**_
 10f914ea9cc83041c29c8bb26973587f54d1113366f11ee5daad4a4d:
     ref: System update (label)
     value: System update (label)
@@ -134,13 +136,13 @@
 12e75835dcd53665e98ab2e6c1064379dd6094870afd31f532f39e47:
     ref: Listing restriction (hint)
     value: >
-        Důležitá hodnota, pokud prodáváš něco, co podléhá např. omezení věku nebo
-        dokonce vyžaduje oprávnění k užití.
+        Důležitá hodnota, pokud prodáváš něco, co podléhá např. omezení věku
+        nebo dokonce vyžaduje oprávnění k užití.
 14663fea507627f6c98c1360a9aa3c6d275ed885e44051e7d88af28a:
     ref: Feed age (hint)
     value: >
-        Jedná se o odhad životnosti nabízeného předmětu - orientační hodnota, podle
-        které můžeš odhadnout, jak starý daný předmět cca je.
+        Jedná se o odhad životnosti nabízeného předmětu - orientační hodnota,
+        podle které můžeš odhadnout, jak starý daný předmět cca je.
 14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
     ref: Condition (title)
     value: Nastavení stavu
@@ -189,7 +191,8 @@
     value: Informace o kupujícím
 1e2825e05d0a8e168a812a6bb29ff8f7b5f58b3c0b29bbffd2c8dfa5:
     ref: Closer p90 (hint)
-    value: Udává čas, za jak dlouho kupující obvykle zavře zprávu bez další interakce.
+    value: Udává čas, za jak dlouho kupující obvykle zavře zprávu bez další
+        interakce.
 1e2c52ff0279d0ad26557c2235b137106f4d5a45187461bba1242a01:
     ref: Listing condition not selected
     value: Jakýkoli stav
@@ -211,9 +214,6 @@
 23609a4b2bc2ea2da20065b7286ff1892586974ad83ab17bf92ab7f0:
     ref: Resolve transaction (button)
     value: Vyřízeno
-23d96471b4cb8b94656db913455c655d345ce88c217df03f385d2750:
-    ref: Personal - Location (label)
-    value: Adresa
 255174a1e467263f9445031755d0c4df78c9c89f4835c67fe40b7e2d:
     ref: Buyer activity (label)
     value: Přibližná aktivita
@@ -325,6 +325,9 @@
 3ca78530a9e9985ed4678eeb359e23a9c8e913ec6de9f637c0f53e46:
     ref: Price - free
     value: Zdarma
+3dc34d77b3a23a2bc84aa64a0a17e65843037cff2fc4d511a6c4ded3:
+    ref: Personal - name
+    value: Jméno
 3df09c51e95ae8860071d5aa5bdab57a73ecc7c25ae2f25373ac5da3:
     ref: Privacy policy not available in this language (title)
     value: Privacy policy not available in this language (title)
@@ -380,22 +383,6 @@
 47babec012e4f310636ec7ddbcd6e5b33dbe7fe9f946fde7d3cb0d48:
     ref: Package - Link (placeholder)
     value: Např. https://www.zasilkovna.cz/sledovani/Z488654
-486106a7527d8d2727d2c29ae0bf04b30c60032b353b74b4c1abf20a:
-    ref: Personal - Warning (message)
-    value: >
-        Buď velmi opatrný, s kým sdílíš osobní údaje, jelikož po předání už
-
-        je nemáme pod kontrolou.
-
-
-        **Aplikace tyto údaje drží pouze v rámci této transakce, pak je nenávratně
-        smaže.**
-
-
-        _Nikdy prosím nepiš své jméno ani jiné údaje přímo do chatu, jelikož ten je
-        zachován
-
-        v archivu a zůstává dostupný._
 489d00517dfd05ee3a0d97637b9717d03aa5ae79bab228d5eed3e1e4:
     ref: Loading... (label)
     value: ...přemýšlím...
@@ -405,11 +392,11 @@
 4a6d672731040044ea10a6210d1d72de8ce2a49c57e6eab1ba45eb66:
     ref: Feed name (required)
     value: >
-        Nastav si svůj název seznamu, abys poznal, co v něm očekáváš (např. zimní
-        pneu).
+        Nastav si svůj název seznamu, abys poznal, co v něm očekáváš (např.
+        zimní pneu).
 4d603e3fca4e9f047b0fd3fdd009a1808b0b50eda2aa6f12c206a9c7:
     ref: Share location (button)
-    value: Sdílet polohu
+    value: Sdílet adresu
 4de936d4b1f35fb13cdfb1640a634d4d7225802275960a2a2abdf6ad:
     ref: Create new feed (button)
     value: Nový seznam
@@ -543,6 +530,9 @@
 62323b76d8ec615cba6e105b1c5c1e2e4f6e9f89de5a251ed565809f:
     ref: Transaction row - personal activity (label)
     value: Sdílí předání
+62f79d721e1f64279cdb9c76ae70447c285af806b3d67a6223a7aa14:
+    ref: Share contact info (title)
+    value: Sdílet osobní údaje
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
     ref: View transactions (button)
     value: Zprávy
@@ -619,8 +609,7 @@
     value: Vytvořit nový seznam
 7a82926bb5336fd34c1755025654a057c7419b9e9e71e717eb89c249:
     ref: Feed range (hint)
-    value:
-        Nastav si okruh v km, v jakém chceš vidět inzeráty; pro tuto funkci si
+    value: Nastav si okruh v km, v jakém chceš vidět inzeráty; pro tuto funkci si
         musíš nastavit polohu.
 7b472479e6400e6c2e09906123f97a7c1bd6279166ae118d06b0a53b:
     ref: Personal - Phone (label)
@@ -634,8 +623,8 @@
 7b93a66595d88c60241f7eb48599cc8738e54decdbca0730a8aa958d:
     ref: Buyer load (hint)
     value: >
-        Pokud kupující odbavuje více zpráv, promítne se to v tomto údaji - tobě to
-        může nastavit očekávání např. v
+        Pokud kupující odbavuje více zpráv, promítne se to v tomto údaji - tobě
+        to může nastavit očekávání např. v
 
         čekání na odpověď.
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
@@ -723,8 +712,7 @@
     value: Opravdu?
 8c6d637b17a817c8335245b499c9f7a36a9a82cc52d4c64693fa5839:
     ref: Feed location (hint)
-    value:
-        Poloha je jenom pro tebe - slouží pro řazení a filtrování inzerátů podle
+    value: Poloha je jenom pro tebe - slouží pro řazení a filtrování inzerátů podle
         vzdálenosti.
 8d47c2c64d234b088c046d1b9327decc0b007667bc9cec30ea49fced:
     ref: Feed location (label)
@@ -808,8 +796,7 @@
     value: Najít
 Age 1 (hint):
     static: true
-    value:
-        Na konci životnosti. Spíš na dojetí / záchranu / pro někoho, kdo ví, do
+    value: Na konci životnosti. Spíš na dojetí / záchranu / pro někoho, kdo ví, do
         čeho jde.
 Age 1 (label):
     static: true
@@ -822,8 +809,7 @@ Age 2 (label):
     value: E — Pozdní roky
 Age 3 (hint):
     static: true
-    value:
-        Známky času jdou vidět, ale pořád funguje / drží se. Zhruba “půlka až za
+    value: Známky času jdou vidět, ale pořád funguje / drží se. Zhruba “půlka až za
         půlkou”.
 Age 3 (label):
     static: true
@@ -1086,8 +1072,7 @@ Listing restriction - none:
     value: Bez omezení
 Listing restriction - restricted (hint):
     static: true
-    value:
-        Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podléhá zvláštním
+    value: Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podléhá zvláštním
         pravidlům.
 Listing restriction - restricted:
     static: true
@@ -1173,8 +1158,8 @@ a6e86b3291a545db816776356f5caf38299d6b03627d9a5ce926df1b:
 a78ed5f38f0cf730dc1a618d9df1ca5011cc5d947d61f00075e0c5da:
     ref: Expired rate (hint)
     value: >
-        Nastavuje očekávání, kdy se kupující např. po předání balíčku už ke zprávám
-        nevrátí a obchod neuzavře.
+        Nastavuje očekávání, kdy se kupující např. po předání balíčku už ke
+        zprávám nevrátí a obchod neuzavře.
 a92a914e77188202f38d6b42be76d7f92cee60d777d0c00ca5aecbde:
     ref: Package - Tracking number (placeholder)
     value: Např. Z488654
@@ -1199,15 +1184,13 @@ acca87272a911bd673bc0f526d8ddaf4bedf8c4d04a375401d80df47:
 ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba48:
     ref: Search (title)
     value: Hledat
-acf5cd0bee4e6bd74eea745c51c41f0b3a17a1de314afd2d76eb056c:
-    ref: Personal - Warning (title)
-    value: Sdílíš osobní údaje
 ad463b7f3d6f1eaa5308848bc97d5f303534c5cd5e2ddeed8fd6b57b:
     ref: Package - Tracking number (label)
     value: Číslo zásilky
 b00de300bf157b03b1058da19b680a271fa960ab182ee923c3994e03:
     ref: Listing condition (hint)
-    value: Stav má přímý vliv na možnosti doručení inzerátu, přesto se snaž být upřímný.
+    value: Stav má přímý vliv na možnosti doručení inzerátu, přesto se snaž být
+        upřímný.
 b0a721169f47da108f0195d392e3d788b2d417564f50dd126981465a:
     ref: No transactions as seller (message)
     value: Můžeš se podívat, jak se tvým inzerátům daří.
@@ -1269,12 +1252,14 @@ bbd8808bf4c28cd66cc606e6a7d8c4ab0c2cd43a8f8ae2aace45a73b:
 bcd9934e20e9f9156bc934d5ff4ae78c96d19fdc0ec072a3a20e1371:
     ref: Listing - Pros (label)
     value: Co chci vyzdvihnout
+bce3e1275a3bf736748b56423b72c3e6c36ebb60fed5b600b81fc486:
+    ref: Personal - map
+    value: Souřadnice
 bda14ae9f8cb30b7b7440f39407eb24b991ad4b512e8118780fac091:
     ref: Expiration date not set
     value: Datum vypršení není nastaveno
 bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
-    ref:
-        Missing identity for an Entity (id). I'm sorry, but I cannot provide better
+    ref: Missing identity for an Entity (id). I'm sorry, but I cannot provide better
         message than this :(
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
@@ -1366,6 +1351,9 @@ c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
 c7147aaa47c54e90b7023be8ee57d73010a71c259e352067aaad48e6:
     ref: Reject transaction (button)
     value: Odmítnout a zavřít
+cb3a34c7200192f3cf99f4312074d252b890df7647e1e65c2ee986ab:
+    ref: Share location (title)
+    value: Sdílet adresu
 cbac5f835956010c5b45bed61ee098674baef1e75ef17acc19462ac1:
     ref: Flag listing (button)
     value: Nahlásit inzerát
@@ -1422,7 +1410,8 @@ d8afcd78535d2c0ab7b58dfcc92c11456c55fe96dab19a1de6a24218:
 d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
     ref: Feed title (hint)
     value: >
-        Nastav si, jaké titulky inzerátů se mají zobrazovat (např. iPhone nebo Bosh).
+        Nastav si, jaké titulky inzerátů se mají zobrazovat (např. iPhone nebo
+        Bosh).
 d95b6247e69f90b9f6f613b62be4396f37f5c45acb205f993f42dd18:
     ref: Reaction rate (label)
     value: Reakce na zprávy
@@ -1466,8 +1455,7 @@ e6eeb3e62553d5dd4ea8cc04ca5739bba6dfde2ff7f7b7262d62aa30:
     value: Oznámení
 e71d354084e447c188977c94dd32b5163d009bd889d26e8819df7ead:
     ref: Feed - end of road (message)
-    value:
-        Došel jsi na konec cesty, nicméně si můžeš buď poladit aktuální seznam,
+    value: Došel jsi na konec cesty, nicméně si můžeš buď poladit aktuální seznam,
         nebo se podívej další, které máš připravené.
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
     ref: Feed location not selected
@@ -1502,6 +1490,9 @@ f18a36932d031042735ffe9b5fbf3fad95a86de7b3b04e8ae3f43986:
 f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
     ref: Favourites (label)
     value: Moje oblíbené
+f3f7b74c586e4bc7fff67cd348751ca929ed627420e6662d5e9a322d:
+    ref: Personal - phone
+    value: Telefon
 f3f9c0a66a107af2911fa0f9019dc4526940d1afe4a957e1445e3447:
     ref: Condition not selected
     value: Stav nemáš vybraný
@@ -1517,6 +1508,9 @@ f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
 f614ee6abd82ea21f37d43a4669a4ccdcda5dfb0553501b5cd572420:
     ref: No transactions as buyer (title)
     value: Zatím tu nic nemáš
+f6ad9463741af76056b52e94393690183d61ce5cedfae42ded3fcded:
+    ref: Personal - email
+    value: Email
 f718d2ba74693c352dc2c17cc74e1b23c47ed2051d1c31598d0dd766:
     ref: sold
     value: sold
@@ -1648,8 +1642,8 @@ transaction - buyer - status-dispute-seller:
         **Je potřeba tvoje pozornost**
 
 
-        _Prodejce si žádá vyřešit problém - společně se na to podívejte a domluvte
-        se._
+        _Prodejce si žádá vyřešit problém - společně se na to podívejte a
+        domluvte se._
     static: true
 transaction - buyer - status-interest:
     value: |

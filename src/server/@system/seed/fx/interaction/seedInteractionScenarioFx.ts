@@ -154,7 +154,6 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 				name: personal.name,
 				phone: personal.phone,
 				email: personal.email,
-				locationId,
 			},
 		}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
 	}
