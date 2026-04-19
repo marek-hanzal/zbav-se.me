@@ -10,13 +10,13 @@ export const PersonalSchema = z
 		]),
 		payload: z
 			.looseObject({
-				name: z.string().meta({
+				name: z.string().optional().meta({
 					description: "Contact name",
 				}),
-				phone: z.string().meta({
+				phone: z.string().optional().meta({
 					description: "Contact phone",
 				}),
-				email: z.email().meta({
+				email: z.email().optional().meta({
 					description: "Contact email",
 				}),
 			})
