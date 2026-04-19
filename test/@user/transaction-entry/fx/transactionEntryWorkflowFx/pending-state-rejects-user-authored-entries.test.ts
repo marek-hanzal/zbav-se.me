@@ -9,6 +9,7 @@ import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionEntryCollectionFx } from "~/user/transaction-entry/server/fx/transactionEntryCollectionFx";
+import { transactionEntryCountFx } from "~/user/transaction-entry/server/fx/transactionEntryCountFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 import { transactionEntryFetchFx } from "~/user/transaction-entry/server/fx/transactionEntryFetchFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
@@ -55,6 +56,13 @@ describe("transactionEntry workflow", () => {
 					kind: "text",
 				},
 			});
+			const sellerTextCountInInterest = yield* transactionEntryCountFx({
+				userId: seller.id,
+				where: {
+					transactionId: transaction.id,
+					kind: "text",
+				},
+			});
 			const sellerTimelineInInterest = yield* transactionEntryCollectionFx({
 				userId: seller.id,
 				where: {
@@ -84,6 +92,7 @@ describe("transactionEntry workflow", () => {
 			expect(textEntry.kind).toBe("text");
 			expect(textEntry.direction).toBe("out");
 			expect(sellerTextInInterest).toHaveLength(0);
+			expect(sellerTextCountInInterest).toBe(0);
 			expect(sellerTimelineInInterest.map((item) => item.kind)).toContain("status-interest");
 			expect(sellerTimelineInInterest.map((item) => item.id)).not.toContain(textEntry.id);
 			expectErrorFx(sellerFetchInInterest);
@@ -178,6 +187,13 @@ describe("transactionEntry workflow", () => {
 					kind: "text",
 				},
 			});
+			const sellerTextCountInTrade = yield* transactionEntryCountFx({
+				userId: seller.id,
+				where: {
+					transactionId: transaction.id,
+					kind: "text",
+				},
+			});
 			const sellerFetchInTrade = yield* transactionEntryFetchFx({
 				userId: seller.id,
 				where: {
@@ -188,6 +204,7 @@ describe("transactionEntry workflow", () => {
 			expect(sellerTextInTrade.map((item) => item.id)).toEqual([
 				textEntry.id,
 			]);
+			expect(sellerTextCountInTrade).toBe(1);
 			expect(sellerFetchInTrade.id).toBe(textEntry.id);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

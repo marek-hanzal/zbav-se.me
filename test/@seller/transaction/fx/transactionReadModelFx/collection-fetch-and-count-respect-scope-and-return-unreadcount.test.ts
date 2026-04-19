@@ -79,4 +79,55 @@ describe("seller transaction read model", () => {
 			expect(count).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
+
+	it("lastAt sorting ignores buffered buyer text while transaction stays in interest", async () => {
+		const database = await testabase("sellerTransactionReadModelFx-lastAt-interest");
+
+		return Effect.gen(function* () {
+			const { seller, buyer } = yield* createUsersFx({});
+			const listing = yield* getDefaultListingCreateFx;
+
+			const olderScenario = yield* createPendingScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+				listing,
+			});
+			const newerScenario = yield* createPendingScenarioFx({
+				sellerId: seller.id,
+				buyerId: buyer.id,
+				listing,
+			});
+			const hiddenTextEntry = yield* transactionEntryCreateFx({
+				userId: buyer.id,
+				transactionId: olderScenario.transactionId,
+				kind: "text",
+				payload: {
+					text: "This must not make the older interest look newer",
+				},
+			});
+
+			const collection = yield* transactionCollectionFx({
+				scope: {
+					userId: seller.id,
+				},
+				sort: [
+					{
+						field: "lastAt",
+						order: "desc",
+					},
+				],
+			});
+
+			const orderedIds = collection.map((item) => item.id);
+			const olderIndex = orderedIds.indexOf(olderScenario.transactionId);
+			const newerIndex = orderedIds.indexOf(newerScenario.transactionId);
+			const olderItem = collection.find((item) => item.id === olderScenario.transactionId);
+
+			expect(newerIndex).toBeGreaterThanOrEqual(0);
+			expect(olderIndex).toBeGreaterThanOrEqual(0);
+			expect(newerIndex).toBeLessThan(olderIndex);
+			expect(olderItem?.entry.kind).toBe("status-interest");
+			expect(olderItem?.lastAt.getTime()).toBeLessThan(hiddenTextEntry.createdAt.getTime());
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
 });
