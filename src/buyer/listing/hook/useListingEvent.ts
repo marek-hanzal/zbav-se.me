@@ -32,30 +32,7 @@ export const useListingEvent = ({
 	const visible = useStore((state) => state.getById(listingId)?.visible ?? false);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-	const listingEventCreateMutation = withListingEventCreateMutation.useMutation({
-		retry(count, error) {
-			logger.trace("Retry", {
-				visible,
-				error,
-				count,
-			});
-			if (error._tag === "InvalidRequestErrorFx") {
-				return false;
-			} else if (error._tag === "TooManyRequestsFx") {
-				return false;
-			}
-			return visible;
-		},
-		retryDelay(count) {
-			logger.trace("Retrying", {
-				count,
-			});
-			if (count >= 3) {
-				return 0;
-			}
-			return 1000 * 60 * 5;
-		},
-	});
+	const listingEventCreateMutation = withListingEventCreateMutation.useMutation({});
 
 	const create = useCallback(
 		(listingId: string, event: ListingEventEnumSchema.Type) => {
