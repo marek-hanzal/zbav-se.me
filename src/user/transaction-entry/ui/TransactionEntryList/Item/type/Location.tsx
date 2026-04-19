@@ -28,6 +28,11 @@ export const Location = withFallback(
 			},
 		});
 
+		const position = ofLatLonText({
+			mode: "map",
+			latLon: location,
+		});
+
 		return (
 			<TypeContainer
 				data-ui={"Location"}
@@ -46,7 +51,7 @@ export const Location = withFallback(
 					action={<CopyIconAction text={location.address} />}
 				/>
 				<LabelValue
-					textLabel={translator.text("Personal - lat-lon")}
+					textLabel={translator.text("Personal - map")}
 					textValue={ofLatLonText({
 						mode: "text",
 						latLon: location,

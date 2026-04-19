@@ -1252,6 +1252,9 @@ bbd8808bf4c28cd66cc606e6a7d8c4ab0c2cd43a8f8ae2aace45a73b:
 bcd9934e20e9f9156bc934d5ff4ae78c96d19fdc0ec072a3a20e1371:
     ref: Listing - Pros (label)
     value: Co chci vyzdvihnout
+bce3e1275a3bf736748b56423b72c3e6c36ebb60fed5b600b81fc486:
+    ref: Personal - map
+    value: Souřadnice
 bda14ae9f8cb30b7b7440f39407eb24b991ad4b512e8118780fac091:
     ref: Expiration date not set
     value: Datum vypršení není nastaveno
