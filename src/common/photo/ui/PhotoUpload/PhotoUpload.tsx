@@ -8,17 +8,6 @@ import { Placeholder } from "./Placeholder";
 import { Preview } from "./Preview";
 import { useController } from "./useController";
 
-export namespace PhotoUpload {
-	export type Value = string | undefined;
-	export type OnChangeFn = (uploadId: Value) => void;
-
-	export interface Props extends Omit<Container.Props, "onChange"> {
-		camera?: boolean;
-		value: Value;
-		onChange: OnChangeFn;
-	}
-}
-
 const UploadPending: FC<{
 	progress: number;
 }> = ({ progress }) => {
@@ -49,6 +38,15 @@ const UploadPending: FC<{
 	);
 };
 
+export namespace PhotoUpload {
+	export interface Props extends Omit<Container.Props, "onChange"> {
+		camera?: boolean;
+		value: useController.Value;
+		onChange: useController.OnChangeFn;
+		onUpload?: useController.OnUploadFn;
+	}
+}
+
 /**
  * Coordinates photo file input and upload-ready state for the parent form.
  * Use it in editors where users attach media before publishing or saving.
@@ -59,11 +57,12 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	camera = false,
 	value,
 	onChange,
+	onUpload,
 	...props
 }) => {
 	const controller = useController({
-		value,
 		onChange,
+		onUpload,
 	});
 
 	return (

@@ -16,5 +16,8 @@ export const withUploadCollectionSelectFx = Effect.fn("withUploadCollectionSelec
 		sort,
 	});
 
-	return sourceSelect.select("u.id");
+	return sourceSelect.select([
+		"u.id",
+		"u.url",
+	]);
 });

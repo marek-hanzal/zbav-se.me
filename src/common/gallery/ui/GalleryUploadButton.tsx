@@ -4,11 +4,11 @@ import { GalleryUploadSheet } from "~/common/gallery/ui/GalleryUploadSheet";
 import { PhotoIcon } from "~/common/ui/icon";
 
 export namespace GalleryUploadButton {
-	export interface Props<TData extends GalleryUploadSheet.Uploads>
+	export interface Props<TData extends GalleryUploadSheet.Uploads, TResult>
 		extends Button.Props,
 			Pick<
-				GalleryUploadSheet.Props<TData>,
-				"withMutation" | "toMutation" | "onSuccess" | "onCancel" | "state"
+				GalleryUploadSheet.Props<TData, TResult>,
+				"withMutation" | "toMutation" | "onSuccess" | "onCancel" | "state" | "limit"
 			> {
 		defaultUploadIds: string[];
 	}
@@ -20,15 +20,16 @@ export namespace GalleryUploadButton {
  *
  * @see src/draft/ui/DraftEditor/patch/GalleryPatch.tsx
  */
-export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads>({
+export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads, TResult>({
 	withMutation,
 	toMutation,
 	onSuccess,
 	onCancel,
 	state,
 	defaultUploadIds,
+	limit,
 	...props
-}: GalleryUploadButton.Props<TData>) => {
+}: GalleryUploadButton.Props<TData, TResult>) => {
 	return (
 		<>
 			<Button
@@ -50,6 +51,7 @@ export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads>({
 				onCancel={onCancel}
 				state={state}
 				defaultUploadIds={defaultUploadIds}
+				limit={limit}
 				detent={"default"}
 			/>
 		</>

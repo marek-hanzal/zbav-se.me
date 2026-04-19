@@ -1,7 +1,6 @@
 import { type FC, type RefObject, useRef } from "react";
 import { useAutoScroll } from "@/lib/client/auto-scroll";
 import { Container } from "@/lib/client/container";
-import { ClearButton } from "~/user/agent/ui/Agent/ClearButton";
 import { HistoryList } from "./HistoryList";
 import { LiveList } from "./LiveList";
 
@@ -37,18 +36,6 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 			<HistoryList />
 
 			<LiveList />
-
-			{isPending ? null : (
-				<Container
-					data-ui-flow="horizontal"
-					data-ui-items="center"
-					data-ui-justify="center"
-					data-ui-inner="default"
-					data-ui-width="full"
-				>
-					<ClearButton />
-				</Container>
-			)}
 		</Container>
 	);
 };

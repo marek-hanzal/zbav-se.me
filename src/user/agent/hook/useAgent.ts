@@ -13,13 +13,11 @@ import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamIte
 import { withAgentUsageQuery } from "~/user/agent/query/withAgentUsageQuery";
 
 export namespace useAgent {
-	export interface Variables {
-		text: string;
-	}
-
 	export interface Props extends MarkSuspense.Props {
 		//
 	}
+
+	export type Use = ReturnType<typeof useAgent>;
 }
 
 export const useAgent = ({ _suspense }: useAgent.Props) => {
@@ -45,22 +43,12 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 		};
 	}, []);
 
-	const mutation = useMutation<void, Error, useAgent.Variables>({
-		async mutationFn({ text }) {
-			const trimmed = text.trim();
-
-			if (trimmed.length === 0) {
-				return;
-			}
-
+	const mutation = useMutation<void, Error, AgentInputItem[]>({
+		async mutationFn(input) {
 			setHistoryItems((current) => {
 				return [
 					...(current ?? []),
-					{
-						id: genId(),
-						role: "user",
-						content: trimmed,
-					},
+					...input,
 				] satisfies AgentInputItem[];
 			}, AgentStreamItemsQuery);
 
@@ -86,7 +74,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 				.create({
 					adapter: "fetch",
 				})
-				.post<ReadableStream<Uint8Array>>(link.href, JSON.stringify(trimmed), {
+				.post<ReadableStream<Uint8Array>>(link.href, JSON.stringify(input), {
 					headers: {
 						Accept: "text/event-stream",
 						"Content-Type": "application/json",
@@ -137,15 +125,13 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 	});
 
 	const submit = useCallback(
-		async (text: string) => {
+		async (item: AgentInputItem[]) => {
 			if (mutation.isPending) {
 				return;
 			}
 
 			try {
-				await mutation.mutateAsync({
-					text,
-				});
+				await mutation.mutateAsync(item);
 			} catch (error) {
 				console.error(error);
 			}
@@ -163,6 +149,38 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 	return {
 		mutation,
 		submit,
+		input: {
+			text(text: string): AgentInputItem[] {
+				return [
+					{
+						id: genId(),
+						role: "user",
+						content: text.trim(),
+					},
+				];
+			},
+			image(text: string, src: string[]): AgentInputItem[] {
+				return [
+					{
+						id: genId(),
+						role: "user",
+						content: [
+							...src.map(
+								(url) =>
+									({
+										type: "input_image",
+										image: url,
+									}) as const,
+							),
+							{
+								type: "input_text",
+								text,
+							},
+						],
+					},
+				];
+			},
+		},
 		cancel,
 	} as const;
 };

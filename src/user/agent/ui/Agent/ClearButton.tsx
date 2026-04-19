@@ -6,12 +6,14 @@ import { withAgentStreamDeleteCollectionMutation } from "~/user/agent/mutation/w
 
 export namespace ClearButton {
 	export interface Props extends Button.Props {
-		//
+		onSuccess(): Promise<void>;
 	}
 }
 
-export const ClearButton: FC<ClearButton.Props> = (props) => {
-	const mutation = withAgentStreamDeleteCollectionMutation.useMutation();
+export const ClearButton: FC<ClearButton.Props> = ({ onSuccess, ...props }) => {
+	const mutation = withAgentStreamDeleteCollectionMutation.useMutation({
+		onSuccess,
+	});
 
 	return (
 		<Button

@@ -2,7 +2,7 @@ import { withFallback } from "@/lib/client/fallback";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { HeroImage } from "~/common/ui/img";
-import { withUploadFetchQuery } from "~/user/upload/query/withUploadFetchQuery";
+import { withUploadQuery } from "~/user/upload/query/withUploadQuery";
 
 export namespace Preview {
 	export interface Props extends MarkSuspense.Props {
@@ -17,11 +17,7 @@ export namespace Preview {
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const Preview = withFallback(({ _suspense, uploadId }: Preview.Props) => {
-	const { data } = withUploadFetchQuery.useSuspenseQuery({
-		where: {
-			id: uploadId,
-		},
-	});
+	const { data } = withUploadQuery.useFetchQuery(uploadId);
 
 	return (
 		<HeroImage

@@ -7,11 +7,9 @@ import { AssistantAgent } from "~/user/agent/AssistantAgent";
 import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { withRunnerSessionMiddleware } from "~/user/agent/server/middleware/withRunnerSessionMiddleware";
 
-const AgentRequestSchema: z.ZodType<string | AgentInputItem[]> = z
-	.union([
-		z.string(),
-		z.array(z.unknown()).transform((items) => items as AgentInputItem[]),
-	])
+const AgentRequestSchema: z.ZodType<AgentInputItem[]> = z
+	.array(z.unknown())
+	.transform((items) => items as AgentInputItem[])
 	.meta({
 		id: "AgentRequest",
 		description: "Request body accepted by the assistant streaming endpoint",

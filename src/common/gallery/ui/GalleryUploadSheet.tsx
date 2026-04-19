@@ -11,15 +11,17 @@ export namespace GalleryUploadSheet {
 		uploadIds: string[];
 	}
 
-	export interface Props<TData extends Uploads>
+	export interface Props<TData extends Uploads, TResult>
 		extends Omit<BottomSheet.Props, "isOpen" | "onClose"> {
-		withMutation: withMutation.Api<TData, any, any>;
+		withMutation: withMutation.Api<TData, TResult, any>;
 		toMutation(uploadIds: string[]): TData;
+		allowClear?: boolean;
 		defaultUploadIds: string[];
+		limit?: number;
 		//
 		state: StateType.State<boolean>;
 		//
-		onSuccess(): void;
+		onSuccess(result: TResult): void;
 		onCancel(): void;
 	}
 }
@@ -27,22 +29,22 @@ export namespace GalleryUploadSheet {
 /**
  * Coordinates the gallery upload flow in a bottom sheet, including local state, mutation submit, and cancel reset.
  * Use it when photo changes should be edited in an isolated overlay and persisted only after explicit save.
- *
- * @see src/draft/ui/DraftEditor/patch/GalleryPatch.tsx
  */
-export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
+export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, const TResult>({
 	withMutation,
 	toMutation,
 	onSuccess,
 	onCancel,
 	state,
+	allowClear,
 	defaultUploadIds,
+	limit = 1,
 	...props
-}: GalleryUploadSheet.Props<TData>) => {
+}: GalleryUploadSheet.Props<TData, TResult>) => {
 	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
 	const mutation = withMutation.useMutation({
-		async onPostMutation() {
-			onSuccess();
+		async onPostMutation({ result }) {
+			onSuccess(result);
 		},
 	});
 
@@ -61,11 +63,12 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 				data-ui-inner="default"
 			>
 				<GalleryUpload
+					allowClear={allowClear}
 					state={{
 						value: uploadIds,
 						set: setUploadIds,
 					}}
-					limit={1}
+					limit={limit}
 				/>
 
 				<SaveContainer
@@ -74,10 +77,10 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 						onCancel();
 					}}
 					onSave={() => {
-						mutation.mutate(toMutation(uploadIds));
+						mutation.mutateAsync(toMutation(uploadIds));
 					}}
 					loading={mutation.isPending}
-					disabled={uploadIds.length === 0}
+					disabled={!allowClear && uploadIds.length === 0}
 				/>
 			</Container>
 		</BottomSheet>

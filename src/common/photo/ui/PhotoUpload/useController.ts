@@ -6,14 +6,18 @@ import {
 	useRef,
 	useState,
 } from "react";
-import type { PhotoUpload } from "~/common/photo/ui/PhotoUpload";
 import { withUploadMutation } from "~/user/upload/mutation/withUploadMutation";
-import { withUploadFetchQuery } from "~/user/upload/query/withUploadFetchQuery";
+import { withUploadQuery } from "~/user/upload/query/withUploadQuery";
+import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
 export namespace useController {
+	export type Value = string | undefined;
+	export type OnChangeFn = (uploadId: Value) => void;
+	export type OnUploadFn = (upload: UploadSchema.Type | undefined) => void;
+
 	export interface Props {
-		value: PhotoUpload.Value;
-		onChange: PhotoUpload.OnChangeFn;
+		onChange: OnChangeFn;
+		onUpload?: OnUploadFn;
 	}
 
 	export interface Result {
@@ -26,10 +30,10 @@ export namespace useController {
 	}
 }
 
-export function useController({ value, onChange }: useController.Props): useController.Result {
+export function useController({ onChange, onUpload }: useController.Props): useController.Result {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [progress, setProgress] = useState(0);
-	const setUpload = withUploadFetchQuery.useSet();
+	const setUpload = withUploadQuery.useUpdate();
 
 	const pick = useCallback(() => {
 		inputRef.current?.click();
@@ -45,47 +49,13 @@ export function useController({ value, onChange }: useController.Props): useCont
 	const uploadMutation = withUploadMutation.useMutation({
 		async onPreMutation() {
 			setProgress(0);
-
-			setUpload(
-				() => {
-					return undefined;
-				},
-				{
-					where: {
-						id: value,
-					},
-				},
-			);
 		},
 		async onPostMutation({ result }) {
-			setUpload(() => result, {
-				where: {
-					id: result.id,
-				},
-			});
+			setUpload(result);
 			onChange(result.id);
+			onUpload?.(result);
 		},
 	});
-
-	const onUpload = useCallback(
-		async (e: ChangeEvent<HTMLInputElement>) => {
-			const file = e.target.files?.[0];
-			if (!file) {
-				return;
-			}
-
-			uploadMutation.mutate({
-				blob: file,
-				name: file.name,
-				onProgress: setProgress,
-			});
-
-			e.target.value = "";
-		},
-		[
-			uploadMutation,
-		],
-	);
 
 	return {
 		inputRef,
@@ -93,6 +63,24 @@ export function useController({ value, onChange }: useController.Props): useCont
 		isPending: uploadMutation.isPending,
 		pick,
 		onKeyDown,
-		onUpload,
+		onUpload: useCallback(
+			async (e: ChangeEvent<HTMLInputElement>) => {
+				const file = e.target.files?.[0];
+				if (!file) {
+					return;
+				}
+
+				uploadMutation.mutate({
+					blob: file,
+					name: file.name,
+					onProgress: setProgress,
+				});
+
+				e.target.value = "";
+			},
+			[
+				uploadMutation,
+			],
+		),
 	} as const;
 }

@@ -16,13 +16,15 @@ import { SendMessageIcon } from "../icon";
 export namespace ChatInput {
 	export interface Props extends Omit<Container.Props, "onSubmit" | "onChange"> {
 		cancel?: ReactNode;
-		onSubmit(value: string): void;
+		onSubmit(value: string): Promise<void>;
 		placeholder: string;
 		maxRows?: number;
 		loading: boolean;
 		left?: ReactNode;
 		inputRef?: RefCallback<HTMLTextAreaElement>;
 	}
+
+	export type PropsEx = Omit<Props, "loading" | "placeholder" | "onSubmit">;
 }
 
 export const ChatInput: FC<ChatInput.Props> = ({
