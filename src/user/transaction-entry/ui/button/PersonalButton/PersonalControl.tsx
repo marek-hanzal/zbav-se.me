@@ -3,6 +3,7 @@ import z from "zod";
 import { Container } from "@/lib/client/container";
 import { FormField } from "@/lib/client/form";
 import { Tx } from "@/lib/client/tx";
+import { cleanOf } from "@/lib/common/clean-of";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
@@ -44,7 +45,7 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 			onSubmit: Schema,
 		},
 		async onSubmit({ value }) {
-			return onSave(value);
+			return onSave(cleanOf(value) || {});
 		},
 	});
 
