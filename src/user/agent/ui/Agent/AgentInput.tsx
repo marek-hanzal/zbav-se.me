@@ -67,13 +67,11 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 				onSubmit={async (text) => {
 					chat.submit(
 						uploads.length > 0
-							? [
-									// biome-ignore lint/style/noNonNullAssertion: Ssst, mother fucker
-									chat.input.image(text, uploads[0]!.url),
-								]
-							: [
-									chat.input.text(text),
-								],
+							? chat.input.image(
+									text,
+									uploads.map(({ url }) => url),
+								)
+							: chat.input.text(text),
 					);
 					setUploads([]);
 				}}

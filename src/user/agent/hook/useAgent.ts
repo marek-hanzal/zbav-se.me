@@ -150,28 +150,35 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 		mutation,
 		submit,
 		input: {
-			text(text: string): AgentInputItem {
-				return {
-					id: genId(),
-					role: "user",
-					content: text.trim(),
-				};
+			text(text: string): AgentInputItem[] {
+				return [
+					{
+						id: genId(),
+						role: "user",
+						content: text.trim(),
+					},
+				];
 			},
-			image(text: string, src: string): AgentInputItem {
-				return {
-					id: genId(),
-					role: "user",
-					content: [
-						{
-							type: "input_image",
-							image: src,
-						},
-						{
-							type: "input_text",
-							text,
-						},
-					],
-				};
+			image(text: string, src: string[]): AgentInputItem[] {
+				return [
+					{
+						id: genId(),
+						role: "user",
+						content: [
+							...src.map(
+								(url) =>
+									({
+										type: "input_image",
+										image: url,
+									}) as const,
+							),
+							{
+								type: "input_text",
+								text,
+							},
+						],
+					},
+				];
 			},
 		},
 		cancel,
