@@ -2,7 +2,9 @@ import { type FC, useState } from "react";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
 import { translator } from "@/lib/common/translator";
+import { withProxyMutation } from "~/common/gallery/mutation/withProxyMutation";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
+import { GalleryUploadSheet } from "~/common/gallery/ui/GalleryUploadSheet";
 import { ChatInput } from "~/common/ui/chat";
 import { CancelIcon } from "~/common/ui/icon";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
@@ -17,14 +19,46 @@ export namespace AgentInput {
 }
 
 export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
+	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 	const [uploads, setUploads] = useState<UploadSchema.Type[]>([]);
 
 	return (
 		<Container>
 			{uploads.length > 0 ? (
-				<Container className={"h-24"}>
-					<GalleryPreview uploads={uploads} />
-				</Container>
+				<>
+					<Container
+						className={"h-32"}
+						data-ui-inner={"default"}
+						onClick={() => {
+							setIsGalleryOpen(true);
+						}}
+					>
+						<GalleryPreview
+							uploads={uploads}
+							data-ui-inner={undefined}
+						/>
+					</Container>
+
+					<GalleryUploadSheet
+						state={{
+							value: isGalleryOpen,
+							set: setIsGalleryOpen,
+						}}
+						withMutation={withProxyMutation}
+						toMutation={(uploadIds) => ({
+							uploadIds,
+						})}
+						onSuccess={async (result) => {
+							setUploads(result);
+							setIsGalleryOpen(false);
+						}}
+						onCancel={() => {
+							setIsGalleryOpen(false);
+						}}
+						defaultUploadIds={uploads.map(({ id }) => id)}
+						detent={"default"}
+					/>
+				</>
 			) : null}
 
 			<ChatInput
