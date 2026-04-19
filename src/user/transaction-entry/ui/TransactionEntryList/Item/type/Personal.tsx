@@ -18,6 +18,7 @@ export namespace Personal {
 export const Personal = withFallback(
 	({ _suspense, transactionEntry, ...props }: Personal.Props) => {
 		const locale = useLocale();
+		const { name, phone, email } = transactionEntry.payload;
 
 		return (
 			<TypeContainer
@@ -30,23 +31,29 @@ export const Personal = withFallback(
 					data-ui-layout="vertical-flex"
 					data-ui-gap="xs"
 				>
-					<Typo
-						label={transactionEntry.payload.name}
-						data-ui-wrap="wrap"
-						data-ui-font="bold"
-						className={"py-1"}
-					/>
+					{name && (
+						<Typo
+							label={name}
+							data-ui-wrap="wrap"
+							data-ui-font="bold"
+							className={"py-1"}
+						/>
+					)}
 
-					<Typo
-						label={transactionEntry.payload.phone}
-						data-ui-wrap="wrap"
-					/>
+					{phone && (
+						<Typo
+							label={phone}
+							data-ui-wrap="wrap"
+						/>
+					)}
 
-					<Typo
-						label={transactionEntry.payload.email}
-						data-ui-wrap="wrap"
-						className={"py-1"}
-					/>
+					{email && (
+						<Typo
+							label={email}
+							data-ui-wrap="wrap"
+							className={"py-1"}
+						/>
+					)}
 				</Container>
 
 				<Typo
