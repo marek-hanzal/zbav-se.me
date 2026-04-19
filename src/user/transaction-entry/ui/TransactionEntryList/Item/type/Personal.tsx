@@ -6,7 +6,6 @@ import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { toTimeDiff } from "@/lib/common/time";
-import { withLocationFetchQuery } from "~/session/location/withLocationFetchQuery";
 import type { TransactionEntryPersonal } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/PersonalSchema";
 import { TypeContainer } from "./TypeContainer";
 
@@ -19,11 +18,6 @@ export namespace Personal {
 export const Personal = withFallback(
 	({ _suspense, transactionEntry, ...props }: Personal.Props) => {
 		const locale = useLocale();
-		const { data: location } = withLocationFetchQuery.useSuspenseQuery({
-			where: {
-				id: transactionEntry.payload.locationId,
-			},
-		});
 
 		return (
 			<TypeContainer
@@ -50,12 +44,6 @@ export const Personal = withFallback(
 
 					<Typo
 						label={transactionEntry.payload.email}
-						data-ui-wrap="wrap"
-						className={"py-1"}
-					/>
-
-					<Typo
-						label={location.address}
 						data-ui-wrap="wrap"
 						className={"py-1"}
 					/>
