@@ -53,6 +53,8 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 					length: limit,
 				}).map((_, slot) => {
 					const uploadId = state.value[slot];
+					const previousUploadId = state.value[slot - 1];
+					const nextUploadId = state.value[slot + 1];
 					const disabled = slot > 0 && !state.value[slot - 1];
 
 					return (
@@ -83,10 +85,44 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 
 							{uploadId ? (
 								<Toolbar
-									onDelete={() => {
-										state.set((prev) => {
-											return prev.filter((_, index) => index !== slot);
-										});
+									canMoveLeft={!!previousUploadId}
+									canMoveRight={!!nextUploadId}
+									hooks={{
+										onDelete() {
+											state.set((prev) => {
+												return prev.filter((_, index) => index !== slot);
+											});
+										},
+										onMoveLeft() {
+											if (!previousUploadId) {
+												return;
+											}
+
+											state.set((prev) => {
+												const next = [
+													...prev,
+												];
+												next[slot - 1] = uploadId;
+												next[slot] = previousUploadId;
+
+												return next.filter((f): f is string => !!f);
+											});
+										},
+										onMoveRight() {
+											if (!nextUploadId) {
+												return;
+											}
+
+											state.set((prev) => {
+												const next = [
+													...prev,
+												];
+												next[slot] = nextUploadId;
+												next[slot + 1] = uploadId;
+
+												return next.filter((f): f is string => !!f);
+											});
+										},
 									}}
 								/>
 							) : null}
