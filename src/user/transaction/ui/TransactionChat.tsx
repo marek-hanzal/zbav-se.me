@@ -76,20 +76,12 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 			{match(transaction.status)
 				.with("interest", () => {
 					return (
-						<Container
-							data-ui-layout="horizontal-flex"
-							data-ui-items="center"
-							data-ui-gap="md"
-							data-ui-width="full"
-						>
-							<Tx
-								label={text.pending}
-								data-ui-width="full"
-								data-ui-text="sm"
-								data-ui-opacity="6"
-								className="text-center"
-							/>
-						</Container>
+						<ChatInput
+							onSubmit={submit}
+							placeholder={text.pending}
+							loading={messageMutation.isPending}
+							left={left}
+						/>
 					);
 				})
 				.with("trade", () => {
