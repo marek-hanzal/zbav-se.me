@@ -11,6 +11,8 @@ import { CancelIcon } from "~/common/ui/icon";
 import { useAgent } from "~/user/agent/hook/useAgent";
 import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
+import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
+import { AgentMenu } from "./AgentMenu";
 import { AgentMessageList } from "./AgentMessageList";
 
 export namespace Agent {
@@ -103,6 +105,11 @@ export const Agent: FC<Agent.Props> = ({ ...props }) => {
 						data-ui-shadow={false}
 						data-ui-color="lead"
 					/>
+				}
+				left={
+					<TransactionMenuButton>
+						{(close) => <AgentMenu close={close} />}
+					</TransactionMenuButton>
 				}
 			/>
 		</Container>
