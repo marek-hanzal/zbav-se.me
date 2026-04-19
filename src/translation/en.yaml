@@ -100,6 +100,9 @@
 1127abe5ce9696ad1b6477d3c6557314bacdf45155e4e890091f1d3e:
   ref: Save (button)
   value: Save (button)
+1197e5900b01d28ee8b613f57d248629a702012feb4ff152544c45e2:
+  ref: Listing price - offer
+  value: Listing price - offer
 124648485fb6d6f50a0829d36808e384ad3c0904126f300a12fda2e7:
   ref: Reject transaction - confirm (button)
   value: Reject transaction - confirm (button)
@@ -595,9 +598,6 @@
 836b19fc748e6429a7591712239acea4d936fab1b0671f538ba91660:
   ref: Listing unfavourited (label)
   value: Listing unfavourited (label)
-83986605d9083e9070c115dd6c600f8b3b5cc67f1565228fa79615c6:
-  ref: Price - offer
-  value: Price - offer
 83b634826d57876d245185f68ced81274d52163ed8a9af640530ab71:
   ref: You got like (label)
   value: You got like (label)
@@ -1065,9 +1065,6 @@ fa65ccecdeb5bdcf00a832c72eb27cdaca5a549ea59fc48ad7267ab9:
 fa8d4af882062a1148f43f806622a6851ff29ff80f66467624617d7a:
   ref: Listing location (hint)
   value: Listing location (hint)
-faecab53142a1792e02de1dfa45f39cc83797a47dc171d3687e10fa0:
-  ref: Transaction not accepted - buyer (message)
-  value: Transaction not accepted - buyer (message)
 fb5f656c01caafdecfd1468991d74a7ab481b89ce6df9a8c229d726e:
   ref: Package - Link (label)
   value: Package - Link (label)

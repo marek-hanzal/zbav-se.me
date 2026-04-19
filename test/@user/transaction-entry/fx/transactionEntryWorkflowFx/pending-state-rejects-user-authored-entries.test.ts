@@ -55,6 +55,12 @@ describe("transactionEntry workflow", () => {
 					kind: "text",
 				},
 			});
+			const sellerTimelineInInterest = yield* transactionEntryCollectionFx({
+				userId: seller.id,
+				where: {
+					transactionId: transaction.id,
+				},
+			});
 			const sellerFetchInInterest = yield* Effect.either(
 				transactionEntryFetchFx({
 					userId: seller.id,
@@ -78,6 +84,8 @@ describe("transactionEntry workflow", () => {
 			expect(textEntry.kind).toBe("text");
 			expect(textEntry.direction).toBe("out");
 			expect(sellerTextInInterest).toHaveLength(0);
+			expect(sellerTimelineInInterest.map((item) => item.kind)).toContain("status-interest");
+			expect(sellerTimelineInInterest.map((item) => item.id)).not.toContain(textEntry.id);
 			expectErrorFx(sellerFetchInInterest);
 			expect(sellerTextActivity).toBeUndefined();
 
