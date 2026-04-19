@@ -139,7 +139,6 @@ describe("transactionEntry workflow", () => {
 						name: "Buyer",
 						phone: "+420123456789",
 						email: "buyer@test.cz",
-						locationId: "loc_pending_invalid",
 					},
 				}),
 			);
