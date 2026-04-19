@@ -6,10 +6,13 @@ import { CountSchema } from "@/lib/common/schema";
 import { draftCountFx } from "~/seller/draft/server/fx/draftCountFx";
 import { DraftCountQuerySchema } from "~/seller/draft/server/schema/DraftCountQuerySchema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export namespace draftCountFn {
+	export type Error = Effect.Effect.Error<draftCountFx>;
+}
 
 export const draftCountFn = createServerFn()
 	.middleware([
@@ -35,14 +38,12 @@ export const draftCountFn = createServerFn()
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

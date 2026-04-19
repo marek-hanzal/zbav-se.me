@@ -6,10 +6,13 @@ import { CountSchema } from "@/lib/common/schema";
 import { feedCountFx } from "~/buyer/feed/server/fx/feedCountFx";
 import { FeedCountQuerySchema } from "~/buyer/feed/server/schema/FeedCountQuerySchema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export namespace feedCountFn {
+	export type Error = Effect.Effect.Error<feedCountFx>;
+}
 
 export const feedCountFn = createServerFn()
 	.middleware([
@@ -36,14 +39,12 @@ export const feedCountFn = createServerFn()
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

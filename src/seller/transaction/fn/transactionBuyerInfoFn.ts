@@ -8,10 +8,13 @@ import { TransactionBuyerInfoSchema } from "~/seller/transaction/server/schema/T
 import { TransactionQuerySchema } from "~/seller/transaction/server/schema/TransactionQuerySchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export namespace transactionBuyerInfoFn {
+	export type Error = Effect.Effect.Error<transactionGetBuyerInfoFx>;
+}
 
 export const transactionBuyerInfoFn = createServerFn()
 	.middleware([
@@ -46,27 +49,12 @@ export const transactionBuyerInfoFn = createServerFn()
 			withKyselyFx(database),
 			withDateFx,
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				NotFoundErrorFx(error) {
-					logger.error("NotFoundError", {
-						message: error.message,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("NotFoundError");
-				},
-				RuntimeErrorFx(error) {
-					logger.error("RuntimeError", {
-						message: error.message,
-						cause: error.cause,
-					});
-					throw new Error("RuntimeError");
-				},
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
-					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

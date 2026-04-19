@@ -14,6 +14,16 @@ import { cleanOf } from "@/lib/common/clean-of";
 import type { CountSchema, EntitySchema } from "@/lib/common/schema";
 
 export namespace withEntityQuery {
+	export interface Errors {
+		fetch: Error;
+		collection: Error;
+		count: Error;
+		patch: Error;
+		create: Error;
+		delete: Error;
+		patchCollection: Error;
+	}
+
 	export namespace Invalidator {
 		/**
 		 * Supported invalidation targets.
@@ -54,8 +64,10 @@ export namespace withEntityQuery {
 		in TCreateRequest,
 		in TDeleteRequest,
 		in TPatchCollectionRequest,
+		TErrors extends Errors = Errors,
 	> {
 		logger: Logger;
+		errors?: TErrors;
 		/**
 		 * Base query key prefix for this entity resource.
 		 */
@@ -96,8 +108,8 @@ export namespace withEntityQuery {
 	 *
 	 * `queryKey` and `queryFn` are controlled internally by this helper.
 	 */
-	export interface QueryOptions<TResult>
-		extends OmitKeyof<UseSuspenseQueryOptions<TResult, Error>, "queryKey" | "queryFn"> {
+	export interface QueryOptions<TResult, TError = Error>
+		extends OmitKeyof<UseSuspenseQueryOptions<TResult, TError>, "queryKey" | "queryFn"> {
 		//
 	}
 
@@ -204,6 +216,7 @@ export const withEntityQuery = <
 	const TCreateRequest,
 	const TDeleteRequest,
 	const TPatchCollectionRequest,
+	const TErrors extends withEntityQuery.Errors = withEntityQuery.Errors,
 >({
 	logger,
 	keys,
@@ -223,7 +236,8 @@ export const withEntityQuery = <
 	TPatchRequest,
 	TCreateRequest,
 	TDeleteRequest,
-	TPatchCollectionRequest
+	TPatchCollectionRequest,
+	TErrors
 >) => {
 	/**
 	 * Internal key builder.
@@ -346,7 +360,7 @@ export const withEntityQuery = <
 	function ensureEntityQuery(
 		queryClient: QueryClient,
 		data: TFetchRequest,
-		opts?: withEntityQuery.QueryOptions<TEntity>,
+		opts?: withEntityQuery.QueryOptions<TEntity, TErrors["fetch"]>,
 	) {
 		const queryKey = $keys("fetch", data);
 
@@ -374,7 +388,10 @@ export const withEntityQuery = <
 	/**
 	 * Internal suspense fetch hook by canonical fetch request payload.
 	 */
-	function useEntityQuery(data: TFetchRequest, opts?: withEntityQuery.QueryOptions<TEntity>) {
+	function useEntityQuery(
+		data: TFetchRequest,
+		opts?: withEntityQuery.QueryOptions<TEntity, TErrors["fetch"]>,
+	) {
 		const queryKey = $keys("fetch", data);
 
 		logger.trace("withEntityQuery::useEntityQuery", {
@@ -400,7 +417,7 @@ export const withEntityQuery = <
 
 	function useMaybeEntityQuery(
 		data: TFetchRequest,
-		opts?: withEntityQuery.QueryOptions<TEntity | null>,
+		opts?: withEntityQuery.QueryOptions<TEntity | null, TErrors["fetch"]>,
 	) {
 		const queryKey = $keys("fetch", data);
 
@@ -420,7 +437,7 @@ export const withEntityQuery = <
 	function ensureFetchQuery(
 		queryClient: QueryClient,
 		id: string,
-		opts?: withEntityQuery.QueryOptions<TEntity>,
+		opts?: withEntityQuery.QueryOptions<TEntity, TErrors["fetch"]>,
 	) {
 		const data = toIdKey(id);
 		const queryKey = $keys("fetch", data);
@@ -444,7 +461,10 @@ export const withEntityQuery = <
 	 * Consumers re-render when this entity cache entry changes, including updates
 	 * written by `usePatchMutation`.
 	 */
-	function useFetchQuery(id: string, opts?: withEntityQuery.QueryOptions<TEntity>) {
+	function useFetchQuery(
+		id: string,
+		opts?: withEntityQuery.QueryOptions<TEntity, TErrors["fetch"]>,
+	) {
 		const request = toIdKey(id);
 
 		return useEntityQuery(request, opts);
@@ -467,7 +487,7 @@ export const withEntityQuery = <
 	function ensureCollectionQuery(
 		queryClient: QueryClient,
 		data: TCollectionRequest,
-		opts?: withEntityQuery.QueryOptions<TEntity[]>,
+		opts?: withEntityQuery.QueryOptions<TEntity[], TErrors["collection"]>,
 	) {
 		const queryKey = $keys("collection", data);
 
@@ -491,7 +511,7 @@ export const withEntityQuery = <
 	 */
 	function useCollectionQuery(
 		data: TCollectionRequest,
-		opts?: withEntityQuery.QueryOptions<TEntity[]>,
+		opts?: withEntityQuery.QueryOptions<TEntity[], TErrors["collection"]>,
 	) {
 		const queryClient = useQueryClient();
 		const queryKey = $keys("collection", data);
@@ -505,7 +525,10 @@ export const withEntityQuery = <
 		});
 	}
 
-	function useIdsQuery(data: TCollectionRequest, opts?: withEntityQuery.QueryOptions<string[]>) {
+	function useIdsQuery(
+		data: TCollectionRequest,
+		opts?: withEntityQuery.QueryOptions<string[], TErrors["collection"]>,
+	) {
 		const queryClient = useQueryClient();
 		const queryKey = $keys("collection", data);
 
@@ -521,7 +544,7 @@ export const withEntityQuery = <
 	function ensureCountQuery(
 		queryClient: QueryClient,
 		data: TCountRequest,
-		opts?: withEntityQuery.QueryOptions<CountSchema.Type>,
+		opts?: withEntityQuery.QueryOptions<CountSchema.Type, TErrors["count"]>,
 	) {
 		const queryKey = $keys("count", data);
 
@@ -542,7 +565,7 @@ export const withEntityQuery = <
 	 */
 	function useCountQuery(
 		data: TCountRequest,
-		opts?: withEntityQuery.QueryOptions<CountSchema.Type>,
+		opts?: withEntityQuery.QueryOptions<CountSchema.Type, TErrors["count"]>,
 	) {
 		const queryKey = $keys("count", data);
 
@@ -613,7 +636,7 @@ export const withEntityQuery = <
 	 * Optional invalidation is available for broader cache refresh scenarios.
 	 */
 	function usePatchMutation<TContext = unknown>(
-		opts?: withEntityQuery.MutationOptions<TPatchRequest, TEntity, Error, TContext>,
+		opts?: withEntityQuery.MutationOptions<TPatchRequest, TEntity, TErrors["patch"], TContext>,
 	) {
 		const queryClient = useQueryClient();
 		const { invalidate, onPreMutation, onPostMutation, meta, ...$opts } = opts || {};
@@ -646,7 +669,12 @@ export const withEntityQuery = <
 	 * Bulk patch mutation that writes every returned entity into canonical fetch cache.
 	 */
 	function usePatchCollectionMutation<TContext = unknown>(
-		opts?: withEntityQuery.MutationOptions<TPatchCollectionRequest, TEntity[], Error, TContext>,
+		opts?: withEntityQuery.MutationOptions<
+			TPatchCollectionRequest,
+			TEntity[],
+			TErrors["patchCollection"],
+			TContext
+		>,
 	) {
 		const queryClient = useQueryClient();
 		const { invalidate, onPreMutation, onPostMutation, meta, ...$opts } = opts || {};
@@ -703,7 +731,12 @@ export const withEntityQuery = <
 	 * - runs `onPostMutation` after cache sync
 	 */
 	function useCreateMutation<TContext = unknown>(
-		opts?: withEntityQuery.MutationOptions<TCreateRequest, TEntity, Error, TContext>,
+		opts?: withEntityQuery.MutationOptions<
+			TCreateRequest,
+			TEntity,
+			TErrors["create"],
+			TContext
+		>,
 	) {
 		const queryClient = useQueryClient();
 		const { invalidate, onPreMutation, onPostMutation, meta, ...$opts } = opts || {};
@@ -767,7 +800,12 @@ export const withEntityQuery = <
 	 * - runs `onPostMutation` after cache sync
 	 */
 	function useDeleteMutation<TContext = unknown>(
-		opts?: withEntityQuery.MutationOptions<TDeleteRequest, TEntity, Error, TContext>,
+		opts?: withEntityQuery.MutationOptions<
+			TDeleteRequest,
+			TEntity,
+			TErrors["delete"],
+			TContext
+		>,
 	) {
 		const queryClient = useQueryClient();
 		const { invalidate, onPreMutation, onPostMutation, meta, ...$opts } = opts || {};

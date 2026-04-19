@@ -3,12 +3,15 @@ import { Effect } from "effect";
 import { withLoggerFx } from "@/lib/common/log";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
 import { ActivityQuerySchema } from "~/user/activity/server/schema/ActivityQuerySchema";
+
+export namespace activityArchiveFn {
+	export type Error = Effect.Effect.Error<activityArchiveFx>;
+}
 
 export const activityArchiveFn = createServerFn({
 	method: "POST",
@@ -35,10 +38,12 @@ export const activityArchiveFn = createServerFn({
 			withKyselyFx(database),
 			withDateFx,
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				RuntimeErrorFx() {
-					throw new Error("RuntimeError");
-				},
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
+					});
+				});
 			}),
 			Effect.runPromise,
 		);

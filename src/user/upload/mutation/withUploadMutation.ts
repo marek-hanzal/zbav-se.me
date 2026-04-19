@@ -17,7 +17,11 @@ export namespace withUploadMutation {
 	}
 }
 
-export const withUploadMutation = withMutation<withUploadMutation.Props, UploadSchema.Type, Error>({
+export const withUploadMutation = withMutation<
+	withUploadMutation.Props,
+	UploadSchema.Type,
+	s3PreSignFn.Error | uploadCreateFn.Error
+>({
 	logger: getRootLogger([
 		"mutation",
 		"withUploadMutation",

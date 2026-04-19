@@ -46,3 +46,5 @@ export const transactionEntryFetchFx = Effect.fn("transactionEntryFetchFx")(func
 		},
 	});
 });
+
+export type transactionEntryFetchFx = ReturnType<typeof transactionEntryFetchFx>;

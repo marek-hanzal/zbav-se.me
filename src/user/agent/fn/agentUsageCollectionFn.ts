@@ -4,13 +4,16 @@ import { z } from "zod";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { agentUsageCollectionFx } from "~/user/agent/server/fx/agentUsageCollectionFx";
 import { AgentUsageQuerySchema } from "~/user/agent/server/schema/AgentUsageQuerySchema";
 import { AgentUsageSchema } from "~/user/agent/server/schema/AgentUsageSchema";
+
+export namespace agentUsageCollectionFn {
+	export type Error = Effect.Effect.Error<agentUsageCollectionFx>;
+}
 
 export const agentUsageCollectionFn = createServerFn()
 	.middleware([
@@ -37,14 +40,12 @@ export const agentUsageCollectionFn = createServerFn()
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

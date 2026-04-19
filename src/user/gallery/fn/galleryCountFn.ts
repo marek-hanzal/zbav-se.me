@@ -4,12 +4,15 @@ import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { CountSchema } from "@/lib/common/schema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { galleryCountFx } from "~/user/gallery/server/fx/galleryCountFx";
 import { GalleryCountQuerySchema } from "~/user/gallery/server/schema/GalleryCountQuerySchema";
+
+export namespace galleryCountFn {
+	export type Error = Effect.Effect.Error<galleryCountFx>;
+}
 
 export const galleryCountFn = createServerFn()
 	.middleware([
@@ -36,14 +39,12 @@ export const galleryCountFn = createServerFn()
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

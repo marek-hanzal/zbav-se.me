@@ -4,14 +4,14 @@ import { agentUsageCollectionFn } from "~/user/agent/fn/agentUsageCollectionFn";
 import type { AgentUsageQuerySchema } from "~/user/agent/server/schema/AgentUsageQuerySchema";
 import type { AgentUsageSchema } from "~/user/agent/server/schema/AgentUsageSchema";
 
-export const withAgentTokensQuery = withQuery<
-	AgentUsageQuerySchema.Type,
-	Pick<AgentUsageSchema.Type, "input" | "output" | "total">
->({
+export const withAgentTokensQuery = withQuery({
 	logger: getRootLogger([
 		"query",
 		"withAgentTokensQuery",
 	]),
+	errors: {} as {
+		query: agentUsageCollectionFn.Error;
+	},
 	keys(data) {
 		return [
 			"agent",
@@ -20,7 +20,9 @@ export const withAgentTokensQuery = withQuery<
 			data,
 		];
 	},
-	async queryFn(data) {
+	async queryFn(
+		data: AgentUsageQuerySchema.Type,
+	): Promise<Pick<AgentUsageSchema.Type, "input" | "output" | "total">> {
 		const source = await agentUsageCollectionFn({
 			data,
 		});

@@ -7,10 +7,13 @@ import { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreat
 import { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export namespace listingCreateFn {
+	export type Error = Effect.Effect.Error<listingCreateFx>;
+}
 
 export const listingCreateFn = createServerFn({
 	method: "POST",
@@ -38,33 +41,12 @@ export const listingCreateFn = createServerFn({
 			withKyselyFx(database),
 			withDateFx,
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				NotFoundErrorFx(error) {
-					logger.error("NotFoundError", {
-						message: error.message,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("NotFoundError");
-				},
-				InvalidRequestErrorFx(error) {
-					logger.error("InvalidRequestError", {
-						message: error.message,
-					});
-					throw new Error("InvalidRequestError");
-				},
-				RuntimeErrorFx(error) {
-					logger.error("RuntimeError", {
-						message: error.message,
-						cause: error.cause,
-					});
-					throw new Error("RuntimeError");
-				},
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
-					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

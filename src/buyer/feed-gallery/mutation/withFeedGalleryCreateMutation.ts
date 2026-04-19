@@ -8,7 +8,7 @@ import type { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 export const withFeedGalleryCreateMutation = withMutation<
 	FeedGalleryCreateSchema.Type,
 	GallerySchema.Type,
-	Error
+	feedGalleryCreateFn.Error
 >({
 	logger: getRootLogger([
 		"mutation",

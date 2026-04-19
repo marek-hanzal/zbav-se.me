@@ -7,11 +7,14 @@ import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionA
 import { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { withTransactionContextFx } from "~/user/transaction/server/context/withTransactionContextFx";
+
+export namespace transactionAcceptFn {
+	export type Error = Effect.Effect.Error<transactionAcceptFx>;
+}
 
 export const transactionAcceptFn = createServerFn({
 	method: "POST",
@@ -40,39 +43,12 @@ export const transactionAcceptFn = createServerFn({
 			withDateFx,
 			withTransactionContextFx(),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				NotFoundErrorFx(error) {
-					logger.error("NotFoundError", {
-						message: error.message,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("NotFoundError");
-				},
-				AccessDeniedErrorFx(error) {
-					logger.error("AccessDeniedError", {
-						message: error.message,
-					});
-					throw new Error("AccessDeniedError");
-				},
-				InvalidRequestErrorFx(error) {
-					logger.error("InvalidRequestError", {
-						message: error.message,
-					});
-					throw new Error("InvalidRequestError");
-				},
-				RuntimeErrorFx(error) {
-					logger.error("RuntimeError", {
-						message: error.message,
-						cause: error.cause,
-					});
-					throw new Error("RuntimeError");
-				},
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
-					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

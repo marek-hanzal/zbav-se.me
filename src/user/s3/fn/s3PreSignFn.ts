@@ -4,7 +4,6 @@ import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withS3Fx } from "~/common/s3/server/context/withS3Fx";
 import { s3PreSignFx } from "~/common/s3/server/fx/s3PreSignFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { ServerCdnSchema } from "~/server/env/ServerCdnSchema";
 import { ServerS3Schema } from "~/server/env/ServerS3Schema";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
@@ -13,6 +12,10 @@ import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { S3PreSignRequestSchema } from "~/user/s3/server/schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "~/user/s3/server/schema/S3PreSignResponseSchema";
 import { withUploadFx } from "~/user/upload/server/context/withUploadFx";
+
+export namespace s3PreSignFn {
+	export type Error = Effect.Effect.Error<s3PreSignFx>;
+}
 
 export const s3PreSignFn = createServerFn({
 	method: "POST",
@@ -51,14 +54,12 @@ export const s3PreSignFn = createServerFn({
 				cdn: cdnConfig.SERVER_CONTENT_CDN,
 			}),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

@@ -4,14 +4,14 @@ import type { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 import { transactionEntryGalleryFetchFn } from "~/user/transaction-entry/fn/transactionEntryGalleryFetchFn";
 import type { TransactionEntryGalleryQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryGalleryQuerySchema";
 
-export const withTransactionEntryGalleryFetchQuery = withQuery<
-	TransactionEntryGalleryQuerySchema.Type,
-	GallerySchema.Type
->({
+export const withTransactionEntryGalleryFetchQuery = withQuery({
 	logger: getRootLogger([
 		"query",
 		"withTransactionEntryGalleryFetchQuery",
 	]),
+	errors: {} as {
+		query: transactionEntryGalleryFetchFn.Error;
+	},
 	keys(data) {
 		return [
 			"transaction-entry",
@@ -20,7 +20,7 @@ export const withTransactionEntryGalleryFetchQuery = withQuery<
 			data,
 		];
 	},
-	async queryFn(data) {
+	async queryFn(data: TransactionEntryGalleryQuerySchema.Type): Promise<GallerySchema.Type> {
 		return transactionEntryGalleryFetchFn({
 			data,
 		});

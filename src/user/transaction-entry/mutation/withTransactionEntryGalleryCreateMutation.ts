@@ -14,7 +14,7 @@ export namespace withTransactionEntryGalleryCreateMutation {
 export const withTransactionEntryGalleryCreateMutation = withMutation<
 	withTransactionEntryGalleryCreateMutation.Props,
 	TransactionEntrySchema.Type,
-	Error
+	transactionEntryCreateFn.Error
 >({
 	logger: getRootLogger([
 		"mutation",

@@ -22,7 +22,7 @@ export namespace withArchiveBuyerMessageActivityMutation {
 export const withArchiveBuyerMessageActivityMutation = withMutation<
 	withArchiveBuyerMessageActivityMutation.Variables,
 	void,
-	Error
+	activityArchiveFn.Error
 >({
 	logger: getRootLogger([
 		"mutation",

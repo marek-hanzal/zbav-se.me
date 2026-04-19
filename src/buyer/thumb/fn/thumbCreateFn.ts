@@ -7,10 +7,13 @@ import { thumbCreateFx } from "~/buyer/thumb/server/fx/thumbCreateFx";
 import { ThumbCreateSchema } from "~/buyer/thumb/server/schema/ThumbCreateSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export namespace thumbCreateFn {
+	export type Error = Effect.Effect.Error<thumbCreateFx>;
+}
 
 export const thumbCreateFn = createServerFn({
 	method: "POST",
@@ -38,33 +41,12 @@ export const thumbCreateFn = createServerFn({
 			withKyselyFx(database),
 			withDateFx,
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				NotFoundErrorFx(error) {
-					logger.error("NotFoundError", {
-						message: error.message,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("NotFoundErrorFx");
-				},
-				InvalidRequestErrorFx(error) {
-					logger.error("InvalidRequestError", {
-						message: error.message,
-					});
-					throw new Error("InvalidRequestErrorFx");
-				},
-				RuntimeErrorFx(error) {
-					logger.error("RuntimeError", {
-						message: error.message,
-						cause: error.cause,
-					});
-					throw new Error("RuntimeErrorFx");
-				},
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodErrorFx", {
-						zod,
-						input,
-					});
-					throw new Error("ZodErrorFx");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

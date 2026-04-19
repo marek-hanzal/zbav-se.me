@@ -7,54 +7,58 @@ import type { TransactionCountQuerySchema } from "~/seller/transaction/server/sc
 import type { TransactionQuerySchema } from "~/seller/transaction/server/schema/TransactionQuerySchema";
 import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
 
-export const withTransactionQuery = withEntityQuery<
-	TransactionSchema.Type,
-	TransactionQuerySchema.Type,
-	TransactionQuerySchema.Type,
-	TransactionCountQuerySchema.Type,
-	never,
-	never,
-	never,
-	never
->({
+export const withTransactionQuery = withEntityQuery({
 	logger: getRootLogger([
 		"query",
 		"withTransactionQuery",
 	]),
-	keys: () => [
-		"seller",
-		"transaction",
-	],
-	toIdKey: (id) => ({
-		where: {
-			id,
-		},
-	}),
-	async fetchFn(data) {
+	errors: {} as {
+		fetch: transactionFetchFn.Error;
+		collection: transactionCollectionFn.Error;
+		count: transactionCountFn.Error;
+		patch: Error;
+		create: Error;
+		delete: Error;
+		patchCollection: Error;
+	},
+	keys() {
+		return [
+			"seller",
+			"transaction",
+		];
+	},
+	toIdKey(id): TransactionQuerySchema.Type {
+		return {
+			where: {
+				id,
+			},
+		};
+	},
+	async fetchFn(data: TransactionQuerySchema.Type) {
 		return transactionFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data) {
+	async collectionFn(data: TransactionQuerySchema.Type) {
 		return transactionCollectionFn({
 			data,
 		});
 	},
-	async countFn(data) {
+	async countFn(data: TransactionCountQuerySchema.Type) {
 		return transactionCountFn({
 			data,
 		});
 	},
-	async createFn(_data) {
+	async createFn(_data: never): Promise<TransactionSchema.Type> {
 		throw new Error("Transaction create is not supported.");
 	},
-	async deleteFn(_data) {
+	async deleteFn(_data: never): Promise<TransactionSchema.Type> {
 		throw new Error("Transaction delete is not supported.");
 	},
-	async patchFn(_data) {
+	async patchFn(_data: never): Promise<TransactionSchema.Type> {
 		throw new Error("Transaction patch is not supported.");
 	},
-	async patchCollectionFn(_data) {
+	async patchCollectionFn(_data: never): Promise<TransactionSchema.Type[]> {
 		throw new Error("Transaction collection patch is not supported.");
 	},
 });

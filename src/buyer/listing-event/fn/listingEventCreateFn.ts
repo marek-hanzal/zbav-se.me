@@ -5,13 +5,15 @@ import { withLoggerFx } from "@/lib/common/log";
 import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
 import { ListingEventCreateSchema } from "~/buyer/listing-event/server/schema/ListingEventCreateSchema";
 import { ListingEventSchema } from "~/buyer/listing-event/server/schema/ListingEventSchema";
-import { noticeError } from "~/common/notice/noticeError";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export namespace listingEventCreateFn {
+	export type Error = Effect.Effect.Error<listingEventCreateFx>;
+}
 
 export const listingEventCreateFn = createServerFn({
 	method: "POST",
@@ -39,38 +41,12 @@ export const listingEventCreateFn = createServerFn({
 			withKyselyFx(database),
 			withDateFx,
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				NotFoundErrorFx(error) {
-					logger.error("NotFoundError", {
-						message: error.message,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("NotFoundErrorFx");
-				},
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodErrorFx", {
-						zod,
-						input,
-					});
-					throw new Error("ZodErrorFx");
-				},
-				RuntimeErrorFx(error) {
-					logger.error("RuntimeError", {
-						message: error.message,
-						cause: error.cause,
-					});
-					throw new Error("RuntimeErrorFx");
-				},
-				InvalidRequestErrorFx(error) {
-					logger.error("InvalidRequestError", {
-						message: error.message,
-					});
-					throw new Error("InvalidRequestErrorFx");
-				},
-				TooManyRequestsFx() {
-					throw noticeError({
-						message: "Wait little bit, bro",
-					});
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

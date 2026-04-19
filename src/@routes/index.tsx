@@ -5,9 +5,13 @@ import { withSessionQuery } from "~/user/auth/query/withSessionQuery";
 export const Route = createFileRoute("/")({
 	async loader({ context: { queryClient } }) {
 		const locale = await getLocaleFn();
-		const sessionQuery = await withSessionQuery.ensure(queryClient, undefined, {
-			throwOnError: true,
-		});
+		const sessionQuery = await withSessionQuery.ensure(
+			queryClient,
+			"No input data here, bro!",
+			{
+				throwOnError: true,
+			},
+		);
 
 		if (sessionQuery?.user) {
 			throw redirect({

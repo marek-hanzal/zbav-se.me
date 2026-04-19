@@ -4,7 +4,6 @@ import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
@@ -12,6 +11,10 @@ import { withUploadFx } from "../server/context/withUploadFx";
 import { uploadCreateFx } from "../server/fx/uploadCreateFx";
 import { UploadCreateSchema } from "../server/schema/UploadCreateSchema";
 import { UploadSchema } from "../server/schema/UploadSchema";
+
+export namespace uploadCreateFn {
+	export type Error = Effect.Effect.Error<uploadCreateFx>;
+}
 
 export const uploadCreateFn = createServerFn({
 	method: "POST",
@@ -42,27 +45,12 @@ export const uploadCreateFn = createServerFn({
 				cdn: process.env.CDN_URL ?? "",
 			}),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				InvalidRequestErrorFx(error) {
-					logger.error("InvalidRequestError", {
-						message: error.message,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("InvalidRequestError");
-				},
-				RuntimeErrorFx(error) {
-					logger.error("RuntimeError", {
-						message: error.message,
-						cause: error.cause,
-					});
-					throw new Error("RuntimeError");
-				},
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
-					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

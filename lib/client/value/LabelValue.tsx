@@ -57,7 +57,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 		>
 			<Container
 				data-ui={"LabelValue-[Container.label-wrapper]"}
-				data-ui-tone="primary"
+				data-ui-tone="neutral"
 				data-ui-theme="light"
 				data-ui-flow="horizontal"
 				data-ui-items="center"

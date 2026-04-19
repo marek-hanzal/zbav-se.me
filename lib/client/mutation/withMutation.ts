@@ -154,7 +154,7 @@ export function withMutation<TVariables, TResult, TError>({
 		useMutation<TContext = unknown>(
 			options?: withMutation.UseOptions<TVariables, TResult, TError, TContext>,
 		): UseMutationResult<TResult, TError, TVariables, TContext> {
-			const { onPreMutation, onPostMutation, ...$options } = options ?? {};
+			const { onPreMutation, onPostMutation, onError, ...$options } = options ?? {};
 			const queryClient = useQueryClient();
 
 			return useMutation<TResult, TError, TVariables, TContext>({
@@ -179,6 +179,13 @@ export function withMutation<TVariables, TResult, TError>({
 					});
 					//
 					return result;
+				},
+				onError(error, variables, onMutateResult, context) {
+					logger.error("Kaboom", {
+						error,
+						variables,
+					});
+					onError?.(error, variables, onMutateResult, context);
 				},
 				...$options,
 			});

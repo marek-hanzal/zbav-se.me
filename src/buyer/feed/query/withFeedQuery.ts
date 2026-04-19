@@ -12,59 +12,63 @@ import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 
-export const withFeedQuery = withEntityQuery<
-	FeedSchema.Type,
-	FeedQuerySchema.Type,
-	FeedQuerySchema.Type,
-	FeedCountQuerySchema.Type,
-	FeedPatchSchema.Type,
-	FeedCreateSchema.Type,
-	FeedQuerySchema.Type,
-	never
->({
+export const withFeedQuery = withEntityQuery({
 	logger: getRootLogger([
 		"query",
 		"withFeedQuery",
 	]),
-	keys: () => [
-		"feed",
-	],
-	toIdKey: (id) => ({
-		where: {
-			id,
-		},
-	}),
-	async fetchFn(data) {
+	errors: {} as {
+		fetch: feedFetchFn.Error;
+		collection: feedCollectionFn.Error;
+		count: feedCountFn.Error;
+		patch: feedPatchFn.Error;
+		create: feedCreateFn.Error;
+		delete: feedDeleteFn.Error;
+		patchCollection: Error;
+	},
+	keys() {
+		return [
+			"feed",
+		];
+	},
+	toIdKey(id): FeedQuerySchema.Type {
+		return {
+			where: {
+				id,
+			},
+		};
+	},
+	async fetchFn(data: FeedQuerySchema.Type) {
 		return feedFetchFn({
 			data,
 		});
 	},
-	async collectionFn(data) {
+	async collectionFn(data: FeedQuerySchema.Type) {
 		return feedCollectionFn({
 			data,
 		});
 	},
-	async countFn(data) {
+	async countFn(data: FeedCountQuerySchema.Type) {
 		return feedCountFn({
 			data,
 		});
 	},
-	async createFn(data) {
+	async createFn(data: FeedCreateSchema.Type) {
 		return feedCreateFn({
 			data,
 		});
 	},
-	async deleteFn(data) {
+	async deleteFn(data: FeedQuerySchema.Type) {
 		return feedDeleteFn({
 			data,
 		});
 	},
-	async patchFn(data) {
+	async patchFn(data: FeedPatchSchema.Type) {
 		return feedPatchFn({
 			data,
 		});
 	},
-	async patchCollectionFn(_data) {
+	async patchCollectionFn(_data: never): Promise<FeedSchema.Type[]> {
 		throw new Error("Feed collection patch is not supported.");
 	},
 });

@@ -2,7 +2,7 @@ import { withQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { getSessionFn } from "../fn/getSessionFn";
 
-export const withSessionQuery = withQuery<void, Awaited<ReturnType<typeof getSessionFn>>>({
+export const withSessionQuery = withQuery({
 	logger: getRootLogger([
 		"query",
 		"withSessionQuery",
@@ -13,7 +13,9 @@ export const withSessionQuery = withQuery<void, Awaited<ReturnType<typeof getSes
 			"server",
 		];
 	},
-	async queryFn() {
+	async queryFn(
+		_data: "No input data here, bro!",
+	): Promise<Awaited<ReturnType<typeof getSessionFn>>> {
 		return getSessionFn();
 	},
 	defaultOptions: {

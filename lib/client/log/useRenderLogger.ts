@@ -15,6 +15,7 @@ export function useRenderLogger({ logger, name, meta }: useRenderLogger.Props) {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Frozen at first time
 	const $logger = useMemo(() => {
 		return logger.getChild([
+			"hook",
 			"useRenderLogger",
 			name,
 		]);

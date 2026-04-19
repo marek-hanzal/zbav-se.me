@@ -4,14 +4,14 @@ import { transactionBuyerInfoFn } from "~/seller/transaction/fn/transactionBuyer
 import type { TransactionBuyerInfoSchema } from "~/seller/transaction/server/schema/TransactionBuyerInfoSchema";
 import type { TransactionQuerySchema } from "~/seller/transaction/server/schema/TransactionQuerySchema";
 
-export const withTransactionBuyerInfoQuery = withQuery<
-	TransactionQuerySchema.Type,
-	TransactionBuyerInfoSchema.Type
->({
+export const withTransactionBuyerInfoQuery = withQuery({
 	logger: getRootLogger([
 		"query",
 		"withTransactionBuyerInfoQuery",
 	]),
+	errors: {} as {
+		query: transactionBuyerInfoFn.Error;
+	},
 	keys(data) {
 		return [
 			"seller",
@@ -20,7 +20,7 @@ export const withTransactionBuyerInfoQuery = withQuery<
 			data,
 		];
 	},
-	async queryFn(data) {
+	async queryFn(data: TransactionQuerySchema.Type): Promise<TransactionBuyerInfoSchema.Type> {
 		return transactionBuyerInfoFn({
 			data,
 		});

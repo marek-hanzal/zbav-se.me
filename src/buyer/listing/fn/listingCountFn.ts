@@ -6,10 +6,13 @@ import { CountSchema } from "@/lib/common/schema";
 import { listingCountFx } from "~/buyer/listing/server/fx/listingCountFx";
 import { ListingCountQuerySchema } from "~/buyer/listing/server/schema/ListingCountQuerySchema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withCatchFx } from "~/server/effect/withCatchFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+
+export namespace listingCountFn {
+	export type Error = Effect.Effect.Error<listingCountFx>;
+}
 
 export const listingCountFn = createServerFn()
 	.middleware([
@@ -35,14 +38,12 @@ export const listingCountFn = createServerFn()
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
-			withCatchFx({
-				ZodErrorFx({ zod, input }) {
-					logger.error("ZodError", {
-						zod,
-						input,
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
 					});
-					throw new Error("ZodError");
-				},
+				});
 			}),
 			Effect.runPromise,
 		);

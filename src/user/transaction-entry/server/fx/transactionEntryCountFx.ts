@@ -42,3 +42,5 @@ export const transactionEntryCountFx = Effect.fn("transactionEntryCountFx")(func
 		},
 	});
 });
+
+export type transactionEntryCountFx = ReturnType<typeof transactionEntryCountFx>;
