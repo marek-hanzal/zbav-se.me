@@ -6,17 +6,12 @@ import axios from "axios";
 import { createParser } from "eventsource-parser";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
-import { genId } from "@/lib/common/gen-id";
 import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import { withAgentUsageQuery } from "~/user/agent/query/withAgentUsageQuery";
 
 export namespace useAgent {
-	export interface Variables {
-		text: string;
-	}
-
 	export interface Props extends MarkSuspense.Props {
 		//
 	}
@@ -45,22 +40,12 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 		};
 	}, []);
 
-	const mutation = useMutation<void, Error, useAgent.Variables>({
-		async mutationFn({ text }) {
-			const trimmed = text.trim();
-
-			if (trimmed.length === 0) {
-				return;
-			}
-
+	const mutation = useMutation<void, Error, AgentInputItem>({
+		async mutationFn(input) {
 			setHistoryItems((current) => {
 				return [
 					...(current ?? []),
-					{
-						id: genId(),
-						role: "user",
-						content: trimmed,
-					},
+					input,
 				] satisfies AgentInputItem[];
 			}, AgentStreamItemsQuery);
 
@@ -86,14 +71,20 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 				.create({
 					adapter: "fetch",
 				})
-				.post<ReadableStream<Uint8Array>>(link.href, JSON.stringify(trimmed), {
-					headers: {
-						Accept: "text/event-stream",
-						"Content-Type": "application/json",
+				.post<ReadableStream<Uint8Array>>(
+					link.href,
+					JSON.stringify([
+						input,
+					]),
+					{
+						headers: {
+							Accept: "text/event-stream",
+							"Content-Type": "application/json",
+						},
+						signal: abortControllerRef.current.signal,
+						responseType: "stream",
 					},
-					signal: abortControllerRef.current.signal,
-					responseType: "stream",
-				});
+				);
 
 			const reader = response.data.getReader();
 

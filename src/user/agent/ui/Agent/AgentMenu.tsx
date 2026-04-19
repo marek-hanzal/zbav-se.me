@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { TransactionButtonUi } from "~/user/transaction/ui/TransactionButtonUi";
@@ -12,6 +12,8 @@ export namespace AgentMenu {
 }
 
 export const AgentMenu: FC<AgentMenu.Props> = ({ close, ...props }) => {
+	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+
 	return (
 		<Container
 			data-ui={"AgentMenu"}
@@ -21,6 +23,29 @@ export const AgentMenu: FC<AgentMenu.Props> = ({ close, ...props }) => {
 			data-ui-inner="default"
 			{...props}
 		>
+			{/* <Group>
+				<GalleryUploadButton
+					defaultUploadIds={[]}
+					state={{
+						value: isGalleryOpen,
+						set: setIsGalleryOpen,
+					}}
+					withMutation={withTransactionEntryGalleryCreateMutation}
+					toMutation={(uploadIds) => ({
+						transactionId: transaction.id,
+						uploadIds,
+					})}
+					onSuccess={async () => {
+						setIsGalleryOpen(false);
+						close();
+					}}
+					onCancel={() => {
+						setIsGalleryOpen(false);
+					}}
+					{...MessageButtonUi}
+				/>
+			</Group> */}
+
 			<Group>
 				<ClearButton
 					onSuccess={async () => {
