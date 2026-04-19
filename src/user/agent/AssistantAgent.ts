@@ -23,6 +23,7 @@ import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSetting
 import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
 import { toolTransactionEntryCollection } from "~/user/transaction-entry/server/tool/toolTransactionEntryCollection";
 import { toolTransactionEntryCreate } from "~/user/transaction-entry/server/tool/toolTransactionEntryCreate";
+import { toolUploadCreate } from "../upload/server/tool/toolUploadCreate";
 
 export const AssistantAgent = Agent.create({
 	name: "Assistant",
@@ -184,6 +185,8 @@ Response style
 		//
 		toolTransactionEntryCollection,
 		toolTransactionEntryCreate,
+		//
+		toolUploadCreate,
 		/**
 		 * Utility tools for both human and models
 		 */

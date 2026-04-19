@@ -172,6 +172,13 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 										image: url,
 									}) as const,
 							),
+							...src.map(
+								(url) =>
+									({
+										type: "input_text",
+										text: url,
+									}) as const,
+							),
 							{
 								type: "input_text",
 								text,
