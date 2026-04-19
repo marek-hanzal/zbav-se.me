@@ -51,6 +51,11 @@ const LittleMachine = {
 			request: "status-expired",
 			side: null,
 		},
+		// buyer-side buffer
+		{
+			request: "text",
+			side: "buyer",
+		},
 	],
 	trade: [
 		// trade

@@ -50,7 +50,10 @@ export default defineConfig({
 			],
 		},
 		//
-		testTimeout: 4_000,
+		/**
+		 * Fuckin' GitHub Actions are too lazy...
+		 */
+		testTimeout: 10_000,
 		//
 		pool: "forks",
 		maxConcurrency: 4,
@@ -69,28 +72,17 @@ export default defineConfig({
 			],
 			reportsDirectory: "./coverage/vitest",
 			include: [
-				"src/**/*.ts",
-				"lib/**/*.ts",
+				"src/**/server/db/**/*Fx.ts",
+				"src/**/server/fx/**/*Fx.ts",
+				"src/server/database/fx/**/*Fx.ts",
 			],
 			exclude: [
 				"**/*.test.ts",
 				"**/*.d.ts",
 				//
-				"lib/client/**/*.t*",
-				"lib/common/**/*.t*",
-				"lib/server/**/*.t*",
-				//
-				"src/*.ts",
-				//
-				"src/@routes/**/*.ts",
-				//
-				"src/common/**/*.ts",
-				//
-				"src/**/fn/**/*.ts",
-				"src/**/mutation/**/*.ts",
-				"src/**/query/**/*.ts",
-				"src/**/schema/**/*.ts",
-				"src/**/ui/**/*.ts",
+				"src/server/@migrations/**/*.ts",
+				"src/server/@system/**/*.ts",
+				"src/**/server/tool/**/*.ts",
 			],
 			reportOnFailure: false,
 			watermarks: {

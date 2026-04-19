@@ -26,9 +26,23 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 	const gallerySelect = yield* withGallerySelectFx({});
 
 	return transactionSourceSelect.selectAll("lt").select((eb) => {
+		/**
+		 * Pick the latest seller-visible timeline entry for seller transaction previews.
+		 *
+		 * Buyer text written in `interest` belongs to the buyer-side buffer and must not
+		 * appear in seller list/detail previews before the seller opens the trade. This
+		 * keeps the preview aligned with the main transaction-entry visibility gate while
+		 * still allowing non-text status entries to explain the current state.
+		 */
 		const lastActivitySelect = eb
 			.selectFrom("transaction_entry as te")
 			.whereRef("te.transactionId", "=", "lt.id")
+			.where((eb) => {
+				return eb.or([
+					eb("te.kind", "!=", "text"),
+					eb("lt.status", "!=", "interest"),
+				]);
+			})
 			.orderBy("te.createdAt", "desc")
 			.limit(1);
 
@@ -44,13 +58,13 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 				)
 				.as("lastAt"),
 			jsonObjectFrom(
-				lastActivitySelect.selectAll("te").select((eb) =>
-					sql<TransactionEntryDirectionEnumSchema.Type>`case
-							when ${eb.ref("te.userId")} is null then 'system'
-							when ${eb.ref("te.userId")} = ${eb.ref("l.userId")} then 'out'
-							else 'in'
-						end`.as("direction"),
-				),
+				lastActivitySelect.selectAll("te").select((eb) => {
+					return sql<TransactionEntryDirectionEnumSchema.Type>`case
+                        when ${eb.ref("te.userId")} is null then 'system'
+                        when ${eb.ref("te.userId")} = ${eb.ref("l.userId")} then 'out'
+                        else 'in'
+                    end`.as("direction");
+				}),
 			)
 				.$notNull()
 				.$castTo<TransactionEntrySchema.Type>()
@@ -62,10 +76,9 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 				.where("i.family", "=", "transaction")
 				.where("i.type", "=", "buyer-message")
 				.where("i.archivedAt", "is", null)
-				.where(
-					(eb) =>
-						sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`,
-				)}), 0)`.as("unreadCount"),
+				.where((eb) => {
+					return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
+				})}), 0)`.as("unreadCount"),
 			sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 			jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))
 				.$notNull()

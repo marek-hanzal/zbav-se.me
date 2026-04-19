@@ -246,41 +246,23 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				)
 				.exhaustive();
 
-			yield* match(transaction.side)
-				.with("buyer", () =>
-					activityCreateFx({
-						userId: transaction.sellerId,
-						reference: [
-							transaction.listingId,
-							transaction.id,
-						],
-						family: "transaction",
-						type: "buyer-message",
-						payload: {
-							transactionId: transaction.id,
-							transactionEntryId: transactionEntry.id,
-						},
-						priority: "high",
-					}),
-				)
-				.with("seller", () =>
-					activityCreateFx({
-						userId: transaction.buyerId,
-						reference: [
-							transaction.listingId,
-							transaction.id,
-						],
-						family: "transaction",
-						type: "seller-message",
-						payload: {
-							transactionId: transaction.id,
-							transactionEntryId: transactionEntry.id,
-						},
-						priority: "high",
-					}),
-				)
-				.with("transaction", () =>
-					Effect.all([
+			/**
+			 * Create counterparty activity as an explicit, controlled side effect.
+			 *
+			 * Persisting a transaction entry does not automatically mean the other side
+			 * should be notified. Most user-authored entries produce unread activity for
+			 * the counterparty, but the buyer-side `interest` text buffer is intentionally
+			 * different: it is stored for the buyer and later revealed after `trade`,
+			 * without pinging or leaking anything to the seller while the transaction is
+			 * still only an interest.
+			 *
+			 * Keep this effect lazy so the notification branch is not constructed or
+			 * executed until the visibility/anti-spam gate below decides that counterparty
+			 * activity is actually allowed.
+			 */
+			const createCounterpartyActivityFx = Effect.suspend(() => {
+				return match(transaction.side)
+					.with("buyer", () =>
 						activityCreateFx({
 							userId: transaction.sellerId,
 							reference: [
@@ -288,15 +270,15 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 								transaction.id,
 							],
 							family: "transaction",
-							type: "transaction",
+							type: "buyer-message",
 							payload: {
 								transactionId: transaction.id,
-								listingId: transaction.listingId,
 								transactionEntryId: transactionEntry.id,
-								target: "seller",
 							},
 							priority: "high",
 						}),
+					)
+					.with("seller", () =>
 						activityCreateFx({
 							userId: transaction.buyerId,
 							reference: [
@@ -304,54 +286,97 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 								transaction.id,
 							],
 							family: "transaction",
-							type: "transaction",
+							type: "seller-message",
 							payload: {
 								transactionId: transaction.id,
-								listingId: transaction.listingId,
 								transactionEntryId: transactionEntry.id,
-								target: "buyer",
 							},
 							priority: "high",
 						}),
-					]).pipe(Effect.asVoid),
-				)
-				.with("system", () =>
-					Effect.all([
-						activityCreateFx({
-							userId: transaction.sellerId,
-							reference: [
-								transaction.listingId,
-								transaction.id,
-							],
-							family: "transaction",
-							type: "system",
-							payload: {
-								transactionId: transaction.id,
-								listingId: transaction.listingId,
-								transactionEntryId: transactionEntry.id,
-								target: "seller",
-							},
-							priority: "high",
-						}),
-						activityCreateFx({
-							userId: transaction.buyerId,
-							reference: [
-								transaction.listingId,
-								transaction.id,
-							],
-							family: "transaction",
-							type: "system",
-							payload: {
-								transactionId: transaction.id,
-								listingId: transaction.listingId,
-								transactionEntryId: transactionEntry.id,
-								target: "buyer",
-							},
-							priority: "high",
-						}),
-					]).pipe(Effect.asVoid),
-				)
-				.otherwise(() => Effect.void);
+					)
+					.with("transaction", () =>
+						Effect.all([
+							activityCreateFx({
+								userId: transaction.sellerId,
+								reference: [
+									transaction.listingId,
+									transaction.id,
+								],
+								family: "transaction",
+								type: "transaction",
+								payload: {
+									transactionId: transaction.id,
+									listingId: transaction.listingId,
+									transactionEntryId: transactionEntry.id,
+									target: "seller",
+								},
+								priority: "high",
+							}),
+							activityCreateFx({
+								userId: transaction.buyerId,
+								reference: [
+									transaction.listingId,
+									transaction.id,
+								],
+								family: "transaction",
+								type: "transaction",
+								payload: {
+									transactionId: transaction.id,
+									listingId: transaction.listingId,
+									transactionEntryId: transactionEntry.id,
+									target: "buyer",
+								},
+								priority: "high",
+							}),
+						]).pipe(Effect.asVoid),
+					)
+					.with("system", () =>
+						Effect.all([
+							activityCreateFx({
+								userId: transaction.sellerId,
+								reference: [
+									transaction.listingId,
+									transaction.id,
+								],
+								family: "transaction",
+								type: "system",
+								payload: {
+									transactionId: transaction.id,
+									listingId: transaction.listingId,
+									transactionEntryId: transactionEntry.id,
+									target: "seller",
+								},
+								priority: "high",
+							}),
+							activityCreateFx({
+								userId: transaction.buyerId,
+								reference: [
+									transaction.listingId,
+									transaction.id,
+								],
+								family: "transaction",
+								type: "system",
+								payload: {
+									transactionId: transaction.id,
+									listingId: transaction.listingId,
+									transactionEntryId: transactionEntry.id,
+									target: "buyer",
+								},
+								priority: "high",
+							}),
+						]).pipe(Effect.asVoid),
+					)
+					.otherwise(() => Effect.void);
+			});
+
+			yield* Effect.if(transaction.status === "interest" && transaction.side === "buyer", {
+				onTrue() {
+					return Effect.void;
+				},
+				onFalse() {
+					return createCounterpartyActivityFx;
+				},
+			});
 
 			return transactionEntry;
 		}),

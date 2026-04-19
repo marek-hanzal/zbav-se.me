@@ -68,7 +68,7 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 						<Typo
 							label={toTimeDiff({
 								locale,
-								time: transaction.updatedAt,
+								time: transaction.lastAt,
 							})}
 							data-ui-text="xs"
 							data-ui-opacity={isUnread ? undefined : "7"}

@@ -7,7 +7,6 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
 import { archiveSellerMessageActivity } from "~/buyer/transaction/service/archiveSellerMessageActivity";
-import { InterestMessage } from "~/buyer/transaction/ui/status/InterestMessage";
 import { RejectedMessage } from "~/buyer/transaction/ui/status/RejectedMessage";
 import { TransactionMenu } from "~/buyer/transaction/ui/TransactionMenu";
 import { getRootLogger } from "~/common/log/getRootLogger";
@@ -30,20 +29,6 @@ export const TransactionInput: FC<TransactionInput.Props> = ({ _suspense, transa
 	});
 
 	return match(transaction.status)
-		.with("interest", () => {
-			return (
-				<Container
-					data-ui-flow="vertical"
-					data-ui-inner="default"
-					data-ui-gap="default"
-				>
-					<InterestMessage
-						close={() => {}}
-						transaction={transaction}
-					/>
-				</Container>
-			);
-		})
 		.with("rejected", () => {
 			return (
 				<Container
@@ -85,7 +70,7 @@ export const TransactionInput: FC<TransactionInput.Props> = ({ _suspense, transa
 						</TransactionMenuButton>
 					}
 					text={{
-						pending: translator.text("Transaction not accepted - buyer (message)"),
+						pending: translator.text("Transaction - send a message (placeholder)"),
 						open: translator.text("Transaction - send a message (placeholder)"),
 						dispute: translator.text(
 							"Transaction - dispute - send a message (placeholder)",
