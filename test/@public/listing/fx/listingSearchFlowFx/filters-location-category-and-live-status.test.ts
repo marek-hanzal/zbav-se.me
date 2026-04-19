@@ -1,0 +1,212 @@
+import { Effect } from "effect";
+import { sql } from "kysely";
+import { describe, expect, it } from "vitest";
+import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import { listingCollectionFx } from "~/public/listing/server/fx/listingCollectionFx";
+import { listingCountFx } from "~/public/listing/server/fx/listingCountFx";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { createListingFx } from "~/test/listing/fx/createListingFx";
+import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
+import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
+
+type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+
+const personalDelivery: ListingDeliveryEnumSchema.Type[] = [
+	"personal",
+];
+
+const postDelivery: ListingDeliveryEnumSchema.Type[] = [
+	"post",
+];
+
+const seedOstravaLocation = (database: TestDatabase) =>
+	Effect.promise(() =>
+		database.kysely
+			.insertInto("location")
+			.values({
+				id: "loc_public_listing_search_ostrava",
+				query: "Ostrava",
+				lang: "cs",
+				country: "Cesko",
+				code: "CZ",
+				county: "Ostrava-mesto",
+				municipality: "Ostrava",
+				state: "Moravskoslezsky kraj",
+				address: "Ostrava, Cesko",
+				city: "Ostrava",
+				street: null,
+				zip: "702 00",
+				confidence: 0.98,
+				hash: "test:public-listing-search:ostrava:cs",
+				lat: 49.820923,
+				lon: 18.262524,
+				geo: sql`default`,
+			})
+			.onConflict((oc) =>
+				oc
+					.columns([
+						"lang",
+						"hash",
+					])
+					.doNothing(),
+			)
+			.execute(),
+	);
+
+const patchPublicListing = (
+	database: TestDatabase,
+	props: {
+		id: string;
+		locationId?: string;
+		price: number;
+		condition: number;
+		age: number;
+		delivery: ListingDeliveryEnumSchema.Type[];
+		warranty: "custom" | "no-warranty" | "warranty";
+		status?: "banned" | "live" | "on-hold" | "sold";
+	},
+) =>
+	Effect.promise(() =>
+		database.kysely
+			.updateTable("listing")
+			.set({
+				locationId: props.locationId,
+				price: props.price,
+				condition: props.condition,
+				age: props.age,
+				delivery: props.delivery,
+				warranty: props.warranty,
+				status: props.status ?? "live",
+			})
+			.where("id", "=", props.id)
+			.executeTakeFirstOrThrow(),
+	);
+
+describe("public listing search flow", () => {
+	it("applies high-level filters and excludes every non-live listing", async () => {
+		const database = await testabase("public-listing-search-flow");
+
+		return Effect.gen(function* () {
+			const seller = yield* leaseTestUserFx({});
+			const listingDefaults = yield* getDefaultListingCreateFx;
+
+			yield* seedOstravaLocation(database);
+
+			const matching = yield* createListingFx(seller.id, {
+				title: "Travel laptop with warranty",
+				...listingDefaults,
+			});
+			const tooFar = yield* createListingFx(seller.id, {
+				title: "Travel laptop from Ostrava",
+				categoryId: listingDefaults.categoryId,
+				locationId: "loc_public_listing_search_ostrava",
+			});
+			const sold = yield* createListingFx(seller.id, {
+				title: "Travel laptop sold",
+				...listingDefaults,
+			});
+			const onHold = yield* createListingFx(seller.id, {
+				title: "Travel laptop on hold",
+				...listingDefaults,
+			});
+
+			yield* patchPublicListing(database, {
+				id: matching.id,
+				price: 5000,
+				condition: 5,
+				age: 2,
+				delivery: personalDelivery,
+				warranty: "warranty",
+			});
+			yield* patchPublicListing(database, {
+				id: tooFar.id,
+				locationId: "loc_public_listing_search_ostrava",
+				price: 4500,
+				condition: 5,
+				age: 2,
+				delivery: personalDelivery,
+				warranty: "warranty",
+			});
+			yield* patchPublicListing(database, {
+				id: sold.id,
+				price: 4800,
+				condition: 5,
+				age: 2,
+				delivery: personalDelivery,
+				warranty: "warranty",
+				status: "sold",
+			});
+			yield* patchPublicListing(database, {
+				id: onHold.id,
+				price: 4000,
+				condition: 4,
+				age: 1,
+				delivery: postDelivery,
+				warranty: "custom",
+				status: "on-hold",
+			});
+
+			const collection = yield* listingCollectionFx({
+				scope: {},
+				where: {
+					fulltext: "travel laptop",
+					categoryId: listingDefaults.categoryId,
+					priceMin: 4000,
+					priceMax: 5500,
+					conditionIn: [
+						5,
+					],
+					ageIn: [
+						2,
+					],
+					deliveryIn: personalDelivery,
+					warrantyIn: [
+						"warranty",
+					],
+					range: 10,
+				},
+				meta: {
+					latLon: {
+						lat: 50.075539,
+						lon: 14.4378,
+					},
+				},
+			});
+			const count = yield* listingCountFx({
+				scope: {},
+				where: {
+					fulltext: "travel laptop",
+					categoryId: listingDefaults.categoryId,
+					priceMin: 4000,
+					priceMax: 5500,
+					conditionIn: [
+						5,
+					],
+					ageIn: [
+						2,
+					],
+					deliveryIn: personalDelivery,
+					warrantyIn: [
+						"warranty",
+					],
+					range: 10,
+				},
+				meta: {
+					latLon: {
+						lat: 50.075539,
+						lon: 14.4378,
+					},
+				},
+			});
+
+			expect(collection.map((item) => item.id)).toEqual([
+				matching.id,
+			]);
+			expect(collection.map((item) => item.id)).not.toContain(tooFar.id);
+			expect(collection.map((item) => item.id)).not.toContain(sold.id);
+			expect(collection.map((item) => item.id)).not.toContain(onHold.id);
+			expect(count).toBe(collection.length);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+});
