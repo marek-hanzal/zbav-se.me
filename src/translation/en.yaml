@@ -343,9 +343,6 @@
 47babec012e4f310636ec7ddbcd6e5b33dbe7fe9f946fde7d3cb0d48:
   ref: Package - Link (placeholder)
   value: Package - Link (placeholder)
-486106a7527d8d2727d2c29ae0bf04b30c60032b353b74b4c1abf20a:
-  ref: Personal - Warning (message)
-  value: Personal - Warning (message)
 489d00517dfd05ee3a0d97637b9717d03aa5ae79bab228d5eed3e1e4:
   ref: Loading... (label)
   value: Loading... (label)
@@ -481,6 +478,9 @@
 62323b76d8ec615cba6e105b1c5c1e2e4f6e9f89de5a251ed565809f:
   ref: Transaction row - personal activity (label)
   value: Shared handoff details
+62f79d721e1f64279cdb9c76ae70447c285af806b3d67a6223a7aa14:
+  ref: Share contact info (title)
+  value: Share contact info (title)
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
   ref: View transactions (button)
   value: View transactions (button)
@@ -778,9 +778,6 @@ acca87272a911bd673bc0f526d8ddaf4bedf8c4d04a375401d80df47:
 ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba48:
   ref: Search (title)
   value: Search
-acf5cd0bee4e6bd74eea745c51c41f0b3a17a1de314afd2d76eb056c:
-  ref: Personal - Warning (title)
-  value: Personal - Warning (title)
 ad463b7f3d6f1eaa5308848bc97d5f303534c5cd5e2ddeed8fd6b57b:
   ref: Package - Tracking number (label)
   value: Package - Tracking number (label)
@@ -885,6 +882,9 @@ c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
 c7147aaa47c54e90b7023be8ee57d73010a71c259e352067aaad48e6:
   ref: Reject transaction (button)
   value: Reject transaction (button)
+cb3a34c7200192f3cf99f4312074d252b890df7647e1e65c2ee986ab:
+  ref: Share location (title)
+  value: Share location (title)
 cbac5f835956010c5b45bed61ee098674baef1e75ef17acc19462ac1:
   ref: Flag listing (button)
   value: Flag listing (button)

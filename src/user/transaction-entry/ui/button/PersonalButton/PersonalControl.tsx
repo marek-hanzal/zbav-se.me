@@ -1,14 +1,11 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { FormField } from "@/lib/client/form";
-import { WarningIcon } from "@/lib/client/icon";
-import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { LocationSelect } from "~/common/location/ui/LocationSelect";
 import { useAppForm } from "~/common/ui/form";
-import { uiWarningStatus } from "~/common/ui/ui";
 import { PersonalSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema/PersonalSchema";
 
 export namespace PersonalControl {
@@ -36,37 +33,26 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 	});
 
 	return (
-		<form
-			data-ui="PersonalControl"
-			onSubmit={(e) => {
-				e.preventDefault();
-				form.handleSubmit();
-			}}
+		<Container
+			data-ui-layout="vertical-content-footer"
+			data-ui-height="full"
+			data-ui-inner="default"
+			{...props}
 		>
 			<Container
-				data-ui-layout="vertical-content-footer"
+				data-ui-scroll="vertical"
 				data-ui-height="full"
-				data-ui-inner="default"
-				{...props}
 			>
 				<Container
-					data-ui-scroll="vertical"
-					data-ui-height="full"
+					data-ui-layout="vertical-flex"
+					data-ui-gap="default"
 				>
-					<Status
-						icon={WarningIcon}
-						textTitle={translator.text("Personal - Warning (title)")}
-						textMessage={translator.text("Personal - Warning (message)")}
-						{...uiWarningStatus({
-							className: [
-								"text-left",
-							],
-						})}
-					/>
-
-					<Container
-						data-ui-layout="vertical-flex"
-						data-ui-gap="default"
+					<form
+						data-ui="PersonalControl"
+						onSubmit={(e) => {
+							e.preventDefault();
+							form.handleSubmit();
+						}}
 					>
 						<form.AppField name={"name"}>
 							{(field) => (
@@ -168,27 +154,27 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 								</FormField>
 							)}
 						</form.AppField>
-					</Container>
+					</form>
 				</Container>
-
-				<form.Subscribe
-					selector={(state) => ({
-						isValid: state.isValid,
-						isSubmitting: state.isSubmitting,
-					})}
-				>
-					{({ isValid, isSubmitting }) => (
-						<SaveContainer
-							onCancel={onCancel}
-							onSave={() => {
-								form.handleSubmit();
-							}}
-							loading={isSubmitting}
-							disabled={!isValid}
-						/>
-					)}
-				</form.Subscribe>
 			</Container>
-		</form>
+
+			<form.Subscribe
+				selector={(state) => ({
+					isValid: state.isValid,
+					isSubmitting: state.isSubmitting,
+				})}
+			>
+				{({ isValid, isSubmitting }) => (
+					<SaveContainer
+						onCancel={onCancel}
+						onSave={() => {
+							form.handleSubmit();
+						}}
+						loading={isSubmitting}
+						disabled={!isValid}
+					/>
+				)}
+			</form.Subscribe>
+		</Container>
 	);
 };
