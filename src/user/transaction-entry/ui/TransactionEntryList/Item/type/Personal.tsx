@@ -1,3 +1,4 @@
+import { CopyIconAction } from "@/lib/client/clipboard/CopyIconAction";
 import type { Container as ContainerType } from "@/lib/client/container";
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
@@ -5,7 +6,9 @@ import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
+import { LabelValue } from "@/lib/client/value";
 import { toTimeDiff } from "@/lib/common/time";
+import { translator } from "@/lib/common/translator";
 import type { TransactionEntryPersonal } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/PersonalSchema";
 import { TypeContainer } from "./TypeContainer";
 
@@ -32,26 +35,41 @@ export const Personal = withFallback(
 					data-ui-gap="xs"
 				>
 					{name && (
-						<Typo
-							label={name}
-							data-ui-wrap="wrap"
-							data-ui-font="bold"
-							className={"py-1"}
+						<LabelValue
+							textLabel={translator.text("Personal - name")}
+							textValue={name}
+							textLabelProps={{
+								"data-ui-text": "default",
+								"data-ui-font": "normal",
+							}}
+							data-ui-background={undefined}
+							action={<CopyIconAction text={name} />}
 						/>
 					)}
 
 					{phone && (
-						<Typo
-							label={phone}
-							data-ui-wrap="wrap"
+						<LabelValue
+							textLabel={translator.text("Personal - phone")}
+							textValue={phone}
+							textLabelProps={{
+								"data-ui-text": "default",
+								"data-ui-font": "normal",
+							}}
+							data-ui-background={undefined}
+							action={<CopyIconAction text={phone} />}
 						/>
 					)}
 
 					{email && (
-						<Typo
-							label={email}
-							data-ui-wrap="wrap"
-							className={"py-1"}
+						<LabelValue
+							textLabel={translator.text("Personal - email")}
+							textValue={email}
+							textLabelProps={{
+								"data-ui-text": "default",
+								"data-ui-font": "normal",
+							}}
+							data-ui-background={undefined}
+							action={<CopyIconAction text={email} />}
 						/>
 					)}
 				</Container>

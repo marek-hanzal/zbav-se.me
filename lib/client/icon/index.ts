@@ -15,6 +15,7 @@ export { ChevronUpIcon } from "./ChevronUpIcon";
 export { CloseDrawerIcon } from "./CloseDrawerIcon";
 export { CloseIcon } from "./CloseIcon";
 export { ConfirmIcon } from "./ConfirmIcon";
+export { CopyIcon } from "./CopyIcon";
 export { DescIcon } from "./DescIcon";
 export { DislikeIcon } from "./DislikeIcon";
 export { DotIcon } from "./DotIcon";
