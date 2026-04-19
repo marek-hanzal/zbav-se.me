@@ -8,6 +8,7 @@ import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCr
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 
 describe("seller transaction read model", () => {
 	it("collection, fetch and count respect seller scope and expose unreadCount", async () => {
@@ -21,6 +22,14 @@ describe("seller transaction read model", () => {
 				sellerId: seller.id,
 				buyerId: buyer.id,
 				listing,
+			});
+			yield* transactionEntryCreateFx({
+				userId: buyer.id,
+				transactionId: ownScenario.transactionId,
+				kind: "text",
+				payload: {
+					text: "Buyer interest buffer should not leak",
+				},
 			});
 			yield* createPendingScenarioFx({
 				sellerId: stranger.id,
@@ -38,6 +47,7 @@ describe("seller transaction read model", () => {
 			expect(collection[0]?.id).toBe(ownScenario.transactionId);
 			expect(typeof collection[0]?.unreadCount).toBe("number");
 			expect(collection[0]?.unreadCount).toBeGreaterThan(0);
+			expect(collection[0]?.entry.kind).toBe("status-interest");
 
 			const fetched = yield* transactionFetchFx({
 				scope: {
@@ -50,6 +60,7 @@ describe("seller transaction read model", () => {
 
 			expect(fetched.id).toBe(ownScenario.transactionId);
 			expect(typeof fetched.unreadCount).toBe("number");
+			expect(fetched.entry.kind).toBe("status-interest");
 
 			const count = yield* transactionCountFx({
 				scope: {
