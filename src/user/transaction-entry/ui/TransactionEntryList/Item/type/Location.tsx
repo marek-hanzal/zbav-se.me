@@ -1,12 +1,13 @@
 import { CopyIconAction } from "@/lib/client/clipboard/CopyIconAction";
 import type { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
+import { uiLinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { LabelValue } from "@/lib/client/value";
-import { ofLatLonText } from "@/lib/common/location";
+import { ofGoogleMap, ofLatLonText } from "@/lib/common/location";
 import { toTimeDiff } from "@/lib/common/time";
 import { translator } from "@/lib/common/translator";
 import { withLocationFetchQuery } from "~/session/location/withLocationFetchQuery";
@@ -52,10 +53,20 @@ export const Location = withFallback(
 				/>
 				<LabelValue
 					textLabel={translator.text("Personal - map")}
-					textValue={ofLatLonText({
-						mode: "text",
-						latLon: location,
-					})}
+					textValue={
+						<a
+							href={ofGoogleMap({
+								latLon: location,
+							})}
+							target={"_blank"}
+							{...uiLinkTo({})}
+						>
+							{ofLatLonText({
+								mode: "text",
+								latLon: location,
+							})}
+						</a>
+					}
 					textLabelProps={{
 						"data-ui-text": "default",
 						"data-ui-font": "normal",
