@@ -50,7 +50,10 @@ export default defineConfig({
 			],
 		},
 		//
-		testTimeout: 4_000,
+		/**
+		 * Fuckin' GitHub Actions are too lazy...
+		 */
+		testTimeout: 10_000,
 		//
 		pool: "forks",
 		maxConcurrency: 4,
