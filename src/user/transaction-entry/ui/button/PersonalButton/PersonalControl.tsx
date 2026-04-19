@@ -1,11 +1,29 @@
 import type { FC } from "react";
+import z from "zod";
 import { Container } from "@/lib/client/container";
 import { FormField } from "@/lib/client/form";
 import { Tx } from "@/lib/client/tx";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
-import { PersonalSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema/PersonalSchema";
+import type { PersonalSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema/PersonalSchema";
+
+const Schema = z
+	.looseObject({
+		name: z.string().min(0),
+		phone: z.string().min(0),
+		email: z.union([
+			z.literal(""),
+			z.email(),
+		]),
+	})
+	.strip();
+
+type Schema = typeof Schema;
+
+namespace Schema {
+	export type Type = z.infer<Schema>;
+}
 
 export namespace PersonalControl {
 	export interface Props extends Container.Props {
@@ -20,10 +38,10 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 			name: "",
 			phone: "",
 			email: "",
-		} satisfies PersonalSchema.Type["payload"],
+		} satisfies Schema.Type,
 		validators: {
-			onMount: PersonalSchema.shape.payload,
-			onSubmit: PersonalSchema.shape.payload,
+			onMount: Schema,
+			onSubmit: Schema,
 		},
 		async onSubmit({ value }) {
 			return onSave(value);
@@ -128,6 +146,7 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 			>
 				{({ values, isValid, isSubmitting }) => {
 					const hasNonEmpty = !!(values.name || values.phone || values.email);
+
 					return (
 						<SaveContainer
 							onCancel={onCancel}
