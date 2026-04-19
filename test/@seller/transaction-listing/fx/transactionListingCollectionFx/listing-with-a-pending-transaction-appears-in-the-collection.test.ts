@@ -50,9 +50,7 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 			expect(typeof item?.count).toBe("number");
 			expect(item?.count).toBe(1);
 			expect(item?.entry.kind).toBe("status-interest");
-			expect(item?.lastAt.getTime()).toBe(
-				new Date(item?.entry.createdAt ?? 0).getTime(),
-			);
+			expect(item?.lastAt.getTime()).toBe(new Date(item?.entry.createdAt ?? 0).getTime());
 			expect(item?.lastAt.getTime()).toBeLessThan(hiddenTextEntry.createdAt.getTime());
 			expect(fetched.entry.kind).toBe("status-interest");
 			expect(fetched.lastAt.getTime()).toBe(new Date(fetched.entry.createdAt).getTime());
