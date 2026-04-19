@@ -64,7 +64,19 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 			<ChatInput
 				data-ui-width="full"
 				data-ui-inner="default"
-				onSubmit={chat.submit}
+				onSubmit={async (text) => {
+					await chat.submit(
+						uploads.length > 0
+							? [
+									// biome-ignore lint/style/noNonNullAssertion: Ssst, mother fucker
+									chat.input.image(text, uploads[0]!.url),
+								]
+							: [
+									chat.input.text(text),
+								],
+					);
+					setUploads([]);
+				}}
 				placeholder={translator.text("Write to an agent")}
 				loading={chat.mutation.isPending}
 				cancel={

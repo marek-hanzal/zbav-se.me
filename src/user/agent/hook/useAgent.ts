@@ -43,12 +43,12 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 		};
 	}, []);
 
-	const mutation = useMutation<void, Error, AgentInputItem>({
+	const mutation = useMutation<void, Error, AgentInputItem[]>({
 		async mutationFn(input) {
 			setHistoryItems((current) => {
 				return [
 					...(current ?? []),
-					input,
+					...input,
 				] satisfies AgentInputItem[];
 			}, AgentStreamItemsQuery);
 
@@ -74,20 +74,14 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 				.create({
 					adapter: "fetch",
 				})
-				.post<ReadableStream<Uint8Array>>(
-					link.href,
-					JSON.stringify([
-						input,
-					]),
-					{
-						headers: {
-							Accept: "text/event-stream",
-							"Content-Type": "application/json",
-						},
-						signal: abortControllerRef.current.signal,
-						responseType: "stream",
+				.post<ReadableStream<Uint8Array>>(link.href, JSON.stringify(input), {
+					headers: {
+						Accept: "text/event-stream",
+						"Content-Type": "application/json",
 					},
-				);
+					signal: abortControllerRef.current.signal,
+					responseType: "stream",
+				});
 
 			const reader = response.data.getReader();
 
@@ -131,22 +125,13 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 	});
 
 	const submit = useCallback(
-		async (text: string) => {
+		async (item: AgentInputItem[]) => {
 			if (mutation.isPending) {
 				return;
 			}
 
 			try {
-				await mutation.mutateAsync({
-					id: genId(),
-					role: "user",
-					content: [
-						{
-							type: "input_text",
-							text: text.trim(),
-						},
-					],
-				});
+				await mutation.mutateAsync(item);
 			} catch (error) {
 				console.error(error);
 			}
@@ -164,6 +149,31 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 	return {
 		mutation,
 		submit,
+		input: {
+			text(text: string): AgentInputItem {
+				return {
+					id: genId(),
+					role: "user",
+					content: text.trim(),
+				};
+			},
+			image(text: string, src: string): AgentInputItem {
+				return {
+					id: genId(),
+					role: "user",
+					content: [
+						{
+							type: "input_image",
+							image: src,
+						},
+						{
+							type: "input_text",
+							text,
+						},
+					],
+				};
+			},
+		},
 		cancel,
 	} as const;
 };
