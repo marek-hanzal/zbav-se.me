@@ -4,7 +4,6 @@ import { FormField } from "@/lib/client/form";
 import { Tx } from "@/lib/client/tx";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import { LocationSelect } from "~/common/location/ui/LocationSelect";
 import { useAppForm } from "~/common/ui/form";
 import { PersonalSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema/PersonalSchema";
 
@@ -21,7 +20,6 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 			name: "",
 			phone: "",
 			email: "",
-			locationId: "",
 		} satisfies PersonalSchema.Type["payload"],
 		validators: {
 			onMount: PersonalSchema.shape.payload,
@@ -115,32 +113,6 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 										value={field.state.value ?? ""}
 										onBlur={field.handleBlur}
 										onChange={(e) => field.handleChange(e.target.value)}
-										{...props}
-									/>
-								)}
-							</FormField>
-						)}
-					</form.AppField>
-
-					<form.AppField name={"locationId"}>
-						{(field) => (
-							<FormField
-								id={field.name}
-								name={field.name}
-								label={<Tx label={"Personal - Location (label)"} />}
-								meta={field.state.meta}
-								required
-							>
-								{(props) => (
-									<LocationSelect
-										value={field.state.value ?? null}
-										onChange={(value) => {
-											field.handleChange(value ?? "");
-										}}
-										textHint={""}
-										warningStatusProps={{
-											icon: null,
-										}}
 										{...props}
 									/>
 								)}
