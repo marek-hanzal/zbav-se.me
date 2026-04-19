@@ -6,6 +6,7 @@ import axios from "axios";
 import { createParser } from "eventsource-parser";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
+import { genId } from "@/lib/common/gen-id";
 import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
@@ -135,7 +136,9 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 
 			try {
 				await mutation.mutateAsync({
-					text,
+					id: genId(),
+					role: "user",
+					content: text.trim(),
 				});
 			} catch (error) {
 				console.error(error);
