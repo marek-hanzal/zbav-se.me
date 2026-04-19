@@ -47,6 +47,7 @@ export const AgentMenu: FC<AgentMenu.Props> = ({ close, onUpload, ...props }) =>
 					onCancel={() => {
 						setIsGalleryOpen(false);
 					}}
+					limit={5}
 					{...MessageButtonUi}
 				/>
 			</Group>

@@ -57,6 +57,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 						}}
 						defaultUploadIds={uploads.map(({ id }) => id)}
 						detent={"default"}
+						limit={5}
 					/>
 				</>
 			) : null}

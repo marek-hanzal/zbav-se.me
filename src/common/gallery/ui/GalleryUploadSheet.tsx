@@ -16,6 +16,7 @@ export namespace GalleryUploadSheet {
 		withMutation: withMutation.Api<TData, TResult, any>;
 		toMutation(uploadIds: string[]): TData;
 		defaultUploadIds: string[];
+		limit?: number;
 		//
 		state: StateType.State<boolean>;
 		//
@@ -35,6 +36,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, con
 	onCancel,
 	state,
 	defaultUploadIds,
+	limit = 1,
 	...props
 }: GalleryUploadSheet.Props<TData, TResult>) => {
 	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
@@ -63,7 +65,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, con
 						value: uploadIds,
 						set: setUploadIds,
 					}}
-					limit={1}
+					limit={limit}
 				/>
 
 				<SaveContainer
