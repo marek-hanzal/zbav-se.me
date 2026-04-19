@@ -121,20 +121,24 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 
 			<form.Subscribe
 				selector={(state) => ({
+					values: state.values,
 					isValid: state.isValid,
 					isSubmitting: state.isSubmitting,
 				})}
 			>
-				{({ isValid, isSubmitting }) => (
-					<SaveContainer
-						onCancel={onCancel}
-						onSave={() => {
-							form.handleSubmit();
-						}}
-						loading={isSubmitting}
-						disabled={!isValid}
-					/>
-				)}
+				{({ values, isValid, isSubmitting }) => {
+					const hasNonEmpty = !!(values.name || values.phone || values.email);
+					return (
+						<SaveContainer
+							onCancel={onCancel}
+							onSave={() => {
+								form.handleSubmit();
+							}}
+							loading={isSubmitting}
+							disabled={!isValid || !hasNonEmpty}
+						/>
+					);
+				}}
 			</form.Subscribe>
 		</Container>
 	);
