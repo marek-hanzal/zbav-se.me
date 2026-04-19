@@ -52,7 +52,6 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 								name={field.name}
 								label={<Tx label={"Personal - Name (label)"} />}
 								meta={field.state.meta}
-								required
 							>
 								{(props) => (
 									<field.TextInput
@@ -77,7 +76,6 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 								name={field.name}
 								label={<Tx label={"Personal - Phone (label)"} />}
 								meta={field.state.meta}
-								required
 							>
 								{(props) => (
 									<field.TextInput
@@ -102,7 +100,6 @@ export const PersonalControl: FC<PersonalControl.Props> = ({ onCancel, onSave, .
 								name={field.name}
 								label={<Tx label={"Personal - Email (label)"} />}
 								meta={field.state.meta}
-								required
 							>
 								{(props) => (
 									<field.TextInput
