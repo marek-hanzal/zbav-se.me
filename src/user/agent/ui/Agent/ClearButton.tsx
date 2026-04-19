@@ -19,7 +19,7 @@ export const ClearButton: FC<ClearButton.Props> = ({ onSuccess, ...props }) => {
 		<Button
 			data-action={"clear conversation history"}
 			iconEnabled={ClearIcon}
-			onClick={(e) => {
+			onClick={() => {
 				mutation.mutate({});
 			}}
 			loading={mutation.isPending}

@@ -1,4 +1,4 @@
-import { type FC, useState } from "react";
+import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { TransactionButtonUi } from "~/user/transaction/ui/TransactionButtonUi";
@@ -12,7 +12,7 @@ export namespace AgentMenu {
 }
 
 export const AgentMenu: FC<AgentMenu.Props> = ({ close, ...props }) => {
-	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+	// const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
 		<Container
