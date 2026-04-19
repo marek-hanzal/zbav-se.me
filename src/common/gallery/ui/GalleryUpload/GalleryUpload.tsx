@@ -4,6 +4,7 @@ import { useSnapperNav } from "@/lib/client/snapper";
 import { SnapperNav } from "@/lib/client/snapper-nav";
 import type { StateType } from "@/lib/client/type";
 import { PhotoUpload } from "~/common/photo/ui/PhotoUpload";
+import { Toolbar } from "./Toolbar";
 
 export namespace GalleryUpload {
 	export interface Props extends Container.Props {
@@ -51,27 +52,45 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 				{Array.from({
 					length: limit,
 				}).map((_, slot) => {
+					const uploadId = state.value[slot];
 					const disabled = slot > 0 && !state.value[slot - 1];
 
 					return (
-						<PhotoUpload
+						<Container
 							key={`${
 								// biome-ignore lint/suspicious/noArrayIndexKey: We're ok here, bro
 								slot + 1
 							}`}
-							value={state.value[slot]}
-							onChange={(uploadId) => {
-								state.set((prev) => {
-									const next: (string | undefined)[] = [
-										...prev,
-									];
-									next[slot] = uploadId;
+							data-ui={"GalleryUpload-[Container.photo]"}
+							data-ui-position="relative"
+							data-ui-width="full"
+							data-ui-height="full"
+						>
+							<PhotoUpload
+								value={uploadId}
+								onChange={(nextUploadId) => {
+									state.set((prev) => {
+										const next: (string | undefined)[] = [
+											...prev,
+										];
+										next[slot] = nextUploadId;
 
-									return next.filter((f): f is string => !!f);
-								});
-							}}
-							data-ui-disabled={disabled}
-						/>
+										return next.filter((f): f is string => !!f);
+									});
+								}}
+								data-ui-disabled={disabled}
+							/>
+
+							{uploadId ? (
+								<Toolbar
+									onDelete={() => {
+										state.set((prev) => {
+											return prev.filter((_, index) => index !== slot);
+										});
+									}}
+								/>
+							) : null}
+						</Container>
 					);
 				})}
 			</Container>
