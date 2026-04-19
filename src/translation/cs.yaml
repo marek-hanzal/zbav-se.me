@@ -1753,3 +1753,9 @@ Agent tool - seller_transaction_collection:
 Agent tool - transaction_entry_collection:
     value: Čtu si obsah zpráv
     static: true
+Agent tool - location_autocomplete:
+    value: Zjišťuju si adresu
+    static: true
+Agent tool - route:
+    value: Počítám trasu
+    static: true
