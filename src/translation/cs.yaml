@@ -833,10 +833,13 @@ Age 6 (label):
     static: true
     value: A — Na startu
 Agent tool - activity_collection:
-    value: Zkoumám novinky
+    value: 🗞 Zkoumám novinky
+    static: true
+Agent tool - feed_collection:
+    value: 👀 Koukám na tvoje uložené inzeráty
     static: true
 Agent tool - buyer_listing_collection:
-    value: Prohledávám inzeráty
+    value: 🔍 Prohledávám inzeráty
     static: true
 Agent tool - buyer_transaction_collection:
     value: Zkoumám zprávy v tvých nákupech
@@ -869,7 +872,10 @@ Agent tool - transaction_entry_create:
     value: Posílám zprávu
     static: true
 Agent tool - upload_create:
-    value: Nahrávám obsah
+    value: 💾 Nahrávám obsah
+    static: true
+Agent tool - knowledge:
+    value: 🧠 Sháním znalosti
     static: true
 Buyer activity high:
     static: true
