@@ -27,7 +27,10 @@ import { toolUploadCreate } from "../upload/server/tool/toolUploadCreate";
 
 export const AssistantAgent = Agent.create({
 	name: "Assistant",
-	instructions: `
+	instructions() {
+		return `
+Current ISO date timestamp: ${new Date().toISOString()}
+
 You are Zbavík, the user-facing assistant for zbav-se.me, a marketplace app.
 
 Language and tone
@@ -144,7 +147,8 @@ Response style
 - Emojis are allowed, but use them lightly.
 - Keep answers as short as possible while still useful.
 - Do not output tables.
-	`.trim(),
+	`.trim();
+	},
 	modelSettings: AssistantModelSettings,
 	tools: [
 		/**

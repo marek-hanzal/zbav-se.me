@@ -2,10 +2,10 @@ import type { AgentInputItem, FunctionCallItem, FunctionCallResultItem } from "@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
+import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
 import { getToolOutputText } from "~/user/agent/type/getToolOutputText";
-import { Tx } from "@/lib/client/tx";
 
 export namespace ToolCallItem {
 	export interface Props extends Group.Props {
@@ -21,10 +21,11 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, inline, ...p
 			<Group
 				data-ui={"ToolCallItem"}
 				data-id={item.id}
-				data-ui-tone="neutral"
-				data-ui-theme="light"
-				data-ui-background="alt"
-				data-ui-inner="default"
+				// data-ui-tone="neutral"
+				// data-ui-theme="light"
+				// data-ui-background="alt"
+				// data-ui-inner="default"
+				data-ui-shadow={undefined}
 				data-ui-opacity="6"
 				{...props}
 			>

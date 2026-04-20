@@ -1,12 +1,14 @@
-import type { RunStreamEvent } from "@openai/agents";
-import type { FC } from "react";
+import type { FunctionCallResultItem, RunStreamEvent } from "@openai/agents";
+import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
-import { selectToolCallState } from "./selectToolCallState";
+import { getFunctionCallResultItem } from "~/user/agent/type/getFunctionCallResultItem";
+import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
+import { getToolOutputText } from "~/user/agent/type/getToolOutputText";
 
 export namespace ToolCallBlock {
 	export interface Props extends Group.Props {
@@ -23,17 +25,18 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 	className,
 	...props
 }) => {
-	const state = selectToolCallState(events, itemId);
+	const state = useToolCalls(events, itemId);
 
 	if (inline) {
 		return (
 			<Group
 				data-ui={"ToolCallBlock"}
 				data-id={itemId}
-				data-ui-tone="neutral"
-				data-ui-theme="light"
-				data-ui-background="alt"
-				data-ui-inner="default"
+				// data-ui-tone="neutral"
+				// data-ui-theme="light"
+				// data-ui-background="alt"
+				// data-ui-inner="default"
+				data-ui-shadow={undefined}
 				data-ui-opacity="6"
 				{...props}
 			>
@@ -134,3 +137,69 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 		</Group>
 	);
 };
+
+// =================================================================================================
+
+function useToolCalls(events: RunStreamEvent[] | undefined, itemId: string) {
+	return useMemo(() => {
+		const all = events ?? [];
+
+		const created = all.find((event) => {
+			const responseEvent = getResponseStreamEvent(event);
+
+			return (
+				responseEvent?.type === "response.output_item.added" &&
+				responseEvent.item.type === "function_call" &&
+				responseEvent.item.id === itemId
+			);
+		});
+
+		const done = all.find((event) => {
+			const responseEvent = getResponseStreamEvent(event);
+
+			return (
+				responseEvent?.type === "response.function_call_arguments.done" &&
+				responseEvent.item_id === itemId
+			);
+		});
+
+		const createdEvent = created ? getResponseStreamEvent(created) : null;
+		const doneEvent = done ? getResponseStreamEvent(done) : null;
+
+		const createdName =
+			createdEvent &&
+			createdEvent.type === "response.output_item.added" &&
+			createdEvent.item.type === "function_call"
+				? createdEvent.item.name
+				: "";
+
+		const doneArgs =
+			doneEvent && doneEvent.type === "response.function_call_arguments.done"
+				? doneEvent.arguments
+				: null;
+		const callId =
+			createdEvent &&
+			createdEvent.type === "response.output_item.added" &&
+			createdEvent.item.type === "function_call"
+				? createdEvent.item.call_id
+				: null;
+		const result = callId
+			? all
+					.map(getFunctionCallResultItem)
+					.find(
+						(event): event is FunctionCallResultItem =>
+							event !== null && event.callId === callId,
+					)
+			: undefined;
+
+		return {
+			name: createdName,
+			input: doneArgs,
+			output: getToolOutputText(result),
+			isPending: !result,
+		} as const;
+	}, [
+		events,
+		itemId,
+	]);
+}
