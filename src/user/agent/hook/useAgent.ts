@@ -151,6 +151,7 @@ export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 	}, []);
 
 	return {
+		threadId,
 		mutation,
 		submit,
 		input: {

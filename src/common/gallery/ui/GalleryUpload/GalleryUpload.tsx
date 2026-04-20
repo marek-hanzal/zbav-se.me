@@ -11,6 +11,7 @@ export namespace GalleryUpload {
 		allowClear?: boolean;
 		state: StateType.State<string[]>;
 		limit: number;
+		mutationId?: string;
 	}
 }
 
@@ -20,7 +21,13 @@ export namespace GalleryUpload {
  *
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const GalleryUpload: FC<GalleryUpload.Props> = ({ allowClear, state, limit, ...props }) => {
+export const GalleryUpload: FC<GalleryUpload.Props> = ({
+	allowClear,
+	state,
+	limit,
+	mutationId,
+	...props
+}) => {
 	const snapperRef = useRef<HTMLDivElement>(null);
 	const snapperNav = useSnapperNav({
 		containerRef: snapperRef,
@@ -72,6 +79,7 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ allowClear, state, limi
 						>
 							<PhotoUpload
 								value={uploadId}
+								mutationId={mutationId}
 								onChange={(nextUploadId) => {
 									state.set((prev) => {
 										const next: (string | undefined)[] = [

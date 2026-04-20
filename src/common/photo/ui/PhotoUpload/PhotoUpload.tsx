@@ -44,6 +44,7 @@ export namespace PhotoUpload {
 		value: useController.Value;
 		onChange: useController.OnChangeFn;
 		onUpload?: useController.OnUploadFn;
+		mutationId?: string;
 	}
 }
 
@@ -58,12 +59,16 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	value,
 	onChange,
 	onUpload,
+	mutationId,
+	"data-ui-disabled": dataUiDisabled,
 	...props
 }) => {
 	const controller = useController({
 		onChange,
 		onUpload,
+		mutationId,
 	});
+	const isDisabled = controller.isPending || dataUiDisabled || undefined;
 
 	return (
 		<Container
@@ -75,7 +80,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 			data-ui-border
 			data-ui-shadow
 			data-ui-position="relative"
-			data-ui-disabled={controller.isPending ?? undefined}
+			data-ui-disabled={isDisabled}
 			data-ui-width="full"
 			data-ui-height="full"
 			onClick={controller.pick}
@@ -94,9 +99,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 
 			{controller.isPending ? <UploadPending progress={controller.progress} /> : null}
 
-			{!value && !controller.isPending ? (
-				<Placeholder disabled={props["data-ui-disabled"]} />
-			) : null}
+			{!value && !controller.isPending ? <Placeholder disabled={isDisabled} /> : null}
 
 			{value && !controller.isPending ? (
 				<Suspense fallback={<Preview.Fallback />}>

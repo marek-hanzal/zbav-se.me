@@ -18,6 +18,7 @@ export namespace useController {
 	export interface Props {
 		onChange: OnChangeFn;
 		onUpload?: OnUploadFn;
+		mutationId?: string;
 	}
 
 	export interface Result {
@@ -30,7 +31,11 @@ export namespace useController {
 	}
 }
 
-export function useController({ onChange, onUpload }: useController.Props): useController.Result {
+export function useController({
+	onChange,
+	onUpload,
+	mutationId,
+}: useController.Props): useController.Result {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [progress, setProgress] = useState(0);
 	const setUpload = withUploadQuery.useUpdate();
@@ -47,6 +52,9 @@ export function useController({ onChange, onUpload }: useController.Props): useC
 	}, []);
 
 	const uploadMutation = withUploadMutation.useMutation({
+		meta: {
+			mutationId,
+		},
 		async onPreMutation() {
 			setProgress(0);
 		},

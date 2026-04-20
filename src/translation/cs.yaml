@@ -1199,6 +1199,9 @@ a78ed5f38f0cf730dc1a618d9df1ca5011cc5d947d61f00075e0c5da:
     value: >
         Nastavuje očekávání, kdy se kupující např. po předání balíčku už ke
         zprávám nevrátí a obchod neuzavře.
+a7f5e5490a00e11ff6314e82bf18c26edb4ec0a26ccb4ad6260fb578:
+    ref: Thread token usage (label)
+    value: Projebané tokeny
 a92a914e77188202f38d6b42be76d7f92cee60d777d0c00ca5aecbde:
     ref: Package - Tracking number (placeholder)
     value: Např. Z488654
