@@ -10,11 +10,11 @@ export const AgentStreamMigration: Migration = {
 			.addColumn("payload", "jsonb", (col) => col.notNull())
 			.addColumn("sort", "integer", (col) => col.notNull())
 			.addForeignKeyConstraint(
-				"agent_stream_[userId]_fk",
+				"agent_stream_[threadId]_fk",
 				[
-					"userId",
+					"threadId",
 				],
-				"user",
+				"agent_thread",
 				[
 					"id",
 				],
