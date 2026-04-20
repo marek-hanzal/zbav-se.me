@@ -874,6 +874,9 @@ Agent tool - transaction_entry_create:
 Agent tool - upload_create:
     value: Nahrávám obsah
     static: true
+Agent tool - draft_collection:
+    value: Zkoumám tvé uložené inzeráty
+    static: true
 Buyer activity high:
     static: true
     value: Vysoká aktivita
