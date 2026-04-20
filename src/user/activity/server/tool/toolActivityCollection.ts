@@ -2,10 +2,10 @@ import { tool } from "@openai/agents";
 import { match } from "ts-pattern";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { activityCollectionFn } from "~/user/activity/fn/activityCollectionFn";
 import { activityCountFn } from "~/user/activity/fn/activityCountFn";
 import { ActivityToolQuerySchema } from "~/user/activity/server/schema/ActivityToolQuerySchema";
-import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
