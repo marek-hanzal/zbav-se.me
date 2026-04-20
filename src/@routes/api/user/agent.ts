@@ -2,6 +2,7 @@ import type { AgentInputItem, RunStreamEvent } from "@openai/agents";
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { genId } from "@/lib/common/gen-id";
+import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { withLocaleMiddleware } from "~/server/middleware/withLocaleMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { AssistantAgent } from "~/user/agent/AssistantAgent";
@@ -44,6 +45,7 @@ export const Route = createFileRoute("/api/user/agent")({
 				]);
 
 				const input = AgentRequestSchema.safeParse(await request.json());
+				const viteEnv = ViteEnvSchema.parse(process.env);
 
 				if (!input.success) {
 					logger.warn("Invalid request (schema validation failed)", {
@@ -120,6 +122,7 @@ export const Route = createFileRoute("/api/user/agent")({
 								>(AssistantAgent, input.data, {
 									context: {
 										locale,
+										cdn: viteEnv.VITE_CONTENT_CDN,
 									},
 									session,
 									stream: true,

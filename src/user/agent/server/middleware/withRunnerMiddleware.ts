@@ -6,6 +6,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 export namespace withRunnerMiddleware {
 	export interface Context {
 		locale: string;
+		cdn: string;
 	}
 }
 
