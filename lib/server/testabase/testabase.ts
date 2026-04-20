@@ -9,6 +9,10 @@ import {
 } from "@/lib/common/database";
 import { genId } from "@/lib/common/gen-id";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
+import { createDatabaseFromTemplate } from "./createDatabaseFromTemplate";
+import { dropDatabase } from "./dropDatabase";
+import { withAdminDatabase } from "./withAdminDatabase";
+import { withTemplateLock } from "./withTemplateLock";
 
 export namespace testabase {
 	export interface Props<in out TDatabase> {
@@ -33,27 +37,34 @@ export const testabase = async <const TDatabase>({
 	return Effect.gen(function* () {
 		const databaseConfig = ServerDatabaseSchema.parse(process.env);
 
-		const { kysely } = yield* databaseFx.pipe(
-			withDialectFx(
-				new PostgresDialect({
-					pool: new Pool({
-						connectionString: withDatabaseName({
-							dsn: databaseConfig.SERVER_DATABASE_URL,
-							name: root,
-						}),
-						application_name: `testabase:admin:${name}`,
-						max: 1,
-					}),
-				}),
-			),
+		const { kysely } = yield* Effect.promise(() =>
+			withAdminDatabase({
+				databaseFx,
+				dsn: databaseConfig.SERVER_DATABASE_URL,
+				name,
+				root,
+			}),
 		);
 
 		yield* Effect.promise(async () => {
-			await sql`DROP DATABASE IF EXISTS ${sql.ref(name)}`.execute(kysely);
-			await sql`CREATE DATABASE ${sql.ref(name)} TEMPLATE ${sql.ref(template)}`.execute(
-				kysely,
-			);
-			await kysely.destroy();
+			try {
+				await withTemplateLock({
+					kysely,
+					template,
+					callback: async () => {
+						await sql`DROP DATABASE IF EXISTS ${sql.ref(name)} WITH (FORCE)`.execute(
+							kysely,
+						);
+						await createDatabaseFromTemplate({
+							kysely,
+							name,
+							template,
+						});
+					},
+				});
+			} finally {
+				await kysely.destroy();
+			}
 		});
 
 		const instance = yield* databaseFx.pipe(
@@ -73,6 +84,12 @@ export const testabase = async <const TDatabase>({
 
 		onTestFinished(async () => {
 			await instance.kysely.destroy();
+			await dropDatabase({
+				databaseFx,
+				dsn: databaseConfig.SERVER_DATABASE_URL,
+				name,
+				root,
+			});
 		});
 
 		return instance;
