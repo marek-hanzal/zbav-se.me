@@ -21,7 +21,7 @@ export const HistoryList: FC<HistoryList.Props> = (props) => {
 		<Container
 			data-ui={"HistoryList"}
 			data-ui-flow="vertical"
-			data-ui-gap="default"
+			data-ui-gap="lg"
 			{...props}
 		>
 			{items.map((item, index) => {
@@ -34,7 +34,7 @@ export const HistoryList: FC<HistoryList.Props> = (props) => {
 							return (
 								<UserMessage
 									key={`user-${item.id ?? index}`}
-									item={item}
+									content={item.content}
 								/>
 							);
 						},
@@ -46,7 +46,8 @@ export const HistoryList: FC<HistoryList.Props> = (props) => {
 						(item) => (
 							<AssistantMessage
 								key={`assistant-${item.id}`}
-								item={item}
+								content={item.content}
+								groupId={item.id}
 							/>
 						),
 					)

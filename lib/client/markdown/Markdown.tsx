@@ -1,9 +1,10 @@
 import type { ComponentProps, FC } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { uiButton } from "../button/uiButton";
+import type { uiButton } from "../button/uiButton";
 import { Container } from "../container/Container";
 import { uiContainer } from "../container/uiContainer";
+import { uiLinkTo } from "../link-to";
 import { Typo } from "../typo/Typo";
 import { uiMarkdown } from "./uiMarkdown";
 
@@ -64,8 +65,8 @@ export const Markdown: FC<Markdown.Props> = ({ className, components, ...props }
 								{...props}
 								target="_blank"
 								rel="noopener noreferrer"
-								{...uiButton({
-									className: [],
+								{...uiLinkTo({
+									"data-ui-wrap": true,
 									...components?.a,
 								})}
 							/>
