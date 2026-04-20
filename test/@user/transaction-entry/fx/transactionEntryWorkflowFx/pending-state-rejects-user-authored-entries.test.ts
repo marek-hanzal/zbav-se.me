@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { fetchActivityItemsFx } from "~/test/activity/fx/fetchActivityItemsFx";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
@@ -38,7 +39,7 @@ describe("transactionEntry workflow", () => {
 
 			const upload = yield* uploadCreateFx({
 				userId: buyer.id,
-				url: "https://cdn.zbav-se.me/transaction-entry-pending-gallery.jpg",
+				url: testUploadUrl("transaction-entry-pending-gallery.jpg"),
 			});
 
 			const textEntry = yield* transactionEntryCreateFx({

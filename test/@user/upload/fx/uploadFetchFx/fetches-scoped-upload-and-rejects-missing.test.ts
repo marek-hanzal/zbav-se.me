@@ -4,6 +4,7 @@ import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 import { uploadFetchFx } from "~/user/upload/server/fx/uploadFetchFx";
 
@@ -13,14 +14,17 @@ describe("uploadFetchFx", () => {
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
+			const uploadContext = yield* UploadContextFx;
+			const cdn = uploadContext.cdn.replace(/\/$/, "");
+			const ownUploadUrl = `${cdn}/own-upload.jpg`;
 
 			const ownUpload = yield* uploadCreateFx({
 				userId: users.seller.id,
-				url: "https://cdn.zbav-se.me/own-upload.jpg",
+				url: ownUploadUrl,
 			});
 			const foreignUpload = yield* uploadCreateFx({
 				userId: users.stranger.id,
-				url: "https://cdn.zbav-se.me/foreign-upload.jpg",
+				url: `${cdn}/foreign-upload.jpg`,
 			});
 
 			const fetched = yield* uploadFetchFx({
@@ -33,7 +37,7 @@ describe("uploadFetchFx", () => {
 			});
 
 			expect(fetched.id).toBe(ownUpload.id);
-			expect(fetched.url).toBe("https://cdn.zbav-se.me/own-upload.jpg");
+			expect(fetched.url).toBe(ownUploadUrl);
 
 			const foreign = yield* Effect.either(
 				uploadFetchFx({

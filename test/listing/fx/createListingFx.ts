@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
+import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 export namespace createListingFx {
@@ -40,8 +41,10 @@ export const createListingFx = (
 			throw new Error("Expected location autocomplete to return Praha");
 		}
 
+		const uploadContext = yield* UploadContextFx;
+
 		const upload = yield* uploadCreateFx({
-			url: "https://cdn.zbav-se.me/test.jpg",
+			url: `${uploadContext.cdn.replace(/\/$/, "")}/test.jpg`,
 			userId: sellerId,
 		});
 

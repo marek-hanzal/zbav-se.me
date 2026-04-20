@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
@@ -32,7 +33,7 @@ describe("userEventSellerInfoFx", () => {
 			expect(location).toHaveLength(1);
 
 			const upload = yield* uploadCreateFx({
-				url: "https://cdn.zbav-se.me/test.jpg",
+				url: testUploadUrl("test.jpg"),
 				userId: seller.id,
 			});
 

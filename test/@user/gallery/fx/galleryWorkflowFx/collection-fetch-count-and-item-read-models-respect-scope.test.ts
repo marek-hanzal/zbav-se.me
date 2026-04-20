@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
@@ -22,11 +23,11 @@ describe("gallery workflow", () => {
 
 			const firstUpload = yield* uploadCreateFx({
 				userId: seller.id,
-				url: "https://cdn.zbav-se.me/gallery-workflow-1.jpg",
+				url: testUploadUrl("gallery-workflow-1.jpg"),
 			});
 			const secondUpload = yield* uploadCreateFx({
 				userId: seller.id,
-				url: "https://cdn.zbav-se.me/gallery-workflow-2.jpg",
+				url: testUploadUrl("gallery-workflow-2.jpg"),
 			});
 
 			const draft = yield* draftCreateFx({
@@ -115,7 +116,7 @@ describe("gallery workflow", () => {
 
 			const upload = yield* uploadCreateFx({
 				userId: seller.id,
-				url: "https://cdn.zbav-se.me/gallery-workflow-foreign.jpg",
+				url: testUploadUrl("gallery-workflow-foreign.jpg"),
 			});
 
 			const draft = yield* draftCreateFx({

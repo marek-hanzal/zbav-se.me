@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import { feedGalleryCreateFx } from "~/buyer/feed-gallery/server/fx/feedGalleryCreateFx";
@@ -26,19 +27,19 @@ describe("feedGalleryCreateFx", () => {
 
 			const firstUpload = yield* uploadCreateFx({
 				userId: user.id,
-				url: "https://cdn.zbav-se.me/feed-gallery-1.jpg",
+				url: testUploadUrl("feed-gallery-1.jpg"),
 			});
 			const secondUpload = yield* uploadCreateFx({
 				userId: user.id,
-				url: "https://cdn.zbav-se.me/feed-gallery-2.jpg",
+				url: testUploadUrl("feed-gallery-2.jpg"),
 			});
 			const thirdUpload = yield* uploadCreateFx({
 				userId: user.id,
-				url: "https://cdn.zbav-se.me/feed-gallery-3.jpg",
+				url: testUploadUrl("feed-gallery-3.jpg"),
 			});
 			const strangerUpload = yield* uploadCreateFx({
 				userId: stranger.id,
-				url: "https://cdn.zbav-se.me/feed-gallery-stranger.jpg",
+				url: testUploadUrl("feed-gallery-stranger.jpg"),
 			});
 
 			const firstGallery = yield* feedGalleryCreateFx({
