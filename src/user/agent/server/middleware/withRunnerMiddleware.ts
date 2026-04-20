@@ -36,13 +36,8 @@ export const withRunnerMiddleware = createMiddleware()
 				console.log("\n=== AGENT ===");
 				console.log(agent.name);
 
-				console.log("\n=== INSTRUCTIONS ===");
-				console.dir(modelData.instructions, {
-					depth: null,
-				});
-
-				console.log("\n=== INPUT SENT TO MODEL ===");
-				console.dir(modelData.input, {
+				console.log("\n=== TOOLS ===");
+				console.dir(agent.tools, {
 					depth: null,
 				});
 
