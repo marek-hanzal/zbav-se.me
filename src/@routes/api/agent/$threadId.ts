@@ -31,6 +31,28 @@ type StreamState = {
 	heartbeat: ReturnType<typeof setInterval> | undefined;
 };
 
+type UsageSnapshot = {
+	requests: number;
+	input: number;
+	output: number;
+	total: number;
+};
+
+const emptyUsageSnapshot = (): UsageSnapshot => ({
+	requests: 0,
+	input: 0,
+	output: 0,
+	total: 0,
+});
+
+const hasUsage = ({ requests, input, output, total }: UsageSnapshot) => {
+	return requests > 0 || input > 0 || output > 0 || total > 0;
+};
+
+const isUsageReadyEvent = (event: RunStreamEvent) => {
+	return event.type === "raw_model_stream_event" && event.data.type === "response_done";
+};
+
 export const Route = createFileRoute("/api/agent/$threadId")({
 	server: {
 		middleware: [
@@ -174,59 +196,89 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 
 								logger.trace("Run created");
 
-								logger.trace("Starting event stream", {
-									threadId,
-								});
+								let persistedUsage = emptyUsageSnapshot();
 
-								for await (const event of stream) {
-									if (state.closed) {
-										break;
+								const flushUsage = async () => {
+									const currentUsage = {
+										requests: stream.state.usage.requests,
+										input: stream.state.usage.inputTokens,
+										total: stream.state.usage.totalTokens,
+										output: stream.state.usage.outputTokens,
+									} satisfies UsageSnapshot;
+
+									const usage = {
+										requests: currentUsage.requests - persistedUsage.requests,
+										input: currentUsage.input - persistedUsage.input,
+										total: currentUsage.total - persistedUsage.total,
+										output: currentUsage.output - persistedUsage.output,
+									} satisfies UsageSnapshot;
+
+									if (!hasUsage(usage)) {
+										return;
 									}
 
 									try {
-										controller.enqueue(
-											encoder.encode(
-												`data: ${JSON.stringify(event as RunStreamEvent)}\n\n`,
-											),
+										await Effect.gen(function* () {
+											yield* agentUsageCreateFx({
+												userId: user.id,
+												threadId,
+												...usage,
+											});
+										}).pipe(
+											withKyselyFx(database),
+											withDateFx,
+											withLoggerFx(rootLogger),
+											Effect.runPromise,
 										);
-									} catch {
-										state.closed = true;
-										break;
-									}
-								}
 
-								logger.trace("Stream finished, about to wait for completed", {
-									threadId,
-								});
-
-								await stream.completed;
-
-								logger.trace("Stream success", {
-									threadId,
-								});
-
-								try {
-									await Effect.gen(function* () {
-										yield* agentUsageCreateFx({
+										persistedUsage = currentUsage;
+									} catch (error) {
+										logger.error("Agent usage persistence failed", {
 											userId: user.id,
 											threadId,
-											requests: stream.state.usage.requests,
-											input: stream.state.usage.inputTokens,
-											total: stream.state.usage.totalTokens,
-											output: stream.state.usage.outputTokens,
+											usage,
+											error,
 										});
-									}).pipe(
-										withKyselyFx(database),
-										withDateFx,
-										withLoggerFx(rootLogger),
-										Effect.runPromise,
-									);
-								} catch (error) {
-									logger.error("Agent usage persistence failed", {
-										userId: user.id,
+									}
+								};
+
+								try {
+									logger.trace("Starting event stream", {
 										threadId,
-										error,
 									});
+
+									for await (const event of stream) {
+										if (state.closed) {
+											break;
+										}
+
+										try {
+											controller.enqueue(
+												encoder.encode(
+													`data: ${JSON.stringify(event as RunStreamEvent)}\n\n`,
+												),
+											);
+										} catch {
+											state.closed = true;
+											break;
+										}
+
+										if (isUsageReadyEvent(event)) {
+											await flushUsage();
+										}
+									}
+
+									logger.trace("Stream finished, about to wait for completed", {
+										threadId,
+									});
+
+									await stream.completed;
+
+									logger.trace("Stream success", {
+										threadId,
+									});
+								} finally {
+									await flushUsage();
 								}
 							} catch (error) {
 								logger.error("Agent stream failed", {
