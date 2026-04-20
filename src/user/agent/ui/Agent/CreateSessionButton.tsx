@@ -38,7 +38,7 @@ export const CreateSessionButton: FC<CreateSessionButton.Props> = ({ onSuccess, 
 			iconProps={{
 				"data-ui-text": "lg",
 			}}
-			onClick={(e) => {
+			onClick={() => {
 				mutation.mutate({});
 			}}
 			loading={mutation.isPending}
