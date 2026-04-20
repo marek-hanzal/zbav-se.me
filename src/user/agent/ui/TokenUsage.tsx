@@ -23,6 +23,7 @@ export const TokenUsage = withFallback<TokenUsage.Props, Container>(
 				data-ui-gap="xs"
 				data-ui-items="center"
 				data-ui-justify="center"
+				data-ui-text={"xs"}
 				{...props}
 			>
 				<Typo
