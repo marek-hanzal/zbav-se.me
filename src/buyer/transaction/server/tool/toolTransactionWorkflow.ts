@@ -6,6 +6,7 @@ import { transactionDisputeFn } from "~/buyer/transaction/fn/transactionDisputeF
 import { transactionRejectFn } from "~/buyer/transaction/fn/transactionRejectFn";
 import { transactionSuccessFn } from "~/buyer/transaction/fn/transactionSuccessFn";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -29,23 +30,26 @@ Supported actions:
 
 Requires the exact buyer-side transaction id.
 	`.trim(),
-	parameters: z
-		.looseObject({
-			transactionId: z.string().meta({
-				description: "Exact buyer-side transaction ID",
-			}),
-			type: z
-				.enum([
-					"close",
-					"dispute",
-					"reject",
-					"success",
-				])
-				.meta({
-					description: "Buyer workflow action to execute",
+	strict: true,
+	parameters: unsafeJsonSchema(
+		z
+			.looseObject({
+				transactionId: z.string().meta({
+					description: "Exact buyer-side transaction ID",
 				}),
-		})
-		.strip(),
+				type: z
+					.enum([
+						"close",
+						"dispute",
+						"reject",
+						"success",
+					])
+					.meta({
+						description: "Buyer workflow action to execute",
+					}),
+			})
+			.strip(),
+	),
 	async execute({ type, transactionId }) {
 		logger.trace("toolTransactionWorkflow", {
 			type,

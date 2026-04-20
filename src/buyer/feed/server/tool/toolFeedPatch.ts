@@ -9,7 +9,7 @@ const logger = getRootLogger([
 	"toolFeedPatch",
 ]);
 
-export const toolFeedPatch = tool<FeedToolPatchSchema>({
+export const toolFeedPatch = tool({
 	name: "feed-patch",
 	needsApproval: false,
 	description: `

@@ -5,6 +5,7 @@ import { getRootLogger } from "~/common/log/getRootLogger";
 import { transactionCollectionFn } from "~/seller/transaction/fn/transactionCollectionFn";
 import { transactionCountFn } from "~/seller/transaction/fn/transactionCountFn";
 import { TransactionToolQuerySchema } from "~/seller/transaction/server/schema/TransactionToolQuerySchema";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -24,15 +25,18 @@ Modes:
 Use for seller-side transaction lookup and transaction metadata.
 Do not use for trade message/timeline content.
     `.trim(),
-	parameters: z
-		.looseObject({
-			type: z.enum([
-				"count",
-				"collection",
-			]),
-			query: TransactionToolQuerySchema,
-		})
-		.strip(),
+	strict: true,
+	parameters: unsafeJsonSchema(
+		z
+			.looseObject({
+				type: z.enum([
+					"count",
+					"collection",
+				]),
+				query: TransactionToolQuerySchema,
+			})
+			.strip(),
+	),
 	async execute({ type, query }) {
 		logger.trace("toolTransactionCollection", {
 			type,

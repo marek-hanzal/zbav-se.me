@@ -1,6 +1,7 @@
 import { tool } from "@openai/agents";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { transactionEntryCreateFn } from "~/user/transaction-entry/fn/transactionEntryCreateFn";
 import { TransactionEntryCreateSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema";
 
@@ -91,7 +92,8 @@ Transaction-state rules before using this:
 This writes to the transaction timeline and notifies the other participant, so do not call it for drafts, previews, suggestions,
 or when required fields are uncertain.
 	`.trim(),
-	parameters: TransactionEntryCreateToolSchema,
+	strict: true,
+	parameters: unsafeJsonSchema(TransactionEntryCreateToolSchema),
 	async execute(data) {
 		logger.trace("toolTransactionEntryCreate", {
 			data,

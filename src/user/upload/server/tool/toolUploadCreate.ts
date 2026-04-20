@@ -1,5 +1,6 @@
 import { tool } from "@openai/agents";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { uploadCreateFn } from "~/user/upload/fn/uploadCreateFn";
 import { UploadToolCreateSchema } from "~/user/upload/server/schema/UploadToolCreateSchema";
 
@@ -21,7 +22,8 @@ Use when:
 
 Returns the upload record with id and URL.
     `.trim(),
-	parameters: UploadToolCreateSchema,
+	strict: true,
+	parameters: unsafeJsonSchema(UploadToolCreateSchema),
 	async execute(data) {
 		logger.trace("toolUploadCreate", {
 			data,

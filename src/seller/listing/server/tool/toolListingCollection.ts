@@ -5,6 +5,7 @@ import { getRootLogger } from "~/common/log/getRootLogger";
 import { listingCollectionFn } from "~/seller/listing/fn/listingCollectionFn";
 import { listingCountFn } from "~/seller/listing/fn/listingCountFn";
 import { ListingToolQuerySchema } from "~/seller/listing/server/schema/ListingToolQuerySchema";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -24,15 +25,18 @@ Modes:
 Use for seller-owned listing lookup and management.
 Do not use for buyer-visible marketplace search.
     `.trim(),
-	parameters: z
-		.looseObject({
-			type: z.enum([
-				"count",
-				"collection",
-			]),
-			query: ListingToolQuerySchema,
-		})
-		.strip(),
+	strict: true,
+	parameters: unsafeJsonSchema(
+		z
+			.looseObject({
+				type: z.enum([
+					"count",
+					"collection",
+				]),
+				query: ListingToolQuerySchema,
+			})
+			.strip(),
+	),
 	async execute({ type, query }) {
 		logger.trace("toolListingCollection", {
 			type,

@@ -5,6 +5,7 @@ import { feedCollectionFn } from "~/buyer/feed/fn/feedCollectionFn";
 import { feedCountFn } from "~/buyer/feed/fn/feedCountFn";
 import { FeedToolQuerySchema } from "~/buyer/feed/server/schema/FeedToolQuerySchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -23,15 +24,18 @@ Modes:
 
 Use only user-facing feeds (type: user), not internal search feeds (type: search).
     `.trim(),
-	parameters: z
-		.looseObject({
-			type: z.enum([
-				"count",
-				"collection",
-			]),
-			query: FeedToolQuerySchema,
-		})
-		.strip(),
+	strict: true,
+	parameters: unsafeJsonSchema(
+		z
+			.looseObject({
+				type: z.enum([
+					"count",
+					"collection",
+				]),
+				query: FeedToolQuerySchema,
+			})
+			.strip(),
+	),
 	async execute({ type, query }) {
 		logger.trace("toolFeedCollection", {
 			type,

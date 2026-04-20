@@ -5,6 +5,7 @@ import { getRootLogger } from "~/common/log/getRootLogger";
 import { activityCollectionFn } from "~/user/activity/fn/activityCollectionFn";
 import { activityCountFn } from "~/user/activity/fn/activityCountFn";
 import { ActivityToolQuerySchema } from "~/user/activity/server/schema/ActivityToolQuerySchema";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -24,15 +25,18 @@ Modes:
 Use for notifications, unread-style activity, reactions, and transaction-related activity summaries.
 Do not use for full trade message content.
     `.trim(),
-	parameters: z
-		.looseObject({
-			type: z.enum([
-				"count",
-				"collection",
-			]),
-			query: ActivityToolQuerySchema,
-		})
-		.strip(),
+	strict: true,
+	parameters: unsafeJsonSchema(
+		z
+			.looseObject({
+				type: z.enum([
+					"count",
+					"collection",
+				]),
+				query: ActivityToolQuerySchema,
+			})
+			.strip(),
+	),
 	async execute({ type, query }) {
 		logger.trace("toolActivityCollection", {
 			type,

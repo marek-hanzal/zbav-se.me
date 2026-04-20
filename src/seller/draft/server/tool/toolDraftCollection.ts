@@ -5,6 +5,7 @@ import { getRootLogger } from "~/common/log/getRootLogger";
 import { draftCollectionFn } from "~/seller/draft/fn/draftCollectionFn";
 import { draftCountFn } from "~/seller/draft/fn/draftCountFn";
 import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"draft",
@@ -25,15 +26,17 @@ Modes:
 Use for draft lookup and for finding draft ids before update or delete.
     `.trim(),
 	strict: true,
-	parameters: z
-		.looseObject({
-			type: z.enum([
-				"count",
-				"collection",
-			]),
-			query: DraftToolQuerySchema,
-		})
-		.strip(),
+	parameters: unsafeJsonSchema(
+		z
+			.looseObject({
+				type: z.enum([
+					"count",
+					"collection",
+				]),
+				query: DraftToolQuerySchema,
+			})
+			.strip(),
+	),
 	async execute({ type, query }) {
 		logger.trace("toolDraftCollection", {
 			type,

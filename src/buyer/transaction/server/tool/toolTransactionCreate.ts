@@ -2,6 +2,7 @@ import { tool } from "@openai/agents";
 import { transactionCreateFn } from "~/buyer/transaction/fn/transactionCreateFn";
 import { TransactionCreateSchema } from "~/buyer/transaction/server/schema/TransactionCreateSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -24,7 +25,8 @@ Before using:
 
 This creates a pending transaction, links the buyer and listing owner as participants, writes the pending status entry, and notifies the seller.
 	`.trim(),
-	parameters: TransactionCreateSchema,
+	strict: true,
+	parameters: unsafeJsonSchema(TransactionCreateSchema),
 	async execute(data) {
 		logger.trace("toolTransactionCreate", {
 			data,

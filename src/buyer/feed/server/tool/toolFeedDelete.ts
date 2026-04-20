@@ -2,6 +2,7 @@ import { tool } from "@openai/agents";
 import { feedDeleteFn } from "~/buyer/feed/fn/feedDeleteFn";
 import { FeedToolQuerySchema } from "~/buyer/feed/server/schema/FeedToolQuerySchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -23,9 +24,12 @@ Boundaries:
 - Use 'filter.id'
 - If you don't know exact feed id, ask the user and resolve it using 'feed-collection(filter.fulltext="")'
     `.trim(),
-	parameters: FeedToolQuerySchema.pick({
-		filter: true,
-	}),
+	strict: true,
+	parameters: unsafeJsonSchema(
+		FeedToolQuerySchema.pick({
+			filter: true,
+		}),
+	),
 	async execute(data) {
 		logger.trace("toolFeedDelete", {
 			data,

@@ -3,6 +3,7 @@ import Fuse from "fuse.js";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"knowledge",
@@ -18,13 +19,22 @@ Search knowledge topics by query or exact key.
 Return the best matching topics.
 Set withContent to include full topic content.
     `.trim(),
-	parameters: z
-		.looseObject({
-			input: z.string().describe("Search query."),
-			limit: z.coerce.number().int().positive().max(20).optional().describe("Max results."),
-			withContent: z.boolean().optional().default(false),
-		})
-		.strip(),
+	strict: true,
+	parameters: unsafeJsonSchema(
+		z
+			.looseObject({
+				input: z.string().describe("Search query."),
+				limit: z.coerce
+					.number()
+					.int()
+					.positive()
+					.max(20)
+					.optional()
+					.describe("Max results."),
+				withContent: z.boolean().optional().default(false),
+			})
+			.strip(),
+	),
 	async execute({ input, limit, withContent }) {
 		logger.trace("toolKnowledge", {
 			input,

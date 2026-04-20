@@ -6,6 +6,7 @@ import { transactionAcceptFn } from "~/seller/transaction/fn/transactionAcceptFn
 import { transactionDisputeFn } from "~/seller/transaction/fn/transactionDisputeFn";
 import { transactionRejectFn } from "~/seller/transaction/fn/transactionRejectFn";
 import { transactionResolveFn } from "~/seller/transaction/fn/transactionResolveFn";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -29,23 +30,26 @@ Actions:
 
 Requires the exact seller-side transaction id.
 	`.trim(),
-	parameters: z
-		.looseObject({
-			transactionId: z.string().meta({
-				description: "Exact seller-side transaction ID",
-			}),
-			type: z
-				.enum([
-					"accept",
-					"dispute",
-					"reject",
-					"resolve",
-				])
-				.meta({
-					description: "Seller workflow action to execute",
+	strict: true,
+	parameters: unsafeJsonSchema(
+		z
+			.looseObject({
+				transactionId: z.string().meta({
+					description: "Exact seller-side transaction ID",
 				}),
-		})
-		.strip(),
+				type: z
+					.enum([
+						"accept",
+						"dispute",
+						"reject",
+						"resolve",
+					])
+					.meta({
+						description: "Seller workflow action to execute",
+					}),
+			})
+			.strip(),
+	),
 	async execute({ type, transactionId }) {
 		logger.trace("toolTransactionWorkflow", {
 			type,
