@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import {
 	appendSeedBenchmarkJsonl,
 	printSeedCoreReport,
@@ -6,7 +7,6 @@ import {
 import { seedCoreFx } from "~/server/@system/seed/fx/seedCoreFx";
 import { withSeedRuntimeFx } from "~/server/@system/seed/fx/withSeedRuntimeFx";
 import { parseSeedArgsFx } from "~/server/@system/seed/schema/SeedArgsSchema";
-import { ServerViteSchema } from "~/server/env/ServerViteSchema";
 
 const { report, runtimeMs } = await Effect.gen(function* () {
 	const start = yield* Effect.sync(() => Date.now());
@@ -14,7 +14,7 @@ const { report, runtimeMs } = await Effect.gen(function* () {
 		name: "seed-core",
 		args: process.argv.slice(2),
 	});
-	const viteConfig = ServerViteSchema.parse(process.env);
+	const viteConfig = ViteEnvSchema.parse(process.env);
 	const report = yield* seedCoreFx({
 		count: args.count,
 		user: args.user,

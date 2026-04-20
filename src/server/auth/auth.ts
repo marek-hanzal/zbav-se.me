@@ -5,10 +5,10 @@ import { type Dialect, Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { genId } from "@/lib/common/gen-id";
+import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import type { Database } from "~/server/database/Database";
 import { ServerBetterAuthSchema } from "~/server/env/ServerBetterAuthSchema";
-import { ServerViteSchema } from "~/server/env/ServerViteSchema";
 
 const logger = getRootLogger("auth");
 
@@ -29,7 +29,7 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 	const connection = dialect();
 
 	const betterAuthConfig = ServerBetterAuthSchema.parse(process.env);
-	const viteConfig = ServerViteSchema.parse(process.env);
+	const viteConfig = ViteEnvSchema.parse(process.env);
 	const { hostname: originHost } = new URL(viteConfig.VITE_ORIGIN);
 
 	/**

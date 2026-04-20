@@ -3,16 +3,16 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { keyOf } from "@/lib/common/key-of";
 import { withLoggerFx } from "@/lib/common/log";
+import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { withS3Fx } from "~/common/s3/server/context/withS3Fx";
 import { s3PreSignFx } from "~/common/s3/server/fx/s3PreSignFx";
 import { ServerS3Schema } from "~/server/env/ServerS3Schema";
-import { ServerViteSchema } from "~/server/env/ServerViteSchema";
 import { withUploadFx } from "~/user/upload/server/context/withUploadFx";
 
 describe("s3PreSignFx", () => {
 	it("generates signed url and CDN path using real S3 config", async () => {
 		const s3Config = ServerS3Schema.parse(process.env);
-		const viteConfig = ServerViteSchema.parse(process.env);
+		const viteConfig = ViteEnvSchema.parse(process.env);
 		const logger = getLogger("zbav-se.me");
 
 		const result = await s3PreSignFx({

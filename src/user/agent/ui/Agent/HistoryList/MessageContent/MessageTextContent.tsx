@@ -5,7 +5,7 @@ import { Group } from "@/lib/client/group";
 import { uiLinkTo } from "@/lib/client/link-to";
 import { Markdown } from "@/lib/client/markdown";
 import { translator } from "@/lib/common/translator";
-import { ServerViteSchema } from "~/server/env/ServerViteSchema";
+import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 
 export namespace MessageTextContent {
 	export interface Props extends Group.Props {
@@ -20,7 +20,7 @@ export const MessageTextContent: FC<MessageTextContent.Props> = ({ groupId, text
 		return null;
 	}
 
-	const { VITE_CONTENT_CDN } = ServerViteSchema.parse(import.meta.env);
+	const { VITE_CONTENT_CDN } = ViteEnvSchema.parse(import.meta.env);
 
 	if (value.startsWith(VITE_CONTENT_CDN)) {
 		return (
