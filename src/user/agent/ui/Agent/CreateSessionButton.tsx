@@ -46,7 +46,8 @@ export const CreateSessionButton: FC<CreateSessionButton.Props> = ({ onSuccess, 
 			data-ui-tone="secondary"
 			data-ui-theme="light"
 			data-ui-badge="lg"
-			data-ui-width="content"
+			data-ui-justify={"center"}
+			data-ui-items={"center"}
 			{...props}
 		>
 			<Tx

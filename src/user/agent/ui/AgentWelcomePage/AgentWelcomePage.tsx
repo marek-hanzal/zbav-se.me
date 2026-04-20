@@ -6,6 +6,8 @@ import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
+import { withAgentThreadQuery } from "../../query/withAgentThreadQuery";
+import { ContinueSessionButton } from "../Agent/ContinueSessionButton";
 import { CreateSessionButton } from "../Agent/CreateSessionButton";
 
 export namespace AgentWelcomePage {
@@ -16,6 +18,7 @@ export namespace AgentWelcomePage {
 
 export const AgentWelcomePage = ({ ...props }: AgentWelcomePage.Props) => {
 	const locale = useLocale();
+	const { data: threadCount } = withAgentThreadQuery.useCountQuery({});
 
 	return (
 		<TitleContainer
@@ -48,7 +51,22 @@ export const AgentWelcomePage = ({ ...props }: AgentWelcomePage.Props) => {
 					icon={AiIcon}
 					textTitle={translator.text("Agent welcome (title)")}
 					textMessage={translator.text("Agent welcome (message)")}
-					action={<CreateSessionButton />}
+					action={
+						<Container
+							data-ui="AgentWelcomePage-[Action]"
+							data-ui-flow="horizontal"
+							data-ui-gap="md"
+							data-ui-justify="center"
+							className={[
+								"flex-wrap",
+							]}
+						>
+							{threadCount > 0 ? (
+								<ContinueSessionButton data-ui-width={"full"} />
+							) : null}
+							<CreateSessionButton data-ui-width={"full"} />
+						</Container>
+					}
 				/>
 			</Container>
 		</TitleContainer>

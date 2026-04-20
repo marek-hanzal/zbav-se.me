@@ -35,6 +35,7 @@ import { Route as LocaleAppHomeRouteImport } from './@routes/$locale/app/home'
 import { Route as ApiPublicMigrationRunRouteImport } from './@routes/api/public/migration/run'
 import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
 import { Route as LocaleAppAgentWelcomeRouteImport } from './@routes/$locale/app/agent/welcome'
+import { Route as LocaleAppAgentContinueRouteImport } from './@routes/$locale/app/agent/continue'
 import { Route as LocaleAppAgentThreadIdRouteImport } from './@routes/$locale/app/agent/$threadId'
 import { Route as LocaleAppActivityPriorityRouteImport } from './@routes/$locale/app/activity/$priority'
 import { Route as LocaleAppSellerTransactionListRouteImport } from './@routes/$locale/app/seller/transaction/list'
@@ -182,6 +183,11 @@ const LocaleAppAgentWelcomeRoute = LocaleAppAgentWelcomeRouteImport.update({
   path: '/agent/welcome',
   getParentRoute: () => LocaleAppRoute,
 } as any)
+const LocaleAppAgentContinueRoute = LocaleAppAgentContinueRouteImport.update({
+  id: '/agent/continue',
+  path: '/agent/continue',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
 const LocaleAppAgentThreadIdRoute = LocaleAppAgentThreadIdRouteImport.update({
   id: '/agent/$threadId',
   path: '/agent/$threadId',
@@ -303,6 +309,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
+  '/$locale/app/agent/continue': typeof LocaleAppAgentContinueRoute
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
@@ -345,6 +352,7 @@ export interface FileRoutesByTo {
   '/$locale/app': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
+  '/$locale/app/agent/continue': typeof LocaleAppAgentContinueRoute
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
@@ -390,6 +398,7 @@ export interface FileRoutesById {
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
+  '/$locale/app/agent/continue': typeof LocaleAppAgentContinueRoute
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
@@ -436,6 +445,7 @@ export interface FileRouteTypes {
     | '/$locale/app/'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
+    | '/$locale/app/agent/continue'
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
     | '/api/public/migration/run'
@@ -478,6 +488,7 @@ export interface FileRouteTypes {
     | '/$locale/app'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
+    | '/$locale/app/agent/continue'
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
     | '/api/public/migration/run'
@@ -522,6 +533,7 @@ export interface FileRouteTypes {
     | '/$locale/app/'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
+    | '/$locale/app/agent/continue'
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
     | '/api/public/migration/run'
@@ -734,6 +746,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppAgentWelcomeRouteImport
       parentRoute: typeof LocaleAppRoute
     }
+    '/$locale/app/agent/continue': {
+      id: '/$locale/app/agent/continue'
+      path: '/agent/continue'
+      fullPath: '/$locale/app/agent/continue'
+      preLoaderRoute: typeof LocaleAppAgentContinueRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
     '/$locale/app/agent/$threadId': {
       id: '/$locale/app/agent/$threadId'
       path: '/agent/$threadId'
@@ -857,6 +876,7 @@ interface LocaleAppRouteChildren {
   LocaleAppIndexRoute: typeof LocaleAppIndexRoute
   LocaleAppActivityPriorityRoute: typeof LocaleAppActivityPriorityRoute
   LocaleAppAgentThreadIdRoute: typeof LocaleAppAgentThreadIdRoute
+  LocaleAppAgentContinueRoute: typeof LocaleAppAgentContinueRoute
   LocaleAppAgentWelcomeRoute: typeof LocaleAppAgentWelcomeRoute
   LocaleAppBuyerSearchRoute: typeof LocaleAppBuyerSearchRoute
   LocaleAppBuyerFavouriteListRoute: typeof LocaleAppBuyerFavouriteListRoute
@@ -883,6 +903,7 @@ const LocaleAppRouteChildren: LocaleAppRouteChildren = {
   LocaleAppIndexRoute: LocaleAppIndexRoute,
   LocaleAppActivityPriorityRoute: LocaleAppActivityPriorityRoute,
   LocaleAppAgentThreadIdRoute: LocaleAppAgentThreadIdRoute,
+  LocaleAppAgentContinueRoute: LocaleAppAgentContinueRoute,
   LocaleAppAgentWelcomeRoute: LocaleAppAgentWelcomeRoute,
   LocaleAppBuyerSearchRoute: LocaleAppBuyerSearchRoute,
   LocaleAppBuyerFavouriteListRoute: LocaleAppBuyerFavouriteListRoute,

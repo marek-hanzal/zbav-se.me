@@ -12,7 +12,7 @@ export const withTransactionEntryGalleryFetchQuery = withQuery({
 	errors: {} as {
 		query: transactionEntryGalleryFetchFn.Error;
 	},
-	keys(data) {
+	keys(data: TransactionEntryGalleryQuerySchema.Type) {
 		return [
 			"transaction-entry",
 			"gallery",

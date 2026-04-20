@@ -12,7 +12,7 @@ export const withAgentUsageQuery = withQuery({
 	errors: {} as {
 		query: agentUsageCollectionFn.Error;
 	},
-	keys(data) {
+	keys(data: AgentUsageQuerySchema.Type) {
 		return [
 			"agent",
 			"usage",

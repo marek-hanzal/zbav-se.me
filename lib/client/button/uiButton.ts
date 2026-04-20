@@ -32,6 +32,7 @@ export namespace uiButton {
 		shadow?: CoolUi.Shadow;
 		shadowActive?: CoolUi.ShadowActive;
 		zIndex?: CoolUi.zIndex;
+		badge?: CoolUi.Badge;
 		//
 		text?: CoolUi.Text;
 		font?: CoolUi.Font;

@@ -12,7 +12,7 @@ export const withTransactionBuyerInfoQuery = withQuery({
 	errors: {} as {
 		query: transactionBuyerInfoFn.Error;
 	},
-	keys(data) {
+	keys(data: TransactionQuerySchema.Type) {
 		return [
 			"seller",
 			"transaction",

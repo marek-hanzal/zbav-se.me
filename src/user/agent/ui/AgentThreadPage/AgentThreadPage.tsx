@@ -22,10 +22,10 @@ export const AgentThreadPage = withFallback<AgentThreadPage.Props, TitleContaine
 		return (
 			<TitleContainer
 				textTitle={translator.text("Agent (title)")}
-				textSubtitle={<TokenUsage />}
+				textSubtitle={<TokenUsage threadId={threadId} />}
 				left={
 					<BackHomeButton
-						to="/$locale/app/home"
+						to="/$locale/app/agent/welcome"
 						params={{
 							locale,
 						}}
@@ -49,7 +49,7 @@ export const AgentThreadPage = withFallback<AgentThreadPage.Props, TitleContaine
 				textTitle={translator.text("Agent (title)")}
 				left={
 					<BackHomeButton
-						to="/$locale/app/home"
+						to="/$locale/app/agent/welcome"
 						params={{
 							locale,
 						}}

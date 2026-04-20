@@ -8,14 +8,18 @@ import { withAgentTokensQuery } from "~/user/agent/query/withAgentTokensQuery";
 
 export namespace TokenUsage {
 	export interface Props extends Container.Props {
-		//
+		threadId?: string;
 	}
 }
 
 export const TokenUsage = withFallback<TokenUsage.Props, Container>(
-	({ ...props }) => {
+	({ threadId, ...props }) => {
 		const locale = useLocale();
-		const { data: tokens } = withAgentTokensQuery.useSuspenseQuery({});
+		const { data: tokens } = withAgentTokensQuery.useSuspenseQuery({
+			where: {
+				threadId,
+			},
+		});
 
 		return (
 			<Container

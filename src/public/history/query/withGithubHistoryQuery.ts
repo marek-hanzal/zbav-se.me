@@ -12,7 +12,7 @@ export const withGithubHistoryQuery = withQuery({
 		"query",
 		"withGithubHistoryQuery",
 	]),
-	keys(data) {
+	keys(data: GithubHistoryQuery) {
 		return [
 			"github",
 			"history",
