@@ -80,6 +80,7 @@ Local sync source files live in `@env/*.json` and can be applied with `bun run e
 | group | VALUE | Required | secret/variable | comment |
 | --- | --- | --- | --- | --- |
 | assets | `VITE_APP_ASSETS` | yes | variable | Public asset base URL used by the Vite production build for emitted static assets and CDN links. |
+| cdn | `VITE_CONTENT_CDN` | yes | variable | Public CDN base URL returned for uploaded content and generated file links. |
 | build | `NITRO_PRESET` | default: `vercel` | variable | Optional Nitro deployment preset override for production builds. |
 
 ### Server runtime
@@ -95,7 +96,6 @@ Local sync source files live in `@env/*.json` and can be applied with `bun run e
 | s3 | `SERVER_S3_BUCKET` | yes | variable | Bucket name used for uploaded content storage. |
 | s3 | `SERVER_S3_KEY` | yes | secret | Access key ID for the S3-compatible storage provider. |
 | s3 | `SERVER_S3_SECRET` | yes | secret | Secret access key for the S3-compatible storage provider. |
-| cdn | `SERVER_CONTENT_CDN` | yes | variable | Public CDN base URL returned for uploaded content and generated file links. |
 | external-api | `SERVER_GEOAPIFY_TOKEN` | yes | secret | Geoapify API token used for location autocomplete and related geodata lookups. |
 | external-api | `SERVER_GITHUB` | yes | secret | GitHub token used by the server-side GitHub integration. |
 | seed | `SEED_CORE_CONCURRENCY` | optional | variable | Optional shared concurrency override for seed jobs that use the generic seed concurrency helper. |

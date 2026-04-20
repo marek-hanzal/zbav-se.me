@@ -4,8 +4,8 @@ import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withS3Fx } from "~/common/s3/server/context/withS3Fx";
 import { s3PreSignFx } from "~/common/s3/server/fx/s3PreSignFx";
-import { ServerCdnSchema } from "~/server/env/ServerCdnSchema";
 import { ServerS3Schema } from "~/server/env/ServerS3Schema";
+import { ServerViteSchema } from "~/server/env/ServerViteSchema";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
@@ -34,7 +34,7 @@ export const s3PreSignFn = createServerFn({
 		logger.trace(name, data);
 
 		const s3Config = ServerS3Schema.parse(process.env);
-		const cdnConfig = ServerCdnSchema.parse(process.env);
+		const viteConfig = ServerViteSchema.parse(process.env);
 
 		return zodGuardFx({
 			schema: S3PreSignResponseSchema,
@@ -51,7 +51,7 @@ export const s3PreSignFn = createServerFn({
 				secret: s3Config.SERVER_S3_SECRET,
 			}),
 			withUploadFx({
-				cdn: cdnConfig.SERVER_CONTENT_CDN,
+				cdn: viteConfig.VITE_CONTENT_CDN,
 			}),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {

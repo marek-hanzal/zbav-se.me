@@ -9,10 +9,10 @@ import { withSeedProgressFx } from "~/server/@system/seed/context/withSeedProgre
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { databaseFx } from "~/server/database/databaseFx";
 import { withDateFx } from "~/server/database/fx/withDateFx";
-import { ServerCdnSchema } from "~/server/env/ServerCdnSchema";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
 import { ServerS3Schema } from "~/server/env/ServerS3Schema";
+import { ServerViteSchema } from "~/server/env/ServerViteSchema";
 import { withLocationFx } from "~/session/location/server/fx/withLocationFx";
 import { withTransactionContextFx } from "~/user/transaction/server/context/withTransactionContextFx";
 import { withUploadFx } from "~/user/upload/server/context/withUploadFx";
@@ -20,8 +20,8 @@ import { withUploadFx } from "~/user/upload/server/context/withUploadFx";
 export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 	const databaseConfig = ServerDatabaseSchema.parse(process.env);
 	const s3Config = ServerS3Schema.parse(process.env);
-	const cdnConfig = ServerCdnSchema.parse(process.env);
 	const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
+	const viteConfig = ServerViteSchema.parse(process.env);
 	const logger = getRootLogger();
 
 	return Effect.gen(function* () {
@@ -65,7 +65,7 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 				bucket: s3Config.SERVER_S3_BUCKET,
 			}),
 			withUploadFx({
-				cdn: cdnConfig.SERVER_CONTENT_CDN,
+				cdn: viteConfig.VITE_CONTENT_CDN,
 			}),
 			withDateFx,
 			withTransactionContextFx(),
