@@ -11,11 +11,9 @@ export const AssistantMessage: FC<AssistantMessage.Props> = (props) => {
 	return (
 		<MessageContent
 			data-ui={"AssistantMessage"}
-			partProps={{
-				"data-ui-background": undefined,
-				"data-ui-shadow": undefined,
-				"data-ui-inner": undefined,
-			}}
+			data-ui-background={undefined}
+			data-ui-shadow={undefined}
+			data-ui-inner={undefined}
 			{...props}
 		/>
 	);

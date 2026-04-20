@@ -1,6 +1,5 @@
 import type { AssistantMessageItem, UserMessageItem } from "@openai/agents-core";
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
 import { MessageContentPart } from "./MessageContentPart";
 
 export namespace MessageContent {
@@ -9,19 +8,12 @@ export namespace MessageContent {
 		| Exclude<UserMessageItem["content"], string>[number]
 		| AssistantMessageItem["content"][number];
 
-	export interface Props extends Omit<Container.Props, "content"> {
+	export interface Props extends Omit<Partial<MessageContentPart.Props>, "content"> {
 		content: Content;
-		groupId?: string;
-		partProps?: Partial<MessageContentPart.Props>;
 	}
 }
 
-export const MessageContent: FC<MessageContent.Props> = ({
-	content,
-	groupId,
-	partProps,
-	...props
-}) => {
+export const MessageContent: FC<MessageContent.Props> = ({ content, ...props }) => {
 	const parts = getMessageContentParts(content);
 
 	if (!parts.length) {
@@ -31,21 +23,15 @@ export const MessageContent: FC<MessageContent.Props> = ({
 	const countByFingerprint = new Map<string, number>();
 
 	return (
-		<Container
-			data-ui={"MessageContent"}
-			data-ui-flow="vertical"
-			data-ui-gap="xs"
-			{...props}
-		>
+		<>
 			{parts.map((part) => (
 				<MessageContentPart
 					key={getPartKey(part, countByFingerprint)}
-					groupId={groupId}
 					part={part}
-					{...partProps}
+					{...props}
 				/>
 			))}
-		</Container>
+		</>
 	);
 };
 

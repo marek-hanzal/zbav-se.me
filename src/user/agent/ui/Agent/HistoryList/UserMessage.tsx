@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Group } from "@/lib/client/group";
+import { Container } from "@/lib/client/container";
 import { MessageContent } from "./MessageContent";
 
 export namespace UserMessage {
@@ -10,7 +10,8 @@ export namespace UserMessage {
 
 export const UserMessage: FC<UserMessage.Props> = (props) => {
 	return (
-		<Group
+		<Container
+			data-ui={"UserMessage"}
 			data-ui-tone={"neutral"}
 			data-ui-theme={"light"}
 			data-ui-background={"default"}
@@ -26,15 +27,12 @@ export const UserMessage: FC<UserMessage.Props> = (props) => {
 		>
 			<MessageContent
 				data-ui={"UserMessage"}
-				partProps={{
-					"data-ui-inner": "default",
-					"data-ui-round": undefined,
-					"data-ui-border": false,
-					"data-ui-background": undefined,
-					"data-ui-shadow": undefined,
-				}}
+				data-ui-background={undefined}
+				data-ui-shadow={false}
+				data-ui-border={false}
+				data-ui-inner={"default"}
 				{...props}
 			/>
-		</Group>
+		</Container>
 	);
 };
