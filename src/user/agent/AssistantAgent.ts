@@ -19,12 +19,12 @@ import { toolTransactionWorkflow as toolSellerTransactionWorkflow } from "~/sell
 import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
 import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
 import { toolRoute } from "~/session/location/server/tool/toolRoute";
-import { toolActivityCollection } from "~/user/activity/server/tool/toolActivityCollection";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
 import { toolTransactionEntryCollection } from "~/user/transaction-entry/server/tool/toolTransactionEntryCollection";
 import { toolTransactionEntryCreate } from "~/user/transaction-entry/server/tool/toolTransactionEntryCreate";
+import { toolActivityCollection } from "../activity/server/tool/toolActivityCollection";
 import { toolUploadCreate } from "../upload/server/tool/toolUploadCreate";
 
 export const AssistantAgent = new Agent<withRunnerMiddleware.Context>({
