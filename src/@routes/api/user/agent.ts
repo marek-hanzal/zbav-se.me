@@ -2,6 +2,7 @@ import type { AgentInputItem, RunStreamEvent } from "@openai/agents";
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { genId } from "@/lib/common/gen-id";
+import { withLocaleMiddleware } from "~/server/middleware/withLocaleMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { AssistantAgent } from "~/user/agent/AssistantAgent";
 import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
@@ -29,9 +30,13 @@ export const Route = createFileRoute("/api/user/agent")({
 			withUserMiddleware,
 			withRunnerSessionMiddleware,
 			withRunnerMiddleware,
+			withLocaleMiddleware,
 		],
 		handlers: {
-			async POST({ request, context: { database, user, rootLogger, runner, session } }) {
+			async POST({
+				request,
+				context: { database, user, rootLogger, runner, session, locale },
+			}) {
 				const logger = rootLogger.getChild([
 					"api",
 					"user",
@@ -109,7 +114,13 @@ export const Route = createFileRoute("/api/user/agent")({
 
 							try {
 								logger.trace("Starting run");
-								const stream = await runner.run(AssistantAgent, input.data, {
+								const stream = await runner.run<
+									AssistantAgent,
+									withRunnerMiddleware.Context
+								>(AssistantAgent, input.data, {
+									context: {
+										locale,
+									},
 									session,
 									stream: true,
 									signal: abortController.signal,

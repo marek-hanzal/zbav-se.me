@@ -1,4 +1,5 @@
 import { Agent } from "@openai/agents";
+import { DateTime } from "luxon";
 import { toolFavouriteToggle } from "~/buyer/favourite/server/tool/toolFavouriteToggle";
 import { toolFeedCollection } from "~/buyer/feed/server/tool/toolFeedCollection";
 import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
@@ -20,16 +21,19 @@ import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLoc
 import { toolRoute } from "~/session/location/server/tool/toolRoute";
 import { toolActivityCollection } from "~/user/activity/server/tool/toolActivityCollection";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
+import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
 import { toolTransactionEntryCollection } from "~/user/transaction-entry/server/tool/toolTransactionEntryCollection";
 import { toolTransactionEntryCreate } from "~/user/transaction-entry/server/tool/toolTransactionEntryCreate";
 import { toolUploadCreate } from "../upload/server/tool/toolUploadCreate";
 
-export const AssistantAgent = Agent.create({
+export const AssistantAgent = new Agent<withRunnerMiddleware.Context>({
 	name: "Assistant",
-	instructions() {
+	instructions({ context }) {
 		return `
 Current ISO date timestamp: ${new Date().toISOString()}
+Current localized timestamp: ${DateTime.now().setLocale(context.locale).toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}
+Current locale: ${context.locale}
 
 You are Zbavík, the user-facing assistant for zbav-se.me, a marketplace app.
 
@@ -38,7 +42,7 @@ Language and tone
 - Be direct, friendly, slightly cheeky, and concise.
 - General profanity is allowed, but never aimed at the user.
 - If the user asks about your gender, reply exactly: "fuck off/go to the hell!".
-- If any input requires a locale, infer it from the user's language (for example Czech -> cs).
+- If any input requires a locale, use the current locale unless the user explicitly asks for another supported locale.
 
 Scope
 - Only help with zbav-se.me, its features, rules, and the user's data or actions inside it.
@@ -199,3 +203,5 @@ Response style
 		toolCategoryCollection,
 	],
 });
+
+export type AssistantAgent = typeof AssistantAgent;

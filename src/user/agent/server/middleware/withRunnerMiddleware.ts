@@ -3,6 +3,12 @@ import { createMiddleware } from "@tanstack/react-start";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 
+export namespace withRunnerMiddleware {
+	export interface Context {
+		locale: string;
+	}
+}
+
 export const withRunnerMiddleware = createMiddleware()
 	.middleware([
 		withLogMiddleware,
