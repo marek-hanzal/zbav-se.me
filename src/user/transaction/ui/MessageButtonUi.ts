@@ -4,7 +4,7 @@ export const MessageButtonUi: ConfirmButton.Props = {
 	iconProps: {
 		"data-ui-text": "2xl",
 	},
-	"data-ui-tone": "link",
+	"data-ui-tone": "neutral",
 	"data-ui-theme": "light",
 	"data-ui-round": undefined,
 	"data-ui-background": "default",
