@@ -1759,3 +1759,15 @@ Agent tool - location_autocomplete:
 Agent tool - route:
     value: Počítám trasu
     static: true
+Agent tool - category_collection:
+    value: Zkoumám kategorie
+    static: true
+Agent tool - buyer_listing_collection:
+    value: Prohledávám inzeráty
+    static: true
+Agent tool - seller_listing_collection:
+    value: Koukám na tvé inzeráty
+    static: true
+Agent tool - buyer_transaction_create:
+    value: Otevírám obchod
+    static: true
