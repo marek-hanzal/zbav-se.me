@@ -28,8 +28,9 @@ export const AssistantMessage: FC<AssistantMessage.Props> = ({ events, itemId, .
 			data-id={itemId}
 			data-ui-tone="neutral"
 			data-ui-theme="light"
-			data-ui-background="alt"
-			data-ui-inner="default"
+			data-ui-background={undefined}
+			data-ui-shadow={undefined}
+			data-ui-inner={undefined}
 			{...props}
 		>
 			<Markdown>{content}</Markdown>

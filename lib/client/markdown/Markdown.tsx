@@ -69,6 +69,7 @@ export const Markdown: FC<Markdown.Props> = ({ className, components, ...props }
 									"data-ui-wrap": true,
 									...components?.a,
 								})}
+								className={"overflow-hidden"}
 							/>
 						);
 					},
