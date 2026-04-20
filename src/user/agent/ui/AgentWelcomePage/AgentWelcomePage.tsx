@@ -62,9 +62,17 @@ export const AgentWelcomePage = ({ ...props }: AgentWelcomePage.Props) => {
 							]}
 						>
 							{threadCount > 0 ? (
-								<ContinueSessionButton data-ui-width={"full"} />
+								<ContinueSessionButton
+									data-ui-width={"full"}
+									data-ui-justify={"center"}
+									data-ui-items={"center"}
+								/>
 							) : null}
-							<CreateSessionButton data-ui-width={"full"} />
+							<CreateSessionButton
+								data-ui-width={"full"}
+								data-ui-justify={"center"}
+								data-ui-items={"center"}
+							/>
 						</Container>
 					}
 				/>

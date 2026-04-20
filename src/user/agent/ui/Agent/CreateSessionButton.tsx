@@ -38,7 +38,7 @@ export const CreateSessionButton: FC<CreateSessionButton.Props> = ({ onSuccess, 
 			iconProps={{
 				"data-ui-text": "lg",
 			}}
-			onClick={() => {
+			onClick={(e) => {
 				mutation.mutate({});
 			}}
 			loading={mutation.isPending}
@@ -46,8 +46,6 @@ export const CreateSessionButton: FC<CreateSessionButton.Props> = ({ onSuccess, 
 			data-ui-tone="secondary"
 			data-ui-theme="light"
 			data-ui-badge="lg"
-			data-ui-justify={"center"}
-			data-ui-items={"center"}
 			{...props}
 		>
 			<Tx
