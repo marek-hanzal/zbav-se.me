@@ -18,6 +18,7 @@ env:
     # Common env. variables
     # -------------------------------
     VITE_APP_ASSETS: ${{ vars.VITE_APP_ASSETS }}
+    VITE_CONTENT_CDN: ${{ vars.VITE_CONTENT_CDN }}
     VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
     NODE_OPTIONS: --max-old-space-size=1300
 
@@ -31,7 +32,6 @@ env:
     SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
     SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
     SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
-    SERVER_CONTENT_CDN: ${{ vars.SERVER_CONTENT_CDN }}
     SERVER_GITHUB: ${{ secrets.SERVER_GITHUB }}
     SERVER_AI_TOKEN: ${{ secrets.SERVER_AI_TOKEN }}
     SERVER_AI_SERVER_URL: ${{ vars.SERVER_AI_SERVER_URL }}
@@ -73,6 +73,7 @@ jobs:
 
                   # Common env. variables
                   check_var VITE_APP_ASSETS
+                  check_var VITE_CONTENT_CDN
                   check_var VITE_ORIGIN
 
                   # Server env. variables
@@ -83,7 +84,6 @@ jobs:
                   check_var SERVER_BETTER_AUTH_SECRET
                   check_var SERVER_GEOAPIFY_TOKEN
                   check_var SERVER_JWT_SECRET
-                  check_var SERVER_CONTENT_CDN
                   check_var SERVER_GITHUB
                   check_var SERVER_AI_TOKEN
                   check_var SERVER_AI_SERVER_URL

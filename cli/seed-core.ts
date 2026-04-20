@@ -6,7 +6,7 @@ import {
 import { seedCoreFx } from "~/server/@system/seed/fx/seedCoreFx";
 import { withSeedRuntimeFx } from "~/server/@system/seed/fx/withSeedRuntimeFx";
 import { parseSeedArgsFx } from "~/server/@system/seed/schema/SeedArgsSchema";
-import { ServerCdnSchema } from "~/server/env/ServerCdnSchema";
+import { ServerViteSchema } from "~/server/env/ServerViteSchema";
 
 const { report, runtimeMs } = await Effect.gen(function* () {
 	const start = yield* Effect.sync(() => Date.now());
@@ -14,11 +14,11 @@ const { report, runtimeMs } = await Effect.gen(function* () {
 		name: "seed-core",
 		args: process.argv.slice(2),
 	});
-	const cdnConfig = ServerCdnSchema.parse(process.env);
+	const viteConfig = ServerViteSchema.parse(process.env);
 	const report = yield* seedCoreFx({
 		count: args.count,
 		user: args.user,
-		cdn: cdnConfig.SERVER_CONTENT_CDN,
+		cdn: viteConfig.VITE_CONTENT_CDN,
 	});
 	const end = yield* Effect.sync(() => Date.now());
 
