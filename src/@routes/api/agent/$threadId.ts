@@ -50,6 +50,11 @@ const hasUsage = ({ requests, input, output, total }: UsageSnapshot) => {
 };
 
 const isUsageReadyEvent = (event: RunStreamEvent) => {
+	/**
+	 * The Agents SDK exposes exact token usage only when a model response stream
+	 * emits `response_done`. In multi-step agent runs this can happen multiple times
+	 * before the whole run finishes, so it is the earliest precise billing point.
+	 */
 	return event.type === "raw_model_stream_event" && event.data.type === "response_done";
 };
 
@@ -150,6 +155,11 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 
 							logger.trace("Stream started");
 
+							/**
+							 * Tie the browser request abort to the agent run abort. Without this,
+							 * a closed SSE connection could leave the model request running until
+							 * the provider or runtime times it out.
+							 */
 							request.signal.addEventListener("abort", abortListener, {
 								once: true,
 							});
@@ -162,6 +172,11 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 							}
 
 							if (!state.closed) {
+								/**
+								 * Keep the SSE connection warm across proxies and browsers. The
+								 * comment frame is ignored by EventSource-style parsers but prevents
+								 * idle connection cleanup while the model is thinking or tools run.
+								 */
 								state.heartbeat = setInterval(() => {
 									if (state.closed) {
 										return;
@@ -199,6 +214,11 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 								let persistedUsage = emptyUsageSnapshot();
 
 								const flushUsage = async () => {
+									/**
+									 * `stream.state.usage` is cumulative for the whole run. Persist only
+									 * the delta since the last successful write, otherwise every
+									 * `response_done` would double-count earlier model requests.
+									 */
 									const currentUsage = {
 										requests: stream.state.usage.requests,
 										input: stream.state.usage.inputTokens,
@@ -243,6 +263,11 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 								};
 
 								try {
+									/**
+									 * Forward raw agent events as SSE. Usage is flushed immediately after
+									 * a usage-ready event is sent so the client still receives the event
+									 * even if the accounting write is slow or fails.
+									 */
 									logger.trace("Starting event stream", {
 										threadId,
 									});
@@ -278,6 +303,11 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 										threadId,
 									});
 								} finally {
+									/**
+									 * Do one final delta flush even on cancellation or stream errors.
+									 * This catches any completed model request that updated SDK usage but
+									 * did not pass through the regular event-loop flush path.
+									 */
 									await flushUsage();
 								}
 							} catch (error) {
@@ -315,6 +345,11 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 									}
 								}
 							} finally {
+								/**
+								 * Cleanup lives outside the agent-run try/catch because it must happen
+								 * for validation-successful requests regardless of model, persistence,
+								 * or client connection failures.
+								 */
 								request.signal.removeEventListener("abort", abortListener);
 
 								clearInterval(state.heartbeat);
