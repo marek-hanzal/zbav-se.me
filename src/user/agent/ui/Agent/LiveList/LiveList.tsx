@@ -1,9 +1,10 @@
-import type { FC } from "react";
+import type { RunStreamEvent } from "@openai/agents-core";
+import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
+import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 import { AssistantMessage } from "./AssistantMessage";
 import { ErrorMessage } from "./ErrorMessage";
-import { selectLiveEntries } from "./selectLiveEntries";
 import { ThinkingIndicator } from "./ThinkingIndicator";
 import { ToolCallBlock } from "./ToolCallBlock";
 
@@ -15,7 +16,7 @@ export namespace LiveList {
 
 export const LiveList: FC<LiveList.Props> = ({ ...props }) => {
 	const { data: events } = withAgentLiveQuery.useQuery("No input data here, bro");
-	const entries = selectLiveEntries(events);
+	const entries = useLiveEntries(events);
 
 	return (
 		<Container
@@ -51,3 +52,65 @@ export const LiveList: FC<LiveList.Props> = ({ ...props }) => {
 		</Container>
 	);
 };
+
+// =================================================================================================
+
+namespace useLiveEntries {
+	interface Entry {
+		itemId: string;
+	}
+
+	interface LiveAssistantEntry extends Entry {
+		type: "assistant";
+	}
+
+	interface LiveToolCallEntry extends Entry {
+		type: "tool-call";
+	}
+
+	export type LiveEntry = LiveAssistantEntry | LiveToolCallEntry;
+}
+
+function useLiveEntries(events: RunStreamEvent[] | undefined): useLiveEntries.LiveEntry[] {
+	return useMemo(() => {
+		const seen = new Set<string>();
+		const entries: useLiveEntries.LiveEntry[] = [];
+
+		for (const event of events ?? []) {
+			const responseEvent = getResponseStreamEvent(event);
+
+			if (!responseEvent) {
+				continue;
+			}
+
+			if (
+				responseEvent.type !== "response.output_item.added" ||
+				!responseEvent.item.id ||
+				seen.has(responseEvent.item.id)
+			) {
+				continue;
+			}
+
+			seen.add(responseEvent.item.id);
+
+			if (responseEvent.item.type === "function_call") {
+				entries.push({
+					type: "tool-call",
+					itemId: responseEvent.item.id,
+				});
+				continue;
+			}
+
+			if (responseEvent.item.type === "message") {
+				entries.push({
+					type: "assistant",
+					itemId: responseEvent.item.id,
+				});
+			}
+		}
+
+		return entries;
+	}, [
+		events,
+	]);
+}
