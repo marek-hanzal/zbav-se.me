@@ -7,7 +7,7 @@ export const FeedToolPatchSchema = z
 	.looseObject({
 		patch: z
 			.looseObject({
-				...FeedPatchSchema.shape,
+				...FeedPatchSchema.shape.patch.shape,
 				query: ListingToolQuerySchema,
 			})
 			.partial()
