@@ -1,6 +1,7 @@
 import { getLogger } from "@logtape/logtape";
 import type { Effect } from "effect";
 import { withLoggerFx } from "@/lib/common/log";
+import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
@@ -14,6 +15,8 @@ type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 const logger = getLogger("zbav-se.me");
 
 const withBaseRuntimeFx = (database: TestDatabase) => {
+	const viteConfig = ViteEnvSchema.parse(process.env);
+
 	return <A, E, R>(eff: Effect.Effect<A, E, R>) =>
 		eff.pipe(
 			withLoggerFx(logger),
@@ -21,7 +24,7 @@ const withBaseRuntimeFx = (database: TestDatabase) => {
 			withDateFx,
 			withTransactionContextFx(),
 			withUploadFx({
-				cdn: "https://cdn.zbav-se.me",
+				cdn: viteConfig.VITE_CONTENT_CDN,
 			}),
 		);
 };

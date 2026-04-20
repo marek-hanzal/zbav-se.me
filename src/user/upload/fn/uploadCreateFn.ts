@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
+import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
@@ -31,6 +32,7 @@ export const uploadCreateFn = createServerFn({
 			name,
 		]);
 		logger.trace(name, data);
+		const viteConfig = ViteEnvSchema.parse(process.env);
 
 		return zodGuardFx({
 			schema: UploadSchema,
@@ -42,7 +44,7 @@ export const uploadCreateFn = createServerFn({
 			withKyselyFx(database),
 			withDateFx,
 			withUploadFx({
-				cdn: process.env.CDN_URL ?? "",
+				cdn: viteConfig.VITE_CONTENT_CDN,
 			}),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {

@@ -30,6 +30,13 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	const uploadContext = yield* UploadContextFx;
 	const dateContext = yield* DateContextFx;
 
+	logger.trace("Checking CDN url", {
+		userId,
+		url,
+		cdn: uploadContext.cdn,
+		isValid: url.startsWith(uploadContext.cdn),
+	});
+
 	if (!url.startsWith(uploadContext.cdn)) {
 		return yield* new InvalidRequestErrorFx({
 			message: "Only content from the CDN can be uploaded",
