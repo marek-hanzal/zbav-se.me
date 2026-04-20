@@ -1,8 +1,9 @@
 import type { RunStreamEvent } from "@openai/agents";
-import type { FC } from "react";
+import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";
 import { Typo } from "@/lib/client/typo";
-import { selectErrorState } from "./selectErrorState";
+import { translator } from "@/lib/common/translator";
+import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 
 export namespace ErrorMessage {
 	export interface Props extends Container.Props {
@@ -11,7 +12,7 @@ export namespace ErrorMessage {
 }
 
 export const ErrorMessage: FC<ErrorMessage.Props> = ({ events, ...props }) => {
-	const errorState = selectErrorState(events);
+	const errorState = useErrorState(events);
 
 	if (!errorState) {
 		return null;
@@ -33,3 +34,24 @@ export const ErrorMessage: FC<ErrorMessage.Props> = ({ events, ...props }) => {
 		</Container>
 	);
 };
+
+// =================================================================================================
+
+function useErrorState(events: RunStreamEvent[] | undefined) {
+	return useMemo(() => {
+		const errorEvent = (events ?? [])
+			.map(getResponseStreamEvent)
+			.filter((event) => event !== null)
+			.findLast((event) => event.type === "response.failed");
+
+		if (!errorEvent) {
+			return null;
+		}
+
+		return {
+			message: translator.text(errorEvent.response.error?.message ?? "Agent stream failed"),
+		} as const;
+	}, [
+		events,
+	]);
+}
