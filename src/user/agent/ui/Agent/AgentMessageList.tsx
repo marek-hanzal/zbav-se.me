@@ -8,12 +8,14 @@ export namespace AgentMessageList {
 	export interface Props extends Container.Props {
 		containerRef: RefObject<HTMLDivElement | null>;
 		isPending: boolean;
+		threadId: string;
 	}
 }
 
 export const AgentMessageList: FC<AgentMessageList.Props> = ({
 	containerRef,
 	isPending,
+	threadId,
 	...props
 }) => {
 	const contentRef = useRef<HTMLDivElement | null>(null);
@@ -33,7 +35,7 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 			data-ui-gap="default"
 			{...props}
 		>
-			<HistoryList />
+			<HistoryList threadId={threadId} />
 
 			<LiveList />
 		</Container>

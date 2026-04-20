@@ -6,12 +6,14 @@ import { withLoggerFx } from "@/lib/common/log";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLocaleMiddleware } from "~/server/middleware/withLocaleMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { AssistantAgent } from "~/user/agent/AssistantAgent";
+import { agentThreadFetchFx } from "~/user/agent/server/fx/agentThreadFetchFx";
 import { agentUsageCreateFx } from "~/user/agent/server/fx/agentUsageCreateFx";
 import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
-import { withRunnerSessionMiddleware } from "~/user/agent/server/middleware/withRunnerSessionMiddleware";
+import { KyselySession } from "~/user/agent/server/session/KyselySession";
 
 const AgentRequestSchema: z.ZodType<AgentInputItem[]> = z
 	.array(z.unknown())
@@ -29,22 +31,22 @@ type StreamState = {
 	heartbeat: ReturnType<typeof setInterval> | undefined;
 };
 
-export const Route = createFileRoute("/api/user/agent")({
+export const Route = createFileRoute("/api/agent/$threadId")({
 	server: {
 		middleware: [
 			withUserMiddleware,
-			withRunnerSessionMiddleware,
+			withDatabaseMiddleware,
 			withRunnerMiddleware,
 			withLocaleMiddleware,
 		],
 		handlers: {
 			async POST({
 				request,
-				context: { database, user, rootLogger, runner, session, locale },
+				context: { database, user, rootLogger, runner, locale },
+				params: { threadId },
 			}) {
 				const logger = rootLogger.getChild([
 					"api",
-					"user",
 					"agent",
 				]);
 
@@ -66,6 +68,43 @@ export const Route = createFileRoute("/api/user/agent")({
 						},
 					);
 				}
+
+				try {
+					/**
+					 * The fetch itself here is a gate for valid thread.
+					 */
+					await Effect.gen(function* () {
+						return yield* agentThreadFetchFx({
+							where: {
+								id: threadId,
+							},
+							scope: {
+								userId: user.id,
+							},
+						});
+					}).pipe(withKyselyFx(database), withLoggerFx(rootLogger), Effect.runPromise);
+				} catch (error) {
+					logger.error("Invalid request (thread not found)", {
+						userId: user.id,
+						threadId,
+						error,
+					});
+
+					return Response.json(
+						{
+							error: "Thread not found",
+						},
+						{
+							status: 404,
+						},
+					);
+				}
+
+				const session = new KyselySession({
+					kysely: database.kysely,
+					userId: user.id,
+					threadId,
+				});
 
 				const abortController = new AbortController();
 				const abortRunner = () => {
@@ -134,8 +173,6 @@ export const Route = createFileRoute("/api/user/agent")({
 								});
 
 								logger.trace("Run created");
-
-								const threadId = await session.getSessionId();
 
 								logger.trace("Starting event stream", {
 									threadId,

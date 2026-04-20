@@ -24,7 +24,7 @@ export const AgentLink = withFallback(
 				data-action={"open agent chat"}
 				{...uiMenuButton({})}
 				icon={AiIcon}
-				to="/$locale/app/agent"
+				to="/$locale/app/agent/welcome"
 				params={{
 					locale,
 				}}
@@ -58,7 +58,7 @@ export const AgentLink = withFallback(
 				data-action={"open agent chat"}
 				{...uiMenuButton({})}
 				icon={AiIcon}
-				to="/$locale/app/agent"
+				to="/$locale/app/agent/welcome"
 				params={{
 					locale,
 				}}

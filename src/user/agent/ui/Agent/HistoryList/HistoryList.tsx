@@ -10,12 +10,14 @@ import { UserMessage } from "./UserMessage";
 
 export namespace HistoryList {
 	export interface Props extends Container.Props {
-		//
+		threadId: string;
 	}
 }
 
-export const HistoryList: FC<HistoryList.Props> = (props) => {
-	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(AgentStreamItemsQuery);
+export const HistoryList: FC<HistoryList.Props> = ({ threadId, ...props }) => {
+	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(
+		AgentStreamItemsQuery(threadId),
+	);
 
 	return (
 		<Container

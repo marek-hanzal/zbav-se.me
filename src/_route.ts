@@ -26,15 +26,16 @@ import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
 import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
 import { Route as LocaleAppIndexRouteImport } from './@routes/$locale/app/index'
-import { Route as ApiUserAgentRouteImport } from './@routes/api/user/agent'
 import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
+import { Route as ApiAgentThreadIdRouteImport } from './@routes/api/agent/$threadId'
 import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welcome'
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
 import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
 import { Route as LocaleAppHomeRouteImport } from './@routes/$locale/app/home'
-import { Route as LocaleAppAgentRouteImport } from './@routes/$locale/app/agent'
 import { Route as ApiPublicMigrationRunRouteImport } from './@routes/api/public/migration/run'
 import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
+import { Route as LocaleAppAgentWelcomeRouteImport } from './@routes/$locale/app/agent/welcome'
+import { Route as LocaleAppAgentThreadIdRouteImport } from './@routes/$locale/app/agent/$threadId'
 import { Route as LocaleAppActivityPriorityRouteImport } from './@routes/$locale/app/activity/$priority'
 import { Route as LocaleAppSellerTransactionListRouteImport } from './@routes/$locale/app/seller/transaction/list'
 import { Route as LocaleAppSellerListingMyRouteImport } from './@routes/$locale/app/seller/listing/my'
@@ -136,14 +137,14 @@ const LocaleAppIndexRoute = LocaleAppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleAppRoute,
 } as any)
-const ApiUserAgentRoute = ApiUserAgentRouteImport.update({
-  id: '/user/agent',
-  path: '/user/agent',
-  getParentRoute: () => ApiRoute,
-} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/auth/$',
   path: '/auth/$',
+  getParentRoute: () => ApiRoute,
+} as any)
+const ApiAgentThreadIdRoute = ApiAgentThreadIdRouteImport.update({
+  id: '/agent/$threadId',
+  path: '/agent/$threadId',
   getParentRoute: () => ApiRoute,
 } as any)
 const LocaleAppWelcomeRoute = LocaleAppWelcomeRouteImport.update({
@@ -166,11 +167,6 @@ const LocaleAppHomeRoute = LocaleAppHomeRouteImport.update({
   path: '/home',
   getParentRoute: () => LocaleAppRoute,
 } as any)
-const LocaleAppAgentRoute = LocaleAppAgentRouteImport.update({
-  id: '/agent',
-  path: '/agent',
-  getParentRoute: () => LocaleAppRoute,
-} as any)
 const ApiPublicMigrationRunRoute = ApiPublicMigrationRunRouteImport.update({
   id: '/public/migration/run',
   path: '/public/migration/run',
@@ -179,6 +175,16 @@ const ApiPublicMigrationRunRoute = ApiPublicMigrationRunRouteImport.update({
 const LocaleAppBuyerSearchRoute = LocaleAppBuyerSearchRouteImport.update({
   id: '/buyer/search',
   path: '/buyer/search',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
+const LocaleAppAgentWelcomeRoute = LocaleAppAgentWelcomeRouteImport.update({
+  id: '/agent/welcome',
+  path: '/agent/welcome',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
+const LocaleAppAgentThreadIdRoute = LocaleAppAgentThreadIdRouteImport.update({
+  id: '/agent/$threadId',
+  path: '/agent/$threadId',
   getParentRoute: () => LocaleAppRoute,
 } as any)
 const LocaleAppActivityPriorityRoute =
@@ -288,15 +294,16 @@ export interface FileRoutesByFullPath {
   '/api/health': typeof ApiHealthRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/app/agent': typeof LocaleAppAgentRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/user/agent': typeof ApiUserAgentRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
+  '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
+  '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
@@ -329,15 +336,16 @@ export interface FileRoutesByTo {
   '/api/health': typeof ApiHealthRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale': typeof LocaleIndexRoute
-  '/$locale/app/agent': typeof LocaleAppAgentRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/user/agent': typeof ApiUserAgentRoute
   '/$locale/app': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
+  '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
+  '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
@@ -373,15 +381,16 @@ export interface FileRoutesById {
   '/api/health': typeof ApiHealthRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/app/agent': typeof LocaleAppAgentRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/user/agent': typeof ApiUserAgentRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
+  '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
+  '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
@@ -418,15 +427,16 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/redirect/sign-in'
     | '/$locale/'
-    | '/$locale/app/agent'
     | '/$locale/app/home'
     | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
+    | '/api/agent/$threadId'
     | '/api/auth/$'
-    | '/api/user/agent'
     | '/$locale/app/'
     | '/$locale/app/activity/$priority'
+    | '/$locale/app/agent/$threadId'
+    | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
     | '/api/public/migration/run'
     | '/$locale/app/buyer/favourite/list'
@@ -459,15 +469,16 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/redirect/sign-in'
     | '/$locale'
-    | '/$locale/app/agent'
     | '/$locale/app/home'
     | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
+    | '/api/agent/$threadId'
     | '/api/auth/$'
-    | '/api/user/agent'
     | '/$locale/app'
     | '/$locale/app/activity/$priority'
+    | '/$locale/app/agent/$threadId'
+    | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
     | '/api/public/migration/run'
     | '/$locale/app/buyer/favourite/list'
@@ -502,15 +513,16 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/redirect/sign-in'
     | '/$locale/'
-    | '/$locale/app/agent'
     | '/$locale/app/home'
     | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
+    | '/api/agent/$threadId'
     | '/api/auth/$'
-    | '/api/user/agent'
     | '/$locale/app/'
     | '/$locale/app/activity/$priority'
+    | '/$locale/app/agent/$threadId'
+    | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
     | '/api/public/migration/run'
     | '/$locale/app/buyer/favourite/list'
@@ -659,18 +671,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppIndexRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/api/user/agent': {
-      id: '/api/user/agent'
-      path: '/user/agent'
-      fullPath: '/api/user/agent'
-      preLoaderRoute: typeof ApiUserAgentRouteImport
-      parentRoute: typeof ApiRoute
-    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/auth/$'
       fullPath: '/api/auth/$'
       preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof ApiRoute
+    }
+    '/api/agent/$threadId': {
+      id: '/api/agent/$threadId'
+      path: '/agent/$threadId'
+      fullPath: '/api/agent/$threadId'
+      preLoaderRoute: typeof ApiAgentThreadIdRouteImport
       parentRoute: typeof ApiRoute
     }
     '/$locale/app/welcome': {
@@ -701,13 +713,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppHomeRouteImport
       parentRoute: typeof LocaleAppRoute
     }
-    '/$locale/app/agent': {
-      id: '/$locale/app/agent'
-      path: '/agent'
-      fullPath: '/$locale/app/agent'
-      preLoaderRoute: typeof LocaleAppAgentRouteImport
-      parentRoute: typeof LocaleAppRoute
-    }
     '/api/public/migration/run': {
       id: '/api/public/migration/run'
       path: '/public/migration/run'
@@ -720,6 +725,20 @@ declare module '@tanstack/react-router' {
       path: '/buyer/search'
       fullPath: '/$locale/app/buyer/search'
       preLoaderRoute: typeof LocaleAppBuyerSearchRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/agent/welcome': {
+      id: '/$locale/app/agent/welcome'
+      path: '/agent/welcome'
+      fullPath: '/$locale/app/agent/welcome'
+      preLoaderRoute: typeof LocaleAppAgentWelcomeRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
+    '/$locale/app/agent/$threadId': {
+      id: '/$locale/app/agent/$threadId'
+      path: '/agent/$threadId'
+      fullPath: '/$locale/app/agent/$threadId'
+      preLoaderRoute: typeof LocaleAppAgentThreadIdRouteImport
       parentRoute: typeof LocaleAppRoute
     }
     '/$locale/app/activity/$priority': {
@@ -831,13 +850,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface LocaleAppRouteChildren {
-  LocaleAppAgentRoute: typeof LocaleAppAgentRoute
   LocaleAppHomeRoute: typeof LocaleAppHomeRoute
   LocaleAppShopRoute: typeof LocaleAppShopRoute
   LocaleAppUserRoute: typeof LocaleAppUserRoute
   LocaleAppWelcomeRoute: typeof LocaleAppWelcomeRoute
   LocaleAppIndexRoute: typeof LocaleAppIndexRoute
   LocaleAppActivityPriorityRoute: typeof LocaleAppActivityPriorityRoute
+  LocaleAppAgentThreadIdRoute: typeof LocaleAppAgentThreadIdRoute
+  LocaleAppAgentWelcomeRoute: typeof LocaleAppAgentWelcomeRoute
   LocaleAppBuyerSearchRoute: typeof LocaleAppBuyerSearchRoute
   LocaleAppBuyerFavouriteListRoute: typeof LocaleAppBuyerFavouriteListRoute
   LocaleAppBuyerFeedDefaultRoute: typeof LocaleAppBuyerFeedDefaultRoute
@@ -856,13 +876,14 @@ interface LocaleAppRouteChildren {
 }
 
 const LocaleAppRouteChildren: LocaleAppRouteChildren = {
-  LocaleAppAgentRoute: LocaleAppAgentRoute,
   LocaleAppHomeRoute: LocaleAppHomeRoute,
   LocaleAppShopRoute: LocaleAppShopRoute,
   LocaleAppUserRoute: LocaleAppUserRoute,
   LocaleAppWelcomeRoute: LocaleAppWelcomeRoute,
   LocaleAppIndexRoute: LocaleAppIndexRoute,
   LocaleAppActivityPriorityRoute: LocaleAppActivityPriorityRoute,
+  LocaleAppAgentThreadIdRoute: LocaleAppAgentThreadIdRoute,
+  LocaleAppAgentWelcomeRoute: LocaleAppAgentWelcomeRoute,
   LocaleAppBuyerSearchRoute: LocaleAppBuyerSearchRoute,
   LocaleAppBuyerFavouriteListRoute: LocaleAppBuyerFavouriteListRoute,
   LocaleAppBuyerFeedDefaultRoute: LocaleAppBuyerFeedDefaultRoute,
@@ -915,8 +936,8 @@ interface ApiRouteChildren {
   ApiCronRoute: typeof ApiCronRoute
   ApiE2eRoute: typeof ApiE2eRoute
   ApiHealthRoute: typeof ApiHealthRoute
+  ApiAgentThreadIdRoute: typeof ApiAgentThreadIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
-  ApiUserAgentRoute: typeof ApiUserAgentRoute
   ApiPublicMigrationRunRoute: typeof ApiPublicMigrationRunRoute
 }
 
@@ -924,8 +945,8 @@ const ApiRouteChildren: ApiRouteChildren = {
   ApiCronRoute: ApiCronRoute,
   ApiE2eRoute: ApiE2eRoute,
   ApiHealthRoute: ApiHealthRoute,
+  ApiAgentThreadIdRoute: ApiAgentThreadIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
-  ApiUserAgentRoute: ApiUserAgentRoute,
   ApiPublicMigrationRunRoute: ApiPublicMigrationRunRoute,
 }
 

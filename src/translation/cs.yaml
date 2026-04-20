@@ -454,13 +454,7 @@
 574e8d7959d46895c001cb1a6a5edbd5a1a94662288fdcf36ddff0e1:
     ref: Agent welcome (message)
     value: |
-        Jsem tvůj osobní asistent, který si poradí s různýma úlohama:
-        - vyhledávání inzerátů
-        - příprava inzerátů (uložené inzeráty)
-        - správa zpráv v rámci obchodů
-        - dotazy ohledně aplikace
-        - shrnutí událostí
-        - ...a spousta dalšího, stačí se zeptat!
+        Jsem tvůj osobní asistent, který si poradí s různýma úlohama!
 57cf1f27b485ad4ccfff9487dc973c5a5a9d3582b03670f822646bc0:
     ref: Transaction not accepted - seller (message)
     value: Zprávy můžeš psát až po přijetí transakce.
@@ -623,9 +617,6 @@
 7b76eaae7e44c7090565c9a3f68a77cc082807fbf7f1c1111dfadb29:
     ref: Unignore listing (button)
     value: Zrušit ignoraci
-7b77281c6dc1a4d0b28c3aae49154ee4e5f2b98740508ea2dba60141:
-    ref: Clear chat history (label)
-    value: Smazat historii
 7b93a66595d88c60241f7eb48599cc8738e54decdbca0730a8aa958d:
     ref: Buyer load (hint)
     value: >
@@ -853,6 +844,9 @@ Agent tool - buyer_transaction_create:
 Agent tool - category_collection:
     value: Zkoumám kategorie
     static: true
+Agent tool - draft_collection:
+    value: Zkoumám tvé uložené inzeráty
+    static: true
 Agent tool - location_autocomplete:
     value: Zjišťuju si adresu
     static: true
@@ -873,9 +867,6 @@ Agent tool - transaction_entry_create:
     static: true
 Agent tool - upload_create:
     value: Nahrávám obsah
-    static: true
-Agent tool - draft_collection:
-    value: Zkoumám tvé uložené inzeráty
     static: true
 Buyer activity high:
     static: true
@@ -1475,6 +1466,9 @@ de75432fdd962d61c3b89d0c4098554de1f957cfd40f3f2fc50967c0:
 de8832ba89f066ff957f2387c53ed8c543d4ed977d7fac554ab3f590:
     ref: Go to my feed (button)
     value: Objevuj!
+e231f819f6eaa8ba876bc47eaa113f9ce0e4663ffd510bcf92f04855:
+    ref: Create new chat (label)
+    value: Nový chat
 e24d776c431f2cb9d46c2bbd22e31dcbf906057798f788ae78b0e9c8:
     ref: Draft - those others (title)
     value: Další volby

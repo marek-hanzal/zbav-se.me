@@ -1,27 +1,21 @@
 import { type FC, useRef } from "react";
 import { Container } from "@/lib/client/container";
-import { EmptyState } from "@/lib/client/empty-state";
-import { AiIcon } from "@/lib/client/icon";
-import { Status } from "@/lib/client/status";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
 import { useAgent } from "~/user/agent/hook/useAgent";
-import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
-import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import { AgentInput } from "./AgentInput";
 import { AgentMessageList } from "./AgentMessageList";
 
 export namespace Agent {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		//
+		threadId: string;
 	}
 }
 
-export const Agent: FC<Agent.Props> = ({ ...props }) => {
+export const Agent: FC<Agent.Props> = ({ threadId, ...props }) => {
 	const chat = useAgent({
 		_suspense: "I know",
+		threadId,
 	});
-	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(AgentStreamItemsQuery);
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	return (
@@ -33,52 +27,22 @@ export const Agent: FC<Agent.Props> = ({ ...props }) => {
 			data-ui-gap="xs"
 			{...props}
 		>
-			<EmptyState
-				check={[
-					{
-						check() {
-							return !items.length;
-						},
-						render() {
-							return (
-								<Container
-									data-ui-tone="brand"
-									data-ui-theme="light"
-									data-ui-layout="vertical-centered"
-									data-ui-height="full"
-									data-ui-width="full"
-									data-ui-inner="4xl"
-									className={[
-										"text-center",
-									]}
-								>
-									<Status
-										icon={AiIcon}
-										textTitle={translator.text("Agent welcome (title)")}
-										textMessage={translator.text("Agent welcome (message)")}
-									/>
-								</Container>
-							);
-						},
-					},
+			<Container
+				ref={containerRef}
+				data-ui-layout="vertical-flex"
+				data-ui-gap="default"
+				data-ui-scroll="vertical"
+				data-ui-height="full"
+				className={[
+					"pb-[50%]",
 				]}
 			>
-				<Container
-					ref={containerRef}
-					data-ui-layout="vertical-flex"
-					data-ui-gap="default"
-					data-ui-scroll="vertical"
-					data-ui-height="full"
-					className={[
-						"pb-[50%]",
-					]}
-				>
-					<AgentMessageList
-						containerRef={containerRef}
-						isPending={chat.mutation.isPending}
-					/>
-				</Container>
-			</EmptyState>
+				<AgentMessageList
+					containerRef={containerRef}
+					isPending={chat.mutation.isPending}
+					threadId={threadId}
+				/>
+			</Container>
 
 			<AgentInput chat={chat} />
 		</Container>

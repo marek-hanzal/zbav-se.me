@@ -568,9 +568,6 @@
 7b76eaae7e44c7090565c9a3f68a77cc082807fbf7f1c1111dfadb29:
   ref: Unignore listing (button)
   value: Unignore listing (button)
-7b77281c6dc1a4d0b28c3aae49154ee4e5f2b98740508ea2dba60141:
-  ref: Clear chat history (label)
-  value: Clear chat history (label)
 7b93a66595d88c60241f7eb48599cc8738e54decdbca0730a8aa958d:
   ref: Buyer load (hint)
   value: Buyer load (hint)
@@ -969,6 +966,9 @@ de75432fdd962d61c3b89d0c4098554de1f957cfd40f3f2fc50967c0:
 de8832ba89f066ff957f2387c53ed8c543d4ed977d7fac554ab3f590:
   ref: Go to my feed (button)
   value: Go to my feed (button)
+e231f819f6eaa8ba876bc47eaa113f9ce0e4663ffd510bcf92f04855:
+  ref: Create new chat (label)
+  value: Create new chat (label)
 e24d776c431f2cb9d46c2bbd22e31dcbf906057798f788ae78b0e9c8:
   ref: Draft - those others (title)
   value: Draft - those others (title)
