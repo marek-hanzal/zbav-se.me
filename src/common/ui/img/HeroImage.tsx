@@ -6,7 +6,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { Container, uiContainer } from "@/lib/client/container";
+import { Container, type uiContainer } from "@/lib/client/container";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Status } from "@/lib/client/status";
 import { translator } from "@/lib/common/translator";
@@ -49,6 +49,7 @@ export namespace HeroImage {
 		 * Fallback node rendered when `visible` is `false`.
 		 */
 		invisible?: ReactNode;
+		wrapperProps?: Container.Props;
 	}
 }
 
@@ -74,6 +75,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	errorStatusProps,
 	spinner,
 	invisible,
+	wrapperProps,
 	onLoad,
 	onError,
 	//
@@ -110,16 +112,15 @@ export const HeroImage: FC<HeroImage.Props> = ({
 
 	return (
 		<Container
-			{...uiContainer({
-				name: "HeroImage",
-				"data-ui-height": "full",
-				"data-ui-width": "full",
-				"data-ui-position": "relative",
-				className: [
-					"overflow-hidden",
-					className,
-				],
-			})}
+			data-ui={"HeroImage"}
+			data-ui-height={"full"}
+			data-ui-width={"full"}
+			data-ui-position={"relative"}
+			className={[
+				"overflow-hidden",
+				className,
+			]}
+			{...wrapperProps}
 		>
 			{/** biome-ignore lint/a11y/useAltText: Should go from props */}
 			<img

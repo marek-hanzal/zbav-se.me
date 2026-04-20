@@ -91,6 +91,9 @@
 0f44d510d8a8cf53325df192dfac3d02f4299c2d9a4a5dbe2dad9a6f:
   ref: Price type not set
   value: Price type not set
+10139dbd1e131e8c61052d8e552a6031740316ac1d46b26260d696a3:
+  ref: Move photo right (button)
+  value: Move photo right (button)
 1033ff575b4fcc2a5f68f0546b255961c4cf9514267255fbd76e2920:
   ref: Listing title not filled
   value: Listing title not filled
@@ -520,6 +523,9 @@
 6b995a341f6e953b965e3423dab8d7d6cbce6665e1c1868a0e921958:
   ref: Transactions - buyer-to-seller - buyer (title)
   value: Transactions - buyer-to-seller - buyer (title)
+6bb0769faf58b871709c8497aeeec1de75504a2c85acfabfbfd726c2:
+  ref: Delete photo (button)
+  value: Delete photo (button)
 6ca3f3546da9df7cda3ed2984fd874d81938723ee09b0116ce96825a:
   ref: Search (button)
   value: Search (button)
@@ -823,6 +829,9 @@ b69e7c81a2cf955f47aaed9418e325ed9cedbe08fda6ee8d438f1752:
 b6c76a2cd866bcc2fc175c7fb66093264226f4695f2dfe3c41d7056f:
   ref: Feed age (label)
   value: Feed age (label)
+b6e14a12cc95e04752de75453a8b402408a9862c0af4ae1f0073f2d9:
+  ref: Embedded image - url (label)
+  value: Embedded image - url (label)
 b8ff3ed6b71e3332fcbe61d56e37ad7a849b09934d4514084cc0b710:
   ref: No transactions as buyer (message)
   value: No transactions as buyer (message)
@@ -984,6 +993,9 @@ e6eeb3e62553d5dd4ea8cc04ca5739bba6dfde2ff7f7b7262d62aa30:
 e71d354084e447c188977c94dd32b5163d009bd889d26e8819df7ead:
   ref: Feed - end of road (message)
   value: Feed - end of road (message)
+e7ddf51c8794680ce0b15c064794fdcfb0cdae8432ea09ba6a71862f:
+  ref: Move photo left (button)
+  value: Move photo left (button)
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
   ref: Feed location not selected
   value: Feed location not selected

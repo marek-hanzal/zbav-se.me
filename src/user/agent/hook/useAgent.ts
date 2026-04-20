@@ -165,20 +165,16 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 						id: genId(),
 						role: "user",
 						content: [
-							...src.map(
-								(url) =>
-									({
-										type: "input_image",
-										image: url,
-									}) as const,
-							),
-							...src.map(
-								(url) =>
-									({
-										type: "input_text",
-										text: url,
-									}) as const,
-							),
+							...src.flatMap((url) => [
+								{
+									type: "input_image",
+									image: url,
+								} as const,
+								{
+									type: "input_text",
+									text: url,
+								} as const,
+							]),
 							{
 								type: "input_text",
 								text,

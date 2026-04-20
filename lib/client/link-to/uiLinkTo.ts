@@ -24,6 +24,7 @@ export namespace uiLinkTo {
 		shadow?: CoolUi.Shadow;
 		position?: CoolUi.Position;
 		disabled?: CoolUi.Disabled;
+		font?: CoolUi.Font;
 		truncate?: boolean;
 		wrap?: boolean;
 		zIndex?: CoolUi.zIndex;

@@ -1,9 +1,11 @@
 import type { ComponentProps, FC } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { HeroImage } from "~/common/ui/img";
 import type { uiButton } from "../button/uiButton";
 import { Container } from "../container/Container";
 import { uiContainer } from "../container/uiContainer";
+import { Group } from "../group";
 import { uiLinkTo } from "../link-to";
 import { Typo } from "../typo/Typo";
 import { uiMarkdown } from "./uiMarkdown";
@@ -127,6 +129,21 @@ export const Markdown: FC<Markdown.Props> = ({ className, components, ...props }
 									],
 								})}
 							/>
+						);
+					},
+					img(props) {
+						return (
+							<Group>
+								<HeroImage
+									wrapperProps={{
+										"data-ui-height": "content",
+									}}
+									className={[
+										"min-h-92",
+									]}
+									{...props}
+								/>
+							</Group>
 						);
 					},
 				}}
