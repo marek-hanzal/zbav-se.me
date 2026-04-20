@@ -862,6 +862,12 @@ Agent tool - route:
 Agent tool - seller_listing_collection:
     value: Koukám na tvé inzeráty
     static: true
+Agent tool - feed_create:
+    value: Ukládám nové hledání pro inzeráty
+    static: true
+Agent tool - feed_patch:
+    value: Upravuji nastavení uloženého hledání inzerátů
+    static: true
 Agent tool - seller_transaction_collection:
     value: Zkoumám zprávy v tvých prodejích
     static: true
