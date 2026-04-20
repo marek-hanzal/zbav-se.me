@@ -14,6 +14,7 @@
 			"!**/.output",
 			"!**/.nitro",
 			"!**/.vercel",
+			"!**/.venv",
 			"!**/.tanstack",
 			"!**/sdk/src/api",
 			"!**/coverage"

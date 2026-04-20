@@ -25,12 +25,29 @@ export const withRunnerMiddleware = createMiddleware()
 		const aiConfig = ServerAiSchema.parse(process.env);
 
 		const runner = new Runner({
+			workflowName: "zbav-se.me agent",
 			model: aiConfig.SERVER_AI_MODEL,
 			modelProvider: new OpenAIProvider({
 				baseURL: aiConfig.SERVER_AI_SERVER_URL,
 				apiKey: aiConfig.SERVER_AI_TOKEN,
 			}),
 			tracingDisabled: true,
+			callModelInputFilter: async ({ agent, modelData }) => {
+				console.log("\n=== AGENT ===");
+				console.log(agent.name);
+
+				console.log("\n=== INSTRUCTIONS ===");
+				console.dir(modelData.instructions, {
+					depth: null,
+				});
+
+				console.log("\n=== INPUT SENT TO MODEL ===");
+				console.dir(modelData.input, {
+					depth: null,
+				});
+
+				return modelData;
+			},
 		});
 
 		logger.trace("Config", {
