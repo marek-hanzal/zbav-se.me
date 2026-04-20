@@ -50,6 +50,9 @@ export const Transaction: FC<Transaction.Props> = ({
 				data-ui-layout="vertical-header-content"
 				data-ui-height="full"
 				data-ui-scroll="vertical"
+				className={[
+					"pb-[50%]",
+				]}
 			>
 				<Container
 					data-ui="Transaction-[HeroContainer]"

@@ -96,7 +96,14 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			data-ui-layout="horizontal-flex"
 			data-ui-items="center"
 			data-ui-justify="center"
-			data-ui-gap="md"
+			data-ui-tone={"neutral"}
+			data-ui-theme={"light"}
+			data-ui-width="full"
+			data-ui-inner="default"
+			data-ui-background={"default"}
+			data-ui-border
+			data-ui-round={"lg"}
+			data-ui-shadow
 			{...props}
 		>
 			{left}
@@ -115,6 +122,8 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				placeholder={placeholder}
 				{...uiInput({
 					"data-ui-round": "default",
+					"data-ui-border": undefined,
+					"data-ui-shadow": false,
 					className: [
 						"resize-none",
 						"outline-none",

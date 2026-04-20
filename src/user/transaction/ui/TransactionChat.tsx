@@ -71,6 +71,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 			data-ui="TransactionChat"
 			data-ui-layout="vertical-flex"
 			data-ui-width="full"
+			data-ui-snap-to={"bottom-center"}
 			{...props}
 		>
 			{match(transaction.status)

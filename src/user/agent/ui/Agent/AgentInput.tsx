@@ -63,56 +63,60 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 				limit={5}
 			/>
 
-			<ChatInput
-				data-ui-width="full"
-				data-ui-inner="default"
-				onSubmit={async (text) => {
-					chat.submit(
-						uploads.length > 0
-							? chat.input.image(
-									text,
-									uploads.map(({ url }) => url),
-								)
-							: chat.input.text(text),
-					);
-					setUploads([]);
-				}}
-				placeholder={translator.text("Write to an agent")}
-				loading={chat.mutation.isPending}
-				cancel={
-					<Button
-						data-action={"stop agent stream"}
-						iconEnabled={CancelIcon}
-						onClick={chat.cancel}
-						iconProps={{
-							"data-ui-text": "xl",
-						}}
-						data-ui-justify="center"
-						data-ui-items="center"
-						data-ui-tone="brand"
-						data-ui-theme="light"
-						data-ui-square="default"
-						data-ui-background={undefined}
-						data-ui-border={false}
-						data-ui-shadow={false}
-						data-ui-color="lead"
-					/>
-				}
-				left={
-					<TransactionMenuButton>
-						{(close) => (
-							<AgentMenu
-								close={close}
-								galleryState={{
-									value: isGalleryOpen,
-									set: setIsGalleryOpen,
-								}}
-							/>
-						)}
-					</TransactionMenuButton>
-				}
-				{...props}
-			/>
+			<Container
+				data-ui-inner={"default"}
+				data-ui-snap-to={"bottom-center"}
+				data-ui-width={"full"}
+			>
+				<ChatInput
+					onSubmit={async (text) => {
+						chat.submit(
+							uploads.length > 0
+								? chat.input.image(
+										text,
+										uploads.map(({ url }) => url),
+									)
+								: chat.input.text(text),
+						);
+						setUploads([]);
+					}}
+					placeholder={translator.text("Write to an agent")}
+					loading={chat.mutation.isPending}
+					cancel={
+						<Button
+							data-action={"stop agent stream"}
+							iconEnabled={CancelIcon}
+							onClick={chat.cancel}
+							iconProps={{
+								"data-ui-text": "xl",
+							}}
+							data-ui-justify="center"
+							data-ui-items="center"
+							data-ui-tone="brand"
+							data-ui-theme="light"
+							data-ui-square="default"
+							data-ui-background={undefined}
+							data-ui-border={false}
+							data-ui-shadow={false}
+							data-ui-color="lead"
+						/>
+					}
+					left={
+						<TransactionMenuButton>
+							{(close) => (
+								<AgentMenu
+									close={close}
+									galleryState={{
+										value: isGalleryOpen,
+										set: setIsGalleryOpen,
+									}}
+								/>
+							)}
+						</TransactionMenuButton>
+					}
+					{...props}
+				/>
+			</Container>
 		</Container>
 	);
 };

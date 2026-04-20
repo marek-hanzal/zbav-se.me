@@ -69,6 +69,9 @@ export const Agent: FC<Agent.Props> = ({ ...props }) => {
 					data-ui-gap="default"
 					data-ui-scroll="vertical"
 					data-ui-height="full"
+					className={[
+						"pb-[50%]",
+					]}
 				>
 					<AgentMessageList
 						containerRef={containerRef}
