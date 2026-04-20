@@ -1,6 +1,7 @@
 import type { auth } from "~/server/auth/auth";
 import type { ActivityTableSchema } from "~/server/database/@table/ActivityTableSchema";
 import type { AgentStreamTableSchema } from "~/server/database/@table/AgentStreamTableSchema";
+import type { AgentThreadTableSchema } from "~/server/database/@table/AgentThreadTableSchema";
 import type { AgentUsageTableSchema } from "~/server/database/@table/AgentUsageTableSchema";
 import type { CategoryMissTableSchema } from "~/server/database/@table/CategoryMissTableSchema";
 import type { CategorySpotlightTableSchema } from "~/server/database/@table/CategorySpotlightTableSchema";
@@ -27,6 +28,7 @@ import type { UserExTableSchema } from "~/server/database/@table/UserExTableSche
 export interface Database {
 	activity: ActivityTableSchema.Type;
 	agent_stream: AgentStreamTableSchema.Type;
+	agent_thread: AgentThreadTableSchema.Type;
 	agent_usage: AgentUsageTableSchema.Type;
 	category_miss: CategoryMissTableSchema.Type;
 	category_spotlight: CategorySpotlightTableSchema.Type;

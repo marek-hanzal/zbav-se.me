@@ -6,7 +6,6 @@ import { withProxyMutation } from "~/common/gallery/mutation/withProxyMutation";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { GalleryUploadSheet } from "~/common/gallery/ui/GalleryUploadSheet";
 import { ChatInput } from "~/common/ui/chat";
-import { CancelIcon } from "~/common/ui/icon";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import type { useAgent } from "../../hook/useAgent";
@@ -85,7 +84,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 					cancel={
 						<Button
 							data-action={"stop agent stream"}
-							iconEnabled={CancelIcon}
+							iconEnabled={"icon-[solar--stop-linear]"}
 							onClick={chat.cancel}
 							iconProps={{
 								"data-ui-text": "xl",

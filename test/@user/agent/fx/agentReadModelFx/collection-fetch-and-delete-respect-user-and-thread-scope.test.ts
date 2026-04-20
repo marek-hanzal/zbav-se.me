@@ -31,10 +31,55 @@ interface AgentUsageSeedRow {
 }
 
 const seedAgentStream = (database: TestDatabase, rows: AgentStreamSeedRow[]) =>
-	Effect.promise(() => database.kysely.insertInto("agent_stream").values(rows).execute());
+	Effect.promise(async () => {
+		await seedAgentThreads(database, rows);
+		await database.kysely.insertInto("agent_stream").values(rows).execute();
+	});
 
 const seedAgentUsage = (database: TestDatabase, rows: AgentUsageSeedRow[]) =>
-	Effect.promise(() => database.kysely.insertInto("agent_usage").values(rows).execute());
+	Effect.promise(async () => {
+		await seedAgentThreads(database, rows);
+		await database.kysely.insertInto("agent_usage").values(rows).execute();
+	});
+
+const seedAgentThreads = async (
+	database: TestDatabase,
+	rows: Array<{
+		userId: string;
+		threadId: string;
+	}>,
+) => {
+	const now = new Date("2026-01-01T00:00:00.000Z");
+	const threads = [
+		...new Map(
+			rows.map((row) => [
+				row.threadId,
+				{
+					id: row.threadId,
+					userId: row.userId,
+					createdAt: now,
+					updatedAt: now,
+					archivedAt: null,
+				},
+			]),
+		).values(),
+	];
+	const existing = await database.kysely
+		.selectFrom("agent_thread")
+		.select("id")
+		.where(
+			"id",
+			"in",
+			threads.map((thread) => thread.id),
+		)
+		.execute();
+	const existingIds = new Set(existing.map((thread) => thread.id));
+	const missing = threads.filter((thread) => !existingIds.has(thread.id));
+
+	if (missing.length > 0) {
+		await database.kysely.insertInto("agent_thread").values(missing).execute();
+	}
+};
 
 describe("agent read models", () => {
 	it("collections, fetch and delete collection apply user and thread scopes", async () => {
@@ -80,7 +125,7 @@ describe("agent read models", () => {
 				{
 					id: "agent-read-stream-foreign",
 					userId: stranger.id,
-					threadId: "thread-a",
+					threadId: "thread-foreign",
 					payload: {
 						id: "agent-input-foreign",
 						role: "user",
@@ -113,7 +158,7 @@ describe("agent read models", () => {
 				{
 					id: "agent-read-usage-foreign",
 					userId: stranger.id,
-					threadId: "thread-a",
+					threadId: "thread-foreign",
 					requests: 3,
 					input: 30,
 					output: 9,

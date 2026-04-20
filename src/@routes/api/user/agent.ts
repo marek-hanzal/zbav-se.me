@@ -1,11 +1,15 @@
 import type { AgentInputItem, RunStreamEvent } from "@openai/agents";
 import { createFileRoute } from "@tanstack/react-router";
+import { Effect } from "effect";
 import { z } from "zod";
-import { genId } from "@/lib/common/gen-id";
+import { withLoggerFx } from "@/lib/common/log";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
+import { withDateFx } from "~/server/database/fx/withDateFx";
+import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withLocaleMiddleware } from "~/server/middleware/withLocaleMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { AssistantAgent } from "~/user/agent/AssistantAgent";
+import { agentUsageCreateFx } from "~/user/agent/server/fx/agentUsageCreateFx";
 import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { withRunnerSessionMiddleware } from "~/user/agent/server/middleware/withRunnerSessionMiddleware";
 
@@ -165,19 +169,21 @@ export const Route = createFileRoute("/api/user/agent")({
 								});
 
 								try {
-									await database.kysely
-										.insertInto("agent_usage")
-										.values({
-											id: genId(),
+									await Effect.gen(function* () {
+										yield* agentUsageCreateFx({
 											userId: user.id,
 											threadId,
 											requests: stream.state.usage.requests,
 											input: stream.state.usage.inputTokens,
 											total: stream.state.usage.totalTokens,
 											output: stream.state.usage.outputTokens,
-											createdAt: new Date(),
-										})
-										.execute();
+										});
+									}).pipe(
+										withKyselyFx(database),
+										withDateFx,
+										withLoggerFx(rootLogger),
+										Effect.runPromise,
+									);
 								} catch (error) {
 									logger.error("Agent usage persistence failed", {
 										userId: user.id,
