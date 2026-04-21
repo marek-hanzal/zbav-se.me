@@ -805,6 +805,24 @@
 		],
 		"group": "TV, audio a foto",
 		"category": "Drony s kamerou",
+		"restrictions": [
+			"adult"
+		]
+	},
+	{
+		"slug": "tv-audio-a-foto--drony-hracky",
+		"locale": "cs",
+		"spotlight": [
+			"dron hračka",
+			"hračkářský dron",
+			"dětský dron",
+			"toy drone",
+			"mini dron",
+			"dron pro děti",
+			"malý dron"
+		],
+		"group": "TV, audio a foto",
+		"category": "Drony - hračky",
 		"restrictions": []
 	},
 	{
@@ -834,7 +852,9 @@
 		],
 		"group": "Dětské zboží",
 		"category": "Autosedačky",
-		"restrictions": []
+		"restrictions": [
+			"adult"
+		]
 	},
 	{
 		"slug": "detske-zbozi--detske-postylky-a-zidlicky",
@@ -1293,7 +1313,9 @@
 		],
 		"group": "Jídlo",
 		"category": "Dětské příkrmy",
-		"restrictions": []
+		"restrictions": [
+			"adult"
+		]
 	},
 	{
 		"slug": "jidlo--kojenecka-vyziva",
@@ -1307,7 +1329,9 @@
 		],
 		"group": "Jídlo",
 		"category": "Kojenecká výživa",
-		"restrictions": []
+		"restrictions": [
+			"adult"
+		]
 	},
 	{
 		"slug": "jidlo--umela-mleka-a-pokracovaci-mleka",
@@ -1324,7 +1348,9 @@
 		],
 		"group": "Jídlo",
 		"category": "Umělá mléka a pokračovací mléka",
-		"restrictions": []
+		"restrictions": [
+			"adult"
+		]
 	},
 	{
 		"slug": "jidlo--detske-kase",
@@ -1340,7 +1366,9 @@
 		],
 		"group": "Jídlo",
 		"category": "Dětské kaše",
-		"restrictions": []
+		"restrictions": [
+			"adult"
+		]
 	},
 	{
 		"slug": "jidlo--doplnky-stravy-a-vitaminy",
@@ -1355,7 +1383,9 @@
 		],
 		"group": "Jídlo",
 		"category": "Doplňky stravy a vitamíny",
-		"restrictions": []
+		"restrictions": [
+			"adult"
+		]
 	},
 	{
 		"slug": "jidlo--bezlepkove-a-specialni-potraviny",
@@ -1535,6 +1565,111 @@
 		"restrictions": []
 	},
 	{
+		"slug": "airsoft--airsoftove-pistole",
+		"locale": "cs",
+		"spotlight": [
+			"airsoft pistole",
+			"airsoftová pistole",
+			"plynová pistole",
+			"co2 pistole",
+			"gbb pistole",
+			"aep pistole"
+		],
+		"group": "Airsoft",
+		"category": "Airsoftové pistole",
+		"restrictions": [
+			"sensitive"
+		]
+	},
+	{
+		"slug": "airsoft--airsoftove-pusky",
+		"locale": "cs",
+		"spotlight": [
+			"airsoft puška",
+			"airsoftová puška",
+			"aeg puška",
+			"elektrická puška",
+			"m4 airsoft",
+			"ak airsoft"
+		],
+		"group": "Airsoft",
+		"category": "Airsoftové pušky",
+		"restrictions": [
+			"sensitive"
+		]
+	},
+	{
+		"slug": "airsoft--airsoftove-samopaly",
+		"locale": "cs",
+		"spotlight": [
+			"airsoft samopal",
+			"airsoftový samopal",
+			"smg airsoft",
+			"mp5 airsoft",
+			"p90 airsoft",
+			"kompaktní airsoft"
+		],
+		"group": "Airsoft",
+		"category": "Airsoftové samopaly",
+		"restrictions": [
+			"sensitive"
+		]
+	},
+	{
+		"slug": "airsoft--airsoftove-brokovnice",
+		"locale": "cs",
+		"spotlight": [
+			"airsoft brokovnice",
+			"airsoftová brokovnice",
+			"shotgun airsoft",
+			"pumpovací brokovnice",
+			"manuální brokovnice"
+		],
+		"group": "Airsoft",
+		"category": "Airsoftové brokovnice",
+		"restrictions": [
+			"sensitive"
+		]
+	},
+	{
+		"slug": "airsoft--airsoftove-odstrelovaci-pusky",
+		"locale": "cs",
+		"spotlight": [
+			"airsoft sniper",
+			"odstřelovací puška",
+			"airsoft odstřelovačka",
+			"sniper rifle",
+			"manuální sniper",
+			"dmr airsoft"
+		],
+		"group": "Airsoft",
+		"category": "Airsoftové odstřelovací pušky",
+		"restrictions": [
+			"sensitive"
+		]
+	},
+	{
+		"slug": "airsoft--airsoftove-prislusenstvi",
+		"locale": "cs",
+		"spotlight": [
+			"airsoft příslušenství",
+			"airsoftové příslušenství",
+			"airsoft kuličky",
+			"bb kuličky",
+			"zásobník",
+			"zásobníky",
+			"kolimátor",
+			"optika",
+			"airsoft baterie",
+			"ochranné brýle"
+		],
+		"group": "Airsoft",
+		"category": "Airsoftové příslušenství",
+		"restrictions": [
+			"sensitive"
+		]
+	},
+	{
 		"slug": "auto-moto--osobni-auta",
 		"locale": "cs",
 		"spotlight": [
@@ -1549,7 +1684,9 @@
 		],
 		"group": "Auto-moto",
 		"category": "Osobní auta",
-		"restrictions": []
+		"restrictions": [
+			"adult"
+		]
 	},
 	{
 		"slug": "auto-moto--motocykly-a-skutry",
@@ -1566,7 +1703,9 @@
 		],
 		"group": "Auto-moto",
 		"category": "Motocykly a skútry",
-		"restrictions": []
+		"restrictions": [
+			"adult"
+		]
 	},
 	{
 		"slug": "auto-moto--pneumatiky-a-disky",
@@ -1644,7 +1783,9 @@
 		],
 		"group": "Zahrada a dílna",
 		"category": "Sekačky a křovinořezy",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--pily-a-retezove-pily",
@@ -1660,7 +1801,9 @@
 		],
 		"group": "Zahrada a dílna",
 		"category": "Pily a řetězové pily",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--aku-naradi-vrtacky-brusky",
@@ -1677,7 +1820,9 @@
 		],
 		"group": "Zahrada a dílna",
 		"category": "Aku nářadí (vrtačky/brusky)",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--rucni-naradi",
@@ -1840,7 +1985,9 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Králíci",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--morcata",
@@ -1853,7 +2000,9 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Morčata",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--krecici",
@@ -1866,7 +2015,9 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Křečci",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--potkani-a-mysi",
@@ -1881,7 +2032,9 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Potkani a myši",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--papousci-a-ptaci",
@@ -1897,7 +2050,9 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Papoušci a ptáci",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--rybicky",
@@ -1911,7 +2066,9 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Rybičky",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--agamy-a-jesteri",
@@ -1928,7 +2085,9 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Agamy a ještěři",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--hadi",
@@ -1944,7 +2103,9 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Hadi",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--zelvy",
@@ -1957,7 +2118,9 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Želvy",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--kocky",
@@ -1972,7 +2135,9 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Kočky",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--psi",
@@ -1987,7 +2152,9 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Psi",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--krmivo-a-pamlsky",
@@ -2212,7 +2379,9 @@
 		],
 		"group": "Hobby a kreativita",
 		"category": "Modelářství (RC/drony)",
-		"restrictions": []
+		"restrictions": [
+			"adult"
+		]
 	},
 	{
 		"slug": "hobby-a-kreativita--3d-tisk-a-filamenty",
@@ -2572,6 +2741,129 @@
 		"group": "Sběratelství a starožitnosti",
 		"category": "Památky a kuriozity",
 		"restrictions": []
+	},
+	{
+		"slug": "chladne-zbrane--noze",
+		"locale": "cs",
+		"spotlight": [
+			"nůž",
+			"nože",
+			"kapesní nůž",
+			"zavírací nůž",
+			"lovecký nůž",
+			"taktický nůž",
+			"pevná čepel"
+		],
+		"group": "Chladné zbraně",
+		"category": "Nože",
+		"restrictions": [
+			"sensitive"
+		]
+	},
+	{
+		"slug": "chladne-zbrane--mece-a-savle",
+		"locale": "cs",
+		"spotlight": [
+			"meč",
+			"meče",
+			"šavle",
+			"katana",
+			"wakizashi",
+			"rapír",
+			"historický meč"
+		],
+		"group": "Chladné zbraně",
+		"category": "Meče a šavle",
+		"restrictions": [
+			"sensitive"
+		]
+	},
+	{
+		"slug": "chladne-zbrane--dyky",
+		"locale": "cs",
+		"spotlight": [
+			"dýka",
+			"dýky",
+			"dagger",
+			"stiletto",
+			"bodná zbraň",
+			"historická dýka"
+		],
+		"group": "Chladné zbraně",
+		"category": "Dýky",
+		"restrictions": [
+			"sensitive"
+		]
+	},
+	{
+		"slug": "chladne-zbrane--bajonety",
+		"locale": "cs",
+		"spotlight": [
+			"bajonet",
+			"bajonety",
+			"bodák",
+			"vojenský bajonet",
+			"historický bajonet",
+			"puškový bajonet"
+		],
+		"group": "Chladné zbraně",
+		"category": "Bajonety",
+		"restrictions": [
+			"sensitive"
+		]
+	},
+	{
+		"slug": "chladne-zbrane--sekery-a-macety",
+		"locale": "cs",
+		"spotlight": [
+			"sekera",
+			"sekery",
+			"mačeta",
+			"mačety",
+			"tomahawk",
+			"taktická sekera",
+			"kukri"
+		],
+		"group": "Chladné zbraně",
+		"category": "Sekery a mačety",
+		"restrictions": [
+			"sensitive"
+		]
+	},
+	{
+		"slug": "chladne-zbrane--vrhaci-zbrane",
+		"locale": "cs",
+		"spotlight": [
+			"vrhací nůž",
+			"vrhací nože",
+			"vrhací hvězdice",
+			"shuriken",
+			"vrhací sekera",
+			"throwing knife"
+		],
+		"group": "Chladné zbraně",
+		"category": "Vrhací zbraně",
+		"restrictions": [
+			"sensitive"
+		]
+	},
+	{
+		"slug": "chladne-zbrane--repliky-a-dekorace",
+		"locale": "cs",
+		"spotlight": [
+			"replika zbraně",
+			"repliky zbraní",
+			"dekorativní zbraň",
+			"historická replika",
+			"fantasy meč",
+			"filmová replika",
+			"dekorace na zeď"
+		],
+		"group": "Chladné zbraně",
+		"category": "Repliky a dekorace",
+		"restrictions": [
+			"sensitive"
+		]
 	},
 	{
 		"slug": "umeni-a-design--obrazy-a-grafiky",
@@ -3042,8 +3334,6 @@
 			"new year",
 			"silvestrovské oslavy",
 			"silvestrovské dekorace",
-			"petardy",
-			"ohňostroj",
 			"party",
 			"oslava",
 			"31. prosinec",
@@ -3052,6 +3342,25 @@
 		"group": "Sezóna",
 		"category": "Silvestr",
 		"restrictions": []
+	},
+	{
+		"slug": "sezona--pyrotechnika",
+		"locale": "cs",
+		"spotlight": [
+			"pyrotechnika",
+			"petardy",
+			"ohňostroj",
+			"rachejtle",
+			"dělobuchy",
+			"fontány",
+			"prskavky",
+			"silvestrovská pyrotechnika"
+		],
+		"group": "Sezóna",
+		"category": "Pyrotechnika",
+		"restrictions": [
+			"adult"
+		]
 	},
 	{
 		"slug": "sezona--den-matek",
