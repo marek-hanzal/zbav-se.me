@@ -14,7 +14,7 @@
 		],
 		"group": "Mobily a příslušenství",
 		"category": "Smartphone",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -29,7 +29,7 @@
 		],
 		"group": "Mobily a příslušenství",
 		"category": "Tlačítkový telefon",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -45,7 +45,7 @@
 		],
 		"group": "Mobily a příslušenství",
 		"category": "Chytré hodinky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -59,7 +59,7 @@
 		],
 		"group": "Mobily a příslušenství",
 		"category": "Příslušenství k mobilům",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -74,7 +74,7 @@
 		],
 		"group": "Mobily a příslušenství",
 		"category": "Powerbanka",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -91,7 +91,7 @@
 		],
 		"group": "Mobily a příslušenství",
 		"category": "Nabíječky a kabely",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -108,7 +108,7 @@
 		],
 		"group": "Mobily a příslušenství",
 		"category": "Pouzdra a skla",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -124,7 +124,7 @@
 		],
 		"group": "Mobily a příslušenství",
 		"category": "Paměťové karty",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -142,7 +142,7 @@
 		],
 		"group": "Počítače a kancelář",
 		"category": "Notebook",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -158,7 +158,7 @@
 		],
 		"group": "Počítače a kancelář",
 		"category": "Stolní PC",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -176,7 +176,7 @@
 		],
 		"group": "Počítače a kancelář",
 		"category": "Monitor",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -195,7 +195,7 @@
 		],
 		"group": "Počítače a kancelář",
 		"category": "PC komponenty (CPU/GPU/RAM)",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -212,7 +212,7 @@
 		],
 		"group": "Počítače a kancelář",
 		"category": "Periferie (klávesnice/myš)",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -230,7 +230,7 @@
 		],
 		"group": "Počítače a kancelář",
 		"category": "Síťové prvky (router/NAS)",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -247,7 +247,7 @@
 		],
 		"group": "Počítače a kancelář",
 		"category": "Tiskárny a skenery",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -265,7 +265,7 @@
 		],
 		"group": "Počítače a kancelář",
 		"category": "Úložiště (SSD/HDD)",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -282,7 +282,7 @@
 		],
 		"group": "Počítače a kancelář",
 		"category": "Software a licence",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -300,9 +300,7 @@
 		],
 		"group": "Vape/Elektronické cigarety",
 		"category": "Atomizéry - Boro",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -321,9 +319,7 @@
 		],
 		"group": "Vape/Elektronické cigarety",
 		"category": "Atomizéry - MTL",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -342,9 +338,7 @@
 		],
 		"group": "Vape/Elektronické cigarety",
 		"category": "Atomizéry - DL",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -363,9 +357,7 @@
 		],
 		"group": "Vape/Elektronické cigarety",
 		"category": "Atomizéry",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -383,9 +375,7 @@
 		],
 		"group": "Vape/Elektronické cigarety",
 		"category": "Mody",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -403,9 +393,7 @@
 		],
 		"group": "Vape/Elektronické cigarety",
 		"category": "Články (baterie)",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -423,9 +411,7 @@
 		],
 		"group": "Vape/Elektronické cigarety",
 		"category": "Spirálky",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -444,9 +430,7 @@
 		],
 		"group": "Vape/Elektronické cigarety",
 		"category": "Příslušenství",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -464,7 +448,7 @@
 		],
 		"group": "Oblečení a doplňky",
 		"category": "Dámské oblečení",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -482,7 +466,7 @@
 		],
 		"group": "Oblečení a doplňky",
 		"category": "Pánské oblečení",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -499,7 +483,7 @@
 		],
 		"group": "Oblečení a doplňky",
 		"category": "Dětské oblečení",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -517,7 +501,7 @@
 		],
 		"group": "Oblečení a doplňky",
 		"category": "Boty",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -535,7 +519,7 @@
 		],
 		"group": "Oblečení a doplňky",
 		"category": "Kabelky a tašky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -553,7 +537,7 @@
 		],
 		"group": "Oblečení a doplňky",
 		"category": "Hodinky a šperky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -571,7 +555,7 @@
 		],
 		"group": "Oblečení a doplňky",
 		"category": "Sportovní oblečení",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -590,7 +574,7 @@
 		],
 		"group": "Oblečení a doplňky",
 		"category": "Doplňky (čepice/pásky)",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -608,7 +592,7 @@
 		],
 		"group": "Hry a konzole",
 		"category": "Herní konzole",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -625,7 +609,7 @@
 		],
 		"group": "Hry a konzole",
 		"category": "Hry pro PlayStation",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -641,7 +625,7 @@
 		],
 		"group": "Hry a konzole",
 		"category": "Hry pro Xbox",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -659,7 +643,7 @@
 		],
 		"group": "Hry a konzole",
 		"category": "Hry pro Nintendo",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -676,7 +660,7 @@
 		],
 		"group": "Hry a konzole",
 		"category": "PC hry",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -693,7 +677,7 @@
 		],
 		"group": "Hry a konzole",
 		"category": "Ovladače a příslušenství",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -710,7 +694,7 @@
 		],
 		"group": "Hry a konzole",
 		"category": "VR headsety",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -729,7 +713,7 @@
 		],
 		"group": "TV, audio a foto",
 		"category": "Televize",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -746,7 +730,7 @@
 		],
 		"group": "TV, audio a foto",
 		"category": "Set-top boxy a přehrávače",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -764,7 +748,7 @@
 		],
 		"group": "TV, audio a foto",
 		"category": "Reproduktory a soundbary",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -782,7 +766,7 @@
 		],
 		"group": "TV, audio a foto",
 		"category": "Sluchátka",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -800,7 +784,7 @@
 		],
 		"group": "TV, audio a foto",
 		"category": "Fotoaparáty",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -817,7 +801,7 @@
 		],
 		"group": "TV, audio a foto",
 		"category": "Objektivy a příslušenství",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -834,7 +818,7 @@
 		],
 		"group": "TV, audio a foto",
 		"category": "Projektory",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -852,9 +836,7 @@
 		],
 		"group": "TV, audio a foto",
 		"category": "Drony s kamerou",
-		"restrictions": [
-			"adult"
-		],
+		"restriction": "adult",
 		"discovery": "implicit"
 	},
 	{
@@ -871,7 +853,7 @@
 		],
 		"group": "TV, audio a foto",
 		"category": "Drony - hračky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -887,7 +869,7 @@
 		],
 		"group": "Dětské zboží",
 		"category": "Kočárky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -902,9 +884,7 @@
 		],
 		"group": "Dětské zboží",
 		"category": "Autosedačky",
-		"restrictions": [
-			"adult"
-		],
+		"restriction": "adult",
 		"discovery": "implicit"
 	},
 	{
@@ -920,7 +900,7 @@
 		],
 		"group": "Dětské zboží",
 		"category": "Dětské postýlky a židličky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -937,7 +917,7 @@
 		],
 		"group": "Dětské zboží",
 		"category": "Hračky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -952,7 +932,7 @@
 		],
 		"group": "Dětské zboží",
 		"category": "Dětské oblečení a obuv",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -968,7 +948,7 @@
 		],
 		"group": "Dětské zboží",
 		"category": "Přebalování a péče",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -985,7 +965,7 @@
 		],
 		"group": "Dům a bydlení",
 		"category": "Osvětlení",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1002,7 +982,7 @@
 		],
 		"group": "Dům a bydlení",
 		"category": "Textil (závěsy/koberce)",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1019,7 +999,7 @@
 		],
 		"group": "Dům a bydlení",
 		"category": "Dekorace",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1036,7 +1016,7 @@
 		],
 		"group": "Dům a bydlení",
 		"category": "Úložné boxy a organizéry",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1052,7 +1032,7 @@
 		],
 		"group": "Dům a bydlení",
 		"category": "Zrcadla a rámy",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1069,7 +1049,7 @@
 		],
 		"group": "Dům a bydlení",
 		"category": "Smart home (chytrá domácnost)",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1085,7 +1065,7 @@
 		],
 		"group": "Nábytek",
 		"category": "Pohovky a sedací soupravy",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1102,7 +1082,7 @@
 		],
 		"group": "Nábytek",
 		"category": "Postele a matrace",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1118,7 +1098,7 @@
 		],
 		"group": "Nábytek",
 		"category": "Skříně a komody",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1135,7 +1115,7 @@
 		],
 		"group": "Nábytek",
 		"category": "Stoly a židle",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1152,7 +1132,7 @@
 		],
 		"group": "Nábytek",
 		"category": "Police a regály",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1168,7 +1148,7 @@
 		],
 		"group": "Nábytek",
 		"category": "Zahradní nábytek",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1185,7 +1165,7 @@
 		],
 		"group": "Bílá technika",
 		"category": "Lednice a mrazáky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1203,7 +1183,7 @@
 		],
 		"group": "Bílá technika",
 		"category": "Pračky a sušičky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1220,7 +1200,7 @@
 		],
 		"group": "Bílá technika",
 		"category": "Myčky nádobí",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1238,7 +1218,7 @@
 		],
 		"group": "Bílá technika",
 		"category": "Sporáky a trouby",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1255,7 +1235,7 @@
 		],
 		"group": "Bílá technika",
 		"category": "Mikrovlnky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1272,7 +1252,7 @@
 		],
 		"group": "Bílá technika",
 		"category": "Vysavače a parní čističe",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1289,7 +1269,7 @@
 		],
 		"group": "Kuchyň a jídelna",
 		"category": "Nádobí a příbory",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1306,7 +1286,7 @@
 		],
 		"group": "Kuchyň a jídelna",
 		"category": "Hrnce a pánve",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1323,7 +1303,7 @@
 		],
 		"group": "Kuchyň a jídelna",
 		"category": "Sklenice a hrnky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1340,7 +1320,7 @@
 		],
 		"group": "Kuchyň a jídelna",
 		"category": "Kuchyňské spotřebiče malé",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1357,7 +1337,7 @@
 		],
 		"group": "Kuchyň a jídelna",
 		"category": "Káva a kávovary",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1373,7 +1353,7 @@
 		],
 		"group": "Kuchyň a jídelna",
 		"category": "Boxy a organizéry do kuchyně",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1392,9 +1372,7 @@
 		],
 		"group": "Jídlo",
 		"category": "Dětské příkrmy",
-		"restrictions": [
-			"adult"
-		],
+		"restriction": "adult",
 		"discovery": "implicit"
 	},
 	{
@@ -1409,9 +1387,7 @@
 		],
 		"group": "Jídlo",
 		"category": "Kojenecká výživa",
-		"restrictions": [
-			"adult"
-		],
+		"restriction": "adult",
 		"discovery": "implicit"
 	},
 	{
@@ -1429,9 +1405,7 @@
 		],
 		"group": "Jídlo",
 		"category": "Umělá mléka a pokračovací mléka",
-		"restrictions": [
-			"adult"
-		],
+		"restriction": "adult",
 		"discovery": "implicit"
 	},
 	{
@@ -1448,9 +1422,7 @@
 		],
 		"group": "Jídlo",
 		"category": "Dětské kaše",
-		"restrictions": [
-			"adult"
-		],
+		"restriction": "adult",
 		"discovery": "implicit"
 	},
 	{
@@ -1466,9 +1438,7 @@
 		],
 		"group": "Jídlo",
 		"category": "Doplňky stravy a vitamíny",
-		"restrictions": [
-			"adult"
-		],
+		"restriction": "adult",
 		"discovery": "implicit"
 	},
 	{
@@ -1485,7 +1455,7 @@
 		],
 		"group": "Jídlo",
 		"category": "Bezlepkové a speciální potraviny",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1502,7 +1472,7 @@
 		],
 		"group": "Jídlo",
 		"category": "Trvanlivé potraviny",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1519,7 +1489,7 @@
 		],
 		"group": "Jídlo",
 		"category": "Sladkosti a snacky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1536,7 +1506,7 @@
 		],
 		"group": "Jídlo",
 		"category": "Nápoje",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1554,7 +1524,7 @@
 		],
 		"group": "Jídlo",
 		"category": "Čaj a káva",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1571,7 +1541,7 @@
 		],
 		"group": "Sport a outdoor",
 		"category": "Kola a příslušenství",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1588,7 +1558,7 @@
 		],
 		"group": "Sport a outdoor",
 		"category": "Běh a fitness",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1604,7 +1574,7 @@
 		],
 		"group": "Sport a outdoor",
 		"category": "Lyže a snowboard",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1622,7 +1592,7 @@
 		],
 		"group": "Sport a outdoor",
 		"category": "Kemping (stany/spacáky)",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1639,7 +1609,7 @@
 		],
 		"group": "Sport a outdoor",
 		"category": "Koloběžky a longboardy",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1656,7 +1626,7 @@
 		],
 		"group": "Sport a outdoor",
 		"category": "Rybaření",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1672,9 +1642,7 @@
 		],
 		"group": "Airsoft",
 		"category": "Airsoftové pistole",
-		"restrictions": [
-			"sensitive"
-		],
+		"restriction": "sensitive",
 		"discovery": "explicit"
 	},
 	{
@@ -1690,9 +1658,7 @@
 		],
 		"group": "Airsoft",
 		"category": "Airsoftové pušky",
-		"restrictions": [
-			"sensitive"
-		],
+		"restriction": "sensitive",
 		"discovery": "explicit"
 	},
 	{
@@ -1708,9 +1674,7 @@
 		],
 		"group": "Airsoft",
 		"category": "Airsoftové samopaly",
-		"restrictions": [
-			"sensitive"
-		],
+		"restriction": "sensitive",
 		"discovery": "explicit"
 	},
 	{
@@ -1725,9 +1689,7 @@
 		],
 		"group": "Airsoft",
 		"category": "Airsoftové brokovnice",
-		"restrictions": [
-			"sensitive"
-		],
+		"restriction": "sensitive",
 		"discovery": "explicit"
 	},
 	{
@@ -1743,9 +1705,7 @@
 		],
 		"group": "Airsoft",
 		"category": "Airsoftové odstřelovací pušky",
-		"restrictions": [
-			"sensitive"
-		],
+		"restriction": "sensitive",
 		"discovery": "explicit"
 	},
 	{
@@ -1765,9 +1725,7 @@
 		],
 		"group": "Airsoft",
 		"category": "Airsoftové příslušenství",
-		"restrictions": [
-			"sensitive"
-		],
+		"restriction": "sensitive",
 		"discovery": "explicit"
 	},
 	{
@@ -1785,9 +1743,7 @@
 		],
 		"group": "Auto-moto",
 		"category": "Osobní auta",
-		"restrictions": [
-			"adult"
-		],
+		"restriction": "adult",
 		"discovery": "implicit"
 	},
 	{
@@ -1805,9 +1761,7 @@
 		],
 		"group": "Auto-moto",
 		"category": "Motocykly a skútry",
-		"restrictions": [
-			"adult"
-		],
+		"restriction": "adult",
 		"discovery": "implicit"
 	},
 	{
@@ -1825,9 +1779,7 @@
 		],
 		"group": "Auto-moto",
 		"category": "Pneumatiky a disky",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -1843,9 +1795,7 @@
 		],
 		"group": "Auto-moto",
 		"category": "Autodoplňky",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -1861,9 +1811,7 @@
 		],
 		"group": "Auto-moto",
 		"category": "Náhradní díly",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -1880,7 +1828,7 @@
 		],
 		"group": "Auto-moto",
 		"category": "Helmy a výbava",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1896,9 +1844,7 @@
 		],
 		"group": "Zahrada a dílna",
 		"category": "Sekačky a křovinořezy",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -1915,9 +1861,7 @@
 		],
 		"group": "Zahrada a dílna",
 		"category": "Pily a řetězové pily",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -1935,9 +1879,7 @@
 		],
 		"group": "Zahrada a dílna",
 		"category": "Aku nářadí (vrtačky/brusky)",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -1955,7 +1897,7 @@
 		],
 		"group": "Zahrada a dílna",
 		"category": "Ruční nářadí",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1972,7 +1914,7 @@
 		],
 		"group": "Zahrada a dílna",
 		"category": "Zavlažování a zahradní technika",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -1990,7 +1932,7 @@
 		],
 		"group": "Zahrada a dílna",
 		"category": "Grily a příslušenství",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2007,7 +1949,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Pelíšky a boudy",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2024,7 +1966,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Misky a krmítka",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2042,7 +1984,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Vodítka a obojky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2059,7 +2001,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Hračky pro zvířata",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2076,7 +2018,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Akvária a terária",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2094,7 +2036,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Klece a přepravky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2110,9 +2052,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Králíci",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -2126,9 +2066,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Morčata",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -2142,9 +2080,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Křečci",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -2160,9 +2096,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Potkani a myši",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -2179,9 +2113,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Papoušci a ptáci",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -2196,9 +2128,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Rybičky",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -2216,9 +2146,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Agamy a ještěři",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -2235,9 +2163,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Hadi",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -2251,9 +2177,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Želvy",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -2269,9 +2193,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Kočky",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -2287,9 +2209,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Psi",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -2306,7 +2226,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Krmivo a pamlsky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2322,7 +2242,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Stelivo a podestýlka",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2339,7 +2259,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Terarijní vybavení",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2355,7 +2275,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Akvarijní vybavení",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2372,7 +2292,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Péče a hygiena",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2388,7 +2308,7 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Veterinární doplňky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2405,7 +2325,7 @@
 		],
 		"group": "Knihy",
 		"category": "Běžné knihy",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2422,7 +2342,7 @@
 		],
 		"group": "Knihy",
 		"category": "Komiksy a manga",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2438,9 +2358,7 @@
 		],
 		"group": "Knihy",
 		"category": "Pro dospělé",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -2459,7 +2377,7 @@
 		],
 		"group": "Filmy",
 		"category": "Běžné filmy",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2477,7 +2395,7 @@
 		],
 		"group": "Filmy",
 		"category": "VHS",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2494,9 +2412,7 @@
 		],
 		"group": "Filmy",
 		"category": "Pro dospělé",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -2513,7 +2429,7 @@
 		],
 		"group": "Hudba",
 		"category": "Běžná hudba",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2531,7 +2447,7 @@
 		],
 		"group": "Hudba",
 		"category": "Vinyl a gramodesky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2549,7 +2465,7 @@
 		],
 		"group": "Hudba",
 		"category": "CD a kazety",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2566,7 +2482,7 @@
 		],
 		"group": "Hudba",
 		"category": "Noty a zpěvníky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2583,7 +2499,7 @@
 		],
 		"group": "Hobby a kreativita",
 		"category": "Deskovky a puzzle",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2601,9 +2517,7 @@
 		],
 		"group": "Hobby a kreativita",
 		"category": "Modelářství (RC/drony)",
-		"restrictions": [
-			"adult"
-		],
+		"restriction": "adult",
 		"discovery": "implicit"
 	},
 	{
@@ -2621,7 +2535,7 @@
 		],
 		"group": "Hobby a kreativita",
 		"category": "3D tisk a filamenty",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2639,7 +2553,7 @@
 		],
 		"group": "Hobby a kreativita",
 		"category": "Malování a kreslení",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2657,7 +2571,7 @@
 		],
 		"group": "Hobby a kreativita",
 		"category": "Šití a háčkování",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2675,7 +2589,7 @@
 		],
 		"group": "Hobby a kreativita",
 		"category": "DIY sady a materiál",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2692,7 +2606,7 @@
 		],
 		"group": "Krása a osobní péče",
 		"category": "Parfémy",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2709,7 +2623,7 @@
 		],
 		"group": "Krása a osobní péče",
 		"category": "Péče o pleť",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2726,7 +2640,7 @@
 		],
 		"group": "Krása a osobní péče",
 		"category": "Péče o vlasy",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2743,7 +2657,7 @@
 		],
 		"group": "Krása a osobní péče",
 		"category": "Holicí strojky a epilátory",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2760,7 +2674,7 @@
 		],
 		"group": "Krása a osobní péče",
 		"category": "Žehličky a kulmy",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2778,7 +2692,7 @@
 		],
 		"group": "Krása a osobní péče",
 		"category": "Manikúra a pedikúra",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2795,7 +2709,7 @@
 		],
 		"group": "Hudební nástroje",
 		"category": "Kytary a baskytary",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2813,7 +2727,7 @@
 		],
 		"group": "Hudební nástroje",
 		"category": "Klávesy a piana",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2831,7 +2745,7 @@
 		],
 		"group": "Hudební nástroje",
 		"category": "Bicí a perkuse",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2848,7 +2762,7 @@
 		],
 		"group": "Hudební nástroje",
 		"category": "Dechové nástroje",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2865,7 +2779,7 @@
 		],
 		"group": "Hudební nástroje",
 		"category": "MIDI a studiová technika",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2882,7 +2796,7 @@
 		],
 		"group": "Hudební nástroje",
 		"category": "Struny, paličky a příslušenství",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2899,7 +2813,7 @@
 		],
 		"group": "Sběratelství a starožitnosti",
 		"category": "Mince a bankovky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2915,7 +2829,7 @@
 		],
 		"group": "Sběratelství a starožitnosti",
 		"category": "Poštovní známky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2932,7 +2846,7 @@
 		],
 		"group": "Sběratelství a starožitnosti",
 		"category": "Figurky a modely",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2950,7 +2864,7 @@
 		],
 		"group": "Sběratelství a starožitnosti",
 		"category": "Retro a vintage",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2967,7 +2881,7 @@
 		],
 		"group": "Sběratelství a starožitnosti",
 		"category": "Starožitnosti",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -2984,7 +2898,7 @@
 		],
 		"group": "Sběratelství a starožitnosti",
 		"category": "Památky a kuriozity",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3001,9 +2915,7 @@
 		],
 		"group": "Chladné zbraně",
 		"category": "Nože",
-		"restrictions": [
-			"sensitive"
-		],
+		"restriction": "sensitive",
 		"discovery": "explicit"
 	},
 	{
@@ -3020,9 +2932,7 @@
 		],
 		"group": "Chladné zbraně",
 		"category": "Meče a šavle",
-		"restrictions": [
-			"sensitive"
-		],
+		"restriction": "sensitive",
 		"discovery": "explicit"
 	},
 	{
@@ -3038,9 +2948,7 @@
 		],
 		"group": "Chladné zbraně",
 		"category": "Dýky",
-		"restrictions": [
-			"sensitive"
-		],
+		"restriction": "sensitive",
 		"discovery": "explicit"
 	},
 	{
@@ -3056,9 +2964,7 @@
 		],
 		"group": "Chladné zbraně",
 		"category": "Bajonety",
-		"restrictions": [
-			"sensitive"
-		],
+		"restriction": "sensitive",
 		"discovery": "explicit"
 	},
 	{
@@ -3075,9 +2981,7 @@
 		],
 		"group": "Chladné zbraně",
 		"category": "Sekery a mačety",
-		"restrictions": [
-			"sensitive"
-		],
+		"restriction": "sensitive",
 		"discovery": "explicit"
 	},
 	{
@@ -3093,9 +2997,7 @@
 		],
 		"group": "Chladné zbraně",
 		"category": "Vrhací zbraně",
-		"restrictions": [
-			"sensitive"
-		],
+		"restriction": "sensitive",
 		"discovery": "explicit"
 	},
 	{
@@ -3112,9 +3014,7 @@
 		],
 		"group": "Chladné zbraně",
 		"category": "Repliky a dekorace",
-		"restrictions": [
-			"sensitive"
-		],
+		"restriction": "sensitive",
 		"discovery": "explicit"
 	},
 	{
@@ -3132,7 +3032,7 @@
 		],
 		"group": "Umění a design",
 		"category": "Obrazy a grafiky",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3149,7 +3049,7 @@
 		],
 		"group": "Umění a design",
 		"category": "Plakáty a printy",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3166,7 +3066,7 @@
 		],
 		"group": "Umění a design",
 		"category": "Sochy a objekty",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3182,7 +3082,7 @@
 		],
 		"group": "Umění a design",
 		"category": "Autorský design",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3199,7 +3099,7 @@
 		],
 		"group": "Umění a design",
 		"category": "Rámování a pasparty",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3215,7 +3115,7 @@
 		],
 		"group": "Umění a design",
 		"category": "Umělecké potřeby",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3232,9 +3132,7 @@
 		],
 		"group": "Nemovitosti",
 		"category": "Prodej bytu",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -3251,9 +3149,7 @@
 		],
 		"group": "Nemovitosti",
 		"category": "Pronájem bytu",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -3270,9 +3166,7 @@
 		],
 		"group": "Nemovitosti",
 		"category": "Prodej domu",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -3288,9 +3182,7 @@
 		],
 		"group": "Nemovitosti",
 		"category": "Pronájem domu",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -3307,9 +3199,7 @@
 		],
 		"group": "Nemovitosti",
 		"category": "Pozemky",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -3326,9 +3216,7 @@
 		],
 		"group": "Nemovitosti",
 		"category": "Garáže a parkování",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -3345,9 +3233,7 @@
 		],
 		"group": "Nemovitosti",
 		"category": "Chaty a chalupy",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -3363,9 +3249,7 @@
 		],
 		"group": "Nemovitosti",
 		"category": "Komerční prostory",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -3381,9 +3265,7 @@
 		],
 		"group": "Ostatní",
 		"category": "Dárkové poukazy",
-		"restrictions": [
-			"adult-relaxed"
-		],
+		"restriction": "adult-relaxed",
 		"discovery": "implicit"
 	},
 	{
@@ -3400,7 +3282,7 @@
 		],
 		"group": "Ostatní",
 		"category": "Ztráty a nálezy",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3416,7 +3298,7 @@
 		],
 		"group": "Ostatní",
 		"category": "Náhradní díly různé",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3432,7 +3314,7 @@
 		],
 		"group": "Ostatní",
 		"category": "Nezařazené",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3452,7 +3334,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Vánoce",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3470,7 +3352,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Valentýn",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3489,7 +3371,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Velikonoce",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3508,7 +3390,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Halloween",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3530,7 +3412,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Zima",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3553,7 +3435,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Jaro",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3578,7 +3460,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Léto",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3601,7 +3483,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Podzim",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3621,7 +3503,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Silvestr",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3639,9 +3521,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Pyrotechnika",
-		"restrictions": [
-			"adult"
-		],
+		"restriction": "adult",
 		"discovery": "implicit"
 	},
 	{
@@ -3659,7 +3539,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Den matek",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3676,7 +3556,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Den otců",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3697,7 +3577,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Začátek školy",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	},
 	{
@@ -3716,7 +3596,7 @@
 		],
 		"group": "Sezóna",
 		"category": "Maturita",
-		"restrictions": [],
+		"restriction": "none",
 		"discovery": "implicit"
 	}
 ]
