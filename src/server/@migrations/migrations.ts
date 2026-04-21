@@ -25,6 +25,7 @@ import { ActivityMigration } from "~/server/@migrations/0023-activity";
 import { AgentThreadMigration } from "~/server/@migrations/0024-agent-thread";
 import { AgentStreamMigration } from "~/server/@migrations/0025-agent-stream";
 import { AgentUsageMigration } from "~/server/@migrations/0026-agent-usage";
+import { UserRestrictionMigration } from "~/server/@migrations/0027-user-restriction";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -54,4 +55,5 @@ export const migrations = {
 	"0024-agent-thread": AgentThreadMigration,
 	"0025-agent-stream": AgentStreamMigration,
 	"0026-agent-usage": AgentUsageMigration,
+	"0027-user-restriction": UserRestrictionMigration,
 } as const;
