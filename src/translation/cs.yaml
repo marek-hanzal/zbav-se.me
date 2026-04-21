@@ -1331,8 +1331,10 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
         better message than this :(
 bf82382f7d27ed92f076fc65613ec5fc5c0d9a2b535fe794ddb59b3d:
     ref: User restriction level (hint)
-    value: |
-        Tvoje nastavená úroveň omezení určuje, jaký obsah můžeš vidět a vytvářet. Každá
+    value: >
+        Tvoje nastavená úroveň omezení určuje, jaký obsah můžeš vidět a
+        vytvářet. Každá
+
         změna vždycky spustí časovač od začátku.
 buyer - Buyer rejected the transaction (message):
     value: |
@@ -1603,6 +1605,9 @@ f718d2ba74693c352dc2c17cc74e1b23c47ed2051d1c31598d0dd766:
 f7656349927879425de1f295c96260d551349336336a22ada2d9ff70:
     ref: Clear all (button)
     value: Vyčistit vše
+f7e09a0f70de4fcf808d88a6efc0280abaec228595978af2e7ceea70:
+    ref: No tokens used yet (label)
+    value: Zatím jsi mě nic nestál, ale můžeš s tím něco udělat 😁
 f7e0ec1bfc4a3e3a1766b4f3f07644ce4a036f0e83bd3f138796434b:
     ref: Go to my listings (button)
     value: Moje inzeráty
