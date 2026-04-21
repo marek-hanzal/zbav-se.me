@@ -1,7 +1,7 @@
-import type { FC } from "react";
+import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
-import { UserIcon } from "@/lib/client/icon";
+import { EditIcon, Icon, UserIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
@@ -15,6 +15,7 @@ import { useUser } from "~/user/auth/hook/useUser";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { SignOutButton } from "~/user/profile/UserPage/SignOutButton";
 import { withUserRestrictionQuery } from "~/user/user-restriction/query/withUserRestrictionQuery";
+import { RestrictionSheet } from "./RestrictionSheet";
 
 export namespace UserPage {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
@@ -31,23 +32,26 @@ export namespace UserPage {
 export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
 	const user = useUser();
+	const restrictionMutation = withUserRestrictionQuery.useCreateMutation({
+		invalidate: [
+			"collection",
+		],
+	});
 	const {
 		data: [restriction],
 	} = withUserRestrictionQuery.useCollectionQuery({
-		where: {
-			isAvailable: true,
-		},
 		cursor: {
 			page: 0,
 			size: 1,
 		},
 		sort: [
 			{
-				field: "availableAt",
+				field: "createdAt",
 				order: "desc",
 			},
 		],
 	});
+	const [isRestriction, setIsRestriction] = useState(false);
 
 	return (
 		<TitleContainer
@@ -95,6 +99,15 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 						renderFn={({ id }) => {
 							return <Tx label={`Listing restriction - ${id}`} />;
 						}}
+						action={
+							<Icon
+								icon={EditIcon}
+								data-ui-text={"lg"}
+								onClick={() => {
+									setIsRestriction((open) => !open);
+								}}
+							/>
+						}
 					/>
 				</Group>
 
@@ -110,6 +123,20 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 					<SignOutButton data-ui-width={"full"} />
 				</Group>
 			</Container>
+
+			<RestrictionSheet
+				isOpen={isRestriction}
+				onClose={() => {
+					setIsRestriction(false);
+				}}
+				restriction={restriction?.restriction || []}
+				onRestriction={async (restriction) => {
+					return restrictionMutation.mutateAsync({
+						restriction,
+					});
+				}}
+				isPending={restrictionMutation.isPending}
+			/>
 		</TitleContainer>
 	);
 };

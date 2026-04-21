@@ -31,7 +31,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 	const createdAt = dateContext.now().toJSDate();
 
 	return yield* tryDbFx(async () => {
-		return kysely
+		await kysely
 			.insertInto("user_restriction")
 			.values({
 				id,
@@ -40,8 +40,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 				availableAt,
 				createdAt,
 			})
-			.returningAll()
-			.executeTakeFirstOrThrow();
+			.execute();
 
 		return {
 			id,

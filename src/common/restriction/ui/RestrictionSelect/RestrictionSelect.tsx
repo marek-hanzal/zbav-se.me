@@ -20,7 +20,7 @@ export namespace RestrictionSelect {
 export const RestrictionSelect: FC<RestrictionSelect.Props> = ({ selection, ...props }) => {
 	return (
 		<Container
-			data-ui="RestrictionSelect[Container]"
+			data-ui="RestrictionSelect"
 			data-ui-layout="vertical-flex"
 			data-ui-height="full"
 			data-ui-width="full"

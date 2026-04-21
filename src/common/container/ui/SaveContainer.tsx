@@ -40,7 +40,7 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 }) => {
 	return (
 		<Container
-			data-ui="SaveContainer[Container]"
+			data-ui="SaveContainer"
 			data-ui-flow="horizontal"
 			data-ui-items="center"
 			data-ui-justify="space-evenly"
