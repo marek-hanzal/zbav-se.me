@@ -51,6 +51,8 @@ describe("draft lifecycle", () => {
 				restriction: "none",
 				expiresAt: "1-month",
 				categoryId: category.id,
+				delivery: null,
+				warranty: null,
 				// biome-ignore lint/style/noNonNullAssertion: asserted by locationAutocompleteFx
 				locationId: location[0]!.id,
 				uploadIds: [

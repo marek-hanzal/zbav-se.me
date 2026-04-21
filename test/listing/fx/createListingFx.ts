@@ -58,6 +58,8 @@ export const createListingFx = (
 			priceType: "open",
 			restriction: "none",
 			title,
+			delivery: null,
+			warranty: null,
 			uploadIds: [
 				upload.id,
 			],

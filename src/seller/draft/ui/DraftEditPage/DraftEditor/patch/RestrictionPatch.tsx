@@ -44,7 +44,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 	});
 	const form = useAppForm({
 		defaultValues: {
-			restriction: draft.restriction ?? "none",
+			restriction: draft.restriction,
 		},
 		validators: {
 			onMount: RestrictionSchema,

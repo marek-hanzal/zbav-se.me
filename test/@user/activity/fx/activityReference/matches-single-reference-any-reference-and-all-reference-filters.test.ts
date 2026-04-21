@@ -50,6 +50,8 @@ const _createListingFixtureFx = ({ buyerId, sellerId }: Omit<ListingFixture, "li
 			priceType: "open",
 			restriction: "none",
 			title: "Reference fixture listing",
+			delivery: null,
+			warranty: null,
 			uploadIds: [
 				upload.id,
 			],

@@ -48,6 +48,8 @@ describe("userEventSellerInfoFx", () => {
 				priceType: "open",
 				restriction: "none",
 				title: "Some piece of crap",
+				delivery: null,
+				warranty: null,
 				uploadIds: [
 					upload.id,
 				],

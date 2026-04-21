@@ -19,13 +19,13 @@ export const ListingCreateSchema = z
 		age: z.number().nullable().meta({
 			description: "Age of the item (0-based index)",
 		}),
-		delivery: z.array(ListingDeliveryEnumSchema).nullish().meta({
+		delivery: z.array(ListingDeliveryEnumSchema).nullable().meta({
 			description: "Delivery methods for the listing",
 		}),
-		warranty: ListingWarrantyEnumSchema.nullish().meta({
+		warranty: ListingWarrantyEnumSchema.nullable().meta({
 			description: "Warranty type for the listing",
 		}),
-		restriction: CategoryRestrictionEnumSchema.nullish().meta({
+		restriction: CategoryRestrictionEnumSchema.nullable().meta({
 			description: `
 Restriction may get only higher level than provided from category, e.g. "adult" category
 cannot get "none" restriction on it's listings.
