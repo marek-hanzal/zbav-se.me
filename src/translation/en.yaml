@@ -55,6 +55,9 @@
 0931bae674f385d4352f8bb5199e1d2390a7e0008f4c93551330702f:
   ref: No listings with transactions (message)
   value: There are no listings with messages yet.
+099eeb8f7eb479d2e309b0f0dae8fc8d334ea91def03a97ecfe31cab:
+  ref: Listing restrictions (label)
+  value: Listing restrictions (label)
 0a08e45b023a7e9c7c4856084c91d4a78b31861ac5bf75f91fe4780a:
   ref: Listing restriction (label)
   value: Listing restriction (label)
@@ -781,6 +784,9 @@ a92a914e77188202f38d6b42be76d7f92cee60d777d0c00ca5aecbde:
 a9790b0c8d516c6185b9912ed236639eff1fd75206a534bf6f54d697:
   ref: Tool call input (label)
   value: Tool call input (label)
+aa125b59232e4f44807c968c6b228662e44aec9a4291b48a4f53afdf:
+  ref: Listing restrictions (empty)
+  value: Listing restrictions (empty)
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
   ref: Photo upload placeholder (title)
   value: Photo upload placeholder (title)

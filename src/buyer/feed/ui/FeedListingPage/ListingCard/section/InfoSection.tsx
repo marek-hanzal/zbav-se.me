@@ -26,6 +26,19 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView 
 			data-ui-gap="default"
 		>
 			<Group>
+				<ValueList
+					textLabel={translator.text("Listing restrictions (label)")}
+					textEmpty={translator.text("Listing restrictions (empty)")}
+					items={listing.restrictions.map((id) => ({
+						id,
+					}))}
+					renderFn={({ id }) => {
+						return <Tx label={`Listing restriction - ${id}`} />;
+					}}
+				/>
+			</Group>
+
+			<Group>
 				<LabelValue
 					textLabel={translator.text("Listing category (label)")}
 					textValue={
