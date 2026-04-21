@@ -28,6 +28,7 @@ export const createListingFx = (
 		const resolvedCategoryId =
 			categoryId ??
 			(yield* categoryFetchFx({
+				userId: sellerId,
 				where: {
 					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
 				},

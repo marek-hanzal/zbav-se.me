@@ -12,8 +12,8 @@ export const CategoryMigration: Migration = {
 			.asEnum(
 				toEnumGuard<CategoryRestrictionEnumSchema.Type>()([
 					"none",
-					"adult",
 					"adult-relaxed",
+					"adult",
 					"sensitive",
 					"restricted",
 				] as const),

@@ -23,7 +23,7 @@ export const categoryCollectionFn = createServerFn()
 		withUserMiddleware,
 	])
 	.inputValidator(CategoryQuerySchema)
-	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
+	.handler(async ({ data, context: { database, rootLogger, user }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",
 			name,
@@ -34,6 +34,7 @@ export const categoryCollectionFn = createServerFn()
 			schema: z.array(CategorySchema),
 			dataFx: categoryCollectionFx({
 				...data,
+				userId: user.id,
 				scope: {},
 			}),
 		}).pipe(

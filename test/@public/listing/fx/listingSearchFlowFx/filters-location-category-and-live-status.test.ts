@@ -10,7 +10,6 @@ import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 
@@ -116,6 +115,15 @@ const patchListingRestriction = (
 				restriction: props.restriction,
 			})
 			.where("id", "=", props.id)
+			.executeTakeFirstOrThrow(),
+	);
+
+const categoryBySlug = (database: TestDatabase, slug: string) =>
+	Effect.promise(() =>
+		database.kysely
+			.selectFrom("category")
+			.select("id")
+			.where("slug", "=", slug)
 			.executeTakeFirstOrThrow(),
 	);
 
@@ -251,18 +259,14 @@ describe("public listing search flow", () => {
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
-			const implicitCategory = yield* categoryFetchFx({
-				where: {
-					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
-				},
-				scope: {},
-			});
-			const explicitCategory = yield* categoryFetchFx({
-				where: {
-					slug: "pocitace-a-kancelar--monitor",
-				},
-				scope: {},
-			});
+			const implicitCategory = yield* categoryBySlug(
+				database,
+				"pocitace-a-kancelar--uloziste-ssd-hdd",
+			);
+			const explicitCategory = yield* categoryBySlug(
+				database,
+				"pocitace-a-kancelar--monitor",
+			);
 
 			yield* patchCategoryDiscovery(database, {
 				id: explicitCategory.id,
@@ -335,30 +339,22 @@ describe("public listing search flow", () => {
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
-			const openCategory = yield* categoryFetchFx({
-				where: {
-					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
-				},
-				scope: {},
-			});
-			const adultRelaxedCategory = yield* categoryFetchFx({
-				where: {
-					slug: "vape-elektronicke-cigarety--mody",
-				},
-				scope: {},
-			});
-			const adultCategory = yield* categoryFetchFx({
-				where: {
-					slug: "tv-audio-a-foto--drony-s-kamerou",
-				},
-				scope: {},
-			});
-			const sensitiveCategory = yield* categoryFetchFx({
-				where: {
-					slug: "airsoft--airsoftove-pistole",
-				},
-				scope: {},
-			});
+			const openCategory = yield* categoryBySlug(
+				database,
+				"pocitace-a-kancelar--uloziste-ssd-hdd",
+			);
+			const adultRelaxedCategory = yield* categoryBySlug(
+				database,
+				"vape-elektronicke-cigarety--mody",
+			);
+			const adultCategory = yield* categoryBySlug(
+				database,
+				"tv-audio-a-foto--drony-s-kamerou",
+			);
+			const sensitiveCategory = yield* categoryBySlug(
+				database,
+				"airsoft--airsoftove-pistole",
+			);
 
 			const openListing = yield* createListingFx(seller.id, {
 				title: "Public restriction marker open",

@@ -3,6 +3,7 @@ import { Effect } from "effect";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { CountSchema } from "@/lib/common/schema";
+import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -21,7 +22,7 @@ export const categoryCountFn = createServerFn()
 		withUserMiddleware,
 	])
 	.inputValidator(CategoryCountQuerySchema)
-	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
+	.handler(async ({ data, context: { database, rootLogger, user }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",
 			name,
@@ -32,10 +33,12 @@ export const categoryCountFn = createServerFn()
 			schema: CountSchema,
 			dataFx: categoryCountFx({
 				...data,
+				userId: user.id,
 				scope: {},
 			}),
 		}).pipe(
 			withKyselyFx(database),
+			withDateFx,
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {

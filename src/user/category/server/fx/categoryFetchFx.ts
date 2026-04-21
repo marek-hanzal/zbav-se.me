@@ -8,11 +8,13 @@ import type { CategoryQuerySchema } from "~/user/category/server/schema/Category
 
 export namespace categoryFetchFx {
 	export interface Props extends CategoryQuerySchema.Type {
+		userId?: string;
 		scope: CategoryFilterSchema.Type;
 	}
 }
 
 export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
+	userId,
 	filter,
 	where,
 	scope,
@@ -30,6 +32,7 @@ export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
 		resource: "category",
 		selectFx: withCategorySelectFx({
 			sort,
+			userId,
 		}),
 		filter,
 		where,

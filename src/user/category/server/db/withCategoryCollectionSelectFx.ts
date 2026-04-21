@@ -10,10 +10,8 @@ export namespace withCategoryCollectionSelectFx {
 }
 
 export const withCategoryCollectionSelectFx = Effect.fn("withCategoryCollectionSelectFx")(
-	function* ({ sort }: withCategoryCollectionSelectFx.Props) {
-		const sourceSelect = yield* withCategorySourceSelectFx({
-			sort,
-		});
+	function* (props: withCategoryCollectionSelectFx.Props) {
+		const sourceSelect = yield* withCategorySourceSelectFx(props);
 
 		return sourceSelect.selectAll("cat");
 	},

@@ -9,12 +9,10 @@ export namespace withCategorySelectFx {
 	export type Select = Effect.Effect.Success<ReturnType<typeof withCategorySelectFx>>;
 }
 
-export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* ({
-	sort,
-}: withCategorySelectFx.Props) {
-	const sourceSelect = yield* withCategorySourceSelectFx({
-		sort,
-	});
+export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* (
+	props: withCategorySelectFx.Props,
+) {
+	const sourceSelect = yield* withCategorySourceSelectFx(props);
 
 	return sourceSelect.selectAll("cat");
 });

@@ -9,11 +9,13 @@ import type { CategoryQuerySchema } from "~/user/category/server/schema/Category
 
 export namespace categoryCollectionFx {
 	export interface Props extends CategoryQuerySchema.Type {
+		userId?: string;
 		scope: CategoryFilterSchema.Type;
 	}
 }
 
 export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* ({
+	userId,
 	cursor = {
 		page: 0,
 		size: 10,
@@ -37,6 +39,7 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 	const data = yield* withCollectionFx({
 		selectFx: withCategoryCollectionSelectFx({
 			sort,
+			userId,
 		}),
 		cursor,
 		limit,

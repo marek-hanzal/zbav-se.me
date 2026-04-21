@@ -59,6 +59,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			 */
 			if (restriction) {
 				const category = yield* categoryFetchFx({
+					userId,
 					where: {
 						id: categoryId,
 					},

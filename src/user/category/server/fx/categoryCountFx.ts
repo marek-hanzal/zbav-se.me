@@ -8,11 +8,13 @@ import type { CategoryFilterSchema } from "~/user/category/server/schema/Categor
 
 export namespace categoryCountFx {
 	export interface Props extends CategoryCountQuerySchema.Type {
+		userId?: string;
 		scope: CategoryFilterSchema.Type;
 	}
 }
 
 export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
+	userId,
 	filter,
 	where,
 	scope,
@@ -25,7 +27,9 @@ export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withCategoryCollectionSelectFx({}),
+		selectFx: withCategoryCollectionSelectFx({
+			userId,
+		}),
 		filter,
 		where,
 		scope,

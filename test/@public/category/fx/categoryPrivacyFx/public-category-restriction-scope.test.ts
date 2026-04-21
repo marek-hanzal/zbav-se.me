@@ -6,37 +6,42 @@ import { categoryFetchFx as publicCategoryFetchFx } from "~/public/category/serv
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-import { categoryFetchFx as userCategoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
+
+type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+
+const categoryBySlug = (database: TestDatabase, slug: string) =>
+	Effect.promise(() =>
+		database.kysely
+			.selectFrom("category")
+			.select([
+				"id",
+				"restriction",
+			])
+			.where("slug", "=", slug)
+			.executeTakeFirstOrThrow(),
+	);
 
 describe("public category privacy", () => {
 	it("only exposes unrestricted categories", async () => {
 		const database = await testabase("public-category-restriction-scope");
 
 		return Effect.gen(function* () {
-			const noneCategory = yield* userCategoryFetchFx({
-				where: {
-					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
-				},
-				scope: {},
-			});
-			const adultRelaxedCategory = yield* userCategoryFetchFx({
-				where: {
-					slug: "vape-elektronicke-cigarety--mody",
-				},
-				scope: {},
-			});
-			const adultCategory = yield* userCategoryFetchFx({
-				where: {
-					slug: "tv-audio-a-foto--drony-s-kamerou",
-				},
-				scope: {},
-			});
-			const sensitiveCategory = yield* userCategoryFetchFx({
-				where: {
-					slug: "airsoft--airsoftove-pistole",
-				},
-				scope: {},
-			});
+			const noneCategory = yield* categoryBySlug(
+				database,
+				"pocitace-a-kancelar--uloziste-ssd-hdd",
+			);
+			const adultRelaxedCategory = yield* categoryBySlug(
+				database,
+				"vape-elektronicke-cigarety--mody",
+			);
+			const adultCategory = yield* categoryBySlug(
+				database,
+				"tv-audio-a-foto--drony-s-kamerou",
+			);
+			const sensitiveCategory = yield* categoryBySlug(
+				database,
+				"airsoft--airsoftove-pistole",
+			);
 
 			const categoryIdIn = [
 				noneCategory.id,
