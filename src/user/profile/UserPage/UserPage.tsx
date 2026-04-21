@@ -47,28 +47,43 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 			{...props}
 		>
 			<Container
-				data-ui-layout="vertical-centered"
-				data-ui-height="full"
+				data-ui-flow={"vertical"}
+				data-ui-gap={"default"}
+				data-ui-inner={"default"}
 			>
 				<Status
+					data-ui-tone={"brand"}
+					data-ui-theme={"light"}
 					icon={UserIcon}
-					textTitle={user.email}
-					textMessage={user.name}
-					action={<SignOutButton />}
-					data-ui-tone="brand"
-					data-ui-theme="light"
-					data-ui-color="lead"
-					data-ui-text="3xl"
-				>
-					<Container data-ui-inner="4xl">
-						<Group>
-							<LabelValue
-								textLabel={translator.text("Token usage (label)")}
-								textValue={<TokenUsage data-ui-text="default" />}
-							/>
-						</Group>
-					</Container>
-				</Status>
+				/>
+
+				<Group>
+					<LabelValue
+						textLabel={translator.text("User email (label)")}
+						textHint={translator.text("User email (hint)")}
+						textValue={user.email}
+					/>
+				</Group>
+
+				<Group>
+					<LabelValue
+						textLabel={translator.text("User restriction level (label)")}
+						textHint={translator.text("User restriction level (hint)")}
+						textValue={"boo"}
+					/>
+				</Group>
+
+				<Group>
+					<LabelValue
+						textLabel={translator.text("Token usage (label)")}
+						textHint={translator.text("Token usage (hint)")}
+						textValue={<TokenUsage data-ui-justify={"start"} />}
+					/>
+				</Group>
+
+				<Group>
+					<SignOutButton data-ui-width={"full"} />
+				</Group>
 			</Container>
 		</TitleContainer>
 	);

@@ -53,6 +53,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 			data-ui-border={false}
 			data-ui-shadow={false}
 			data-ui-width="full"
+			data-ui-color={"text"}
 			{...props}
 		>
 			<Container
@@ -92,7 +93,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 			{isString(textValue) ? (
 				<Tx
 					label={textValue}
-					data-ui-tone="secondary"
+					data-ui-tone="neutral"
 					data-ui-theme="light"
 					data-ui-text="default"
 					data-ui-truncate={true}

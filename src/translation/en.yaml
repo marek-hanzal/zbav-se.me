@@ -85,6 +85,9 @@
 0e2d6ae59d756678e034197ebd80f4723aecad41dc953699684a443e:
   ref: Listings (label)
   value: Listings (label)
+0e5daaaecc38bf62135c8dc612d1f62742b0be9de7f88b6909be4fce:
+  ref: Token usage (hint)
+  value: Token usage (hint)
 0e6cf0e3ce32e8ff03c1c483fa275fb0f2baa4ec9e5e3dcc47b5442f:
   ref: Delivery (title)
   value: Delivery (title)
@@ -271,9 +274,6 @@
 3685c79576a1efb41990be4a56a962ff63eaab48e01dd64da8e62c16:
   ref: No drafts (title)
   value: No drafts (title)
-36867b0182ba4840c97c772c1168bf1584a52897b6a292d58dc53dc9:
-  ref: Register (title)
-  value: Register (title)
 376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
   ref: rejected
   value: rejected
@@ -900,6 +900,9 @@ c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
 c7147aaa47c54e90b7023be8ee57d73010a71c259e352067aaad48e6:
   ref: Reject transaction (button)
   value: Reject transaction (button)
+c954144c7f6d3e5b4e0dd9edebbe92ef172c35c3f79102ca2531ac1c:
+  ref: User email (label)
+  value: User email (label)
 cb3a34c7200192f3cf99f4312074d252b890df7647e1e65c2ee986ab:
   ref: Share location (title)
   value: Share location (title)
@@ -1023,6 +1026,9 @@ ebff4121130dcb1e32bc8706a7005ec0c78e811db18e0ae28a6abb4c:
 ec4a4862ee04c61e1fdfa3e4be7eabc32fa95e9f33a193e11251c8f2:
   ref: Invalid email address
   value: Invalid email address
+f079be21449752a7e54a2bb26cb023b6bb623b0df137245a5a5c06c9:
+  ref: User email (hint)
+  value: User email (hint)
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
   ref: Submit listing (button)
   value: Submit listing (button)
