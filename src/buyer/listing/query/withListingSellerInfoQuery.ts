@@ -12,7 +12,7 @@ export const withListingSellerInfoQuery = withQuery({
 	errors: {} as {
 		query: listingGetSellerInfoFn.Error;
 	},
-	keys(variables) {
+	keys(variables: EntitySchema.Type) {
 		return [
 			"listing",
 			"seller-info",

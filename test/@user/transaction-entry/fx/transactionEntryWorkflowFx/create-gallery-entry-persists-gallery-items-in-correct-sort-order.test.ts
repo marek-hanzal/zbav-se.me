@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
@@ -23,19 +24,19 @@ describe("transactionEntryWorkflowFx", () => {
 			const uploads = yield* Effect.all([
 				uploadCreateFx({
 					userId: buyer.id,
-					url: "https://cdn.zbav-se.me/gallery-sort-1.jpg",
+					url: testUploadUrl("gallery-sort-1.jpg"),
 				}),
 				uploadCreateFx({
 					userId: buyer.id,
-					url: "https://cdn.zbav-se.me/gallery-sort-2.jpg",
+					url: testUploadUrl("gallery-sort-2.jpg"),
 				}),
 				uploadCreateFx({
 					userId: buyer.id,
-					url: "https://cdn.zbav-se.me/gallery-sort-3.jpg",
+					url: testUploadUrl("gallery-sort-3.jpg"),
 				}),
 				uploadCreateFx({
 					userId: buyer.id,
-					url: "https://cdn.zbav-se.me/gallery-sort-4.jpg",
+					url: testUploadUrl("gallery-sort-4.jpg"),
 				}),
 			]);
 

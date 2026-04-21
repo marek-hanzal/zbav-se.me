@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { draftGalleryCreateFx } from "~/seller/draft-gallery/server/fx/draftGalleryCreateFx";
+import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
@@ -18,19 +19,19 @@ describe("draftGalleryCreateFx", () => {
 
 			const firstUpload = yield* uploadCreateFx({
 				userId: user.id,
-				url: "https://cdn.zbav-se.me/draft-gallery-1.jpg",
+				url: testUploadUrl("draft-gallery-1.jpg"),
 			});
 			const secondUpload = yield* uploadCreateFx({
 				userId: user.id,
-				url: "https://cdn.zbav-se.me/draft-gallery-2.jpg",
+				url: testUploadUrl("draft-gallery-2.jpg"),
 			});
 			const thirdUpload = yield* uploadCreateFx({
 				userId: user.id,
-				url: "https://cdn.zbav-se.me/draft-gallery-3.jpg",
+				url: testUploadUrl("draft-gallery-3.jpg"),
 			});
 			const strangerUpload = yield* uploadCreateFx({
 				userId: stranger.id,
-				url: "https://cdn.zbav-se.me/draft-gallery-stranger.jpg",
+				url: testUploadUrl("draft-gallery-stranger.jpg"),
 			});
 
 			const draft = yield* draftCreateFx({

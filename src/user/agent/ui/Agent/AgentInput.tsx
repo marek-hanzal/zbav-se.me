@@ -1,15 +1,16 @@
 import { type FC, useState } from "react";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
+import { Tx } from "@/lib/client/tx";
 import { translator } from "@/lib/common/translator";
 import { withProxyMutation } from "~/common/gallery/mutation/withProxyMutation";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { GalleryUploadSheet } from "~/common/gallery/ui/GalleryUploadSheet";
 import { ChatInput } from "~/common/ui/chat";
-import { CancelIcon } from "~/common/ui/icon";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import type { useAgent } from "../../hook/useAgent";
+import { TokenUsage } from "../TokenUsage";
 import { AgentMenu } from "./AgentMenu";
 
 export namespace AgentInput {
@@ -25,21 +26,6 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 
 	return (
 		<Container>
-			{uploads.length > 0 ? (
-				<Container
-					className={"h-32"}
-					data-ui-inner={"default"}
-					onClick={() => {
-						setIsGalleryOpen(true);
-					}}
-				>
-					<GalleryPreview
-						uploads={uploads}
-						data-ui-inner={undefined}
-					/>
-				</Container>
-			) : null}
-
 			<GalleryUploadSheet
 				key={uploadIds.join(":")}
 				allowClear
@@ -67,8 +53,39 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 				data-ui-inner={"default"}
 				data-ui-snap-to={"bottom-center"}
 				data-ui-width={"full"}
+				data-ui-position={"relative"}
 			>
+				{uploads.length > 0 ? (
+					<Container
+						className={[
+							"h-32",
+							"translate-y-[20%]",
+							"relative",
+						]}
+						data-ui-inner={"default"}
+						onClick={() => {
+							setIsGalleryOpen(true);
+						}}
+					>
+						<Container
+							data-ui-tone={"neutral"}
+							data-ui-theme={"light"}
+							data-ui-border
+							data-ui-height={"full"}
+							data-ui-round={"default"}
+						>
+							<GalleryPreview
+								uploads={uploads}
+								data-ui-inner={undefined}
+							/>
+						</Container>
+					</Container>
+				) : null}
+
 				<ChatInput
+					className={[
+						"relative",
+					]}
 					onSubmit={async (text) => {
 						chat.submit(
 							uploads.length > 0
@@ -85,7 +102,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 					cancel={
 						<Button
 							data-action={"stop agent stream"}
-							iconEnabled={CancelIcon}
+							iconEnabled={"icon-[solar--stop-linear]"}
 							onClick={chat.cancel}
 							iconProps={{
 								"data-ui-text": "xl",
@@ -116,6 +133,25 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 					}
 					{...props}
 				/>
+
+				<Container
+					data-ui-flow={"horizontal"}
+					data-ui-items={"center"}
+					data-ui-justify={"end"}
+				>
+					<Tx
+						label={"Thread token usage (label)"}
+						data-ui-text={"xs"}
+						data-ui-opacity={"3"}
+					/>
+
+					<TokenUsage
+						threadId={chat.threadId}
+						data-ui-text={"xs"}
+						data-ui-opacity={"4"}
+						data-ui-inner={"xs"}
+					/>
+				</Container>
 			</Container>
 		</Container>
 	);

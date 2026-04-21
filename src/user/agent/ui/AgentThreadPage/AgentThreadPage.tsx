@@ -6,26 +6,24 @@ import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { Agent } from "~/user/agent/ui/Agent";
-import { TokenUsage } from "~/user/agent/ui/TokenUsage";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 
-export namespace AgentPage {
+export namespace AgentThreadPage {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
-		//
+		threadId: string;
 	}
 }
 
-export const AgentPage = withFallback<AgentPage.Props, TitleContainer>(
-	(props) => {
+export const AgentThreadPage = withFallback<AgentThreadPage.Props, TitleContainer>(
+	({ threadId, ...props }) => {
 		const locale = useLocale();
 
 		return (
 			<TitleContainer
 				textTitle={translator.text("Agent (title)")}
-				textSubtitle={<TokenUsage />}
 				left={
 					<BackHomeButton
-						to="/$locale/app/home"
+						to="/$locale/app/agent/welcome"
 						params={{
 							locale,
 						}}
@@ -34,7 +32,10 @@ export const AgentPage = withFallback<AgentPage.Props, TitleContainer>(
 				right={<HomeMenuButton />}
 				{...props}
 			>
-				<Agent _suspense={"I know"} />
+				<Agent
+					_suspense={"I know"}
+					threadId={threadId}
+				/>
 			</TitleContainer>
 		);
 	},
@@ -46,7 +47,7 @@ export const AgentPage = withFallback<AgentPage.Props, TitleContainer>(
 				textTitle={translator.text("Agent (title)")}
 				left={
 					<BackHomeButton
-						to="/$locale/app/home"
+						to="/$locale/app/agent/welcome"
 						params={{
 							locale,
 						}}

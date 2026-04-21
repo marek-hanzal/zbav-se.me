@@ -101,6 +101,9 @@
 0e6cf0e3ce32e8ff03c1c483fa275fb0f2baa4ec9e5e3dcc47b5442f:
     ref: Delivery (title)
     value: Možnost předání
+0f1c8ab326544422049b9f8d33680aeaf123de9ceb1977d85f8e91b7:
+    ref: Continue chat (label)
+    value: Pokračovat
 0f44d510d8a8cf53325df192dfac3d02f4299c2d9a4a5dbe2dad9a6f:
     ref: Price type not set
     value: Typ ceny nemáš nastavený
@@ -454,13 +457,7 @@
 574e8d7959d46895c001cb1a6a5edbd5a1a94662288fdcf36ddff0e1:
     ref: Agent welcome (message)
     value: |
-        Jsem tvůj osobní asistent, který si poradí s různýma úlohama:
-        - vyhledávání inzerátů
-        - příprava inzerátů (uložené inzeráty)
-        - správa zpráv v rámci obchodů
-        - dotazy ohledně aplikace
-        - shrnutí událostí
-        - ...a spousta dalšího, stačí se zeptat!
+        Jsem tvůj osobní asistent, který si poradí s různýma úlohama!
 57cf1f27b485ad4ccfff9487dc973c5a5a9d3582b03670f822646bc0:
     ref: Transaction not accepted - seller (message)
     value: Zprávy můžeš psát až po přijetí transakce.
@@ -623,9 +620,6 @@
 7b76eaae7e44c7090565c9a3f68a77cc082807fbf7f1c1111dfadb29:
     ref: Unignore listing (button)
     value: Zrušit ignoraci
-7b77281c6dc1a4d0b28c3aae49154ee4e5f2b98740508ea2dba60141:
-    ref: Clear chat history (label)
-    value: Smazat historii
 7b93a66595d88c60241f7eb48599cc8738e54decdbca0730a8aa958d:
     ref: Buyer load (hint)
     value: >
@@ -839,10 +833,13 @@ Age 6 (label):
     static: true
     value: A — Na startu
 Agent tool - activity_collection:
-    value: Zkoumám novinky
+    value: 🗞 Zkoumám novinky
+    static: true
+Agent tool - feed_collection:
+    value: 👀 Koukám na tvoje uložené inzeráty
     static: true
 Agent tool - buyer_listing_collection:
-    value: Prohledávám inzeráty
+    value: 🔍 Prohledávám inzeráty
     static: true
 Agent tool - buyer_transaction_collection:
     value: Zkoumám zprávy v tvých nákupech
@@ -853,6 +850,9 @@ Agent tool - buyer_transaction_create:
 Agent tool - category_collection:
     value: Zkoumám kategorie
     static: true
+Agent tool - draft_collection:
+    value: Zkoumám tvé uložené inzeráty
+    static: true
 Agent tool - location_autocomplete:
     value: Zjišťuju si adresu
     static: true
@@ -861,6 +861,12 @@ Agent tool - route:
     static: true
 Agent tool - seller_listing_collection:
     value: Koukám na tvé inzeráty
+    static: true
+Agent tool - feed_create:
+    value: Ukládám nové hledání pro inzeráty
+    static: true
+Agent tool - feed_patch:
+    value: Upravuji nastavení uloženého hledání inzerátů
     static: true
 Agent tool - seller_transaction_collection:
     value: Zkoumám zprávy v tvých prodejích
@@ -872,10 +878,10 @@ Agent tool - transaction_entry_create:
     value: Posílám zprávu
     static: true
 Agent tool - upload_create:
-    value: Nahrávám obsah
+    value: 💾 Nahrávám obsah
     static: true
-Agent tool - draft_collection:
-    value: Zkoumám tvé uložené inzeráty
+Agent tool - knowledge:
+    value: 🧠 Sháním znalosti
     static: true
 Buyer activity high:
     static: true
@@ -1205,6 +1211,9 @@ a78ed5f38f0cf730dc1a618d9df1ca5011cc5d947d61f00075e0c5da:
     value: >
         Nastavuje očekávání, kdy se kupující např. po předání balíčku už ke
         zprávám nevrátí a obchod neuzavře.
+a7f5e5490a00e11ff6314e82bf18c26edb4ec0a26ccb4ad6260fb578:
+    ref: Thread token usage (label)
+    value: Projebané tokeny
 a92a914e77188202f38d6b42be76d7f92cee60d777d0c00ca5aecbde:
     ref: Package - Tracking number (placeholder)
     value: Např. Z488654
@@ -1475,6 +1484,9 @@ de75432fdd962d61c3b89d0c4098554de1f957cfd40f3f2fc50967c0:
 de8832ba89f066ff957f2387c53ed8c543d4ed977d7fac554ab3f590:
     ref: Go to my feed (button)
     value: Objevuj!
+e231f819f6eaa8ba876bc47eaa113f9ce0e4663ffd510bcf92f04855:
+    ref: Create new chat (label)
+    value: Nový chat
 e24d776c431f2cb9d46c2bbd22e31dcbf906057798f788ae78b0e9c8:
     ref: Draft - those others (title)
     value: Další volby

@@ -5,11 +5,22 @@ import { getRootLogger } from "~/common/log/getRootLogger";
 import { transactionCollectionFn } from "~/seller/transaction/fn/transactionCollectionFn";
 import { transactionCountFn } from "~/seller/transaction/fn/transactionCountFn";
 import { TransactionToolQuerySchema } from "~/seller/transaction/server/schema/TransactionToolQuerySchema";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
 	"toolTransactionCollection",
 ]);
+
+const InputSchema = z
+	.looseObject({
+		type: z.enum([
+			"count",
+			"collection",
+		]),
+		query: TransactionToolQuerySchema,
+	})
+	.strip();
 
 export const toolTransactionCollection = tool({
 	name: "seller-transaction-collection",
@@ -24,20 +35,14 @@ Modes:
 Use for seller-side transaction lookup and transaction metadata.
 Do not use for trade message/timeline content.
     `.trim(),
-	parameters: z
-		.looseObject({
-			type: z.enum([
-				"count",
-				"collection",
-			]),
-			query: TransactionToolQuerySchema,
-		})
-		.strip(),
-	async execute({ type, query }) {
+	strict: true,
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolTransactionCollection", {
-			type,
-			query,
+			input,
 		});
+
+		const { type, query } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("count", async () => {

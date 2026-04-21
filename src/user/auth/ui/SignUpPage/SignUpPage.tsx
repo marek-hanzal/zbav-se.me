@@ -86,13 +86,14 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ...props }) => {
 			data-ui-position="relative"
 			data-ui-height="full"
 			data-ui-width="full"
+			data-ui-inner={"default"}
 			{...props}
 		>
 			<Container
 				data-ui-layout="vertical-flex"
 				data-ui-scroll="vertical"
 				data-ui-width="full"
-				data-ui-height="full"
+				data-ui-height="content"
 			>
 				<Status
 					icon={
@@ -105,7 +106,6 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ...props }) => {
 							<Logo />
 						</LinkTo>
 					}
-					textTitle={translator.text("Register (title)")}
 					data-ui-inner="default"
 				>
 					<form

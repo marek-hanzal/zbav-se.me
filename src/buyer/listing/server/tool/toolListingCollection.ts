@@ -5,11 +5,22 @@ import { listingCollectionFn } from "~/buyer/listing/fn/listingCollectionFn";
 import { listingCountFn } from "~/buyer/listing/fn/listingCountFn";
 import { ListingToolQuerySchema } from "~/buyer/listing/server/schema/ListingToolQuerySchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
 	"toolListingCollection",
 ]);
+
+const InputSchema = z
+	.looseObject({
+		type: z.enum([
+			"count",
+			"collection",
+		]),
+		query: ListingToolQuerySchema,
+	})
+	.strip();
 
 export const toolListingCollection = tool({
 	name: "buyer-listing-collection",
@@ -26,20 +37,14 @@ Do not use for seller-owned listing management.
 
 Prefer query filters such as category, location, price, favourite, ignored, feed, or transaction when relevant.
     `.trim(),
-	parameters: z
-		.looseObject({
-			type: z.enum([
-				"count",
-				"collection",
-			]),
-			query: ListingToolQuerySchema,
-		})
-		.strip(),
-	async execute({ type, query }) {
+	strict: true,
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolListingCollection", {
-			type,
-			query,
+			input,
 		});
+
+		const { type, query } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("count", async () => {

@@ -13,11 +13,11 @@ export const AgentUsageMigration: Migration = {
 			.addColumn("output", "integer", (col) => col.notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
-				"agent_usage_[userId]_fk",
+				"agent_usage_[threadId]_fk",
 				[
-					"userId",
+					"threadId",
 				],
-				"user",
+				"agent_thread",
 				[
 					"id",
 				],

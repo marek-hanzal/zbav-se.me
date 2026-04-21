@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
+import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -17,15 +18,15 @@ describe("galleryItemCollectionFx", () => {
 
 			const sellerFirstUpload = yield* uploadCreateFx({
 				userId: seller.id,
-				url: "https://cdn.zbav-se.me/gallery-item-collection-1.jpg",
+				url: testUploadUrl("gallery-item-collection-1.jpg"),
 			});
 			const sellerSecondUpload = yield* uploadCreateFx({
 				userId: seller.id,
-				url: "https://cdn.zbav-se.me/gallery-item-collection-2.jpg",
+				url: testUploadUrl("gallery-item-collection-2.jpg"),
 			});
 			const buyerUpload = yield* uploadCreateFx({
 				userId: buyer.id,
-				url: "https://cdn.zbav-se.me/gallery-item-collection-3.jpg",
+				url: testUploadUrl("gallery-item-collection-3.jpg"),
 			});
 
 			const sellerDraft = yield* draftCreateFx({

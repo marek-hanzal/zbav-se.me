@@ -9,10 +9,10 @@ export const FeedTableSchema = z
 		userId: z.string().meta({
 			description: "ID of the user who created the feed",
 		}),
-		locationId: z.string().nullable().meta({
+		locationId: z.string().nullish().meta({
 			description: "ID of the location associated with the feed",
 		}),
-		uploadId: z.string().nullable().meta({
+		uploadId: z.string().nullish().meta({
 			description:
 				"Hero image for this feed (usually selected from the listings in the feed)",
 		}),

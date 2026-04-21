@@ -1,14 +1,18 @@
 import type { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStreamQuerySchema";
 
-export const AgentStreamItemsQuery = {
-	sort: [
-		{
-			field: "sort",
-			order: "asc",
+export const AgentStreamItemsQuery = (threadId: string) =>
+	({
+		where: {
+			threadId,
 		},
-	],
-	cursor: {
-		page: 0,
-		size: 512,
-	},
-} satisfies AgentStreamQuerySchema.Type;
+		sort: [
+			{
+				field: "sort",
+				order: "asc",
+			},
+		],
+		cursor: {
+			page: 0,
+			size: 512,
+		},
+	}) satisfies AgentStreamQuerySchema.Type;

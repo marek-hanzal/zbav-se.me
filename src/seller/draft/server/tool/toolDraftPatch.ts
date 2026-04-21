@@ -2,6 +2,7 @@ import { tool } from "@openai/agents";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { draftPatchFn } from "~/seller/draft/fn/draftPatchFn";
 import { DraftToolPatchSchema } from "~/seller/draft/server/schema/DraftToolPatchSchema";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -29,11 +30,14 @@ Enum values:
 - restriction restricted: Strongly restricted content.
 - expiresAt: 7-days, 14-days, 1-month.
     `.trim(),
-	parameters: DraftToolPatchSchema,
-	async execute(data) {
+	strict: true,
+	parameters: unsafeJsonSchema(DraftToolPatchSchema),
+	async execute(input) {
 		logger.trace("toolDraftPatch", {
-			data,
+			data: input,
 		});
+
+		const data = await DraftToolPatchSchema.parseAsync(input);
 
 		return draftPatchFn({
 			data,

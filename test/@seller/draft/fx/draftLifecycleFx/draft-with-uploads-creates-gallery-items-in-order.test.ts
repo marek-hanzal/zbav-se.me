@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
+import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
@@ -14,11 +15,11 @@ describe("draft lifecycle", () => {
 			const seller = yield* leaseTestUserFx({});
 
 			const upload1 = yield* uploadCreateFx({
-				url: "https://cdn.zbav-se.me/test1.jpg",
+				url: testUploadUrl("test1.jpg"),
 				userId: seller.id,
 			});
 			const upload2 = yield* uploadCreateFx({
-				url: "https://cdn.zbav-se.me/test2.jpg",
+				url: testUploadUrl("test2.jpg"),
 				userId: seller.id,
 			});
 

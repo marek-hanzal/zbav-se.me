@@ -25,6 +25,7 @@ export const withRunnerMiddleware = createMiddleware()
 		const aiConfig = ServerAiSchema.parse(process.env);
 
 		const runner = new Runner({
+			workflowName: "zbav-se.me agent",
 			model: aiConfig.SERVER_AI_MODEL,
 			modelProvider: new OpenAIProvider({
 				baseURL: aiConfig.SERVER_AI_SERVER_URL,

@@ -14,13 +14,13 @@ import { withAgentUsageQuery } from "~/user/agent/query/withAgentUsageQuery";
 
 export namespace useAgent {
 	export interface Props extends MarkSuspense.Props {
-		//
+		threadId: string;
 	}
 
 	export type Use = ReturnType<typeof useAgent>;
 }
 
-export const useAgent = ({ _suspense }: useAgent.Props) => {
+export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const liveQuery = withAgentLiveQuery.useSet();
@@ -31,10 +31,14 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 
 	const link = useMemo(() => {
 		return router.buildLocation({
-			to: "/api/user/agent",
+			to: "/api/agent/$threadId",
+			params: {
+				threadId,
+			},
 		});
 	}, [
 		router,
+		threadId,
 	]);
 
 	useEffect(() => {
@@ -50,7 +54,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 					...(current ?? []),
 					...input,
 				] satisfies AgentInputItem[];
-			}, AgentStreamItemsQuery);
+			}, AgentStreamItemsQuery(threadId));
 
 			liveQuery(() => []);
 
@@ -147,6 +151,7 @@ export const useAgent = ({ _suspense }: useAgent.Props) => {
 	}, []);
 
 	return {
+		threadId,
 		mutation,
 		submit,
 		input: {

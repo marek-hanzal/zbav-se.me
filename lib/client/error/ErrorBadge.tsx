@@ -21,6 +21,7 @@ export const ErrorBadge: FC<ErrorBadge.Props> = ({ error, placeholder, ...props 
 				data-ui={"ErrorBadge"}
 				data-ui-text="default"
 				data-ui-badge="xs"
+				data-ui-background={undefined}
 				data-ui-shadow={false}
 				data-ui-border={false}
 				{...props}

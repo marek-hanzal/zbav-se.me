@@ -7,32 +7,37 @@ export namespace KyselySession {
 	export interface Props {
 		kysely: Kysely<Database>;
 		userId: string;
-		threadId?: string;
+		threadId: string;
 	}
 }
 
 export class KyselySession implements Session {
-	public constructor(private readonly props: KyselySession.Props) {
-		//
+	private readonly kysely: Kysely<Database>;
+	private readonly threadId: string;
+	private readonly userId: string;
+
+	public constructor({ kysely, threadId, userId }: KyselySession.Props) {
+		this.kysely = kysely;
+		this.threadId = threadId;
+		this.userId = userId;
 	}
 
 	public async getSessionId(): Promise<string> {
-		return this.props.threadId ?? this.props.userId;
+		return this.threadId;
 	}
 
 	public async getItems(limit?: number): Promise<AgentInputItem[]> {
-		const threadId = this.props.threadId ?? this.props.userId;
-		const recent = this.props.kysely
+		const recent = this.kysely
 			.selectFrom("agent_stream")
 			.select([
 				"payload",
 				"sort",
 			])
-			.where("userId", "=", this.props.userId)
-			.where("threadId", "=", threadId)
+			.where("userId", "=", this.userId)
+			.where("threadId", "=", this.threadId)
 			.orderBy("sort", "desc");
 
-		const rows = await this.props.kysely
+		const rows = await this.kysely
 			.selectFrom(
 				(limit !== undefined && limit > 0 ? recent.limit(limit) : recent).as("recent"),
 			)
@@ -48,13 +53,12 @@ export class KyselySession implements Session {
 			return;
 		}
 
-		const threadId = this.props.threadId ?? this.props.userId;
-		await this.props.kysely.transaction().execute(async (trx) => {
+		await this.kysely.transaction().execute(async (trx) => {
 			const current = await trx
 				.selectFrom("agent_stream")
 				.select(({ fn }) => fn.max<number>("sort").as("maxSort"))
-				.where("userId", "=", this.props.userId)
-				.where("threadId", "=", threadId)
+				.where("userId", "=", this.userId)
+				.where("threadId", "=", this.threadId)
 				.executeTakeFirst();
 
 			let nextSort = current?.maxSort ?? 0;
@@ -64,8 +68,8 @@ export class KyselySession implements Session {
 				.values(
 					items.map((payload) => ({
 						id: genId(),
-						userId: this.props.userId,
-						threadId,
+						userId: this.userId,
+						threadId: this.threadId,
 						payload,
 						sort: ++nextSort,
 					})),
@@ -75,16 +79,15 @@ export class KyselySession implements Session {
 	}
 
 	public async popItem(): Promise<AgentInputItem | undefined> {
-		const threadId = this.props.threadId ?? this.props.userId;
-		return await this.props.kysely.transaction().execute(async (trx) => {
+		return await this.kysely.transaction().execute(async (trx) => {
 			const row = await trx
 				.selectFrom("agent_stream")
 				.select([
 					"id",
 					(eb) => eb.ref("payload").$castTo<AgentInputItem>().as("payload"),
 				])
-				.where("userId", "=", this.props.userId)
-				.where("threadId", "=", threadId)
+				.where("userId", "=", this.userId)
+				.where("threadId", "=", this.threadId)
 				.orderBy("sort", "desc")
 				.executeTakeFirst();
 
@@ -95,7 +98,7 @@ export class KyselySession implements Session {
 			await trx
 				.deleteFrom("agent_stream")
 				.where("id", "=", row.id)
-				.where("threadId", "=", threadId)
+				.where("threadId", "=", this.threadId)
 				.execute();
 
 			return row.payload;
@@ -103,11 +106,10 @@ export class KyselySession implements Session {
 	}
 
 	public async clearSession(): Promise<void> {
-		const threadId = this.props.threadId ?? this.props.userId;
-		await this.props.kysely
+		await this.kysely
 			.deleteFrom("agent_stream")
-			.where("userId", "=", this.props.userId)
-			.where("threadId", "=", threadId)
+			.where("userId", "=", this.userId)
+			.where("threadId", "=", this.threadId)
 			.execute();
 	}
 }

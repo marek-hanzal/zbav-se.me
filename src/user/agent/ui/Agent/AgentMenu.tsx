@@ -6,9 +6,7 @@ import { Tx } from "@/lib/client/tx";
 import type { StateType } from "@/lib/client/type";
 import { PhotoIcon } from "~/common/ui/icon";
 import { MessageButtonUi } from "~/user/transaction/ui/MessageButtonUi";
-import { TransactionButtonUi } from "~/user/transaction/ui/TransactionButtonUi";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
-import { ClearButton } from "./ClearButton";
 
 export namespace AgentMenu {
 	export interface Props extends Container.Props {
@@ -38,15 +36,6 @@ export const AgentMenu: FC<AgentMenu.Props> = ({ close, galleryState, ...props }
 				>
 					<Tx label="Upload photos (button)" />
 				</Button>
-			</Group>
-
-			<Group>
-				<ClearButton
-					onSuccess={async () => {
-						close();
-					}}
-					{...TransactionButtonUi}
-				/>
 			</Group>
 		</Container>
 	);

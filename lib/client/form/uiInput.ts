@@ -43,7 +43,7 @@ export const uiInput = ({ name = "Input", className, ...ui }: uiInput.Props) => 
 			"data-ui-text": "default",
 			"data-ui-color": "text",
 			"data-ui-border": true,
-			"data-ui-shadow": true,
+			"data-ui-shadow": false,
 			"data-ui-round": "default",
 			"data-ui-width": "full",
 			"data-ui-inner": "default",

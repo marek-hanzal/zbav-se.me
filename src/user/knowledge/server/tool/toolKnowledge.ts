@@ -2,6 +2,7 @@ import { tool } from "@openai/agents";
 import Fuse from "fuse.js";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { getKnowledgeIndex } from "~/user/knowledge/server/service/getKnowledgeIndex";
 
 const logger = getRootLogger([
@@ -9,6 +10,14 @@ const logger = getRootLogger([
 	"tool",
 	"toolKnowledge",
 ]);
+
+const InputSchema = z
+	.looseObject({
+		query: z.string().describe("Search query."),
+		limit: z.coerce.number().int().positive().max(20).optional().describe("Max results."),
+		withContent: z.boolean().optional().default(false),
+	})
+	.strip();
 
 export const toolKnowledge = tool({
 	name: "knowledge",
@@ -18,21 +27,16 @@ Search knowledge topics by query or exact key.
 Return the best matching topics.
 Set withContent to include full topic content.
     `.trim(),
-	parameters: z
-		.looseObject({
-			input: z.string().describe("Search query."),
-			limit: z.coerce.number().int().positive().max(20).optional().describe("Max results."),
-			withContent: z.boolean().optional().default(false),
-		})
-		.strip(),
-	async execute({ input, limit, withContent }) {
+	strict: true,
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolKnowledge", {
 			input,
-			limit,
-			withContent,
 		});
 
-		const normalized = input.trim();
+		const { query, limit, withContent } = await InputSchema.parseAsync(input);
+
+		const normalized = query.trim();
 		const index = getKnowledgeIndex().map(
 			({ content, data }) =>
 				({

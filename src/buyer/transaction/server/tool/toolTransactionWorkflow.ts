@@ -6,11 +6,30 @@ import { transactionDisputeFn } from "~/buyer/transaction/fn/transactionDisputeF
 import { transactionRejectFn } from "~/buyer/transaction/fn/transactionRejectFn";
 import { transactionSuccessFn } from "~/buyer/transaction/fn/transactionSuccessFn";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
 	"toolTransactionWorkflow",
 ]);
+
+const InputSchema = z
+	.looseObject({
+		transactionId: z.string().meta({
+			description: "Exact buyer-side transaction ID",
+		}),
+		type: z
+			.enum([
+				"close",
+				"dispute",
+				"reject",
+				"success",
+			])
+			.meta({
+				description: "Buyer workflow action to execute",
+			}),
+	})
+	.strip();
 
 export const toolTransactionWorkflow = tool({
 	name: "buyer-transaction-workflow",
@@ -29,28 +48,14 @@ Supported actions:
 
 Requires the exact buyer-side transaction id.
 	`.trim(),
-	parameters: z
-		.looseObject({
-			transactionId: z.string().meta({
-				description: "Exact buyer-side transaction ID",
-			}),
-			type: z
-				.enum([
-					"close",
-					"dispute",
-					"reject",
-					"success",
-				])
-				.meta({
-					description: "Buyer workflow action to execute",
-				}),
-		})
-		.strip(),
-	async execute({ type, transactionId }) {
+	strict: true,
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolTransactionWorkflow", {
-			type,
-			transactionId,
+			input,
 		});
+
+		const { type, transactionId } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("close", () => {

@@ -11,7 +11,7 @@ export const withLocationFetchQuery = withQuery({
 	errors: {} as {
 		query: locationFetchFn.Error;
 	},
-	keys(data) {
+	keys(data: LocationQuerySchema.Type) {
 		return [
 			"location",
 			"fetch",

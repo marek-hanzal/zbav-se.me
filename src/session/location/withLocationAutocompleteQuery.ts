@@ -12,7 +12,7 @@ export const withLocationAutocompleteQuery = withQuery({
 	errors: {} as {
 		query: locationAutocompleteFn.Error;
 	},
-	keys(data) {
+	keys(data: LocationAutocompleteSchema.Type) {
 		return [
 			"location",
 			"autocomplete",

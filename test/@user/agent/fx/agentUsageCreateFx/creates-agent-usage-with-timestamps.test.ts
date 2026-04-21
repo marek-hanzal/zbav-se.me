@@ -11,6 +11,20 @@ describe("agentUsageCreateFx", () => {
 
 		return Effect.gen(function* () {
 			const { seller } = yield* createUsersFx({});
+			const now = new Date("2026-01-01T00:00:00.000Z");
+
+			yield* Effect.promise(() =>
+				database.kysely
+					.insertInto("agent_thread")
+					.values({
+						id: "thread-a",
+						userId: seller.id,
+						createdAt: now,
+						updatedAt: now,
+						archivedAt: null,
+					})
+					.execute(),
+			);
 
 			yield* agentUsageCreateFx({
 				userId: seller.id,

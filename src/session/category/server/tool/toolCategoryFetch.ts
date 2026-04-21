@@ -1,5 +1,6 @@
 import { tool } from "@openai/agents";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { categoryFetchFn } from "~/session/category/fn/categoryFetchFn";
 import { CategoryQuerySchema } from "~/session/category/server/schema/CategoryQuerySchema";
 
@@ -21,11 +22,14 @@ export const toolCategoryFetch = tool({
         - category: Category name.
         - sort: Explicit category sort order.
     `.trim(),
-	parameters: CategoryQuerySchema,
-	async execute(data) {
+	strict: true,
+	parameters: unsafeJsonSchema(CategoryQuerySchema),
+	async execute(input) {
 		logger.trace("toolCategoryFetch", {
-			data,
+			input,
 		});
+
+		const data = await CategoryQuerySchema.parseAsync(input);
 
 		return categoryFetchFn({
 			data,

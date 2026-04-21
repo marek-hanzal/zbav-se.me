@@ -4,6 +4,7 @@ import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
+import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 describe("uploadCreateFx", () => {
@@ -12,6 +13,8 @@ describe("uploadCreateFx", () => {
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
+			const uploadContext = yield* UploadContextFx;
+			const validUrl = `${uploadContext.cdn.replace(/\/$/, "")}/upload-create-valid.jpg`;
 
 			const invalid = yield* Effect.either(
 				uploadCreateFx({
@@ -37,10 +40,10 @@ describe("uploadCreateFx", () => {
 
 			const upload = yield* uploadCreateFx({
 				userId: user.id,
-				url: "https://cdn.zbav-se.me/upload-create-valid.jpg",
+				url: validUrl,
 			});
 
-			expect(upload.url).toBe("https://cdn.zbav-se.me/upload-create-valid.jpg");
+			expect(upload.url).toBe(validUrl);
 
 			const storedUpload = yield* Effect.promise(() =>
 				database.kysely
@@ -57,7 +60,7 @@ describe("uploadCreateFx", () => {
 			expect(storedUpload).toEqual({
 				id: upload.id,
 				userId: user.id,
-				url: "https://cdn.zbav-se.me/upload-create-valid.jpg",
+				url: validUrl,
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

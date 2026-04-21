@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
 import { uploadCollectionFx } from "~/user/upload/server/fx/uploadCollectionFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 import { uploadFetchFx } from "~/user/upload/server/fx/uploadFetchFx";
@@ -13,18 +14,20 @@ describe("uploadCollectionFx", () => {
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
+			const uploadContext = yield* UploadContextFx;
+			const cdn = uploadContext.cdn.replace(/\/$/, "");
 
 			const first = yield* uploadCreateFx({
 				userId: users.seller.id,
-				url: "https://cdn.zbav-se.me/upload-a.jpg",
+				url: `${cdn}/upload-a.jpg`,
 			});
 			const second = yield* uploadCreateFx({
 				userId: users.seller.id,
-				url: "https://cdn.zbav-se.me/upload-b.jpg",
+				url: `${cdn}/upload-b.jpg`,
 			});
 			yield* uploadCreateFx({
 				userId: users.stranger.id,
-				url: "https://cdn.zbav-se.me/upload-hidden.jpg",
+				url: `${cdn}/upload-hidden.jpg`,
 			});
 
 			const collection = yield* uploadCollectionFx({

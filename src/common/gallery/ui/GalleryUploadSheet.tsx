@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { Container } from "@/lib/client/container";
 import type { withMutation } from "@/lib/client/mutation";
 import type { StateType } from "@/lib/client/type";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
+import { withUploadMutation } from "~/user/upload/mutation/withUploadMutation";
 
 export namespace GalleryUploadSheet {
 	export interface Uploads {
@@ -42,6 +43,10 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, con
 	...props
 }: GalleryUploadSheet.Props<TData, TResult>) => {
 	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
+	const mutationId = useId();
+	const isUploading = withUploadMutation.useIsMutating({
+		mutationId,
+	});
 	const mutation = withMutation.useMutation({
 		async onPostMutation({ result }) {
 			onSuccess(result);
@@ -69,6 +74,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, con
 						set: setUploadIds,
 					}}
 					limit={limit}
+					mutationId={mutationId}
 				/>
 
 				<SaveContainer
@@ -80,7 +86,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, con
 						mutation.mutateAsync(toMutation(uploadIds));
 					}}
 					loading={mutation.isPending}
-					disabled={!allowClear && uploadIds.length === 0}
+					disabled={isUploading || (!allowClear && uploadIds.length === 0)}
 				/>
 			</Container>
 		</BottomSheet>

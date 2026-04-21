@@ -5,11 +5,22 @@ import { transactionCollectionFn } from "~/buyer/transaction/fn/transactionColle
 import { transactionCountFn } from "~/buyer/transaction/fn/transactionCountFn";
 import { TransactionToolQuerySchema } from "~/buyer/transaction/server/schema/TransactionToolQuerySchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
 	"toolTransactionCollection",
 ]);
+
+const InputSchema = z
+	.looseObject({
+		type: z.enum([
+			"count",
+			"collection",
+		]),
+		query: TransactionToolQuerySchema,
+	})
+	.strip();
 
 export const toolTransactionCollection = tool({
 	name: "buyer-transaction-collection",
@@ -24,20 +35,14 @@ Modes:
 Use for buyer-side transaction lookup and transaction metadata.
 Do not use for trade message/timeline content; use the transaction entry tool for that.
     `.trim(),
-	parameters: z
-		.looseObject({
-			type: z.enum([
-				"count",
-				"collection",
-			]),
-			query: TransactionToolQuerySchema,
-		})
-		.strip(),
-	async execute({ type, query }) {
+	strict: true,
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolTransactionCollection", {
-			type,
-			query,
+			input,
 		});
+
+		const { type, query } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("count", async () => {
@@ -65,7 +70,7 @@ Do not use for trade message/timeline content; use the transaction entry tool fo
 				return {
 					count: items.length,
 					items,
-				} as const;
+				};
 			})
 			.exhaustive();
 	},

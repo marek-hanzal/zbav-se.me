@@ -2,6 +2,7 @@ import { tool } from "@openai/agents";
 import { match } from "ts-pattern";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { transactionEntryCollectionFn } from "~/user/transaction-entry/fn/transactionEntryCollectionFn";
 import { transactionEntryCountFn } from "~/user/transaction-entry/fn/transactionEntryCountFn";
 import { TransactionEntryToolQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryToolQuerySchema";
@@ -10,6 +11,16 @@ const logger = getRootLogger([
 	"tool",
 	"toolTransactionEntryCollection",
 ]);
+
+const InputSchema = z
+	.looseObject({
+		type: z.enum([
+			"count",
+			"collection",
+		]),
+		query: TransactionEntryToolQuerySchema,
+	})
+	.strip();
 
 export const toolTransactionEntryCollection = tool({
 	name: "transaction-entry-collection",
@@ -24,20 +35,14 @@ Modes:
 Use for trade message content, timeline content, structured exchange data, and transaction history.
 Prefer an exact transactionId when available.
     `.trim(),
-	parameters: z
-		.looseObject({
-			type: z.enum([
-				"count",
-				"collection",
-			]),
-			query: TransactionEntryToolQuerySchema,
-		})
-		.strip(),
-	async execute({ type, query }) {
+	strict: true,
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolTransactionEntryCollection", {
-			type,
-			query,
+			input,
 		});
+
+		const { type, query } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("count", async () => {

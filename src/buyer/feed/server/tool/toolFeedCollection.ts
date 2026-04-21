@@ -5,11 +5,22 @@ import { feedCollectionFn } from "~/buyer/feed/fn/feedCollectionFn";
 import { feedCountFn } from "~/buyer/feed/fn/feedCountFn";
 import { FeedToolQuerySchema } from "~/buyer/feed/server/schema/FeedToolQuerySchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
 	"tool",
 	"toolFeedCollection",
 ]);
+
+const InputSchema = z
+	.looseObject({
+		type: z.enum([
+			"count",
+			"collection",
+		]),
+		query: FeedToolQuerySchema,
+	})
+	.strip();
 
 export const toolFeedCollection = tool({
 	name: "feed-collection",
@@ -23,20 +34,14 @@ Modes:
 
 Use only user-facing feeds (type: user), not internal search feeds (type: search).
     `.trim(),
-	parameters: z
-		.looseObject({
-			type: z.enum([
-				"count",
-				"collection",
-			]),
-			query: FeedToolQuerySchema,
-		})
-		.strip(),
-	async execute({ type, query }) {
+	strict: true,
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolFeedCollection", {
-			type,
-			query,
+			input,
 		});
+
+		const { type, query } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("count", async () => {

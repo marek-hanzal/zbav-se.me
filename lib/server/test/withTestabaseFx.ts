@@ -172,6 +172,9 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 			 * This ensures early we're able to create new databases from the template.
 			 */
 			await sql`CREATE DATABASE dummy TEMPLATE ${sql.ref(template)};`.execute(kysely);
+			await sql`ALTER DATABASE ${sql.ref(template)} WITH ALLOW_CONNECTIONS = false;`.execute(
+				kysely,
+			);
 			await kysely.destroy();
 		});
 	});

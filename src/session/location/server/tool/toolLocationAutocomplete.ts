@@ -1,5 +1,6 @@
 import { tool } from "@openai/agents";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { locationAutocompleteFn } from "~/session/location/fn/locationAutocompleteFn";
 import { LocationAutocompleteSchema } from "~/session/location/server/schema/LocationAutocompleteSchema";
 
@@ -20,11 +21,14 @@ or a location id. Return compact candidates; do not guess an id when multiple ca
 Boundaries:
 - Guess a "lang" from the user's language
     `.trim(),
-	parameters: LocationAutocompleteSchema,
-	async execute(data) {
+	strict: true,
+	parameters: unsafeJsonSchema(LocationAutocompleteSchema),
+	async execute(input) {
 		logger.trace("toolLocationAutocomplete", {
-			data,
+			input,
 		});
+
+		const data = await LocationAutocompleteSchema.parseAsync(input);
 
 		const matches = await locationAutocompleteFn({
 			data,

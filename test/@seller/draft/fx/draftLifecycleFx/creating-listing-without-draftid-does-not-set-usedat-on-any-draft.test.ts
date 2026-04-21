@@ -4,6 +4,7 @@ import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
+import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
@@ -28,7 +29,7 @@ describe("draft lifecycle", () => {
 				limit: 1,
 			});
 			const upload = yield* uploadCreateFx({
-				url: "https://cdn.zbav-se.me/test.jpg",
+				url: testUploadUrl("test.jpg"),
 				userId: seller.id,
 			});
 

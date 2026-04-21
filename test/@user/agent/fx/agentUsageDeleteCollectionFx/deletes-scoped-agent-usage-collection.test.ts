@@ -18,6 +18,16 @@ const seedAgentUsage = async (
 		createdAt: Date;
 	}>,
 ) => {
+	const now = new Date("2026-01-01T00:00:00.000Z");
+	const threads = rows.map((row) => ({
+		id: row.threadId,
+		userId: row.userId,
+		createdAt: now,
+		updatedAt: now,
+		archivedAt: null,
+	}));
+
+	await database.kysely.insertInto("agent_thread").values(threads).execute();
 	await database.kysely.insertInto("agent_usage").values(rows).execute();
 };
 
