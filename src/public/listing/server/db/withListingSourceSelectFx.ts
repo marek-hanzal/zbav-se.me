@@ -36,7 +36,7 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 			"live",
 		] as const)
 		.where((eb) => {
-			return sql<boolean>`coalesce(${eb.ref("cat.restrictions")}, '{}'::category_restriction_enum[]) <@ array[${sql.join(publicCategoryRestrictions)}]::category_restriction_enum[]`;
+			return sql<boolean>`array[${eb.ref("cat.restriction")}] <@ array[${sql.join(publicCategoryRestrictions)}]::category_restriction_enum[]`;
 		})
 		.where((eb) => {
 			return sql<boolean>`coalesce(${eb.ref("l.restriction")}, ${CategoryRestrictionEnumSchema.enum.none}::category_restriction_enum) = any(array[${sql.join(publicCategoryRestrictions)}]::category_restriction_enum[])`;

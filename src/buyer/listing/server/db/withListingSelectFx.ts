@@ -34,7 +34,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	return listingSourceSelect.selectAll("l").select((eb) => [
 		sql<
 			CategoryRestrictionEnumSchema.Type[]
-		>`coalesce(${eb.ref("cat.restrictions")}, '{}'::category_restriction_enum[]) || COALESCE(array[${eb.ref("l.restriction")}], '{}'::category_restriction_enum[])`.as(
+		>`array[${eb.ref("cat.restriction")}] || COALESCE(array[${eb.ref("l.restriction")}], '{}'::category_restriction_enum[])`.as(
 			"restrictions",
 		),
 		sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
