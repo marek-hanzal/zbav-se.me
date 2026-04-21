@@ -17,7 +17,9 @@ export const withUserRestrictionSourceSelectFx = Effect.fn("withUserRestrictionS
 	function* ({ sort }: withUserRestrictionSourceSelectFx.Props) {
 		const { kysely } = yield* KyselyContextFx;
 
-		let query = kysely.selectFrom("user_restriction as ur");
+		let query = kysely
+			.selectFrom("user_restriction as ur")
+			.where("ur.availableAt", "is not", null);
 
 		for (const item of sort ?? []) {
 			query = match(item.field)

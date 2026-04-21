@@ -9,8 +9,8 @@ import { RestrictionSelect } from "~/common/restriction/ui/RestrictionSelect";
 
 export namespace RestrictionSheet {
 	export interface Props extends BottomSheet.Props {
-		onRestriction(restriction: CategoryRestrictionEnumSchema.Type[]): Promise<any>;
-		restriction: CategoryRestrictionEnumSchema.Type[];
+		onRestriction(restriction: CategoryRestrictionEnumSchema.Type): Promise<any>;
+		restriction: CategoryRestrictionEnumSchema.Type;
 		isPending: boolean;
 	}
 }
@@ -23,7 +23,12 @@ export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 }) => {
 	const selection = useSelection({
 		mode: "single",
-		initial: restriction.map((item) => ({
+		initial: (restriction
+			? [
+					restriction,
+				]
+			: []
+		).map((item) => ({
 			id: item,
 		})),
 	});
@@ -48,7 +53,9 @@ export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 						props.onClose();
 						setTimeout(() => {
 							selection.set(
-								restriction.map((item) => ({
+								[
+									restriction,
+								].map((item) => ({
 									id: item,
 								})),
 							);
@@ -57,7 +64,7 @@ export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 					onSave={() => {
 						props.onClose();
 						onRestriction(
-							selection.optional.multiId() as CategoryRestrictionEnumSchema.Type[],
+							selection.optional.singleId() as CategoryRestrictionEnumSchema.Type,
 						);
 					}}
 					loading={isPending}

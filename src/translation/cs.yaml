@@ -776,6 +776,9 @@
 9b4e31938f7bfe43653601280094968b3e4bab6d2464057c41166c54:
     ref: Transaction row - package activity (label)
     value: Sdílí doručení
+9b6d29168a82d0b11ff7d6fc4b36a86c00907de12dbd869472a05d0d:
+    ref: Restriction settings (title)
+    value: Nastavení omezení
 9be03a22c6dda814a581e5407a9d23f5a7660c55eb918e86f93d2951:
     ref: Listing seller info not available (title)
     value: Zatím nemám dost dat

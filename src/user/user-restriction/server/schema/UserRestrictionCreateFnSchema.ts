@@ -3,7 +3,7 @@ import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRe
 
 export const UserRestrictionCreateFnSchema = z
 	.looseObject({
-		restriction: z.array(CategoryRestrictionEnumSchema).min(1).meta({
+		restriction: CategoryRestrictionEnumSchema.meta({
 			description: "Restriction levels applied to the user",
 		}),
 	})

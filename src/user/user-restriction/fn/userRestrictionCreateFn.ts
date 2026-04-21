@@ -46,7 +46,7 @@ export const userRestrictionCreateFn = createServerFn({
 					availableAt: dateContext
 						.now()
 						.plus({
-							hours: userRestrictionContext.delay,
+							hours: userRestrictionContext.delay[data.restriction],
 						})
 						.toJSDate(),
 				});

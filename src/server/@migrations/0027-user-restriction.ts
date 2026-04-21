@@ -7,8 +7,8 @@ export const UserRestrictionMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
-			.addColumn("restriction", sql`category_restriction_enum[]`, (col) => col.notNull())
-			.addColumn("availableAt", "timestamptz", (col) => col.notNull())
+			.addColumn("restriction", sql`category_restriction_enum`, (col) => col.notNull())
+			.addColumn("availableAt", "timestamptz")
 			.addForeignKeyConstraint(
 				"user_restriction_[userId]_fk",
 				[
@@ -28,8 +28,8 @@ export const UserRestrictionMigration: Migration = {
 		`.execute(db);
 
 		await sql`
-			CREATE INDEX "user_restriction_[restriction]_idx"
-			ON "user_restriction" USING GIN ("restriction");
+			CREATE INDEX "user_restriction_[userId-createdAt]_idx"
+			ON "user_restriction" ("userId", "createdAt" DESC);
 		`.execute(db);
 	},
 };

@@ -13,12 +13,11 @@ export const UserRestrictionTableSchema = z
 			description: "Creation timestamp",
 			type: "string",
 		}),
-		restriction: z.array(CategoryRestrictionEnumSchema).meta({
+		restriction: CategoryRestrictionEnumSchema.meta({
 			description: "Restriction levels applied to the user",
 		}),
-		availableAt: z.coerce.date().meta({
+		availableAt: z.coerce.date().nullable().meta({
 			description: "Timestamp when the user restriction becomes available",
-			type: "string",
 		}),
 	})
 	.meta({

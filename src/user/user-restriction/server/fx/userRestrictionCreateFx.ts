@@ -4,6 +4,7 @@ import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import type { UserRestrictionCreateSchema } from "../schema/UserRestrictionCreateSchema";
 
 export namespace userRestrictionCreateFx {
@@ -24,32 +25,46 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 		availableAt,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
-	const dateContext = yield* DateContextFx;
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
-	const id = genId();
-	const createdAt = dateContext.now().toJSDate();
+			const id = genId();
+			const createdAt = dateContext.now().toJSDate();
 
-	return yield* tryDbFx(async () => {
-		await kysely
-			.insertInto("user_restriction")
-			.values({
-				id,
-				userId,
-				restriction,
-				availableAt,
-				createdAt,
-			})
-			.execute();
+			yield* Effect.promise(async () => {
+				await kysely
+					.updateTable("user_restriction")
+					.set({
+						availableAt: null,
+					})
+					.where("userId", "=", userId)
+					.execute();
+			});
 
-		return {
-			id,
-			userId,
-			restriction,
-			availableAt,
-			createdAt,
-		} as const;
-	});
+			return yield* tryDbFx(async () => {
+				await kysely
+					.insertInto("user_restriction")
+					.values({
+						id,
+						userId,
+						restriction,
+						availableAt,
+						createdAt,
+					})
+					.execute();
+
+				return {
+					id,
+					userId,
+					restriction,
+					availableAt,
+					createdAt,
+				} as const;
+			});
+		}),
+	);
 });
 
 export type userRestrictionCreateFx = ReturnType<typeof userRestrictionCreateFx>;
