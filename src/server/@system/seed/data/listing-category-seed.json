@@ -33979,6 +33979,66 @@
 				"personal",
 				"package"
 			]
+		},
+		{
+			"title": "Atmizoo Vapeshell Boro bridge",
+			"description": "Atmizoo Vapeshell Boro bridge - používaný v Billet Boxu, deck i komín v pořádku, stav odpovídá fotkám.",
+			"pros": [
+				"originální kus",
+				"funkční deck",
+				"jemné doladění airflow",
+				"bez prasklin",
+				"náhradní o-kroužky",
+				"rychlé předání"
+			],
+			"cons": [
+				"běžné stopy po osazení",
+				"bez coilu a vaty",
+				"bez záruky",
+				"bez původní krabičky",
+				"vyžaduje zkušenost s buildem",
+				"pouze pro dospělé"
+			],
+			"priceMin": 700,
+			"priceMax": 2600,
+			"priceSpikes": [
+				3600,
+				5200
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "SXK Boro tank s drip tipem",
+			"description": "SXK Boro tank s drip tipem - používaný jako záložní set, těsnění drží a tank neteče, stav odpovídá fotkám.",
+			"pros": [
+				"tank i drip tip v setu",
+				"těsnění drží",
+				"kompaktní řešení",
+				"bez prasklin",
+				"vhodné jako záloha",
+				"osobní předání možné"
+			],
+			"cons": [
+				"jde o klon",
+				"drobné oděrky",
+				"bez záruky",
+				"bez příslušenství navíc",
+				"nutné vlastní osazení",
+				"pouze pro dospělé"
+			],
+			"priceMin": 200,
+			"priceMax": 900,
+			"priceSpikes": [
+				1300,
+				1800
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
 		}
 	],
 	"vape-elektronicke-cigarety--atomizery-mtl": [
@@ -34222,6 +34282,66 @@
 			"priceSpikes": [
 				3200,
 				4800
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "Lost Vape Thelema Solo 100W",
+			"description": "Lost Vape Thelema Solo 100W - jednobateriový mod v pěkném stavu, používán doma, čip reaguje bez prodlevy.",
+			"pros": [
+				"kompaktní rozměr",
+				"funkční čip",
+				"závit 510 bez vůle",
+				"čitelný displej",
+				"vhodný na 21700",
+				"rychlé předání"
+			],
+			"cons": [
+				"bez článku",
+				"lehké oděrky na bocích",
+				"bez záruky",
+				"bez USB kabelu",
+				"koženka má drobnou patinu",
+				"pouze pro dospělé"
+			],
+			"priceMin": 700,
+			"priceMax": 2200,
+			"priceSpikes": [
+				3000,
+				4200
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "Vaporesso Gen 200 mod",
+			"description": "Vaporesso Gen 200 mod - lehký dvoučlánkový mod s funkční elektronikou, používaný střídavě jako druhé zařízení.",
+			"pros": [
+				"nízká hmotnost",
+				"funkční tlačítka",
+				"závit v pořádku",
+				"rychlá odezva",
+				"vhodný na dva články 18650",
+				"osobní předání možné"
+			],
+			"cons": [
+				"bez baterií",
+				"běžné známky používání",
+				"bez záruky",
+				"lehce ošoupaný lak",
+				"nabíjecí port nepoužívám",
+				"pouze pro dospělé"
+			],
+			"priceMin": 600,
+			"priceMax": 1800,
+			"priceSpikes": [
+				2600,
+				3800
 			],
 			"delivery": [
 				"personal",
@@ -34478,6 +34598,66 @@
 				"personal",
 				"package"
 			]
+		},
+		{
+			"title": "Action Army AAP-01 GBB",
+			"description": "Action Army AAP-01 GBB - lehká plynová pistole na hru i target, zásobník drží tlak a závěr chodí hladce.",
+			"pros": [
+				"spolehlivý chod",
+				"nízká hmotnost",
+				"dobrý základ na upgrade",
+				"zásobník neteče",
+				"rychlé předání",
+				"čistá hlaveň"
+			],
+			"cons": [
+				"běžné známky používání",
+				"bez záruky",
+				"plyn není součástí",
+				"bez kolimátoru a montáže",
+				"jen jeden zásobník",
+				"pouze pro dospělé"
+			],
+			"priceMin": 1500,
+			"priceMax": 3800,
+			"priceSpikes": [
+				5200,
+				7200
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "Hi-Capa 5.1 GBB černá",
+			"description": "Hi-Capa 5.1 GBB černá - používaná na trénink v hale, spoušť i blowback fungují bez problémů, stav odpovídá fotkám.",
+			"pros": [
+				"plynulý blowback",
+				"dobrá přesnost na krátko",
+				"zásobník těsní",
+				"oblíbená platforma",
+				"rychlé předání",
+				"vhodné jako sekundární zbraň"
+			],
+			"cons": [
+				"oděrky na závěru",
+				"bez záruky",
+				"bez plynu",
+				"bez kufříku",
+				"hop-up chce doladit dle střeliva",
+				"pouze pro dospělé"
+			],
+			"priceMin": 1800,
+			"priceMax": 4200,
+			"priceSpikes": [
+				5800,
+				8000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
 		}
 	],
 	"airsoft--airsoftove-pusky": [
@@ -34535,6 +34715,66 @@
 			"priceSpikes": [
 				9000,
 				13000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "E&L AK-74MN Essential",
+			"description": "E&L AK-74MN Essential - poctivá kovová AEG puška, používaná venku, mechabox i hop-up fungují bez problému.",
+			"pros": [
+				"kovové tělo",
+				"solidní základ",
+				"zásobník dobře podává",
+				"sklopná pažba",
+				"rychlé předání",
+				"vhodné i na další upgrade"
+			],
+			"cons": [
+				"vyšší hmotnost",
+				"bez záruky",
+				"běžné oděrky",
+				"baterie není součástí",
+				"bez popruhu",
+				"pouze pro dospělé"
+			],
+			"priceMin": 4500,
+			"priceMax": 9500,
+			"priceSpikes": [
+				13000,
+				18000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "CYMA CM.097B M4 ETU",
+			"description": "CYMA CM.097B M4 ETU - modernější M4 s elektronikou a mlok předpažbím, hraná jednu sezónu, stav odpovídá fotkám.",
+			"pros": [
+				"ETU elektronika",
+				"mlok předpažbí",
+				"rychlá odezva spouště",
+				"rovná hlaveň",
+				"dva zásobníky",
+				"osobní předání možné"
+			],
+			"cons": [
+				"lehké oděrky na těle",
+				"bez záruky",
+				"baterie po sezoně",
+				"bez kufru",
+				"hop-up je potřeba doladit",
+				"pouze pro dospělé"
+			],
+			"priceMin": 5000,
+			"priceMax": 10500,
+			"priceSpikes": [
+				14500,
+				19000
 			],
 			"delivery": [
 				"personal",
@@ -34854,6 +35094,68 @@
 				"post",
 				"package"
 			]
+		},
+		{
+			"title": "sbírka paperbacků pro dospělé 6 ks",
+			"description": "sbírka paperbacků pro dospělé 6 ks - čtené knihy v měkké vazbě, stránky kompletní a čisté, stav odpovídá fotkám.",
+			"pros": [
+				"šest knih v setu",
+				"čitelné bez poškození",
+				"výhodná cena za celek",
+				"diskrétní balení možné",
+				"rychlé předání",
+				"vhodné na doplnění sbírky"
+			],
+			"cons": [
+				"běžné známky čtení",
+				"bez záruky",
+				"měkké vazby mají ohnuté rohy",
+				"nejde o nové vydání",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 150,
+			"priceMax": 600,
+			"priceSpikes": [
+				900,
+				1300
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "vintage magazíny pro dospělé 90. léta",
+			"description": "vintage magazíny pro dospělé 90. léta - několik čísel v jednom balíčku, vhodné spíš pro sběratele, stav odpovídá fotkám.",
+			"pros": [
+				"zajímavý retro obsah",
+				"více kusů v balíčku",
+				"čitelné a kompletní",
+				"vhodné pro sběratele",
+				"diskrétní balení možné",
+				"osobní předání možné"
+			],
+			"cons": [
+				"papír nese známky stáří",
+				"bez záruky",
+				"místy ohnuté rohy",
+				"nejde o top sběratelský stav",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 200,
+			"priceMax": 900,
+			"priceSpikes": [
+				1400,
+				2200
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
 		}
 	],
 	"filmy--pro-dospele": [
@@ -34912,6 +35214,68 @@
 			"priceSpikes": [
 				700,
 				1000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "DVD mix pro dospělé 10 ks",
+			"description": "DVD mix pro dospělé 10 ks - různé starší tituly prodávám jako celek, disky i obaly odpovídají běžnému používání.",
+			"pros": [
+				"deset kusů v lotu",
+				"výhodná cena",
+				"většina disků bez hlubokých škrábanců",
+				"diskrétní balení možné",
+				"rychlé předání",
+				"vhodné jako levný set"
+			],
+			"cons": [
+				"starší vydání",
+				"bez záruky",
+				"některé obaly jsou opotřebené",
+				"bez digitální verze",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 150,
+			"priceMax": 650,
+			"priceSpikes": [
+				1000,
+				1500
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "4K UHD film pro dospělé",
+			"description": "4K UHD film pro dospělé - originální steelbook s diskem v pěkném stavu, vhodné pro sběratele i přehrání.",
+			"pros": [
+				"originální vydání",
+				"steelbook obal",
+				"disk otestovaný",
+				"vyšší kvalita obrazu",
+				"diskrétní balení možné",
+				"osobní předání možné"
+			],
+			"cons": [
+				"jen jeden titul",
+				"bez záruky",
+				"drobné vlásečnice na obalu",
+				"vyšší cena oproti DVD",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 250,
+			"priceMax": 900,
+			"priceSpikes": [
+				1300,
+				1800
 			],
 			"delivery": [
 				"personal",
@@ -34980,6 +35344,66 @@
 				"personal",
 				"package"
 			]
+		},
+		{
+			"title": "Benchmade Griptilian 551",
+			"description": "Benchmade Griptilian 551 - zavírací nůž pro EDC, čepel centrovaná a pojistka funguje bez vůle, stav odpovídá fotkám.",
+			"pros": [
+				"funkční pojistka",
+				"hladké otevírání",
+				"centrovaná čepel",
+				"oblíbený model",
+				"rychlé předání",
+				"vhodné na běžné nošení"
+			],
+			"cons": [
+				"drobné oděrky klipu",
+				"bez záruky",
+				"bez krabičky",
+				"ostří chce lehce dotáhnout",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 1800,
+			"priceMax": 3500,
+			"priceSpikes": [
+				4500,
+				6200
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "Opinel No. 8 Inox olivovník",
+			"description": "Opinel No. 8 Inox olivovník - lehký zavírací nůž s dřevěnou střenkou, používaný spíš na výlety, stav odpovídá fotkám.",
+			"pros": [
+				"nerezová čepel",
+				"lehké provedení",
+				"dřevěná střenka",
+				"funkční pojistka Virobloc",
+				"rychlé předání",
+				"praktická velikost"
+			],
+			"cons": [
+				"běžné známky používání",
+				"bez záruky",
+				"dřevo nese lehkou patinu",
+				"bez pouzdra",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 250,
+			"priceMax": 700,
+			"priceSpikes": [
+				1000,
+				1500
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
 		}
 	],
 	"chladne-zbrane--mece-a-savle": [
@@ -35036,6 +35460,64 @@
 			"priceSpikes": [
 				4500,
 				6500
+			],
+			"delivery": [
+				"personal"
+			]
+		},
+		{
+			"title": "wakizaši dekorativní replika",
+			"description": "wakizaši dekorativní replika - kratší meč s pochvou, vystavený v interiéru, povrch bez větší koroze, stav odpovídá fotkám.",
+			"pros": [
+				"kompaktnější délka",
+				"pochva součástí",
+				"dekorativní vzhled",
+				"zachovalé opletení rukojeti",
+				"rychlé předání",
+				"vhodné na výstavku"
+			],
+			"cons": [
+				"není určené k použití",
+				"bez záruky",
+				"drobné oděrky laku pochvy",
+				"preferuji osobní převzetí",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 800,
+			"priceMax": 2200,
+			"priceSpikes": [
+				3200,
+				4500
+			],
+			"delivery": [
+				"personal"
+			]
+		},
+		{
+			"title": "napoleonská šavle dekorativní replika",
+			"description": "napoleonská šavle dekorativní replika - masivnější kus do sbírky nebo na zeď, koš i čepel působí zachovale.",
+			"pros": [
+				"výrazný dekorativní kus",
+				"solidní délka",
+				"zachovalá čepel",
+				"vhodné do sbírky",
+				"rychlé předání",
+				"pěkný koš rukojeti"
+			],
+			"cons": [
+				"není určené k použití",
+				"bez záruky",
+				"vyšší hmotnost",
+				"jen osobní převzetí",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 1500,
+			"priceMax": 3800,
+			"priceSpikes": [
+				5200,
+				7000
 			],
 			"delivery": [
 				"personal"
@@ -35405,6 +35887,64 @@
 			"priceSpikes": [
 				1800,
 				2600
+			],
+			"delivery": [
+				"personal"
+			]
+		},
+		{
+			"title": "petardy kategorie F3 balení",
+			"description": "petardy kategorie F3 balení - neotevřené originální balení, skladováno v suchu a mimo zdroje tepla, stav odpovídá fotkám.",
+			"pros": [
+				"originální balení",
+				"čitelná kategorizace",
+				"suché skladování",
+				"bez poškození obalu",
+				"rychlé předání",
+				"vhodné na sezonní použití"
+			],
+			"cons": [
+				"pouze osobní předání",
+				"bez záruky",
+				"jen pro dospělé",
+				"nutné bezpečné zacházení",
+				"neposílám balíkově",
+				"stav dle fotek"
+			],
+			"priceMin": 150,
+			"priceMax": 700,
+			"priceSpikes": [
+				1000,
+				1500
+			],
+			"delivery": [
+				"personal"
+			]
+		},
+		{
+			"title": "vulkan a menší baterie set",
+			"description": "vulkan a menší baterie set - několik kusů z loňského nákupu, vše zůstalo v původním balení a bylo v suchu.",
+			"pros": [
+				"více kusů v setu",
+				"originální balení",
+				"skladované v suchu",
+				"vhodné na menší oslavu",
+				"rychlé předání",
+				"rozumná cena za celek"
+			],
+			"cons": [
+				"pouze osobní předání",
+				"bez záruky",
+				"jen pro dospělé",
+				"nutné ověřit termín použitelnosti",
+				"neposílám poštou",
+				"stav dle fotek"
+			],
+			"priceMin": 300,
+			"priceMax": 1100,
+			"priceSpikes": [
+				1600,
+				2400
 			],
 			"delivery": [
 				"personal"
