@@ -56,7 +56,7 @@ export const createListingFx = (
 			locationId: resolvedLocationId,
 			price: 500,
 			priceType: "open",
-			restriction: "none",
+			restriction: null,
 			title,
 			delivery: null,
 			warranty: null,
