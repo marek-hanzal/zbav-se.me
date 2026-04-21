@@ -1126,7 +1126,7 @@ Listing restriction - adult-relaxed (hint):
         "lehké" věci, např. vape.
 Listing restriction - adult-relaxed:
     static: true
-    value: Pouze pro dospělé (18+) - s potvrzením
+    value: Pouze pro dospělé (18+), mírné ověření
 Listing restriction - none (hint):
     static: true
     value: Běžný obsah bez jakéhokoli omezení (pro všechny, vč. mládeže).

@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
@@ -33,12 +34,16 @@ export namespace UserPage {
  * @see src/@routes
  */
 export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
+	const queryClient = useQueryClient();
 	const locale = useLocale();
 	const user = useUser();
 	const restrictionMutation = withUserRestrictionQuery.useCreateMutation({
 		invalidate: [
 			"collection",
 		],
+		onSuccess() {
+			queryClient.clear();
+		},
 	});
 	const {
 		data: [restriction],
