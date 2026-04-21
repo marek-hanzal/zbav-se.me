@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
-import { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
+import { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 
 export const DraftSchema = z

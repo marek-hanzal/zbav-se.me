@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
+import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 
 export const getDefaultListingCreateFx = Effect.gen(function* () {
 	const category = yield* categoryFetchFx({

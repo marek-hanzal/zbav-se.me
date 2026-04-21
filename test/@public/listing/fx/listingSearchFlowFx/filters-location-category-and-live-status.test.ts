@@ -5,12 +5,12 @@ import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/Categ
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { listingCollectionFx } from "~/public/listing/server/fx/listingCollectionFx";
 import { listingCountFx } from "~/public/listing/server/fx/listingCountFx";
-import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
+import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 

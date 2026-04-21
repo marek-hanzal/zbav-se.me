@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { categoryCollectionFx } from "~/user/category/server/fx/categoryCollectionFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { categoryCollectionFx } from "~/user/category/server/fx/categoryCollectionFx";
 
 describe("categoryCollectionFx", () => {
 	it("returns paged data for matching categories and does not create category miss", async () => {

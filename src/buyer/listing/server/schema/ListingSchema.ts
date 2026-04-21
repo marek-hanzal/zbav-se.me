@@ -2,8 +2,8 @@ import { z } from "zod";
 import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
-import { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
+import { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 
 export const ListingSchema = z
