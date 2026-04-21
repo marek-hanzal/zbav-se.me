@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { Container } from "@/lib/client/container";
 import { useSelection } from "@/lib/client/selection";
+import { translator } from "@/lib/common/translator";
 import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { RestrictionSelect } from "~/common/restriction/ui/RestrictionSelect";
@@ -28,7 +29,12 @@ export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 	});
 
 	return (
-		<BottomSheet {...props}>
+		<BottomSheet
+			header={() => ({
+				title: translator.text("Restriction settings (title)"),
+			})}
+			{...props}
+		>
 			<Container
 				data-ui-layout={"vertical-content-footer"}
 				data-ui-height={"full"}
@@ -39,11 +45,11 @@ export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 
 				<SaveContainer
 					onCancel={() => {
-						selection.clear();
+						// selection.clear();
 						props.onClose();
 					}}
 					onSave={() => {
-						selection.clear();
+						// selection.clear();
 						props.onClose();
 						onRestriction(
 							selection.optional.multiId() as CategoryRestrictionEnumSchema.Type[],
