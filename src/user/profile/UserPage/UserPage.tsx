@@ -41,8 +41,8 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 		invalidate: [
 			"collection",
 		],
-		onSuccess() {
-			queryClient.clear();
+		async onSuccess() {
+			return queryClient.clear();
 		},
 	});
 	const {
