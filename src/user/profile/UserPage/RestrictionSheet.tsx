@@ -22,7 +22,7 @@ export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 	...props
 }) => {
 	const selection = useSelection({
-		mode: "multi",
+		mode: "single",
 		initial: restriction.map((item) => ({
 			id: item,
 		})),
@@ -45,11 +45,16 @@ export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 
 				<SaveContainer
 					onCancel={() => {
-						// selection.clear();
 						props.onClose();
+						setTimeout(() => {
+							selection.set(
+								restriction.map((item) => ({
+									id: item,
+								})),
+							);
+						}, 0);
 					}}
 					onSave={() => {
-						// selection.clear();
 						props.onClose();
 						onRestriction(
 							selection.optional.multiId() as CategoryRestrictionEnumSchema.Type[],

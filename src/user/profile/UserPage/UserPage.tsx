@@ -6,7 +6,9 @@ import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
+import { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
+import { toTimeDiff } from "@/lib/common/time";
 import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
@@ -73,6 +75,8 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 				data-ui-flow={"vertical"}
 				data-ui-gap={"default"}
 				data-ui-inner={"default"}
+				data-ui-scroll={"vertical"}
+				data-ui-height={"full"}
 			>
 				<Status
 					data-ui-tone={"brand"}
@@ -97,7 +101,28 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 							id: item,
 						}))}
 						renderFn={({ id }) => {
-							return <Tx label={`Listing restriction - ${id}`} />;
+							return (
+								<Container
+									data-ui-flow={"vertical"}
+									data-ui-gap={"xs"}
+								>
+									<Tx label={`Listing restriction - ${id}`} />
+
+									{restriction ? (
+										<Typo
+											label={toTimeDiff({
+												locale,
+												time: restriction.availableAt,
+											})}
+											data-ui-tone={"brand"}
+											data-ui-theme={"light"}
+											data-ui-color={"lead"}
+											data-ui-text={"sm"}
+											data-ui-opacity={"6"}
+										/>
+									) : null}
+								</Container>
+							);
 						}}
 						action={
 							<Icon
