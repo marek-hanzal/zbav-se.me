@@ -301,7 +301,7 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Atomizéry - Boro",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--atomizery-mtl",
@@ -320,7 +320,7 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Atomizéry - MTL",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--atomizery-dl",
@@ -339,7 +339,7 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Atomizéry - DL",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--atomizery",
@@ -358,7 +358,7 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Atomizéry",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--mody",
@@ -376,7 +376,7 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Mody",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--clanky-baterie",
@@ -394,7 +394,7 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Články (baterie)",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--spiralky",
@@ -412,7 +412,7 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Spirálky",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--prislusenstvi",
@@ -431,7 +431,7 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Příslušenství",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "obleceni-a-doplnky--damske-obleceni",
@@ -2053,7 +2053,7 @@
 		"group": "Domácí zvířata",
 		"category": "Králíci",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "domaci-zvirata--morcata",
@@ -2067,7 +2067,7 @@
 		"group": "Domácí zvířata",
 		"category": "Morčata",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "domaci-zvirata--krecici",
@@ -2081,7 +2081,7 @@
 		"group": "Domácí zvířata",
 		"category": "Křečci",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "domaci-zvirata--potkani-a-mysi",
@@ -2097,7 +2097,7 @@
 		"group": "Domácí zvířata",
 		"category": "Potkani a myši",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "domaci-zvirata--papousci-a-ptaci",
@@ -2114,7 +2114,7 @@
 		"group": "Domácí zvířata",
 		"category": "Papoušci a ptáci",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "domaci-zvirata--rybicky",
@@ -2129,7 +2129,7 @@
 		"group": "Domácí zvířata",
 		"category": "Rybičky",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "domaci-zvirata--agamy-a-jesteri",
@@ -2147,7 +2147,7 @@
 		"group": "Domácí zvířata",
 		"category": "Agamy a ještěři",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "domaci-zvirata--hadi",
@@ -2164,7 +2164,7 @@
 		"group": "Domácí zvířata",
 		"category": "Hadi",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "domaci-zvirata--zelvy",
@@ -2178,7 +2178,7 @@
 		"group": "Domácí zvířata",
 		"category": "Želvy",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "domaci-zvirata--kocky",
@@ -2194,7 +2194,7 @@
 		"group": "Domácí zvířata",
 		"category": "Kočky",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "domaci-zvirata--psi",
@@ -2210,7 +2210,7 @@
 		"group": "Domácí zvířata",
 		"category": "Psi",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "domaci-zvirata--krmivo-a-pamlsky",
@@ -2359,7 +2359,7 @@
 		"group": "Knihy",
 		"category": "Pro dospělé",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "filmy--bezne-filmy",
@@ -2413,7 +2413,7 @@
 		"group": "Filmy",
 		"category": "Pro dospělé",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "hudba--bezna-hudba",
@@ -3522,7 +3522,7 @@
 		"group": "Sezóna",
 		"category": "Pyrotechnika",
 		"restriction": "adult",
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "sezona--den-matek",
