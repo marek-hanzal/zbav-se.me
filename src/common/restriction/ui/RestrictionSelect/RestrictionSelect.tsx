@@ -8,16 +8,19 @@ import { Item } from "./Item";
 export namespace RestrictionSelect {
 	export interface Props extends Container.Props {
 		selection: useSelection.Selection<EntitySchema.Type>;
+		allowClear?: boolean;
 	}
 }
 
 /**
  * Provides an interactive control for selecting restriction values in forms.
  * Use it in editors where users need to choose or update restriction before saving.
- *
- * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
-export const RestrictionSelect: FC<RestrictionSelect.Props> = ({ selection, ...props }) => {
+export const RestrictionSelect: FC<RestrictionSelect.Props> = ({
+	allowClear,
+	selection,
+	...props
+}) => {
 	return (
 		<Container
 			data-ui="RestrictionSelect"
@@ -34,6 +37,7 @@ export const RestrictionSelect: FC<RestrictionSelect.Props> = ({ selection, ...p
 						key={restriction}
 						restriction={restriction}
 						selection={selection}
+						allowClear={allowClear}
 					/>
 				);
 			})}

@@ -10,25 +10,22 @@ import { RestrictionSelect } from "~/common/restriction/ui/RestrictionSelect";
 export namespace RestrictionSheet {
 	export interface Props extends BottomSheet.Props {
 		onRestriction(restriction: CategoryRestrictionEnumSchema.Type): Promise<any>;
-		restriction: CategoryRestrictionEnumSchema.Type;
+		restriction: CategoryRestrictionEnumSchema.Type | undefined;
 		isPending: boolean;
 	}
 }
 
 export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 	onRestriction,
-	restriction,
+	restriction = "none",
 	isPending,
 	...props
 }) => {
 	const selection = useSelection({
 		mode: "single",
-		initial: (restriction
-			? [
-					restriction,
-				]
-			: []
-		).map((item) => ({
+		initial: [
+			restriction,
+		].map((item) => ({
 			id: item,
 		})),
 	});

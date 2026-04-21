@@ -145,6 +145,9 @@
 188182c2fe82cee01a535fea542022b96a389bdbc5c5f374f0aa5564:
   ref: Chat - transaction resolved - seller cannot write (message)
   value: Chat - transaction resolved - seller cannot write (message)
+18d40db40cbca71185b9de088cfdb1325cea3896815c4ea9219dc292:
+  ref: Restriction available in (label)
+  value: Restriction available in (label)
 1943b1ef0623fcc6116ef391b30cce37b7fd75dcde851410b1d5f9d6:
   ref: Upload photos (button)
   value: Upload photos (button)

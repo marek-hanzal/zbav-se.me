@@ -41,11 +41,8 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 		],
 	});
 	const {
-		data: [currentRestriction],
+		data: [restriction],
 	} = withUserRestrictionQuery.useCollectionQuery({
-		where: {
-			isAvailable: true,
-		},
 		cursor: {
 			page: 0,
 			size: 1,
@@ -61,25 +58,7 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 			},
 		],
 	});
-	const {
-		data: [pendingRestriction],
-	} = withUserRestrictionQuery.useCollectionQuery({
-		where: {
-			isAvailable: false,
-		},
-		cursor: {
-			page: 0,
-			size: 1,
-		},
-		sort: [
-			{
-				field: "createdAt",
-				order: "desc",
-			},
-		],
-	});
 	const [isRestriction, setIsRestriction] = useState(false);
-	const hasPending = pendingRestriction && pendingRestriction.id === currentRestriction?.id;
 
 	return (
 		<TitleContainer
@@ -125,42 +104,47 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 						textHint={translator.text("User restriction level (hint)")}
 						textEmpty={translator.text("User restriction level (empty)")}
 						items={[
-							currentRestriction,
-							hasPending ? undefined : pendingRestriction,
+							restriction,
 						].filter((item): item is UserRestrictionSchema.Type => !!item)}
 						renderFn={(restriction) => {
 							return (
 								<Container
-									data-ui-flow={"horizontal"}
+									data-ui-flow={"vertical"}
 									data-ui-gap={"xs"}
-									data-ui-justify={"space-between"}
 									data-ui-width={"full"}
 								>
 									<Tx
 										label={`Listing restriction - ${restriction.restriction}`}
-										data-ui-font={
-											restriction === currentRestriction ? "bold" : undefined
-										}
-										data-ui-opacity={
-											restriction === pendingRestriction ? "7" : undefined
-										}
+										data-ui-font={"bold"}
 									/>
 
-									{restriction === pendingRestriction &&
-									restriction.availableAt ? (
-										<Typo
-											label={`(${toTimeDiff({
-												type: "human",
-												locale,
-												source: restriction.createdAt.toISOString(),
-												time: restriction.availableAt,
-											})})`}
-											data-ui-tone={"brand"}
-											data-ui-theme={"light"}
-											data-ui-color={"lead"}
-											data-ui-text={"sm"}
-											data-ui-opacity={"8"}
-										/>
+									{restriction.availableAt &&
+									restriction.availableAt > new Date() ? (
+										<Container
+											data-ui-flow={"horizontal"}
+											data-ui-justify={"space-between"}
+											data-ui-items={"center"}
+										>
+											<Tx
+												label={"Restriction available in (label)"}
+												data-ui-text={"sm"}
+											/>
+
+											<Typo
+												label={toTimeDiff({
+													type: "human",
+													locale,
+													source: restriction.createdAt.toISOString(),
+													time: restriction.availableAt,
+												})}
+												data-ui-tone={"brand"}
+												data-ui-theme={"light"}
+												data-ui-color={"lead"}
+												data-ui-font={"bold"}
+												data-ui-text={"sm"}
+												data-ui-opacity={"8"}
+											/>
+										</Container>
 									) : null}
 								</Container>
 							);
@@ -195,7 +179,7 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 				onClose={() => {
 					setIsRestriction(false);
 				}}
-				restriction={pendingRestriction?.restriction ?? "none"}
+				restriction={restriction?.restriction}
 				onRestriction={async (restriction) => {
 					return restrictionMutation.mutateAsync({
 						restriction,
