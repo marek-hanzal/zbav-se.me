@@ -1332,9 +1332,8 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
 bf82382f7d27ed92f076fc65613ec5fc5c0d9a2b535fe794ddb59b3d:
     ref: User restriction level (hint)
     value: |
-        Tvoje nastavená úroveň omezení, jaké inzeráty můžeš vidět a jaké můžeš
-        vytvářet. Tohle je základní ochrana proti nevhodnému obsahu. Každá změna
-        vždycky spustí časovač od začátku
+        Tvoje nastavená úroveň omezení určuje, jaký obsah můžeš vidět a vytvářet. Každá
+        změna vždycky spustí časovač od začátku.
 buyer - Buyer rejected the transaction (message):
     value: |
         **Odmítl jsi obchod.**
