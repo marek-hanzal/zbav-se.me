@@ -380,10 +380,18 @@ describe("public listing search flow", () => {
 				title: "Public restriction marker listing adult",
 				categoryId: openCategory.id,
 			});
+			const restrictedListingRestriction = yield* createListingFx(seller.id, {
+				title: "Public restriction marker listing restricted",
+				categoryId: openCategory.id,
+			});
 
 			yield* patchListingRestriction(database, {
 				id: adultListingRestriction.id,
 				restriction: "adult",
+			});
+			yield* patchListingRestriction(database, {
+				id: restrictedListingRestriction.id,
+				restriction: "restricted",
 			});
 
 			const categoryIdIn = [
@@ -414,6 +422,9 @@ describe("public listing search flow", () => {
 			expect(collection.map((item) => item.id)).not.toContain(adultCategoryListing.id);
 			expect(collection.map((item) => item.id)).not.toContain(sensitiveCategoryListing.id);
 			expect(collection.map((item) => item.id)).not.toContain(adultListingRestriction.id);
+			expect(collection.map((item) => item.id)).not.toContain(
+				restrictedListingRestriction.id,
+			);
 			expect(count).toBe(collection.length);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
