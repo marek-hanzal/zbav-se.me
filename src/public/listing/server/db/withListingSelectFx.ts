@@ -35,7 +35,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 		"l.priceType",
 		"l.currency",
 		"l.createdAt",
-		sql<CategoryRestrictionEnumSchema.Type[]>`array(
+		sql<CategoryRestrictionEnumSchema.Type[]>`to_jsonb(array(
 			select restriction_item.restriction
 			from unnest(array[
 				${eb.ref("cat.restriction")},
@@ -44,7 +44,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			where restriction_item.restriction is not null
 			group by restriction_item.restriction
 			order by min(restriction_item.ord)
-		)`.as("restrictions"),
+		))`.as("restrictions"),
 		sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 		sql<CategoryTableSchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category"),
 		jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))

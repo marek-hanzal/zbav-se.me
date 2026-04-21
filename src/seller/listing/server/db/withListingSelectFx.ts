@@ -35,7 +35,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 		"l.warranty",
 		"l.status",
 		"l.restriction",
-		sql<CategoryRestrictionEnumSchema.Type[]>`array(
+		sql<CategoryRestrictionEnumSchema.Type[]>`to_jsonb(array(
 			select restriction_item.restriction
 			from unnest(array[
 				${eb.ref("cat.restriction")},
@@ -44,7 +44,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			where restriction_item.restriction is not null
 			group by restriction_item.restriction
 			order by min(restriction_item.ord)
-		)`.as("restrictions"),
+		))`.as("restrictions"),
 		"l.locationId",
 		"l.categoryId",
 		"l.galleryId",

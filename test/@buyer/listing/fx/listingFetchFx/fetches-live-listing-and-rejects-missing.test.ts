@@ -15,6 +15,7 @@ describe("buyer listingFetchFx", () => {
 			const users = yield* createUsersFx({});
 			const listing = yield* createListingFx(users.seller.id, {
 				title: "Buyer fetch listing",
+				restriction: "adult-relaxed",
 			});
 
 			const fetched = yield* listingFetchFx({
@@ -28,6 +29,10 @@ describe("buyer listingFetchFx", () => {
 			expect(fetched.id).toBe(listing.id);
 			expect(fetched.title).toBe("Buyer fetch listing");
 			expect(fetched.status).toBe("live");
+			expect(fetched.restrictions).toEqual([
+				"none",
+				"adult-relaxed",
+			]);
 
 			const missing = yield* Effect.either(
 				listingFetchFx({

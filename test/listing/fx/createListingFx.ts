@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
@@ -10,12 +11,18 @@ export namespace createListingFx {
 		categoryId?: string;
 		title?: string;
 		locationId?: string;
+		restriction?: CategoryRestrictionEnumSchema.Type | null;
 	}
 }
 
 export const createListingFx = (
 	sellerId: string,
-	{ title = "Test listing", locationId, categoryId }: createListingFx.Props = {},
+	{
+		title = "Test listing",
+		locationId,
+		categoryId,
+		restriction = null,
+	}: createListingFx.Props = {},
 ) =>
 	Effect.gen(function* () {
 		const resolvedCategoryId =
@@ -56,7 +63,7 @@ export const createListingFx = (
 			locationId: resolvedLocationId,
 			price: 500,
 			priceType: "open",
-			restriction: null,
+			restriction,
 			title,
 			delivery: null,
 			warranty: null,
