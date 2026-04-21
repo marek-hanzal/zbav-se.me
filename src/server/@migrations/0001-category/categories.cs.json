@@ -13,7 +13,8 @@
 			"xiaomi"
 		],
 		"group": "Mobily a příslušenství",
-		"category": "Smartphone"
+		"category": "Smartphone",
+		"restrictions": []
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--tlacitkovy-telefon",
@@ -26,7 +27,8 @@
 			"motorola"
 		],
 		"group": "Mobily a příslušenství",
-		"category": "Tlačítkový telefon"
+		"category": "Tlačítkový telefon",
+		"restrictions": []
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--chytre-hodinky",
@@ -40,7 +42,8 @@
 			"sportovní hodinky"
 		],
 		"group": "Mobily a příslušenství",
-		"category": "Chytré hodinky"
+		"category": "Chytré hodinky",
+		"restrictions": []
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--prislusenstvi-k-mobilum",
@@ -52,7 +55,8 @@
 			"doplňky"
 		],
 		"group": "Mobily a příslušenství",
-		"category": "Příslušenství k mobilům"
+		"category": "Příslušenství k mobilům",
+		"restrictions": []
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--powerbanka",
@@ -65,7 +69,8 @@
 			"externí baterie"
 		],
 		"group": "Mobily a příslušenství",
-		"category": "Powerbanka"
+		"category": "Powerbanka",
+		"restrictions": []
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--nabijecky-a-kabely",
@@ -80,7 +85,8 @@
 			"bezdrátová nabíječka"
 		],
 		"group": "Mobily a příslušenství",
-		"category": "Nabíječky a kabely"
+		"category": "Nabíječky a kabely",
+		"restrictions": []
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--pouzdra-a-skla",
@@ -95,7 +101,8 @@
 			"folie"
 		],
 		"group": "Mobily a příslušenství",
-		"category": "Pouzdra a skla"
+		"category": "Pouzdra a skla",
+		"restrictions": []
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--pametove-karty",
@@ -109,7 +116,8 @@
 			"úložiště"
 		],
 		"group": "Mobily a příslušenství",
-		"category": "Paměťové karty"
+		"category": "Paměťové karty",
+		"restrictions": []
 	},
 	{
 		"slug": "pocitace-a-kancelar--notebook",
@@ -125,7 +133,8 @@
 			"lenovo"
 		],
 		"group": "Počítače a kancelář",
-		"category": "Notebook"
+		"category": "Notebook",
+		"restrictions": []
 	},
 	{
 		"slug": "pocitace-a-kancelar--stolni-pc",
@@ -139,7 +148,8 @@
 			"workstation"
 		],
 		"group": "Počítače a kancelář",
-		"category": "Stolní PC"
+		"category": "Stolní PC",
+		"restrictions": []
 	},
 	{
 		"slug": "pocitace-a-kancelar--monitor",
@@ -155,7 +165,8 @@
 			"ultrawide"
 		],
 		"group": "Počítače a kancelář",
-		"category": "Monitor"
+		"category": "Monitor",
+		"restrictions": []
 	},
 	{
 		"slug": "pocitace-a-kancelar--pc-komponenty-cpu-gpu-ram",
@@ -172,7 +183,8 @@
 			"nvidia"
 		],
 		"group": "Počítače a kancelář",
-		"category": "PC komponenty (CPU/GPU/RAM)"
+		"category": "PC komponenty (CPU/GPU/RAM)",
+		"restrictions": []
 	},
 	{
 		"slug": "pocitace-a-kancelar--periferie-klavesnice-mys",
@@ -187,7 +199,8 @@
 			"bezdrátová"
 		],
 		"group": "Počítače a kancelář",
-		"category": "Periferie (klávesnice/myš)"
+		"category": "Periferie (klávesnice/myš)",
+		"restrictions": []
 	},
 	{
 		"slug": "pocitace-a-kancelar--sitove-prvky-router-nas",
@@ -203,7 +216,8 @@
 			"wi-fi"
 		],
 		"group": "Počítače a kancelář",
-		"category": "Síťové prvky (router/NAS)"
+		"category": "Síťové prvky (router/NAS)",
+		"restrictions": []
 	},
 	{
 		"slug": "pocitace-a-kancelar--tiskarny-a-skenery",
@@ -218,7 +232,8 @@
 			"multifunkční"
 		],
 		"group": "Počítače a kancelář",
-		"category": "Tiskárny a skenery"
+		"category": "Tiskárny a skenery",
+		"restrictions": []
 	},
 	{
 		"slug": "pocitace-a-kancelar--uloziste-ssd-hdd",
@@ -234,7 +249,8 @@
 			"m.2"
 		],
 		"group": "Počítače a kancelář",
-		"category": "Úložiště (SSD/HDD)"
+		"category": "Úložiště (SSD/HDD)",
+		"restrictions": []
 	},
 	{
 		"slug": "pocitace-a-kancelar--software-a-licence",
@@ -249,7 +265,95 @@
 			"antivirus"
 		],
 		"group": "Počítače a kancelář",
-		"category": "Software a licence"
+		"category": "Software a licence",
+		"restrictions": []
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--atomizery-mtl-dl",
+		"locale": "cs",
+		"spotlight": [
+			"atomizér",
+			"atomizer",
+			"tank",
+			"clearomizér",
+			"mtl",
+			"dl",
+			"rta",
+			"rda",
+			"rdta"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Atomizéry (MTL/DL)",
+		"restrictions": []
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--mody",
+		"locale": "cs",
+		"spotlight": [
+			"mod",
+			"mód",
+			"vape mod",
+			"box mod",
+			"grip",
+			"baterkový mod",
+			"elektronická cigareta",
+			"ecigareta"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Mody",
+		"restrictions": []
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--clanky-baterie",
+		"locale": "cs",
+		"spotlight": [
+			"článek",
+			"články",
+			"baterie",
+			"akumulátor",
+			"18650",
+			"21700",
+			"26650",
+			"vape baterie"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Články (baterie)",
+		"restrictions": []
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--spiralky",
+		"locale": "cs",
+		"spotlight": [
+			"spirálka",
+			"spirálky",
+			"coil",
+			"coily",
+			"žhavicí hlava",
+			"hlava",
+			"mesh",
+			"odpor"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Spirálky",
+		"restrictions": []
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--prislusenstvi",
+		"locale": "cs",
+		"spotlight": [
+			"vape příslušenství",
+			"příslušenství",
+			"náustek",
+			"drip tip",
+			"sklíčko",
+			"těsnění",
+			"vaty",
+			"bavlna",
+			"nabíječka"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Příslušenství",
+		"restrictions": []
 	},
 	{
 		"slug": "obleceni-a-doplnky--damske-obleceni",
@@ -265,7 +369,8 @@
 			"obleky"
 		],
 		"group": "Oblečení a doplňky",
-		"category": "Dámské oblečení"
+		"category": "Dámské oblečení",
+		"restrictions": []
 	},
 	{
 		"slug": "obleceni-a-doplnky--panske-obleceni",
@@ -281,7 +386,8 @@
 			"kraťasy"
 		],
 		"group": "Oblečení a doplňky",
-		"category": "Pánské oblečení"
+		"category": "Pánské oblečení",
+		"restrictions": []
 	},
 	{
 		"slug": "obleceni-a-doplnky--detske-obleceni",
@@ -296,7 +402,8 @@
 			"children clothing"
 		],
 		"group": "Oblečení a doplňky",
-		"category": "Dětské oblečení"
+		"category": "Dětské oblečení",
+		"restrictions": []
 	},
 	{
 		"slug": "obleceni-a-doplnky--boty",
@@ -312,7 +419,8 @@
 			"sandals"
 		],
 		"group": "Oblečení a doplňky",
-		"category": "Boty"
+		"category": "Boty",
+		"restrictions": []
 	},
 	{
 		"slug": "obleceni-a-doplnky--kabelky-a-tasky",
@@ -328,7 +436,8 @@
 			"tote"
 		],
 		"group": "Oblečení a doplňky",
-		"category": "Kabelky a tašky"
+		"category": "Kabelky a tašky",
+		"restrictions": []
 	},
 	{
 		"slug": "obleceni-a-doplnky--hodinky-a-sperky",
@@ -344,7 +453,8 @@
 			"bracelet"
 		],
 		"group": "Oblečení a doplňky",
-		"category": "Hodinky a šperky"
+		"category": "Hodinky a šperky",
+		"restrictions": []
 	},
 	{
 		"slug": "obleceni-a-doplnky--sportovni-obleceni",
@@ -360,7 +470,8 @@
 			"gym"
 		],
 		"group": "Oblečení a doplňky",
-		"category": "Sportovní oblečení"
+		"category": "Sportovní oblečení",
+		"restrictions": []
 	},
 	{
 		"slug": "obleceni-a-doplnky--doplnky-cepice-pasky",
@@ -377,7 +488,8 @@
 			"scarf"
 		],
 		"group": "Oblečení a doplňky",
-		"category": "Doplňky (čepice/pásky)"
+		"category": "Doplňky (čepice/pásky)",
+		"restrictions": []
 	},
 	{
 		"slug": "hry-a-konzole--herni-konzole",
@@ -393,7 +505,8 @@
 			"xbox series"
 		],
 		"group": "Hry a konzole",
-		"category": "Herní konzole"
+		"category": "Herní konzole",
+		"restrictions": []
 	},
 	{
 		"slug": "hry-a-konzole--hry-pro-playstation",
@@ -408,7 +521,8 @@
 			"playstation games"
 		],
 		"group": "Hry a konzole",
-		"category": "Hry pro PlayStation"
+		"category": "Hry pro PlayStation",
+		"restrictions": []
 	},
 	{
 		"slug": "hry-a-konzole--hry-pro-xbox",
@@ -422,7 +536,8 @@
 			"game pass"
 		],
 		"group": "Hry a konzole",
-		"category": "Hry pro Xbox"
+		"category": "Hry pro Xbox",
+		"restrictions": []
 	},
 	{
 		"slug": "hry-a-konzole--hry-pro-nintendo",
@@ -438,7 +553,8 @@
 			"pokemon"
 		],
 		"group": "Hry a konzole",
-		"category": "Hry pro Nintendo"
+		"category": "Hry pro Nintendo",
+		"restrictions": []
 	},
 	{
 		"slug": "hry-a-konzole--pc-hry",
@@ -453,7 +569,8 @@
 			"gaming"
 		],
 		"group": "Hry a konzole",
-		"category": "PC hry"
+		"category": "PC hry",
+		"restrictions": []
 	},
 	{
 		"slug": "hry-a-konzole--ovladace-a-prislusenstvi",
@@ -468,7 +585,8 @@
 			"gaming"
 		],
 		"group": "Hry a konzole",
-		"category": "Ovladače a příslušenství"
+		"category": "Ovladače a příslušenství",
+		"restrictions": []
 	},
 	{
 		"slug": "hry-a-konzole--vr-headsety",
@@ -483,7 +601,8 @@
 			"vr brýle"
 		],
 		"group": "Hry a konzole",
-		"category": "VR headsety"
+		"category": "VR headsety",
+		"restrictions": []
 	},
 	{
 		"slug": "tv-audio-a-foto--televize",
@@ -500,7 +619,8 @@
 			"sony"
 		],
 		"group": "TV, audio a foto",
-		"category": "Televize"
+		"category": "Televize",
+		"restrictions": []
 	},
 	{
 		"slug": "tv-audio-a-foto--set-top-boxy-a-prehravace",
@@ -515,7 +635,8 @@
 			"streaming"
 		],
 		"group": "TV, audio a foto",
-		"category": "Set-top boxy a přehrávače"
+		"category": "Set-top boxy a přehrávače",
+		"restrictions": []
 	},
 	{
 		"slug": "tv-audio-a-foto--reproduktory-a-soundbary",
@@ -531,7 +652,8 @@
 			"sonos"
 		],
 		"group": "TV, audio a foto",
-		"category": "Reproduktory a soundbary"
+		"category": "Reproduktory a soundbary",
+		"restrictions": []
 	},
 	{
 		"slug": "tv-audio-a-foto--sluchatka",
@@ -547,7 +669,8 @@
 			"sennheiser"
 		],
 		"group": "TV, audio a foto",
-		"category": "Sluchátka"
+		"category": "Sluchátka",
+		"restrictions": []
 	},
 	{
 		"slug": "tv-audio-a-foto--fotoaparaty",
@@ -563,7 +686,8 @@
 			"kompaktní"
 		],
 		"group": "TV, audio a foto",
-		"category": "Fotoaparáty"
+		"category": "Fotoaparáty",
+		"restrictions": []
 	},
 	{
 		"slug": "tv-audio-a-foto--objektivy-a-prislusenstvi",
@@ -578,7 +702,8 @@
 			"stativ"
 		],
 		"group": "TV, audio a foto",
-		"category": "Objektivy a příslušenství"
+		"category": "Objektivy a příslušenství",
+		"restrictions": []
 	},
 	{
 		"slug": "tv-audio-a-foto--projektory",
@@ -593,7 +718,8 @@
 			"benq"
 		],
 		"group": "TV, audio a foto",
-		"category": "Projektory"
+		"category": "Projektory",
+		"restrictions": []
 	},
 	{
 		"slug": "tv-audio-a-foto--drony-s-kamerou",
@@ -609,7 +735,8 @@
 			"mini"
 		],
 		"group": "TV, audio a foto",
-		"category": "Drony s kamerou"
+		"category": "Drony s kamerou",
+		"restrictions": []
 	},
 	{
 		"slug": "detske-zbozi--kocarky",
@@ -623,7 +750,8 @@
 			"dětský kočárek"
 		],
 		"group": "Dětské zboží",
-		"category": "Kočárky"
+		"category": "Kočárky",
+		"restrictions": []
 	},
 	{
 		"slug": "detske-zbozi--autosedacky",
@@ -636,7 +764,8 @@
 			"baby seat"
 		],
 		"group": "Dětské zboží",
-		"category": "Autosedačky"
+		"category": "Autosedačky",
+		"restrictions": []
 	},
 	{
 		"slug": "detske-zbozi--detske-postylky-a-zidlicky",
@@ -650,7 +779,8 @@
 			"dětský nábytek"
 		],
 		"group": "Dětské zboží",
-		"category": "Dětské postýlky a židličky"
+		"category": "Dětské postýlky a židličky",
+		"restrictions": []
 	},
 	{
 		"slug": "detske-zbozi--hracky",
@@ -665,7 +795,8 @@
 			"autíčka"
 		],
 		"group": "Dětské zboží",
-		"category": "Hračky"
+		"category": "Hračky",
+		"restrictions": []
 	},
 	{
 		"slug": "detske-zbozi--detske-obleceni-a-obuv",
@@ -678,7 +809,8 @@
 			"kojenecké oblečení"
 		],
 		"group": "Dětské zboží",
-		"category": "Dětské oblečení a obuv"
+		"category": "Dětské oblečení a obuv",
+		"restrictions": []
 	},
 	{
 		"slug": "detske-zbozi--prebalovani-a-pece",
@@ -692,7 +824,8 @@
 			"hygiena"
 		],
 		"group": "Dětské zboží",
-		"category": "Přebalování a péče"
+		"category": "Přebalování a péče",
+		"restrictions": []
 	},
 	{
 		"slug": "dum-a-bydleni--osvetleni",
@@ -707,7 +840,8 @@
 			"žárovky"
 		],
 		"group": "Dům a bydlení",
-		"category": "Osvětlení"
+		"category": "Osvětlení",
+		"restrictions": []
 	},
 	{
 		"slug": "dum-a-bydleni--textil-zavesy-koberce",
@@ -722,7 +856,8 @@
 			"deky"
 		],
 		"group": "Dům a bydlení",
-		"category": "Textil (závěsy/koberce)"
+		"category": "Textil (závěsy/koberce)",
+		"restrictions": []
 	},
 	{
 		"slug": "dum-a-bydleni--dekorace",
@@ -737,7 +872,8 @@
 			"interiér"
 		],
 		"group": "Dům a bydlení",
-		"category": "Dekorace"
+		"category": "Dekorace",
+		"restrictions": []
 	},
 	{
 		"slug": "dum-a-bydleni--ulozne-boxy-a-organizery",
@@ -752,7 +888,8 @@
 			"kontejnery"
 		],
 		"group": "Dům a bydlení",
-		"category": "Úložné boxy a organizéry"
+		"category": "Úložné boxy a organizéry",
+		"restrictions": []
 	},
 	{
 		"slug": "dum-a-bydleni--zrcadla-a-ramy",
@@ -766,7 +903,8 @@
 			"dekorativní rámy"
 		],
 		"group": "Dům a bydlení",
-		"category": "Zrcadla a rámy"
+		"category": "Zrcadla a rámy",
+		"restrictions": []
 	},
 	{
 		"slug": "dum-a-bydleni--smart-home-chytra-domacnost",
@@ -781,7 +919,8 @@
 			"automatizace"
 		],
 		"group": "Dům a bydlení",
-		"category": "Smart home (chytrá domácnost)"
+		"category": "Smart home (chytrá domácnost)",
+		"restrictions": []
 	},
 	{
 		"slug": "nabytek--pohovky-a-sedaci-soupravy",
@@ -795,7 +934,8 @@
 			"rohová pohovka"
 		],
 		"group": "Nábytek",
-		"category": "Pohovky a sedací soupravy"
+		"category": "Pohovky a sedací soupravy",
+		"restrictions": []
 	},
 	{
 		"slug": "nabytek--postele-a-matrace",
@@ -810,7 +950,8 @@
 			"pružiny"
 		],
 		"group": "Nábytek",
-		"category": "Postele a matrace"
+		"category": "Postele a matrace",
+		"restrictions": []
 	},
 	{
 		"slug": "nabytek--skrine-a-komody",
@@ -824,7 +965,8 @@
 			"wardrobe"
 		],
 		"group": "Nábytek",
-		"category": "Skříně a komody"
+		"category": "Skříně a komody",
+		"restrictions": []
 	},
 	{
 		"slug": "nabytek--stoly-a-zidle",
@@ -839,7 +981,8 @@
 			"stolní nábytek"
 		],
 		"group": "Nábytek",
-		"category": "Stoly a židle"
+		"category": "Stoly a židle",
+		"restrictions": []
 	},
 	{
 		"slug": "nabytek--police-a-regaly",
@@ -854,7 +997,8 @@
 			"úložný systém"
 		],
 		"group": "Nábytek",
-		"category": "Police a regály"
+		"category": "Police a regály",
+		"restrictions": []
 	},
 	{
 		"slug": "nabytek--zahradni-nabytek",
@@ -868,7 +1012,8 @@
 			"outdoor nábytek"
 		],
 		"group": "Nábytek",
-		"category": "Zahradní nábytek"
+		"category": "Zahradní nábytek",
+		"restrictions": []
 	},
 	{
 		"slug": "bila-technika--lednice-a-mrazaky",
@@ -883,7 +1028,8 @@
 			"electrolux"
 		],
 		"group": "Bílá technika",
-		"category": "Lednice a mrazáky"
+		"category": "Lednice a mrazáky",
+		"restrictions": []
 	},
 	{
 		"slug": "bila-technika--pracky-a-susicky",
@@ -899,7 +1045,8 @@
 			"whirlpool"
 		],
 		"group": "Bílá technika",
-		"category": "Pračky a sušičky"
+		"category": "Pračky a sušičky",
+		"restrictions": []
 	},
 	{
 		"slug": "bila-technika--mycky-nadobi",
@@ -914,7 +1061,8 @@
 			"miele"
 		],
 		"group": "Bílá technika",
-		"category": "Myčky nádobí"
+		"category": "Myčky nádobí",
+		"restrictions": []
 	},
 	{
 		"slug": "bila-technika--sporaky-a-trouby",
@@ -930,7 +1078,8 @@
 			"induction"
 		],
 		"group": "Bílá technika",
-		"category": "Sporáky a trouby"
+		"category": "Sporáky a trouby",
+		"restrictions": []
 	},
 	{
 		"slug": "bila-technika--mikrovlnky",
@@ -945,7 +1094,8 @@
 			"electrolux"
 		],
 		"group": "Bílá technika",
-		"category": "Mikrovlnky"
+		"category": "Mikrovlnky",
+		"restrictions": []
 	},
 	{
 		"slug": "bila-technika--vysavace-a-parni-cistice",
@@ -960,7 +1110,8 @@
 			"siemens"
 		],
 		"group": "Bílá technika",
-		"category": "Vysavače a parní čističe"
+		"category": "Vysavače a parní čističe",
+		"restrictions": []
 	},
 	{
 		"slug": "kuchyn-a-jidelna--nadobi-a-pribory",
@@ -975,7 +1126,8 @@
 			"jídelní souprava"
 		],
 		"group": "Kuchyň a jídelna",
-		"category": "Nádobí a příbory"
+		"category": "Nádobí a příbory",
+		"restrictions": []
 	},
 	{
 		"slug": "kuchyn-a-jidelna--hrnce-a-panve",
@@ -990,7 +1142,8 @@
 			"cast iron"
 		],
 		"group": "Kuchyň a jídelna",
-		"category": "Hrnce a pánve"
+		"category": "Hrnce a pánve",
+		"restrictions": []
 	},
 	{
 		"slug": "kuchyn-a-jidelna--sklenice-a-hrnky",
@@ -1005,7 +1158,8 @@
 			"porcelán"
 		],
 		"group": "Kuchyň a jídelna",
-		"category": "Sklenice a hrnky"
+		"category": "Sklenice a hrnky",
+		"restrictions": []
 	},
 	{
 		"slug": "kuchyn-a-jidelna--kuchynske-spotrebice-male",
@@ -1020,7 +1174,8 @@
 			"robot"
 		],
 		"group": "Kuchyň a jídelna",
-		"category": "Kuchyňské spotřebiče malé"
+		"category": "Kuchyňské spotřebiče malé",
+		"restrictions": []
 	},
 	{
 		"slug": "kuchyn-a-jidelna--kava-a-kavovary",
@@ -1035,7 +1190,8 @@
 			"moka"
 		],
 		"group": "Kuchyň a jídelna",
-		"category": "Káva a kávovary"
+		"category": "Káva a kávovary",
+		"restrictions": []
 	},
 	{
 		"slug": "kuchyn-a-jidelna--boxy-a-organizery-do-kuchyne",
@@ -1049,7 +1205,8 @@
 			"organizace"
 		],
 		"group": "Kuchyň a jídelna",
-		"category": "Boxy a organizéry do kuchyně"
+		"category": "Boxy a organizéry do kuchyně",
+		"restrictions": []
 	},
 	{
 		"slug": "jidlo--detske-prikrmy",
@@ -1066,7 +1223,8 @@
 			"sunar"
 		],
 		"group": "Jídlo",
-		"category": "Dětské příkrmy"
+		"category": "Dětské příkrmy",
+		"restrictions": []
 	},
 	{
 		"slug": "jidlo--kojenecka-vyziva",
@@ -1079,7 +1237,8 @@
 			"bio příkrmy"
 		],
 		"group": "Jídlo",
-		"category": "Kojenecká výživa"
+		"category": "Kojenecká výživa",
+		"restrictions": []
 	},
 	{
 		"slug": "jidlo--umela-mleka-a-pokracovaci-mleka",
@@ -1095,7 +1254,8 @@
 			"formula"
 		],
 		"group": "Jídlo",
-		"category": "Umělá mléka a pokračovací mléka"
+		"category": "Umělá mléka a pokračovací mléka",
+		"restrictions": []
 	},
 	{
 		"slug": "jidlo--detske-kase",
@@ -1110,7 +1270,8 @@
 			"porridge"
 		],
 		"group": "Jídlo",
-		"category": "Dětské kaše"
+		"category": "Dětské kaše",
+		"restrictions": []
 	},
 	{
 		"slug": "jidlo--doplnky-stravy-a-vitaminy",
@@ -1124,7 +1285,8 @@
 			"suplementy"
 		],
 		"group": "Jídlo",
-		"category": "Doplňky stravy a vitamíny"
+		"category": "Doplňky stravy a vitamíny",
+		"restrictions": []
 	},
 	{
 		"slug": "jidlo--bezlepkove-a-specialni-potraviny",
@@ -1139,7 +1301,8 @@
 			"speciální dieta"
 		],
 		"group": "Jídlo",
-		"category": "Bezlepkové a speciální potraviny"
+		"category": "Bezlepkové a speciální potraviny",
+		"restrictions": []
 	},
 	{
 		"slug": "jidlo--trvanlive-potraviny",
@@ -1154,7 +1317,8 @@
 			"cukr"
 		],
 		"group": "Jídlo",
-		"category": "Trvanlivé potraviny"
+		"category": "Trvanlivé potraviny",
+		"restrictions": []
 	},
 	{
 		"slug": "jidlo--sladkosti-a-snacky",
@@ -1169,7 +1333,8 @@
 			"tyčinky"
 		],
 		"group": "Jídlo",
-		"category": "Sladkosti a snacky"
+		"category": "Sladkosti a snacky",
+		"restrictions": []
 	},
 	{
 		"slug": "jidlo--napoje",
@@ -1184,7 +1349,8 @@
 			"limonáda"
 		],
 		"group": "Jídlo",
-		"category": "Nápoje"
+		"category": "Nápoje",
+		"restrictions": []
 	},
 	{
 		"slug": "jidlo--caj-a-kava",
@@ -1200,7 +1366,8 @@
 			"coffee"
 		],
 		"group": "Jídlo",
-		"category": "Čaj a káva"
+		"category": "Čaj a káva",
+		"restrictions": []
 	},
 	{
 		"slug": "sport-a-outdoor--kola-a-prislusenstvi",
@@ -1215,7 +1382,8 @@
 			"cyklistické doplňky"
 		],
 		"group": "Sport a outdoor",
-		"category": "Kola a příslušenství"
+		"category": "Kola a příslušenství",
+		"restrictions": []
 	},
 	{
 		"slug": "sport-a-outdoor--beh-a-fitness",
@@ -1230,7 +1398,8 @@
 			"workout"
 		],
 		"group": "Sport a outdoor",
-		"category": "Běh a fitness"
+		"category": "Běh a fitness",
+		"restrictions": []
 	},
 	{
 		"slug": "sport-a-outdoor--lyze-a-snowboard",
@@ -1244,7 +1413,8 @@
 			"snowboardové boty"
 		],
 		"group": "Sport a outdoor",
-		"category": "Lyže a snowboard"
+		"category": "Lyže a snowboard",
+		"restrictions": []
 	},
 	{
 		"slug": "sport-a-outdoor--kemping-stany-spacaky",
@@ -1260,7 +1430,8 @@
 			"turistika"
 		],
 		"group": "Sport a outdoor",
-		"category": "Kemping (stany/spacáky)"
+		"category": "Kemping (stany/spacáky)",
+		"restrictions": []
 	},
 	{
 		"slug": "sport-a-outdoor--kolobezky-a-longboardy",
@@ -1275,7 +1446,8 @@
 			"skate"
 		],
 		"group": "Sport a outdoor",
-		"category": "Koloběžky a longboardy"
+		"category": "Koloběžky a longboardy",
+		"restrictions": []
 	},
 	{
 		"slug": "sport-a-outdoor--rybareni",
@@ -1290,7 +1462,8 @@
 			"rybářské náčiní"
 		],
 		"group": "Sport a outdoor",
-		"category": "Rybaření"
+		"category": "Rybaření",
+		"restrictions": []
 	},
 	{
 		"slug": "auto-moto--osobni-auta",
@@ -1306,7 +1479,8 @@
 			"suv"
 		],
 		"group": "Auto-moto",
-		"category": "Osobní auta"
+		"category": "Osobní auta",
+		"restrictions": []
 	},
 	{
 		"slug": "auto-moto--motocykly-a-skutry",
@@ -1322,7 +1496,8 @@
 			"atv"
 		],
 		"group": "Auto-moto",
-		"category": "Motocykly a skútry"
+		"category": "Motocykly a skútry",
+		"restrictions": []
 	},
 	{
 		"slug": "auto-moto--pneumatiky-a-disky",
@@ -1338,7 +1513,8 @@
 			"zimní pneumatiky"
 		],
 		"group": "Auto-moto",
-		"category": "Pneumatiky a disky"
+		"category": "Pneumatiky a disky",
+		"restrictions": []
 	},
 	{
 		"slug": "auto-moto--autodoplnky",
@@ -1352,7 +1528,8 @@
 			"auto příslušenství"
 		],
 		"group": "Auto-moto",
-		"category": "Autodoplňky"
+		"category": "Autodoplňky",
+		"restrictions": []
 	},
 	{
 		"slug": "auto-moto--nahradni-dily",
@@ -1366,7 +1543,8 @@
 			"auto komponenty"
 		],
 		"group": "Auto-moto",
-		"category": "Náhradní díly"
+		"category": "Náhradní díly",
+		"restrictions": []
 	},
 	{
 		"slug": "auto-moto--helmy-a-vybava",
@@ -1381,7 +1559,8 @@
 			"motocyklová výbava"
 		],
 		"group": "Auto-moto",
-		"category": "Helmy a výbava"
+		"category": "Helmy a výbava",
+		"restrictions": []
 	},
 	{
 		"slug": "zahrada-a-dilna--sekacky-a-krovinorezy",
@@ -1395,7 +1574,8 @@
 			"garden tools"
 		],
 		"group": "Zahrada a dílna",
-		"category": "Sekačky a křovinořezy"
+		"category": "Sekačky a křovinořezy",
+		"restrictions": []
 	},
 	{
 		"slug": "zahrada-a-dilna--pily-a-retezove-pily",
@@ -1410,7 +1590,8 @@
 			"reciprocating saw"
 		],
 		"group": "Zahrada a dílna",
-		"category": "Pily a řetězové pily"
+		"category": "Pily a řetězové pily",
+		"restrictions": []
 	},
 	{
 		"slug": "zahrada-a-dilna--aku-naradi-vrtacky-brusky",
@@ -1426,7 +1607,8 @@
 			"sander"
 		],
 		"group": "Zahrada a dílna",
-		"category": "Aku nářadí (vrtačky/brusky)"
+		"category": "Aku nářadí (vrtačky/brusky)",
+		"restrictions": []
 	},
 	{
 		"slug": "zahrada-a-dilna--rucni-naradi",
@@ -1442,7 +1624,8 @@
 			"pliers"
 		],
 		"group": "Zahrada a dílna",
-		"category": "Ruční nářadí"
+		"category": "Ruční nářadí",
+		"restrictions": []
 	},
 	{
 		"slug": "zahrada-a-dilna--zavlazovani-a-zahradni-technika",
@@ -1457,7 +1640,8 @@
 			"garden equipment"
 		],
 		"group": "Zahrada a dílna",
-		"category": "Zavlažování a zahradní technika"
+		"category": "Zavlažování a zahradní technika",
+		"restrictions": []
 	},
 	{
 		"slug": "zahrada-a-dilna--grily-a-prislusenstvi",
@@ -1473,7 +1657,8 @@
 			"electric grill"
 		],
 		"group": "Zahrada a dílna",
-		"category": "Grily a příslušenství"
+		"category": "Grily a příslušenství",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--pelisky-a-boudy",
@@ -1488,7 +1673,8 @@
 			"kočičí pelíšky"
 		],
 		"group": "Domácí zvířata",
-		"category": "Pelíšky a boudy"
+		"category": "Pelíšky a boudy",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--misky-a-krmitka",
@@ -1503,7 +1689,8 @@
 			"pet feeders"
 		],
 		"group": "Domácí zvířata",
-		"category": "Misky a krmítka"
+		"category": "Misky a krmítka",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--voditka-a-obojky",
@@ -1519,7 +1706,8 @@
 			"retractable leash"
 		],
 		"group": "Domácí zvířata",
-		"category": "Vodítka a obojky"
+		"category": "Vodítka a obojky",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--hracky-pro-zvirata",
@@ -1534,7 +1722,8 @@
 			"pet play"
 		],
 		"group": "Domácí zvířata",
-		"category": "Hračky pro zvířata"
+		"category": "Hračky pro zvířata",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--akvaria-a-teraria",
@@ -1549,7 +1738,8 @@
 			"aquarium equipment"
 		],
 		"group": "Domácí zvířata",
-		"category": "Akvária a terária"
+		"category": "Akvária a terária",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--klece-a-prepravky",
@@ -1565,7 +1755,8 @@
 			"hamster cages"
 		],
 		"group": "Domácí zvířata",
-		"category": "Klece a přepravky"
+		"category": "Klece a přepravky",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--kralici",
@@ -1579,7 +1770,8 @@
 			"rabbit"
 		],
 		"group": "Domácí zvířata",
-		"category": "Králíci"
+		"category": "Králíci",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--morcata",
@@ -1591,7 +1783,8 @@
 			"morčátko"
 		],
 		"group": "Domácí zvířata",
-		"category": "Morčata"
+		"category": "Morčata",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--krecici",
@@ -1603,7 +1796,8 @@
 			"křečík"
 		],
 		"group": "Domácí zvířata",
-		"category": "Křečci"
+		"category": "Křečci",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--potkani-a-mysi",
@@ -1617,7 +1811,8 @@
 			"hlodavec"
 		],
 		"group": "Domácí zvířata",
-		"category": "Potkani a myši"
+		"category": "Potkani a myši",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--papousci-a-ptaci",
@@ -1632,7 +1827,8 @@
 			"parrot"
 		],
 		"group": "Domácí zvířata",
-		"category": "Papoušci a ptáci"
+		"category": "Papoušci a ptáci",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--rybicky",
@@ -1645,7 +1841,8 @@
 			"fish"
 		],
 		"group": "Domácí zvířata",
-		"category": "Rybičky"
+		"category": "Rybičky",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--agamy-a-jesteri",
@@ -1661,7 +1858,8 @@
 			"chameleon"
 		],
 		"group": "Domácí zvířata",
-		"category": "Agamy a ještěři"
+		"category": "Agamy a ještěři",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--hadi",
@@ -1676,7 +1874,8 @@
 			"korálovka"
 		],
 		"group": "Domácí zvířata",
-		"category": "Hadi"
+		"category": "Hadi",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--zelvy",
@@ -1688,7 +1887,8 @@
 			"terrapin"
 		],
 		"group": "Domácí zvířata",
-		"category": "Želvy"
+		"category": "Želvy",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--kocky",
@@ -1702,7 +1902,8 @@
 			"cat"
 		],
 		"group": "Domácí zvířata",
-		"category": "Kočky"
+		"category": "Kočky",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--psi",
@@ -1716,7 +1917,8 @@
 			"puppy"
 		],
 		"group": "Domácí zvířata",
-		"category": "Psi"
+		"category": "Psi",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--krmivo-a-pamlsky",
@@ -1731,7 +1933,8 @@
 			"seno"
 		],
 		"group": "Domácí zvířata",
-		"category": "Krmivo a pamlsky"
+		"category": "Krmivo a pamlsky",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--stelivo-a-podestylka",
@@ -1745,7 +1948,8 @@
 			"toaleta"
 		],
 		"group": "Domácí zvířata",
-		"category": "Stelivo a podestýlka"
+		"category": "Stelivo a podestýlka",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--terarijni-vybaveni",
@@ -1760,7 +1964,8 @@
 			"substrát"
 		],
 		"group": "Domácí zvířata",
-		"category": "Terarijní vybavení"
+		"category": "Terarijní vybavení",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--akvarijni-vybaveni",
@@ -1774,7 +1979,8 @@
 			"akvarijní technika"
 		],
 		"group": "Domácí zvířata",
-		"category": "Akvarijní vybavení"
+		"category": "Akvarijní vybavení",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--pece-a-hygiena",
@@ -1789,7 +1995,8 @@
 			"grooming"
 		],
 		"group": "Domácí zvířata",
-		"category": "Péče a hygiena"
+		"category": "Péče a hygiena",
+		"restrictions": []
 	},
 	{
 		"slug": "domaci-zvirata--veterinarni-doplnky",
@@ -1803,7 +2010,8 @@
 			"obojek proti klíšťatům"
 		],
 		"group": "Domácí zvířata",
-		"category": "Veterinární doplňky"
+		"category": "Veterinární doplňky",
+		"restrictions": []
 	},
 	{
 		"slug": "knihy-filmy-a-hudba--knihy",
@@ -1818,7 +2026,8 @@
 			"knihkupectví"
 		],
 		"group": "Knihy, filmy a hudba",
-		"category": "Knihy"
+		"category": "Knihy",
+		"restrictions": []
 	},
 	{
 		"slug": "knihy-filmy-a-hudba--komiksy-a-manga",
@@ -1833,7 +2042,8 @@
 			"comic books"
 		],
 		"group": "Knihy, filmy a hudba",
-		"category": "Komiksy a manga"
+		"category": "Komiksy a manga",
+		"restrictions": []
 	},
 	{
 		"slug": "knihy-filmy-a-hudba--vinyl-a-gramodesky",
@@ -1849,7 +2059,8 @@
 			"turntable"
 		],
 		"group": "Knihy, filmy a hudba",
-		"category": "Vinyl a gramodesky"
+		"category": "Vinyl a gramodesky",
+		"restrictions": []
 	},
 	{
 		"slug": "knihy-filmy-a-hudba--cd-a-kazety",
@@ -1865,7 +2076,8 @@
 			"tape cassettes"
 		],
 		"group": "Knihy, filmy a hudba",
-		"category": "CD a kazety"
+		"category": "CD a kazety",
+		"restrictions": []
 	},
 	{
 		"slug": "knihy-filmy-a-hudba--dvd-a-blu-ray",
@@ -1881,7 +2093,8 @@
 			"film collection"
 		],
 		"group": "Knihy, filmy a hudba",
-		"category": "DVD a Blu-ray"
+		"category": "DVD a Blu-ray",
+		"restrictions": []
 	},
 	{
 		"slug": "knihy-filmy-a-hudba--noty-a-zpevniky",
@@ -1896,7 +2109,8 @@
 			"guitar tabs"
 		],
 		"group": "Knihy, filmy a hudba",
-		"category": "Noty a zpěvníky"
+		"category": "Noty a zpěvníky",
+		"restrictions": []
 	},
 	{
 		"slug": "hobby-a-kreativita--deskovky-a-puzzle",
@@ -1911,7 +2125,8 @@
 			"family games"
 		],
 		"group": "Hobby a kreativita",
-		"category": "Deskovky a puzzle"
+		"category": "Deskovky a puzzle",
+		"restrictions": []
 	},
 	{
 		"slug": "hobby-a-kreativita--modelarstvi-rc-drony",
@@ -1927,7 +2142,8 @@
 			"model kits"
 		],
 		"group": "Hobby a kreativita",
-		"category": "Modelářství (RC/drony)"
+		"category": "Modelářství (RC/drony)",
+		"restrictions": []
 	},
 	{
 		"slug": "hobby-a-kreativita--3d-tisk-a-filamenty",
@@ -1943,7 +2159,8 @@
 			"3d printer"
 		],
 		"group": "Hobby a kreativita",
-		"category": "3D tisk a filamenty"
+		"category": "3D tisk a filamenty",
+		"restrictions": []
 	},
 	{
 		"slug": "hobby-a-kreativita--malovani-a-kresleni",
@@ -1959,7 +2176,8 @@
 			"canvas"
 		],
 		"group": "Hobby a kreativita",
-		"category": "Malování a kreslení"
+		"category": "Malování a kreslení",
+		"restrictions": []
 	},
 	{
 		"slug": "hobby-a-kreativita--siti-a-hackovani",
@@ -1975,7 +2193,8 @@
 			"needles"
 		],
 		"group": "Hobby a kreativita",
-		"category": "Šití a háčkování"
+		"category": "Šití a háčkování",
+		"restrictions": []
 	},
 	{
 		"slug": "hobby-a-kreativita--diy-sady-a-material",
@@ -1991,7 +2210,8 @@
 			"supplies"
 		],
 		"group": "Hobby a kreativita",
-		"category": "DIY sady a materiál"
+		"category": "DIY sady a materiál",
+		"restrictions": []
 	},
 	{
 		"slug": "krasa-a-osobni-pece--parfemy",
@@ -2006,7 +2226,8 @@
 			"parfum"
 		],
 		"group": "Krása a osobní péče",
-		"category": "Parfémy"
+		"category": "Parfémy",
+		"restrictions": []
 	},
 	{
 		"slug": "krasa-a-osobni-pece--pece-o-plet",
@@ -2021,7 +2242,8 @@
 			"face masks"
 		],
 		"group": "Krása a osobní péče",
-		"category": "Péče o pleť"
+		"category": "Péče o pleť",
+		"restrictions": []
 	},
 	{
 		"slug": "krasa-a-osobni-pece--pece-o-vlasy",
@@ -2036,7 +2258,8 @@
 			"styling"
 		],
 		"group": "Krása a osobní péče",
-		"category": "Péče o vlasy"
+		"category": "Péče o vlasy",
+		"restrictions": []
 	},
 	{
 		"slug": "krasa-a-osobni-pece--holici-strojky-a-epilatory",
@@ -2051,7 +2274,8 @@
 			"hair removal"
 		],
 		"group": "Krása a osobní péče",
-		"category": "Holicí strojky a epilátory"
+		"category": "Holicí strojky a epilátory",
+		"restrictions": []
 	},
 	{
 		"slug": "krasa-a-osobni-pece--zehlicky-a-kulmy",
@@ -2066,7 +2290,8 @@
 			"hair tools"
 		],
 		"group": "Krása a osobní péče",
-		"category": "Žehličky a kulmy"
+		"category": "Žehličky a kulmy",
+		"restrictions": []
 	},
 	{
 		"slug": "krasa-a-osobni-pece--manikura-a-pedikura",
@@ -2082,7 +2307,8 @@
 			"cuticle care"
 		],
 		"group": "Krása a osobní péče",
-		"category": "Manikúra a pedikúra"
+		"category": "Manikúra a pedikúra",
+		"restrictions": []
 	},
 	{
 		"slug": "hudebni-nastroje--kytary-a-baskytary",
@@ -2097,7 +2323,8 @@
 			"classical guitar"
 		],
 		"group": "Hudební nástroje",
-		"category": "Kytary a baskytary"
+		"category": "Kytary a baskytary",
+		"restrictions": []
 	},
 	{
 		"slug": "hudebni-nastroje--klavesy-a-piana",
@@ -2113,7 +2340,8 @@
 			"keyboard"
 		],
 		"group": "Hudební nástroje",
-		"category": "Klávesy a piana"
+		"category": "Klávesy a piana",
+		"restrictions": []
 	},
 	{
 		"slug": "hudebni-nastroje--bici-a-perkuse",
@@ -2129,7 +2357,8 @@
 			"drum kit"
 		],
 		"group": "Hudební nástroje",
-		"category": "Bicí a perkuse"
+		"category": "Bicí a perkuse",
+		"restrictions": []
 	},
 	{
 		"slug": "hudebni-nastroje--dechove-nastroje",
@@ -2144,7 +2373,8 @@
 			"trombone"
 		],
 		"group": "Hudební nástroje",
-		"category": "Dechové nástroje"
+		"category": "Dechové nástroje",
+		"restrictions": []
 	},
 	{
 		"slug": "hudebni-nastroje--midi-a-studiova-technika",
@@ -2159,7 +2389,8 @@
 			"recording"
 		],
 		"group": "Hudební nástroje",
-		"category": "MIDI a studiová technika"
+		"category": "MIDI a studiová technika",
+		"restrictions": []
 	},
 	{
 		"slug": "hudebni-nastroje--struny-palicky-a-prislusenstvi",
@@ -2174,7 +2405,8 @@
 			"accessories"
 		],
 		"group": "Hudební nástroje",
-		"category": "Struny, paličky a příslušenství"
+		"category": "Struny, paličky a příslušenství",
+		"restrictions": []
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--mince-a-bankovky",
@@ -2189,7 +2421,8 @@
 			"collectible coins"
 		],
 		"group": "Sběratelství a starožitnosti",
-		"category": "Mince a bankovky"
+		"category": "Mince a bankovky",
+		"restrictions": []
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--postovni-znamky",
@@ -2203,7 +2436,8 @@
 			"postal stamps"
 		],
 		"group": "Sběratelství a starožitnosti",
-		"category": "Poštovní známky"
+		"category": "Poštovní známky",
+		"restrictions": []
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--figurky-a-modely",
@@ -2218,7 +2452,8 @@
 			"scale models"
 		],
 		"group": "Sběratelství a starožitnosti",
-		"category": "Figurky a modely"
+		"category": "Figurky a modely",
+		"restrictions": []
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--retro-a-vintage",
@@ -2234,7 +2469,8 @@
 			"rare"
 		],
 		"group": "Sběratelství a starožitnosti",
-		"category": "Retro a vintage"
+		"category": "Retro a vintage",
+		"restrictions": []
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--starozitnosti",
@@ -2249,7 +2485,8 @@
 			"museum pieces"
 		],
 		"group": "Sběratelství a starožitnosti",
-		"category": "Starožitnosti"
+		"category": "Starožitnosti",
+		"restrictions": []
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--pamatky-a-kuriozity",
@@ -2264,7 +2501,8 @@
 			"unique items"
 		],
 		"group": "Sběratelství a starožitnosti",
-		"category": "Památky a kuriozity"
+		"category": "Památky a kuriozity",
+		"restrictions": []
 	},
 	{
 		"slug": "umeni-a-design--obrazy-a-grafiky",
@@ -2280,7 +2518,8 @@
 			"visual art"
 		],
 		"group": "Umění a design",
-		"category": "Obrazy a grafiky"
+		"category": "Obrazy a grafiky",
+		"restrictions": []
 	},
 	{
 		"slug": "umeni-a-design--plakaty-a-printy",
@@ -2295,7 +2534,8 @@
 			"art prints"
 		],
 		"group": "Umění a design",
-		"category": "Plakáty a printy"
+		"category": "Plakáty a printy",
+		"restrictions": []
 	},
 	{
 		"slug": "umeni-a-design--sochy-a-objekty",
@@ -2310,7 +2550,8 @@
 			"figurines"
 		],
 		"group": "Umění a design",
-		"category": "Sochy a objekty"
+		"category": "Sochy a objekty",
+		"restrictions": []
 	},
 	{
 		"slug": "umeni-a-design--autorsky-design",
@@ -2324,7 +2565,8 @@
 			"artistic design"
 		],
 		"group": "Umění a design",
-		"category": "Autorský design"
+		"category": "Autorský design",
+		"restrictions": []
 	},
 	{
 		"slug": "umeni-a-design--ramovani-a-pasparty",
@@ -2339,7 +2581,8 @@
 			"custom frames"
 		],
 		"group": "Umění a design",
-		"category": "Rámování a pasparty"
+		"category": "Rámování a pasparty",
+		"restrictions": []
 	},
 	{
 		"slug": "umeni-a-design--umelecke-potreby",
@@ -2353,7 +2596,8 @@
 			"craft supplies"
 		],
 		"group": "Umění a design",
-		"category": "Umělecké potřeby"
+		"category": "Umělecké potřeby",
+		"restrictions": []
 	},
 	{
 		"slug": "nemovitosti--prodej-bytu",
@@ -2368,7 +2612,8 @@
 			"real estate"
 		],
 		"group": "Nemovitosti",
-		"category": "Prodej bytu"
+		"category": "Prodej bytu",
+		"restrictions": []
 	},
 	{
 		"slug": "nemovitosti--pronajem-bytu",
@@ -2383,7 +2628,8 @@
 			"apartment rent"
 		],
 		"group": "Nemovitosti",
-		"category": "Pronájem bytu"
+		"category": "Pronájem bytu",
+		"restrictions": []
 	},
 	{
 		"slug": "nemovitosti--prodej-domu",
@@ -2398,7 +2644,8 @@
 			"villa"
 		],
 		"group": "Nemovitosti",
-		"category": "Prodej domu"
+		"category": "Prodej domu",
+		"restrictions": []
 	},
 	{
 		"slug": "nemovitosti--pronajem-domu",
@@ -2412,7 +2659,8 @@
 			"family house rent"
 		],
 		"group": "Nemovitosti",
-		"category": "Pronájem domu"
+		"category": "Pronájem domu",
+		"restrictions": []
 	},
 	{
 		"slug": "nemovitosti--pozemky",
@@ -2427,7 +2675,8 @@
 			"vacant land"
 		],
 		"group": "Nemovitosti",
-		"category": "Pozemky"
+		"category": "Pozemky",
+		"restrictions": []
 	},
 	{
 		"slug": "nemovitosti--garaze-a-parkovani",
@@ -2442,7 +2691,8 @@
 			"parking spots"
 		],
 		"group": "Nemovitosti",
-		"category": "Garáže a parkování"
+		"category": "Garáže a parkování",
+		"restrictions": []
 	},
 	{
 		"slug": "nemovitosti--chaty-a-chalupy",
@@ -2457,7 +2707,8 @@
 			"vacation homes"
 		],
 		"group": "Nemovitosti",
-		"category": "Chaty a chalupy"
+		"category": "Chaty a chalupy",
+		"restrictions": []
 	},
 	{
 		"slug": "nemovitosti--komercni-prostory",
@@ -2471,7 +2722,8 @@
 			"commercial real estate"
 		],
 		"group": "Nemovitosti",
-		"category": "Komerční prostory"
+		"category": "Komerční prostory",
+		"restrictions": []
 	},
 	{
 		"slug": "ostatni--darkove-poukazy",
@@ -2485,7 +2737,8 @@
 			"gift vouchers"
 		],
 		"group": "Ostatní",
-		"category": "Dárkové poukazy"
+		"category": "Dárkové poukazy",
+		"restrictions": []
 	},
 	{
 		"slug": "ostatni--ztraty-a-nalezy",
@@ -2500,7 +2753,8 @@
 			"missing items"
 		],
 		"group": "Ostatní",
-		"category": "Ztráty a nálezy"
+		"category": "Ztráty a nálezy",
+		"restrictions": []
 	},
 	{
 		"slug": "ostatni--bazarove-sety-a-mixy",
@@ -2515,7 +2769,8 @@
 			"mixed collections"
 		],
 		"group": "Ostatní",
-		"category": "Bazarové sety a mixy"
+		"category": "Bazarové sety a mixy",
+		"restrictions": []
 	},
 	{
 		"slug": "ostatni--nahradni-dily-ruzne",
@@ -2529,7 +2784,8 @@
 			"generic parts"
 		],
 		"group": "Ostatní",
-		"category": "Náhradní díly různé"
+		"category": "Náhradní díly různé",
+		"restrictions": []
 	},
 	{
 		"slug": "ostatni--nezarazene",
@@ -2543,7 +2799,8 @@
 			"mixed items"
 		],
 		"group": "Ostatní",
-		"category": "Nezařazené"
+		"category": "Nezařazené",
+		"restrictions": []
 	},
 	{
 		"slug": "sezona--vanoce",
@@ -2561,7 +2818,8 @@
 			"mikuláš"
 		],
 		"group": "Sezóna",
-		"category": "Vánoce"
+		"category": "Vánoce",
+		"restrictions": []
 	},
 	{
 		"slug": "sezona--valentyn",
@@ -2577,7 +2835,8 @@
 			"láska"
 		],
 		"group": "Sezóna",
-		"category": "Valentýn"
+		"category": "Valentýn",
+		"restrictions": []
 	},
 	{
 		"slug": "sezona--velikonoce",
@@ -2594,7 +2853,8 @@
 			"velikonoční košík"
 		],
 		"group": "Sezóna",
-		"category": "Velikonoce"
+		"category": "Velikonoce",
+		"restrictions": []
 	},
 	{
 		"slug": "sezona--halloween",
@@ -2611,7 +2871,8 @@
 			"31. říjen"
 		],
 		"group": "Sezóna",
-		"category": "Halloween"
+		"category": "Halloween",
+		"restrictions": []
 	},
 	{
 		"slug": "sezona--zima",
@@ -2631,7 +2892,8 @@
 			"mráz"
 		],
 		"group": "Sezóna",
-		"category": "Zima"
+		"category": "Zima",
+		"restrictions": []
 	},
 	{
 		"slug": "sezona--jaro",
@@ -2652,7 +2914,8 @@
 			"květen"
 		],
 		"group": "Sezóna",
-		"category": "Jaro"
+		"category": "Jaro",
+		"restrictions": []
 	},
 	{
 		"slug": "sezona--leto",
@@ -2675,7 +2938,8 @@
 			"srpen"
 		],
 		"group": "Sezóna",
-		"category": "Léto"
+		"category": "Léto",
+		"restrictions": []
 	},
 	{
 		"slug": "sezona--podzim",
@@ -2696,7 +2960,8 @@
 			"listopad"
 		],
 		"group": "Sezóna",
-		"category": "Podzim"
+		"category": "Podzim",
+		"restrictions": []
 	},
 	{
 		"slug": "sezona--silvestr",
@@ -2716,7 +2981,8 @@
 			"1. leden"
 		],
 		"group": "Sezóna",
-		"category": "Silvestr"
+		"category": "Silvestr",
+		"restrictions": []
 	},
 	{
 		"slug": "sezona--den-matek",
@@ -2732,7 +2998,8 @@
 			"druhá květnová neděle"
 		],
 		"group": "Sezóna",
-		"category": "Den matek"
+		"category": "Den matek",
+		"restrictions": []
 	},
 	{
 		"slug": "sezona--den-otcu",
@@ -2747,7 +3014,8 @@
 			"třetí červnová neděle"
 		],
 		"group": "Sezóna",
-		"category": "Den otců"
+		"category": "Den otců",
+		"restrictions": []
 	},
 	{
 		"slug": "sezona--zacatek-skoly",
@@ -2766,7 +3034,8 @@
 			"září"
 		],
 		"group": "Sezóna",
-		"category": "Začátek školy"
+		"category": "Začátek školy",
+		"restrictions": []
 	},
 	{
 		"slug": "sezona--maturita",
@@ -2783,6 +3052,7 @@
 			"konec školy"
 		],
 		"group": "Sezóna",
-		"category": "Maturita"
+		"category": "Maturita",
+		"restrictions": []
 	}
 ]
