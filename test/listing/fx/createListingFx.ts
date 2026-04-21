@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
-import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
+import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
 import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";

@@ -2,7 +2,7 @@ import type { FC } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
 import { translator } from "@/lib/common/translator";
-import { CategoryInline } from "~/session/category/ui/CategoryInline";
+import { CategoryInline } from "~/user/category/ui/CategoryInline";
 
 export namespace CategoryValue {
 	export interface Props extends LabelValue.PropsEx, MarkSuspense.Props {

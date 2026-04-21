@@ -8,7 +8,7 @@ import { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
 import { translator } from "@/lib/common/translator";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
-import { CategoryInline } from "~/session/category/ui/CategoryInline";
+import { CategoryInline } from "~/user/category/ui/CategoryInline";
 import { SellerInfo } from "../../SellerInfo";
 
 export namespace InfoSection {

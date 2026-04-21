@@ -11,7 +11,7 @@ import { useAppForm } from "~/common/ui/form";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreateSchema";
-import { CategorySelect } from "~/session/category/ui/CategorySelect";
+import { CategorySelect } from "~/user/category/ui/CategorySelect";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 

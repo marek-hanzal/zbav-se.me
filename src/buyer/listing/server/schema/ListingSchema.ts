@@ -2,7 +2,7 @@ import { z } from "zod";
 import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
-import { CategorySchema } from "~/session/category/server/schema/CategorySchema";
+import { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 
