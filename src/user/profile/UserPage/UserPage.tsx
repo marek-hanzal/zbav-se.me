@@ -134,7 +134,6 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 												label={toTimeDiff({
 													type: "human",
 													locale,
-													source: restriction.createdAt.toISOString(),
 													time: restriction.availableAt,
 												})}
 												data-ui-tone={"brand"}
