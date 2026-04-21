@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
 
 export const CategoryTableSchema = z
 	.looseObject({
@@ -19,6 +20,13 @@ export const CategoryTableSchema = z
 		}),
 		locale: z.string().meta({
 			description: "Locale/language of the category",
+		}),
+		restrictions: z.array(ListingRestrictionEnumSchema).meta({
+			description: `
+Array of restrictions applied using this category; this is core rule and it's not possible to override it by the user.
+
+Empty array means "open" (unrestricted).
+        `.trim(),
 		}),
 	})
 	.meta({

@@ -15,6 +15,7 @@ export const CategoryMigration: Migration = {
 			.addColumn("slug", "text", (col) => col.notNull())
 			.addColumn("sort", "integer", (col) => col.notNull())
 			.addColumn("locale", "text", (col) => col.notNull())
+			.addColumn("restrictions", sql`listing_restriction_enum[]`)
 			.addUniqueConstraint("category_[slug-locale]_unique_idx", [
 				"slug",
 				"locale",
