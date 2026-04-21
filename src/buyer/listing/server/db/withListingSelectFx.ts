@@ -32,11 +32,16 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	const gallerySelect = yield* withGallerySelectFx({});
 
 	return listingSourceSelect.selectAll("l").select((eb) => [
-		sql<
-			CategoryRestrictionEnumSchema.Type[]
-		>`array[${eb.ref("cat.restriction")}] || COALESCE(array[${eb.ref("l.restriction")}], '{}'::category_restriction_enum[])`.as(
-			"restrictions",
-		),
+		sql<CategoryRestrictionEnumSchema.Type[]>`array(
+			select restriction_item.restriction
+			from unnest(array[
+				${eb.ref("cat.restriction")},
+				${eb.ref("l.restriction")}
+			]::category_restriction_enum[]) with ordinality as restriction_item(restriction, ord)
+			where restriction_item.restriction is not null
+			group by restriction_item.restriction
+			order by min(restriction_item.ord)
+		)`.as("restrictions"),
 		sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 		sql<CategoryTableSchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category"),
 		sql<ListingDeliveryEnumSchema.Type[] | null>`to_jsonb(${eb.ref("l.delivery")})`.as(

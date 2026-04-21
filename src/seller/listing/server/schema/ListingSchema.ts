@@ -15,7 +15,7 @@ export const ListingSchema = z
 		}),
 		restrictions: z.array(CategoryRestrictionEnumSchema).meta({
 			description: `
-Computed restrictions from category. Read-only.
+Computed restrictions from category and listing. Read-only.
             `.trim(),
 		}),
 	})
