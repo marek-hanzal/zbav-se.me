@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
+import { hasExplicitCategory } from "~/common/listing/util/hasExplicitCategory";
 import { withListingCollectionSelectFx } from "~/public/listing/server/db/withListingCollectionSelectFx";
 import { withListingQueryBuilderFx } from "~/public/listing/server/db/withListingQueryBuilderFx";
 import type { ListingCountQuerySchema } from "~/public/listing/server/schema/ListingCountQuerySchema";
@@ -39,9 +40,11 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 		const { count } = yield* Effect.promise(async () => {
 			return kysely
 				.selectFrom("listing as l")
+				.innerJoin("category as cat", "cat.id", "l.categoryId")
 				.where("l.status", "in", [
 					"live",
 				])
+				.where("cat.type", "=", "implicit")
 				.select(sql<number>`count(*)::int`.as("count"))
 				.executeTakeFirstOrThrow();
 		});
@@ -52,6 +55,11 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	return yield* withCountFx({
 		selectFx: withListingCollectionSelectFx({
 			meta,
+			hasExplicitCategory: hasExplicitCategory([
+				filter,
+				where,
+				scope,
+			]),
 		}),
 		filter,
 		where,

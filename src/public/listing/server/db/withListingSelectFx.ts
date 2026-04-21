@@ -17,10 +17,12 @@ export namespace withListingSelectFx {
 export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	sort,
 	meta,
+	hasExplicitCategory,
 }: withListingSelectFx.Props) {
 	const listingSourceSelect = yield* withListingSourceSelectFx({
 		sort,
 		meta,
+		hasExplicitCategory,
 	});
 
 	const gallerySelect = yield* withGallerySelectFx({});

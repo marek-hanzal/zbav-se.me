@@ -7,6 +7,7 @@ import { ignoreCreateFx } from "~/buyer/ignore/server/fx/ignoreCreateFx";
 import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
 import { listingCountFx } from "~/buyer/listing/server/fx/listingCountFx";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
@@ -77,6 +78,23 @@ const patchListingSearchData = (
 				age: props.age,
 				delivery: props.delivery,
 				warranty: props.warranty,
+			})
+			.where("id", "=", props.id)
+			.executeTakeFirstOrThrow(),
+	);
+
+const patchCategoryType = (
+	database: TestDatabase,
+	props: {
+		id: string;
+		type: "explicit" | "implicit";
+	},
+) =>
+	Effect.promise(() =>
+		database.kysely
+			.updateTable("category")
+			.set({
+				type: props.type,
 			})
 			.where("id", "=", props.id)
 			.executeTakeFirstOrThrow(),
@@ -242,6 +260,84 @@ describe("buyer listing discovery flow", () => {
 			]);
 			expect(allExceptOwn.map((item) => item.id)).not.toContain(ownListing.id);
 			expect(allExceptOwn.map((item) => item.id)).toContain(farListing.id);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+
+	it("hides explicit categories unless the buyer query asks for a category", async () => {
+		const database = await testabase("buyer-listing-category-type-flow");
+
+		return Effect.gen(function* () {
+			const users = yield* createUsersFx({});
+			const implicitCategory = yield* categoryFetchFx({
+				where: {
+					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
+				},
+				scope: {},
+			});
+			const explicitCategory = yield* categoryFetchFx({
+				where: {
+					slug: "pocitace-a-kancelar--monitor",
+				},
+				scope: {},
+			});
+
+			yield* patchCategoryType(database, {
+				id: explicitCategory.id,
+				type: "explicit",
+			});
+
+			const implicitListing = yield* createListingFx(users.seller.id, {
+				title: "Buyer category type visibility marker",
+				categoryId: implicitCategory.id,
+			});
+			const explicitListing = yield* createListingFx(users.seller.id, {
+				title: "Buyer category type visibility marker",
+				categoryId: explicitCategory.id,
+			});
+
+			const defaultCollection = yield* listingCollectionFx({
+				userId: users.buyer.id,
+				scope: {},
+				where: {
+					title: "Buyer category type visibility marker",
+				},
+			});
+			const defaultCount = yield* listingCountFx({
+				userId: users.buyer.id,
+				scope: {},
+				where: {
+					title: "Buyer category type visibility marker",
+				},
+			});
+			const explicitByCategory = yield* listingCollectionFx({
+				userId: users.buyer.id,
+				scope: {},
+				where: {
+					title: "Buyer category type visibility marker",
+					categoryId: explicitCategory.id,
+				},
+			});
+			const explicitByCategoryIn = yield* listingCollectionFx({
+				userId: users.buyer.id,
+				scope: {},
+				where: {
+					title: "Buyer category type visibility marker",
+					categoryIdIn: [
+						explicitCategory.id,
+					],
+				},
+			});
+
+			expect(defaultCollection.map((item) => item.id)).toEqual([
+				implicitListing.id,
+			]);
+			expect(defaultCount).toBe(defaultCollection.length);
+			expect(explicitByCategory.map((item) => item.id)).toEqual([
+				explicitListing.id,
+			]);
+			expect(explicitByCategoryIn.map((item) => item.id)).toEqual([
+				explicitListing.id,
+			]);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

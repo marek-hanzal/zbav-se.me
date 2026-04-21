@@ -5,6 +5,7 @@ import { withListingQueryBuilderFx } from "~/buyer/listing/server/db/withListing
 import { withListingSelectFx } from "~/buyer/listing/server/db/withListingSelectFx";
 import type { ListingFilterSchema } from "~/buyer/listing/server/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
+import { hasExplicitCategory } from "~/common/listing/util/hasExplicitCategory";
 
 export namespace listingFetchFx {
 	export interface Props extends ListingQuerySchema.Type {
@@ -37,6 +38,11 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 			userId,
 			sort,
 			meta,
+			hasExplicitCategory: hasExplicitCategory([
+				filter,
+				where,
+				scope,
+			]),
 		}),
 		filter,
 		where,

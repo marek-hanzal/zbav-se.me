@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
+import { hasExplicitCategory } from "~/common/listing/util/hasExplicitCategory";
 import { withListingCollectionSelectFx } from "~/public/listing/server/db/withListingCollectionSelectFx";
 import { withListingQueryBuilderFx } from "~/public/listing/server/db/withListingQueryBuilderFx";
 import type { ListingFilterSchema } from "~/public/listing/server/schema/ListingFilterSchema";
@@ -39,6 +40,11 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 		selectFx: withListingCollectionSelectFx({
 			sort,
 			meta,
+			hasExplicitCategory: hasExplicitCategory([
+				filter,
+				where,
+				scope,
+			]),
 		}),
 		cursor,
 		limit,

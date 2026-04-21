@@ -22,10 +22,6 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 >({ select, where, meta }: withListingQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 
-	query = query.where("l.status", "in", [
-		"live",
-	] as const) as TSelect;
-
 	if (!where) {
 		return yield* Effect.succeed(query);
 	}

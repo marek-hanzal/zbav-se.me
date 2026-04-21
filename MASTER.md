@@ -476,6 +476,13 @@ Kategorie nese mimo jiné:
 - **název**
 - **slug**
 - **locale**
+- **typ viditelnosti v defaultním listingu**
+
+Typ viditelnosti kategorie:
+- `implicit` = normální kategorie. Její inzeráty se můžou objevit v obecném feedu/hledání bez výběru kategorie.
+- `explicit` = tichá kategorie. Její inzeráty nelezou do obecného feedu/hledání samy od sebe; uživatel si o tu kategorii musí vědomě říct filtrem.
+
+Tohle není [Citlivost](#koncept-citlivost-inzeratu). `explicit` neznamená zakázaný ani 18+. Je to hygienická brzda veřejného feedu: věci, které existují a jsou normálně dostupné, ale nemusejí být hned na první dobrou všem v ksichtu.
 
 <a id="koncept-category-spec"></a>
 #### Category Spec (parametry)
@@ -1010,12 +1017,16 @@ Tvrdý pravidlo:
 Ostatní brány jsou pravidla listingu (ne zákaz otevření):
 - ignor,
 - životní cyklus [Inzerátu](#koncept-inzerat) (`expired` / `closed` / `sold`),
+- typ [Kategorie](#koncept-kategorie) (`explicit` se zobrazí jen při vědomém category filtru),
 - [Release window](#koncept-release-window),
 - anti-topper a podobný mechaniky pořadí.
 
 Co se v listingu defaultně neukazuje:
 - `expired` a `closed` (jen přes vědomej filtr / historickej režim),
-- `sold` (není k dispozici).
+- `sold` (není k dispozici),
+- inzeráty v kategoriích typu `explicit`, pokud dotaz nemá konkrétní category filtr.
+
+Explicitní category filtr znamená, že dotaz obsahuje konkrétní kategorii nebo seznam kategorií. Prázdnej seznam kategorií se bere jako „bez category filtru“, takže pořád platí jen `implicit`.
 
 Kontrakt detailu mimo `live`:
 - Detail se otevře (krom citlivosti), ale je read-only a místo „Mám zájem“ ukážu jasnej status („Už není dostupný“). UI má být fér.

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
+import { CategoryTypeEnumSchema } from "~/common/category/enum/CategoryTypeEnumSchema";
 
 export const CategoryTableSchema = z
 	.looseObject({
@@ -20,6 +21,13 @@ export const CategoryTableSchema = z
 		}),
 		locale: z.string().meta({
 			description: "Locale/language of the category",
+		}),
+		type: CategoryTypeEnumSchema.meta({
+			description: `
+Controls whether listings in this category are included in default listing queries.
+
+Explicit categories are returned only when the query asks for a category using categoryId or categoryIdIn.
+        `.trim(),
 		}),
 		restrictions: z.array(CategoryRestrictionEnumSchema).meta({
 			description: `

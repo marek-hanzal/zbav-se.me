@@ -9,6 +9,7 @@ export namespace withListingSourceSelectFx {
 	export interface Props {
 		sort?: ListingSortSchema.Type[];
 		meta: ListingMetaSchema.Type | undefined;
+		hasExplicitCategory?: boolean;
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withListingSourceSelectFx>>;
@@ -17,13 +18,21 @@ export namespace withListingSourceSelectFx {
 export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(function* ({
 	sort,
 	meta,
+	hasExplicitCategory,
 }: withListingSourceSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely
 		.selectFrom("listing as l")
 		.innerJoin("location as loc", "loc.id", "l.locationId")
-		.innerJoin("category as cat", "cat.id", "l.categoryId");
+		.innerJoin("category as cat", "cat.id", "l.categoryId")
+		.where("l.status", "in", [
+			"live",
+		] as const);
+
+	if (!hasExplicitCategory) {
+		query = query.where("cat.type", "=", "implicit");
+	}
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
