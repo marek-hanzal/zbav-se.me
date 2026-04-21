@@ -269,22 +269,83 @@
 		"restrictions": []
 	},
 	{
-		"slug": "vape-elektronicke-cigarety--atomizery-mtl-dl",
+		"slug": "vape-elektronicke-cigarety--atomizery-boro",
 		"locale": "cs",
 		"spotlight": [
 			"atomizér",
 			"atomizer",
+			"boro",
+			"boro tank",
+			"boro atomizér",
+			"bridge",
+			"boro bridge",
+			"billet box"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Atomizéry - Boro",
+		"restrictions": [
+			"adult-relaxed"
+		]
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--atomizery-mtl",
+		"locale": "cs",
+		"spotlight": [
+			"atomizér",
+			"atomizer",
+			"mtl",
+			"mouth to lung",
 			"tank",
 			"clearomizér",
-			"mtl",
-			"dl",
 			"rta",
 			"rda",
 			"rdta"
 		],
 		"group": "Vape/Elektronické cigarety",
-		"category": "Atomizéry (MTL/DL)",
-		"restrictions": []
+		"category": "Atomizéry - MTL",
+		"restrictions": [
+			"adult-relaxed"
+		]
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--atomizery-dl",
+		"locale": "cs",
+		"spotlight": [
+			"atomizér",
+			"atomizer",
+			"dl",
+			"direct lung",
+			"tank",
+			"clearomizér",
+			"rta",
+			"rda",
+			"rdta"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Atomizéry - DL",
+		"restrictions": [
+			"adult-relaxed"
+		]
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--atomizery",
+		"locale": "cs",
+		"spotlight": [
+			"atomizér",
+			"atomizéry",
+			"atomizer",
+			"tank",
+			"clearomizér",
+			"vape tank",
+			"rta",
+			"rda",
+			"rdta"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Atomizéry",
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--mody",
@@ -301,7 +362,9 @@
 		],
 		"group": "Vape/Elektronické cigarety",
 		"category": "Mody",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--clanky-baterie",
@@ -318,7 +381,9 @@
 		],
 		"group": "Vape/Elektronické cigarety",
 		"category": "Články (baterie)",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--spiralky",
@@ -335,7 +400,9 @@
 		],
 		"group": "Vape/Elektronické cigarety",
 		"category": "Spirálky",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--prislusenstvi",
@@ -353,7 +420,9 @@
 		],
 		"group": "Vape/Elektronické cigarety",
 		"category": "Příslušenství",
-		"restrictions": []
+		"restrictions": [
+			"adult-relaxed"
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--damske-obleceni",
