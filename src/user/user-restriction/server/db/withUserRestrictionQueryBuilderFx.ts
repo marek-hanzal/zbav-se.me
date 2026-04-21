@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
+import { DateContextFx } from "@/lib/common/date";
 import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import type { UserRestrictionFilterSchema } from "../schema/UserRestrictionFilterSchema";
 import type { withUserRestrictionSourceSelectFx } from "./withUserRestrictionSourceSelectFx";
@@ -23,6 +24,8 @@ export const withUserRestrictionQueryBuilderFx = Effect.fn("withUserRestrictionQ
 		select,
 		where,
 	}: withUserRestrictionQueryBuilderFx.Props<TSelect>) {
+		const dateContext = yield* DateContextFx;
+
 		let query = select;
 
 		if (!where) {
@@ -45,6 +48,10 @@ export const withUserRestrictionQueryBuilderFx = Effect.fn("withUserRestrictionQ
 			query = query.where(
 				sql<boolean>`${where.restriction as CategoryRestrictionEnumSchema.Type} = ANY(${sql.ref("ur.restriction")})`,
 			) as TSelect;
+		}
+
+		if (where.isAvailable === true) {
+			query = query.where("ur.availableAt", "<=", dateContext.now().toJSDate()) as TSelect;
 		}
 
 		if (where.availableAtGte) {

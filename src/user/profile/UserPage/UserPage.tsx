@@ -13,6 +13,7 @@ import { TokenUsage } from "~/user/agent/ui/TokenUsage";
 import { useUser } from "~/user/auth/hook/useUser";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { SignOutButton } from "~/user/profile/UserPage/SignOutButton";
+import { withUserRestrictionQuery } from "~/user/user-restriction/query/withUserRestrictionQuery";
 
 export namespace UserPage {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
@@ -29,6 +30,21 @@ export namespace UserPage {
 export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
 	const user = useUser();
+	const aa = withUserRestrictionQuery.useCollectionQuery({
+		where: {
+			isAvailable: true,
+		},
+		cursor: {
+			page: 0,
+			size: 1,
+		},
+		sort: [
+			{
+				field: "availableAt",
+				order: "desc",
+			},
+		],
+	});
 
 	return (
 		<TitleContainer

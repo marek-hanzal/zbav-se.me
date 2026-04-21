@@ -13,11 +13,12 @@ export const UserRestrictionFilterSchema = z
 		}),
 		availableAtGte: z.coerce.date().optional().meta({
 			description: "Lower availableAt bound",
-			type: "string",
 		}),
 		availableAtLte: z.coerce.date().optional().meta({
 			description: "Upper availableAt bound",
-			type: "string",
+		}),
+		isAvailable: z.boolean().optional().meta({
+			description: "Filter out only available items",
 		}),
 	})
 	.strip()
