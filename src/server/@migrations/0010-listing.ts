@@ -29,7 +29,7 @@ export const ListingMigration: Migration = {
 			.addColumn("delivery", sql`listing_delivery_enum[]`)
 			.addColumn("warranty", sql`listing_warranty_enum`)
 			.addColumn("status", sql`listing_status_enum`)
-			.addColumn("restriction", sql`listing_restriction_enum`, (col) => col.notNull())
+			.addColumn("restriction", sql`category_restriction_enum`)
 			.addColumn("locationId", "text", (col) => col.notNull())
 			.addColumn("categoryId", "text", (col) => col.notNull())
 			.addColumn("galleryId", "text", (col) => col.notNull())

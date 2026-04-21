@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { withListingSourceSelectFx } from "~/buyer/listing/server/db/withListingSourceSelectFx";
+import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import type { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
@@ -29,6 +30,11 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	const gallerySelect = yield* withGallerySelectFx({});
 
 	return listingSourceSelect.selectAll("l").select((eb) => [
+		sql<
+			CategoryRestrictionEnumSchema.Type[]
+		>`coalesce(${eb.ref("cat.restrictions")}, '{}'::category_restriction_enum[]) || COALESCE(array[${eb.ref("l.restriction")}], '{}'::category_restriction_enum[])`.as(
+			"restrictions",
+		),
 		sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 		sql<CategoryTableSchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category"),
 		sql<ListingDeliveryEnumSchema.Type[] | null>`to_jsonb(${eb.ref("l.delivery")})`.as(

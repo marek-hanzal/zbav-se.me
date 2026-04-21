@@ -1,8 +1,8 @@
 import { z } from "zod";
+import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
-import { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import { ProsConsSchema } from "~/seller/listing/server/schema/ProsConsSchema";
 
@@ -25,7 +25,12 @@ export const ListingCreateSchema = z
 		warranty: ListingWarrantyEnumSchema.nullish().meta({
 			description: "Warranty type for the listing",
 		}),
-		restriction: ListingRestrictionEnumSchema,
+		restriction: CategoryRestrictionEnumSchema.nullish().meta({
+			description: `
+Restriction may get only higher level than provided from category, e.g. "adult" category
+cannot get "none" restriction on it's listings.
+            `.trim(),
+		}),
 		draftId: z.string().optional().meta({
 			description: "ID of the draft",
 		}),

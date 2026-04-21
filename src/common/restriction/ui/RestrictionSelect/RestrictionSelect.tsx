@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import type { useSelection } from "@/lib/client/selection";
 import type { EntitySchema } from "@/lib/common/schema";
-import { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
+import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { Item } from "./Item";
 
 export namespace RestrictionSelect {
@@ -28,7 +28,7 @@ export const RestrictionSelect: FC<RestrictionSelect.Props> = ({ selection, ...p
 			data-ui-gap="lg"
 			{...props}
 		>
-			{Object.values(ListingRestrictionEnumSchema.enum).map((restriction) => {
+			{Object.values(CategoryRestrictionEnumSchema.enum).map((restriction) => {
 				return (
 					<Item
 						key={restriction}

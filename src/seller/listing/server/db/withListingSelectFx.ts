@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
+import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { withListingSourceSelectFx } from "~/seller/listing/server/db/withListingSourceSelectFx";
 import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
@@ -34,6 +35,11 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 		"l.warranty",
 		"l.status",
 		"l.restriction",
+		sql<
+			CategoryRestrictionEnumSchema.Type[]
+		>`coalesce(${eb.ref("cat.restrictions")}, '{}'::category_restriction_enum[]) || COALESCE(array[${eb.ref("l.restriction")}], '{}'::category_restriction_enum[])`.as(
+			"restrictions",
+		),
 		"l.locationId",
 		"l.categoryId",
 		"l.galleryId",

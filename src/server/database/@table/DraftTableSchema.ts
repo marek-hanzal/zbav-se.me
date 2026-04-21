@@ -1,8 +1,8 @@
 import { z } from "zod";
+import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
-import { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 import { ProsConsSchema } from "~/seller/listing/server/schema/ProsConsSchema";
@@ -43,8 +43,13 @@ export const DraftTableSchema = z
 			description: "Warranty type for the draft",
 		}),
 		//
-		restriction: ListingRestrictionEnumSchema.nullable().meta({
-			description: "Content restriction level of the draft",
+		restriction: CategoryRestrictionEnumSchema.nullish().meta({
+			description: `
+Restriction override for the listing (draft). May be only higher level than
+category of the listing - e.g. "adult" category cannot get "none" restriction.
+
+If not provided, listing will be controlled from category only.
+            `.trim(),
 		}),
 		//
 		locationId: z.string().nullable().meta({

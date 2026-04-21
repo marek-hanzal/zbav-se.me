@@ -2,7 +2,6 @@ import { type Migration, sql } from "kysely";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
-import type { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
 import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 
 export const DraftMigration: Migration = {
@@ -42,19 +41,6 @@ export const DraftMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createType("listing_restriction_enum")
-			.asEnum(
-				toEnumGuard<ListingRestrictionEnumSchema.Type>()([
-					"none",
-					"adult",
-					"adult-relaxed",
-					"sensitive",
-					"restricted",
-				] as const),
-			)
-			.execute();
-
-		await db.schema
 			.createTable("draft")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
@@ -66,7 +52,7 @@ export const DraftMigration: Migration = {
 			.addColumn("age", "integer")
 			.addColumn("delivery", sql`listing_delivery_enum[]`)
 			.addColumn("warranty", sql`listing_warranty_enum`)
-			.addColumn("restriction", sql`listing_restriction_enum`)
+			.addColumn("restriction", sql`category_restriction_enum`)
 			.addColumn("locationId", "text")
 			.addColumn("categoryId", "text")
 			.addColumn("galleryId", "text", (col) => col.notNull())

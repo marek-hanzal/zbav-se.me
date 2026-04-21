@@ -5,8 +5,8 @@ import { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
 import type { EntitySchema } from "@/lib/common/schema";
 import { translator } from "@/lib/common/translator";
+import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import type { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
 import { RestrictionSelect } from "~/common/restriction/ui/RestrictionSelect";
 import { TitleContainer } from "~/common/ui/container";
 import { useAppForm } from "~/common/ui/form";
@@ -44,7 +44,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 	});
 	const form = useAppForm({
 		defaultValues: {
-			restriction: (draft.restriction as ListingRestrictionEnumSchema.Type | null) ?? null,
+			restriction: draft.restriction ?? "none",
 		},
 		validators: {
 			onMount: RestrictionSchema,
@@ -77,7 +77,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 		onSelect(item) {
 			form.setFieldValue(
 				"restriction",
-				(item?.id as ListingRestrictionEnumSchema.Type | undefined) ?? null,
+				(item?.id as CategoryRestrictionEnumSchema.Type) ?? null,
 			);
 			form.setFieldMeta("restriction", (meta) => ({
 				...meta,
