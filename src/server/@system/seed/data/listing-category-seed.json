@@ -33918,5 +33918,1497 @@
 				"package"
 			]
 		}
+	],
+	"vape-elektronicke-cigarety--atomizery-boro": [
+		{
+			"title": "Cthulhu AIO Boro tank set",
+			"description": "Cthulhu AIO Boro tank set - používaný v jednom zařízení, těsnění i závity v pořádku, stav odpovídá fotkám.",
+			"pros": [
+				"bez prasklin",
+				"těsnění drží",
+				"závity nejsou stržené",
+				"vhodné pro Billet Box",
+				"čisté po vypláchnutí",
+				"rychlé předání"
+			],
+			"cons": [
+				"běžné stopy používání",
+				"bez původní krabičky",
+				"bez záruky",
+				"je potřeba vlastní coil",
+				"na těle drobné vlásečnice",
+				"pouze pro dospělé"
+			],
+			"priceMin": 300,
+			"priceMax": 2500,
+			"priceSpikes": [
+				3500,
+				5000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "VapeSnail Boro bridge klon",
+			"description": "VapeSnail Boro bridge klon - funkční kus s náhradními šroubky, vhodné pro MTL setup, stav odpovídá fotkám.",
+			"pros": [
+				"funkční závity",
+				"náhradní šroubky v balení",
+				"vhodné pro MTL",
+				"kompaktní rozměr",
+				"bez protečení při správném osazení",
+				"osobní předání možné"
+			],
+			"cons": [
+				"klon bez původu",
+				"drobné oděrky",
+				"bez coilu a vaty",
+				"bez záruky",
+				"vyžaduje zkušenost s buildem",
+				"pouze pro dospělé"
+			],
+			"priceMin": 250,
+			"priceMax": 1800,
+			"priceSpikes": [
+				2500,
+				3500
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"vape-elektronicke-cigarety--atomizery-mtl": [
+		{
+			"title": "Aspire Nautilus 3 tank",
+			"description": "Aspire Nautilus 3 tank - používaný střídmě, sklo bez prasklin, připravený po vyčištění k dalšímu používání.",
+			"pros": [
+				"sklo bez prasklin",
+				"plynulé airflow",
+				"snadné horní plnění",
+				"originální náhradní sklo",
+				"vhodný na MTL",
+				"rychlé předání"
+			],
+			"cons": [
+				"běžné oděrky na základně",
+				"bez žhavicí hlavy",
+				"bez záruky",
+				"bez původní krabičky",
+				"nutné vlastní čištění před použitím",
+				"pouze pro dospělé"
+			],
+			"priceMin": 250,
+			"priceMax": 1200,
+			"priceSpikes": [
+				1600,
+				2200
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "Berserker Mini MTL RTA",
+			"description": "Berserker Mini MTL RTA - rebuild atomizér s kompletním tankem, používán krátce, stav odpovídá fotkám.",
+			"pros": [
+				"kompletní tank",
+				"funkční závity",
+				"vhodný pro utažené MTL",
+				"náhradní o-kroužky",
+				"bez prasklin",
+				"osobní předání možné"
+			],
+			"cons": [
+				"bez coilu",
+				"drobné známky používání",
+				"bez záruky",
+				"menší škrábanec na základně",
+				"vyžaduje vlastní build",
+				"pouze pro dospělé"
+			],
+			"priceMin": 300,
+			"priceMax": 1500,
+			"priceSpikes": [
+				2000,
+				2800
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"vape-elektronicke-cigarety--atomizery-dl": [
+		{
+			"title": "GeekVape Zeus Sub-Ohm tank",
+			"description": "GeekVape Zeus Sub-Ohm tank - používaný jako rezervní, airflow i horní plnění fungují bez problémů, stav odpovídá fotkám.",
+			"pros": [
+				"bez prasklého skla",
+				"hladký chod závitu",
+				"vhodné pro DL",
+				"méně náchylný k protečení",
+				"náhradní sklo součástí",
+				"rychlé předání"
+			],
+			"cons": [
+				"běžné oděrky",
+				"bez žhavicí hlavy",
+				"bez záruky",
+				"bez krabičky",
+				"větší rozměr",
+				"pouze pro dospělé"
+			],
+			"priceMin": 350,
+			"priceMax": 1400,
+			"priceSpikes": [
+				1900,
+				2600
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "Voopoo Uforce-L tank černý",
+			"description": "Voopoo Uforce-L tank černý - zachovalý kus s jedním náhradním sklem, připravený k dalšímu používání.",
+			"pros": [
+				"zachovalý stav",
+				"náhradní sklo",
+				"funkční airflow",
+				"horní plnění bez vůle",
+				"vhodný na vyšší výkon",
+				"osobní předání možné"
+			],
+			"cons": [
+				"bez žhavicí hlavy",
+				"jemné oděrky na spodku",
+				"bez záruky",
+				"bez původního balení",
+				"potřeba vyčistit před použitím",
+				"pouze pro dospělé"
+			],
+			"priceMin": 350,
+			"priceMax": 1500,
+			"priceSpikes": [
+				2100,
+				3000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"vape-elektronicke-cigarety--atomizery": [
+		{
+			"title": "Hellvape Dead Rabbit Solo RTA",
+			"description": "Hellvape Dead Rabbit Solo RTA - univerzální rebuild atomizér v dobrém stavu, závity i deck jsou v pořádku.",
+			"pros": [
+				"funkční deck",
+				"náhradní těsnění",
+				"bez prasklin",
+				"vhodný na single coil",
+				"čistý po rozebrání",
+				"rychlé předání"
+			],
+			"cons": [
+				"bez coilu a vaty",
+				"běžné oděrky",
+				"bez záruky",
+				"bez původní krabičky",
+				"vyžaduje zkušenost s buildem",
+				"pouze pro dospělé"
+			],
+			"priceMin": 350,
+			"priceMax": 1700,
+			"priceSpikes": [
+				2300,
+				3200
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "Oxva Arbiter Solo RTA",
+			"description": "Oxva Arbiter Solo RTA - používaný krátce, kompletní tank a náhradní sklo, stav odpovídá fotkám.",
+			"pros": [
+				"kompletní balení",
+				"náhradní sklo",
+				"funkční závity",
+				"bez prasklin",
+				"univerzální airflow",
+				"osobní předání možné"
+			],
+			"cons": [
+				"bez vlastního buildu",
+				"drobné známky používání",
+				"bez záruky",
+				"jemné oděrky na vršku",
+				"potřeba vlastní vaty",
+				"pouze pro dospělé"
+			],
+			"priceMin": 400,
+			"priceMax": 1800,
+			"priceSpikes": [
+				2400,
+				3400
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"vape-elektronicke-cigarety--mody": [
+		{
+			"title": "Voopoo Drag 4 mod",
+			"description": "Voopoo Drag 4 mod - plně funkční dvoučlánkový mod, používán doma, bez problémů s čipem nebo tlačítky.",
+			"pros": [
+				"funkční displej",
+				"spolehlivé tlačítko",
+				"závit 510 v pořádku",
+				"vhodný na dva články 18650",
+				"bez pádu",
+				"rychlé předání"
+			],
+			"cons": [
+				"bez článků",
+				"jemné škrábance",
+				"bez záruky",
+				"bez USB kabelu",
+				"větší rozměr",
+				"pouze pro dospělé"
+			],
+			"priceMin": 500,
+			"priceMax": 2200,
+			"priceSpikes": [
+				3000,
+				4500
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "GeekVape Aegis Legend 2",
+			"description": "GeekVape Aegis Legend 2 - odolný mod v zachovalém stavu, vše funkční, stav odpovídá fotkám.",
+			"pros": [
+				"funkční elektronika",
+				"zamykání přepínačem",
+				"závit bez vůle",
+				"odolné tělo",
+				"displej bez vadných pixelů",
+				"osobní předání možné"
+			],
+			"cons": [
+				"bez baterií",
+				"běžné oděrky na hranách",
+				"bez záruky",
+				"bez původního obalu",
+				"nabíjení doporučuji externě",
+				"pouze pro dospělé"
+			],
+			"priceMin": 600,
+			"priceMax": 2500,
+			"priceSpikes": [
+				3200,
+				4800
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"vape-elektronicke-cigarety--clanky-baterie": [
+		{
+			"title": "Sony VTC6 18650 pár",
+			"description": "Sony VTC6 18650 pár - používané společně v modu, bez poškozeného obalu, kapacita odpovídá běžnému provozu.",
+			"pros": [
+				"používané v páru",
+				"obal bez trhlin",
+				"bez nafouknutí",
+				"značené datum používání",
+				"vhodné jako záloha",
+				"rychlé předání"
+			],
+			"cons": [
+				"nejde o nové kusy",
+				"bez záruky",
+				"bez krabičky",
+				"nutná vlastní kontrola před použitím",
+				"neposílám nechráněné",
+				"pouze pro dospělé"
+			],
+			"priceMin": 150,
+			"priceMax": 600,
+			"priceSpikes": [
+				900,
+				1200
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "Molicel P42A 21700 dvojice",
+			"description": "Molicel P42A 21700 dvojice - zachovalé články s nepoškozenou izolací, vhodné do výkonnějších modů.",
+			"pros": [
+				"nepoškozená izolace",
+				"používané spolu",
+				"bez nadměrného zahřívání",
+				"slušná kapacita",
+				"vhodné do 21700 zařízení",
+				"osobní předání možné"
+			],
+			"cons": [
+				"použité kusy",
+				"bez záruky",
+				"bez ochranných boxů",
+				"nutná opatrná přeprava",
+				"bez měření pod zátěží",
+				"pouze pro dospělé"
+			],
+			"priceMin": 180,
+			"priceMax": 700,
+			"priceSpikes": [
+				1000,
+				1400
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"vape-elektronicke-cigarety--spiralky": [
+		{
+			"title": "NI80 fused clapton 10 ks",
+			"description": "NI80 fused clapton 10 ks - ručně motané spirálky v uzavíratelné krabičce, nepoužité kusy.",
+			"pros": [
+				"nepoužité",
+				"rovnoměrné provedení",
+				"krabička součástí",
+				"vhodné pro RTA i RDA",
+				"rychlé předání",
+				"rozumná cena"
+			],
+			"cons": [
+				"bez přesného ohmmetru v balení",
+				"nutná vlastní montáž",
+				"bez záruky",
+				"pro zkušenější uživatele",
+				"bez vaty",
+				"pouze pro dospělé"
+			],
+			"priceMin": 80,
+			"priceMax": 350,
+			"priceSpikes": [
+				500,
+				800
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "mesh pásky pro Zeus X",
+			"description": "mesh pásky pro Zeus X - nové balení se zbytkem z multipacku, vhodné jako zásoba.",
+			"pros": [
+				"nové kusy",
+				"uložené v suchu",
+				"praktické balení",
+				"snadná výměna",
+				"vhodné jako zásoba",
+				"osobní předání možné"
+			],
+			"cons": [
+				"není to celé originální balení",
+				"bez záruky",
+				"bez vaty",
+				"jen pro kompatibilní atomizéry",
+				"nižší hodnota pro zaslání samostatně",
+				"pouze pro dospělé"
+			],
+			"priceMin": 50,
+			"priceMax": 250,
+			"priceSpikes": [
+				400,
+				600
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		}
+	],
+	"vape-elektronicke-cigarety--prislusenstvi": [
+		{
+			"title": "Nitecore Intellicharger i2",
+			"description": "Nitecore Intellicharger i2 - funkční nabíječka na články 18650 a 21700, používaná doma jako druhá nabíječka.",
+			"pros": [
+				"plně funkční",
+				"indikace nabíjení",
+				"kompaktní rozměr",
+				"vhodná na Li-ion články",
+				"napájecí kabel součástí",
+				"rychlé předání"
+			],
+			"cons": [
+				"běžné známky používání",
+				"bez krabičky",
+				"bez záruky",
+				"pomalejší než novější modely",
+				"pouze dva sloty",
+				"pouze pro dospělé"
+			],
+			"priceMin": 200,
+			"priceMax": 700,
+			"priceSpikes": [
+				1000,
+				1500
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "plnící lahvičky a cotton set",
+			"description": "plnící lahvičky a cotton set - drobné příslušenství k rebuildům, vše čisté a připravené k použití.",
+			"pros": [
+				"praktický set",
+				"lahvičky netečou",
+				"vata v uzavřeném sáčku",
+				"vhodné jako startovací výbava",
+				"levné doplnění zásoby",
+				"osobní předání možné"
+			],
+			"cons": [
+				"smíšené značky",
+				"bez originálních obalů",
+				"bez záruky",
+				"nejde o kompletní servisní sadu",
+				"nižší cena kvůli použitému setu",
+				"pouze pro dospělé"
+			],
+			"priceMin": 80,
+			"priceMax": 350,
+			"priceSpikes": [
+				500,
+				800
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		}
+	],
+	"airsoft--airsoftove-pistole": [
+		{
+			"title": "Glock 17 Gen5 GBB",
+			"description": "Glock 17 Gen5 GBB - hraná občasně na venkovních akcích, zásobník těsní, stav odpovídá fotkám.",
+			"pros": [
+				"funkční blowback",
+				"zásobník neteče",
+				"dobrá ergonomie",
+				"rychlé předání",
+				"vhodné jako sekundární zbraň",
+				"součástí kufřík"
+			],
+			"cons": [
+				"běžné oděrky z pouzdra",
+				"bez záruky",
+				"neposílám natažené bombičky",
+				"nutná vlastní kontrola výkonu",
+				"plyn není součástí",
+				"pouze pro dospělé"
+			],
+			"priceMin": 1200,
+			"priceMax": 4500,
+			"priceSpikes": [
+				6500,
+				9000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "CZ P-09 CO2 pistole",
+			"description": "CZ P-09 CO2 pistole - používaná rekreačně, funkční hop-up i závěr, stav odpovídá fotkám.",
+			"pros": [
+				"funkční závěr",
+				"zásobník drží tlak",
+				"originální značení",
+				"vhodné na target i hru",
+				"rychlé předání",
+				"čistá hlaveň"
+			],
+			"cons": [
+				"kosmetické oděrky",
+				"bez záruky",
+				"CO2 bombičky nejsou součástí",
+				"tvrdší spoušť v DA",
+				"bez pouzdra",
+				"pouze pro dospělé"
+			],
+			"priceMin": 1000,
+			"priceMax": 3500,
+			"priceSpikes": [
+				5000,
+				7000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"airsoft--airsoftove-pusky": [
+		{
+			"title": "Specna Arms M4A1 AEG",
+			"description": "Specna Arms M4A1 AEG - základní elektrická puška se dvěma zásobníky, funkční a připravená na další sezónu.",
+			"pros": [
+				"funkční mechabox",
+				"dva zásobníky",
+				"sklopná mířidla",
+				"vhodná pro upgrade",
+				"rychlé předání",
+				"baterie součástí"
+			],
+			"cons": [
+				"běžné opotřebení pažby",
+				"bez záruky",
+				"baterie už není nová",
+				"nutné seřízení hop-up dle střeliva",
+				"bez kufru",
+				"pouze pro dospělé"
+			],
+			"priceMin": 2500,
+			"priceMax": 7000,
+			"priceSpikes": [
+				10000,
+				14000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "G36C AEG s kolimátorem",
+			"description": "G36C AEG s kolimátorem - kompaktní puška pro CQB i venek, zásobník podává bez problémů.",
+			"pros": [
+				"kompaktní rozměr",
+				"kolimátor v ceně",
+				"funkční podávání",
+				"sklopná pažba",
+				"vhodné na začátek",
+				"osobní předání možné"
+			],
+			"cons": [
+				"drobné oděrky těla",
+				"bez záruky",
+				"kolimátor bez krytek",
+				"starší kabeláž",
+				"baterie není součástí",
+				"pouze pro dospělé"
+			],
+			"priceMin": 2200,
+			"priceMax": 6500,
+			"priceSpikes": [
+				9000,
+				13000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"airsoft--airsoftove-samopaly": [
+		{
+			"title": "Tokyo Marui MP5A5 AEG",
+			"description": "Tokyo Marui MP5A5 AEG - hraná v hale, mechabox tichý a spolehlivý, stav odpovídá fotkám.",
+			"pros": [
+				"spolehlivý chod",
+				"kompaktní rozměr",
+				"vhodné pro CQB",
+				"dva zásobníky",
+				"rychlé předání",
+				"solidní zpracování"
+			],
+			"cons": [
+				"starší model",
+				"bez záruky",
+				"oděrky na předpažbí",
+				"baterie potřebuje výměnu",
+				"nižší výkon na venek",
+				"pouze pro dospělé"
+			],
+			"priceMin": 3000,
+			"priceMax": 8500,
+			"priceSpikes": [
+				12000,
+				16000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "ASG Scorpion EVO 3",
+			"description": "ASG Scorpion EVO 3 - výkonný samopal s funkční elektronikou, používaný s pružinou pro CQB limity.",
+			"pros": [
+				"funkční elektronika",
+				"rychlá výměna pružiny",
+				"kompaktní platforma",
+				"dva zásobníky",
+				"přesná střelba",
+				"osobní předání možné"
+			],
+			"cons": [
+				"běžné známky používání",
+				"bez záruky",
+				"bez baterie",
+				"vyšší cena oproti základu",
+				"drobné oděrky na pažbě",
+				"pouze pro dospělé"
+			],
+			"priceMin": 6000,
+			"priceMax": 12000,
+			"priceSpikes": [
+				16000,
+				22000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"airsoft--airsoftove-brokovnice": [
+		{
+			"title": "Tokyo Marui M870 breacher",
+			"description": "Tokyo Marui M870 breacher - plynová brokovnice s pevným výkonem, používaná jen na CQB akcích.",
+			"pros": [
+				"tři kuličky na výstřel",
+				"spolehlivý chod",
+				"kompaktní délka",
+				"vhodná do haly",
+				"rychlé předání",
+				"dvě patrony v ceně"
+			],
+			"cons": [
+				"bez záruky",
+				"běžné oděrky",
+				"plyn není součástí",
+				"nižší kapacita oproti AEG",
+				"bez popruhu",
+				"pouze pro dospělé"
+			],
+			"priceMin": 4500,
+			"priceMax": 9500,
+			"priceSpikes": [
+				13000,
+				18000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "CYMA CM.350 pružinová brokovnice",
+			"description": "CYMA CM.350 pružinová brokovnice - jednoduchý a funkční kus pro rekreační hraní, stav odpovídá fotkám.",
+			"pros": [
+				"spolehlivý základ",
+				"nenáročný provoz",
+				"patrony součástí",
+				"vhodné na začátek",
+				"rychlé předání",
+				"bez vůlí v pumpě"
+			],
+			"cons": [
+				"nižší dostřel",
+				"bez záruky",
+				"drobné oděrky plastů",
+				"jen manuální natahování",
+				"bez kufru",
+				"pouze pro dospělé"
+			],
+			"priceMin": 1200,
+			"priceMax": 3000,
+			"priceSpikes": [
+				4500,
+				6500
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"airsoft--airsoftove-odstrelovaci-pusky": [
+		{
+			"title": "Well MB03 sniper set",
+			"description": "Well MB03 sniper set - základní odstřelovací puška s optikou a bipodem, vhodná pro další upgrade.",
+			"pros": [
+				"optika v ceně",
+				"bipod součástí",
+				"vhodné na upgrade",
+				"funkční závěr",
+				"rychlé předání",
+				"dobrý základ na les"
+			],
+			"cons": [
+				"základní výkon",
+				"bez záruky",
+				"drobné kosmetické vady",
+				"optika bez krytek",
+				"pomalejší přebíjení",
+				"pouze pro dospělé"
+			],
+			"priceMin": 2500,
+			"priceMax": 6500,
+			"priceSpikes": [
+				9000,
+				13000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "Silverback TAC-41P",
+			"description": "Silverback TAC-41P - přesná odstřelovací platforma, používaná jednu sezónu, hop-up drží nastavení.",
+			"pros": [
+				"přesná platforma",
+				"stabilní hop-up",
+				"kvalitní základ",
+				"vhodné bez nutného upgradu",
+				"rychlé předání",
+				"zásobník součástí"
+			],
+			"cons": [
+				"vyšší pořizovací cena",
+				"bez záruky",
+				"optika není součástí",
+				"drobné oděrky na liště",
+				"pouze osobní kontrola doporučena",
+				"pouze pro dospělé"
+			],
+			"priceMin": 9000,
+			"priceMax": 18000,
+			"priceSpikes": [
+				23000,
+				30000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"airsoft--airsoftove-prislusenstvi": [
+		{
+			"title": "zásobníky M4 a speedloader set",
+			"description": "zásobníky M4 a speedloader set - tři tlačné zásobníky a plnička, vše funkční a připravené na další hru.",
+			"pros": [
+				"tři zásobníky",
+				"funkční podávání",
+				"speedloader v ceně",
+				"vhodné jako rezerva",
+				"rychlé předání",
+				"rozumná cena"
+			],
+			"cons": [
+				"běžné oděrky",
+				"bez záruky",
+				"smíšené značky",
+				"jen pro M4 platformu",
+				"bez originálního balení",
+				"pouze pro dospělé"
+			],
+			"priceMin": 400,
+			"priceMax": 1200,
+			"priceSpikes": [
+				1800,
+				2600
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "ochranná maska a brýle",
+			"description": "ochranná maska a brýle - použitá výstroj na airsoft, skla bez větších škrábanců, vše funkční.",
+			"pros": [
+				"základní ochrana obličeje",
+				"brýle dobře sedí",
+				"nastavitelné popruhy",
+				"vhodné pro začátek",
+				"rychlé předání",
+				"kompletní set"
+			],
+			"cons": [
+				"běžné známky používání",
+				"bez záruky",
+				"nutné ověřit vlastní pohodlí",
+				"drobné vlásečnice na skle",
+				"neřeší zamlžování",
+				"pouze pro dospělé"
+			],
+			"priceMin": 300,
+			"priceMax": 1000,
+			"priceSpikes": [
+				1500,
+				2200
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		}
+	],
+	"knihy--pro-dospele": [
+		{
+			"title": "erotický román současná beletrie",
+			"description": "erotický román současná beletrie - jednou čtené, čisté stránky a nepoškozená vazba, stav odpovídá fotkám.",
+			"pros": [
+				"čisté stránky",
+				"pevná vazba",
+				"bez popsaných okrajů",
+				"vhodné do sbírky",
+				"rychlé předání",
+				"diskrétní balení možné"
+			],
+			"cons": [
+				"běžné známky čtení",
+				"bez záruky",
+				"drobný ohyb rohu obálky",
+				"nejde o nové vydání",
+				"jen pro dospělé čtenáře",
+				"stav dle fotek"
+			],
+			"priceMin": 80,
+			"priceMax": 350,
+			"priceSpikes": [
+				500,
+				800
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "foto publikace akt a glamour",
+			"description": "foto publikace akt a glamour - větší formát, zachovalý přebal, vhodné jako sběratelský kus nebo dekorace do knihovny.",
+			"pros": [
+				"větší formát",
+				"zachovalý přebal",
+				"kvalitní tisk",
+				"čistý vnitřek",
+				"diskrétní balení možné",
+				"osobní předání možné"
+			],
+			"cons": [
+				"drobné oděrky přebalu",
+				"bez záruky",
+				"vyšší poštovné kvůli formátu",
+				"není vhodné pro nezletilé",
+				"lehce opotřebené rohy",
+				"stav odpovídá fotkám"
+			],
+			"priceMin": 120,
+			"priceMax": 900,
+			"priceSpikes": [
+				1400,
+				2200
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		}
+	],
+	"filmy--pro-dospele": [
+		{
+			"title": "DVD kolekce pro dospělé 5 ks",
+			"description": "DVD kolekce pro dospělé 5 ks - disky bez hlubokých škrábanců, obaly zachovalé, stav odpovídá fotkám.",
+			"pros": [
+				"přehratelné disky",
+				"pět kusů v setu",
+				"zachovalé obaly",
+				"diskrétní balení možné",
+				"rychlé předání",
+				"výhodná cena za set"
+			],
+			"cons": [
+				"běžné vlásečnice na discích",
+				"bez záruky",
+				"starší vydání",
+				"není vhodné pro nezletilé",
+				"bez digitální verze",
+				"stav dle fotek"
+			],
+			"priceMin": 100,
+			"priceMax": 500,
+			"priceSpikes": [
+				800,
+				1200
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "Blu-ray titul pro dospělé",
+			"description": "Blu-ray titul pro dospělé - originální nosič, otestované přehrání, obal i disk v zachovalém stavu.",
+			"pros": [
+				"originální nosič",
+				"otestované přehrání",
+				"zachovalý obal",
+				"diskrétní balení možné",
+				"vyšší kvalita obrazu",
+				"osobní předání možné"
+			],
+			"cons": [
+				"jen jeden titul",
+				"bez záruky",
+				"není vhodné pro nezletilé",
+				"lehké oděrky obalu",
+				"bez digitální kopie",
+				"stav odpovídá fotkám"
+			],
+			"priceMin": 120,
+			"priceMax": 450,
+			"priceSpikes": [
+				700,
+				1000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		}
+	],
+	"chladne-zbrane--noze": [
+		{
+			"title": "Morakniv Companion nerez",
+			"description": "Morakniv Companion nerez - používaný outdoor nůž s plastovým pouzdrem, ostří bez vylomení, stav odpovídá fotkám.",
+			"pros": [
+				"funkční ostří",
+				"pouzdro součástí",
+				"nerezová čepel",
+				"lehké provedení",
+				"rychlé předání",
+				"praktické využití"
+			],
+			"cons": [
+				"běžné stopy používání",
+				"bez záruky",
+				"drobné škrábance na čepeli",
+				"nutné vlastní nabroušení dle preference",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 250,
+			"priceMax": 700,
+			"priceSpikes": [
+				1000,
+				1500
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "Victorinox Huntsman červený",
+			"description": "Victorinox Huntsman červený - multifunkční kapesní nůž, všechny nástroje chodí, stav odpovídá fotkám.",
+			"pros": [
+				"všechny nástroje funkční",
+				"kompaktní velikost",
+				"ikonický model",
+				"vhodný na běžné nošení",
+				"rychlé předání",
+				"bez vůlí"
+			],
+			"cons": [
+				"oděrky na střenkách",
+				"bez záruky",
+				"bez krabičky",
+				"potřeba vyčistit v kloubech",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 400,
+			"priceMax": 1200,
+			"priceSpikes": [
+				1700,
+				2500
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"chladne-zbrane--mece-a-savle": [
+		{
+			"title": "katana dekorativní 104 cm",
+			"description": "katana dekorativní 104 cm - vystavená na stojanu, pochva i rukojeť v zachovalém stavu, stav odpovídá fotkám.",
+			"pros": [
+				"dekorativní kus",
+				"pochva součástí",
+				"zachovalá rukojeť",
+				"vhodné na výstavku",
+				"rychlé předání",
+				"bez větší koroze"
+			],
+			"cons": [
+				"není určené na sekání",
+				"bez záruky",
+				"drobné oděrky pochvy",
+				"preferuji osobní převzetí",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 900,
+			"priceMax": 2500,
+			"priceSpikes": [
+				3500,
+				5000
+			],
+			"delivery": [
+				"personal"
+			]
+		},
+		{
+			"title": "husarská šavle replika",
+			"description": "husarská šavle replika - dekorativní replika na zavěšení, zachovalá čepel i koš rukojeti.",
+			"pros": [
+				"dekorativní replika",
+				"zachovalý koš rukojeti",
+				"vhodné na stěnu",
+				"solidní délka",
+				"rychlé předání",
+				"vizuálně pěkný kus"
+			],
+			"cons": [
+				"není určené k použití",
+				"bez záruky",
+				"drobné tečky na čepeli",
+				"bez závěsného systému",
+				"není vhodné pro nezletilé",
+				"preferuji osobní kontrolu"
+			],
+			"priceMin": 1200,
+			"priceMax": 3200,
+			"priceSpikes": [
+				4500,
+				6500
+			],
+			"delivery": [
+				"personal"
+			]
+		}
+	],
+	"chladne-zbrane--dyky": [
+		{
+			"title": "lovecká dýka s pouzdrem",
+			"description": "lovecká dýka s pouzdrem - pevná čepel, pouzdro drží dobře na opasku, stav odpovídá fotkám.",
+			"pros": [
+				"pevná čepel",
+				"pouzdro součástí",
+				"dobře sedí v ruce",
+				"praktický kus",
+				"rychlé předání",
+				"bez vylomení ostří"
+			],
+			"cons": [
+				"běžné stopy používání",
+				"bez záruky",
+				"drobné vlásečnice na čepeli",
+				"nutné vlastní nabroušení dle potřeby",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 500,
+			"priceMax": 1500,
+			"priceSpikes": [
+				2200,
+				3200
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "dýka s pevnou čepelí 23 cm",
+			"description": "dýka s pevnou čepelí 23 cm - zachovalý kus do sbírky nebo na outdoor použití, stav odpovídá fotkám.",
+			"pros": [
+				"pevná konstrukce",
+				"zachovalá rukojeť",
+				"bez větší koroze",
+				"vhodné do sbírky",
+				"rychlé předání",
+				"pouzdro v ceně"
+			],
+			"cons": [
+				"bez záruky",
+				"oděrky na záštitě",
+				"není vhodné pro nezletilé",
+				"preferuji osobní předání",
+				"není nově broušená",
+				"stav dle fotek"
+			],
+			"priceMin": 450,
+			"priceMax": 1400,
+			"priceSpikes": [
+				2000,
+				3000
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"chladne-zbrane--bajonety": [
+		{
+			"title": "AKM bajonet s pochvou",
+			"description": "AKM bajonet s pochvou - sběratelský kus v použitelném stavu, mechanické poškození nevidím, stav odpovídá fotkám.",
+			"pros": [
+				"pochva součástí",
+				"zajímavý sběratelský kus",
+				"bez větší koroze",
+				"originální vzhled",
+				"rychlé předání",
+				"pevná konstrukce"
+			],
+			"cons": [
+				"běžné opotřebení",
+				"bez záruky",
+				"oděrky na pochvě",
+				"není vhodné pro nezletilé",
+				"preferuji osobní kontrolu",
+				"stav dle fotek"
+			],
+			"priceMin": 700,
+			"priceMax": 1800,
+			"priceSpikes": [
+				2500,
+				3800
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "bajonet vz. 58 dekorativní kus",
+			"description": "bajonet vz. 58 dekorativní kus - použitý sběratelský předmět bez známek neodborných oprav, stav odpovídá fotkám.",
+			"pros": [
+				"sběratelský charakter",
+				"funkční pojistka",
+				"bez větších zásahů",
+				"zachovalé střenky",
+				"rychlé předání",
+				"pochva součástí"
+			],
+			"cons": [
+				"běžné stopy stáří",
+				"bez záruky",
+				"menší oděrky na kovu",
+				"není vhodné pro nezletilé",
+				"preferuji osobní převzetí",
+				"stav dle fotek"
+			],
+			"priceMin": 900,
+			"priceMax": 2200,
+			"priceSpikes": [
+				3000,
+				4500
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"chladne-zbrane--sekery-a-macety": [
+		{
+			"title": "Tramontina macheta 18\"",
+			"description": "Tramontina macheta 18\" - používaná na zahradě i na táboření, čepel bez prasklin, stav odpovídá fotkám.",
+			"pros": [
+				"funkční čepel",
+				"dobrá délka",
+				"jednoduchá údržba",
+				"praktické využití",
+				"rychlé předání",
+				"rozumná cena"
+			],
+			"cons": [
+				"běžné oděrky",
+				"bez záruky",
+				"nutné občasné broušení",
+				"bez pouzdra",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 300,
+			"priceMax": 900,
+			"priceSpikes": [
+				1300,
+				1800
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "outdoor sekera Fiskars X10",
+			"description": "outdoor sekera Fiskars X10 - kompaktní sekera s pevnou topůrkem, vhodná na dřevo i do auta.",
+			"pros": [
+				"pevná konstrukce",
+				"kryt ostří součástí",
+				"kompaktní velikost",
+				"oblíbený model",
+				"rychlé předání",
+				"dobře skladovatelná"
+			],
+			"cons": [
+				"běžné známky používání",
+				"bez záruky",
+				"oděrky na topůrku",
+				"není vhodné pro nezletilé",
+				"preferuji osobní kontrolu",
+				"stav dle fotek"
+			],
+			"priceMin": 500,
+			"priceMax": 1400,
+			"priceSpikes": [
+				1900,
+				2600
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"chladne-zbrane--vrhaci-zbrane": [
+		{
+			"title": "vrhací nože set 3 ks",
+			"description": "vrhací nože set 3 ks - používané na terč, všechny kusy rovné a bez vylomení, stav odpovídá fotkám.",
+			"pros": [
+				"tři kusy v setu",
+				"obal součástí",
+				"rovné čepele",
+				"vhodné na terč",
+				"rychlé předání",
+				"kompaktní rozměr"
+			],
+			"cons": [
+				"běžné známky používání",
+				"bez záruky",
+				"oděrky povrchu",
+				"není vhodné pro nezletilé",
+				"pouze pro bezpečné použití",
+				"stav dle fotek"
+			],
+			"priceMin": 250,
+			"priceMax": 700,
+			"priceSpikes": [
+				1000,
+				1500
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		},
+		{
+			"title": "shuriken set 2 ks",
+			"description": "shuriken set 2 ks - dekorativně i na terč, dodám s textilním pouzdrem, stav odpovídá fotkám.",
+			"pros": [
+				"textilní pouzdro",
+				"dva kusy",
+				"zachovalý povrch",
+				"vhodné na terč",
+				"rychlé předání",
+				"lehký set"
+			],
+			"cons": [
+				"bez záruky",
+				"menší oděrky hran",
+				"není vhodné pro nezletilé",
+				"pouze pro bezpečné použití",
+				"nejde o sběratelskou raritu",
+				"stav dle fotek"
+			],
+			"priceMin": 200,
+			"priceMax": 600,
+			"priceSpikes": [
+				900,
+				1300
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"chladne-zbrane--repliky-a-dekorace": [
+		{
+			"title": "gladius dekorativní replika",
+			"description": "gladius dekorativní replika - vystavený kus do pracovny nebo sbírky, čepel i rukojeť vypadají zachovale.",
+			"pros": [
+				"dekorativní zpracování",
+				"vhodné do sbírky",
+				"stojánek součástí",
+				"bez větší koroze",
+				"rychlé předání",
+				"vizuálně výrazný kus"
+			],
+			"cons": [
+				"není určené k použití",
+				"bez záruky",
+				"menší oděrky na stojanu",
+				"preferuji osobní převzetí",
+				"není vhodné pro nezletilé",
+				"stav dle fotek"
+			],
+			"priceMin": 800,
+			"priceMax": 2200,
+			"priceSpikes": [
+				3200,
+				4500
+			],
+			"delivery": [
+				"personal"
+			]
+		},
+		{
+			"title": "středověká dýka na zeď",
+			"description": "středověká dýka na zeď - dekorativní replika s pouzdrem, vystavená v interiéru, stav odpovídá fotkám.",
+			"pros": [
+				"dekorativní vzhled",
+				"pouzdro součástí",
+				"vhodné na výstavku",
+				"zachovalý povrch",
+				"rychlé předání",
+				"kompaktní rozměr"
+			],
+			"cons": [
+				"není určené k použití",
+				"bez záruky",
+				"drobné oděrky kovu",
+				"není vhodné pro nezletilé",
+				"preferuji osobní kontrolu",
+				"stav dle fotek"
+			],
+			"priceMin": 500,
+			"priceMax": 1600,
+			"priceSpikes": [
+				2200,
+				3200
+			],
+			"delivery": [
+				"personal",
+				"package"
+			]
+		}
+	],
+	"sezona--pyrotechnika": [
+		{
+			"title": "kompakt 25 ran 20 mm",
+			"description": "kompakt 25 ran 20 mm - neotevřený kus z letošní sezóny, skladovaný v suchu a mimo teplo.",
+			"pros": [
+				"neotevřené balení",
+				"čitelný štítek",
+				"skladované v suchu",
+				"vhodné na Silvestr",
+				"rychlé předání",
+				"bez poškození obalu"
+			],
+			"cons": [
+				"pouze osobní předání",
+				"bez záruky",
+				"jen pro dospělé",
+				"nutné dodržet bezpečné použití",
+				"neposílám poštou",
+				"stav dle fotek"
+			],
+			"priceMin": 400,
+			"priceMax": 1800,
+			"priceSpikes": [
+				2500,
+				3500
+			],
+			"delivery": [
+				"personal"
+			]
+		},
+		{
+			"title": "fontány a římské svíce set",
+			"description": "fontány a římské svíce set - zbytek z oslavy, vše v originálním a nepoškozeném balení, stav odpovídá fotkám.",
+			"pros": [
+				"originální balení",
+				"nepoškozené kusy",
+				"vhodné na menší oslavu",
+				"skladované v suchu",
+				"rychlé předání",
+				"výhodný set"
+			],
+			"cons": [
+				"pouze osobní předání",
+				"bez záruky",
+				"jen pro dospělé",
+				"nutné bezpečné zacházení",
+				"neposílám balíkově",
+				"stav dle fotek"
+			],
+			"priceMin": 250,
+			"priceMax": 1200,
+			"priceSpikes": [
+				1800,
+				2600
+			],
+			"delivery": [
+				"personal"
+			]
+		}
 	]
 }
