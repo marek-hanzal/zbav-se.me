@@ -13,6 +13,16 @@ const logger = getRootLogger([
 	"toolDraftCollection",
 ]);
 
+const InputSchema = z
+	.looseObject({
+		type: z.enum([
+			"count",
+			"collection",
+		]),
+		query: DraftToolQuerySchema,
+	})
+	.strip();
+
 export const toolDraftCollection = tool({
 	name: "draft-collection",
 	needsApproval: false,
@@ -26,22 +36,13 @@ Modes:
 Use for draft lookup and for finding draft ids before update or delete.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(
-		z
-			.looseObject({
-				type: z.enum([
-					"count",
-					"collection",
-				]),
-				query: DraftToolQuerySchema,
-			})
-			.strip(),
-	),
-	async execute({ type, query }) {
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolDraftCollection", {
-			type,
-			query,
+			input,
 		});
+
+		const { type, query } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("count", async () => {

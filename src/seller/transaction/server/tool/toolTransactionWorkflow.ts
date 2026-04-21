@@ -13,6 +13,24 @@ const logger = getRootLogger([
 	"toolTransactionWorkflow",
 ]);
 
+const InputSchema = z
+	.looseObject({
+		transactionId: z.string().meta({
+			description: "Exact seller-side transaction ID",
+		}),
+		type: z
+			.enum([
+				"accept",
+				"dispute",
+				"reject",
+				"resolve",
+			])
+			.meta({
+				description: "Seller workflow action to execute",
+			}),
+	})
+	.strip();
+
 export const toolTransactionWorkflow = tool({
 	name: "seller-transaction-workflow",
 	needsApproval: false,
@@ -31,30 +49,13 @@ Actions:
 Requires the exact seller-side transaction id.
 	`.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(
-		z
-			.looseObject({
-				transactionId: z.string().meta({
-					description: "Exact seller-side transaction ID",
-				}),
-				type: z
-					.enum([
-						"accept",
-						"dispute",
-						"reject",
-						"resolve",
-					])
-					.meta({
-						description: "Seller workflow action to execute",
-					}),
-			})
-			.strip(),
-	),
-	async execute({ type, transactionId }) {
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolTransactionWorkflow", {
-			type,
-			transactionId,
+			input,
 		});
+
+		const { type, transactionId } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("accept", () => {

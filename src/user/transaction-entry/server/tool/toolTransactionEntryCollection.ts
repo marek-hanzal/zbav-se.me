@@ -12,6 +12,16 @@ const logger = getRootLogger([
 	"toolTransactionEntryCollection",
 ]);
 
+const InputSchema = z
+	.looseObject({
+		type: z.enum([
+			"count",
+			"collection",
+		]),
+		query: TransactionEntryToolQuerySchema,
+	})
+	.strip();
+
 export const toolTransactionEntryCollection = tool({
 	name: "transaction-entry-collection",
 	needsApproval: false,
@@ -26,22 +36,13 @@ Use for trade message content, timeline content, structured exchange data, and t
 Prefer an exact transactionId when available.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(
-		z
-			.looseObject({
-				type: z.enum([
-					"count",
-					"collection",
-				]),
-				query: TransactionEntryToolQuerySchema,
-			})
-			.strip(),
-	),
-	async execute({ type, query }) {
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolTransactionEntryCollection", {
-			type,
-			query,
+			input,
 		});
+
+		const { type, query } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("count", async () => {

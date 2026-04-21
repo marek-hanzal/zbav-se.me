@@ -32,10 +32,12 @@ Enum values:
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(DraftToolPatchSchema),
-	async execute(data) {
+	async execute(input) {
 		logger.trace("toolDraftPatch", {
-			data,
+			data: input,
 		});
+
+		const data = await DraftToolPatchSchema.parseAsync(input);
 
 		return draftPatchFn({
 			data,

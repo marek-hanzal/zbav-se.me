@@ -12,6 +12,16 @@ const logger = getRootLogger([
 	"toolListingCollection",
 ]);
 
+const InputSchema = z
+	.looseObject({
+		type: z.enum([
+			"count",
+			"collection",
+		]),
+		query: ListingToolQuerySchema,
+	})
+	.strip();
+
 export const toolListingCollection = tool({
 	name: "seller-listing-collection",
 	needsApproval: false,
@@ -26,22 +36,13 @@ Use for seller-owned listing lookup and management.
 Do not use for buyer-visible marketplace search.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(
-		z
-			.looseObject({
-				type: z.enum([
-					"count",
-					"collection",
-				]),
-				query: ListingToolQuerySchema,
-			})
-			.strip(),
-	),
-	async execute({ type, query }) {
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolListingCollection", {
-			type,
-			query,
+			input,
 		});
+
+		const { type, query } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("count", async () => {

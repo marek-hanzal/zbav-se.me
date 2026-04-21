@@ -12,6 +12,16 @@ const logger = getRootLogger([
 	"toolFeedCollection",
 ]);
 
+const InputSchema = z
+	.looseObject({
+		type: z.enum([
+			"count",
+			"collection",
+		]),
+		query: FeedToolQuerySchema,
+	})
+	.strip();
+
 export const toolFeedCollection = tool({
 	name: "feed-collection",
 	needsApproval: false,
@@ -25,22 +35,13 @@ Modes:
 Use only user-facing feeds (type: user), not internal search feeds (type: search).
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(
-		z
-			.looseObject({
-				type: z.enum([
-					"count",
-					"collection",
-				]),
-				query: FeedToolQuerySchema,
-			})
-			.strip(),
-	),
-	async execute({ type, query }) {
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolFeedCollection", {
-			type,
-			query,
+			input,
 		});
+
+		const { type, query } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("count", async () => {

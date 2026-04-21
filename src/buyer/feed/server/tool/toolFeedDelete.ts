@@ -9,6 +9,10 @@ const logger = getRootLogger([
 	"toolFeedDelete",
 ]);
 
+const InputSchema = FeedToolQuerySchema.pick({
+	filter: true,
+});
+
 export const toolFeedDelete = tool({
 	name: "feed-delete",
 	needsApproval: false,
@@ -25,15 +29,13 @@ Boundaries:
 - If you don't know exact feed id, ask the user and resolve it using 'feed-collection(filter.fulltext="")'
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(
-		FeedToolQuerySchema.pick({
-			filter: true,
-		}),
-	),
-	async execute(data) {
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolFeedDelete", {
-			data,
+			input,
 		});
+
+		const data = await InputSchema.parseAsync(input);
 
 		return feedDeleteFn({
 			data,

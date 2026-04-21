@@ -20,10 +20,12 @@ as latitude and longitude. Prefer "drive" unless the user clearly asks for walki
 	`.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(RouteSchema),
-	async execute(data) {
+	async execute(input) {
 		logger.trace("toolRoute", {
-			data,
+			input,
 		});
+
+		const data = await RouteSchema.parseAsync(input);
 
 		const distance = await routeFn({
 			data,

@@ -24,10 +24,12 @@ Returns the upload record with id and URL.
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(UploadToolCreateSchema),
-	async execute(data) {
+	async execute(input) {
 		logger.trace("toolUploadCreate", {
-			data,
+			data: input,
 		});
+
+		const data = await UploadToolCreateSchema.parseAsync(input);
 
 		return uploadCreateFn({
 			data,

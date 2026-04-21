@@ -12,6 +12,16 @@ const logger = getRootLogger([
 	"toolListingCollection",
 ]);
 
+const InputSchema = z
+	.looseObject({
+		type: z.enum([
+			"count",
+			"collection",
+		]),
+		query: ListingToolQuerySchema,
+	})
+	.strip();
+
 export const toolListingCollection = tool({
 	name: "buyer-listing-collection",
 	needsApproval: false,
@@ -28,22 +38,13 @@ Do not use for seller-owned listing management.
 Prefer query filters such as category, location, price, favourite, ignored, feed, or transaction when relevant.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(
-		z
-			.looseObject({
-				type: z.enum([
-					"count",
-					"collection",
-				]),
-				query: ListingToolQuerySchema,
-			})
-			.strip(),
-	),
-	async execute({ type, query }) {
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolListingCollection", {
-			type,
-			query,
+			input,
 		});
+
+		const { type, query } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("count", async () => {

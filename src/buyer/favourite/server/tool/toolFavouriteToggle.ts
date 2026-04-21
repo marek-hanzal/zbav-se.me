@@ -17,10 +17,12 @@ Toggles concrete listing as favourite/unfavourite.
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(FavouriteToggleSchema),
-	async execute(data) {
+	async execute(input) {
 		logger.trace("toolFavouriteToggle", {
-			data,
+			input,
 		});
+
+		const data = await FavouriteToggleSchema.parseAsync(input);
 
 		return favouriteToggleFn({
 			data,

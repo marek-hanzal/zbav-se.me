@@ -28,10 +28,12 @@ Sort:
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(CategoryToolQuerySchema),
-	async execute(data) {
+	async execute(input) {
 		logger.trace("toolCategoryCollection", {
-			data,
+			input,
 		});
+
+		const data = await CategoryToolQuerySchema.parseAsync(input);
 
 		const items = await categoryCollectionFn({
 			data: {

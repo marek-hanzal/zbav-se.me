@@ -31,10 +31,12 @@ Enum values:
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(DraftCreateSchema),
-	async execute(data) {
+	async execute(input) {
 		logger.trace("toolDraftCreate", {
-			data,
+			data: input,
 		});
+
+		const data = await DraftCreateSchema.parseAsync(input);
 
 		return draftCreateFn({
 			data,

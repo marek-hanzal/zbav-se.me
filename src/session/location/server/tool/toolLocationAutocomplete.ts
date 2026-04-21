@@ -23,10 +23,12 @@ Boundaries:
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(LocationAutocompleteSchema),
-	async execute(data) {
+	async execute(input) {
 		logger.trace("toolLocationAutocomplete", {
-			data,
+			input,
 		});
+
+		const data = await LocationAutocompleteSchema.parseAsync(input);
 
 		const matches = await locationAutocompleteFn({
 			data,

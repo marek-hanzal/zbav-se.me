@@ -27,10 +27,12 @@ This creates a pending transaction, links the buyer and listing owner as partici
 	`.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(TransactionCreateSchema),
-	async execute(data) {
+	async execute(input) {
 		logger.trace("toolTransactionCreate", {
-			data,
+			input,
 		});
+
+		const data = await TransactionCreateSchema.parseAsync(input);
 
 		return transactionCreateFn({
 			data,

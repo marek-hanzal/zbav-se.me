@@ -24,10 +24,12 @@ export const toolCategoryFetch = tool({
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(CategoryQuerySchema),
-	async execute(data) {
+	async execute(input) {
 		logger.trace("toolCategoryFetch", {
-			data,
+			input,
 		});
+
+		const data = await CategoryQuerySchema.parseAsync(input);
 
 		return categoryFetchFn({
 			data,

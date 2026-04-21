@@ -12,6 +12,16 @@ const logger = getRootLogger([
 	"toolActivityCollection",
 ]);
 
+const InputSchema = z
+	.looseObject({
+		type: z.enum([
+			"count",
+			"collection",
+		]),
+		query: ActivityToolQuerySchema,
+	})
+	.strip();
+
 export const toolActivityCollection = tool({
 	name: "activity-collection",
 	needsApproval: false,
@@ -26,22 +36,13 @@ Use for notifications, unread-style activity, reactions, and transaction-related
 Do not use for full trade message content.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(
-		z
-			.looseObject({
-				type: z.enum([
-					"count",
-					"collection",
-				]),
-				query: ActivityToolQuerySchema,
-			})
-			.strip(),
-	),
-	async execute({ type, query }) {
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolActivityCollection", {
-			type,
-			query,
+			input,
 		});
+
+		const { type, query } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("count", async () => {

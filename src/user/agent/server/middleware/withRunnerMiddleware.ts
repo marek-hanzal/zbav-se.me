@@ -32,17 +32,6 @@ export const withRunnerMiddleware = createMiddleware()
 				apiKey: aiConfig.SERVER_AI_TOKEN,
 			}),
 			tracingDisabled: true,
-			callModelInputFilter: async ({ agent, modelData }) => {
-				console.log("\n=== AGENT ===");
-				console.log(agent.name);
-
-				console.log("\n=== TOOLS ===");
-				console.dir(agent.tools, {
-					depth: null,
-				});
-
-				return modelData;
-			},
 		});
 
 		logger.trace("Config", {

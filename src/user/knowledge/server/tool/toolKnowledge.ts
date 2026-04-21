@@ -11,6 +11,14 @@ const logger = getRootLogger([
 	"toolKnowledge",
 ]);
 
+const InputSchema = z
+	.looseObject({
+		query: z.string().describe("Search query."),
+		limit: z.coerce.number().int().positive().max(20).optional().describe("Max results."),
+		withContent: z.boolean().optional().default(false),
+	})
+	.strip();
+
 export const toolKnowledge = tool({
 	name: "knowledge",
 	needsApproval: false,
@@ -20,29 +28,15 @@ Return the best matching topics.
 Set withContent to include full topic content.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(
-		z
-			.looseObject({
-				input: z.string().describe("Search query."),
-				limit: z.coerce
-					.number()
-					.int()
-					.positive()
-					.max(20)
-					.optional()
-					.describe("Max results."),
-				withContent: z.boolean().optional().default(false),
-			})
-			.strip(),
-	),
-	async execute({ input, limit, withContent }) {
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolKnowledge", {
 			input,
-			limit,
-			withContent,
 		});
 
-		const normalized = input.trim();
+		const { query, limit, withContent } = await InputSchema.parseAsync(input);
+
+		const normalized = query.trim();
 		const index = getKnowledgeIndex().map(
 			({ content, data }) =>
 				({

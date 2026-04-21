@@ -28,10 +28,12 @@ Boundaries:
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(FeedToolPatchSchema),
-	async execute(data) {
+	async execute(input) {
 		logger.trace("toolFeedPatch", {
-			data,
+			input,
 		});
+
+		const data = await FeedToolPatchSchema.parseAsync(input);
 
 		return feedPatchFn({
 			data,

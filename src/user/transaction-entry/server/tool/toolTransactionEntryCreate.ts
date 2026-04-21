@@ -94,10 +94,12 @@ or when required fields are uncertain.
 	`.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(TransactionEntryCreateToolSchema),
-	async execute(data) {
+	async execute(input) {
 		logger.trace("toolTransactionEntryCreate", {
-			data,
+			data: input,
 		});
+
+		const data = await TransactionEntryCreateToolSchema.parseAsync(input);
 
 		return transactionEntryCreateFn({
 			data: TransactionEntryCreateSchema.parse(data),

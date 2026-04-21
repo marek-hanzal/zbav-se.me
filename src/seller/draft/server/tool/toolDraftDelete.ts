@@ -9,6 +9,10 @@ const logger = getRootLogger([
 	"toolDraftDelete",
 ]);
 
+const InputSchema = DraftToolQuerySchema.pick({
+	filter: true,
+});
+
 export const toolDraftDelete = tool({
 	name: "draft-delete",
 	needsApproval: false,
@@ -19,15 +23,13 @@ Use only after clear user intent to delete. Prefer an exact draft
 id; if using name/title-like filters, first confirm the target with draft-collection.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(
-		DraftToolQuerySchema.pick({
-			filter: true,
-		}),
-	),
-	async execute(data) {
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
 		logger.trace("toolDraftDelete", {
-			data,
+			input,
 		});
+
+		const data = await InputSchema.parseAsync(input);
 
 		return draftDeleteFn({
 			data,
