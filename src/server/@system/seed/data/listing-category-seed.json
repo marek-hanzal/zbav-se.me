@@ -35180,6 +35180,134 @@
 			]
 		}
 	],
+	"knihy--bezne-knihy": [
+		{
+			"title": "současná česká beletrie 5 knih",
+			"description": "současná česká beletrie 5 knih - prodávám jako celek po úklidu knihovny, knihy jsou čtené, ale zachovalé.",
+			"pros": [
+				"5 knih v setu",
+				"čisté stránky",
+				"bez potrhaných vazeb",
+				"vhodné na běžné čtení",
+				"rychlé předání",
+				"výhodná cena za komplet"
+			],
+			"cons": [
+				"běžné známky čtení",
+				"bez záruky",
+				"měkké vazby mají ohnuté rohy",
+				"jen jako celý set",
+				"bez původních obalů",
+				"stav dle fotek"
+			],
+			"priceMin": 120,
+			"priceMax": 500,
+			"priceSpikes": [
+				800,
+				1200
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "naučné knihy mix historie a psychologie",
+			"description": "naučné knihy mix historie a psychologie - různá vydání v dobrém stavu, vhodné na doplnění domácí knihovny.",
+			"pros": [
+				"zajímavý mix titulů",
+				"čitelné a kompletní",
+				"pevné vazby převažují",
+				"vhodné i jako dárek",
+				"osobní předání možné",
+				"rozumná cena"
+			],
+			"cons": [
+				"některé přebaly nesou oděrky",
+				"bez záruky",
+				"starší vydání",
+				"neprodávám jednotlivě",
+				"vyšší poštovné kvůli váze",
+				"stav odpovídá fotkám"
+			],
+			"priceMin": 150,
+			"priceMax": 700,
+			"priceSpikes": [
+				1100,
+				1600
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		}
+	],
+	"knihy--komiksy-a-manga": [
+		{
+			"title": "manga Naruto svazky 1-8",
+			"description": "manga Naruto svazky 1-8 - čtené, ale zachovalé kusy, prodávám ideálně jako celek.",
+			"pros": [
+				"8 svazků v řadě",
+				"čisté stránky",
+				"bez chybějících listů",
+				"vhodné na doplnění série",
+				"rychlé předání",
+				"výhodná cena za komplet"
+			],
+			"cons": [
+				"běžné ohyby rožků",
+				"bez záruky",
+				"nejde o nové vydání",
+				"jen jako set",
+				"drobné oděrky obálek",
+				"stav dle fotek"
+			],
+			"priceMin": 500,
+			"priceMax": 1400,
+			"priceSpikes": [
+				1900,
+				2600
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "Batman a Spider-Man komiksy mix",
+			"description": "Batman a Spider-Man komiksy mix - několik čísel v češtině i angličtině, vhodné spíš pro fanouška nebo sběratele.",
+			"pros": [
+				"mix známých sérií",
+				"čitelné a kompletní",
+				"zachovalý tisk",
+				"vhodné pro sběratele",
+				"diskrétní balení možné",
+				"osobní předání možné"
+			],
+			"cons": [
+				"různé jazyky vydání",
+				"bez záruky",
+				"drobné vady hran",
+				"nejde o top sběratelský stav",
+				"část bez ochranných obalů",
+				"stav dle fotek"
+			],
+			"priceMin": 250,
+			"priceMax": 900,
+			"priceSpikes": [
+				1300,
+				1900
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		}
+	],
 	"knihy--pro-dospele": [
 		{
 			"title": "erotický román současná beletrie",
@@ -35298,6 +35426,134 @@
 			"priceSpikes": [
 				1400,
 				2200
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		}
+	],
+	"filmy--bezne-filmy": [
+		{
+			"title": "Blu-ray mix sci-fi a akce 6 ks",
+			"description": "Blu-ray mix sci-fi a akce 6 ks - originální nosiče v zachovalém stavu, prodávám po přechodu na streaming.",
+			"pros": [
+				"originální disky",
+				"6 kusů v setu",
+				"většina obalů pěkná",
+				"otestované přehrání",
+				"rychlé předání",
+				"výhodná cena za komplet"
+			],
+			"cons": [
+				"běžné vlásečnice na discích",
+				"bez záruky",
+				"neprodávám jednotlivě",
+				"část obalů nese oděrky",
+				"bez digitálních kopií",
+				"stav dle fotek"
+			],
+			"priceMin": 250,
+			"priceMax": 900,
+			"priceSpikes": [
+				1300,
+				1800
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "DVD kolekce české komedie 10 ks",
+			"description": "DVD kolekce české komedie 10 ks - starší, ale přehratelné kusy, vhodné na chatu nebo do sbírky.",
+			"pros": [
+				"10 filmů v setu",
+				"české klasiky",
+				"většina obalů zachovalá",
+				"rozumná cena",
+				"osobní předání možné",
+				"vhodné pro běžné přehrání"
+			],
+			"cons": [
+				"starší vydání",
+				"bez záruky",
+				"některé boxy mají prasklinu",
+				"jen jako celek",
+				"bez digitální verze",
+				"stav odpovídá fotkám"
+			],
+			"priceMin": 200,
+			"priceMax": 700,
+			"priceSpikes": [
+				1000,
+				1500
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		}
+	],
+	"filmy--vhs": [
+		{
+			"title": "VHS Disney a rodinné filmy 8 ks",
+			"description": "VHS Disney a rodinné filmy 8 ks - starší videokazety z domácí sbírky, prodávám jako retro celek.",
+			"pros": [
+				"8 kazet v setu",
+				"retro kusy",
+				"obaly převážně zachovalé",
+				"vhodné do sbírky",
+				"rychlé předání",
+				"rozumná cena"
+			],
+			"cons": [
+				"nezkoušeno na každém přehrávači",
+				"bez záruky",
+				"část polepů nese známky stáří",
+				"jen jako komplet",
+				"krabičky mají oděrky",
+				"stav dle fotek"
+			],
+			"priceMin": 150,
+			"priceMax": 600,
+			"priceSpikes": [
+				900,
+				1400
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "retro VHS horory a akční filmy",
+			"description": "retro VHS horory a akční filmy - mix starších titulů pro sběratele nebo fanouška videokazet, stav odpovídá fotkám.",
+			"pros": [
+				"zajímavý retro mix",
+				"vhodné do sbírky",
+				"originální krabičky",
+				"rychlé předání",
+				"některé méně běžné tituly",
+				"osobní předání možné"
+			],
+			"cons": [
+				"bez záruky přehratelnosti všech kazet",
+				"běžné známky stáří",
+				"papírové obaly mají oděrky",
+				"část bez českého dabingu",
+				"jen pro retro nadšence",
+				"stav dle fotek"
+			],
+			"priceMin": 180,
+			"priceMax": 700,
+			"priceSpikes": [
+				1000,
+				1500
 			],
 			"delivery": [
 				"personal",
@@ -35981,6 +36237,262 @@
 			]
 		}
 	],
+	"hudba--bezna-hudba": [
+		{
+			"title": "CD alba pop a rock mix 12 ks",
+			"description": "CD alba pop a rock mix 12 ks - různí interpreti, originální nosiče, prodávám po úklidu poličky.",
+			"pros": [
+				"12 alb v setu",
+				"originální nosiče",
+				"většina přehraná bez problému",
+				"vhodné do auta i domů",
+				"rychlé předání",
+				"výhodná cena"
+			],
+			"cons": [
+				"krabičky mají běžné oděrky",
+				"bez záruky",
+				"některé booklety chybí",
+				"jen jako komplet",
+				"starší vydání",
+				"stav dle fotek"
+			],
+			"priceMin": 250,
+			"priceMax": 850,
+			"priceSpikes": [
+				1200,
+				1800
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "hudební DVD a CD koncerty mix",
+			"description": "hudební DVD a CD koncerty mix - zajímavý mix živých nahrávek a studiových alb, vše z domácí sbírky.",
+			"pros": [
+				"mix formátů",
+				"originální nosiče",
+				"zachovalé booklety",
+				"vhodné pro fanouška hudby",
+				"osobní předání možné",
+				"rozumná cena za set"
+			],
+			"cons": [
+				"různé žánry v jednom balíčku",
+				"bez záruky",
+				"část obalů má prasklinu",
+				"neprodávám po kusech",
+				"starší vydání",
+				"stav odpovídá fotkám"
+			],
+			"priceMin": 220,
+			"priceMax": 900,
+			"priceSpikes": [
+				1300,
+				1900
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		}
+	],
+	"hudba--vinyl-a-gramodesky": [
+		{
+			"title": "vinyl LP rock 70.-80. léta 6 ks",
+			"description": "vinyl LP rock 70.-80. léta 6 ks - starší desky z domácí sbírky, obaly i média nesou běžné známky používání.",
+			"pros": [
+				"6 LP v setu",
+				"retro sbírka",
+				"originální obaly",
+				"vhodné pro fanouška vinylů",
+				"rychlé předání",
+				"rozumná cena za komplet"
+			],
+			"cons": [
+				"bez záruky stavu každé desky",
+				"povrchové vlásečnice",
+				"obaly nesou stopy stáří",
+				"jen jako set",
+				"nečištěno profesionálně",
+				"stav dle fotek"
+			],
+			"priceMin": 500,
+			"priceMax": 1600,
+			"priceSpikes": [
+				2300,
+				3200
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "jazz a soul gramodesky mix",
+			"description": "jazz a soul gramodesky mix - několik zajímavých desek do sbírky nebo na běžný poslech, stav odpovídá fotkám.",
+			"pros": [
+				"zajímavý žánrový mix",
+				"vhodné pro sběratele",
+				"originální lisy",
+				"pevné obaly u části kusů",
+				"osobní předání možné",
+				"dobrý základ sbírky"
+			],
+			"cons": [
+				"část desek nese šum odpovídající stáří",
+				"bez záruky",
+				"obaly mají rohové oděrky",
+				"různý stav jednotlivých kusů",
+				"jen jako komplet",
+				"stav dle fotek"
+			],
+			"priceMin": 450,
+			"priceMax": 1500,
+			"priceSpikes": [
+				2200,
+				3000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		}
+	],
+	"hudba--cd-a-kazety": [
+		{
+			"title": "audio kazety český pop 15 ks",
+			"description": "audio kazety český pop 15 ks - starší mix na běžný poslech nebo do sbírky, prodávám ideálně jako celek.",
+			"pros": [
+				"15 kazet v setu",
+				"retro formát",
+				"originální obaly",
+				"vhodné do sbírky",
+				"rychlé předání",
+				"nízká cena"
+			],
+			"cons": [
+				"bez záruky přehratelnosti všech kusů",
+				"část obalů je opotřebená",
+				"jen jako komplet",
+				"běžné známky stáří",
+				"některé polepy jsou vyšisované",
+				"stav dle fotek"
+			],
+			"priceMin": 150,
+			"priceMax": 500,
+			"priceSpikes": [
+				800,
+				1200
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "CD metal a alternative 9 ks",
+			"description": "CD metal a alternative 9 ks - originální alba z domácí sbírky, booklety převážně zachované.",
+			"pros": [
+				"9 originálních CD",
+				"zajímavý žánrový mix",
+				"většina bookletů nechybí",
+				"vhodné pro fanouška",
+				"osobní předání možné",
+				"výhodná cena"
+			],
+			"cons": [
+				"krabičky nesou praskliny",
+				"bez záruky",
+				"část disků má vlásečnice",
+				"neprodávám jednotlivě",
+				"starší vydání",
+				"stav odpovídá fotkám"
+			],
+			"priceMin": 220,
+			"priceMax": 750,
+			"priceSpikes": [
+				1100,
+				1600
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		}
+	],
+	"hudba--noty-a-zpevniky": [
+		{
+			"title": "zpěvníky táborové a folkové písně",
+			"description": "zpěvníky táborové a folkové písně - několik použitých zpěvníků pro kytaru nebo společné hraní.",
+			"pros": [
+				"praktické pro hraní",
+				"více kusů v setu",
+				"čitelné akordy",
+				"vhodné ke kytaře",
+				"rychlé předání",
+				"rozumná cena"
+			],
+			"cons": [
+				"část stran je poznamenaná tužkou",
+				"bez záruky",
+				"měkké vazby mají oděrky",
+				"jen jako komplet",
+				"starší vydání",
+				"stav dle fotek"
+			],
+			"priceMin": 100,
+			"priceMax": 400,
+			"priceSpikes": [
+				650,
+				900
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "noty pro klavír a keyboard mix",
+			"description": "noty pro klavír a keyboard mix - vhodné pro začátečníka i mírně pokročilého, prodávám jako balíček.",
+			"pros": [
+				"užitečné pro výuku",
+				"mix různých skladeb",
+				"čitelné listy",
+				"vhodné na domácí cvičení",
+				"osobní předání možné",
+				"nízká cena za celek"
+			],
+			"cons": [
+				"část je popsaná tužkou",
+				"bez záruky",
+				"starší tisk",
+				"jen jako set",
+				"lehce pomačkané desky",
+				"stav odpovídá fotkám"
+			],
+			"priceMin": 120,
+			"priceMax": 450,
+			"priceSpikes": [
+				700,
+				1000
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		}
+	],
 	"sezona--pyrotechnika": [
 		{
 			"title": "kompakt 25 ran 20 mm",
@@ -36096,6 +36608,70 @@
 			],
 			"delivery": [
 				"personal"
+			]
+		}
+	],
+	"tv-audio-a-foto--drony-hracky": [
+		{
+			"title": "dětský mini dron na doma",
+			"description": "dětský mini dron na doma - malý lehký dron s kryty vrtulí, vhodný spíš na létání v interiéru.",
+			"pros": [
+				"kryty vrtulí",
+				"snadné ovládání",
+				"nabíjecí kabel v balení",
+				"vhodné pro začátečníka",
+				"rychlé předání",
+				"nízká cena"
+			],
+			"cons": [
+				"kratší výdrž baterie",
+				"bez záruky",
+				"spíš na domácí použití",
+				"lehké oděrky na plastu",
+				"citlivější na vítr",
+				"stav dle fotek"
+			],
+			"priceMin": 200,
+			"priceMax": 700,
+			"priceSpikes": [
+				1000,
+				1500
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
+			]
+		},
+		{
+			"title": "skládací hračka dron s ovladačem",
+			"description": "skládací hračka dron s ovladačem - jednoduchý model pro rekreační létání, kompletní balení bez většího poškození.",
+			"pros": [
+				"ovladač součástí",
+				"skládací ramena",
+				"vhodné jako levný dárek",
+				"jednoduché ovládání",
+				"osobní předání možné",
+				"kompaktní balení"
+			],
+			"cons": [
+				"základní kvalita kamery nebo bez kamery",
+				"bez záruky",
+				"nižší odolnost plastů",
+				"kratší doba letu",
+				"spíš pro občasné použití",
+				"stav odpovídá fotkám"
+			],
+			"priceMin": 250,
+			"priceMax": 900,
+			"priceSpikes": [
+				1200,
+				1700
+			],
+			"delivery": [
+				"personal",
+				"post",
+				"package"
 			]
 		}
 	]
