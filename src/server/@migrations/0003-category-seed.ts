@@ -39,7 +39,7 @@ export const CategorySeedMigration: Migration = {
 							sort: index,
 							locale: category.locale,
 							discovery: category.discovery,
-							restrictions: category.restrictions,
+							restriction: category.restriction,
 						}) as const,
 				),
 			)
