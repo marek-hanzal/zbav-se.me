@@ -1132,7 +1132,7 @@ Listing restriction - none (hint):
     value: Běžný obsah bez jakéhokoli omezení (pro všechny, vč. mládeže).
 Listing restriction - none:
     static: true
-    value: Bez omezení
+    value: Běžný obsah
 Listing restriction - restricted (hint):
     static: true
     value: Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podléhá zvláštním
@@ -1249,7 +1249,7 @@ ac4e887fc8f3f64d662b6a940ff6e823894c748bf103185448f43afa:
     value: personal
 acca87272a911bd673bc0f526d8ddaf4bedf8c4d04a375401d80df47:
     ref: Restriction not selected
-    value: Bez omezení
+    value: Běžný obsah
 ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba48:
     ref: Search (title)
     value: Hledat
