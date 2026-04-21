@@ -7,12 +7,14 @@ import { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 
 export const ListingSchema = z
 	.looseObject({
-		id: ListingTableSchema.shape.id,
-		title: ListingTableSchema.shape.title,
-		price: ListingTableSchema.shape.price,
-		priceType: ListingTableSchema.shape.priceType,
-		currency: ListingTableSchema.shape.currency,
-		createdAt: ListingTableSchema.shape.createdAt,
+		...ListingTableSchema.pick({
+			id: true,
+			title: true,
+			price: true,
+			priceType: true,
+			currency: true,
+			createdAt: true,
+		}).shape,
 		restrictions: z.array(CategoryRestrictionEnumSchema).meta({
 			description: `
 Computed restrictions from category and listing. Read-only.
