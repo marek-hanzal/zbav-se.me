@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { FilterSchema } from "@/lib/common/schema";
+import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 
 export const CategoryFilterSchema = z
 	.looseObject({
@@ -18,6 +19,9 @@ export const CategoryFilterSchema = z
 		}),
 		slug: z.string().optional().meta({
 			description: "This filter matches the exact slug of the category",
+		}),
+		restrictionLte: CategoryRestrictionEnumSchema.optional().meta({
+			description: "Filter out restricted categories",
 		}),
 	})
 	.strip()
