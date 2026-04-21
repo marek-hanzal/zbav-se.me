@@ -4,8 +4,9 @@ import { Group } from "@/lib/client/group";
 import { UserIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
+import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { LabelValue } from "@/lib/client/value";
+import { LabelValue, ValueList } from "@/lib/client/value";
 import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
@@ -30,7 +31,9 @@ export namespace UserPage {
 export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
 	const user = useUser();
-	const aa = withUserRestrictionQuery.useCollectionQuery({
+	const {
+		data: [restriction],
+	} = withUserRestrictionQuery.useCollectionQuery({
 		where: {
 			isAvailable: true,
 		},
@@ -82,10 +85,16 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 				</Group>
 
 				<Group>
-					<LabelValue
+					<ValueList
 						textLabel={translator.text("User restriction level (label)")}
 						textHint={translator.text("User restriction level (hint)")}
-						textValue={"boo"}
+						textEmpty={translator.text("User restriction level (empty)")}
+						items={(restriction?.restriction ?? []).map((item) => ({
+							id: item,
+						}))}
+						renderFn={({ id }) => {
+							return <Tx label={`Listing restriction - ${id}`} />;
+						}}
 					/>
 				</Group>
 
