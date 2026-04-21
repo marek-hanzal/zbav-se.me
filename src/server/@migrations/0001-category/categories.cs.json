@@ -1675,7 +1675,7 @@
 		"restrictions": [
 			"sensitive"
 		],
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "airsoft--airsoftove-pusky",
@@ -1693,7 +1693,7 @@
 		"restrictions": [
 			"sensitive"
 		],
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "airsoft--airsoftove-samopaly",
@@ -1711,7 +1711,7 @@
 		"restrictions": [
 			"sensitive"
 		],
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "airsoft--airsoftove-brokovnice",
@@ -1728,7 +1728,7 @@
 		"restrictions": [
 			"sensitive"
 		],
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "airsoft--airsoftove-odstrelovaci-pusky",
@@ -1746,7 +1746,7 @@
 		"restrictions": [
 			"sensitive"
 		],
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "airsoft--airsoftove-prislusenstvi",
@@ -1768,7 +1768,7 @@
 		"restrictions": [
 			"sensitive"
 		],
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "auto-moto--osobni-auta",
@@ -3004,7 +3004,7 @@
 		"restrictions": [
 			"sensitive"
 		],
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "chladne-zbrane--mece-a-savle",
@@ -3023,7 +3023,7 @@
 		"restrictions": [
 			"sensitive"
 		],
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "chladne-zbrane--dyky",
@@ -3041,7 +3041,7 @@
 		"restrictions": [
 			"sensitive"
 		],
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "chladne-zbrane--bajonety",
@@ -3059,7 +3059,7 @@
 		"restrictions": [
 			"sensitive"
 		],
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "chladne-zbrane--sekery-a-macety",
@@ -3078,7 +3078,7 @@
 		"restrictions": [
 			"sensitive"
 		],
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "chladne-zbrane--vrhaci-zbrane",
@@ -3096,7 +3096,7 @@
 		"restrictions": [
 			"sensitive"
 		],
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "chladne-zbrane--repliky-a-dekorace",
@@ -3115,7 +3115,7 @@
 		"restrictions": [
 			"sensitive"
 		],
-		"discovery": "implicit"
+		"discovery": "explicit"
 	},
 	{
 		"slug": "umeni-a-design--obrazy-a-grafiky",
