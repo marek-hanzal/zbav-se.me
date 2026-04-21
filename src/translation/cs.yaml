@@ -1320,6 +1320,11 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
         message than this :(
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
+bf82382f7d27ed92f076fc65613ec5fc5c0d9a2b535fe794ddb59b3d:
+    ref: User restriction level (hint)
+    value: |
+        Tvoje nastavená úroveň omezení, jaké inzeráty můžeš vidět a jaké můžeš
+        vytvářet. Tohle je základní ochrana proti nevhodnému obsahu.
 buyer - Buyer rejected the transaction (message):
     value: |
         **Odmítl jsi obchod.**
@@ -1487,6 +1492,9 @@ de75432fdd962d61c3b89d0c4098554de1f957cfd40f3f2fc50967c0:
 de8832ba89f066ff957f2387c53ed8c543d4ed977d7fac554ab3f590:
     ref: Go to my feed (button)
     value: Objevuj!
+defe75b5ea35da1e0b6c835ee17ebc86a344203ae3009d12d98fa66f:
+    ref: User restriction level (label)
+    value: Tvoje nastavené omezení
 e231f819f6eaa8ba876bc47eaa113f9ce0e4663ffd510bcf92f04855:
     ref: Create new chat (label)
     value: Nový chat

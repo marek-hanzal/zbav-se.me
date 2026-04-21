@@ -1,4 +1,6 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
+import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { withUserRestrictionSourceSelectFx } from "./withUserRestrictionSourceSelectFx";
 
 export namespace withUserRestrictionSelectFx {
@@ -19,7 +21,11 @@ export const withUserRestrictionSelectFx = Effect.fn("withUserRestrictionSelectF
 	return sourceSelect.select([
 		"ur.id",
 		"ur.createdAt",
-		"ur.restriction",
+		(eb) => {
+			return sql<
+				CategoryRestrictionEnumSchema.Type[]
+			>`to_jsonb(${eb.ref("ur.restriction")})`.as("restriction");
+		},
 		"ur.availableAt",
 	]);
 });

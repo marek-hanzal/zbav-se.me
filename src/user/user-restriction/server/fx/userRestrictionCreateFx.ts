@@ -26,26 +26,31 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
-	const id = genId();
 
-	return yield* tryDbFx(async () =>
-		kysely
+	const id = genId();
+	const createdAt = dateContext.now().toJSDate();
+
+	return yield* tryDbFx(async () => {
+		return kysely
 			.insertInto("user_restriction")
 			.values({
 				id,
 				userId,
 				restriction,
 				availableAt,
-				createdAt: dateContext.now().toJSDate(),
+				createdAt,
 			})
-			.returning([
-				"id",
-				"createdAt",
-				"restriction",
-				"availableAt",
-			])
-			.executeTakeFirstOrThrow(),
-	);
+			.returningAll()
+			.executeTakeFirstOrThrow();
+
+		return {
+			id,
+			userId,
+			restriction,
+			availableAt,
+			createdAt,
+		} as const;
+	});
 });
 
 export type userRestrictionCreateFx = ReturnType<typeof userRestrictionCreateFx>;
