@@ -26,10 +26,12 @@ Hint:
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(FeedToolCreateSchema),
-	async execute(data) {
+	async execute(input) {
 		logger.trace("toolFeedCreate", {
-			data,
+			data: input,
 		});
+
+		const data = await FeedToolCreateSchema.parseAsync(input);
 
 		return feedCreateFn({
 			data,
