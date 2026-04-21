@@ -29,11 +29,10 @@ Controls whether listings in this category are included in default listing queri
 Explicit categories are returned only when the query asks for a category using categoryId or categoryIdIn.
         `.trim(),
 		}),
-		restrictions: z.array(CategoryRestrictionEnumSchema).meta({
+		restriction: CategoryRestrictionEnumSchema.meta({
 			description: `
-Array of restrictions applied using this category; this is core rule and it's not possible to override it by the user.
-
-Empty array means "open" (unrestricted).
+Restriction this category applies by default; it cannot be weakened, but from the other side it
+may be hardened to higher restriction level.
         `.trim(),
 		}),
 	})
