@@ -1,9 +1,15 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
+import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import type { ListingMetaSchema } from "~/public/listing/server/schema/ListingMetaSchema";
 import type { ListingSortSchema } from "~/public/listing/server/schema/ListingSortSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+
+const publicCategoryRestrictions = [
+	CategoryRestrictionEnumSchema.enum.none,
+	CategoryRestrictionEnumSchema.enum["adult-relaxed"],
+] as const;
 
 export namespace withListingSourceSelectFx {
 	export interface Props {
@@ -28,10 +34,16 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.where("l.status", "in", [
 			"live",
-		] as const);
+		] as const)
+		.where((eb) => {
+			return sql<boolean>`coalesce(${eb.ref("cat.restrictions")}, '{}'::category_restriction_enum[]) <@ array[${sql.join(publicCategoryRestrictions)}]::category_restriction_enum[]`;
+		})
+		.where((eb) => {
+			return sql<boolean>`coalesce(${eb.ref("l.restriction")}, ${CategoryRestrictionEnumSchema.enum.none}::category_restriction_enum) = any(array[${sql.join(publicCategoryRestrictions)}]::category_restriction_enum[])`;
+		});
 
 	if (!hasExplicitCategory) {
-		query = query.where("cat.type", "=", "implicit");
+		query = query.where("cat.discovery", "=", "implicit");
 	}
 
 	for (const item of sort ?? []) {

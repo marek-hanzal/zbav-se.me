@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { describe, expect, it } from "vitest";
+import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { listingCollectionFx } from "~/public/listing/server/fx/listingCollectionFx";
 import { listingCountFx } from "~/public/listing/server/fx/listingCountFx";
@@ -84,18 +85,35 @@ const patchPublicListing = (
 			.executeTakeFirstOrThrow(),
 	);
 
-const patchCategoryType = (
+const patchCategoryDiscovery = (
 	database: TestDatabase,
 	props: {
 		id: string;
-		type: "explicit" | "implicit";
+		discovery: "explicit" | "implicit";
 	},
 ) =>
 	Effect.promise(() =>
 		database.kysely
 			.updateTable("category")
 			.set({
-				type: props.type,
+				discovery: props.discovery,
+			})
+			.where("id", "=", props.id)
+			.executeTakeFirstOrThrow(),
+	);
+
+const patchListingRestriction = (
+	database: TestDatabase,
+	props: {
+		id: string;
+		restriction: CategoryRestrictionEnumSchema.Type;
+	},
+) =>
+	Effect.promise(() =>
+		database.kysely
+			.updateTable("listing")
+			.set({
+				restriction: props.restriction,
 			})
 			.where("id", "=", props.id)
 			.executeTakeFirstOrThrow(),
@@ -229,7 +247,7 @@ describe("public listing search flow", () => {
 	});
 
 	it("hides explicit categories unless the query asks for a category", async () => {
-		const database = await testabase("public-listing-category-type-flow");
+		const database = await testabase("public-listing-category-discovery-flow");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -246,50 +264,50 @@ describe("public listing search flow", () => {
 				scope: {},
 			});
 
-			yield* patchCategoryType(database, {
+			yield* patchCategoryDiscovery(database, {
 				id: explicitCategory.id,
-				type: "explicit",
+				discovery: "explicit",
 			});
 
 			const implicitListing = yield* createListingFx(seller.id, {
-				title: "Category type visibility marker",
+				title: "Category discovery visibility marker",
 				categoryId: implicitCategory.id,
 			});
 			const explicitListing = yield* createListingFx(seller.id, {
-				title: "Category type visibility marker",
+				title: "Category discovery visibility marker",
 				categoryId: explicitCategory.id,
 			});
 
 			const defaultCollection = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					title: "Category type visibility marker",
+					title: "Category discovery visibility marker",
 				},
 			});
 			const emptyCategoryCollection = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					title: "Category type visibility marker",
+					title: "Category discovery visibility marker",
 					categoryIdIn: [],
 				},
 			});
 			const defaultCount = yield* listingCountFx({
 				scope: {},
 				where: {
-					title: "Category type visibility marker",
+					title: "Category discovery visibility marker",
 				},
 			});
 			const explicitByCategory = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					title: "Category type visibility marker",
+					title: "Category discovery visibility marker",
 					categoryId: explicitCategory.id,
 				},
 			});
 			const explicitByCategoryIn = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					title: "Category type visibility marker",
+					title: "Category discovery visibility marker",
 					categoryIdIn: [
 						explicitCategory.id,
 					],
@@ -309,6 +327,94 @@ describe("public listing search flow", () => {
 			expect(explicitByCategoryIn.map((item) => item.id)).toEqual([
 				explicitListing.id,
 			]);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+
+	it("allows only public-safe restrictions even with explicit category filters", async () => {
+		const database = await testabase("public-listing-restriction-flow");
+
+		return Effect.gen(function* () {
+			const seller = yield* leaseTestUserFx({});
+			const openCategory = yield* categoryFetchFx({
+				where: {
+					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
+				},
+				scope: {},
+			});
+			const adultRelaxedCategory = yield* categoryFetchFx({
+				where: {
+					slug: "vape-elektronicke-cigarety--mody",
+				},
+				scope: {},
+			});
+			const adultCategory = yield* categoryFetchFx({
+				where: {
+					slug: "tv-audio-a-foto--drony-s-kamerou",
+				},
+				scope: {},
+			});
+			const sensitiveCategory = yield* categoryFetchFx({
+				where: {
+					slug: "airsoft--airsoftove-pistole",
+				},
+				scope: {},
+			});
+
+			const openListing = yield* createListingFx(seller.id, {
+				title: "Public restriction marker open",
+				categoryId: openCategory.id,
+			});
+			const adultRelaxedListing = yield* createListingFx(seller.id, {
+				title: "Public restriction marker relaxed",
+				categoryId: adultRelaxedCategory.id,
+			});
+			const adultCategoryListing = yield* createListingFx(seller.id, {
+				title: "Public restriction marker adult category",
+				categoryId: adultCategory.id,
+			});
+			const sensitiveCategoryListing = yield* createListingFx(seller.id, {
+				title: "Public restriction marker sensitive category",
+				categoryId: sensitiveCategory.id,
+			});
+			const adultListingRestriction = yield* createListingFx(seller.id, {
+				title: "Public restriction marker listing adult",
+				categoryId: openCategory.id,
+			});
+
+			yield* patchListingRestriction(database, {
+				id: adultListingRestriction.id,
+				restriction: "adult",
+			});
+
+			const categoryIdIn = [
+				openCategory.id,
+				adultRelaxedCategory.id,
+				adultCategory.id,
+				sensitiveCategory.id,
+			];
+			const collection = yield* listingCollectionFx({
+				scope: {},
+				where: {
+					title: "Public restriction marker",
+					categoryIdIn,
+				},
+			});
+			const count = yield* listingCountFx({
+				scope: {},
+				where: {
+					title: "Public restriction marker",
+					categoryIdIn,
+				},
+			});
+
+			expect(collection.map((item) => item.id)).toEqual([
+				openListing.id,
+				adultRelaxedListing.id,
+			]);
+			expect(collection.map((item) => item.id)).not.toContain(adultCategoryListing.id);
+			expect(collection.map((item) => item.id)).not.toContain(sensitiveCategoryListing.id);
+			expect(collection.map((item) => item.id)).not.toContain(adultListingRestriction.id);
+			expect(count).toBe(collection.length);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

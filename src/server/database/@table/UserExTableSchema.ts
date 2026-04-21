@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { UserSideEnumSchema } from "~/common/user-event/enum/UserSideEnumSchema";
 
 export const UserExTableSchema = z
 	.looseObject({
@@ -11,10 +10,6 @@ export const UserExTableSchema = z
 		}),
 		locationId: z.string().nullable().meta({
 			description: "Default location for the user - user for listings & listing sorting",
-		}),
-		side: UserSideEnumSchema.nullish(),
-		token: z.string().nullish().meta({
-			description: "Bearer token used for agent access and API token fallback auth",
 		}),
 	})
 	.meta({

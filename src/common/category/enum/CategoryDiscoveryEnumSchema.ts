@@ -1,12 +1,12 @@
 import { z } from "zod";
 
-export const CategoryTypeEnumSchema = z
+export const CategoryDiscoveryEnumSchema = z
 	.enum([
 		"implicit",
 		"explicit",
 	])
 	.meta({
-		id: "CategoryTypeEnum",
+		id: "CategoryDiscoveryEnum",
 		description: `
 Defines whether listings from a category are included in broad listing queries.
 
@@ -16,8 +16,8 @@ Meanings:
         `.trim(),
 	});
 
-export type CategoryTypeEnumSchema = typeof CategoryTypeEnumSchema;
+export type CategoryDiscoveryEnumSchema = typeof CategoryDiscoveryEnumSchema;
 
-export namespace CategoryTypeEnumSchema {
-	export type Type = z.infer<CategoryTypeEnumSchema>;
+export namespace CategoryDiscoveryEnumSchema {
+	export type Type = z.infer<CategoryDiscoveryEnumSchema>;
 }

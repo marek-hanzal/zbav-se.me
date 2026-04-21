@@ -1,7 +1,7 @@
 import { type Migration, sql } from "kysely";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
+import type { CategoryDiscoveryEnumSchema } from "~/common/category/enum/CategoryDiscoveryEnumSchema";
 import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
-import type { CategoryTypeEnumSchema } from "~/common/category/enum/CategoryTypeEnumSchema";
 
 export const CategoryMigration: Migration = {
 	async up(db) {
@@ -21,9 +21,9 @@ export const CategoryMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createType("category_type_enum")
+			.createType("category_discovery_enum")
 			.asEnum(
-				toEnumGuard<CategoryTypeEnumSchema.Type>()([
+				toEnumGuard<CategoryDiscoveryEnumSchema.Type>()([
 					"implicit",
 					"explicit",
 				] as const),
@@ -41,7 +41,7 @@ export const CategoryMigration: Migration = {
 			.addColumn("slug", "text", (col) => col.notNull())
 			.addColumn("sort", "integer", (col) => col.notNull())
 			.addColumn("locale", "text", (col) => col.notNull())
-			.addColumn("type", sql`category_type_enum`, (col) => col.notNull())
+			.addColumn("discovery", sql`category_discovery_enum`, (col) => col.notNull())
 			.addColumn("restrictions", sql`category_restriction_enum[]`)
 			.addUniqueConstraint("category_[slug-locale]_unique_idx", [
 				"slug",

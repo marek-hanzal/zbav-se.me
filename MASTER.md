@@ -476,9 +476,9 @@ Kategorie nese mimo jiné:
 - **název**
 - **slug**
 - **locale**
-- **typ viditelnosti v defaultním listingu**
+- **discovery režim v defaultním listingu**
 
-Typ viditelnosti kategorie:
+Discovery režim kategorie:
 - `implicit` = normální kategorie. Její inzeráty se můžou objevit v obecném feedu/hledání bez výběru kategorie.
 - `explicit` = tichá kategorie. Její inzeráty nelezou do obecného feedu/hledání samy od sebe; uživatel si o tu kategorii musí vědomě říct filtrem.
 
@@ -1017,16 +1017,18 @@ Tvrdý pravidlo:
 Ostatní brány jsou pravidla listingu (ne zákaz otevření):
 - ignor,
 - životní cyklus [Inzerátu](#koncept-inzerat) (`expired` / `closed` / `sold`),
-- typ [Kategorie](#koncept-kategorie) (`explicit` se zobrazí jen při vědomém category filtru),
+- discovery režim [Kategorie](#koncept-kategorie) (`explicit` se zobrazí jen při vědomém category filtru),
 - [Release window](#koncept-release-window),
 - anti-topper a podobný mechaniky pořadí.
 
 Co se v listingu defaultně neukazuje:
 - `expired` a `closed` (jen přes vědomej filtr / historickej režim),
 - `sold` (není k dispozici),
-- inzeráty v kategoriích typu `explicit`, pokud dotaz nemá konkrétní category filtr.
+- inzeráty v kategoriích s discovery režimem `explicit`, pokud dotaz nemá konkrétní category filtr.
 
 Explicitní category filtr znamená, že dotaz obsahuje konkrétní kategorii nebo seznam kategorií. Prázdnej seznam kategorií se bere jako „bez category filtru“, takže pořád platí jen `implicit`.
+
+Veřejný listing má pevný citlivostní strop: můžou se v něm objevit jen inzeráty s výslednou citlivostí `none` nebo `adult-relaxed`. Tenhle strop nejde uživatelsky ovlivnit ani obejít category filtrem.
 
 Kontrakt detailu mimo `live`:
 - Detail se otevře (krom citlivosti), ale je read-only a místo „Mám zájem“ ukážu jasnej status („Už není dostupný“). UI má být fér.
@@ -1160,6 +1162,7 @@ Gating a viditelnost (dvoufázově, schválně):
 
 Hard gate pravidla:
 - V listingu (feed/search/seznam) se cokoliv nad maximum **vůbec nedostane do výsledků**.
+- Veřejný listing má systémové maximum `adult-relaxed`; `adult`, `sensitive` a `restricted` do něj nikdy nelezou.
 - Na detail přes přímý odkaz vracím při nesouladu maxima **404** (žádný obcházení přes link, žádný „aspoň víš že to existuje“).
 - **Citlivost** je **jediná uživatelská** věc, která smí detail tvrdě schovat (404). Kromě citlivosti existuje ještě **admin hard removal** (výjimečná stopka pro nelegální/škodlivý obsah), která je **404** a nastavuje stav `banned` (viz [Ban](#koncept-ban) a [Inzerát](#koncept-inzerat)). Ostatní brány můžou ovlivnit seznam, ale nemaj dělat „ten inzerát pro tebe neexistuje“.
 

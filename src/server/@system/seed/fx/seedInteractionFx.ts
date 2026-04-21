@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { genId } from "@/lib/common/gen-id";
-import { list } from "@/lib/common/rangedom";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { SeedProgressContextFx } from "~/server/@system/seed/context/withSeedProgressFx";
 import { ensureSeedUserFx } from "~/server/@system/seed/fx/ensureSeedUserFx";
@@ -45,10 +44,7 @@ export const seedInteractionFx = Effect.fn("seedInteractionFx")(function* ({
 	yield* userExPatchFx({
 		userId: current.id,
 		patch: {
-			side: list([
-				"seller",
-				"buyer",
-			]),
+			locationId: null,
 		},
 	});
 

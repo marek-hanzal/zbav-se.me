@@ -1,10 +1,16 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
+import { ActivityTypeEnumSchema } from "~/common/activity/enum/ActivityTypeEnumSchema";
 import type { ActivityTableSchema } from "~/server/database/@table/ActivityTableSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withActivitySelectFx } from "~/user/activity/server/db/withActivitySelectFx";
 import type { ActivitySortSchema } from "~/user/activity/server/schema/ActivitySortSchema";
+
+const messageActivityTypes = [
+	ActivityTypeEnumSchema.enum["buyer-message"],
+	ActivityTypeEnumSchema.enum["seller-message"],
+] as const;
 
 export namespace withActivityCollectionSelectFx {
 	export interface Props {
@@ -25,7 +31,7 @@ export const withActivityCollectionSelectFx = Effect.fn("withActivityCollectionS
 					.select((eb) =>
 						sql<number>`row_number() over (
 						partition by case
-							when ${eb.ref("i.type")} in ('buyer-message', 'seller-message')
+							when ${eb.ref("i.type")} = any(array[${sql.join(messageActivityTypes)}]::activity_type_enum[])
 								then ${eb.ref("i.payload")} ->> 'transactionId'
 							else ${eb.ref("i.id")}
 						end

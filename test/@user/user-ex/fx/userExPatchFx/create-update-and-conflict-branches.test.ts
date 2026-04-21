@@ -47,23 +47,20 @@ describe("userExPatchFx", () => {
 				const created = yield* userExPatchFx({
 					userId: users.seller.id,
 					patch: {
-						side: "seller",
+						locationId: null,
 					},
 				});
 
 				expect(created.userId).toBe(users.seller.id);
-				expect(created.side).toBe("seller");
 
 				const updated = yield* userExPatchFx({
 					userId: users.seller.id,
 					patch: {
-						token: "updated-token",
+						locationId: null,
 					},
 				});
 
 				expect(updated.id).toBe(created.id);
-				expect(updated.side).toBe("seller");
-				expect(updated.token).toBe("updated-token");
 
 				yield* Effect.promise(() =>
 					sql
@@ -95,13 +92,13 @@ describe("userExPatchFx", () => {
 						userExPatchFx({
 							userId: users.buyer.id,
 							patch: {
-								side: "buyer",
+								locationId: null,
 							},
 						}).pipe(runtime, Effect.either, Effect.runPromise),
 						userExPatchFx({
 							userId: users.buyer.id,
 							patch: {
-								side: "buyer",
+								locationId: null,
 							},
 						}).pipe(secondRuntime, Effect.either, Effect.runPromise),
 					]),

@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
+import { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 
 export namespace withTransactionListingSourceSelectFx {
@@ -47,9 +47,9 @@ export const withTransactionListingSourceSelectFx = Effect.fn(
 				jsonObjectFrom(
 					lastActivitySelect.selectAll("te").select((eb) => {
 						return sql<TransactionEntryDirectionEnumSchema.Type>`case
-							when ${eb.ref("te.userId")} is null then 'system'
-							when ${eb.ref("te.userId")} = ${eb.ref("l.userId")} then 'out'
-							else 'in'
+							when ${eb.ref("te.userId")} is null then ${TransactionEntryDirectionEnumSchema.enum.system}
+							when ${eb.ref("te.userId")} = ${eb.ref("l.userId")} then ${TransactionEntryDirectionEnumSchema.enum.out}
+							else ${TransactionEntryDirectionEnumSchema.enum.in}
 						end`.as("direction");
 					}),
 				)

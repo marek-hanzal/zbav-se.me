@@ -31,7 +31,7 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 		] as const);
 
 	if (!hasExplicitCategory) {
-		query = query.where("cat.type", "=", "implicit");
+		query = query.where("cat.discovery", "=", "implicit");
 	}
 
 	for (const item of sort ?? []) {

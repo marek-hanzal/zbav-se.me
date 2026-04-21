@@ -83,18 +83,18 @@ const patchListingSearchData = (
 			.executeTakeFirstOrThrow(),
 	);
 
-const patchCategoryType = (
+const patchCategoryDiscovery = (
 	database: TestDatabase,
 	props: {
 		id: string;
-		type: "explicit" | "implicit";
+		discovery: "explicit" | "implicit";
 	},
 ) =>
 	Effect.promise(() =>
 		database.kysely
 			.updateTable("category")
 			.set({
-				type: props.type,
+				discovery: props.discovery,
 			})
 			.where("id", "=", props.id)
 			.executeTakeFirstOrThrow(),
@@ -264,7 +264,7 @@ describe("buyer listing discovery flow", () => {
 	});
 
 	it("hides explicit categories unless the buyer query asks for a category", async () => {
-		const database = await testabase("buyer-listing-category-type-flow");
+		const database = await testabase("buyer-listing-category-discovery-flow");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -281,17 +281,17 @@ describe("buyer listing discovery flow", () => {
 				scope: {},
 			});
 
-			yield* patchCategoryType(database, {
+			yield* patchCategoryDiscovery(database, {
 				id: explicitCategory.id,
-				type: "explicit",
+				discovery: "explicit",
 			});
 
 			const implicitListing = yield* createListingFx(users.seller.id, {
-				title: "Buyer category type visibility marker",
+				title: "Buyer category discovery visibility marker",
 				categoryId: implicitCategory.id,
 			});
 			const explicitListing = yield* createListingFx(users.seller.id, {
-				title: "Buyer category type visibility marker",
+				title: "Buyer category discovery visibility marker",
 				categoryId: explicitCategory.id,
 			});
 
@@ -299,21 +299,21 @@ describe("buyer listing discovery flow", () => {
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title: "Buyer category type visibility marker",
+					title: "Buyer category discovery visibility marker",
 				},
 			});
 			const defaultCount = yield* listingCountFx({
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title: "Buyer category type visibility marker",
+					title: "Buyer category discovery visibility marker",
 				},
 			});
 			const explicitByCategory = yield* listingCollectionFx({
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title: "Buyer category type visibility marker",
+					title: "Buyer category discovery visibility marker",
 					categoryId: explicitCategory.id,
 				},
 			});
@@ -321,7 +321,7 @@ describe("buyer listing discovery flow", () => {
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title: "Buyer category type visibility marker",
+					title: "Buyer category discovery visibility marker",
 					categoryIdIn: [
 						explicitCategory.id,
 					],

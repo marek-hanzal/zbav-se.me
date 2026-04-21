@@ -5,7 +5,7 @@ import { withTransactionSourceSelectFx } from "~/seller/transaction/server/db/wi
 import type { TransactionSortSchema } from "~/seller/transaction/server/schema/TransactionSortSchema";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
 import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
-import type { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
+import { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 
 export namespace withTransactionSelectFx {
@@ -60,9 +60,9 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 			jsonObjectFrom(
 				lastActivitySelect.selectAll("te").select((eb) => {
 					return sql<TransactionEntryDirectionEnumSchema.Type>`case
-                        when ${eb.ref("te.userId")} is null then 'system'
-                        when ${eb.ref("te.userId")} = ${eb.ref("l.userId")} then 'out'
-                        else 'in'
+                        when ${eb.ref("te.userId")} is null then ${TransactionEntryDirectionEnumSchema.enum.system}
+                        when ${eb.ref("te.userId")} = ${eb.ref("l.userId")} then ${TransactionEntryDirectionEnumSchema.enum.out}
+                        else ${TransactionEntryDirectionEnumSchema.enum.in}
                     end`.as("direction");
 				}),
 			)
