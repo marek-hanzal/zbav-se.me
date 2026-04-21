@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
+import { CategorySchema } from "~/public/category/server/schema/CategorySchema";
+import { GallerySchema } from "~/public/gallery/server/schema/GallerySchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
-import { CategorySchema } from "~/user/category/server/schema/CategorySchema";
-import { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 
 export const ListingSchema = z
 	.looseObject({

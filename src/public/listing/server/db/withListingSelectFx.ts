@@ -2,10 +2,11 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
+import { withGallerySelectFx } from "~/public/gallery/server/db/withGallerySelectFx";
+import type { GallerySchema } from "~/public/gallery/server/schema/GallerySchema";
 import { withListingSourceSelectFx } from "~/public/listing/server/db/withListingSourceSelectFx";
 import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
-import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
 
 export namespace withListingSelectFx {
 	export interface Props extends withListingSourceSelectFx.Props {
@@ -49,6 +50,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 		sql<CategoryTableSchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category"),
 		jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))
 			.$notNull()
+			.$castTo<GallerySchema.Type>()
 			.as("gallery"),
 	]);
 });
