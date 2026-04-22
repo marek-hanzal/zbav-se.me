@@ -112,6 +112,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 							"relative",
 							"mx-2",
 						]}
+						data-ui-opacity={"8"}
 					>
 						<Icon
 							icon={"icon-[solar--clock-circle-linear]"}
@@ -166,6 +167,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 					}}
 					placeholder={translator.text("Write to an agent")}
 					loading={chat.isPending}
+					disableSubmit={chat.isQueueFull}
 					cancel={
 						<Button
 							data-action={"stop agent stream"}

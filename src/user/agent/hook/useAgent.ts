@@ -25,6 +25,7 @@ export namespace useAgent {
 
 	export interface QueuerState {
 		isPending: boolean;
+		isQueueFull: boolean;
 		queueSize: number;
 		queueText: string | undefined;
 	}
@@ -114,6 +115,7 @@ export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 		},
 		(state) => ({
 			isPending: state.isExecuting || state.activeItems.length > 0 || state.size > 0,
+			isQueueFull: state.isFull,
 			queueSize: state.size,
 			queueText: getQueueText(state.items),
 		}),
@@ -147,6 +149,7 @@ export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 	return {
 		threadId,
 		isPending: queuer.state.isPending,
+		isQueueFull: queuer.state.isQueueFull,
 		queueSize: queuer.state.queueSize,
 		queueText: queuer.state.queueText,
 		submit,
