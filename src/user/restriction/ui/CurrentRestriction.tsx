@@ -63,6 +63,7 @@ export const CurrentRestriction = withFallback(
 									data-ui-justify={"space-between"}
 									data-ui-items={"center"}
 									data-ui-width={"full"}
+									data-ui-opacity={"6"}
 								>
 									<Tx
 										label={"Restriction available in (label)"}

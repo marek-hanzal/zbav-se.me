@@ -21,10 +21,8 @@ export const Agent: FC<Agent.Props> = ({ threadId, ...props }) => {
 	return (
 		<Container
 			data-ui={"Agent"}
-			data-ui-layout="vertical-content-footer"
 			data-ui-height="full"
 			data-ui-width="full"
-			data-ui-gap="xs"
 			{...props}
 		>
 			<Container

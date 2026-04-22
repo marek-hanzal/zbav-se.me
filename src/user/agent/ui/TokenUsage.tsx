@@ -24,6 +24,7 @@ export const TokenUsage = withFallback<TokenUsage.Props, Container>(
 
 		return (
 			<Container
+				data-ui={"TokenUsage"}
 				data-ui-flow="horizontal"
 				data-ui-gap="xs"
 				data-ui-items="center"

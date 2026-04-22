@@ -25,7 +25,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 	const uploadIds = uploads.map(({ id }) => id);
 
 	return (
-		<Container>
+		<>
 			<GalleryUploadSheet
 				key={uploadIds.join(":")}
 				allowClear
@@ -54,6 +54,9 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 				data-ui-snap-to={"bottom-center"}
 				data-ui-width={"full"}
 				data-ui-position={"relative"}
+				className={[
+					"bottom-0",
+				]}
 			>
 				{uploads.length > 0 ? (
 					<Container
@@ -135,9 +138,10 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 				/>
 
 				<Container
-					data-ui-flow={"horizontal"}
-					data-ui-items={"center"}
-					data-ui-justify={"end"}
+					data-ui-flow={"vertical"}
+					data-ui-items={"end"}
+					data-ui-justify={"center"}
+					data-ui-inner={"xs"}
 				>
 					<Tx
 						label={"Thread token usage (label)"}
@@ -149,10 +153,9 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 						threadId={chat.threadId}
 						data-ui-text={"xs"}
 						data-ui-opacity={"4"}
-						data-ui-inner={"xs"}
 					/>
 				</Container>
 			</Container>
-		</Container>
+		</>
 	);
 };
