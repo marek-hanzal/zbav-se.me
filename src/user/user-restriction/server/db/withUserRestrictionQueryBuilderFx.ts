@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { DateContextFx } from "@/lib/common/date";
-import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import type { UserRestrictionFilterSchema } from "../schema/UserRestrictionFilterSchema";
 import type { withUserRestrictionSourceSelectFx } from "./withUserRestrictionSourceSelectFx";
 
@@ -46,7 +46,7 @@ export const withUserRestrictionQueryBuilderFx = Effect.fn("withUserRestrictionQ
 
 		if (where.restriction) {
 			query = query.where(
-				sql<boolean>`${where.restriction as CategoryRestrictionEnumSchema.Type} = ANY(${sql.ref("ur.restriction")})`,
+				sql<boolean>`${where.restriction as RestrictionEnumSchema.Type} = ANY(${sql.ref("ur.restriction")})`,
 			) as TSelect;
 		}
 

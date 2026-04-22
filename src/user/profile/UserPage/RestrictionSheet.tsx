@@ -3,14 +3,14 @@ import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { Container } from "@/lib/client/container";
 import { useSelection } from "@/lib/client/selection";
 import { translator } from "@/lib/common/translator";
-import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { RestrictionSelect } from "~/common/restriction/ui/RestrictionSelect";
 
 export namespace RestrictionSheet {
 	export interface Props extends BottomSheet.Props {
-		onRestriction(restriction: CategoryRestrictionEnumSchema.Type): Promise<any>;
-		restriction: CategoryRestrictionEnumSchema.Type | undefined;
+		onRestriction(restriction: RestrictionEnumSchema.Type): Promise<any>;
+		restriction: RestrictionEnumSchema.Type | undefined;
 		isPending: boolean;
 	}
 }
@@ -60,9 +60,7 @@ export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 					}}
 					onSave={() => {
 						props.onClose();
-						onRestriction(
-							selection.optional.singleId() as CategoryRestrictionEnumSchema.Type,
-						);
+						onRestriction(selection.optional.singleId() as RestrictionEnumSchema.Type);
 					}}
 					loading={isPending}
 					disabled={false}

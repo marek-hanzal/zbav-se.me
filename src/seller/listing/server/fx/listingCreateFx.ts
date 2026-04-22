@@ -12,9 +12,9 @@ import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
-import { checkRestrictionFx } from "~/user/category/server/fx/checkRestrictionFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
+import { checkRestrictionFx } from "~/user/restriction/server/fx/checkRestrictionFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 export namespace listingCreateFx {

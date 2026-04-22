@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import type { ListingMetaSchema } from "~/public/listing/server/schema/ListingMetaSchema";
 import type { ListingSortSchema } from "~/public/listing/server/schema/ListingSortSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 
 const publicCategoryRestrictions = [
-	CategoryRestrictionEnumSchema.enum.none,
-	CategoryRestrictionEnumSchema.enum["adult-relaxed"],
+	RestrictionEnumSchema.enum.none,
+	RestrictionEnumSchema.enum["adult-relaxed"],
 ] as const;
 
 export namespace withListingSourceSelectFx {
@@ -36,10 +36,10 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 			"live",
 		] as const)
 		.where((eb) => {
-			return sql<boolean>`array[${eb.ref("cat.restriction")}] <@ array[${sql.join(publicCategoryRestrictions)}]::category_restriction_enum[]`;
+			return sql<boolean>`array[${eb.ref("cat.restriction")}] <@ array[${sql.join(publicCategoryRestrictions)}]::restriction_enum[]`;
 		})
 		.where((eb) => {
-			return sql<boolean>`coalesce(${eb.ref("l.restriction")}, ${CategoryRestrictionEnumSchema.enum.none}::category_restriction_enum) = any(array[${sql.join(publicCategoryRestrictions)}]::category_restriction_enum[])`;
+			return sql<boolean>`coalesce(${eb.ref("l.restriction")}, ${RestrictionEnumSchema.enum.none}::restriction_enum) = any(array[${sql.join(publicCategoryRestrictions)}]::restriction_enum[])`;
 		});
 
 	if (!hasExplicitCategory) {

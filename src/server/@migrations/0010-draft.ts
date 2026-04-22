@@ -52,7 +52,7 @@ export const DraftMigration: Migration = {
 			.addColumn("age", "integer")
 			.addColumn("delivery", sql`listing_delivery_enum[]`)
 			.addColumn("warranty", sql`listing_warranty_enum`)
-			.addColumn("restriction", sql`category_restriction_enum`)
+			.addColumn("restriction", sql`restriction_enum`)
 			.addColumn("locationId", "text")
 			.addColumn("categoryId", "text")
 			.addColumn("galleryId", "text", (col) => col.notNull())

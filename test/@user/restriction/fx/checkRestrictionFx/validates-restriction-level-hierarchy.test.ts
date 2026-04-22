@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { checkRestrictionFx } from "~/user/category/server/fx/checkRestrictionFx";
+import { checkRestrictionFx } from "~/user/restriction/server/fx/checkRestrictionFx";
 
 describe("checkRestrictionFx", () => {
 	it("succeeds when request level equals required level", () =>

@@ -2,11 +2,11 @@ import type { FC } from "react";
 import { Tx } from "@/lib/client/tx";
 import { LabelValue } from "@/lib/client/value";
 import { translator } from "@/lib/common/translator";
-import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 
 export namespace RestrictionValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {
-		restriction: CategoryRestrictionEnumSchema.Type | null | undefined;
+		restriction: RestrictionEnumSchema.Type | null | undefined;
 	}
 }
 

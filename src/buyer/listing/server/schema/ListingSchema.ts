@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { CategorySchema } from "~/user/category/server/schema/CategorySchema";
@@ -36,7 +36,7 @@ export const ListingSchema = z
 		thumb: ThumbEnumSchema.nullable().meta({
 			description: "Thumb type provided by the user (like/dislike) or null if not present",
 		}),
-		restrictions: z.array(CategoryRestrictionEnumSchema).meta({
+		restrictions: z.array(RestrictionEnumSchema).meta({
 			description: `
 Computed restrictions from category and listing. Read-only.
             `.trim(),

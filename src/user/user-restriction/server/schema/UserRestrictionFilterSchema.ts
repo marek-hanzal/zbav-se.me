@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { FilterSchema } from "@/lib/common/schema";
-import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 
 export const UserRestrictionFilterSchema = z
 	.looseObject({
@@ -8,7 +8,7 @@ export const UserRestrictionFilterSchema = z
 		userId: z.string().optional().meta({
 			description: "This filter matches the exact userId",
 		}),
-		restriction: CategoryRestrictionEnumSchema.optional().meta({
+		restriction: RestrictionEnumSchema.optional().meta({
 			description: "This filter matches rows containing the restriction level",
 		}),
 		availableAtGte: z.coerce.date().optional().meta({

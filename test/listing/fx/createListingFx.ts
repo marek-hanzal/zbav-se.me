@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
 import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
@@ -11,7 +11,7 @@ export namespace createListingFx {
 		categoryId?: string;
 		title?: string;
 		locationId?: string;
-		restriction?: CategoryRestrictionEnumSchema.Type | null;
+		restriction?: RestrictionEnumSchema.Type | null;
 	}
 }
 

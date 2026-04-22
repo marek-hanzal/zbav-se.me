@@ -2,14 +2,14 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
-import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { categoryCollectionFx } from "~/user/category/server/fx/categoryCollectionFx";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
-type CategoryRestriction = CategoryRestrictionEnumSchema.Type;
+type CategoryRestriction = RestrictionEnumSchema.Type;
 
 interface RestrictionRecord {
 	restriction: CategoryRestriction;

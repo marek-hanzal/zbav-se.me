@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { describe, expect, it } from "vitest";
-import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { listingCollectionFx } from "~/public/listing/server/fx/listingCollectionFx";
 import { listingCountFx } from "~/public/listing/server/fx/listingCountFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
@@ -105,7 +105,7 @@ const patchListingRestriction = (
 	database: TestDatabase,
 	props: {
 		id: string;
-		restriction: CategoryRestrictionEnumSchema.Type;
+		restriction: RestrictionEnumSchema.Type;
 	},
 ) =>
 	Effect.promise(() =>

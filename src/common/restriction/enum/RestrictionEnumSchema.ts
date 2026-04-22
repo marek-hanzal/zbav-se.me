@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const CategoryRestrictionEnumSchema = z
+export const RestrictionEnumSchema = z
 	.enum([
 		"none",
 		"adult-relaxed",
@@ -9,7 +9,7 @@ export const CategoryRestrictionEnumSchema = z
 		"restricted",
 	])
 	.meta({
-		id: "CategoryRestrictionEnum",
+		id: "RestrictionEnum",
 		description: `
 Defines restriction levels on categories (so on listings).
 
@@ -24,8 +24,8 @@ Meanings:
         `.trim(),
 	});
 
-export type CategoryRestrictionEnumSchema = typeof CategoryRestrictionEnumSchema;
+export type RestrictionEnumSchema = typeof RestrictionEnumSchema;
 
-export namespace CategoryRestrictionEnumSchema {
-	export type Type = z.infer<CategoryRestrictionEnumSchema>;
+export namespace RestrictionEnumSchema {
+	export type Type = z.infer<RestrictionEnumSchema>;
 }

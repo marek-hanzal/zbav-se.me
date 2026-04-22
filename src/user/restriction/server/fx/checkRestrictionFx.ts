@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 
 const levels = {
@@ -8,12 +8,12 @@ const levels = {
 	adult: 2,
 	sensitive: 3,
 	restricted: 4,
-} satisfies Record<CategoryRestrictionEnumSchema.Type, number>;
+} satisfies Record<RestrictionEnumSchema.Type, number>;
 
 export namespace checkRestrictionFx {
 	export interface Props {
-		level: CategoryRestrictionEnumSchema.Type;
-		request: CategoryRestrictionEnumSchema.Type;
+		level: RestrictionEnumSchema.Type;
+		request: RestrictionEnumSchema.Type;
 	}
 }
 

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { CategoryDiscoveryEnumSchema } from "~/common/category/enum/CategoryDiscoveryEnumSchema";
-import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 
 export const CategoryTableSchema = z
 	.looseObject({
@@ -29,7 +29,7 @@ Controls whether listings in this category are included in default listing queri
 Explicit categories are returned only when the query asks for a category using categoryId or categoryIdIn.
         `.trim(),
 		}),
-		restriction: CategoryRestrictionEnumSchema.meta({
+		restriction: RestrictionEnumSchema.meta({
 			description: `
 Restriction this category applies by default; it cannot be weakened, but from the other side it
 may be hardened to higher restriction level.

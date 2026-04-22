@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { CategorySchema } from "~/public/category/server/schema/CategorySchema";
 import { GallerySchema } from "~/public/gallery/server/schema/GallerySchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
@@ -15,7 +15,7 @@ export const ListingSchema = z
 			currency: true,
 			createdAt: true,
 		}).shape,
-		restrictions: z.array(CategoryRestrictionEnumSchema).meta({
+		restrictions: z.array(RestrictionEnumSchema).meta({
 			description: `
 Computed restrictions from category and listing. Read-only.
             `.trim(),

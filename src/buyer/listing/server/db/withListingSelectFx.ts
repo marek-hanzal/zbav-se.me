@@ -2,9 +2,9 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { withListingSourceSelectFx } from "~/buyer/listing/server/db/withListingSourceSelectFx";
-import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import type { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
 import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
@@ -32,12 +32,12 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	const gallerySelect = yield* withGallerySelectFx({});
 
 	return listingSourceSelect.selectAll("l").select((eb) => [
-		sql<CategoryRestrictionEnumSchema.Type[]>`to_jsonb(array(
+		sql<RestrictionEnumSchema.Type[]>`to_jsonb(array(
 			select restriction_item.restriction
 			from unnest(array[
 				${eb.ref("cat.restriction")},
 				${eb.ref("l.restriction")}
-			]::category_restriction_enum[]) with ordinality as restriction_item(restriction, ord)
+			]::restriction_enum[]) with ordinality as restriction_item(restriction, ord)
 			where restriction_item.restriction is not null
 			group by restriction_item.restriction
 			order by min(restriction_item.ord)

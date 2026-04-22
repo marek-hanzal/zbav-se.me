@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 
 export const UserRestrictionCreateSchema = z
 	.looseObject({
-		restriction: CategoryRestrictionEnumSchema.meta({
+		restriction: RestrictionEnumSchema.meta({
 			description: "Restriction levels applied to the user",
 		}),
 		availableAt: z.coerce.date().meta({

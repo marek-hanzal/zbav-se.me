@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { ProsConsSchema } from "~/seller/listing/server/schema/ProsConsSchema";
 
 export const ListingCreateSchema = z
@@ -25,7 +25,7 @@ export const ListingCreateSchema = z
 		warranty: ListingWarrantyEnumSchema.nullable().meta({
 			description: "Warranty type for the listing",
 		}),
-		restriction: CategoryRestrictionEnumSchema.nullable().meta({
+		restriction: RestrictionEnumSchema.nullable().meta({
 			description: `
 Restriction may get only higher level than provided from category, e.g. "adult" category
 cannot get "none" restriction on it's listings.
