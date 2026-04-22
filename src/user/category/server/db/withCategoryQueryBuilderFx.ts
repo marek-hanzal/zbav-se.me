@@ -8,7 +8,7 @@ import { withActiveUserRestrictionSelectFx } from "~/user/user-restriction/serve
 
 export namespace withCategoryQueryBuilderFx {
 	export interface Props<TSelect extends withCategorySourceSelectFx.Select> {
-        userId: string;
+		userId: string;
 		select: TSelect;
 		where?: CategoryFilterSchema.Type;
 	}

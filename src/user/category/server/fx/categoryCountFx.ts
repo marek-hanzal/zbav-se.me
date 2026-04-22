@@ -8,7 +8,7 @@ import type { CategoryFilterSchema } from "~/user/category/server/schema/Categor
 
 export namespace categoryCountFx {
 	export interface Props extends CategoryCountQuerySchema.Type {
-		userId?: string;
+		userId: string;
 		scope: CategoryFilterSchema.Type;
 	}
 }
@@ -27,13 +27,16 @@ export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withCategoryCollectionSelectFx({
-			userId,
-		}),
+		selectFx: withCategoryCollectionSelectFx({}),
 		filter,
 		where,
 		scope,
-		queryFx: withCategoryQueryBuilderFx,
+		queryFx(query) {
+			return withCategoryQueryBuilderFx({
+				userId,
+				...query,
+			});
+		},
 	});
 });
 

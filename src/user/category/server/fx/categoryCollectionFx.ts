@@ -9,7 +9,7 @@ import type { CategoryQuerySchema } from "~/user/category/server/schema/Category
 
 export namespace categoryCollectionFx {
 	export interface Props extends CategoryQuerySchema.Type {
-		userId?: string;
+		userId: string;
 		scope: CategoryFilterSchema.Type;
 	}
 }
@@ -39,14 +39,18 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 	const data = yield* withCollectionFx({
 		selectFx: withCategoryCollectionSelectFx({
 			sort,
-			userId,
 		}),
 		cursor,
 		limit,
 		filter,
 		where,
 		scope,
-		queryFx: withCategoryQueryBuilderFx,
+		queryFx(query) {
+			return withCategoryQueryBuilderFx({
+				userId,
+				...query,
+			});
+		},
 	});
 
 	if (data.length === 0) {

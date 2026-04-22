@@ -34,6 +34,9 @@ export const ListContainer = withFallback(
 				locale,
 				fulltext,
 			},
+			where: {
+				withRestriction: true,
+			},
 			cursor: {
 				page: 0,
 				size: 256,
