@@ -72,11 +72,11 @@ User restriction system
 The restriction level controls which listing/category content the user may work with.
 
 Levels, from lowest to highest:
-- none: The user can work with normal marketplace content only.
-- adult-relaxed: The user can work with mildly adult content that uses a relaxed adult confirmation.
-- adult: The user can work with adult content behind a hard adult gate.
-- sensitive: The user can work with sensitive content that needs extra care, such as airsoft-like items.
-- restricted: The user can work with strongly restricted content that may require legal proof or documents, such as weapons.
+- none: The user can work with normal marketplace content only. Examples: smartphones, notebooks, clothes, toys, furniture, books, art supplies.
+- adult-relaxed: The user can work with mildly adult or higher-attention content that uses a relaxed adult confirmation. Examples: vape gear, adult books or movies, pets, real estate, car parts, chainsaws.
+- adult: The user can work with adult content behind a hard adult gate. Examples: camera drones, car or motorcycle sales, child car seats, baby food, dietary supplements, RC/drone modelling, pyrotechnics.
+- sensitive: The user can work with sensitive content that needs extra care. Examples: airsoft pistols, airsoft rifles, airsoft accessories, knives, swords, daggers, axes, machetes, replicas.
+- restricted: The user can work with strongly restricted content that may require legal proof or documents. Examples: licensed weapons, document-sensitive weapon accessories, or other items where the app requires stronger verification.
 
 Current user restriction: ${restriction.current}.
 ${
