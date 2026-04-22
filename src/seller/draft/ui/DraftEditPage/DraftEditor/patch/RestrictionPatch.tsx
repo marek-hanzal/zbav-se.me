@@ -74,6 +74,9 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 					},
 				]
 			: [],
+		deps: [
+			draft,
+		],
 		onSelect(item) {
 			form.setFieldValue("restriction", (item?.id as RestrictionEnumSchema.Type) ?? null);
 			form.setFieldMeta("restriction", (meta) => ({

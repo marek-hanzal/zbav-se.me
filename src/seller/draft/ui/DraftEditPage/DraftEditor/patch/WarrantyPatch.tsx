@@ -40,6 +40,9 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ draft, onCancel, onView
 					},
 				]
 			: [],
+		deps: [
+			draft,
+		],
 	});
 
 	const warrantyId = selection.optional.singleId();

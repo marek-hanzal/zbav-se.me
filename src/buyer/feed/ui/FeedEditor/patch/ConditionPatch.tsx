@@ -27,6 +27,9 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 		initial: feed.query?.filter?.conditionIn?.map((item) => ({
 			id: String(item),
 		})),
+		deps: [
+			feed,
+		],
 	});
 
 	return (

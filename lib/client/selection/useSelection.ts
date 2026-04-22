@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { type DependencyList, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { EntitySchema } from "@/lib/common/schema";
 
 export namespace useSelection {
@@ -9,6 +9,7 @@ export namespace useSelection {
 	export interface Props<T extends EntitySchema.Type> {
 		mode: Mode; // Assumed static during component lifetime
 		initial?: T[];
+		deps?: DependencyList;
 		/** Called in single mode when exactly one item is selected (always with value) */
 		onSingle?: (item: T) => void;
 		/** Called on any change (including empty) — also in single mode */
@@ -65,36 +66,18 @@ export namespace useSelection {
 	}
 }
 
-/** Deduplicate by id, keep first occurrence */
-function dedupeById<T extends EntitySchema.Type>(arr: readonly T[]): T[] {
-	const seen = new Set<string>();
-	const out: T[] = [];
-	for (const it of arr) {
-		if (!seen.has(it.id)) {
-			seen.add(it.id);
-			out.push(it);
-		}
-	}
-	return out;
-}
-
 export function useSelection<T extends EntitySchema.Type>({
 	mode,
 	initial = [],
+	deps = [],
 	onSingle,
 	onMulti,
 	onSelect,
 }: useSelection.Props<T>): useSelection.Selection<T> {
-	// Initial normalization only (mode is static)
-	// biome-ignore lint/correctness/useExhaustiveDependencies: One time shot
-	const initialNormalized = useMemo(() => {
-		const cleaned = dedupeById(initial);
-		return mode === "single" ? cleaned.slice(0, 1) : cleaned;
-	}, []); // intentionally once
-
-	const [selection, setSelection] = useState<T[]>(initialNormalized);
+	const [selection, setSelection] = useState<T[]>(() => normalize(initial, mode));
 	const selectionRef = useRef(selection);
 	selectionRef.current = selection;
+	const isInitialDepsEffectRef = useRef(true);
 
 	/** Dispatch callbacks immediately from actions (never on mount) */
 	const dispatch = useCallback(
@@ -118,11 +101,24 @@ export function useSelection<T extends EntitySchema.Type>({
 		],
 	);
 
+	useEffect(() => {
+		if (isInitialDepsEffectRef.current) {
+			isInitialDepsEffectRef.current = false;
+			return;
+		}
+
+		const normalized = normalize(initial, mode);
+		selectionRef.current = normalized;
+		setSelection(normalized);
+		dispatch(normalized);
+		// biome-ignore lint/correctness/useExhaustiveDependencies: deps is the hook API; callers decide when initial should be re-applied
+	}, deps);
+
 	/** Centralized setter that normalizes and dispatches */
 	const apply = useCallback(
 		(next: T[]) => {
-			const cleaned = dedupeById(next);
-			const normalized = mode === "single" ? cleaned.slice(0, 1) : cleaned;
+			const normalized = normalize(next, mode);
+			selectionRef.current = normalized;
 			setSelection(normalized);
 			dispatch(normalized);
 		},
@@ -369,4 +365,27 @@ export function useSelection<T extends EntitySchema.Type>({
 			every,
 		],
 	);
+}
+
+// ========================================================================================
+
+/** Deduplicate by id, keep first occurrence */
+function dedupeById<T extends EntitySchema.Type>(arr: readonly T[]): T[] {
+	const seen = new Set<string>();
+	const out: T[] = [];
+	for (const it of arr) {
+		if (!seen.has(it.id)) {
+			seen.add(it.id);
+			out.push(it);
+		}
+	}
+	return out;
+}
+
+function normalize<T extends EntitySchema.Type>(
+	selection: readonly T[],
+	mode: useSelection.Mode,
+): T[] {
+	const cleaned = dedupeById(selection);
+	return mode === "single" ? cleaned.slice(0, 1) : cleaned;
 }

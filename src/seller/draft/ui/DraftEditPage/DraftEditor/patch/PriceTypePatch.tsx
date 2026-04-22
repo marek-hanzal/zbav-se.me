@@ -69,6 +69,9 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, onVi
 					},
 				]
 			: [],
+		deps: [
+			draft,
+		],
 		onSelect(item) {
 			form.setFieldValue(
 				"priceType",

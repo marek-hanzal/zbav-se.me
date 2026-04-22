@@ -22,6 +22,9 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 		initial: feed.query?.filter?.categoryIdIn?.map((id) => ({
 			id,
 		})),
+		deps: [
+			feed,
+		],
 	});
 
 	const categoryId = selection.optional.singleId() ?? null;

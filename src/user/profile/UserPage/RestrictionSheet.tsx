@@ -28,6 +28,9 @@ export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 		].map((item) => ({
 			id: item,
 		})),
+		deps: [
+			restriction,
+		],
 	});
 
 	return (

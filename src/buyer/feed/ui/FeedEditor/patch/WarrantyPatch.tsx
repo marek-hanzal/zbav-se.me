@@ -23,6 +23,9 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ feed, onSettled, onCanc
 		initial: (feed.query?.filter?.warrantyIn ?? []).map((warranty) => ({
 			id: warranty,
 		})),
+		deps: [
+			feed,
+		],
 	});
 
 	return (
