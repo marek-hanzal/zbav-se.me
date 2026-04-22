@@ -20,6 +20,8 @@ export namespace ChatInput {
 		placeholder: string;
 		maxRows?: number;
 		loading: boolean;
+		disableInput?: boolean;
+		disableSubmit?: boolean;
 		left?: ReactNode;
 		inputRef?: RefCallback<HTMLTextAreaElement>;
 	}
@@ -33,6 +35,8 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	placeholder,
 	maxRows = 6,
 	loading,
+	disableInput = false,
+	disableSubmit = false,
 	left,
 	inputRef,
 	...props
@@ -40,6 +44,16 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	const [message, setMessage] = useState("");
 	const areaId = useId();
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+	const canSubmit = !disableSubmit && message.length > 0;
+
+	const submit = () => {
+		if (!canSubmit) {
+			return;
+		}
+
+		onSubmit(message);
+		setMessage("");
+	};
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We're reacting to value change
 	useLayoutEffect(() => {
@@ -78,15 +92,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 		if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
 			e.preventDefault();
 
-			if (props["data-ui-disabled"]) {
-				return;
-			}
-
-			const trimmed = message.trim();
-			if (trimmed.length > 0) {
-				onSubmit(trimmed);
-				setMessage("");
-			}
+			submit();
 		}
 	};
 
@@ -116,8 +122,9 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				id={areaId}
 				rows={1}
 				value={message}
-				disabled={props["data-ui-disabled"] || loading}
-				onChange={(e) => setMessage(e.target.value)}
+				disabled={disableInput}
+				data-ui-disabled={disableInput}
+				onChange={(e) => setMessage(e.target.value.trim())}
 				onKeyDown={handleKeyDown}
 				placeholder={placeholder}
 				{...uiInput({
@@ -135,32 +142,28 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				})}
 			/>
 
-			{loading && cancel ? (
-				cancel
-			) : (
-				<Button
-					data-action={"send chat text message"}
-					iconEnabled={SendMessageIcon}
-					iconProps={{
-						"data-ui-text": "2xl",
-					}}
-					disabled={loading || message.length === 0}
-					loading={loading}
-					onClick={() => {
-						onSubmit(message);
-						setMessage("");
-					}}
-					data-ui-justify="center"
-					data-ui-items="center"
-					data-ui-tone="brand"
-					data-ui-theme="light"
-					data-ui-square="default"
-					data-ui-background={undefined}
-					data-ui-border={false}
-					data-ui-shadow={false}
-					data-ui-color="lead"
-				/>
-			)}
+			{loading && cancel ? cancel : null}
+
+			<Button
+				data-action={"send chat text message"}
+				iconEnabled={SendMessageIcon}
+				iconProps={{
+					"data-ui-text": "2xl",
+				}}
+				disabled={!canSubmit}
+				data-ui-disabled={!canSubmit}
+				loading={loading && disableSubmit}
+				onClick={submit}
+				data-ui-justify="center"
+				data-ui-items="center"
+				data-ui-tone="brand"
+				data-ui-theme="light"
+				data-ui-square="default"
+				data-ui-background={undefined}
+				data-ui-border={false}
+				data-ui-shadow={false}
+				data-ui-color="lead"
+			/>
 		</Container>
 	);
 };
