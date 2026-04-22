@@ -12,10 +12,11 @@ export namespace AgentMenu {
 	export interface Props extends Container.Props {
 		close: TransactionMenuButton.Close;
 		galleryState: StateType.State<boolean>;
+		isPending: boolean;
 	}
 }
 
-export const AgentMenu: FC<AgentMenu.Props> = ({ close, galleryState, ...props }) => {
+export const AgentMenu: FC<AgentMenu.Props> = ({ close, galleryState, isPending, ...props }) => {
 	return (
 		<Container
 			data-ui={"AgentMenu"}
@@ -28,7 +29,13 @@ export const AgentMenu: FC<AgentMenu.Props> = ({ close, galleryState, ...props }
 			<Group>
 				<Button
 					iconEnabled={PhotoIcon}
+					disabled={isPending}
+					loading={isPending}
 					onClick={() => {
+						if (isPending) {
+							return;
+						}
+
 						galleryState.set(true);
 						close();
 					}}

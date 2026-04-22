@@ -25,7 +25,8 @@ export namespace useAgent {
 
 	export interface QueuerState {
 		isPending: boolean;
-		items: SubmitInput[];
+		queueSize: number;
+		queueText: string | undefined;
 	}
 
 	export type Use = ReturnType<typeof useAgent>;
@@ -102,6 +103,7 @@ export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 		{
 			concurrency: 1,
 			key: `agent-${threadId}`,
+			maxSize: 5,
 			throwOnError: false,
 			onError(error) {
 				logger.error("Agent queue item failed", {
@@ -112,7 +114,8 @@ export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 		},
 		(state) => ({
 			isPending: state.isExecuting || state.activeItems.length > 0 || state.size > 0,
-			items: state.items,
+			queueSize: state.size,
+			queueText: getQueueText(state.items),
 		}),
 	);
 
@@ -144,8 +147,8 @@ export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 	return {
 		threadId,
 		isPending: queuer.state.isPending,
-		queue: queuer.state.items,
-		queueText: getQueueText(queuer.state.items),
+		queueSize: queuer.state.queueSize,
+		queueText: queuer.state.queueText,
 		submit,
 		clearQueue,
 		input: {

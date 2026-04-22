@@ -190,6 +190,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 							{(close) => (
 								<AgentMenu
 									close={close}
+									isPending={chat.isPending}
 									galleryState={{
 										value: isGalleryOpen,
 										set: setIsGalleryOpen,
