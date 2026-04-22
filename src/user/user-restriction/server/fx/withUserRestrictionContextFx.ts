@@ -7,7 +7,7 @@ import {
 export function withUserRestrictionContextFx(context?: Partial<UserRestrictionContext>) {
 	const resolvedContext: UserRestrictionContext = {
 		delay: {
-			adult: 0.002,
+			adult: 1,
 			sensitive: 2,
 			restricted: 24,
 			...context?.delay,
