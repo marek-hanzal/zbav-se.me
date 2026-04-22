@@ -16,7 +16,7 @@ export const UserRestrictionTableSchema = z
 		restriction: RestrictionEnumSchema.meta({
 			description: "Restriction levels applied to the user",
 		}),
-		availableAt: z.coerce.date().nullable().meta({
+		availableAt: z.coerce.date().meta({
 			description: "Timestamp when the user restriction becomes available",
 		}),
 		expiresAt: z.coerce.date().nullable().meta({

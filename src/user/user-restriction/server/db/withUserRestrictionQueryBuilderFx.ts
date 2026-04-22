@@ -80,14 +80,6 @@ export const withUserRestrictionQueryBuilderFx = Effect.fn("withUserRestrictionQ
 			query = query.where("ur.availableAt", "<=", where.availableAtLte) as TSelect;
 		}
 
-		if (where.availableAtIsNull === true) {
-			query = query.where("ur.availableAt", "is", null) as TSelect;
-		}
-
-		if (where.availableAtIsNull === false) {
-			query = query.where("ur.availableAt", "is not", null) as TSelect;
-		}
-
 		if (where.expiresAtGte) {
 			query = query.where("ur.expiresAt", ">=", where.expiresAtGte) as TSelect;
 		}

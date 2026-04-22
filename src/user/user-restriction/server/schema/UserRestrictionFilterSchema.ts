@@ -20,10 +20,6 @@ export const UserRestrictionFilterSchema = z
 		isAvailable: z.boolean().optional().meta({
 			description: "Filter out only available items",
 		}),
-		availableAtIsNull: z.boolean().optional().meta({
-			description:
-				"When explicit true/false controls if is/is not null is checked on 'availableAt' field.",
-		}),
 		expiresAtGte: z.coerce.date().optional().meta({
 			description: "Lower expiresAt bound",
 		}),

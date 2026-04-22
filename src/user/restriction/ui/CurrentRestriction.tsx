@@ -27,7 +27,6 @@ export const CurrentRestriction = withFallback(
 		const locale = useLocale();
 		const { data: restrictions } = withUserRestrictionQuery.useCollectionQuery({
 			where: {
-				availableAtIsNull: false,
 				isExpired: false,
 			},
 			sort: [
@@ -70,21 +69,19 @@ export const CurrentRestriction = withFallback(
 										data-ui-text={"sm"}
 									/>
 
-									{restriction.availableAt ? (
-										<Typo
-											label={toTimeDiff({
-												type: "human",
-												locale,
-												time: restriction.availableAt,
-											})}
-											data-ui-tone={"brand"}
-											data-ui-theme={"light"}
-											data-ui-color={"lead"}
-											data-ui-font={"bold"}
-											data-ui-text={"sm"}
-											data-ui-opacity={"8"}
-										/>
-									) : null}
+									<Typo
+										label={toTimeDiff({
+											type: "human",
+											locale,
+											time: restriction.availableAt,
+										})}
+										data-ui-tone={"brand"}
+										data-ui-theme={"light"}
+										data-ui-color={"lead"}
+										data-ui-font={"bold"}
+										data-ui-text={"sm"}
+										data-ui-opacity={"8"}
+									/>
 								</Container>
 							)}
 						</Container>

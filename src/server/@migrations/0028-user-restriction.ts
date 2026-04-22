@@ -8,7 +8,7 @@ export const UserRestrictionMigration: Migration = {
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addColumn("restriction", sql`restriction_enum`, (col) => col.notNull())
-			.addColumn("availableAt", "timestamptz")
+			.addColumn("availableAt", "timestamptz", (col) => col.notNull())
 			.addColumn("expiresAt", "timestamptz")
 			.addForeignKeyConstraint(
 				"user_restriction_[userId]_fk",
