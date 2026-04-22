@@ -38,6 +38,7 @@ export const createUserRestriction = (
 		userId: string;
 		restriction: Restriction;
 		availableAtOffsetMinutes: number;
+		expiresAtOffsetMinutes?: number;
 		createdAtOffsetMinutes?: number;
 	},
 ) =>
@@ -57,6 +58,14 @@ export const createUserRestriction = (
 							minutes: props.availableAtOffsetMinutes,
 						})
 						.toJSDate(),
+					expiresAt:
+						props.expiresAtOffsetMinutes === undefined
+							? null
+							: now
+									.plus({
+										minutes: props.expiresAtOffsetMinutes,
+									})
+									.toJSDate(),
 					createdAt: now
 						.plus({
 							minutes: props.createdAtOffsetMinutes ?? props.availableAtOffsetMinutes,

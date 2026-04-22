@@ -19,6 +19,9 @@ export const UserRestrictionTableSchema = z
 		availableAt: z.coerce.date().nullable().meta({
 			description: "Timestamp when the user restriction becomes available",
 		}),
+		expiresAt: z.coerce.date().nullable().meta({
+			description: "Timestamp when the user restriction expires",
+		}),
 	})
 	.meta({
 		id: "UserRestrictionTable",

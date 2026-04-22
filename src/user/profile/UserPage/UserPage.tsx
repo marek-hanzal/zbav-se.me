@@ -45,6 +45,10 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 	const {
 		data: [restriction],
 	} = withUserRestrictionQuery.useCollectionQuery({
+		where: {
+			availableAtIsNull: false,
+			isExpired: false,
+		},
 		cursor: {
 			page: 0,
 			size: 1,

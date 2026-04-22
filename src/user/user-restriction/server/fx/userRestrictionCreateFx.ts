@@ -53,6 +53,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 						userId,
 						restriction,
 						availableAt,
+						expiresAt: null,
 						createdAt,
 					})
 					.execute();
@@ -62,6 +63,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 					userId,
 					restriction,
 					availableAt,
+					expiresAt: null,
 					createdAt,
 					isAvailable,
 				} as const;

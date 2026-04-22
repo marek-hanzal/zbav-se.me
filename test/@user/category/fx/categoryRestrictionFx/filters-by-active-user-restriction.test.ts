@@ -77,6 +77,7 @@ const createUserRestrictions = (
 								minutes: record.availableAtOffsetMinutes,
 							})
 							.toJSDate(),
+						expiresAt: null,
 						createdAt: now
 							.plus({
 								minutes: record.createdAtOffsetMinutes,

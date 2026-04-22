@@ -15,13 +15,20 @@ export namespace withActiveUserRestrictionSelectFx {
 export const withActiveUserRestrictionSelectFx = Effect.fn("withActiveUserRestrictionSelectFx")(
 	function* ({ userId }: withActiveUserRestrictionSelectFx.Props) {
 		const dateContext = yield* DateContextFx;
+		const now = dateContext.now().toJSDate();
 		const sourceSelect = yield* withUserRestrictionSourceSelectFx({});
 
 		return sourceSelect
 			.clearSelect()
 			.select("ur.restriction")
 			.where("ur.userId", "=", userId)
-			.where("ur.availableAt", "<=", dateContext.now().toJSDate())
+			.where("ur.availableAt", "<=", now)
+			.where((eb) =>
+				eb.or([
+					eb("ur.expiresAt", "is", null),
+					eb("ur.expiresAt", ">", now),
+				]),
+			)
 			.orderBy("ur.availableAt", "desc")
 			.orderBy("ur.createdAt", "desc")
 			.limit(1);

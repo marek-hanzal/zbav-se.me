@@ -24,6 +24,19 @@ export const UserRestrictionFilterSchema = z
 			description:
 				"When explicit true/false controls if is/is not null is checked on 'availableAt' field.",
 		}),
+		expiresAtGte: z.coerce.date().optional().meta({
+			description: "Lower expiresAt bound",
+		}),
+		expiresAtLte: z.coerce.date().optional().meta({
+			description: "Upper expiresAt bound",
+		}),
+		expiresAtIsNull: z.boolean().optional().meta({
+			description:
+				"When explicit true/false controls if is/is not null is checked on 'expiresAt' field.",
+		}),
+		isExpired: z.boolean().optional().meta({
+			description: "Filter restriction rows by whether expiresAt is already in the past.",
+		}),
 	})
 	.strip()
 	.meta({

@@ -21,14 +21,13 @@ export const withUserRestrictionSourceSelectFx = Effect.fn("withUserRestrictionS
 		const dateContext = yield* DateContextFx;
 		const now = dateContext.now().toJSDate();
 
-		let query = kysely
-			.selectFrom("user_restriction as ur")
-			.where("ur.availableAt", "is not", null);
+		let query = kysely.selectFrom("user_restriction as ur");
 
 		for (const item of sort ?? []) {
 			query = match(item.field)
 				.with("availableAt", () => query.orderBy("ur.availableAt", item.order))
 				.with("createdAt", () => query.orderBy("ur.createdAt", item.order))
+				.with("expiresAt", () => query.orderBy("ur.expiresAt", item.order))
 				.with("id", () => query.orderBy("ur.id", item.order))
 				.exhaustive();
 		}
@@ -38,9 +37,11 @@ export const withUserRestrictionSourceSelectFx = Effect.fn("withUserRestrictionS
 			"ur.createdAt",
 			"ur.restriction",
 			"ur.availableAt",
-			sql<boolean>`coalesce(${eb.ref("ur.availableAt")} <= ${eb.val(now)}, false)`.as(
-				"isAvailable",
-			),
+			"ur.expiresAt",
+			sql<boolean>`
+				coalesce(${eb.ref("ur.availableAt")} <= ${eb.val(now)}, false)
+				and (${eb.ref("ur.expiresAt")} is null or ${eb.ref("ur.expiresAt")} > ${eb.val(now)})
+			`.as("isAvailable"),
 		]);
 	},
 );

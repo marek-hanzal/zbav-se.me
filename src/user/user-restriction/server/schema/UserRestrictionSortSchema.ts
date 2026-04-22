@@ -7,6 +7,7 @@ export const UserRestrictionSortSchema = z
 			.enum([
 				"availableAt",
 				"createdAt",
+				"expiresAt",
 				"id",
 			])
 			.meta({

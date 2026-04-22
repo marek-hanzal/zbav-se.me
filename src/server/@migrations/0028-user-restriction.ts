@@ -9,6 +9,7 @@ export const UserRestrictionMigration: Migration = {
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addColumn("restriction", sql`restriction_enum`, (col) => col.notNull())
 			.addColumn("availableAt", "timestamptz")
+			.addColumn("expiresAt", "timestamptz")
 			.addForeignKeyConstraint(
 				"user_restriction_[userId]_fk",
 				[
@@ -23,8 +24,8 @@ export const UserRestrictionMigration: Migration = {
 			.execute();
 
 		await sql`
-			CREATE INDEX "user_restriction_[userId-availableAt]_idx"
-			ON "user_restriction" ("userId", "availableAt" DESC);
+			CREATE INDEX "user_restriction_[userId-availableAt-expiresAt]_idx"
+			ON "user_restriction" ("userId", "availableAt" DESC, "expiresAt");
 		`.execute(db);
 
 		await sql`

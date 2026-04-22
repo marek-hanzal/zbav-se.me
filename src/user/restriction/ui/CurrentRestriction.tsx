@@ -28,10 +28,7 @@ export const CurrentRestriction = withFallback(
 		const { data: restrictions } = withUserRestrictionQuery.useCollectionQuery({
 			where: {
 				availableAtIsNull: false,
-			},
-			cursor: {
-				page: 0,
-				size: 2,
+				isExpired: false,
 			},
 			sort: [
 				{

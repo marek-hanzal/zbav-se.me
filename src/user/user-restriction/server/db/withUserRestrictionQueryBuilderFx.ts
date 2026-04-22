@@ -25,6 +25,7 @@ export const withUserRestrictionQueryBuilderFx = Effect.fn("withUserRestrictionQ
 		where,
 	}: withUserRestrictionQueryBuilderFx.Props<TSelect>) {
 		const dateContext = yield* DateContextFx;
+		const now = dateContext.now().toJSDate();
 
 		let query = select;
 
@@ -51,11 +52,24 @@ export const withUserRestrictionQueryBuilderFx = Effect.fn("withUserRestrictionQ
 		}
 
 		if (where.isAvailable === true) {
-			query = query.where("ur.availableAt", "<=", dateContext.now().toJSDate()) as TSelect;
+			query = query.where("ur.availableAt", "<=", now).where((eb) =>
+				eb.or([
+					eb("ur.expiresAt", "is", null),
+					eb("ur.expiresAt", ">", now),
+				]),
+			) as TSelect;
 		}
 
 		if (where.isAvailable === false) {
-			query = query.where("ur.availableAt", ">", dateContext.now().toJSDate()) as TSelect;
+			query = query.where((eb) =>
+				eb.or([
+					eb("ur.availableAt", ">", now),
+					eb.and([
+						eb("ur.expiresAt", "is not", null),
+						eb("ur.expiresAt", "<=", now),
+					]),
+				]),
+			) as TSelect;
 		}
 
 		if (where.availableAtGte) {
@@ -72,6 +86,37 @@ export const withUserRestrictionQueryBuilderFx = Effect.fn("withUserRestrictionQ
 
 		if (where.availableAtIsNull === false) {
 			query = query.where("ur.availableAt", "is not", null) as TSelect;
+		}
+
+		if (where.expiresAtGte) {
+			query = query.where("ur.expiresAt", ">=", where.expiresAtGte) as TSelect;
+		}
+
+		if (where.expiresAtLte) {
+			query = query.where("ur.expiresAt", "<=", where.expiresAtLte) as TSelect;
+		}
+
+		if (where.expiresAtIsNull === true) {
+			query = query.where("ur.expiresAt", "is", null) as TSelect;
+		}
+
+		if (where.expiresAtIsNull === false) {
+			query = query.where("ur.expiresAt", "is not", null) as TSelect;
+		}
+
+		if (where.isExpired === true) {
+			query = query
+				.where("ur.expiresAt", "is not", null)
+				.where("ur.expiresAt", "<=", now) as TSelect;
+		}
+
+		if (where.isExpired === false) {
+			query = query.where((eb) =>
+				eb.or([
+					eb("ur.expiresAt", "is", null),
+					eb("ur.expiresAt", ">", now),
+				]),
+			) as TSelect;
 		}
 
 		return yield* Effect.succeed(query);

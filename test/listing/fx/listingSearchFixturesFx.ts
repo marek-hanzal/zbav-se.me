@@ -199,6 +199,7 @@ export const createUserRestrictionFx = (
 							minutes: 10,
 						})
 						.toJSDate(),
+					expiresAt: null,
 					createdAt: now
 						.minus({
 							minutes: 10,
