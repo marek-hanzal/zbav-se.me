@@ -6,14 +6,13 @@ import { withLoggerFx } from "@/lib/common/log";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLocaleMiddleware } from "~/server/middleware/withLocaleMiddleware";
-import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { AssistantAgent } from "~/user/agent/AssistantAgent";
 import { agentThreadFetchFx } from "~/user/agent/server/fx/agentThreadFetchFx";
 import { agentUsageCreateFx } from "~/user/agent/server/fx/agentUsageCreateFx";
 import { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { KyselySession } from "~/user/agent/server/session/KyselySession";
+import { withUserRestrictionMiddleware } from "~/user/restriction/middleware/withUserRestrictionMiddleware";
 
 const AgentRequestSchema: z.ZodType<AgentInputItem[]> = z
 	.array(z.unknown())
@@ -61,15 +60,14 @@ const isUsageReadyEvent = (event: RunStreamEvent) => {
 export const Route = createFileRoute("/api/agent/$threadId")({
 	server: {
 		middleware: [
-			withUserMiddleware,
-			withDatabaseMiddleware,
+			withUserRestrictionMiddleware,
 			withRunnerMiddleware,
 			withLocaleMiddleware,
 		],
 		handlers: {
 			async POST({
 				request,
-				context: { database, user, rootLogger, runner, locale },
+				context: { database, user, rootLogger, runner, locale, restriction },
 				params: { threadId },
 			}) {
 				const logger = rootLogger.getChild([
@@ -203,6 +201,7 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 									context: {
 										locale,
 										cdn: viteEnv.VITE_CONTENT_CDN,
+										restriction,
 									},
 									session,
 									stream: true,
