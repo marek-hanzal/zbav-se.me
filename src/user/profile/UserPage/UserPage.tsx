@@ -4,7 +4,6 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { EditIcon, Icon, UserIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
-import { Status } from "@/lib/client/status";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
 import { translator } from "@/lib/common/translator";
@@ -88,11 +87,19 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 				data-ui-scroll={"vertical"}
 				data-ui-height={"full"}
 			>
-				<Status
-					data-ui-tone={"brand"}
-					data-ui-theme={"light"}
-					icon={UserIcon}
-				/>
+				<Container
+					data-ui-flow={"horizontal"}
+					data-ui-justify={"center"}
+					data-ui-width={"full"}
+				>
+					<Icon
+						icon={UserIcon}
+						data-ui-tone={"brand"}
+						data-ui-theme={"light"}
+						data-ui-color={"lead"}
+						data-ui-text={"4xl"}
+					/>
+				</Container>
 
 				<Group>
 					<LabelValue
