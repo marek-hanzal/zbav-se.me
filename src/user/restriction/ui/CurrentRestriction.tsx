@@ -57,7 +57,7 @@ export const CurrentRestriction = withFallback(
 						<Container data-ui-width={"full"}>
 							<Tx
 								label={`Listing restriction - ${restriction.restriction}`}
-								data-ui-font={"bold"}
+								data-ui-font={restriction.isAvailable ? "bold" : undefined}
 								data-ui-width={"full"}
 							/>
 

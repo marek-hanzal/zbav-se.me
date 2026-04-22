@@ -5,11 +5,8 @@ import { Group } from "@/lib/client/group";
 import { EditIcon, Icon, UserIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
-import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { Typo } from "@/lib/client/typo";
-import { LabelValue, ValueList } from "@/lib/client/value";
-import { toTimeDiff } from "@/lib/common/time";
+import { LabelValue } from "@/lib/client/value";
 import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
@@ -17,8 +14,8 @@ import { TokenUsage } from "~/user/agent/ui/TokenUsage";
 import { useUser } from "~/user/auth/hook/useUser";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { SignOutButton } from "~/user/profile/UserPage/SignOutButton";
+import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import { withUserRestrictionQuery } from "~/user/user-restriction/query/withUserRestrictionQuery";
-import type { UserRestrictionSchema } from "~/user/user-restriction/server/schema/UserRestrictionSchema";
 import { RestrictionSheet } from "./RestrictionSheet";
 
 export namespace UserPage {
@@ -103,56 +100,11 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 				</Group>
 
 				<Group>
-					{}
-					<ValueList
-						textLabel={translator.text("User restriction level (label)")}
-						textHint={translator.text("User restriction level (hint)")}
-						textEmpty={translator.text("User restriction level (empty)")}
-						items={[
-							restriction,
-						].filter((item): item is UserRestrictionSchema.Type => !!item)}
-						renderFn={(restriction) => {
-							return (
-								<Container
-									data-ui-flow={"vertical"}
-									data-ui-gap={"xs"}
-									data-ui-width={"full"}
-								>
-									<Tx
-										label={`Listing restriction - ${restriction.restriction}`}
-										data-ui-font={"bold"}
-									/>
-
-									{restriction.availableAt &&
-									restriction.availableAt > new Date() ? (
-										<Container
-											data-ui-flow={"horizontal"}
-											data-ui-justify={"space-between"}
-											data-ui-items={"center"}
-										>
-											<Tx
-												label={"Restriction available in (label)"}
-												data-ui-text={"sm"}
-											/>
-
-											<Typo
-												label={toTimeDiff({
-													type: "human",
-													locale,
-													time: restriction.availableAt,
-												})}
-												data-ui-tone={"brand"}
-												data-ui-theme={"light"}
-												data-ui-color={"lead"}
-												data-ui-font={"bold"}
-												data-ui-text={"sm"}
-												data-ui-opacity={"8"}
-											/>
-										</Container>
-									) : null}
-								</Container>
-							);
+					<CurrentRestriction
+						textLabelProps={{
+							"data-ui-tone": "neutral",
 						}}
+						_suspense={"I know"}
 						action={
 							<Icon
 								icon={EditIcon}
