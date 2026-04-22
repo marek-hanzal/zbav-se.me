@@ -63,6 +63,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 				data-ui-position={"relative"}
 				className={[
 					"bottom-0",
+					"pb-0",
 				]}
 			>
 				{uploads.length > 0 ? (
@@ -146,9 +147,13 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 
 				<Container
 					data-ui-flow={"horizontal"}
-					data-ui-items={"end"}
-					data-ui-justify={"space-between"}
+					data-ui-items={"center"}
+					data-ui-justify={"end"}
 					data-ui-inner={"xs"}
+					data-ui-gap={"default"}
+					className={[
+						"pb-0",
+					]}
 				>
 					{tokens.total > 0 ? (
 						<Tx
