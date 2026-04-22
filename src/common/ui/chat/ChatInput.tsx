@@ -44,14 +44,15 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	const [message, setMessage] = useState("");
 	const areaId = useId();
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-	const canSubmit = !disableSubmit && message.length > 0;
+	const value = message.trim();
+	const canSubmit = !disableSubmit && value.length > 0;
 
 	const submit = () => {
 		if (!canSubmit) {
 			return;
 		}
 
-		onSubmit(message);
+		onSubmit(value);
 		setMessage("");
 	};
 
@@ -124,7 +125,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				value={message}
 				disabled={disableInput}
 				data-ui-disabled={disableInput}
-				onChange={(e) => setMessage(e.target.value.trim())}
+				onChange={(e) => setMessage(e.target.value)}
 				onKeyDown={handleKeyDown}
 				placeholder={placeholder}
 				{...uiInput({
