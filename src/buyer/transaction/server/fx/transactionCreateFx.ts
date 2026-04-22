@@ -106,6 +106,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				userId,
 				listingId,
 				event: "transaction",
+				checkVisibility: false,
 			}).pipe(Effect.ignore);
 
 			yield* activityCreateFx({

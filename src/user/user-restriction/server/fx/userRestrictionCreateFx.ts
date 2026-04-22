@@ -44,18 +44,18 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 			const id = genId();
 			const createdAt = dateContext.now().toJSDate();
 			const now = dateContext.now().toJSDate();
-				const isAvailable = availableAt.getTime() <= createdAt.getTime();
+			const isAvailable = availableAt.getTime() <= createdAt.getTime();
 
-				yield* Effect.promise(async () => {
-					/**
-					 * Serializes restriction switches per user. `pg_advisory_xact_lock`
-					 * waits until the previous transaction commits/rolls back; it only
-					 * errors early when PostgreSQL `lock_timeout` / `statement_timeout`
-					 * or the application request/connection timeout cancels the query.
-					 */
-					await sql`select pg_advisory_xact_lock(hashtextextended(${userId}, 0))`.execute(
-						kysely,
-					);
+			yield* Effect.promise(async () => {
+				/**
+				 * Serializes restriction switches per user. `pg_advisory_xact_lock`
+				 * waits until the previous transaction commits/rolls back; it only
+				 * errors early when PostgreSQL `lock_timeout` / `statement_timeout`
+				 * or the application request/connection timeout cancels the query.
+				 */
+				await sql`select pg_advisory_xact_lock(hashtextextended(${userId}, 0))`.execute(
+					kysely,
+				);
 
 				/**
 				 * The rule:

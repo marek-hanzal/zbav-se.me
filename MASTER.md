@@ -1169,6 +1169,8 @@ Hard gate pravidla:
 - V listingu (feed/search/seznam) se cokoliv nad maximum **vůbec nedostane do výsledků**.
 - Veřejný listing má systémové maximum `adult-relaxed`; `adult`, `sensitive` a `restricted` do něj nikdy nelezou.
 - Na detail přes přímý odkaz vracím při nesouladu maxima **404** (žádný obcházení přes link, žádný „aspoň víš že to existuje“).
+- Nová omezená akce (např. otevření transakce, reakce, metrika viditelnosti) musí respektovat aktuální maximum. Nižší profilová citlivost nesmí spustit akci nad vyšším inzerátem.
+- Historický/post-akční přístup je měkčí: když se uživatel k inzerátu legálně dostal dřív (např. existující transakce, seller info v kontextu otevřené interakce), UI může zachovat potřebný kontext i po snížení maxima. To je kontext, ne nová permission k omezené akci.
 - **Citlivost** je **jediná uživatelská** věc, která smí detail tvrdě schovat (404). Kromě citlivosti existuje ještě **admin hard removal** (výjimečná stopka pro nelegální/škodlivý obsah), která je **404** a nastavuje stav `banned` (viz [Ban](#koncept-ban) a [Inzerát](#koncept-inzerat)). Ostatní brány můžou ovlivnit seznam, ale nemaj dělat „ten inzerát pro tebe neexistuje“.
 
 Odpovědnost:

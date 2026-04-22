@@ -52,6 +52,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 							userId,
 							listingId,
 							event: "favourite",
+							checkVisibility: false,
 						}).pipe(Effect.ignore);
 
 						yield* activityCreateFx({
@@ -88,6 +89,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 							userId,
 							listingId,
 							event: "unfavourite",
+							checkVisibility: false,
 						}).pipe(Effect.ignore);
 
 						yield* activityCreateFx({

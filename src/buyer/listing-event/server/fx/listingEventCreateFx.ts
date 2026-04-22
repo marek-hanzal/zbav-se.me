@@ -3,6 +3,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { listingCheckIfOwnFx } from "~/buyer/listing/server/fx/listingCheckIfOwnFx";
+import { listingFetchFx } from "~/buyer/listing/server/fx/listingFetchFx";
 import { listingEventRateLimitFx } from "~/buyer/listing-event/server/fx/listingEventRateLimitFx";
 import type { ListingEventCreateSchema } from "~/buyer/listing-event/server/schema/ListingEventCreateSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -12,6 +13,7 @@ import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 export namespace listingEventCreateFx {
 	export interface Props extends ListingEventCreateSchema.Type {
 		userId: string;
+		checkVisibility?: boolean;
 	}
 }
 
@@ -19,6 +21,7 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 	userId,
 	listingId,
 	event,
+	checkVisibility = true,
 }: listingEventCreateFx.Props) {
 	const logger = yield* getLoggerFx("listingEventCreateFx");
 	logger.trace("listingEventCreateFx", {
@@ -37,6 +40,16 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 				listingId,
 				message: "You cannot generate event on your own listing.",
 			});
+
+			if (checkVisibility) {
+				yield* listingFetchFx({
+					userId,
+					where: {
+						id: listingId,
+					},
+					scope: {},
+				});
+			}
 
 			const now = dateContext.now();
 
