@@ -269,12 +269,14 @@ describe("buyer listing discovery flow", () => {
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
 			const implicitCategory = yield* categoryFetchFx({
+				userId: users.buyer.id,
 				where: {
 					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
 				},
 				scope: {},
 			});
 			const explicitCategory = yield* categoryFetchFx({
+				userId: users.buyer.id,
 				where: {
 					slug: "pocitace-a-kancelar--monitor",
 				},

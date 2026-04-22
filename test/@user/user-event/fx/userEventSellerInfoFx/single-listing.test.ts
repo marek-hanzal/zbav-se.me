@@ -18,6 +18,7 @@ describe("userEventSellerInfoFx", () => {
 			const seller = yield* leaseTestUserFx({});
 
 			const category = yield* categoryFetchFx({
+				userId: seller.id,
 				where: {
 					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
 				},

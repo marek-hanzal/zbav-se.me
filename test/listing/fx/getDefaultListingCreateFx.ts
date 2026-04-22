@@ -1,9 +1,12 @@
 import { Effect } from "effect";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 
 export const getDefaultListingCreateFx = Effect.gen(function* () {
+	const user = yield* leaseTestUserFx({});
 	const category = yield* categoryFetchFx({
+		userId: user.id,
 		where: {
 			slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
 		},

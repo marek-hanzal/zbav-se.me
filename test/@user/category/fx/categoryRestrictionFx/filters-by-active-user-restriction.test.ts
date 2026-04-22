@@ -41,6 +41,7 @@ describe("user category restriction scope", () => {
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
+			const unrestrictedUser = yield* leaseTestUserFx({});
 			const dateContext = yield* DateContextFx;
 			const now = dateContext.now();
 
@@ -56,6 +57,7 @@ describe("user category restriction scope", () => {
 			const sensitiveCategoryId = yield* categoryIdByRestriction(database, "sensitive");
 
 			const noneCategory = yield* categoryFetchFx({
+				userId: user.id,
 				where: {
 					id: noneCategoryId,
 				},
@@ -104,6 +106,7 @@ describe("user category restriction scope", () => {
 				userId: user.id,
 				scope: {},
 				where: {
+					withRestriction: true,
 					idIn: [
 						noneCategory.id,
 						adultRelaxedCategoryId,
@@ -117,6 +120,24 @@ describe("user category restriction scope", () => {
 				"none",
 				"adult-relaxed",
 				"adult",
+			]);
+
+			const fallbackCollection = yield* categoryCollectionFx({
+				userId: unrestrictedUser.id,
+				scope: {},
+				where: {
+					withRestriction: true,
+					idIn: [
+						noneCategory.id,
+						adultRelaxedCategoryId,
+						adultCategoryId,
+						sensitiveCategoryId,
+					],
+				},
+			});
+
+			expect(fallbackCollection.map((item) => item.restriction)).toEqual([
+				"none",
 			]);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

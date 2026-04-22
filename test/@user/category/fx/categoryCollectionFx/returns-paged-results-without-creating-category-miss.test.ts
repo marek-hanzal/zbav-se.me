@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { categoryCollectionFx } from "~/user/category/server/fx/categoryCollectionFx";
 
 describe("categoryCollectionFx", () => {
@@ -9,9 +10,11 @@ describe("categoryCollectionFx", () => {
 		const database = await testabase("categoryCollectionFx-non-empty");
 
 		return Effect.gen(function* () {
+			const user = yield* leaseTestUserFx({});
 			const fulltext = "pocitace";
 
 			const firstPage = yield* categoryCollectionFx({
+				userId: user.id,
 				filter: {
 					fulltext,
 				},
@@ -22,6 +25,7 @@ describe("categoryCollectionFx", () => {
 				scope: {},
 			});
 			const secondPage = yield* categoryCollectionFx({
+				userId: user.id,
 				filter: {
 					fulltext,
 				},

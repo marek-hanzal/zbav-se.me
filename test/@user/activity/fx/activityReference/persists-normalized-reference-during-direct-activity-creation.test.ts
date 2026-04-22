@@ -19,6 +19,7 @@ interface ListingFixture {
 const _createListingFixtureFx = ({ buyerId, sellerId }: Omit<ListingFixture, "listingId">) =>
 	Effect.gen(function* () {
 		const category = yield* categoryFetchFx({
+			userId: sellerId,
 			where: {
 				slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
 			},
