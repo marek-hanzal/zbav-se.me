@@ -42,6 +42,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 
 			const id = genId();
 			const createdAt = dateContext.now().toJSDate();
+			const now = dateContext.now().toJSDate();
 			const isAvailable = availableAt.getTime() <= createdAt.getTime();
 
 			yield* Effect.promise(async () => {
@@ -53,10 +54,10 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 				await kysely
 					.updateTable("user_restriction")
 					.set({
-						expiresAt: dateContext.now().toJSDate(),
+						expiresAt: now,
 					})
 					.$if(delay > 0, (eb) => {
-						return eb.where("availableAt", ">", dateContext.now().toJSDate());
+						return eb.where("availableAt", ">", now);
 					})
 					.where("userId", "=", userId)
 					.execute();
@@ -71,8 +72,13 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 						.set({
 							expiresAt: availableAt,
 						})
-						.where("availableAt", "<=", dateContext.now().toJSDate())
-						.where("expiresAt", "is", null)
+						.where("availableAt", "<=", now)
+						.where((eb) =>
+							eb.or([
+								eb("expiresAt", "is", null),
+								eb("expiresAt", ">", now),
+							]),
+						)
 						.where("userId", "=", userId)
 						.execute();
 				}
