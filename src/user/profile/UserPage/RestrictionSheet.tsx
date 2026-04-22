@@ -17,17 +17,19 @@ export namespace RestrictionSheet {
 
 export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 	onRestriction,
-	restriction = "none",
+	restriction,
 	isPending,
 	...props
 }) => {
 	const selection = useSelection({
 		mode: "single",
-		initial: [
-			restriction,
-		].map((item) => ({
-			id: item,
-		})),
+		initial: restriction
+			? [
+					restriction,
+				].map((item) => ({
+					id: item,
+				}))
+			: undefined,
 		deps: [
 			restriction,
 		],
@@ -52,13 +54,14 @@ export const RestrictionSheet: FC<RestrictionSheet.Props> = ({
 					onCancel={() => {
 						props.onClose();
 						setTimeout(() => {
-							selection.set(
-								[
-									restriction,
-								].map((item) => ({
-									id: item,
-								})),
-							);
+							restriction &&
+								selection.set(
+									[
+										restriction,
+									].map((item) => ({
+										id: item,
+									})),
+								);
 						}, 0);
 					}}
 					onSave={() => {

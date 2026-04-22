@@ -27,7 +27,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 		restriction,
 	});
 
-	const delay = userRestrictionContext.delay[restriction];
+	const delay = userRestrictionContext.delay[restriction] ?? 0;
 	const availableAt = dateContext
 		.now()
 		.plus({
@@ -45,14 +45,36 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 			const isAvailable = availableAt.getTime() <= createdAt.getTime();
 
 			yield* Effect.promise(async () => {
+				/**
+				 * The rule:
+				 * - if we've to wait, discard only future waiting restrictions
+				 * - if we're not waiting, discard _all_ restrictions as the new one replaces them
+				 */
 				await kysely
 					.updateTable("user_restriction")
 					.set({
-						availableAt: null,
+						expiresAt: dateContext.now().toJSDate(),
 					})
-					.where("availableAt", ">=", new Date())
+					.$if(delay > 0, (eb) => {
+						return eb.where("availableAt", ">", dateContext.now().toJSDate());
+					})
 					.where("userId", "=", userId)
 					.execute();
+
+				/**
+				 * If we're waiting, set expiration date on current restriction(s) to
+				 * available date of the new one, so they'll flip properly
+				 */
+				if (delay > 0) {
+					await kysely
+						.updateTable("user_restriction")
+						.set({
+							expiresAt: availableAt,
+						})
+						.where("availableAt", "<=", dateContext.now().toJSDate())
+						.where("userId", "=", userId)
+						.execute();
+				}
 			});
 
 			return yield* tryDbFx(async () => {
