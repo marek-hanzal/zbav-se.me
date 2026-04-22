@@ -3,18 +3,13 @@ import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { ValueList } from "@/lib/client/value";
 import { translator } from "@/lib/common/translator";
-import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { withUserRestrictionQuery } from "~/user/user-restriction/query/withUserRestrictionQuery";
+import type { UserRestrictionSchema } from "~/user/user-restriction/server/schema/UserRestrictionSchema";
 
 export namespace CurrentRestriction {
-	export interface Restriction {
-		id: string;
-		value: RestrictionEnumSchema.Type;
-	}
-
 	export interface Props
 		extends Omit<
-				ValueList.PropsEx<Restriction>,
+				ValueList.PropsEx<UserRestrictionSchema.Type>,
 				"items" | "renderFn" | "textLabel" | "textEmpty"
 			>,
 			MarkSuspense.Props {
@@ -35,18 +30,11 @@ export const CurrentRestriction = withFallback(
 				size: 1,
 			},
 		});
-		const items = (
-			restriction
-				? [
-						restriction.restriction,
-					]
-				: [
-						"none",
-					]
-		).map((item) => ({
-			id: item,
-			value: item,
-		}));
+		const items = restriction
+			? [
+					restriction,
+				]
+			: [];
 
 		return (
 			<ValueList
@@ -59,10 +47,10 @@ export const CurrentRestriction = withFallback(
 					"data-ui-color": "lead",
 				}}
 				items={items}
-				renderFn={({ value }) => {
+				renderFn={({ restriction }) => {
 					return (
 						<Tx
-							label={`Listing restriction - ${value}`}
+							label={`Listing restriction - ${restriction}`}
 							data-ui-font={"bold"}
 						/>
 					);
