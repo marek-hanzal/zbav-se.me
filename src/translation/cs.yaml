@@ -859,16 +859,16 @@ Agent tool - buyer_listing_collection:
     value: 🔍 Prohledávám inzeráty
     static: true
 Agent tool - buyer_transaction_collection:
-    value: Zkoumám zprávy v tvých nákupech
+    value: 📬 Zkoumám zprávy v tvých nákupech
     static: true
 Agent tool - buyer_transaction_create:
-    value: Otevírám obchod
+    value: 🛍 Otevírám obchod
     static: true
 Agent tool - category_collection:
-    value: Zkoumám kategorie
+    value: 🏷 Zkoumám kategorie
     static: true
 Agent tool - draft_collection:
-    value: Zkoumám tvé uložené inzeráty
+    value: 📥 Zkoumám tvé uložené inzeráty
     static: true
 Agent tool - feed_collection:
     value: 👀 Koukám na tvoje uložené inzeráty
@@ -883,10 +883,10 @@ Agent tool - knowledge:
     value: 🧠 Sháním znalosti
     static: true
 Agent tool - location_autocomplete:
-    value: Zjišťuju si adresu
+    value: 🏜 Zjišťuju si adresu
     static: true
 Agent tool - route:
-    value: Počítám trasu
+    value: 🛣 Počítám trasu
     static: true
 Agent tool - seller_listing_collection:
     value: Koukám na tvé inzeráty
