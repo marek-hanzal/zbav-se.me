@@ -109,7 +109,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 						setUploads([]);
 					}}
 					placeholder={translator.text("Write to an agent")}
-					loading={chat.mutation.isPending}
+					loading={chat.isPending}
 					cancel={
 						<Button
 							data-action={"stop agent stream"}

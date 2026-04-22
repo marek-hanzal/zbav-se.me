@@ -35,7 +35,7 @@ export const Agent: FC<Agent.Props> = ({ threadId, ...props }) => {
 				<div className={"pb-42"}>
 					<AgentMessageList
 						containerRef={containerRef}
-						isPending={chat.mutation.isPending}
+						isPending={chat.isPending}
 						threadId={threadId}
 					/>
 				</div>
