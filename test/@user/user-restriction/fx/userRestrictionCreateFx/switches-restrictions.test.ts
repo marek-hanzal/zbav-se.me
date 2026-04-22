@@ -236,4 +236,28 @@ describe("userRestrictionCreateFx", () => {
 			expect(expiredRestrictions).toHaveLength(2);
 		}).pipe(withRestrictionRuntimeFx(database), Effect.runPromise);
 	});
+
+	it("filters stored rows by scalar restriction value", async () => {
+		const database = await testabase("user-restriction-filter-by-value");
+
+		return Effect.gen(function* () {
+			const user = yield* leaseTestUserFx({});
+
+			yield* createRestriction(user.id, "adult");
+			yield* createRestriction(user.id, "adult-relaxed");
+
+			const adultRestrictions = yield* userRestrictionCollectionFx({
+				scope: {
+					userId: user.id,
+				},
+				where: {
+					restriction: "adult",
+				},
+			});
+
+			expectRestrictions(adultRestrictions, [
+				"adult",
+			]);
+		}).pipe(withRestrictionRuntimeFx(database), Effect.runPromise);
+	});
 });

@@ -1146,7 +1146,7 @@ Related:
 
 Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec vidět*. **Citlivost** je hard gate: chrání veřejnej prostor před obsahem, kterej určitá skupina lidí buď **nechce**, nebo ho **ani nesmí** vidět.
 
-Úrovně (stupňovaně): `none < adult < adult-relaxed < sensitive < restricted`.
+Úrovně (stupňovaně): `none < adult-relaxed < adult < sensitive < restricted`.
 
 | Úroveň             | Enum            | Poznámka                                                                                                                                                                                                                   |
 | ------------------ | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1154,7 +1154,12 @@ Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec v
 | Pro dospělé        | `adult`         | 18+ kontext                                                                                                                                                                                                                |
 | Pro dospělé (soft) | `adult-relaxed` | adult lze odkliknout na základě varovné hlášky (jen pro 18+)                                                                                                                                                              |
 | Citlivé            | `sensitive`     | věci „na hraně“, co nechci cpát všem                                                                                                                                                                                       |
-| Omezené            | `restricted`    | zákonný omezení / oprávnění (systém ho **neověřuje**); nutná součást ochrany je také běžící cooldown 24h — tzn. člověk musí vědět, co dělá; tento cooldown se zapne pokaždé, když si člověk v profilu zapne "restricted" úroveň |
+| Omezené            | `restricted`    | zákonný omezení / oprávnění (systém ho **neověřuje**); nutná součást ochrany je také běžící cooldown — tzn. člověk musí vědět, co dělá |
+
+Cooldown při zapnutí vyšší úrovně:
+- `adult`: 1h
+- `sensitive`: 2h
+- `restricted`: 24h
 
 Gating a viditelnost (dvoufázově, schválně):
 - **Profil** = nastavíš maximum (co *smíš / jsi ochotnej* vidět).
