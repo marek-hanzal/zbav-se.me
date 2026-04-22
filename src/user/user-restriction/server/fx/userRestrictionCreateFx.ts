@@ -5,6 +5,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import { UserRestrictionContextFx } from "../context/UserRestrictionContextFx";
 import type { UserRestrictionCreateSchema } from "../schema/UserRestrictionCreateSchema";
 
 export namespace userRestrictionCreateFx {
@@ -16,14 +17,23 @@ export namespace userRestrictionCreateFx {
 export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(function* ({
 	userId,
 	restriction,
-	availableAt,
 }: userRestrictionCreateFx.Props) {
+	const userRestrictionContext = yield* UserRestrictionContextFx;
+	const dateContext = yield* DateContextFx;
+
 	const logger = yield* getLoggerFx("userRestrictionCreateFx");
 	logger.trace("userRestrictionCreateFx", {
 		userId,
 		restriction,
-		availableAt,
 	});
+
+	const delay = userRestrictionContext.delay[restriction];
+	const availableAt = dateContext
+		.now()
+		.plus({
+			hours: delay,
+		})
+		.toJSDate();
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {

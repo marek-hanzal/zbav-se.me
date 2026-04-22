@@ -6,10 +6,6 @@ export const UserRestrictionCreateSchema = z
 		restriction: RestrictionEnumSchema.meta({
 			description: "Restriction levels applied to the user",
 		}),
-		availableAt: z.coerce.date().meta({
-			description: "Timestamp when the user restriction becomes available",
-			type: "string",
-		}),
 	})
 	.strip()
 	.meta({
