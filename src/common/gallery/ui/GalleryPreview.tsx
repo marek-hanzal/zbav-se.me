@@ -13,15 +13,13 @@ export namespace GalleryPreview {
 /**
  * Shows a visual preview of gallery content, including loading-aware rendering.
  * Use it to confirm selected media before the final submit action.
- *
- * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const GalleryPreview: FC<GalleryPreview.Props> = ({ uploads, ...props }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
 		<Container
-			data-ui={"GalleryButton-[Container.wrapper]"}
+			data-ui={"GalleryPreview"}
 			data-ui-position="relative"
 			data-ui-height="full"
 			data-ui-inner="default"
@@ -32,7 +30,6 @@ export const GalleryPreview: FC<GalleryPreview.Props> = ({ uploads, ...props }) 
 
 			<Container
 				ref={containerRef}
-				data-ui={"GalleryButton-[Container.content]"}
 				data-ui-layout="vertical-full"
 				data-ui-height="full"
 				data-ui-snap="vertical"

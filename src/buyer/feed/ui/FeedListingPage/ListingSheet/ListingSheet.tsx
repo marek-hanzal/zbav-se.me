@@ -67,7 +67,12 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 			},
 			gallery: {
 				children: (
-					<GalleryPreview uploads={listing.gallery.items.map((item) => item.upload)} />
+					<GalleryPreview
+						uploads={listing.gallery.items.map((item) => item.upload)}
+						onClick={() => {
+							setView("default");
+						}}
+					/>
 				),
 				header: () => ({
 					title: translator.text("Listing gallery (title)"),
