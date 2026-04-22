@@ -1,5 +1,6 @@
 import { type FC, type PropsWithChildren, Suspense, useCallback, useMemo, useState } from "react";
 import { CloseIcon } from "@/lib/client/icon";
+import { useRenderLogger } from "@/lib/client/log";
 import { SheetView } from "@/lib/client/sheet-view";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
@@ -7,6 +8,7 @@ import { translator } from "@/lib/common/translator";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { SellerInfo } from "~/buyer/listing/SellerInfo/SellerInfo";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { CloseButton } from "~/common/ui/button";
 import { ListingCard } from "../ListingCard";
 
@@ -29,6 +31,14 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 }) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const [view, setView] = useState<ListingSheet.View>("default");
+
+	useRenderLogger({
+		logger: getRootLogger(),
+		name: "ListingSheet",
+		meta: {
+			listingId,
+		},
+	});
 
 	const $onClose = useCallback(() => {
 		setView("default");
