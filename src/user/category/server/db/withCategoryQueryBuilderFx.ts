@@ -1,10 +1,14 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
+import { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { withLikeEx } from "~/server/database/expression/withLikeEx";
 import type { withCategorySourceSelectFx } from "~/user/category/server/db/withCategorySourceSelectFx";
 import type { CategoryFilterSchema } from "~/user/category/server/schema/CategoryFilterSchema";
+import { withActiveUserRestrictionSelectFx } from "~/user/user-restriction/server/db/withActiveUserRestrictionSelectFx";
 
 export namespace withCategoryQueryBuilderFx {
 	export interface Props<TSelect extends withCategorySourceSelectFx.Select> {
+        userId: string;
 		select: TSelect;
 		where?: CategoryFilterSchema.Type;
 	}
@@ -20,19 +24,19 @@ export namespace withCategoryQueryBuilderFx {
  */
 export const withCategoryQueryBuilderFx = Effect.fn("withCategoryQueryBuilderFx")(function* <
 	TSelect extends withCategorySourceSelectFx.Select,
->({ select, where }: withCategoryQueryBuilderFx.Props<TSelect>) {
-	let query: typeof select = select;
+>({ userId, select, where }: withCategoryQueryBuilderFx.Props<TSelect>) {
+	let query: TSelect = select;
 
 	if (!where) {
 		return yield* Effect.succeed(select);
 	}
 
 	if (where.id) {
-		query = query.where("cat.id", "=", where.id) as typeof select;
+		query = query.where("cat.id", "=", where.id) as TSelect;
 	}
 
 	if (where.idIn && where.idIn.length > 0) {
-		query = query.where("cat.id", "in", where.idIn) as typeof select;
+		query = query.where("cat.id", "in", where.idIn) as TSelect;
 	}
 
 	if (where.fulltext) {
@@ -50,29 +54,40 @@ export const withCategoryQueryBuilderFx = Effect.fn("withCategoryQueryBuilderFx"
 						.where((eb) => withLikeEx(eb.ref("category_spotlight.text"), fulltext)),
 				),
 			]),
-		) as typeof select;
+		) as TSelect;
 	}
 
 	if (where.group) {
-		query = query.where((eb) => withLikeEx(eb.ref("cat.group"), where.group)) as typeof select;
+		query = query.where((eb) => withLikeEx(eb.ref("cat.group"), where.group)) as TSelect;
 	}
 
 	if (where.category) {
-		query = query.where((eb) =>
-			withLikeEx(eb.ref("cat.category"), where.category),
-		) as typeof select;
+		query = query.where((eb) => withLikeEx(eb.ref("cat.category"), where.category)) as TSelect;
 	}
 
 	if (where.locale) {
-		query = query.where("cat.locale", "=", where.locale) as typeof select;
+		query = query.where("cat.locale", "=", where.locale) as TSelect;
 	}
 
 	if (where.localeIn?.length) {
-		query = query.where("cat.locale", "in", where.localeIn) as typeof select;
+		query = query.where("cat.locale", "in", where.localeIn) as TSelect;
 	}
 
 	if (where.slug) {
-		query = query.where("cat.slug", "=", where.slug) as typeof select;
+		query = query.where("cat.slug", "=", where.slug) as TSelect;
+	}
+
+	if (where?.withRestriction === true) {
+		const fallbackSql = sql`${CategoryRestrictionEnumSchema.enum.none}::category_restriction_enum`;
+		const restrictionSql = userId
+			? sql`coalesce((${yield* withActiveUserRestrictionSelectFx({
+					userId,
+				})}), ${fallbackSql})`
+			: fallbackSql;
+
+		query = query.where((eb) => {
+			return sql<boolean>`${eb.ref("cat.restriction")} <= ${restrictionSql}`;
+		}) as TSelect;
 	}
 
 	return yield* Effect.succeed(query);

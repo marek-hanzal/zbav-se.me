@@ -23,6 +23,9 @@ export const CategoryFilterSchema = z
 		restrictionLte: CategoryRestrictionEnumSchema.optional().meta({
 			description: "Filter out restricted categories",
 		}),
+		withRestriction: z.boolean().optional().meta({
+			description: "If true, only categories available to the user will be returned",
+		}),
 	})
 	.strip()
 	.meta({
