@@ -72,6 +72,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 							expiresAt: availableAt,
 						})
 						.where("availableAt", "<=", dateContext.now().toJSDate())
+						.where("expiresAt", "is", null)
 						.where("userId", "=", userId)
 						.execute();
 				}
