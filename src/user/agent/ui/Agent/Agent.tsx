@@ -32,7 +32,7 @@ export const Agent: FC<Agent.Props> = ({ threadId, ...props }) => {
 				data-ui-scroll="vertical"
 				data-ui-height="full"
 				className={[
-					"pb-[50%]",
+					"pb-42",
 				]}
 			>
 				<AgentMessageList
