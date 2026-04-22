@@ -5,6 +5,7 @@ import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import type { AgentThreadCreateSchema } from "~/user/agent/server/schema/AgentThreadCreateSchema";
 import type { AgentThreadSchema } from "~/user/agent/server/schema/AgentThreadSchema";
+import { withAgentThreadQuery } from "../query/withAgentThreadQuery";
 
 export const withAgentThreadCreateSessionMutation = withMutation<
 	AgentThreadCreateSchema.Type,
@@ -29,7 +30,14 @@ export const withAgentThreadCreateSessionMutation = withMutation<
 		});
 	},
 	invalidate: [
-		withAgentStreamItemsQuery,
 		withAgentLiveQuery,
+		withAgentStreamItemsQuery,
+		{
+			async invalidate(queryClient) {
+				await withAgentThreadQuery.invalidator(queryClient, [
+					"collection",
+				]);
+			},
+		},
 	],
 });
