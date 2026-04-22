@@ -2,143 +2,210 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
+import type { CategoryRestrictionEnumSchema } from "~/common/category/enum/CategoryRestrictionEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { categoryCollectionFx } from "~/user/category/server/fx/categoryCollectionFx";
-import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type CategoryRestriction = CategoryRestrictionEnumSchema.Type;
 
-const categoryIdBySlug = (database: TestDatabase, slug: string) =>
+interface RestrictionRecord {
+	restriction: CategoryRestriction;
+	availableAtOffsetMinutes: number;
+	createdAtOffsetMinutes: number;
+}
+
+interface Scenario {
+	name: string;
+	records: RestrictionRecord[];
+	expectedRestrictions: CategoryRestriction[];
+}
+
+const restrictionLevels = [
+	"none",
+	"adult-relaxed",
+	"adult",
+	"sensitive",
+	"restricted",
+] as const satisfies CategoryRestriction[];
+
+const createRestrictedCategories = (database: TestDatabase, slugPrefix: string) =>
 	Effect.promise(async () => {
-		const category = await database.kysely
-			.selectFrom("category")
-			.select("id")
-			.where("slug", "=", slug)
-			.executeTakeFirstOrThrow();
+		const categories = restrictionLevels.map((restriction, index) => ({
+			id: genId(),
+			group: `Restriction fixture ${slugPrefix}`,
+			category: `Restriction fixture ${restriction}`,
+			slug: `${slugPrefix}-${restriction}`,
+			sort: index,
+			locale: "cs",
+			discovery: "implicit" as const,
+			restriction,
+		}));
 
-		return category.id;
+		await database.kysely.insertInto("category").values(categories).execute();
+
+		return categories.map((category) => category.id);
 	});
 
-const categoryIdByRestriction = (
+const createUserRestrictions = (
 	database: TestDatabase,
-	restriction: "adult" | "adult-relaxed" | "sensitive",
+	props: {
+		userId: string;
+		records: RestrictionRecord[];
+	},
 ) =>
-	Effect.promise(async () => {
-		const category = await database.kysely
-			.selectFrom("category")
-			.select("id")
-			.where("restriction", "=", restriction)
-			.executeTakeFirstOrThrow();
+	Effect.gen(function* () {
+		if (props.records.length === 0) {
+			return;
+		}
 
-		return category.id;
+		const dateContext = yield* DateContextFx;
+		const now = dateContext.now();
+
+		yield* Effect.promise(() =>
+			database.kysely
+				.insertInto("user_restriction")
+				.values(
+					props.records.map((record) => ({
+						id: genId(),
+						userId: props.userId,
+						restriction: record.restriction,
+						availableAt: now
+							.plus({
+								minutes: record.availableAtOffsetMinutes,
+							})
+							.toJSDate(),
+						createdAt: now
+							.plus({
+								minutes: record.createdAtOffsetMinutes,
+							})
+							.toJSDate(),
+					})),
+				)
+				.execute(),
+		);
 	});
+
+const fetchAvailableRestrictions = (userId: string, categoryIdIn: string[]) =>
+	categoryCollectionFx({
+		userId,
+		scope: {},
+		where: {
+			withRestriction: true,
+			idIn: categoryIdIn,
+		},
+		sort: [
+			{
+				field: "sort",
+				order: "asc",
+			},
+		],
+	}).pipe(
+		Effect.map((categories) =>
+			categories.map((category) => category.restriction as CategoryRestriction),
+		),
+	);
 
 describe("user category restriction scope", () => {
-	it("uses only active user restriction and falls back to none", async () => {
+	it("filters categories by the latest active user restriction", async () => {
 		const database = await testabase("user-category-active-restriction-scope");
 
+		const scenarios = [
+			{
+				name: "falls back to none when no user restriction exists",
+				records: [],
+				expectedRestrictions: [
+					"none",
+				],
+			},
+			{
+				name: "ignores a future sensitive restriction",
+				records: [
+					{
+						restriction: "sensitive",
+						availableAtOffsetMinutes: 60,
+						createdAtOffsetMinutes: -5,
+					},
+				],
+				expectedRestrictions: [
+					"none",
+				],
+			},
+			{
+				name: "uses active adult while future sensitive waits",
+				records: [
+					{
+						restriction: "adult",
+						availableAtOffsetMinutes: -10,
+						createdAtOffsetMinutes: -20,
+					},
+					{
+						restriction: "sensitive",
+						availableAtOffsetMinutes: 60,
+						createdAtOffsetMinutes: -5,
+					},
+				],
+				expectedRestrictions: [
+					"none",
+					"adult-relaxed",
+					"adult",
+				],
+			},
+			{
+				name: "uses the newest active row instead of the strongest old row",
+				records: [
+					{
+						restriction: "sensitive",
+						availableAtOffsetMinutes: -120,
+						createdAtOffsetMinutes: -120,
+					},
+					{
+						restriction: "adult-relaxed",
+						availableAtOffsetMinutes: -10,
+						createdAtOffsetMinutes: -10,
+					},
+				],
+				expectedRestrictions: [
+					"none",
+					"adult-relaxed",
+				],
+			},
+			{
+				name: "allows every category for active restricted",
+				records: [
+					{
+						restriction: "restricted",
+						availableAtOffsetMinutes: -10,
+						createdAtOffsetMinutes: -10,
+					},
+				],
+				expectedRestrictions: [
+					"none",
+					"adult-relaxed",
+					"adult",
+					"sensitive",
+					"restricted",
+				],
+			},
+		] satisfies Scenario[];
+
 		return Effect.gen(function* () {
-			const user = yield* leaseTestUserFx({});
-			const unrestrictedUser = yield* leaseTestUserFx({});
-			const dateContext = yield* DateContextFx;
-			const now = dateContext.now();
+			const categoryIdIn = yield* createRestrictedCategories(database, "restriction-scope");
 
-			const noneCategoryId = yield* categoryIdBySlug(
-				database,
-				"pocitace-a-kancelar--uloziste-ssd-hdd",
-			);
-			const adultRelaxedCategoryId = yield* categoryIdByRestriction(
-				database,
-				"adult-relaxed",
-			);
-			const adultCategoryId = yield* categoryIdByRestriction(database, "adult");
-			const sensitiveCategoryId = yield* categoryIdByRestriction(database, "sensitive");
+			for (const scenario of scenarios) {
+				const user = yield* leaseTestUserFx({});
 
-			const noneCategory = yield* categoryFetchFx({
-				userId: user.id,
-				where: {
-					id: noneCategoryId,
-				},
-				scope: {},
-			});
+				yield* createUserRestrictions(database, {
+					userId: user.id,
+					records: scenario.records,
+				});
 
-			yield* Effect.promise(() =>
-				database.kysely
-					.insertInto("user_restriction")
-					.values([
-						{
-							id: genId(),
-							userId: user.id,
-							restriction: "sensitive",
-							availableAt: now
-								.plus({
-									hours: 1,
-								})
-								.toJSDate(),
-							createdAt: now
-								.minus({
-									minutes: 1,
-								})
-								.toJSDate(),
-						},
-						{
-							id: genId(),
-							userId: user.id,
-							restriction: "adult",
-							availableAt: now
-								.minus({
-									minutes: 1,
-								})
-								.toJSDate(),
-							createdAt: now
-								.minus({
-									minutes: 2,
-								})
-								.toJSDate(),
-						},
-					])
-					.execute(),
-			);
+				const restrictions = yield* fetchAvailableRestrictions(user.id, categoryIdIn);
 
-			const scopedCollection = yield* categoryCollectionFx({
-				userId: user.id,
-				scope: {},
-				where: {
-					withRestriction: true,
-					idIn: [
-						noneCategory.id,
-						adultRelaxedCategoryId,
-						adultCategoryId,
-						sensitiveCategoryId,
-					],
-				},
-			});
-
-			expect(scopedCollection.map((item) => item.restriction)).toEqual([
-				"none",
-				"adult-relaxed",
-				"adult",
-			]);
-
-			const fallbackCollection = yield* categoryCollectionFx({
-				userId: unrestrictedUser.id,
-				scope: {},
-				where: {
-					withRestriction: true,
-					idIn: [
-						noneCategory.id,
-						adultRelaxedCategoryId,
-						adultCategoryId,
-						sensitiveCategoryId,
-					],
-				},
-			});
-
-			expect(fallbackCollection.map((item) => item.restriction)).toEqual([
-				"none",
-			]);
+				expect(restrictions, scenario.name).toEqual(scenario.expectedRestrictions);
+			}
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
