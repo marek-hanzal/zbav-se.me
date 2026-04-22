@@ -31,7 +31,12 @@ export const GalleryPreviewSheet: FC<GalleryPreviewSheet.Props> = ({ uploads, ..
 			}}
 			{...props}
 		>
-			<GalleryPreview uploads={uploads} />
+			<GalleryPreview
+				uploads={uploads}
+				onClick={() => {
+					props.onClose();
+				}}
+			/>
 		</BottomSheet>
 	);
 };
