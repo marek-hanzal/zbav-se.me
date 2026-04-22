@@ -1,7 +1,12 @@
+import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
+import { useLocale } from "@/lib/client/locale";
+import { SpinnerContainer } from "@/lib/client/spinner";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { ValueList } from "@/lib/client/value";
+import { Typo } from "@/lib/client/typo";
+import { LabelValue, ValueList } from "@/lib/client/value";
+import { toTimeDiff } from "@/lib/common/time";
 import { translator } from "@/lib/common/translator";
 import { withUserRestrictionQuery } from "~/user/user-restriction/query/withUserRestrictionQuery";
 import type { UserRestrictionSchema } from "~/user/user-restriction/server/schema/UserRestrictionSchema";
@@ -10,7 +15,7 @@ export namespace CurrentRestriction {
 	export interface Props
 		extends Omit<
 				ValueList.PropsEx<UserRestrictionSchema.Type>,
-				"items" | "renderFn" | "textLabel" | "textEmpty"
+				"textLabel" | "textEmpty" | "items" | "renderFn"
 			>,
 			MarkSuspense.Props {
 		//
@@ -19,40 +24,71 @@ export namespace CurrentRestriction {
 
 export const CurrentRestriction = withFallback(
 	({ _suspense, ...props }: CurrentRestriction.Props) => {
-		const {
-			data: [restriction],
-		} = withUserRestrictionQuery.useCollectionQuery({
+		const locale = useLocale();
+		const { data: restrictions } = withUserRestrictionQuery.useCollectionQuery({
 			where: {
-				isAvailable: true,
+				availableAtIsNull: false,
 			},
 			cursor: {
 				page: 0,
 				size: 1,
 			},
+			sort: [
+				{
+					field: "createdAt",
+					order: "desc",
+				},
+			],
 		});
-		const items = restriction
-			? [
-					restriction,
-				]
-			: [];
 
 		return (
 			<ValueList
 				textLabel={translator.text("Current Restriction value (label)")}
 				textEmpty={translator.text("Current Restriction value (empty)")}
 				textHint={translator.text("Current Restriction value (hint)")}
-				labelProps={{
+				textLabelProps={{
 					"data-ui-tone": "brand",
 					"data-ui-theme": "light",
 					"data-ui-color": "lead",
 				}}
-				items={items}
-				renderFn={({ restriction }) => {
+				items={restrictions}
+				renderFn={(restriction) => {
 					return (
-						<Tx
-							label={`Listing restriction - ${restriction}`}
-							data-ui-font={"bold"}
-						/>
+						<Container data-ui-width={"full"}>
+							<Tx
+								label={`Listing restriction - ${restriction.restriction}`}
+								data-ui-font={"bold"}
+								data-ui-width={"full"}
+							/>
+
+							<Container
+								data-ui-flow={"horizontal"}
+								data-ui-justify={"space-between"}
+								data-ui-items={"center"}
+								data-ui-width={"full"}
+							>
+								<Tx
+									label={"Restriction available in (label)"}
+									data-ui-text={"sm"}
+								/>
+
+								{restriction.availableAt && restriction.availableAt ? (
+									<Typo
+										label={toTimeDiff({
+											type: "human",
+											locale,
+											time: restriction.availableAt,
+										})}
+										data-ui-tone={"brand"}
+										data-ui-theme={"light"}
+										data-ui-color={"lead"}
+										data-ui-font={"bold"}
+										data-ui-text={"sm"}
+										data-ui-opacity={"8"}
+									/>
+								) : null}
+							</Container>
+						</Container>
 					);
 				}}
 				{...props}
@@ -61,12 +97,10 @@ export const CurrentRestriction = withFallback(
 	},
 	({ ...props }: Omit<CurrentRestriction.Props, "_suspense">) => {
 		return (
-			<ValueList
+			<LabelValue
 				textLabel={translator.text("Current Restriction value (label)")}
 				textEmpty={translator.text("Current Restriction value (empty)")}
-				items={[]}
-				renderFn={() => null}
-				loading={true}
+				textValue={<SpinnerContainer type={"icon"} />}
 				{...props}
 			/>
 		);
