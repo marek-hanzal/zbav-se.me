@@ -1,5 +1,6 @@
 import { Agent } from "@openai/agents";
 import { DateTime } from "luxon";
+import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import { toolFavouriteToggle } from "~/buyer/favourite/server/tool/toolFavouriteToggle";
 import { toolFeedCollection } from "~/buyer/feed/server/tool/toolFeedCollection";
 import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
@@ -9,6 +10,7 @@ import { toolListingCollection as toolBuyerListingCollection } from "~/buyer/lis
 import { toolTransactionCollection as toolBuyerTransactionCollection } from "~/buyer/transaction/server/tool/toolTransactionCollection";
 import { toolTransactionCreate as toolBuyerTransactionCreate } from "~/buyer/transaction/server/tool/toolTransactionCreate";
 import { toolTransactionWorkflow as toolBuyerTransactionWorkflow } from "~/buyer/transaction/server/tool/toolTransactionWorkflow";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
 import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
 import { toolDraftDelete } from "~/seller/draft/server/tool/toolDraftDelete";
@@ -30,6 +32,17 @@ import { toolUploadCreate } from "../upload/server/tool/toolUploadCreate";
 export const AssistantAgent = new Agent<withRunnerMiddleware.Context>({
 	name: "Assistant",
 	instructions({ context }) {
+		/**
+		 * This is a clever hack to remember update Assistant if this enum changes.
+		 */
+		toEnumGuard<RestrictionEnumSchema.Type>()([
+			"adult",
+			"adult-relaxed",
+			"none",
+			"restricted",
+			"sensitive",
+		]);
+
 		return `
 Current ISO date timestamp: ${new Date().toISOString()}
 Current localized timestamp: ${DateTime.now().setLocale(context.locale).toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}
