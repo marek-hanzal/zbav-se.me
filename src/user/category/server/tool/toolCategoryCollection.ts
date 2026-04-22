@@ -1,4 +1,7 @@
 import { tool } from "@openai/agents";
+import { match } from "ts-pattern";
+import { z } from "zod";
+import { ModeEnumSchema } from "~/common/agent/enum/ModeEnumSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { categoryCollectionFn } from "~/user/category/fn/categoryCollectionFn";
@@ -8,6 +11,13 @@ const logger = getRootLogger([
 	"tool",
 	"toolCategoryCollection",
 ]);
+
+const InputSchema = z
+	.looseObject({
+		query: CategoryToolQuerySchema,
+		mode: ModeEnumSchema,
+	})
+	.strip();
 
 export const toolCategoryCollection = tool({
 	name: "category-collection",
@@ -27,24 +37,44 @@ Sort:
 - sort: Explicit category sort order.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(CategoryToolQuerySchema),
+	parameters: unsafeJsonSchema(InputSchema),
 	async execute(input) {
 		logger.trace("toolCategoryCollection", {
 			input,
 		});
 
-		const data = await CategoryToolQuerySchema.parseAsync(input);
+		const { query, mode } = await InputSchema.parseAsync(input);
 
 		const items = await categoryCollectionFn({
 			data: {
-				...data,
+				...query,
+				where: {
+					/**
+					 * Model can use only available categories
+					 */
+					withRestriction: true,
+				},
 				limit: 8,
 			},
 		});
 
-		return {
-			count: items.length,
-			items,
-		};
+		return match(mode)
+			.with("browse", () => {
+				return {
+					count: items.length,
+					items: items.map((item) => ({
+						id: item.id,
+						group: item.group,
+						category: item.category,
+					})),
+				} as const;
+			})
+			.with("detail", () => {
+				return {
+					count: items.length,
+					items,
+				} as const;
+			})
+			.exhaustive();
 	},
 });

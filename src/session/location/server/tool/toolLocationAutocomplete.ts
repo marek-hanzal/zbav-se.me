@@ -1,4 +1,7 @@
 import { tool } from "@openai/agents";
+import { match } from "ts-pattern";
+import { z } from "zod";
+import { ModeEnumSchema } from "~/common/agent/enum/ModeEnumSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { locationAutocompleteFn } from "~/session/location/fn/locationAutocompleteFn";
@@ -8,6 +11,13 @@ const logger = getRootLogger([
 	"tool",
 	"toolLocationAutocomplete",
 ]);
+
+const InputSchema = z
+	.looseObject({
+		query: LocationAutocompleteSchema,
+		mode: ModeEnumSchema,
+	})
+	.strip();
 
 export const toolLocationAutocomplete = tool({
 	name: "location-autocomplete",
@@ -22,21 +32,37 @@ Boundaries:
 - Guess a "lang" from the user's language
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(LocationAutocompleteSchema),
+	parameters: unsafeJsonSchema(InputSchema),
 	async execute(input) {
 		logger.trace("toolLocationAutocomplete", {
 			input,
 		});
 
-		const data = await LocationAutocompleteSchema.parseAsync(input);
+		const { query, mode } = await InputSchema.parseAsync(input);
 
 		const matches = await locationAutocompleteFn({
-			data,
+			data: query,
 		});
 
-		return {
-			count: matches.length,
-			matches: matches,
-		};
+		return match(mode)
+			.with("browse", () => {
+				return {
+					count: matches.length,
+					matches: matches.map((item) => ({
+						id: item.id,
+						address: item.address,
+						confidence: item.confidence,
+						lat: item.lat,
+						lon: item.lon,
+					})),
+				} as const;
+			})
+			.with("detail", () => {
+				return {
+					count: matches.length,
+					matches: matches,
+				} as const;
+			})
+			.exhaustive();
 	},
 });
