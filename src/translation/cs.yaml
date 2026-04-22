@@ -592,12 +592,20 @@
 6dbcf4fc35bb69ec88d55c0a6ab2a709d55dc49588e018564cbca5a1:
     ref: Transaction update (label)
     value: Transaction update (label)
+6ea3c4bc6fe521f548261295bdab73df068908c00355a65809fdf4ab:
+    ref: Current Restriction value (label)
+    value: Režim obsahu
 6facc75794554d433accb2f240799b65ee08b763fef727c9bf711dc7:
     ref: Login (hero)
     value: Už se známe
 70314354b3f9429b5ad2152154bd2a7f641ac9cd0aec5e53bb8582ff:
     ref: Transactions - archived - buyer (title)
     value: Archivováno
+70b147d5fa98938b8af4a584f9aa65729e915eca7ae712ed763337af:
+    ref: Current Restriction value (hint)
+    value: |
+        Tohle nastavení určuje, jaké kategorie můžeš používat a co se ti zobrazí
+        ve vyhledávání. Změníš ho ve svém účtu.
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
     value: Výchozí řazení
@@ -1584,6 +1592,9 @@ f18a36932d031042735ffe9b5fbf3fad95a86de7b3b04e8ae3f43986:
 f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
     ref: Favourites (label)
     value: Moje oblíbené
+f34432c0a6823a6ecf16eca4da02fd00ecaa4e1e833959f6c112e9a6:
+    ref: Current Restriction value (empty)
+    value: Běžný obsah
 f3f7b74c586e4bc7fff67cd348751ca929ed627420e6662d5e9a322d:
     ref: Personal - phone
     value: Telefon

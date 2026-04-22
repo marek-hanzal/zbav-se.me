@@ -60,7 +60,9 @@ export const CategoryValueList = withFallback(
 			/>
 		);
 	},
-	(props: ValueList.PropsEx<CategorySchema.Type>) => {
+	({
+		...props
+	}: Omit<CategoryValueList.Props, "_suspense" | "categoryIdIn" | "textLabel" | "textEmpty">) => {
 		return (
 			<ValueList
 				textLabel={translator.text("Loading... (label)")}

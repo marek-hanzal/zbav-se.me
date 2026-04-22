@@ -9,7 +9,7 @@ export namespace WarrantyValueList {
 		warranty: string;
 	}
 
-	export interface Props extends ValueList.PropsEx<Item> {
+	export interface Props extends Omit<ValueList.PropsEx<Item>, "items" | "renderFn"> {
 		warrantyIn: ListingWarrantyEnumSchema.Type[];
 	}
 }
