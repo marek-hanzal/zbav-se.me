@@ -25,6 +25,7 @@ export namespace useAgent {
 
 	export interface QueuerState {
 		isPending: boolean;
+		items: SubmitInput[];
 	}
 
 	export type Use = ReturnType<typeof useAgent>;
@@ -82,6 +83,8 @@ export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 
 	const queuer = useAsyncQueuer<useAgent.SubmitInput, useAgent.QueuerState>(
 		async ({ input }) => {
+			appendHistoryItems(input);
+
 			try {
 				await submitAgentRun({
 					abortControllerRef,
@@ -109,21 +112,26 @@ export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 		},
 		(state) => ({
 			isPending: state.isExecuting || state.activeItems.length > 0 || state.size > 0,
+			items: state.items,
 		}),
 	);
 
 	const submit = useCallback(
 		async (input: AgentInputItem[]) => {
-			appendHistoryItems(input);
 			queuer.addItem({
 				input,
 			});
 		},
 		[
-			appendHistoryItems,
 			queuer,
 		],
 	);
+
+	const clearQueue = useCallback(() => {
+		queuer.clear();
+	}, [
+		queuer,
+	]);
 
 	const cancel = useCallback(() => {
 		abortControllerRef.current?.abort();
@@ -136,7 +144,10 @@ export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 	return {
 		threadId,
 		isPending: queuer.state.isPending,
+		queue: queuer.state.items,
+		queueText: getQueueText(queuer.state.items),
 		submit,
+		clearQueue,
 		input: {
 			text(text: string): AgentInputItem[] {
 				return [
@@ -261,4 +272,32 @@ function getErrorMessage(error: unknown): string {
 	}
 
 	return String(error);
+}
+
+function getQueueText(queue: useAgent.SubmitInput[]): string | undefined {
+	const [item] = queue;
+
+	if (!item) {
+		return undefined;
+	}
+
+	const text = item.input.map(getInputText).filter(Boolean).join(" ");
+	const suffix = queue.length > 1 ? ` (+${queue.length - 1})` : "";
+
+	return `${text}${suffix}`;
+}
+
+function getInputText(item: AgentInputItem): string {
+	if ("role" in item && item.role === "user") {
+		if (typeof item.content === "string") {
+			return item.content;
+		}
+
+		return item.content
+			.filter((content) => content.type === "input_text")
+			.map((content) => content.text)
+			.join(" ");
+	}
+
+	return "";
 }
