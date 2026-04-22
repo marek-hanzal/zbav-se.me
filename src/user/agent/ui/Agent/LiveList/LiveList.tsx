@@ -10,12 +10,14 @@ import { ToolCallBlock } from "./ToolCallBlock";
 
 export namespace LiveList {
 	export interface Props extends Container.Props {
-		//
+		threadId: string;
 	}
 }
 
-export const LiveList: FC<LiveList.Props> = ({ ...props }) => {
-	const { data: events } = withAgentLiveQuery.useQuery("No input data here, bro");
+export const LiveList: FC<LiveList.Props> = ({ threadId, ...props }) => {
+	const { data: events } = withAgentLiveQuery.useQuery({
+		threadId,
+	});
 	const entries = useLiveEntries(events);
 
 	return (

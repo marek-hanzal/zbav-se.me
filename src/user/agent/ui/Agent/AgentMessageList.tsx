@@ -37,7 +37,7 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 		>
 			<HistoryList threadId={threadId} />
 
-			<LiveList />
+			<LiveList threadId={threadId} />
 		</Container>
 	);
 };
