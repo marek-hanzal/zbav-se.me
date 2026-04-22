@@ -27,7 +27,7 @@ export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ className }) => {
 			data-ui-color="icon"
 			data-ui-round="full"
 			data-ui-background="default"
-			data-ui-shadow
+			data-ui-shadow={false}
 			data-ui-border
 			data-ui-inner="md"
 			data-ui-opacity="8"

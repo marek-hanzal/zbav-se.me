@@ -22,8 +22,9 @@ export const uiBackButton = ({ name, className, ...ui }: uiBackButton.Props) => 
 		"data-ui-round": "full",
 		"data-ui-square": "md",
 		"data-ui-text": "xl",
-		"data-ui-opacity": "6",
+		"data-ui-opacity": "8",
 		"data-ui-color": "lead",
+		"data-ui-shadow": false,
 		...ui,
 		className,
 	});
