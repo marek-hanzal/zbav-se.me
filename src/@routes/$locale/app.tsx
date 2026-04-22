@@ -1,4 +1,5 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { AgentRuntimeProvider } from "~/user/agent/runtime";
 import { withSessionQuery } from "~/user/auth/query/withSessionQuery";
 
 export const Route = createFileRoute("/$locale/app")({
@@ -23,5 +24,12 @@ export const Route = createFileRoute("/$locale/app")({
 		return {
 			user: sessionQuery.user,
 		} as const;
+	},
+	component() {
+		return (
+			<AgentRuntimeProvider>
+				<Outlet />
+			</AgentRuntimeProvider>
+		);
 	},
 });

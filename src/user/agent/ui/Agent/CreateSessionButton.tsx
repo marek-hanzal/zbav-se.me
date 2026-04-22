@@ -19,7 +19,9 @@ export const CreateSessionButton: FC<CreateSessionButton.Props> = ({ onSuccess, 
 	const navigate = useNavigate();
 	const mutation = withAgentThreadCreateSessionMutation.useMutation({
 		async onPostMutation({ result: thread }) {
-			liveQuery(() => []);
+			liveQuery(() => [], {
+				threadId: thread.id,
+			});
 			await navigate({
 				to: "/$locale/app/agent/$threadId",
 				params: {

@@ -1,16 +1,12 @@
-import type { RunStreamEvent } from "@openai/agents";
 import type { AgentInputItem } from "@openai/agents-core";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "@tanstack/react-router";
-import axios from "axios";
-import { createParser } from "eventsource-parser";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
 import { genId } from "@/lib/common/gen-id";
-import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
-import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
-import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
-import { withAgentUsageQuery } from "~/user/agent/query/withAgentUsageQuery";
+import { useAgentRuntime } from "~/user/agent/runtime";
+
+type QueueTextItem = {
+	input: AgentInputItem[];
+};
 
 export namespace useAgent {
 	export interface Props extends MarkSuspense.Props {
@@ -20,140 +16,43 @@ export namespace useAgent {
 	export type Use = ReturnType<typeof useAgent>;
 }
 
-export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
-	const router = useRouter();
-	const queryClient = useQueryClient();
-	const liveQuery = withAgentLiveQuery.useSet();
-	const setHistoryItems = withAgentStreamItemsQuery.useSet();
-	const usageQueryInvalidator = withAgentUsageQuery.useInvalidate();
-
-	const abortControllerRef = useRef<AbortController | null>(null);
-
-	const link = useMemo(() => {
-		return router.buildLocation({
-			to: "/api/agent/$threadId",
-			params: {
-				threadId,
-			},
-		});
-	}, [
-		router,
-		threadId,
-	]);
-
-	useEffect(() => {
-		return () => {
-			abortControllerRef.current?.abort();
-		};
-	}, []);
-
-	const mutation = useMutation<void, Error, AgentInputItem[]>({
-		async mutationFn(input) {
-			setHistoryItems((current) => {
-				return [
-					...(current ?? []),
-					...input,
-				] satisfies AgentInputItem[];
-			}, AgentStreamItemsQuery(threadId));
-
-			liveQuery(() => []);
-
-			abortControllerRef.current = new AbortController();
-			const decoder = new TextDecoder();
-
-			const parser = createParser({
-				onEvent: (message) => {
-					if (message.data.length === 0) {
-						return;
-					}
-
-					liveQuery((prev) => [
-						...(prev ?? []),
-						JSON.parse(message.data) as RunStreamEvent,
-					]);
-				},
-			});
-
-			const response = await axios
-				.create({
-					adapter: "fetch",
-				})
-				.post<ReadableStream<Uint8Array>>(link.href, JSON.stringify(input), {
-					headers: {
-						Accept: "text/event-stream",
-						"Content-Type": "application/json",
-					},
-					signal: abortControllerRef.current.signal,
-					responseType: "stream",
-				});
-
-			const reader = response.data.getReader();
-
-			try {
-				for (;;) {
-					const { done, value } = await reader.read();
-
-					if (done) {
-						break;
-					}
-
-					if (!value) {
-						continue;
-					}
-
-					parser.feed(
-						decoder.decode(value, {
-							stream: true,
-						}),
-					);
-				}
-
-				const rest = decoder.decode();
-
-				if (rest.length > 0) {
-					parser.feed(rest);
-				}
-			} finally {
-				reader.releaseLock();
-			}
-		},
-		onError(error) {
-			console.error(error);
-		},
-		async onSettled() {
-			abortControllerRef.current = null;
-			await withAgentStreamItemsQuery.invalidate(queryClient);
-			liveQuery(() => []);
-			await usageQueryInvalidator();
-		},
-	});
+export const useAgent = ({ threadId }: useAgent.Props) => {
+	const runtime = useAgentRuntime();
+	const state = runtime.getThreadState(threadId);
+	const queueText = getQueueText(state.queue);
 
 	const submit = useCallback(
-		async (item: AgentInputItem[]) => {
-			if (mutation.isPending) {
-				return;
-			}
-
-			try {
-				await mutation.mutateAsync(item);
-			} catch (error) {
-				console.error(error);
-			}
+		async (input: AgentInputItem[]) => {
+			runtime.submit(threadId, input);
 		},
 		[
-			mutation,
+			runtime,
+			threadId,
 		],
 	);
 
+	const clearQueue = useCallback(() => {
+		runtime.clearQueue(threadId);
+	}, [
+		runtime,
+		threadId,
+	]);
+
 	const cancel = useCallback(() => {
-		abortControllerRef.current?.abort();
-		abortControllerRef.current = null;
-	}, []);
+		runtime.cancel(threadId);
+	}, [
+		runtime,
+		threadId,
+	]);
 
 	return {
 		threadId,
-		mutation,
+		isPending: state.isRunning || state.queue.length > 0,
+		isQueueFull: state.queue.length >= 5,
+		queueSize: state.queue.length,
+		queueText,
 		submit,
+		clearQueue,
 		input: {
 			text(text: string): AgentInputItem[] {
 				return [
@@ -192,3 +91,31 @@ export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 		cancel,
 	} as const;
 };
+
+function getQueueText(queue: QueueTextItem[]): string | undefined {
+	const [item] = queue;
+
+	if (!item) {
+		return undefined;
+	}
+
+	const text = item.input.map(getInputText).filter(Boolean).join(" ");
+	const suffix = queue.length > 1 ? ` (+${queue.length - 1})` : "";
+
+	return `${text}${suffix}`;
+}
+
+function getInputText(item: AgentInputItem): string {
+	if ("role" in item && item.role === "user") {
+		if (typeof item.content === "string") {
+			return item.content;
+		}
+
+		return item.content
+			.filter((content) => content.type === "input_text")
+			.map((content) => content.text)
+			.join(" ");
+	}
+
+	return "";
+}

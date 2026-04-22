@@ -1,7 +1,9 @@
 import { type FC, useState } from "react";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
+import { Icon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
+import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
 import { withProxyMutation } from "~/common/gallery/mutation/withProxyMutation";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
@@ -93,6 +95,61 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 					</Container>
 				) : null}
 
+				{chat.queueText ? (
+					<Container
+						data-ui={"AgentInput-[Queue]"}
+						data-ui-inner={"sm"}
+						data-ui-flow={"horizontal"}
+						data-ui-items={"center"}
+						data-ui-gap={"default"}
+						data-ui-tone={"neutral"}
+						data-ui-theme={"light"}
+						data-ui-background={"default"}
+						data-ui-border
+						data-ui-round={"default"}
+						className={[
+							"translate-y-[20%]",
+							"relative",
+							"mx-2",
+						]}
+						data-ui-opacity={"8"}
+					>
+						<Icon
+							icon={"icon-[solar--clock-circle-linear]"}
+							data-ui-text={"lg"}
+							data-ui-opacity={"4"}
+						/>
+
+						<Typo
+							label={chat.queueText}
+							data-ui={"AgentInput-[QueueText]"}
+							data-ui-width={"full"}
+							data-ui-text={"sm"}
+							className={[
+								"truncate",
+							]}
+						/>
+
+						<Button
+							data-action={"clear queued agent messages"}
+							iconEnabled={"icon-[solar--close-circle-linear]"}
+							onClick={chat.clearQueue}
+							iconProps={{
+								"data-ui-text": "lg",
+							}}
+							data-ui-justify="center"
+							data-ui-items="center"
+							data-ui-tone="neutral"
+							data-ui-theme="light"
+							data-ui-square="sm"
+							data-ui-background={undefined}
+							data-ui-border={false}
+							data-ui-shadow={false}
+							data-ui-color="lead"
+						/>
+					</Container>
+				) : null}
+
 				<ChatInput
 					className={[
 						"relative",
@@ -109,7 +166,8 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 						setUploads([]);
 					}}
 					placeholder={translator.text("Write to an agent")}
-					loading={chat.mutation.isPending}
+					loading={chat.isPending}
+					disableSubmit={chat.isQueueFull}
 					cancel={
 						<Button
 							data-action={"stop agent stream"}
@@ -134,6 +192,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 							{(close) => (
 								<AgentMenu
 									close={close}
+									isPending={chat.isPending}
 									galleryState={{
 										value: isGalleryOpen,
 										set: setIsGalleryOpen,

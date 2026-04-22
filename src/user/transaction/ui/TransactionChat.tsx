@@ -81,6 +81,8 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 							onSubmit={submit}
 							placeholder={text.pending}
 							loading={messageMutation.isPending}
+							disableInput={messageMutation.isPending}
+							disableSubmit={messageMutation.isPending}
 							left={left}
 						/>
 					);
@@ -91,6 +93,8 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 							onSubmit={submit}
 							placeholder={text.open}
 							loading={messageMutation.isPending}
+							disableInput={messageMutation.isPending}
+							disableSubmit={messageMutation.isPending}
 							left={left}
 						/>
 					);
@@ -121,6 +125,8 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 							onSubmit={submit}
 							placeholder={text.dispute}
 							loading={messageMutation.isPending}
+							disableInput={messageMutation.isPending}
+							disableSubmit={messageMutation.isPending}
 							left={left}
 						/>
 					);
