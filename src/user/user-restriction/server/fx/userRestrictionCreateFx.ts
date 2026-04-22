@@ -40,6 +40,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 					.set({
 						availableAt: null,
 					})
+					.where("availableAt", ">=", new Date())
 					.where("userId", "=", userId)
 					.execute();
 			});

@@ -31,12 +31,12 @@ export const CurrentRestriction = withFallback(
 			},
 			cursor: {
 				page: 0,
-				size: 1,
+				size: 2,
 			},
 			sort: [
 				{
-					field: "createdAt",
-					order: "desc",
+					field: "availableAt",
+					order: "asc",
 				},
 			],
 		});
@@ -61,33 +61,35 @@ export const CurrentRestriction = withFallback(
 								data-ui-width={"full"}
 							/>
 
-							<Container
-								data-ui-flow={"horizontal"}
-								data-ui-justify={"space-between"}
-								data-ui-items={"center"}
-								data-ui-width={"full"}
-							>
-								<Tx
-									label={"Restriction available in (label)"}
-									data-ui-text={"sm"}
-								/>
-
-								{restriction.availableAt && restriction.availableAt ? (
-									<Typo
-										label={toTimeDiff({
-											type: "human",
-											locale,
-											time: restriction.availableAt,
-										})}
-										data-ui-tone={"brand"}
-										data-ui-theme={"light"}
-										data-ui-color={"lead"}
-										data-ui-font={"bold"}
+							{restriction.isAvailable ? null : (
+								<Container
+									data-ui-flow={"horizontal"}
+									data-ui-justify={"space-between"}
+									data-ui-items={"center"}
+									data-ui-width={"full"}
+								>
+									<Tx
+										label={"Restriction available in (label)"}
 										data-ui-text={"sm"}
-										data-ui-opacity={"8"}
 									/>
-								) : null}
-							</Container>
+
+									{restriction.availableAt ? (
+										<Typo
+											label={toTimeDiff({
+												type: "human",
+												locale,
+												time: restriction.availableAt,
+											})}
+											data-ui-tone={"brand"}
+											data-ui-theme={"light"}
+											data-ui-color={"lead"}
+											data-ui-font={"bold"}
+											data-ui-text={"sm"}
+											data-ui-opacity={"8"}
+										/>
+									) : null}
+								</Container>
+							)}
 						</Container>
 					);
 				}}
