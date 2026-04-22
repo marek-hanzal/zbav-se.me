@@ -31,15 +31,14 @@ export const Agent: FC<Agent.Props> = ({ threadId, ...props }) => {
 				data-ui-gap="default"
 				data-ui-scroll="vertical"
 				data-ui-height="full"
-				className={[
-					"pb-42",
-				]}
 			>
-				<AgentMessageList
-					containerRef={containerRef}
-					isPending={chat.mutation.isPending}
-					threadId={threadId}
-				/>
+				<div className={"pb-42"}>
+					<AgentMessageList
+						containerRef={containerRef}
+						isPending={chat.mutation.isPending}
+						threadId={threadId}
+					/>
+				</div>
 			</Container>
 
 			<AgentInput chat={chat} />
