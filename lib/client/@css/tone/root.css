@@ -236,9 +236,9 @@
 	);
 	--tone-neutral-light-lead: color-mix(in srgb, var(--color-slate-700) 100%, transparent);
 	--tone-neutral-light-lead-active: color-mix(in srgb, var(--tone-neutral-light-lead) 95%, black);
-	--tone-neutral-light-bg: color-mix(in srgb, var(--color-slate-100) 75%, transparent);
+	--tone-neutral-light-bg: color-mix(in srgb, var(--color-slate-100) 75%, white);
 	--tone-neutral-light-bg-active: color-mix(in srgb, var(--tone-neutral-light-bg) 92.5%, white);
-	--tone-neutral-light-bg-alt: color-mix(in srgb, var(--color-slate-200) 40%, transparent);
+	--tone-neutral-light-bg-alt: color-mix(in srgb, var(--color-slate-200) 40%, white);
 	--tone-neutral-light-bg-alt-active: color-mix(
 		in srgb,
 		var(--tone-neutral-light-bg-alt) 92.5%,
