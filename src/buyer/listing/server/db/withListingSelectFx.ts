@@ -11,7 +11,7 @@ import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectF
 
 export namespace withListingSelectFx {
 	export interface Props extends withListingSourceSelectFx.Props {
-		userId: string;
+		//
 	}
 
 	export type Select = ReturnType<typeof withListingSelectFx>;
@@ -24,6 +24,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	hasExplicitCategory,
 }: withListingSelectFx.Props) {
 	const listingSourceSelect = yield* withListingSourceSelectFx({
+		userId,
 		sort,
 		meta,
 		hasExplicitCategory,

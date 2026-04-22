@@ -1,12 +1,15 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { describe, expect, it } from "vitest";
+import { DateContextFx } from "@/lib/common/date";
+import { genId } from "@/lib/common/gen-id";
 import { favouriteCreateFx } from "~/buyer/favourite/server/fx/favouriteCreateFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
 import { ignoreCreateFx } from "~/buyer/ignore/server/fx/ignoreCreateFx";
 import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
 import { listingCountFx } from "~/buyer/listing/server/fx/listingCountFx";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
@@ -15,6 +18,7 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+type Restriction = RestrictionEnumSchema.Type;
 
 const personalDelivery: ListingDeliveryEnumSchema.Type[] = [
 	"personal",
@@ -99,6 +103,63 @@ const patchCategoryDiscovery = (
 			.where("id", "=", props.id)
 			.executeTakeFirstOrThrow(),
 	);
+
+const createRestrictedCategory = (
+	database: TestDatabase,
+	props: {
+		slug: string;
+		restriction: Restriction;
+	},
+) =>
+	Effect.promise(async () => {
+		const category = {
+			id: genId(),
+			group: "Buyer listing restriction fixture",
+			category: `Buyer listing restriction ${props.restriction}`,
+			slug: props.slug,
+			sort: 0,
+			locale: "cs",
+			discovery: "implicit" as const,
+			restriction: props.restriction,
+		};
+
+		await database.kysely.insertInto("category").values(category).execute();
+
+		return category;
+	});
+
+const createUserRestriction = (
+	database: TestDatabase,
+	props: {
+		userId: string;
+		restriction: Restriction;
+	},
+) =>
+	Effect.gen(function* () {
+		const dateContext = yield* DateContextFx;
+		const now = dateContext.now();
+
+		yield* Effect.promise(() =>
+			database.kysely
+				.insertInto("user_restriction")
+				.values({
+					id: genId(),
+					userId: props.userId,
+					restriction: props.restriction,
+					availableAt: now
+						.minus({
+							minutes: 10,
+						})
+						.toJSDate(),
+					createdAt: now
+						.minus({
+							minutes: 10,
+						})
+						.toJSDate(),
+				})
+				.execute(),
+		);
+	});
 
 describe("buyer listing discovery flow", () => {
 	it("filters by buyer state, location and scope without leaking foreign data", async () => {
@@ -340,6 +401,114 @@ describe("buyer listing discovery flow", () => {
 			expect(explicitByCategoryIn.map((item) => item.id)).toEqual([
 				explicitListing.id,
 			]);
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+
+	it("filters listings by active buyer restriction regardless of category input", async () => {
+		const database = await testabase("buyer-listing-active-restriction-scope");
+
+		return Effect.gen(function* () {
+			const users = yield* createUsersFx({});
+			const noneCategory = yield* createRestrictedCategory(database, {
+				slug: "buyer-listing-restriction-none",
+				restriction: "none",
+			});
+			const adultCategory = yield* createRestrictedCategory(database, {
+				slug: "buyer-listing-restriction-adult",
+				restriction: "adult",
+			});
+			const restrictedCategory = yield* createRestrictedCategory(database, {
+				slug: "buyer-listing-restriction-restricted",
+				restriction: "restricted",
+			});
+			const title = "Buyer listing restriction visibility marker";
+
+			const noneListing = yield* createListingFx(users.seller.id, {
+				title,
+				categoryId: noneCategory.id,
+			});
+			const adultCategoryListing = yield* createListingFx(users.seller.id, {
+				title,
+				categoryId: adultCategory.id,
+			});
+			const restrictedCategoryListing = yield* createListingFx(users.seller.id, {
+				title,
+				categoryId: restrictedCategory.id,
+			});
+			const adultListingRestriction = yield* createListingFx(users.seller.id, {
+				title,
+				categoryId: noneCategory.id,
+				restriction: "adult",
+			});
+			const restrictedListingRestriction = yield* createListingFx(users.seller.id, {
+				title,
+				categoryId: noneCategory.id,
+				restriction: "restricted",
+			});
+			const categoryIdIn = [
+				noneCategory.id,
+				adultCategory.id,
+				restrictedCategory.id,
+			];
+
+			const defaultCollection = yield* listingCollectionFx({
+				userId: users.buyer.id,
+				scope: {},
+				where: {
+					title,
+					categoryIdIn,
+				},
+			});
+			const defaultIds = defaultCollection.map((item) => item.id).sort();
+
+			expect(defaultIds).toEqual(
+				[
+					noneListing.id,
+				].sort(),
+			);
+
+			yield* createUserRestriction(database, {
+				userId: users.buyer.id,
+				restriction: "adult",
+			});
+
+			const adultCollection = yield* listingCollectionFx({
+				userId: users.buyer.id,
+				scope: {},
+				where: {
+					title,
+					categoryIdIn,
+				},
+			});
+			const adultCount = yield* listingCountFx({
+				userId: users.buyer.id,
+				scope: {},
+				where: {
+					title,
+					categoryIdIn,
+				},
+			});
+			const adultIds = adultCollection.map((item) => item.id).sort();
+			const explicitRestrictedCollection = yield* listingCollectionFx({
+				userId: users.buyer.id,
+				scope: {},
+				where: {
+					title,
+					categoryId: restrictedCategory.id,
+				},
+			});
+
+			expect(adultIds).toEqual(
+				[
+					noneListing.id,
+					adultCategoryListing.id,
+					adultListingRestriction.id,
+				].sort(),
+			);
+			expect(adultCount).toBe(adultCollection.length);
+			expect(adultIds).not.toContain(restrictedCategoryListing.id);
+			expect(adultIds).not.toContain(restrictedListingRestriction.id);
+			expect(explicitRestrictedCollection).toEqual([]);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
