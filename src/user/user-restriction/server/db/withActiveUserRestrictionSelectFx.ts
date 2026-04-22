@@ -18,6 +18,7 @@ export const withActiveUserRestrictionSelectFx = Effect.fn("withActiveUserRestri
 		const sourceSelect = yield* withUserRestrictionSourceSelectFx({});
 
 		return sourceSelect
+			.clearSelect()
 			.select("ur.restriction")
 			.where("ur.userId", "=", userId)
 			.where("ur.availableAt", "<=", dateContext.now().toJSDate())

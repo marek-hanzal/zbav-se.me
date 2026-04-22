@@ -4,6 +4,9 @@ import { UserRestrictionTableSchema } from "~/server/database/@table/UserRestric
 export const UserRestrictionSchema = z
 	.looseObject({
 		...UserRestrictionTableSchema.shape,
+		isAvailable: z.boolean().meta({
+			description: "Is this restriction already available?",
+		}),
 	})
 	.omit({
 		userId: true,

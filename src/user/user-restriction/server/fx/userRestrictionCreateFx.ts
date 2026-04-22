@@ -32,6 +32,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 
 			const id = genId();
 			const createdAt = dateContext.now().toJSDate();
+			const isAvailable = availableAt.getTime() <= createdAt.getTime();
 
 			yield* Effect.promise(async () => {
 				await kysely
@@ -61,6 +62,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 					restriction,
 					availableAt,
 					createdAt,
+					isAvailable,
 				} as const;
 			});
 		}),

@@ -1,5 +1,7 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { match } from "ts-pattern";
+import { DateContextFx } from "@/lib/common/date";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { UserRestrictionSortSchema } from "../schema/UserRestrictionSortSchema";
 
@@ -16,6 +18,8 @@ export namespace withUserRestrictionSourceSelectFx {
 export const withUserRestrictionSourceSelectFx = Effect.fn("withUserRestrictionSourceSelectFx")(
 	function* ({ sort }: withUserRestrictionSourceSelectFx.Props) {
 		const { kysely } = yield* KyselyContextFx;
+		const dateContext = yield* DateContextFx;
+		const now = dateContext.now().toJSDate();
 
 		let query = kysely
 			.selectFrom("user_restriction as ur")
@@ -29,6 +33,14 @@ export const withUserRestrictionSourceSelectFx = Effect.fn("withUserRestrictionS
 				.exhaustive();
 		}
 
-		return query;
+		return query.select((eb) => [
+			"ur.id",
+			"ur.createdAt",
+			"ur.restriction",
+			"ur.availableAt",
+			sql<boolean>`coalesce(${eb.ref("ur.availableAt")} <= ${eb.val(now)}, false)`.as(
+				"isAvailable",
+			),
+		]);
 	},
 );

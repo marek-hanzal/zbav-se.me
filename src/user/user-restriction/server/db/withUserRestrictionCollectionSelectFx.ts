@@ -14,14 +14,7 @@ export namespace withUserRestrictionCollectionSelectFx {
 export const withUserRestrictionCollectionSelectFx = Effect.fn(
 	"withUserRestrictionCollectionSelectFx",
 )(function* ({ sort }: withUserRestrictionCollectionSelectFx.Props) {
-	const sourceSelect = yield* withUserRestrictionSourceSelectFx({
+	return yield* withUserRestrictionSourceSelectFx({
 		sort,
 	});
-
-	return sourceSelect.select([
-		"ur.id",
-		"ur.createdAt",
-		"ur.restriction",
-		"ur.availableAt",
-	]);
 });

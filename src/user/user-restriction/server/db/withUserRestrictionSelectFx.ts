@@ -12,14 +12,7 @@ export namespace withUserRestrictionSelectFx {
 export const withUserRestrictionSelectFx = Effect.fn("withUserRestrictionSelectFx")(function* ({
 	sort,
 }: withUserRestrictionSelectFx.Props) {
-	const sourceSelect = yield* withUserRestrictionSourceSelectFx({
+	return yield* withUserRestrictionSourceSelectFx({
 		sort,
 	});
-
-	return sourceSelect.select([
-		"ur.id",
-		"ur.createdAt",
-		"ur.restriction",
-		"ur.availableAt",
-	]);
 });
