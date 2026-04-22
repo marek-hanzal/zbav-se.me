@@ -1,12 +1,14 @@
 import type { RunStreamEvent } from "@openai/agents";
 import type { AgentInputItem } from "@openai/agents-core";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAsyncQueuer } from "@tanstack/react-pacer/async-queuer";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import axios from "axios";
 import { createParser } from "eventsource-parser";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { type RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
 import { genId } from "@/lib/common/gen-id";
+import { useLogger } from "~/common/log/hook/useLogger";
 import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
 import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
@@ -15,6 +17,14 @@ import { withAgentUsageQuery } from "~/user/agent/query/withAgentUsageQuery";
 export namespace useAgent {
 	export interface Props extends MarkSuspense.Props {
 		threadId: string;
+	}
+
+	export interface SubmitInput {
+		input: AgentInputItem[];
+	}
+
+	export interface QueuerState {
+		isPending: boolean;
 	}
 
 	export type Use = ReturnType<typeof useAgent>;
@@ -26,6 +36,12 @@ export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 	const liveQuery = withAgentLiveQuery.useSet();
 	const setHistoryItems = withAgentStreamItemsQuery.useSet();
 	const usageQueryInvalidator = withAgentUsageQuery.useInvalidate();
+	const logger = useLogger({
+		name: [
+			"hook",
+			"useAgent",
+		],
+	});
 
 	const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -47,112 +63,79 @@ export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 		};
 	}, []);
 
-	const mutation = useMutation<void, Error, AgentInputItem[]>({
-		async mutationFn(input) {
+	const appendHistoryItems = useCallback(
+		(input: AgentInputItem[]) => {
 			setHistoryItems((current) => {
+				const ids = new Set((current ?? []).map((item) => item.id).filter(Boolean));
+
 				return [
 					...(current ?? []),
-					...input,
+					...input.filter((item) => !item.id || !ids.has(item.id)),
 				] satisfies AgentInputItem[];
 			}, AgentStreamItemsQuery(threadId));
-
-			liveQuery(() => []);
-
-			abortControllerRef.current = new AbortController();
-			const decoder = new TextDecoder();
-
-			const parser = createParser({
-				onEvent: (message) => {
-					if (message.data.length === 0) {
-						return;
-					}
-
-					liveQuery((prev) => [
-						...(prev ?? []),
-						JSON.parse(message.data) as RunStreamEvent,
-					]);
-				},
-			});
-
-			const response = await axios
-				.create({
-					adapter: "fetch",
-				})
-				.post<ReadableStream<Uint8Array>>(link.href, JSON.stringify(input), {
-					headers: {
-						Accept: "text/event-stream",
-						"Content-Type": "application/json",
-					},
-					signal: abortControllerRef.current.signal,
-					responseType: "stream",
-				});
-
-			const reader = response.data.getReader();
-
-			try {
-				for (;;) {
-					const { done, value } = await reader.read();
-
-					if (done) {
-						break;
-					}
-
-					if (!value) {
-						continue;
-					}
-
-					parser.feed(
-						decoder.decode(value, {
-							stream: true,
-						}),
-					);
-				}
-
-				const rest = decoder.decode();
-
-				if (rest.length > 0) {
-					parser.feed(rest);
-				}
-			} finally {
-				reader.releaseLock();
-			}
-		},
-		onError(error) {
-			console.error(error);
-		},
-		async onSettled() {
-			abortControllerRef.current = null;
-			await withAgentStreamItemsQuery.invalidate(queryClient);
-			liveQuery(() => []);
-			await usageQueryInvalidator();
-		},
-	});
-
-	const submit = useCallback(
-		async (item: AgentInputItem[]) => {
-			if (mutation.isPending) {
-				return;
-			}
-
-			try {
-				await mutation.mutateAsync(item);
-			} catch (error) {
-				console.error(error);
-			}
 		},
 		[
-			mutation,
+			setHistoryItems,
+			threadId,
+		],
+	);
+
+	const queuer = useAsyncQueuer<useAgent.SubmitInput, useAgent.QueuerState>(
+		async ({ input }) => {
+			try {
+				await submitAgentRun({
+					abortControllerRef,
+					input,
+					link: link.href,
+					liveQuery,
+				});
+			} finally {
+				abortControllerRef.current = null;
+				await withAgentStreamItemsQuery.invalidate(queryClient);
+				liveQuery(() => []);
+				await usageQueryInvalidator();
+			}
+		},
+		{
+			concurrency: 1,
+			key: `agent-${threadId}`,
+			throwOnError: false,
+			onError(error) {
+				logger.error("Agent queue item failed", {
+					error: getErrorMessage(error),
+					threadId,
+				});
+			},
+		},
+		(state) => ({
+			isPending: state.isExecuting || state.activeItems.length > 0 || state.size > 0,
+		}),
+	);
+
+	const submit = useCallback(
+		async (input: AgentInputItem[]) => {
+			appendHistoryItems(input);
+			queuer.addItem({
+				input,
+			});
+		},
+		[
+			appendHistoryItems,
+			queuer,
 		],
 	);
 
 	const cancel = useCallback(() => {
 		abortControllerRef.current?.abort();
 		abortControllerRef.current = null;
-	}, []);
+		queuer.abort();
+	}, [
+		queuer,
+	]);
 
 	return {
 		threadId,
-		mutation,
+		isPending: queuer.state.isPending,
 		submit,
 		input: {
 			text(text: string): AgentInputItem[] {
@@ -192,3 +175,90 @@ export const useAgent = ({ _suspense, threadId }: useAgent.Props) => {
 		cancel,
 	} as const;
 };
+
+// =================================================================================================
+
+namespace submitAgentRun {
+	export interface Props {
+		abortControllerRef: RefObject<AbortController | null>;
+		input: AgentInputItem[];
+		link: string;
+		liveQuery: ReturnType<typeof withAgentLiveQuery.useSet>;
+	}
+}
+
+async function submitAgentRun({
+	abortControllerRef,
+	input,
+	link,
+	liveQuery,
+}: submitAgentRun.Props): Promise<void> {
+	liveQuery(() => []);
+
+	abortControllerRef.current = new AbortController();
+	const decoder = new TextDecoder();
+
+	const parser = createParser({
+		onEvent: (message) => {
+			if (message.data.length === 0) {
+				return;
+			}
+
+			liveQuery((prev) => [
+				...(prev ?? []),
+				JSON.parse(message.data) as RunStreamEvent,
+			]);
+		},
+	});
+
+	const response = await axios
+		.create({
+			adapter: "fetch",
+		})
+		.post<ReadableStream<Uint8Array>>(link, JSON.stringify(input), {
+			headers: {
+				Accept: "text/event-stream",
+				"Content-Type": "application/json",
+			},
+			signal: abortControllerRef.current.signal,
+			responseType: "stream",
+		});
+
+	const reader = response.data.getReader();
+
+	try {
+		for (;;) {
+			const { done, value } = await reader.read();
+
+			if (done) {
+				break;
+			}
+
+			if (!value) {
+				continue;
+			}
+
+			parser.feed(
+				decoder.decode(value, {
+					stream: true,
+				}),
+			);
+		}
+
+		const rest = decoder.decode();
+
+		if (rest.length > 0) {
+			parser.feed(rest);
+		}
+	} finally {
+		reader.releaseLock();
+	}
+}
+
+function getErrorMessage(error: unknown): string {
+	if (error instanceof Error) {
+		return error.message;
+	}
+
+	return String(error);
+}
