@@ -9,6 +9,7 @@ import { DeliveryValueList } from "~/common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
 import { TitleValue } from "~/common/title/ui/TitleValue";
+import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import type { FeedEditor } from "./FeedEditor";
 import { AgeValueList } from "./value/AgeValueList";
 import { CategoryValueList } from "./value/CategoryValueList";
@@ -45,6 +46,10 @@ export const Editor: FC<Editor.Props> = ({
 			data-ui-gap="lg"
 			{...props}
 		>
+			<Group>
+				<CurrentRestriction _suspense={_suspense} />
+			</Group>
+
 			{hidden?.includes("header") ? null : (
 				<Group>
 					<GalleryValue
