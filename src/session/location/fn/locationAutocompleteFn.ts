@@ -35,9 +35,7 @@ export const locationAutocompleteFn = createServerFn()
 
 		return zodGuardFx({
 			schema: z.array(LocationSchema),
-			dataFx: locationAutocompleteFx({
-				...data,
-			}),
+			dataFx: locationAutocompleteFx(data),
 		}).pipe(
 			withKyselyFx(database),
 			withLocationFx({

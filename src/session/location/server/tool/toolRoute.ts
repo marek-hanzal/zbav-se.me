@@ -13,10 +13,12 @@ export const toolRoute = tool({
 	name: "route",
 	needsApproval: false,
 	description: `
-Calculates route distance between two coordinates in meters.
+Calculates route distance between two coordinates (locations) in meters.
 
 Use when the user needs travel distance between two known points. Coordinates must be provided
 as latitude and longitude. Prefer "drive" unless the user clearly asks for walking, cycling, or trucking.
+
+You need to resolve lat/lon using "location-browse" tool before this.
 	`.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(RouteSchema),
@@ -31,9 +33,6 @@ as latitude and longitude. Prefer "drive" unless the user clearly asks for walki
 			data,
 		});
 
-		return {
-			distance,
-			unit: "meters",
-		};
+		return `${distance.toFixed(2)}m`;
 	},
 });

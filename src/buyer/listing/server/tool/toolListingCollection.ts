@@ -4,7 +4,6 @@ import { z } from "zod";
 import { listingCollectionFn } from "~/buyer/listing/fn/listingCollectionFn";
 import { listingCountFn } from "~/buyer/listing/fn/listingCountFn";
 import { ListingToolQuerySchema } from "~/buyer/listing/server/schema/ListingToolQuerySchema";
-import { ModeEnumSchema } from "~/common/agent/enum/ModeEnumSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
@@ -20,7 +19,6 @@ const InputSchema = z
 			"collection",
 		]),
 		query: ListingToolQuerySchema,
-		mode: ModeEnumSchema,
 	})
 	.strip();
 
@@ -31,10 +29,9 @@ export const toolListingCollection = tool({
 Buyer-visible listings matching the query.
 
 Modes:
-- collection: return a small page of matching listings
+- collection: return a small page of matching listings; this is whole heavy listing dataset
 - count: return how many matching listings exist
 
-Use for buyer-side browsing and search.
 Do not use for seller-owned listing management.
 
 Prefer query filters such as category, location, price, favourite, ignored, feed, or transaction when relevant.
@@ -46,7 +43,7 @@ Prefer query filters such as category, location, price, favourite, ignored, feed
 			input,
 		});
 
-		const { type, query, mode } = await InputSchema.parseAsync(input);
+		const { type, query } = await InputSchema.parseAsync(input);
 
 		return match(type)
 			.with("count", async () => {
@@ -71,29 +68,14 @@ Prefer query filters such as category, location, price, favourite, ignored, feed
 					},
 				});
 
-				return match(mode)
-					.with("browse", () => {
-						return {
-							count: items.length,
-							items: items.map((item) => {
-								return {
-									id: item.id,
-									title: item.title,
-									description: item.description?.substring(0, 64),
-									price: item.price,
-									priceType: item.priceType,
-									distance: item.distance,
-								};
-							}),
-						} as const;
-					})
-					.with("detail", () => {
-						return {
-							count: items.length,
-							items,
-						} as const;
-					})
-					.exhaustive();
+				if (!items) {
+					return "nothing";
+				}
+
+				return {
+					count: items.length,
+					items,
+				} as const;
 			})
 			.exhaustive();
 	},

@@ -16,15 +16,12 @@ export namespace ToolCallItem {
 }
 
 export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, inline, ...props }) => {
+	inline = false;
 	if (inline) {
 		return (
 			<Group
 				data-ui={"ToolCallItem"}
 				data-id={item.id}
-				// data-ui-tone="neutral"
-				// data-ui-theme="light"
-				// data-ui-background="alt"
-				// data-ui-inner="default"
 				data-ui-shadow={undefined}
 				data-ui-opacity="6"
 				{...props}
@@ -41,10 +38,9 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, inline, ...p
 		);
 	}
 
-	const result = items.find(
-		(i): i is FunctionCallResultItem =>
-			i.type === "function_call_result" && i.callId === item.callId,
-	);
+	const result = items.find((i): i is FunctionCallResultItem => {
+		return i.type === "function_call_result" && i.callId === item.callId;
+	});
 	const output = getToolOutputText(result);
 
 	return (

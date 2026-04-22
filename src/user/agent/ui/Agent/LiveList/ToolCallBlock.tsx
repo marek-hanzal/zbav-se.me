@@ -27,15 +27,12 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 }) => {
 	const state = useToolCalls(events, itemId);
 
+	inline = false;
 	if (inline) {
 		return (
 			<Group
 				data-ui={"ToolCallBlock"}
 				data-id={itemId}
-				// data-ui-tone="neutral"
-				// data-ui-theme="light"
-				// data-ui-background="alt"
-				// data-ui-inner="default"
 				data-ui-shadow={undefined}
 				data-ui-opacity="6"
 				{...props}
