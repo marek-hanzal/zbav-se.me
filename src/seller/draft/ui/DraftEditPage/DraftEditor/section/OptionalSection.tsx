@@ -10,6 +10,7 @@ import { ConditionValue } from "../value/ConditionValue";
 import { ConsValueList } from "../value/ConsValueList";
 import { DescriptionValue } from "../value/DescriptionValue";
 import { ProsValueList } from "../value/ProsValueList";
+import { RestrictionValue } from "../value/RestrictionValue";
 import { WarrantyValue } from "../value/WarrantyValue";
 
 export namespace OptionalSection {
@@ -31,6 +32,19 @@ export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) =>
 				data-ui-opacity="8"
 				className={"text-center"}
 			/>
+
+			<Group>
+				<RestrictionValue
+					data-ui={"set listing restriction"}
+					restriction={draft.restriction}
+					action={<ChevronAction />}
+					onClick={() => onView("restriction")}
+					wrapperProps={{
+						"data-ui-tone": draft.restriction ? "neutral" : "secondary",
+					}}
+					data-ui-disabled={!draft.category}
+				/>
+			</Group>
 
 			<Group>
 				<DescriptionValue

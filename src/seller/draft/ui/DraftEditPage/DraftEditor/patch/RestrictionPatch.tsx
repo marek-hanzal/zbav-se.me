@@ -98,7 +98,12 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 				data-ui-gap="default"
 			>
 				<form.AppField name={"restriction"}>
-					{(_field) => <RestrictionSelect selection={selection} />}
+					{(_field) => (
+						<RestrictionSelect
+							selection={selection}
+							minLevel={draft.category?.restriction ?? "none"}
+						/>
+					)}
 				</form.AppField>
 
 				<form.Subscribe selector={(state) => state.isValid}>

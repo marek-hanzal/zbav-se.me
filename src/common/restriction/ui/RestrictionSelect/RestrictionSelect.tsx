@@ -5,10 +5,29 @@ import type { EntitySchema } from "@/lib/common/schema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { Item } from "./Item";
 
+const getSelectableRestrictions = (
+	minLevel: RestrictionEnumSchema.Type,
+	maxLevel: RestrictionEnumSchema.Type,
+) => {
+	const { options } = RestrictionEnumSchema;
+	const minIndex = options.indexOf(minLevel);
+	const maxIndex = options.indexOf(maxLevel);
+
+	return options.slice(minIndex, maxIndex + 1);
+};
+
 export namespace RestrictionSelect {
 	export interface Props extends Container.Props {
 		selection: useSelection.Selection<EntitySchema.Type>;
 		allowClear?: boolean;
+		/**
+		 * Minimum selectable level.
+		 */
+		minLevel?: RestrictionEnumSchema.Type;
+		/**
+		 * Maximum selectable level.
+		 */
+		maxLevel?: RestrictionEnumSchema.Type;
 	}
 }
 
@@ -18,9 +37,13 @@ export namespace RestrictionSelect {
  */
 export const RestrictionSelect: FC<RestrictionSelect.Props> = ({
 	allowClear,
+	minLevel = "none",
+	maxLevel = "restricted",
 	selection,
 	...props
 }) => {
+	const restrictions = getSelectableRestrictions(minLevel, maxLevel);
+
 	return (
 		<Container
 			data-ui="RestrictionSelect"
@@ -31,7 +54,7 @@ export const RestrictionSelect: FC<RestrictionSelect.Props> = ({
 			data-ui-gap="lg"
 			{...props}
 		>
-			{Object.values(RestrictionEnumSchema.enum).map((restriction) => {
+			{restrictions.map((restriction) => {
 				return (
 					<Item
 						key={restriction}

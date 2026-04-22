@@ -151,8 +151,8 @@
 12e75835dcd53665e98ab2e6c1064379dd6094870afd31f532f39e47:
     ref: Listing restriction (hint)
     value: >
-        Důležitá hodnota, pokud prodáváš něco, co podléhá např. omezení věku
-        nebo dokonce vyžaduje oprávnění k užití.
+        Kategorie definuje základní omezení, nicméně máš možnost přitvrdit,
+        pokud to tak cítíš.
 14663fea507627f6c98c1360a9aa3c6d275ed885e44051e7d88af28a:
     ref: Feed age (hint)
     value: >
