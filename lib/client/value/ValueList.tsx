@@ -35,7 +35,7 @@ export namespace ValueList {
 		action?: ReactNode;
 		loading?: boolean;
 		wrapperProps?: Container.Props;
-		labelProps?: Typo.PropsEx;
+		textLabelProps?: Typo.PropsEx;
 	}
 
 	export type PropsEx<TItem extends EntitySchema.Type> = Omit<
@@ -53,7 +53,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 	action,
 	loading,
 	wrapperProps,
-	labelProps,
+	textLabelProps,
 	...props
 }: ValueList.Props<TItem>) => {
 	return (
@@ -87,7 +87,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 					data-ui-font="semibold"
 					data-ui-display="block"
 					data-ui-color="lead"
-					{...labelProps}
+					{...textLabelProps}
 				/>
 
 				{action}
