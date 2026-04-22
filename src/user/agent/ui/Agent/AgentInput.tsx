@@ -125,9 +125,8 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 							data-ui={"AgentInput-[QueueText]"}
 							data-ui-width={"full"}
 							data-ui-text={"sm"}
-							className={[
-								"truncate",
-							]}
+							data-ui-truncate
+							data-ui-opacity={"6"}
 						/>
 
 						<Button
