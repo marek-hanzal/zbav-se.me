@@ -1,9 +1,7 @@
-import { Suspense } from "react";
+import { type FC, Suspense } from "react";
 import { Container } from "@/lib/client/container";
-import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import { useRenderLogger } from "@/lib/client/log";
-import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { useListingEvent } from "~/buyer/listing/hook/useListingEvent";
@@ -24,132 +22,136 @@ export namespace ListingCard {
 	}
 }
 
-export const ListingCard = withFallback(
-	({ _suspense, feedId, listingId, onView, children, ...props }: ListingCard.Props) => {
-		const { data: feed } = withFeedQuery.useFetchQuery(feedId);
-		const { data: listing } = withListingQuery.useFetchQuery(listingId);
+export const ListingCard: FC<ListingCard.Props> = ({
+	_suspense,
+	feedId,
+	listingId,
+	onView,
+	children,
+	...props
+}: ListingCard.Props) => {
+	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
+	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 
-		useListingEvent({
-			enabled: true,
+	useListingEvent({
+		enabled: true,
+		listingId,
+		event: "view",
+		timeoutMs: 2_500,
+	});
+
+	useRenderLogger({
+		logger: getRootLogger(),
+		name: "ListingCard",
+		meta: {
 			listingId,
-			event: "view",
-			timeoutMs: 2_500,
-		});
+		},
+	});
 
-		useRenderLogger({
-			logger: getRootLogger(),
-			name: "ListingCard",
-			meta: {
-				listingId,
-			},
-		});
+	const disableThump = listing.isIgnored || listing.hasFlag;
+	const disableFlags = listing.isFavourite || listing.thumb === "like";
 
-		const disableThump = listing.isIgnored || listing.hasFlag;
-		const disableFlags = listing.isFavourite || listing.thumb === "like";
+	return (
+		<Container
+			data-ui={"ListingCard"}
+			data-ui-layout="vertical-flex"
+			data-ui-gap="xl"
+			data-ui-inner="default"
+			{...props}
+		>
+			<HeroSection
+				_suspense={_suspense}
+				feedId={feedId}
+				listing={listing}
+				onView={onView}
+			/>
 
-		return (
-			<Container
-				data-ui={"ListingCard"}
-				data-ui-layout="vertical-flex"
-				data-ui-gap="xl"
-				data-ui-inner="default"
-				{...props}
-			>
-				<HeroSection
-					_suspense={_suspense}
-					feedId={feedId}
-					listing={listing}
-					onView={onView}
-				/>
+			<InfoSection
+				_suspense={_suspense}
+				listing={listing}
+				onView={onView}
+			/>
 
-				<InfoSection
-					_suspense={_suspense}
-					listing={listing}
-					onView={onView}
-				/>
-
-				{listing.my ? null : (
-					<>
-						<Container
-							data-ui-layout="horizontal-flex"
-							data-ui-width="full"
-							data-ui-items="center"
-							data-ui-justify="space-evenly"
+			{listing.my ? null : (
+				<>
+					<Container
+						data-ui-layout="horizontal-flex"
+						data-ui-width="full"
+						data-ui-items="center"
+						data-ui-justify="space-evenly"
+					>
+						<Suspense
+							fallback={
+								<ThumbLikeButton.Fallback
+									listingId={listingId}
+									meta={undefined}
+									disabled={disableThump || !!listing.thumb}
+								/>
+							}
 						>
-							<Suspense
-								fallback={
-									<ThumbLikeButton.Fallback
-										listingId={listingId}
-										meta={undefined}
-										disabled={disableThump || !!listing.thumb}
-									/>
-								}
-							>
-								<ThumbLikeButton
-									_suspense={"I know"}
+							<ThumbLikeButton
+								_suspense={"I know"}
+								listingId={listingId}
+								meta={feed.query.meta}
+								disabled={disableThump || !!listing.thumb}
+							/>
+						</Suspense>
+
+						<Suspense
+							fallback={
+								<ThumbDislikeButton.Fallback
 									listingId={listingId}
-									meta={feed.query.meta}
+									meta={undefined}
 									disabled={disableThump || !!listing.thumb}
 								/>
-							</Suspense>
+							}
+						>
+							<ThumbDislikeButton
+								_suspense={"I know"}
+								listingId={listingId}
+								meta={feed.query.meta}
+								disabled={disableThump || !!listing.thumb}
+							/>
+						</Suspense>
+					</Container>
 
-							<Suspense
-								fallback={
-									<ThumbDislikeButton.Fallback
-										listingId={listingId}
-										meta={undefined}
-										disabled={disableThump || !!listing.thumb}
-									/>
-								}
-							>
-								<ThumbDislikeButton
-									_suspense={"I know"}
+					<Group>
+						<Suspense
+							fallback={
+								<IgnoreButton.Fallback
 									listingId={listingId}
-									meta={feed.query.meta}
-									disabled={disableThump || !!listing.thumb}
-								/>
-							</Suspense>
-						</Container>
-
-						<Group>
-							<Suspense
-								fallback={
-									<IgnoreButton.Fallback
-										listingId={listingId}
-										meta={undefined}
-										disabled={disableFlags}
-									/>
-								}
-							>
-								<IgnoreButton
-									_suspense={"I know"}
-									listingId={listingId}
-									meta={feed.query.meta}
+									meta={undefined}
 									disabled={disableFlags}
 								/>
-							</Suspense>
+							}
+						>
+							<IgnoreButton
+								_suspense={"I know"}
+								listingId={listingId}
+								meta={feed.query.meta}
+								disabled={disableFlags}
+							/>
+						</Suspense>
 
-							<Suspense
-								fallback={
-									<FlagButton.Fallback
-										listingId={listingId}
-										meta={undefined}
-										disabled={disableFlags}
-									/>
-								}
-							>
-								<FlagButton
-									_suspense={"I know"}
+						<Suspense
+							fallback={
+								<FlagButton.Fallback
 									listingId={listingId}
-									meta={feed.query.meta}
+									meta={undefined}
 									disabled={disableFlags}
 								/>
-							</Suspense>
-						</Group>
-					</>
-				)}
-			</Container>
-		);
-	},
-	SpinnerContainer,
-);
+							}
+						>
+							<FlagButton
+								_suspense={"I know"}
+								listingId={listingId}
+								meta={feed.query.meta}
+								disabled={disableFlags}
+							/>
+						</Suspense>
+					</Group>
+				</>
+			)}
+		</Container>
+	);
+};
