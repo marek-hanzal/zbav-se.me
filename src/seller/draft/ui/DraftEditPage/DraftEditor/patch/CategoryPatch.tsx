@@ -50,6 +50,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ draft, onCancel, onView
 			mutation.mutate({
 				patch: {
 					categoryId: value.categoryId,
+					restriction: null,
 				},
 				query: {
 					where: {
