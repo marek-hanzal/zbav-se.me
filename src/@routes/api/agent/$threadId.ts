@@ -206,6 +206,7 @@ export const Route = createFileRoute("/api/agent/$threadId")({
 									session,
 									stream: true,
 									signal: abortController.signal,
+									maxTurns: 32,
 								});
 
 								logger.trace("Run created");
