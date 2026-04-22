@@ -1,6 +1,7 @@
-import type { PropsWithChildren, ReactNode } from "react";
+import { type PropsWithChildren, type ReactNode, Suspense } from "react";
 import { entriesOf } from "@/lib/common/entries-of";
 import { Container } from "../container/Container";
+import { SpinnerContainer } from "../spinner";
 import type { StateType } from "../type/StateType";
 
 export namespace View {
@@ -40,7 +41,7 @@ export const View = <TView extends string, TProps = {}>({
 					data-ui-width="full"
 					className={state.value === key ? undefined : "hidden"}
 				>
-					{children}
+					<Suspense fallback={<SpinnerContainer />}>{children}</Suspense>
 				</Container>
 			);
 		}),
