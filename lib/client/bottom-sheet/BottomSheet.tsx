@@ -4,12 +4,14 @@ import {
 	type FC,
 	type PropsWithChildren,
 	type ReactNode,
+	Suspense,
 	useRef,
 } from "react";
 import { Sheet, type SheetRef } from "react-modal-sheet";
 import { tvc } from "@/lib/client/cls";
 import { useMergeRefs } from "@/lib/client/ref";
 import { Container } from "../container";
+import { SpinnerContainer } from "../spinner/SpinnerContainer";
 import { Tx } from "../tx";
 
 export namespace BottomSheet {
@@ -113,7 +115,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 					}}
 					{...contentProps}
 				>
-					{children}
+					<Suspense fallback={<SpinnerContainer />}>{children}</Suspense>
 				</Sheet.Content>
 			</Sheet.Container>
 
