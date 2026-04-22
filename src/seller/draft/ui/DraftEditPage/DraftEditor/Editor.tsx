@@ -1,11 +1,13 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
+import { Group } from "@/lib/client/group";
 import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
+import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import type { DraftEditor } from "./DraftEditor";
 import { ActionSection } from "./section/ActionSection";
 import { OptionalSection } from "./section/OptionalSection";
@@ -41,8 +43,12 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draft, locale, onView }) =
 				data-ui-width="full"
 				data-ui-gap="lg"
 			>
+				<Group>
+					<CurrentRestriction _suspense={_suspense} />
+				</Group>
+
 				<RequiredSection
-					_suspense={"I know"}
+					_suspense={_suspense}
 					draft={draft}
 					onView={onView}
 				/>

@@ -4,7 +4,8 @@ import {
 	LocationContextFx,
 } from "~/session/location/server/context/LocationContextFx";
 
-export const withLocationFx =
-	(context: LocationContext) =>
-	<A, E, R>(eff: Effect.Effect<A, E, R>) =>
-		eff.pipe(Effect.provideService(LocationContextFx, context));
+export function withLocationFx(context: LocationContext) {
+	return <A, E, R>(eff: Effect.Effect<A, E, R>) => {
+		return eff.pipe(Effect.provideService(LocationContextFx, context));
+	};
+}

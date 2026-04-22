@@ -49,6 +49,7 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 							userId,
 							listingId,
 							event: "ignore",
+							checkVisibility: false,
 						}).pipe(Effect.ignore);
 
 						yield* activityCreateFx({
@@ -85,6 +86,7 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 							userId,
 							listingId,
 							event: "unignore",
+							checkVisibility: false,
 						}).pipe(Effect.ignore);
 
 						yield* activityCreateFx({

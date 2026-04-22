@@ -1,12 +1,18 @@
 import { OpenAIProvider, Runner, setTracingDisabled } from "@openai/agents";
 import { createMiddleware } from "@tanstack/react-start";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { ServerAiSchema } from "~/server/env/ServerAiSchema";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
+import type { UserRestrictionSchema } from "~/user/user-restriction/server/schema/UserRestrictionSchema";
 
 export namespace withRunnerMiddleware {
 	export interface Context {
 		locale: string;
 		cdn: string;
+		restriction: {
+			current: RestrictionEnumSchema.Type;
+			pending: UserRestrictionSchema.Type | undefined;
+		};
 	}
 }
 

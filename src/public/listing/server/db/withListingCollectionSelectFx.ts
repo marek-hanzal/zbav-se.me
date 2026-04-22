@@ -9,12 +9,8 @@ export namespace withListingCollectionSelectFx {
 	export type Select = Effect.Effect.Success<ReturnType<typeof withListingCollectionSelectFx>>;
 }
 
-export const withListingCollectionSelectFx = Effect.fn("withListingCollectionSelectFx")(function* ({
-	sort,
-	meta,
-}: withListingCollectionSelectFx.Props) {
-	return yield* withListingSelectFx({
-		sort,
-		meta,
-	});
+export const withListingCollectionSelectFx = Effect.fn("withListingCollectionSelectFx")(function* (
+	props: withListingCollectionSelectFx.Props,
+) {
+	return yield* withListingSelectFx(props);
 });

@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
-import { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 import { VectorSchema } from "~/common/schema/VectorSchema";
 import { ProsConsSchema } from "~/seller/listing/server/schema/ProsConsSchema";
@@ -39,7 +39,7 @@ export const ListingTableSchema = z
 		//
 		status: ListingStatusEnumSchema,
 		//
-		restriction: ListingRestrictionEnumSchema,
+		restriction: RestrictionEnumSchema.nullish(),
 		//
 		locationId: z.string().meta({
 			description: "ID of the location",

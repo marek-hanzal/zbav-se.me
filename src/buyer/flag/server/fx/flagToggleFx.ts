@@ -49,6 +49,7 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 							userId,
 							listingId,
 							event: "flag",
+							checkVisibility: false,
 						}).pipe(Effect.ignore);
 
 						yield* activityCreateFx({
@@ -85,6 +86,7 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 							userId,
 							listingId,
 							event: "unflag",
+							checkVisibility: false,
 						}).pipe(Effect.ignore);
 
 						yield* activityCreateFx({

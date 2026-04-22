@@ -37,7 +37,7 @@ export const seedCoreFx = Effect.fn("seedCoreFx")(function* ({
 	yield* userExPatchFx({
 		userId: current.id,
 		patch: {
-			side: "seller",
+			locationId: null,
 		},
 	});
 

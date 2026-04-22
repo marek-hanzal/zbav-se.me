@@ -9,10 +9,11 @@ export namespace Item {
 	export interface Props {
 		restriction: string;
 		selection: useSelection.Selection<EntitySchema.Type>;
+		allowClear?: boolean;
 	}
 }
 
-export const Item: FC<Item.Props> = ({ restriction, selection }) => {
+export const Item: FC<Item.Props> = ({ restriction, allowClear, selection }) => {
 	const item = {
 		id: restriction,
 	};
@@ -21,7 +22,11 @@ export const Item: FC<Item.Props> = ({ restriction, selection }) => {
 	return (
 		<Button
 			onClick={() => {
-				selection.toggle(item);
+				if (allowClear) {
+					selection.toggle(item);
+					return;
+				}
+				selection.single(item);
 			}}
 			{...uiSelectButton({
 				isSelected,

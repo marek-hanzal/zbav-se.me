@@ -59,6 +59,9 @@
 0931bae674f385d4352f8bb5199e1d2390a7e0008f4c93551330702f:
     ref: No listings with transactions (message)
     value: Zatím tu nejsou žádné inzeráty se zprávami.
+099eeb8f7eb479d2e309b0f0dae8fc8d334ea91def03a97ecfe31cab:
+    ref: Listing restrictions (label)
+    value: Omezení
 0a08e45b023a7e9c7c4856084c91d4a78b31861ac5bf75f91fe4780a:
     ref: Listing restriction (label)
     value: Nastavení omezení
@@ -95,9 +98,15 @@
 
 
         _Později si budeš moci v rámci transakce adresu upřesnit, když budeš chtít._
+0dc96ec736a7c4435d0da80542073c15e4cc827c3a6290fb9d58d011:
+    ref: User restriction level (empty)
+    value: Běžný neškodný obsah
 0e2d6ae59d756678e034197ebd80f4723aecad41dc953699684a443e:
     ref: Listings (label)
     value: Objevuj!
+0e5daaaecc38bf62135c8dc612d1f62742b0be9de7f88b6909be4fce:
+    ref: Token usage (hint)
+    value: AIčko je drahý, moc. A tohle jsou tokeny, které jsi profrčel
 0e6cf0e3ce32e8ff03c1c483fa275fb0f2baa4ec9e5e3dcc47b5442f:
     ref: Delivery (title)
     value: Možnost předání
@@ -142,8 +151,8 @@
 12e75835dcd53665e98ab2e6c1064379dd6094870afd31f532f39e47:
     ref: Listing restriction (hint)
     value: >
-        Důležitá hodnota, pokud prodáváš něco, co podléhá např. omezení věku
-        nebo dokonce vyžaduje oprávnění k užití.
+        Kategorie definuje základní omezení, nicméně máš možnost přitvrdit,
+        pokud to tak cítíš.
 14663fea507627f6c98c1360a9aa3c6d275ed885e44051e7d88af28a:
     ref: Feed age (hint)
     value: >
@@ -168,6 +177,9 @@
 188182c2fe82cee01a535fea542022b96a389bdbc5c5f374f0aa5564:
     ref: Chat - transaction resolved - seller cannot write (message)
     value: Máš vyřízeno, nic dalšího tu nemusíš řešit.
+18d40db40cbca71185b9de088cfdb1325cea3896815c4ea9219dc292:
+    ref: Restriction available in (label)
+    value: Čas do aktivace
 1943b1ef0623fcc6116ef391b30cce37b7fd75dcde851410b1d5f9d6:
     ref: Upload photos (button)
     value: Nahraj fotky
@@ -305,9 +317,6 @@
 3685c79576a1efb41990be4a56a962ff63eaab48e01dd64da8e62c16:
     ref: No drafts (title)
     value: Zatím tu nic není...
-36867b0182ba4840c97c772c1168bf1584a52897b6a292d58dc53dc9:
-    ref: Register (title)
-    value: Přidej se k nám! ❤️
 376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
     ref: rejected
     value: rejected
@@ -583,12 +592,20 @@
 6dbcf4fc35bb69ec88d55c0a6ab2a709d55dc49588e018564cbca5a1:
     ref: Transaction update (label)
     value: Transaction update (label)
+6ea3c4bc6fe521f548261295bdab73df068908c00355a65809fdf4ab:
+    ref: Current Restriction value (label)
+    value: Režim obsahu
 6facc75794554d433accb2f240799b65ee08b763fef727c9bf711dc7:
     ref: Login (hero)
     value: Už se známe
 70314354b3f9429b5ad2152154bd2a7f641ac9cd0aec5e53bb8582ff:
     ref: Transactions - archived - buyer (title)
     value: Archivováno
+70b147d5fa98938b8af4a584f9aa65729e915eca7ae712ed763337af:
+    ref: Current Restriction value (hint)
+    value: |
+        Tohle nastavení určuje, jaké kategorie můžeš používat a co se ti zobrazí
+        ve vyhledávání. Změníš ho ve svém účtu.
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
     value: Výchozí řazení
@@ -773,6 +790,9 @@
 9b4e31938f7bfe43653601280094968b3e4bab6d2464057c41166c54:
     ref: Transaction row - package activity (label)
     value: Sdílí doručení
+9b6d29168a82d0b11ff7d6fc4b36a86c00907de12dbd869472a05d0d:
+    ref: Restriction settings (title)
+    value: Nastavení omezení
 9be03a22c6dda814a581e5407a9d23f5a7660c55eb918e86f93d2951:
     ref: Listing seller info not available (title)
     value: Zatím nemám dost dat
@@ -835,9 +855,6 @@ Age 6 (label):
 Agent tool - activity_collection:
     value: 🗞 Zkoumám novinky
     static: true
-Agent tool - feed_collection:
-    value: 👀 Koukám na tvoje uložené inzeráty
-    static: true
 Agent tool - buyer_listing_collection:
     value: 🔍 Prohledávám inzeráty
     static: true
@@ -853,6 +870,18 @@ Agent tool - category_collection:
 Agent tool - draft_collection:
     value: Zkoumám tvé uložené inzeráty
     static: true
+Agent tool - feed_collection:
+    value: 👀 Koukám na tvoje uložené inzeráty
+    static: true
+Agent tool - feed_create:
+    value: Ukládám nové hledání pro inzeráty
+    static: true
+Agent tool - feed_patch:
+    value: Upravuji nastavení uloženého hledání inzerátů
+    static: true
+Agent tool - knowledge:
+    value: 🧠 Sháním znalosti
+    static: true
 Agent tool - location_autocomplete:
     value: Zjišťuju si adresu
     static: true
@@ -861,12 +890,6 @@ Agent tool - route:
     static: true
 Agent tool - seller_listing_collection:
     value: Koukám na tvé inzeráty
-    static: true
-Agent tool - feed_create:
-    value: Ukládám nové hledání pro inzeráty
-    static: true
-Agent tool - feed_patch:
-    value: Upravuji nastavení uloženého hledání inzerátů
     static: true
 Agent tool - seller_transaction_collection:
     value: Zkoumám zprávy v tvých prodejích
@@ -879,9 +902,6 @@ Agent tool - transaction_entry_create:
     static: true
 Agent tool - upload_create:
     value: 💾 Nahrávám obsah
-    static: true
-Agent tool - knowledge:
-    value: 🧠 Sháním znalosti
     static: true
 Buyer activity high:
     static: true
@@ -1114,13 +1134,13 @@ Listing restriction - adult-relaxed (hint):
         "lehké" věci, např. vape.
 Listing restriction - adult-relaxed:
     static: true
-    value: Pouze pro dospělé (18+) - s potvrzením
+    value: Pouze pro dospělé (18+), mírné ověření
 Listing restriction - none (hint):
     static: true
     value: Běžný obsah bez jakéhokoli omezení (pro všechny, vč. mládeže).
 Listing restriction - none:
     static: true
-    value: Bez omezení
+    value: Běžný obsah
 Listing restriction - restricted (hint):
     static: true
     value: Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podléhá zvláštním
@@ -1220,6 +1240,9 @@ a92a914e77188202f38d6b42be76d7f92cee60d777d0c00ca5aecbde:
 a9790b0c8d516c6185b9912ed236639eff1fd75206a534bf6f54d697:
     ref: Tool call input (label)
     value: Tool call input (label)
+aa125b59232e4f44807c968c6b228662e44aec9a4291b48a4f53afdf:
+    ref: Listing restrictions (empty)
+    value: Jestli tohle vidíš, něco se někde posralo, hopla.
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
     ref: Photo upload placeholder (title)
     value: Nahraj obrázek
@@ -1234,7 +1257,7 @@ ac4e887fc8f3f64d662b6a940ff6e823894c748bf103185448f43afa:
     value: personal
 acca87272a911bd673bc0f526d8ddaf4bedf8c4d04a375401d80df47:
     ref: Restriction not selected
-    value: Bez omezení
+    value: Běžný obsah
 ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba48:
     ref: Search (title)
     value: Hledat
@@ -1320,6 +1343,13 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
         message than this :(
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
+bf82382f7d27ed92f076fc65613ec5fc5c0d9a2b535fe794ddb59b3d:
+    ref: User restriction level (hint)
+    value: >
+        Tvoje nastavená úroveň omezení určuje, jaký obsah můžeš vidět a
+        vytvářet. Každá
+
+        změna vždycky spustí časovač od začátku.
 buyer - Buyer rejected the transaction (message):
     value: |
         **Odmítl jsi obchod.**
@@ -1408,6 +1438,9 @@ c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
 c7147aaa47c54e90b7023be8ee57d73010a71c259e352067aaad48e6:
     ref: Reject transaction (button)
     value: Odmítnout a zavřít
+c954144c7f6d3e5b4e0dd9edebbe92ef172c35c3f79102ca2531ac1c:
+    ref: User email (label)
+    value: Tímhle se přihlašuješ
 cb3a34c7200192f3cf99f4312074d252b890df7647e1e65c2ee986ab:
     ref: Share location (title)
     value: Sdílet adresu
@@ -1484,6 +1517,9 @@ de75432fdd962d61c3b89d0c4098554de1f957cfd40f3f2fc50967c0:
 de8832ba89f066ff957f2387c53ed8c543d4ed977d7fac554ab3f590:
     ref: Go to my feed (button)
     value: Objevuj!
+defe75b5ea35da1e0b6c835ee17ebc86a344203ae3009d12d98fa66f:
+    ref: User restriction level (label)
+    value: Tvoje nastavené omezení
 e231f819f6eaa8ba876bc47eaa113f9ce0e4663ffd510bcf92f04855:
     ref: Create new chat (label)
     value: Nový chat
@@ -1541,6 +1577,9 @@ ebff4121130dcb1e32bc8706a7005ec0c78e811db18e0ae28a6abb4c:
 ec4a4862ee04c61e1fdfa3e4be7eabc32fa95e9f33a193e11251c8f2:
     ref: Invalid email address
     value: Špatně vyplněná emailová adresa...
+f079be21449752a7e54a2bb26cb023b6bb623b0df137245a5a5c06c9:
+    ref: User email (hint)
+    value: Já ti to říkal - nic jiného o tobě nevím.
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
     ref: Submit listing (button)
     value: Zveřejnit inzerát
@@ -1553,6 +1592,9 @@ f18a36932d031042735ffe9b5fbf3fad95a86de7b3b04e8ae3f43986:
 f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
     ref: Favourites (label)
     value: Moje oblíbené
+f34432c0a6823a6ecf16eca4da02fd00ecaa4e1e833959f6c112e9a6:
+    ref: Current Restriction value (empty)
+    value: Běžný obsah
 f3f7b74c586e4bc7fff67cd348751ca929ed627420e6662d5e9a322d:
     ref: Personal - phone
     value: Telefon
@@ -1580,6 +1622,9 @@ f718d2ba74693c352dc2c17cc74e1b23c47ed2051d1c31598d0dd766:
 f7656349927879425de1f295c96260d551349336336a22ada2d9ff70:
     ref: Clear all (button)
     value: Vyčistit vše
+f7e09a0f70de4fcf808d88a6efc0280abaec228595978af2e7ceea70:
+    ref: No tokens used yet (label)
+    value: Zatím jsi mě nic nestál, ale můžeš s tím něco udělat 😁
 f7e0ec1bfc4a3e3a1766b4f3f07644ce4a036f0e83bd3f138796434b:
     ref: Go to my listings (button)
     value: Moje inzeráty

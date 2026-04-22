@@ -22,6 +22,9 @@ export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...pro
 		initial: feed.query?.filter?.ageIn?.map((item) => ({
 			id: String(item),
 		})),
+		deps: [
+			feed,
+		],
 	});
 
 	return (

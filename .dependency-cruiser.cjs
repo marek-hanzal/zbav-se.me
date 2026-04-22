@@ -89,6 +89,17 @@ const rules = [
 		},
 	},
 	{
+		name: "user-from-public",
+		comment: "Do not import user stuff from public",
+		severity: "error",
+		from: {
+			path: "^src/public(/|$)",
+		},
+		to: {
+			path: "^src/user(/|$)",
+		},
+	},
+	{
 		name: "no-server-imports",
 		comment: "Do not import server internals outside the approved server surface",
 		severity: "error",

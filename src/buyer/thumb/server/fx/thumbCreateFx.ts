@@ -75,6 +75,7 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 					userId,
 					listingId,
 					event: type,
+					checkVisibility: false,
 				}).pipe(Effect.ignore);
 
 				yield* activityCreateFx({

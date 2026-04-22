@@ -1,7 +1,8 @@
 import { Effect } from "effect";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
-import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
+import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
@@ -10,17 +11,24 @@ export namespace createListingFx {
 		categoryId?: string;
 		title?: string;
 		locationId?: string;
+		restriction?: RestrictionEnumSchema.Type | null;
 	}
 }
 
 export const createListingFx = (
 	sellerId: string,
-	{ title = "Test listing", locationId, categoryId }: createListingFx.Props = {},
+	{
+		title = "Test listing",
+		locationId,
+		categoryId,
+		restriction = null,
+	}: createListingFx.Props = {},
 ) =>
 	Effect.gen(function* () {
 		const resolvedCategoryId =
 			categoryId ??
 			(yield* categoryFetchFx({
+				userId: sellerId,
 				where: {
 					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
 				},
@@ -56,8 +64,10 @@ export const createListingFx = (
 			locationId: resolvedLocationId,
 			price: 500,
 			priceType: "open",
-			restriction: "none",
+			restriction,
 			title,
+			delivery: null,
+			warranty: null,
 			uploadIds: [
 				upload.id,
 			],

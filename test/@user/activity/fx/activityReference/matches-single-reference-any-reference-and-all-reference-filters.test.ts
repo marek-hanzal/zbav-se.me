@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
-import { categoryFetchFx } from "~/session/category/server/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
 import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
@@ -9,6 +8,7 @@ import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { activityCollectionFx } from "~/user/activity/server/fx/activityCollectionFx";
 import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
+import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 interface ListingFixture {
@@ -20,6 +20,7 @@ interface ListingFixture {
 const _createListingFixtureFx = ({ buyerId, sellerId }: Omit<ListingFixture, "listingId">) =>
 	Effect.gen(function* () {
 		const category = yield* categoryFetchFx({
+			userId: sellerId,
 			where: {
 				slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
 			},
@@ -50,6 +51,8 @@ const _createListingFixtureFx = ({ buyerId, sellerId }: Omit<ListingFixture, "li
 			priceType: "open",
 			restriction: "none",
 			title: "Reference fixture listing",
+			delivery: null,
+			warranty: null,
 			uploadIds: [
 				upload.id,
 			],

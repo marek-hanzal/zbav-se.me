@@ -39,6 +39,9 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({ draft, onCancel, onVi
 					},
 				]
 			: [],
+		deps: [
+			draft,
+		],
 	});
 
 	const itemId = selection.optional.singleId();

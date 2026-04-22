@@ -3,9 +3,9 @@ import { withFallback } from "@/lib/client/fallback";
 import type { MarkSuspense } from "@/lib/client/type";
 import { ValueList } from "@/lib/client/value";
 import { translator } from "@/lib/common/translator";
-import type { CategorySchema } from "~/session/category/server/schema/CategorySchema";
-import { CategoryInline } from "~/session/category/ui/CategoryInline";
-import { withCategoryQuery } from "~/session/category/withCategoryQuery";
+import { withCategoryQuery } from "~/user/category/query/withCategoryQuery";
+import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
+import { CategoryInline } from "~/user/category/ui/CategoryInline";
 
 export namespace CategoryValueList {
 	export interface Props
@@ -60,7 +60,9 @@ export const CategoryValueList = withFallback(
 			/>
 		);
 	},
-	(props: ValueList.PropsEx<CategorySchema.Type>) => {
+	({
+		...props
+	}: Omit<CategoryValueList.Props, "_suspense" | "categoryIdIn" | "textLabel" | "textEmpty">) => {
 		return (
 			<ValueList
 				textLabel={translator.text("Loading... (label)")}

@@ -8,7 +8,7 @@ import { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
 import { translator } from "@/lib/common/translator";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
-import { CategoryInline } from "~/session/category/ui/CategoryInline";
+import { CategoryInline } from "~/user/category/ui/CategoryInline";
 import { SellerInfo } from "../../SellerInfo";
 
 export namespace InfoSection {
@@ -25,6 +25,19 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView 
 			data-ui-layout="vertical-flex"
 			data-ui-gap="default"
 		>
+			<Group>
+				<ValueList
+					textLabel={translator.text("Listing restrictions (label)")}
+					textEmpty={translator.text("Listing restrictions (empty)")}
+					items={listing.restrictions.map((id) => ({
+						id,
+					}))}
+					renderFn={({ id }) => {
+						return <Tx label={`Listing restriction - ${id}`} />;
+					}}
+				/>
+			</Group>
+
 			<Group>
 				<LabelValue
 					textLabel={translator.text("Listing category (label)")}

@@ -6,7 +6,7 @@ import { Tx } from "@/lib/client/tx";
 import type { EntitySchema } from "@/lib/common/schema";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import type { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { RestrictionSelect } from "~/common/restriction/ui/RestrictionSelect";
 import { TitleContainer } from "~/common/ui/container";
 import { useAppForm } from "~/common/ui/form";
@@ -44,7 +44,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 	});
 	const form = useAppForm({
 		defaultValues: {
-			restriction: (draft.restriction as ListingRestrictionEnumSchema.Type | null) ?? null,
+			restriction: draft.restriction,
 		},
 		validators: {
 			onMount: RestrictionSchema,
@@ -74,11 +74,11 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 					},
 				]
 			: [],
+		deps: [
+			draft,
+		],
 		onSelect(item) {
-			form.setFieldValue(
-				"restriction",
-				(item?.id as ListingRestrictionEnumSchema.Type | undefined) ?? null,
-			);
+			form.setFieldValue("restriction", (item?.id as RestrictionEnumSchema.Type) ?? null);
 			form.setFieldMeta("restriction", (meta) => ({
 				...meta,
 				isTouched: true,
@@ -101,7 +101,12 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 				data-ui-gap="default"
 			>
 				<form.AppField name={"restriction"}>
-					{(_field) => <RestrictionSelect selection={selection} />}
+					{(_field) => (
+						<RestrictionSelect
+							selection={selection}
+							minLevel={draft.category?.restriction ?? "none"}
+						/>
+					)}
 				</form.AppField>
 
 				<form.Subscribe selector={(state) => state.isValid}>

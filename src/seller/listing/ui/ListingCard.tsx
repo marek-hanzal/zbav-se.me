@@ -11,7 +11,7 @@ import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { HeroImage } from "~/common/ui/img";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
-import { CategoryInline } from "~/session/category/ui/CategoryInline";
+import { CategoryInline } from "~/user/category/ui/CategoryInline";
 
 export namespace ListingCard {
 	export interface Hooks {

@@ -2,6 +2,7 @@ import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { withAgentTokensQuery } from "~/user/agent/query/withAgentTokensQuery";
@@ -23,6 +24,7 @@ export const TokenUsage = withFallback<TokenUsage.Props, Container>(
 
 		return (
 			<Container
+				data-ui={"TokenUsage"}
 				data-ui-flow="horizontal"
 				data-ui-gap="xs"
 				data-ui-items="center"
@@ -30,23 +32,29 @@ export const TokenUsage = withFallback<TokenUsage.Props, Container>(
 				data-ui-text={"xs"}
 				{...props}
 			>
-				<Typo
-					label={toLocaleNumber({
-						locale,
-						number: tokens.input,
-					})}
-					data-ui-font="bold"
-				/>
-				<Typo
-					label={"/"}
-					data-ui-opacity="4"
-				/>
-				<Typo
-					label={toLocaleNumber({
-						locale,
-						number: tokens.output,
-					})}
-				/>
+				{tokens.total > 0 ? (
+					<>
+						<Typo
+							label={toLocaleNumber({
+								locale,
+								number: tokens.input,
+							})}
+							data-ui-font="bold"
+						/>
+						<Typo
+							label={"/"}
+							data-ui-opacity="4"
+						/>
+						<Typo
+							label={toLocaleNumber({
+								locale,
+								number: tokens.output,
+							})}
+						/>
+					</>
+				) : (
+					<Tx label={"No tokens used yet (label)"} />
+				)}
 			</Container>
 		);
 	},

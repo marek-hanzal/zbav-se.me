@@ -5,7 +5,7 @@ import type { EntitySchema } from "@/lib/common/schema";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import { CategorySelect } from "~/session/category/ui/CategorySelect";
+import { CategorySelect } from "~/user/category/ui/CategorySelect";
 
 export namespace CategoryPatch {
 	export interface Props extends Container.Props {
@@ -22,6 +22,9 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 		initial: feed.query?.filter?.categoryIdIn?.map((id) => ({
 			id,
 		})),
+		deps: [
+			feed,
+		],
 	});
 
 	const categoryId = selection.optional.singleId() ?? null;

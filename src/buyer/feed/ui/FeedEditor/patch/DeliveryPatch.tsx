@@ -23,6 +23,9 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ feed, onSettled, onCanc
 		initial: (feed.query?.filter?.deliveryIn ?? []).map((delivery) => ({
 			id: delivery,
 		})),
+		deps: [
+			feed,
+		],
 	});
 
 	return (

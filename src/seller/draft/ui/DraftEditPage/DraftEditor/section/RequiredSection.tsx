@@ -13,7 +13,6 @@ import { CategoryValue } from "../value/CategoryValue";
 import { ExpireAtValue } from "../value/ExpireAtValue";
 import { PriceTypeValue } from "../value/PriceTypeValue";
 import { PriceValue } from "../value/PriceValue";
-import { RestrictionValue } from "../value/RestrictionValue";
 
 export namespace RequiredSection {
 	export interface Props extends MarkSuspense.Props {
@@ -113,18 +112,6 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ _suspense, draft, o
 					onClick={() => onView("expireAt")}
 					wrapperProps={{
 						"data-ui-tone": draft.expiresAt ? "neutral" : "primary",
-					}}
-				/>
-			</Group>
-
-			<Group>
-				<RestrictionValue
-					data-ui={"set listing restriction"}
-					restriction={draft.restriction}
-					action={<ChevronAction />}
-					onClick={() => onView("restriction")}
-					wrapperProps={{
-						"data-ui-tone": draft.restriction ? "neutral" : "primary",
 					}}
 				/>
 			</Group>

@@ -39,6 +39,9 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onView, ...props
 					},
 				]
 			: [],
+		deps: [
+			draft,
+		],
 	});
 
 	const itemId = selection.optional.singleId();

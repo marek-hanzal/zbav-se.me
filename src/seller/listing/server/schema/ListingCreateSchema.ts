@@ -2,8 +2,8 @@ import { z } from "zod";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
-import { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { ProsConsSchema } from "~/seller/listing/server/schema/ProsConsSchema";
 
 export const ListingCreateSchema = z
@@ -19,13 +19,18 @@ export const ListingCreateSchema = z
 		age: z.number().nullable().meta({
 			description: "Age of the item (0-based index)",
 		}),
-		delivery: z.array(ListingDeliveryEnumSchema).nullish().meta({
+		delivery: z.array(ListingDeliveryEnumSchema).nullable().meta({
 			description: "Delivery methods for the listing",
 		}),
-		warranty: ListingWarrantyEnumSchema.nullish().meta({
+		warranty: ListingWarrantyEnumSchema.nullable().meta({
 			description: "Warranty type for the listing",
 		}),
-		restriction: ListingRestrictionEnumSchema,
+		restriction: RestrictionEnumSchema.nullable().meta({
+			description: `
+Restriction may get only higher level than provided from category, e.g. "adult" category
+cannot get "none" restriction on it's listings.
+            `.trim(),
+		}),
 		draftId: z.string().optional().meta({
 			description: "ID of the draft",
 		}),

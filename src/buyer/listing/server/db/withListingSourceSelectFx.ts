@@ -3,27 +3,50 @@ import { sql } from "kysely";
 import { match } from "ts-pattern";
 import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import type { ListingSortSchema } from "~/buyer/listing/server/schema/ListingSortSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { withActiveUserRestrictionSelectFx } from "~/user/user-restriction/server/db/withActiveUserRestrictionSelectFx";
 
 export namespace withListingSourceSelectFx {
 	export interface Props {
+		userId: string;
 		sort?: ListingSortSchema.Type[];
 		meta: ListingMetaSchema.Type | undefined;
+		hasExplicitCategory?: boolean;
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withListingSourceSelectFx>>;
 }
 
 export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(function* ({
+	userId,
 	sort,
 	meta,
+	hasExplicitCategory,
 }: withListingSourceSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
+	const fallbackSql = sql`${RestrictionEnumSchema.enum.none}::restriction_enum`;
+	const restrictionSql = sql`coalesce((${yield* withActiveUserRestrictionSelectFx({
+		userId,
+	})}), ${fallbackSql})`;
 
 	let query = kysely
 		.selectFrom("listing as l")
 		.innerJoin("location as loc", "loc.id", "l.locationId")
-		.innerJoin("category as cat", "cat.id", "l.categoryId");
+		.innerJoin("category as cat", "cat.id", "l.categoryId")
+		.where("l.status", "in", [
+			"live",
+		] as const)
+		.where((eb) => {
+			return sql<boolean>`coalesce(${eb.ref("cat.restriction")}, ${fallbackSql}) <= ${restrictionSql}`;
+		})
+		.where((eb) => {
+			return sql<boolean>`coalesce(${eb.ref("l.restriction")}, ${fallbackSql}) <= ${restrictionSql}`;
+		});
+
+	if (!hasExplicitCategory) {
+		query = query.where("cat.discovery", "=", "implicit");
+	}
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

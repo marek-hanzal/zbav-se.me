@@ -15,6 +15,7 @@ describe("seller listingFetchFx", () => {
 			const users = yield* createUsersFx({});
 			const ownListing = yield* createListingFx(users.seller.id, {
 				title: "Seller own listing",
+				restriction: "none",
 			});
 			const foreignListing = yield* createListingFx(users.stranger.id, {
 				title: "Foreign seller listing",
@@ -31,6 +32,9 @@ describe("seller listingFetchFx", () => {
 
 			expect(fetched.id).toBe(ownListing.id);
 			expect(fetched.title).toBe("Seller own listing");
+			expect(fetched.restrictions).toEqual([
+				"none",
+			]);
 
 			const foreign = yield* Effect.either(
 				listingFetchFx({

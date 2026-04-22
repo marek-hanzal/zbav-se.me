@@ -5,6 +5,7 @@ import { Group } from "../group/Group";
 import { Icon } from "../icon";
 import { SpinnerContainer } from "../spinner/SpinnerContainer";
 import { Tx } from "../tx/Tx";
+import type { Typo } from "../typo/Typo";
 
 export namespace ValueList {
 	export interface Props<TItem extends EntitySchema.Type> extends Container.Props {
@@ -34,9 +35,13 @@ export namespace ValueList {
 		action?: ReactNode;
 		loading?: boolean;
 		wrapperProps?: Container.Props;
+		textLabelProps?: Typo.PropsEx;
 	}
 
-	export type PropsEx<TItem extends EntitySchema.Type> = Partial<Props<TItem>>;
+	export type PropsEx<TItem extends EntitySchema.Type> = Omit<
+		Props<TItem>,
+		"textLabel" | "textEmpty" | "renderFn"
+	>;
 }
 
 export const ValueList = <TItem extends EntitySchema.Type>({
@@ -48,6 +53,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 	action,
 	loading,
 	wrapperProps,
+	textLabelProps,
 	...props
 }: ValueList.Props<TItem>) => {
 	return (
@@ -81,6 +87,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 					data-ui-font="semibold"
 					data-ui-display="block"
 					data-ui-color="lead"
+					{...textLabelProps}
 				/>
 
 				{action}
@@ -146,3 +153,5 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 		</Container>
 	);
 };
+
+export type ValueList = typeof ValueList;

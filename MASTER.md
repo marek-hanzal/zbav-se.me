@@ -476,6 +476,13 @@ Kategorie nese mimo jiné:
 - **název**
 - **slug**
 - **locale**
+- **discovery režim v defaultním listingu**
+
+Discovery režim kategorie:
+- `implicit` = normální kategorie. Její inzeráty se můžou objevit v obecném feedu/hledání bez výběru kategorie.
+- `explicit` = tichá kategorie. Její inzeráty nelezou do obecného feedu/hledání samy od sebe; uživatel si o tu kategorii musí vědomě říct filtrem.
+
+Tohle není [Citlivost](#koncept-citlivost-inzeratu). `explicit` neznamená zakázaný ani 18+. Je to hygienická brzda veřejného feedu: věci, které existují a jsou normálně dostupné, ale nemusejí být hned na první dobrou všem v ksichtu.
 
 <a id="koncept-category-spec"></a>
 #### Category Spec (parametry)
@@ -1010,12 +1017,18 @@ Tvrdý pravidlo:
 Ostatní brány jsou pravidla listingu (ne zákaz otevření):
 - ignor,
 - životní cyklus [Inzerátu](#koncept-inzerat) (`expired` / `closed` / `sold`),
+- discovery režim [Kategorie](#koncept-kategorie) (`explicit` se zobrazí jen při vědomém category filtru),
 - [Release window](#koncept-release-window),
 - anti-topper a podobný mechaniky pořadí.
 
 Co se v listingu defaultně neukazuje:
 - `expired` a `closed` (jen přes vědomej filtr / historickej režim),
-- `sold` (není k dispozici).
+- `sold` (není k dispozici),
+- inzeráty v kategoriích s discovery režimem `explicit`, pokud dotaz nemá konkrétní category filtr.
+
+Explicitní category filtr znamená, že dotaz obsahuje konkrétní kategorii nebo seznam kategorií. Prázdnej seznam kategorií se bere jako „bez category filtru“, takže pořád platí jen `implicit`.
+
+Veřejný listing má pevný citlivostní strop: můžou se v něm objevit jen inzeráty s výslednou citlivostí `none` nebo `adult-relaxed`. Tenhle strop nejde uživatelsky ovlivnit ani obejít category filtrem.
 
 Kontrakt detailu mimo `live`:
 - Detail se otevře (krom citlivosti), ale je read-only a místo „Mám zájem“ ukážu jasnej status („Už není dostupný“). UI má být fér.
@@ -1133,7 +1146,7 @@ Related:
 
 Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec vidět*. **Citlivost** je hard gate: chrání veřejnej prostor před obsahem, kterej určitá skupina lidí buď **nechce**, nebo ho **ani nesmí** vidět.
 
-Úrovně (stupňovaně): `none < adult < adult-relaxed < sensitive < restricted`.
+Úrovně (stupňovaně): `none < adult-relaxed < adult < sensitive < restricted`.
 
 | Úroveň             | Enum            | Poznámka                                                                                                                                                                                                                   |
 | ------------------ | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1141,7 +1154,12 @@ Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec v
 | Pro dospělé        | `adult`         | 18+ kontext                                                                                                                                                                                                                |
 | Pro dospělé (soft) | `adult-relaxed` | adult lze odkliknout na základě varovné hlášky (jen pro 18+)                                                                                                                                                              |
 | Citlivé            | `sensitive`     | věci „na hraně“, co nechci cpát všem                                                                                                                                                                                       |
-| Omezené            | `restricted`    | zákonný omezení / oprávnění (systém ho **neověřuje**); nutná součást ochrany je také běžící cooldown 24h — tzn. člověk musí vědět, co dělá; tento cooldown se zapne pokaždé, když si člověk v profilu zapne "restricted" úroveň |
+| Omezené            | `restricted`    | zákonný omezení / oprávnění (systém ho **neověřuje**); nutná součást ochrany je také běžící cooldown — tzn. člověk musí vědět, co dělá |
+
+Cooldown při zapnutí vyšší úrovně:
+- `adult`: 1h
+- `sensitive`: 2h
+- `restricted`: 24h
 
 Gating a viditelnost (dvoufázově, schválně):
 - **Profil** = nastavíš maximum (co *smíš / jsi ochotnej* vidět).
@@ -1149,7 +1167,10 @@ Gating a viditelnost (dvoufázově, schválně):
 
 Hard gate pravidla:
 - V listingu (feed/search/seznam) se cokoliv nad maximum **vůbec nedostane do výsledků**.
+- Veřejný listing má systémové maximum `adult-relaxed`; `adult`, `sensitive` a `restricted` do něj nikdy nelezou.
 - Na detail přes přímý odkaz vracím při nesouladu maxima **404** (žádný obcházení přes link, žádný „aspoň víš že to existuje“).
+- Nová omezená akce (např. otevření transakce, reakce, metrika viditelnosti) musí respektovat aktuální maximum. Nižší profilová citlivost nesmí spustit akci nad vyšším inzerátem.
+- Historický/post-akční přístup je měkčí: když se uživatel k inzerátu legálně dostal dřív (např. existující transakce, seller info v kontextu otevřené interakce), UI může zachovat potřebný kontext i po snížení maxima. To je kontext, ne nová permission k omezené akci.
 - **Citlivost** je **jediná uživatelská** věc, která smí detail tvrdě schovat (404). Kromě citlivosti existuje ještě **admin hard removal** (výjimečná stopka pro nelegální/škodlivý obsah), která je **404** a nastavuje stav `banned` (viz [Ban](#koncept-ban) a [Inzerát](#koncept-inzerat)). Ostatní brány můžou ovlivnit seznam, ale nemaj dělat „ten inzerát pro tebe neexistuje“.
 
 Odpovědnost:

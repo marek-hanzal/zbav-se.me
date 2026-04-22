@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
-import { NotFoundErrorFx } from "@/lib/common/error";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
+import { listingFetchFx } from "~/buyer/listing/server/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
 import { transactionFetchFx } from "~/buyer/transaction/server/fx/transactionFetchFx";
 import type { TransactionCreateSchema } from "~/buyer/transaction/server/schema/TransactionCreateSchema";
@@ -40,24 +40,13 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			const config = yield* TransactionContextFx;
 			const dateContext = yield* DateContextFx;
 
-			const listing = yield* tryDbFx(async () =>
-				kysely
-					.selectFrom("listing")
-					.select([
-						"id",
-						"userId",
-					])
-					.where("id", "=", listingId)
-					.executeTakeFirst(),
-			);
-
-			if (!listing) {
-				return yield* new NotFoundErrorFx({
-					resource: "listing",
-					resourceId: listingId,
-					message: "Listing not found",
-				});
-			}
+			const listing = yield* listingFetchFx({
+				userId,
+				where: {
+					id: listingId,
+				},
+				scope: {},
+			});
 
 			const now = dateContext.now();
 
@@ -117,6 +106,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				userId,
 				listingId,
 				event: "transaction",
+				checkVisibility: false,
 			}).pipe(Effect.ignore);
 
 			yield* activityCreateFx({

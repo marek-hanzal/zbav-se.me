@@ -15,7 +15,9 @@ describe("public listing visibility", () => {
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
 
-			const alpha = yield* createListingFx(seller.id);
+			const alpha = yield* createListingFx(seller.id, {
+				restriction: "adult-relaxed",
+			});
 			const beta = yield* createListingFx(seller.id);
 
 			yield* Effect.promise(() =>
@@ -47,6 +49,10 @@ describe("public listing visibility", () => {
 
 			expect(fetched.id).toBe(alpha.id);
 			expect(fetched.title).toBe("Alpha MacBook");
+			expect(fetched.restrictions).toEqual([
+				"none",
+				"adult-relaxed",
+			]);
 
 			const sold = yield* Effect.either(
 				listingFetchFx({
@@ -70,6 +76,10 @@ describe("public listing visibility", () => {
 
 			expect(filtered).toHaveLength(1);
 			expect(filtered[0]?.id).toBe(alpha.id);
+			expect(filtered[0]?.restrictions).toEqual([
+				"none",
+				"adult-relaxed",
+			]);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

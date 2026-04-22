@@ -1,14 +1,21 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import type { ListingMetaSchema } from "~/public/listing/server/schema/ListingMetaSchema";
 import type { ListingSortSchema } from "~/public/listing/server/schema/ListingSortSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+
+const publicCategoryRestrictions = [
+	RestrictionEnumSchema.enum.none,
+	RestrictionEnumSchema.enum["adult-relaxed"],
+] as const;
 
 export namespace withListingSourceSelectFx {
 	export interface Props {
 		sort?: ListingSortSchema.Type[];
 		meta: ListingMetaSchema.Type | undefined;
+		hasExplicitCategory?: boolean;
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withListingSourceSelectFx>>;
@@ -17,13 +24,27 @@ export namespace withListingSourceSelectFx {
 export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(function* ({
 	sort,
 	meta,
+	hasExplicitCategory,
 }: withListingSourceSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely
 		.selectFrom("listing as l")
 		.innerJoin("location as loc", "loc.id", "l.locationId")
-		.innerJoin("category as cat", "cat.id", "l.categoryId");
+		.innerJoin("category as cat", "cat.id", "l.categoryId")
+		.where("l.status", "in", [
+			"live",
+		] as const)
+		.where((eb) => {
+			return sql<boolean>`array[${eb.ref("cat.restriction")}] <@ array[${sql.join(publicCategoryRestrictions)}]::restriction_enum[]`;
+		})
+		.where((eb) => {
+			return sql<boolean>`coalesce(${eb.ref("l.restriction")}, ${RestrictionEnumSchema.enum.none}::restriction_enum) = any(array[${sql.join(publicCategoryRestrictions)}]::restriction_enum[])`;
+		});
+
+	if (!hasExplicitCategory) {
+		query = query.where("cat.discovery", "=", "implicit");
+	}
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

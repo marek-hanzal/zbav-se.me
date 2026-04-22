@@ -2,8 +2,8 @@ import { z } from "zod";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
-import { ListingRestrictionEnumSchema } from "~/common/listing/enum/ListingRestrictionEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { ProsConsSchema } from "~/seller/listing/server/schema/ProsConsSchema";
 
 export const DraftCreateSchema = z
@@ -27,7 +27,7 @@ export const DraftCreateSchema = z
 		warranty: ListingWarrantyEnumSchema.nullish().meta({
 			description: "Warranty type for the draft",
 		}),
-		restriction: ListingRestrictionEnumSchema.nullish().meta({
+		restriction: RestrictionEnumSchema.nullish().meta({
 			description: "Content restriction level of the draft",
 		}),
 		locationId: z.string().optional().meta({

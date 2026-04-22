@@ -24,6 +24,7 @@ import type { TransactionUserTableSchema } from "~/server/database/@table/Transa
 import type { UploadTableSchema } from "~/server/database/@table/UploadTableSchema";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
+import type { UserRestrictionTableSchema } from "~/server/database/@table/UserRestrictionTableSchema";
 
 export interface Database {
 	activity: ActivityTableSchema.Type;
@@ -51,5 +52,6 @@ export interface Database {
 	upload: UploadTableSchema.Type;
 	user_event: UserEventTableSchema.Type;
 	user_ex: UserExTableSchema.Type;
+	user_restriction: UserRestrictionTableSchema.Type;
 	user: auth.User;
 }

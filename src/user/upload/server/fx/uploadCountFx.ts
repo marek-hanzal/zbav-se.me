@@ -1,8 +1,6 @@
 import { Effect } from "effect";
-import { sql } from "kysely";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withUploadQueryBuilderFx } from "~/user/upload/server/db/withUploadQueryBuilderFx";
 import { withUploadSourceSelectFx } from "~/user/upload/server/db/withUploadSourceSelectFx";
 import type { UploadCountQuerySchema } from "~/user/upload/server/schema/UploadCountQuerySchema";
@@ -25,24 +23,6 @@ export const uploadCountFx = Effect.fn("uploadCountFx")(function* ({
 		where,
 		scope,
 	});
-
-	const hasFilter = !!(filter && Object.keys(filter).length > 0);
-	const hasWhere = !!(where && Object.keys(where).length > 0);
-
-	if (!hasFilter && !hasWhere) {
-		const { kysely } = yield* KyselyContextFx;
-
-		let query = kysely.selectFrom("upload as u");
-		if (scope?.userId) {
-			query = query.where("u.userId", "=", scope.userId);
-		}
-
-		const { count } = yield* Effect.promise(async () => {
-			return query.select(sql<number>`count(*)::int`.as("count")).executeTakeFirstOrThrow();
-		});
-
-		return count;
-	}
 
 	return yield* withCountFx({
 		selectFx: withUploadSourceSelectFx({

@@ -36,6 +36,9 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ draft, onCancel, onView
 		initial: (draft.delivery ?? []).map((delivery) => ({
 			id: delivery,
 		})),
+		deps: [
+			draft,
+		],
 	});
 
 	const deliveryIds = selection.optional.multiId();

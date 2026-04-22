@@ -10,6 +10,7 @@ import { ChatInput } from "~/common/ui/chat";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import type { useAgent } from "../../hook/useAgent";
+import { withAgentTokensQuery } from "../../query/withAgentTokensQuery";
 import { TokenUsage } from "../TokenUsage";
 import { AgentMenu } from "./AgentMenu";
 
@@ -23,9 +24,14 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 	const [uploads, setUploads] = useState<UploadSchema.Type[]>([]);
 	const uploadIds = uploads.map(({ id }) => id);
+	const { data: tokens } = withAgentTokensQuery.useSuspenseQuery({
+		where: {
+			threadId: chat.threadId,
+		},
+	});
 
 	return (
-		<Container>
+		<>
 			<GalleryUploadSheet
 				key={uploadIds.join(":")}
 				allowClear
@@ -52,8 +58,13 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 			<Container
 				data-ui-inner={"default"}
 				data-ui-snap-to={"bottom-center"}
+				data-ui-flow={"vertical"}
 				data-ui-width={"full"}
 				data-ui-position={"relative"}
+				className={[
+					"bottom-0",
+					"pb-0",
+				]}
 			>
 				{uploads.length > 0 ? (
 					<Container
@@ -138,21 +149,29 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 					data-ui-flow={"horizontal"}
 					data-ui-items={"center"}
 					data-ui-justify={"end"}
+					data-ui-inner={"xs"}
+					data-ui-gap={"default"}
+					className={[
+						"pb-0",
+					]}
 				>
-					<Tx
-						label={"Thread token usage (label)"}
-						data-ui-text={"xs"}
-						data-ui-opacity={"3"}
-					/>
+					{tokens.total > 0 ? (
+						<Tx
+							label={"Thread token usage (label)"}
+							data-ui-text={"xs"}
+							data-ui-opacity={"3"}
+						/>
+					) : (
+						<div />
+					)}
 
 					<TokenUsage
 						threadId={chat.threadId}
 						data-ui-text={"xs"}
 						data-ui-opacity={"4"}
-						data-ui-inner={"xs"}
 					/>
 				</Container>
 			</Container>
-		</Container>
+		</>
 	);
 };

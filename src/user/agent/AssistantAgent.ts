@@ -1,5 +1,6 @@
 import { Agent } from "@openai/agents";
 import { DateTime } from "luxon";
+import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import { toolFavouriteToggle } from "~/buyer/favourite/server/tool/toolFavouriteToggle";
 import { toolFeedCollection } from "~/buyer/feed/server/tool/toolFeedCollection";
 import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
@@ -9,6 +10,7 @@ import { toolListingCollection as toolBuyerListingCollection } from "~/buyer/lis
 import { toolTransactionCollection as toolBuyerTransactionCollection } from "~/buyer/transaction/server/tool/toolTransactionCollection";
 import { toolTransactionCreate as toolBuyerTransactionCreate } from "~/buyer/transaction/server/tool/toolTransactionCreate";
 import { toolTransactionWorkflow as toolBuyerTransactionWorkflow } from "~/buyer/transaction/server/tool/toolTransactionWorkflow";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { toolDraftCollection } from "~/seller/draft/server/tool/toolDraftCollection";
 import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
 import { toolDraftDelete } from "~/seller/draft/server/tool/toolDraftDelete";
@@ -16,16 +18,83 @@ import { toolDraftPatch } from "~/seller/draft/server/tool/toolDraftPatch";
 import { toolListingCollection as toolSellerListingCollection } from "~/seller/listing/server/tool/toolListingCollection";
 import { toolTransactionCollection as toolSellerTransactionCollection } from "~/seller/transaction/server/tool/toolTransactionCollection";
 import { toolTransactionWorkflow as toolSellerTransactionWorkflow } from "~/seller/transaction/server/tool/toolTransactionWorkflow";
-import { toolCategoryCollection } from "~/session/category/server/tool/toolCategoryCollection";
 import { toolLocationAutocomplete } from "~/session/location/server/tool/toolLocationAutocomplete";
 import { toolRoute } from "~/session/location/server/tool/toolRoute";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
+import { toolCategoryCollection } from "~/user/category/server/tool/toolCategoryCollection";
 import { toolKnowledge } from "~/user/knowledge/server/tool/toolKnowledge";
 import { toolTransactionEntryCollection } from "~/user/transaction-entry/server/tool/toolTransactionEntryCollection";
 import { toolTransactionEntryCreate } from "~/user/transaction-entry/server/tool/toolTransactionEntryCreate";
 import { toolActivityCollection } from "../activity/server/tool/toolActivityCollection";
 import { toolUploadCreate } from "../upload/server/tool/toolUploadCreate";
+
+const restrictionBehavior = {
+	none: `
+- Treat normal marketplace content as allowed.
+- Do not proactively suggest adult, sensitive, or restricted content.
+- If the user asks for content above this level, explain briefly that their current setting does not allow it.
+	`.trim(),
+	"adult-relaxed": `
+- Adult-ish content with relaxed handling is allowed.
+- Strong adult, sensitive, and restricted content remain outside the current setting unless tools show otherwise.
+	`.trim(),
+	adult: `
+- Adult content is allowed.
+- Sensitive and restricted content remain outside the current setting unless tools show otherwise.
+	`.trim(),
+	sensitive: `
+- Sensitive content is allowed.
+- Be extra careful with items that may require attention, legal awareness, or safe handling.
+- Restricted content remains outside the current setting unless tools show otherwise.
+	`.trim(),
+	restricted: `
+- Restricted content is allowed.
+- Be careful and factual around legal or document-sensitive items.
+- Do not provide legal advice; direct the user to app flows and relevant factual listing data.
+	`.trim(),
+} satisfies Record<RestrictionEnumSchema.Type, string>;
+
+const formatRestrictionState = ({ restriction, locale }: withRunnerMiddleware.Context) => {
+	/**
+	 * This is a clever hack to remember update Assistant if this enum changes.
+	 */
+	toEnumGuard<RestrictionEnumSchema.Type>()([
+		"adult",
+		"adult-relaxed",
+		"none",
+		"restricted",
+		"sensitive",
+	]);
+
+	return `
+User restriction system
+The restriction level controls which listing/category content the user may work with.
+
+Levels, from lowest to highest:
+- none: The user can work with normal marketplace content only. Examples: smartphones, notebooks, clothes, toys, furniture, books, art supplies.
+- adult-relaxed: The user can work with mildly adult or higher-attention content that uses a relaxed adult confirmation. Examples: vape gear, adult books or movies, pets, real estate, car parts, chainsaws.
+- adult: The user can work with adult content behind a hard adult gate. Examples: camera drones, car or motorcycle sales, child car seats, baby food, dietary supplements, RC/drone modelling, pyrotechnics.
+- sensitive: The user can work with sensitive content that needs extra care. Examples: airsoft pistols, airsoft rifles, airsoft accessories, knives, swords, daggers, axes, machetes, replicas.
+- restricted: The user can work with strongly restricted content that may require legal proof or documents. Examples: licensed weapons, document-sensitive weapon accessories, or other items where the app requires stronger verification.
+
+Current user restriction: ${restriction.current}.
+${
+	restriction.pending
+		? `Pending setting: ${restriction.pending.restriction} at ${DateTime.fromJSDate(
+				restriction.pending.availableAt,
+			)
+				.setLocale(locale)
+				.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}.`
+		: `Pending setting: none.`
+}
+
+Behavior for the current restriction:
+${restrictionBehavior[restriction.current]}
+
+Do not expose internal enum names unless the user explicitly asks about technical internals.
+	`.trim();
+};
 
 export const AssistantAgent = new Agent<withRunnerMiddleware.Context>({
 	name: "Assistant",
@@ -48,6 +117,8 @@ Scope
 - Only help with zbav-se.me, its features, rules, and the user's data or actions inside it.
 - The app supports listings, saved searches, favourites, drafts, transactions, activity notifications, category lookup, location lookup, and internal system knowledge.
 - The app does not handle payments.
+
+${formatRestrictionState(context)}
 
 Working method
 - First understand the user's intent.

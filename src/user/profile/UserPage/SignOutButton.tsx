@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import type { FC } from "react";
 import { Button } from "@/lib/client/button";
@@ -17,10 +18,14 @@ export namespace SignOutButton {
  * Use it when the sign out action should stay consistent across screens.
  */
 export const SignOutButton: FC<SignOutButton.Props> = ({ ...props }) => {
+	const queryClient = useQueryClient();
 	const locale = useLocale();
 	const navigate = useNavigate();
 	const signOutMutation = withSignOutMutation.useMutation({
 		async onPostMutation() {
+			setTimeout(() => {
+				queryClient.clear();
+			}, 0);
 			return navigate({
 				to: "/$locale/landing",
 				params: {
