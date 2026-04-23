@@ -1,1 +1,1 @@
-export { useArrowNavigation } from "./useArrowNavigation";
+export { handleArrowNav } from "./handleArrowNav";

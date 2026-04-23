@@ -7,7 +7,7 @@ import { Tx } from "@/lib/client/tx";
 
 export namespace ContinueSessionButton {
 	export interface Props
-		extends uiLinkTo.Component<Pick<LinkTo.Props, "iconProps" | "ref" | "id">> {
+		extends uiLinkTo.Component<Pick<LinkTo.Props, "iconProps" | "ref" | "id" | "onKeyDown">> {
 		//
 	}
 }
