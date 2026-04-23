@@ -1,6 +1,5 @@
 import { tool } from "@openai/agents";
-import { feedPatchFn } from "~/buyer/feed/fn/feedPatchFn";
-import { FeedToolPatchSchema } from "~/buyer/feed/server/schema/FeedToolPatchSchema";
+import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
@@ -8,6 +7,12 @@ const logger = getRootLogger([
 	"tool",
 	"toolFeedPatch",
 ]);
+
+const InputSchema = z
+	.looseObject({
+		//
+	})
+	.strip();
 
 export const toolFeedPatch = tool({
 	name: "feed-patch",
@@ -27,16 +32,18 @@ Boundaries:
 - Patch only fields you're asked for
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(FeedToolPatchSchema),
+	parameters: unsafeJsonSchema(InputSchema),
 	async execute(input) {
 		logger.trace("toolFeedPatch", {
 			input,
 		});
 
-		const data = await FeedToolPatchSchema.parseAsync(input);
+		const data = await InputSchema.parseAsync(input);
 
-		return feedPatchFn({
-			data,
-		});
+		// await feedPatchFn({
+		// 	data,
+		// });
+
+		return "ok";
 	},
 });

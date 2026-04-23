@@ -29,7 +29,7 @@ export const withIgnoreToggleMutation = withMutation<
 	invalidate: [
 		{
 			async invalidate(queryClient, result) {
-				withListingQuery.updateFn(queryClient, result);
+				result && withListingQuery.updateFn(queryClient, result);
 			},
 		},
 	],

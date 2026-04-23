@@ -1,6 +1,6 @@
 import { tool } from "@openai/agents";
+import { z } from "zod";
 import { feedDeleteFn } from "~/buyer/feed/fn/feedDeleteFn";
-import { FeedToolQuerySchema } from "~/buyer/feed/server/schema/FeedToolQuerySchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
@@ -9,9 +9,11 @@ const logger = getRootLogger([
 	"toolFeedDelete",
 ]);
 
-const InputSchema = FeedToolQuerySchema.pick({
-	filter: true,
-});
+const InputSchema = z
+	.looseObject({
+		//
+	})
+	.strip();
 
 export const toolFeedDelete = tool({
 	name: "feed-delete",
@@ -37,8 +39,10 @@ Boundaries:
 
 		const data = await InputSchema.parseAsync(input);
 
-		return feedDeleteFn({
+		await feedDeleteFn({
 			data,
 		});
+
+		return "ok";
 	},
 });

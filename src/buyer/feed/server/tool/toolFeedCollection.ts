@@ -1,9 +1,6 @@
 import { tool } from "@openai/agents";
-import { match } from "ts-pattern";
 import { z } from "zod";
 import { feedCollectionFn } from "~/buyer/feed/fn/feedCollectionFn";
-import { feedCountFn } from "~/buyer/feed/fn/feedCountFn";
-import { FeedToolQuerySchema } from "~/buyer/feed/server/schema/FeedToolQuerySchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
@@ -14,11 +11,7 @@ const logger = getRootLogger([
 
 const InputSchema = z
 	.looseObject({
-		type: z.enum([
-			"count",
-			"collection",
-		]),
-		query: FeedToolQuerySchema,
+		//
 	})
 	.strip();
 
@@ -41,35 +34,19 @@ Use only user-facing feeds (type: user), not internal search feeds (type: search
 			input,
 		});
 
-		const { type, query } = await InputSchema.parseAsync(input);
+		const { type } = await InputSchema.parseAsync(input);
 
-		return match(type)
-			.with("count", async () => {
-				const count = await feedCountFn({
-					data: query,
-				});
-				const hasMore = await feedCountFn({
-					data: {},
-				});
+		const items = await feedCollectionFn({
+			data: {
+				//
+				limit: 4,
+			},
+		});
 
-				return {
-					count: count,
-					hasMore: hasMore > 0,
-				} as const;
-			})
-			.with("collection", async () => {
-				const items = await feedCollectionFn({
-					data: {
-						...query,
-						limit: 4,
-					},
-				});
+		if (!items.length) {
+			return "nothing";
+		}
 
-				return {
-					count: items.length,
-					items,
-				} as const;
-			})
-			.exhaustive();
+		return "not yet";
 	},
 });

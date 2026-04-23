@@ -1,6 +1,6 @@
 import { tool } from "@openai/agents";
+import { z } from "zod";
 import { feedCreateFn } from "~/buyer/feed/fn/feedCreateFn";
-import { FeedToolCreateSchema } from "~/buyer/feed/server/schema/FeedToolCreateSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
@@ -8,6 +8,12 @@ const logger = getRootLogger([
 	"tool",
 	"toolFeedCreate",
 ]);
+
+const InputSchema = z
+	.looseObject({
+		//
+	})
+	.strip();
 
 export const toolFeedCreate = tool({
 	name: "feed-create",
@@ -25,16 +31,22 @@ Hint:
 - Pay attention to available fields in 'query' field, also in 'query.meta'
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(FeedToolCreateSchema),
+	parameters: unsafeJsonSchema(InputSchema),
 	async execute(input) {
 		logger.trace("toolFeedCreate", {
 			data: input,
 		});
 
-		const data = await FeedToolCreateSchema.parseAsync(input);
+		const data = await InputSchema.parseAsync(input);
 
-		return feedCreateFn({
-			data,
+		const { id } = await feedCreateFn({
+			data: {
+				type: "user",
+				name: "not yet",
+				query: {},
+			},
 		});
+
+		return `ID: ${id}`;
 	},
 });
