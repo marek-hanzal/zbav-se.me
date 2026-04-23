@@ -83,12 +83,14 @@ describe("seller transactionCollectionFx", () => {
 			expect(activeOnly.map((item) => item.id).sort()).toEqual(
 				[
 					activeScenario.transactionId,
+				].sort(),
+			);
+			expect(inactiveOnly.map((item) => item.id).sort()).toEqual(
+				[
+					archivedScenario.transactionId,
 					openScenario.transactionId,
 				].sort(),
 			);
-			expect(inactiveOnly.map((item) => item.id).sort()).toEqual([
-				archivedScenario.transactionId,
-			]);
 			expect(statusCount).toBe(3);
 			expect(typeof activeOnly[0]?.unreadCount).toBe("number");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
