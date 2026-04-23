@@ -17,6 +17,7 @@ import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRu
 import { toolTransactionBrowse } from "~/user/transaction/server/tool/toolTransactionBrowse";
 import { toolTransactionEntryBrowse } from "../transaction-entry/server/tool/toolTransactionEntryBrowse";
 import { toolTransactionEntryCreate } from "../transaction-entry/server/tool/toolTransactionEntryCreate";
+import { toolUploadCreate } from "../upload/server/tool/toolUploadCreate";
 
 export const AssistantAgent = new Agent<withRunnerMiddleware.Context>({
 	name: "Assistant",
@@ -262,6 +263,8 @@ Examples: licensed weapons, document-sensitive weapon accessories, or other item
 		toolTransactionBrowse,
 		toolTransactionEntryCreate,
 		toolTransactionEntryBrowse,
+		//
+		toolUploadCreate,
 		/**
 		 * Core common (utility) tools
 		 */
