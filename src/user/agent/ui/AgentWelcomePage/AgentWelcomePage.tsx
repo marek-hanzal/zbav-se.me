@@ -1,6 +1,8 @@
+import { useEffect, useRef } from "react";
 import { Container } from "@/lib/client/container";
 import { AiIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
+import { useArrowNavigation } from "@/lib/client/nav";
 import { Status } from "@/lib/client/status";
 import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
@@ -19,6 +21,25 @@ export namespace AgentWelcomePage {
 export const AgentWelcomePage = ({ ...props }: AgentWelcomePage.Props) => {
 	const locale = useLocale();
 	const { data: threadCount } = withAgentThreadQuery.useCountQuery({});
+
+	const continueRef = useRef<HTMLAnchorElement>(null);
+	const createSessionRef = useRef<HTMLButtonElement>(null);
+
+	useArrowNavigation({
+		ref: continueRef,
+	});
+	useArrowNavigation({
+		ref: createSessionRef,
+	});
+
+	useEffect(() => {
+		if (continueRef.current) {
+			continueRef.current.focus();
+			return;
+		}
+
+		createSessionRef.current?.focus();
+	}, []);
 
 	return (
 		<TitleContainer
@@ -63,15 +84,21 @@ export const AgentWelcomePage = ({ ...props }: AgentWelcomePage.Props) => {
 						>
 							{threadCount > 0 ? (
 								<ContinueSessionButton
+									id={"continue-session-button"}
+									ref={continueRef}
 									data-ui-width={"full"}
 									data-ui-justify={"center"}
 									data-ui-items={"center"}
+									data-arrow-down={"create-session-button"}
 								/>
 							) : null}
 							<CreateSessionButton
+								id={"create-session-button"}
+								ref={createSessionRef}
 								data-ui-width={"full"}
 								data-ui-justify={"center"}
 								data-ui-items={"center"}
+								data-arrow-up={"continue-session-button"}
 							/>
 						</Container>
 					}
