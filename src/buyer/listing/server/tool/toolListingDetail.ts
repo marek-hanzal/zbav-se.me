@@ -20,6 +20,7 @@ Fetch listing detail if needed.
 
 Hint:
 - Always show first markdown image returned by the detail
+- If there are more images, tell the user
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
