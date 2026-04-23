@@ -83,7 +83,7 @@ Browse seller's trade transactions (here you can get 'transactionId' for transac
 				header: true,
 				delimiter: "\n",
 				columns: [
-					"id",
+					"transactionId",
 					"title",
 					"unreadCount",
 					"updatedAt",
