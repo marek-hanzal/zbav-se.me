@@ -1,5 +1,4 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { type FC, useCallback, useState } from "react";
+import { type FC, useState } from "react";
 import type { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { GalleryUploadButton } from "~/common/gallery/ui/GalleryUploadButton";
@@ -11,7 +10,6 @@ import { withTransactionEntryGalleryCreateMutation } from "~/user/transaction-en
 import { LocationButton } from "~/user/transaction-entry/ui/button/LocationButton";
 import { PackageButton } from "~/user/transaction-entry/ui/button/PackageButton";
 import { PersonalButton } from "~/user/transaction-entry/ui/button/PersonalButton";
-import { archiveBuyerMessageActivity } from "../../service/archiveBuyerMessageActivity";
 
 export namespace TradeMessage {
 	export interface Props extends Container.Props {
@@ -21,20 +19,7 @@ export namespace TradeMessage {
 }
 
 export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ...props }) => {
-	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-
-	const archiveActivity = useCallback(async () => {
-		await archiveBuyerMessageActivity({
-			queryClient,
-			transactionId: transaction.id,
-			listingId: transaction.listingId,
-		});
-	}, [
-		queryClient,
-		transaction.id,
-		transaction.listingId,
-	]);
 
 	return (
 		<>
@@ -48,21 +33,18 @@ export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ...pr
 				<PackageButton
 					close={close}
 					transactionId={transaction.id}
-					onPostMutation={archiveActivity}
 					{...MessageButtonUi}
 				/>
 
 				<PersonalButton
 					close={close}
 					transactionId={transaction.id}
-					onPostMutation={archiveActivity}
 					{...MessageButtonUi}
 				/>
 
 				<LocationButton
 					close={close}
 					transactionId={transaction.id}
-					onPostMutation={archiveActivity}
 					{...MessageButtonUi}
 				/>
 
@@ -78,8 +60,7 @@ export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ...pr
 						transactionId: transaction.id,
 						uploadIds,
 					})}
-					onSuccess={async () => {
-						await archiveActivity();
+					onSuccess={() => {
 						setIsGalleryOpen(false);
 						close();
 					}}

@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import type { FC } from "react";
 import { ConfirmButton } from "@/lib/client/button";
 import { Tx } from "@/lib/client/tx";
@@ -6,7 +5,6 @@ import type { TransactionSchema } from "~/buyer/transaction/server/schema/Transa
 import { CancelIcon } from "~/common/ui/icon";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionRejectMutation } from "../../mutation/withTransactionRejectMutation";
-import { archiveSellerMessageActivity } from "../../service/archiveSellerMessageActivity";
 
 export namespace RejectButton {
 	export interface Props extends Partial<ConfirmButton.Props> {
@@ -16,18 +14,8 @@ export namespace RejectButton {
 }
 
 export const RejectButton: FC<RejectButton.Props> = ({ close, transaction, ...props }) => {
-	const queryClient = useQueryClient();
 	const mutation = withTransactionRejectMutation.useMutation({
 		async onPostMutation() {
-			try {
-				await archiveSellerMessageActivity({
-					queryClient,
-					transactionId: transaction.id,
-				});
-			} catch {
-				// Keep reject flow usable even if unread archival fails.
-			}
-
 			close();
 		},
 	});

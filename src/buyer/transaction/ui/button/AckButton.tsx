@@ -1,55 +1,51 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
 import type { FC } from "react";
-import { Button } from "@/lib/client/button";
+import { uiButton } from "@/lib/client/button";
 import { CheckIcon } from "@/lib/client/icon";
+import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
+import { translator } from "@/lib/common/translator";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
-import { archiveSellerMessageActivity } from "../../service/archiveSellerMessageActivity";
 
 export namespace AckButton {
-	export interface Props extends Button.Props {
+	type LinkProps = Pick<LinkTo.Props, "iconPosition" | "iconProps">;
+
+	export interface Props extends uiButton.Component<LinkProps> {
 		close: TransactionMenuButton.Close;
 		transaction: TransactionSchema.Type;
 	}
 }
 
-export const AckButton: FC<AckButton.Props> = ({ close, transaction, ...props }) => {
+export const AckButton: FC<AckButton.Props> = ({
+	close,
+	transaction,
+	iconPosition,
+	iconProps,
+	className,
+	...ui
+}) => {
 	const locale = useLocale();
-	const queryClient = useQueryClient();
-	const navigate = useNavigate();
-	const mutation = useMutation({
-		async mutationFn(transactionId: string) {
-			return archiveSellerMessageActivity({
-				queryClient,
-				transactionId,
-			});
-		},
-		onSuccess() {
-			navigate({
-				to: "/$locale/app/buyer/transaction/list",
-				params: {
-					locale,
-				},
-			});
-		},
-	});
 
 	return (
-		<Button
-			data-ui="AckButton"
-			data-action={"acknowledge transaction"}
-			iconEnabled={CheckIcon}
-			onClick={() => {
-				mutation.mutate(transaction.id);
+		<LinkTo
+			to={"/$locale/app/buyer/transaction/list"}
+			params={{
+				locale,
 			}}
-			loading={mutation.isPending}
-			disabled={mutation.isPending}
-			{...props}
+			{...uiButton({
+				name: "AckButton",
+				className,
+				...ui,
+			})}
+			data-action={"acknowledge transaction"}
+			title={translator.text("Acknowledge transaction (aria)")}
+			icon={CheckIcon}
+			iconPosition={iconPosition}
+			iconProps={iconProps}
+			onClick={close}
 		>
 			<Tx label="Acknowledge transaction (button)" />
-		</Button>
+		</LinkTo>
 	);
 };

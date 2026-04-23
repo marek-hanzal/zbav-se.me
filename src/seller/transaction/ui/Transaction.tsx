@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { type FC, useRef } from "react";
 import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
@@ -12,7 +11,6 @@ import { TransactionChat } from "~/user/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/user/transaction-entry/ui/TransactionEntryList";
 import { withTransactionQuery } from "../query/withTransactionQuery";
-import { archiveBuyerMessageActivity } from "../service/archiveBuyerMessageActivity";
 import { InterestMessage } from "./status/InterestMessage";
 import { TransactionMenu } from "./TransactionMenu";
 
@@ -30,7 +28,6 @@ export const Transaction: FC<Transaction.Props> = ({
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const queryClient = useQueryClient();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId, {
 		refetchInterval: refresh,
 	});
@@ -109,7 +106,7 @@ export const Transaction: FC<Transaction.Props> = ({
 							data-ui-gap={"default"}
 						>
 							<AckMessage
-								close={close}
+								close={() => {}}
 								transaction={transaction}
 							/>
 						</Container>
@@ -118,19 +115,6 @@ export const Transaction: FC<Transaction.Props> = ({
 				.otherwise(() => {
 					return (
 						<TransactionChat
-							hooks={{
-								async onPostMutation() {
-									try {
-										await archiveBuyerMessageActivity({
-											queryClient,
-											transactionId: transaction.id,
-											listingId: transaction.listingId,
-										});
-									} catch {
-										// Keep message send flow usable even if unread archival fails.
-									}
-								},
-							}}
 							transaction={transaction}
 							left={
 								<TransactionMenuButton>

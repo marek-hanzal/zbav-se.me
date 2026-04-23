@@ -7,6 +7,7 @@ import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
+import { transactionMessageActivityArchiveFx } from "~/user/transaction/server/fx/transactionMessageActivityArchiveFx";
 import { transactionResolveFx as resolveTransactionFx } from "~/user/transaction/server/fx/transactionResolveFx";
 import { transactionStatusMessageFx } from "~/user/transaction/server/fx/transactionStatusMessageFx";
 import { transactionUpdateStatusFx } from "~/user/transaction/server/fx/transactionUpdateStatusFx";
@@ -35,6 +36,13 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 				userId,
 				transactionId,
 				message: "You are not allowed to resolve this listing transaction",
+			});
+
+			yield* transactionMessageActivityArchiveFx({
+				listingId: transaction.listingId,
+				transactionId: transaction.id,
+				type: "buyer-message",
+				userId,
 			});
 
 			const sold = yield* transactionPatchCollectionFx({

@@ -1,5 +1,4 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { type FC, useCallback, useState } from "react";
+import { type FC, useState } from "react";
 import type { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { SellerInfoButton } from "~/buyer/listing/SellerInfo/SellerInfoButton";
@@ -10,7 +9,6 @@ import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMen
 import { withTransactionEntryGalleryCreateMutation } from "~/user/transaction-entry/mutation/withTransactionEntryGalleryCreateMutation";
 import { LocationButton } from "~/user/transaction-entry/ui/button/LocationButton";
 import { PersonalButton } from "~/user/transaction-entry/ui/button/PersonalButton";
-import { archiveSellerMessageActivity } from "../../service/archiveSellerMessageActivity";
 
 export namespace DisputeMessage {
 	export interface Props extends Container.Props {
@@ -20,18 +18,7 @@ export namespace DisputeMessage {
 }
 
 export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, ...props }) => {
-	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-
-	const archiveActivity = useCallback(async () => {
-		await archiveSellerMessageActivity({
-			queryClient,
-			transactionId: transaction.id,
-		});
-	}, [
-		queryClient,
-		transaction.id,
-	]);
 
 	return (
 		<>
@@ -53,8 +40,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, .
 						transactionId: transaction.id,
 						uploadIds,
 					})}
-					onSuccess={async () => {
-						await archiveActivity();
+					onSuccess={() => {
 						setIsGalleryOpen(false);
 						close();
 					}}
@@ -67,14 +53,12 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, .
 				<LocationButton
 					close={close}
 					transactionId={transaction.id}
-					onPostMutation={archiveActivity}
 					{...MessageButtonUi}
 				/>
 
 				<PersonalButton
 					close={close}
 					transactionId={transaction.id}
-					onPostMutation={archiveActivity}
 					{...MessageButtonUi}
 				/>
 			</Group>

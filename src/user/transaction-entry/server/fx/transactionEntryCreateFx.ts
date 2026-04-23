@@ -11,6 +11,7 @@ import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
+import { transactionMessageActivityArchiveFx } from "~/user/transaction/server/fx/transactionMessageActivityArchiveFx";
 import { transactionResolveFx } from "~/user/transaction/server/fx/transactionResolveFx";
 import { transactionTouchFx } from "~/user/transaction/server/fx/transactionTouchFx";
 import { transactionTransitionFx } from "~/user/transaction/server/fx/transactionTransitionFx";
@@ -89,6 +90,25 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				userId,
 				transactionId,
 			});
+
+			yield* match(transaction.side)
+				.with("buyer", () => {
+					return transactionMessageActivityArchiveFx({
+						listingId: transaction.listingId,
+						transactionId: transaction.id,
+						type: "seller-message",
+						userId,
+					});
+				})
+				.with("seller", () => {
+					return transactionMessageActivityArchiveFx({
+						listingId: transaction.listingId,
+						transactionId: transaction.id,
+						type: "buyer-message",
+						userId,
+					});
+				})
+				.otherwise(() => Effect.void);
 
 			/**
 			 * We intentionally keep these side effects before the actual write/transition gate.

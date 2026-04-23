@@ -3,6 +3,7 @@ import type { EntitySchema } from "@/lib/common/schema";
 import { transactionDisputeFn } from "~/buyer/transaction/fn/transactionDisputeFn";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withActivityQuery } from "~/user/activity/query/withActivityQuery";
 import { withTransactionQuery } from "../query/withTransactionQuery";
 
 export const withTransactionDisputeMutation = withMutation<
@@ -29,10 +30,16 @@ export const withTransactionDisputeMutation = withMutation<
 	invalidate: [
 		{
 			async invalidate(queryClient) {
-				await withTransactionQuery.invalidator(queryClient, [
-					"fetch",
-					"collection",
-					"count",
+				await Promise.all([
+					withTransactionQuery.invalidator(queryClient, [
+						"fetch",
+						"collection",
+						"count",
+					]),
+					withActivityQuery.invalidator(queryClient, [
+						"collection",
+						"count",
+					]),
 				]);
 			},
 		},

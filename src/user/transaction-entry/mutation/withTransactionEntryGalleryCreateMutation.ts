@@ -1,5 +1,6 @@
 import { withMutation } from "@/lib/client/mutation";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withActivityQuery } from "~/user/activity/query/withActivityQuery";
 import { transactionEntryCreateFn } from "~/user/transaction-entry/fn/transactionEntryCreateFn";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 import { withTransactionEntryQuery } from "../query/withTransactionEntryQuery";
@@ -42,9 +43,15 @@ export const withTransactionEntryGalleryCreateMutation = withMutation<
 	invalidate: [
 		{
 			async invalidate(queryClient) {
-				await withTransactionEntryQuery.invalidator(queryClient, [
-					"collection",
-					"count",
+				await Promise.all([
+					withTransactionEntryQuery.invalidator(queryClient, [
+						"collection",
+						"count",
+					]),
+					withActivityQuery.invalidator(queryClient, [
+						"collection",
+						"count",
+					]),
 				]);
 			},
 		},

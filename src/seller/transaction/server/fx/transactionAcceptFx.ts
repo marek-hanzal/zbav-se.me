@@ -4,6 +4,7 @@ import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFe
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
+import { transactionMessageActivityArchiveFx } from "~/user/transaction/server/fx/transactionMessageActivityArchiveFx";
 import { transactionResolveFx } from "~/user/transaction/server/fx/transactionResolveFx";
 import { transactionStatusMessageFx } from "~/user/transaction/server/fx/transactionStatusMessageFx";
 import { transactionUpdateStatusFx } from "~/user/transaction/server/fx/transactionUpdateStatusFx";
@@ -39,6 +40,13 @@ export const transactionAcceptFx = Effect.fn("transactionAcceptFx")(function* ({
 					message: "Buyer cannot accept their own transaction",
 				});
 			}
+
+			yield* transactionMessageActivityArchiveFx({
+				listingId: transaction.listingId,
+				transactionId: transaction.id,
+				type: "buyer-message",
+				userId,
+			});
 
 			yield* transactionUpdateStatusFx({
 				transactionId: transaction.id,

@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import type { FC } from "react";
 import { ConfirmButton } from "@/lib/client/button";
 import { Tx } from "@/lib/client/tx";
@@ -6,7 +5,6 @@ import type { TransactionSchema } from "~/buyer/transaction/server/schema/Transa
 import { FlagIcon } from "~/common/ui/icon";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionDisputeMutation } from "../../mutation/withTransactionDisputeMutation";
-import { archiveSellerMessageActivity } from "../../service/archiveSellerMessageActivity";
 
 export namespace DisputeButton {
 	export interface Props extends ConfirmButton.Props {
@@ -16,18 +14,8 @@ export namespace DisputeButton {
 }
 
 export const DisputeButton: FC<DisputeButton.Props> = ({ close, transaction, ...props }) => {
-	const queryClient = useQueryClient();
 	const mutation = withTransactionDisputeMutation.useMutation({
 		async onPostMutation() {
-			try {
-				await archiveSellerMessageActivity({
-					queryClient,
-					transactionId: transaction.id,
-				});
-			} catch {
-				// Keep dispute flow usable even if unread archival fails.
-			}
-
 			close();
 		},
 	});
