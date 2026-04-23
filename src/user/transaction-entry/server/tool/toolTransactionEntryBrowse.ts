@@ -82,6 +82,11 @@ Direction field:
 							kind: "gallery",
 						},
 						async () => {
+							/**
+							 * The magick: galleries are protected, so we've to fetch them
+							 * early as outside of this it's not possible to resolve 'galleryId'
+							 * to real gallery.
+							 */
 							const gallery = await transactionEntryGalleryFetchFn({
 								data: {
 									where: {
