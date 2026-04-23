@@ -76,8 +76,8 @@ Browse seller's trade transactions (here you can get 'transactionId' for transac
 				transactionId: item.id,
 				title: item.title,
 				unreadCount: item.unreadCount,
-				updatedAt: item.updatedAt,
-				expiresAt: item.expiresAt,
+				updatedAt: item.updatedAt.toISOString(),
+				expiresAt: item.expiresAt.toISOString(),
 			})),
 			{
 				header: true,
