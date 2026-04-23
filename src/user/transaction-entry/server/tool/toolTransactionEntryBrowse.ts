@@ -27,8 +27,8 @@ export const toolTransactionEntryBrowse = tool({
 	description: `
 Tool to get events (messages) in transaction (listing trade).
 
-You must have 'transactionId' before using this tool.
-
+- You must have valid (from another tool call) 'transactionId' before using this tool
+- Don't invent your own 'transactionId'
 - You may get text messages
 - You may get status updates
 - Translate status items/non-text messages (entries) to user's language
