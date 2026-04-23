@@ -42,6 +42,10 @@ export const toolTransactionBrowse = tool({
 Browse seller's trade transactions (here you can get 'transactionId' for transaction-entry).
 
 - Don't leak internal ID's
+- Keep an eye on 'expiresAt', check if the transaction is near expiration date and tell the user if so
+- Order is from the most recent activity
+- There is listing 'title'
+- You can use 'unreadCount' to get number of items a user must react to
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
@@ -55,6 +59,12 @@ Browse seller's trade transactions (here you can get 'transactionId' for transac
 		const items = await transactionCollectionFn({
 			data: {
 				filter,
+				sort: [
+					{
+						field: "lastAt",
+						order: "desc",
+					},
+				],
 				limit: 8,
 			},
 		});
@@ -65,13 +75,21 @@ Browse seller's trade transactions (here you can get 'transactionId' for transac
 
 		return stringify(
 			items.map((item) => ({
-				id: item.id,
+				transactionId: item.id,
+				title: item.title,
+				unreadCount: item.unreadCount,
+				updatedAt: item.updatedAt,
+				expiresAt: item.expiresAt,
 			})),
 			{
 				header: true,
 				delimiter: "\n",
 				columns: [
 					"id",
+					"title",
+					"unreadCount",
+					"updatedAt",
+					"expiresAt",
 				],
 			},
 		);
