@@ -7,6 +7,7 @@ import { toolTransactionCreate } from "~/buyer/transaction/server/tool/toolTrans
 import { toolNow } from "~/common/date/server/tool/toolNow";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { toolTransactionBrowse as toolSellerTransactionBrowse } from "~/seller/transaction/server/tool/toolTransactionBrowse";
+import { toolTransactionWorkflow as toolSellerTransactionWorkflow } from "~/seller/transaction/server/tool/toolTransactionWorkflow";
 import { toolLocationBrowse } from "~/session/location/server/tool/toolLocationBrowse";
 import { toolRoute } from "~/session/location/server/tool/toolRoute";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
@@ -263,6 +264,7 @@ Payments:
 		 * Seller domain stuff
 		 */
 		toolSellerTransactionBrowse,
+		toolSellerTransactionWorkflow,
 		/**
 		 * User domain stuff
 		 */

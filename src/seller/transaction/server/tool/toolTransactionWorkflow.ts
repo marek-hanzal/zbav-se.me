@@ -35,7 +35,7 @@ export const toolTransactionWorkflow = tool({
 	name: "seller-transaction-workflow",
 	needsApproval: false,
 	description: `
-Seller-side transaction action.
+Seller-side transaction (status) action.
 
 Use only when the current user is the seller in this transaction.
 If perspective is unknown, resolve it first.
@@ -46,7 +46,7 @@ Actions:
 - resolve: seller marks the transaction as completed (when e.g. item is exchanged, package sent, it's "done" on a seller side)
 - dispute: seller opens a dispute (something went wrong, flow just between users)
 
-Requires the exact seller-side transaction id.
+Requires the exact seller-side 'transactionId'.
 	`.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
@@ -57,7 +57,7 @@ Requires the exact seller-side transaction id.
 
 		const { type, transactionId } = await InputSchema.parseAsync(input);
 
-		return match(type)
+		await match(type)
 			.with("accept", () => {
 				return transactionAcceptFn({
 					data: {
@@ -87,5 +87,7 @@ Requires the exact seller-side transaction id.
 				});
 			})
 			.exhaustive();
+
+		return "ok";
 	},
 });
