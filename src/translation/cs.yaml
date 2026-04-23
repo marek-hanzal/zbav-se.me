@@ -282,9 +282,6 @@
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
     ref: Age (title)
     value: Odhad životnosti
-30b9390acd7135075710fd0a837498dd566f752c01cdae2b58eafb7e:
-    ref: Reasoning
-    value: Rozjímám
 3136e34a81ab39a2fb1e4198edccbf10acf6244b0543a98136311b44:
     ref: Listing warranty (hint)
     value: |
@@ -615,6 +612,9 @@
 730685ddac55ab05051064ae829f90b99a300329a4818c287d8f51a5:
     ref: Tracking number not filled
     value: Číslo zásilky není vyplněné
+73252915616fb0ae958f96d83217a068fd9c6a1bba7c505cf015a56e:
+    ref: Agent working (label)
+    value: 🧑‍💻 Pracuji, dej mi chvilku
 75d0eb333247ea43f5320a9f21b8a1b318fced5eb1f03495bf4ed3d7:
     ref: Go home (link)
     value: Zpět domů
