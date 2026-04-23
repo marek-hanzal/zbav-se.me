@@ -1,9 +1,10 @@
 import { tool } from "@openai/agents";
 import { stringify } from "csv-stringify/sync";
 import { z } from "zod";
+import { transactionCollectionFn as buyerTransactionCollectionFn } from "~/buyer/transaction/fn/transactionCollectionFn";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
-import { transactionCollectionFn } from "~/seller/transaction/fn/transactionCollectionFn";
+import { transactionCollectionFn as sellerTransactionCollectionFn } from "~/seller/transaction/fn/transactionCollectionFn";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
@@ -34,46 +35,60 @@ const InputSchema = z
 	.strip();
 
 export const toolTransactionBrowse = tool({
-	name: "seller-transaction-browse",
+	name: "transaction-browse",
 	needsApproval: false,
 	description: `
-Browse seller's trade transactions (here you can get 'transactionId' for transaction-entry).
+Browse the user's trade transactions from both seller and buyer side in one list (here you can get 'transactionId' for transaction-entry).
 
 - Don't leak internal ID's
 - Keep an eye on 'expiresAt', check if the transaction is near expiration date and tell the user if so
-    Transaction expiration !== listing expiration
-- Order is from the most recent activity
+- Transaction expiration !== listing expiration
+- Order is from the most recent activity across both seller and buyer side
 - There is listing 'title'
 - You can use 'unreadCount' to get number of items a user must react to
-    `.trim(),
+		`.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
 	async execute(input) {
-		logger.trace("toolTransactionCollection", {
+		logger.trace("toolTransactionBrowse", {
 			input,
 		});
 
 		const filter = await InputSchema.parseAsync(input);
 
-		const items = await transactionCollectionFn({
-			data: {
-				filter,
-				sort: [
-					{
-						field: "lastAt",
-						order: "desc",
-					},
-				],
-				limit: 8,
-			},
-		});
+		const [sellerItems, buyerItems] = await Promise.all([
+			sellerTransactionCollectionFn({
+				data: {
+					filter,
+					sort: [
+						{
+							field: "lastAt",
+							order: "desc",
+						},
+					],
+					limit: 10,
+				},
+			}),
+			buyerTransactionCollectionFn({
+				data: {
+					filter,
+					sort: [
+						{
+							field: "lastAt",
+							order: "desc",
+						},
+					],
+					limit: 10,
+				},
+			}),
+		]);
 
-		if (!items.length) {
+		if (!sellerItems.length && !buyerItems.length) {
 			return "nothing";
 		}
 
-		return stringify(
-			items.map((item) => ({
+		const seller = stringify(
+			sellerItems.map((item) => ({
 				transactionId: item.id,
 				title: item.title,
 				unreadCount: item.unreadCount,
@@ -92,5 +107,31 @@ Browse seller's trade transactions (here you can get 'transactionId' for transac
 				],
 			},
 		);
+		const buyer = stringify(
+			buyerItems.map((item) => ({
+				transactionId: item.id,
+				title: item.title,
+				unreadCount: item.unreadCount,
+				updatedAt: item.updatedAt.toISOString(),
+				expiresAt: item.expiresAt.toISOString(),
+			})),
+			{
+				header: true,
+				delimiter: "\n",
+				columns: [
+					"transactionId",
+					"title",
+					"unreadCount",
+					"updatedAt",
+					"expiresAt",
+				],
+			},
+		);
+
+		return `
+${sellerItems.length > 0 ? seller : "Seller: empty"}
+
+${buyerItems.length > 0 ? buyer : "Buyer: empty"}
+        `.trim();
 	},
 });

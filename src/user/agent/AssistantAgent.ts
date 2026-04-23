@@ -5,16 +5,15 @@ import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
 import { toolFeedPatch } from "~/buyer/feed/server/tool/toolFeedPatch";
 import { toolListingBrowse as toolBuyerListingBrowse } from "~/buyer/listing/server/tool/toolListingBrowse";
 import { toolListingDetail as toolBuyerListingDetail } from "~/buyer/listing/server/tool/toolListingDetail";
-import { toolTransactionBrowse as toolBuyerTransactionBrowse } from "~/buyer/transaction/server/tool/toolTransactionBrowse";
 import { toolTransactionCreate } from "~/buyer/transaction/server/tool/toolTransactionCreate";
 import { toolTransactionWorkflow as toolBuyerTransactionWorkflow } from "~/buyer/transaction/server/tool/toolTransactionWorkflow";
 import { toolNow } from "~/common/date/server/tool/toolNow";
-import { toolTransactionBrowse as toolSellerTransactionBrowse } from "~/seller/transaction/server/tool/toolTransactionBrowse";
 import { toolTransactionWorkflow as toolSellerTransactionWorkflow } from "~/seller/transaction/server/tool/toolTransactionWorkflow";
 import { toolLocationBrowse } from "~/session/location/server/tool/toolLocationBrowse";
 import { toolRoute } from "~/session/location/server/tool/toolRoute";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
+import { toolTransactionBrowse } from "~/user/transaction/server/tool/toolTransactionBrowse";
 import { toolTransactionEntryBrowse } from "../transaction-entry/server/tool/toolTransactionEntryBrowse";
 import { toolTransactionEntryCreate } from "../transaction-entry/server/tool/toolTransactionEntryCreate";
 
@@ -159,8 +158,10 @@ Payments:
 - Usually you may need multiple tools: normalize data (e.g. location/category), browse data (e.g. listing candidates), fetch detail when asked for (e.g. listing detail)
 - Normalize vague or shorthand terms once before touching browse, detail or heavier tools
 - If a required input is missing, ask one short question
-- If a follow-up depends on a previous result, use that result explicitly rather than assuming.
-- When asking for counts, state exactly what should be counted.
+- If a follow-up depends on a previous result, use that result explicitly rather than assuming
+- When asking for counts, state exactly what should be counted
+- Prefer using IDs you already know over plain text
+- Prefer *In (multiple IDs) filter fields when available (OR mode)
 
 ## Restriction system:
 You can read restriction system as "adultness" level of things being traded, e.g. if you want a car, you've to be adult. Adult or
@@ -241,7 +242,6 @@ Examples: licensed weapons, document-sensitive weapon accessories, or other item
 		toolBuyerListingBrowse,
 		toolBuyerListingDetail,
 		//
-		toolBuyerTransactionBrowse,
 		toolBuyerTransactionWorkflow,
 		toolTransactionCreate,
 		//
@@ -252,11 +252,11 @@ Examples: licensed weapons, document-sensitive weapon accessories, or other item
 		/**
 		 * Seller domain stuff
 		 */
-		toolSellerTransactionBrowse,
 		toolSellerTransactionWorkflow,
 		/**
 		 * User domain stuff
 		 */
+		toolTransactionBrowse,
 		toolTransactionEntryCreate,
 		toolTransactionEntryBrowse,
 		/**

@@ -6,6 +6,9 @@ export const TransactionEntryPackage = z
 	.looseObject({
 		...BasePackageSchema.shape,
 		direction: TransactionEntryDirectionEnumSchema,
+		listingId: z.string().meta({
+			description: "Listing this entry belongs to",
+		}),
 	})
 	.strip()
 	.meta({

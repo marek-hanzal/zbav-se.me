@@ -34,7 +34,6 @@ const InputSchema = z
 				currencyIn: true,
 				expiresAtAfter: true,
 				expiresAtBefore: true,
-
 				userId: true,
 				idIn: true,
 			})

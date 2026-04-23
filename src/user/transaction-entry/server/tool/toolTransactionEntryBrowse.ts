@@ -14,8 +14,8 @@ const logger = getRootLogger([
 
 const InputSchema = z
 	.looseObject({
-		transactionId: z.string().meta({
-			description: "Transaction is required to get messages",
+		transactionIdIn: z.array(z.string()).meta({
+			description: "Transactions are fetched using 'OR' (any of IDs present)",
 		}),
 	})
 	.strip()
@@ -71,6 +71,7 @@ Status explanation:
 			items.map(async (item) => ({
 				id: item.id,
 				direction: item.direction,
+				listingId: item.listingId,
 				text: await match(item)
 					.with(
 						{
@@ -141,6 +142,7 @@ Status explanation:
 			columns: [
 				"id",
 				"direction",
+				"listingId",
 				"text",
 				"createdAt",
 			],
