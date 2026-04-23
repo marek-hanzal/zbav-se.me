@@ -28,12 +28,13 @@ Hint:
 			input,
 		});
 
-		const query = await InputSchema.parseAsync(input);
+		const { id } = await InputSchema.parseAsync(input);
 
 		return listingFetchFn({
 			data: {
-				...query,
-				limit: 8,
+				where: {
+					id,
+				},
 			},
 		})
 			.then((item) => {
