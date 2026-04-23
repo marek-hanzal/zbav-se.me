@@ -50,6 +50,7 @@ describe("public listing gallery privacy", () => {
 						id: orphanUploadId,
 						userId: otherUser.id,
 						url: orphanUrl,
+						access: "private",
 						createdAt: now,
 					})
 					.execute(),
@@ -60,6 +61,7 @@ describe("public listing gallery privacy", () => {
 					.values({
 						id: orphanGalleryId,
 						userId: otherUser.id,
+						access: "private",
 						createdAt: now,
 					})
 					.execute(),

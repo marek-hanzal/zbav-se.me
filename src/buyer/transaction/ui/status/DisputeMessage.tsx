@@ -42,6 +42,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, .
 				{...props}
 			>
 				<GalleryUploadButton
+					access="private"
 					defaultUploadIds={[]}
 					state={{
 						value: isGalleryOpen,

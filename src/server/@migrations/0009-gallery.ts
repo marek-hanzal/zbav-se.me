@@ -1,4 +1,4 @@
-import type { Migration } from "kysely";
+import { type Migration, sql } from "kysely";
 
 export const GalleryMigration: Migration = {
 	async up(db) {
@@ -7,6 +7,7 @@ export const GalleryMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
 			.addColumn("userId", "text", (col) => col.notNull())
+			.addColumn("access", sql`access_enum`, (col) => col.notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"gallery_[userId]_fk",
@@ -25,6 +26,12 @@ export const GalleryMigration: Migration = {
 			.createIndex("gallery_[userId]_idx")
 			.on("gallery")
 			.column("userId")
+			.execute();
+
+		await db.schema
+			.createIndex("gallery_[access]_idx")
+			.on("gallery")
+			.column("access")
 			.execute();
 
 		await db.schema

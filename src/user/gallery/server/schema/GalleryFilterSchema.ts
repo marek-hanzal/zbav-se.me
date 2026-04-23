@@ -1,11 +1,15 @@
 import { z } from "zod";
 import { FilterSchema } from "@/lib/common/schema";
+import { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 
 export const GalleryFilterSchema = z
 	.looseObject({
 		...FilterSchema.shape,
 		userId: z.string().optional().meta({
 			description: "Exact user id",
+		}),
+		access: AccessEnumSchema.optional().meta({
+			description: "Exact gallery visibility",
 		}),
 	})
 	.strip()

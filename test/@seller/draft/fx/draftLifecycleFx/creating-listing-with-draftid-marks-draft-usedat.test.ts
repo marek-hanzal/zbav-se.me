@@ -32,6 +32,7 @@ describe("draft lifecycle", () => {
 			});
 
 			const upload = yield* uploadCreateFx({
+				access: "private",
 				url: testUploadUrl("test.jpg"),
 				userId: seller.id,
 			});
@@ -64,10 +65,11 @@ describe("draft lifecycle", () => {
 			return {
 				draft: createdDraft,
 				listing: createdListing,
+				uploadId: upload.id,
 			};
 		}).pipe(
 			withRuntimeFx(database),
-			Effect.flatMap(({ draft, listing }) =>
+			Effect.flatMap(({ draft, listing, uploadId }) =>
 				Effect.gen(function* () {
 					expect(listing.status).toBe("live");
 
@@ -83,6 +85,24 @@ describe("draft lifecycle", () => {
 					);
 
 					expect(updatedDraft.usedAt).not.toBeNull();
+
+					const listingGallery = yield* Effect.promise(() =>
+						database.kysely
+							.selectFrom("gallery")
+							.select("access")
+							.where("id", "=", listing.gallery.id)
+							.executeTakeFirstOrThrow(),
+					);
+					const listingUpload = yield* Effect.promise(() =>
+						database.kysely
+							.selectFrom("upload")
+							.select("access")
+							.where("id", "=", uploadId)
+							.executeTakeFirstOrThrow(),
+					);
+
+					expect(listingGallery.access).toBe("public");
+					expect(listingUpload.access).toBe("public");
 				}),
 			),
 			Effect.runPromise,

@@ -23,18 +23,22 @@ describe("transactionEntryWorkflowFx", () => {
 
 			const uploads = yield* Effect.all([
 				uploadCreateFx({
+					access: "private",
 					userId: buyer.id,
 					url: testUploadUrl("gallery-sort-1.jpg"),
 				}),
 				uploadCreateFx({
+					access: "private",
 					userId: buyer.id,
 					url: testUploadUrl("gallery-sort-2.jpg"),
 				}),
 				uploadCreateFx({
+					access: "private",
 					userId: buyer.id,
 					url: testUploadUrl("gallery-sort-3.jpg"),
 				}),
 				uploadCreateFx({
+					access: "private",
 					userId: buyer.id,
 					url: testUploadUrl("gallery-sort-4.jpg"),
 				}),

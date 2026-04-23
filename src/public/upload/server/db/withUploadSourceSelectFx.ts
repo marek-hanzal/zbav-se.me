@@ -16,7 +16,7 @@ export const withUploadSourceSelectFx = Effect.fn("withUploadSourceSelectFx")(fu
 }: withUploadSourceSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	let query = kysely.selectFrom("upload as u");
+	let query = kysely.selectFrom("upload as u").where("u.access", "=", "public");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

@@ -37,6 +37,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 			<GalleryUploadSheet
 				key={uploadIds.join(":")}
 				allowClear
+				access="private"
 				state={{
 					value: isGalleryOpen,
 					set: setIsGalleryOpen,

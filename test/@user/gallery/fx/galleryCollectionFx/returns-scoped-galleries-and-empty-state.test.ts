@@ -15,12 +15,15 @@ describe("galleryCollectionFx", () => {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
 
 			const sellerFirst = yield* galleryInsertFx({
+				access: "private",
 				userId: seller.id,
 			});
 			const sellerSecond = yield* galleryInsertFx({
+				access: "private",
 				userId: seller.id,
 			});
 			yield* galleryInsertFx({
+				access: "private",
 				userId: buyer.id,
 			});
 

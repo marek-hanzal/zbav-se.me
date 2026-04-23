@@ -1,0 +1,41 @@
+import { Effect } from "effect";
+import { withFetchFx } from "@/lib/common/fetch";
+import { getLoggerFx } from "@/lib/common/log";
+import { withGalleryQueryBuilderFx } from "~/public/gallery/server/db/withGalleryQueryBuilderFx";
+import { withGallerySelectFx } from "~/public/gallery/server/db/withGallerySelectFx";
+import type { GalleryFilterSchema } from "~/public/gallery/server/schema/GalleryFilterSchema";
+import type { GalleryQuerySchema } from "~/public/gallery/server/schema/GalleryQuerySchema";
+
+export namespace galleryFetchFx {
+	export interface Props extends GalleryQuerySchema.Type {
+		scope: GalleryFilterSchema.Type;
+	}
+}
+
+export const galleryFetchFx = Effect.fn("galleryFetchFx")(function* ({
+	filter,
+	where,
+	scope,
+	sort,
+}: galleryFetchFx.Props) {
+	const logger = yield* getLoggerFx("galleryFetchFx");
+	logger.trace("galleryFetchFx", {
+		filter,
+		where,
+		scope,
+		sort,
+	});
+
+	return yield* withFetchFx({
+		resource: "gallery",
+		selectFx: withGallerySelectFx({
+			sort,
+		}),
+		filter,
+		where,
+		scope,
+		queryFx: withGalleryQueryBuilderFx,
+	});
+});
+
+export type galleryFetchFx = ReturnType<typeof galleryFetchFx>;

@@ -1,4 +1,4 @@
-import type { Migration } from "kysely";
+import { type Migration, sql } from "kysely";
 
 export const UploadMigration: Migration = {
 	async up(db) {
@@ -7,6 +7,7 @@ export const UploadMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("url", "text", (col) => col.notNull())
+			.addColumn("access", sql`access_enum`, (col) => col.notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"upload_[userId]_fk",
@@ -22,6 +23,8 @@ export const UploadMigration: Migration = {
 			.execute();
 
 		await db.schema.createIndex("upload_[userId]_idx").on("upload").column("userId").execute();
+
+		await db.schema.createIndex("upload_[access]_idx").on("upload").column("access").execute();
 
 		await db.schema
 			.createIndex("upload_[createdAt]_idx")

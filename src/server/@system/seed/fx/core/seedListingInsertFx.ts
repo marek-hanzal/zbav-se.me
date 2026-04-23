@@ -51,8 +51,20 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 	const now = dateContext.now();
 
 	const gallery = yield* galleryInsertFx({
+		access: "public",
 		userId,
 	});
+
+	yield* tryDbFx(async () =>
+		kysely
+			.updateTable("upload")
+			.set({
+				access: "public",
+			})
+			.where("userId", "=", userId)
+			.where("id", "in", uploadIds)
+			.execute(),
+	);
 
 	yield* seedGalleryItemBulkInsertFx({
 		galleryId: gallery.id,

@@ -18,18 +18,22 @@ describe("draftGalleryCreateFx", () => {
 			const stranger = yield* leaseTestUserFx({});
 
 			const firstUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: user.id,
 				url: testUploadUrl("draft-gallery-1.jpg"),
 			});
 			const secondUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: user.id,
 				url: testUploadUrl("draft-gallery-2.jpg"),
 			});
 			const thirdUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: user.id,
 				url: testUploadUrl("draft-gallery-3.jpg"),
 			});
 			const strangerUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: stranger.id,
 				url: testUploadUrl("draft-gallery-stranger.jpg"),
 			});

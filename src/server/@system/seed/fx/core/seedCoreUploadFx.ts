@@ -107,6 +107,7 @@ export const seedCoreUploadFx = Effect.fn("seedCoreUploadFx")(function* ({
 					});
 
 					const upload = yield* uploadCreateFx({
+						access: "private",
 						userId,
 						url: `${cdn.replace(/\/$/, "")}/${key}`,
 					}).pipe(withSeedNowFx(withRandomPastDate()));
@@ -137,6 +138,7 @@ export const seedCoreUploadFx = Effect.fn("seedCoreUploadFx")(function* ({
 				id: string;
 				userId: string;
 				url: string;
+				access: "private";
 				createdAt: Date;
 			}> = [];
 
@@ -149,6 +151,7 @@ export const seedCoreUploadFx = Effect.fn("seedCoreUploadFx")(function* ({
 					id: genId(),
 					userId,
 					url: source.url,
+					access: "private",
 					createdAt: withRandomPastDate().toJSDate(),
 				});
 			}

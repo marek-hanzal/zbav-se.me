@@ -6,6 +6,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import type { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 import { withUploadMutation } from "~/user/upload/mutation/withUploadMutation";
 import { withUploadQuery } from "~/user/upload/query/withUploadQuery";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
@@ -17,6 +18,7 @@ export namespace useController {
 
 	export interface Props {
 		onChange: OnChangeFn;
+		access: AccessEnumSchema.Type;
 		onUpload?: OnUploadFn;
 		mutationId?: string;
 	}
@@ -33,6 +35,7 @@ export namespace useController {
 
 export function useController({
 	onChange,
+	access,
 	onUpload,
 	mutationId,
 }: useController.Props): useController.Result {
@@ -79,6 +82,7 @@ export function useController({
 				}
 
 				uploadMutation.mutate({
+					access,
 					blob: file,
 					name: file.name,
 					onProgress: setProgress,
@@ -87,6 +91,7 @@ export function useController({
 				e.target.value = "";
 			},
 			[
+				access,
 				uploadMutation,
 			],
 		),

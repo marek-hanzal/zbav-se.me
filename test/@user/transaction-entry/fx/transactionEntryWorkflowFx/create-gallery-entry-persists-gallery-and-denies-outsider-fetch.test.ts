@@ -26,10 +26,12 @@ describe("transactionEntry workflow", () => {
 			});
 
 			const firstUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: buyer.id,
 				url: testUploadUrl("transaction-entry-gallery-1.jpg"),
 			});
 			const secondUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: buyer.id,
 				url: testUploadUrl("transaction-entry-gallery-2.jpg"),
 			});

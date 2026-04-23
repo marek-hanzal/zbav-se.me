@@ -3,6 +3,7 @@ import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { Container } from "@/lib/client/container";
 import type { withMutation } from "@/lib/client/mutation";
 import type { StateType } from "@/lib/client/type";
+import type { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
 import { withUploadMutation } from "~/user/upload/mutation/withUploadMutation";
@@ -19,6 +20,7 @@ export namespace GalleryUploadSheet {
 		allowClear?: boolean;
 		defaultUploadIds: string[];
 		limit?: number;
+		access: AccessEnumSchema.Type;
 		//
 		state: StateType.State<boolean>;
 		//
@@ -40,6 +42,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, con
 	allowClear,
 	defaultUploadIds,
 	limit = 1,
+	access,
 	...props
 }: GalleryUploadSheet.Props<TData, TResult>) => {
 	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
@@ -69,6 +72,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads, con
 			>
 				<GalleryUpload
 					allowClear={allowClear}
+					access={access}
 					state={{
 						value: uploadIds,
 						set: setUploadIds,

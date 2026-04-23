@@ -67,6 +67,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 				data-ui-inner="default"
 			>
 				<GalleryUpload
+					access="private"
 					state={{
 						value: uploadIds,
 						set: setUploadIds,

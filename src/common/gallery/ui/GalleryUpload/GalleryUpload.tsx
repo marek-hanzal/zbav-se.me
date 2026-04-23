@@ -3,6 +3,7 @@ import { Container } from "@/lib/client/container";
 import { useSnapperNav } from "@/lib/client/snapper";
 import { SnapperNav } from "@/lib/client/snapper-nav";
 import type { StateType } from "@/lib/client/type";
+import type { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 import { PhotoUpload } from "~/common/photo/ui/PhotoUpload";
 import { Toolbar } from "./Toolbar";
 
@@ -11,6 +12,7 @@ export namespace GalleryUpload {
 		allowClear?: boolean;
 		state: StateType.State<string[]>;
 		limit: number;
+		access: AccessEnumSchema.Type;
 		mutationId?: string;
 	}
 }
@@ -25,6 +27,7 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({
 	allowClear,
 	state,
 	limit,
+	access,
 	mutationId,
 	...props
 }) => {
@@ -79,6 +82,7 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({
 						>
 							<PhotoUpload
 								value={uploadId}
+								access={access}
 								mutationId={mutationId}
 								onChange={(nextUploadId) => {
 									state.set((prev) => {

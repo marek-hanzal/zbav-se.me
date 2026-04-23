@@ -34,6 +34,7 @@ describe("userEventSellerInfoFx", () => {
 			expect(location).toHaveLength(1);
 
 			const upload = yield* uploadCreateFx({
+				access: "private",
 				url: testUploadUrl("test.jpg"),
 				userId: seller.id,
 			});

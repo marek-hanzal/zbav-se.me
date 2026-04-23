@@ -52,6 +52,7 @@ export const createListingFx = (
 		const uploadContext = yield* UploadContextFx;
 
 		const upload = yield* uploadCreateFx({
+			access: "public",
 			url: `${uploadContext.cdn.replace(/\/$/, "")}/test.jpg`,
 			userId: sellerId,
 		});

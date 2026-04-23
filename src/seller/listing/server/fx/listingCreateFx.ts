@@ -73,7 +73,19 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			}
 
 			const gallery = yield* galleryInsertFx({
+				access: "public",
 				userId,
+			});
+
+			yield* tryDbFx(async () => {
+				return kysely
+					.updateTable("upload")
+					.set({
+						access: "public",
+					})
+					.where("userId", "=", userId)
+					.where("id", "in", uploadIds)
+					.execute();
 			});
 
 			let sort = 0;

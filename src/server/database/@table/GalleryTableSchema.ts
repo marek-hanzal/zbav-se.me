@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 
 export const GalleryTableSchema = z
 	.looseObject({
@@ -7,6 +8,9 @@ export const GalleryTableSchema = z
 		}),
 		userId: z.string().meta({
 			description: "ID of the user who owns the gallery",
+		}),
+		access: AccessEnumSchema.meta({
+			description: "Visibility of the gallery",
 		}),
 		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",

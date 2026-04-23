@@ -38,6 +38,7 @@ describe("transactionEntry workflow", () => {
 			);
 
 			const upload = yield* uploadCreateFx({
+				access: "private",
 				userId: buyer.id,
 				url: testUploadUrl("transaction-entry-pending-gallery.jpg"),
 			});

@@ -15,10 +15,12 @@ describe("draft lifecycle", () => {
 			const seller = yield* leaseTestUserFx({});
 
 			const upload1 = yield* uploadCreateFx({
+				access: "private",
 				url: testUploadUrl("test1.jpg"),
 				userId: seller.id,
 			});
 			const upload2 = yield* uploadCreateFx({
+				access: "private",
 				url: testUploadUrl("test2.jpg"),
 				userId: seller.id,
 			});

@@ -36,5 +36,9 @@ export const withGalleryQueryBuilderFx = Effect.fn("withGalleryQueryBuilderFx")(
 		query = query.where("gal.userId", "=", where.userId) as TSelect;
 	}
 
+	if (where.access) {
+		query = query.where("gal.access", "=", where.access) as TSelect;
+	}
+
 	return yield* Effect.succeed(query);
 });
