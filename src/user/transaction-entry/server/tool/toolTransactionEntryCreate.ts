@@ -59,8 +59,12 @@ export const toolTransactionEntryCreate = tool({
 	description: `
 Send a message to transactionId participant (during trade on a listing).
 
-- Strictly prefer structured input over plain messages
-- If there is email / phone / name in the user's text, offer to send them separated
+Kind:
+gallery - use, if user provided an image and asks to send it
+location - use if user provides an address (location) (e.g. package / meeting point)
+package - use if user provided package tracking code / url
+personal - use if user provided you any of: name / phone / email
+text - if none of other kinds matches, use plain text (last chance)
 	`.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
