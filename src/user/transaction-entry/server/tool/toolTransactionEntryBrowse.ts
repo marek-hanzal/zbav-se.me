@@ -70,6 +70,7 @@ Status explanation:
 		const rows = await Promise.all(
 			items.map(async (item) => ({
 				id: item.id,
+				transactionId: item.transactionId,
 				direction: item.direction,
 				listingId: item.listingId,
 				text: await match(item)
@@ -141,6 +142,7 @@ Status explanation:
 			delimiter: "\t",
 			columns: [
 				"id",
+				"transactionId",
 				"direction",
 				"listingId",
 				"text",
