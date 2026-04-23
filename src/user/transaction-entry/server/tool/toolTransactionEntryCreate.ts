@@ -75,8 +75,6 @@ Send a message to transactionId participant (during trade on a listing).
 			data: TransactionEntryCreateSchema.parse(data),
 		});
 
-		return `
-ID: ${transactionEntry.id}
-        `.trim();
+		return `ID: ${transactionEntry.id}`;
 	},
 });

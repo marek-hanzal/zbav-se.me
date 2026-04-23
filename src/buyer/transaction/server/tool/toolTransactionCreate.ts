@@ -32,8 +32,6 @@ Buyer-side transaction action: create/open a new transaction for a concrete list
 			data,
 		});
 
-		return `
-ID: ${transaction.id}
-        `.trim();
+		return `ID: ${transaction.id}`;
 	},
 });
