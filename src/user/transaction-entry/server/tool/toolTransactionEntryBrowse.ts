@@ -133,7 +133,7 @@ Status explanation:
 					.otherwise((item) => {
 						return item.payload.text;
 					}),
-				createdAt: item.createdAt,
+				createdAt: item.createdAt.toISOString(),
 			})),
 		);
 
