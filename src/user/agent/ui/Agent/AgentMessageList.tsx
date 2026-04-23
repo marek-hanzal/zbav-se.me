@@ -26,7 +26,7 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 		resizeBehavior: "instant",
 	});
 
-	const inline = false;
+	const inline = true;
 
 	return (
 		<Container

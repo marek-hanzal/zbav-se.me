@@ -609,7 +609,7 @@
     value: Výchozí řazení
 71071425c005ec94383521cfde429d21614bf3f12a2512da7b8b40c5:
     ref: Agent reasoning
-    value: Rozjímám, dej mi chvilku
+    value: 📡 Rozjímám, dej mi chvilku
 7231a814e73cfe40658f42c9975a364d8b3780b3c3648d7cd17747a7:
     ref: Create new draft (hint)
     value: Nechceš prodat něco dalšího?
@@ -858,6 +858,9 @@ Age 6 (label):
     value: A — Na startu
 Agent tool - activity_collection:
     value: 🗞 Zkoumám novinky
+    static: true
+Agent tool - buyer_listing_detail:
+    value: 👀 Prohlížím si inzerát
     static: true
 Agent tool - buyer_listing_collection:
     value: 🔍 Prohledávám inzeráty
@@ -1681,7 +1684,7 @@ fdb69271db36531b164409df527dbb3a05c166c78966f8d05b6e1797:
     value: Já
 fdfa2235bb12f30ee6f20a10800429839aedff96c34744b2ea8d233e:
     ref: Agent reasoning history (label)
-    value: Tady jsem přemýšlel
+    value: 🧠 Tady jsem přemýšlel
 fe53b76f86226fc536cae35874aff7a3ccfbc38e4700d3ac5c087b9b:
     ref: Message location security (hint)
     value: |

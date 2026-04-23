@@ -1,28 +1,63 @@
 import { tool } from "@openai/agents";
 import { stringify } from "csv-stringify/sync";
+import { z } from "zod";
 import { listingCollectionFn } from "~/buyer/listing/fn/listingCollectionFn";
-import { ListingToolQuerySchema } from "~/buyer/listing/server/schema/ListingToolQuerySchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
+import { ListingFilterSchema } from "../schema/ListingFilterSchema";
+import { ListingQuerySchema } from "../schema/ListingQuerySchema";
 
 const logger = getRootLogger([
 	"tool",
 	"toolListingBrowse",
 ]);
 
-const InputSchema = ListingToolQuerySchema;
+const InputSchema = z
+	.looseObject({
+		...ListingQuerySchema.shape,
+		filter: z
+			.looseObject({
+				...ListingFilterSchema.shape,
+				expiresAtBefore: z.iso.datetime().optional().meta({
+					description:
+						"This filter matches listings that expire before the provided date",
+					type: "string",
+				}),
+				expiresAtAfter: z.iso.datetime().optional().meta({
+					description: "This filter matches listings that expire after the provided date",
+					type: "string",
+				}),
+			})
+			.omit({
+				categoryId: true,
+				currency: true,
+				currencyIn: true,
+				expiresAtAfter: true,
+				expiresAtBefore: true,
+
+				userId: true,
+				idIn: true,
+			})
+			.strip(),
+	})
+	.omit({
+		where: true,
+		limit: true,
+	})
+	.strip()
+	.meta({
+		id: "ListingToolQuery",
+		description: "Query object for listing tools",
+	});
 
 export const toolListingBrowse = tool({
 	name: "buyer-listing-browse",
 	needsApproval: false,
 	description: `
-Buyer-visible listings matching the query. Returns subset of listing data for "quick" answers.
+Browse listings, find candidates, sort them.
 
-Use for buyer-side browsing and search.
-Do not use for seller-owned listing management.
-Result is already ranked and complete shortlist. Do not repeat unless filters change.
-
-Prefer query filters such as category, location, price, favourite, ignored, feed, or transaction when relevant.
+Hint:
+- normalize inputs (e.g. category/location) before using this tool
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),

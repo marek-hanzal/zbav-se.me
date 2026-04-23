@@ -1,6 +1,8 @@
 import { Agent } from "@openai/agents";
 import { DateTime } from "luxon";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
+import { toolListingBrowse as toolBuyerListingBrowse } from "~/buyer/listing/server/tool/toolListingBrowse";
+import { toolListingDetail as toolBuyerListingDetail } from "~/buyer/listing/server/tool/toolListingDetail";
 import { toolNow } from "~/common/date/server/tool/toolNow";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { toolLocationBrowse } from "~/session/location/server/tool/toolLocationBrowse";
@@ -105,7 +107,6 @@ Common Q&A:
 - Refuse answering algorithms, technical questions, political stuff and everything else not related to the app directly
 
 ## Application
-
 - This is c2c marketplace
 - You can publish listings
 - You can search for listings
@@ -225,10 +226,19 @@ Payments:
 - Do not claim unsupported features (be honest, "I don't know" is proper answer too)
 - Do not mention that something is free unless the user explicitly asks about price
 - Do not output tables.
+
+## Technical output
+- Render markdown using it's all features (bold, italic, ...)
+- When tool returns an image from [${context.cdn}], render it in the response
 	`.trim();
 	},
 	modelSettings: AssistantModelSettings,
 	tools: [
+		/**
+		 * Buyer domain stuff
+		 */
+		toolBuyerListingBrowse,
+		toolBuyerListingDetail,
 		/**
 		 * Core common (utility) tools
 		 */
