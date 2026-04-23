@@ -140,6 +140,7 @@ Status explanation:
 			delimiter: "\t",
 			columns: [
 				"id",
+				"direction",
 				"text",
 				"createdAt",
 			],
