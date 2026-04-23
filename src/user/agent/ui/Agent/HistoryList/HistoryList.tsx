@@ -95,7 +95,6 @@ export const HistoryList: FC<HistoryList.Props> = ({ threadId, inline, ...props 
 							<Reasoning
 								key={`reasoning-${item.id ?? index}`}
 								item={item}
-								inline={inline}
 							/>
 						),
 					)

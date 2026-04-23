@@ -61,7 +61,7 @@ function useThinking(events: RunStreamEvent[] | undefined) {
 			if (result) {
 				pendingToolCallIds.delete(result.callId);
 				isVisible = pendingToolCallIds.size === 0;
-				label = isVisible ? translator.text("Reasoning") : null;
+				label = null;
 				continue;
 			}
 
@@ -99,13 +99,13 @@ function useThinking(events: RunStreamEvent[] | undefined) {
 			}
 
 			if (responseEvent.type === "response.reasoning_text.delta") {
-				isVisible = true;
-				label = translator.text("Reasoning");
+				isVisible = false;
+				label = null;
 				continue;
 			}
 
 			if (responseEvent.type === "response.reasoning_text.done") {
-				isVisible = true;
+				isVisible = false;
 				label = null;
 				continue;
 			}
@@ -115,7 +115,7 @@ function useThinking(events: RunStreamEvent[] | undefined) {
 				responseEvent.item.type === "message"
 			) {
 				isVisible = true;
-				label = translator.text("Reasoning");
+				label = null;
 				continue;
 			}
 

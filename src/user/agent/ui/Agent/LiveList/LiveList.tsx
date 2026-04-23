@@ -47,7 +47,7 @@ export const LiveList: FC<LiveList.Props> = ({ threadId, inline, ...props }) => 
 							key={`reasoning-${entry.itemId}`}
 							events={events}
 							itemId={entry.itemId}
-							inline={inline}
+							inline
 						/>
 					);
 				}

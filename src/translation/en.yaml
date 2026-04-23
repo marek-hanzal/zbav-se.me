@@ -85,9 +85,6 @@
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
   ref: Location security (hint)
   value: Location security (hint)
-0dc96ec736a7c4435d0da80542073c15e4cc827c3a6290fb9d58d011:
-  ref: User restriction level (empty)
-  value: User restriction level (empty)
 0e2d6ae59d756678e034197ebd80f4723aecad41dc953699684a443e:
   ref: Listings (label)
   value: Listings (label)
@@ -559,6 +556,9 @@
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
   ref: Feed sorting not selected
   value: Feed sorting not selected
+71071425c005ec94383521cfde429d21614bf3f12a2512da7b8b40c5:
+  ref: Agent reasoning
+  value: Agent reasoning
 7231a814e73cfe40658f42c9975a364d8b3780b3c3648d7cd17747a7:
   ref: Create new draft (hint)
   value: Create new draft (hint)
@@ -891,9 +891,6 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     message than this :(
   value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
     better message than this :(
-bf82382f7d27ed92f076fc65613ec5fc5c0d9a2b535fe794ddb59b3d:
-  ref: User restriction level (hint)
-  value: User restriction level (hint)
 c25e8a6359df6fbcc11434b2d0bcaf641237490f399adfa91cd8702b:
   ref: Home (label)
   value: Home (label)
@@ -999,9 +996,6 @@ de75432fdd962d61c3b89d0c4098554de1f957cfd40f3f2fc50967c0:
 de8832ba89f066ff957f2387c53ed8c543d4ed977d7fac554ab3f590:
   ref: Go to my feed (button)
   value: Go to my feed (button)
-defe75b5ea35da1e0b6c835ee17ebc86a344203ae3009d12d98fa66f:
-  ref: User restriction level (label)
-  value: User restriction level (label)
 e231f819f6eaa8ba876bc47eaa113f9ce0e4663ffd510bcf92f04855:
   ref: Create new chat (label)
   value: Create new chat (label)
@@ -1149,6 +1143,9 @@ fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
 fdb69271db36531b164409df527dbb3a05c166c78966f8d05b6e1797:
   ref: My profile (label)
   value: My profile (label)
+fdfa2235bb12f30ee6f20a10800429839aedff96c34744b2ea8d233e:
+  ref: Agent reasoning history (label)
+  value: Agent reasoning history (label)
 fe53b76f86226fc536cae35874aff7a3ccfbc38e4700d3ac5c087b9b:
   ref: Message location security (hint)
   value: Message location security (hint)

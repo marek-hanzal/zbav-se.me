@@ -2,6 +2,7 @@ import type { RunStreamEvent } from "@openai/agents-core";
 import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
+import { SpinnerContainer } from "@/lib/client/spinner";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
@@ -23,18 +24,33 @@ export const Reasoning: FC<Reasoning.Props> = ({ events, itemId, inline, classNa
 			<Group
 				data-ui={"Reasoning"}
 				data-id={itemId}
-				data-ui-shadow={undefined}
-				data-ui-opacity="6"
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-background="default"
+				data-ui-inner="default"
+				data-ui-color={"lead"}
 				{...props}
 			>
-				<Tx
-					label={translator.text("Agent reasoning")}
-					data-ui-text="sm"
-					data-ui-font="bold"
-					className={[
-						"wrap-break-word",
-					]}
-				/>
+				<Container
+					data-ui-flow={"horizontal"}
+					data-ui-gap={"default"}
+					data-ui-items={"center"}
+				>
+					<Tx
+						label={translator.text("Agent reasoning")}
+						data-ui-text="sm"
+						data-ui-font="bold"
+						className={[
+							"wrap-break-word",
+						]}
+					/>
+
+					<SpinnerContainer
+						data-ui-tone={"neutral"}
+						type={"icon"}
+						data-ui-text={"default"}
+					/>
+				</Container>
 			</Group>
 		);
 	}
