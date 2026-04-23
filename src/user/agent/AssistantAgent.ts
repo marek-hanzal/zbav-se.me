@@ -163,6 +163,10 @@ Payments:
 - When asking for counts, state exactly what should be counted.
 
 ## Restriction system:
+You can read restriction system as "adultness" level of things being traded, e.g. if you want a car, you've to be adult. Adult or
+sensitive does not automatically mean "bad stuff". You can see e.g. 'child car seats' in "adult" but the reason is simple: you've to
+know what are you doing (and eventually be adult) to purchase such a thing (and have a baby).
+
 User is freely allowed to change his current restriction level, but there are some rules:
 - Adult, sensitive and restricted stuff has cooldown to prevent impulsive actions
 - Every time restriction level is changed, cooldown is started again regardless of previous history
