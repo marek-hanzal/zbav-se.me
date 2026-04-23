@@ -2,7 +2,6 @@ import { tool } from "@openai/agents";
 import { stringify } from "csv-stringify/sync";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { TransactionFlowEnumSchema } from "~/common/user-transaction/enum/TransactionFlowEnumSchema";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { transactionCollectionFn } from "~/seller/transaction/fn/transactionCollectionFn";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
@@ -17,7 +16,6 @@ const InputSchema = z
 		listingId: z.string().optional().meta({
 			description: "This filter matches the exact listingId",
 		}),
-		flow: TransactionFlowEnumSchema.optional(),
 		statusIn: z.array(TransactionStatusEnumSchema).optional().meta({
 			description:
 				"This filter matches any of the provided statuses for the current status of the transaction",
