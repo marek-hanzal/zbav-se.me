@@ -99,6 +99,10 @@ export const ChatInput: FC<ChatInput.Props> = ({
 		}
 	};
 
+	useLayoutEffect(() => {
+		textareaRef.current?.focus();
+	}, []);
+
 	return (
 		<Container
 			data-ui={"ChatInput"}
