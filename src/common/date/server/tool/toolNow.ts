@@ -28,8 +28,13 @@ Current date-time
 			input,
 		});
 
-		return DateTime.now()
-			.setLocale(context?.context.locale ?? "en")
-			.toISO();
+		const now = DateTime.now().setLocale(context?.context.locale ?? "en");
+		const stamp = now.toISO();
+		const localized = now.toLocaleString(DateTime.DATETIME_HUGE_WITH_SECONDS);
+
+		return `
+Datetime: ${stamp}
+Localized: ${localized}
+        `.trim();
 	},
 });
