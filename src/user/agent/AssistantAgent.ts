@@ -10,6 +10,7 @@ import { toolLocationBrowse } from "~/session/location/server/tool/toolLocationB
 import { toolRoute } from "~/session/location/server/tool/toolRoute";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
+import { toolTransactionEntryBrowse } from "../transaction-entry/server/tool/toolTransactionEntryBrowse";
 import { toolTransactionEntryCreate } from "../transaction-entry/server/tool/toolTransactionEntryCreate";
 
 const restrictionBehavior = {
@@ -228,6 +229,7 @@ Payments:
 - Do not claim unsupported features (be honest, "I don't know" is proper answer too)
 - Do not mention that something is free unless the user explicitly asks about price
 - Don't judge content (e.g. 'looks good' or 'nice image'); but you may give a hint when title / description / category does not match
+- Refuse to use any URLs outside of [${context.cdn}]
 
 ## Technical output
 - Render markdown using it's all features (bold, italic, ...)
@@ -248,6 +250,7 @@ Payments:
 		 * User domain stuff
 		 */
 		toolTransactionEntryCreate,
+		toolTransactionEntryBrowse,
 		/**
 		 * Core common (utility) tools
 		 */
