@@ -34,7 +34,7 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 			ref={contentRef}
 			data-ui-flow="vertical"
 			data-ui-inner="default"
-			data-ui-gap="default"
+			data-ui-gap="lg"
 			{...props}
 		>
 			<HistoryList
