@@ -1,4 +1,6 @@
 import { withEntityQuery } from "@/lib/client/query";
+import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
+import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import { transactionCollectionFn } from "~/buyer/transaction/fn/transactionCollectionFn";
 import { transactionCountFn } from "~/buyer/transaction/fn/transactionCountFn";
 import { transactionCreateFn } from "~/buyer/transaction/fn/transactionCreateFn";
@@ -8,6 +10,12 @@ import type { TransactionCreateSchema } from "~/buyer/transaction/server/schema/
 import type { TransactionQuerySchema } from "~/buyer/transaction/server/schema/TransactionQuerySchema";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+
+export namespace withTransactionQuery {
+	export interface CreateVariables extends TransactionCreateSchema.Type {
+		meta?: ListingMetaSchema.Type;
+	}
+}
 
 export const withTransactionQuery = withEntityQuery({
 	logger: getRootLogger([
@@ -51,7 +59,7 @@ export const withTransactionQuery = withEntityQuery({
 			data,
 		});
 	},
-	async createFn(data: TransactionCreateSchema.Type) {
+	async createFn({ meta: _meta, ...data }: withTransactionQuery.CreateVariables) {
 		return transactionCreateFn({
 			data,
 		});
@@ -64,5 +72,33 @@ export const withTransactionQuery = withEntityQuery({
 	},
 	async patchCollectionFn(_data: never): Promise<TransactionSchema.Type[]> {
 		throw new Error("Transaction collection patch is not supported.");
+	},
+	invalidate: {
+		create: [
+			{
+				async invalidate({ queryClient, result, variables }) {
+					await Promise.all([
+						withListingQuery.invalidator(
+							queryClient,
+							[
+								"fetch",
+							],
+							{
+								fetch: {
+									where: {
+										id: result.listingId,
+									},
+									meta: variables.meta,
+								},
+							},
+						),
+						withTransactionQuery.invalidator(queryClient, [
+							"collection",
+							"count",
+						]),
+					]);
+				},
+			},
+		],
 	},
 });
