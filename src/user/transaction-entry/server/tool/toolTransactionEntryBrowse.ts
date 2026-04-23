@@ -37,6 +37,9 @@ Direction field:
 - in: message to current user
 - out: message sent by the current user
 - system: system message (visible to the user)
+
+Status explanation:
+- status-interest: Seller must react, there is waiting buyer (accept/reject a trade)
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
