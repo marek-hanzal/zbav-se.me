@@ -63,6 +63,7 @@ export const TransactionEntryList: FC<TransactionEntryList.Props> = ({
 			ref={contentRef}
 			data-ui-flow="vertical"
 			data-ui-gap="lg"
+			data-ui-width={"full"}
 			{...props}
 		>
 			{data.map((transactionEntryId) => {
