@@ -905,7 +905,7 @@ Agent tool - transaction_entry_collection:
     value: Čtu si obsah zpráv
     static: true
 Agent tool - transaction_entry_create:
-    value: Posílám zprávu
+    value: 🕊️ Posílám zprávu
     static: true
 Agent tool - upload_create:
     value: 💾 Nahrávám obsah
