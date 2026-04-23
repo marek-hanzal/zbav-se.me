@@ -1,6 +1,7 @@
 import { withMutation } from "@/lib/client/mutation";
 import { favouriteToggleFn } from "~/buyer/favourite/fn/favouriteToggleFn";
 import type { FavouriteToggleSchema } from "~/buyer/favourite/server/schema/FavouriteToggleSchema";
+import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 
@@ -25,5 +26,11 @@ export const withFavouriteToggleMutation = withMutation<
 			data,
 		});
 	},
-	invalidate: [],
+	invalidate: [
+		{
+			async invalidate(queryClient, result) {
+				withListingQuery.updateFn(queryClient, result);
+			},
+		},
+	],
 });

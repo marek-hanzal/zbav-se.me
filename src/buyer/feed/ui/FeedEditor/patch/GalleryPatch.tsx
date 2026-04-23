@@ -1,7 +1,5 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
-import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { withFeedGalleryCreateMutation } from "~/buyer/feed-gallery/mutation/withFeedGalleryCreateMutation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
@@ -16,7 +14,6 @@ export namespace GalleryPatch {
 }
 
 export const GalleryPatch: FC<GalleryPatch.Props> = ({ feed, onSettled, onCancel }) => {
-	const queryClient = useQueryClient();
 	const [uploadIds, setUploadIds] = useState<string[]>(
 		feed.uploadId
 			? [
@@ -25,21 +22,6 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({ feed, onSettled, onCancel
 			: [],
 	);
 	const mutation = withFeedGalleryCreateMutation.useMutation({
-		async onSuccess() {
-			await withFeedQuery.invalidator(
-				queryClient,
-				[
-					"fetch",
-				],
-				{
-					fetch: {
-						where: {
-							id: feed.id,
-						},
-					},
-				},
-			);
-		},
 		onSettled,
 	});
 

@@ -17,9 +17,7 @@ export namespace ThumbDislikeButton {
 export const ThumbDislikeButton = withFallback(
 	({ _suspense, listingId, meta, ...props }: ThumbDislikeButton.Props) => {
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
-		const update = withListingQuery.useUpdate();
 		const thumbCreateMutation = withThumbCreateMutation.useMutation({
-			onSuccess: update,
 			meta: {
 				mutationId: listing.id,
 			},

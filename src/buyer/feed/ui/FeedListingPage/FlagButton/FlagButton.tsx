@@ -29,9 +29,7 @@ export const FlagButton = withFallback(
 		...props
 	}: FlagButton.Props) => {
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
-		const update = withListingQuery.useUpdate();
 		const flagToggleMutation = withFlagToggleMutation.useMutation({
-			onSuccess: update,
 			meta: {
 				mutationId: listingId,
 			},

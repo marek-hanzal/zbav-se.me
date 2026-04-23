@@ -17,10 +17,8 @@ export namespace FavouriteButton {
 
 export const FavouriteButton = withFallback(
 	({ _suspense, feedId, listingId, meta, ...props }: FavouriteButton.Props) => {
-		const update = withListingQuery.useUpdate();
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
 		const favouriteToggle = withFavouriteToggleMutation.useMutation({
-			onSuccess: update,
 			meta: {
 				mutationId: listingId,
 			},
