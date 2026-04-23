@@ -862,7 +862,7 @@ Agent tool - activity_collection:
 Agent tool - buyer_listing_detail:
     value: 👀 Prohlížím si inzerát
     static: true
-Agent tool - buyer_listing_collection:
+Agent tool - buyer_listing_browse:
     value: 🔍 Prohledávám inzeráty
     static: true
 Agent tool - buyer_transaction_collection:

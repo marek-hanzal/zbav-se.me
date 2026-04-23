@@ -25,7 +25,7 @@ export const ToolCall: FC<ToolCall.Props> = ({ item, items, inline, ...props }) 
 				data-ui-theme="light"
 				data-ui-background="default"
 				data-ui-inner="default"
-				data-ui-color={"lead"}
+				data-ui-opacity={"6"}
 				{...props}
 			>
 				<Container

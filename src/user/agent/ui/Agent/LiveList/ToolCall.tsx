@@ -30,7 +30,6 @@ export const ToolCall: FC<ToolCall.Props> = ({ events, itemId, inline, className
 				data-ui-theme="light"
 				data-ui-background="default"
 				data-ui-inner="default"
-				data-ui-color={"lead"}
 				{...props}
 			>
 				<Tx
