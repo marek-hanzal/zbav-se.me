@@ -21,18 +21,27 @@ export const ToolCall: FC<ToolCall.Props> = ({ item, items, inline, ...props }) 
 			<Group
 				data-ui={"ToolCall"}
 				data-id={item.id}
-				data-ui-shadow={undefined}
-				data-ui-opacity="6"
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-background="default"
+				data-ui-inner="default"
+				data-ui-color={"lead"}
 				{...props}
 			>
-				<Tx
-					label={`Agent tool - ${item.name}`}
-					data-ui-text="sm"
-					data-ui-font="bold"
-					className={[
-						"wrap-break-word",
-					]}
-				/>
+				<Container
+					data-ui-flow={"horizontal"}
+					data-ui-gap={"default"}
+					data-ui-items={"center"}
+				>
+					<Tx
+						label={`Agent tool - ${item.name}`}
+						data-ui-text="sm"
+						data-ui-font="bold"
+						className={[
+							"wrap-break-word",
+						]}
+					/>
+				</Container>
 			</Group>
 		);
 	}
