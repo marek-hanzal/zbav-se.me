@@ -41,6 +41,7 @@ Browse seller's trade transactions (here you can get 'transactionId' for transac
 
 - Don't leak internal ID's
 - Keep an eye on 'expiresAt', check if the transaction is near expiration date and tell the user if so
+    Transaction expiration !== listing expiration
 - Order is from the most recent activity
 - There is listing 'title'
 - You can use 'unreadCount' to get number of items a user must react to
