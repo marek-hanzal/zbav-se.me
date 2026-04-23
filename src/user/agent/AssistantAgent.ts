@@ -3,7 +3,9 @@ import { DateTime } from "luxon";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import { toolListingBrowse as toolBuyerListingBrowse } from "~/buyer/listing/server/tool/toolListingBrowse";
 import { toolListingDetail as toolBuyerListingDetail } from "~/buyer/listing/server/tool/toolListingDetail";
+import { toolTransactionBrowse as toolBuyerTransactionBrowse } from "~/buyer/transaction/server/tool/toolTransactionBrowse";
 import { toolTransactionCreate } from "~/buyer/transaction/server/tool/toolTransactionCreate";
+import { toolTransactionWorkflow as toolBuyerTransactionWorkflow } from "~/buyer/transaction/server/tool/toolTransactionWorkflow";
 import { toolNow } from "~/common/date/server/tool/toolNow";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { toolTransactionBrowse as toolSellerTransactionBrowse } from "~/seller/transaction/server/tool/toolTransactionBrowse";
@@ -259,6 +261,8 @@ Payments:
 		toolBuyerListingBrowse,
 		toolBuyerListingDetail,
 		//
+		toolBuyerTransactionBrowse,
+		toolBuyerTransactionWorkflow,
 		toolTransactionCreate,
 		/**
 		 * Seller domain stuff
