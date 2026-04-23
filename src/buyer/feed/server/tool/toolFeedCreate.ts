@@ -2,6 +2,9 @@ import { tool } from "@openai/agents";
 import { z } from "zod";
 import { feedCreateFn } from "~/buyer/feed/fn/feedCreateFn";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
+import { ListingFilterSchema } from "~/buyer/listing/server/schema/ListingFilterSchema";
+import { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
+import { ListingSortSchema } from "~/buyer/listing/server/schema/ListingSortSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
@@ -13,6 +16,33 @@ const logger = getRootLogger([
 const InputSchema = z
 	.looseObject({
 		...FeedCreateSchema.shape,
+		query: z
+			.looseObject({
+				filter: z
+					.looseObject({
+						...ListingFilterSchema.shape,
+						//
+					})
+					.pick({
+						ageMin: true,
+						ageMax: true,
+						categoryIdIn: true,
+						conditionMin: true,
+						conditionMax: true,
+						priceMin: true,
+						priceMax: true,
+						deliveryIn: true,
+						fulltext: true,
+						range: true,
+					})
+					.strip(),
+				sort: ListingSortSchema.array().optional(),
+				meta: ListingMetaSchema.optional(),
+			})
+			.strip()
+			.meta({
+				description: "Listing query configuration (what this feed should return)",
+			}),
 	})
 	.omit({
 		type: true,
