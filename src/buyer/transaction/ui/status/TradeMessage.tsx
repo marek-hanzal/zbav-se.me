@@ -56,7 +56,7 @@ export const TradeMessage: FC<TradeMessage.Props> = ({ close, transaction, ...pr
 				/>
 
 				<GalleryUploadButton
-					access="private"
+					access="protected"
 					defaultUploadIds={[]}
 					state={{
 						value: isGalleryOpen,

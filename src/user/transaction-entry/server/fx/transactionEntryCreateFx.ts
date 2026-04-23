@@ -173,7 +173,20 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 						}
 
 						const gallery = yield* galleryInsertFx({
+							access: "protected",
 							userId,
+						});
+						const { kysely } = yield* KyselyContextFx;
+
+						yield* tryDbFx(async () => {
+							return kysely
+								.updateTable("upload")
+								.set({
+									access: "protected",
+								})
+								.where("userId", "=", userId)
+								.where("id", "in", payload.uploadIds)
+								.execute();
 						});
 
 						let sort = 0;

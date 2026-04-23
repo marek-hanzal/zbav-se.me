@@ -23,6 +23,10 @@ describe("public gallery access", () => {
 				access: "private",
 				userId: user.id,
 			});
+			const protectedGallery = yield* galleryInsertFx({
+				access: "protected",
+				userId: user.id,
+			});
 
 			const fetched = yield* galleryFetchFx({
 				where: {
@@ -45,6 +49,7 @@ describe("public gallery access", () => {
 			expect(fetched.id).toBe(publicGallery.id);
 			expect(collection.map((item) => item.id)).toContain(publicGallery.id);
 			expect(collection.map((item) => item.id)).not.toContain(privateGallery.id);
+			expect(collection.map((item) => item.id)).not.toContain(protectedGallery.id);
 			expectErrorFx(privateFetch);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

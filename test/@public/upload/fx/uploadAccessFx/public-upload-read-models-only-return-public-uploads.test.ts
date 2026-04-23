@@ -26,6 +26,11 @@ describe("public upload access", () => {
 				userId: user.id,
 				url: testUploadUrl("private-upload.jpg"),
 			});
+			const protectedUpload = yield* uploadCreateFx({
+				access: "protected",
+				userId: user.id,
+				url: testUploadUrl("protected-upload.jpg"),
+			});
 
 			const fetched = yield* uploadFetchFx({
 				where: {
@@ -48,6 +53,7 @@ describe("public upload access", () => {
 			expect(fetched.id).toBe(publicUpload.id);
 			expect(collection.map((item) => item.id)).toContain(publicUpload.id);
 			expect(collection.map((item) => item.id)).not.toContain(privateUpload.id);
+			expect(collection.map((item) => item.id)).not.toContain(protectedUpload.id);
 			expectErrorFx(privateFetch);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

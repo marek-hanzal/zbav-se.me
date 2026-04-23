@@ -9,6 +9,7 @@ export const AccessMigration: Migration = {
 			.asEnum(
 				toEnumGuard<AccessEnumSchema.Type>()([
 					"public",
+					"protected",
 					"private",
 				]),
 			)

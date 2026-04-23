@@ -3,6 +3,7 @@ import { z } from "zod";
 export const AccessEnumSchema = z
 	.enum([
 		"public",
+		"protected",
 		"private",
 	])
 	.meta({
