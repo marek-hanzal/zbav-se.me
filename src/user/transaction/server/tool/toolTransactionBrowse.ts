@@ -129,9 +129,11 @@ Browse the user's trade transactions from both seller and buyer side in one list
 		);
 
 		return `
-${sellerItems.length > 0 ? seller : "Seller: empty"}
+Seller:
+${sellerItems.length > 0 ? seller : "empty"}
 
-${buyerItems.length > 0 ? buyer : "Buyer: empty"}
+Buyer:
+${buyerItems.length > 0 ? buyer : "empty"}
         `.trim();
 	},
 });

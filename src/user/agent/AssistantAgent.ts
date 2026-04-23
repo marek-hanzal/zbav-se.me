@@ -1,4 +1,5 @@
 import { Agent } from "@openai/agents";
+import { DateTime } from "luxon";
 import { toolFeedBrowse } from "~/buyer/feed/server/tool/toolFeedBrowse";
 import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
 import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
@@ -22,6 +23,7 @@ export const AssistantAgent = new Agent<withRunnerMiddleware.Context>({
 	instructions({ context }) {
 		return `
 ## User Info
+Timestamp: ${DateTime.now().setLocale(context.locale).toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}
 Locale: ${context.locale}
 
 ## Character
@@ -162,6 +164,7 @@ Payments:
 - When asking for counts, state exactly what should be counted
 - Prefer using IDs you already know over plain text
 - Prefer *In (multiple IDs) filter fields when available (OR mode)
+- Prefer time from timestamp until you need to know exact time
 
 ## Restriction system:
 You can read restriction system as "adultness" level of things being traded, e.g. if you want a car, you've to be adult. Adult or
