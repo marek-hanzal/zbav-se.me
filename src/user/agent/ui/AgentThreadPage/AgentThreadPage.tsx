@@ -27,6 +27,7 @@ export const AgentThreadPage = withFallback<AgentThreadPage.Props, TitleContaine
 						params={{
 							locale,
 						}}
+						title={translator.text("Back to agent welcome page (aria)")}
 					/>
 				}
 				right={<HomeMenuButton />}
@@ -51,6 +52,7 @@ export const AgentThreadPage = withFallback<AgentThreadPage.Props, TitleContaine
 						params={{
 							locale,
 						}}
+						title={translator.text("Back to agent welcome page (aria)")}
 					/>
 				}
 				right={<HomeMenuButton />}

@@ -50,6 +50,10 @@
 069a14aec9bb4a553c78c2032f6e521d3b8dccbbb4cfac68e67fa1c1:
     ref: Listing - Pros (title)
     value: Co chci vyzdvihnout
+07261caf3c7adcc1fa3f6841f3d73e4e2c05303c0d533f3854f71b07:
+    ref: Open agent menu options (aria)
+    value: Kliknutím otevře spodní panel s nabídkou příloh a možností chatu s
+        asistentem.
 07e6236b5306a6f3a05460719a41b2fe70e6fff29d6d67ec0adae895:
     ref: Transaction - buyer-to-seller - seller (title)
     value: Čekají na tebe
@@ -1408,6 +1412,9 @@ c360a8542e6f85f8f1c9cacccc525cb1fcdf6b743584428ee6111e55:
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
     ref: Feed title not filled
     value: Všechno
+c3a921fae2226996c53c05db55d53ba37519cb13818dea7a7f01cf21:
+    ref: Back to agent welcome page (aria)
+    value: Zpět na domovskou stránku práce s agentem
 c4b158980cb127ec4b61c7409fd02fabe867d223c95b7884ecf64f78:
     ref: Email
     value: Email
@@ -1428,6 +1435,9 @@ c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
     value: |
         Přidej první inzerát a získej unikátní odznak - je to rychlé
         a jednoduché!
+c7040dedbd3b7811865f7415b5099145afdd0e349feec8e1470daed3:
+    ref: Send message to agent (aria)
+    value: Odešle agentovi zprávu, včetně případných příloh (jako jsou obrázky)
 c7147aaa47c54e90b7023be8ee57d73010a71c259e352067aaad48e6:
     ref: Reject transaction (button)
     value: Odmítnout a zavřít
@@ -1519,6 +1529,9 @@ e24d776c431f2cb9d46c2bbd22e31dcbf906057798f788ae78b0e9c8:
 e28de503976684df4b16c4366122c99432deab1cf2b99efa46456e0f:
     ref: like
     value: like
+e2e7c1756b366d4fdae7a9643de8bdff18b1c95b3191aeb19399f585:
+    ref: Go home (aria)
+    value: Zpět domů (domovská stránka)
 e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
     ref: Listing title (required)
     value: |
@@ -1567,6 +1580,9 @@ ebff4121130dcb1e32bc8706a7005ec0c78e811db18e0ae28a6abb4c:
 ec4a4862ee04c61e1fdfa3e4be7eabc32fa95e9f33a193e11251c8f2:
     ref: Invalid email address
     value: Špatně vyplněná emailová adresa...
+ed93fb714dae6be1d7ae3720a471d68308739517246302a5ce21fcda:
+    ref: Cancel current agent work (aria)
+    value: Kliknutím zruší aktuální práci agenta
 f079be21449752a7e54a2bb26cb023b6bb623b0df137245a5a5c06c9:
     ref: User email (hint)
     value: Já ti to říkal - nic jiného o tobě nevím.

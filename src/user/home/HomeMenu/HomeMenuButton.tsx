@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { LinkTo, type uiLinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
+import { translator } from "@/lib/common/translator";
 import { HomeIcon } from "~/common/ui/icon";
 
 export namespace HomeMenuButton {
@@ -16,6 +17,7 @@ export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ className }) => {
 		<LinkTo
 			data-ui={"HomeMenuButton"}
 			data-action={"go home"}
+			title={translator.text("Go home (aria)")}
 			icon={HomeIcon}
 			to={"/$locale/app/home"}
 			params={{
