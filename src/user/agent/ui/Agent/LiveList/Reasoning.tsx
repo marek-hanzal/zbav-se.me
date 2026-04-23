@@ -28,7 +28,6 @@ export const Reasoning: FC<Reasoning.Props> = ({ events, itemId, inline, classNa
 				data-ui-theme="light"
 				data-ui-background="default"
 				data-ui-inner="default"
-				data-ui-color={"lead"}
 				{...props}
 			>
 				<Container

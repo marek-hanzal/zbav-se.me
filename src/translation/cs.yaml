@@ -889,7 +889,7 @@ Agent tool - feed_patch:
 Agent tool - knowledge:
     value: 🧠 Sháním znalosti
     static: true
-Agent tool - location_autocomplete:
+Agent tool - location_browse:
     value: 🏜 Zjišťuju si adresu
     static: true
 Agent tool - route:
