@@ -10,6 +10,7 @@ import { toolLocationBrowse } from "~/session/location/server/tool/toolLocationB
 import { toolRoute } from "~/session/location/server/tool/toolRoute";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
+import { toolTransactionEntryCreate } from "../transaction-entry/server/tool/toolTransactionEntryCreate";
 
 const restrictionBehavior = {
 	none: `
@@ -243,6 +244,10 @@ Payments:
 		toolBuyerListingDetail,
 		//
 		toolTransactionCreate,
+		/**
+		 * User domain stuff
+		 */
+		toolTransactionEntryCreate,
 		/**
 		 * Core common (utility) tools
 		 */
