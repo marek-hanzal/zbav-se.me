@@ -4,7 +4,6 @@ import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { transactionEntryCollectionFn } from "~/user/transaction-entry/fn/transactionEntryCollectionFn";
-import { TransactionEntryFilterSchema } from "../schema/TransactionEntryFilterSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -13,14 +12,9 @@ const logger = getRootLogger([
 
 const InputSchema = z
 	.looseObject({
-		filter: z
-			.looseObject({
-				...TransactionEntryFilterSchema.shape,
-			})
-			.pick({
-				transactionId: true,
-			})
-			.strip(),
+		transactionId: z.string().meta({
+			description: "Transaction is required to get messages",
+		}),
 	})
 	.strip()
 	.meta({
@@ -33,6 +27,8 @@ export const toolTransactionEntryBrowse = tool({
 	description: `
 Tool to get events (messages) in transaction (listing trade).
 
+You must have 'transactionId' before using this tool.
+
 - You may get text messages
 - You may get status updates
 - Translate status items/non-text messages (entries) to user's language
@@ -44,7 +40,7 @@ Tool to get events (messages) in transaction (listing trade).
 			input,
 		});
 
-		const { filter } = await InputSchema.parseAsync(input);
+		const filter = await InputSchema.parseAsync(input);
 
 		const items = await transactionEntryCollectionFn({
 			data: {
