@@ -91,6 +91,7 @@ Browse the user's trade transactions from both seller and buyer side in one list
 			sellerItems.map((item) => ({
 				transactionId: item.id,
 				title: item.title,
+				status: item.status,
 				unreadCount: item.unreadCount,
 				updatedAt: item.updatedAt.toISOString(),
 				expiresAt: item.expiresAt.toISOString(),
@@ -102,6 +103,7 @@ Browse the user's trade transactions from both seller and buyer side in one list
 					"transactionId",
 					"title",
 					"unreadCount",
+					"status",
 					"updatedAt",
 					"expiresAt",
 				],
@@ -111,6 +113,7 @@ Browse the user's trade transactions from both seller and buyer side in one list
 			buyerItems.map((item) => ({
 				transactionId: item.id,
 				title: item.title,
+				status: item.status,
 				unreadCount: item.unreadCount,
 				updatedAt: item.updatedAt.toISOString(),
 				expiresAt: item.expiresAt.toISOString(),
@@ -122,6 +125,7 @@ Browse the user's trade transactions from both seller and buyer side in one list
 					"transactionId",
 					"title",
 					"unreadCount",
+					"status",
 					"updatedAt",
 					"expiresAt",
 				],
