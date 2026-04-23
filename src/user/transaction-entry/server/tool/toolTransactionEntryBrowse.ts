@@ -5,6 +5,7 @@ import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { transactionEntryCollectionFn } from "~/user/transaction-entry/fn/transactionEntryCollectionFn";
+import { transactionEntryGalleryFetchFn } from "~/user/transaction-entry/fn/transactionEntryGalleryFetchFn";
 
 const logger = getRootLogger([
 	"tool",
@@ -63,11 +64,11 @@ Direction field:
 			return "nothing";
 		}
 
-		return stringify(
-			items.map((item) => ({
+		const rows = await Promise.all(
+			items.map(async (item) => ({
 				id: item.id,
 				direction: item.direction,
-				text: match(item)
+				text: await match(item)
 					.with(
 						{
 							kind: "text",
@@ -80,8 +81,19 @@ Direction field:
 						{
 							kind: "gallery",
 						},
-						({ payload }) => {
-							return `galleryId: [${payload.galleryId}]`.trim();
+						async () => {
+							const gallery = await transactionEntryGalleryFetchFn({
+								data: {
+									where: {
+										transactionEntryId: item.id,
+									},
+								},
+							});
+							const photoUrls = gallery.items.map((galleryItem) => {
+								return galleryItem.upload.url;
+							});
+
+							return `Photo URLs: ${photoUrls.join(" | ") || "none"}`.trim();
 						},
 					)
 					.with(
@@ -113,15 +125,16 @@ Direction field:
 					}),
 				createdAt: item.createdAt,
 			})),
-			{
-				header: true,
-				delimiter: "\t",
-				columns: [
-					"id",
-					"text",
-					"createdAt",
-				],
-			},
 		);
+
+		return stringify(rows, {
+			header: true,
+			delimiter: "\t",
+			columns: [
+				"id",
+				"text",
+				"createdAt",
+			],
+		});
 	},
 });

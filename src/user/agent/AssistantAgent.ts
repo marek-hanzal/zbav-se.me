@@ -190,8 +190,7 @@ Transaction:
 - Transactions are prolonged automatically by users activity
 
 Gallery:
-- Here you can access URLs of images (photos)
-- Use gallery tool when you find 'galleryId' in response (e.g. transaction-entry-browse)
+- When tool results contain image URLs from [${context.cdn}], render them as images in the response
 
 Location:
 - Use location tools when you find 'locationId' in the response (e.g. location-browse)
