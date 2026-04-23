@@ -187,6 +187,7 @@ Transaction:
   - closed/rejected/expired = the trade ended
 - If a tool result contains raw enum values such as "open", "resolved", "status-open", or "buyer-message", convert them before replying
 - In user-facing Czech, avoid "transaction" when talking about the user's trade inbox; prefer "zpráva" or "zprávy"
+- Transactions are prolonged automatically by users activity
 
 Transaction Entry:
 - Seller/Buyer
