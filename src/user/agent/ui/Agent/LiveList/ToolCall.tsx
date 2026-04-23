@@ -10,7 +10,7 @@ import { getFunctionCallResultItem } from "~/user/agent/type/getFunctionCallResu
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 import { getToolOutputText } from "~/user/agent/type/getToolOutputText";
 
-export namespace ToolCallBlock {
+export namespace ToolCall {
 	export interface Props extends Group.Props {
 		events: RunStreamEvent[] | undefined;
 		itemId: string;
@@ -18,20 +18,13 @@ export namespace ToolCallBlock {
 	}
 }
 
-export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
-	events,
-	itemId,
-	inline,
-	className,
-	...props
-}) => {
+export const ToolCall: FC<ToolCall.Props> = ({ events, itemId, inline, className, ...props }) => {
 	const state = useToolCalls(events, itemId);
 
-	inline = false;
 	if (inline) {
 		return (
 			<Group
-				data-ui={"ToolCallBlock"}
+				data-ui={"ToolCall"}
 				data-id={itemId}
 				data-ui-shadow={undefined}
 				data-ui-opacity="6"
@@ -51,7 +44,7 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 
 	return (
 		<Group
-			data-ui={"ToolCallBlock"}
+			data-ui={"ToolCall"}
 			data-id={itemId}
 			data-output-id={itemId}
 			data-ui-tone="neutral"
@@ -99,7 +92,7 @@ export const ToolCallBlock: FC<ToolCallBlock.Props> = ({
 
 				{state.isPending ? (
 					<SpinnerContainer
-						data-ui={"ToolCallBlock-[Spinner]"}
+						data-ui={"ToolCall-[Spinner]"}
 						type="icon"
 						size="md"
 						data-ui-tone="neutral"

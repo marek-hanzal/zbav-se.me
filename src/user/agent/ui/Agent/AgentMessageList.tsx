@@ -26,6 +26,8 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 		resizeBehavior: "instant",
 	});
 
+	const inline = false;
+
 	return (
 		<Container
 			data-ui={"AgentMessageList"}
@@ -35,9 +37,15 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 			data-ui-gap="default"
 			{...props}
 		>
-			<HistoryList threadId={threadId} />
+			<HistoryList
+				threadId={threadId}
+				inline={inline}
+			/>
 
-			<LiveList threadId={threadId} />
+			<LiveList
+				threadId={threadId}
+				inline={inline}
+			/>
 		</Container>
 	);
 };

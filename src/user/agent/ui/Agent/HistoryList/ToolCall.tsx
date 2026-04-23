@@ -7,7 +7,7 @@ import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translator";
 import { getToolOutputText } from "~/user/agent/type/getToolOutputText";
 
-export namespace ToolCallItem {
+export namespace ToolCall {
 	export interface Props extends Group.Props {
 		item: FunctionCallItem;
 		items: AgentInputItem[];
@@ -15,12 +15,11 @@ export namespace ToolCallItem {
 	}
 }
 
-export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, inline, ...props }) => {
-	inline = false;
+export const ToolCall: FC<ToolCall.Props> = ({ item, items, inline, ...props }) => {
 	if (inline) {
 		return (
 			<Group
-				data-ui={"ToolCallItem"}
+				data-ui={"ToolCall"}
 				data-id={item.id}
 				data-ui-shadow={undefined}
 				data-ui-opacity="6"
@@ -45,7 +44,7 @@ export const ToolCallItem: FC<ToolCallItem.Props> = ({ item, items, inline, ...p
 
 	return (
 		<Group
-			data-ui={"ToolCallItem"}
+			data-ui={"ToolCall"}
 			data-id={item.id}
 			data-ui-tone="neutral"
 			data-ui-theme="light"

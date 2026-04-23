@@ -4,17 +4,19 @@ import { Container } from "@/lib/client/container";
 import { AgentStreamItemsQuery } from "~/user/agent/query/AgentStreamItemsQuery";
 import { withAgentStreamItemsQuery } from "~/user/agent/query/withAgentStreamItemsQuery";
 import { AssistantMessage } from "./AssistantMessage";
+import { Reasoning } from "./Reasoning";
 import { SystemMessage } from "./SystemMessage";
-import { ToolCallItem } from "./ToolCallItem";
+import { ToolCall } from "./ToolCall";
 import { UserMessage } from "./UserMessage";
 
 export namespace HistoryList {
 	export interface Props extends Container.Props {
 		threadId: string;
+		inline: boolean;
 	}
 }
 
-export const HistoryList: FC<HistoryList.Props> = ({ threadId, ...props }) => {
+export const HistoryList: FC<HistoryList.Props> = ({ threadId, inline, ...props }) => {
 	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(
 		AgentStreamItemsQuery(threadId),
 	);
@@ -69,11 +71,11 @@ export const HistoryList: FC<HistoryList.Props> = ({ threadId, ...props }) => {
 							type: "function_call",
 						},
 						(item) => (
-							<ToolCallItem
+							<ToolCall
 								key={`function-call-${item.callId}`}
 								item={item}
 								items={items}
-								inline
+								inline={inline}
 							/>
 						),
 					)
@@ -89,9 +91,13 @@ export const HistoryList: FC<HistoryList.Props> = ({ threadId, ...props }) => {
 						{
 							type: "reasoning",
 						},
-						() => {
-							return null;
-						},
+						(item) => (
+							<Reasoning
+								key={`reasoning-${item.id ?? index}`}
+								item={item}
+								inline={inline}
+							/>
+						),
 					)
 					.otherwise((event) => {
 						console.warn(event);
