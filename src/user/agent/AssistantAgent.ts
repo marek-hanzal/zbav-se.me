@@ -2,6 +2,7 @@ import { Agent } from "@openai/agents";
 import { DateTime } from "luxon";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import { toolFeedBrowse } from "~/buyer/feed/server/tool/toolFeedBrowse";
+import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
 import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
 import { toolFeedPatch } from "~/buyer/feed/server/tool/toolFeedPatch";
 import { toolListingBrowse as toolBuyerListingBrowse } from "~/buyer/listing/server/tool/toolListingBrowse";
@@ -269,6 +270,7 @@ Payments:
 		toolTransactionCreate,
 		//
 		toolFeedBrowse,
+		toolFeedCreate,
 		toolFeedPatch,
 		toolFeedDelete,
 		/**

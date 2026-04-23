@@ -1,6 +1,7 @@
 import { tool } from "@openai/agents";
 import { z } from "zod";
 import { feedCreateFn } from "~/buyer/feed/fn/feedCreateFn";
+import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
@@ -11,7 +12,10 @@ const logger = getRootLogger([
 
 const InputSchema = z
 	.looseObject({
-		//
+		...FeedCreateSchema.shape,
+	})
+	.omit({
+		type: true,
 	})
 	.strip();
 
@@ -26,8 +30,6 @@ Use only when the user wants to save search criteria. Do not invent the feed nam
 Hint:
 - If the user provides an address, normalize it and fill locationId
 - Resolve latLon from locationId and fill also query.meta.latLon
-- 'type: user': User-facing feed. Use this type in agentic workflows.
-- 'type: search': Internal/agent-derived saved search type. Do not use this type from agent workflows.
 - Pay attention to available fields in 'query' field, also in 'query.meta'
     `.trim(),
 	strict: true,
@@ -41,9 +43,8 @@ Hint:
 
 		const { id } = await feedCreateFn({
 			data: {
+				...data,
 				type: "user",
-				name: "not yet",
-				query: {},
 			},
 		});
 
