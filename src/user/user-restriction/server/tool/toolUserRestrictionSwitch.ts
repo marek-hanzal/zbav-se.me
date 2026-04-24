@@ -3,44 +3,47 @@ import { stringify } from "csv-stringify/sync";
 import { DateTime } from "luxon";
 import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { defaultLocale } from "~/locales";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { userRestrictionCollectionFn } from "../../fn/userRestrictionCollectionFn";
+import { userRestrictionCreateFn } from "../../fn/userRestrictionCreateFn";
 
 const logger = getRootLogger([
 	"tool",
-	"toolUserRestrictionDetail",
+	"toolUserRestrictionSwitch",
 ]);
 
 const InputSchema = z
 	.looseObject({
-		//
+		level: RestrictionEnumSchema,
 	})
 	.strip();
 
-export const toolUserRestrictionDetail = tool<typeof InputSchema, withRunnerMiddleware.Context>({
-	name: "user-restriction-detail",
+export const toolUserRestrictionSwitch = tool<typeof InputSchema, withRunnerMiddleware.Context>({
+	name: "user-restriction-switch",
 	needsApproval: false,
 	description: `
-Resolves current user restriction level.
+Set a new restriction level for listings (content in general).
 
-- Use 'availableAt' as relative time to current timestamp ('now')
-- Restriction levels are activated automatically, no further user action is needed
-- Use human language instead of using restriction code itself
-
-Available:
-ready to use: this restriction level is already available and in use
-waiting: this restriction level will be available (tell the user when)
+User must confirm you this action as switching to another level involves cooldown, so higher restriction levels
+(adult and above) are not available immediately; user must acknowledge this.
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
 	async execute(input, context) {
-		logger.trace("toolUserRestrictionDetail", {
+		logger.trace("toolUserRestrictionSwitch", {
 			input,
 		});
 
-		const _data = await InputSchema.parseAsync(input);
+		const { level: restriction } = await InputSchema.parseAsync(input);
+
+		await userRestrictionCreateFn({
+			data: {
+				restriction,
+			},
+		});
 
 		const restrictions = await userRestrictionCollectionFn({
 			data: {
