@@ -46,6 +46,10 @@ Get the knowledge using 'topicId'
 		return `
 Title: ${topic.data.title}
 Related: ${topic.data.related ? topic.data.related.join(" | ") : "none"}
+
+Summary:
+${topic.data.summary}
+
 Content:
 ${topic.content}
         `;
