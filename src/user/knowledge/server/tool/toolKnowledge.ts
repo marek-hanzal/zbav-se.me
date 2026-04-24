@@ -88,8 +88,6 @@ Set withContent to include full topic content.
 			);
 
 		return {
-			query: normalized,
-			count: matches.length,
 			matches,
 		};
 	},
