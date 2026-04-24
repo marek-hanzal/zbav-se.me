@@ -26,6 +26,7 @@ import { toolTransactionEntryBrowse } from "../transaction-entry/server/tool/too
 import { toolTransactionEntryCreate } from "../transaction-entry/server/tool/toolTransactionEntryCreate";
 import { toolUploadCreate } from "../upload/server/tool/toolUploadCreate";
 import { toolUserRestrictionDetail } from "../user-restriction/server/tool/toolUserRestrictionDetail";
+import { toolUserRestrictionSwitch } from "../user-restriction/server/tool/toolUserRestrictionSwitch";
 
 export const AssistantAgent = new Agent<withRunnerMiddleware.Context>({
 	name: "Assistant",
@@ -296,6 +297,7 @@ Examples: licensed weapons, document-sensitive weapon accessories, or other item
 		toolTransactionEntryCreate,
 		//
 		toolUserRestrictionDetail,
+		toolUserRestrictionSwitch,
 		//
 		toolUploadCreate,
 		/**
