@@ -78,6 +78,6 @@ Hint:
 			},
 		});
 
-		return `ID: ${id}`;
+		return `feedId ${id}`;
 	},
 });

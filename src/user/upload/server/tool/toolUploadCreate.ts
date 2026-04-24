@@ -50,6 +50,6 @@ Access:
 			data,
 		});
 
-		return `ID: ${id}`;
+		return `uploadId ${id}`;
 	},
 });

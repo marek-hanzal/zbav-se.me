@@ -110,6 +110,6 @@ If not provided by user, use '14-days' as a default
 			data,
 		});
 
-		return `ID: ${id}`;
+		return `draftId ${id}`;
 	},
 });

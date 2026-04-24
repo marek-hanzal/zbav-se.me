@@ -79,6 +79,6 @@ text - if none of other kinds matches, use plain text (last chance)
 			data: TransactionEntryCreateSchema.parse(data),
 		});
 
-		return `ID: ${transactionEntry.id}`;
+		return `transactionEntryId ${transactionEntry.id}`;
 	},
 });

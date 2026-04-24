@@ -1,7 +1,7 @@
 import { tool } from "@openai/agents";
+import z from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { draftDeleteFn } from "~/seller/draft/fn/draftDeleteFn";
-import { DraftToolQuerySchema } from "~/seller/draft/server/schema/DraftToolQuerySchema";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
 const logger = getRootLogger([
@@ -9,9 +9,11 @@ const logger = getRootLogger([
 	"toolDraftDelete",
 ]);
 
-const InputSchema = DraftToolQuerySchema.pick({
-	filter: true,
-});
+const InputSchema = z
+	.looseObject({
+		draftId: z.string().min(1),
+	})
+	.strip();
 
 export const toolDraftDelete = tool({
 	name: "draft-delete",
@@ -19,8 +21,7 @@ export const toolDraftDelete = tool({
 	description: `
 Delete saved listing drafts selected by a narrow query.
 
-Use only after clear user intent to delete. Prefer an exact draft
-id; if using name/title-like filters, first confirm the target with draft-collection.
+- Use this tool only when explicitly asked for or confirmed by the user
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
@@ -29,10 +30,16 @@ id; if using name/title-like filters, first confirm the target with draft-collec
 			input,
 		});
 
-		const data = await InputSchema.parseAsync(input);
+		const { draftId: id } = await InputSchema.parseAsync(input);
 
-		return draftDeleteFn({
-			data,
+		await draftDeleteFn({
+			data: {
+				where: {
+					id,
+				},
+			},
 		});
+
+		return "ok";
 	},
 });
