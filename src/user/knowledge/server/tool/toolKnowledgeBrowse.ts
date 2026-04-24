@@ -51,7 +51,7 @@ Related topics are array of 'topicId'; fetch only when needed to get really deep
 				columns: [
 					"topicId",
 					"title",
-					"summary",
+					// "summary",
 					"related",
 				],
 			},
