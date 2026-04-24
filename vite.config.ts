@@ -18,18 +18,6 @@ export default defineConfig(({ mode }) => {
 				"@/lib": path.resolve(__dirname, "./lib"),
 			},
 		},
-		// ssr: {
-		// 	external: isProduction
-		// 		? []
-		// 		: [
-		// 				"pg",
-		// 			],
-		// 	noExternal: [
-		// 		"react",
-		// 		"react-dom",
-		// 		"server-only",
-		// 	],
-		// },
 		plugins: [
 			tanstackStart({
 				router: {
