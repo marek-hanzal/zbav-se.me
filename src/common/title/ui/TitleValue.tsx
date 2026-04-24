@@ -3,7 +3,7 @@ import { LabelValue } from "@/lib/client/value";
 
 export namespace TitleValue {
 	export interface Props extends Omit<LabelValue.PropsEx, "title"> {
-		title: string | null;
+		title: string | null | undefined;
 	}
 }
 

@@ -3,10 +3,10 @@ import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDelivery
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 import { VectorSchema } from "~/common/schema/VectorSchema";
-import { ProsConsSchema } from "~/seller/listing/server/schema/ProsConsSchema";
 
 export const ListingTableSchema = z
 	.looseObject({

@@ -6,10 +6,10 @@ import { TextInput } from "@/lib/client/text-input";
 import { Tx } from "@/lib/client/tx";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
+import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
 import { TitleContainer } from "~/common/ui/container";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
-import { ProsConsSchema } from "~/seller/listing/server/schema/ProsConsSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
 
