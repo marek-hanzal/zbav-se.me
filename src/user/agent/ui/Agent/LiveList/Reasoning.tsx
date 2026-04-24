@@ -37,7 +37,7 @@ export const Reasoning: FC<Reasoning.Props> = ({ events, itemId, inline, classNa
 	useEffect(() => {
 		const run = () => {
 			setReasoningText(list(text));
-			return setTimeout(() => run(), rangedom(1_500, 5_000));
+			return setTimeout(() => run(), rangedom(2_500, 5_000));
 		};
 
 		const timeout = run();

@@ -123,6 +123,9 @@
 1033ff575b4fcc2a5f68f0546b255961c4cf9514267255fbd76e2920:
     ref: Listing title not filled
     value: Titulek nemáš vyplněný
+106d65c5546d941fe532883c3ecf3066d422c40dc463da200fcd8567:
+    ref: Agent reasoning 07
+    value: 🧩 Čas na puzzle
 1088c3fcabd70b4e385443272326be10f59a63b577e719b5ac8c5821:
     ref: Listing ignore (hint)
     value: >
@@ -178,6 +181,9 @@
 188182c2fe82cee01a535fea542022b96a389bdbc5c5f374f0aa5564:
     ref: Chat - transaction resolved - seller cannot write (message)
     value: Máš vyřízeno, nic dalšího tu nemusíš řešit.
+189a92ae95b21522d5b69513500f34a0036955aaa42bb70a8af609ea:
+    ref: Agent reasoning 02
+    value: 💭 Přežvýkávám tokeny
 18d40db40cbca71185b9de088cfdb1325cea3896815c4ea9219dc292:
     ref: Restriction available in (label)
     value: Čas do aktivace
@@ -215,6 +221,9 @@
 1e2c52ff0279d0ad26557c2235b137106f4d5a45187461bba1242a01:
     ref: Listing condition not selected
     value: Jakýkoli stav
+1e85e6d1e73072f47da29024cc25839e88e039b448f77ffd0c26b071:
+    ref: Agent reasoning 06
+    value: 📚 Mám pauzu, čtu si knihu
 1e968f93ae83a641b74f4ac6861264c02056db6cda410d1f67e65805:
     ref: Acknowledge transaction (button)
     value: Hotovo
@@ -353,6 +362,9 @@
 4034c9134481a06e13f39b3d2b927ade85886fc9bbfb379d51f01153:
     ref: Photo upload placeholder (message)
     value: Ťuknutím vyfoť obrázek nebo si vyber z galerie.
+414d7614bbfe281bbdf6c49a89bceea54fded566027b6f9ff9cac35a:
+    ref: Agent reasoning 08
+    value: 🔍 Projíždím souvislosti
 42888fcc58a5c859961d7ce1f9843868fd000cd931e43e080d44b369:
     ref: Register (hero)
     value: Přidej se!
@@ -372,6 +384,9 @@
 43c97e37d539928f112ef93039df9510299f8c68dc170da7c864a3ba:
     ref: Draft list (label)
     value: Rozpracované inzeráty
+43e1cacd1106ccf4cf9c9aae68a8c88d9387c0c7f17f618ef3587279:
+    ref: Agent reasoning 04
+    value: 📡 Chytám správnou vlnu
 44768dba85d12f054b4b9820de22bfdf8dcd0d561e4edc9d5546340b:
     ref: Find listings (label)
     value: Hledat
@@ -402,6 +417,9 @@
 49728f07dea157d2683933772ad0785a610a41c6bf91f753cee3b069:
     ref: Listing restriction (title)
     value: Nastavení omezení
+49a54bfb26fc88f40fd6b7af4e9fe1ab0d5df4956c514f8acbb29290:
+    ref: Agent reasoning 03
+    value: ⚙️ Ladím odpověď
 4a6d672731040044ea10a6210d1d72de8ce2a49c57e6eab1ba45eb66:
     ref: Feed name (required)
     value: >
@@ -578,6 +596,9 @@
 69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
     ref: Feed category not selected
     value: Všechno
+6a9300e86237b6e410efe018fd74d9f14ccafae345ffd1bd41546beb:
+    ref: Acknowledge transaction (aria)
+    value: Kliknutím potvrď transakci
 6b995a341f6e953b965e3423dab8d7d6cbce6665e1c1868a0e921958:
     ref: Transactions - buyer-to-seller - buyer (title)
     value: Čekáš na prodejce
@@ -859,11 +880,11 @@ Age 6 (label):
 Agent tool - activity_collection:
     value: 🗞 Zkoumám novinky
     static: true
-Agent tool - buyer_listing_detail:
-    value: 👀 Prohlížím si inzerát
-    static: true
 Agent tool - buyer_listing_browse:
     value: 🔍 Prohledávám inzeráty
+    static: true
+Agent tool - buyer_listing_detail:
+    value: 👀 Prohlížím si inzerát
     static: true
 Agent tool - buyer_transaction_collection:
     value: 📬 Zkoumám zprávy v tvých nákupech
@@ -1477,12 +1498,18 @@ cf65b78e6d107ecd9f3fe11a78f193542a1d90d08b6451968b7b5a6d:
 d123af005af0e5af73b3d1a3f223b7cbc7a4457fbf74669fd87c5690:
     ref: Description not filled
     value: Bez popisu
+d192dea2dc5f3594d5afc2b7651715be110730ba085647af86a77557:
+    ref: Agent reasoning 05
+    value: 🧠 Vrtám se v hlavě
 d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
     ref: Location not found (badge)
     value: Adres známe hodně, ale tuhle ne
 d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
     ref: Feed title (label)
     value: Titulek
+d4348b78650b7279f4dc4b6c81ba6acb01edf058aff1826544204a52:
+    ref: Agent reasoning 01
+    value: 🤔 Stále přemýšlím
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
     ref: Listing condition (label)
     value: Stav
