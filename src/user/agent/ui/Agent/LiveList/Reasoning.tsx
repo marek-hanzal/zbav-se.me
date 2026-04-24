@@ -4,7 +4,7 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Typo } from "@/lib/client/typo";
-import { list } from "@/lib/common/rangedom";
+import { list, rangedom } from "@/lib/common/rangedom";
 import { translator } from "@/lib/common/translator";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 
@@ -19,29 +19,35 @@ export namespace Reasoning {
 export const Reasoning: FC<Reasoning.Props> = ({ events, itemId, inline, className, ...props }) => {
 	const content = useReasoningContent(events, itemId);
 
-	const text = [
-		translator.text("Agent reasoning 01"),
-		translator.text("Agent reasoning 02"),
-		translator.text("Agent reasoning 03"),
-		translator.text("Agent reasoning 04"),
-		translator.text("Agent reasoning 05"),
-		translator.text("Agent reasoning 06"),
-		translator.text("Agent reasoning 07"),
-		translator.text("Agent reasoning 08"),
-	];
+	const text = useMemo(() => {
+		return [
+			translator.text("Agent reasoning 01"),
+			translator.text("Agent reasoning 02"),
+			translator.text("Agent reasoning 03"),
+			translator.text("Agent reasoning 04"),
+			translator.text("Agent reasoning 05"),
+			translator.text("Agent reasoning 06"),
+			translator.text("Agent reasoning 07"),
+			translator.text("Agent reasoning 08"),
+		];
+	}, []);
 
 	const [reasoningText, setReasoningText] = useState(list(text));
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: One time shot
 	useEffect(() => {
-		const timeout = setInterval(() => {
+		const run = () => {
 			setReasoningText(list(text));
-		}, 5_000);
+			return setTimeout(() => run(), rangedom(1_500, 5_000));
+		};
+
+		const timeout = run();
 
 		return () => {
 			clearTimeout(timeout);
 		};
-	}, []);
+	}, [
+		text,
+	]);
 
 	if (inline) {
 		return (
