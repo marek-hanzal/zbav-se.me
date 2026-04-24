@@ -24,6 +24,10 @@ Category lookup for listing drafts and listing/search category resolution. Use s
 
 Use when the user names a category in natural language and you need a category id or candidate
 list.
+
+Restricted:
+- restricted: user can use category e.g. only for draft creation, but for search it's not available
+- available: category is free to use in any way
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
@@ -52,6 +56,7 @@ list.
 				categoryId: item.id,
 				group: item.group,
 				category: item.category,
+				restricted: item.isRestricted ? "restricted" : "available",
 			})),
 			{
 				header: true,
@@ -60,6 +65,7 @@ list.
 					"categoryId",
 					"group",
 					"category",
+					"restricted",
 				],
 			},
 		);
