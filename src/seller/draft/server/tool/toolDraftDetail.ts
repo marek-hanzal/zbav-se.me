@@ -1,6 +1,6 @@
 import { tool } from "@openai/agents-core";
 import { match } from "ts-pattern";
-import { EntitySchema } from "@/lib/common/schema";
+import { z } from "zod";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { draftFetchFn } from "../../fn/draftFetchFn";
@@ -10,13 +10,19 @@ const logger = getRootLogger([
 	"toolDraftDetail",
 ]);
 
-const InputSchema = EntitySchema;
+const InputSchema = z
+	.looseObject({
+		draftId: z.string().min(1),
+	})
+	.strip();
 
 export const toolDraftDetail = tool({
 	name: "draft-detail",
 	needsApproval: false,
 	description: `
-...
+Fetch draft detail based on 'draftId'
+
+- Don't invent your own 'draftId'
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
@@ -25,7 +31,7 @@ export const toolDraftDetail = tool({
 			input,
 		});
 
-		const { id } = await InputSchema.parseAsync(input);
+		const { draftId: id } = await InputSchema.parseAsync(input);
 
 		return draftFetchFn({
 			data: {
