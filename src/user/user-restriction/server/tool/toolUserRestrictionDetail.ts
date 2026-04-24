@@ -23,8 +23,10 @@ export const toolUserRestrictionDetail = tool({
 Resolves current user restriction level.
 
 - Use 'availableAt' as relative time to current timestamp ('now')
-- 'isActive' === true - restriction level is available to use
-- 'isActive' === false - restriction level is not available yet, present 'availableAt' when it will be available
+
+Available:
+ready to use: this restriction level is already available and in use
+waiting: this restriction level will be available (tell the user when)
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
@@ -59,7 +61,7 @@ Not set, default: 'none'
 			restrictions.map((item) => ({
 				restriction: item.restriction,
 				availableAt: item.availableAt.toISOString(),
-				isActive: item.isAvailable,
+				available: item.isAvailable ? "ready to use" : "waiting",
 			})),
 			{
 				header: true,
@@ -67,7 +69,7 @@ Not set, default: 'none'
 				columns: [
 					"restriction",
 					"availableAt",
-					"isActive",
+					"available",
 				],
 			},
 		);
