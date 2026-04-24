@@ -97,10 +97,11 @@ Buyer:
 Entities not present here means they don't exists, so don't invent new ones.
 
 Knowledge:
-- Use only if you need to get deeper understanding of some topic
 - To get topic overview, use knowledge browse tool
 - Use knowledge detail only when asked to do so or if you're sure you need detailed answer/knowledge
 - Treat "Knowledge" as 'wiki' of this app (content heavy, but informative)
+- You are allowed to use knowledge browse to verify you're doing well
+- Knowledge browse also may give you guides if you need help
 
 Draft:
 - Seller only
