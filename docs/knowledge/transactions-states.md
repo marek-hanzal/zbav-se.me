@@ -7,8 +7,8 @@ related:
   - transaction-expiration
 ---
 
-pending = kupující projevil zájem, ale ještě není otevřená domluva.
-open = prodejce přijal, je možné si psát a domlouvat detaily.
+interest = kupující projevil zájem, ale ještě není otevřená domluva.
+trade = prodejce přijal, je možné si psát a domlouvat detaily.
 resolved = prodejce označil jako vyřešené.
 dispute = otevřený spor po resolved.
 rejected = někdo to odmítl.
