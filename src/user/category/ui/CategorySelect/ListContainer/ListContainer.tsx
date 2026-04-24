@@ -17,6 +17,11 @@ export namespace ListContainer {
 		fulltext: Fulltext.Value;
 		selection: useSelection.Selection<EntitySchema.Type>;
 		categoryId: string | undefined;
+		/**
+		 * Controls if restricted categories are shown: useful e.g. for drafts when
+		 * you can create restricted content.
+		 */
+		withRestriction: boolean;
 	}
 }
 
@@ -27,7 +32,7 @@ export namespace ListContainer {
  * @see src/draft/ui/DraftEditor/patch/CategoryPatch.tsx
  */
 export const ListContainer = withFallback(
-	({ ref, fulltext, selection, categoryId, ...props }: ListContainer.Props) => {
+	({ ref, fulltext, selection, categoryId, withRestriction, ...props }: ListContainer.Props) => {
 		const locale = useLocale();
 		const { data: categoryIds } = withCategoryQuery.useIdsQuery({
 			filter: {
@@ -35,7 +40,7 @@ export const ListContainer = withFallback(
 				fulltext,
 			},
 			where: {
-				withRestriction: true,
+				withRestriction,
 			},
 			cursor: {
 				page: 0,
@@ -81,11 +86,11 @@ export const ListContainer = withFallback(
 
 		return (
 			<Container
+				data-ui={"ListContainer"}
 				data-ui-scroll="vertical"
 				data-ui-height="full"
 			>
 				<Container
-					data-ui="ListContainer[Container.content]"
 					ref={mergedRef}
 					data-ui-flow="vertical"
 					data-ui-gap="default"

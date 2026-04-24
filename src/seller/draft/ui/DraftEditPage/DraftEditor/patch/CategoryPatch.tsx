@@ -100,6 +100,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ draft, onCancel, onView
 						<CategorySelect
 							selection={selection}
 							categoryId={field.state.value ?? undefined}
+							withRestriction
 						/>
 					)}
 				</form.AppField>

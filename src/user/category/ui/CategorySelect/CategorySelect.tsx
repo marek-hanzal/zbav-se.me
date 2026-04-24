@@ -9,21 +9,25 @@ export namespace CategorySelect {
 	export interface Props extends Container.Props {
 		selection: useSelection.Selection<EntitySchema.Type>;
 		categoryId: string | undefined;
+		withRestriction: boolean;
 	}
 }
 
 /**
  * Provides an interactive control for selecting category values in forms.
  * Use it in editors where users need to choose or update category before saving.
- *
- * @see src/draft/ui/DraftEditor/patch/CategoryPatch.tsx
  */
-export const CategorySelect: FC<CategorySelect.Props> = ({ selection, categoryId, ...props }) => {
+export const CategorySelect: FC<CategorySelect.Props> = ({
+	selection,
+	categoryId,
+	withRestriction,
+	...props
+}) => {
 	const [fulltext, setFulltext] = useState<Fulltext.Value>();
 
 	return (
 		<Container
-			data-ui={"CategorySelect[Container]"}
+			data-ui={"CategorySelect"}
 			data-ui-layout="vertical-header-content"
 			data-ui-height="full"
 			data-ui-gap="default"
@@ -41,6 +45,7 @@ export const CategorySelect: FC<CategorySelect.Props> = ({ selection, categoryId
 					fulltext={fulltext}
 					selection={selection}
 					categoryId={categoryId}
+					withRestriction={withRestriction}
 				/>
 			</Suspense>
 		</Container>
