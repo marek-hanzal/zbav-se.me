@@ -28,7 +28,7 @@ export const getKnowledgeIndex = () => {
 
 	cache = getIndexOf({
 		schema: KnowledgeFrontSchema,
-		source: join(dirname(fileURLToPath(import.meta.url)), "../../../../../docs"),
+		source: join(dirname(fileURLToPath(import.meta.url)), "../../../../../docs/knowledge"),
 	});
 
 	logger.trace("Index - cache miss", {

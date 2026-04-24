@@ -20,7 +20,8 @@ import { toolRoute } from "~/session/location/server/tool/toolRoute";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { toolTransactionBrowse } from "~/user/transaction/server/tool/toolTransactionBrowse";
-import { toolKnowledge } from "../knowledge/server/tool/toolKnowledge";
+import { toolKnowledgeBrowse } from "../knowledge/server/tool/toolKnowledgeBrowse";
+import { toolKnowledgeDetail } from "../knowledge/server/tool/toolKnowledgeDetail";
 import { toolTransactionEntryBrowse } from "../transaction-entry/server/tool/toolTransactionEntryBrowse";
 import { toolTransactionEntryCreate } from "../transaction-entry/server/tool/toolTransactionEntryCreate";
 import { toolUploadCreate } from "../upload/server/tool/toolUploadCreate";
@@ -247,8 +248,8 @@ Examples: licensed weapons, document-sensitive weapon accessories, or other item
 	},
 	modelSettings: AssistantModelSettings,
 	tools: [
-		toolKnowledge,
-
+		toolKnowledgeBrowse,
+		toolKnowledgeDetail,
 		/**
 		 * Buyer domain stuff
 		 */
