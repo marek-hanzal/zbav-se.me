@@ -43,7 +43,7 @@ Available:
 				filter: {
 					fulltext: query,
 				},
-				limit: 3,
+				limit: 20,
 			},
 		});
 
