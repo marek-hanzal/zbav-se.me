@@ -69,7 +69,7 @@ Status explanation:
 
 		const rows = await Promise.all(
 			items.map(async (item) => ({
-				id: item.id,
+				transactionEntryId: item.id,
 				transactionId: item.transactionId,
 				direction: item.direction,
 				listingId: item.listingId,
@@ -141,12 +141,12 @@ Status explanation:
 			header: true,
 			delimiter: "\t",
 			columns: [
-				"id",
-				"transactionId",
 				"direction",
+				"transactionId",
 				"listingId",
 				"text",
 				"createdAt",
+				"transactionEntryId",
 			],
 		});
 	},

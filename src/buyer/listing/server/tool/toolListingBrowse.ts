@@ -81,7 +81,7 @@ Hint:
 		return stringify(
 			items.map((item) => {
 				return {
-					id: item.id,
+					listingId: item.id,
 					title: item.title,
 					description: item.description?.substring(0, 64),
 					price: item.price,
@@ -92,7 +92,7 @@ Hint:
 				header: true,
 				delimiter: "\t",
 				columns: [
-					"id",
+					"listingId",
 					"title",
 					"description",
 					"distance",
