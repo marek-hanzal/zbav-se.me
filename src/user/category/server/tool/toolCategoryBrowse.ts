@@ -39,12 +39,6 @@ list.
 				filter: {
 					fulltext: query,
 				},
-				where: {
-					/**
-					 * Model can use only available categories
-					 */
-					withRestriction: true,
-				},
 				limit: 3,
 			},
 		});
@@ -55,7 +49,7 @@ list.
 
 		return stringify(
 			items.map((item) => ({
-				id: item.id,
+				categoryId: item.id,
 				group: item.group,
 				category: item.category,
 			})),
@@ -63,7 +57,7 @@ list.
 				header: true,
 				delimiter: "\t",
 				columns: [
-					"id",
+					"categoryId",
 					"group",
 					"category",
 				],
