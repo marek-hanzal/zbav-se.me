@@ -8,8 +8,12 @@ import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 export namespace draftDeleteFx {
+	export interface Scope extends DraftFilterSchema.Type {
+		userId: string;
+	}
+
 	export interface Props extends Omit<DraftQuerySchema.Type, "cursor" | "sort"> {
-		scope: DraftFilterSchema.Type;
+		scope: Scope;
 	}
 }
 

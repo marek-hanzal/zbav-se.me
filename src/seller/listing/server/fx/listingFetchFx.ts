@@ -7,8 +7,12 @@ import type { ListingFilterSchema } from "~/seller/listing/server/schema/Listing
 import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";
 
 export namespace listingFetchFx {
+	export interface Scope extends ListingFilterSchema.Type {
+		userId: string;
+	}
+
 	export interface Props extends ListingQuerySchema.Type {
-		scope: ListingFilterSchema.Type;
+		scope: Scope;
 	}
 }
 
@@ -30,6 +34,7 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 		resource: "listing",
 		selectFx: withListingSelectFx({
 			sort,
+			userId: scope.userId,
 		}),
 		filter,
 		where,

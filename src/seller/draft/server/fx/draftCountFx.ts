@@ -7,8 +7,12 @@ import type { DraftCountQuerySchema } from "~/seller/draft/server/schema/DraftCo
 import type { DraftFilterSchema } from "~/seller/draft/server/schema/DraftFilterSchema";
 
 export namespace draftCountFx {
+	export interface Scope extends DraftFilterSchema.Type {
+		userId: string;
+	}
+
 	export interface Props extends DraftCountQuerySchema.Type {
-		scope: DraftFilterSchema.Type;
+		scope: Scope;
 	}
 }
 
@@ -25,7 +29,9 @@ export const draftCountFx = Effect.fn("draftCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withDraftCollectionSelectFx({}),
+		selectFx: withDraftCollectionSelectFx({
+			userId: scope.userId,
+		}),
 		filter,
 		where,
 		scope,

@@ -109,6 +109,28 @@ const fetchAvailableRestrictions = (userId: string, categoryIdIn: string[]) =>
 		),
 	);
 
+const fetchRestrictionFlags = (userId: string, categoryIdIn: string[]) =>
+	categoryCollectionFx({
+		userId,
+		scope: {},
+		where: {
+			idIn: categoryIdIn,
+		},
+		sort: [
+			{
+				field: "sort",
+				order: "asc",
+			},
+		],
+	}).pipe(
+		Effect.map((categories) =>
+			categories.map((category) => ({
+				restriction: category.restriction as CategoryRestriction,
+				isRestricted: category.isRestricted,
+			})),
+		),
+	);
+
 describe("user category restriction scope", () => {
 	it("filters categories by the latest active user restriction", async () => {
 		const database = await testabase("user-category-active-restriction-scope");
@@ -206,6 +228,16 @@ describe("user category restriction scope", () => {
 				const restrictions = yield* fetchAvailableRestrictions(user.id, categoryIdIn);
 
 				expect(restrictions, scenario.name).toEqual(scenario.expectedRestrictions);
+
+				const restrictionFlags = yield* fetchRestrictionFlags(user.id, categoryIdIn);
+				const expectedRestrictions: readonly CategoryRestriction[] =
+					scenario.expectedRestrictions;
+				const expectedRestrictionFlags = restrictionLevels.map((restriction) => ({
+					restriction,
+					isRestricted: !expectedRestrictions.includes(restriction),
+				}));
+
+				expect(restrictionFlags, scenario.name).toEqual(expectedRestrictionFlags);
 			}
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

@@ -20,6 +20,7 @@ import { toolRoute } from "~/session/location/server/tool/toolRoute";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { toolTransactionBrowse } from "~/user/transaction/server/tool/toolTransactionBrowse";
+import { toolCategoryBrowse } from "../category/server/tool/toolCategoryBrowse";
 import { toolKnowledgeBrowse } from "../knowledge/server/tool/toolKnowledgeBrowse";
 import { toolKnowledgeDetail } from "../knowledge/server/tool/toolKnowledgeDetail";
 import { toolTransactionEntryBrowse } from "../transaction-entry/server/tool/toolTransactionEntryBrowse";
@@ -27,7 +28,6 @@ import { toolTransactionEntryCreate } from "../transaction-entry/server/tool/too
 import { toolUploadCreate } from "../upload/server/tool/toolUploadCreate";
 import { toolUserRestrictionDetail } from "../user-restriction/server/tool/toolUserRestrictionDetail";
 import { toolUserRestrictionSwitch } from "../user-restriction/server/tool/toolUserRestrictionSwitch";
-import { toolCategoryBrowse } from "../category/server/tool/toolCategoryBrowse";
 
 export const AssistantAgent = new Agent<withRunnerMiddleware.Context>({
 	name: "Assistant",
@@ -301,8 +301,8 @@ Examples: licensed weapons, document-sensitive weapon accessories, or other item
 		toolUserRestrictionSwitch,
 		//
 		toolUploadCreate,
-        //
-        toolCategoryBrowse,
+		//
+		toolCategoryBrowse,
 		/**
 		 * Core common (utility) tools
 		 */

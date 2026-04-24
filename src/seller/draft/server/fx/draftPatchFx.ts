@@ -9,8 +9,12 @@ import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 export namespace draftPatchFx {
+	export interface Scope extends DraftFilterSchema.Type {
+		userId: string;
+	}
+
 	export interface Props extends DraftPatchSchema.Type {
-		scope: DraftFilterSchema.Type;
+		scope: Scope;
 	}
 }
 
@@ -51,7 +55,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 				where: {
 					id: draft.id,
 				},
-				scope: {},
+				scope,
 			});
 		}),
 	);

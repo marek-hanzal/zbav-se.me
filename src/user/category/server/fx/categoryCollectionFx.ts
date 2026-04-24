@@ -39,6 +39,7 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 	const data = yield* withCollectionFx({
 		selectFx: withCategoryCollectionSelectFx({
 			sort,
+			userId,
 		}),
 		cursor,
 		limit,

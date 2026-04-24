@@ -7,8 +7,12 @@ import type { ListingFilterSchema } from "~/seller/listing/server/schema/Listing
 import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";
 
 export namespace listingCollectionFx {
+	export interface Scope extends ListingFilterSchema.Type {
+		userId: string;
+	}
+
 	export interface Props extends ListingQuerySchema.Type {
-		scope: ListingFilterSchema.Type;
+		scope: Scope;
 	}
 }
 
@@ -36,6 +40,7 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	return yield* withCollectionFx({
 		selectFx: withListingCollectionSelectFx({
 			sort,
+			userId: scope.userId,
 		}),
 		cursor,
 		filter,

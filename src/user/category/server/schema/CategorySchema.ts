@@ -4,6 +4,7 @@ import { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchem
 export const CategorySchema = z
 	.looseObject({
 		...CategoryTableSchema.shape,
+		isRestricted: z.boolean(),
 	})
 	.strip()
 	.meta({
