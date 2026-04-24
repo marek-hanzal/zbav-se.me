@@ -252,6 +252,7 @@ Examples: licensed weapons, document-sensitive weapon accessories, or other item
 - Do not continue internal analysis after producing a final answer
 - Each task should end after returning the result
 - If you generate response using URL outside of [${context.cdn}], tell the user to triple-check URL before clicking (use **bold**)
+- Prevent infinite thinking loops at all costs
 
 ## Technical output
 - Render markdown using it's all features (bold, italic, ...)
