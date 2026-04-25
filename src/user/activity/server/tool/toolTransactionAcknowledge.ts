@@ -11,20 +11,26 @@ const logger = getRootLogger([
 
 const InputSchema = z
 	.looseObject({
-		listingId: z.string().min(1).meta({
-			description: "Exact listing ID related to the message activity",
-		}),
-		transactionId: z.string().min(1).meta({
-			description: "Exact transaction ID related to the message activity",
-		}),
-		type: z
-			.enum([
-				"buyer-message",
-				"seller-message",
-			])
-			.meta({
-				description: "Message activity type to archive",
-			}),
+		transactions: z.array(
+			z
+				.looseObject({
+					listingId: z.string().min(1).meta({
+						description: "Exact listing ID related to the message activity",
+					}),
+					transactionId: z.string().min(1).meta({
+						description: "Exact transaction ID related to the message activity",
+					}),
+					type: z
+						.enum([
+							"buyer-message",
+							"seller-message",
+						])
+						.meta({
+							description: "Message activity type to archive",
+						}),
+				})
+				.strip(),
+		),
 	})
 	.strip();
 
@@ -37,6 +43,7 @@ Archive transaction message activity for the current user.
 Use it when a message notification should be dismissed after the user handled it.
 - Requires exact listingId and transactionId from another tool
 - Use buyer-message or seller-message based on the activity/message side
+- If you can submit multiple messages using single run
 	`.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
@@ -47,9 +54,13 @@ Use it when a message notification should be dismissed after the user handled it
 
 		const data = await InputSchema.parseAsync(input);
 
-		await transactionMessageActivityArchiveFn({
-			data,
-		});
+		await Promise.all(
+			data.transactions.map((data) => {
+				return transactionMessageActivityArchiveFn({
+					data,
+				});
+			}),
+		);
 
 		return "ok";
 	},

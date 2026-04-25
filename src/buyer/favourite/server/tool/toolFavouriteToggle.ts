@@ -11,11 +11,18 @@ const logger = getRootLogger([
 
 const InputSchema = z
 	.looseObject({
-		toggle: z.boolean().meta({
-			description: "Whether to add (true) or remove (false) the listing from favourites",
-		}),
-		feedId: z.string(),
-		listingId: z.string(),
+		favourite: z.array(
+			z
+				.looseObject({
+					toggle: z.boolean().meta({
+						description:
+							"Whether to add (true) or remove (false) the listing from favourites",
+					}),
+					feedId: z.string(),
+					listingId: z.string(),
+				})
+				.strip(),
+		),
 	})
 	.strip();
 
@@ -24,6 +31,8 @@ export const toolFavouriteToggle = tool({
 	needsApproval: false,
 	description: `
 Toggles concrete listing as favourite/unfavourite.
+
+- You can mark multiple listings as favourite.
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
@@ -34,9 +43,13 @@ Toggles concrete listing as favourite/unfavourite.
 
 		const data = await InputSchema.parseAsync(input);
 
-		await favouriteToggleFn({
-			data,
-		});
+		await Promise.all(
+			data.favourite.map((data) => {
+				return favouriteToggleFn({
+					data,
+				});
+			}),
+		);
 
 		return "ok";
 	},
