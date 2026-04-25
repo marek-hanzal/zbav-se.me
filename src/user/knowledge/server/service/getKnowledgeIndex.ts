@@ -14,13 +14,6 @@ export namespace getKnowledgeIndex {
 	export type Type = frontOf.Type<KnowledgeFrontSchema>[];
 }
 
-const getKnowledgeSourceMap = () => {
-	return import.meta.glob("/docs/knowledge/*.md", {
-		query: "?raw",
-		import: "default",
-	}) as Record<string, () => Promise<string>>;
-};
-
 export const getKnowledgeIndex = async () => {
 	logger.trace("Index of proxy for Knowledge Index");
 
@@ -30,7 +23,10 @@ export const getKnowledgeIndex = async () => {
 	}
 
 	return (cache = Promise.resolve().then(async () => {
-		const knowledgeSourceMap = getKnowledgeSourceMap();
+		const knowledgeSourceMap = import.meta.glob("/docs/knowledge/*.md", {
+			query: "?raw",
+			import: "default",
+		}) as Record<string, () => Promise<string>>;
 		const keys = Object.keys(knowledgeSourceMap).sort((left: string, right: string) => {
 			return left.localeCompare(right);
 		});
