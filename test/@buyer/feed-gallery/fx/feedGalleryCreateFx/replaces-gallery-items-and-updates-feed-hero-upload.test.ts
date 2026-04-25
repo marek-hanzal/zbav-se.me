@@ -26,18 +26,22 @@ describe("feedGalleryCreateFx", () => {
 			});
 
 			const firstUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: user.id,
 				url: testUploadUrl("feed-gallery-1.jpg"),
 			});
 			const secondUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: user.id,
 				url: testUploadUrl("feed-gallery-2.jpg"),
 			});
 			const thirdUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: user.id,
 				url: testUploadUrl("feed-gallery-3.jpg"),
 			});
 			const strangerUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: stranger.id,
 				url: testUploadUrl("feed-gallery-stranger.jpg"),
 			});

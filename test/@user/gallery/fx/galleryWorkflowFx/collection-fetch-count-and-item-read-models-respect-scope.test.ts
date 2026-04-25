@@ -22,10 +22,12 @@ describe("gallery workflow", () => {
 			const seller = yield* leaseTestUserFx({});
 
 			const firstUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: seller.id,
 				url: testUploadUrl("gallery-workflow-1.jpg"),
 			});
 			const secondUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: seller.id,
 				url: testUploadUrl("gallery-workflow-2.jpg"),
 			});
@@ -115,6 +117,7 @@ describe("gallery workflow", () => {
 			const stranger = yield* leaseTestUserFx({});
 
 			const upload = yield* uploadCreateFx({
+				access: "private",
 				userId: seller.id,
 				url: testUploadUrl("gallery-workflow-foreign.jpg"),
 			});

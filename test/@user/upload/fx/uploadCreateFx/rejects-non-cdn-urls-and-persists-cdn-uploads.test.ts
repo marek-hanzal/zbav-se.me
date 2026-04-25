@@ -18,6 +18,7 @@ describe("uploadCreateFx", () => {
 
 			const invalid = yield* Effect.either(
 				uploadCreateFx({
+					access: "private",
 					userId: user.id,
 					url: "https://evil.example.com/file.jpg",
 				}),
@@ -39,6 +40,7 @@ describe("uploadCreateFx", () => {
 			expect(invalidUpload).toHaveLength(0);
 
 			const upload = yield* uploadCreateFx({
+				access: "private",
 				userId: user.id,
 				url: validUrl,
 			});
@@ -52,6 +54,7 @@ describe("uploadCreateFx", () => {
 						"id",
 						"userId",
 						"url",
+						"access",
 					])
 					.where("id", "=", upload.id)
 					.executeTakeFirstOrThrow(),
@@ -61,6 +64,7 @@ describe("uploadCreateFx", () => {
 				id: upload.id,
 				userId: user.id,
 				url: validUrl,
+				access: "private",
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

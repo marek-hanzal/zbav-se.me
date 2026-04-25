@@ -3,6 +3,7 @@ import { sql } from "kysely";
 import { jsonArrayFrom } from "kysely/helpers/postgres";
 import { withGallerySourceSelectFx } from "~/public/gallery/server/db/withGallerySourceSelectFx";
 import { withGalleryItemSelectFx } from "~/public/gallery-item/server/db/withGalleryItemSelectFx";
+import type { GalleryItemSchema } from "~/public/gallery-item/server/schema/GalleryItemSchema";
 
 export namespace withGallerySelectFx {
 	export interface Props extends withGallerySourceSelectFx.Props {
@@ -36,7 +37,9 @@ export const withGallerySelectFx = Effect.fn("withGallerySelectFx")(function* ({
 		(eb) => {
 			return jsonArrayFrom(
 				galleryItemSelect.whereRef("gal_item.galleryId", "=", eb.ref("gal.id")),
-			).as("items");
+			)
+				.$castTo<GalleryItemSchema.Type[]>()
+				.as("items");
 		},
 	]);
 });

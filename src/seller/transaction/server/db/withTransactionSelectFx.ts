@@ -58,13 +58,16 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 				)
 				.as("lastAt"),
 			jsonObjectFrom(
-				lastActivitySelect.selectAll("te").select((eb) => {
-					return sql<TransactionEntryDirectionEnumSchema.Type>`case
+				lastActivitySelect
+					.selectAll("te")
+					.select("l.id as listingId")
+					.select((eb) => {
+						return sql<TransactionEntryDirectionEnumSchema.Type>`case
                         when ${eb.ref("te.userId")} is null then ${TransactionEntryDirectionEnumSchema.enum.system}
                         when ${eb.ref("te.userId")} = ${eb.ref("l.userId")} then ${TransactionEntryDirectionEnumSchema.enum.out}
                         else ${TransactionEntryDirectionEnumSchema.enum.in}
                     end`.as("direction");
-				}),
+					}),
 			)
 				.$notNull()
 				.$castTo<TransactionEntrySchema.Type>()

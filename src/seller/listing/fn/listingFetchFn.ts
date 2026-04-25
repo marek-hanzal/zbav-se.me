@@ -5,6 +5,7 @@ import { withLoggerFx } from "@/lib/common/log";
 import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
 import { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";
 import { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
+import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -38,6 +39,7 @@ export const listingFetchFn = createServerFn()
 			}),
 		}).pipe(
 			withKyselyFx(database),
+			withDateFx,
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {

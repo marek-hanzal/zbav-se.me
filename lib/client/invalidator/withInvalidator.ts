@@ -1,19 +1,21 @@
 import type { QueryClient } from "@tanstack/react-query";
 
 export namespace withInvalidator {
-	export interface Invalidate {
-		invalidate(queryClient: QueryClient): Promise<void>;
+	export interface Invalidate<TResult = unknown> {
+		invalidate(queryClient: QueryClient, result?: TResult): Promise<void>;
 	}
 
-	export interface Props {
-		invalidate: Invalidate[];
+	export interface Props<TResult = unknown> {
+		invalidate: Invalidate<TResult>[];
 	}
 }
 
-export const withInvalidator = ({ invalidate }: withInvalidator.Props) => {
-	const invalidateFn = async (queryClient: QueryClient) => {
+export const withInvalidator = <TResult = unknown>({
+	invalidate,
+}: withInvalidator.Props<TResult>) => {
+	const invalidateFn = async (queryClient: QueryClient, result?: TResult) => {
 		for (const { invalidate: fn } of invalidate) {
-			await fn(queryClient);
+			await fn(queryClient, result);
 		}
 	};
 

@@ -7,8 +7,12 @@ import type { ListingCountQuerySchema } from "~/seller/listing/server/schema/Lis
 import type { ListingFilterSchema } from "~/seller/listing/server/schema/ListingFilterSchema";
 
 export namespace listingCountFx {
+	export interface Scope extends ListingFilterSchema.Type {
+		userId: string;
+	}
+
 	export interface Props extends ListingCountQuerySchema.Type {
-		scope: ListingFilterSchema.Type;
+		scope: Scope;
 	}
 }
 
@@ -25,7 +29,9 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withListingCollectionSelectFx({}),
+		selectFx: withListingCollectionSelectFx({
+			userId: scope.userId,
+		}),
 		filter,
 		where,
 		scope,

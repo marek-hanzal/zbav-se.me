@@ -1,4 +1,5 @@
 import { withMutation } from "@/lib/client/mutation";
+import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { thumbCreateFn } from "~/buyer/thumb/fn/thumbCreateFn";
 import type { ThumbCreateSchema } from "~/buyer/thumb/server/schema/ThumbCreateSchema";
@@ -25,5 +26,11 @@ export const withThumbCreateMutation = withMutation<
 			data,
 		});
 	},
-	invalidate: [],
+	invalidate: [
+		{
+			async invalidate(queryClient, result) {
+				result && withListingQuery.updateFn(queryClient, result);
+			},
+		},
+	],
 });

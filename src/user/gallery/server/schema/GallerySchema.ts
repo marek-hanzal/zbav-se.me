@@ -11,6 +11,7 @@ export const GallerySchema = z
 	})
 	.omit({
 		userId: true,
+		access: true,
 		createdAt: true,
 	})
 	.strip()

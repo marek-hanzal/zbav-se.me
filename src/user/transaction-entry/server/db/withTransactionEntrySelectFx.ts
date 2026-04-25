@@ -22,7 +22,9 @@ export const withTransactionEntrySelectFx = Effect.fn("withTransactionEntrySelec
 
 	let query = kysely
 		.selectFrom("transaction_entry as te")
+		.innerJoin("transaction as t", "t.id", "te.transactionId")
 		.selectAll("te")
+		.select("t.listingId")
 		.select((eb) =>
 			eb
 				.case()

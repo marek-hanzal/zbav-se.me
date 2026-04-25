@@ -32,6 +32,7 @@ export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
 		resource: "category",
 		selectFx: withCategorySelectFx({
 			sort,
+			userId,
 		}),
 		filter,
 		where,

@@ -1,6 +1,7 @@
 import { withMutation } from "@/lib/client/mutation";
 import { flagToggleFn } from "~/buyer/flag/fn/flagToggleFn";
 import type { FlagToggleSchema } from "~/buyer/flag/server/schema/FlagToggleSchema";
+import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 
@@ -25,5 +26,11 @@ export const withFlagToggleMutation = withMutation<
 			data,
 		});
 	},
-	invalidate: [],
+	invalidate: [
+		{
+			async invalidate(queryClient, result) {
+				result && withListingQuery.updateFn(queryClient, result);
+			},
+		},
+	],
 });

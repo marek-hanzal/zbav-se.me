@@ -18,14 +18,17 @@ describe("uploadCollectionFx", () => {
 			const cdn = uploadContext.cdn.replace(/\/$/, "");
 
 			const first = yield* uploadCreateFx({
+				access: "private",
 				userId: users.seller.id,
 				url: `${cdn}/upload-a.jpg`,
 			});
 			const second = yield* uploadCreateFx({
+				access: "private",
 				userId: users.seller.id,
 				url: `${cdn}/upload-b.jpg`,
 			});
 			yield* uploadCreateFx({
+				access: "private",
 				userId: users.stranger.id,
 				url: `${cdn}/upload-hidden.jpg`,
 			});

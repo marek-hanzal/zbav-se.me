@@ -37,6 +37,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 			const now = dateContext.now().toJSDate();
 
 			const gallery = yield* galleryInsertFx({
+				access: "private",
 				userId,
 			});
 

@@ -6,6 +6,9 @@ export const TransactionEntryGallery = z
 	.looseObject({
 		...BaseGallerySchema.shape,
 		direction: TransactionEntryDirectionEnumSchema,
+		listingId: z.string().meta({
+			description: "Listing this entry belongs to",
+		}),
 	})
 	.strip()
 	.meta({

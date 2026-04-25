@@ -37,6 +37,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 			<GalleryUploadSheet
 				key={uploadIds.join(":")}
 				allowClear
+				access="private"
 				state={{
 					value: isGalleryOpen,
 					set: setIsGalleryOpen,
@@ -125,9 +126,8 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 							data-ui={"AgentInput-[QueueText]"}
 							data-ui-width={"full"}
 							data-ui-text={"sm"}
-							className={[
-								"truncate",
-							]}
+							data-ui-truncate
+							data-ui-opacity={"6"}
 						/>
 
 						<Button
@@ -168,6 +168,9 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 					placeholder={translator.text("Write to an agent")}
 					loading={chat.isPending}
 					disableSubmit={chat.isQueueFull}
+					buttonProps={{
+						"aria-label": translator.text("Send message to agent (aria)"),
+					}}
 					cancel={
 						<Button
 							data-action={"stop agent stream"}
@@ -176,6 +179,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 							iconProps={{
 								"data-ui-text": "xl",
 							}}
+							aria-label={translator.text("Cancel current agent work (aria)")}
 							data-ui-justify="center"
 							data-ui-items="center"
 							data-ui-tone="brand"
@@ -188,7 +192,9 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 						/>
 					}
 					left={
-						<TransactionMenuButton>
+						<TransactionMenuButton
+							aria-label={translator.text("Open agent menu options (aria)")}
+						>
 							{(close) => (
 								<AgentMenu
 									close={close}

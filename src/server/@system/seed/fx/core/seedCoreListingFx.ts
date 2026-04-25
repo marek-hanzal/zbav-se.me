@@ -66,6 +66,19 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 		return;
 	}
 
+	if (uploadIds.length > 0) {
+		yield* tryDbFx(async () =>
+			kysely
+				.updateTable("upload")
+				.set({
+					access: "public",
+				})
+				.where("userId", "=", userId)
+				.where("id", "in", uploadIds)
+				.execute(),
+		);
+	}
+
 	const getCategorySeedItems = (categorySlug: string) => {
 		const seedData = CategorySeed[categorySlug as keyof typeof CategorySeed];
 		if (seedData && seedData.length > 0) {

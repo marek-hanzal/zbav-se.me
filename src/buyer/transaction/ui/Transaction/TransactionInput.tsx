@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
@@ -6,7 +5,6 @@ import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
-import { archiveSellerMessageActivity } from "~/buyer/transaction/service/archiveSellerMessageActivity";
 import { RejectedMessage } from "~/buyer/transaction/ui/status/RejectedMessage";
 import { TransactionMenu } from "~/buyer/transaction/ui/TransactionMenu";
 import { getRootLogger } from "~/common/log/getRootLogger";
@@ -20,7 +18,6 @@ export namespace TransactionInput {
 }
 
 export const TransactionInput: FC<TransactionInput.Props> = ({ _suspense, transactionId }) => {
-	const queryClient = useQueryClient();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 
 	useRenderLogger({
@@ -46,18 +43,6 @@ export const TransactionInput: FC<TransactionInput.Props> = ({ _suspense, transa
 		.otherwise(() => {
 			return (
 				<TransactionChat
-					hooks={{
-						async onPostMutation() {
-							try {
-								await archiveSellerMessageActivity({
-									queryClient,
-									transactionId: transaction.id,
-								});
-							} catch {
-								// Keep message send flow usable even if unread archival fails.
-							}
-						},
-					}}
 					transaction={transaction}
 					left={
 						<TransactionMenuButton>

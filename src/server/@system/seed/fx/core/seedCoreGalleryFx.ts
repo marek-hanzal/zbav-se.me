@@ -59,6 +59,7 @@ export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 						Effect.gen(function* () {
 							const seededAt = withRandomPastDate();
 							const gallery = yield* galleryInsertFx({
+								access: "private",
 								userId,
 							}).pipe(withSeedNowFx(seededAt));
 

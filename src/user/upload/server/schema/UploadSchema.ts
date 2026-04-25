@@ -7,6 +7,7 @@ export const UploadSchema = z
 	})
 	.omit({
 		userId: true,
+		access: true,
 		createdAt: true,
 	})
 	.strip()

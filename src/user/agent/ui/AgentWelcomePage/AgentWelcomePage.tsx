@@ -1,6 +1,8 @@
+import { useEffect, useRef } from "react";
 import { Container } from "@/lib/client/container";
 import { AiIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
+import { handleArrowNav } from "@/lib/client/nav";
 import { Status } from "@/lib/client/status";
 import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
@@ -20,19 +22,44 @@ export const AgentWelcomePage = ({ ...props }: AgentWelcomePage.Props) => {
 	const locale = useLocale();
 	const { data: threadCount } = withAgentThreadQuery.useCountQuery({});
 
+	const continueRef = useRef<HTMLAnchorElement>(null);
+	const createSessionRef = useRef<HTMLButtonElement>(null);
+
+	useEffect(() => {
+		if (continueRef.current) {
+			continueRef.current.focus();
+			return;
+		}
+
+		createSessionRef.current?.focus();
+	}, []);
+
 	return (
 		<TitleContainer
 			data-ui={"AgentWelcomePage"}
 			textTitle={translator.text("Agent (title)")}
 			left={
 				<BackHomeButton
+					id={"back-link"}
 					to="/$locale/app/home"
 					params={{
 						locale,
 					}}
+					//
+					data-arrow-right={"home-link"}
+					data-arrow-down={"continue-session-button"}
+					onKeyDown={handleArrowNav}
 				/>
 			}
-			right={<HomeMenuButton />}
+			right={
+				<HomeMenuButton
+					id={"home-link"}
+					//
+					data-arrow-left={"back-link"}
+					data-arrow-down={"continue-session-button"}
+					onKeyDown={handleArrowNav}
+				/>
+			}
 			{...props}
 		>
 			<Container
@@ -63,15 +90,30 @@ export const AgentWelcomePage = ({ ...props }: AgentWelcomePage.Props) => {
 						>
 							{threadCount > 0 ? (
 								<ContinueSessionButton
+									id={"continue-session-button"}
+									ref={continueRef}
 									data-ui-width={"full"}
 									data-ui-justify={"center"}
 									data-ui-items={"center"}
+									//
+									data-arrow-up={"back-link"}
+									data-arrow-left={"back-link"}
+									data-arrow-right={"home-link"}
+									data-arrow-down={"create-session-button"}
+									onKeyDown={handleArrowNav}
 								/>
 							) : null}
 							<CreateSessionButton
+								id={"create-session-button"}
+								ref={createSessionRef}
 								data-ui-width={"full"}
 								data-ui-justify={"center"}
 								data-ui-items={"center"}
+								//
+								data-arrow-left={"back-link"}
+								data-arrow-right={"home-link"}
+								data-arrow-up={"continue-session-button"}
+								onKeyDown={handleArrowNav}
 							/>
 						</Container>
 					}

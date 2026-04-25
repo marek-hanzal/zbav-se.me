@@ -1,14 +1,15 @@
 import type { RunStreamEvent } from "@openai/agents";
 import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";
-import { Icon, SpinnerIcon } from "@/lib/client/icon";
-import { Typo } from "@/lib/client/typo";
+import { Group } from "@/lib/client/group";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import { Tx } from "@/lib/client/tx";
 import { translator } from "@/lib/common/translator";
 import { getFunctionCallResultItem } from "~/user/agent/type/getFunctionCallResultItem";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 
 export namespace ThinkingIndicator {
-	export interface Props extends Container.Props {
+	export interface Props extends Group.Props {
 		events: RunStreamEvent[] | undefined;
 	}
 }
@@ -20,30 +21,36 @@ export const ThinkingIndicator: FC<ThinkingIndicator.Props> = ({ events, ...prop
 	}
 
 	return (
-		<Container
+		<Group
 			data-ui={"ThinkingIndicator"}
-			data-ui-layout="horizontal-flex"
-			data-ui-items="center"
-			data-ui-gap="xs"
 			data-ui-tone="neutral"
 			data-ui-theme="light"
-			data-ui-text="sm"
+			data-ui-background="default"
+			data-ui-inner="default"
+			data-ui-color={"lead"}
 			{...props}
 		>
-			<Icon
-				icon={SpinnerIcon}
-				data-ui-text="sm"
-			/>
-
-			{state.label !== null ? (
-				<Typo
-					label={state.label}
+			<Container
+				data-ui-flow={"horizontal"}
+				data-ui-gap={"default"}
+				data-ui-items={"center"}
+			>
+				<Tx
+					label={translator.text("Agent working (label)")}
 					data-ui-text="sm"
-					data-ui-font="semibold"
-					data-ui-color="lead"
+					data-ui-font="bold"
+					className={[
+						"wrap-break-word",
+					]}
 				/>
-			) : null}
-		</Container>
+
+				<SpinnerContainer
+					data-ui-tone={"neutral"}
+					type={"icon"}
+					data-ui-text={"default"}
+				/>
+			</Container>
+		</Group>
 	);
 };
 
@@ -52,7 +59,6 @@ export const ThinkingIndicator: FC<ThinkingIndicator.Props> = ({ events, ...prop
 function useThinking(events: RunStreamEvent[] | undefined) {
 	return useMemo(() => {
 		let isVisible = false;
-		let label: string | null = null;
 		const pendingToolCallIds = new Set<string>();
 
 		for (const event of events ?? []) {
@@ -61,7 +67,6 @@ function useThinking(events: RunStreamEvent[] | undefined) {
 			if (result) {
 				pendingToolCallIds.delete(result.callId);
 				isVisible = pendingToolCallIds.size === 0;
-				label = isVisible ? translator.text("Reasoning") : null;
 				continue;
 			}
 
@@ -76,7 +81,6 @@ function useThinking(events: RunStreamEvent[] | undefined) {
 				responseEvent.type === "response.in_progress"
 			) {
 				isVisible = true;
-				label = null;
 				continue;
 			}
 
@@ -85,7 +89,6 @@ function useThinking(events: RunStreamEvent[] | undefined) {
 				responseEvent.type === "response.failed"
 			) {
 				isVisible = false;
-				label = null;
 				continue;
 			}
 
@@ -94,19 +97,16 @@ function useThinking(events: RunStreamEvent[] | undefined) {
 				responseEvent.type === "response.output_text.done"
 			) {
 				isVisible = false;
-				label = null;
 				continue;
 			}
 
 			if (responseEvent.type === "response.reasoning_text.delta") {
-				isVisible = true;
-				label = translator.text("Reasoning");
+				isVisible = false;
 				continue;
 			}
 
 			if (responseEvent.type === "response.reasoning_text.done") {
-				isVisible = true;
-				label = null;
+				isVisible = false;
 				continue;
 			}
 
@@ -115,7 +115,6 @@ function useThinking(events: RunStreamEvent[] | undefined) {
 				responseEvent.item.type === "message"
 			) {
 				isVisible = true;
-				label = translator.text("Reasoning");
 				continue;
 			}
 
@@ -125,19 +124,16 @@ function useThinking(events: RunStreamEvent[] | undefined) {
 			) {
 				pendingToolCallIds.add(responseEvent.item.call_id);
 				isVisible = false;
-				label = null;
 				continue;
 			}
 
 			if (responseEvent.type === "response.function_call_arguments.done") {
 				isVisible = pendingToolCallIds.size === 0;
-				label = null;
 			}
 		}
 
 		return {
 			isVisible,
-			label,
 		} as const;
 	}, [
 		events,

@@ -3,6 +3,7 @@ import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { withGalleryItemSourceSelectFx } from "~/public/gallery-item/server/db/withGalleryItemSourceSelectFx";
 import { withUploadSelectFx } from "~/public/upload/server/db/withUploadSelectFx";
+import type { UploadSchema } from "~/public/upload/server/schema/UploadSchema";
 
 export namespace withGalleryItemSelectFx {
 	export interface Props extends withGalleryItemSourceSelectFx.Props {
@@ -34,6 +35,7 @@ export const withGalleryItemSelectFx = Effect.fn("withGalleryItemSelectFx")(func
 				uploadSelect.whereRef("u.id", "=", eb.ref("gal_item.uploadId")).limit(1),
 			)
 				.$notNull()
+				.$castTo<UploadSchema.Type>()
 				.as("upload");
 		},
 	]);

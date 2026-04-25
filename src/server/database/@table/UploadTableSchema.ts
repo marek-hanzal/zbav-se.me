@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 
 export const UploadTableSchema = z
 	.looseObject({
@@ -10,6 +11,9 @@ export const UploadTableSchema = z
 		}),
 		url: z.url().meta({
 			description: "Public URL to the uploaded file",
+		}),
+		access: AccessEnumSchema.meta({
+			description: "Visibility of the upload",
 		}),
 		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",

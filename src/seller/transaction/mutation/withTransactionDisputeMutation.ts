@@ -4,6 +4,7 @@ import { getRootLogger } from "~/common/log/getRootLogger";
 import { transactionDisputeFn } from "~/seller/transaction/fn/transactionDisputeFn";
 import type { TransactionSchema } from "~/seller/transaction/server/schema/TransactionSchema";
 import { withTransactionListingQuery } from "~/seller/transaction-listing/query/withTransactionListingQuery";
+import { withActivityQuery } from "~/user/activity/query/withActivityQuery";
 import { withTransactionQuery } from "../query/withTransactionQuery";
 
 export const withTransactionDisputeMutation = withMutation<
@@ -38,6 +39,10 @@ export const withTransactionDisputeMutation = withMutation<
 					]),
 					withTransactionListingQuery.invalidator(queryClient, [
 						"fetch",
+						"collection",
+						"count",
+					]),
+					withActivityQuery.invalidator(queryClient, [
 						"collection",
 						"count",
 					]),

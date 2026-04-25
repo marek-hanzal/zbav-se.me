@@ -7,7 +7,6 @@ import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
 import { TitleContainer } from "~/common/ui/container";
 import { withDraftGalleryCreateMutation } from "~/seller/draft/mutation/withDraftGalleryCreateMutation";
-import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
@@ -29,22 +28,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	...props
 }) => {
 	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
-	const invalidate = withDraftQuery.useInvalidator();
 	const mutation = withDraftGalleryCreateMutation.useMutation({
-		async onPostMutation() {
-			return invalidate(
-				[
-					"fetch",
-				],
-				{
-					fetch: {
-						where: {
-							id: draft.id,
-						},
-					},
-				},
-			);
-		},
 		onSuccess() {
 			onView("title");
 		},
@@ -67,6 +51,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 				data-ui-inner="default"
 			>
 				<GalleryUpload
+					access="private"
 					state={{
 						value: uploadIds,
 						set: setUploadIds,

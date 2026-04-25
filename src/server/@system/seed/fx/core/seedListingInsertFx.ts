@@ -51,6 +51,7 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 	const now = dateContext.now();
 
 	const gallery = yield* galleryInsertFx({
+		access: "public",
 		userId,
 	});
 

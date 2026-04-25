@@ -3,8 +3,10 @@ import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDelivery
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import { DescriptionSchema } from "~/common/listing/schema/DescriptionSchema";
+import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
+import { TitleSchema } from "~/common/listing/schema/TitleSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
-import { ProsConsSchema } from "~/seller/listing/server/schema/ProsConsSchema";
 
 export const ListingCreateSchema = z
 	.looseObject({
@@ -41,12 +43,8 @@ cannot get "none" restriction on it's listings.
 			description: "ID of the category",
 		}),
 		expiresAt: ListingExpireEnumSchema,
-		title: z.string().min(5).max(72).meta({
-			description: "Title of the item",
-		}),
-		description: z.string().max(2048).nullish().meta({
-			description: "Description of the item",
-		}),
+		title: TitleSchema,
+		description: DescriptionSchema.nullish(),
 		pros: ProsConsSchema.nullish().meta({
 			description: "Pros of the item",
 		}),

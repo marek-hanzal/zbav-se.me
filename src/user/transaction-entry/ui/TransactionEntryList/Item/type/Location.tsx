@@ -43,6 +43,11 @@ export const Location = withFallback(
 						"data-ui-text": "default",
 						"data-ui-font": "normal",
 					}}
+					textValueProps={{
+						"data-ui-wrap": "wrap",
+						"data-ui-text": "default",
+						"data-ui-truncate": false,
+					}}
 					data-ui-background={undefined}
 					action={<CopyIconAction text={location.address} />}
 				/>

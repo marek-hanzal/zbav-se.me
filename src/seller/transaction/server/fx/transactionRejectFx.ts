@@ -3,6 +3,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
+import { transactionMessageActivityArchiveFx } from "~/user/transaction/server/fx/transactionMessageActivityArchiveFx";
 import { transactionResolveFx } from "~/user/transaction/server/fx/transactionResolveFx";
 import { transactionStatusMessageFx } from "~/user/transaction/server/fx/transactionStatusMessageFx";
 import { transactionUpdateStatusFx } from "~/user/transaction/server/fx/transactionUpdateStatusFx";
@@ -31,6 +32,13 @@ export const transactionRejectFx = Effect.fn("transactionRejectFx")(function* ({
 				userId,
 				transactionId,
 				message: "You are not allowed to reject this listing transaction",
+			});
+
+			yield* transactionMessageActivityArchiveFx({
+				listingId: transaction.listingId,
+				transactionId: transaction.id,
+				type: "buyer-message",
+				userId,
 			});
 
 			yield* transactionUpdateStatusFx({

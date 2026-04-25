@@ -26,10 +26,12 @@ describe("transactionEntry workflow", () => {
 			});
 
 			const firstUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: buyer.id,
 				url: testUploadUrl("transaction-entry-gallery-1.jpg"),
 			});
 			const secondUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: buyer.id,
 				url: testUploadUrl("transaction-entry-gallery-2.jpg"),
 			});
@@ -64,6 +66,27 @@ describe("transactionEntry workflow", () => {
 					.orderBy("sort", "asc")
 					.execute(),
 			);
+			const storedGallery = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("gallery")
+					.select("access")
+					.where("id", "=", entry.payload.galleryId)
+					.executeTakeFirstOrThrow(),
+			);
+			const storedUploads = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("upload")
+					.select([
+						"id",
+						"access",
+					])
+					.where("id", "in", [
+						firstUpload.id,
+						secondUpload.id,
+					])
+					.orderBy("id", "asc")
+					.execute(),
+			);
 
 			expect(gallery).toEqual([
 				{
@@ -74,6 +97,11 @@ describe("transactionEntry workflow", () => {
 					uploadId: secondUpload.id,
 					sort: 1,
 				},
+			]);
+			expect(storedGallery.access).toBe("protected");
+			expect(storedUploads.map((upload) => upload.access)).toEqual([
+				"protected",
+				"protected",
 			]);
 
 			const sellerView = yield* transactionEntryFetchFx({

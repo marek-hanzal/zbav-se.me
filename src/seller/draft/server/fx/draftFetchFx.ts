@@ -7,8 +7,12 @@ import type { DraftFilterSchema } from "~/seller/draft/server/schema/DraftFilter
 import type { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
 
 export namespace draftFetchFx {
+	export interface Scope extends DraftFilterSchema.Type {
+		userId: string;
+	}
+
 	export interface Props extends DraftQuerySchema.Type {
-		scope: DraftFilterSchema.Type;
+		scope: Scope;
 	}
 }
 
@@ -30,6 +34,7 @@ export const draftFetchFx = Effect.fn("draftFetchFx")(function* ({
 		resource: "draft",
 		selectFx: withDraftSelectFx({
 			sort,
+			userId: scope.userId,
 		}),
 		filter,
 		where,

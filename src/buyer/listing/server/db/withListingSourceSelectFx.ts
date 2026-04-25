@@ -26,9 +26,9 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 }: withListingSourceSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 	const fallbackSql = sql`${RestrictionEnumSchema.enum.none}::restriction_enum`;
-	const restrictionSql = sql`coalesce((${yield* withActiveUserRestrictionSelectFx({
+	const restrictionSql = yield* withActiveUserRestrictionSelectFx({
 		userId,
-	})}), ${fallbackSql})`;
+	});
 
 	let query = kysely
 		.selectFrom("listing as l")

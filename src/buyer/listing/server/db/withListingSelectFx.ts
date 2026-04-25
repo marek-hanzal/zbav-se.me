@@ -5,9 +5,10 @@ import { withListingSourceSelectFx } from "~/buyer/listing/server/db/withListing
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import type { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
-import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
+import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
+import { withActiveUserRestrictionSelectFx } from "~/user/user-restriction/server/db/withActiveUserRestrictionSelectFx";
 
 export namespace withListingSelectFx {
 	export interface Props extends withListingSourceSelectFx.Props {
@@ -31,6 +32,9 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	});
 
 	const gallerySelect = yield* withGallerySelectFx({});
+	const restrictionSql = yield* withActiveUserRestrictionSelectFx({
+		userId,
+	});
 
 	return listingSourceSelect.selectAll("l").select((eb) => [
 		sql<RestrictionEnumSchema.Type[]>`to_jsonb(array(
@@ -44,7 +48,17 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			order by min(restriction_item.ord)
 		))`.as("restrictions"),
 		sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
-		sql<CategoryTableSchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category"),
+		/**
+		 * Build the nested category payload from the DB row and append the computed
+		 * restriction flag. In Postgres, `jsonb || jsonb` merges both objects.
+		 */
+		sql<CategorySchema.Type>`
+			to_jsonb(${eb.table("cat")}.*)
+			|| jsonb_build_object(
+				'isRestricted',
+				${eb.ref("cat.restriction")} > ${restrictionSql}
+			)
+		`.as("category"),
 		sql<ListingDeliveryEnumSchema.Type[] | null>`to_jsonb(${eb.ref("l.delivery")})`.as(
 			"delivery",
 		),

@@ -24,10 +24,8 @@ export const IgnoreButton = withFallback(
 		disabled = false,
 		...props
 	}: IgnoreButton.Props) => {
-		const update = withListingQuery.useUpdate();
 		const { data: listing } = withListingQuery.useFetchQuery(listingId);
 		const ignoreToggleMutation = withIgnoreToggleMutation.useMutation({
-			onSuccess: update,
 			meta: {
 				mutationId: listingId,
 			},

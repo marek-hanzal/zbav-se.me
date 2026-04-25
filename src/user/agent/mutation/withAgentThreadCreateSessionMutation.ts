@@ -30,12 +30,14 @@ export const withAgentThreadCreateSessionMutation = withMutation<
 		});
 	},
 	invalidate: [
-		withAgentLiveQuery,
-		withAgentStreamItemsQuery,
 		{
 			async invalidate(queryClient) {
-				await withAgentThreadQuery.invalidator(queryClient, [
-					"collection",
+				await Promise.all([
+					withAgentLiveQuery.invalidate(queryClient),
+					withAgentStreamItemsQuery.invalidate(queryClient),
+					withAgentThreadQuery.invalidator(queryClient, [
+						"collection",
+					]),
 				]);
 			},
 		},

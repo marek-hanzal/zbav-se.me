@@ -1,13 +1,25 @@
 import { tool } from "@openai/agents";
+import { z } from "zod";
+import { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { uploadCreateFn } from "~/user/upload/fn/uploadCreateFn";
-import { UploadToolCreateSchema } from "~/user/upload/server/schema/UploadToolCreateSchema";
 
 const logger = getRootLogger([
 	"tool",
 	"toolUploadCreate",
 ]);
+
+const InputSchema = z
+	.looseObject({
+		url: z.url().meta({
+			description: "Public URL to the uploaded file",
+		}),
+		access: AccessEnumSchema.meta({
+			description: "Visibility of the upload",
+		}),
+	})
+	.strip();
 
 export const toolUploadCreate = tool({
 	name: "upload-create",
@@ -20,19 +32,24 @@ Use when:
 - You have a public URL to a file (image, document, etc.)
 - The URL must be publicly accessible
 
-Returns the upload record with id and URL.
+Access:
+- public: for listings only
+- protected: when sharing uploads between users (e.g. transactions/transaction-entry)
+- private: for user private stuff (e.g. drafts)
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(UploadToolCreateSchema),
+	parameters: unsafeJsonSchema(InputSchema),
 	async execute(input) {
 		logger.trace("toolUploadCreate", {
 			data: input,
 		});
 
-		const data = await UploadToolCreateSchema.parseAsync(input);
+		const data = await InputSchema.parseAsync(input);
 
-		return uploadCreateFn({
+		const { id } = await uploadCreateFn({
 			data,
 		});
+
+		return `uploadId ${id}`;
 	},
 });

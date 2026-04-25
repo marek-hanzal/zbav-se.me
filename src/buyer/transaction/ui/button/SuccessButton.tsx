@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import type { FC } from "react";
 import { Button } from "@/lib/client/button";
 import { Tx } from "@/lib/client/tx";
@@ -6,7 +5,6 @@ import type { TransactionSchema } from "~/buyer/transaction/server/schema/Transa
 import { CheckIcon } from "~/common/ui/icon";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionSuccessMutation } from "../../mutation/withTransactionSuccessMutation";
-import { archiveSellerMessageActivity } from "../../service/archiveSellerMessageActivity";
 
 export namespace SuccessButton {
 	export interface Props extends Button.Props {
@@ -16,18 +14,8 @@ export namespace SuccessButton {
 }
 
 export const SuccessButton: FC<SuccessButton.Props> = ({ close, transaction, ...props }) => {
-	const queryClient = useQueryClient();
 	const mutation = withTransactionSuccessMutation.useMutation({
 		async onPostMutation() {
-			try {
-				await archiveSellerMessageActivity({
-					queryClient,
-					transactionId: transaction.id,
-				});
-			} catch {
-				// Keep success flow usable even if unread archival fails.
-			}
-
 			close();
 		},
 	});

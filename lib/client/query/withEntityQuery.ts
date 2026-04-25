@@ -46,6 +46,18 @@ export namespace withEntityQuery {
 		}
 	}
 
+	export namespace Invalidate {
+		export interface Props<out TRequest, out TResult> {
+			queryClient: QueryClient;
+			result: TResult;
+			variables: TRequest;
+		}
+
+		export interface Type<TRequest, TResult> {
+			invalidate(props: Props<TRequest, TResult>): Promise<void>;
+		}
+	}
+
 	/**
 	 * Static definition of an entity resource handled by this helper.
 	 *
@@ -101,6 +113,12 @@ export namespace withEntityQuery {
 		 * Delete mutation.
 		 */
 		deleteFn(data: TDeleteRequest): Promise<TEntity>;
+		invalidate?: {
+			create?: Invalidate.Type<TCreateRequest, TEntity>[];
+			delete?: Invalidate.Type<TDeleteRequest, TEntity>[];
+			patch?: Invalidate.Type<TPatchRequest, TEntity>[];
+			patchCollection?: Invalidate.Type<TPatchCollectionRequest, TEntity[]>[];
+		};
 	}
 
 	/**
@@ -228,6 +246,7 @@ export const withEntityQuery = <
 	deleteFn,
 	patchFn,
 	patchCollectionFn,
+	invalidate: invalidateConfig,
 }: withEntityQuery.Props<
 	TEntity,
 	TFetchRequest,
@@ -239,6 +258,23 @@ export const withEntityQuery = <
 	TPatchCollectionRequest,
 	TErrors
 >) => {
+	async function invalidateFn<TRequest, TResult>(
+		queryClient: QueryClient,
+		invalidate: withEntityQuery.Invalidate.Type<TRequest, TResult>[] | undefined,
+		variables: TRequest,
+		result: TResult,
+	) {
+		await Promise.all(
+			(invalidate ?? []).map((item) => {
+				return item.invalidate({
+					queryClient,
+					result,
+					variables,
+				});
+			}),
+		);
+	}
+
 	/**
 	 * Internal key builder.
 	 *
@@ -599,6 +635,7 @@ export const withEntityQuery = <
 		await invalidator(queryClient, invalidate, {
 			fetch: key,
 		});
+		await invalidateFn(queryClient, invalidateConfig?.patch, request, result);
 
 		return result;
 	}
@@ -623,6 +660,7 @@ export const withEntityQuery = <
 		}
 
 		await invalidator(queryClient, invalidate);
+		await invalidateFn(queryClient, invalidateConfig?.patchCollection, request, result);
 
 		return result;
 	}
@@ -718,6 +756,7 @@ export const withEntityQuery = <
 		await invalidator(queryClient, invalidate, {
 			fetch: key,
 		});
+		await invalidateFn(queryClient, invalidateConfig?.create, request, result);
 
 		return result;
 	}
@@ -787,6 +826,7 @@ export const withEntityQuery = <
 		await invalidator(queryClient, invalidate, {
 			fetch: key,
 		});
+		await invalidateFn(queryClient, invalidateConfig?.delete, request, result);
 
 		return result;
 	}

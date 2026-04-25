@@ -19,10 +19,12 @@ describe("uploadFetchFx", () => {
 			const ownUploadUrl = `${cdn}/own-upload.jpg`;
 
 			const ownUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: users.seller.id,
 				url: ownUploadUrl,
 			});
 			const foreignUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: users.stranger.id,
 				url: `${cdn}/foreign-upload.jpg`,
 			});

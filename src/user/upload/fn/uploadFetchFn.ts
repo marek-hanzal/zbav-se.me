@@ -21,7 +21,7 @@ export const uploadFetchFn = createServerFn()
 		withUserMiddleware,
 	])
 	.inputValidator(UploadQuerySchema)
-	.handler(async ({ data, context: { database, rootLogger }, serverFnMeta: { name } }) => {
+	.handler(async ({ data, context: { database, user, rootLogger }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",
 			name,
@@ -32,7 +32,9 @@ export const uploadFetchFn = createServerFn()
 			schema: UploadSchema,
 			dataFx: uploadFetchFx({
 				...data,
-				scope: {},
+				scope: {
+					userId: user.id,
+				},
 			}),
 		}).pipe(
 			withKyselyFx(database),

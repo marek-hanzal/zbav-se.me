@@ -55,6 +55,7 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 			}).pipe(
 				Effect.catchTag("NotFoundErrorFx", () => {
 					return galleryCreateFx({
+						access: "private",
 						userId,
 						id: feed.id,
 					});

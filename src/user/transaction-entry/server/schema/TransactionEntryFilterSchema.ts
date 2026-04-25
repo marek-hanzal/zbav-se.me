@@ -8,6 +8,9 @@ export const TransactionEntryFilterSchema = z
 		transactionId: z.string().optional().meta({
 			description: "Matches a concrete transaction identifier",
 		}),
+		transactionIdIn: z.array(z.string()).optional().meta({
+			description: "Matches a concrete transaction identifier",
+		}),
 		userId: z.string().optional().meta({
 			description: "Matches a concrete actor identifier",
 		}),

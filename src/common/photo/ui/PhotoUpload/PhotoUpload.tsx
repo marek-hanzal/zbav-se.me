@@ -4,6 +4,7 @@ import { SpinnerIcon } from "@/lib/client/icon";
 import { Progress } from "@/lib/client/progress";
 import { Status } from "@/lib/client/status";
 import { translator } from "@/lib/common/translator";
+import type { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 import { Placeholder } from "./Placeholder";
 import { Preview } from "./Preview";
 import { useController } from "./useController";
@@ -42,6 +43,7 @@ export namespace PhotoUpload {
 	export interface Props extends Omit<Container.Props, "onChange"> {
 		camera?: boolean;
 		value: useController.Value;
+		access: AccessEnumSchema.Type;
 		onChange: useController.OnChangeFn;
 		onUpload?: useController.OnUploadFn;
 		mutationId?: string;
@@ -57,6 +59,7 @@ export namespace PhotoUpload {
 export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	camera = false,
 	value,
+	access,
 	onChange,
 	onUpload,
 	mutationId,
@@ -65,6 +68,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 }) => {
 	const controller = useController({
 		onChange,
+		access,
 		onUpload,
 		mutationId,
 	});

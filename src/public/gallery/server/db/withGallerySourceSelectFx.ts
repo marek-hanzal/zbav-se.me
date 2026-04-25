@@ -16,7 +16,7 @@ export const withGallerySourceSelectFx = Effect.fn("withGallerySourceSelectFx")(
 }: withGallerySourceSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	let query = kysely.selectFrom("gallery as gal");
+	let query = kysely.selectFrom("gallery as gal").where("gal.access", "=", "public");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

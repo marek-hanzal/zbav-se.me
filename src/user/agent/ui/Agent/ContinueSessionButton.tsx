@@ -6,7 +6,8 @@ import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 
 export namespace ContinueSessionButton {
-	export interface Props extends uiLinkTo.Component<Pick<LinkTo.Props, "iconProps">> {
+	export interface Props
+		extends uiLinkTo.Component<Pick<LinkTo.Props, "iconProps" | "ref" | "id" | "onKeyDown">> {
 		//
 	}
 }

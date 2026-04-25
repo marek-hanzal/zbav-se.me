@@ -1,11 +1,9 @@
-import { useQueryClient } from "@tanstack/react-query";
 import type { FC } from "react";
 import { Button, uiButton } from "@/lib/client/button";
 import { ChevronRightIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
-import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
@@ -20,31 +18,7 @@ export namespace TransactionButton {
 
 export const TransactionButton: FC<TransactionButton.Props> = ({ listing, meta, ...props }) => {
 	const locale = useLocale();
-	const queryClient = useQueryClient();
-	const updateListing = withListingQuery.useUpdate();
-	const transactionCreateMutation = withTransactionQuery.useCreateMutation({
-		async onPostMutation() {
-			/**
-			 * We've to manually refetch listing with meta and update it.
-			 *
-			 * I'm not proud of this solution, but it's at least interesting to see,
-			 * how nicely the stuff here works as a lego.
-			 */
-			updateListing(
-				await withListingQuery.fetchFn({
-					where: {
-						id: listing.id,
-					},
-					meta,
-				}),
-			);
-
-			await withTransactionQuery.invalidator(queryClient, [
-				"collection",
-				"count",
-			]);
-		},
-	});
+	const transactionCreateMutation = withTransactionQuery.useCreateMutation();
 
 	if (listing.transactionId) {
 		return (
@@ -87,6 +61,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({ listing, meta, 
 			onClick={() => {
 				transactionCreateMutation.mutate({
 					listingId: listing.id,
+					meta,
 				});
 			}}
 			data-ui-tone="neutral"

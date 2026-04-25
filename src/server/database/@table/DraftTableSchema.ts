@@ -3,9 +3,11 @@ import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDelivery
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import { DescriptionSchema } from "~/common/listing/schema/DescriptionSchema";
+import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
+import { TitleSchema } from "~/common/listing/schema/TitleSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
-import { ProsConsSchema } from "~/seller/listing/server/schema/ProsConsSchema";
 
 export const DraftTableSchema = z
 	.looseObject({
@@ -65,13 +67,9 @@ If not provided, listing will be controlled from category only.
 			description: "Expiration timestamp",
 		}),
 		//
-		title: z.string().nullable().meta({
-			description: "Title of the item",
-		}),
+		title: TitleSchema.nullish(),
 		//
-		description: z.string().max(2048).nullable().meta({
-			description: "Description of the item",
-		}),
+		description: DescriptionSchema.nullish(),
 		//
 		pros: ProsConsSchema.nullable().meta({
 			description: "Pros of the item",

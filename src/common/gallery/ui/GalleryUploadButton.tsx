@@ -8,7 +8,13 @@ export namespace GalleryUploadButton {
 		extends Button.Props,
 			Pick<
 				GalleryUploadSheet.Props<TData, TResult>,
-				"withMutation" | "toMutation" | "onSuccess" | "onCancel" | "state" | "limit"
+				| "withMutation"
+				| "toMutation"
+				| "onSuccess"
+				| "onCancel"
+				| "state"
+				| "limit"
+				| "access"
 			> {
 		defaultUploadIds: string[];
 	}
@@ -28,6 +34,7 @@ export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads, TR
 	state,
 	defaultUploadIds,
 	limit,
+	access,
 	...props
 }: GalleryUploadButton.Props<TData, TResult>) => {
 	return (
@@ -52,6 +59,7 @@ export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads, TR
 				state={state}
 				defaultUploadIds={defaultUploadIds}
 				limit={limit}
+				access={access}
 				detent={"default"}
 			/>
 		</>

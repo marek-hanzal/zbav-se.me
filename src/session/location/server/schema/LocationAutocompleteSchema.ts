@@ -8,6 +8,9 @@ export const LocationAutocompleteSchema = z
 		lang: z.string().min(2).max(8).meta({
 			description: "The language code for the location search",
 		}),
+		limit: z.int().max(10).optional().meta({
+			description: "If you need less than 10 results, you're welcome!",
+		}),
 	})
 	.strip()
 	.meta({

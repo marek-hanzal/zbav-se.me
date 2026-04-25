@@ -1,21 +1,23 @@
 import type { FC } from "react";
 import { LinkTo, type uiLinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
+import { translator } from "@/lib/common/translator";
 import { HomeIcon } from "~/common/ui/icon";
 
 export namespace HomeMenuButton {
-	export interface Props extends uiLinkTo.Component<{}> {
+	export interface Props extends uiLinkTo.Component<Pick<LinkTo.Props, "id" | "onKeyDown">> {
 		//
 	}
 }
 
-export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ className }) => {
+export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ className, ...props }) => {
 	const locale = useLocale();
 
 	return (
 		<LinkTo
 			data-ui={"HomeMenuButton"}
 			data-action={"go home"}
+			title={translator.text("Go home (aria)")}
 			icon={HomeIcon}
 			to={"/$locale/app/home"}
 			params={{
@@ -32,6 +34,7 @@ export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ className }) => {
 			data-ui-inner="md"
 			data-ui-opacity="8"
 			className={className}
+			{...props}
 		/>
 	);
 };

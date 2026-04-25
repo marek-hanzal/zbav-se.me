@@ -9,9 +9,11 @@ export namespace withDraftCollectionSelectFx {
 
 export const withDraftCollectionSelectFx = Effect.fn("withDraftCollectionSelectFx")(function* ({
 	sort,
+	userId,
 }: withDraftCollectionSelectFx.Props) {
 	const sourceSelect = yield* withDraftSelectFx({
 		sort,
+		userId,
 	});
 
 	return sourceSelect;

@@ -5,16 +5,18 @@ import { withAgentLiveQuery } from "~/user/agent/query/withAgentLiveQuery";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 import { AssistantMessage } from "./AssistantMessage";
 import { ErrorMessage } from "./ErrorMessage";
+import { Reasoning } from "./Reasoning";
 import { ThinkingIndicator } from "./ThinkingIndicator";
-import { ToolCallBlock } from "./ToolCallBlock";
+import { ToolCall } from "./ToolCall";
 
 export namespace LiveList {
 	export interface Props extends Container.Props {
 		threadId: string;
+		inline: boolean;
 	}
 }
 
-export const LiveList: FC<LiveList.Props> = ({ threadId, ...props }) => {
+export const LiveList: FC<LiveList.Props> = ({ threadId, inline, ...props }) => {
 	const { data: events } = withAgentLiveQuery.useQuery({
 		threadId,
 	});
@@ -30,8 +32,19 @@ export const LiveList: FC<LiveList.Props> = ({ threadId, ...props }) => {
 			{entries.map((entry) => {
 				if (entry.type === "tool-call") {
 					return (
-						<ToolCallBlock
+						<ToolCall
 							key={`tool-call-${entry.itemId}`}
+							events={events}
+							itemId={entry.itemId}
+							inline={inline}
+						/>
+					);
+				}
+
+				if (entry.type === "reasoning") {
+					return (
+						<Reasoning
+							key={`reasoning-${entry.itemId}`}
 							events={events}
 							itemId={entry.itemId}
 							inline
@@ -70,7 +83,11 @@ namespace useLiveEntries {
 		type: "tool-call";
 	}
 
-	export type LiveEntry = LiveAssistantEntry | LiveToolCallEntry;
+	interface LiveReasoningEntry extends Entry {
+		type: "reasoning";
+	}
+
+	export type LiveEntry = LiveAssistantEntry | LiveToolCallEntry | LiveReasoningEntry;
 }
 
 function useLiveEntries(events: RunStreamEvent[] | undefined): useLiveEntries.LiveEntry[] {
@@ -98,6 +115,14 @@ function useLiveEntries(events: RunStreamEvent[] | undefined): useLiveEntries.Li
 			if (responseEvent.item.type === "function_call") {
 				entries.push({
 					type: "tool-call",
+					itemId: responseEvent.item.id,
+				});
+				continue;
+			}
+
+			if (responseEvent.item.type === "reasoning") {
+				entries.push({
+					type: "reasoning",
 					itemId: responseEvent.item.id,
 				});
 				continue;

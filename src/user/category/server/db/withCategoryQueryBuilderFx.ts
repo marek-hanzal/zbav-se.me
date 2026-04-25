@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { withLikeEx } from "~/server/database/expression/withLikeEx";
 import type { withCategorySourceSelectFx } from "~/user/category/server/db/withCategorySourceSelectFx";
 import type { CategoryFilterSchema } from "~/user/category/server/schema/CategoryFilterSchema";
@@ -78,12 +77,9 @@ export const withCategoryQueryBuilderFx = Effect.fn("withCategoryQueryBuilderFx"
 	}
 
 	if (where?.withRestriction === true) {
-		const fallbackSql = sql`${RestrictionEnumSchema.enum.none}::restriction_enum`;
-		const restrictionSql = userId
-			? sql`coalesce((${yield* withActiveUserRestrictionSelectFx({
-					userId,
-				})}), ${fallbackSql})`
-			: fallbackSql;
+		const restrictionSql = yield* withActiveUserRestrictionSelectFx({
+			userId,
+		});
 
 		query = query.where((eb) => {
 			return sql<boolean>`${eb.ref("cat.restriction")} <= ${restrictionSql}`;

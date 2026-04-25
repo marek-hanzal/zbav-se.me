@@ -26,18 +26,26 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 		resizeBehavior: "instant",
 	});
 
+	const inline = false;
+
 	return (
 		<Container
 			data-ui={"AgentMessageList"}
 			ref={contentRef}
 			data-ui-flow="vertical"
 			data-ui-inner="default"
-			data-ui-gap="default"
+			data-ui-gap="lg"
 			{...props}
 		>
-			<HistoryList threadId={threadId} />
+			<HistoryList
+				threadId={threadId}
+				inline={inline}
+			/>
 
-			<LiveList threadId={threadId} />
+			<LiveList
+				threadId={threadId}
+				inline={inline}
+			/>
 		</Container>
 	);
 };

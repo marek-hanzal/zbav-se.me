@@ -42,6 +42,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 			<CategorySelect
 				selection={selection}
 				categoryId={categoryId ?? undefined}
+				withRestriction={false}
 			/>
 
 			<SaveContainer

@@ -6,6 +6,9 @@ export const TransactionEntryPersonal = z
 	.looseObject({
 		...BasePersonalSchema.shape,
 		direction: TransactionEntryDirectionEnumSchema,
+		listingId: z.string().meta({
+			description: "Listing this entry belongs to",
+		}),
 	})
 	.strip()
 	.meta({

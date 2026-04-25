@@ -9,33 +9,30 @@ const logger = getRootLogger([
 	"toolTransactionCreate",
 ]);
 
+const InputSchema = TransactionCreateSchema;
+
 export const toolTransactionCreate = tool({
 	name: "buyer-transaction-create",
 	needsApproval: false,
 	description: `
 Buyer-side transaction action: create/open a new transaction for a concrete listing.
 
-Use only when the current user clearly wants to start a transaction with the seller for a specific listing. Requires the exact listingId.
-
-Before using:
-- If the user references a listing vaguely, first find the listing and confirm the exact listingId.
-- If the listing result already has transactionId, do not create a new transaction; use the existing buyer transaction instead.
-- Do not use from seller perspective. Sellers accept/reject/resolve/dispute existing transactions; buyers create new transactions for listings.
-- Do not invent listingId from title text. Resolve it through listing tools first.
-
-This creates a pending transaction, links the buyer and listing owner as participants, writes the pending status entry, and notifies the seller.
+- Use only when the current user clearly wants to start a transaction with the seller for a specific listing
+- If the listing is favourite, offer the user to remove it from favourites
 	`.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(TransactionCreateSchema),
+	parameters: unsafeJsonSchema(InputSchema),
 	async execute(input) {
 		logger.trace("toolTransactionCreate", {
 			input,
 		});
 
-		const data = await TransactionCreateSchema.parseAsync(input);
+		const data = await InputSchema.parseAsync(input);
 
-		return transactionCreateFn({
+		const transaction = await transactionCreateFn({
 			data,
 		});
+
+		return `transactionId ${transaction.id}`;
 	},
 });

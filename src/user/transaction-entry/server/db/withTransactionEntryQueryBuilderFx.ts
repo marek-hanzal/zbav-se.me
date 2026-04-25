@@ -82,6 +82,10 @@ export const withTransactionEntryQueryBuilderFx = Effect.fn("withTransactionEntr
 			query = query.where("te.transactionId", "=", where.transactionId) as TSelect;
 		}
 
+		if (where.transactionIdIn?.length) {
+			query = query.where("te.transactionId", "in", where.transactionIdIn) as TSelect;
+		}
+
 		if (where.userId) {
 			query = query.where("te.userId", "=", where.userId) as TSelect;
 		}

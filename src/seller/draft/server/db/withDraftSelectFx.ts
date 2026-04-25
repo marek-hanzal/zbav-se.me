@@ -3,28 +3,44 @@ import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { withDraftSourceSelectFx } from "~/seller/draft/server/db/withDraftSourceSelectFx";
-import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
+import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
+import { withActiveUserRestrictionSelectFx } from "~/user/user-restriction/server/db/withActiveUserRestrictionSelectFx";
 
 export namespace withDraftSelectFx {
-	export interface Props extends withDraftSourceSelectFx.Props {}
+	export interface Props extends withDraftSourceSelectFx.Props {
+		userId: string;
+	}
 
 	export type Select = ReturnType<typeof withDraftSelectFx>;
 }
 
 export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 	sort,
+	userId,
 }: withDraftSelectFx.Props) {
 	const draftSourceSelect = yield* withDraftSourceSelectFx({
 		sort,
 	});
 
 	const gallerySelect = yield* withGallerySelectFx({});
+	const restrictionSql = yield* withActiveUserRestrictionSelectFx({
+		userId,
+	});
 
 	return draftSourceSelect.selectAll("d").select((eb) => [
 		sql<LocationTableSchema.Type | null>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
-		sql<CategoryTableSchema.Type | null>`to_jsonb(${eb.table("cat")}.*)`.as("category"),
+		sql<CategorySchema.Type | null>`
+			case
+				when ${eb.ref("cat.id")} is null then null
+				else to_jsonb(${eb.table("cat")}.*)
+					|| jsonb_build_object(
+						'isRestricted',
+						${eb.ref("cat.restriction")} > ${restrictionSql}
+					)
+			end
+		`.as("category"),
 		sql<ListingDeliveryEnumSchema.Type[] | null>`to_jsonb(${eb.ref("d.delivery")})`.as(
 			"delivery",
 		),

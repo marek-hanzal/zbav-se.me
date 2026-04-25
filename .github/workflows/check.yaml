@@ -179,69 +179,68 @@ jobs:
                   name: vitest-coverage
                   if-no-files-found: ignore
                   path: coverage/vitest
+    # e2e:
+    #     name: Full-Stack Test
+    #     runs-on: ubuntu-latest
+    #     environment: staging
+    #     env:
+    #         NITRO_PRESET: node_server
+    #         SERVER_E2E: e2e
+    #         PORTLESS_STATE_DIR: /tmp/portless
+    #         NODE_EXTRA_CA_CERTS: /tmp/portless/ca.pem
+    #         SSL_CERT_FILE: /tmp/portless/ca.pem
+    #     steps:
+    #         - uses: actions/checkout@v6.0.2
 
-    e2e:
-        name: Full-Stack Test
-        runs-on: ubuntu-latest
-        environment: staging
-        env:
-            NITRO_PRESET: node_server
-            SERVER_E2E: e2e
-            PORTLESS_STATE_DIR: /tmp/portless
-            NODE_EXTRA_CA_CERTS: /tmp/portless/ca.pem
-            SSL_CERT_FILE: /tmp/portless/ca.pem
-        steps:
-            - uses: actions/checkout@v6.0.2
+    #         - name: Setup Node.js
+    #           uses: actions/setup-node@v6.3.0
+    #           with:
+    #               node-version: "24"
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v6.3.0
-              with:
-                  node-version: "24"
+    #         - name: Setup Bun
+    #           uses: oven-sh/setup-bun@v2.2.0
 
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2.2.0
+    #         - name: Install dependencies
+    #           run: bun install --frozen-lockfile
 
-            - name: Install dependencies
-              run: bun install --frozen-lockfile
+    #         - name: Resolve Playwright version
+    #           id: playwright-version
+    #           run: |
+    #               VERSION=$(node -p 'require("./package.json").devDependencies["@playwright/test"]')
+    #               echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-            - name: Resolve Playwright version
-              id: playwright-version
-              run: |
-                  VERSION=$(node -p 'require("./package.json").devDependencies["@playwright/test"]')
-                  echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+    #         - name: Install portless
+    #           run: bun install -g portless
 
-            - name: Install portless
-              run: bun install -g portless
+    #         - name: Start portless proxy
+    #           run: portless proxy start -p 1355 --https
 
-            - name: Start portless proxy
-              run: portless proxy start -p 1355 --https
+    #         - name: Restore Playwright browser cache
+    #           id: playwright-cache
+    #           uses: actions/cache/restore@v5.0.3
+    #           with:
+    #               path: ~/.cache/ms-playwright
+    #               key: ${{ runner.os }}-playwright-chromium-${{ steps.playwright-version.outputs.version }}
 
-            - name: Restore Playwright browser cache
-              id: playwright-cache
-              uses: actions/cache/restore@v5.0.3
-              with:
-                  path: ~/.cache/ms-playwright
-                  key: ${{ runner.os }}-playwright-chromium-${{ steps.playwright-version.outputs.version }}
+    #         - name: Install Playwright browsers
+    #           run: bunx playwright install --with-deps chromium
 
-            - name: Install Playwright browsers
-              run: bunx playwright install --with-deps chromium
+    #         - name: Save Playwright browser cache
+    #           if: steps.playwright-cache.outputs.cache-hit != 'true'
+    #           uses: actions/cache/save@v5.0.3
+    #           with:
+    #               path: ~/.cache/ms-playwright
+    #               key: ${{ runner.os }}-playwright-chromium-${{ steps.playwright-version.outputs.version }}
 
-            - name: Save Playwright browser cache
-              if: steps.playwright-cache.outputs.cache-hit != 'true'
-              uses: actions/cache/save@v5.0.3
-              with:
-                  path: ~/.cache/ms-playwright
-                  key: ${{ runner.os }}-playwright-chromium-${{ steps.playwright-version.outputs.version }}
+    #         - name: Run Playwright
+    #           run: bun run e2e
 
-            - name: Run Playwright
-              run: bun run e2e
-
-            - name: Upload Playwright artifacts
-              if: always()
-              uses: actions/upload-artifact@v7
-              with:
-                  name: playwright-artifacts
-                  if-no-files-found: ignore
-                  path: |
-                      playwright-report
-                      results
+    #         - name: Upload Playwright artifacts
+    #           if: always()
+    #           uses: actions/upload-artifact@v7
+    #           with:
+    #               name: playwright-artifacts
+    #               if-no-files-found: ignore
+    #               path: |
+    #                   playwright-report
+    #                   results

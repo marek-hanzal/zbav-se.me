@@ -9,13 +9,20 @@ import { translator } from "@/lib/common/translator";
  */
 export const EntitySchema = z
 	.looseObject({
-		id: z.string().min(1, {
-			error() {
-				return translator.text(
-					"Missing identity for an Entity (id). I'm sorry, but I cannot provide better message than this :(",
-				);
-			},
-		}),
+		id: z
+			.string()
+			.min(1, {
+				error() {
+					return translator.text(
+						"Missing identity for an Entity (id). I'm sorry, but I cannot provide better message than this :(",
+					);
+				},
+			})
+			.meta({
+				description: `
+Represents an entity with ID
+            `.trim(),
+			}),
 	})
 	.strip()
 	.meta({

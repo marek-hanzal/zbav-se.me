@@ -24,6 +24,7 @@ export const seedDraftInsertFx = Effect.fn("seedDraftInsertFx")(function* ({
 	const id = genId();
 
 	const gallery = yield* galleryInsertFx({
+		access: "private",
 		userId,
 	});
 

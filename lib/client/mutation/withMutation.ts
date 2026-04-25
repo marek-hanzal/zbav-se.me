@@ -70,7 +70,7 @@ export namespace withMutation {
 		/**
 		 * Optional array of invalidator functions. Each receives the QueryClient and is awaited in sequence when invalidation is triggered.
 		 */
-		invalidate?: withInvalidator.Invalidate[];
+		invalidate?: withInvalidator.Invalidate<TResult>[];
 		/**
 		 * If true, whole Query Client will be cleared out; useful for login/logout to ensure everything is in place.
 		 *
@@ -127,7 +127,7 @@ export function withMutation<TVariables, TResult, TError>({
 	invalidate: $invalidate = [],
 	dropCache,
 }: withMutation.Props<TVariables, TResult>) {
-	const { invalidate } = withInvalidator({
+	const { invalidate } = withInvalidator<TResult>({
 		invalidate: $invalidate,
 	});
 
@@ -171,7 +171,7 @@ export function withMutation<TVariables, TResult, TError>({
 					});
 					//
 					const result = await mutationFn(variables);
-					await invalidate(queryClient);
+					await invalidate(queryClient, result);
 					//
 					await onPostMutation?.({
 						variables,
@@ -215,7 +215,7 @@ export function withMutation<TVariables, TResult, TError>({
 
 			const data = await mutationFn(variables);
 			clearCache(queryClient);
-			await invalidate(queryClient);
+			await invalidate(queryClient, data);
 			return data;
 		},
 		/**
@@ -227,7 +227,7 @@ export function withMutation<TVariables, TResult, TError>({
 			return async () => {
 				logger.trace("useMutation::useInvalidate::invalidate");
 
-				return invalidate(queryClient);
+				return invalidate(queryClient, undefined);
 			};
 		},
 		/**

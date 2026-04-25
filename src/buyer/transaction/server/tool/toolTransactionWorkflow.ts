@@ -35,18 +35,18 @@ export const toolTransactionWorkflow = tool({
 	name: "buyer-transaction-workflow",
 	needsApproval: false,
 	description: `
-Buyer-side transaction workflow action.
+Buyer-side transaction (status) action.
 
-Use only when the current user is acting as the buyer in this transaction.
-If the user's side is unknown, first fetch the transaction and confirm the perspective.
+Use only when the current user is the buyer in this transaction.
+If perspective is unknown, resolve it first.
 
-Supported actions:
-- reject: buyer rejects the transaction (he does not want to continue a transaction)
-- dispute: buyer opens a dispute/complaint
-- success: buyer confirms the transaction (happy path, buyer is happy with the trade)
-- close: buyer closes the transaction (this is neutral state - it's just I'm OK, close it)
+Actions:
+- reject: buyer rejects the transaction (buyer does not want to continue the trade)
+- dispute: buyer opens a dispute (something went wrong, flow just between users)
+- success: buyer confirms the transaction successfully finished
+- close: buyer closes the transaction without confirming success
 
-Requires the exact buyer-side transaction id.
+Requires the exact buyer-side 'transactionId'.
 	`.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
@@ -57,7 +57,7 @@ Requires the exact buyer-side transaction id.
 
 		const { type, transactionId } = await InputSchema.parseAsync(input);
 
-		return match(type)
+		await match(type)
 			.with("close", () => {
 				return transactionCloseFn({
 					data: {
@@ -87,5 +87,7 @@ Requires the exact buyer-side transaction id.
 				});
 			})
 			.exhaustive();
+
+		return "ok";
 	},
 });

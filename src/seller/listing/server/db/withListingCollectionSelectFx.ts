@@ -9,8 +9,10 @@ export namespace withListingCollectionSelectFx {
 
 export const withListingCollectionSelectFx = Effect.fn("withListingCollectionSelectFx")(function* ({
 	sort,
+	userId,
 }: withListingCollectionSelectFx.Props) {
 	return yield* withListingSelectFx({
 		sort,
+		userId,
 	});
 });

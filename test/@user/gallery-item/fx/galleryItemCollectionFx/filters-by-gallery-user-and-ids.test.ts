@@ -17,14 +17,17 @@ describe("galleryItemCollectionFx", () => {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
 
 			const sellerFirstUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: seller.id,
 				url: testUploadUrl("gallery-item-collection-1.jpg"),
 			});
 			const sellerSecondUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: seller.id,
 				url: testUploadUrl("gallery-item-collection-2.jpg"),
 			});
 			const buyerUpload = yield* uploadCreateFx({
+				access: "private",
 				userId: buyer.id,
 				url: testUploadUrl("gallery-item-collection-3.jpg"),
 			});

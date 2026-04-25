@@ -24,6 +24,7 @@ export namespace ChatInput {
 		disableSubmit?: boolean;
 		left?: ReactNode;
 		inputRef?: RefCallback<HTMLTextAreaElement>;
+		buttonProps?: Button.Props;
 	}
 
 	export type PropsEx = Omit<Props, "loading" | "placeholder" | "onSubmit">;
@@ -39,6 +40,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	disableSubmit = false,
 	left,
 	inputRef,
+	buttonProps,
 	...props
 }) => {
 	const [message, setMessage] = useState("");
@@ -96,6 +98,10 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			submit();
 		}
 	};
+
+	useLayoutEffect(() => {
+		textareaRef.current?.focus();
+	}, []);
 
 	return (
 		<Container
@@ -164,6 +170,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				data-ui-border={false}
 				data-ui-shadow={false}
 				data-ui-color="lead"
+				{...buttonProps}
 			/>
 		</Container>
 	);

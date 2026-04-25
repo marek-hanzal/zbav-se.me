@@ -1,6 +1,6 @@
 import { tool } from "@openai/agents";
+import { z } from "zod";
 import { feedPatchFn } from "~/buyer/feed/fn/feedPatchFn";
-import { FeedToolPatchSchema } from "~/buyer/feed/server/schema/FeedToolPatchSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
@@ -9,34 +9,50 @@ const logger = getRootLogger([
 	"toolFeedPatch",
 ]);
 
+const InputSchema = z
+	.looseObject({
+		feedId: z.string().meta({
+			description: "'feedId' resolved from other tools",
+		}),
+		patch: z
+			.looseObject({
+				uploadId: z.string().optional().meta({
+					description: "Update hero image of the feed",
+				}),
+			})
+			.strip(),
+	})
+	.strip();
+
 export const toolFeedPatch = tool({
 	name: "feed-patch",
 	needsApproval: false,
 	description: `
-Patch one existing saved listing search selected by a narrow query.
+Update an existing feed.
 
-Hint:
-- 'type: user': User-facing feed. When the user asks about "my feeds" in general, filter type to user (always use this filter).
-- 'type: search': Internal/agent-derived saved search type. Do not use this type from agent workflows.
-- Use exact 'query.filter.id' to select feed to patch
-- If the user provides an address, fill locationId
-- Resolve latLon from locationId and fill also query.meta.latLon
-
-Boundaries:
-- Do not invent new patch fields
-- Patch only fields you're asked for
+You need 'feedId' from other tools to proceed here.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(FeedToolPatchSchema),
+	parameters: unsafeJsonSchema(InputSchema),
 	async execute(input) {
 		logger.trace("toolFeedPatch", {
 			input,
 		});
 
-		const data = await FeedToolPatchSchema.parseAsync(input);
+		const { feedId, patch } = await InputSchema.parseAsync(input);
 
-		return feedPatchFn({
-			data,
+		await feedPatchFn({
+			data: {
+				patch,
+				query: {
+					where: {
+						id: feedId,
+						type: "user",
+					},
+				},
+			},
 		});
+
+		return "ok";
 	},
 });
