@@ -4,7 +4,7 @@ on:
     push:
         branches-ignore:
             - main
-            - staging
+            - uat
 
 concurrency:
     group: check
@@ -34,7 +34,7 @@ jobs:
     lint:
         name: Lint
         runs-on: ubuntu-latest
-        environment: staging
+        environment: uat
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -55,7 +55,7 @@ jobs:
     dc:
         name: Dependency Cruiser
         runs-on: ubuntu-latest
-        environment: staging
+        environment: uat
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -76,7 +76,7 @@ jobs:
     typecheck:
         name: Typecheck
         runs-on: ubuntu-latest
-        environment: staging
+        environment: uat
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -97,7 +97,7 @@ jobs:
     knip:
         name: Knip
         runs-on: ubuntu-latest
-        environment: staging
+        environment: uat
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -118,7 +118,7 @@ jobs:
     vitest:
         name: Vitest
         runs-on: ubuntu-latest
-        environment: staging
+        environment: uat
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -182,7 +182,7 @@ jobs:
     # e2e:
     #     name: Full-Stack Test
     #     runs-on: ubuntu-latest
-    #     environment: staging
+    #     environment: uat
     #     env:
     #         NITRO_PRESET: node_server
     #         SERVER_E2E: e2e

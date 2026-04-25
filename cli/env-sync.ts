@@ -29,7 +29,7 @@ function printUsage(reason?: string, exitCode = 1): never {
 	console.error("Usage: bun run env:sync <environment> <vercel-project-id>");
 	console.error("");
 	console.error("Examples:");
-	console.error("  bun run env:sync staging prj_xxx");
+	console.error("  bun run env:sync uat prj_xxx");
 	console.error("  bun run env:sync production prj_xxx");
 
 	process.exit(exitCode);

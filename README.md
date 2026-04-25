@@ -65,6 +65,7 @@ The app scripts stay as plain `portless ...` commands. Start the shared HTTPS pr
 This README is the shared source of truth for environment variable naming and intent in the app.
 GitHub Actions environments are the source of truth only for which values are currently configured.
 Local sync source files live in `@env/*.json` and can be applied with `bun run env:sync <environment>`.
+The shared non-production environment is `uat`, so the canonical sync file is `@env/uat.json`.
 
 ### GitHub Actions only
 
