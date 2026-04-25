@@ -33,6 +33,7 @@ type ListingSearchPatch = {
 	warranty?: ListingWarrantyEnumSchema.Type;
 	status?: ListingStatusEnumSchema.Type;
 	restriction?: RestrictionEnumSchema.Type;
+	title?: string;
 };
 
 export const personalDelivery: ListingDeliveryEnumSchema.Type[] = [
@@ -133,6 +134,11 @@ export const patchListingSearchFixtureFx = (database: TestDatabase, props: Listi
 
 		if (props.restriction !== undefined) {
 			values.restriction = props.restriction;
+		}
+
+		if (props.title !== undefined) {
+			values.title = props.title;
+			values.withTitleSearch = sql`lower(immutable_unaccent(${props.title}))`;
 		}
 
 		return database.kysely

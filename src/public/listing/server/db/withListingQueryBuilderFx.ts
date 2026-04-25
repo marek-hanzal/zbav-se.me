@@ -5,6 +5,7 @@ import type { ListingFilterSchema } from "~/public/listing/server/schema/Listing
 import type { ListingMetaSchema } from "~/public/listing/server/schema/ListingMetaSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withLikeEx } from "~/server/database/expression/withLikeEx";
+import { withNormalizedLikeEx } from "~/server/database/expression/withNormalizedLikeEx";
 
 export namespace withListingQueryBuilderFx {
 	export interface Props<TSelect extends withListingSourceSelectFx.Select> {
@@ -51,7 +52,7 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 				);
 
 			return eb.or([
-				withLikeEx(eb.ref("l.title"), fulltext, "both"),
+				withNormalizedLikeEx(eb.ref("l.withTitleSearch"), fulltext, "both"),
 				eb("l.categoryId", "in", categoryIdSelect),
 			]);
 		}) as TSelect;
@@ -195,7 +196,9 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 					? titleMatchSelectBase
 					: titleMatchSelectBase.where("lt.withCategoryDiscovery", "=", "implicit")
 			)
-				.where((eb) => withLikeEx(eb.ref("lt.title"), where.title, "both"))
+				.where((eb) =>
+					withNormalizedLikeEx(eb.ref("lt.withTitleSearch"), where.title, "both"),
+				)
 				.offset(0)
 				.as("tm");
 
@@ -204,7 +207,7 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 			) as TSelect;
 		} else {
 			query = query.where((eb) =>
-				withLikeEx(eb.ref("l.title"), where.title, "both"),
+				withNormalizedLikeEx(eb.ref("l.withTitleSearch"), where.title, "both"),
 			) as TSelect;
 		}
 	}

@@ -25,6 +25,7 @@ Computed restrictions from category and listing. Read-only.
 		withCategoryDiscovery: true,
 		withCategoryRestriction: true,
 		withLocationGeo: true,
+		withTitleSearch: true,
 	})
 	.strip()
 	.meta({

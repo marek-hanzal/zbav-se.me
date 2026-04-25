@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/public/listing/server/fx/listingCollectionFx";
 import { listingCountFx } from "~/public/listing/server/fx/listingCountFx";
@@ -23,6 +24,7 @@ describe("public listing visibility", () => {
 					.set({
 						status: "sold",
 						title: "Already sold",
+						withTitleSearch: sql`lower(immutable_unaccent(${"Already sold"}))`,
 					})
 					.where("id", "=", soldListing.id)
 					.executeTakeFirstOrThrow(),

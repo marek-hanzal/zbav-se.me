@@ -66,6 +66,9 @@ export const ListingTableSchema = z
 		title: z.string().meta({
 			description: "Title of the item",
 		}),
+		withTitleSearch: z.string().meta({
+			description: "Denormalized normalized title search text for listing search predicates",
+		}),
 		titleVec: VectorSchema.meta({
 			description: "Embedding vector for title similarity search",
 		}),

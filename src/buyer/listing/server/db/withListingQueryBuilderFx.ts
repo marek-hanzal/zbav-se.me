@@ -4,6 +4,7 @@ import type { withListingSourceSelectFx } from "~/buyer/listing/server/db/withLi
 import type { ListingFilterSchema } from "~/buyer/listing/server/schema/ListingFilterSchema";
 import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import { withLikeEx } from "~/server/database/expression/withLikeEx";
+import { withNormalizedLikeEx } from "~/server/database/expression/withNormalizedLikeEx";
 
 export namespace withListingQueryBuilderFx {
 	export interface Props<TSelect extends withListingSourceSelectFx.Select> {
@@ -54,7 +55,7 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 				);
 
 			return eb.or([
-				withLikeEx(eb.ref("l.title"), fulltext, "both"),
+				withNormalizedLikeEx(eb.ref("l.withTitleSearch"), fulltext, "both"),
 				eb("l.categoryId", "in", categoryIdSelect),
 			]);
 		}) as TSelect;
@@ -136,7 +137,9 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 	}
 
 	if (where.title) {
-		query = query.where((eb) => withLikeEx(eb.ref("l.title"), where.title, "both")) as TSelect;
+		query = query.where((eb) =>
+			withNormalizedLikeEx(eb.ref("l.withTitleSearch"), where.title, "both"),
+		) as TSelect;
 	}
 
 	if (where.withOwn === false) {

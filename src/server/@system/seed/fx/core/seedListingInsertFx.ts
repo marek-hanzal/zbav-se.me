@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import pgvector from "pgvector";
 import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
@@ -111,6 +112,7 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 				withCategoryDiscovery: categoryRow.discovery,
 				withCategoryRestriction: categoryRow.restriction,
 				withLocationGeo: locationGeo,
+				withTitleSearch: sql`lower(immutable_unaccent(${data.title}))`,
 				...data,
 				titleVec: withCachedTitleVec(data.title),
 				expiresAt: match(data.expiresAt)

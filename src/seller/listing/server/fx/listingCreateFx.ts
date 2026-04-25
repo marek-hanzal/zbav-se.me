@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import pgvector from "pgvector";
 import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
@@ -139,6 +140,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						withCategoryDiscovery: withCategory.discovery,
 						withCategoryRestriction: withCategory.restriction,
 						withLocationGeo: withLocation.geo,
+						withTitleSearch: sql`lower(immutable_unaccent(${data.title}))`,
 						titleVec: pgvector.toSql(
 							embedMinHash({
 								value: data.title,

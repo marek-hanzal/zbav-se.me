@@ -41,6 +41,7 @@ export const ListingMigration: Migration = {
 			.addColumn("draftId", "text")
 			//
 			.addColumn("title", "text", (col) => col.notNull())
+			.addColumn("withTitleSearch", "text", (col) => col.notNull())
 			.addColumn("titleVec", sql`vector(64)`)
 			//
 			.addColumn("description", "text")
@@ -257,17 +258,16 @@ export const ListingMigration: Migration = {
 			.column("warranty")
 			.execute();
 
-		await db.schema
-			.createIndex("listing_[title]_trgm_idx")
-			.on("listing")
-			.using("gin")
-			.expression(sql`lower(immutable_unaccent(title)) gin_trgm_ops`)
-			.execute();
+		await sql`
+			CREATE INDEX "listing_[title]_trgm_idx"
+			ON "listing"
+			USING gin ("withTitleSearch" gin_trgm_ops)
+		`.execute(db);
 
 		await sql`
 			CREATE INDEX "listing_[public-title]_trgm_idx"
 			ON "listing"
-			USING gin (lower(immutable_unaccent(title)) gin_trgm_ops)
+			USING gin ("withTitleSearch" gin_trgm_ops)
 			WHERE "status" = 'live'
 				AND "withCategoryDiscovery" = 'implicit'
 		`.execute(db);
