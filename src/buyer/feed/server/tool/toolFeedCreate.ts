@@ -58,8 +58,7 @@ Create a saved listing search for the current buyer from known query fields.
 Use only when the user wants to save search criteria. Do not invent the feed name, location, category, price range, or other listing query details.
 
 Hint:
-- If the user provides an address, normalize it and fill locationId
-- Resolve latLon from locationId and fill also query.meta.latLon
+- If the user provides an address, normalize it and fill query.meta.locationId
 - Pay attention to available fields in 'query' field, also in 'query.meta'
     `.trim(),
 	strict: true,

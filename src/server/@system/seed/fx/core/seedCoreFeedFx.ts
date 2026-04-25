@@ -54,8 +54,11 @@ export const seedCoreFeedFx = Effect.fn("seedCoreFeedFx")(function* ({
 								userId,
 								type: "user",
 								name: `seed-${genId()}-${i}`,
-								locationId: location?.id ?? null,
-								query: {},
+								query: {
+									meta: {
+										locationId: location?.id,
+									},
+								},
 							}).pipe(withSeedNowFx(withRandomPastDate()));
 						}),
 					);

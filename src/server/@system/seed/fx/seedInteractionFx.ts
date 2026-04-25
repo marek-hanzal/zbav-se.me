@@ -64,7 +64,6 @@ export const seedInteractionFx = Effect.fn("seedInteractionFx")(function* ({
 			type: "user",
 			name: `seed-interaction-${genId()}`,
 			query: {},
-			locationId: null,
 		})).id;
 
 	const listingCandidatesRaw = yield* tryDbFx(async () =>

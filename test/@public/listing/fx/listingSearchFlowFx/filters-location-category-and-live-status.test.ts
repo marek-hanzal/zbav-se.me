@@ -107,10 +107,7 @@ describe("public listing search flow", () => {
 				range: 10,
 			};
 			const meta = {
-				latLon: {
-					lat: 50.075539,
-					lon: 14.4378,
-				},
+				locationId: listingDefaults.locationId,
 			};
 			const collection = yield* listingCollectionFx({
 				scope: {},

@@ -24,6 +24,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	meta,
 	hasExplicitCategory,
 }: withListingSelectFx.Props) {
+	const locationId = meta?.locationId;
 	const listingSourceSelect = yield* withListingSourceSelectFx({
 		userId,
 		sort,
@@ -66,21 +67,22 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 		sql<string[] | null>`to_jsonb(${eb.ref("l.cons")})`.as("cons"),
 		eb
 			.case()
-			.when(sql.lit(meta?.latLon != null))
-			.then(
-				sql`
+			.when(sql.lit(locationId != null))
+			.then(() => {
+				const originGeoSelect = eb
+					.selectFrom("location as originLoc")
+					.select("originLoc.geo")
+					// biome-ignore lint/style/noNonNullAssertion: Check is already don, bro
+					.where("originLoc.id", "=", locationId!)
+					.limit(1);
+
+				return sql`
                         ST_Distance(
                             ${eb.ref("loc.geo")},
-                            ST_SetSRID(
-                                ST_MakePoint(
-                                    ${eb.val(meta?.latLon?.lon)},
-                                    ${eb.val(meta?.latLon?.lat)}
-                                ),
-                                4326
-                            )::geography
+                            ${originGeoSelect}
                         ) / 1000
-		            `,
-			)
+		            `;
+			})
 			.else(null)
 			.end()
 			.$castTo<number | null>()

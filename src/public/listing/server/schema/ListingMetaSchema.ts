@@ -1,9 +1,11 @@
 import { z } from "zod";
-import { LatLonSchema } from "@/lib/common/location";
 
 export const ListingMetaSchema = z
 	.looseObject({
-		latLon: LatLonSchema.optional(),
+		locationId: z.string().min(1, "Location ID is required").optional().meta({
+			id: "PublicListingLocationId",
+			description: "Reference location used for public listing geo targeting",
+		}),
 	})
 	.strip()
 	.meta({

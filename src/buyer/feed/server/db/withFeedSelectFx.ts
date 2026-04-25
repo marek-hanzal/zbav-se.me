@@ -22,7 +22,6 @@ export const withFeedSelectFx = Effect.fn("withFeedSelectFx")(function* ({
 		.select([
 			"f.id",
 			"f.userId",
-			"f.locationId",
 			"f.uploadId",
 			"f.type",
 			"f.name",

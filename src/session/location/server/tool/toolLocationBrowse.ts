@@ -1,5 +1,6 @@
 import { tool } from "@openai/agents";
 import { stringify } from "csv-stringify/sync";
+import { ofGoogleMap } from "@/lib/common/location";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 import { locationAutocompleteFn } from "~/session/location/fn/locationAutocompleteFn";
@@ -49,6 +50,9 @@ or a location id. Return compact candidates; do not guess an id when multiple ca
 				address: item.address,
 				lat: item.lat,
 				lon: item.lon,
+				google: ofGoogleMap({
+					latLon: item,
+				}),
 			})),
 			{
 				header: true,
@@ -58,6 +62,7 @@ or a location id. Return compact candidates; do not guess an id when multiple ca
 					"address",
 					"lat",
 					"lon",
+					"google",
 				],
 			},
 		);

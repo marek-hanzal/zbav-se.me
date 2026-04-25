@@ -107,17 +107,24 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 		query = query.where("l.categoryId", "in", where.categoryIdIn) as TSelect;
 	}
 
-	if (meta?.latLon && where.range !== undefined) {
-		const { lon, lat } = meta.latLon;
+	if (meta?.locationId && where.range !== undefined) {
+		const locationId = meta.locationId;
 		const range = where.range * 1_000;
 
 		query = query.where(
-			(eb) =>
-				sql`ST_DWithin(
+			(eb) => {
+				const originGeoSelect = eb
+					.selectFrom("location as originLoc")
+					.select("originLoc.geo")
+					.where("originLoc.id", "=", locationId)
+					.limit(1);
+
+				return sql`ST_DWithin(
 					${eb.ref("loc.geo")},
-					ST_SetSRID(ST_MakePoint(${eb.val(lon)}, ${eb.val(lat)}), 4326)::geography,
+					${originGeoSelect},
 					${eb.val(range)}
-				)`,
+				)`;
+			},
 		) as TSelect;
 	}
 

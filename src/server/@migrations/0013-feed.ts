@@ -18,7 +18,6 @@ export const FeedMigration: Migration = {
 			.createTable("feed")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
-			.addColumn("locationId", "text")
 			.addColumn("uploadId", "text")
 			.addColumn("type", sql`feed_type_enum`, (col) => col.notNull())
 			.addColumn("name", "text", (col) => col.notNull())
@@ -35,17 +34,6 @@ export const FeedMigration: Migration = {
 					"id",
 				],
 				(c) => c.onDelete("cascade"),
-			)
-			.addForeignKeyConstraint(
-				"feed_[locationId]_fk",
-				[
-					"locationId",
-				],
-				"location",
-				[
-					"id",
-				],
-				(c) => c.onDelete("set null"),
 			)
 			.addForeignKeyConstraint(
 				"feed_[uploadId]_fk",
@@ -91,12 +79,6 @@ export const FeedMigration: Migration = {
 			CREATE INDEX "feed_[userId-createdAt]_idx"
 			ON "feed" ("userId", "createdAt" DESC);
 		`.execute(db);
-
-		await db.schema
-			.createIndex("feed_[locationId]_idx")
-			.on("feed")
-			.column("locationId")
-			.execute();
 
 		await db.schema.createIndex("feed_[uploadId]_idx").on("feed").column("uploadId").execute();
 	},
