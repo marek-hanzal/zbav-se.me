@@ -35,7 +35,7 @@ Get the knowledge using 'topicId'
 
 		const { topicId } = await InputSchema.parseAsync(input);
 
-		const topic = getKnowledgeIndex().find(({ data: { key } }) => {
+		const topic = (await getKnowledgeIndex()).find(({ data: { key } }) => {
 			return key === topicId;
 		});
 

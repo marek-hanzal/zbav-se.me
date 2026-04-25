@@ -37,7 +37,7 @@ Related topics are array of 'topicId'; fetch only when needed to get really deep
 		const _data = await InputSchema.parseAsync(input);
 
 		return stringify(
-			getKnowledgeIndex().map(({ data }) => {
+			(await getKnowledgeIndex()).map(({ data }) => {
 				return {
 					topicId: data.key,
 					title: data.title,

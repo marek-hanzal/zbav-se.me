@@ -32,6 +32,12 @@ export default defineConfig(({ mode }) => {
 				? nitro({
 						preset: process.env.NITRO_PRESET || "vercel",
 						noExternals: true,
+						serverAssets: [
+							{
+								baseName: "knowledge",
+								dir: "./docs/knowledge",
+							},
+						],
 					})
 				: undefined,
 		],

@@ -1,6 +1,4 @@
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
-import { getIndexOf } from "@/lib/common/front";
+import { frontOf } from "@/lib/common/front/frontOf";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { KnowledgeFrontSchema } from "~/user/knowledge/server/schema/KnowledgeFrontSchema";
 
@@ -10,30 +8,53 @@ const logger = getRootLogger([
 	"getKnowledgeIndex",
 ]);
 
-let cache: getKnowledgeIndex.Type | undefined;
+let cache: Promise<getKnowledgeIndex.Type> | undefined;
 
 export namespace getKnowledgeIndex {
-	export type Type = getIndexOf.Type<KnowledgeFrontSchema>;
+	export type Type = frontOf.Type<KnowledgeFrontSchema>[];
 }
 
-export const getKnowledgeIndex = () => {
+const getKnowledgeSourceMap = () => {
+	return import.meta.glob("/docs/knowledge/*.md", {
+		query: "?raw",
+		import: "default",
+	}) as Record<string, () => Promise<string>>;
+};
+
+export const getKnowledgeIndex = async () => {
 	logger.trace("Index of proxy for Knowledge Index");
 
 	if (cache !== undefined) {
-		logger.trace("Index - cache hit", {
-			index: cache.map((item) => item.data.key),
-		});
+		logger.trace("Index - cache hit");
 		return cache;
 	}
 
-	cache = getIndexOf({
-		schema: KnowledgeFrontSchema,
-		source: join(dirname(fileURLToPath(import.meta.url)), "../../../../../docs/knowledge"),
-	});
+	return (cache = Promise.resolve().then(async () => {
+		const knowledgeSourceMap = getKnowledgeSourceMap();
+		const keys = Object.keys(knowledgeSourceMap).sort((left: string, right: string) => {
+			return left.localeCompare(right);
+		});
 
-	logger.trace("Index - cache miss", {
-		index: cache.map((item) => item.data.key),
-	});
+		const index = await Promise.all(
+			keys.map(async (key: string) => {
+				const loader = knowledgeSourceMap[key];
 
-	return cache;
+				if (!loader) {
+					throw new Error(`Knowledge asset "${key}" is missing.`);
+				}
+
+				const source = await loader();
+				return frontOf({
+					schema: KnowledgeFrontSchema,
+					source,
+				});
+			}),
+		);
+
+		logger.trace("Index - cache miss", {
+			index: index.map((item) => item.data.key),
+		});
+
+		return index;
+	}));
 };
