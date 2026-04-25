@@ -79,7 +79,7 @@ Hint:
 		}
 
 		return stringify(
-			items.map((item) => {
+        items.map((item) => {
 				return {
 					listingId: item.id,
 					title: item.title,

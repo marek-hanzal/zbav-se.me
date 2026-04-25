@@ -32,6 +32,7 @@ Tool to get events (messages) in transaction (listing trade).
 - You must have valid (from another tool call) 'transactionId' before using this tool
 - Don't invent your own 'transactionId'
 - Translate status items/non-text messages (entries) to user's language
+- If the transaction is in a terminal state with notification, offer the user acknowledging (transaction-acknowledge)
 
 Direction field:
 - in: message to current user
