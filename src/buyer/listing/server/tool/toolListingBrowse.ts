@@ -57,6 +57,8 @@ Browse listings, find candidates, sort them.
 
 Hint:
 - normalize inputs (e.g. category/location) before using this tool
+- for 'filter.range' you must provide 'meta.locationId'
+- for sort by 'geo' you must provide 'meta.locationId'
     `.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
