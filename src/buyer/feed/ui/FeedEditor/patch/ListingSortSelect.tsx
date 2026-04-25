@@ -9,12 +9,11 @@ import { uiSelectButton } from "~/common/ui/ui";
 
 export namespace ListingSortSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {
-		withGeo: boolean | undefined;
 		state: StateType.Simple<ListingSortSchema.Type[]>;
 	}
 }
 
-export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state, ...props }) => {
+export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ state, ...props }) => {
 	const sortKeyId = useId();
 
 	return (
@@ -33,7 +32,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 						"age",
 						"price",
 						"condition",
-						withGeo ? "geo" : undefined,
+						"geo",
 					] satisfies (ListingSortSchema.Field | undefined)[]
 				).filter(Boolean) as ListingSortSchema.Field[]
 			).map((sortValue) => {

@@ -8,9 +8,6 @@ export const FeedCreateSchema = z
 		name: z.string().min(1).meta({
 			description: "Name of the feed",
 		}),
-		locationId: z.string().nullish().meta({
-			description: "ID of the location associated with the feed",
-		}),
 		query: ListingQuerySchema,
 	})
 	.strip()

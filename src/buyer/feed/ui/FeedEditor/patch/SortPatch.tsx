@@ -17,7 +17,6 @@ export namespace SortPatch {
 export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
 	const [sort, setSort] = useState<ListingSortSchema.Type[]>(feed.query?.sort ?? []);
-	const withGeo = !!feed.query?.meta?.latLon;
 
 	return (
 		<Container
@@ -30,7 +29,6 @@ export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ...p
 			{...props}
 		>
 			<ListingSortSelect
-				withGeo={withGeo}
 				state={{
 					value: sort,
 					set: setSort,

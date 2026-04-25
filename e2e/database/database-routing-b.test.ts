@@ -13,7 +13,6 @@ test("registers the shared user in database B", async ({ page, database, db }) =
 
 		yield* feedCreateFx({
 			...getFeedDefaultCreate(`E2E feed B ${db}`),
-			locationId: null,
 			userId: seller.id,
 		});
 

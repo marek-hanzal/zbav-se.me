@@ -124,10 +124,7 @@ describe("buyer listing discovery flow", () => {
 				range: 10,
 			};
 			const filteredMeta = {
-				latLon: {
-					lat: 50.075539,
-					lon: 14.4378,
-				},
+				locationId: listingDefaults.locationId,
 			};
 			const filtered = yield* listingCollectionFx({
 				userId: users.buyer.id,

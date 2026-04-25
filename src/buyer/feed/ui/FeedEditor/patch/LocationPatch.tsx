@@ -16,7 +16,9 @@ export namespace LocationPatch {
 
 export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
-	const [locationId, setLocationId] = useState<string | undefined | null>(feed.locationId);
+	const [locationId, setLocationId] = useState<string | undefined | null>(
+		feed.query?.meta?.locationId,
+	);
 
 	return (
 		<Container
@@ -44,7 +46,13 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCanc
 								},
 							},
 							patch: {
-								locationId,
+								query: {
+									...feed.query,
+									meta: {
+										...feed.query?.meta,
+										locationId: locationId ?? undefined,
+									},
+								},
 							},
 						},
 						{

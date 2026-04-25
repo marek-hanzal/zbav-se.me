@@ -57,10 +57,10 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 			.with("updatedAt", () => query.orderBy("l.updatedAt", item.order))
 			.with("expiresAt", () => query.orderBy("l.expiresAt", item.order))
 			.with("geo", () => {
-				if (!meta?.latLon) {
+				if (!meta?.locationId) {
 					return query;
 				}
-				const { lon, lat } = meta.latLon;
+				const locationId = meta.locationId;
 				const isDesc = item.order === "desc";
 				const sortOrder = isDesc ? "asc" : item.order;
 				/**
@@ -68,14 +68,34 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 				 * For DESC (farthest-first), order by distance to the antipode ASC,
 				 * which is equivalent and keeps index usage.
 				 */
-				const sortLon = isDesc ? (lon >= 0 ? lon - 180 : lon + 180) : lon;
-				const sortLat = isDesc ? -lat : lat;
 
 				return query.orderBy(
-					(eb) =>
-						sql`${eb.ref("loc.geo")} <-> ST_SetSRID(ST_MakePoint(${eb.val(
-							sortLon,
-						)}, ${eb.val(sortLat)}), 4326)`,
+					(eb) => {
+						const originPointSelect = eb
+							.selectFrom("location as originLoc")
+							.select((originEb) =>
+								sql`ST_SetSRID(
+									ST_MakePoint(
+										case
+											when ${originEb.val(isDesc)} and ${originEb.ref("originLoc.lon")} >= 0 then ${originEb.ref("originLoc.lon")} - 180
+											when ${originEb.val(isDesc)} then ${originEb.ref("originLoc.lon")} + 180
+											else ${originEb.ref("originLoc.lon")}
+										end,
+										case
+											when ${originEb.val(isDesc)} then -${originEb.ref("originLoc.lat")}
+											else ${originEb.ref("originLoc.lat")}
+										end
+									),
+									4326
+								)`.as("point"),
+							)
+							.where("originLoc.id", "=", locationId)
+							.limit(1);
+
+						return sql`${eb.ref("loc.geo")} <-> (
+							${originPointSelect}
+						)`;
+					},
 					sortOrder,
 				);
 			})

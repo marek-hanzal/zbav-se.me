@@ -37,6 +37,8 @@ export const Editor: FC<Editor.Props> = ({
 	children,
 	...props
 }) => {
+	const locationId = feed.query?.meta?.locationId;
+
 	return (
 		<Container
 			data-ui={"FeedEditor-[Container.content]"}
@@ -109,7 +111,7 @@ export const Editor: FC<Editor.Props> = ({
 				<LocationValue
 					_suspense={"I know"}
 					data-action={"edit feed location"}
-					locationId={feed.locationId}
+					locationId={locationId}
 					textLabel={translator.text("Feed location (label)")}
 					textEmpty={translator.text("Feed location not selected")}
 					textHint={translator.text("Feed location (hint)")}
@@ -120,7 +122,7 @@ export const Editor: FC<Editor.Props> = ({
 						/>
 					}
 					wrapperProps={{
-						"data-ui-tone": feed.locationId ? "neutral" : "secondary",
+						"data-ui-tone": locationId ? "neutral" : "secondary",
 					}}
 					onClick={() => onView("location")}
 				/>
@@ -128,7 +130,7 @@ export const Editor: FC<Editor.Props> = ({
 				<RangeValue
 					data-action={"edit feed range"}
 					range={feed.query?.filter?.range}
-					data-ui-disabled={!feed.query?.meta?.latLon}
+					data-ui-disabled={!locationId}
 					action={
 						<Icon
 							icon={ChevronRightIcon}
