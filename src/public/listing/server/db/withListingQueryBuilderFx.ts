@@ -129,6 +129,49 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 	}
 
 	if (where.title) {
+		/**
+		 * Public title search needs a special execution path on large datasets.
+		 *
+		 * Why this exists:
+		 * - The naive predicate `withLikeEx(l.title, ...)` is semantically correct, but on a
+		 *   multi-hundred-thousand / million-row listing table PostgreSQL may decide to walk
+		 *   `listing_[live-createdAt]_idx` first and apply the title predicate as a late filter.
+		 * - That plan is acceptable for broad / common title terms, but it can become
+		 *   catastrophically bad for selective multi-token searches that return very few rows.
+		 *   In those cases the planner keeps scanning rows in sort order, repeatedly evaluating
+		 *   the expensive normalized `LIKE` expression until it proves there is no match or
+		 *   finds enough rows. We measured worst cases in seconds on ~1M listings.
+		 *
+		 * What this branch does:
+		 * - For "selective enough" title searches we build a separate subquery over `listing lt`
+		 *   that finds candidate ids by title first.
+		 * - That subquery is intentionally fenced using `offset(0)`. In PostgreSQL this acts as
+		 *   a cheap anti-inlining barrier that prevents the planner from flattening the title
+		 *   match back into the outer query and reintroducing the bad plan shape.
+		 * - Once candidate ids are produced, we join them back to the outer listing query using
+		 *   `tm.id = l.id`, allowing the trigram title index to do the heavy lifting first.
+		 *
+		 * Why the path is conditional:
+		 * - Very short tokens (`a`, `k`, `tv`, etc.) are usually low-selectivity noise.
+		 * - For those terms the "candidate ids first" strategy can explode the intermediate
+		 *   result set and become worse than the original direct predicate.
+		 * - Therefore we only enable the selective path when every token has length >= 3.
+		 *   Otherwise we deliberately fall back to the simpler direct predicate.
+		 *
+		 * Why explicit category filters matter:
+		 * - The public source select applies `withCategoryDiscovery = implicit` only when the
+		 *   caller does not request an explicit category filter.
+		 * - The title candidate subquery must mirror that exact semantic contract. If we forced
+		 *   `implicit` unconditionally here, explicit-category public searches would silently
+		 *   drop valid rows from categories that are intentionally visible only through explicit
+		 *   filtering.
+		 *
+		 * Important constraints:
+		 * - This is a performance optimization only. It must not change returned rows.
+		 * - Keep this logic aligned with the surrounding public visibility rules.
+		 * - If title matching semantics change in `withLikeEx`, this branch should be reviewed
+		 *   together with the related EXPLAIN plans.
+		 */
 		const titleTokens = where.title
 			.split(/\s+/g)
 			.map((token) => token.trim())
