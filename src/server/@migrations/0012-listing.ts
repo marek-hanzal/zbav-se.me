@@ -157,6 +157,22 @@ export const ListingMigration: Migration = {
 			.column("createdAt")
 			.execute();
 
+		await sql`
+			CREATE INDEX "listing_[live-createdAt]_idx"
+			ON "listing" ("createdAt" DESC)
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[userId-createdAt]_idx"
+			ON "listing" ("userId", "createdAt" DESC)
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[userId-updatedAt]_idx"
+			ON "listing" ("userId", "updatedAt" DESC)
+		`.execute(db);
+
 		await db.schema
 			.createIndex("listing_[expiresAt]_idx")
 			.on("listing")
@@ -185,7 +201,7 @@ export const ListingMigration: Migration = {
 			.createIndex("listing_[title]_trgm_idx")
 			.on("listing")
 			.using("gin")
-			.expression(sql`lower(title) gin_trgm_ops`)
+			.expression(sql`lower(immutable_unaccent(title)) gin_trgm_ops`)
 			.execute();
 
 		// Title vector (e.g., simhash/char-ngrams): cosine

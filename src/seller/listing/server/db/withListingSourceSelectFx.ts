@@ -16,10 +16,7 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 }: withListingSourceSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	let query = kysely
-		.selectFrom("listing as l")
-		.innerJoin("location as loc", "loc.id", "l.locationId")
-		.innerJoin("category as cat", "cat.id", "l.categoryId");
+	let query = kysely.selectFrom("listing as l");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

@@ -69,12 +69,11 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 				 * which is equivalent and keeps index usage.
 				 */
 
-				return query.orderBy(
-					(eb) => {
-						const originPointSelect = eb
-							.selectFrom("location as originLoc")
-							.select((originEb) =>
-								sql`ST_SetSRID(
+				return query.orderBy((eb) => {
+					const originPointSelect = eb
+						.selectFrom("location as originLoc")
+						.select((originEb) =>
+							sql`ST_SetSRID(
 									ST_MakePoint(
 										case
 											when ${originEb.val(isDesc)} and ${originEb.ref("originLoc.lon")} >= 0 then ${originEb.ref("originLoc.lon")} - 180
@@ -88,16 +87,14 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 									),
 									4326
 								)`.as("point"),
-							)
-							.where("originLoc.id", "=", locationId)
-							.limit(1);
+						)
+						.where("originLoc.id", "=", locationId)
+						.limit(1);
 
-						return sql`${eb.ref("loc.geo")} <-> (
+					return sql`${eb.ref("loc.geo")} <-> (
 							${originPointSelect}
 						)`;
-					},
-					sortOrder,
-				);
+				}, sortOrder);
 			})
 			.exhaustive();
 	}

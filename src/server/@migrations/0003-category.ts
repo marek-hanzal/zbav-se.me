@@ -49,5 +49,17 @@ export const CategoryMigration: Migration = {
 		await sql`
             CREATE INDEX "category_[categoryGroupVec]_hnsw_cos_idx" ON "category" USING hnsw ("categoryGroupVec" vector_cosine_ops)
         `.execute(db);
+
+		await sql`
+			CREATE INDEX "category_[group]_trgm_idx"
+			ON "category"
+			USING gin (lower(immutable_unaccent("group")) gin_trgm_ops)
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "category_[category]_trgm_idx"
+			ON "category"
+			USING gin (lower(immutable_unaccent("category")) gin_trgm_ops)
+		`.execute(db);
 	},
 };

@@ -102,21 +102,19 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 		const locationId = meta.locationId;
 		const range = where.range * 1_000;
 
-		query = query.where(
-			(eb) => {
-				const originGeoSelect = eb
-					.selectFrom("location as originLoc")
-					.select("originLoc.geo")
-					.where("originLoc.id", "=", locationId)
-					.limit(1);
+		query = query.where((eb) => {
+			const originGeoSelect = eb
+				.selectFrom("location as originLoc")
+				.select("originLoc.geo")
+				.where("originLoc.id", "=", locationId)
+				.limit(1);
 
-				return sql`ST_DWithin(
+			return sql`ST_DWithin(
 					${eb.ref("loc.geo")},
 					${originGeoSelect},
 					${eb.val(range)}
 				)`;
-			},
-		) as TSelect;
+		}) as TSelect;
 	}
 
 	if (where.title) {

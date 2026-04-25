@@ -24,13 +24,13 @@ export function withLikeEx<DB, TB extends keyof DB>(
 		.with("start", () => {
 			return tokens.map(
 				(token) =>
-					sql<boolean>`lower(unaccent(${column})) like ${sql`lower(unaccent(${token})) || '%'`}`,
+					sql<boolean>`lower(immutable_unaccent(${column})) like ${sql`lower(immutable_unaccent(${token})) || '%'`}`,
 			);
 		})
 		.with("both", () => {
 			return tokens.map(
 				(token) =>
-					sql<boolean>`lower(unaccent(${column})) ilike '%' || ${sql`lower(unaccent(${token})) || '%'`}`,
+					sql<boolean>`lower(immutable_unaccent(${column})) like '%' || ${sql`lower(immutable_unaccent(${token})) || '%'`}`,
 			);
 		})
 		.exhaustive();

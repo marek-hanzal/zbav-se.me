@@ -37,8 +37,18 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 		query = query.where((eb) =>
 			eb.or([
 				withLikeEx(eb.ref("l.title"), fulltext, "both"),
-				withLikeEx(eb.ref("cat.category"), fulltext),
-				withLikeEx(eb.ref("cat.group"), fulltext),
+				eb.exists(
+					eb
+						.selectFrom("category as cat")
+						.select("cat.id")
+						.whereRef("cat.id", "=", "l.categoryId")
+						.where((eb) =>
+							eb.or([
+								withLikeEx(eb.ref("cat.category"), fulltext),
+								withLikeEx(eb.ref("cat.group"), fulltext),
+							]),
+						),
+				),
 			]),
 		) as TSelect;
 	}

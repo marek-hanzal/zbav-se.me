@@ -80,6 +80,12 @@ describe("public listing search flow", () => {
 					title: "Public restriction marker",
 					categoryIdIn,
 				},
+				sort: [
+					{
+						field: "createdAt",
+						order: "asc",
+					},
+				],
 			});
 			const count = yield* listingCountFx({
 				scope: {},

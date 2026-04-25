@@ -30,50 +30,53 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 		userId,
 	});
 
-	return listingSourceSelect.select((eb) => [
-		"l.id",
-		"l.price",
-		"l.priceType",
-		"l.currency",
-		"l.condition",
-		"l.age",
-		"l.warranty",
-		"l.status",
-		"l.restriction",
-		sql<RestrictionEnumSchema.Type[]>`to_jsonb(array(
-			select restriction_item.restriction
-			from unnest(array[
-				${eb.ref("cat.restriction")},
-				${eb.ref("l.restriction")}
-			]::restriction_enum[]) with ordinality as restriction_item(restriction, ord)
-			where restriction_item.restriction is not null
-			group by restriction_item.restriction
-			order by min(restriction_item.ord)
-		))`.as("restrictions"),
-		"l.locationId",
-		"l.categoryId",
-		"l.galleryId",
-		"l.draftId",
-		"l.expiresAt",
-		"l.title",
-		"l.description",
-		"l.createdAt",
-		"l.updatedAt",
-		sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
-		sql<CategorySchema.Type>`
-			to_jsonb(${eb.table("cat")}.*)
-			|| jsonb_build_object(
-				'isRestricted',
-				${eb.ref("cat.restriction")} > ${restrictionSql}
-			)
-		`.as("category"),
-		sql<ListingDeliveryEnumSchema.Type[] | null>`to_jsonb(${eb.ref("l.delivery")})`.as(
-			"delivery",
-		),
-		sql<string[] | null>`to_jsonb(${eb.ref("l.pros")})`.as("pros"),
-		sql<string[] | null>`to_jsonb(${eb.ref("l.cons")})`.as("cons"),
-		jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))
-			.$notNull()
-			.as("gallery"),
-	]);
+	return listingSourceSelect
+		.innerJoin("location as loc", "loc.id", "l.locationId")
+		.innerJoin("category as cat", "cat.id", "l.categoryId")
+		.select((eb) => [
+			"l.id",
+			"l.price",
+			"l.priceType",
+			"l.currency",
+			"l.condition",
+			"l.age",
+			"l.warranty",
+			"l.status",
+			"l.restriction",
+			sql<RestrictionEnumSchema.Type[]>`to_jsonb(array(
+				select restriction_item.restriction
+				from unnest(array[
+					${eb.ref("cat.restriction")},
+					${eb.ref("l.restriction")}
+				]::restriction_enum[]) with ordinality as restriction_item(restriction, ord)
+				where restriction_item.restriction is not null
+				group by restriction_item.restriction
+				order by min(restriction_item.ord)
+			))`.as("restrictions"),
+			"l.locationId",
+			"l.categoryId",
+			"l.galleryId",
+			"l.draftId",
+			"l.expiresAt",
+			"l.title",
+			"l.description",
+			"l.createdAt",
+			"l.updatedAt",
+			sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
+			sql<CategorySchema.Type>`
+				to_jsonb(${eb.table("cat")}.*)
+				|| jsonb_build_object(
+					'isRestricted',
+					${eb.ref("cat.restriction")} > ${restrictionSql}
+				)
+			`.as("category"),
+			sql<ListingDeliveryEnumSchema.Type[] | null>`to_jsonb(${eb.ref("l.delivery")})`.as(
+				"delivery",
+			),
+			sql<string[] | null>`to_jsonb(${eb.ref("l.pros")})`.as("pros"),
+			sql<string[] | null>`to_jsonb(${eb.ref("l.cons")})`.as("cons"),
+			jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))
+				.$notNull()
+				.as("gallery"),
+		]);
 });
