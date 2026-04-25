@@ -3,3 +3,4 @@
 {"stamp":"2026-04-25T20:54:09.380Z","kind":"core","count":5000,"generatedCount":70042,"runtimePerGeneratedRowMs":0.257}
 {"stamp":"2026-04-25T20:55:22.570Z","kind":"core","count":19500,"generatedCount":273209,"runtimePerGeneratedRowMs":0.211}
 {"stamp":"2026-04-25T21:04:55.235Z","kind":"core","count":200000,"generatedCount":2799973,"runtimePerGeneratedRowMs":0.202}
+{"stamp":"2026-04-25T21:36:35.449Z","kind":"core","count":500000,"generatedCount":6999220,"runtimePerGeneratedRowMs":0.228}

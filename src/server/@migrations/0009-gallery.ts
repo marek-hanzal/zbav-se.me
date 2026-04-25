@@ -34,6 +34,12 @@ export const GalleryMigration: Migration = {
 			.column("access")
 			.execute();
 
+		await sql`
+			CREATE INDEX "gallery_[id]_cover_idx"
+			ON "gallery" ("id")
+			INCLUDE ("createdAt", "access")
+		`.execute(db);
+
 		await db.schema
 			.createIndex("gallery_[createdAt]_idx")
 			.on("gallery")

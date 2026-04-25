@@ -26,6 +26,12 @@ export const UploadMigration: Migration = {
 
 		await db.schema.createIndex("upload_[access]_idx").on("upload").column("access").execute();
 
+		await sql`
+			CREATE INDEX "upload_[id]_cover_idx"
+			ON "upload" ("id")
+			INCLUDE ("url", "createdAt", "access")
+		`.execute(db);
+
 		await db.schema
 			.createIndex("upload_[createdAt]_idx")
 			.on("upload")

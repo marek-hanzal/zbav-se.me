@@ -264,6 +264,14 @@ export const ListingMigration: Migration = {
 			.expression(sql`lower(immutable_unaccent(title)) gin_trgm_ops`)
 			.execute();
 
+		await sql`
+			CREATE INDEX "listing_[public-title]_trgm_idx"
+			ON "listing"
+			USING gin (lower(immutable_unaccent(title)) gin_trgm_ops)
+			WHERE "status" = 'live'
+				AND "withCategoryDiscovery" = 'implicit'
+		`.execute(db);
+
 		// Title vector (e.g., simhash/char-ngrams): cosine
 		await sql`
             CREATE INDEX "listing_[titleVec]_hnsw_cos_idx" ON "listing" USING hnsw ("titleVec" vector_cosine_ops);

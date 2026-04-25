@@ -3,6 +3,7 @@ import { sql } from "kysely";
 import type { withListingSourceSelectFx } from "~/public/listing/server/db/withListingSourceSelectFx";
 import type { ListingFilterSchema } from "~/public/listing/server/schema/ListingFilterSchema";
 import type { ListingMetaSchema } from "~/public/listing/server/schema/ListingMetaSchema";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withLikeEx } from "~/server/database/expression/withLikeEx";
 
 export namespace withListingQueryBuilderFx {
@@ -20,6 +21,7 @@ export namespace withListingQueryBuilderFx {
 export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(function* <
 	TSelect extends withListingSourceSelectFx.Select,
 >({ select, where, meta }: withListingQueryBuilderFx.Props<TSelect>) {
+	const { kysely } = yield* KyselyContextFx;
 	let query = select;
 
 	if (!where) {
@@ -127,7 +129,41 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 	}
 
 	if (where.title) {
-		query = query.where((eb) => withLikeEx(eb.ref("l.title"), where.title, "both")) as TSelect;
+		const titleTokens = where.title
+			.split(/\s+/g)
+			.map((token) => token.trim())
+			.filter(Boolean);
+		const hasExplicitCategoryFilter = Boolean(
+			where.categoryId || (where.categoryIdIn && where.categoryIdIn.length > 0),
+		);
+		const withSelectiveTitlePath =
+			titleTokens.length > 0 && titleTokens.every((token) => token.length >= 3);
+
+		if (withSelectiveTitlePath) {
+			const titleMatchSelectBase = kysely
+				.selectFrom("listing as lt")
+				.select([
+					"lt.id as id",
+					"lt.createdAt as createdAt",
+				])
+				.where("lt.status", "=", "live");
+			const titleMatchSelect = (
+				hasExplicitCategoryFilter
+					? titleMatchSelectBase
+					: titleMatchSelectBase.where("lt.withCategoryDiscovery", "=", "implicit")
+			)
+				.where((eb) => withLikeEx(eb.ref("lt.title"), where.title, "both"))
+				.offset(0)
+				.as("tm");
+
+			query = query.innerJoin(titleMatchSelect, (join) =>
+				join.onRef("tm.id", "=", "l.id"),
+			) as TSelect;
+		} else {
+			query = query.where((eb) =>
+				withLikeEx(eb.ref("l.title"), where.title, "both"),
+			) as TSelect;
+		}
 	}
 
 	return yield* Effect.succeed(query);
