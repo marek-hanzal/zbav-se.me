@@ -1,6 +1,6 @@
 import { tool } from "@openai/agents";
+import { z } from "zod";
 import { favouriteToggleFn } from "~/buyer/favourite/fn/favouriteToggleFn";
-import { FavouriteToggleSchema } from "~/buyer/favourite/server/schema/FavouriteToggleSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
 
@@ -9,6 +9,16 @@ const logger = getRootLogger([
 	"toolFavouriteToggle",
 ]);
 
+const InputSchema = z
+	.looseObject({
+		toggle: z.boolean().meta({
+			description: "Whether to add (true) or remove (false) the listing from favourites",
+		}),
+		feedId: z.string(),
+		listingId: z.string(),
+	})
+	.strip();
+
 export const toolFavouriteToggle = tool({
 	name: "favourite-toggle",
 	needsApproval: false,
@@ -16,16 +26,18 @@ export const toolFavouriteToggle = tool({
 Toggles concrete listing as favourite/unfavourite.
     `.trim(),
 	strict: true,
-	parameters: unsafeJsonSchema(FavouriteToggleSchema),
+	parameters: unsafeJsonSchema(InputSchema),
 	async execute(input) {
 		logger.trace("toolFavouriteToggle", {
 			input,
 		});
 
-		const data = await FavouriteToggleSchema.parseAsync(input);
+		const data = await InputSchema.parseAsync(input);
 
-		return favouriteToggleFn({
+		await favouriteToggleFn({
 			data,
 		});
+
+		return "ok";
 	},
 });
