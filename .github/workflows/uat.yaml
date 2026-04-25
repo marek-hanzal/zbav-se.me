@@ -1,11 +1,11 @@
-name: Staging Deploy
+name: UAT Deploy
 
 on:
     push:
-        branches: ["staging"]
+        branches: ["uat"]
 
 concurrency:
-    group: staging-deploy
+    group: uat-deploy
     cancel-in-progress: false
 
 permissions:
@@ -56,7 +56,7 @@ jobs:
     validate-env:
         name: Validate env variables
         runs-on: ubuntu-latest
-        environment: staging
+        environment: uat
         steps:
             - name: Check common environment variables
               run: |
@@ -106,7 +106,7 @@ jobs:
     build:
         name: Build
         runs-on: ubuntu-latest
-        environment: staging
+        environment: uat
         needs: [validate-env]
         steps:
             - uses: actions/checkout@v6.0.2
@@ -134,7 +134,7 @@ jobs:
     deploy:
         name: Deploy app to Vercel
         runs-on: ubuntu-latest
-        environment: staging
+        environment: uat
         needs: [build]
         steps:
             - name: Cache restore (app prebuilt)
@@ -167,7 +167,7 @@ jobs:
     cdn:
         name: Update CDN
         runs-on: ubuntu-latest
-        environment: staging
+        environment: uat
         needs: [build]
         steps:
             - name: Cache restore (app prebuilt)
@@ -196,7 +196,7 @@ jobs:
               uses: docker://rclone/rclone:1.73.2
               with:
                   args: >
-                      sync /github/workspace/.vercel/output/static/assets bunny:/staging/app/assets
+                      sync /github/workspace/.vercel/output/static/assets bunny:/uat/app/assets
                       --config /github/workspace/rclone.conf
                       --inplace
                       --sftp-set-modtime=false
@@ -213,7 +213,7 @@ jobs:
               uses: docker://rclone/rclone:1.73.2
               with:
                   args: >
-                      copy /github/workspace/.vercel/output/static bunny:/staging/app/
+                      copy /github/workspace/.vercel/output/static bunny:/uat/app/
                       --config /github/workspace/rclone.conf
                       --inplace
                       --include "/favicon*.ico"
@@ -233,7 +233,7 @@ jobs:
     migration:
         name: Run migrations
         runs-on: ubuntu-latest
-        environment: staging
+        environment: uat
         needs: [deploy]
         steps:
             - name: Trigger migrations endpoint
