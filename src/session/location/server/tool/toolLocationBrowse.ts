@@ -45,7 +45,7 @@ or a location id. Return compact candidates; do not guess an id when multiple ca
 
 		return stringify(
 			matches.map((item) => ({
-				id: item.id,
+				locationId: item.id,
 				address: item.address,
 				lat: item.lat,
 				lon: item.lon,
@@ -54,7 +54,7 @@ or a location id. Return compact candidates; do not guess an id when multiple ca
 				header: true,
 				delimiter: "\t",
 				columns: [
-					"id",
+					"locationId",
 					"address",
 					"lat",
 					"lon",
