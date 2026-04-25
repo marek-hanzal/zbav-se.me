@@ -86,6 +86,7 @@ Hint:
 					description: item.description?.substring(0, 64),
 					price: item.price,
 					distance: item.distance?.toFixed(2),
+					favourite: item.isFavourite ? "yes" : "no",
 				};
 			}),
 			{
@@ -97,6 +98,7 @@ Hint:
 					"description",
 					"distance",
 					"price",
+					"favourite",
 				],
 			},
 		);

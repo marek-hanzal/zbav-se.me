@@ -18,6 +18,7 @@ export const toolTransactionCreate = tool({
 Buyer-side transaction action: create/open a new transaction for a concrete listing.
 
 - Use only when the current user clearly wants to start a transaction with the seller for a specific listing
+- If the listing is favourite, offer the user to remove it from favourites
 	`.trim(),
 	strict: true,
 	parameters: unsafeJsonSchema(InputSchema),
