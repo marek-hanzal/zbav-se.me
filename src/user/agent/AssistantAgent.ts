@@ -20,6 +20,7 @@ import { toolListingDetail as toolSellerListingDetail } from "~/seller/listing/s
 import { toolTransactionWorkflow as toolSellerTransactionWorkflow } from "~/seller/transaction/server/tool/toolTransactionWorkflow";
 import { toolLocationBrowse } from "~/session/location/server/tool/toolLocationBrowse";
 import { toolRoute } from "~/session/location/server/tool/toolRoute";
+import { toolTransactionAcknowledge } from "~/user/activity/server/tool/toolTransactionAcknowledge";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
 import { toolTransactionBrowse } from "~/user/transaction/server/tool/toolTransactionBrowse";
@@ -161,6 +162,7 @@ Transaction:
 - If a tool result contains raw enum values such as "open", "resolved", "status-open", or "buyer-message", convert them before replying
 - In user-facing Czech, avoid "transaction" when talking about the user's trade inbox; prefer "zpráva" or "zprávy"
 - Transactions are prolonged automatically by users activity
+- If the user wants to dismiss handled message notification, archive the matching activity
 
 Gallery:
 - When tool results contain image URLs from [${context.cdn}], render them as images in the response
@@ -308,6 +310,8 @@ Examples: licensed weapons, document-sensitive weapon accessories, or other item
 		/**
 		 * User domain stuff
 		 */
+		toolTransactionAcknowledge,
+		//
 		toolTransactionBrowse,
 		toolTransactionEntryBrowse,
 		toolTransactionEntryCreate,
