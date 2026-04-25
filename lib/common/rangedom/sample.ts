@@ -3,19 +3,24 @@ export const sample = <T>(items: readonly T[], count: number): T[] => {
 		return [];
 	}
 
-	const copy = Array.from(items);
-	for (let i = copy.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		const current = copy[i];
-		const target = copy[j];
+	const targetCount = Math.min(items.length, count);
+	const picked = new Set<number>();
+	const result: T[] = [];
 
-		if (current === undefined || target === undefined) {
+	while (result.length < targetCount) {
+		const index = Math.floor(Math.random() * items.length);
+		if (picked.has(index)) {
 			continue;
 		}
 
-		copy[i] = target;
-		copy[j] = current;
+		const item = items[index];
+		if (item === undefined) {
+			continue;
+		}
+
+		picked.add(index);
+		result.push(item);
 	}
 
-	return copy.slice(0, Math.min(copy.length, count));
+	return result;
 };

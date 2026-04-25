@@ -16,6 +16,7 @@ import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 const LISTING_SEED_CONCURRENCY = withSeedConcurrency("SEED_LISTING_CONCURRENCY");
 const LISTING_TX_CHUNK_SIZE = 25;
+const UPLOAD_ACCESS_UPDATE_CHUNK_SIZE = 1_000;
 
 type ListingCategorySeedItem = {
 	title: string;
@@ -57,8 +58,13 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 	);
 
 	const categoryIds = categories.map((item) => item.id);
-	const categorySlugs = categories.map((item) => item.slug);
 	const locationIds = locations.map((item) => item.id);
+	const categorySlugById = new Map(
+		categories.map((item) => [
+			item.id,
+			item.slug,
+		]),
+	);
 	if (categoryIds.length === 0 || locationIds.length === 0) {
 		yield* progress.log({
 			message: "Draft/listing generation skipped (missing category/location dataset)",
@@ -67,17 +73,42 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 	}
 
 	if (uploadIds.length > 0) {
-		yield* tryDbFx(async () =>
-			kysely
-				.updateTable("upload")
-				.set({
-					access: "public",
-				})
-				.where("userId", "=", userId)
-				.where("id", "in", uploadIds)
-				.execute(),
-		);
+		for (let i = 0; i < uploadIds.length; i += UPLOAD_ACCESS_UPDATE_CHUNK_SIZE) {
+			const batch = uploadIds.slice(i, i + UPLOAD_ACCESS_UPDATE_CHUNK_SIZE);
+
+			yield* tryDbFx(async () =>
+				kysely
+					.updateTable("upload")
+					.set({
+						access: "public",
+					})
+					.where("userId", "=", userId)
+					.where("id", "in", batch)
+					.execute(),
+			);
+		}
 	}
+
+	const withCategorySeedItem = () => {
+		const categoryId = list(categoryIds);
+		const categorySlug = categorySlugById.get(categoryId) ?? "default";
+		const seedItem = list(getCategorySeedItems(categorySlug)) as ListingCategorySeedItem;
+
+		return {
+			categoryId,
+			seedItem,
+		};
+	};
+
+	const withUploadSelection = (maxCount: number) => {
+		const selected = sample(uploadIds, rangedom(1, Math.min(maxCount, uploadIds.length)));
+
+		if (selected.length === 0) {
+			throw new Error("Upload selection is empty");
+		}
+
+		return selected;
+	};
 
 	const getCategorySeedItems = (categorySlug: string) => {
 		const seedData = CategorySeed[categorySlug as keyof typeof CategorySeed];
@@ -118,14 +149,7 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 				Effect.gen(function* () {
 					yield* Effect.forEach(chunk, () =>
 						Effect.gen(function* () {
-							const categoryId = list(categoryIds);
-
-							const categoryIndex = categoryIds.indexOf(categoryId);
-							const categorySlug = categorySlugs[categoryIndex] ?? "default";
-							const seedItem = list(
-								getCategorySeedItems(categorySlug),
-							) as ListingCategorySeedItem;
-
+							const { categoryId, seedItem } = withCategorySeedItem();
 							const locationId = list(locationIds);
 
 							yield* seedDraftInsertFx({
@@ -141,10 +165,7 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 									"14-days",
 									"1-month",
 								]),
-								uploadIds: sample(
-									uploadIds,
-									rangedom(1, Math.min(4, uploadIds.length)),
-								),
+								uploadIds: withUploadSelection(4),
 							}).pipe(withSeedNowFx(withRandomPastDate()));
 						}),
 					);
@@ -165,14 +186,7 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 				Effect.gen(function* () {
 					yield* Effect.forEach(chunk, () =>
 						Effect.gen(function* () {
-							const categoryId = list(categoryIds);
-
-							const categoryIndex = categoryIds.indexOf(categoryId);
-							const categorySlug = categorySlugs[categoryIndex] ?? "default";
-							const seedItem = list(
-								getCategorySeedItems(categorySlug),
-							) as ListingCategorySeedItem;
-
+							const { categoryId, seedItem } = withCategorySeedItem();
 							const locationId = list(locationIds);
 
 							yield* seedListingInsertFx({
@@ -200,10 +214,7 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 									"14-days",
 									"1-month",
 								]),
-								uploadIds: sample(
-									uploadIds,
-									rangedom(1, Math.min(6, uploadIds.length)),
-								),
+								uploadIds: withUploadSelection(6),
 							}).pipe(withSeedNowFx(withRandomPastDate()));
 						}),
 					);

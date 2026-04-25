@@ -31,6 +31,6 @@ printSeedInteractionReport(report);
 appendSeedBenchmarkJsonl({
 	kind: "interaction",
 	count: report.count,
-	totals: report.totals,
+	tables: report.tables,
 	runtimeMs,
 });
