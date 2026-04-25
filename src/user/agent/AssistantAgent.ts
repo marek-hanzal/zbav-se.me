@@ -1,5 +1,6 @@
 import { Agent } from "@openai/agents";
 import { DateTime } from "luxon";
+import { toolFavouriteToggle } from "~/buyer/favourite/server/tool/toolFavouriteToggle";
 import { toolFeedBrowse } from "~/buyer/feed/server/tool/toolFeedBrowse";
 import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
 import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
@@ -14,6 +15,8 @@ import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
 import { toolDraftDelete } from "~/seller/draft/server/tool/toolDraftDelete";
 import { toolDraftDetail } from "~/seller/draft/server/tool/toolDraftDetail";
 import { toolDraftPatch } from "~/seller/draft/server/tool/toolDraftPatch";
+import { toolListingBrowse as toolSellerListingBrowse } from "~/seller/listing/server/tool/toolListingBrowse";
+import { toolListingDetail as toolSellerListingDetail } from "~/seller/listing/server/tool/toolListingDetail";
 import { toolTransactionWorkflow as toolSellerTransactionWorkflow } from "~/seller/transaction/server/tool/toolTransactionWorkflow";
 import { toolLocationBrowse } from "~/session/location/server/tool/toolLocationBrowse";
 import { toolRoute } from "~/session/location/server/tool/toolRoute";
@@ -89,15 +92,17 @@ If the user's question matches more domains, you may fetch data from both and gi
 
 Seller:
 - Asks about new messages (transactions) - fetch transaction/transaction-entry details, make a complex summary
-- Asks about what's new (transactions/activity) - reply needed, prepare package, personal meeting
-- Asks what to do today/any news (transactions/activity) - reply needed, prepare package, personal meeting
+- Asks about what's new - check seller and buyer messages first
+- Asks what to do today/any news - check seller and buyer messages first
 - Uses drafts (saved pre-published listings)
+- Manages own published listings
 
 Buyer:
 - Asks about new messages (transactions) - fetch transaction/transaction-entry details, make a complex summary
-- Asks about what's new (transactions/activity) - reply needed, prepare package, personal meeting
-- Asks what to do today/any news (transactions/activity) - reply needed, prepare package, personal meeting
+- Asks about what's new - check seller and buyer messages first
+- Asks what to do today/any news - check seller and buyer messages first
 - Uses feed (saved searches)
+- Uses favourites
 - Do complex listing searches (buyer-listing-browse)
 - Creates a new transactions (against listingId); this may be triggered by e.g. "Write him blabla" or "Ok, take it"
         Initial transaction does not need any message, but it's possible to create transaction and send a message (two steps)
@@ -128,10 +133,15 @@ Feed:
 - Don't block user with questions, feed has optional fields
 - Feed has hero image (uploadId), so user may even attach an image to it
 
-Activity:
-- Seller/Buyer/User
-- Kind of inbox, fast way how to get knowledge if there is something new for the user
-- Activity is archived automatically based on action done (e.g. replied to the message)
+Favourite:
+- Buyer only
+- User may save listing to favourites or remove it from favourites
+- Use it for "save this", "heart this", "remove from favourites" intents
+
+Seller Listing:
+- Seller only
+- Use it to browse current user's published listings
+- Helpful for "show my listings", "which listings do I have live", "find my bike listing" intents
 
 Transaction:
 - Seller/Buyer
@@ -280,6 +290,8 @@ Examples: licensed weapons, document-sensitive weapon accessories, or other item
 		toolFeedCreate,
 		toolFeedPatch,
 		toolFeedDelete,
+		//
+		toolFavouriteToggle,
 		/**
 		 * Seller domain stuff
 		 */
@@ -288,6 +300,9 @@ Examples: licensed weapons, document-sensitive weapon accessories, or other item
 		toolDraftCreate,
 		toolDraftPatch,
 		toolDraftDelete,
+		//
+		toolSellerListingBrowse,
+		toolSellerListingDetail,
 		//
 		toolSellerTransactionWorkflow,
 		/**
