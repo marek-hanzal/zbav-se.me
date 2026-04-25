@@ -42,23 +42,22 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 	if (where.fulltext) {
 		const fulltext = where.fulltext;
 
-		query = query.where((eb) =>
-			eb.or([
+		query = query.where((eb) => {
+			const categoryIdSelect = eb
+				.selectFrom("category as cat")
+				.select("cat.id")
+				.where((eb) =>
+					eb.or([
+						withLikeEx(eb.ref("cat.category"), fulltext),
+						withLikeEx(eb.ref("cat.group"), fulltext),
+					]),
+				);
+
+			return eb.or([
 				withLikeEx(eb.ref("l.title"), fulltext, "both"),
-				eb.exists(
-					eb
-						.selectFrom("category as cat")
-						.select("cat.id")
-						.whereRef("cat.id", "=", "l.categoryId")
-						.where((eb) =>
-							eb.or([
-								withLikeEx(eb.ref("cat.category"), fulltext),
-								withLikeEx(eb.ref("cat.group"), fulltext),
-							]),
-						),
-				),
-			]),
-		) as TSelect;
+				eb("l.categoryId", "in", categoryIdSelect),
+			]);
+		}) as TSelect;
 	}
 
 	if (where.userId) {
