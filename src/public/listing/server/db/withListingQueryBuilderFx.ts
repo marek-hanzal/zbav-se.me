@@ -156,7 +156,7 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 		 * - Very short tokens (`a`, `k`, `tv`, etc.) are usually low-selectivity noise.
 		 * - For those terms the "candidate ids first" strategy can explode the intermediate
 		 *   result set and become worse than the original direct predicate.
-		 * - Therefore we only enable the selective path when every token has length >= 3.
+		 * - Therefore we only enable the selective path when every token has length >= 4.
 		 *   Otherwise we deliberately fall back to the simpler direct predicate.
 		 *
 		 * Why explicit category filters matter:
@@ -181,7 +181,7 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 			where.categoryId || (where.categoryIdIn && where.categoryIdIn.length > 0),
 		);
 		const withSelectiveTitlePath =
-			titleTokens.length > 0 && titleTokens.every((token) => token.length >= 3);
+			titleTokens.length > 0 && titleTokens.every((token) => token.length >= 4);
 
 		if (withSelectiveTitlePath) {
 			const titleMatchSelectBase = kysely
