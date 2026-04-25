@@ -30,7 +30,12 @@ export const ListingMigration: Migration = {
 			.addColumn("warranty", sql`listing_warranty_enum`)
 			.addColumn("status", sql`listing_status_enum`)
 			.addColumn("restriction", sql`restriction_enum`)
+			.addColumn("withCategoryDiscovery", sql`category_discovery_enum`, (col) =>
+				col.notNull(),
+			)
+			.addColumn("withCategoryRestriction", sql`restriction_enum`)
 			.addColumn("locationId", "text", (col) => col.notNull())
+			.addColumn("withLocationGeo", sql`geography(Point,4326)`)
 			.addColumn("categoryId", "text", (col) => col.notNull())
 			.addColumn("galleryId", "text", (col) => col.notNull())
 			.addColumn("draftId", "text")
@@ -139,6 +144,18 @@ export const ListingMigration: Migration = {
 			])
 			.execute();
 
+		await sql`
+			CREATE INDEX "listing_[live-categoryId-createdAt]_idx"
+			ON "listing" ("categoryId", "createdAt" DESC)
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[live-locationId-categoryId-createdAt]_idx"
+			ON "listing" ("locationId", "categoryId", "createdAt" DESC)
+			WHERE "status" = 'live'
+		`.execute(db);
+
 		await db.schema
 			.createIndex("listing_[galleryId]_idx")
 			.on("listing")
@@ -164,6 +181,12 @@ export const ListingMigration: Migration = {
 		`.execute(db);
 
 		await sql`
+			CREATE INDEX "listing_[live-updatedAt]_idx"
+			ON "listing" ("updatedAt" DESC)
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
 			CREATE INDEX "listing_[userId-createdAt]_idx"
 			ON "listing" ("userId", "createdAt" DESC)
 		`.execute(db);
@@ -171,6 +194,43 @@ export const ListingMigration: Migration = {
 		await sql`
 			CREATE INDEX "listing_[userId-updatedAt]_idx"
 			ON "listing" ("userId", "updatedAt" DESC)
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[live-price]_idx"
+			ON "listing" ("price")
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[live-condition]_idx"
+			ON "listing" ("condition")
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[live-age]_idx"
+			ON "listing" ("age")
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[live-warranty]_idx"
+			ON "listing" ("warranty")
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[delivery]_gin_idx"
+			ON "listing"
+			USING gin ("delivery")
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[withLocationGeo]_idx"
+			ON "listing"
+			USING gist ("withLocationGeo")
 		`.execute(db);
 
 		await db.schema

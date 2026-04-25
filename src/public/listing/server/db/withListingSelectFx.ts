@@ -29,28 +29,31 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 	const gallerySelect = yield* withGallerySelectFx({});
 
-	return listingSourceSelect.select((eb) => [
-		"l.id",
-		"l.title",
-		"l.price",
-		"l.priceType",
-		"l.currency",
-		"l.createdAt",
-		sql<RestrictionEnumSchema.Type[]>`to_jsonb(array(
-			select restriction_item.restriction
-			from unnest(array[
-				${eb.ref("cat.restriction")},
-				${eb.ref("l.restriction")}
-			]::restriction_enum[]) with ordinality as restriction_item(restriction, ord)
-			where restriction_item.restriction is not null
-			group by restriction_item.restriction
-			order by min(restriction_item.ord)
-		))`.as("restrictions"),
-		sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
-		sql<CategoryTableSchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category"),
-		jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))
-			.$notNull()
-			.$castTo<GallerySchema.Type>()
-			.as("gallery"),
-	]);
+	return listingSourceSelect
+		.innerJoin("location as loc", "loc.id", "l.locationId")
+		.innerJoin("category as cat", "cat.id", "l.categoryId")
+		.select((eb) => [
+			"l.id",
+			"l.title",
+			"l.price",
+			"l.priceType",
+			"l.currency",
+			"l.createdAt",
+			sql<RestrictionEnumSchema.Type[]>`to_jsonb(array(
+				select restriction_item.restriction
+				from unnest(array[
+					${eb.ref("cat.restriction")},
+					${eb.ref("l.restriction")}
+				]::restriction_enum[]) with ordinality as restriction_item(restriction, ord)
+				where restriction_item.restriction is not null
+				group by restriction_item.restriction
+				order by min(restriction_item.ord)
+			))`.as("restrictions"),
+			sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
+			sql<CategoryTableSchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category"),
+			jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))
+				.$notNull()
+				.$castTo<GallerySchema.Type>()
+				.as("gallery"),
+		]);
 });

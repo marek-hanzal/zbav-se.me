@@ -27,6 +27,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 	userId,
 	uploadIds,
 	categoryId,
+	locationId,
 	restriction,
 	...data
 }: listingCreateFx.Props) {
@@ -35,6 +36,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 		userId,
 		uploadIds,
 		categoryId,
+		locationId,
 		restriction,
 		...data,
 	});
@@ -77,6 +79,25 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				userId,
 			});
 
+			const withCategory = yield* tryDbFx(async () => {
+				return kysely
+					.selectFrom("category")
+					.select([
+						"discovery",
+						"restriction",
+					])
+					.where("id", "=", categoryId)
+					.executeTakeFirstOrThrow();
+			});
+
+			const withLocation = yield* tryDbFx(async () => {
+				return kysely
+					.selectFrom("location")
+					.select("geo")
+					.where("id", "=", locationId)
+					.executeTakeFirstOrThrow();
+			});
+
 			yield* tryDbFx(async () => {
 				return kysely
 					.updateTable("upload")
@@ -114,6 +135,10 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						currency: "CZK",
 						status: "live",
 						restriction,
+						locationId,
+						withCategoryDiscovery: withCategory.discovery,
+						withCategoryRestriction: withCategory.restriction,
+						withLocationGeo: withLocation.geo,
 						titleVec: pgvector.toSql(
 							embedMinHash({
 								value: data.title,

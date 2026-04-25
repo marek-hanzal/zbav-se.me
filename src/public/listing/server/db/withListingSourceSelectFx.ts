@@ -30,20 +30,24 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 
 	let query = kysely
 		.selectFrom("listing as l")
-		.innerJoin("location as loc", "loc.id", "l.locationId")
-		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.where("l.status", "in", [
 			"live",
 		] as const)
-		.where((eb) => {
-			return sql<boolean>`array[${eb.ref("cat.restriction")}] <@ array[${sql.join(publicCategoryRestrictions)}]::restriction_enum[]`;
-		})
-		.where((eb) => {
-			return sql<boolean>`coalesce(${eb.ref("l.restriction")}, ${RestrictionEnumSchema.enum.none}::restriction_enum) = any(array[${sql.join(publicCategoryRestrictions)}]::restriction_enum[])`;
-		});
+		.where((eb) =>
+			eb.or([
+				eb("l.withCategoryRestriction", "is", null),
+				eb("l.withCategoryRestriction", "in", publicCategoryRestrictions),
+			]),
+		)
+		.where((eb) =>
+			eb.or([
+				eb("l.restriction", "is", null),
+				eb("l.restriction", "in", publicCategoryRestrictions),
+			]),
+		);
 
 	if (!hasExplicitCategory) {
-		query = query.where("cat.discovery", "=", "implicit");
+		query = query.where("l.withCategoryDiscovery", "=", "implicit");
 	}
 
 	for (const item of sort ?? []) {
@@ -84,7 +88,7 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 						.where("originLoc.id", "=", locationId)
 						.limit(1);
 
-					return sql`${eb.ref("loc.geo")} <-> (
+					return sql`${eb.ref("l.withLocationGeo")} <-> (
 							${originPointSelect}
 						)`;
 				}, sortOrder);

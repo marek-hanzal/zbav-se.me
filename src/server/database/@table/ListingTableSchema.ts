@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CategoryDiscoveryEnumSchema } from "~/common/category/enum/CategoryDiscoveryEnumSchema";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
@@ -40,9 +41,14 @@ export const ListingTableSchema = z
 		status: ListingStatusEnumSchema,
 		//
 		restriction: RestrictionEnumSchema.nullish(),
+		withCategoryDiscovery: CategoryDiscoveryEnumSchema,
+		withCategoryRestriction: RestrictionEnumSchema.nullish(),
 		//
 		locationId: z.string().meta({
 			description: "ID of the location",
+		}),
+		withLocationGeo: z.unknown().nullable().meta({
+			description: "Denormalized location geo point for listing search and range queries",
 		}),
 		categoryId: z.string().meta({
 			description: "ID of the category",

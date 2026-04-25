@@ -55,6 +55,25 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 		userId,
 	});
 
+	const categoryRow = yield* tryDbFx(async () =>
+		kysely
+			.selectFrom("category")
+			.select([
+				"discovery",
+				"restriction",
+			])
+			.where("id", "=", data.categoryId)
+			.executeTakeFirstOrThrow(),
+	);
+
+	const locationRow = yield* tryDbFx(async () =>
+		kysely
+			.selectFrom("location")
+			.select("geo")
+			.where("id", "=", data.locationId)
+			.executeTakeFirstOrThrow(),
+	);
+
 	yield* seedGalleryItemBulkInsertFx({
 		galleryId: gallery.id,
 		uploadIds,
@@ -71,6 +90,9 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 				updatedAt: now.toJSDate(),
 				currency: "CZK",
 				status: "live",
+				withCategoryDiscovery: categoryRow.discovery,
+				withCategoryRestriction: categoryRow.restriction,
+				withLocationGeo: locationRow.geo,
 				...data,
 				titleVec: withCachedTitleVec(data.title),
 				expiresAt: match(data.expiresAt)

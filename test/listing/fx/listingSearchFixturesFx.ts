@@ -25,6 +25,7 @@ type LocationFixture = {
 type ListingSearchPatch = {
 	id: string;
 	locationId?: string;
+	categoryId?: string;
 	price?: number;
 	condition?: number;
 	age?: number;
@@ -77,54 +78,69 @@ export const seedLocationFixtureFx = (database: TestDatabase, location: Location
 	);
 
 export const patchListingSearchFixtureFx = (database: TestDatabase, props: ListingSearchPatch) =>
-	Effect.promise(() =>
-		database.kysely
+	Effect.promise(async () => {
+		const values: Record<string, unknown> = {};
+
+		if (props.locationId !== undefined) {
+			const location = await database.kysely
+				.selectFrom("location")
+				.select("geo")
+				.where("id", "=", props.locationId)
+				.executeTakeFirstOrThrow();
+
+			values.locationId = props.locationId;
+			values.withLocationGeo = location.geo;
+		}
+
+		if (props.categoryId !== undefined) {
+			const category = await database.kysely
+				.selectFrom("category")
+				.select([
+					"discovery",
+					"restriction",
+				])
+				.where("id", "=", props.categoryId)
+				.executeTakeFirstOrThrow();
+
+			values.categoryId = props.categoryId;
+			values.withCategoryDiscovery = category.discovery;
+			values.withCategoryRestriction = category.restriction;
+		}
+
+		if (props.price !== undefined) {
+			values.price = props.price;
+		}
+
+		if (props.condition !== undefined) {
+			values.condition = props.condition;
+		}
+
+		if (props.age !== undefined) {
+			values.age = props.age;
+		}
+
+		if (props.delivery !== undefined) {
+			values.delivery = props.delivery;
+		}
+
+		if (props.warranty !== undefined) {
+			values.warranty = props.warranty;
+		}
+
+		if (props.status !== undefined) {
+			values.status = props.status;
+		}
+
+		if (props.restriction !== undefined) {
+			values.restriction = props.restriction;
+		}
+
+		return database.kysely
 			.updateTable("listing")
-			.set({
-				...(props.locationId !== undefined
-					? {
-							locationId: props.locationId,
-						}
-					: {}),
-				...(props.price !== undefined
-					? {
-							price: props.price,
-						}
-					: {}),
-				...(props.condition !== undefined
-					? {
-							condition: props.condition,
-						}
-					: {}),
-				...(props.age !== undefined
-					? {
-							age: props.age,
-						}
-					: {}),
-				...(props.delivery !== undefined
-					? {
-							delivery: props.delivery,
-						}
-					: {}),
-				...(props.warranty !== undefined
-					? {
-							warranty: props.warranty,
-						}
-					: {}),
-				...(props.status !== undefined
-					? {
-							status: props.status,
-						}
-					: {}),
-				...(props.restriction !== undefined
-					? {
-							restriction: props.restriction,
-						}
-					: {}),
-			})
+			.set(values)
 			.where("id", "=", props.id)
-			.executeTakeFirstOrThrow(),
-	);
+			.executeTakeFirstOrThrow();
+	});
 
 export const patchCategoryDiscoveryFx = (
 	database: TestDatabase,
@@ -133,15 +149,23 @@ export const patchCategoryDiscoveryFx = (
 		discovery: "explicit" | "implicit";
 	},
 ) =>
-	Effect.promise(() =>
-		database.kysely
+	Effect.promise(async () => {
+		await database.kysely
 			.updateTable("category")
 			.set({
 				discovery: props.discovery,
 			})
 			.where("id", "=", props.id)
-			.executeTakeFirstOrThrow(),
-	);
+			.executeTakeFirstOrThrow();
+
+		return database.kysely
+			.updateTable("listing")
+			.set({
+				withCategoryDiscovery: props.discovery,
+			})
+			.where("categoryId", "=", props.id)
+			.executeTakeFirstOrThrow();
+	});
 
 export const categoryIdBySlugFx = (database: TestDatabase, slug: string) =>
 	Effect.promise(() =>
