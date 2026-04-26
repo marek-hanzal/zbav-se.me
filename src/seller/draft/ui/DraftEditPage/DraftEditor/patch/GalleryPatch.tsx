@@ -6,7 +6,7 @@ import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
 import { TitleContainer } from "~/common/ui/container";
-import { withDraftGalleryCreateMutation } from "~/seller/draft/mutation/withDraftGalleryCreateMutation";
+import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import type { DraftEditor } from "../DraftEditor";
 import { EditAction } from "../EditAction";
@@ -28,10 +28,13 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	...props
 }) => {
 	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
-	const mutation = withDraftGalleryCreateMutation.useMutation({
+	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
 			onView("title");
 		},
+		invalidate: [
+			"collection",
+		],
 	});
 
 	return (
@@ -66,8 +69,14 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 					}}
 					onSave={() => {
 						mutation.mutate({
-							draftId: draft.id,
-							uploadIds,
+							patch: {
+								uploadIds,
+							},
+							query: {
+								where: {
+									id: draft.id,
+								},
+							},
 						});
 					}}
 					loading={mutation.isPending}

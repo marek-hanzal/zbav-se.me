@@ -12,7 +12,6 @@ import { getPrettyFormatter } from "@logtape/pretty";
 import { createMiddleware } from "@tanstack/react-start";
 import { genId } from "@/lib/common/gen-id";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { RootLoggerName } from "~/common/log/RootLoggerName";
 import { withDevEnvMiddleware } from "~/server/middleware/withDevEnvMiddleware";
 
 const contextLocalStorage = new AsyncLocalStorage<Record<string, unknown>>();
@@ -77,43 +76,6 @@ export const withLogMiddleware = createMiddleware()
 						sinks: [
 							"console",
 							"file",
-						],
-					},
-					{
-						category: RootLoggerName,
-						lowestLevel: level,
-						sinks: [
-							"file",
-						],
-					},
-					{
-						category: [
-							RootLoggerName,
-							"middleware",
-						],
-						lowestLevel: level,
-						sinks: [
-							"file",
-						],
-					},
-					{
-						category: [
-							RootLoggerName,
-							"fn",
-						],
-						lowestLevel: level,
-						sinks: [
-							"console",
-						],
-					},
-					{
-						category: [
-							RootLoggerName,
-							"fx",
-						],
-						lowestLevel: level,
-						sinks: [
-							"console",
 						],
 					},
 					//

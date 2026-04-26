@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import { type FC } from "react";
+import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { ErrorBadge } from "@/lib/client/error";

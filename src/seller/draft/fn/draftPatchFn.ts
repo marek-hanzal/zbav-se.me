@@ -30,10 +30,12 @@ export const draftPatchFn = createServerFn({
 			name,
 		]);
 		logger.trace(name, data);
+
 		return zodGuardFx({
 			schema: DraftSchema,
 			dataFx: draftPatchFx({
 				...data,
+				userId: user.id,
 				scope: {
 					userId: user.id,
 				},

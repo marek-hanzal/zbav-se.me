@@ -7,6 +7,10 @@ export const DraftPatchSchema = z
 		patch: z
 			.looseObject({
 				...DraftTableSchema.shape,
+				uploadIds: z.array(z.string()).optional().meta({
+					description:
+						"IDs of the uploads; order of uploads defines order in the gallery",
+				}),
 			})
 			.omit({
 				id: true,

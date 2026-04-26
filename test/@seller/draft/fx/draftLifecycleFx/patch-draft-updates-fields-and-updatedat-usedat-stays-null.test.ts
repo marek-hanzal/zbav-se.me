@@ -28,6 +28,7 @@ describe("draft lifecycle", () => {
 						id: draft.id,
 					},
 				},
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
