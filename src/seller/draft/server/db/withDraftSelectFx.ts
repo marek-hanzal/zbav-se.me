@@ -1,11 +1,9 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { jsonObjectFrom } from "kysely/helpers/postgres";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { withDraftSourceSelectFx } from "~/seller/draft/server/db/withDraftSourceSelectFx";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
-import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
 import { withActiveUserRestrictionSelectFx } from "~/user/user-restriction/server/db/withActiveUserRestrictionSelectFx";
 
 export namespace withDraftSelectFx {
@@ -24,7 +22,6 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 		sort,
 	});
 
-	const gallerySelect = yield* withGallerySelectFx({});
 	const restrictionSql = yield* withActiveUserRestrictionSelectFx({
 		userId,
 	});
@@ -46,9 +43,5 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 		),
 		sql<string[] | null>`to_jsonb(${eb.ref("d.pros")})`.as("pros"),
 		sql<string[] | null>`to_jsonb(${eb.ref("d.cons")})`.as("cons"),
-
-		jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("d.galleryId")).limit(1))
-			.$notNull()
-			.as("gallery"),
 	]);
 });
