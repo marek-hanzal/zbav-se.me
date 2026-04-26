@@ -1,27 +1,9 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Status } from "@/lib/client/status";
-import type { Tx } from "@/lib/client/tx";
 import { translator } from "@/lib/common/translator";
 import { AgentStreamItemsQuery } from "../../query/AgentStreamItemsQuery";
 import { withAgentStreamItemsQuery } from "../../query/withAgentStreamItemsQuery";
-
-const TitleUi: Tx.PropsEx = {
-	"data-ui-tone": "neutral",
-	"data-ui-theme": "light",
-	"data-ui-color": "lead",
-	"data-ui-text": "sm",
-};
-
-const PromptUi: Container.Props = {
-	"data-ui-tone": "neutral",
-	"data-ui-theme": "light",
-	"data-ui-background": "default",
-	"data-ui-round": "default",
-	"data-ui-text": "sm",
-	"data-ui-inner": "lg",
-	"data-ui-font": "normal",
-};
 
 export namespace EmptyWelcome {
 	export interface Props extends Container.Props {
