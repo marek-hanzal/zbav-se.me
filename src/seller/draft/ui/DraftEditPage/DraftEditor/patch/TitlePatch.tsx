@@ -76,7 +76,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onView, ...p
 				<Status
 					action={
 						<form
-							className={"w-full"}
+							className={"contents"}
 							onSubmit={(e) => {
 								e.preventDefault();
 								e.stopPropagation();

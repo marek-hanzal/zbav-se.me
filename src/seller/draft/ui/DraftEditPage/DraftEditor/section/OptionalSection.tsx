@@ -34,19 +34,6 @@ export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) =>
 			/>
 
 			<Group>
-				<RestrictionValue
-					data-ui={"set listing restriction"}
-					restriction={draft.restriction}
-					action={<ChevronAction />}
-					onClick={() => onView("restriction")}
-					wrapperProps={{
-						"data-ui-tone": draft.restriction ? "neutral" : "secondary",
-					}}
-					data-ui-disabled={!draft.category}
-				/>
-			</Group>
-
-			<Group>
 				<DescriptionValue
 					description={draft.description}
 					action={<ChevronAction />}
@@ -116,6 +103,19 @@ export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) =>
 					wrapperProps={{
 						"data-ui-tone": draft.age !== null ? "neutral" : "secondary",
 					}}
+				/>
+			</Group>
+
+			<Group>
+				<RestrictionValue
+					data-ui={"set listing restriction"}
+					restriction={draft.restriction}
+					action={<ChevronAction />}
+					onClick={() => onView("restriction")}
+					wrapperProps={{
+						"data-ui-tone": draft.restriction ? "neutral" : "secondary",
+					}}
+					data-ui-disabled={!draft.category}
 				/>
 			</Group>
 		</>

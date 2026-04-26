@@ -41,9 +41,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ _suspense, listing, state
 				}),
 			},
 			gallery: {
-				children: (
-					<GalleryPreview uploads={listing.gallery.items.map((item) => item.upload)} />
-				),
+				children: <GalleryPreview urls={listing.withImageUrl} />,
 				header: () => ({
 					title: translator.text("Listing gallery (title)"),
 					right: (

@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/public/listing/server/fx/listingCollectionFx";
 import { listingFetchFx } from "~/public/listing/server/fx/listingFetchFx";
@@ -26,6 +27,7 @@ describe("public listing visibility", () => {
 						.updateTable("listing")
 						.set({
 							title: "Alpha MacBook",
+							withTitleSearch: sql`lower(immutable_unaccent(${"Alpha MacBook"}))`,
 						})
 						.where("id", "=", alpha.id)
 						.executeTakeFirstOrThrow(),
@@ -33,6 +35,7 @@ describe("public listing visibility", () => {
 						.updateTable("listing")
 						.set({
 							title: "Beta ThinkPad",
+							withTitleSearch: sql`lower(immutable_unaccent(${"Beta ThinkPad"}))`,
 							status: "sold",
 						})
 						.where("id", "=", beta.id)

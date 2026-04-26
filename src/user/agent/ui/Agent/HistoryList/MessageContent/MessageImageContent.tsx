@@ -3,7 +3,6 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { GalleryPreviewSheet } from "~/common/gallery/ui/GalleryPreviewSheet";
 import { HeroImage } from "~/common/ui/img";
-import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
 export namespace MessageImageContent {
 	export interface Props extends Group.Props {
@@ -22,13 +21,6 @@ export const MessageImageContent: FC<MessageImageContent.Props> = ({
 	if (!src) {
 		return null;
 	}
-
-	const uploads: UploadSchema.Type[] = [
-		{
-			id: src,
-			url: src,
-		},
-	];
 
 	return (
 		<Group
@@ -61,7 +53,9 @@ export const MessageImageContent: FC<MessageImageContent.Props> = ({
 			</Container>
 
 			<GalleryPreviewSheet
-				uploads={uploads}
+				urls={[
+					src,
+				]}
 				isOpen={isPreviewOpen}
 				onClose={() => setIsPreviewOpen(false)}
 			/>

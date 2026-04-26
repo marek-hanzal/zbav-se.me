@@ -67,6 +67,12 @@ export const DraftMigration: Migration = {
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addColumn("updatedAt", "timestamptz", (col) => col.notNull())
 			.addColumn("usedAt", "timestamptz")
+			.addColumn("withImageUrl", sql`text[]`, (col) =>
+				col.notNull().defaultTo(sql`array[]::text[]`),
+			)
+			.addColumn("withUploadIds", sql`text[]`, (col) =>
+				col.notNull().defaultTo(sql`array[]::text[]`),
+			)
 			.addForeignKeyConstraint(
 				"draft_[userId]_fk",
 				[

@@ -57,10 +57,10 @@ export const Editor: FC<Editor.Props> = ({
 					<GalleryValue
 						data-action={"edit feed gallery"}
 						label={translator.text("Feed photo gallery (label)")}
-						uploads={
+						urls={
 							feed.upload
 								? [
-										feed.upload,
+										feed.upload?.url,
 									]
 								: []
 						}

@@ -89,7 +89,7 @@ export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
 							data-ui-round={"default"}
 						>
 							<GalleryPreview
-								uploads={uploads}
+								urls={uploads.map((upload) => upload.url)}
 								data-ui-inner={undefined}
 							/>
 						</Container>

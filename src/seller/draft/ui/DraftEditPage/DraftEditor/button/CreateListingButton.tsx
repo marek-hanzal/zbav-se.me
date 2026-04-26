@@ -4,8 +4,8 @@ import { Button } from "@/lib/client/button";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { uiSaveButton } from "~/common/ui/ui";
+import { useIsValid } from "~/seller/draft/hook/useIsValid";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
-import { isValid } from "~/seller/draft/util/isValid";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 
 export namespace CreateListingButton {
@@ -32,7 +32,9 @@ export const CreateListingButton: FC<CreateListingButton.Props> = ({
 		},
 	});
 
-	const valid = isValid(draft);
+	const valid = useIsValid({
+		draft,
+	});
 
 	return (
 		<Button

@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import type { withListingSourceSelectFx } from "~/seller/listing/server/db/withListingSourceSelectFx";
 import type { ListingFilterSchema } from "~/seller/listing/server/schema/ListingFilterSchema";
 import { withLikeEx } from "~/server/database/expression/withLikeEx";
+import { withNormalizedLikeEx } from "~/server/database/expression/withNormalizedLikeEx";
 
 export namespace withListingQueryBuilderFx {
 	export interface Props<TSelect extends withListingSourceSelectFx.Select> {
@@ -34,13 +35,22 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 	if (where.fulltext) {
 		const fulltext = where.fulltext;
 
-		query = query.where((eb) =>
-			eb.or([
-				withLikeEx(eb.ref("l.title"), fulltext, "both"),
-				withLikeEx(eb.ref("cat.category"), fulltext),
-				withLikeEx(eb.ref("cat.group"), fulltext),
-			]),
-		) as TSelect;
+		query = query.where((eb) => {
+			const categoryIdSelect = eb
+				.selectFrom("category as cat")
+				.select("cat.id")
+				.where((eb) =>
+					eb.or([
+						withLikeEx(eb.ref("cat.category"), fulltext),
+						withLikeEx(eb.ref("cat.group"), fulltext),
+					]),
+				);
+
+			return eb.or([
+				withNormalizedLikeEx(eb.ref("l.withTitleSearch"), fulltext, "both"),
+				eb("l.categoryId", "in", categoryIdSelect),
+			]);
+		}) as TSelect;
 	}
 
 	if (where.userId) {

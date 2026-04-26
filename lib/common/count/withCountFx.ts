@@ -63,6 +63,9 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 	const { count } = yield* Effect.promise(async () => {
 		return qb
 			.clearSelect()
+			.clearOrderBy()
+			.clearLimit()
+			.clearOffset()
 			.select(sql<number>`count(*)::int`.as("count"))
 			.executeTakeFirstOrThrow();
 	});

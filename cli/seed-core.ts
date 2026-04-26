@@ -32,6 +32,6 @@ printSeedCoreReport(report);
 appendSeedBenchmarkJsonl({
 	kind: "core",
 	count: report.count,
-	totals: report.totals,
+	tables: report.tables,
 	runtimeMs,
 });

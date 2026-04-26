@@ -11,8 +11,8 @@ import { toTimeDiff } from "@/lib/common/time";
 import { useMaybeUpload } from "~/common/gallery/hook/useMaybeUpload";
 import { ListItem } from "~/common/list-item/ListItem";
 import { CheckIcon } from "~/common/ui/icon";
+import { useIsValid } from "~/seller/draft/hook/useIsValid";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
-import { isValid } from "~/seller/draft/util/isValid";
 
 export namespace Item {
 	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {
@@ -25,9 +25,11 @@ export const Item = withFallback(
 		const { data: draft } = withDraftQuery.useFetchQuery(draftId);
 
 		const locale = useLocale();
-		const hero = useMaybeUpload(draft.gallery.items);
+		const hero = useMaybeUpload(draft.withImageUrl);
 
-		const valid = isValid(draft);
+		const valid = useIsValid({
+			draft,
+		});
 
 		return (
 			<LinkTo

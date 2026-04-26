@@ -20,7 +20,7 @@ export namespace Hero {
 
 export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
-	const hero = useUpload(listing.gallery.items);
+	const hero = useUpload(listing.withImageUrl);
 
 	return (
 		<Container
@@ -38,7 +38,7 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 			{listing.isIgnored ? <Overlay data-ui-type="subtle" /> : null}
 
 			<HeroImage
-				src={hero.url}
+				src={hero}
 				alt={`Hero image for listing ${listing.id}`}
 				visible
 				invisible={<SpinnerContainer />}

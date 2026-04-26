@@ -3,11 +3,11 @@ import { Container } from "@/lib/client/container";
 import { Status } from "@/lib/client/status";
 import { PhotoIcon } from "~/common/ui/icon";
 import { HeroImage } from "~/common/ui/img";
-import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
+import { useMaybeUpload } from "../hook/useMaybeUpload";
 
 export namespace GalleryValue {
 	export interface Props extends Container.Props {
-		uploads: UploadSchema.Type[];
+		urls: string[];
 		label: string;
 		statusProps?: Status.Props;
 	}
@@ -16,13 +16,13 @@ export namespace GalleryValue {
 /**
  * Displays a read-only gallery value with hero-image preview and a fallback status when no photos are present.
  * Use it in summaries and detail cards where users need a quick visual check of current gallery state.
- *
- * @see src/draft/ui/DraftEditor/patch/GalleryPatch.tsx
  */
-export const GalleryValue: FC<GalleryValue.Props> = ({ uploads, label, statusProps, ...props }) => {
+export const GalleryValue: FC<GalleryValue.Props> = ({ urls, label, statusProps, ...props }) => {
+	const hero = useMaybeUpload(urls);
+
 	return (
 		<Container
-			data-ui={"GalleryValue[Container]"}
+			data-ui={"GalleryValue"}
 			data-ui-tone="neutral"
 			data-ui-theme="light"
 			data-ui-round={undefined}
@@ -36,14 +36,14 @@ export const GalleryValue: FC<GalleryValue.Props> = ({ uploads, label, statusPro
 			className="h-42"
 			{...props}
 		>
-			{uploads.length > 0 && uploads[0] ? (
+			{hero ? (
 				<HeroImage
-					src={uploads[0].url}
+					src={hero}
 					data-ui-round="default"
 				/>
 			) : null}
 
-			{uploads.length > 0 ? null : (
+			{hero ? null : (
 				<Status
 					data-ui={"GalleryValue-[Status.photo-hint]"}
 					icon={PhotoIcon}

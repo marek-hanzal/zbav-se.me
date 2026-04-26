@@ -93,50 +93,50 @@ export const withInlineCounts = (tables: Record<string, number>, max = 6) => {
 	return `${items.join(", ")}${suffix}`;
 };
 
-const withTotalCount = (totals: Record<string, number>) =>
-	Object.values(totals).reduce((acc, value) => acc + Number(value || 0), 0);
+const withGeneratedCount = (tables: Record<string, number>) =>
+	Object.values(tables).reduce((acc, value) => acc + Number(value || 0), 0);
 
 export const toSeedBenchmarkJsonl = ({
 	kind,
 	count,
-	totals,
+	tables,
 	runtimeMs,
 }: {
 	kind: "core" | "interaction";
 	count: number;
-	totals: Record<string, number>;
+	tables: Record<string, number>;
 	runtimeMs: number;
 }) => {
-	const totalCount = withTotalCount(totals);
-	const safeCount = Math.max(1, count);
-	const runtimePerItemMs = Number((runtimeMs / safeCount).toFixed(3));
+	const generatedCount = withGeneratedCount(tables);
+	const safeGeneratedCount = Math.max(1, generatedCount);
+	const runtimePerGeneratedRowMs = Number((runtimeMs / safeGeneratedCount).toFixed(3));
 
 	return JSON.stringify({
 		stamp: new Date().toISOString(),
 		kind,
 		count,
-		totalCount,
-		runtimePerItemMs,
+		generatedCount,
+		runtimePerGeneratedRowMs,
 	});
 };
 
 export const appendSeedBenchmarkJsonl = ({
 	kind,
 	count,
-	totals,
+	tables,
 	runtimeMs,
 	filePath = "benchmark.jsonl",
 }: {
 	kind: "core" | "interaction";
 	count: number;
-	totals: Record<string, number>;
+	tables: Record<string, number>;
 	runtimeMs: number;
 	filePath?: string;
 }) => {
 	const line = toSeedBenchmarkJsonl({
 		kind,
 		count,
-		totals,
+		tables,
 		runtimeMs,
 	});
 

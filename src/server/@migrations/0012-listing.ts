@@ -30,12 +30,21 @@ export const ListingMigration: Migration = {
 			.addColumn("warranty", sql`listing_warranty_enum`)
 			.addColumn("status", sql`listing_status_enum`)
 			.addColumn("restriction", sql`restriction_enum`)
+			.addColumn("withCategoryDiscovery", sql`category_discovery_enum`, (col) =>
+				col.notNull(),
+			)
+			.addColumn("withCategoryRestriction", sql`restriction_enum`)
 			.addColumn("locationId", "text", (col) => col.notNull())
+			.addColumn("withLocationGeo", sql`geography(Point,4326)`)
 			.addColumn("categoryId", "text", (col) => col.notNull())
 			.addColumn("galleryId", "text", (col) => col.notNull())
 			.addColumn("draftId", "text")
 			//
 			.addColumn("title", "text", (col) => col.notNull())
+			.addColumn("withImageUrl", sql`text[]`, (col) =>
+				col.notNull().defaultTo(sql`array[]::text[]`),
+			)
+			.addColumn("withTitleSearch", "text", (col) => col.notNull())
 			.addColumn("titleVec", sql`vector(64)`)
 			//
 			.addColumn("description", "text")
@@ -139,6 +148,18 @@ export const ListingMigration: Migration = {
 			])
 			.execute();
 
+		await sql`
+			CREATE INDEX "listing_[live-categoryId-createdAt]_idx"
+			ON "listing" ("categoryId", "createdAt" DESC)
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[live-locationId-categoryId-createdAt]_idx"
+			ON "listing" ("locationId", "categoryId", "createdAt" DESC)
+			WHERE "status" = 'live'
+		`.execute(db);
+
 		await db.schema
 			.createIndex("listing_[galleryId]_idx")
 			.on("listing")
@@ -156,6 +177,65 @@ export const ListingMigration: Migration = {
 			.on("listing")
 			.column("createdAt")
 			.execute();
+
+		await sql`
+			CREATE INDEX "listing_[live-createdAt]_idx"
+			ON "listing" ("createdAt" DESC)
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[live-updatedAt]_idx"
+			ON "listing" ("updatedAt" DESC)
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[userId-createdAt]_idx"
+			ON "listing" ("userId", "createdAt" DESC)
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[userId-updatedAt]_idx"
+			ON "listing" ("userId", "updatedAt" DESC)
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[live-price]_idx"
+			ON "listing" ("price")
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[live-condition]_idx"
+			ON "listing" ("condition")
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[live-age]_idx"
+			ON "listing" ("age")
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[live-warranty]_idx"
+			ON "listing" ("warranty")
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[delivery]_gin_idx"
+			ON "listing"
+			USING gin ("delivery")
+			WHERE "status" = 'live'
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[withLocationGeo]_idx"
+			ON "listing"
+			USING gist ("withLocationGeo")
+		`.execute(db);
 
 		await db.schema
 			.createIndex("listing_[expiresAt]_idx")
@@ -181,12 +261,19 @@ export const ListingMigration: Migration = {
 			.column("warranty")
 			.execute();
 
-		await db.schema
-			.createIndex("listing_[title]_trgm_idx")
-			.on("listing")
-			.using("gin")
-			.expression(sql`lower(title) gin_trgm_ops`)
-			.execute();
+		await sql`
+			CREATE INDEX "listing_[title]_trgm_idx"
+			ON "listing"
+			USING gin ("withTitleSearch" gin_trgm_ops)
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "listing_[public-title]_trgm_idx"
+			ON "listing"
+			USING gin ("withTitleSearch" gin_trgm_ops)
+			WHERE "status" = 'live'
+				AND "withCategoryDiscovery" = 'implicit'
+		`.execute(db);
 
 		// Title vector (e.g., simhash/char-ngrams): cosine
 		await sql`

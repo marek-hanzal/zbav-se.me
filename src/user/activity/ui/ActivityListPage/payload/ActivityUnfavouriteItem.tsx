@@ -19,7 +19,7 @@ export namespace ActivityUnfavouriteItem {
 export const ActivityUnfavouriteItem: FC<ActivityUnfavouriteItem.Props> = ({ item }) => {
 	const locale = useLocale();
 	const { data: listing } = withListingQuery.useFetchQuery(item.payload.listingId);
-	const hero = useUpload(listing.gallery.items);
+	const hero = useUpload(listing.withImageUrl);
 	const patchMutation = withActivityQuery.usePatchMutation({
 		invalidate: [],
 	});

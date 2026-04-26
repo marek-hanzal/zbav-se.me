@@ -129,6 +129,7 @@ export const SignInPage: FC<SignInPage.Props> = ({ ...props }) => {
 												data-ui={"SignInPage[EmailInput]"}
 												type={"email"}
 												autoComplete={"email webauthn"}
+												autoFocus
 												placeholder={translator.text("Enter your email")}
 												value={field.state.value ?? ""}
 												onBlur={field.handleBlur}

@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { type FC, useEffect, useRef } from "react";
 import { uiButton } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
 import { ChevronRightIcon } from "@/lib/client/icon";
@@ -23,6 +23,11 @@ export namespace WelcomePage {
  */
 export const WelcomePage: FC<WelcomePage.Props> = ({ ...props }) => {
 	const locale = useLocale();
+	const actionRef = useRef<HTMLAnchorElement>(null);
+
+	useEffect(() => {
+		actionRef?.current?.focus();
+	}, []);
 
 	return (
 		<Container
@@ -39,6 +44,7 @@ export const WelcomePage: FC<WelcomePage.Props> = ({ ...props }) => {
 				}}
 				action={
 					<LinkTo
+						ref={actionRef}
 						data-action={"go home from welcome"}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}

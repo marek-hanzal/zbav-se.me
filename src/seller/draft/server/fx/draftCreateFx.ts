@@ -18,7 +18,7 @@ export namespace draftCreateFx {
 
 export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 	userId,
-	uploadIds,
+	uploadIds = [],
 	...data
 }: draftCreateFx.Props) {
 	const logger = yield* getLoggerFx("draftCreateFx");
@@ -55,6 +55,39 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 				}
 			}
 
+			let withImageUrl: string[] = [];
+			let withUploadIds: string[] = [];
+			if (uploadIds && uploadIds.length > 0) {
+				const withUpload = yield* tryDbFx(async () => {
+					return kysely
+						.selectFrom("upload")
+						.select([
+							"id",
+							"url",
+						])
+						.where("userId", "=", userId)
+						.where("id", "in", uploadIds)
+						.execute();
+				});
+
+				const urlById = new Map(
+					withUpload.map((row) => [
+						row.id,
+						row.url,
+					]),
+				);
+
+				withImageUrl = uploadIds.flatMap((uploadId) => {
+					const imageUrl = urlById.get(uploadId);
+					return imageUrl
+						? [
+								imageUrl,
+							]
+						: [];
+				});
+				withUploadIds = uploadIds.filter((uploadId) => urlById.has(uploadId));
+			}
+
 			yield* tryDbFx(async () => {
 				return kysely
 					.insertInto("draft")
@@ -66,6 +99,8 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 						createdAt: now,
 						updatedAt: now,
 						currency: "CZK",
+						withImageUrl,
+						withUploadIds,
 					})
 					.execute();
 			});

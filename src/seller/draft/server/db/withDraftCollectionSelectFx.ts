@@ -11,10 +11,8 @@ export const withDraftCollectionSelectFx = Effect.fn("withDraftCollectionSelectF
 	sort,
 	userId,
 }: withDraftCollectionSelectFx.Props) {
-	const sourceSelect = yield* withDraftSelectFx({
+	return yield* withDraftSelectFx({
 		sort,
 		userId,
 	});
-
-	return sourceSelect;
 });

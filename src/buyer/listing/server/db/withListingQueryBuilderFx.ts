@@ -4,6 +4,7 @@ import type { withListingSourceSelectFx } from "~/buyer/listing/server/db/withLi
 import type { ListingFilterSchema } from "~/buyer/listing/server/schema/ListingFilterSchema";
 import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import { withLikeEx } from "~/server/database/expression/withLikeEx";
+import { withNormalizedLikeEx } from "~/server/database/expression/withNormalizedLikeEx";
 
 export namespace withListingQueryBuilderFx {
 	export interface Props<TSelect extends withListingSourceSelectFx.Select> {
@@ -42,13 +43,22 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 	if (where.fulltext) {
 		const fulltext = where.fulltext;
 
-		query = query.where((eb) =>
-			eb.or([
-				withLikeEx(eb.ref("l.title"), fulltext, "both"),
-				withLikeEx(eb.ref("cat.category"), fulltext),
-				withLikeEx(eb.ref("cat.group"), fulltext),
-			]),
-		) as TSelect;
+		query = query.where((eb) => {
+			const categoryIdSelect = eb
+				.selectFrom("category as cat")
+				.select("cat.id")
+				.where((eb) =>
+					eb.or([
+						withLikeEx(eb.ref("cat.category"), fulltext),
+						withLikeEx(eb.ref("cat.group"), fulltext),
+					]),
+				);
+
+			return eb.or([
+				withNormalizedLikeEx(eb.ref("l.withTitleSearch"), fulltext, "both"),
+				eb("l.categoryId", "in", categoryIdSelect),
+			]);
+		}) as TSelect;
 	}
 
 	if (where.userId) {
@@ -111,25 +121,25 @@ export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(
 		const locationId = meta.locationId;
 		const range = where.range * 1_000;
 
-		query = query.where(
-			(eb) => {
-				const originGeoSelect = eb
-					.selectFrom("location as originLoc")
-					.select("originLoc.geo")
-					.where("originLoc.id", "=", locationId)
-					.limit(1);
+		query = query.where((eb) => {
+			const originGeoSelect = eb
+				.selectFrom("location as originLoc")
+				.select("originLoc.geo")
+				.where("originLoc.id", "=", locationId)
+				.limit(1);
 
-				return sql`ST_DWithin(
-					${eb.ref("loc.geo")},
+			return sql`ST_DWithin(
+					${eb.ref("l.withLocationGeo")},
 					${originGeoSelect},
 					${eb.val(range)}
 				)`;
-			},
-		) as TSelect;
+		}) as TSelect;
 	}
 
 	if (where.title) {
-		query = query.where((eb) => withLikeEx(eb.ref("l.title"), where.title, "both")) as TSelect;
+		query = query.where((eb) =>
+			withNormalizedLikeEx(eb.ref("l.withTitleSearch"), where.title, "both"),
+		) as TSelect;
 	}
 
 	if (where.withOwn === false) {

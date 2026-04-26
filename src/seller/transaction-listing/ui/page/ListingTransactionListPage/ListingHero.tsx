@@ -20,7 +20,7 @@ export namespace ListingHero {
 export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ...props }) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const [isOpen, setIsOpen] = useState(false);
-	const hero = useUpload(listing.gallery.items);
+	const hero = useUpload(listing.withImageUrl);
 
 	useRenderLogger({
 		logger: getRootLogger(),
@@ -42,7 +42,7 @@ export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ...pr
 				{...props}
 			>
 				<HeroImage
-					src={hero.url}
+					src={hero}
 					alt={`Hero image for listing ${listing.id}`}
 					className={"h-42"}
 				/>

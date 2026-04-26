@@ -4,7 +4,6 @@ import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
 import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
-import { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 import { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 
 export const TransactionSchema = z
@@ -14,9 +13,12 @@ export const TransactionSchema = z
 			description: "Transaction title",
 		}),
 		status: TransactionStatusEnumSchema,
-		//
-		gallery: GallerySchema,
-		//
+		galleryId: z.string().meta({
+			description: "ID of the listing gallery",
+		}),
+		withImageUrl: z.array(z.string()).meta({
+			description: "Ordered listing image URLs",
+		}),
 		price: z.coerce.number().meta({
 			description: "Price of the listing",
 			type: "number",

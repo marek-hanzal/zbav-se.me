@@ -3,11 +3,10 @@ import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { translator } from "@/lib/common/translator";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { CloseButton } from "~/common/ui/button";
-import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
 export namespace GalleryPreviewSheet {
 	export interface Props extends BottomSheet.Props {
-		uploads: UploadSchema.Type[];
+		urls: string[];
 	}
 }
 
@@ -17,7 +16,7 @@ export namespace GalleryPreviewSheet {
  *
  * @see src/draft/ui/DraftEditor/patch/GalleryPatch.tsx
  */
-export const GalleryPreviewSheet: FC<GalleryPreviewSheet.Props> = ({ uploads, ...props }) => {
+export const GalleryPreviewSheet: FC<GalleryPreviewSheet.Props> = ({ urls, ...props }) => {
 	return (
 		<BottomSheet
 			data-ui={"GalleryPreviewSheet"}
@@ -32,7 +31,7 @@ export const GalleryPreviewSheet: FC<GalleryPreviewSheet.Props> = ({ uploads, ..
 			{...props}
 		>
 			<GalleryPreview
-				uploads={uploads}
+				urls={urls}
 				onClick={() => {
 					props.onClose();
 				}}

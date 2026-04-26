@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CategoryDiscoveryEnumSchema } from "~/common/category/enum/CategoryDiscoveryEnumSchema";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
@@ -40,9 +41,14 @@ export const ListingTableSchema = z
 		status: ListingStatusEnumSchema,
 		//
 		restriction: RestrictionEnumSchema.nullish(),
+		withCategoryDiscovery: CategoryDiscoveryEnumSchema,
+		withCategoryRestriction: RestrictionEnumSchema.nullish(),
 		//
 		locationId: z.string().meta({
 			description: "ID of the location",
+		}),
+		withLocationGeo: z.unknown().nullable().meta({
+			description: "Denormalized location geo point for listing search and range queries",
 		}),
 		categoryId: z.string().meta({
 			description: "ID of the category",
@@ -59,6 +65,13 @@ export const ListingTableSchema = z
 		//
 		title: z.string().meta({
 			description: "Title of the item",
+		}),
+		withImageUrl: z.array(z.string()).meta({
+			description:
+				"Denormalized ordered public image URLs used for listing gallery previews and list reads",
+		}),
+		withTitleSearch: z.string().meta({
+			description: "Denormalized normalized title search text for listing search predicates",
 		}),
 		titleVec: VectorSchema.meta({
 			description: "Embedding vector for title similarity search",

@@ -15,7 +15,7 @@ export namespace seedDraftInsertFx {
 
 export const seedDraftInsertFx = Effect.fn("seedDraftInsertFx")(function* ({
 	userId,
-	uploadIds,
+	uploadIds = [],
 	...data
 }: seedDraftInsertFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
@@ -33,6 +33,38 @@ export const seedDraftInsertFx = Effect.fn("seedDraftInsertFx")(function* ({
 		uploadIds: uploadIds ?? [],
 	});
 
+	let withImageUrl: string[] = [];
+	let withUploadIds: string[] = [];
+	if (uploadIds.length > 0) {
+		const withUpload = yield* tryDbFx(async () =>
+			kysely
+				.selectFrom("upload")
+				.select([
+					"id",
+					"url",
+				])
+				.where("id", "in", uploadIds)
+				.execute(),
+		);
+
+		const urlById = new Map(
+			withUpload.map((row) => [
+				row.id,
+				row.url,
+			]),
+		);
+
+		withImageUrl = uploadIds.flatMap((uploadId) => {
+			const imageUrl = urlById.get(uploadId);
+			return imageUrl
+				? [
+						imageUrl,
+					]
+				: [];
+		});
+		withUploadIds = uploadIds.filter((uploadId) => urlById.has(uploadId));
+	}
+
 	yield* tryDbFx(async () =>
 		kysely
 			.insertInto("draft")
@@ -44,6 +76,8 @@ export const seedDraftInsertFx = Effect.fn("seedDraftInsertFx")(function* ({
 				createdAt: now,
 				updatedAt: now,
 				currency: "CZK",
+				withImageUrl,
+				withUploadIds,
 			})
 			.execute(),
 	);

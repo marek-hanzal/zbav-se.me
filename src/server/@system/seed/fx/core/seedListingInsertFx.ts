@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import pgvector from "pgvector";
 import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
@@ -6,12 +7,22 @@ import { embedMinHash } from "@/lib/common/embedding";
 import { genId } from "@/lib/common/gen-id";
 import type { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreateSchema";
 import { seedGalleryItemBulkInsertFx } from "~/server/@system/seed/fx/core/seedGalleryItemBulkInsertFx";
+import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 
 const titleVecCache = new Map<string, string>();
+const categoryCache = new Map<
+	string,
+	{
+		discovery: CategoryTableSchema.Type["discovery"];
+		restriction: CategoryTableSchema.Type["restriction"];
+	}
+>();
+const locationGeoCache = new Map<string, unknown>();
+const uploadUrlCache = new Map<string, string>();
 
 const withCachedTitleVec = (title: string) => {
 	const cached = titleVecCache.get(title);
@@ -25,6 +36,34 @@ const withCachedTitleVec = (title: string) => {
 	);
 	titleVecCache.set(title, next);
 	return next;
+};
+
+const withOrderedImageUrl = ({
+	rows,
+	uploadIds,
+}: {
+	rows: Array<{
+		id: string;
+		url: string;
+	}>;
+	uploadIds: string[];
+}) => {
+	const urlById = new Map(
+		rows.map((row) => [
+			row.id,
+			row.url,
+		]),
+	);
+
+	return uploadIds.flatMap((uploadId) => {
+		const imageUrl = urlById.get(uploadId);
+
+		return imageUrl
+			? [
+					imageUrl,
+				]
+			: [];
+	});
 };
 
 export namespace seedListingInsertFx {
@@ -55,8 +94,71 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 		userId,
 	});
 
+	const categoryRow =
+		categoryCache.get(data.categoryId) ??
+		(yield* tryDbFx(async () =>
+			kysely
+				.selectFrom("category")
+				.select([
+					"discovery",
+					"restriction",
+				])
+				.where("id", "=", data.categoryId)
+				.executeTakeFirstOrThrow(),
+		));
+
+	categoryCache.set(data.categoryId, categoryRow);
+
+	const locationGeo =
+		locationGeoCache.get(data.locationId) ??
+		(yield* tryDbFx(async () =>
+			kysely
+				.selectFrom("location")
+				.select("geo")
+				.where("id", "=", data.locationId)
+				.executeTakeFirstOrThrow()
+				.then((row) => row.geo),
+		));
+
+	locationGeoCache.set(data.locationId, locationGeo);
+
 	yield* seedGalleryItemBulkInsertFx({
 		galleryId: gallery.id,
+		uploadIds,
+	});
+
+	const missingUploadIds = uploadIds.filter((uploadId) => !uploadUrlCache.has(uploadId));
+
+	if (missingUploadIds.length > 0) {
+		const uploadRows = yield* tryDbFx(async () =>
+			kysely
+				.selectFrom("upload")
+				.select([
+					"id",
+					"url",
+				])
+				.where("id", "in", missingUploadIds)
+				.execute(),
+		);
+
+		for (const row of uploadRows) {
+			uploadUrlCache.set(row.id, row.url);
+		}
+	}
+
+	const withImageUrl = withOrderedImageUrl({
+		rows: uploadIds.flatMap((uploadId) => {
+			const imageUrl = uploadUrlCache.get(uploadId);
+
+			return imageUrl
+				? [
+						{
+							id: uploadId,
+							url: imageUrl,
+						},
+					]
+				: [];
+		}),
 		uploadIds,
 	});
 
@@ -71,6 +173,11 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 				updatedAt: now.toJSDate(),
 				currency: "CZK",
 				status: "live",
+				withCategoryDiscovery: categoryRow.discovery,
+				withCategoryRestriction: categoryRow.restriction,
+				withLocationGeo: locationGeo,
+				withImageUrl,
+				withTitleSearch: sql`lower(immutable_unaccent(${data.title}))`,
 				...data,
 				titleVec: withCachedTitleVec(data.title),
 				expiresAt: match(data.expiresAt)

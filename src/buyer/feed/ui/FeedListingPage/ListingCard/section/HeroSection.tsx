@@ -21,7 +21,7 @@ export namespace HeroSection {
 }
 
 export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) => {
-	const hero = useUpload(listing.gallery.items);
+	const hero = useUpload(listing.withImageUrl);
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 
 	useRenderLogger({
@@ -79,7 +79,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 				)}
 
 				<HeroImage
-					src={hero.url}
+					src={hero}
 					alt={`Hero image for listing ${listing.id}`}
 					data-action={"open listing gallery"}
 					onClick={() => onView("gallery")}

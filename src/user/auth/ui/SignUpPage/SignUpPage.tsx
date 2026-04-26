@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import type { FC } from "react";
+import { type FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { ErrorBadge } from "@/lib/client/error";
@@ -129,6 +129,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ...props }) => {
 											data-ui={"SignUpPage[EmailInput]"}
 											type={"email"}
 											autoComplete={"email"}
+											autoFocus
 											placeholder={translator.text("Enter your email")}
 											value={field.state.value ?? ""}
 											onBlur={field.handleBlur}

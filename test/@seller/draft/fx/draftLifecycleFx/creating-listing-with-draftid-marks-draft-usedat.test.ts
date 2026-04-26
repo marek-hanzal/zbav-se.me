@@ -90,7 +90,7 @@ describe("draft lifecycle", () => {
 						database.kysely
 							.selectFrom("gallery")
 							.select("access")
-							.where("id", "=", listing.gallery.id)
+							.where("id", "=", listing.galleryId)
 							.executeTakeFirstOrThrow(),
 					);
 					const listingUpload = yield* Effect.promise(() =>

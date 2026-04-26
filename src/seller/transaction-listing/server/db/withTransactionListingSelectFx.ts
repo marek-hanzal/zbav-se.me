@@ -1,10 +1,8 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { withTransactionListingSourceSelectFx } from "~/seller/transaction-listing/server/db/withTransactionListingSourceSelectFx";
 import type { TransactionListingSortSchema } from "~/seller/transaction-listing/server/schema/TransactionListingSortSchema";
-import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
 
 export namespace withTransactionListingSelectFx {
 	export interface Props {
@@ -18,14 +16,11 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 	function* ({ sort }: withTransactionListingSelectFx.Props) {
 		const sourceSelect = yield* withTransactionListingSourceSelectFx();
 
-		const gallerySelect = yield* withGallerySelectFx({});
-
 		let query = sourceSelect.select((eb) => {
 			return [
 				eb.ref("l.id").as("listingId"),
-				jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))
-					.$notNull()
-					.as("gallery"),
+				eb.ref("l.galleryId").as("galleryId"),
+				eb.ref("l.withImageUrl").as("withImageUrl"),
 				sql<number>`(${eb
 					.selectFrom("transaction as lt")
 					.select(sql<number>`count(*)::int`.as("count"))

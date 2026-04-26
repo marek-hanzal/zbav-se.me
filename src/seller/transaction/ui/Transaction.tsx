@@ -31,7 +31,7 @@ export const Transaction: FC<Transaction.Props> = ({
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId, {
 		refetchInterval: refresh,
 	});
-	const hero = useUpload(transaction.gallery.items);
+	const hero = useUpload(transaction.withImageUrl);
 
 	return (
 		<Container
@@ -57,7 +57,7 @@ export const Transaction: FC<Transaction.Props> = ({
 					data-ui-height="content"
 				>
 					<HeroImage
-						src={hero.url}
+						src={hero}
 						alt={`Hero image for transaction ${transaction.id}`}
 						className={"h-42"}
 					/>

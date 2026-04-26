@@ -68,7 +68,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 			gallery: {
 				children: (
 					<GalleryPreview
-						uploads={listing.gallery.items.map((item) => item.upload)}
+						urls={listing.withImageUrl}
 						onClick={() => {
 							setView("default");
 						}}

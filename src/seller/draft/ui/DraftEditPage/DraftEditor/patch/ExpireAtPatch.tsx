@@ -29,9 +29,6 @@ export namespace ExpireAtPatch {
 
 export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
-		onSuccess() {
-			onView("restriction");
-		},
 		invalidate: [
 			"collection",
 		],

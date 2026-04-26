@@ -4,7 +4,6 @@ import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { withTransactionSourceSelectFx } from "~/seller/transaction/server/db/withTransactionSourceSelectFx";
 import type { TransactionSortSchema } from "~/seller/transaction/server/schema/TransactionSortSchema";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
-import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
 import { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 
@@ -22,8 +21,6 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 	const transactionSourceSelect = yield* withTransactionSourceSelectFx({
 		sort,
 	});
-
-	const gallerySelect = yield* withGallerySelectFx({});
 
 	return transactionSourceSelect.selectAll("lt").select((eb) => {
 		/**
@@ -51,6 +48,8 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 			"l.price",
 			"l.priceType",
 			"l.currency",
+			"l.galleryId",
+			"l.withImageUrl",
 			eb.fn
 				.coalesce(
 					lastActivitySelect.select("te.createdAt").$asScalar(),
@@ -83,9 +82,6 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 					return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
 				})}), 0)`.as("unreadCount"),
 			sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
-			jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))
-				.$notNull()
-				.as("gallery"),
 			eb.ref("lt.status").$notNull().as("status"),
 		];
 	});

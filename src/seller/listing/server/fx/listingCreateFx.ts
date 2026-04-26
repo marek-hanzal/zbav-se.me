@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import pgvector from "pgvector";
 import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
@@ -15,6 +16,7 @@ import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
 import { checkRestrictionFx } from "~/user/restriction/server/fx/checkRestrictionFx";
+import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 export namespace listingCreateFx {
@@ -27,6 +29,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 	userId,
 	uploadIds,
 	categoryId,
+	locationId,
 	restriction,
 	...data
 }: listingCreateFx.Props) {
@@ -35,6 +38,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 		userId,
 		uploadIds,
 		categoryId,
+		locationId,
 		restriction,
 		...data,
 	});
@@ -77,6 +81,25 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				userId,
 			});
 
+			const withCategory = yield* tryDbFx(async () => {
+				return kysely
+					.selectFrom("category")
+					.select([
+						"discovery",
+						"restriction",
+					])
+					.where("id", "=", categoryId)
+					.executeTakeFirstOrThrow();
+			});
+
+			const withLocation = yield* tryDbFx(async () => {
+				return kysely
+					.selectFrom("location")
+					.select("geo")
+					.where("id", "=", locationId)
+					.executeTakeFirstOrThrow();
+			});
+
 			yield* tryDbFx(async () => {
 				return kysely
 					.updateTable("upload")
@@ -87,6 +110,45 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					.where("id", "in", uploadIds)
 					.execute();
 			});
+
+			const withUpload = yield* tryDbFx(async () => {
+				return kysely
+					.selectFrom("upload")
+					.select([
+						"id",
+						"url",
+					])
+					.where("userId", "=", userId)
+					.where("id", "in", uploadIds)
+					.orderBy("createdAt", "asc")
+					.execute();
+			});
+
+			/**
+			 * This is a hack how to manually reorder uploaded images to
+			 * listing, so they preserve user's image order.
+			 */
+			const withImageUrl = ((
+				withUpload: Pick<UploadSchema.Type, "id" | "url">[],
+				uploadIds: string[],
+			) => {
+				const urlById = new Map(
+					withUpload.map((row) => [
+						row.id,
+						row.url,
+					]),
+				);
+
+				return uploadIds.flatMap((uploadId) => {
+					const imageUrl = urlById.get(uploadId);
+
+					return imageUrl
+						? [
+								imageUrl,
+							]
+						: [];
+				});
+			})(withUpload, uploadIds);
 
 			let sort = 0;
 			for (const uploadId of uploadIds) {
@@ -114,6 +176,12 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						currency: "CZK",
 						status: "live",
 						restriction,
+						locationId,
+						withCategoryDiscovery: withCategory.discovery,
+						withCategoryRestriction: withCategory.restriction,
+						withLocationGeo: withLocation.geo,
+						withImageUrl,
+						withTitleSearch: sql`lower(immutable_unaccent(${data.title}))`,
 						titleVec: pgvector.toSql(
 							embedMinHash({
 								value: data.title,

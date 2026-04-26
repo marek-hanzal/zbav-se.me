@@ -32,20 +32,18 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 
 	let query = kysely
 		.selectFrom("listing as l")
-		.innerJoin("location as loc", "loc.id", "l.locationId")
-		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.where("l.status", "in", [
 			"live",
 		] as const)
 		.where((eb) => {
-			return sql<boolean>`coalesce(${eb.ref("cat.restriction")}, ${fallbackSql}) <= ${restrictionSql}`;
+			return sql<boolean>`coalesce(${eb.ref("l.withCategoryRestriction")}, ${fallbackSql}) <= ${restrictionSql}`;
 		})
 		.where((eb) => {
 			return sql<boolean>`coalesce(${eb.ref("l.restriction")}, ${fallbackSql}) <= ${restrictionSql}`;
 		});
 
 	if (!hasExplicitCategory) {
-		query = query.where("cat.discovery", "=", "implicit");
+		query = query.where("l.withCategoryDiscovery", "=", "implicit");
 	}
 
 	for (const item of sort ?? []) {
@@ -69,12 +67,11 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 				 * which is equivalent and keeps index usage.
 				 */
 
-				return query.orderBy(
-					(eb) => {
-						const originPointSelect = eb
-							.selectFrom("location as originLoc")
-							.select((originEb) =>
-								sql`ST_SetSRID(
+				return query.orderBy((eb) => {
+					const originPointSelect = eb
+						.selectFrom("location as originLoc")
+						.select((originEb) =>
+							sql`ST_SetSRID(
 									ST_MakePoint(
 										case
 											when ${originEb.val(isDesc)} and ${originEb.ref("originLoc.lon")} >= 0 then ${originEb.ref("originLoc.lon")} - 180
@@ -88,16 +85,14 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 									),
 									4326
 								)`.as("point"),
-							)
-							.where("originLoc.id", "=", locationId)
-							.limit(1);
+						)
+						.where("originLoc.id", "=", locationId)
+						.limit(1);
 
-						return sql`${eb.ref("loc.geo")} <-> (
+					return sql`${eb.ref("l.withLocationGeo")} <-> (
 							${originPointSelect}
 						)`;
-					},
-					sortOrder,
-				);
+				}, sortOrder);
 			})
 			.exhaustive();
 	}

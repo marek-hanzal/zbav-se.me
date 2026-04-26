@@ -25,7 +25,7 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 	const locale = useLocale();
 	const { data: transactionListing } =
 		withTransactionListingQuery.useFetchQuery(transactionListingId);
-	const hero = useUpload(transactionListing.gallery.items);
+	const hero = useUpload(transactionListing.withImageUrl);
 	const unreadCount = transactionListing.unreadCount;
 	const isUnread = unreadCount > 0;
 
@@ -44,7 +44,7 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 						data-ui-position="relative"
 						data-ui-height="full"
 					>
-						<Image src={hero.url} />
+						<Image src={hero} />
 
 						{isUnread ? (
 							<Badge

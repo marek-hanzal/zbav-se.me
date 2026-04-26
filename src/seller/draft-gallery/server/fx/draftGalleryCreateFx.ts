@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { draftResolveFx } from "~/seller/draft/server/fx/draftResolveFx";
 import type { DraftGalleryCreateSchema } from "~/seller/draft-gallery/server/schema/DraftGalleryCreateSchema";
@@ -21,6 +22,7 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 	uploadIds,
 }: draftGalleryCreateFx.Props) {
 	const logger = yield* getLoggerFx("draftGalleryCreateFx");
+	const dateContext = yield* DateContextFx;
 	logger.trace("draftGalleryCreateFx", {
 		userId,
 		draftId,
@@ -61,6 +63,49 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 				});
 				sort++;
 			}
+
+			const withUpload = yield* tryDbFx(async () => {
+				return kysely
+					.selectFrom("upload")
+					.select([
+						"id",
+						"url",
+					])
+					.where("userId", "=", userId)
+					.where("id", "in", uploadIds)
+					.orderBy("createdAt", "asc")
+					.execute();
+			});
+
+			const urlById = new Map(
+				withUpload.map((row) => [
+					row.id,
+					row.url,
+				]),
+			);
+
+			const withImageUrl = uploadIds.flatMap((uploadId) => {
+				const imageUrl = urlById.get(uploadId);
+				return imageUrl
+					? [
+							imageUrl,
+						]
+					: [];
+			});
+			const withUploadIds = uploadIds.filter((uploadId) => urlById.has(uploadId));
+
+			yield* tryDbFx(async () => {
+				return kysely
+					.updateTable("draft")
+					.set({
+						withImageUrl,
+						withUploadIds,
+						updatedAt: dateContext.now().toJSDate(),
+					})
+					.where("id", "=", draftId)
+					.where("userId", "=", userId)
+					.execute();
+			});
 
 			return yield* galleryFetchFx({
 				where: {

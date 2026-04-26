@@ -19,7 +19,7 @@ export namespace ActivityBuyerMessageItem {
 export const ActivityBuyerMessageItem: FC<ActivityBuyerMessageItem.Props> = ({ item }) => {
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(item.payload.transactionId);
-	const hero = useUpload(transaction.gallery.items);
+	const hero = useUpload(transaction.withImageUrl);
 
 	return (
 		<LinkTo
