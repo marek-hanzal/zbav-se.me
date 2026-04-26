@@ -23,7 +23,7 @@ export namespace draftPatchFx {
 
 export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 	userId,
-	patch,
+	patch: { uploadIds, ...patch },
 	query,
 	scope,
 }: draftPatchFx.Props) {
@@ -46,9 +46,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 
 			const extra: Partial<DraftTableSchema.Type> = {};
 
-			if (patch.uploadIds) {
-				const uploadIds = patch.uploadIds;
-
+			if (uploadIds) {
 				yield* tryDbFx(async () => {
 					return kysely
 						.deleteFrom("gallery_item")
