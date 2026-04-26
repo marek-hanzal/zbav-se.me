@@ -4,7 +4,7 @@ import { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreat
 export const isValid = (draft: DraftSchema.Type) => {
 	const data = {
 		...draft,
-		uploadIds: draft.gallery.items.map((item) => item.uploadId),
+		uploadIds: draft.withUploadIds,
 		draftId: draft.id,
 	};
 	const isValid = ListingCreateSchema.safeParse(data).success;
