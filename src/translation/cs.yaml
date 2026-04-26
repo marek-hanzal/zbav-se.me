@@ -117,6 +117,10 @@
 0f44d510d8a8cf53325df192dfac3d02f4299c2d9a4a5dbe2dad9a6f:
     ref: Price type not set
     value: Typ ceny nemáš nastavený
+0f494da26ea5587a67d83b4efd9795d6af0c6fd561f0f6204b3c20c0:
+    ref: Agent empty welcome (content)
+    value: Umím vyřešit cokoli, co umí appka, jen líp a rychleji, pojď mě pořádně
+        protáhnout!
 10139dbd1e131e8c61052d8e552a6031740316ac1d46b26260d696a3:
     ref: Move photo right (button)
     value: Move photo right (button)
@@ -1345,6 +1349,9 @@ b9057abdfc2947ea0f0da7b26069769bbf9c40ca4d382aae15ddbd0a:
 b9280e542386de06015c0360e53e55cfccee8b1bf03cea7ef44c26c0:
     ref: Feed delivery (label)
     value: Možnosti předání
+b9b83e918602a11deeca155243e6ff287c1355e711cd1e728dccf509:
+    ref: Agent empty welcome (title)
+    value: Co máš dneska na srdci?
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
     ref: My listings (label)
     value: Moje inzeráty

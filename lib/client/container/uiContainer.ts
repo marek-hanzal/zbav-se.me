@@ -52,6 +52,7 @@ export namespace uiContainer {
 		color?: CoolUi.Color;
 		square?: CoolUi.Square;
 		flow?: CoolUi.Flow;
+		font?: CoolUi.Font;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
