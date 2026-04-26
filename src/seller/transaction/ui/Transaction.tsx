@@ -57,7 +57,7 @@ export const Transaction: FC<Transaction.Props> = ({
 					data-ui-height="content"
 				>
 					<HeroImage
-						src={hero.url}
+						src={hero}
 						alt={`Hero image for transaction ${transaction.id}`}
 						className={"h-42"}
 					/>

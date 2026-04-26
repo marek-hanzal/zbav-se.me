@@ -35,7 +35,7 @@ export const TransactionHero: FC<TransactionHero.Props> = ({ transactionId, ...p
 			{...props}
 		>
 			<HeroImage
-				src={hero.url}
+				src={hero}
 				alt={`Hero image for transaction ${transaction.id}`}
 				className={"h-42"}
 			/>

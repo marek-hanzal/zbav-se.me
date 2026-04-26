@@ -38,7 +38,7 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 			{listing.isIgnored ? <Overlay data-ui-type="subtle" /> : null}
 
 			<HeroImage
-				src={hero.url}
+				src={hero}
 				alt={`Hero image for listing ${listing.id}`}
 				visible
 				invisible={<SpinnerContainer />}

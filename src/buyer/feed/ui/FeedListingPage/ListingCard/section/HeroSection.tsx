@@ -79,7 +79,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 				)}
 
 				<HeroImage
-					src={hero.url}
+					src={hero}
 					alt={`Hero image for listing ${listing.id}`}
 					data-action={"open listing gallery"}
 					onClick={() => onView("gallery")}

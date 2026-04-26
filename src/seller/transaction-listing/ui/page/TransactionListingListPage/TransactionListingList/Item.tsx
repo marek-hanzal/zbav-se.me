@@ -44,7 +44,7 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 						data-ui-position="relative"
 						data-ui-height="full"
 					>
-						<Image src={hero.url} />
+						<Image src={hero} />
 
 						{isUnread ? (
 							<Badge
