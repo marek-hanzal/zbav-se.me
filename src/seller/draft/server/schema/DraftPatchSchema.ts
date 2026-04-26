@@ -15,6 +15,7 @@ export const DraftPatchSchema = z
 				createdAt: true,
 				updatedAt: true,
 				withImageUrl: true,
+				withUploadIds: true,
 			})
 			.partial()
 			.strip()

@@ -9,7 +9,6 @@ import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { galleryFetchFx } from "~/user/gallery/server/fx/galleryFetchFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
-import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
 export namespace draftGalleryCreateFx {
 	export interface Props extends DraftGalleryCreateSchema.Type {
@@ -78,33 +77,29 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 					.execute();
 			});
 
-			const withImageUrl = ((
-				withUpload: Pick<UploadSchema.Type, "id" | "url">[],
-				uploadIds: string[],
-			) => {
-				const urlById = new Map(
-					withUpload.map((row) => [
-						row.id,
-						row.url,
-					]),
-				);
+			const urlById = new Map(
+				withUpload.map((row) => [
+					row.id,
+					row.url,
+				]),
+			);
 
-				return uploadIds.flatMap((uploadId) => {
-					const imageUrl = urlById.get(uploadId);
-
-					return imageUrl
-						? [
-								imageUrl,
-							]
-						: [];
-				});
-			})(withUpload, uploadIds);
+			const withImageUrl = uploadIds.flatMap((uploadId) => {
+				const imageUrl = urlById.get(uploadId);
+				return imageUrl
+					? [
+							imageUrl,
+						]
+					: [];
+			});
+			const withUploadIds = uploadIds.filter((uploadId) => urlById.has(uploadId));
 
 			yield* tryDbFx(async () => {
 				return kysely
 					.updateTable("draft")
 					.set({
 						withImageUrl,
+						withUploadIds,
 						updatedAt: dateContext.now().toJSDate(),
 					})
 					.where("id", "=", draftId)

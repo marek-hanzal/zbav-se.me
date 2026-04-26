@@ -7,34 +7,6 @@ import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 
-const withOrderedImageUrl = ({
-	rows,
-	uploadIds,
-}: {
-	rows: Array<{
-		id: string;
-		url: string;
-	}>;
-	uploadIds: string[];
-}) => {
-	const urlById = new Map(
-		rows.map((row) => [
-			row.id,
-			row.url,
-		]),
-	);
-
-	return uploadIds.flatMap((uploadId) => {
-		const imageUrl = urlById.get(uploadId);
-
-		return imageUrl
-			? [
-					imageUrl,
-				]
-			: [];
-	});
-};
-
 export namespace seedDraftInsertFx {
 	export interface Props extends DraftCreateSchema.Type {
 		userId: string;
@@ -43,7 +15,7 @@ export namespace seedDraftInsertFx {
 
 export const seedDraftInsertFx = Effect.fn("seedDraftInsertFx")(function* ({
 	userId,
-	uploadIds,
+	uploadIds = [],
 	...data
 }: seedDraftInsertFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
@@ -62,23 +34,35 @@ export const seedDraftInsertFx = Effect.fn("seedDraftInsertFx")(function* ({
 	});
 
 	let withImageUrl: string[] = [];
-	const safeUploadIds = uploadIds ?? [];
-	if (safeUploadIds.length > 0) {
-		const uploadRows = yield* tryDbFx(async () =>
+	let withUploadIds: string[] = [];
+	if (uploadIds.length > 0) {
+		const withUpload = yield* tryDbFx(async () =>
 			kysely
 				.selectFrom("upload")
 				.select([
 					"id",
 					"url",
 				])
-				.where("id", "in", safeUploadIds)
+				.where("id", "in", uploadIds)
 				.execute(),
 		);
 
-		withImageUrl = withOrderedImageUrl({
-			rows: uploadRows,
-			uploadIds: safeUploadIds,
+		const urlById = new Map(
+			withUpload.map((row) => [
+				row.id,
+				row.url,
+			]),
+		);
+
+		withImageUrl = uploadIds.flatMap((uploadId) => {
+			const imageUrl = urlById.get(uploadId);
+			return imageUrl
+				? [
+						imageUrl,
+					]
+				: [];
 		});
+		withUploadIds = uploadIds.filter((uploadId) => urlById.has(uploadId));
 	}
 
 	yield* tryDbFx(async () =>
@@ -93,6 +77,7 @@ export const seedDraftInsertFx = Effect.fn("seedDraftInsertFx")(function* ({
 				updatedAt: now,
 				currency: "CZK",
 				withImageUrl,
+				withUploadIds,
 			})
 			.execute(),
 	);

@@ -9,7 +9,6 @@ import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
-import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
 export namespace draftCreateFx {
 	export interface Props extends DraftCreateSchema.Type {
@@ -57,6 +56,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 			}
 
 			let withImageUrl: string[] = [];
+			let withUploadIds: string[] = [];
 			if (uploadIds && uploadIds.length > 0) {
 				const withUpload = yield* tryDbFx(async () => {
 					return kysely
@@ -70,27 +70,22 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 						.execute();
 				});
 
-				withImageUrl = ((
-					withUpload: Pick<UploadSchema.Type, "id" | "url">[],
-					uploadIds: string[],
-				) => {
-					const urlById = new Map(
-						withUpload.map((row) => [
-							row.id,
-							row.url,
-						]),
-					);
+				const urlById = new Map(
+					withUpload.map((row) => [
+						row.id,
+						row.url,
+					]),
+				);
 
-					return uploadIds.flatMap((uploadId) => {
-						const imageUrl = urlById.get(uploadId);
-
-						return imageUrl
-							? [
-									imageUrl,
-								]
-							: [];
-					});
-				})(withUpload, uploadIds as string[]);
+				withImageUrl = uploadIds.flatMap((uploadId) => {
+					const imageUrl = urlById.get(uploadId);
+					return imageUrl
+						? [
+								imageUrl,
+							]
+						: [];
+				});
+				withUploadIds = uploadIds.filter((uploadId) => urlById.has(uploadId));
 			}
 
 			yield* tryDbFx(async () => {
@@ -105,6 +100,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 						updatedAt: now,
 						currency: "CZK",
 						withImageUrl,
+						withUploadIds,
 					})
 					.execute();
 			});

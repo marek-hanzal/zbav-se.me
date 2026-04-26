@@ -92,6 +92,10 @@ If not provided, listing will be controlled from category only.
 			description:
 				"Denormalized ordered public image URLs used for draft gallery previews and list reads",
 		}),
+		withUploadIds: z.array(z.string()).meta({
+			description:
+				"Denormalized ordered upload IDs used for draft gallery management and consistency checks",
+		}),
 	})
 	.meta({
 		id: "DraftTable",

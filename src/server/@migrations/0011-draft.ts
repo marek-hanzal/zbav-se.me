@@ -70,6 +70,9 @@ export const DraftMigration: Migration = {
 			.addColumn("withImageUrl", sql`text[]`, (col) =>
 				col.notNull().defaultTo(sql`array[]::text[]`),
 			)
+			.addColumn("withUploadIds", sql`text[]`, (col) =>
+				col.notNull().defaultTo(sql`array[]::text[]`),
+			)
 			.addForeignKeyConstraint(
 				"draft_[userId]_fk",
 				[
