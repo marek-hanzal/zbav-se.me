@@ -2,7 +2,6 @@ import { z } from "zod";
 import { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
 import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { CategorySchema } from "~/user/category/server/schema/CategorySchema";
-import { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 
 export const DraftSchema = z
 	.looseObject({
@@ -12,9 +11,6 @@ export const DraftSchema = z
 		}),
 		category: CategorySchema.nullable().meta({
 			description: "Category data",
-		}),
-		gallery: GallerySchema.meta({
-			description: "Draft gallery images",
 		}),
 	})
 	.omit({

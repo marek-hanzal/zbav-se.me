@@ -52,7 +52,7 @@ Price type: ${match(item.priceType)
 					.exhaustive()}
 
 Images:
-${item.gallery.items.length > 0 ? item.gallery.items.map((item) => item.upload.url) : "not set"}
+${item.withImageUrl.length > 0 ? item.withImageUrl.join("\n") : "not set"}
 
 Description:
 ${item.description ?? "not set"}

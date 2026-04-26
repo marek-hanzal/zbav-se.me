@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { draftResolveFx } from "~/seller/draft/server/fx/draftResolveFx";
 import type { DraftGalleryCreateSchema } from "~/seller/draft-gallery/server/schema/DraftGalleryCreateSchema";
@@ -8,6 +9,7 @@ import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { galleryFetchFx } from "~/user/gallery/server/fx/galleryFetchFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
+import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
 export namespace draftGalleryCreateFx {
 	export interface Props extends DraftGalleryCreateSchema.Type {
@@ -21,6 +23,7 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 	uploadIds,
 }: draftGalleryCreateFx.Props) {
 	const logger = yield* getLoggerFx("draftGalleryCreateFx");
+	const dateContext = yield* DateContextFx;
 	logger.trace("draftGalleryCreateFx", {
 		userId,
 		draftId,
@@ -61,6 +64,53 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 				});
 				sort++;
 			}
+
+			const withUpload = yield* tryDbFx(async () => {
+				return kysely
+					.selectFrom("upload")
+					.select([
+						"id",
+						"url",
+					])
+					.where("userId", "=", userId)
+					.where("id", "in", uploadIds)
+					.orderBy("createdAt", "asc")
+					.execute();
+			});
+
+			const withImageUrl = ((
+				withUpload: Pick<UploadSchema.Type, "id" | "url">[],
+				uploadIds: string[],
+			) => {
+				const urlById = new Map(
+					withUpload.map((row) => [
+						row.id,
+						row.url,
+					]),
+				);
+
+				return uploadIds.flatMap((uploadId) => {
+					const imageUrl = urlById.get(uploadId);
+
+					return imageUrl
+						? [
+								imageUrl,
+							]
+						: [];
+				});
+			})(withUpload, uploadIds);
+
+			yield* tryDbFx(async () => {
+				return kysely
+					.updateTable("draft")
+					.set({
+						withImageUrl,
+						updatedAt: dateContext.now().toJSDate(),
+					})
+					.where("id", "=", draftId)
+					.where("userId", "=", userId)
+					.execute();
+			});
 
 			return yield* galleryFetchFx({
 				where: {

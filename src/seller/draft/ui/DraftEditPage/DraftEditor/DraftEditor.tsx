@@ -53,8 +53,6 @@ export namespace DraftEditor {
 /**
  * Orchestrates editing sections and suspense states for the draft workflow.
  * Use it as the top-level editor body for this domain flow.
- *
- * @see src/draft/page/DraftEditPage.tsx
  */
 export const DraftEditor = withFallback(
 	({ _suspense, draftId }: DraftEditor.Props) => {

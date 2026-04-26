@@ -87,6 +87,11 @@ If not provided, listing will be controlled from category only.
 		usedAt: z.coerce.date().nullable().meta({
 			description: "Timestamp when the draft was used to create a listing",
 		}),
+		//
+		withImageUrl: z.array(z.string()).meta({
+			description:
+				"Denormalized ordered public image URLs used for draft gallery previews and list reads",
+		}),
 	})
 	.meta({
 		id: "DraftTable",

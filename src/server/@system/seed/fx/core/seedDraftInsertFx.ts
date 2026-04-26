@@ -7,6 +7,34 @@ import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 
+const withOrderedImageUrl = ({
+	rows,
+	uploadIds,
+}: {
+	rows: Array<{
+		id: string;
+		url: string;
+	}>;
+	uploadIds: string[];
+}) => {
+	const urlById = new Map(
+		rows.map((row) => [
+			row.id,
+			row.url,
+		]),
+	);
+
+	return uploadIds.flatMap((uploadId) => {
+		const imageUrl = urlById.get(uploadId);
+
+		return imageUrl
+			? [
+					imageUrl,
+				]
+			: [];
+	});
+};
+
 export namespace seedDraftInsertFx {
 	export interface Props extends DraftCreateSchema.Type {
 		userId: string;
@@ -33,6 +61,26 @@ export const seedDraftInsertFx = Effect.fn("seedDraftInsertFx")(function* ({
 		uploadIds: uploadIds ?? [],
 	});
 
+	let withImageUrl: string[] = [];
+	const safeUploadIds = uploadIds ?? [];
+	if (safeUploadIds.length > 0) {
+		const uploadRows = yield* tryDbFx(async () =>
+			kysely
+				.selectFrom("upload")
+				.select([
+					"id",
+					"url",
+				])
+				.where("id", "in", safeUploadIds)
+				.execute(),
+		);
+
+		withImageUrl = withOrderedImageUrl({
+			rows: uploadRows,
+			uploadIds: safeUploadIds,
+		});
+	}
+
 	yield* tryDbFx(async () =>
 		kysely
 			.insertInto("draft")
@@ -44,6 +92,7 @@ export const seedDraftInsertFx = Effect.fn("seedDraftInsertFx")(function* ({
 				createdAt: now,
 				updatedAt: now,
 				currency: "CZK",
+				withImageUrl,
 			})
 			.execute(),
 	);

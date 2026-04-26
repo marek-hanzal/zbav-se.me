@@ -25,7 +25,7 @@ export const Item = withFallback(
 		const { data: draft } = withDraftQuery.useFetchQuery(draftId);
 
 		const locale = useLocale();
-		const hero = useMaybeUpload(draft.gallery.items);
+		const hero = useMaybeUpload(draft.withImageUrl);
 
 		const valid = isValid(draft);
 

@@ -14,6 +14,7 @@ export const DraftPatchSchema = z
 				currency: true,
 				createdAt: true,
 				updatedAt: true,
+				withImageUrl: true,
 			})
 			.partial()
 			.strip()
