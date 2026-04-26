@@ -1,6 +1,7 @@
 import { type FC, type RefObject, useRef } from "react";
 import { useAutoScroll } from "@/lib/client/auto-scroll";
 import { Container } from "@/lib/client/container";
+import { EmptyWelcome } from "./EmptyWelcome";
 import { HistoryList } from "./HistoryList";
 import { LiveList } from "./LiveList";
 
@@ -37,6 +38,11 @@ export const AgentMessageList: FC<AgentMessageList.Props> = ({
 			data-ui-gap="lg"
 			{...props}
 		>
+			<EmptyWelcome
+				threadId={threadId}
+				isPending={isPending}
+			/>
+
 			<HistoryList
 				threadId={threadId}
 				inline={inline}

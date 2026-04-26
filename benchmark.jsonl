@@ -8,3 +8,5 @@
 {"stamp":"2026-04-26T11:38:16.315Z","kind":"core","count":500,"generatedCount":7471,"runtimePerGeneratedRowMs":11.515}
 {"stamp":"2026-04-26T11:42:01.172Z","kind":"core","count":500,"generatedCount":7485,"runtimePerGeneratedRowMs":8.394}
 {"stamp":"2026-04-26T11:43:13.475Z","kind":"core","count":2000,"generatedCount":28528,"runtimePerGeneratedRowMs":2.265}
+{"stamp":"2026-04-26T13:39:49.180Z","kind":"core","count":500000,"generatedCount":6997918,"runtimePerGeneratedRowMs":0.357}
+{"stamp":"2026-04-26T14:49:25.908Z","kind":"core","count":500000,"generatedCount":7002295,"runtimePerGeneratedRowMs":0.403}
