@@ -2,7 +2,8 @@ import type { FC, ReactNode } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { ChevronRightIcon, Icon } from "@/lib/client/icon";
-import { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
+import { isString } from "@/lib/common/is-string";
+import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import { Image } from "./Image";
 
 export namespace ListItem {
@@ -25,12 +26,11 @@ export const ListItem: FC<ListItem.Props> = ({
 	children,
 	...props
 }) => {
-	const upload = UploadSchema.safeParse(hero);
 	const image: ReactNode =
 		hero == null ? (
 			<Image />
-		) : upload.success ? (
-			<Image src={upload.data.url} />
+		) : isString(hero) ? (
+			<Image src={hero} />
 		) : (
 			<Container
 				className={"aspect-square h-full shrink-0 overflow-hidden"}

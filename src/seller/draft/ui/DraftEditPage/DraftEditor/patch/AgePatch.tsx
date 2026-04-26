@@ -24,7 +24,7 @@ export namespace AgePatch {
 export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			onView("default");
+			onView("restriction");
 		},
 		invalidate: [
 			"collection",
@@ -49,8 +49,8 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onView, ...props
 
 	return (
 		<TitleContainer
+			data-ui={"AgePatch"}
 			textTitle={translator.text("Age (title)")}
-			data-ui={"Setup-[TitleContainer.age]"}
 			left={<EditAction />}
 			{...props}
 		>
