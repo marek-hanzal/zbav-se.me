@@ -181,7 +181,7 @@ export const DraftEditor = withFallback(
 							draft={draft}
 							onCancel={onDone}
 							onView={setView}
-							defaultUploadIds={draft.gallery.items.map((item) => item.uploadId)}
+							defaultUploadIds={draft.withUploadIds}
 						/>
 					),
 				},
