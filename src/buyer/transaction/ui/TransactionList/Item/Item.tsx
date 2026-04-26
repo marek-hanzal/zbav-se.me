@@ -20,7 +20,7 @@ export namespace Item {
 export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.Props) => {
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
-	const hero = useUpload(transaction.gallery.items);
+	const hero = useUpload(transaction.withImageUrl);
 
 	return (
 		<LinkTo

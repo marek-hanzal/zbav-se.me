@@ -16,6 +16,7 @@ import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
 import { checkRestrictionFx } from "~/user/restriction/server/fx/checkRestrictionFx";
+import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 export namespace listingCreateFx {
@@ -110,6 +111,45 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					.execute();
 			});
 
+			const withUpload = yield* tryDbFx(async () => {
+				return kysely
+					.selectFrom("upload")
+					.select([
+						"id",
+						"url",
+					])
+					.where("userId", "=", userId)
+					.where("id", "in", uploadIds)
+					.orderBy("createdAt", "asc")
+					.execute();
+			});
+
+			/**
+			 * This is a hack how to manually reorder uploaded images to
+			 * listing, so they preserve user's image order.
+			 */
+			const withImageUrl = ((
+				withUpload: Pick<UploadSchema.Type, "id" | "url">[],
+				uploadIds: string[],
+			) => {
+				const urlById = new Map(
+					withUpload.map((row) => [
+						row.id,
+						row.url,
+					]),
+				);
+
+				return uploadIds.flatMap((uploadId) => {
+					const imageUrl = urlById.get(uploadId);
+
+					return imageUrl
+						? [
+								imageUrl,
+							]
+						: [];
+				});
+			})(withUpload, uploadIds);
+
 			let sort = 0;
 			for (const uploadId of uploadIds) {
 				yield* galleryItemInsertFx({
@@ -140,6 +180,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						withCategoryDiscovery: withCategory.discovery,
 						withCategoryRestriction: withCategory.restriction,
 						withLocationGeo: withLocation.geo,
+						withImageUrl,
 						withTitleSearch: sql`lower(immutable_unaccent(${data.title}))`,
 						titleVec: pgvector.toSql(
 							embedMinHash({

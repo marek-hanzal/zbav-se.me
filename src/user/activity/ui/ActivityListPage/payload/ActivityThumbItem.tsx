@@ -24,7 +24,7 @@ export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
 	const locale = useLocale();
 	const [isOpen, setIsOpen] = useState(false);
 	const { data: listing } = withListingQuery.useFetchQuery(item.payload.listingId);
-	const hero = useUpload(listing.gallery.items);
+	const hero = useUpload(listing.withImageUrl);
 	const patchMutation = withActivityQuery.usePatchMutation({
 		invalidate: [],
 	});

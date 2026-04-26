@@ -1,13 +1,11 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { withListingSourceSelectFx } from "~/buyer/listing/server/db/withListingSourceSelectFx";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import type { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
-import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
 import { withActiveUserRestrictionSelectFx } from "~/user/user-restriction/server/db/withActiveUserRestrictionSelectFx";
 
 export namespace withListingSelectFx {
@@ -32,7 +30,6 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 		hasExplicitCategory,
 	});
 
-	const gallerySelect = yield* withGallerySelectFx({});
 	const restrictionSql = yield* withActiveUserRestrictionSelectFx({
 		userId,
 	});
@@ -54,6 +51,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.locationId",
 			"l.categoryId",
 			"l.galleryId",
+			"l.withImageUrl",
 			"l.draftId",
 			"l.expiresAt",
 			"l.title",
@@ -109,11 +107,6 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				.end()
 				.$castTo<number | null>()
 				.as("distance"),
-
-			jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))
-				.$notNull()
-				.as("gallery"),
-
 			sql<boolean>`${eb.ref("l.userId")} = ${eb.val(userId)}`.as("my"),
 
 			eb

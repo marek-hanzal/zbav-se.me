@@ -22,6 +22,7 @@ const categoryCache = new Map<
 	}
 >();
 const locationGeoCache = new Map<string, unknown>();
+const uploadUrlCache = new Map<string, string>();
 
 const withCachedTitleVec = (title: string) => {
 	const cached = titleVecCache.get(title);
@@ -35,6 +36,34 @@ const withCachedTitleVec = (title: string) => {
 	);
 	titleVecCache.set(title, next);
 	return next;
+};
+
+const withOrderedImageUrl = ({
+	rows,
+	uploadIds,
+}: {
+	rows: Array<{
+		id: string;
+		url: string;
+	}>;
+	uploadIds: string[];
+}) => {
+	const urlById = new Map(
+		rows.map((row) => [
+			row.id,
+			row.url,
+		]),
+	);
+
+	return uploadIds.flatMap((uploadId) => {
+		const imageUrl = urlById.get(uploadId);
+
+		return imageUrl
+			? [
+					imageUrl,
+				]
+			: [];
+	});
 };
 
 export namespace seedListingInsertFx {
@@ -98,6 +127,41 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 		uploadIds,
 	});
 
+	const missingUploadIds = uploadIds.filter((uploadId) => !uploadUrlCache.has(uploadId));
+
+	if (missingUploadIds.length > 0) {
+		const uploadRows = yield* tryDbFx(async () =>
+			kysely
+				.selectFrom("upload")
+				.select([
+					"id",
+					"url",
+				])
+				.where("id", "in", missingUploadIds)
+				.execute(),
+		);
+
+		for (const row of uploadRows) {
+			uploadUrlCache.set(row.id, row.url);
+		}
+	}
+
+	const withImageUrl = withOrderedImageUrl({
+		rows: uploadIds.flatMap((uploadId) => {
+			const imageUrl = uploadUrlCache.get(uploadId);
+
+			return imageUrl
+				? [
+						{
+							id: uploadId,
+							url: imageUrl,
+						},
+					]
+				: [];
+		}),
+		uploadIds,
+	});
+
 	yield* tryDbFx(async () =>
 		kysely
 			.insertInto("listing")
@@ -112,6 +176,7 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 				withCategoryDiscovery: categoryRow.discovery,
 				withCategoryRestriction: categoryRow.restriction,
 				withLocationGeo: locationGeo,
+				withImageUrl,
 				withTitleSearch: sql`lower(immutable_unaccent(${data.title}))`,
 				...data,
 				titleVec: withCachedTitleVec(data.title),

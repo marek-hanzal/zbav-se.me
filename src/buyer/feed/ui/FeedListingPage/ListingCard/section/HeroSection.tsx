@@ -21,7 +21,7 @@ export namespace HeroSection {
 }
 
 export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) => {
-	const hero = useUpload(listing.gallery.items);
+	const hero = useUpload(listing.withImageUrl);
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 
 	useRenderLogger({

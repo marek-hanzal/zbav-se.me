@@ -27,7 +27,7 @@ export const Gallery = withFallback(
 				transactionEntryId: transactionEntry.id,
 			},
 		});
-		const hero = useUpload(gallery.items);
+		const hero = useUpload(gallery.items.map(({ upload }) => upload.url));
 		const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 		return (
@@ -43,7 +43,7 @@ export const Gallery = withFallback(
 				{...props}
 			>
 				<HeroImage
-					src={hero.url}
+					src={hero}
 					visible
 					data-ui-tone="neutral"
 					data-ui-theme="light"
@@ -69,7 +69,7 @@ export const Gallery = withFallback(
 				/>
 
 				<GalleryPreviewSheet
-					uploads={gallery.items.map((item) => item.upload)}
+					urls={gallery.items.map((item) => item.upload.url)}
 					isOpen={isGalleryOpen}
 					onClose={() => setIsGalleryOpen(false)}
 				/>

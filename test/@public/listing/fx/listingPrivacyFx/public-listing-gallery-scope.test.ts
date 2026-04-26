@@ -96,9 +96,9 @@ describe("public listing gallery privacy", () => {
 				collection,
 			]);
 
-			expect(fetched.gallery.id).toBe(listing.gallery.id);
-			expect(fetched.gallery.items).toHaveLength(1);
-			expect(fetched.gallery.items.map((item) => item.upload.url)).not.toContain(orphanUrl);
+			expect(fetched.galleryId).toBe(listing.galleryId);
+			expect(fetched.withImageUrl).toHaveLength(1);
+			expect(fetched.withImageUrl).not.toContain(orphanUrl);
 			expect(serialized).not.toContain(orphanUploadId);
 			expect(serialized).not.toContain(orphanGalleryId);
 			expect(serialized).not.toContain(orphanGalleryItemId);

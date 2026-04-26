@@ -1,8 +1,6 @@
-import type { GalleryItemSchema } from "~/user/gallery-item/server/schema/GalleryItemSchema";
-import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import { useMaybeUpload } from "./useMaybeUpload";
 
-export const useUpload = (items: GalleryItemSchema.Type[]): UploadSchema.Type => {
+export const useUpload = (items: string[]): string => {
 	const upload = useMaybeUpload(items);
 
 	if (!upload) {

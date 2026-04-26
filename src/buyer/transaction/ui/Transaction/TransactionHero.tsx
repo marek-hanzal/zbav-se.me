@@ -18,7 +18,7 @@ export namespace TransactionHero {
 export const TransactionHero: FC<TransactionHero.Props> = ({ transactionId, ...props }) => {
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 	const [, setDetail] = useState(false);
-	const hero = useUpload(transaction.gallery.items);
+	const hero = useUpload(transaction.withImageUrl);
 
 	useRenderLogger({
 		logger: getRootLogger(),

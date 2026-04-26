@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { GallerySchema } from "~/user/gallery/server/schema/GallerySchema";
 import { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 
 export const TransactionListingSchema = z
@@ -10,11 +9,14 @@ export const TransactionListingSchema = z
 		listingId: z.string().meta({
 			description: "ID of the listing that has at least one transaction",
 		}),
+		galleryId: z.string().meta({
+			description: "ID of the listing gallery",
+		}),
 		title: z.string().meta({
 			description: "Title of the listing",
 		}),
-		gallery: GallerySchema.meta({
-			description: "Listing gallery images",
+		withImageUrl: z.array(z.string()).meta({
+			description: "Ordered listing image URLs",
 		}),
 		count: z.coerce.number().int().nonnegative().meta({
 			description: "Total number of transactions for this listing (within the current scope)",

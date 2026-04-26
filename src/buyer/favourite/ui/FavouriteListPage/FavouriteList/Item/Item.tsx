@@ -17,7 +17,7 @@ export namespace Item {
 export const Item = withFallback(({ _suspense, listingId }: Item.Props) => {
 	const locale = useLocale();
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
-	const hero = useUpload(listing.gallery.items);
+	const hero = useUpload(listing.withImageUrl);
 
 	return (
 		<ListItem

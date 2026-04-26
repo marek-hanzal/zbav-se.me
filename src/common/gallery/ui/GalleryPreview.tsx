@@ -2,11 +2,10 @@ import { type FC, useRef } from "react";
 import { Container } from "@/lib/client/container";
 import { Fade } from "@/lib/client/fade";
 import { HeroImage } from "~/common/ui/img";
-import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 
 export namespace GalleryPreview {
 	export interface Props extends Container.Props {
-		uploads: UploadSchema.Type[];
+		urls: string[];
 	}
 }
 
@@ -14,7 +13,7 @@ export namespace GalleryPreview {
  * Shows a visual preview of gallery content, including loading-aware rendering.
  * Use it to confirm selected media before the final submit action.
  */
-export const GalleryPreview: FC<GalleryPreview.Props> = ({ uploads, ...props }) => {
+export const GalleryPreview: FC<GalleryPreview.Props> = ({ urls, ...props }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
@@ -36,11 +35,12 @@ export const GalleryPreview: FC<GalleryPreview.Props> = ({ uploads, ...props }) 
 				data-ui-snap-align="center"
 				data-ui-gap="default"
 			>
-				{uploads.map((upload) => {
+				{urls.map((imageUrl, index) => {
 					return (
 						<HeroImage
-							key={upload.id}
-							src={upload.url}
+							// biome-ignore lint/suspicious/noArrayIndexKey: Sssst
+							key={index}
+							src={imageUrl}
 							alt={"Gallery image"}
 							data-ui-height="full"
 							data-ui-round="default"

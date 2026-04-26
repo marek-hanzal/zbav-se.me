@@ -66,6 +66,10 @@ export const ListingTableSchema = z
 		title: z.string().meta({
 			description: "Title of the item",
 		}),
+		withImageUrl: z.array(z.string()).meta({
+			description:
+				"Denormalized ordered public image URLs used for listing gallery previews and list reads",
+		}),
 		withTitleSearch: z.string().meta({
 			description: "Denormalized normalized title search text for listing search predicates",
 		}),

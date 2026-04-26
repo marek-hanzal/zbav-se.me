@@ -49,7 +49,7 @@ Price type: ${match(item.priceType)
 					.exhaustive()}
 
 Images:
-${item.gallery.items.map((item) => item.upload.url)}
+${item.withImageUrl.join("\n")}
 
 Description:
 ${item.description}

@@ -20,7 +20,7 @@ export namespace Hero {
 
 export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
-	const hero = useUpload(listing.gallery.items);
+	const hero = useUpload(listing.withImageUrl);
 
 	return (
 		<Container

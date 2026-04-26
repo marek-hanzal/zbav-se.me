@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { CategorySchema } from "~/public/category/server/schema/CategorySchema";
-import { GallerySchema } from "~/public/gallery/server/schema/GallerySchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 
@@ -13,6 +12,8 @@ export const ListingSchema = z
 			price: true,
 			priceType: true,
 			currency: true,
+			galleryId: true,
+			withImageUrl: true,
 			createdAt: true,
 		}).shape,
 		restrictions: z.array(RestrictionEnumSchema).meta({
@@ -22,9 +23,6 @@ Computed restrictions from category and listing. Read-only.
 		}),
 		location: LocationSchema,
 		category: CategorySchema,
-		gallery: GallerySchema.meta({
-			description: "Listing gallery images",
-		}),
 	})
 	.strip()
 	.meta({

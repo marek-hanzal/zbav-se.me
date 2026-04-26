@@ -19,7 +19,7 @@ export namespace ListingItem {
  */
 export const ListingItem = withFallback(({ listingId }: ListingItem.Props) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
-	const hero = useUpload(listing.gallery.items);
+	const hero = useUpload(listing.withImageUrl);
 
 	return (
 		<ListItem

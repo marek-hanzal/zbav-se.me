@@ -41,6 +41,9 @@ export const ListingMigration: Migration = {
 			.addColumn("draftId", "text")
 			//
 			.addColumn("title", "text", (col) => col.notNull())
+			.addColumn("withImageUrl", sql`text[]`, (col) =>
+				col.notNull().defaultTo(sql`array[]::text[]`),
+			)
 			.addColumn("withTitleSearch", "text", (col) => col.notNull())
 			.addColumn("titleVec", sql`vector(64)`)
 			//

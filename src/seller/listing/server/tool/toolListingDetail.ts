@@ -47,7 +47,7 @@ Category: ${item.category.group} / ${item.category.category}
 Location: ${item.location.address}
 
 Images:
-${item.gallery.items.length > 0 ? item.gallery.items.map((galleryItem) => galleryItem.upload.url) : "not set"}
+${item.withImageUrl.join("\n")}
 
 Description:
 ${item.description ?? "not set"}
