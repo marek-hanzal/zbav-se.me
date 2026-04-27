@@ -8,12 +8,6 @@ export const ListingSchema = z
 	.looseObject({
 		...ListingTableSchema.pick({
 			id: true,
-			title: true,
-			price: true,
-			priceType: true,
-			currency: true,
-			galleryId: true,
-			withImageUrl: true,
 			createdAt: true,
 		}).shape,
 		restrictions: z.array(RestrictionEnumSchema).meta({

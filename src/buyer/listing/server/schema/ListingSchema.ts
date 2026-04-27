@@ -40,10 +40,6 @@ Computed restrictions from category and listing. Read-only.
 	})
 	.omit({
 		userId: true,
-		withCategoryDiscovery: true,
-		withCategoryRestriction: true,
-		withLocationGeo: true,
-		withTitleSearch: true,
 	})
 	.strip()
 	.meta({

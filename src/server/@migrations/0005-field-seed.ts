@@ -1,8 +1,6 @@
 import type { Migration } from "kysely";
 import { genId } from "@/lib/common/gen-id";
-import fieldSeedData from "~/server/@migrations/0005-field-seed/field.json" with {
-	type: "json",
-};
+import fieldSeedData from "~/server/@migrations/0005-field-seed/field.json" with { type: "json" };
 
 export const FieldSeedMigration: Migration = {
 	async up(db) {
