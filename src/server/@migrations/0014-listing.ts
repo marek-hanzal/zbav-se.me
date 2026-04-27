@@ -30,9 +30,9 @@ export const ListingMigration: Migration = {
 			.addColumn("warranty", sql`listing_warranty_enum`)
 			.addColumn("status", sql`listing_status_enum`)
 			.addColumn("restriction", sql`restriction_enum`)
-			.addColumn("withCategoryDiscovery", sql`category_discovery_enum`, (col) =>
-				col.notNull(),
-			)
+			.addColumn("withCategoryDiscovery", sql`category_discovery_enum`, (col) => {
+				return col.notNull();
+			})
 			.addColumn("withCategoryRestriction", sql`restriction_enum`)
 			.addColumn("locationId", "text", (col) => col.notNull())
 			.addColumn("withLocationGeo", sql`geography(Point,4326)`)
@@ -41,9 +41,9 @@ export const ListingMigration: Migration = {
 			.addColumn("draftId", "text")
 			//
 			.addColumn("title", "text", (col) => col.notNull())
-			.addColumn("withImageUrl", sql`text[]`, (col) =>
-				col.notNull().defaultTo(sql`array[]::text[]`),
-			)
+			.addColumn("withImageUrl", sql`text[]`, (col) => {
+				return col.notNull().defaultTo(sql`array[]::text[]`);
+			})
 			.addColumn("withTitleSearch", "text", (col) => col.notNull())
 			//
 			.addColumn("description", "text")
@@ -62,7 +62,9 @@ export const ListingMigration: Migration = {
 				[
 					"id",
 				],
-				(c) => c.onDelete("cascade"),
+				(c) => {
+					return c.onDelete("cascade");
+				},
 			)
 			.addForeignKeyConstraint(
 				"listing_[locationId]_fk",
@@ -73,7 +75,9 @@ export const ListingMigration: Migration = {
 				[
 					"id",
 				],
-				(c) => c.onDelete("cascade"),
+				(c) => {
+					return c.onDelete("cascade");
+				},
 			)
 			.addForeignKeyConstraint(
 				"listing_[categoryId]_fk",
@@ -84,7 +88,9 @@ export const ListingMigration: Migration = {
 				[
 					"id",
 				],
-				(c) => c.onDelete("cascade"),
+				(c) => {
+					return c.onDelete("cascade");
+				},
 			)
 			.addForeignKeyConstraint(
 				"listing_[galleryId]_fk",
@@ -95,7 +101,9 @@ export const ListingMigration: Migration = {
 				[
 					"id",
 				],
-				(c) => c.onDelete("cascade"),
+				(c) => {
+					return c.onDelete("cascade");
+				},
 			)
 			.addForeignKeyConstraint(
 				"listing_[draftId]_fk",
@@ -106,7 +114,9 @@ export const ListingMigration: Migration = {
 				[
 					"id",
 				],
-				(c) => c.onDelete("set null"),
+				(c) => {
+					return c.onDelete("set null");
+				},
 			)
 			.execute();
 
@@ -273,10 +283,5 @@ export const ListingMigration: Migration = {
 			WHERE "status" = 'live'
 				AND "withCategoryDiscovery" = 'implicit'
 		`.execute(db);
-
-		// Title vector (e.g., simhash/char-ngrams): cosine
-		await sql`
-            CREATE INDEX "listing_[titleVec]_hnsw_cos_idx" ON "listing" USING hnsw ("titleVec" vector_cosine_ops);
-        `.execute(db);
 	},
 };
