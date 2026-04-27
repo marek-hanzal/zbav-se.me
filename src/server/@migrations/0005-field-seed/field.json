@@ -6,6 +6,12 @@
 		"required": true
 	},
 	{
+		"name": "price",
+		"group": "listing",
+		"type": "decimal",
+		"required": false
+	},
+	{
 		"name": "warranty",
 		"group": "listing",
 		"type": "enum-single",
