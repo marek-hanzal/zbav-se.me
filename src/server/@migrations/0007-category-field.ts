@@ -7,6 +7,7 @@ export const CategoryFieldMigration: Migration = {
 			.addColumn("categoryId", "text", (col) => col.notNull())
 			.addColumn("fieldId", "text", (col) => col.notNull())
 			.addColumn("sort", "int2", (col) => col.notNull())
+			.addColumn("required", "boolean")
 			.addPrimaryKeyConstraint("category_field_pk", [
 				"categoryId",
 				"fieldId",
