@@ -8,7 +8,10 @@ export const FieldMigration: Migration = {
 			.addColumn("name", "text", (col) => col.notNull())
 			.addColumn("required", "boolean", (col) => col.notNull())
 			.addColumn("group", "text", (col) => col.notNull())
-			.addUniqueConstraint("field_[name-group]_unique_idx", ["name", "group"])
+			.addUniqueConstraint("field_[name-group]_unique_idx", [
+				"name",
+				"group",
+			])
 			.execute();
 	},
 };
