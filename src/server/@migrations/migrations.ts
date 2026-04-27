@@ -3,6 +3,7 @@ import { AccessMigration } from "~/server/@migrations/0001-access";
 import { RestrictionMigration } from "~/server/@migrations/0002-restriction";
 import { FieldMigration } from "~/server/@migrations/0003-field";
 import { FieldOptionMigration } from "~/server/@migrations/0004-field-option";
+import { AttrLocationMigration } from "~/server/@migrations/0005-attr-location";
 import { AttrNumberMigration } from "~/server/@migrations/0006-attr-number";
 import { AttrDecimalMigration } from "~/server/@migrations/0007-attr-decimal";
 import { AttrTextMigration } from "~/server/@migrations/0008-attr-text";
@@ -43,6 +44,7 @@ export const migrations = {
 	"0002-restriction": RestrictionMigration,
 	"0003-field": FieldMigration,
 	"0004-field-option": FieldOptionMigration,
+	"0005-attr-location": AttrLocationMigration,
 	"0006-attr-number": AttrNumberMigration,
 	"0007-attr-decimal": AttrDecimalMigration,
 	"0008-attr-text": AttrTextMigration,
