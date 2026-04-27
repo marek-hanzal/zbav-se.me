@@ -2,7 +2,7 @@ import type { Migration } from "kysely";
 import pgvector from "pgvector";
 import { embedMinHash } from "@/lib/common/embedding";
 import { genId } from "@/lib/common/gen-id";
-import categoriesCsData from "~/server/@migrations/0025-category/categories.cs.json" with {
+import categoriesCsData from "~/server/@migrations/0027-category/categories.cs.json" with {
 	type: "json",
 };
 

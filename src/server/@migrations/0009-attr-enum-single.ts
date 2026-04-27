@@ -14,6 +14,17 @@ export const AttrEnumSingleMigration: Migration = {
 			])
 
 			.addForeignKeyConstraint(
+				"attr_enum_single_[listingId]_fk",
+				[
+					"listingId",
+				],
+				"listing",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
+			.addForeignKeyConstraint(
 				"attr_enum_single_[fieldId]_fk",
 				[
 					"fieldId",
@@ -25,15 +36,17 @@ export const AttrEnumSingleMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"attr_enum_single_[listingId]_fk",
+				"attr_enum_single_[fieldId-value]_fk",
 				[
-					"listingId",
+					"fieldId",
+					"value",
 				],
-				"listing",
+				"field_option",
 				[
-					"id",
+					"fieldId",
+					"value",
 				],
-				(c) => c.onDelete("cascade"),
+				(c) => c.onDelete("restrict"),
 			)
 
 			.execute();
