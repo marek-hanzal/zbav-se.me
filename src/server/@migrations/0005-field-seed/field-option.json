@@ -1,241 +1,151 @@
 [
 	{
-		"field": {
-			"name": "warranty",
-			"group": "listing"
-		},
+		"field": "warranty",
 		"value": "no-warranty",
 		"sort": 0
 	},
 	{
-		"field": {
-			"name": "warranty",
-			"group": "listing"
-		},
+		"field": "warranty",
 		"value": "warranty",
 		"sort": 1
 	},
 	{
-		"field": {
-			"name": "warranty",
-			"group": "listing"
-		},
+		"field": "warranty",
 		"value": "custom",
 		"sort": 2
 	},
 	{
-		"field": {
-			"name": "delivery",
-			"group": "listing"
-		},
+		"field": "delivery",
 		"value": "personal",
 		"sort": 0
 	},
 	{
-		"field": {
-			"name": "delivery",
-			"group": "listing"
-		},
+		"field": "delivery",
 		"value": "post",
 		"sort": 1
 	},
 	{
-		"field": {
-			"name": "delivery",
-			"group": "listing"
-		},
+		"field": "delivery",
 		"value": "package",
 		"sort": 2
 	},
 	{
-		"field": {
-			"name": "delivery",
-			"group": "listing"
-		},
+		"field": "delivery",
 		"value": "other",
 		"sort": 3
 	},
 	{
-		"field": {
-			"name": "price-type",
-			"group": "listing"
-		},
+		"field": "price-type",
 		"value": "closed",
 		"sort": 0
 	},
 	{
-		"field": {
-			"name": "price-type",
-			"group": "listing"
-		},
+		"field": "price-type",
 		"value": "open",
 		"sort": 1
 	},
 	{
-		"field": {
-			"name": "price-type",
-			"group": "listing"
-		},
+		"field": "price-type",
 		"value": "offer",
 		"sort": 2
 	},
 	{
-		"field": {
-			"name": "restriction",
-			"group": "listing"
-		},
+		"field": "restriction",
 		"value": "none",
 		"sort": 0
 	},
 	{
-		"field": {
-			"name": "restriction",
-			"group": "listing"
-		},
+		"field": "restriction",
 		"value": "adult-relaxed",
 		"sort": 1
 	},
 	{
-		"field": {
-			"name": "restriction",
-			"group": "listing"
-		},
+		"field": "restriction",
 		"value": "adult",
 		"sort": 2
 	},
 	{
-		"field": {
-			"name": "restriction",
-			"group": "listing"
-		},
+		"field": "restriction",
 		"value": "sensitive",
 		"sort": 3
 	},
 	{
-		"field": {
-			"name": "restriction",
-			"group": "listing"
-		},
+		"field": "restriction",
 		"value": "restricted",
 		"sort": 4
 	},
 	{
-		"field": {
-			"name": "expire",
-			"group": "listing"
-		},
+		"field": "expire-at",
 		"value": "7-days",
 		"sort": 0
 	},
 	{
-		"field": {
-			"name": "expire",
-			"group": "listing"
-		},
+		"field": "expire-at",
 		"value": "14-days",
 		"sort": 1
 	},
 	{
-		"field": {
-			"name": "expire",
-			"group": "listing"
-		},
+		"field": "expire-at",
 		"value": "1-month",
 		"sort": 2
 	},
 	{
-		"field": {
-			"name": "condition",
-			"group": "listing"
-		},
+		"field": "condition",
 		"value": "1",
 		"sort": 0
 	},
 	{
-		"field": {
-			"name": "condition",
-			"group": "listing"
-		},
+		"field": "condition",
 		"value": "2",
 		"sort": 1
 	},
 	{
-		"field": {
-			"name": "condition",
-			"group": "listing"
-		},
+		"field": "condition",
 		"value": "3",
 		"sort": 2
 	},
 	{
-		"field": {
-			"name": "condition",
-			"group": "listing"
-		},
+		"field": "condition",
 		"value": "4",
 		"sort": 3
 	},
 	{
-		"field": {
-			"name": "condition",
-			"group": "listing"
-		},
+		"field": "condition",
 		"value": "5",
 		"sort": 4
 	},
 	{
-		"field": {
-			"name": "condition",
-			"group": "listing"
-		},
+		"field": "condition",
 		"value": "6",
 		"sort": 5
 	},
 	{
-		"field": {
-			"name": "age",
-			"group": "listing"
-		},
+		"field": "age",
 		"value": "1",
 		"sort": 0
 	},
 	{
-		"field": {
-			"name": "age",
-			"group": "listing"
-		},
+		"field": "age",
 		"value": "2",
 		"sort": 1
 	},
 	{
-		"field": {
-			"name": "age",
-			"group": "listing"
-		},
+		"field": "age",
 		"value": "3",
 		"sort": 2
 	},
 	{
-		"field": {
-			"name": "age",
-			"group": "listing"
-		},
+		"field": "age",
 		"value": "4",
 		"sort": 3
 	},
 	{
-		"field": {
-			"name": "age",
-			"group": "listing"
-		},
+		"field": "age",
 		"value": "5",
 		"sort": 4
 	},
 	{
-		"field": {
-			"name": "age",
-			"group": "listing"
-		},
+		"field": "age",
 		"value": "6",
 		"sort": 5
 	}

@@ -15,7 +15,11 @@
 		"group": "Mobily a příslušenství",
 		"category": "Smartphone",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--tlacitkovy-telefon",

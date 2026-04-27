@@ -24,8 +24,7 @@ export const FieldSeedMigration: Migration = {
 					fieldId: db
 						.selectFrom("field")
 						.select("id")
-						.where("name", "=", field.name)
-						.where("group", "=", field.group),
+						.where("name", "=", field),
 					...rest,
 				})),
 			)
