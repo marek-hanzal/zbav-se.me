@@ -1,7 +1,14 @@
 [
 	{
-		"name": "nam",
-		"group": "group",
+		"name": "title",
+		"group": "listing",
+		"type": "text",
+		"required": true
+	},
+	{
+		"name": "warranty",
+		"group": "listing",
+		"type": "enum-single",
 		"required": false
 	}
 ]

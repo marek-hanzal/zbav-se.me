@@ -7,7 +7,6 @@ export const FieldOptionMigration: Migration = {
 			//
 			.addColumn("fieldId", "text", (col) => col.notNull())
 			.addColumn("value", "text", (col) => col.notNull())
-			.addColumn("label", "text", (col) => col.notNull())
 			.addColumn("sort", "integer", (col) => col.notNull())
 
 			.addPrimaryKeyConstraint("field_option_[fieldId-value]_pk", [
