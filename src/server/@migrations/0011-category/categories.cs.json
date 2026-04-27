@@ -17,8 +17,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -36,8 +46,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -56,8 +76,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -74,8 +104,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -93,8 +133,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -114,8 +164,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -135,8 +195,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -155,8 +225,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -177,8 +257,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -197,8 +287,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -219,8 +319,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -242,8 +352,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -263,8 +383,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -285,8 +415,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -306,8 +446,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -328,8 +478,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -349,8 +509,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -371,8 +541,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -394,8 +574,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -417,8 +607,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -440,8 +640,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -462,8 +672,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -484,8 +704,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -506,8 +736,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -529,8 +769,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -551,8 +801,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -573,8 +833,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -594,8 +864,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -616,8 +896,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -638,8 +928,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -660,8 +960,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -682,8 +992,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -705,8 +1025,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -727,8 +1057,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -748,8 +1088,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -768,8 +1118,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -790,8 +1150,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -811,8 +1181,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -832,8 +1212,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -853,8 +1243,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -876,8 +1276,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -897,8 +1307,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -919,8 +1339,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -941,8 +1371,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -963,8 +1403,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -984,8 +1434,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1005,8 +1465,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1027,8 +1497,18 @@
 		"restriction": "adult",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1048,8 +1528,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1068,8 +1558,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1087,8 +1587,18 @@
 		"restriction": "adult",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1107,8 +1617,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1128,8 +1648,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1147,8 +1677,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1167,8 +1707,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1188,8 +1738,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1209,8 +1769,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1230,8 +1800,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1251,8 +1831,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1271,8 +1861,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1292,8 +1892,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1312,8 +1922,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1333,8 +1953,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1353,8 +1983,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1374,8 +2014,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1395,8 +2045,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1415,8 +2075,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1436,8 +2106,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1458,8 +2138,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1479,8 +2169,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1501,8 +2201,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1522,8 +2232,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1543,8 +2263,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1564,8 +2294,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1585,8 +2325,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1606,8 +2356,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1627,8 +2387,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1648,8 +2418,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1668,8 +2448,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1691,8 +2481,18 @@
 		"restriction": "adult",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1710,8 +2510,18 @@
 		"restriction": "adult",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1732,8 +2542,18 @@
 		"restriction": "adult",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1753,8 +2573,18 @@
 		"restriction": "adult",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1773,8 +2603,18 @@
 		"restriction": "adult",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1794,8 +2634,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1815,8 +2665,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1836,8 +2696,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1857,8 +2727,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1879,8 +2759,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1900,8 +2790,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1921,8 +2821,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1941,8 +2851,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1963,8 +2883,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -1984,8 +2914,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2005,8 +2945,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2025,8 +2975,18 @@
 		"restriction": "sensitive",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2045,8 +3005,18 @@
 		"restriction": "sensitive",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2065,8 +3035,18 @@
 		"restriction": "sensitive",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2084,8 +3064,18 @@
 		"restriction": "sensitive",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2104,8 +3094,18 @@
 		"restriction": "sensitive",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2128,8 +3128,18 @@
 		"restriction": "sensitive",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2150,8 +3160,18 @@
 		"restriction": "adult",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2172,8 +3192,18 @@
 		"restriction": "adult",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2194,8 +3224,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2214,8 +3254,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2234,8 +3284,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2255,8 +3315,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2275,8 +3345,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2296,8 +3376,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2318,8 +3408,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2340,8 +3440,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2361,8 +3471,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2383,8 +3503,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2404,8 +3534,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2425,8 +3565,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2447,8 +3597,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2468,8 +3628,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2489,8 +3659,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2511,8 +3691,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2531,8 +3721,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2549,8 +3749,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2567,8 +3777,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2587,8 +3807,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2608,8 +3838,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2627,8 +3867,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2649,8 +3899,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2670,8 +3930,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2688,8 +3958,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2708,8 +3988,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2728,8 +4018,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2749,8 +4049,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2769,8 +4079,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2790,8 +4110,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2810,8 +4140,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2831,8 +4171,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2851,8 +4201,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2872,8 +4232,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2893,8 +4263,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2913,8 +4293,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2936,8 +4326,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2958,8 +4358,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -2979,8 +4389,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3000,8 +4420,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3022,8 +4452,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3044,8 +4484,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3065,8 +4515,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3086,8 +4546,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3108,8 +4578,18 @@
 		"restriction": "adult",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3130,8 +4610,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3152,8 +4642,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3174,8 +4674,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3196,8 +4706,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3217,8 +4737,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3238,8 +4768,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3259,8 +4799,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3280,8 +4830,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3301,8 +4861,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3323,8 +4893,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3344,8 +4924,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3366,8 +4956,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3388,8 +4988,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3409,8 +5019,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3430,8 +5050,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3451,8 +5081,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3472,8 +5112,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3492,8 +5142,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3513,8 +5173,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3535,8 +5205,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3556,8 +5236,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3577,8 +5267,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3598,8 +5298,18 @@
 		"restriction": "sensitive",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3619,8 +5329,18 @@
 		"restriction": "sensitive",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3639,8 +5359,18 @@
 		"restriction": "sensitive",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3659,8 +5389,18 @@
 		"restriction": "sensitive",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3680,8 +5420,18 @@
 		"restriction": "sensitive",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3700,8 +5450,18 @@
 		"restriction": "sensitive",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3721,8 +5481,18 @@
 		"restriction": "sensitive",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3743,8 +5513,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3764,8 +5544,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3785,8 +5575,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3805,8 +5605,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3826,8 +5636,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3846,8 +5666,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3867,8 +5697,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3888,8 +5728,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3909,8 +5759,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3929,8 +5789,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3950,8 +5820,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3971,8 +5851,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -3992,8 +5882,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4012,8 +5912,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4032,8 +5942,18 @@
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4053,8 +5973,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4073,8 +6003,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4093,8 +6033,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4117,8 +6067,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4139,8 +6099,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4162,8 +6132,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4185,8 +6165,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4211,8 +6201,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4238,8 +6238,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4267,8 +6277,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4294,8 +6314,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4318,8 +6348,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4340,8 +6380,18 @@
 		"restriction": "adult",
 		"discovery": "explicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4362,8 +6412,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4383,8 +6443,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4408,8 +6478,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	},
 	{
@@ -4431,8 +6511,18 @@
 		"restriction": "none",
 		"discovery": "implicit",
 		"field": [
-			"title",
-			"location"
+			{
+				"name": "title"
+			},
+			{
+				"name": "location"
+			},
+			{
+				"name": "price"
+			},
+			{
+				"name": "price-type"
+			}
 		]
 	}
 ]
