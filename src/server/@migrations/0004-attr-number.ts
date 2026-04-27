@@ -4,25 +4,17 @@ export const AttrNumberMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createTable("attr_number")
-			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
-			.addColumn("fieldId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
-			.addColumn("value", "integer", (col) => col.notNull())
+			.addColumn("fieldId", "text", (col) => col.notNull())
 			//
-			.addForeignKeyConstraint(
-				"attr_number_[fieldId]_fk",
-				[
-					"fieldId",
-				],
-				"field",
-				[
-					"id",
-				],
-				(c) => {
-					return c.onDelete("cascade");
-				},
-			)
+			.addColumn("value", "integer", (col) => col.notNull())
+
+			.addPrimaryKeyConstraint("attr_number_pk", [
+				"listingId",
+				"fieldId",
+			])
+
 			.addForeignKeyConstraint(
 				"attr_number_[listingId]_fk",
 				[
@@ -32,11 +24,30 @@ export const AttrNumberMigration: Migration = {
 				[
 					"id",
 				],
-				(c) => {
-					return c.onDelete("cascade");
-				},
+				(c) => c.onDelete("cascade"),
 			)
-			//
+			.addForeignKeyConstraint(
+				"attr_number_[fieldId]_fk",
+				[
+					"fieldId",
+				],
+				"field",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
+
+			.execute();
+
+		await db.schema
+			.createIndex("attr_number_[fieldId-value-listingId]_idx")
+			.on("attr_number")
+			.columns([
+				"fieldId",
+				"value",
+				"listingId",
+			])
 			.execute();
 	},
 };
