@@ -30,7 +30,7 @@ export const Item = withFallback(
 
 		return (
 			<Container
-				data-ui={"Item[Container]"}
+				data-ui={"Item"}
 				data-id={feed.id}
 				data-ui-position="relative"
 				data-ui-width="full"
@@ -48,7 +48,7 @@ export const Item = withFallback(
 					data-ui-height="full"
 				>
 					<ListItem
-						hero={feed.upload}
+						hero={feed.upload?.url}
 						title={
 							<Tx
 								label={feed.name}
