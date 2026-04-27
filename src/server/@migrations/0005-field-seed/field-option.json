@@ -142,5 +142,53 @@
 		},
 		"value": "1-month",
 		"sort": 2
+	},
+	{
+		"field": {
+			"name": "condition",
+			"group": "listing"
+		},
+		"value": "1",
+		"sort": 0
+	},
+	{
+		"field": {
+			"name": "condition",
+			"group": "listing"
+		},
+		"value": "2",
+		"sort": 1
+	},
+	{
+		"field": {
+			"name": "condition",
+			"group": "listing"
+		},
+		"value": "3",
+		"sort": 2
+	},
+	{
+		"field": {
+			"name": "condition",
+			"group": "listing"
+		},
+		"value": "4",
+		"sort": 3
+	},
+	{
+		"field": {
+			"name": "condition",
+			"group": "listing"
+		},
+		"value": "5",
+		"sort": 4
+	},
+	{
+		"field": {
+			"name": "condition",
+			"group": "listing"
+		},
+		"value": "6",
+		"sort": 5
 	}
 ]

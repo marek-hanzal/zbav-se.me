@@ -40,5 +40,11 @@
 		"group": "listing",
 		"type": "enum-single",
 		"required": false
+	},
+	{
+		"name": "condition",
+		"group": "listing",
+		"type": "enum-single",
+		"required": false
 	}
 ]
