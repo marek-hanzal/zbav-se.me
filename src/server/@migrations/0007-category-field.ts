@@ -6,6 +6,7 @@ export const CategoryFieldMigration: Migration = {
 			.createTable("category_field")
 			.addColumn("categoryId", "text", (col) => col.notNull())
 			.addColumn("fieldId", "text", (col) => col.notNull())
+			.addColumn("sort", "int2", (col) => col.notNull())
 			.addPrimaryKeyConstraint("category_field_pk", [
 				"categoryId",
 				"fieldId",

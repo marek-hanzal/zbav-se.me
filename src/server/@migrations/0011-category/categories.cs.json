@@ -18,16 +18,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -47,16 +51,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -77,16 +85,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -105,16 +117,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -134,16 +150,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -165,16 +185,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -196,16 +220,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -226,16 +254,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -258,16 +290,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -288,16 +324,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -320,16 +360,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -353,16 +397,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -384,16 +432,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -416,16 +468,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -447,16 +503,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -479,16 +539,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -510,16 +574,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -542,16 +610,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -575,16 +647,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -608,16 +684,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -641,16 +721,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -673,16 +757,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -705,16 +793,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -737,16 +829,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -770,16 +866,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -802,16 +902,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -834,16 +938,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -865,16 +973,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -897,16 +1009,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -929,16 +1045,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -961,16 +1081,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -993,16 +1117,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1026,16 +1154,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1058,16 +1190,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1089,16 +1225,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1119,16 +1259,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1151,16 +1295,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1182,16 +1330,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1213,16 +1365,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1244,16 +1400,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1277,16 +1437,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1308,16 +1472,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1340,16 +1508,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1372,16 +1544,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1404,16 +1580,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1435,16 +1615,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1466,16 +1650,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1498,16 +1686,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1529,16 +1721,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1559,16 +1755,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1588,16 +1788,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1618,16 +1822,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1649,16 +1857,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1678,16 +1890,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1708,16 +1924,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1739,16 +1959,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1770,16 +1994,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1801,16 +2029,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1832,16 +2064,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1862,16 +2098,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1893,16 +2133,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1923,16 +2167,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1954,16 +2202,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -1984,16 +2236,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2015,16 +2271,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2046,16 +2306,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2076,16 +2340,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2107,16 +2375,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2139,16 +2411,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2170,16 +2446,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2202,16 +2482,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2233,16 +2517,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2264,16 +2552,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2295,16 +2587,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2326,16 +2622,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2357,16 +2657,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2388,16 +2692,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2419,16 +2727,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2449,16 +2761,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2482,16 +2798,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2511,16 +2831,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2543,16 +2867,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2574,16 +2902,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2604,16 +2936,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2635,16 +2971,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2666,16 +3006,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2697,16 +3041,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2728,16 +3076,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2760,16 +3112,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2791,16 +3147,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2822,16 +3182,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2852,16 +3216,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2884,16 +3252,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2915,16 +3287,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2946,16 +3322,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -2976,16 +3356,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3006,16 +3390,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3036,16 +3424,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3065,16 +3457,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3095,16 +3491,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3129,16 +3529,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3161,16 +3565,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3193,16 +3601,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3225,16 +3637,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3255,16 +3671,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3285,16 +3705,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3316,16 +3740,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3346,16 +3774,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3377,16 +3809,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3409,16 +3845,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3441,16 +3881,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3472,16 +3916,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3504,16 +3952,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3535,16 +3987,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3566,16 +4022,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3598,16 +4058,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3629,16 +4093,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3660,16 +4128,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3692,16 +4164,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3722,16 +4198,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3750,16 +4230,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3778,16 +4262,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3808,16 +4296,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3839,16 +4331,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3868,16 +4364,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3900,16 +4400,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3931,16 +4435,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3959,16 +4467,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -3989,16 +4501,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4019,16 +4535,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4050,16 +4570,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4080,16 +4604,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4111,16 +4639,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4141,16 +4673,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4172,16 +4708,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4202,16 +4742,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4233,16 +4777,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4264,16 +4812,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4294,16 +4846,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4327,16 +4883,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4359,16 +4919,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4390,16 +4954,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4421,16 +4989,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4453,16 +5025,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4485,16 +5061,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4516,16 +5096,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4547,16 +5131,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4579,16 +5167,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4611,16 +5203,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4643,16 +5239,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4675,16 +5275,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4707,16 +5311,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4738,16 +5346,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4769,16 +5381,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4800,16 +5416,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4831,16 +5451,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4862,16 +5486,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4894,16 +5522,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4925,16 +5557,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4957,16 +5593,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -4989,16 +5629,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5020,16 +5664,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5051,16 +5699,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5082,16 +5734,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5113,16 +5769,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5143,16 +5803,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5174,16 +5838,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5206,16 +5874,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5237,16 +5909,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5268,16 +5944,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5299,16 +5979,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5330,16 +6014,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5360,16 +6048,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5390,16 +6082,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5421,16 +6117,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5451,16 +6151,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5482,16 +6186,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5514,16 +6222,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5545,16 +6257,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5576,16 +6292,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5606,16 +6326,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5637,16 +6361,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5667,16 +6395,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5698,16 +6430,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5729,16 +6465,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5760,16 +6500,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5790,16 +6534,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5821,16 +6569,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5852,16 +6604,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5883,16 +6639,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5913,16 +6673,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5943,16 +6707,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -5974,16 +6742,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6004,16 +6776,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6034,16 +6810,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6068,16 +6848,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6100,16 +6884,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6133,16 +6921,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6166,16 +6958,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6202,16 +6998,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6239,16 +7039,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6278,16 +7082,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6315,16 +7123,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6349,16 +7161,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6381,16 +7197,20 @@
 		"discovery": "explicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6413,16 +7233,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6444,16 +7268,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6479,16 +7307,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	},
@@ -6512,16 +7344,20 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "title"
+				"name": "title",
+				"sort": 0
 			},
 			{
-				"name": "location"
+				"name": "location",
+				"sort": 1
 			},
 			{
-				"name": "price"
+				"name": "price",
+				"sort": 2
 			},
 			{
-				"name": "price-type"
+				"name": "price-type",
+				"sort": 3
 			}
 		]
 	}

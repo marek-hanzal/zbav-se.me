@@ -79,9 +79,10 @@ export const CategorySeedMigration: Migration = {
 			await db
 				.insertInto("category_field")
 				.values(
-					field.map((field) => ({
+					field.map(({ name, ...rest }) => ({
 						categoryId: db.selectFrom("category").select("id").where("slug", "=", slug),
-						fieldId: db.selectFrom("field").select("id").where("name", "=", field.name),
+						fieldId: db.selectFrom("field").select("id").where("name", "=", name),
+						...rest,
 					})),
 				)
 				.execute();
