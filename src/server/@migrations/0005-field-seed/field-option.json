@@ -190,5 +190,53 @@
 		},
 		"value": "6",
 		"sort": 5
+	},
+	{
+		"field": {
+			"name": "age",
+			"group": "listing"
+		},
+		"value": "1",
+		"sort": 0
+	},
+	{
+		"field": {
+			"name": "age",
+			"group": "listing"
+		},
+		"value": "2",
+		"sort": 1
+	},
+	{
+		"field": {
+			"name": "age",
+			"group": "listing"
+		},
+		"value": "3",
+		"sort": 2
+	},
+	{
+		"field": {
+			"name": "age",
+			"group": "listing"
+		},
+		"value": "4",
+		"sort": 3
+	},
+	{
+		"field": {
+			"name": "age",
+			"group": "listing"
+		},
+		"value": "5",
+		"sort": 4
+	},
+	{
+		"field": {
+			"name": "age",
+			"group": "listing"
+		},
+		"value": "6",
+		"sort": 5
 	}
 ]

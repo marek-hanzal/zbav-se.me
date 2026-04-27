@@ -46,5 +46,11 @@
 		"group": "listing",
 		"type": "enum-single",
 		"required": false
+	},
+	{
+		"name": "age",
+		"group": "listing",
+		"type": "enum-single",
+		"required": false
 	}
 ]
