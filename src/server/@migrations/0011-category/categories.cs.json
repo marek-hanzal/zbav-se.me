@@ -34,7 +34,11 @@
 		"group": "Mobily a příslušenství",
 		"category": "Tlačítkový telefon",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--chytre-hodinky",
@@ -50,7 +54,11 @@
 		"group": "Mobily a příslušenství",
 		"category": "Chytré hodinky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--prislusenstvi-k-mobilum",
@@ -64,7 +72,11 @@
 		"group": "Mobily a příslušenství",
 		"category": "Příslušenství k mobilům",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--powerbanka",
@@ -79,7 +91,11 @@
 		"group": "Mobily a příslušenství",
 		"category": "Powerbanka",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--nabijecky-a-kabely",
@@ -96,7 +112,11 @@
 		"group": "Mobily a příslušenství",
 		"category": "Nabíječky a kabely",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--pouzdra-a-skla",
@@ -113,7 +133,11 @@
 		"group": "Mobily a příslušenství",
 		"category": "Pouzdra a skla",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--pametove-karty",
@@ -129,7 +153,11 @@
 		"group": "Mobily a příslušenství",
 		"category": "Paměťové karty",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--notebook",
@@ -147,7 +175,11 @@
 		"group": "Počítače a kancelář",
 		"category": "Notebook",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--stolni-pc",
@@ -163,7 +195,11 @@
 		"group": "Počítače a kancelář",
 		"category": "Stolní PC",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--monitor",
@@ -181,7 +217,11 @@
 		"group": "Počítače a kancelář",
 		"category": "Monitor",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--pc-komponenty-cpu-gpu-ram",
@@ -200,7 +240,11 @@
 		"group": "Počítače a kancelář",
 		"category": "PC komponenty (CPU/GPU/RAM)",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--periferie-klavesnice-mys",
@@ -217,7 +261,11 @@
 		"group": "Počítače a kancelář",
 		"category": "Periferie (klávesnice/myš)",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--sitove-prvky-router-nas",
@@ -235,7 +283,11 @@
 		"group": "Počítače a kancelář",
 		"category": "Síťové prvky (router/NAS)",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--tiskarny-a-skenery",
@@ -252,7 +304,11 @@
 		"group": "Počítače a kancelář",
 		"category": "Tiskárny a skenery",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--uloziste-ssd-hdd",
@@ -270,7 +326,11 @@
 		"group": "Počítače a kancelář",
 		"category": "Úložiště (SSD/HDD)",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--software-a-licence",
@@ -287,7 +347,11 @@
 		"group": "Počítače a kancelář",
 		"category": "Software a licence",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--atomizery-boro",
@@ -305,7 +369,11 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Atomizéry - Boro",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--atomizery-mtl",
@@ -324,7 +392,11 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Atomizéry - MTL",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--atomizery-dl",
@@ -343,7 +415,11 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Atomizéry - DL",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--atomizery",
@@ -362,7 +438,11 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Atomizéry",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--mody",
@@ -380,7 +460,11 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Mody",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--clanky-baterie",
@@ -398,7 +482,11 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Články (baterie)",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--spiralky",
@@ -416,7 +504,11 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Spirálky",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--prislusenstvi",
@@ -435,7 +527,11 @@
 		"group": "Vape/Elektronické cigarety",
 		"category": "Příslušenství",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--damske-obleceni",
@@ -453,7 +549,11 @@
 		"group": "Oblečení a doplňky",
 		"category": "Dámské oblečení",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--panske-obleceni",
@@ -471,7 +571,11 @@
 		"group": "Oblečení a doplňky",
 		"category": "Pánské oblečení",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--detske-obleceni",
@@ -488,7 +592,11 @@
 		"group": "Oblečení a doplňky",
 		"category": "Dětské oblečení",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--boty",
@@ -506,7 +614,11 @@
 		"group": "Oblečení a doplňky",
 		"category": "Boty",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--kabelky-a-tasky",
@@ -524,7 +636,11 @@
 		"group": "Oblečení a doplňky",
 		"category": "Kabelky a tašky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--hodinky-a-sperky",
@@ -542,7 +658,11 @@
 		"group": "Oblečení a doplňky",
 		"category": "Hodinky a šperky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--sportovni-obleceni",
@@ -560,7 +680,11 @@
 		"group": "Oblečení a doplňky",
 		"category": "Sportovní oblečení",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--doplnky-cepice-pasky",
@@ -579,7 +703,11 @@
 		"group": "Oblečení a doplňky",
 		"category": "Doplňky (čepice/pásky)",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hry-a-konzole--herni-konzole",
@@ -597,7 +725,11 @@
 		"group": "Hry a konzole",
 		"category": "Herní konzole",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hry-a-konzole--hry-pro-playstation",
@@ -614,7 +746,11 @@
 		"group": "Hry a konzole",
 		"category": "Hry pro PlayStation",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hry-a-konzole--hry-pro-xbox",
@@ -630,7 +766,11 @@
 		"group": "Hry a konzole",
 		"category": "Hry pro Xbox",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hry-a-konzole--hry-pro-nintendo",
@@ -648,7 +788,11 @@
 		"group": "Hry a konzole",
 		"category": "Hry pro Nintendo",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hry-a-konzole--pc-hry",
@@ -665,7 +809,11 @@
 		"group": "Hry a konzole",
 		"category": "PC hry",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hry-a-konzole--ovladace-a-prislusenstvi",
@@ -682,7 +830,11 @@
 		"group": "Hry a konzole",
 		"category": "Ovladače a příslušenství",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hry-a-konzole--vr-headsety",
@@ -699,7 +851,11 @@
 		"group": "Hry a konzole",
 		"category": "VR headsety",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--televize",
@@ -718,7 +874,11 @@
 		"group": "TV, audio a foto",
 		"category": "Televize",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--set-top-boxy-a-prehravace",
@@ -735,7 +895,11 @@
 		"group": "TV, audio a foto",
 		"category": "Set-top boxy a přehrávače",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--reproduktory-a-soundbary",
@@ -753,7 +917,11 @@
 		"group": "TV, audio a foto",
 		"category": "Reproduktory a soundbary",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--sluchatka",
@@ -771,7 +939,11 @@
 		"group": "TV, audio a foto",
 		"category": "Sluchátka",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--fotoaparaty",
@@ -789,7 +961,11 @@
 		"group": "TV, audio a foto",
 		"category": "Fotoaparáty",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--objektivy-a-prislusenstvi",
@@ -806,7 +982,11 @@
 		"group": "TV, audio a foto",
 		"category": "Objektivy a příslušenství",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--projektory",
@@ -823,7 +1003,11 @@
 		"group": "TV, audio a foto",
 		"category": "Projektory",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--drony-s-kamerou",
@@ -841,7 +1025,11 @@
 		"group": "TV, audio a foto",
 		"category": "Drony s kamerou",
 		"restriction": "adult",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--drony-hracky",
@@ -858,7 +1046,11 @@
 		"group": "TV, audio a foto",
 		"category": "Drony - hračky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "detske-zbozi--kocarky",
@@ -874,7 +1066,11 @@
 		"group": "Dětské zboží",
 		"category": "Kočárky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "detske-zbozi--autosedacky",
@@ -889,7 +1085,11 @@
 		"group": "Dětské zboží",
 		"category": "Autosedačky",
 		"restriction": "adult",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "detske-zbozi--detske-postylky-a-zidlicky",
@@ -905,7 +1105,11 @@
 		"group": "Dětské zboží",
 		"category": "Dětské postýlky a židličky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "detske-zbozi--hracky",
@@ -922,7 +1126,11 @@
 		"group": "Dětské zboží",
 		"category": "Hračky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "detske-zbozi--detske-obleceni-a-obuv",
@@ -937,7 +1145,11 @@
 		"group": "Dětské zboží",
 		"category": "Dětské oblečení a obuv",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "detske-zbozi--prebalovani-a-pece",
@@ -953,7 +1165,11 @@
 		"group": "Dětské zboží",
 		"category": "Přebalování a péče",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "dum-a-bydleni--osvetleni",
@@ -970,7 +1186,11 @@
 		"group": "Dům a bydlení",
 		"category": "Osvětlení",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "dum-a-bydleni--textil-zavesy-koberce",
@@ -987,7 +1207,11 @@
 		"group": "Dům a bydlení",
 		"category": "Textil (závěsy/koberce)",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "dum-a-bydleni--dekorace",
@@ -1004,7 +1228,11 @@
 		"group": "Dům a bydlení",
 		"category": "Dekorace",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "dum-a-bydleni--ulozne-boxy-a-organizery",
@@ -1021,7 +1249,11 @@
 		"group": "Dům a bydlení",
 		"category": "Úložné boxy a organizéry",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "dum-a-bydleni--zrcadla-a-ramy",
@@ -1037,7 +1269,11 @@
 		"group": "Dům a bydlení",
 		"category": "Zrcadla a rámy",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "dum-a-bydleni--smart-home-chytra-domacnost",
@@ -1054,7 +1290,11 @@
 		"group": "Dům a bydlení",
 		"category": "Smart home (chytrá domácnost)",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nabytek--pohovky-a-sedaci-soupravy",
@@ -1070,7 +1310,11 @@
 		"group": "Nábytek",
 		"category": "Pohovky a sedací soupravy",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nabytek--postele-a-matrace",
@@ -1087,7 +1331,11 @@
 		"group": "Nábytek",
 		"category": "Postele a matrace",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nabytek--skrine-a-komody",
@@ -1103,7 +1351,11 @@
 		"group": "Nábytek",
 		"category": "Skříně a komody",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nabytek--stoly-a-zidle",
@@ -1120,7 +1372,11 @@
 		"group": "Nábytek",
 		"category": "Stoly a židle",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nabytek--police-a-regaly",
@@ -1137,7 +1393,11 @@
 		"group": "Nábytek",
 		"category": "Police a regály",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nabytek--zahradni-nabytek",
@@ -1153,7 +1413,11 @@
 		"group": "Nábytek",
 		"category": "Zahradní nábytek",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "bila-technika--lednice-a-mrazaky",
@@ -1170,7 +1434,11 @@
 		"group": "Bílá technika",
 		"category": "Lednice a mrazáky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "bila-technika--pracky-a-susicky",
@@ -1188,7 +1456,11 @@
 		"group": "Bílá technika",
 		"category": "Pračky a sušičky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "bila-technika--mycky-nadobi",
@@ -1205,7 +1477,11 @@
 		"group": "Bílá technika",
 		"category": "Myčky nádobí",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "bila-technika--sporaky-a-trouby",
@@ -1223,7 +1499,11 @@
 		"group": "Bílá technika",
 		"category": "Sporáky a trouby",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "bila-technika--mikrovlnky",
@@ -1240,7 +1520,11 @@
 		"group": "Bílá technika",
 		"category": "Mikrovlnky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "bila-technika--vysavace-a-parni-cistice",
@@ -1257,7 +1541,11 @@
 		"group": "Bílá technika",
 		"category": "Vysavače a parní čističe",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "kuchyn-a-jidelna--nadobi-a-pribory",
@@ -1274,7 +1562,11 @@
 		"group": "Kuchyň a jídelna",
 		"category": "Nádobí a příbory",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "kuchyn-a-jidelna--hrnce-a-panve",
@@ -1291,7 +1583,11 @@
 		"group": "Kuchyň a jídelna",
 		"category": "Hrnce a pánve",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "kuchyn-a-jidelna--sklenice-a-hrnky",
@@ -1308,7 +1604,11 @@
 		"group": "Kuchyň a jídelna",
 		"category": "Sklenice a hrnky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "kuchyn-a-jidelna--kuchynske-spotrebice-male",
@@ -1325,7 +1625,11 @@
 		"group": "Kuchyň a jídelna",
 		"category": "Kuchyňské spotřebiče malé",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "kuchyn-a-jidelna--kava-a-kavovary",
@@ -1342,7 +1646,11 @@
 		"group": "Kuchyň a jídelna",
 		"category": "Káva a kávovary",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "kuchyn-a-jidelna--boxy-a-organizery-do-kuchyne",
@@ -1358,7 +1666,11 @@
 		"group": "Kuchyň a jídelna",
 		"category": "Boxy a organizéry do kuchyně",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "jidlo--detske-prikrmy",
@@ -1377,7 +1689,11 @@
 		"group": "Jídlo",
 		"category": "Dětské příkrmy",
 		"restriction": "adult",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "jidlo--kojenecka-vyziva",
@@ -1392,7 +1708,11 @@
 		"group": "Jídlo",
 		"category": "Kojenecká výživa",
 		"restriction": "adult",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "jidlo--umela-mleka-a-pokracovaci-mleka",
@@ -1410,7 +1730,11 @@
 		"group": "Jídlo",
 		"category": "Umělá mléka a pokračovací mléka",
 		"restriction": "adult",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "jidlo--detske-kase",
@@ -1427,7 +1751,11 @@
 		"group": "Jídlo",
 		"category": "Dětské kaše",
 		"restriction": "adult",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "jidlo--doplnky-stravy-a-vitaminy",
@@ -1443,7 +1771,11 @@
 		"group": "Jídlo",
 		"category": "Doplňky stravy a vitamíny",
 		"restriction": "adult",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "jidlo--bezlepkove-a-specialni-potraviny",
@@ -1460,7 +1792,11 @@
 		"group": "Jídlo",
 		"category": "Bezlepkové a speciální potraviny",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "jidlo--trvanlive-potraviny",
@@ -1477,7 +1813,11 @@
 		"group": "Jídlo",
 		"category": "Trvanlivé potraviny",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "jidlo--sladkosti-a-snacky",
@@ -1494,7 +1834,11 @@
 		"group": "Jídlo",
 		"category": "Sladkosti a snacky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "jidlo--napoje",
@@ -1511,7 +1855,11 @@
 		"group": "Jídlo",
 		"category": "Nápoje",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "jidlo--caj-a-kava",
@@ -1529,7 +1877,11 @@
 		"group": "Jídlo",
 		"category": "Čaj a káva",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sport-a-outdoor--kola-a-prislusenstvi",
@@ -1546,7 +1898,11 @@
 		"group": "Sport a outdoor",
 		"category": "Kola a příslušenství",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sport-a-outdoor--beh-a-fitness",
@@ -1563,7 +1919,11 @@
 		"group": "Sport a outdoor",
 		"category": "Běh a fitness",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sport-a-outdoor--lyze-a-snowboard",
@@ -1579,7 +1939,11 @@
 		"group": "Sport a outdoor",
 		"category": "Lyže a snowboard",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sport-a-outdoor--kemping-stany-spacaky",
@@ -1597,7 +1961,11 @@
 		"group": "Sport a outdoor",
 		"category": "Kemping (stany/spacáky)",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sport-a-outdoor--kolobezky-a-longboardy",
@@ -1614,7 +1982,11 @@
 		"group": "Sport a outdoor",
 		"category": "Koloběžky a longboardy",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sport-a-outdoor--rybareni",
@@ -1631,7 +2003,11 @@
 		"group": "Sport a outdoor",
 		"category": "Rybaření",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "airsoft--airsoftove-pistole",
@@ -1647,7 +2023,11 @@
 		"group": "Airsoft",
 		"category": "Airsoftové pistole",
 		"restriction": "sensitive",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "airsoft--airsoftove-pusky",
@@ -1663,7 +2043,11 @@
 		"group": "Airsoft",
 		"category": "Airsoftové pušky",
 		"restriction": "sensitive",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "airsoft--airsoftove-samopaly",
@@ -1679,7 +2063,11 @@
 		"group": "Airsoft",
 		"category": "Airsoftové samopaly",
 		"restriction": "sensitive",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "airsoft--airsoftove-brokovnice",
@@ -1694,7 +2082,11 @@
 		"group": "Airsoft",
 		"category": "Airsoftové brokovnice",
 		"restriction": "sensitive",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "airsoft--airsoftove-odstrelovaci-pusky",
@@ -1710,7 +2102,11 @@
 		"group": "Airsoft",
 		"category": "Airsoftové odstřelovací pušky",
 		"restriction": "sensitive",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "airsoft--airsoftove-prislusenstvi",
@@ -1730,7 +2126,11 @@
 		"group": "Airsoft",
 		"category": "Airsoftové příslušenství",
 		"restriction": "sensitive",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "auto-moto--osobni-auta",
@@ -1748,7 +2148,11 @@
 		"group": "Auto-moto",
 		"category": "Osobní auta",
 		"restriction": "adult",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "auto-moto--motocykly-a-skutry",
@@ -1766,7 +2170,11 @@
 		"group": "Auto-moto",
 		"category": "Motocykly a skútry",
 		"restriction": "adult",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "auto-moto--pneumatiky-a-disky",
@@ -1784,7 +2192,11 @@
 		"group": "Auto-moto",
 		"category": "Pneumatiky a disky",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "auto-moto--autodoplnky",
@@ -1800,7 +2212,11 @@
 		"group": "Auto-moto",
 		"category": "Autodoplňky",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "auto-moto--nahradni-dily",
@@ -1816,7 +2232,11 @@
 		"group": "Auto-moto",
 		"category": "Náhradní díly",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "auto-moto--helmy-a-vybava",
@@ -1833,7 +2253,11 @@
 		"group": "Auto-moto",
 		"category": "Helmy a výbava",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--sekacky-a-krovinorezy",
@@ -1849,7 +2273,11 @@
 		"group": "Zahrada a dílna",
 		"category": "Sekačky a křovinořezy",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--pily-a-retezove-pily",
@@ -1866,7 +2294,11 @@
 		"group": "Zahrada a dílna",
 		"category": "Pily a řetězové pily",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--aku-naradi-vrtacky-brusky",
@@ -1884,7 +2316,11 @@
 		"group": "Zahrada a dílna",
 		"category": "Aku nářadí (vrtačky/brusky)",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--rucni-naradi",
@@ -1902,7 +2338,11 @@
 		"group": "Zahrada a dílna",
 		"category": "Ruční nářadí",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--zavlazovani-a-zahradni-technika",
@@ -1919,7 +2359,11 @@
 		"group": "Zahrada a dílna",
 		"category": "Zavlažování a zahradní technika",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--grily-a-prislusenstvi",
@@ -1937,7 +2381,11 @@
 		"group": "Zahrada a dílna",
 		"category": "Grily a příslušenství",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--pelisky-a-boudy",
@@ -1954,7 +2402,11 @@
 		"group": "Domácí zvířata",
 		"category": "Pelíšky a boudy",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--misky-a-krmitka",
@@ -1971,7 +2423,11 @@
 		"group": "Domácí zvířata",
 		"category": "Misky a krmítka",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--voditka-a-obojky",
@@ -1989,7 +2445,11 @@
 		"group": "Domácí zvířata",
 		"category": "Vodítka a obojky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--hracky-pro-zvirata",
@@ -2006,7 +2466,11 @@
 		"group": "Domácí zvířata",
 		"category": "Hračky pro zvířata",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--akvaria-a-teraria",
@@ -2023,7 +2487,11 @@
 		"group": "Domácí zvířata",
 		"category": "Akvária a terária",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--klece-a-prepravky",
@@ -2041,7 +2509,11 @@
 		"group": "Domácí zvířata",
 		"category": "Klece a přepravky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--kralici",
@@ -2057,7 +2529,11 @@
 		"group": "Domácí zvířata",
 		"category": "Králíci",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--morcata",
@@ -2071,7 +2547,11 @@
 		"group": "Domácí zvířata",
 		"category": "Morčata",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--krecici",
@@ -2085,7 +2565,11 @@
 		"group": "Domácí zvířata",
 		"category": "Křečci",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--potkani-a-mysi",
@@ -2101,7 +2585,11 @@
 		"group": "Domácí zvířata",
 		"category": "Potkani a myši",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--papousci-a-ptaci",
@@ -2118,7 +2606,11 @@
 		"group": "Domácí zvířata",
 		"category": "Papoušci a ptáci",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--rybicky",
@@ -2133,7 +2625,11 @@
 		"group": "Domácí zvířata",
 		"category": "Rybičky",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--agamy-a-jesteri",
@@ -2151,7 +2647,11 @@
 		"group": "Domácí zvířata",
 		"category": "Agamy a ještěři",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--hadi",
@@ -2168,7 +2668,11 @@
 		"group": "Domácí zvířata",
 		"category": "Hadi",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--zelvy",
@@ -2182,7 +2686,11 @@
 		"group": "Domácí zvířata",
 		"category": "Želvy",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--kocky",
@@ -2198,7 +2706,11 @@
 		"group": "Domácí zvířata",
 		"category": "Kočky",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--psi",
@@ -2214,7 +2726,11 @@
 		"group": "Domácí zvířata",
 		"category": "Psi",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--krmivo-a-pamlsky",
@@ -2231,7 +2747,11 @@
 		"group": "Domácí zvířata",
 		"category": "Krmivo a pamlsky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--stelivo-a-podestylka",
@@ -2247,7 +2767,11 @@
 		"group": "Domácí zvířata",
 		"category": "Stelivo a podestýlka",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--terarijni-vybaveni",
@@ -2264,7 +2788,11 @@
 		"group": "Domácí zvířata",
 		"category": "Terarijní vybavení",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--akvarijni-vybaveni",
@@ -2280,7 +2808,11 @@
 		"group": "Domácí zvířata",
 		"category": "Akvarijní vybavení",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--pece-a-hygiena",
@@ -2297,7 +2829,11 @@
 		"group": "Domácí zvířata",
 		"category": "Péče a hygiena",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "domaci-zvirata--veterinarni-doplnky",
@@ -2313,7 +2849,11 @@
 		"group": "Domácí zvířata",
 		"category": "Veterinární doplňky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "knihy--bezne-knihy",
@@ -2330,7 +2870,11 @@
 		"group": "Knihy",
 		"category": "Běžné knihy",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "knihy--komiksy-a-manga",
@@ -2347,7 +2891,11 @@
 		"group": "Knihy",
 		"category": "Komiksy a manga",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "knihy--pro-dospele",
@@ -2363,7 +2911,11 @@
 		"group": "Knihy",
 		"category": "Pro dospělé",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "filmy--bezne-filmy",
@@ -2382,7 +2934,11 @@
 		"group": "Filmy",
 		"category": "Běžné filmy",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "filmy--vhs",
@@ -2400,7 +2956,11 @@
 		"group": "Filmy",
 		"category": "VHS",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "filmy--pro-dospele",
@@ -2417,7 +2977,11 @@
 		"group": "Filmy",
 		"category": "Pro dospělé",
 		"restriction": "adult-relaxed",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hudba--bezna-hudba",
@@ -2434,7 +2998,11 @@
 		"group": "Hudba",
 		"category": "Běžná hudba",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hudba--vinyl-a-gramodesky",
@@ -2452,7 +3020,11 @@
 		"group": "Hudba",
 		"category": "Vinyl a gramodesky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hudba--cd-a-kazety",
@@ -2470,7 +3042,11 @@
 		"group": "Hudba",
 		"category": "CD a kazety",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hudba--noty-a-zpevniky",
@@ -2487,7 +3063,11 @@
 		"group": "Hudba",
 		"category": "Noty a zpěvníky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hobby-a-kreativita--deskovky-a-puzzle",
@@ -2504,7 +3084,11 @@
 		"group": "Hobby a kreativita",
 		"category": "Deskovky a puzzle",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hobby-a-kreativita--modelarstvi-rc-drony",
@@ -2522,7 +3106,11 @@
 		"group": "Hobby a kreativita",
 		"category": "Modelářství (RC/drony)",
 		"restriction": "adult",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hobby-a-kreativita--3d-tisk-a-filamenty",
@@ -2540,7 +3128,11 @@
 		"group": "Hobby a kreativita",
 		"category": "3D tisk a filamenty",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hobby-a-kreativita--malovani-a-kresleni",
@@ -2558,7 +3150,11 @@
 		"group": "Hobby a kreativita",
 		"category": "Malování a kreslení",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hobby-a-kreativita--siti-a-hackovani",
@@ -2576,7 +3172,11 @@
 		"group": "Hobby a kreativita",
 		"category": "Šití a háčkování",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hobby-a-kreativita--diy-sady-a-material",
@@ -2594,7 +3194,11 @@
 		"group": "Hobby a kreativita",
 		"category": "DIY sady a materiál",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "krasa-a-osobni-pece--parfemy",
@@ -2611,7 +3215,11 @@
 		"group": "Krása a osobní péče",
 		"category": "Parfémy",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "krasa-a-osobni-pece--pece-o-plet",
@@ -2628,7 +3236,11 @@
 		"group": "Krása a osobní péče",
 		"category": "Péče o pleť",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "krasa-a-osobni-pece--pece-o-vlasy",
@@ -2645,7 +3257,11 @@
 		"group": "Krása a osobní péče",
 		"category": "Péče o vlasy",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "krasa-a-osobni-pece--holici-strojky-a-epilatory",
@@ -2662,7 +3278,11 @@
 		"group": "Krása a osobní péče",
 		"category": "Holicí strojky a epilátory",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "krasa-a-osobni-pece--zehlicky-a-kulmy",
@@ -2679,7 +3299,11 @@
 		"group": "Krása a osobní péče",
 		"category": "Žehličky a kulmy",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "krasa-a-osobni-pece--manikura-a-pedikura",
@@ -2697,7 +3321,11 @@
 		"group": "Krása a osobní péče",
 		"category": "Manikúra a pedikúra",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hudebni-nastroje--kytary-a-baskytary",
@@ -2714,7 +3342,11 @@
 		"group": "Hudební nástroje",
 		"category": "Kytary a baskytary",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hudebni-nastroje--klavesy-a-piana",
@@ -2732,7 +3364,11 @@
 		"group": "Hudební nástroje",
 		"category": "Klávesy a piana",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hudebni-nastroje--bici-a-perkuse",
@@ -2750,7 +3386,11 @@
 		"group": "Hudební nástroje",
 		"category": "Bicí a perkuse",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hudebni-nastroje--dechove-nastroje",
@@ -2767,7 +3407,11 @@
 		"group": "Hudební nástroje",
 		"category": "Dechové nástroje",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hudebni-nastroje--midi-a-studiova-technika",
@@ -2784,7 +3428,11 @@
 		"group": "Hudební nástroje",
 		"category": "MIDI a studiová technika",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "hudebni-nastroje--struny-palicky-a-prislusenstvi",
@@ -2801,7 +3449,11 @@
 		"group": "Hudební nástroje",
 		"category": "Struny, paličky a příslušenství",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--mince-a-bankovky",
@@ -2818,7 +3470,11 @@
 		"group": "Sběratelství a starožitnosti",
 		"category": "Mince a bankovky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--postovni-znamky",
@@ -2834,7 +3490,11 @@
 		"group": "Sběratelství a starožitnosti",
 		"category": "Poštovní známky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--figurky-a-modely",
@@ -2851,7 +3511,11 @@
 		"group": "Sběratelství a starožitnosti",
 		"category": "Figurky a modely",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--retro-a-vintage",
@@ -2869,7 +3533,11 @@
 		"group": "Sběratelství a starožitnosti",
 		"category": "Retro a vintage",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--starozitnosti",
@@ -2886,7 +3554,11 @@
 		"group": "Sběratelství a starožitnosti",
 		"category": "Starožitnosti",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--pamatky-a-kuriozity",
@@ -2903,7 +3575,11 @@
 		"group": "Sběratelství a starožitnosti",
 		"category": "Památky a kuriozity",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "chladne-zbrane--noze",
@@ -2920,7 +3596,11 @@
 		"group": "Chladné zbraně",
 		"category": "Nože",
 		"restriction": "sensitive",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "chladne-zbrane--mece-a-savle",
@@ -2937,7 +3617,11 @@
 		"group": "Chladné zbraně",
 		"category": "Meče a šavle",
 		"restriction": "sensitive",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "chladne-zbrane--dyky",
@@ -2953,7 +3637,11 @@
 		"group": "Chladné zbraně",
 		"category": "Dýky",
 		"restriction": "sensitive",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "chladne-zbrane--bajonety",
@@ -2969,7 +3657,11 @@
 		"group": "Chladné zbraně",
 		"category": "Bajonety",
 		"restriction": "sensitive",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "chladne-zbrane--sekery-a-macety",
@@ -2986,7 +3678,11 @@
 		"group": "Chladné zbraně",
 		"category": "Sekery a mačety",
 		"restriction": "sensitive",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "chladne-zbrane--vrhaci-zbrane",
@@ -3002,7 +3698,11 @@
 		"group": "Chladné zbraně",
 		"category": "Vrhací zbraně",
 		"restriction": "sensitive",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "chladne-zbrane--repliky-a-dekorace",
@@ -3019,7 +3719,11 @@
 		"group": "Chladné zbraně",
 		"category": "Repliky a dekorace",
 		"restriction": "sensitive",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "umeni-a-design--obrazy-a-grafiky",
@@ -3037,7 +3741,11 @@
 		"group": "Umění a design",
 		"category": "Obrazy a grafiky",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "umeni-a-design--plakaty-a-printy",
@@ -3054,7 +3762,11 @@
 		"group": "Umění a design",
 		"category": "Plakáty a printy",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "umeni-a-design--sochy-a-objekty",
@@ -3071,7 +3783,11 @@
 		"group": "Umění a design",
 		"category": "Sochy a objekty",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "umeni-a-design--autorsky-design",
@@ -3087,7 +3803,11 @@
 		"group": "Umění a design",
 		"category": "Autorský design",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "umeni-a-design--ramovani-a-pasparty",
@@ -3104,7 +3824,11 @@
 		"group": "Umění a design",
 		"category": "Rámování a pasparty",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "umeni-a-design--umelecke-potreby",
@@ -3120,7 +3844,11 @@
 		"group": "Umění a design",
 		"category": "Umělecké potřeby",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nemovitosti--prodej-bytu",
@@ -3137,7 +3865,11 @@
 		"group": "Nemovitosti",
 		"category": "Prodej bytu",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nemovitosti--pronajem-bytu",
@@ -3154,7 +3886,11 @@
 		"group": "Nemovitosti",
 		"category": "Pronájem bytu",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nemovitosti--prodej-domu",
@@ -3171,7 +3907,11 @@
 		"group": "Nemovitosti",
 		"category": "Prodej domu",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nemovitosti--pronajem-domu",
@@ -3187,7 +3927,11 @@
 		"group": "Nemovitosti",
 		"category": "Pronájem domu",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nemovitosti--pozemky",
@@ -3204,7 +3948,11 @@
 		"group": "Nemovitosti",
 		"category": "Pozemky",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nemovitosti--garaze-a-parkovani",
@@ -3221,7 +3969,11 @@
 		"group": "Nemovitosti",
 		"category": "Garáže a parkování",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nemovitosti--chaty-a-chalupy",
@@ -3238,7 +3990,11 @@
 		"group": "Nemovitosti",
 		"category": "Chaty a chalupy",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "nemovitosti--komercni-prostory",
@@ -3254,7 +4010,11 @@
 		"group": "Nemovitosti",
 		"category": "Komerční prostory",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "ostatni--darkove-poukazy",
@@ -3270,7 +4030,11 @@
 		"group": "Ostatní",
 		"category": "Dárkové poukazy",
 		"restriction": "adult-relaxed",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "ostatni--ztraty-a-nalezy",
@@ -3287,7 +4051,11 @@
 		"group": "Ostatní",
 		"category": "Ztráty a nálezy",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "ostatni--nahradni-dily-ruzne",
@@ -3303,7 +4071,11 @@
 		"group": "Ostatní",
 		"category": "Náhradní díly různé",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "ostatni--nezarazene",
@@ -3319,7 +4091,11 @@
 		"group": "Ostatní",
 		"category": "Nezařazené",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--vanoce",
@@ -3339,7 +4115,11 @@
 		"group": "Sezóna",
 		"category": "Vánoce",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--valentyn",
@@ -3357,7 +4137,11 @@
 		"group": "Sezóna",
 		"category": "Valentýn",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--velikonoce",
@@ -3376,7 +4160,11 @@
 		"group": "Sezóna",
 		"category": "Velikonoce",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--halloween",
@@ -3395,7 +4183,11 @@
 		"group": "Sezóna",
 		"category": "Halloween",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--zima",
@@ -3417,7 +4209,11 @@
 		"group": "Sezóna",
 		"category": "Zima",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--jaro",
@@ -3440,7 +4236,11 @@
 		"group": "Sezóna",
 		"category": "Jaro",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--leto",
@@ -3465,7 +4265,11 @@
 		"group": "Sezóna",
 		"category": "Léto",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--podzim",
@@ -3488,7 +4292,11 @@
 		"group": "Sezóna",
 		"category": "Podzim",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--silvestr",
@@ -3508,7 +4316,11 @@
 		"group": "Sezóna",
 		"category": "Silvestr",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--pyrotechnika",
@@ -3526,7 +4338,11 @@
 		"group": "Sezóna",
 		"category": "Pyrotechnika",
 		"restriction": "adult",
-		"discovery": "explicit"
+		"discovery": "explicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--den-matek",
@@ -3544,7 +4360,11 @@
 		"group": "Sezóna",
 		"category": "Den matek",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--den-otcu",
@@ -3561,7 +4381,11 @@
 		"group": "Sezóna",
 		"category": "Den otců",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--zacatek-skoly",
@@ -3582,7 +4406,11 @@
 		"group": "Sezóna",
 		"category": "Začátek školy",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	},
 	{
 		"slug": "sezona--maturita",
@@ -3601,6 +4429,10 @@
 		"group": "Sezóna",
 		"category": "Maturita",
 		"restriction": "none",
-		"discovery": "implicit"
+		"discovery": "implicit",
+		"field": [
+			"title",
+			"geo"
+		]
 	}
 ]
