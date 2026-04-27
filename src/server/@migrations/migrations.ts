@@ -3,12 +3,6 @@ import { AccessMigration } from "~/server/@migrations/0001-access";
 import { RestrictionMigration } from "~/server/@migrations/0002-restriction";
 import { FieldMigration } from "~/server/@migrations/0003-field";
 import { FieldOptionMigration } from "~/server/@migrations/0004-field-option";
-import { AttrLocationMigration } from "~/server/@migrations/0005-attr-location";
-import { AttrNumberMigration } from "~/server/@migrations/0006-attr-number";
-import { AttrDecimalMigration } from "~/server/@migrations/0007-attr-decimal";
-import { AttrTextMigration } from "~/server/@migrations/0008-attr-text";
-import { AttrEnumSingleMigration } from "~/server/@migrations/0009-attr-enum-single";
-import { AttrEnumMultiMigration } from "~/server/@migrations/0010-attr-enum-multi";
 import { CategoryMigration } from "~/server/@migrations/0011-category";
 import { CategoryFieldMigration } from "~/server/@migrations/0012-category-field";
 import { CategorySpotlightMigration } from "~/server/@migrations/0013-category-spotlight";
@@ -36,6 +30,12 @@ import { AgentThreadMigration } from "~/server/@migrations/0034-agent-thread";
 import { AgentStreamMigration } from "~/server/@migrations/0035-agent-stream";
 import { AgentUsageMigration } from "~/server/@migrations/0036-agent-usage";
 import { UserRestrictionMigration } from "~/server/@migrations/0037-user-restriction";
+import { AttrLocationMigration } from "~/server/@migrations/0038-attr-location";
+import { AttrNumberMigration } from "~/server/@migrations/0039-attr-number";
+import { AttrDecimalMigration } from "~/server/@migrations/0040-attr-decimal";
+import { AttrTextMigration } from "~/server/@migrations/0041-attr-text";
+import { AttrEnumSingleMigration } from "~/server/@migrations/0042-attr-enum-single";
+import { AttrEnumMultiMigration } from "~/server/@migrations/0043-attr-enum-multi";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -43,12 +43,6 @@ export const migrations = {
 	"0002-restriction": RestrictionMigration,
 	"0003-field": FieldMigration,
 	"0004-field-option": FieldOptionMigration,
-	"0005-attr-location": AttrLocationMigration,
-	"0006-attr-number": AttrNumberMigration,
-	"0007-attr-decimal": AttrDecimalMigration,
-	"0008-attr-text": AttrTextMigration,
-	"0009-attr-enum-single": AttrEnumSingleMigration,
-	"0010-attr-enum-multi": AttrEnumMultiMigration,
 	"0011-category": CategoryMigration,
 	"0012-category-field": CategoryFieldMigration,
 	"0013-category-spotlight": CategorySpotlightMigration,
@@ -76,4 +70,10 @@ export const migrations = {
 	"0035-agent-stream": AgentStreamMigration,
 	"0036-agent-usage": AgentUsageMigration,
 	"0037-user-restriction": UserRestrictionMigration,
+	"0038-attr-location": AttrLocationMigration,
+	"0039-attr-number": AttrNumberMigration,
+	"0040-attr-decimal": AttrDecimalMigration,
+	"0041-attr-text": AttrTextMigration,
+	"0042-attr-enum-single": AttrEnumSingleMigration,
+	"0043-attr-enum-multi": AttrEnumMultiMigration,
 };

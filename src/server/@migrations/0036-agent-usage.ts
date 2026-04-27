@@ -28,5 +28,14 @@ export const AgentUsageMigration: Migration = {
 		await sql`
         CREATE INDEX "agent_usage_[userId-threadId-createdAt]_idx" ON "agent_usage" ("userId", "threadId", "createdAt" ASC);
 		`.execute(db);
+
+		await db.schema
+			.createIndex("agent_usage_[threadId-createdAt]_idx")
+			.on("agent_usage")
+			.columns([
+				"threadId",
+				"createdAt",
+			])
+			.execute();
 	},
 };

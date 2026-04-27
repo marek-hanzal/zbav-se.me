@@ -62,6 +62,12 @@ export const AttrLocationMigration: Migration = {
 			.execute();
 
 		await db.schema
+			.createIndex("attr_location_[locationId]_idx")
+			.on("attr_location")
+			.column("locationId")
+			.execute();
+
+		await db.schema
 			.createIndex("attr_location_[geo]_idx")
 			.on("attr_location")
 			.using("gist")

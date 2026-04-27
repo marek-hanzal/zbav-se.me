@@ -74,5 +74,14 @@ export const TransactionEntryMigration: Migration = {
 				"createdAt",
 			])
 			.execute();
+
+		await db.schema
+			.createIndex("transaction_entry_[userId-createdAt]_idx")
+			.on("transaction_entry")
+			.columns([
+				"userId",
+				"createdAt",
+			])
+			.execute();
 	},
 };

@@ -25,5 +25,14 @@ export const AgentStreamMigration: Migration = {
 		await sql`
 			CREATE INDEX "agent_stream_[userId-threadId-sort]_idx" ON "agent_stream" ("userId", "threadId", "sort" ASC);
 		`.execute(db);
+
+		await db.schema
+			.createIndex("agent_stream_[threadId-sort]_idx")
+			.on("agent_stream")
+			.columns([
+				"threadId",
+				"sort",
+			])
+			.execute();
 	},
 };

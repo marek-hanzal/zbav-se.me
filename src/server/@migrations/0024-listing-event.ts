@@ -49,6 +49,15 @@ export const ListingEventMigration: Migration = {
 			.execute();
 
 		await db.schema
+			.createIndex("listing_event_[listingId-createdAt]_idx")
+			.on("listing_event")
+			.columns([
+				"listingId",
+				"createdAt",
+			])
+			.execute();
+
+		await db.schema
 			.createIndex("listing_event_[event]_idx")
 			.on("listing_event")
 			.column("event")
