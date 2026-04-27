@@ -74,5 +74,17 @@ export const CategorySeedMigration: Migration = {
 		if (spotlightData.length > 0) {
 			await db.insertInto("category_spotlight").values(spotlightData).execute();
 		}
+
+		for await (const { slug, field } of categoriesCsData) {
+			await db
+				.insertInto("category_field")
+				.values(
+					field.map((field) => ({
+						categoryId: db.selectFrom("category").select("id").where("slug", "=", slug),
+						fieldId: db.selectFrom("field").select("id").where("name", "=", field),
+					})),
+				)
+				.execute();
+		}
 	},
 };

@@ -18,7 +18,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -37,7 +37,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -57,7 +57,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -75,7 +75,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -94,7 +94,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -115,7 +115,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -136,7 +136,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -156,7 +156,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -178,7 +178,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -198,7 +198,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -220,7 +220,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -243,7 +243,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -264,7 +264,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -286,7 +286,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -307,7 +307,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -329,7 +329,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -350,7 +350,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -372,7 +372,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -395,7 +395,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -418,7 +418,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -441,7 +441,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -463,7 +463,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -485,7 +485,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -507,7 +507,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -530,7 +530,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -552,7 +552,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -574,7 +574,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -595,7 +595,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -617,7 +617,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -639,7 +639,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -661,7 +661,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -683,7 +683,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -706,7 +706,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -728,7 +728,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -749,7 +749,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -769,7 +769,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -791,7 +791,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -812,7 +812,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -833,7 +833,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -854,7 +854,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -877,7 +877,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -898,7 +898,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -920,7 +920,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -942,7 +942,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -964,7 +964,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -985,7 +985,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1006,7 +1006,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1028,7 +1028,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1049,7 +1049,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1069,7 +1069,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1088,7 +1088,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1108,7 +1108,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1129,7 +1129,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1148,7 +1148,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1168,7 +1168,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1189,7 +1189,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1210,7 +1210,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1231,7 +1231,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1252,7 +1252,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1272,7 +1272,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1293,7 +1293,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1313,7 +1313,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1334,7 +1334,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1354,7 +1354,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1375,7 +1375,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1396,7 +1396,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1416,7 +1416,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1437,7 +1437,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1459,7 +1459,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1480,7 +1480,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1502,7 +1502,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1523,7 +1523,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1544,7 +1544,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1565,7 +1565,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1586,7 +1586,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1607,7 +1607,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1628,7 +1628,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1649,7 +1649,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1669,7 +1669,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1692,7 +1692,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1711,7 +1711,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1733,7 +1733,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1754,7 +1754,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1774,7 +1774,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1795,7 +1795,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1816,7 +1816,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1837,7 +1837,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1858,7 +1858,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1880,7 +1880,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1901,7 +1901,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1922,7 +1922,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1942,7 +1942,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1964,7 +1964,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -1985,7 +1985,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2006,7 +2006,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2026,7 +2026,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2046,7 +2046,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2066,7 +2066,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2085,7 +2085,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2105,7 +2105,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2129,7 +2129,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2151,7 +2151,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2173,7 +2173,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2195,7 +2195,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2215,7 +2215,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2235,7 +2235,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2256,7 +2256,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2276,7 +2276,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2297,7 +2297,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2319,7 +2319,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2341,7 +2341,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2362,7 +2362,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2384,7 +2384,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2405,7 +2405,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2426,7 +2426,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2448,7 +2448,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2469,7 +2469,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2490,7 +2490,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2512,7 +2512,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2532,7 +2532,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2550,7 +2550,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2568,7 +2568,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2588,7 +2588,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2609,7 +2609,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2628,7 +2628,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2650,7 +2650,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2671,7 +2671,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2689,7 +2689,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2709,7 +2709,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2729,7 +2729,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2750,7 +2750,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2770,7 +2770,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2791,7 +2791,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2811,7 +2811,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2832,7 +2832,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2852,7 +2852,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2873,7 +2873,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2894,7 +2894,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2914,7 +2914,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2937,7 +2937,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2959,7 +2959,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -2980,7 +2980,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3001,7 +3001,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3023,7 +3023,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3045,7 +3045,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3066,7 +3066,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3087,7 +3087,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3109,7 +3109,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3131,7 +3131,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3153,7 +3153,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3175,7 +3175,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3197,7 +3197,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3218,7 +3218,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3239,7 +3239,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3260,7 +3260,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3281,7 +3281,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3302,7 +3302,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3324,7 +3324,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3345,7 +3345,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3367,7 +3367,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3389,7 +3389,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3410,7 +3410,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3431,7 +3431,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3452,7 +3452,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3473,7 +3473,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3493,7 +3493,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3514,7 +3514,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3536,7 +3536,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3557,7 +3557,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3578,7 +3578,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3599,7 +3599,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3620,7 +3620,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3640,7 +3640,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3660,7 +3660,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3681,7 +3681,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3701,7 +3701,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3722,7 +3722,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3744,7 +3744,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3765,7 +3765,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3786,7 +3786,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3806,7 +3806,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3827,7 +3827,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3847,7 +3847,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3868,7 +3868,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3889,7 +3889,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3910,7 +3910,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3930,7 +3930,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3951,7 +3951,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3972,7 +3972,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -3993,7 +3993,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4013,7 +4013,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4033,7 +4033,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4054,7 +4054,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4074,7 +4074,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4094,7 +4094,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4118,7 +4118,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4140,7 +4140,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4163,7 +4163,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4186,7 +4186,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4212,7 +4212,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4239,7 +4239,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4268,7 +4268,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4295,7 +4295,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4319,7 +4319,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4341,7 +4341,7 @@
 		"discovery": "explicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4363,7 +4363,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4384,7 +4384,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4409,7 +4409,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	},
 	{
@@ -4432,7 +4432,7 @@
 		"discovery": "implicit",
 		"field": [
 			"title",
-			"geo"
+			"location"
 		]
 	}
 ]
