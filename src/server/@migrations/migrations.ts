@@ -2,7 +2,7 @@ import { PostgresExtensionsMigration } from "~/server/@migrations/0000-postgres-
 import { AccessMigration } from "~/server/@migrations/0001-access";
 import { RestrictionMigration } from "~/server/@migrations/0002-restriction";
 import { FieldMigration } from "~/server/@migrations/0003-field";
-import { AttrMigration } from "~/server/@migrations/0004-attr";
+import { AttrNumberMigration } from "~/server/@migrations/0004-attr-number";
 import { CategoryMigration } from "~/server/@migrations/0005-category";
 import { CategoryFieldMigration } from "~/server/@migrations/0006-category-field";
 import { CategorySpotlightMigration } from "~/server/@migrations/0007-category-spotlight";
@@ -37,7 +37,7 @@ export const migrations = {
 	"0001-access": AccessMigration,
 	"0002-restriction": RestrictionMigration,
 	"0003-field": FieldMigration,
-	"0004-attr": AttrMigration,
+	"0004-attr-number": AttrNumberMigration,
 	"0005-category": CategoryMigration,
 	"0006-category-field": CategoryFieldMigration,
 	"0007-category-spotlight": CategorySpotlightMigration,

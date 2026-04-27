@@ -1,16 +1,17 @@
 import type { Migration } from "kysely";
 
-export const AttrMigration: Migration = {
+export const AttrNumberMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("attr")
+			.createTable("attr_number")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
 			.addColumn("fieldId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
+			.addColumn("value", "integer", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
-				"attr_[fieldId]_fk",
+				"attr_number_[fieldId]_fk",
 				[
 					"fieldId",
 				],
@@ -23,7 +24,7 @@ export const AttrMigration: Migration = {
 				},
 			)
 			.addForeignKeyConstraint(
-				"attr_[listingId]_fk",
+				"attr_number_[listingId]_fk",
 				[
 					"listingId",
 				],
