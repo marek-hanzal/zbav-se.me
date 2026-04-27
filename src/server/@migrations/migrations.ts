@@ -4,6 +4,7 @@ import { RestrictionMigration } from "~/server/@migrations/0002-restriction";
 import { FieldMigration } from "~/server/@migrations/0003-field";
 import { AttrNumberMigration } from "~/server/@migrations/0004-attr-number";
 import { AttrDecimalMigration } from "~/server/@migrations/0005-attr-decimal";
+import { AttrTextMigration } from "~/server/@migrations/0006-attr-text";
 import { CategoryMigration } from "~/server/@migrations/0025-category";
 import { CategoryFieldMigration } from "~/server/@migrations/0026-category-field";
 import { CategorySpotlightMigration } from "~/server/@migrations/0027-category-spotlight";
@@ -40,6 +41,7 @@ export const migrations = {
 	"0003-field": FieldMigration,
 	"0004-attr-number": AttrNumberMigration,
 	"0005-attr-decimal": AttrDecimalMigration,
+	"0006-attr-text": AttrTextMigration,
 	"0025-category": CategoryMigration,
 	"0026-category-field": CategoryFieldMigration,
 	"0027-category-spotlight": CategorySpotlightMigration,

@@ -1,20 +1,20 @@
 import type { Migration } from "kysely";
 
-export const AttrDecimalMigration: Migration = {
+export const AttrTextMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("attr_decimal")
+			.createTable("attr_text")
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("fieldId", "text", (col) => col.notNull())
-			.addColumn("value", "decimal(10, 2)", (col) => col.notNull())
+			.addColumn("value", "text", (col) => col.notNull())
 
-			.addPrimaryKeyConstraint("attr_decimal_pk", [
+			.addPrimaryKeyConstraint("attr_text_pk", [
 				"listingId",
 				"fieldId",
 			])
 
 			.addForeignKeyConstraint(
-				"attr_decimal_[listingId]_fk",
+				"attr_text_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -25,7 +25,7 @@ export const AttrDecimalMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"attr_decimal_[fieldId]_fk",
+				"attr_text_[fieldId]_fk",
 				[
 					"fieldId",
 				],
@@ -39,11 +39,10 @@ export const AttrDecimalMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("attr_decimal_[fieldId-value-listingId]_idx")
-			.on("attr_decimal")
+			.createIndex("attr_text_[fieldId-listingId]_idx")
+			.on("attr_text")
 			.columns([
 				"fieldId",
-				"value",
 				"listingId",
 			])
 			.execute();
