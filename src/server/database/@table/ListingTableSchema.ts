@@ -1,12 +1,4 @@
 import { z } from "zod";
-import { CategoryDiscoveryEnumSchema } from "~/common/category/enum/CategoryDiscoveryEnumSchema";
-import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
-import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
-import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
-import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
-import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
-import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
-import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 
 export const ListingTableSchema = z
 	.looseObject({
@@ -15,73 +7,6 @@ export const ListingTableSchema = z
 		}),
 		userId: z.string().meta({
 			description: "ID of the user who created the listing",
-		}),
-		//
-		price: z.coerce.number().meta({
-			description: "Price of the listing",
-			type: "number",
-		}),
-		priceType: ListingPriceEnumSchema,
-		//
-		currency: CurrencyEnumSchema,
-		//
-		condition: z.number().nullable().meta({
-			description: "Condition of the item (0-based index)",
-		}),
-		//
-		age: z.number().nullable().meta({
-			description: "Age of the item (0-based index)",
-		}),
-		//
-		delivery: z.array(ListingDeliveryEnumSchema).nullable(),
-		//
-		warranty: ListingWarrantyEnumSchema.nullable(),
-		//
-		status: ListingStatusEnumSchema,
-		//
-		restriction: RestrictionEnumSchema.nullish(),
-		withCategoryDiscovery: CategoryDiscoveryEnumSchema,
-		withCategoryRestriction: RestrictionEnumSchema.nullish(),
-		//
-		locationId: z.string().meta({
-			description: "ID of the location",
-		}),
-		withLocationGeo: z.unknown().nullable().meta({
-			description: "Denormalized location geo point for listing search and range queries",
-		}),
-		categoryId: z.string().meta({
-			description: "ID of the category",
-		}),
-		galleryId: z.string().meta({
-			description: "ID of the gallery",
-		}),
-		draftId: z.string().nullable().meta({
-			description: "ID of the draft this listing was created from",
-		}),
-		expiresAt: z.coerce.date().meta({
-			description: "Expiration timestamp",
-		}),
-		//
-		title: z.string().meta({
-			description: "Title of the item",
-		}),
-		withImageUrl: z.array(z.string()).meta({
-			description:
-				"Denormalized ordered public image URLs used for listing gallery previews and list reads",
-		}),
-		withTitleSearch: z.string().meta({
-			description: "Denormalized normalized title search text for listing search predicates",
-		}),
-		//
-		description: z.string().nullable().meta({
-			description: "Description of the item",
-		}),
-		//
-		pros: ProsConsSchema.nullable().meta({
-			description: "Pros of the item",
-		}),
-		cons: ProsConsSchema.nullable().meta({
-			description: "Cons of the item",
 		}),
 		//
 		createdAt: z.coerce.date().meta({
