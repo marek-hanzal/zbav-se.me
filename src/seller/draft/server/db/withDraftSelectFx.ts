@@ -27,7 +27,6 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 	});
 
 	return draftSourceSelect.selectAll("d").select((eb) => [
-		sql<LocationTableSchema.Type | null>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 		sql<CategorySchema.Type | null>`
 			case
 				when ${eb.ref("cat.id")} is null then null

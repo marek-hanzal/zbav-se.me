@@ -8,6 +8,7 @@ export const ListingMigration: Migration = {
 			.createType("listing_status_enum")
 			.asEnum(
 				toEnumGuard<ListingStatusEnumSchema.Type>()([
+					"draft",
 					"live",
 					"sold",
 					"on-hold",

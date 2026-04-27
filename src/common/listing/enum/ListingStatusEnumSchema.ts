@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const ListingStatusEnumSchema = z
 	.enum([
+		"draft",
 		"live",
 		"sold",
 		"on-hold",

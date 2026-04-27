@@ -16,10 +16,7 @@ export const withDraftSourceSelectFx = Effect.fn("withDraftSourceSelectFx")(func
 }: withDraftSourceSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	let query = kysely
-		.selectFrom("draft as d")
-		.leftJoin("location as loc", "loc.id", "d.locationId")
-		.leftJoin("category as cat", "cat.id", "d.categoryId");
+	let query = kysely.selectFrom("draft as d");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
