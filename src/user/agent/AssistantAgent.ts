@@ -10,11 +10,6 @@ import { toolListingDetail as toolBuyerListingDetail } from "~/buyer/listing/ser
 import { toolTransactionCreate } from "~/buyer/transaction/server/tool/toolTransactionCreate";
 import { toolTransactionWorkflow as toolBuyerTransactionWorkflow } from "~/buyer/transaction/server/tool/toolTransactionWorkflow";
 import { toolNow } from "~/common/date/server/tool/toolNow";
-import { toolDraftBrowse } from "~/seller/draft/server/tool/toolDraftBrowse";
-import { toolDraftCreate } from "~/seller/draft/server/tool/toolDraftCreate";
-import { toolDraftDelete } from "~/seller/draft/server/tool/toolDraftDelete";
-import { toolDraftDetail } from "~/seller/draft/server/tool/toolDraftDetail";
-import { toolDraftPatch } from "~/seller/draft/server/tool/toolDraftPatch";
 import { toolListingBrowse as toolSellerListingBrowse } from "~/seller/listing/server/tool/toolListingBrowse";
 import { toolListingDetail as toolSellerListingDetail } from "~/seller/listing/server/tool/toolListingDetail";
 import { toolTransactionWorkflow as toolSellerTransactionWorkflow } from "~/seller/transaction/server/tool/toolTransactionWorkflow";
@@ -297,12 +292,6 @@ Examples: licensed weapons, document-sensitive weapon accessories, or other item
 		/**
 		 * Seller domain stuff
 		 */
-		toolDraftBrowse,
-		toolDraftDetail,
-		toolDraftCreate,
-		toolDraftPatch,
-		toolDraftDelete,
-		//
 		toolSellerListingBrowse,
 		toolSellerListingDetail,
 		//
