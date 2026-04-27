@@ -1,9 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import pgvector from "pgvector";
 import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
-import { embedMinHash } from "@/lib/common/embedding";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
@@ -182,11 +180,6 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						withLocationGeo: withLocation.geo,
 						withImageUrl,
 						withTitleSearch: sql`lower(immutable_unaccent(${data.title}))`,
-						titleVec: pgvector.toSql(
-							embedMinHash({
-								value: data.title,
-							}),
-						),
 						expiresAt: match(data.expiresAt)
 							.with("7-days", () =>
 								now.plus({

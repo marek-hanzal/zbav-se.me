@@ -45,7 +45,6 @@ export const ListingMigration: Migration = {
 				col.notNull().defaultTo(sql`array[]::text[]`),
 			)
 			.addColumn("withTitleSearch", "text", (col) => col.notNull())
-			.addColumn("titleVec", sql`vector(64)`)
 			//
 			.addColumn("description", "text")
 			.addColumn("pros", sql`text[]`)

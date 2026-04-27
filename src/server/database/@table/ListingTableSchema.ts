@@ -7,7 +7,6 @@ import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarranty
 import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
-import { VectorSchema } from "~/common/schema/VectorSchema";
 
 export const ListingTableSchema = z
 	.looseObject({
@@ -72,9 +71,6 @@ export const ListingTableSchema = z
 		}),
 		withTitleSearch: z.string().meta({
 			description: "Denormalized normalized title search text for listing search predicates",
-		}),
-		titleVec: VectorSchema.meta({
-			description: "Embedding vector for title similarity search",
 		}),
 		//
 		description: z.string().nullable().meta({
