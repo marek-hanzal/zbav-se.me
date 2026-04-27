@@ -5,6 +5,8 @@ import { FieldMigration } from "~/server/@migrations/0003-field";
 import { AttrNumberMigration } from "~/server/@migrations/0004-attr-number";
 import { AttrDecimalMigration } from "~/server/@migrations/0005-attr-decimal";
 import { AttrTextMigration } from "~/server/@migrations/0006-attr-text";
+import { AttrEnumSingleMigration } from "~/server/@migrations/0007-attr-enum-single";
+import { AttrEnumMultiMigration } from "~/server/@migrations/0008-attr-enum-multi";
 import { CategoryMigration } from "~/server/@migrations/0025-category";
 import { CategoryFieldMigration } from "~/server/@migrations/0026-category-field";
 import { CategorySpotlightMigration } from "~/server/@migrations/0027-category-spotlight";
@@ -42,6 +44,8 @@ export const migrations = {
 	"0004-attr-number": AttrNumberMigration,
 	"0005-attr-decimal": AttrDecimalMigration,
 	"0006-attr-text": AttrTextMigration,
+	"0007-attr-enum-single": AttrEnumSingleMigration,
+	"0008-attr-enum-multi": AttrEnumMultiMigration,
 	"0025-category": CategoryMigration,
 	"0026-category-field": CategoryFieldMigration,
 	"0027-category-spotlight": CategorySpotlightMigration,
