@@ -22,5 +22,125 @@
 		},
 		"value": "custom",
 		"sort": 2
+	},
+	{
+		"field": {
+			"name": "delivery",
+			"group": "listing"
+		},
+		"value": "personal",
+		"sort": 0
+	},
+	{
+		"field": {
+			"name": "delivery",
+			"group": "listing"
+		},
+		"value": "post",
+		"sort": 1
+	},
+	{
+		"field": {
+			"name": "delivery",
+			"group": "listing"
+		},
+		"value": "package",
+		"sort": 2
+	},
+	{
+		"field": {
+			"name": "delivery",
+			"group": "listing"
+		},
+		"value": "other",
+		"sort": 3
+	},
+	{
+		"field": {
+			"name": "price-type",
+			"group": "listing"
+		},
+		"value": "closed",
+		"sort": 0
+	},
+	{
+		"field": {
+			"name": "price-type",
+			"group": "listing"
+		},
+		"value": "open",
+		"sort": 1
+	},
+	{
+		"field": {
+			"name": "price-type",
+			"group": "listing"
+		},
+		"value": "offer",
+		"sort": 2
+	},
+	{
+		"field": {
+			"name": "restriction",
+			"group": "listing"
+		},
+		"value": "none",
+		"sort": 0
+	},
+	{
+		"field": {
+			"name": "restriction",
+			"group": "listing"
+		},
+		"value": "adult-relaxed",
+		"sort": 1
+	},
+	{
+		"field": {
+			"name": "restriction",
+			"group": "listing"
+		},
+		"value": "adult",
+		"sort": 2
+	},
+	{
+		"field": {
+			"name": "restriction",
+			"group": "listing"
+		},
+		"value": "sensitive",
+		"sort": 3
+	},
+	{
+		"field": {
+			"name": "restriction",
+			"group": "listing"
+		},
+		"value": "restricted",
+		"sort": 4
+	},
+	{
+		"field": {
+			"name": "expire",
+			"group": "listing"
+		},
+		"value": "7-days",
+		"sort": 0
+	},
+	{
+		"field": {
+			"name": "expire",
+			"group": "listing"
+		},
+		"value": "14-days",
+		"sort": 1
+	},
+	{
+		"field": {
+			"name": "expire",
+			"group": "listing"
+		},
+		"value": "1-month",
+		"sort": 2
 	}
 ]

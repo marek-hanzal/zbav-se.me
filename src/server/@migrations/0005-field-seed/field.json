@@ -10,5 +10,29 @@
 		"group": "listing",
 		"type": "enum-single",
 		"required": false
+	},
+	{
+		"name": "delivery",
+		"group": "listing",
+		"type": "enum-multi",
+		"required": false
+	},
+	{
+		"name": "price-type",
+		"group": "listing",
+		"type": "enum-single",
+		"required": false
+	},
+	{
+		"name": "restriction",
+		"group": "listing",
+		"type": "enum-single",
+		"required": false
+	},
+	{
+		"name": "expire",
+		"group": "listing",
+		"type": "enum-single",
+		"required": false
 	}
 ]
