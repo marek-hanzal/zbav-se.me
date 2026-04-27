@@ -12,6 +12,8 @@ export const ListingMigration: Migration = {
 					"live",
 					"sold",
 					"on-hold",
+					"expired",
+					"closed",
 					"banned",
 				]),
 			)
