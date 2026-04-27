@@ -43,7 +43,6 @@ export const DraftMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-
 			.execute();
 
 		await db.schema.createIndex("draft_[userId]_idx").on("draft").column("userId").execute();
