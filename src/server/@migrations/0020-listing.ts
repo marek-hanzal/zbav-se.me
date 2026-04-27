@@ -215,9 +215,4 @@ export const ListingMigration: Migration = {
 			WHERE "status" = 'live'
 		`.execute(db);
 	},
-
-	async down(db) {
-		await db.schema.dropTable("listing").execute();
-		await sql`DROP TYPE IF EXISTS "listing_status_enum"`.execute(db);
-	},
 };
