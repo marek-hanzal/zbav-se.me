@@ -18,8 +18,7 @@ export const withTransactionSourceSelectFx = Effect.fn("withTransactionSourceSel
 
 	let query = kysely
 		.selectFrom("transaction as lt")
-		.innerJoin("listing as l", "lt.listingId", "l.id")
-		.innerJoin("location as loc", "l.locationId", "loc.id");
+		.innerJoin("listing as l", "lt.listingId", "l.id");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

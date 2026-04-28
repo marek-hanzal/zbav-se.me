@@ -25,21 +25,26 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 					.selectFrom("transaction as lt")
 					.select(sql<number>`count(*)::int`.as("count"))
 					.whereRef("lt.listingId", "=", "l.id")})`.as("count"),
-				sql<number>`coalesce((${eb
-					.selectFrom("activity as i")
-					.select((eb) =>
-						sql<number>`count(distinct ${eb.ref("i.payload")} ->> 'transactionId')::int`.as(
-							"unreadCount",
-						),
+				eb.fn
+					.coalesce(
+						eb
+							.selectFrom("activity as i")
+							.select((eb) =>
+								sql<number>`count(distinct ${eb.ref("i.payload")} ->> 'transactionId')::int`.as(
+									"unreadCount",
+								),
+							)
+							.whereRef("i.userId", "=", "l.userId")
+							.where("i.family", "=", "transaction")
+							.where("i.type", "=", "buyer-message")
+							.where("i.archivedAt", "is", null)
+							.where(
+								(eb) =>
+									sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`,
+							),
+						eb.lit(0),
 					)
-					.whereRef("i.userId", "=", "l.userId")
-					.where("i.family", "=", "transaction")
-					.where("i.type", "=", "buyer-message")
-					.where("i.archivedAt", "is", null)
-					.where(
-						(eb) =>
-							sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`,
-					)}), 0)`.as("unreadCount"),
+					.as("unread"),
 			];
 		});
 

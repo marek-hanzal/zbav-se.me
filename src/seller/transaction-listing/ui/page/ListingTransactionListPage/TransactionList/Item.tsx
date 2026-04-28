@@ -22,8 +22,7 @@ export namespace Item {
 export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.Props) => {
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
-	const unreadCount = transaction.unreadCount ?? 0;
-	const isUnread = unreadCount > 0;
+	const isUnread = transaction.unread > 0;
 
 	return (
 		<LinkTo
