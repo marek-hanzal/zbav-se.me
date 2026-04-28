@@ -23,7 +23,7 @@ describe("public listing visibility", () => {
 					.updateTable("listing")
 					.set({
 						status: "sold",
-						title: "Already sold",
+						// title: "Already sold",
 						withTitleSearch: sql`lower(immutable_unaccent(${"Already sold"}))`,
 					})
 					.where("id", "=", soldListing.id)

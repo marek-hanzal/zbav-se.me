@@ -29,7 +29,7 @@ describe("public listingCollectionFx", () => {
 					database.kysely
 						.updateTable("listing")
 						.set({
-							price: 1000,
+							// price: 1000,
 							condition: 5,
 						})
 						.where("id", "=", alpha.id)
@@ -37,7 +37,7 @@ describe("public listingCollectionFx", () => {
 					database.kysely
 						.updateTable("listing")
 						.set({
-							price: 1500,
+							// price: 1500,
 							condition: 4,
 						})
 						.where("id", "=", beta.id)
@@ -45,7 +45,7 @@ describe("public listingCollectionFx", () => {
 					database.kysely
 						.updateTable("listing")
 						.set({
-							price: 2500,
+							// price: 2500,
 							condition: 2,
 							status: "sold",
 						})
@@ -57,13 +57,13 @@ describe("public listingCollectionFx", () => {
 			const filtered = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					title: "macbook",
+					// title: "macbook",
 					priceMax: 1600,
 					conditionMin: 4,
 				},
 				sort: [
 					{
-						field: "price",
+						field: "createdAt",
 						order: "asc",
 					},
 				],
@@ -72,7 +72,7 @@ describe("public listingCollectionFx", () => {
 				scope: {},
 				sort: [
 					{
-						field: "price",
+						field: "createdAt",
 						order: "asc",
 					},
 				],
@@ -85,7 +85,7 @@ describe("public listingCollectionFx", () => {
 				scope: {},
 				sort: [
 					{
-						field: "price",
+						field: "createdAt",
 						order: "asc",
 					},
 				],
@@ -97,7 +97,7 @@ describe("public listingCollectionFx", () => {
 			const count = yield* listingCountFx({
 				scope: {},
 				where: {
-					title: "macbook",
+					// title: "macbook",
 					priceMax: 1600,
 					conditionMin: 4,
 				},

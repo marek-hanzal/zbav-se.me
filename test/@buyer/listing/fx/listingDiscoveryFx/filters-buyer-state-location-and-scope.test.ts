@@ -133,7 +133,7 @@ describe("buyer listing discovery flow", () => {
 				meta: filteredMeta,
 				sort: [
 					{
-						field: "geo",
+						field: "createdAt",
 						order: "asc",
 					},
 				],

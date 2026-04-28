@@ -88,8 +88,7 @@ export const ListingMigration: Migration = {
 				sql`
 					"status" <> 'draft'
 					OR (
-						"publishedAt" IS NULL
-						AND "visibleAt" IS NULL
+						"visibleAt" IS NULL
 						AND "expiresAt" IS NULL
 					)
 				`,
@@ -105,7 +104,6 @@ export const ListingMigration: Migration = {
 						"categoryId" IS NOT NULL
 						AND "withCategoryDiscovery" IS NOT NULL
 						AND "withCategoryRestriction" IS NOT NULL
-						AND "publishedAt" IS NOT NULL
 						AND "visibleAt" IS NOT NULL
 						AND "expiresAt" IS NOT NULL
 					)
@@ -117,15 +115,12 @@ export const ListingMigration: Migration = {
 				"listing_[lifecycle-order]_check",
 				sql`
 					(
-						"publishedAt" IS NULL
-						AND "visibleAt" IS NULL
+						"visibleAt" IS NULL
 						AND "expiresAt" IS NULL
 					)
 					OR (
-						"publishedAt" IS NOT NULL
-						AND "visibleAt" IS NOT NULL
+						"visibleAt" IS NOT NULL
 						AND "expiresAt" IS NOT NULL
-						AND "publishedAt" <= "visibleAt"
 						AND "visibleAt" < "expiresAt"
 					)
 				`,

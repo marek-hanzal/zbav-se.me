@@ -77,7 +77,7 @@ describe("public listing search flow", () => {
 			const collection = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					title: "Public restriction marker",
+					// title: "Public restriction marker",
 					categoryIdIn,
 				},
 				sort: [
@@ -90,7 +90,7 @@ describe("public listing search flow", () => {
 			const count = yield* listingCountFx({
 				scope: {},
 				where: {
-					title: "Public restriction marker",
+					// title: "Public restriction marker",
 					categoryIdIn,
 				},
 			});

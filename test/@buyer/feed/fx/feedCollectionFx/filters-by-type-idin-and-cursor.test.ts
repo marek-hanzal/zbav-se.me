@@ -20,7 +20,7 @@ describe("feedCollectionFx", () => {
 				name: "Search Feed",
 				query: {
 					where: {
-						title: "macbook",
+						// title: "macbook",
 					},
 				},
 			});

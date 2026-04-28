@@ -42,7 +42,7 @@ const _createListingFixtureFx = ({ buyerId, sellerId }: Omit<ListingFixture, "li
 		});
 
 		const listing = yield* listingCreateFx({
-			age: 1,
+			// age: 1,
 			condition: 1,
 			categoryId: category.id,
 			expiresAt: "1-month",

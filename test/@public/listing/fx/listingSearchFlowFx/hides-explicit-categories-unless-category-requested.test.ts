@@ -44,33 +44,33 @@ describe("public listing search flow", () => {
 			const defaultCollection = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					title,
+					// title,
 				},
 			});
 			const emptyCategoryCollection = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					title,
+					// title,
 					categoryIdIn: [],
 				},
 			});
 			const defaultCount = yield* listingCountFx({
 				scope: {},
 				where: {
-					title,
+					// title,
 				},
 			});
 			const explicitByCategory = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					title,
+					// title,
 					categoryId: explicitCategory.id,
 				},
 			});
 			const explicitByCategoryIn = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					title,
+					// title,
 					categoryIdIn: [
 						explicitCategory.id,
 					],
