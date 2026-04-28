@@ -39,6 +39,12 @@ export const ListingMigration: Migration = {
 			// Media aggregate.
 			// Listing can start with empty gallery; publish validates actual image count.
 			.addColumn("galleryId", "text", (col) => col.notNull())
+			.addColumn("withUploadIds", sql`text[]`, (col) => {
+				return col.notNull().defaultTo(sql`array[]::text[]`);
+			})
+			.addColumn("withImageUrl", sql`text[]`, (col) => {
+				return col.notNull().defaultTo(sql`array[]::text[]`);
+			})
 
 			// createdAt = object creation, not market publish time.
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
