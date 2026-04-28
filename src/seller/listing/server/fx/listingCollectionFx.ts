@@ -39,14 +39,7 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	return yield* withCollectionFx({
 		selectFx: withListingSelectFx({
 			sort,
-		}).pipe(
-			Effect.map(({ select, queryFx }) => {
-				return {
-					select: select.clearSelect().select("l.id"),
-					queryFx,
-				};
-			}),
-		),
+		}),
 		cursor,
 		filter,
 		where,

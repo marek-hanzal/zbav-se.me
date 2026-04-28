@@ -21,7 +21,7 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 	function* ({ sort }: withTransactionListingSelectFx.Props) {
 		const { kysely } = yield* KyselyContextFx;
 
-		let query = kysely
+		let select = kysely
 			.selectFrom("listing as l")
 			.selectAll("l")
 			.select((eb) => {
@@ -66,7 +66,7 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 				);
 			});
 
-		query = query.select((eb) => {
+		select = select.select((eb) => {
 			return [
 				eb.ref("l.id").as("listingId"),
 				eb.ref("l.galleryId").as("galleryId"),
@@ -100,14 +100,14 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 		});
 
 		for (const item of sort ?? []) {
-			query = match(item.field)
-				.with("createdAt", () => query.orderBy("l.createdAt", item.order))
-				.with("lastAt", () => query.orderBy("lastAt", item.order))
+			select = match(item.field)
+				.with("createdAt", () => select.orderBy("l.createdAt", item.order))
+				.with("lastAt", () => select.orderBy("lastAt", item.order))
 				.exhaustive();
 		}
 
 		return selectFx({
-			select: query,
+			select: select,
 			queryFx(select, where: TransactionListingFilterSchema.Type) {
 				return Effect.gen(function* () {
 					let q = select;

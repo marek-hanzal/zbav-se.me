@@ -13,8 +13,6 @@ export namespace withTransactionSelectFx {
 	export interface Props {
 		sort?: TransactionSortSchema.Type[];
 	}
-
-	export type Select = ReturnType<typeof withTransactionSelectFx>;
 }
 
 export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(function* ({
@@ -22,17 +20,17 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 }: withTransactionSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	let query = kysely
+	let select = kysely
 		.selectFrom("transaction as lt")
 		.innerJoin("listing as l", "lt.listingId", "l.id");
 
 	for (const item of sort ?? []) {
-		query = match(item.field)
-			.with("createdAt", () => query.orderBy("lt.createdAt", item.order))
-			.with("updatedAt", () => query.orderBy("lt.updatedAt", item.order))
-			.with("expiresAt", () => query.orderBy("lt.expiresAt", item.order))
+		select = match(item.field)
+			.with("createdAt", () => select.orderBy("lt.createdAt", item.order))
+			.with("updatedAt", () => select.orderBy("lt.updatedAt", item.order))
+			.with("expiresAt", () => select.orderBy("lt.expiresAt", item.order))
 			.with("lastAt", () => {
-				return query.orderBy((eb) => {
+				return select.orderBy((eb) => {
 					return eb.fn.coalesce(
 						eb
 							.selectFrom("transaction_entry as te")
@@ -52,7 +50,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 				}, item.order);
 			})
 			.with("status", () => {
-				return query.orderBy((eb) => {
+				return select.orderBy((eb) => {
 					return eb
 						.case(eb.ref("lt.status"))
 						.when("interest")
@@ -81,7 +79,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 	}
 
 	return selectFx({
-		select: query
+		select: select
 			.selectAll("lt")
 			.select([
 				"l.withImageUrl",
