@@ -52,8 +52,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					.executeTakeFirstOrThrow();
 			});
 
-			yield* tryDbFx(async () =>
-				kysely
+			yield* tryDbFx(async () => {
+				return kysely
 					.insertInto("listing")
 					.values({
 						...data,
@@ -73,8 +73,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						createdAt: now.toJSDate(),
 						updatedAt: now.toJSDate(),
 					})
-					.execute(),
-			);
+					.execute();
+			});
 
 			yield* userEventCreateFx({
 				userId,
