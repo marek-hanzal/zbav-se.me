@@ -24,6 +24,8 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 	return listingSourceSelect.select([
 		"l.id",
+		"l.status",
+		"l.withUploadIds",
 		"l.categoryId",
 		"l.restriction",
 		"l.withImageUrl",

@@ -14,6 +14,7 @@ export const ListingSchema = z
 	})
 	.omit({
 		userId: true,
+		galleryId: true,
 		withCategoryDiscovery: true,
 		withCategoryRestriction: true,
 	})
