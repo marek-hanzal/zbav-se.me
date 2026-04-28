@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withActivityCollectionSelectFx } from "~/user/activity/server/db/withActivityCollectionSelectFx";
-import { withActivityQueryBuilderFx } from "~/user/activity/server/db/withActivityQueryBuilderFx";
 import type { ActivityFilterSchema } from "~/user/activity/server/schema/ActivityFilterSchema";
 import type { ActivityQuerySchema } from "~/user/activity/server/schema/ActivityQuerySchema";
+import { withActivitySelectFx } from "../db/withActivitySelectFx";
 
 export namespace activityCollectionFx {
 	export interface Props extends ActivityQuerySchema.Type {
@@ -34,7 +33,7 @@ export const activityCollectionFx = Effect.fn("activityCollectionFx")(function* 
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withActivityCollectionSelectFx({
+		selectFx: withActivitySelectFx({
 			sort,
 		}),
 		cursor,
@@ -42,7 +41,6 @@ export const activityCollectionFx = Effect.fn("activityCollectionFx")(function* 
 		filter,
 		where,
 		scope,
-		queryFx: withActivityQueryBuilderFx,
 	});
 });
 
