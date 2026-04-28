@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { withUserRestrictionQueryBuilderFx } from "../db/withUserRestrictionQueryBuilderFx";
-import { withUserRestrictionSourceSelectFx } from "../db/withUserRestrictionSourceSelectFx";
+import { withUserRestrictionSelectFx } from "../db/withUserRestrictionSelectFx";
 import type { UserRestrictionCountQuerySchema } from "../schema/UserRestrictionCountQuerySchema";
 import type { UserRestrictionFilterSchema } from "../schema/UserRestrictionFilterSchema";
 
@@ -25,13 +24,12 @@ export const userRestrictionCountFx = Effect.fn("userRestrictionCountFx")(functi
 	});
 
 	return yield* withCountFx({
-		selectFx: withUserRestrictionSourceSelectFx({
+		selectFx: withUserRestrictionSelectFx({
 			sort: [],
 		}),
 		filter,
 		where,
 		scope,
-		queryFx: withUserRestrictionQueryBuilderFx,
 	});
 });
 
