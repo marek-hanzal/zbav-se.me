@@ -34,13 +34,13 @@ export const activityPatchFx = Effect.fn("activityPatchFx")(function* ({
 				scope,
 			});
 
-			yield* tryDbFx(async () =>
-				kysely
+			yield* tryDbFx(async () => {
+				return kysely
 					.updateTable("activity")
 					.set(patch)
 					.where("id", "=", activity.id)
-					.executeTakeFirst(),
-			);
+					.executeTakeFirst();
+			});
 
 			return yield* activityFetchFx({
 				where: {
