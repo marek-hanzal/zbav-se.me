@@ -27,7 +27,7 @@ export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* 
 		.selectFrom("category as cat")
 		.selectAll("cat")
 		.select((eb) => {
-			return eb("cat.restriction", ">", restrictionSql).as("isRestricted");
+			return eb("cat.restriction", ">", restrictionSql).$castTo<boolean>().as("isRestricted");
 		});
 
 	for (const item of sort ?? []) {
