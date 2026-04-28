@@ -1,10 +1,8 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
-import { Markdown } from "@/lib/client/markdown";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
 import { translator } from "@/lib/common/translator";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
@@ -52,7 +50,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView 
 				/>
 			</Group>
 
-			{listing.description ? (
+			{/* {listing.description ? (
 				<Group>
 					<LabelValue
 						textLabel={translator.text("Listing description (label)")}
@@ -128,7 +126,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView 
 						/>
 					) : null}
 				</Group>
-			) : null}
+			) : null} */}
 
 			{listing.my ? null : (
 				<Group>

@@ -56,7 +56,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					/>
 				),
 				header: ({ close }) => ({
-					title: listing.title,
+					title: "listing.title",
 					right: (
 						<CloseButton
 							data-action={"close listing detail"}

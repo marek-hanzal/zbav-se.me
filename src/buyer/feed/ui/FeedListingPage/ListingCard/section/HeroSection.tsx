@@ -40,9 +40,9 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 				data-ui-position="relative"
 			>
 				<ListingPrice
-					price={listing.price}
-					priceType={listing.priceType}
-					currency={listing.currency}
+					price={0}
+					priceType={"offer"}
+					currency={"oprav price"}
 					data-ui-snap-to="top-center"
 					data-ui-opacity="8"
 					data-ui-z-index

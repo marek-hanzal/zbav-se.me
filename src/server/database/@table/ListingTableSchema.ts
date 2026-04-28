@@ -19,8 +19,8 @@ export const ListingTableSchema = z
 		status: ListingStatusEnumSchema,
 		//
 		galleryId: z.string().min(1),
-		withImageUrl: z.array(z.string().min(1)).optional(),
-		withUploadIds: z.array(z.string().min(1)).optional().meta({
+		withImageUrl: z.array(z.string().min(1)),
+		withUploadIds: z.array(z.string().min(1)).meta({
 			description:
 				"Denormalized ordered upload IDs used for draft gallery management and consistency checks",
 		}),

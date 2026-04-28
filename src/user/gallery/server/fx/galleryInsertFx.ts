@@ -9,11 +9,13 @@ import type { GalleryCreateSchema } from "~/user/gallery/server/schema/GalleryCr
 export namespace galleryInsertFx {
 	export interface Props extends GalleryCreateSchema.Type {
 		userId: string;
+		id?: string;
 	}
 }
 
 export const galleryInsertFx = Effect.fn("galleryInsertFx")(function* ({
 	userId,
+	id = genId(),
 	...props
 }: galleryInsertFx.Props) {
 	const logger = yield* getLoggerFx("galleryInsertFx");
@@ -24,8 +26,6 @@ export const galleryInsertFx = Effect.fn("galleryInsertFx")(function* ({
 
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
-
-	const id = genId();
 
 	yield* tryDbFx(async () => {
 		return kysely
