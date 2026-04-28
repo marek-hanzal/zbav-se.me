@@ -1,12 +1,23 @@
 import { Effect } from "effect";
-import { withListingSourceSelectFx } from "~/public/listing/server/db/withListingSourceSelectFx";
+import { match } from "ts-pattern";
+import { selectFx } from "@/lib/common/select";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import type { ListingFilterSchema } from "../schema/ListingFilterSchema";
+import type { ListingMetaSchema } from "../schema/ListingMetaSchema";
+import type { ListingSortSchema } from "../schema/ListingSortSchema";
+
+const publicCategoryRestrictions = [
+	RestrictionEnumSchema.enum.none,
+	RestrictionEnumSchema.enum["adult-relaxed"],
+] as const;
 
 export namespace withListingSelectFx {
-	export interface Props extends withListingSourceSelectFx.Props {
-		//
+	export interface Props {
+		sort?: ListingSortSchema.Type[];
+		meta?: ListingMetaSchema.Type;
+		hasExplicitCategory: boolean;
 	}
-
-	export type Select = ReturnType<typeof withListingSelectFx>;
 }
 
 export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
@@ -14,26 +25,92 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	meta,
 	hasExplicitCategory,
 }: withListingSelectFx.Props) {
-	const listingSourceSelect = yield* withListingSourceSelectFx({
-		sort,
-		meta,
-		hasExplicitCategory,
-	});
+	const { kysely } = yield* KyselyContextFx;
 
-	return listingSourceSelect.select((eb) => [
-		"l.id",
-		"l.galleryId",
-		"l.withImageUrl",
-		"l.createdAt",
-		// sql<RestrictionEnumSchema.Type[]>`to_jsonb(array(
-		// 	select restriction_item.restriction
-		// 	from unnest(array[
-		// 		${eb.ref("cat.restriction")},
-		// 		${eb.ref("l.restriction")}
-		// 	]::restriction_enum[]) with ordinality as restriction_item(restriction, ord)
-		// 	where restriction_item.restriction is not null
-		// 	group by restriction_item.restriction
-		// 	order by min(restriction_item.ord)
-		// ))`.as("restrictions"),
-	]);
+	let select = kysely
+		.selectFrom("listing as l")
+		.where("l.status", "in", [
+			"live",
+		])
+		.where((eb) => {
+			return eb.or([
+				eb("l.withCategoryRestriction", "is", null),
+				eb("l.withCategoryRestriction", "in", publicCategoryRestrictions),
+			]);
+		})
+		.where((eb) => {
+			return eb.or([
+				eb("l.restriction", "is", null),
+				eb("l.restriction", "in", publicCategoryRestrictions),
+			]);
+		});
+
+	if (!hasExplicitCategory) {
+		select = select.where("l.withCategoryDiscovery", "=", "implicit");
+	}
+
+	for (const item of sort ?? []) {
+		select = match(item.field)
+			.with("createdAt", () => select.orderBy("l.createdAt", item.order))
+			.with("updatedAt", () => select.orderBy("l.updatedAt", item.order))
+			.with("expiresAt", () => select.orderBy("l.expiresAt", item.order))
+			.exhaustive();
+	}
+
+	return selectFx({
+		select: select.select([
+			"l.id",
+			"l.galleryId",
+			"l.withImageUrl",
+			"l.createdAt",
+		]),
+		queryFx(select, where: ListingFilterSchema.Type) {
+			return Effect.gen(function* () {
+				let query = select;
+
+				if (!where) {
+					return yield* Effect.succeed(query);
+				}
+
+				if (where.id) {
+					query = query.where("l.id", "=", where.id);
+				}
+
+				if (where.idIn && where.idIn.length > 0) {
+					query = query.where("l.id", "in", where.idIn);
+				}
+
+				if (where.fulltext) {
+					const _fulltext = where.fulltext;
+
+					// query = query.where((eb) => {
+					// 	const categoryIdSelect = eb
+					// 		.selectFrom("category as cat")
+					// 		.select("cat.id")
+					// 		.where((eb) =>
+					// 			eb.or([
+					// 				withLikeEx(eb.ref("cat.category"), fulltext),
+					// 				withLikeEx(eb.ref("cat.group"), fulltext),
+					// 			]),
+					// 		);
+
+					// 	return eb.or([
+					// 		withNormalizedLikeEx(eb.ref("l.withTitleSearch"), fulltext, "both"),
+					// 		eb("l.categoryId", "in", categoryIdSelect),
+					// 	]);
+					// }) as TSelect;
+				}
+
+				if (where.categoryId) {
+					query = query.where("l.categoryId", "=", where.categoryId);
+				}
+
+				if (where.categoryIdIn && where.categoryIdIn.length > 0) {
+					query = query.where("l.categoryId", "in", where.categoryIdIn);
+				}
+
+				return yield* Effect.succeed(query);
+			});
+		},
+	});
 });
