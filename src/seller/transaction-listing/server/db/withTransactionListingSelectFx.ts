@@ -32,6 +32,7 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 						.selectFrom("transaction as lt")
 						.select(sql<number>`count(*)::int`.as("count"))
 						.whereRef("lt.listingId", "=", "l.id")
+						.$asScalar()
 						.$castTo<number>()
 						.as("count");
 				},
@@ -107,7 +108,7 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 		}
 
 		return selectFx({
-			select: select,
+			select,
 			queryFx(select, where: TransactionListingFilterSchema.Type) {
 				return Effect.gen(function* () {
 					let query = select;
