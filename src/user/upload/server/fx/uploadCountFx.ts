@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { withUploadQueryBuilderFx } from "~/user/upload/server/db/withUploadQueryBuilderFx";
-import { withUploadSourceSelectFx } from "~/user/upload/server/db/withUploadSourceSelectFx";
 import type { UploadCountQuerySchema } from "~/user/upload/server/schema/UploadCountQuerySchema";
 import type { UploadFilterSchema } from "~/user/upload/server/schema/UploadFilterSchema";
+import { withUploadSelectFx } from "../db/withUploadSelectFx";
 
 export namespace uploadCountFx {
 	export interface Props extends UploadCountQuerySchema.Type {
@@ -25,13 +24,12 @@ export const uploadCountFx = Effect.fn("uploadCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withUploadSourceSelectFx({
+		selectFx: withUploadSelectFx({
 			sort: [],
 		}),
 		filter,
 		where,
 		scope,
-		queryFx: withUploadQueryBuilderFx,
 	});
 });
 
