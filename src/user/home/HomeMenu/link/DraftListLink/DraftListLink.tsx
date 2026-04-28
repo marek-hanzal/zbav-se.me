@@ -59,7 +59,7 @@ export const DraftListLink = withFallback(
 				data-action={"open draft list"}
 				{...uiMenuButton({})}
 				icon={DraftIcon}
-				to="/$locale/app/seller/draft/list"
+				to="/$locale/app/seller/listing/list"
 				params={{
 					locale,
 				}}
