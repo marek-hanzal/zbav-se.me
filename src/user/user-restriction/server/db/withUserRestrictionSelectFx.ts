@@ -40,14 +40,18 @@ export const withUserRestrictionSelectFx = Effect.fn("withUserRestrictionSelectF
 				"ur.expiresAt",
 			])
 			.select((eb) => {
-				return eb
-					.and([
-						eb("ur.availableAt", "<=", now),
-						eb.or([
-							eb("ur.expiresAt", "is", null),
-							eb("ur.expiresAt", ">", now),
+				return eb.fn
+					.coalesce(
+						eb.and([
+							eb("ur.availableAt", "<=", now),
+							eb.or([
+								eb("ur.expiresAt", "is", null),
+								eb("ur.expiresAt", ">", now),
+							]),
 						]),
-					])
+						eb.lit(false),
+					)
+					.$castTo<boolean>()
 					.as("isAvailable");
 			}),
 		queryFx(select, where: UserRestrictionFilterSchema.Type) {
