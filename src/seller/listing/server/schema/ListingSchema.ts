@@ -4,13 +4,6 @@ import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema"
 export const ListingSchema = z
 	.looseObject({
 		...ListingTableSchema.shape,
-		// 		location: LocationSchema,
-		// 		category: CategorySchema,
-		// 		restrictions: z.array(RestrictionEnumSchema).meta({
-		// 			description: `
-		// Computed restrictions from category and listing. Read-only.
-		//             `.trim(),
-		// 		}),
 	})
 	.omit({
 		userId: true,

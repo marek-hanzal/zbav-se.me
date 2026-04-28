@@ -12,7 +12,7 @@ export const ListingTableSchema = z
 			description: "ID of the user who created the listing",
 		}),
 		//
-		categoryId: z.string().min(1).nullish(),
+		categoryId: z.string().min(1),
 		withCategoryDiscovery: CategoryDiscoveryEnumSchema.nullish(),
 		withCategoryRestriction: RestrictionEnumSchema.nullish(),
 		//

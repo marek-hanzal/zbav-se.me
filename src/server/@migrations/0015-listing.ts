@@ -32,7 +32,7 @@ export const ListingMigration: Migration = {
 
 			// Category can be missing while draft.
 			// Published states must have it.
-			.addColumn("categoryId", "text")
+			.addColumn("categoryId", "text", (col) => col.notNull())
 			.addColumn("withCategoryDiscovery", sql`category_discovery_enum`)
 			.addColumn("withCategoryRestriction", sql`restriction_enum`)
 

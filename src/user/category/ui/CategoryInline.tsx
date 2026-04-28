@@ -16,8 +16,6 @@ export namespace CategoryInline {
 /**
  * Renders category data inline so it can fit dense UI rows without extra wrappers.
  * Use it where space is limited and category still needs to remain readable.
- *
- * @see src/draft/ui/DraftEditor/patch/CategoryPatch.tsx
  */
 export const CategoryInline = withFallback(
 	({
@@ -59,7 +57,7 @@ export const CategoryInline = withFallback(
 	(props: SpinnerContainer.Props) => {
 		return (
 			<SpinnerContainer
-				data-ui={"CategoryValueListContent-[SpinnerContainer.category-inline]"}
+				data-ui={"CategoryInline"}
 				{...props}
 			/>
 		);

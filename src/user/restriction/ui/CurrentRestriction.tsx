@@ -43,7 +43,7 @@ export const CurrentRestriction = withFallback(
 				textEmpty={translator.text("Current Restriction value (empty)")}
 				textHint={translator.text("Current Restriction value (hint)")}
 				textLabelProps={{
-					"data-ui-tone": "brand",
+					"data-ui-tone": "primary",
 					"data-ui-theme": "light",
 					"data-ui-color": "lead",
 				}}
@@ -76,7 +76,7 @@ export const CurrentRestriction = withFallback(
 											locale,
 											time: restriction.availableAt,
 										})}
-										data-ui-tone={"brand"}
+										data-ui-tone={"primary"}
 										data-ui-theme={"light"}
 										data-ui-color={"lead"}
 										data-ui-font={"bold"}

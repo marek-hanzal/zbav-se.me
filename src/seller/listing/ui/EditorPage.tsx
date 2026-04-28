@@ -3,19 +3,24 @@ import { withFallback } from "@/lib/client/fallback";
 import { useLocale } from "@/lib/client/locale";
 import { handleArrowNav } from "@/lib/client/nav";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
+import { Editor } from "./Editor/Editor";
 
 export namespace EditorPage {
-	export interface Props extends TitleContainer.Props {
-		//
+	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
+		listingId: string;
 	}
 }
 
-export const EditorPage = withFallback<EditorPage.Props, FC<EditorPage.Props>>(
-	(props) => {
+export const EditorPage = withFallback<
+	EditorPage.Props,
+	FC<Omit<EditorPage.Props, "listingId" | "_suspense">>
+>(
+	({ _suspense, listingId, ...props }) => {
 		const locale = useLocale();
 
 		return (
@@ -44,7 +49,10 @@ export const EditorPage = withFallback<EditorPage.Props, FC<EditorPage.Props>>(
 				}
 				{...props}
 			>
-				pico
+				<Editor
+					_suspense={_suspense}
+					listingId={listingId}
+				/>
 			</TitleContainer>
 		);
 	},
