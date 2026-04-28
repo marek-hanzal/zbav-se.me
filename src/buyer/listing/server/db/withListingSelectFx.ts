@@ -72,7 +72,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				return sql<RestrictionEnumSchema.Type>`
                     greatest(
                         ${eb.ref("cat.restriction")},
-                        coalesce(${eb.ref("l.restriction")}, ${eb.ref("cat.restriction")})
+                        ${eb.ref("l.restriction")}
                     )
                 `.as("withRestriction");
 			})
