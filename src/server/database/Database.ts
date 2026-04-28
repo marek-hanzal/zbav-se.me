@@ -9,6 +9,7 @@ import type { CategoryTableSchema } from "~/server/database/@table/CategoryTable
 import type { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
 import type { FavouriteTableSchema } from "~/server/database/@table/FavouriteTableSchema";
 import type { FeedTableSchema } from "~/server/database/@table/FeedTableSchema";
+import type { FieldOptionTableSchema } from "~/server/database/@table/FieldOptionTableSchema";
 import type { FieldTableSchema } from "~/server/database/@table/FieldTableSchema";
 import type { FlagTableSchema } from "~/server/database/@table/FlagTableSchema";
 import type { GalleryItemTableSchema } from "~/server/database/@table/GalleryItemTableSchema";
@@ -39,6 +40,7 @@ export interface Database {
 	favourite: FavouriteTableSchema.Type;
 	feed: FeedTableSchema.Type;
 	field: FieldTableSchema.Type;
+	field_option: FieldOptionTableSchema.Type;
 	flag: FlagTableSchema.Type;
 	gallery_item: GalleryItemTableSchema.Type;
 	gallery: GalleryTableSchema.Type;
