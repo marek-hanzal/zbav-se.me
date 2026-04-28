@@ -9,8 +9,6 @@ export namespace withFieldSelectFx {
 	export interface Props {
 		sort?: FieldSortSchema.Type[];
 	}
-
-	export type Select = ReturnType<typeof withFieldSelectFx>;
 }
 
 export const withFieldSelectFx = Effect.fn("withFieldSelectFx")(function* ({
@@ -30,7 +28,6 @@ export const withFieldSelectFx = Effect.fn("withFieldSelectFx")(function* ({
 
 	return selectFx({
 		select: query.select([
-			"fld.id",
 			"fld.name",
 			"fld.type",
 			"fld.required",
@@ -44,11 +41,11 @@ export const withFieldSelectFx = Effect.fn("withFieldSelectFx")(function* ({
 				}
 
 				if (where.id) {
-					q = q.where("fld.id", "=", where.id);
+					q = q.where("fld.name", "=", where.id);
 				}
 
 				if (where.idIn && where.idIn.length > 0) {
-					q = q.where("fld.id", "in", where.idIn);
+					q = q.where("fld.name", "in", where.idIn);
 				}
 
 				if (where.name) {

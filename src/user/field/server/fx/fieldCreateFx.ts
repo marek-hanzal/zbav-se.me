@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
@@ -20,14 +19,7 @@ export const fieldCreateFx = Effect.fn("fieldCreateFx")(function* (data: fieldCr
 	const { kysely } = yield* KyselyContextFx;
 
 	return yield* tryDbFx(async () => {
-		return kysely
-			.insertInto("field")
-			.values({
-				...data,
-				id: genId(),
-			})
-			.returningAll()
-			.executeTakeFirstOrThrow();
+		return kysely.insertInto("field").values(data).returningAll().executeTakeFirstOrThrow();
 	});
 });
 

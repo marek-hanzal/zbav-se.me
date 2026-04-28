@@ -1,12 +1,9 @@
 import { z } from "zod";
-import { FieldTableSchema } from "./FieldTableSchema";
+import { FieldTableSchema } from "~/server/database/@table/FieldTableSchema";
 
 export const FieldCreateSchema = z
 	.looseObject({
 		...FieldTableSchema.shape,
-	})
-	.omit({
-		id: true,
 	})
 	.strip()
 	.meta({
