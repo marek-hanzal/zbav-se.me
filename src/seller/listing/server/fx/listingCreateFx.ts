@@ -18,13 +18,11 @@ export namespace listingCreateFx {
 
 export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 	userId,
-	categoryId,
 	...data
 }: listingCreateFx.Props) {
 	const logger = yield* getLoggerFx("listingCreateFx");
 	logger.trace("listingCreateFx", {
 		userId,
-		categoryId,
 		...data,
 	});
 
@@ -41,17 +39,6 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				userId,
 			});
 
-			const withCategory = yield* tryDbFx(async () => {
-				return kysely
-					.selectFrom("category")
-					.select([
-						"discovery",
-						"restriction",
-					])
-					.where("id", "=", categoryId)
-					.executeTakeFirstOrThrow();
-			});
-
 			yield* tryDbFx(async () => {
 				return kysely
 					.insertInto("listing")
@@ -59,10 +46,6 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						...data,
 						id,
 						userId,
-						//
-						categoryId,
-						withCategoryDiscovery: withCategory.discovery,
-						withCategoryRestriction: withCategory.restriction,
 						//
 						galleryId: gallery.id,
 						withImageUrl: [],

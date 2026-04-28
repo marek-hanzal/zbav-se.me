@@ -163,14 +163,6 @@ export const patchCategoryDiscoveryFx = (
 			})
 			.where("id", "=", props.id)
 			.executeTakeFirstOrThrow();
-
-		return database.kysely
-			.updateTable("listing")
-			.set({
-				withCategoryDiscovery: props.discovery,
-			})
-			.where("categoryId", "=", props.id)
-			.executeTakeFirstOrThrow();
 	});
 };
 

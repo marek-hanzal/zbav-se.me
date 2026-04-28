@@ -29,14 +29,12 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 	let select = kysely
 		.selectFrom("listing as l")
+		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.where("l.status", "in", [
 			"live",
 		])
 		.where((eb) => {
-			return eb.or([
-				eb("l.withCategoryRestriction", "is", null),
-				eb("l.withCategoryRestriction", "in", publicCategoryRestrictions),
-			]);
+			return eb("cat.restriction", "in", publicCategoryRestrictions);
 		})
 		.where((eb) => {
 			return eb.or([
@@ -46,7 +44,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 		});
 
 	if (!hasExplicitCategory) {
-		select = select.where("l.withCategoryDiscovery", "=", "implicit");
+		select = select.where("cat.discovery", "=", "implicit");
 	}
 
 	for (const item of sort ?? []) {

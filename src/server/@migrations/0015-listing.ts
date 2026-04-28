@@ -33,10 +33,6 @@ export const ListingMigration: Migration = {
 			// Category can be missing while draft.
 			// Published states must have it.
 			.addColumn("categoryId", "text", (col) => col.notNull())
-			.addColumn("withCategoryDiscovery", sql`category_discovery_enum`, (col) =>
-				col.notNull(),
-			)
-			.addColumn("withCategoryRestriction", sql`restriction_enum`, (col) => col.notNull())
 
 			// Media aggregate.
 			// Listing can start with empty gallery; publish validates actual image count.
@@ -110,8 +106,6 @@ export const ListingMigration: Migration = {
 					"status" NOT IN ('live', 'sold', 'on-hold', 'expired', 'closed')
 					OR (
 						"categoryId" IS NOT NULL
-						AND "withCategoryDiscovery" IS NOT NULL
-						AND "withCategoryRestriction" IS NOT NULL
 						AND "visibleAt" IS NOT NULL
 						AND "expiresAt" IS NOT NULL
 					)
@@ -191,13 +185,6 @@ export const ListingMigration: Migration = {
 			CREATE INDEX "listing_[live-categoryId-visibleAt]_idx"
 			ON "listing" ("categoryId", "visibleAt" DESC, "id" DESC)
 			WHERE "status" = 'live'
-		`.execute(db);
-
-		await sql`
-			CREATE INDEX "listing_[live-public-visibleAt]_idx"
-			ON "listing" ("visibleAt" DESC, "id" DESC)
-			WHERE "status" = 'live'
-				AND "withCategoryDiscovery" = 'implicit'
 		`.execute(db);
 
 		await sql`

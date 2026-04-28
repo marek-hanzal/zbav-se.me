@@ -39,8 +39,6 @@ Computed restrictions from category and listing. Read-only.
 	.omit({
 		userId: true,
 		galleryId: true,
-		withCategoryDiscovery: true,
-		withCategoryRestriction: true,
 	})
 	.strip()
 	.meta({

@@ -38,18 +38,14 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"live",
 		])
 		.where((eb) => {
-			return eb(
-				eb.fn.coalesce("l.withCategoryRestriction", fallbackSql),
-				"<=",
-				restrictionSql,
-			);
+			return eb(eb.fn.coalesce("cat.restriction", fallbackSql), "<=", restrictionSql);
 		})
 		.where((eb) => {
 			return eb(eb.fn.coalesce("l.restriction", fallbackSql), "<=", restrictionSql);
 		});
 
 	if (!hasExplicitCategory) {
-		select = select.where("l.withCategoryDiscovery", "=", "implicit");
+		select = select.where("cat.discovery", "=", "implicit");
 	}
 
 	for (const item of sort ?? []) {

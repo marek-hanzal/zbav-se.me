@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { CategoryDiscoveryEnumSchema } from "~/common/category/enum/CategoryDiscoveryEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 
@@ -13,8 +12,6 @@ export const ListingTableSchema = z
 		}),
 		//
 		categoryId: z.string().min(1),
-		withCategoryDiscovery: CategoryDiscoveryEnumSchema,
-		withCategoryRestriction: RestrictionEnumSchema,
 		//
 		status: ListingStatusEnumSchema,
 		restriction: RestrictionEnumSchema.nullish(),
