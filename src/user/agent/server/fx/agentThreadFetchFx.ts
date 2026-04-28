@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withAgentThreadQueryBuilderFx } from "~/user/agent/server/db/withAgentThreadQueryBuilderFx";
 import { withAgentThreadSelectFx } from "~/user/agent/server/db/withAgentThreadSelectFx";
 import type { AgentThreadFilterSchema } from "~/user/agent/server/schema/AgentThreadFilterSchema";
 import type { AgentThreadQuerySchema } from "~/user/agent/server/schema/AgentThreadQuerySchema";
@@ -34,7 +33,6 @@ export const agentThreadFetchFx = Effect.fn("agentThreadFetchFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx: withAgentThreadQueryBuilderFx,
 	});
 });
 

@@ -3,7 +3,6 @@ import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { withAgentStreamQueryBuilderFx } from "~/user/agent/server/db/withAgentStreamQueryBuilderFx";
 import { withAgentStreamSelectFx } from "~/user/agent/server/db/withAgentStreamSelectFx";
 import type { AgentStreamFilterSchema } from "~/user/agent/server/schema/AgentStreamFilterSchema";
 import type { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStreamQuerySchema";
@@ -26,7 +25,7 @@ export const agentStreamDeleteCollectionFx = Effect.fn("agentStreamDeleteCollect
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
 
-			let select = yield* withAgentStreamSelectFx({
+			let { select, queryFx } = yield* withAgentStreamSelectFx({
 				sort: query.sort,
 			});
 
@@ -35,10 +34,7 @@ export const agentStreamDeleteCollectionFx = Effect.fn("agentStreamDeleteCollect
 				query.where,
 				query.scope,
 			]) {
-				select = yield* withAgentStreamQueryBuilderFx({
-					select,
-					where: layer,
-				});
+				select = yield* queryFx(select, layer);
 			}
 
 			return yield* tryDbFx(async () => {
