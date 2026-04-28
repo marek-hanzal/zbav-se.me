@@ -1,9 +1,6 @@
 import { z } from "zod";
-import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
-import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
-import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 
 export const TransactionSchema = z
@@ -13,28 +10,18 @@ export const TransactionSchema = z
 			description: "Transaction title",
 		}),
 		status: TransactionStatusEnumSchema,
-		galleryId: z.string().meta({
-			description: "ID of the listing gallery",
-		}),
-		withImageUrl: z.array(z.string()).meta({
-			description: "Ordered listing image URLs",
-		}),
-		price: z.coerce.number().meta({
-			description: "Price of the listing",
-			type: "number",
-		}),
-		priceType: ListingPriceEnumSchema,
-		currency: CurrencyEnumSchema,
 		entry: TransactionEntrySchema,
 		lastAt: z.coerce.date().meta({
 			description: "Timestamp of the latest seller-visible transaction activity",
 		}),
-		unreadCount: z.coerce.number().int().nonnegative().meta({
+		unread: z.coerce.number().int().nonnegative().meta({
 			description: "Unread activity buyer-message count for this transaction",
 			type: "number",
 		}),
 		//
-		location: LocationSchema,
+		withImageUrl: z.array(z.string()).meta({
+			description: "Ordered listing image URLs",
+		}),
 	})
 	.omit({
 		userId: true,

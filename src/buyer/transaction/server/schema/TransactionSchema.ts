@@ -6,14 +6,18 @@ import { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/T
 export const TransactionSchema = z
 	.looseObject({
 		...TransactionTableSchema.shape,
-		title: z.string().meta({
-			description: "Transaction title",
-		}),
 		status: TransactionStatusEnumSchema,
 		entry: TransactionEntrySchema,
 		unread: z.coerce.number().int().nonnegative().meta({
 			description: "Unread activity seller-message count for this transaction",
 			type: "number",
+		}),
+		//
+		title: z.string().meta({
+			description: "Transaction title",
+		}),
+		withImageUrl: z.array(z.string()).meta({
+			description: "Ordered listing image URLs",
 		}),
 	})
 	.omit({

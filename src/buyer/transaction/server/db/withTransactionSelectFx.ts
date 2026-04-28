@@ -21,55 +21,59 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 		sort,
 	});
 
-	return transactionSourceSelect.selectAll("lt").select((eb) => {
-		const lastActivitySelect = eb
-			.selectFrom("transaction_entry as te")
-			.whereRef("te.transactionId", "=", "lt.id")
-			.orderBy("te.createdAt", "desc")
-			.limit(1);
+	return transactionSourceSelect
+		.selectAll("lt")
+		.select("l.withImageUrl")
+		.select((eb) => eb.val("not yet").as("title"))
+		.select((eb) => {
+			const lastActivitySelect = eb
+				.selectFrom("transaction_entry as te")
+				.whereRef("te.transactionId", "=", "lt.id")
+				.orderBy("te.createdAt", "desc")
+				.limit(1);
 
-		return [
-			eb.fn
-				.coalesce(
-					lastActivitySelect.select("te.createdAt").$asScalar(),
-					eb.ref("lt.updatedAt"),
-				)
-				.as("lastAt"),
-			jsonObjectFrom(
-				lastActivitySelect
-					.selectAll("te")
-					.select(eb.ref("l.id").as("listingId"))
-					.select((eb) => {
-						return eb
-							.case()
-							.when("te.userId", "is", null)
-							.then(TransactionEntryDirectionEnumSchema.enum.system)
-							.when("te.userId", "=", eb.ref("lt.userId"))
-							.then(TransactionEntryDirectionEnumSchema.enum.out)
-							.else(TransactionEntryDirectionEnumSchema.enum.in)
-							.end()
-							.as("direction");
-					}),
-			)
-				.$notNull()
-				.$castTo<TransactionEntrySchema.Type>()
-				.as("entry"),
-			eb.fn
-				.coalesce(
-					eb
-						.selectFrom("activity as i")
-						.select(sql<number>`count(*)::int`.as("unread"))
-						.whereRef("i.userId", "=", "lt.userId")
-						.where("i.family", "=", "transaction")
-						.where("i.type", "=", "seller-message")
-						.where("i.archivedAt", "is", null)
-						.where((eb) => {
-							return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
+			return [
+				eb.fn
+					.coalesce(
+						lastActivitySelect.select("te.createdAt").$asScalar(),
+						eb.ref("lt.updatedAt"),
+					)
+					.as("lastAt"),
+				jsonObjectFrom(
+					lastActivitySelect
+						.selectAll("te")
+						.select(eb.ref("l.id").as("listingId"))
+						.select((eb) => {
+							return eb
+								.case()
+								.when("te.userId", "is", null)
+								.then(TransactionEntryDirectionEnumSchema.enum.system)
+								.when("te.userId", "=", eb.ref("lt.userId"))
+								.then(TransactionEntryDirectionEnumSchema.enum.out)
+								.else(TransactionEntryDirectionEnumSchema.enum.in)
+								.end()
+								.as("direction");
 						}),
-					sql.lit(0),
 				)
-				.as("unread"),
-			eb.ref("lt.status").$notNull().as("status"),
-		];
-	});
+					.$notNull()
+					.$castTo<TransactionEntrySchema.Type>()
+					.as("entry"),
+				eb.fn
+					.coalesce(
+						eb
+							.selectFrom("activity as i")
+							.select(sql<number>`count(*)::int`.as("unread"))
+							.whereRef("i.userId", "=", "lt.userId")
+							.where("i.family", "=", "transaction")
+							.where("i.type", "=", "seller-message")
+							.where("i.archivedAt", "is", null)
+							.where((eb) => {
+								return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
+							}),
+						sql.lit(0),
+					)
+					.as("unread"),
+				eb.ref("lt.status").$notNull().as("status"),
+			];
+		});
 });
