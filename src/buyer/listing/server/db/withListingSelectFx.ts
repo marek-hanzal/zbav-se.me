@@ -33,7 +33,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 	let select = kysely
 		.selectFrom("listing as l")
-		.innerJoin("category as cat", "cat.id", "l.categoryId")
+		.leftJoin("category as cat", "cat.id", "l.categoryId")
 		.where("l.status", "in", [
 			"live",
 		])
