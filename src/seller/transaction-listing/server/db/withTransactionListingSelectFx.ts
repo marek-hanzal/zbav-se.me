@@ -23,7 +23,37 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 
 		let select = kysely
 			.selectFrom("listing as l")
-			.selectAll("l")
+			.select([
+				"l.id as listingId",
+				(eb) => {
+					return eb
+						.selectFrom("transaction as lt")
+						.select(sql<number>`count(*)::int`.as("count"))
+						.whereRef("lt.listingId", "=", "l.id")
+						.as("count");
+				},
+				(eb) => {
+					return eb.fn
+						.coalesce(
+							eb
+								.selectFrom("activity as i")
+								.select((eb) => {
+									return sql<number>`count(distinct ${eb.ref("i.payload")} ->> 'transactionId')::int`.as(
+										"unread",
+									);
+								})
+								.whereRef("i.userId", "=", "l.userId")
+								.where("i.family", "=", "transaction")
+								.where("i.type", "=", "buyer-message")
+								.where("i.archivedAt", "is", null)
+								.where((eb) => {
+									return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
+								}),
+							eb.lit(0),
+						)
+						.as("unread");
+				},
+			])
 			.select((eb) => {
 				const activitySql = eb
 					.selectFrom("transaction_entry as te")
@@ -65,39 +95,6 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 						.whereRef("lt.listingId", "=", "l.id"),
 				);
 			});
-
-		select = select.select((eb) => {
-			return [
-				eb.ref("l.id").as("listingId"),
-				eb.ref("l.galleryId").as("galleryId"),
-				eb.ref("l.withImageUrl").as("withImageUrl"),
-				eb
-					.selectFrom("transaction as lt")
-					.select(sql<number>`count(*)::int`.as("count"))
-					.whereRef("lt.listingId", "=", "l.id")
-					.as("count"),
-				eb.fn
-					.coalesce(
-						eb
-							.selectFrom("activity as i")
-							.select((eb) =>
-								sql<number>`count(distinct ${eb.ref("i.payload")} ->> 'transactionId')::int`.as(
-									"unread",
-								),
-							)
-							.whereRef("i.userId", "=", "l.userId")
-							.where("i.family", "=", "transaction")
-							.where("i.type", "=", "buyer-message")
-							.where("i.archivedAt", "is", null)
-							.where(
-								(eb) =>
-									sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`,
-							),
-						eb.lit(0),
-					)
-					.as("unread"),
-			];
-		});
 
 		for (const item of sort ?? []) {
 			select = match(item.field)
