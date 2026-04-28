@@ -20,9 +20,6 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("price", () => query.orderBy("l.price", item.order))
-			.with("condition", () => query.orderBy("l.condition", item.order))
-			.with("age", () => query.orderBy("l.age", item.order))
 			.with("createdAt", () => query.orderBy("l.createdAt", item.order))
 			.with("updatedAt", () => query.orderBy("l.updatedAt", item.order))
 			.with("expiresAt", () => query.orderBy("l.expiresAt", item.order))

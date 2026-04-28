@@ -152,7 +152,10 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						...data,
 						id,
 						userId,
+						//
 						galleryId: gallery.id,
+						withImageUrl: [],
+						withUploadIds: [],
 						//
 						status: "draft",
 						//
