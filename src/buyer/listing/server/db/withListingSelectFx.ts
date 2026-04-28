@@ -33,6 +33,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 	let select = kysely
 		.selectFrom("listing as l")
+		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.where("l.status", "in", [
 			"live",
 		])
@@ -71,6 +72,18 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				"l.createdAt",
 				"l.updatedAt",
 			])
+			.select((eb) => {
+				return sql<RestrictionEnumSchema.Type[]>`to_jsonb(array(
+                    select restriction_item.restriction
+                    from unnest(array[
+                        ${eb.ref("cat.restriction")},
+                        ${eb.ref("l.restriction")}
+                    ]::restriction_enum[]) with ordinality as restriction_item(restriction, ord)
+                    where restriction_item.restriction is not null
+                    group by restriction_item.restriction
+                    order by min(restriction_item.ord)
+                ))`.as("restrictions");
+			})
 			.select((eb) => {
 				return eb("l.userId", "=", userId).$castTo<boolean>().as("my");
 			})

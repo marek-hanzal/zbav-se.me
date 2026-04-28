@@ -13,8 +13,8 @@ export const ListingTableSchema = z
 		}),
 		//
 		categoryId: z.string().min(1),
-		withCategoryDiscovery: CategoryDiscoveryEnumSchema.nullish(),
-		withCategoryRestriction: RestrictionEnumSchema.nullish(),
+		withCategoryDiscovery: CategoryDiscoveryEnumSchema,
+		withCategoryRestriction: RestrictionEnumSchema,
 		//
 		status: ListingStatusEnumSchema,
 		restriction: RestrictionEnumSchema.nullish(),

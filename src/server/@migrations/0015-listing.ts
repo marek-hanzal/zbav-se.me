@@ -33,8 +33,10 @@ export const ListingMigration: Migration = {
 			// Category can be missing while draft.
 			// Published states must have it.
 			.addColumn("categoryId", "text", (col) => col.notNull())
-			.addColumn("withCategoryDiscovery", sql`category_discovery_enum`)
-			.addColumn("withCategoryRestriction", sql`restriction_enum`)
+			.addColumn("withCategoryDiscovery", sql`category_discovery_enum`, (col) =>
+				col.notNull(),
+			)
+			.addColumn("withCategoryRestriction", sql`restriction_enum`, (col) => col.notNull())
 
 			// Media aggregate.
 			// Listing can start with empty gallery; publish validates actual image count.
