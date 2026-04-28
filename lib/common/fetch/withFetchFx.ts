@@ -1,19 +1,9 @@
 import { Effect } from "effect";
-import type { SelectQueryBuilder } from "kysely";
 import { NotFoundErrorFx } from "../error/NotFoundErrorFx";
 import type { FilterSchema } from "../schema/FilterSchema";
+import type { selectFx } from "../select";
 
 export namespace withFetchFx {
-	export namespace Query {
-		export interface Props<
-			TSelect extends SelectQueryBuilder<any, any, any>,
-			TFilter extends FilterSchema.Type,
-		> {
-			select: TSelect;
-			where?: TFilter;
-		}
-	}
-
 	export interface Props<
 		TDB,
 		TTable extends keyof TDB,
@@ -25,15 +15,16 @@ export namespace withFetchFx {
 		TQueryContext,
 	> {
 		resource: string;
-		selectFx: Effect.Effect<
-			SelectQueryBuilder<TDB, TTable, TOutput>,
+		selectFx: selectFx<
+			TDB,
+			TTable,
+			TOutput,
+			TFilter,
 			TSelectError,
-			TSelectContext
+			TSelectContext,
+			TQueryError,
+			TQueryContext
 		>;
-		queryFx?(
-			props: Query.Props<SelectQueryBuilder<TDB, TTable, TOutput>, TFilter>,
-		): Effect.Effect<SelectQueryBuilder<TDB, TTable, TOutput>, TQueryError, TQueryContext>;
-
 		/**
 		 * User-land filters - lowest priority
 		 */
@@ -61,7 +52,6 @@ export const withFetchFx = Effect.fn("withFetchFx")(function* <
 >({
 	resource,
 	selectFx,
-	queryFx = ({ select }) => Effect.succeed(select),
 	filter,
 	where,
 	scope,
@@ -81,12 +71,9 @@ export const withFetchFx = Effect.fn("withFetchFx")(function* <
 		scope,
 	] as const;
 
-	let qb = yield* selectFx;
+	let { select: qb, queryFx } = yield* selectFx;
 	for (const layer of layers) {
-		qb = yield* queryFx({
-			select: qb,
-			where: layer,
-		});
+		qb = yield* queryFx(qb, layer);
 	}
 
 	const result = yield* Effect.promise(async () => {
