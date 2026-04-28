@@ -1,26 +1,33 @@
 import { Effect } from "effect";
-import { sql } from "kysely";
 import { jsonArrayFrom } from "kysely/helpers/postgres";
-import { withGallerySourceSelectFx } from "~/public/gallery/server/db/withGallerySourceSelectFx";
+import { match } from "ts-pattern";
+import { selectFx } from "@/lib/common/select";
 import { withGalleryItemSelectFx } from "~/public/gallery-item/server/db/withGalleryItemSelectFx";
 import type { GalleryItemSchema } from "~/public/gallery-item/server/schema/GalleryItemSchema";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import type { GalleryFilterSchema } from "../schema/GalleryFilterSchema";
+import type { GallerySortSchema } from "../schema/GallerySortSchema";
 
 export namespace withGallerySelectFx {
-	export interface Props extends withGallerySourceSelectFx.Props {
-		//
+	export interface Props {
+		sort?: GallerySortSchema.Type[];
 	}
-
-	export type Select = Effect.Effect.Success<ReturnType<typeof withGallerySelectFx>>;
 }
 
 export const withGallerySelectFx = Effect.fn("withGallerySelectFx")(function* ({
 	sort,
 }: withGallerySelectFx.Props) {
-	const sourceSelect = yield* withGallerySourceSelectFx({
-		sort,
-	});
+	const { kysely } = yield* KyselyContextFx;
 
-	const galleryItemSelect = yield* withGalleryItemSelectFx({
+	let select = kysely.selectFrom("gallery as gal").where("gal.access", "=", "public");
+
+	for (const item of sort ?? []) {
+		select = match(item.field)
+			.with("createdAt", () => select.orderBy("gal.createdAt", item.order))
+			.exhaustive();
+	}
+
+	const { select: galleryItemSelect } = yield* withGalleryItemSelectFx({
 		sort: [
 			{
 				field: "sort",
@@ -29,17 +36,36 @@ export const withGallerySelectFx = Effect.fn("withGallerySelectFx")(function* ({
 		],
 	});
 
-	return sourceSelect.select([
-		"gal.id",
-		(eb) => {
-			return sql<Date>`${eb.ref("gal.createdAt")}`.as("createdAt");
+	return selectFx({
+		select: select.select([
+			"gal.id",
+			"gal.createdAt",
+			(eb) => {
+				return jsonArrayFrom(
+					galleryItemSelect.whereRef("gal_item.galleryId", "=", eb.ref("gal.id")),
+				)
+					.$castTo<GalleryItemSchema.Type[]>()
+					.as("items");
+			},
+		]),
+		queryFx(select, where: GalleryFilterSchema.Type) {
+			return Effect.gen(function* () {
+				let query = select;
+
+				if (!where) {
+					return yield* Effect.succeed(select);
+				}
+
+				if (where.id) {
+					query = query.where("gal.id", "=", where.id);
+				}
+
+				if (where.idIn && where.idIn.length > 0) {
+					query = query.where("gal.id", "in", where.idIn);
+				}
+
+				return yield* Effect.succeed(query);
+			});
 		},
-		(eb) => {
-			return jsonArrayFrom(
-				galleryItemSelect.whereRef("gal_item.galleryId", "=", eb.ref("gal.id")),
-			)
-				.$castTo<GalleryItemSchema.Type[]>()
-				.as("items");
-		},
-	]);
+	});
 });
