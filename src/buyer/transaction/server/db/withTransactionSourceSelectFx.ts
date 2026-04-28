@@ -18,16 +18,15 @@ export const withTransactionSourceSelectFx = Effect.fn("withTransactionSourceSel
 
 	let query = kysely
 		.selectFrom("transaction as lt")
-		.innerJoin("listing as l", "lt.listingId", "l.id")
-		.innerJoin("location as loc", "l.locationId", "loc.id");
+		.innerJoin("listing as l", "lt.listingId", "l.id");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
 			.with("createdAt", () => query.orderBy("lt.createdAt", item.order))
 			.with("updatedAt", () => query.orderBy("lt.updatedAt", item.order))
 			.with("expiresAt", () => query.orderBy("lt.expiresAt", item.order))
-			.with("lastAt", () =>
-				query.orderBy(
+			.with("lastAt", () => {
+				return query.orderBy(
 					(eb) =>
 						eb.fn.coalesce(
 							eb
@@ -40,10 +39,10 @@ export const withTransactionSourceSelectFx = Effect.fn("withTransactionSourceSel
 							eb.ref("lt.updatedAt"),
 						),
 					item.order,
-				),
-			)
-			.with("status", () =>
-				query.orderBy(
+				);
+			})
+			.with("status", () => {
+				return query.orderBy(
 					(eb) =>
 						eb
 							.case(eb.ref("lt.status"))
@@ -68,8 +67,8 @@ export const withTransactionSourceSelectFx = Effect.fn("withTransactionSourceSel
 							.else(999)
 							.end(),
 					item.order,
-				),
-			)
+				);
+			})
 			.exhaustive();
 	}
 

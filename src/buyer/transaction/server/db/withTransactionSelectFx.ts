@@ -3,7 +3,6 @@ import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { withTransactionSourceSelectFx } from "~/buyer/transaction/server/db/withTransactionSourceSelectFx";
 import type { TransactionSortSchema } from "~/buyer/transaction/server/schema/TransactionSortSchema";
-import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
 import { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 
@@ -30,12 +29,6 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 			.limit(1);
 
 		return [
-			"l.title",
-			"l.price",
-			"l.priceType",
-			"l.currency",
-			"l.galleryId",
-			"l.withImageUrl",
 			eb.fn
 				.coalesce(
 					lastActivitySelect.select("te.createdAt").$asScalar(),
@@ -46,29 +39,36 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 				lastActivitySelect
 					.selectAll("te")
 					.select(eb.ref("l.id").as("listingId"))
-					.select((eb) =>
-						sql<TransactionEntryDirectionEnumSchema.Type>`case
-						when ${eb.ref("te.userId")} is null then ${TransactionEntryDirectionEnumSchema.enum.system}
-						when ${eb.ref("te.userId")} = ${eb.ref("lt.userId")} then ${TransactionEntryDirectionEnumSchema.enum.out}
-						else ${TransactionEntryDirectionEnumSchema.enum.in}
-					end`.as("direction"),
-					),
+					.select((eb) => {
+						return eb
+							.case()
+							.when("te.userId", "is", null)
+							.then(TransactionEntryDirectionEnumSchema.enum.system)
+							.when("te.userId", "=", eb.ref("lt.userId"))
+							.then(TransactionEntryDirectionEnumSchema.enum.out)
+							.else(TransactionEntryDirectionEnumSchema.enum.in)
+							.end()
+							.as("direction");
+					}),
 			)
 				.$notNull()
 				.$castTo<TransactionEntrySchema.Type>()
 				.as("entry"),
-			sql<number>`coalesce((${eb
-				.selectFrom("activity as i")
-				.select(sql<number>`count(*)::int`.as("unreadCount"))
-				.whereRef("i.userId", "=", "lt.userId")
-				.where("i.family", "=", "transaction")
-				.where("i.type", "=", "seller-message")
-				.where("i.archivedAt", "is", null)
-				.where(
-					(eb) =>
-						sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`,
-				)}), 0)`.as("unreadCount"),
-			sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
+			eb.fn
+				.coalesce(
+					eb
+						.selectFrom("activity as i")
+						.select(sql<number>`count(*)::int`.as("unread"))
+						.whereRef("i.userId", "=", "lt.userId")
+						.where("i.family", "=", "transaction")
+						.where("i.type", "=", "seller-message")
+						.where("i.archivedAt", "is", null)
+						.where((eb) => {
+							return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`;
+						}),
+					sql.lit(0),
+				)
+				.as("unread"),
 			eb.ref("lt.status").$notNull().as("status"),
 		];
 	});

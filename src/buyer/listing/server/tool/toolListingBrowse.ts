@@ -30,8 +30,6 @@ const InputSchema = z
 			})
 			.omit({
 				categoryId: true,
-				currency: true,
-				currencyIn: true,
 				expiresAtAfter: true,
 				expiresAtBefore: true,
 				userId: true,

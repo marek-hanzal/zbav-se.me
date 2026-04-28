@@ -14,18 +14,6 @@ export const getFeedDefaultCreate = (name: string, type: FeedTypeEnumSchema.Type
 					field: "createdAt",
 					order: "desc",
 				},
-				{
-					field: "price",
-					order: "asc",
-				},
-				{
-					field: "condition",
-					order: "desc",
-				},
-				{
-					field: "age",
-					order: "desc",
-				},
 			],
 		},
 	}) satisfies FeedCreateSchema.Type;

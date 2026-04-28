@@ -1,5 +1,4 @@
 import { tool } from "@openai/agents-core";
-import { match } from "ts-pattern";
 import { EntitySchema } from "@/lib/common/schema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
@@ -40,9 +39,9 @@ Hint:
 		})
 			.then((item) => {
 				return `
-Title: ${item.title}
-Price: ${item.price.toFixed(2)}
-Price type: ${match(item.priceType)
+Title: {item.title}
+Price: {item.price.toFixed(2)}
+Price type: {match(item.priceType)
 					.with("open", () => "Accept offers")
 					.with("closed", () => "Does not accept offers")
 					.with("offer", () => "Offer a price")
@@ -52,7 +51,7 @@ Images:
 ${item.withImageUrl.join("\n")}
 
 Description:
-${item.description}
+{item.description}
                 `.trim();
 			})
 			.catch(() => {
