@@ -69,16 +69,12 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				"l.updatedAt",
 			])
 			.select((eb) => {
-				return sql<RestrictionEnumSchema.Type[]>`to_jsonb(array(
-                    select restriction_item.restriction
-                    from unnest(array[
+				return sql<RestrictionEnumSchema.Type>`
+                    greatest(
                         ${eb.ref("cat.restriction")},
-                        ${eb.ref("l.restriction")}
-                    ]::restriction_enum[]) with ordinality as restriction_item(restriction, ord)
-                    where restriction_item.restriction is not null
-                    group by restriction_item.restriction
-                    order by min(restriction_item.ord)
-                ))`.as("restrictions");
+                        coalesce(${eb.ref("l.restriction")}, ${eb.ref("cat.restriction")})
+                    )
+                `.as("withRestriction");
 			})
 			.select((eb) => {
 				return eb("l.userId", "=", userId).$castTo<boolean>().as("my");

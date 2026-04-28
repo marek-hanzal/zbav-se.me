@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 
 export const ListingSchema = z
@@ -8,11 +9,11 @@ export const ListingSchema = z
 			createdAt: true,
 			withImageUrl: true,
 		}).shape,
-		// 		restrictions: z.array(RestrictionEnumSchema).meta({
-		// 			description: `
-		// Computed restrictions from category and listing. Read-only.
-		//             `.trim(),
-		// 		}),
+		withRestriction: RestrictionEnumSchema.meta({
+			description: `
+Effective restriction of this listing.
+            `.trim(),
+		}),
 		// 		location: LocationSchema,
 		// 		category: CategorySchema,
 	})
