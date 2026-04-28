@@ -6,7 +6,6 @@ import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
-import { LocationBadge } from "~/common/location/ui/LocationBadge";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroImage } from "~/common/ui/img";
 import { FavouriteButton } from "../../FavouriteButton";
@@ -48,13 +47,13 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 					data-ui-z-index
 				/>
 
-				<LocationBadge
+				{/* <LocationBadge
 					location={listing.location}
 					distance={listing.distance}
 					data-ui-snap-to="bottom"
 					data-ui-opacity="8"
 					data-ui-z-index
-				/>
+				/> */}
 
 				{listing.my ? null : (
 					<FavouriteButton

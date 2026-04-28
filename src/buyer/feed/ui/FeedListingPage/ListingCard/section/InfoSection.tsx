@@ -1,12 +1,8 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
-import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { LabelValue, ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
-import { CategoryInline } from "~/user/category/ui/CategoryInline";
 import { SellerInfo } from "../../SellerInfo";
 
 export namespace InfoSection {
@@ -23,7 +19,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView 
 			data-ui-layout="vertical-flex"
 			data-ui-gap="default"
 		>
-			<Group>
+			{/* <Group>
 				<ValueList
 					textLabel={translator.text("Listing restrictions (label)")}
 					textEmpty={translator.text("Listing restrictions (empty)")}
@@ -34,9 +30,9 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView 
 						return <Tx label={`Listing restriction - ${id}`} />;
 					}}
 				/>
-			</Group>
+			</Group> */}
 
-			<Group>
+			{/* <Group>
 				<LabelValue
 					textLabel={translator.text("Listing category (label)")}
 					textValue={
@@ -48,7 +44,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView 
 						/>
 					}
 				/>
-			</Group>
+			</Group> */}
 
 			{/* {listing.description ? (
 				<Group>

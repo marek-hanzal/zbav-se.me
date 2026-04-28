@@ -1,8 +1,5 @@
 import { z } from "zod";
-import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
-import { CategorySchema } from "~/public/category/server/schema/CategorySchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
-import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 
 export const ListingSchema = z
 	.looseObject({
@@ -10,13 +7,13 @@ export const ListingSchema = z
 			id: true,
 			createdAt: true,
 		}).shape,
-		restrictions: z.array(RestrictionEnumSchema).meta({
-			description: `
-Computed restrictions from category and listing. Read-only.
-            `.trim(),
-		}),
-		location: LocationSchema,
-		category: CategorySchema,
+		// 		restrictions: z.array(RestrictionEnumSchema).meta({
+		// 			description: `
+		// Computed restrictions from category and listing. Read-only.
+		//             `.trim(),
+		// 		}),
+		// 		location: LocationSchema,
+		// 		category: CategorySchema,
 	})
 	.strip()
 	.meta({

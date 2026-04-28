@@ -7,9 +7,6 @@ import { Typo } from "@/lib/client/typo";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { HeroImage } from "~/common/ui/img";
-import { Delivery } from "./Delivery";
-import { Distance } from "./Distance";
-import { Price } from "./Price";
 
 export namespace Hero {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -55,7 +52,7 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 					data-ui-gap="default"
 				>
 					<Typo
-						label={listing.title}
+						label={"listing.title"}
 						data-ui-tone="neutral"
 						data-ui-theme="light"
 						data-ui-font="semibold"
@@ -64,10 +61,10 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 						data-ui-truncate
 					/>
 
-					<Distance distance={listing.distance} />
+					{/* <Distance distance={listing.distance} /> */}
 				</Container>
 
-				<Container
+				{/* <Container
 					data-ui-flow={"horizontal"}
 					data-ui-justify={"space-between"}
 				>
@@ -78,7 +75,7 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 					/>
 
 					<Delivery delivery={listing.delivery} />
-				</Container>
+				</Container> */}
 			</Container>
 		</Container>
 	);
