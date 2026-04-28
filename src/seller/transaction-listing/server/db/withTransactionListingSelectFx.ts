@@ -25,11 +25,14 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 			.selectFrom("listing as l")
 			.select([
 				"l.id as listingId",
+				"l.id",
+				"l.withImageUrl",
 				(eb) => {
 					return eb
 						.selectFrom("transaction as lt")
 						.select(sql<number>`count(*)::int`.as("count"))
 						.whereRef("lt.listingId", "=", "l.id")
+						.$castTo<number>()
 						.as("count");
 				},
 				(eb) => {
@@ -107,18 +110,18 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 			select: select,
 			queryFx(select, where: TransactionListingFilterSchema.Type) {
 				return Effect.gen(function* () {
-					let q = select;
+					let query = select;
 
 					if (!where) {
 						return yield* Effect.succeed(select);
 					}
 
 					if (where.id) {
-						q = q.where("l.id", "=", where.id);
+						query = query.where("l.id", "=", where.id);
 					}
 
 					if (where.idIn && where.idIn.length > 0) {
-						q = q.where("l.id", "in", where.idIn);
+						query = query.where("l.id", "in", where.idIn);
 					}
 
 					if (where.fulltext) {
@@ -127,14 +130,14 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 					}
 
 					if (where.userId) {
-						q = q.where("l.userId", "=", where.userId);
+						query = query.where("l.userId", "=", where.userId);
 					}
 
 					if (where.flow) {
 						const flow = where.flow;
 
 						if (flow === "buyer-to-seller") {
-							q = q.where((eb) => {
+							query = query.where((eb) => {
 								return eb.exists(
 									eb
 										.selectFrom("activity as i")
@@ -144,12 +147,12 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 										.where("i.type", "=", "buyer-message")
 										.where("i.archivedAt", "is", null)
 										.where((eb) => {
-											return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
+											return sql`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
 										}),
 								);
 							});
 						} else if (flow === "seller-to-buyer") {
-							q = q.where((eb) =>
+							query = query.where((eb) =>
 								eb.and([
 									eb.exists(
 										eb
@@ -172,7 +175,7 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 												.where("i.type", "=", "buyer-message")
 												.where("i.archivedAt", "is", null)
 												.where((eb) => {
-													return sql<boolean>`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
+													return sql`${eb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`;
 												}),
 										),
 									),
@@ -181,7 +184,7 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 						}
 					}
 
-					return yield* Effect.succeed(q);
+					return yield* Effect.succeed(query);
 				});
 			},
 		});
