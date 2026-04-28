@@ -14,8 +14,6 @@ export namespace ListingItem {
 /**
  * Wraps one seller listing row in suspense so item-level data can resolve with isolated fallback.
  * Use it inside virtualized or incremental listing collections where each item may load independently.
- *
- * @see src/listing/MyListingPage/ListingList/ListingList.tsx
  */
 export const ListingItem = withFallback(({ listingId }: ListingItem.Props) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
@@ -28,7 +26,7 @@ export const ListingItem = withFallback(({ listingId }: ListingItem.Props) => {
 			hero={hero}
 			title={
 				<Typo
-					label={listing.title ?? "Draft (label)"}
+					label={"Draft (label)"}
 					data-ui-tone="neutral"
 					data-ui-theme="light"
 					data-ui-color="lead"
