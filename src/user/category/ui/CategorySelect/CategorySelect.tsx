@@ -8,6 +8,9 @@ import { ListContainer } from "./ListContainer";
 export namespace CategorySelect {
 	export interface Props extends Container.Props {
 		selection: useSelection.Selection<EntitySchema.Type>;
+		/**
+		 * Scroll to the given category
+		 */
 		categoryId: string | undefined;
 		withRestriction: boolean;
 	}

@@ -1,5 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
+import { EditorPage } from "~/seller/listing/ui/EditorPage";
 
 export const Route = createFileRoute("/$locale/app/seller/listing/resolve")({
 	async loader({ context: { queryClient }, params: { locale } }) {
@@ -27,17 +28,12 @@ export const Route = createFileRoute("/$locale/app/seller/listing/resolve")({
 			});
 		}
 
-		const listing = await withListingQuery.createFn(queryClient, {}, [
-			"collection",
-		]);
-
 		throw redirect({
-			to: "/$locale/app/seller/listing/$id/edit",
+			to: "/$locale/app/seller/listing/category",
 			params: {
-				id: listing.id,
 				locale,
 			},
 		});
 	},
-	// pendingComponent: DraftEditor.Fallback,
+	pendingComponent: EditorPage.Fallback,
 });

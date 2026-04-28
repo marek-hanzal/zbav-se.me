@@ -42,6 +42,7 @@ import { Route as LocaleAppSellerTransactionListRouteImport } from './@routes/$l
 import { Route as LocaleAppSellerListingResolveRouteImport } from './@routes/$locale/app/seller/listing/resolve'
 import { Route as LocaleAppSellerListingMyRouteImport } from './@routes/$locale/app/seller/listing/my'
 import { Route as LocaleAppSellerListingListRouteImport } from './@routes/$locale/app/seller/listing/list'
+import { Route as LocaleAppSellerListingCategoryRouteImport } from './@routes/$locale/app/seller/listing/category'
 import { Route as LocaleAppBuyerTransactionListRouteImport } from './@routes/$locale/app/buyer/transaction/list'
 import { Route as LocaleAppBuyerFeedListRouteImport } from './@routes/$locale/app/buyer/feed/list'
 import { Route as LocaleAppBuyerFeedDefaultRouteImport } from './@routes/$locale/app/buyer/feed/default'
@@ -223,6 +224,12 @@ const LocaleAppSellerListingListRoute =
     path: '/seller/listing/list',
     getParentRoute: () => LocaleAppRoute,
   } as any)
+const LocaleAppSellerListingCategoryRoute =
+  LocaleAppSellerListingCategoryRouteImport.update({
+    id: '/seller/listing/category',
+    path: '/seller/listing/category',
+    getParentRoute: () => LocaleAppRoute,
+  } as any)
 const LocaleAppBuyerTransactionListRoute =
   LocaleAppBuyerTransactionListRouteImport.update({
     id: '/buyer/transaction/list',
@@ -317,6 +324,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
   '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
   '/$locale/app/buyer/transaction/list': typeof LocaleAppBuyerTransactionListRoute
+  '/$locale/app/seller/listing/category': typeof LocaleAppSellerListingCategoryRoute
   '/$locale/app/seller/listing/list': typeof LocaleAppSellerListingListRoute
   '/$locale/app/seller/listing/my': typeof LocaleAppSellerListingMyRoute
   '/$locale/app/seller/listing/resolve': typeof LocaleAppSellerListingResolveRoute
@@ -360,6 +368,7 @@ export interface FileRoutesByTo {
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
   '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
   '/$locale/app/buyer/transaction/list': typeof LocaleAppBuyerTransactionListRoute
+  '/$locale/app/seller/listing/category': typeof LocaleAppSellerListingCategoryRoute
   '/$locale/app/seller/listing/list': typeof LocaleAppSellerListingListRoute
   '/$locale/app/seller/listing/my': typeof LocaleAppSellerListingMyRoute
   '/$locale/app/seller/listing/resolve': typeof LocaleAppSellerListingResolveRoute
@@ -406,6 +415,7 @@ export interface FileRoutesById {
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
   '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
   '/$locale/app/buyer/transaction/list': typeof LocaleAppBuyerTransactionListRoute
+  '/$locale/app/seller/listing/category': typeof LocaleAppSellerListingCategoryRoute
   '/$locale/app/seller/listing/list': typeof LocaleAppSellerListingListRoute
   '/$locale/app/seller/listing/my': typeof LocaleAppSellerListingMyRoute
   '/$locale/app/seller/listing/resolve': typeof LocaleAppSellerListingResolveRoute
@@ -453,6 +463,7 @@ export interface FileRouteTypes {
     | '/$locale/app/buyer/feed/default'
     | '/$locale/app/buyer/feed/list'
     | '/$locale/app/buyer/transaction/list'
+    | '/$locale/app/seller/listing/category'
     | '/$locale/app/seller/listing/list'
     | '/$locale/app/seller/listing/my'
     | '/$locale/app/seller/listing/resolve'
@@ -496,6 +507,7 @@ export interface FileRouteTypes {
     | '/$locale/app/buyer/feed/default'
     | '/$locale/app/buyer/feed/list'
     | '/$locale/app/buyer/transaction/list'
+    | '/$locale/app/seller/listing/category'
     | '/$locale/app/seller/listing/list'
     | '/$locale/app/seller/listing/my'
     | '/$locale/app/seller/listing/resolve'
@@ -541,6 +553,7 @@ export interface FileRouteTypes {
     | '/$locale/app/buyer/feed/default'
     | '/$locale/app/buyer/feed/list'
     | '/$locale/app/buyer/transaction/list'
+    | '/$locale/app/seller/listing/category'
     | '/$locale/app/seller/listing/list'
     | '/$locale/app/seller/listing/my'
     | '/$locale/app/seller/listing/resolve'
@@ -795,6 +808,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppSellerListingListRouteImport
       parentRoute: typeof LocaleAppRoute
     }
+    '/$locale/app/seller/listing/category': {
+      id: '/$locale/app/seller/listing/category'
+      path: '/seller/listing/category'
+      fullPath: '/$locale/app/seller/listing/category'
+      preLoaderRoute: typeof LocaleAppSellerListingCategoryRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
     '/$locale/app/buyer/transaction/list': {
       id: '/$locale/app/buyer/transaction/list'
       path: '/buyer/transaction/list'
@@ -883,6 +903,7 @@ interface LocaleAppRouteChildren {
   LocaleAppBuyerFeedDefaultRoute: typeof LocaleAppBuyerFeedDefaultRoute
   LocaleAppBuyerFeedListRoute: typeof LocaleAppBuyerFeedListRoute
   LocaleAppBuyerTransactionListRoute: typeof LocaleAppBuyerTransactionListRoute
+  LocaleAppSellerListingCategoryRoute: typeof LocaleAppSellerListingCategoryRoute
   LocaleAppSellerListingListRoute: typeof LocaleAppSellerListingListRoute
   LocaleAppSellerListingMyRoute: typeof LocaleAppSellerListingMyRoute
   LocaleAppSellerListingResolveRoute: typeof LocaleAppSellerListingResolveRoute
@@ -910,6 +931,7 @@ const LocaleAppRouteChildren: LocaleAppRouteChildren = {
   LocaleAppBuyerFeedDefaultRoute: LocaleAppBuyerFeedDefaultRoute,
   LocaleAppBuyerFeedListRoute: LocaleAppBuyerFeedListRoute,
   LocaleAppBuyerTransactionListRoute: LocaleAppBuyerTransactionListRoute,
+  LocaleAppSellerListingCategoryRoute: LocaleAppSellerListingCategoryRoute,
   LocaleAppSellerListingListRoute: LocaleAppSellerListingListRoute,
   LocaleAppSellerListingMyRoute: LocaleAppSellerListingMyRoute,
   LocaleAppSellerListingResolveRoute: LocaleAppSellerListingResolveRoute,

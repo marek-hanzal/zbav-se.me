@@ -16,6 +16,9 @@
 04cf9e0686a93465f2354dfd8553727d51dd7516e95953b741620240:
   ref: Go to drafts (link)
   value: Go to drafts (link)
+050d325dc0ab4741ff8dd2e315e563bf0a746ea997e21d31bc54f8dd:
+  ref: Listing category not selected
+  value: Listing category not selected
 05222c72d8e46e315cfc05b0a13edcf266e0b81f58e5179b08c0ffd7:
   ref: Personal - location
   value: Personal - location
@@ -244,6 +247,9 @@
 42888fcc58a5c859961d7ce1f9843868fd000cd931e43e080d44b369:
   ref: Register (hero)
   value: Register (hero)
+42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
+  ref: Listing category (label)
+  value: Listing category (label)
 435b71e7556a644cd11a2e8059ae87568d2ccd2115317edbb53af97f:
   ref: History activity (hint)
   value: History activity (hint)
@@ -373,6 +379,9 @@
 5c8983bc9f6b82b7d54e9d2de54f4a5e12120ac5ec4c523d723b166b:
   ref: Continue listing (label)
   value: Continue listing (label)
+5d63ff74d1b687573d3623cda52ca2e286a12411b79b5d85ef581087:
+  ref: Select listing category (title)
+  value: Select listing category (title)
 5dff2c312c85487ff5ee3fb9ac4ef2e1d4a492a52eeb2f1d0333c94a:
   ref: About me (message)
   value: About me (message)
@@ -382,6 +391,9 @@
 5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
   ref: Feed name (placeholder)
   value: Feed name (placeholder)
+5f8d3eb16bf7b5c857416890f7e4c3ff3d02dfa73a7d621f9a603e9f:
+  ref: Listing photo gallery (label)
+  value: Listing photo gallery (label)
 5f8fac6b4c34a106a1ca60552e94ccd263a2dd51ce2099c6de06e4f9:
   ref: Transaction status sold (label)
   value: Marked as sold
@@ -445,6 +457,9 @@
 6bb0769faf58b871709c8497aeeec1de75504a2c85acfabfbfd726c2:
   ref: Delete photo (button)
   value: Delete photo (button)
+6c833aaaa63822edd567f6082467908feff8f708b7264cd0d2b7650b:
+  ref: Continue to listing (label)
+  value: Continue to listing (label)
 6ca3f3546da9df7cda3ed2984fd874d81938723ee09b0116ce96825a:
   ref: Search (button)
   value: Search (button)
