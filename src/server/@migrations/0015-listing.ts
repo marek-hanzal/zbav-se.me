@@ -23,19 +23,15 @@ export const ListingMigration: Migration = {
 			.createTable("listing")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
-
-			// Workflow / gate.
+			//
 			.addColumn("status", sql`listing_status_enum`, (col) => {
 				return col.notNull();
 			})
+			//
 			.addColumn("restriction", sql`restriction_enum`)
-
-			// Category can be missing while draft.
-			// Published states must have it.
+			//
 			.addColumn("categoryId", "text", (col) => col.notNull())
-
-			// Media aggregate.
-			// Listing can start with empty gallery; publish validates actual image count.
+			//
 			.addColumn("galleryId", "text", (col) => col.notNull())
 			.addColumn("withUploadIds", sql`text[]`, (col) => {
 				return col.notNull().defaultTo(sql`array[]::text[]`);
@@ -58,14 +54,20 @@ export const ListingMigration: Migration = {
 			.addColumn("condition", "integer")
 			.addColumn("age", "integer")
 			//
-			.addColumn("delivery", sql`listing_delivery_enum[]`)
+			.addColumn("delivery", sql`listing_delivery_enum[]`, (col) => {
+				return col.notNull().defaultTo(sql`array[]::listing_delivery_enum[]`);
+			})
 			.addColumn("warranty", sql`listing_warranty_enum`)
 			//
 			.addColumn("locationId", "text")
 			.addColumn("withLocationGeo", sql`geography(Point,4326)`)
 			//
-			.addColumn("pros", sql`text[]`)
-			.addColumn("cons", sql`text[]`)
+			.addColumn("pros", sql`text[]`, (col) => {
+				return col.notNull().defaultTo(sql`array[]::text[]`);
+			})
+			.addColumn("cons", sql`text[]`, (col) => {
+				return col.notNull().defaultTo(sql`array[]::text[]`);
+			})
 
 			// createdAt = object creation, not market publish time.
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
@@ -107,6 +109,25 @@ export const ListingMigration: Migration = {
 					"id",
 				],
 				(c) => c.onDelete("restrict"),
+			)
+			.addForeignKeyConstraint(
+				"listing_[locationId]_fk",
+				[
+					"locationId",
+				],
+				"location",
+				[
+					"id",
+				],
+				(c) => c.onDelete("restrict"),
+			)
+
+			.addCheckConstraint(
+				"listing_[pros-cons-max]_check",
+				sql`
+                    cardinality("pros") <= 5
+                    AND cardinality("cons") <= 5
+                `,
 			)
 
 			// Draft is private/unpublished.
@@ -201,6 +222,13 @@ export const ListingMigration: Migration = {
 			.column("status")
 			.execute();
 
+		await sql`
+            CREATE INDEX "listing_[live-title]_trgm_idx"
+            ON "listing"
+            USING gin ("withTitle" gin_trgm_ops)
+            WHERE "status" = 'live'
+        `.execute(db);
+
 		/**
 		 * Main feed/search shapes.
 		 */
@@ -224,5 +252,27 @@ export const ListingMigration: Migration = {
 			ON "listing" ("expiresAt")
 			WHERE "status" = 'live'
 		`.execute(db);
+
+		await sql`
+            CREATE INDEX "listing_[live-categoryId-price]_idx"
+            ON "listing" ("categoryId", "price", "id")
+            WHERE "status" = 'live'
+            AND "price" IS NOT NULL
+        `.execute(db);
+
+		await sql`
+            CREATE INDEX "listing_[live-withLocationGeo]_idx"
+            ON "listing"
+            USING gist ("withLocationGeo")
+            WHERE "status" = 'live'
+            AND "withLocationGeo" IS NOT NULL
+        `.execute(db);
+
+		await sql`
+            CREATE INDEX "listing_[live-delivery]_gin_idx"
+            ON "listing"
+            USING gin ("delivery")
+            WHERE "status" = 'live'
+        `.execute(db);
 	},
 };
