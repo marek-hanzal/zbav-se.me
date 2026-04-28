@@ -44,6 +44,29 @@ export const ListingMigration: Migration = {
 				return col.notNull().defaultTo(sql`array[]::text[]`);
 			})
 
+			/**
+			 * Core listing fields (shared across all categories).
+			 */
+			.addColumn("title", "text")
+			.addColumn("withTitle", "text")
+			.addColumn("description", "text")
+			//
+			.addColumn("price", "decimal(10, 2)")
+			.addColumn("priceType", sql`listing_price_enum`)
+			.addColumn("currency", "text")
+			//
+			.addColumn("condition", "integer")
+			.addColumn("age", "integer")
+			//
+			.addColumn("delivery", sql`listing_delivery_enum[]`)
+			.addColumn("warranty", sql`listing_warranty_enum`)
+			//
+			.addColumn("locationId", "text")
+			.addColumn("withLocationGeo", sql`geography(Point,4326)`)
+			//
+			.addColumn("pros", sql`text[]`)
+			.addColumn("cons", sql`text[]`)
+
 			// createdAt = object creation, not market publish time.
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addColumn("updatedAt", "timestamptz", (col) => col.notNull())
