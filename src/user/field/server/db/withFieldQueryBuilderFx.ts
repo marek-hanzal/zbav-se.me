@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import type { withFieldSelectFx } from "./withFieldSelectFx";
 import type { FieldFilterSchema } from "~/user/field/server/schema/FieldFilterSchema";
+import type { withFieldSelectFx } from "./withFieldSelectFx";
 
 export namespace withFieldQueryBuilderFx {
 	export interface Props<TSelect extends withFieldSelectFx.Select = withFieldSelectFx.Select> {

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import type { withFieldOptionSelectFx } from "./withFieldOptionSelectFx";
 import type { FieldOptionFilterSchema } from "~/user/field-option/server/schema/FieldOptionFilterSchema";
+import type { withFieldOptionSelectFx } from "./withFieldOptionSelectFx";
 
 export namespace withFieldOptionQueryBuilderFx {
 	export interface Props<
