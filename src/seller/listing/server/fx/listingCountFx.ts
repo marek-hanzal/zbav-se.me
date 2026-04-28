@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { withListingCollectionSelectFx } from "~/seller/listing/server/db/withListingCollectionSelectFx";
-import { withListingQueryBuilderFx } from "~/seller/listing/server/db/withListingQueryBuilderFx";
 import type { ListingCountQuerySchema } from "~/seller/listing/server/schema/ListingCountQuerySchema";
 import type { ListingFilterSchema } from "~/seller/listing/server/schema/ListingFilterSchema";
+import { withListingSelectFx } from "../db/withListingSelectFx";
 
 export namespace listingCountFx {
 	export interface Scope extends ListingFilterSchema.Type {
@@ -29,13 +28,13 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withListingCollectionSelectFx({
+		selectFx: withListingSelectFx({
+			sort: [],
 			userId: scope.userId,
 		}),
 		filter,
 		where,
 		scope,
-		queryFx: withListingQueryBuilderFx,
 	});
 });
 

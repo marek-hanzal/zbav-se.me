@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withListingQueryBuilderFx } from "~/seller/listing/server/db/withListingQueryBuilderFx";
 import { withListingSelectFx } from "~/seller/listing/server/db/withListingSelectFx";
 import type { ListingFilterSchema } from "~/seller/listing/server/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";
@@ -39,7 +38,6 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx: withListingQueryBuilderFx,
 	});
 });
 

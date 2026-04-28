@@ -23,6 +23,9 @@ export type selectFx<
 	TSelectContext
 >;
 
+/**
+ * Dummy, just provides proper types, so everything should fit nicely.
+ */
 export const selectFx = <
 	TDB,
 	TTable extends keyof TDB,
