@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { withFieldOptionCollectionSelectFx } from "~/user/field-option/server/db/withFieldOptionCollectionSelectFx";
-import { withFieldOptionQueryBuilderFx } from "~/user/field-option/server/db/withFieldOptionQueryBuilderFx";
+import { withFieldOptionSelectFx } from "~/user/field-option/server/db/withFieldOptionSelectFx";
 import type { FieldOptionCountQuerySchema } from "~/user/field-option/server/schema/FieldOptionCountQuerySchema";
 import type { FieldOptionFilterSchema } from "~/user/field-option/server/schema/FieldOptionFilterSchema";
 
@@ -25,11 +24,10 @@ export const fieldOptionCountFx = Effect.fn("fieldOptionCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withFieldOptionCollectionSelectFx({}),
+		selectFx: withFieldOptionSelectFx({}),
 		filter,
 		where,
 		scope,
-		queryFx: withFieldOptionQueryBuilderFx,
 	});
 });
 

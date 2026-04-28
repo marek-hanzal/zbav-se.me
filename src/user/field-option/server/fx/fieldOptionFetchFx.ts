@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withFieldOptionQueryBuilderFx } from "~/user/field-option/server/db/withFieldOptionQueryBuilderFx";
 import { withFieldOptionSelectFx } from "~/user/field-option/server/db/withFieldOptionSelectFx";
 import type { FieldOptionFilterSchema } from "~/user/field-option/server/schema/FieldOptionFilterSchema";
 import type { FieldOptionQuerySchema } from "~/user/field-option/server/schema/FieldOptionQuerySchema";
@@ -34,7 +33,6 @@ export const fieldOptionFetchFx = Effect.fn("fieldOptionFetchFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx: withFieldOptionQueryBuilderFx,
 	});
 });
 

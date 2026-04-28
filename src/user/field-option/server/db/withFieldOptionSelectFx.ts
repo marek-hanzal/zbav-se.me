@@ -1,24 +1,67 @@
 import { Effect } from "effect";
-import { withFieldOptionSourceSelectFx } from "./withFieldOptionSourceSelectFx";
+import { match } from "ts-pattern";
+import { selectFx } from "@/lib/common/select";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import type { FieldOptionFilterSchema } from "../schema/FieldOptionFilterSchema";
+import type { FieldOptionSortSchema } from "../schema/FieldOptionSortSchema";
 
 export namespace withFieldOptionSelectFx {
-	export interface Props extends withFieldOptionSourceSelectFx.Props {
-		//
+	export interface Props {
+		sort?: FieldOptionSortSchema.Type[];
 	}
-
-	export type Select = Effect.Effect.Success<ReturnType<typeof withFieldOptionSelectFx>>;
 }
 
 export const withFieldOptionSelectFx = Effect.fn("withFieldOptionSelectFx")(function* ({
 	sort,
 }: withFieldOptionSelectFx.Props) {
-	const sourceSelect = yield* withFieldOptionSourceSelectFx({
-		sort,
-	});
+	const { kysely } = yield* KyselyContextFx;
 
-	return sourceSelect.select([
-		"fopt.fieldId",
-		"fopt.value",
-		"fopt.sort",
-	]);
+	let query = kysely.selectFrom("field_option as fopt");
+
+	for (const item of sort ?? []) {
+		query = match(item.field)
+			.with("fieldId", () => query.orderBy("fopt.fieldId", item.order))
+			.with("value", () => query.orderBy("fopt.value", item.order))
+			.with("sort", () => query.orderBy("fopt.sort", item.order))
+			.exhaustive();
+	}
+
+	return selectFx({
+		select: query.select([
+			"fopt.fieldId",
+			"fopt.value",
+			"fopt.sort",
+		]),
+		queryFx(select, where: FieldOptionFilterSchema.Type) {
+			return Effect.gen(function* () {
+				let q = select;
+
+				if (!where) {
+					return yield* Effect.succeed(select);
+				}
+
+				if (where.id) {
+					q = q.where("fopt.fieldId", "=", where.id);
+				}
+
+				if (where.idIn && where.idIn.length > 0) {
+					q = q.where("fopt.fieldId", "in", where.idIn);
+				}
+
+				if (where.fieldId) {
+					q = q.where("fopt.fieldId", "=", where.fieldId);
+				}
+
+				if (where.value) {
+					q = q.where("fopt.value", "=", where.value);
+				}
+
+				if (where.sort !== undefined) {
+					q = q.where("fopt.sort", "=", where.sort);
+				}
+
+				return yield* Effect.succeed(q);
+			});
+		},
+	});
 });

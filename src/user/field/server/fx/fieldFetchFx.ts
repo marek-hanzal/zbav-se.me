@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withFieldQueryBuilderFx } from "~/user/field/server/db/withFieldQueryBuilderFx";
 import { withFieldSelectFx } from "~/user/field/server/db/withFieldSelectFx";
 import type { FieldFilterSchema } from "~/user/field/server/schema/FieldFilterSchema";
 import type { FieldQuerySchema } from "~/user/field/server/schema/FieldQuerySchema";
@@ -34,7 +33,6 @@ export const fieldFetchFx = Effect.fn("fieldFetchFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx: withFieldQueryBuilderFx,
 	});
 });
 

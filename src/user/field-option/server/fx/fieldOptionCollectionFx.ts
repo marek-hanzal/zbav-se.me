@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withFieldOptionCollectionSelectFx } from "~/user/field-option/server/db/withFieldOptionCollectionSelectFx";
-import { withFieldOptionQueryBuilderFx } from "~/user/field-option/server/db/withFieldOptionQueryBuilderFx";
+import { withFieldOptionSelectFx } from "~/user/field-option/server/db/withFieldOptionSelectFx";
 import type { FieldOptionFilterSchema } from "~/user/field-option/server/schema/FieldOptionFilterSchema";
 import type { FieldOptionQuerySchema } from "~/user/field-option/server/schema/FieldOptionQuerySchema";
 
@@ -34,7 +33,7 @@ export const fieldOptionCollectionFx = Effect.fn("fieldOptionCollectionFx")(func
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withFieldOptionCollectionSelectFx({
+		selectFx: withFieldOptionSelectFx({
 			sort,
 		}),
 		cursor,
@@ -42,7 +41,6 @@ export const fieldOptionCollectionFx = Effect.fn("fieldOptionCollectionFx")(func
 		filter,
 		where,
 		scope,
-		queryFx: withFieldOptionQueryBuilderFx,
 	});
 });
 

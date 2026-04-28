@@ -3,8 +3,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { withAgentUsageCollectionSelectFx } from "~/user/agent/server/db/withAgentUsageCollectionSelectFx";
-import { withAgentUsageQueryBuilderFx } from "~/user/agent/server/db/withAgentUsageQueryBuilderFx";
+import { withAgentUsageSelectFx } from "~/user/agent/server/db/withAgentUsageSelectFx";
 import type { AgentUsageFilterSchema } from "~/user/agent/server/schema/AgentUsageFilterSchema";
 import type { AgentUsageQuerySchema } from "~/user/agent/server/schema/AgentUsageQuerySchema";
 
@@ -26,7 +25,7 @@ export const agentUsageDeleteCollectionFx = Effect.fn("agentUsageDeleteCollectio
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
 
-			let select = yield* withAgentUsageCollectionSelectFx({
+			let { select, queryFx } = yield* withAgentUsageSelectFx({
 				sort: query.sort,
 			});
 
@@ -35,10 +34,7 @@ export const agentUsageDeleteCollectionFx = Effect.fn("agentUsageDeleteCollectio
 				query.where,
 				query.scope,
 			]) {
-				select = yield* withAgentUsageQueryBuilderFx({
-					select,
-					where: layer,
-				});
+				select = yield* queryFx(select, layer);
 			}
 
 			return yield* tryDbFx(async () => {
