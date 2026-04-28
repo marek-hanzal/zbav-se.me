@@ -30,7 +30,7 @@ export const CategoryFieldMigration: Migration = {
 				],
 				"field",
 				[
-					"id",
+					"name",
 				],
 				(c) => c.onDelete("cascade"),
 			)

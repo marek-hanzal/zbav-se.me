@@ -33,7 +33,7 @@ export const AttrNumberMigration: Migration = {
 				],
 				"field",
 				[
-					"id",
+					"name",
 				],
 				(c) => c.onDelete("cascade"),
 			)

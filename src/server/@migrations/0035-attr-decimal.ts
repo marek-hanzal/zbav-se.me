@@ -31,7 +31,7 @@ export const AttrDecimalMigration: Migration = {
 				],
 				"field",
 				[
-					"id",
+					"name",
 				],
 				(c) => c.onDelete("cascade"),
 			)

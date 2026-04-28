@@ -32,7 +32,7 @@ export const AttrEnumMultiMigration: Migration = {
 				],
 				"field",
 				[
-					"id",
+					"name",
 				],
 				(c) => c.onDelete("cascade"),
 			)

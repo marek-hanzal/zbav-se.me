@@ -16,15 +16,9 @@ export const FieldMigration: Migration = {
 
 		await db.schema
 			.createTable("field")
-			.addColumn("id", "text", (col) => col.primaryKey().notNull())
-			.addColumn("name", "text", (col) => col.notNull())
+			.addColumn("name", "text", (col) => col.primaryKey().notNull())
 			.addColumn("type", sql`field_type_enum`, (col) => col.notNull())
 			.addColumn("required", "boolean", (col) => col.notNull())
-
-			.addUniqueConstraint("field_[name]_unique_idx", [
-				"name",
-			])
-
 			.execute();
 	},
 };

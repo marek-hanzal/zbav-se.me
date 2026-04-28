@@ -31,7 +31,7 @@ export const AttrTextMigration: Migration = {
 				],
 				"field",
 				[
-					"id",
+					"name",
 				],
 				(c) => c.onDelete("cascade"),
 			)

@@ -3,9 +3,6 @@ import { FieldTypeEnumSchema } from "~/user/field/server/schema/FieldTypeEnumSch
 
 export const FieldTableSchema = z
 	.looseObject({
-		id: z.string().meta({
-			description: "ID of the field",
-		}),
 		name: z.string().meta({
 			description: "Name of the field",
 		}),

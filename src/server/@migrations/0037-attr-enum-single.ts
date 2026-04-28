@@ -31,7 +31,7 @@ export const AttrEnumSingleMigration: Migration = {
 				],
 				"field",
 				[
-					"id",
+					"name",
 				],
 				(c) => c.onDelete("cascade"),
 			)

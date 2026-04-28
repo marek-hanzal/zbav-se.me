@@ -81,7 +81,7 @@ export const CategorySeedMigration: Migration = {
 				.values(
 					field.map(({ name, ...rest }) => ({
 						categoryId: db.selectFrom("category").select("id").where("slug", "=", slug),
-						fieldId: db.selectFrom("field").select("id").where("name", "=", name),
+						fieldId: name,
 						...rest,
 					})),
 				)
