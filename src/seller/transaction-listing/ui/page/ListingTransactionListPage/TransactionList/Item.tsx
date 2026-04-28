@@ -56,9 +56,11 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 						data-ui-justify="space-between"
 						data-ui-items="center"
 					>
-						{unreadCount > 0 ? (
+						{transaction.unread > 0 ? (
 							<TypoIcon icon={MessageIcon}>
-								<Typo label={`x${unreadCount > 9 ? "9+" : unreadCount}`} />
+								<Typo
+									label={`x${transaction.unread > 9 ? "9+" : transaction.unread}`}
+								/>
 							</TypoIcon>
 						) : (
 							<div />

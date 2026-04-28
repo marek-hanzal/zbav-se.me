@@ -42,11 +42,11 @@ export const withTransactionListingQueryBuilderFx = Effect.fn(
 	if (where.fulltext) {
 		const fulltext = where.fulltext;
 
-		query = query.where((eb) =>
-			eb.or([
-				eb("l.title", "like", `%${fulltext}%`),
-			]),
-		) as TSelect;
+		// query = query.where((eb) =>
+		// 	eb.or([
+		// 		eb("l.title", "like", `%${fulltext}%`),
+		// 	]),
+		// ) as TSelect;
 	}
 
 	if (where.userId) {

@@ -6,7 +6,6 @@ import type { AgentUsageTableSchema } from "~/server/database/@table/AgentUsageT
 import type { CategoryMissTableSchema } from "~/server/database/@table/CategoryMissTableSchema";
 import type { CategorySpotlightTableSchema } from "~/server/database/@table/CategorySpotlightTableSchema";
 import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
-import type { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
 import type { FavouriteTableSchema } from "~/server/database/@table/FavouriteTableSchema";
 import type { FeedTableSchema } from "~/server/database/@table/FeedTableSchema";
 import type { FieldOptionTableSchema } from "~/server/database/@table/FieldOptionTableSchema";
@@ -36,7 +35,6 @@ export interface Database {
 	category_miss: CategoryMissTableSchema.Type;
 	category_spotlight: CategorySpotlightTableSchema.Type;
 	category: CategoryTableSchema.Type;
-	draft: DraftTableSchema.Type;
 	favourite: FavouriteTableSchema.Type;
 	feed: FeedTableSchema.Type;
 	field: FieldTableSchema.Type;
