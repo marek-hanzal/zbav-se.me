@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
-import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { ListingFilterSchema } from "../schema/ListingFilterSchema";
 import type { ListingSortSchema } from "../schema/ListingSortSchema";
@@ -22,7 +22,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 	let query = kysely
 		.selectFrom("listing as l")
-		.innerJoin("category as cat", "cat.id", "l.categoryId");
+		.leftJoin("category as cat", "cat.id", "l.categoryId");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
@@ -44,12 +44,18 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.createdAt",
 			"l.updatedAt",
 			(eb) => {
-				return sql<RestrictionEnumSchema.Type>`
-                    greatest(
-                        ${eb.ref("cat.restriction")},
-                        coalesce(${eb.ref("l.restriction")}, ${eb.ref("cat.restriction")})
-                    )
-                `.as("withRestriction");
+				return eb.fn
+					.coalesce(
+						sql<RestrictionEnumSchema.Type | null>`
+                            greatest(
+                                ${eb.ref("cat.restriction")},
+                                ${eb.ref("l.restriction")}
+                            )
+			            `,
+						sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`,
+					)
+					.$castTo<RestrictionEnumSchema.Type>()
+					.as("withRestriction");
 			},
 		]),
 		queryFx(select, where: ListingFilterSchema.Type) {
