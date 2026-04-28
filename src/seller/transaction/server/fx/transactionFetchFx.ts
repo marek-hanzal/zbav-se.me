@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withTransactionQueryBuilderFx } from "~/seller/transaction/server/db/withTransactionQueryBuilderFx";
 import { withTransactionSelectFx } from "~/seller/transaction/server/db/withTransactionSelectFx";
 import type { TransactionFilterSchema } from "~/seller/transaction/server/schema/TransactionFilterSchema";
 import type { TransactionQuerySchema } from "~/seller/transaction/server/schema/TransactionQuerySchema";
@@ -34,7 +33,6 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx: withTransactionQueryBuilderFx,
 	});
 });
 

@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withTransactionListingCollectionSelectFx } from "~/seller/transaction-listing/server/db/withTransactionListingCollectionSelectFx";
-import { withTransactionListingQueryBuilderFx } from "~/seller/transaction-listing/server/db/withTransactionListingQueryBuilderFx";
+import { withTransactionListingSelectFx } from "~/seller/transaction-listing/server/db/withTransactionListingSelectFx";
 import type { TransactionListingFilterSchema } from "~/seller/transaction-listing/server/schema/TransactionListingFilterSchema";
 import type { TransactionListingQuerySchema } from "~/seller/transaction-listing/server/schema/TransactionListingQuerySchema";
 
@@ -35,7 +34,7 @@ export const transactionListingCollectionFx = Effect.fn("transactionListingColle
 		});
 
 		return yield* withCollectionFx({
-			selectFx: withTransactionListingCollectionSelectFx({
+			selectFx: withTransactionListingSelectFx({
 				sort,
 			}),
 			cursor,
@@ -43,7 +42,6 @@ export const transactionListingCollectionFx = Effect.fn("transactionListingColle
 			filter,
 			where,
 			scope,
-			queryFx: withTransactionListingQueryBuilderFx,
 		});
 	},
 );

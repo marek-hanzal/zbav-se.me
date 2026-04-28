@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withIgnoreQueryBuilderFx } from "~/buyer/ignore/server/db/withIgnoreQueryBuilderFx";
 import { withIgnoreSelectFx } from "~/buyer/ignore/server/db/withIgnoreSelectFx";
 import type { IgnoreFilterSchema } from "~/buyer/ignore/server/schema/IgnoreFilterSchema";
 import type { IgnoreQuerySchema } from "~/buyer/ignore/server/schema/IgnoreQuerySchema";
@@ -34,7 +33,6 @@ export const ignoreFetchFx = Effect.fn("ignoreFetchFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx: withIgnoreQueryBuilderFx,
 	});
 });
 

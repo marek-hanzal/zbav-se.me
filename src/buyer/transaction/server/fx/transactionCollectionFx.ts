@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withTransactionCollectionSelectFx } from "~/buyer/transaction/server/db/withTransactionCollectionSelectFx";
-import { withTransactionQueryBuilderFx } from "~/buyer/transaction/server/db/withTransactionQueryBuilderFx";
+import { withTransactionSelectFx } from "~/buyer/transaction/server/db/withTransactionSelectFx";
 import type { TransactionFilterSchema } from "~/buyer/transaction/server/schema/TransactionFilterSchema";
 import type { TransactionQuerySchema } from "~/buyer/transaction/server/schema/TransactionQuerySchema";
 
@@ -34,7 +33,7 @@ export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(func
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withTransactionCollectionSelectFx({
+		selectFx: withTransactionSelectFx({
 			sort,
 		}),
 		cursor,
@@ -42,7 +41,6 @@ export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(func
 		filter,
 		where,
 		scope,
-		queryFx: withTransactionQueryBuilderFx,
 	});
 });
 

@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withFeedCollectionSelectFx } from "~/buyer/feed/server/db/withFeedCollectionSelectFx";
-import { withFeedQueryBuilderFx } from "~/buyer/feed/server/db/withFeedQueryBuilderFx";
+import { withFeedSelectFx } from "~/buyer/feed/server/db/withFeedSelectFx";
 import type { FeedFilterSchema } from "~/buyer/feed/server/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
 
@@ -34,14 +33,13 @@ export const feedCollectionFx = Effect.fn("feedCollectionFx")(function* ({
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withFeedCollectionSelectFx({
+		selectFx: withFeedSelectFx({
 			sort,
 		}),
 		cursor,
 		filter,
 		where,
 		scope,
-		queryFx: withFeedQueryBuilderFx,
 		limit,
 	});
 });

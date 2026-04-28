@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withFavouriteCollectionSelectFx } from "~/buyer/favourite/server/db/withFavouriteCollectionSelectFx";
-import { withFavouriteQueryBuilderFx } from "~/buyer/favourite/server/db/withFavouriteQueryBuilderFx";
+import { withFavouriteSelectFx } from "~/buyer/favourite/server/db/withFavouriteSelectFx";
 import type { FavouriteFilterSchema } from "~/buyer/favourite/server/schema/FavouriteFilterSchema";
 import type { FavouriteQuerySchema } from "~/buyer/favourite/server/schema/FavouriteQuerySchema";
 
@@ -34,14 +33,13 @@ export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withFavouriteCollectionSelectFx({
+		selectFx: withFavouriteSelectFx({
 			sort,
 		}),
 		cursor,
 		filter,
 		where,
 		scope,
-		queryFx: withFavouriteQueryBuilderFx,
 		limit,
 	});
 });
