@@ -26,11 +26,9 @@ export const ListingMigration: Migration = {
 
 			// Workflow / gate.
 			.addColumn("status", sql`listing_status_enum`, (col) => {
-				return col.notNull().defaultTo(sql`'draft'::listing_status_enum`);
+				return col.notNull();
 			})
-			.addColumn("restriction", sql`restriction_enum`, (col) => {
-				return col.notNull().defaultTo(sql`'none'::restriction_enum`);
-			})
+			.addColumn("restriction", sql`restriction_enum`)
 
 			// Category can be missing while draft.
 			// Published states must have it.

@@ -17,6 +17,7 @@ export const ListingTableSchema = z
 		withCategoryRestriction: RestrictionEnumSchema.optional(),
 		//
 		status: ListingStatusEnumSchema,
+		restriction: RestrictionEnumSchema.optional(),
 		//
 		galleryId: z.string().min(1),
 		withImageUrl: z.array(z.string().min(1)),
