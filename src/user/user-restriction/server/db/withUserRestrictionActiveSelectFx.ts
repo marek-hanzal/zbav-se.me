@@ -13,10 +13,14 @@ export namespace withUserRestrictionActiveSelectFx {
 export const withUserRestrictionActiveSelectFx = Effect.fn("withActiveUserRestrictionSelectFx")(
 	function* ({ userId }: withUserRestrictionActiveSelectFx.Props) {
 		const { kysely } = yield* KyselyContextFx;
-		const fallbackSql = sql`${RestrictionEnumSchema.enum.none}::restriction_enum`;
+		const fallbackSql = sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`;
 
 		if (!userId) {
-			return fallbackSql;
+			return kysely.selectNoFrom(() => {
+				return sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`.as(
+					"restriction",
+				);
+			});
 		}
 
 		const { select, queryFx } = yield* withUserRestrictionSelectFx({
@@ -36,7 +40,10 @@ export const withUserRestrictionActiveSelectFx = Effect.fn("withActiveUserRestri
 			(yield* queryFx(select, {
 				userId,
 				isAvailable: true,
-			})).limit(1),
+			}))
+				.clearSelect()
+				.select("ur.restriction")
+				.limit(1),
 			fallbackSql,
 		);
 	},

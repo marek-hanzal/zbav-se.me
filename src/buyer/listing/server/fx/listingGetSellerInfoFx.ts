@@ -23,8 +23,8 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 
 	const { kysely } = yield* KyselyContextFx;
 
-	const userInfo = yield* tryDbFx(async () =>
-		kysely
+	const userInfo = yield* tryDbFx(async () => {
+		return kysely
 			.selectFrom("listing as l")
 			.innerJoin("user as u", "u.id", "l.userId")
 			.select((eb) => [
@@ -39,8 +39,8 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 					.as("listings"),
 			])
 			.where("l.id", "=", listingId)
-			.executeTakeFirst(),
-	);
+			.executeTakeFirst();
+	});
 
 	if (!userInfo) {
 		return yield* new NotFoundErrorFx({
