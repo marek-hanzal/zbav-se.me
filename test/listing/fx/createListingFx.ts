@@ -58,6 +58,7 @@ export const createListingFx = (
 		});
 
 		return yield* listingCreateFx({
+			categoryId: resolvedCategoryId,
 			userId: sellerId,
 		});
 	});
