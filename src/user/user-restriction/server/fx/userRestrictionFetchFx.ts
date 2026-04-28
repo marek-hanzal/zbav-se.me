@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withUserRestrictionQueryBuilderFx } from "../db/withUserRestrictionQueryBuilderFx";
 import { withUserRestrictionSelectFx } from "../db/withUserRestrictionSelectFx";
 import type { UserRestrictionFilterSchema } from "../schema/UserRestrictionFilterSchema";
 import type { UserRestrictionQuerySchema } from "../schema/UserRestrictionQuerySchema";
@@ -34,7 +33,6 @@ export const userRestrictionFetchFx = Effect.fn("userRestrictionFetchFx")(functi
 		filter,
 		where,
 		scope,
-		queryFx: withUserRestrictionQueryBuilderFx,
 	});
 });
 
