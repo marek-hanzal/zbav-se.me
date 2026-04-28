@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withGalleryQueryBuilderFx } from "~/user/gallery/server/db/withGalleryQueryBuilderFx";
 import { withGallerySelectFx } from "~/user/gallery/server/db/withGallerySelectFx";
 import type { GalleryFilterSchema } from "~/user/gallery/server/schema/GalleryFilterSchema";
 import type { GalleryQuerySchema } from "~/user/gallery/server/schema/GalleryQuerySchema";
@@ -34,7 +33,6 @@ export const galleryFetchFx = Effect.fn("galleryFetchFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx: withGalleryQueryBuilderFx,
 	});
 });
 
