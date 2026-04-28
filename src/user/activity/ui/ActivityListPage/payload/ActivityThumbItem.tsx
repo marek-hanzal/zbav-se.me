@@ -55,7 +55,7 @@ export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
 				bottom={
 					<Container data-ui-flow="vertical">
 						<Typo
-							label={listing.title}
+							label={"listing.title"}
 							data-ui-text="sm"
 						/>
 						<Typo
@@ -87,7 +87,6 @@ export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
 			/>
 
 			<BottomSheet
-				data-ui="ActivityThumbItem[BottomSheet]"
 				isOpen={isOpen}
 				onClose={() => {
 					setIsOpen(false);
@@ -98,12 +97,11 @@ export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
 				})}
 			>
 				<Container
-					data-ui="ActivityThumbItem-[ListingCard]"
 					data-ui-inner="default"
 					data-ui-flow="vertical"
 					data-ui-gap="default"
 				>
-					<Tx label={listing.title} />
+					<Tx label={"listing.title"} />
 					<Tx label={`#${listing.id}`} />
 				</Container>
 			</BottomSheet>

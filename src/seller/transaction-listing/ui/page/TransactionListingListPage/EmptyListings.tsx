@@ -26,7 +26,7 @@ export const EmptyListings: FC<EmptyListings.Props> = (props) => {
 					data-action={"go to drafts"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
-					to={"/$locale/app/seller/draft/resolve"}
+					to={"/$locale/app/seller/listing/resolve"}
 					params={{
 						locale,
 					}}
