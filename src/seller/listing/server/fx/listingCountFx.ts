@@ -30,7 +30,6 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	return yield* withCountFx({
 		selectFx: withListingSelectFx({
 			sort: [],
-			userId: scope.userId,
 		}),
 		filter,
 		where,

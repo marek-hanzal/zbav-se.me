@@ -33,7 +33,6 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 		resource: "listing",
 		selectFx: withListingSelectFx({
 			sort,
-			userId: scope.userId,
 		}),
 		filter,
 		where,

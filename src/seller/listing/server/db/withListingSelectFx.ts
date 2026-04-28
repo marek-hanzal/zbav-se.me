@@ -2,13 +2,11 @@ import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { withActiveUserRestrictionSelectFx } from "~/user/user-restriction/server/db/withActiveUserRestrictionSelectFx";
 import type { ListingFilterSchema } from "../schema/ListingFilterSchema";
 import type { ListingSortSchema } from "../schema/ListingSortSchema";
 
 export namespace withListingSelectFx {
 	export interface Props {
-		userId: string;
 		sort?: ListingSortSchema.Type[];
 	}
 
@@ -17,7 +15,6 @@ export namespace withListingSelectFx {
 
 export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	sort,
-	userId,
 }: withListingSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
@@ -30,10 +27,6 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			.with("expiresAt", () => query.orderBy("l.expiresAt", item.order))
 			.exhaustive();
 	}
-
-	const restrictionSql = yield* withActiveUserRestrictionSelectFx({
-		userId,
-	});
 
 	return selectFx({
 		select: query.select([

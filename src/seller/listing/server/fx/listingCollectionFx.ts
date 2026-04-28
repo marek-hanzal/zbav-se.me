@@ -39,7 +39,6 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	return yield* withCollectionFx({
 		selectFx: withListingSelectFx({
 			sort,
-			userId: scope.userId,
 		}).pipe(
 			Effect.map(({ select, queryFx }) => {
 				return {
