@@ -61,8 +61,8 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 					side: transaction.side,
 				});
 
-				yield* tryDbFx(async () =>
-					kysely
+				yield* tryDbFx(async () => {
+					return kysely
 						.insertInto("transaction_entry")
 						.values({
 							...data,
@@ -70,8 +70,8 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							kind,
 							createdAt: dateContext.now().toJSDate(),
 						})
-						.executeTakeFirstOrThrow(),
-				);
+						.executeTakeFirstOrThrow();
+				});
 
 				yield* transactionTouchFx({
 					transactionId,
@@ -295,8 +295,8 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 			 */
 			const createCounterpartyActivityFx = Effect.suspend(() => {
 				return match(transaction.side)
-					.with("buyer", () =>
-						activityCreateFx({
+					.with("buyer", () => {
+						return activityCreateFx({
 							userId: transaction.sellerId,
 							reference: [
 								transaction.listingId,
@@ -309,10 +309,10 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 								transactionEntryId: transactionEntry.id,
 							},
 							priority: "high",
-						}),
-					)
-					.with("seller", () =>
-						activityCreateFx({
+						});
+					})
+					.with("seller", () => {
+						return activityCreateFx({
 							userId: transaction.buyerId,
 							reference: [
 								transaction.listingId,
@@ -325,10 +325,10 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 								transactionEntryId: transactionEntry.id,
 							},
 							priority: "high",
-						}),
-					)
-					.with("transaction", () =>
-						Effect.all([
+						});
+					})
+					.with("transaction", () => {
+						return Effect.all([
 							activityCreateFx({
 								userId: transaction.sellerId,
 								reference: [
@@ -361,10 +361,10 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 								},
 								priority: "high",
 							}),
-						]).pipe(Effect.asVoid),
-					)
-					.with("system", () =>
-						Effect.all([
+						]).pipe(Effect.asVoid);
+					})
+					.with("system", () => {
+						return Effect.all([
 							activityCreateFx({
 								userId: transaction.sellerId,
 								reference: [
@@ -397,8 +397,8 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 								},
 								priority: "high",
 							}),
-						]).pipe(Effect.asVoid),
-					)
+						]).pipe(Effect.asVoid);
+					})
 					.otherwise(() => Effect.void);
 			});
 

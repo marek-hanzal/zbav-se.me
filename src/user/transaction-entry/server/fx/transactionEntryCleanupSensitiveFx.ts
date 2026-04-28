@@ -29,8 +29,8 @@ export const transactionEntryCleanupSensitiveFx = Effect.fn("transactionEntryCle
 
 		const { kysely } = yield* KyselyContextFx;
 
-		return yield* tryDbFx(async () =>
-			kysely
+		return yield* tryDbFx(async () => {
+			return kysely
 				.deleteFrom("transaction_entry")
 				.where("transactionId", "=", transactionId)
 				.where("kind", "in", [
@@ -38,7 +38,7 @@ export const transactionEntryCleanupSensitiveFx = Effect.fn("transactionEntryCle
 					"package",
 					"personal",
 				])
-				.executeTakeFirst(),
-		);
+				.executeTakeFirst();
+		});
 	},
 );
