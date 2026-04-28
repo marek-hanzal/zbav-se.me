@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
+import { z } from "zod";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withDateFx } from "~/server/database/fx/withDateFx";
@@ -30,7 +31,7 @@ export const userRestrictionCollectionFn = createServerFn()
 		logger.trace(name, data);
 
 		return zodGuardFx({
-			schema: UserRestrictionSchema.array(),
+			schema: z.array(UserRestrictionSchema),
 			dataFx: userRestrictionCollectionFx({
 				...data,
 				scope: {

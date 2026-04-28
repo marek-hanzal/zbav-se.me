@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withUserRestrictionCollectionSelectFx } from "../db/withUserRestrictionCollectionSelectFx";
-import { withUserRestrictionQueryBuilderFx } from "../db/withUserRestrictionQueryBuilderFx";
+import { withUserRestrictionSelectFx } from "../db/withUserRestrictionSelectFx";
 import type { UserRestrictionFilterSchema } from "../schema/UserRestrictionFilterSchema";
 import type { UserRestrictionQuerySchema } from "../schema/UserRestrictionQuerySchema";
 
@@ -13,15 +12,15 @@ export namespace userRestrictionCollectionFx {
 }
 
 export const userRestrictionCollectionFx = Effect.fn("userRestrictionCollectionFx")(function* ({
-	filter,
-	where,
-	scope,
 	cursor = {
 		page: 0,
 		size: 10,
 	},
-	limit,
+	filter,
+	where,
+	scope,
 	sort,
+	limit,
 }: userRestrictionCollectionFx.Props) {
 	const logger = yield* getLoggerFx("userRestrictionCollectionFx");
 	logger.trace("userRestrictionCollectionFx", {
@@ -29,20 +28,19 @@ export const userRestrictionCollectionFx = Effect.fn("userRestrictionCollectionF
 		where,
 		scope,
 		cursor,
-		limit,
 		sort,
+		limit,
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withUserRestrictionCollectionSelectFx({
+		selectFx: withUserRestrictionSelectFx({
 			sort,
 		}),
 		cursor,
-		limit,
 		filter,
 		where,
 		scope,
-		queryFx: withUserRestrictionQueryBuilderFx,
+		limit,
 	});
 });
 
