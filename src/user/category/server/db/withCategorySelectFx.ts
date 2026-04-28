@@ -1,10 +1,9 @@
 import { Effect } from "effect";
-import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withLikeEx } from "~/server/database/expression/withLikeEx";
-import { withActiveUserRestrictionSelectFx } from "~/user/user-restriction/server/db/withActiveUserRestrictionSelectFx";
+import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
 import type { CategoryFilterSchema } from "../schema/CategoryFilterSchema";
 import type { CategorySortSchema } from "../schema/CategorySortSchema";
 
@@ -20,16 +19,16 @@ export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* 
 	sort,
 }: withCategorySelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
-	const restrictionSql = yield* withActiveUserRestrictionSelectFx({
+	const restrictionSql = yield* withUserRestrictionActiveSelectFx({
 		userId,
 	});
 
 	let select = kysely
 		.selectFrom("category as cat")
 		.selectAll("cat")
-		.select((eb) =>
-			sql<boolean>`${eb.ref("cat.restriction")} > ${restrictionSql}`.as("isRestricted"),
-		);
+		.select((eb) => {
+			return eb("cat.restriction", ">", restrictionSql).as("isRestricted");
+		});
 
 	for (const item of sort ?? []) {
 		select = match(item.field)
@@ -106,7 +105,7 @@ export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* 
 
 				if (where?.withRestriction === true) {
 					query = query.where((eb) => {
-						return sql<boolean>`${eb.ref("cat.restriction")} <= ${restrictionSql}`;
+						return eb("cat.restriction", "<=", restrictionSql);
 					});
 				}
 
