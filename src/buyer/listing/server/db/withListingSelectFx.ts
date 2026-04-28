@@ -69,12 +69,18 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				"l.updatedAt",
 			])
 			.select((eb) => {
-				return sql<RestrictionEnumSchema.Type>`
-                    greatest(
-                        ${eb.ref("cat.restriction")},
-                        ${eb.ref("l.restriction")}
-                    )
-                `.as("withRestriction");
+				return eb.fn
+					.coalesce(
+						sql<RestrictionEnumSchema.Type | null>`
+                            greatest(
+                                ${eb.ref("cat.restriction")},
+                                ${eb.ref("l.restriction")}
+                            )
+			            `,
+						sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`,
+					)
+					.$castTo<RestrictionEnumSchema.Type>()
+					.as("withRestriction");
 			})
 			.select((eb) => {
 				return eb("l.userId", "=", userId).$castTo<boolean>().as("my");
