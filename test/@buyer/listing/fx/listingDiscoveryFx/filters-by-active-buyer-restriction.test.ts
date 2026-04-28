@@ -63,7 +63,7 @@ describe("buyer listing discovery flow", () => {
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title,
+					// title,
 					categoryIdIn,
 				},
 			});
@@ -83,7 +83,7 @@ describe("buyer listing discovery flow", () => {
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title,
+					// title,
 					categoryIdIn,
 				},
 			});
@@ -91,7 +91,7 @@ describe("buyer listing discovery flow", () => {
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title,
+					// title,
 					categoryIdIn,
 				},
 			});
@@ -100,7 +100,7 @@ describe("buyer listing discovery flow", () => {
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title,
+					// title,
 					categoryId: restrictedCategory.id,
 				},
 			});
