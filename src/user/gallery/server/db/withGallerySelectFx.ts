@@ -26,7 +26,7 @@ export const withGallerySelectFx = Effect.fn("withGallerySelectFx")(function* ({
 			.exhaustive();
 	}
 
-	const galleryItemSelect = yield* withGalleryItemSelectFx({
+	const { select: galleryItemSelect } = yield* withGalleryItemSelectFx({
 		sort: [
 			{
 				field: "sort",
