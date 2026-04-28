@@ -30,9 +30,9 @@ export const ListingSchema = z
 		thumb: ThumbEnumSchema.nullable().meta({
 			description: "Thumb type provided by the user (like/dislike) or null if not present",
 		}),
-		restrictions: z.array(RestrictionEnumSchema).meta({
+		withRestriction: RestrictionEnumSchema.meta({
 			description: `
-Computed restrictions from category and listing. Read-only.
+Effective restriction applied on the listing.
             `.trim(),
 		}),
 	})

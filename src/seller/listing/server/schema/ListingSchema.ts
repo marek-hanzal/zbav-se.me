@@ -1,9 +1,15 @@
 import { z } from "zod";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 
 export const ListingSchema = z
 	.looseObject({
 		...ListingTableSchema.shape,
+		withRestriction: RestrictionEnumSchema.meta({
+			description: `
+Effective restriction applied on the listing.
+            `.trim(),
+		}),
 	})
 	.omit({
 		userId: true,

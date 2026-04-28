@@ -1,6 +1,8 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { ListingFilterSchema } from "../schema/ListingFilterSchema";
 import type { ListingSortSchema } from "../schema/ListingSortSchema";
@@ -18,7 +20,9 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 }: withListingSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	let query = kysely.selectFrom("listing as l");
+	let query = kysely
+		.selectFrom("listing as l")
+		.innerJoin("category as cat", "cat.id", "l.categoryId");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
@@ -39,6 +43,14 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.expiresAt",
 			"l.createdAt",
 			"l.updatedAt",
+			(eb) => {
+				return sql<RestrictionEnumSchema.Type>`
+                    greatest(
+                        ${eb.ref("cat.restriction")},
+                        coalesce(${eb.ref("l.restriction")}, ${eb.ref("cat.restriction")})
+                    )
+                `.as("withRestriction");
+			},
 		]),
 		queryFx(select, where: ListingFilterSchema.Type) {
 			return Effect.gen(function* () {

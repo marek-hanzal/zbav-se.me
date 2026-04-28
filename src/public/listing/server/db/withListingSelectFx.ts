@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
@@ -61,6 +62,14 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.galleryId",
 			"l.withImageUrl",
 			"l.createdAt",
+			(eb) => {
+				return sql<RestrictionEnumSchema.Type>`
+                    greatest(
+                        ${eb.ref("cat.restriction")},
+                        coalesce(${eb.ref("l.restriction")}, ${eb.ref("cat.restriction")})
+                    )
+                `.as("withRestriction");
+			},
 		]),
 		queryFx(select, where: ListingFilterSchema.Type) {
 			return Effect.gen(function* () {
