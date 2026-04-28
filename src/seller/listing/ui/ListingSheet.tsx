@@ -36,7 +36,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ _suspense, listing, state
 					/>
 				),
 				header: ({ close }) => ({
-					title: listing.title,
+					title: "listing.title",
 					right: <CloseButton onClick={close} />,
 				}),
 			},
