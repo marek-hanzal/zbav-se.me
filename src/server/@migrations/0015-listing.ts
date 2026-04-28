@@ -67,7 +67,7 @@ export const ListingMigration: Migration = {
 			//
 			.addColumn("restriction", sql`restriction_enum`)
 			//
-			.addColumn("categoryId", "text", (col) => col.notNull())
+			.addColumn("categoryId", "text")
 			//
 			.addColumn("galleryId", "text", (col) => col.notNull())
 			.addColumn("withUploadIds", sql`text[]`, (col) => {
