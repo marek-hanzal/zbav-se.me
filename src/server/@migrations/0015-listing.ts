@@ -1,6 +1,9 @@
 import { type Migration, sql } from "kysely";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
+import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import type { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
+import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 
 export const ListingMigration: Migration = {
 	async up(db) {
@@ -15,7 +18,41 @@ export const ListingMigration: Migration = {
 					"expired",
 					"closed",
 					"banned",
-				] as const),
+				]),
+			)
+			.execute();
+
+		await db.schema
+			.createType("listing_price_enum")
+			.asEnum(
+				toEnumGuard<ListingPriceEnumSchema.Type>()([
+					"closed",
+					"open",
+					"offer",
+				]),
+			)
+			.execute();
+
+		await db.schema
+			.createType("listing_delivery_enum")
+			.asEnum(
+				toEnumGuard<ListingDeliveryEnumSchema.Type>()([
+					"personal",
+					"post",
+					"package",
+					"other",
+				]),
+			)
+			.execute();
+
+		await db.schema
+			.createType("listing_warranty_enum")
+			.asEnum(
+				toEnumGuard<ListingWarrantyEnumSchema.Type>()([
+					"warranty",
+					"no-warranty",
+					"custom",
+				]),
 			)
 			.execute();
 
