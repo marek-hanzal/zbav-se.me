@@ -11,9 +11,9 @@ import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 export namespace listingCreateFx {
-	export type Props = ListingCreateSchema.Type & {
+	export interface Props extends ListingCreateSchema.Type {
 		userId: string;
-	};
+	}
 }
 
 export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({

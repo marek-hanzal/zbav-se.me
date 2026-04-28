@@ -58,7 +58,6 @@ export const createListingFx = (
 		});
 
 		return yield* listingCreateFx({
-			title,
 			userId: sellerId,
 		});
 	});

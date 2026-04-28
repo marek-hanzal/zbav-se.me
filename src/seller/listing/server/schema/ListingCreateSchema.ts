@@ -4,7 +4,7 @@ export const ListingCreateSchema = z
 	.looseObject({
 		//
 	})
-	.strip()
+	// .strip()
 	.meta({
 		id: "ListingCreate",
 		description: "Data for creating a new listing",
