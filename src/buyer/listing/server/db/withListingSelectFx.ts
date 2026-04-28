@@ -62,10 +62,16 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	return selectFx({
 		select: select
 			.select([
+				"l.id",
 				"l.userId",
+				"l.status",
+				"l.withImageUrl",
+				"l.withUploadIds",
+				"l.createdAt",
+				"l.updatedAt",
 			])
 			.select((eb) => {
-				return eb("l.userId", "=", userId).as("my");
+				return eb("l.userId", "=", userId).$castTo<boolean>().as("my");
 			})
 			.select((eb) => [
 				eb

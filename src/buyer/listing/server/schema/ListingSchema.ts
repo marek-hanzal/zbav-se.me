@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
-import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 
 export const ListingSchema = z
@@ -38,6 +37,7 @@ export const ListingSchema = z
 	})
 	.omit({
 		userId: true,
+		galleryId: true,
 	})
 	.strip()
 	.meta({
