@@ -9,42 +9,38 @@ import type { GalleryCreateSchema } from "~/user/gallery/server/schema/GalleryCr
 export namespace galleryInsertFx {
 	export interface Props extends GalleryCreateSchema.Type {
 		userId: string;
-		id?: string;
 	}
 }
 
 export const galleryInsertFx = Effect.fn("galleryInsertFx")(function* ({
 	userId,
-	id,
 	...props
 }: galleryInsertFx.Props) {
 	const logger = yield* getLoggerFx("galleryInsertFx");
 	logger.trace("galleryInsertFx", {
 		userId,
-		id,
 		...props,
 	});
 
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 
-	const galleryId = id ?? genId();
+	const id = genId();
 
-	yield* tryDbFx(async () =>
-		kysely
+	yield* tryDbFx(async () => {
+		return kysely
 			.insertInto("gallery")
 			.values({
 				...props,
-				id: galleryId,
+				id,
 				userId,
 				createdAt: dateContext.now().toJSDate(),
 			})
-			.onConflict((eb) => eb.doNothing())
-			.execute(),
-	);
+			.execute();
+	});
 
 	return {
-		id: galleryId,
+		id,
 	} as const;
 });
 

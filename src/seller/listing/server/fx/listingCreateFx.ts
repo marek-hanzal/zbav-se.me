@@ -1,6 +1,4 @@
 import { Effect } from "effect";
-import { sql } from "kysely";
-import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
@@ -9,12 +7,7 @@ import type { ListingCreateSchema } from "~/seller/listing/server/schema/Listing
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
-import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
-import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
-import { checkRestrictionFx } from "~/user/restriction/server/fx/checkRestrictionFx";
-import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 export namespace listingCreateFx {
@@ -25,19 +18,11 @@ export namespace listingCreateFx {
 
 export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 	userId,
-	uploadIds,
-	categoryId,
-	locationId,
-	restriction,
 	...data
 }: listingCreateFx.Props) {
 	const logger = yield* getLoggerFx("listingCreateFx");
 	logger.trace("listingCreateFx", {
 		userId,
-		uploadIds,
-		categoryId,
-		locationId,
-		restriction,
 		...data,
 	});
 
@@ -49,116 +34,116 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			const id = genId();
 			const now = dateContext.now();
 
-			if (uploadIds.length === 0) {
-				return yield* new InvalidRequestErrorFx({
-					message: "At least one upload is required",
-				});
-			}
+			// if (uploadIds.length === 0) {
+			// 	return yield* new InvalidRequestErrorFx({
+			// 		message: "At least one upload is required",
+			// 	});
+			// }
 
-			/**
-			 * We need ensure user does not use under-level restriction
-			 * on his listing.
-			 */
-			if (restriction) {
-				const category = yield* categoryFetchFx({
-					userId,
-					where: {
-						id: categoryId,
-					},
-					scope: {},
-				});
+			// /**
+			//  * We need ensure user does not use under-level restriction
+			//  * on his listing.
+			//  */
+			// if (restriction) {
+			// 	const category = yield* categoryFetchFx({
+			// 		userId,
+			// 		where: {
+			// 			id: categoryId,
+			// 		},
+			// 		scope: {},
+			// 	});
 
-				yield* checkRestrictionFx({
-					level: category.restriction,
-					request: restriction,
-				});
-			}
+			// 	yield* checkRestrictionFx({
+			// 		level: category.restriction,
+			// 		request: restriction,
+			// 	});
+			// }
 
 			const gallery = yield* galleryInsertFx({
 				access: "public",
 				userId,
 			});
 
-			const withCategory = yield* tryDbFx(async () => {
-				return kysely
-					.selectFrom("category")
-					.select([
-						"discovery",
-						"restriction",
-					])
-					.where("id", "=", categoryId)
-					.executeTakeFirstOrThrow();
-			});
+			// const withCategory = yield* tryDbFx(async () => {
+			// 	return kysely
+			// 		.selectFrom("category")
+			// 		.select([
+			// 			"discovery",
+			// 			"restriction",
+			// 		])
+			// 		.where("id", "=", categoryId)
+			// 		.executeTakeFirstOrThrow();
+			// });
 
-			const withLocation = yield* tryDbFx(async () => {
-				return kysely
-					.selectFrom("location")
-					.select("geo")
-					.where("id", "=", locationId)
-					.executeTakeFirstOrThrow();
-			});
+			// const withLocation = yield* tryDbFx(async () => {
+			// 	return kysely
+			// 		.selectFrom("location")
+			// 		.select("geo")
+			// 		.where("id", "=", locationId)
+			// 		.executeTakeFirstOrThrow();
+			// });
 
-			yield* tryDbFx(async () => {
-				return kysely
-					.updateTable("upload")
-					.set({
-						access: "public",
-					})
-					.where("userId", "=", userId)
-					.where("id", "in", uploadIds)
-					.execute();
-			});
+			// yield* tryDbFx(async () => {
+			// 	return kysely
+			// 		.updateTable("upload")
+			// 		.set({
+			// 			access: "public",
+			// 		})
+			// 		.where("userId", "=", userId)
+			// 		.where("id", "in", uploadIds)
+			// 		.execute();
+			// });
 
-			const withUpload = yield* tryDbFx(async () => {
-				return kysely
-					.selectFrom("upload")
-					.select([
-						"id",
-						"url",
-					])
-					.where("userId", "=", userId)
-					.where("id", "in", uploadIds)
-					.orderBy("createdAt", "asc")
-					.execute();
-			});
+			// const withUpload = yield* tryDbFx(async () => {
+			// 	return kysely
+			// 		.selectFrom("upload")
+			// 		.select([
+			// 			"id",
+			// 			"url",
+			// 		])
+			// 		.where("userId", "=", userId)
+			// 		.where("id", "in", uploadIds)
+			// 		.orderBy("createdAt", "asc")
+			// 		.execute();
+			// });
 
-			/**
-			 * This is a hack how to manually reorder uploaded images to
-			 * listing, so they preserve user's image order.
-			 */
-			const withImageUrl = ((
-				withUpload: Pick<UploadSchema.Type, "id" | "url">[],
-				uploadIds: string[],
-			) => {
-				const urlById = new Map(
-					withUpload.map((row) => [
-						row.id,
-						row.url,
-					]),
-				);
+			// /**
+			//  * This is a hack how to manually reorder uploaded images to
+			//  * listing, so they preserve user's image order.
+			//  */
+			// const withImageUrl = ((
+			// 	withUpload: Pick<UploadSchema.Type, "id" | "url">[],
+			// 	uploadIds: string[],
+			// ) => {
+			// 	const urlById = new Map(
+			// 		withUpload.map((row) => [
+			// 			row.id,
+			// 			row.url,
+			// 		]),
+			// 	);
 
-				return uploadIds.flatMap((uploadId) => {
-					const imageUrl = urlById.get(uploadId);
+			// 	return uploadIds.flatMap((uploadId) => {
+			// 		const imageUrl = urlById.get(uploadId);
 
-					return imageUrl
-						? [
-								imageUrl,
-							]
-						: [];
-				});
-			})(withUpload, uploadIds);
+			// 		return imageUrl
+			// 			? [
+			// 					imageUrl,
+			// 				]
+			// 			: [];
+			// 	});
+			// })(withUpload, uploadIds);
 
-			let sort = 0;
-			for (const uploadId of uploadIds) {
-				yield* galleryItemInsertFx({
-					galleryId: gallery.id,
-					uploadId,
-					sort,
-					userId,
-					check: false,
-				});
-				sort++;
-			}
+			// let sort = 0;
+			// for (const uploadId of uploadIds) {
+			// 	yield* galleryItemInsertFx({
+			// 		galleryId: gallery.id,
+			// 		uploadId,
+			// 		sort,
+			// 		userId,
+			// 		check: false,
+			// 	});
+			// 	sort++;
+			// }
 
 			yield* tryDbFx(async () =>
 				kysely
@@ -167,55 +152,34 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						...data,
 						id,
 						userId,
-						categoryId,
 						galleryId: gallery.id,
+						//
+						status: "draft",
+						//
 						createdAt: now.toJSDate(),
 						updatedAt: now.toJSDate(),
-						currency: "CZK",
-						status: "live",
-						restriction,
-						locationId,
-						withCategoryDiscovery: withCategory.discovery,
-						withCategoryRestriction: withCategory.restriction,
-						withLocationGeo: withLocation.geo,
-						withImageUrl,
-						withTitleSearch: sql`lower(immutable_unaccent(${data.title}))`,
-						expiresAt: match(data.expiresAt)
-							.with("7-days", () =>
-								now.plus({
-									days: 7,
-								}),
-							)
-							.with("14-days", () =>
-								now.plus({
-									days: 14,
-								}),
-							)
-							.with("1-month", () =>
-								now.plus({
-									months: 1,
-								}),
-							)
-							.exhaustive()
-							.toJSDate(),
+						// withTitleSearch: sql`lower(immutable_unaccent(${data.title}))`,
+						// expiresAt: match(data.expiresAt)
+						// 	.with("7-days", () =>
+						// 		now.plus({
+						// 			days: 7,
+						// 		}),
+						// 	)
+						// 	.with("14-days", () =>
+						// 		now.plus({
+						// 			days: 14,
+						// 		}),
+						// 	)
+						// 	.with("1-month", () =>
+						// 		now.plus({
+						// 			months: 1,
+						// 		}),
+						// 	)
+						// 	.exhaustive()
+						// 	.toJSDate(),
 					})
 					.execute(),
 			);
-
-			if (data.draftId) {
-				const draftId = data.draftId;
-				yield* tryDbFx(async () =>
-					kysely
-						.updateTable("draft")
-						.set({
-							usedAt: now.toJSDate(),
-							updatedAt: now.toJSDate(),
-						})
-						.where("id", "=", draftId)
-						.where("userId", "=", userId)
-						.execute(),
-				);
-			}
 
 			yield* userEventCreateFx({
 				userId,

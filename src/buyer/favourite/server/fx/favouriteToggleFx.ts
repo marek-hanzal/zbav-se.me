@@ -39,7 +39,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 				message: "You cannot add your own listing to favourites",
 			});
 
-			return yield* Effect.if(toggle, {
+			yield* Effect.if(toggle, {
 				onTrue() {
 					return Effect.gen(function* () {
 						yield* favouriteCreateFx({
@@ -66,15 +66,6 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 								listingId,
 							},
 							priority: "common",
-						});
-
-						return yield* listingFetchFx({
-							userId,
-							where: {
-								id: listingId,
-							},
-							scope: {},
-							meta,
 						});
 					});
 				},
@@ -104,17 +95,17 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 							},
 							priority: "common",
 						});
-
-						return yield* listingFetchFx({
-							userId,
-							where: {
-								id: listingId,
-							},
-							scope: {},
-							meta,
-						});
 					});
 				},
+			});
+
+			return yield* listingFetchFx({
+				userId,
+				where: {
+					id: listingId,
+				},
+				scope: {},
+				meta,
 			});
 		}),
 	);

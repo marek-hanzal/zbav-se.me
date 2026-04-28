@@ -7,13 +7,15 @@ export namespace withFieldOptionCollectionSelectFx {
 		//
 	}
 
-	export type Select = Effect.Effect.Success<ReturnType<typeof withFieldOptionCollectionSelectFx>>;
+	export type Select = Effect.Effect.Success<
+		ReturnType<typeof withFieldOptionCollectionSelectFx>
+	>;
 }
 
-export const withFieldOptionCollectionSelectFx = Effect.fn("withFieldOptionCollectionSelectFx")(function* ({
-	sort,
-}: withFieldOptionCollectionSelectFx.Props) {
-	return yield* withFieldOptionSelectFx({
-		sort,
-	});
-});
+export const withFieldOptionCollectionSelectFx = Effect.fn("withFieldOptionCollectionSelectFx")(
+	function* ({ sort }: withFieldOptionCollectionSelectFx.Props) {
+		return yield* withFieldOptionSelectFx({
+			sort,
+		});
+	},
+);

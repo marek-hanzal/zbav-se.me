@@ -21,10 +21,7 @@ export const FieldSeedMigration: Migration = {
 			.insertInto("field_option")
 			.values(
 				fieldOptionSeedData.map(({ field, ...rest }) => ({
-					fieldId: db
-						.selectFrom("field")
-						.select("id")
-						.where("name", "=", field),
+					fieldId: db.selectFrom("field").select("id").where("name", "=", field),
 					...rest,
 				})),
 			)

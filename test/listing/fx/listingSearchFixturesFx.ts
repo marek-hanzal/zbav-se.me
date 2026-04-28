@@ -154,8 +154,8 @@ export const patchCategoryDiscoveryFx = (
 		id: string;
 		discovery: "explicit" | "implicit";
 	},
-) =>
-	Effect.promise(async () => {
+) => {
+	return Effect.promise(async () => {
 		await database.kysely
 			.updateTable("category")
 			.set({
@@ -172,6 +172,7 @@ export const patchCategoryDiscoveryFx = (
 			.where("categoryId", "=", props.id)
 			.executeTakeFirstOrThrow();
 	});
+};
 
 export const categoryIdBySlugFx = (database: TestDatabase, slug: string) =>
 	Effect.promise(() =>

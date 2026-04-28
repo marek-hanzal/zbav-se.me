@@ -3,9 +3,7 @@ import type { withFieldSelectFx } from "./withFieldSelectFx";
 import type { FieldFilterSchema } from "~/user/field/server/schema/FieldFilterSchema";
 
 export namespace withFieldQueryBuilderFx {
-	export interface Props<
-		TSelect extends withFieldSelectFx.Select = withFieldSelectFx.Select,
-	> {
+	export interface Props<TSelect extends withFieldSelectFx.Select = withFieldSelectFx.Select> {
 		select: TSelect;
 		where?: FieldFilterSchema.Type;
 	}

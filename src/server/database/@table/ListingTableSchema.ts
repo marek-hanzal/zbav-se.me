@@ -1,4 +1,7 @@
 import { z } from "zod";
+import { CategoryDiscoveryEnumSchema } from "~/common/category/enum/CategoryDiscoveryEnumSchema";
+import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 
 export const ListingTableSchema = z
 	.looseObject({
@@ -7,6 +10,19 @@ export const ListingTableSchema = z
 		}),
 		userId: z.string().meta({
 			description: "ID of the user who created the listing",
+		}),
+		//
+		categoryId: z.string().min(1).optional(),
+		withCategoryDiscovery: CategoryDiscoveryEnumSchema.optional(),
+		withCategoryRestriction: RestrictionEnumSchema.optional(),
+		//
+		status: ListingStatusEnumSchema,
+		//
+		galleryId: z.string().min(1),
+		withImageUrl: z.array(z.string().min(1)).optional(),
+		withUploadIds: z.array(z.string().min(1)).optional().meta({
+			description:
+				"Denormalized ordered upload IDs used for draft gallery management and consistency checks",
 		}),
 		//
 		createdAt: z.coerce.date().meta({

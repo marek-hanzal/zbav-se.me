@@ -58,20 +58,7 @@ export const createListingFx = (
 		});
 
 		return yield* listingCreateFx({
-			age: 1,
-			condition: 1,
-			categoryId: resolvedCategoryId,
-			expiresAt: "1-month",
-			locationId: resolvedLocationId,
-			price: 500,
-			priceType: "open",
-			restriction,
 			title,
-			delivery: null,
-			warranty: null,
-			uploadIds: [
-				upload.id,
-			],
 			userId: sellerId,
 		});
 	});
