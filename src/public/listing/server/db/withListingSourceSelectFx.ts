@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import type { ListingMetaSchema } from "~/public/listing/server/schema/ListingMetaSchema";
@@ -38,13 +37,13 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 				eb("l.withCategoryRestriction", "is", null),
 				eb("l.withCategoryRestriction", "in", publicCategoryRestrictions),
 			]),
-		)
-		.where((eb) =>
-			eb.or([
-				eb("l.restriction", "is", null),
-				eb("l.restriction", "in", publicCategoryRestrictions),
-			]),
 		);
+	// .where((eb) =>
+	// 	eb.or([
+	// 		eb("l.restriction", "is", null),
+	// 		eb("l.restriction", "in", publicCategoryRestrictions),
+	// 	]),
+	// );
 
 	if (!hasExplicitCategory) {
 		query = query.where("l.withCategoryDiscovery", "=", "implicit");
@@ -52,47 +51,9 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("price", () => query.orderBy("l.price", item.order))
-			.with("condition", () => query.orderBy("l.condition", item.order))
-			.with("age", () => query.orderBy("l.age", item.order))
 			.with("createdAt", () => query.orderBy("l.createdAt", item.order))
 			.with("updatedAt", () => query.orderBy("l.updatedAt", item.order))
 			.with("expiresAt", () => query.orderBy("l.expiresAt", item.order))
-			.with("geo", () => {
-				if (!meta?.locationId) {
-					return query;
-				}
-				const locationId = meta.locationId;
-				const isDesc = item.order === "desc";
-				const sortOrder = isDesc ? "asc" : item.order;
-
-				return query.orderBy((eb) => {
-					const originPointSelect = eb
-						.selectFrom("location as originLoc")
-						.select((originEb) =>
-							sql`ST_SetSRID(
-									ST_MakePoint(
-										case
-											when ${originEb.val(isDesc)} and ${originEb.ref("originLoc.lon")} >= 0 then ${originEb.ref("originLoc.lon")} - 180
-											when ${originEb.val(isDesc)} then ${originEb.ref("originLoc.lon")} + 180
-											else ${originEb.ref("originLoc.lon")}
-										end,
-										case
-											when ${originEb.val(isDesc)} then -${originEb.ref("originLoc.lat")}
-											else ${originEb.ref("originLoc.lat")}
-										end
-									),
-									4326
-								)`.as("point"),
-						)
-						.where("originLoc.id", "=", locationId)
-						.limit(1);
-
-					return sql`${eb.ref("l.withLocationGeo")} <-> (
-							${originPointSelect}
-						)`;
-				}, sortOrder);
-			})
 			.exhaustive();
 	}
 

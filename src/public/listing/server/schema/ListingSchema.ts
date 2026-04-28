@@ -6,6 +6,7 @@ export const ListingSchema = z
 		...ListingTableSchema.pick({
 			id: true,
 			createdAt: true,
+			withImageUrl: true,
 		}).shape,
 		// 		restrictions: z.array(RestrictionEnumSchema).meta({
 		// 			description: `
