@@ -5,19 +5,13 @@ import { ChevronRightIcon, Icon } from "@/lib/client/icon";
 import type { MarkSuspense } from "@/lib/client/type";
 import { translator } from "@/lib/common/translator";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
-import { DeliveryValueList } from "~/common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
-import { TitleValue } from "~/common/title/ui/TitleValue";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import type { FeedEditor } from "./FeedEditor";
-import { AgeValueList } from "./value/AgeValueList";
 import { CategoryValueList } from "./value/CategoryValueList";
-import { ConditionValueList } from "./value/ConditionValueList";
 import { NameValue } from "./value/NameValue";
-import { RangeValue } from "./value/RangeValue";
 import { SortValue } from "./value/SortValue";
-import { WarrantyValueList } from "./value/WarrantyValueList";
 
 export namespace Editor {
 	export type Section = "header";
@@ -127,7 +121,7 @@ export const Editor: FC<Editor.Props> = ({
 					onClick={() => onView("location")}
 				/>
 
-				<RangeValue
+				{/* <RangeValue
 					data-action={"edit feed range"}
 					range={feed.query?.filter?.range}
 					data-ui-disabled={!locationId}
@@ -141,7 +135,7 @@ export const Editor: FC<Editor.Props> = ({
 						"data-ui-tone": feed.query?.filter?.range ? "neutral" : "secondary",
 					}}
 					onClick={() => onView("range")}
-				/>
+				/> */}
 			</Group>
 
 			<Group>
@@ -163,7 +157,7 @@ export const Editor: FC<Editor.Props> = ({
 			</Group>
 
 			<Group>
-				<ConditionValueList
+				{/* <ConditionValueList
 					data-action={"edit feed condition"}
 					conditionIn={feed.query?.filter?.conditionIn ?? []}
 					action={
@@ -179,9 +173,9 @@ export const Editor: FC<Editor.Props> = ({
 								: "secondary",
 					}}
 					onClick={() => onView("condition")}
-				/>
+				/> */}
 
-				<AgeValueList
+				{/* <AgeValueList
 					data-action={"edit feed age"}
 					ageIn={feed.query?.filter?.ageIn ?? []}
 					action={
@@ -195,11 +189,11 @@ export const Editor: FC<Editor.Props> = ({
 							(feed.query?.filter?.ageIn ?? []).length > 0 ? "neutral" : "secondary",
 					}}
 					onClick={() => onView("age")}
-				/>
+				/> */}
 			</Group>
 
 			<Group>
-				<DeliveryValueList
+				{/* <DeliveryValueList
 					data-action={"edit feed delivery"}
 					deliveryIn={feed.query?.filter?.deliveryIn ?? []}
 					action={
@@ -215,11 +209,11 @@ export const Editor: FC<Editor.Props> = ({
 								: "secondary",
 					}}
 					onClick={() => onView("delivery")}
-				/>
+				/> */}
 			</Group>
 
 			<Group>
-				<WarrantyValueList
+				{/* <WarrantyValueList
 					data-action={"edit feed warranty"}
 					warrantyIn={feed.query?.filter?.warrantyIn ?? []}
 					action={
@@ -235,11 +229,11 @@ export const Editor: FC<Editor.Props> = ({
 								: "secondary",
 					}}
 					onClick={() => onView("warranty")}
-				/>
+				/> */}
 			</Group>
 
 			<Group>
-				<TitleValue
+				{/* <TitleValue
 					data-action={"edit feed title"}
 					title={feed.query?.filter?.title ?? null}
 					textLabel={translator.text("Feed title (label)")}
@@ -255,7 +249,7 @@ export const Editor: FC<Editor.Props> = ({
 						"data-ui-tone": feed.query?.filter?.title ? "neutral" : "secondary",
 					}}
 					onClick={() => onView("title")}
-				/>
+				/> */}
 			</Group>
 
 			{children}

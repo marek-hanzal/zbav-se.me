@@ -25,6 +25,13 @@ export const ListingTableSchema = z
 				"Denormalized ordered upload IDs used for draft gallery management and consistency checks",
 		}),
 		//
+		visibleAt: z.coerce.date().optional().meta({
+			description: "When a listing goes live",
+		}),
+		expiresAt: z.coerce.date().optional().meta({
+			description: "When a listing dies",
+		}),
+		//
 		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",
 		}),

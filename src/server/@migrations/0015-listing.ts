@@ -47,7 +47,6 @@ export const ListingMigration: Migration = {
 			.addColumn("updatedAt", "timestamptz", (col) => col.notNull())
 
 			// Public lifecycle. Null while draft.
-			.addColumn("publishedAt", "timestamptz")
 			.addColumn("visibleAt", "timestamptz")
 			.addColumn("expiresAt", "timestamptz")
 
