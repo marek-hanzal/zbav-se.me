@@ -12,12 +12,12 @@ export const ListingTableSchema = z
 			description: "ID of the user who created the listing",
 		}),
 		//
-		categoryId: z.string().min(1).optional(),
-		withCategoryDiscovery: CategoryDiscoveryEnumSchema.optional(),
-		withCategoryRestriction: RestrictionEnumSchema.optional(),
+		categoryId: z.string().min(1).nullish(),
+		withCategoryDiscovery: CategoryDiscoveryEnumSchema.nullish(),
+		withCategoryRestriction: RestrictionEnumSchema.nullish(),
 		//
 		status: ListingStatusEnumSchema,
-		restriction: RestrictionEnumSchema.optional(),
+		restriction: RestrictionEnumSchema.nullish(),
 		//
 		galleryId: z.string().min(1),
 		withImageUrl: z.array(z.string().min(1)),
@@ -26,10 +26,10 @@ export const ListingTableSchema = z
 				"Denormalized ordered upload IDs used for draft gallery management and consistency checks",
 		}),
 		//
-		visibleAt: z.coerce.date().optional().meta({
+		visibleAt: z.coerce.date().nullish().meta({
 			description: "When a listing goes live",
 		}),
-		expiresAt: z.coerce.date().optional().meta({
+		expiresAt: z.coerce.date().nullish().meta({
 			description: "When a listing dies",
 		}),
 		//

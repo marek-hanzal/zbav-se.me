@@ -1,9 +1,8 @@
 import { z } from "zod";
-import { TitleSchema } from "~/common/listing/schema/TitleSchema";
 
 export const ListingCreateSchema = z
 	.looseObject({
-		title: TitleSchema,
+		//
 	})
 	.strip()
 	.meta({

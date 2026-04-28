@@ -1,5 +1,4 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { translator } from "@/lib/common/translator";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 
 export const Route = createFileRoute("/$locale/app/seller/listing/resolve")({
@@ -28,15 +27,9 @@ export const Route = createFileRoute("/$locale/app/seller/listing/resolve")({
 			});
 		}
 
-		const listing = await withListingQuery.createFn(
-			queryClient,
-			{
-				title: translator.text("New listing (title)"),
-			},
-			[
-				"collection",
-			],
-		);
+		const listing = await withListingQuery.createFn(queryClient, {}, [
+			"collection",
+		]);
 
 		throw redirect({
 			to: "/$locale/app/seller/listing/$id/edit",
