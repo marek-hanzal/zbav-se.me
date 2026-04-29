@@ -300,11 +300,11 @@ export const ListingMigration: Migration = {
         `.execute(db);
 
 		await sql`
-            CREATE INDEX "listing_[live-withLocationGeo]_idx"
+            CREATE INDEX "listing_[live-withLocation]_idx"
             ON "listing"
-            USING gist ("withLocationGeo")
+            USING gist ("withLocation")
             WHERE "status" = 'live'
-            AND "withLocationGeo" IS NOT NULL
+            AND "withLocation" IS NOT NULL
         `.execute(db);
 
 		await sql`
