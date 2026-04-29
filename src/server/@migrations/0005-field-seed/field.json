@@ -8,5 +8,10 @@
 		"name": "storage",
 		"type": "enum-single",
 		"required": false
+	},
+	{
+		"name": "battery-condition",
+		"type": "number",
+		"required": false
 	}
 ]

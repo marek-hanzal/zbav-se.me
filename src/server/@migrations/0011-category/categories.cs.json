@@ -21,6 +21,11 @@
 				"name": "ram",
 				"sort": 0,
 				"required": null
+			},
+			{
+				"name": "storage",
+				"sort": 1,
+				"required": null
 			}
 		]
 	},
