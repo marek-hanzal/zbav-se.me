@@ -1,11 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { z } from "zod";
+import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { attrOfFx } from "../server/fx/attrOfFx";
+import { AttrOfSchema } from "../server/schema/AttrOfSchema";
 
 export namespace attrOfFn {
 	export type Error = Effect.Effect.Error<attrOfFx>;
@@ -31,27 +33,19 @@ export const attrOfFn = createServerFn()
 		]);
 		logger.trace(name, data);
 
-		const foo = await attrOfFx(data).pipe(
+		return zodGuardFx({
+			schema: z.array(AttrOfSchema),
+			dataFx: attrOfFx(data),
+		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
+			Effect.tapError((error) => {
+				return Effect.sync(() => {
+					logger.error(error._tag, {
+						error,
+					});
+				});
+			}),
 			Effect.runPromise,
 		);
-
-        return foo;
-
-		// return zodGuardFx({
-		// 	schema: z.array(FieldSchema),
-		// 	dataFx: attrOfFx(data),
-		// }).pipe(
-		// 	withKyselyFx(database),
-		// 	withLoggerFx(rootLogger),
-		// 	Effect.tapError((error) => {
-		// 		return Effect.sync(() => {
-		// 			logger.error(error._tag, {
-		// 				error,
-		// 			});
-		// 		});
-		// 	}),
-		// 	Effect.runPromise,
-		// );
 	});

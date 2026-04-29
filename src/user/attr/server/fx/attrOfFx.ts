@@ -3,7 +3,7 @@ import { sql } from "kysely";
 import { jsonArrayFrom } from "kysely/helpers/postgres";
 import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { FieldOptionSchema } from "~/user/field-option/server/schema/FieldOptionSchema";
+import type { AttrOfSchema } from "../schema/AttrOfSchema";
 
 export namespace attrOfFx {
 	export interface Props {
@@ -117,85 +117,7 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 			])
 			.where("cf.categoryId", "=", categoryId)
 			.orderBy("cf.sort", "asc")
-			.$castTo<
-				| {
-						name: string;
-						type: "text";
-						options: FieldOptionSchema.Type[];
-						required: true;
-						value: string;
-				  }
-				| {
-						name: string;
-						type: "text";
-						options: FieldOptionSchema.Type[];
-						required: false;
-						value: string | null;
-				  }
-				//
-				| {
-						name: string;
-						type: "decimal";
-						options: FieldOptionSchema.Type[];
-						required: true;
-						value: number;
-				  }
-				| {
-						name: string;
-						type: "decimal";
-						options: FieldOptionSchema.Type[];
-						required: false;
-						value: number | null;
-				  }
-				//
-				| {
-						name: string;
-						type: "number";
-						options: FieldOptionSchema.Type[];
-						required: true;
-						value: number;
-				  }
-				| {
-						name: string;
-						type: "number";
-						options: FieldOptionSchema.Type[];
-						required: false;
-						value: number | null;
-				  }
-				//
-				| {
-						name: string;
-						type: "enum-single";
-						options: FieldOptionSchema.Type[];
-						required: true;
-						value: string;
-				  }
-				| {
-						name: string;
-						type: "enum-single";
-						options: FieldOptionSchema.Type[];
-						required: false;
-						value: string | null;
-				  }
-				//
-				| {
-						name: string;
-						type: "enum-multi";
-						options: FieldOptionSchema.Type[];
-						required: true;
-						value: [
-							string,
-							...string[],
-						];
-				  }
-				| {
-						name: string;
-						type: "enum-multi";
-						options: FieldOptionSchema.Type[];
-						required: false;
-						value: string[];
-				  }
-			>()
+			.$castTo<AttrOfSchema.Type>()
 			.execute();
 	});
 });
