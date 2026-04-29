@@ -110,7 +110,14 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, ...props }) => 
 						);
 					})
 					.with("offer", null, undefined, () => {
-						return null;
+						return (
+							<PriceValue
+								price={0}
+								currency={"CZK"}
+								action={<ChevronAction />}
+								data-ui-disabled
+							/>
+						);
 					})
 					.exhaustive()}
 			</Group>
