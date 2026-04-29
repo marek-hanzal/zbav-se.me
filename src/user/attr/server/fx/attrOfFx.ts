@@ -64,9 +64,14 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 						.then(
 							eb
 								.selectFrom("attr_enum_multi as aem")
-								.select([
-									(eb) => sql`to_jsonb(${eb.ref("aem.value")})`.as("value"),
-								])
+								.select((eb) => {
+									return eb.fn
+										.coalesce(
+											sql`jsonb_agg(to_jsonb(${eb.ref("aem.value")}) order by ${eb.ref("aem.value")})`,
+											sql`'[]'::jsonb`,
+										)
+										.as("value");
+								})
 								.where("aem.listingId", "=", listingId)
 								.whereRef("aem.fieldId", "=", "cf.fieldId")
 								.$castTo<string[]>(),
@@ -80,6 +85,17 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 								])
 								.where("an.listingId", "=", listingId)
 								.whereRef("an.fieldId", "=", "cf.fieldId")
+								.$castTo<number>(),
+						)
+						.when("f.type", "=", "decimal")
+						.then(
+							eb
+								.selectFrom("attr_decimal as ad")
+								.select([
+									(eb) => sql`to_jsonb(${eb.ref("ad.value")})`.as("value"),
+								])
+								.where("ad.listingId", "=", listingId)
+								.whereRef("ad.fieldId", "=", "cf.fieldId")
 								.$castTo<number>(),
 						)
 						.when("f.type", "=", "text")
