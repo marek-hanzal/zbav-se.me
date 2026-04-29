@@ -1,7 +1,9 @@
 import type { FC } from "react";
+import { Group } from "@/lib/client/group";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { withAttrOfQuery } from "~/user/attr/query/withAttrOfQuery";
+import { AttrOf } from "~/user/attr/ui/AttrOf";
 
 export namespace CategoryEditor {
 	export interface Props extends MarkSuspense.Props {
@@ -20,8 +22,6 @@ export const CategoryEditor: FC<CategoryEditor.Props> = ({ _suspense, listingId,
 		return null;
 	}
 
-	console.log("Fields", fields);
-
 	return (
 		<>
 			<Tx
@@ -34,7 +34,16 @@ export const CategoryEditor: FC<CategoryEditor.Props> = ({ _suspense, listingId,
 				className={"text-center"}
 			/>
 
-			<div>fieldy, pyco</div>
+			<Group>
+				{fields.map((field) => {
+					return (
+						<AttrOf
+							key={field.name}
+							attrOf={field}
+						/>
+					);
+				})}
+			</Group>
 		</>
 	);
 };
