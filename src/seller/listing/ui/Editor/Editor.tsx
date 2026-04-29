@@ -44,6 +44,10 @@ export namespace Editor {
 				| "age"
 				| "pros"
 				| "cons"
+				| "delivery"
+				| "description"
+				| "warranty"
+				| "restriction"
 				| "condition",
 		): void;
 	}
@@ -193,7 +197,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 					<DeliveryValueList
 						deliveryIn={listing.delivery}
 						action={<ChevronAction />}
-						// onClick={() => onView("delivery")}
+						onClick={() => setView("delivery")}
 					/>
 				</Group>
 
@@ -201,7 +205,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 					<DescriptionValue
 						description={listing.description}
 						action={<ChevronAction />}
-						// onClick={() => onView("description")}
+						onClick={() => setView("description")}
 					/>
 				</Group>
 
@@ -223,7 +227,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 					<WarrantyValue
 						warranty={listing.warranty}
 						action={<ChevronAction />}
-						// onClick={() => onView("warranty")}
+						onClick={() => setView("warranty")}
 					/>
 				</Group>
 
@@ -247,7 +251,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 						restriction={listing.restriction}
 						action={<ChevronAction />}
 						data-ui-disabled={!listing.categoryId}
-						// onClick={() => onView("restriction")}
+						onClick={() => setView("restriction")}
 					/>
 				</Group>
 			</Container>
