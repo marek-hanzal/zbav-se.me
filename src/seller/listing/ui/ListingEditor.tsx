@@ -6,6 +6,7 @@ import { withListingQuery } from "../query/withListingQuery";
 import { Editor } from "./Editor";
 import { CategoryPatch } from "./patch/CategoryPatch";
 import { ExpiresPatch } from "./patch/ExpiresPatch";
+import { GalleryPatch } from "./patch/GalleryPatch";
 import { LocationPatch } from "./patch/LocationPatch";
 import { PriceTypePatch } from "./patch/PriceTypePatch";
 
@@ -49,6 +50,16 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 						_suspense={"I know"}
 						listingId={listing.id}
 						setView={setView}
+					/>
+				),
+			},
+			gallery: {
+				children: (
+					<GalleryPatch
+						listing={listing}
+						onCancel={onDone}
+						setView={setView}
+						defaultUploadIds={listing.withUploadIds}
 					/>
 				),
 			},
@@ -137,14 +148,6 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 						draft={listing}
 						onCancel={onDone}
 						onView={setView}
-					/>`,
-			},
-			gallery: {
-				children: `<GalleryPatch
-						draft={listing}
-						onCancel={onDone}
-						onView={setView}
-						defaultUploadIds={listing.withUploadIds}
 					/>`,
 			},
 			description: {

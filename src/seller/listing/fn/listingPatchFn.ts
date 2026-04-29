@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
+import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -34,6 +35,7 @@ export const listingPatchFn = createServerFn({
 			schema: ListingSchema,
 			dataFx: listingPatchFx({
 				...data,
+				userId: user.id,
 				scope: {
 					userId: user.id,
 				},
@@ -41,6 +43,7 @@ export const listingPatchFn = createServerFn({
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
+			withDateFx,
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

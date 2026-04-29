@@ -50,6 +50,8 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			//
 			"l.expires",
 			//
+			"l.galleryId",
+			//
 			"l.expiresAt",
 			"l.createdAt",
 			"l.updatedAt",

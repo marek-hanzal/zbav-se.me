@@ -19,6 +19,10 @@ export const ListingPatchSchema = z
 				price: z.number().positive().nullish(),
 				//
 				expires: ListingExpireEnumSchema.optional(),
+				//
+				uploadIds: z.array(z.string().min(1)).min(1).optional(),
+				withImageUrl: z.array(z.string().min(1)).min(1).optional(),
+				withUploadIds: z.array(z.string().min(1)).min(1).optional(),
 			})
 			.strip(),
 		query: ListingQuerySchema,
