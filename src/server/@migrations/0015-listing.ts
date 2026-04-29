@@ -88,6 +88,8 @@ export const ListingMigration: Migration = {
 			.addColumn("priceType", sql`listing_price_enum`)
 			.addColumn("currency", "text")
 			//
+			.addColumn("expires", "text")
+			//
 			.addColumn("condition", "integer")
 			.addColumn("age", "integer")
 			//

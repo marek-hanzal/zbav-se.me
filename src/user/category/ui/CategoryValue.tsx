@@ -30,6 +30,9 @@ export const CategoryValue: FC<CategoryValue.Props> = ({ _suspense, categoryId, 
 					/>
 				) : null
 			}
+			wrapperProps={{
+				"data-ui-tone": categoryId ? "neutral" : "primary",
+			}}
 			{...props}
 		/>
 	);

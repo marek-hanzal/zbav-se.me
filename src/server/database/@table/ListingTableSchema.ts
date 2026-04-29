@@ -1,6 +1,10 @@
 import { z } from "zod";
+import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
+import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
+import { TitleSchema } from "~/common/listing/schema/TitleSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 
 export const ListingTableSchema = z
 	.looseObject({
@@ -11,7 +15,7 @@ export const ListingTableSchema = z
 			description: "ID of the user who created the listing",
 		}),
 		//
-		categoryId: z.string().min(1),
+		categoryId: z.string().min(1).nullish(),
 		//
 		status: ListingStatusEnumSchema,
 		restriction: RestrictionEnumSchema.nullish(),
@@ -22,6 +26,17 @@ export const ListingTableSchema = z
 			description:
 				"Denormalized ordered upload IDs used for draft gallery management and consistency checks",
 		}),
+		/**
+		 * Core listing attributes
+		 */
+		title: TitleSchema.nullish(),
+		locationId: z.string().min(1).nullish(),
+		//
+		priceType: ListingPriceEnumSchema.nullish(),
+		price: z.number().positive().nullish(),
+		currency: CurrencyEnumSchema.nullish(),
+		//
+		expires: ListingExpireEnumSchema.nullish(),
 		//
 		visibleAt: z.coerce.date().nullish().meta({
 			description: "When a listing goes live",

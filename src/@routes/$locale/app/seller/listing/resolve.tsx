@@ -28,9 +28,14 @@ export const Route = createFileRoute("/$locale/app/seller/listing/resolve")({
 			});
 		}
 
+		const listing = await withListingQuery.createFn(queryClient, {}, [
+			"collection",
+		]);
+
 		throw redirect({
-			to: "/$locale/app/seller/listing/category",
+			to: "/$locale/app/seller/listing/$id/edit",
 			params: {
+				id: listing.id,
 				locale,
 			},
 		});
