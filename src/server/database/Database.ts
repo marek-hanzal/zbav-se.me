@@ -26,10 +26,20 @@ import type { UploadTableSchema } from "~/server/database/@table/UploadTableSche
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
 import type { UserRestrictionTableSchema } from "~/server/database/@table/UserRestrictionTableSchema";
+import type { AttrDecimalTableSchema } from "./@table/AttrDecimalTableSchema";
+import type { AttrEnumMultiSchema } from "./@table/AttrEnumMultiSchema";
+import type { AttrEnumSingleSchema } from "./@table/AttrEnumSingleSchema";
+import type { AttrNumberTableSchema } from "./@table/AttrNumberTableSchema";
+import type { AttrTextSchema } from "./@table/AttrTextSchema";
 import type { CategoryFieldTableSchema } from "./@table/CategoryFieldTableSchema";
 
 export interface Database {
 	activity: ActivityTableSchema.Type;
+	attr_decimal: AttrDecimalTableSchema.Type;
+	attr_number: AttrNumberTableSchema.Type;
+	attr_enum_multi: AttrEnumMultiSchema.Type;
+	attr_enum_single: AttrEnumSingleSchema.Type;
+	attr_text: AttrTextSchema.Type;
 	agent_stream: AgentStreamTableSchema.Type;
 	agent_thread: AgentThreadTableSchema.Type;
 	agent_usage: AgentUsageTableSchema.Type;

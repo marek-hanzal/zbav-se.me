@@ -31,7 +31,6 @@ import { AgentThreadMigration } from "~/server/@migrations/0029-agent-thread";
 import { AgentStreamMigration } from "~/server/@migrations/0030-agent-stream";
 import { AgentUsageMigration } from "~/server/@migrations/0031-agent-usage";
 import { UserRestrictionMigration } from "~/server/@migrations/0032-user-restriction";
-import { AttrLocationMigration } from "~/server/@migrations/0033-attr-location";
 import { AttrNumberMigration } from "~/server/@migrations/0034-attr-number";
 import { AttrDecimalMigration } from "~/server/@migrations/0035-attr-decimal";
 import { AttrTextMigration } from "~/server/@migrations/0036-attr-text";
@@ -72,7 +71,7 @@ export const migrations = {
 	"0030-agent-stream": AgentStreamMigration,
 	"0031-agent-usage": AgentUsageMigration,
 	"0032-user-restriction": UserRestrictionMigration,
-	"0033-attr-location": AttrLocationMigration,
+
 	"0034-attr-number": AttrNumberMigration,
 	"0035-attr-decimal": AttrDecimalMigration,
 	"0036-attr-text": AttrTextMigration,

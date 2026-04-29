@@ -7,7 +7,6 @@ export const FieldTypeEnumSchema = z
 		"text",
 		"enum-single",
 		"enum-multi",
-		"location",
 	])
 	.meta({
 		id: "FieldTypeEnum",
