@@ -10,14 +10,14 @@ import { LocationValue } from "~/common/location/ui/LocationValue";
 import { TitleValue } from "~/common/title/ui/TitleValue";
 import { ChevronAction } from "~/common/ui/action/ChevronAction";
 import { CategoryValue } from "~/user/category/ui/CategoryValue";
+import { ConsValueList } from "~/user/listing/ui/ConsValueList";
 import { DescriptionValue } from "~/user/listing/ui/DescriptionValue";
 import { ExpireAtValue } from "~/user/listing/ui/ExpireAtValue";
 import { PriceTypeValue } from "~/user/listing/ui/PriceTypeValue";
 import { PriceValue } from "~/user/listing/ui/PriceValue";
+import { ProsValueList } from "~/user/listing/ui/ProsValueList";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import { withListingQuery } from "../../query/withListingQuery";
-import { ConsValueList } from "~/user/listing/ui/ConsValueList";
-import { ProsValueList } from "~/user/listing/ui/ProsValueList";
 
 export namespace Editor {
 	export interface Props extends Container.Props, MarkSuspense.Props {
