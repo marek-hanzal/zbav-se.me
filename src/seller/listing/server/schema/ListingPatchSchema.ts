@@ -22,7 +22,7 @@ export const ListingPatchSchema = z
 				restriction: RestrictionEnumSchema.nullish(),
 				//
 				priceType: ListingPriceEnumSchema.optional(),
-				price: z.number().positive().nullish(),
+				price: z.coerce.number().positive().nullish(),
 				//
 				expires: ListingExpireEnumSchema.optional(),
 				//
