@@ -14,7 +14,7 @@ export const CategoryEditor: FC<CategoryEditor.Props> = ({ _suspense, categoryId
 		id: categoryId ?? "unknown",
 	});
 
-	if (!categoryId) {
+	if (!categoryId || !fields.length) {
 		return null;
 	}
 

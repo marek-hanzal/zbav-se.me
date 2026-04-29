@@ -256,7 +256,10 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 					/>
 				</Group>
 
-				<CategoryEditor categoryId={listing.categoryId} />
+				<CategoryEditor
+					_suspense={"I know"}
+					categoryId={listing.categoryId}
+				/>
 			</Container>
 		</TitleContainer>
 	);

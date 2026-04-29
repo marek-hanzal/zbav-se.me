@@ -33,7 +33,11 @@ export const categoryFieldsFx = Effect.fn("categoryFieldsFx")(function* ({
 					return jsonArrayFrom(
 						eb
 							.selectFrom("field_option as fo")
-							.select("fo.value")
+							.select([
+								"fo.fieldId",
+								"fo.value",
+								"fo.sort",
+							])
 							.whereRef("fo.fieldId", "=", "cf.fieldId")
 							.orderBy("fo.sort", "asc"),
 					).as("options");
