@@ -1,152 +1,27 @@
 [
 	{
-		"field": "warranty",
-		"value": "no-warranty",
+		"field": "ram",
+		"value": "Less then 8 GB",
 		"sort": 0
 	},
 	{
-		"field": "warranty",
-		"value": "warranty",
+		"field": "ram",
+		"value": "8 GB",
 		"sort": 1
 	},
 	{
-		"field": "warranty",
-		"value": "custom",
+		"field": "ram",
+		"value": "10 GB",
 		"sort": 2
 	},
 	{
-		"field": "delivery",
-		"value": "personal",
-		"sort": 0
-	},
-	{
-		"field": "delivery",
-		"value": "post",
-		"sort": 1
-	},
-	{
-		"field": "delivery",
-		"value": "package",
-		"sort": 2
-	},
-	{
-		"field": "delivery",
-		"value": "other",
+		"field": "ram",
+		"value": "12 GB",
 		"sort": 3
 	},
 	{
-		"field": "price-type",
-		"value": "closed",
-		"sort": 0
-	},
-	{
-		"field": "price-type",
-		"value": "open",
-		"sort": 1
-	},
-	{
-		"field": "price-type",
-		"value": "offer",
-		"sort": 2
-	},
-	{
-		"field": "restriction",
-		"value": "none",
-		"sort": 0
-	},
-	{
-		"field": "restriction",
-		"value": "adult-relaxed",
-		"sort": 1
-	},
-	{
-		"field": "restriction",
-		"value": "adult",
-		"sort": 2
-	},
-	{
-		"field": "restriction",
-		"value": "sensitive",
-		"sort": 3
-	},
-	{
-		"field": "restriction",
-		"value": "restricted",
+		"field": "ram",
+		"value": "More than 12 GB",
 		"sort": 4
-	},
-	{
-		"field": "expire-at",
-		"value": "7-days",
-		"sort": 0
-	},
-	{
-		"field": "expire-at",
-		"value": "14-days",
-		"sort": 1
-	},
-	{
-		"field": "expire-at",
-		"value": "1-month",
-		"sort": 2
-	},
-	{
-		"field": "condition",
-		"value": "1",
-		"sort": 0
-	},
-	{
-		"field": "condition",
-		"value": "2",
-		"sort": 1
-	},
-	{
-		"field": "condition",
-		"value": "3",
-		"sort": 2
-	},
-	{
-		"field": "condition",
-		"value": "4",
-		"sort": 3
-	},
-	{
-		"field": "condition",
-		"value": "5",
-		"sort": 4
-	},
-	{
-		"field": "condition",
-		"value": "6",
-		"sort": 5
-	},
-	{
-		"field": "age",
-		"value": "1",
-		"sort": 0
-	},
-	{
-		"field": "age",
-		"value": "2",
-		"sort": 1
-	},
-	{
-		"field": "age",
-		"value": "3",
-		"sort": 2
-	},
-	{
-		"field": "age",
-		"value": "4",
-		"sort": 3
-	},
-	{
-		"field": "age",
-		"value": "5",
-		"sort": 4
-	},
-	{
-		"field": "age",
-		"value": "6",
-		"sort": 5
 	}
 ]

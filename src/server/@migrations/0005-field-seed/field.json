@@ -1,52 +1,7 @@
 [
 	{
-		"name": "title",
-		"type": "text",
-		"required": true
-	},
-	{
-		"name": "price",
-		"type": "decimal",
-		"required": false
-	},
-	{
-		"name": "warranty",
-		"type": "enum-single",
-		"required": false
-	},
-	{
-		"name": "delivery",
+		"name": "ram",
 		"type": "enum-multi",
 		"required": false
-	},
-	{
-		"name": "price-type",
-		"type": "enum-single",
-		"required": false
-	},
-	{
-		"name": "restriction",
-		"type": "enum-single",
-		"required": false
-	},
-	{
-		"name": "expire-at",
-		"type": "enum-single",
-		"required": false
-	},
-	{
-		"name": "condition",
-		"type": "enum-single",
-		"required": false
-	},
-	{
-		"name": "age",
-		"type": "enum-single",
-		"required": false
-	},
-	{
-		"name": "location",
-		"type": "location",
-		"required": true
 	}
 ]
