@@ -10,6 +10,8 @@ import { LocationValue } from "~/common/location/ui/LocationValue";
 import { TitleValue } from "~/common/title/ui/TitleValue";
 import { ChevronAction } from "~/common/ui/action/ChevronAction";
 import { CategoryValue } from "~/user/category/ui/CategoryValue";
+import { AgeValue } from "~/user/listing/ui/AgeValue";
+import { ConditionValue } from "~/user/listing/ui/ConditionValue";
 import { ConsValueList } from "~/user/listing/ui/ConsValueList";
 import { DeliveryValueList } from "~/user/listing/ui/DeliveryValueList";
 import { DescriptionValue } from "~/user/listing/ui/DescriptionValue";
@@ -17,6 +19,8 @@ import { ExpireAtValue } from "~/user/listing/ui/ExpireAtValue";
 import { PriceTypeValue } from "~/user/listing/ui/PriceTypeValue";
 import { PriceValue } from "~/user/listing/ui/PriceValue";
 import { ProsValueList } from "~/user/listing/ui/ProsValueList";
+import { RestrictionValue } from "~/user/listing/ui/RestrictionValue";
+import { WarrantyValue } from "~/user/listing/ui/WarrantyValue";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import { withListingQuery } from "../../query/withListingQuery";
 
@@ -169,6 +173,38 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, ...props }) => 
 					cons={listing.cons}
 					action={<ChevronAction />}
 					// onClick={() => onView("cons")}
+				/>
+			</Group>
+
+			<Group>
+				<WarrantyValue
+					warranty={listing.warranty}
+					action={<ChevronAction />}
+					// onClick={() => onView("warranty")}
+				/>
+			</Group>
+
+			<Group>
+				<ConditionValue
+					condition={listing.condition}
+					action={<ChevronAction />}
+					// onClick={() => onView("condition")}
+				/>
+
+				<AgeValue
+					age={listing.age}
+					action={<ChevronAction />}
+					// onClick={() => onView("age")}
+				/>
+			</Group>
+
+			<Group>
+				<RestrictionValue
+					data-ui={"set listing restriction"}
+					restriction={listing.restriction}
+					action={<ChevronAction />}
+					// onClick={() => onView("restriction")}
+					data-ui-disabled={!listing.categoryId}
 				/>
 			</Group>
 		</Container>
