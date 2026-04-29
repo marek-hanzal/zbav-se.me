@@ -32,7 +32,7 @@ import { withListingQuery } from "../../query/withListingQuery";
 export namespace Editor {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
 		listingId: string;
-		setView(view: "gallery" | "title" | "category"): void;
+		setView(view: "gallery" | "title" | "category" | "location"): void;
 	}
 }
 
@@ -120,7 +120,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 						textEmpty={translator.text("Listing location not selected")}
 						textHint={translator.text("Listing location (hint)")}
 						action={<ChevronAction />}
-						// onClick={() => onView("location")}
+						onClick={() => setView("location")}
 					/>
 				</Group>
 

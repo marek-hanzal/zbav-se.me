@@ -39,6 +39,7 @@ Effective restriction applied on the listing.
 	.omit({
 		userId: true,
 		galleryId: true,
+		withLocation: true,
 	})
 	.strip()
 	.meta({

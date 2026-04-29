@@ -36,7 +36,11 @@ export const ListingTableSchema = z
 		 */
 		title: TitleSchema.nullish(),
 		description: DescriptionSchema.nullish(),
+		//
 		locationId: z.string().min(1).nullish(),
+		withLocation: z.unknown().nullable().meta({
+			description: "Denormalized location geo point for listing search and range queries",
+		}),
 		//
 		pros: ProsConsSchema,
 		cons: ProsConsSchema,

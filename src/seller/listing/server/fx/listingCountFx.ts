@@ -2,11 +2,11 @@ import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
 import type { ListingCountQuerySchema } from "~/seller/listing/server/schema/ListingCountQuerySchema";
-import type { ListingFilterSchema } from "~/seller/listing/server/schema/ListingFilterSchema";
 import { withListingSelectFx } from "../db/withListingSelectFx";
+import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace listingCountFx {
-	export interface Scope extends ListingFilterSchema.Type {
+	export interface Scope extends ListingWhereSchema.Type {
 		userId: string;
 	}
 

@@ -9,6 +9,7 @@ export const ListingPatchSchema = z
 			.looseObject({
 				title: TitleSchema.optional(),
 				categoryId: z.string().min(1).optional(),
+				locationId: z.string().min(1).optional(),
 				restriction: RestrictionEnumSchema.nullish(),
 			})
 			.strip(),

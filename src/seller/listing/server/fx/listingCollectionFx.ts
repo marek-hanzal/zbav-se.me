@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import type { ListingFilterSchema } from "~/seller/listing/server/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";
 import { withListingSelectFx } from "../db/withListingSelectFx";
+import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace listingCollectionFx {
-	export interface Scope extends ListingFilterSchema.Type {
+	export interface Scope extends ListingWhereSchema.Type {
 		userId: string;
 	}
 

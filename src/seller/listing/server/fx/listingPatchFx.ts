@@ -14,13 +14,16 @@ export namespace listingPatchFx {
 }
 
 export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
-	patch,
+	patch: { locationId, ...patch },
 	query,
 	scope,
 }: listingPatchFx.Props) {
 	const logger = yield* getLoggerFx("listingPatchFx");
 	logger.trace("listingPatchFx", {
-		patch,
+		patch: {
+			...patch,
+			locationId,
+		},
 		query,
 		scope,
 	});
@@ -39,8 +42,28 @@ export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
 					.updateTable("listing")
 					.set(patch)
 					.where("id", "=", listing.id)
-					.executeTakeFirst();
+					.execute();
 			});
+
+			if (locationId) {
+				const { geo: withLocation } = yield* tryDbFx(async () => {
+					return kysely
+						.selectFrom("location")
+						.select("geo")
+						.where("id", "=", locationId)
+						.executeTakeFirstOrThrow();
+				});
+
+				yield* tryDbFx(async () => {
+					return kysely
+						.updateTable("listing")
+						.set({
+							withLocation,
+						})
+						.where("id", "=", listing.id)
+						.execute();
+				});
+			}
 
 			return yield* listingFetchFx({
 				where: {

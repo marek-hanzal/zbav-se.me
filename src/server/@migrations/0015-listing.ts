@@ -99,7 +99,7 @@ export const ListingMigration: Migration = {
 			.addColumn("warranty", sql`listing_warranty_enum`)
 			//
 			.addColumn("locationId", "text")
-			.addColumn("withLocationGeo", sql`geography(Point,4326)`)
+			.addColumn("withLocation", sql`geography(Point,4326)`)
 			//
 			.addColumn("pros", sql`text[]`, (col) => {
 				return col.notNull().defaultTo(sql`array[]::text[]`);

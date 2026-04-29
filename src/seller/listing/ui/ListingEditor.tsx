@@ -5,6 +5,7 @@ import { TitlePatch } from "~/seller/listing/ui/patch/TitlePatch";
 import { withListingQuery } from "../query/withListingQuery";
 import { Editor } from "./Editor";
 import { CategoryPatch } from "./patch/CategoryPatch";
+import { LocationPatch } from "./patch/LocationPatch";
 
 export namespace ListingEditor {
 	export type View =
@@ -68,11 +69,13 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 				),
 			},
 			location: {
-				children: `<LocationPatch
-						draft={listing}
+				children: (
+					<LocationPatch
+						listing={listing}
 						onCancel={onDone}
-						onView={setView}
-					/>`,
+						setView={setView}
+					/>
+				),
 			},
 			price: {
 				children: `<PricePatch
