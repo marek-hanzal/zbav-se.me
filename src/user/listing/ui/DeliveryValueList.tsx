@@ -18,8 +18,6 @@ export namespace DeliveryValueList {
 /**
  * Renders a read-only list of delivery values in a consistent label/value style.
  * Use it in detail or preview views when you need to show multiple delivery entries clearly.
- *
- * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const DeliveryValueList: FC<DeliveryValueList.Props> = ({ deliveryIn, ...props }) => {
 	const items = deliveryIn.map((item) => ({
@@ -34,6 +32,9 @@ export const DeliveryValueList: FC<DeliveryValueList.Props> = ({ deliveryIn, ...
 			textEmpty={translator.text("Feed delivery not selected")}
 			items={items}
 			renderFn={(item) => translator.text(`Listing delivery - ${item.delivery}`)}
+			wrapperProps={{
+				"data-ui-tone": deliveryIn.length > 0 ? "neutral" : "secondary",
+			}}
 			{...props}
 		/>
 	);

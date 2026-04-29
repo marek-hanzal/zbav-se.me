@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
+import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { ListingFilterSchema } from "../schema/ListingFilterSchema";
@@ -48,6 +49,11 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			},
 			(eb) => {
 				return sql<string[]>`to_jsonb(${eb.ref("l.cons")})`.as("cons");
+			},
+			(eb) => {
+				return sql<ListingDeliveryEnumSchema.Type[]>`to_jsonb(${eb.ref("l.delivery")})`.as(
+					"delivery",
+				);
 			},
 			(eb) => {
 				return eb.fn

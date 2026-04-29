@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
+import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { ListingFilterSchema } from "../schema/ListingFilterSchema";
@@ -63,12 +64,29 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.withImageUrl",
 			"l.createdAt",
 			(eb) => {
-				return sql<RestrictionEnumSchema.Type>`
-                    greatest(
-                        ${eb.ref("cat.restriction")},
-                        coalesce(${eb.ref("l.restriction")}, ${eb.ref("cat.restriction")})
-                    )
-                `.as("withRestriction");
+				return sql<string[]>`to_jsonb(${eb.ref("l.pros")})`.as("pros");
+			},
+			(eb) => {
+				return sql<string[]>`to_jsonb(${eb.ref("l.cons")})`.as("cons");
+			},
+			(eb) => {
+				return sql<ListingDeliveryEnumSchema.Type[]>`to_jsonb(${eb.ref("l.delivery")})`.as(
+					"delivery",
+				);
+			},
+			(eb) => {
+				return eb.fn
+					.coalesce(
+						sql<RestrictionEnumSchema.Type | null>`
+                            greatest(
+                                ${eb.ref("cat.restriction")},
+                                ${eb.ref("l.restriction")}
+                            )
+			            `,
+						sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`,
+					)
+					.$castTo<RestrictionEnumSchema.Type>()
+					.as("withRestriction");
 			},
 		]),
 		queryFx(select, where: ListingFilterSchema.Type) {

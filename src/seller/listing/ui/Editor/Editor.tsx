@@ -11,6 +11,7 @@ import { TitleValue } from "~/common/title/ui/TitleValue";
 import { ChevronAction } from "~/common/ui/action/ChevronAction";
 import { CategoryValue } from "~/user/category/ui/CategoryValue";
 import { ConsValueList } from "~/user/listing/ui/ConsValueList";
+import { DeliveryValueList } from "~/user/listing/ui/DeliveryValueList";
 import { DescriptionValue } from "~/user/listing/ui/DescriptionValue";
 import { ExpireAtValue } from "~/user/listing/ui/ExpireAtValue";
 import { PriceTypeValue } from "~/user/listing/ui/PriceTypeValue";
@@ -140,6 +141,14 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, ...props }) => 
 				data-ui-opacity="8"
 				className={"text-center"}
 			/>
+
+			<Group>
+				<DeliveryValueList
+					deliveryIn={listing.delivery}
+					action={<ChevronAction />}
+					// onClick={() => onView("delivery")}
+				/>
+			</Group>
 
 			<Group>
 				<DescriptionValue

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
@@ -37,6 +38,8 @@ export const ListingTableSchema = z
 		//
 		pros: ProsConsSchema,
 		cons: ProsConsSchema,
+		//
+		delivery: z.array(ListingDeliveryEnumSchema),
 		//
 		priceType: ListingPriceEnumSchema.nullish(),
 		price: z.number().positive().nullish(),
