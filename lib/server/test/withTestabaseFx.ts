@@ -1,3 +1,4 @@
+import { getLogger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
@@ -8,6 +9,7 @@ import {
 	withDatabaseName,
 	withDialectFx,
 } from "@/lib/common/database";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { ensureDocker } from "../docker/ensureDocker";
 import { rmImage } from "../docker/rmImage";
 import { runImage } from "../docker/runImage";
@@ -104,7 +106,11 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 	const dsn = `postgresql://postgres:postgres@127.0.0.1:${port}`;
 
 	yield* Effect.gen(function* () {
-		const { kysely } = yield* withDatabaseFx({}).pipe(
+		const { kysely } = yield* withDatabaseFx({
+			logger: getRootLogger([
+				"db",
+			]),
+		}).pipe(
 			withDialectFx(
 				new PostgresDialect({
 					pool: new Pool({
@@ -150,7 +156,9 @@ export const withTestabaseFx = Effect.fn("withTestabaseFx")(function* ({
 	});
 
 	yield* Effect.gen(function* () {
-		const { kysely } = yield* withDatabaseFx({}).pipe(
+		const { kysely } = yield* withDatabaseFx({
+			logger: getLogger("test"),
+		}).pipe(
 			withDialectFx(
 				new PostgresDialect({
 					pool: new Pool({

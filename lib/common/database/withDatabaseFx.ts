@@ -1,3 +1,4 @@
+import type { Logger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { type Dialect, Kysely, type MigrationResult, Migrator } from "kysely";
 import { DialectContextFx } from "./DialectContextFx";
@@ -10,6 +11,7 @@ export namespace withDatabaseFx {
 	}
 
 	export interface Props<in out TDatabase> {
+		logger: Logger;
 		/**
 		 * Called before the migration is executed.
 		 */
@@ -25,6 +27,7 @@ export namespace withDatabaseFx {
 }
 
 export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TDatabase>({
+	logger,
 	onPreMigration,
 	onPostMigration,
 }: withDatabaseFx.Props<TDatabase>) {
@@ -43,11 +46,16 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 			log(log) {
 				switch (log.level) {
 					case "error": {
-						console.error(log.error);
+						logger.error("Kaboom", {
+							error: log.error,
+						});
 						break;
 					}
 					case "query": {
-						// console.log(log.query.sql);
+						logger.trace(log.query.sql, {
+							ms: log.queryDurationMillis,
+							params: log.query.parameters,
+						});
 						break;
 					}
 				}
