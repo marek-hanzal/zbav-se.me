@@ -12,22 +12,24 @@ import { useAppForm } from "~/common/ui/form";
 import { withListingQuery } from "../../query/withListingQuery";
 import type { ListingSchema } from "../../server/schema/ListingSchema";
 
-const FormSchema = z.object({
-	price: z.number().positive().nullable(),
-});
+const FormSchema = z
+	.looseObject({
+		price: z.number().nullable(),
+	})
+	.strip();
 
 export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "expireAt"): void;
+		setView(view: "expires"): void;
 	}
 }
 
 export const PricePatch: FC<PricePatch.Props> = ({ listing, onCancel, setView, ...props }) => {
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("expireAt");
+			setView("expires");
 		},
 		invalidate: [
 			"collection",
@@ -59,7 +61,7 @@ export const PricePatch: FC<PricePatch.Props> = ({ listing, onCancel, setView, .
 
 	return (
 		<TitleContainer
-			data-ui={"PricePatch"}
+			data-ui={"Setup-[TitleContainer.price]"}
 			textTitle={translator.text("Price (title)")}
 			left={<EditAction />}
 			{...props}

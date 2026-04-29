@@ -25,7 +25,7 @@ export namespace PriceTypePatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "expires"): void;
+		setView(view: "expires" | "price"): void;
 	}
 }
 
@@ -36,8 +36,8 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 	...props
 }) => {
 	const mutation = withListingQuery.usePatchMutation({
-		onSuccess() {
-			setView("expires");
+		onSuccess({ priceType }) {
+			setView(priceType === "offer" ? "expires" : "price");
 		},
 		invalidate: [
 			"collection",
