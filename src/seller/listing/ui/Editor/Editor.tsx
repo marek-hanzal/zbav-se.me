@@ -33,7 +33,7 @@ export namespace Editor {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
 		listingId: string;
 		setView(
-			view: "gallery" | "title" | "category" | "location" | "priceType" | "expires",
+			view: "gallery" | "title" | "category" | "location" | "priceType" | "expires" | "price",
 		): void;
 	}
 }
@@ -142,7 +142,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 									price={listing.price}
 									currency={listing.currency}
 									action={<ChevronAction />}
-									// onClick={() => onView("price")}
+									onClick={() => setView("price")}
 								/>
 							);
 						})

@@ -8,6 +8,7 @@ import { CategoryPatch } from "./patch/CategoryPatch";
 import { ExpiresPatch } from "./patch/ExpiresPatch";
 import { GalleryPatch } from "./patch/GalleryPatch";
 import { LocationPatch } from "./patch/LocationPatch";
+import { PricePatch } from "./patch/PricePatch";
 import { PriceTypePatch } from "./patch/PriceTypePatch";
 
 export namespace ListingEditor {
@@ -100,11 +101,13 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 				),
 			},
 			price: {
-				children: `<PricePatch
+				children: (
+					<PricePatch
 						listing={listing}
 						onCancel={onDone}
 						setView={setView}
-					/>`,
+					/>
+				),
 			},
 			expires: {
 				children: (
