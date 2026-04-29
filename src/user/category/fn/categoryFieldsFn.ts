@@ -7,8 +7,8 @@ import { EntitySchema } from "@/lib/common/schema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
+import { FieldSchema } from "~/user/field/server/schema/FieldSchema";
 import { categoryFieldsFx } from "../server/fx/categoryFieldsFx";
-import { CategoryFieldSchema } from "../server/schema/CategoryFieldSchema";
 
 export namespace categoryFieldsFn {
 	export type Error = Effect.Effect.Error<categoryFieldsFx>;
@@ -31,7 +31,7 @@ export const categoryFieldsFn = createServerFn()
 			});
 
 			return zodGuardFx({
-				schema: z.array(CategoryFieldSchema),
+				schema: z.array(FieldSchema),
 				dataFx: categoryFieldsFx({
 					categoryId: id,
 				}),
