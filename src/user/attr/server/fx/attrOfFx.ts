@@ -3,17 +3,20 @@ import { jsonArrayFrom } from "kysely/helpers/postgres";
 import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 
-export namespace categoryFieldsFx {
+export namespace attrOfFx {
 	export interface Props {
+		listingId: string;
 		categoryId: string;
 	}
 }
 
-export const categoryFieldsFx = Effect.fn("categoryFieldsFx")(function* ({
+export const attrOfFx = Effect.fn("attrOfFx")(function* ({
+	listingId,
 	categoryId,
-}: categoryFieldsFx.Props) {
-	const logger = yield* getLoggerFx("categoryFieldsFx");
-	logger.trace("categoryFieldsFx", {
+}: attrOfFx.Props) {
+	const logger = yield* getLoggerFx("attrOfFx");
+	logger.trace("attrOfFx", {
+		listingId,
 		categoryId,
 	});
 
@@ -49,4 +52,4 @@ export const categoryFieldsFx = Effect.fn("categoryFieldsFx")(function* ({
 	});
 });
 
-export type categoryFieldsFx = ReturnType<typeof categoryFieldsFx>;
+export type attrOfFx = ReturnType<typeof attrOfFx>;

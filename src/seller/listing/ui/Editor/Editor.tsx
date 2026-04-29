@@ -258,6 +258,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 
 				<CategoryEditor
 					_suspense={"I know"}
+					listingId={listing.id}
 					categoryId={listing.categoryId}
 				/>
 			</Container>

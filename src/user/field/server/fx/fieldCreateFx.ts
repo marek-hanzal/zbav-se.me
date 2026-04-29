@@ -3,6 +3,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import type { FieldCreateSchema } from "../schema/FieldCreateSchema";
+import { fieldFetchFx } from "./fieldFetchFx";
 
 export namespace fieldCreateFx {
 	export interface Props extends FieldCreateSchema.Type {
@@ -18,8 +19,15 @@ export const fieldCreateFx = Effect.fn("fieldCreateFx")(function* (data: fieldCr
 
 	const { kysely } = yield* KyselyContextFx;
 
-	return yield* tryDbFx(async () => {
+	yield* tryDbFx(async () => {
 		return kysely.insertInto("field").values(data).returningAll().executeTakeFirstOrThrow();
+	});
+
+	return yield* fieldFetchFx({
+		where: {
+			name: data.name,
+		},
+		scope: {},
 	});
 });
 

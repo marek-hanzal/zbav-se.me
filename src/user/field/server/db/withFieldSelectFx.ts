@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { jsonArrayFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -31,6 +32,19 @@ export const withFieldSelectFx = Effect.fn("withFieldSelectFx")(function* ({
 			"fld.name",
 			"fld.type",
 			"fld.required",
+			(eb) => {
+				return jsonArrayFrom(
+					eb
+						.selectFrom("field_option as fo")
+						.select([
+							"fo.fieldId",
+							"fo.value",
+							"fo.sort",
+						])
+						.whereRef("fo.fieldId", "=", "fld.name")
+						.orderBy("fo.sort", "asc"),
+				).as("options");
+			},
 		]),
 		queryFx(select, where: FieldFilterSchema.Type) {
 			return Effect.gen(function* () {

@@ -5,7 +5,7 @@ import { FieldOptionSchema } from "~/user/field-option/server/schema/FieldOption
 export const FieldSchema = z
 	.looseObject({
 		...FieldTableSchema.shape,
-        options: z.array(FieldOptionSchema),
+		options: z.array(FieldOptionSchema),
 	})
 	.strip()
 	.meta({

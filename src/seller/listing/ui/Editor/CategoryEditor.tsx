@@ -1,17 +1,19 @@
 import type { FC } from "react";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { withCategoryFieldsQuery } from "~/user/category/query/withCategoryFieldsQuery";
+import { withAttrOfQuery } from "~/user/attr/query/withAttrOfQuery";
 
 export namespace CategoryEditor {
 	export interface Props extends MarkSuspense.Props {
+		listingId: string;
 		categoryId: string | undefined | null;
 	}
 }
 
-export const CategoryEditor: FC<CategoryEditor.Props> = ({ _suspense, categoryId }) => {
-	const { data: fields } = withCategoryFieldsQuery.useSuspenseQuery({
-		id: categoryId ?? "unknown",
+export const CategoryEditor: FC<CategoryEditor.Props> = ({ _suspense, listingId, categoryId }) => {
+	const { data: fields } = withAttrOfQuery.useSuspenseQuery({
+		listingId,
+		categoryId: categoryId ?? "unknown",
 	});
 
 	if (!categoryId || !fields.length) {
