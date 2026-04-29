@@ -23,5 +23,30 @@
 		"field": "ram",
 		"value": "More than 12 GB",
 		"sort": 4
+	},
+	{
+		"field": "storage",
+		"value": "Less than 128 GB",
+		"sort": 0
+	},
+	{
+		"field": "storage",
+		"value": "256 GB",
+		"sort": 1
+	},
+	{
+		"field": "storage",
+		"value": "512 GB",
+		"sort": 2
+	},
+	{
+		"field": "storage",
+		"value": "1 TB",
+		"sort": 3
+	},
+	{
+		"field": "storage",
+		"value": "More than 1 TB",
+		"sort": 4
 	}
 ]

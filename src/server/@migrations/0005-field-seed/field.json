@@ -1,7 +1,12 @@
 [
 	{
 		"name": "ram",
-		"type": "enum-multi",
+		"type": "enum-single",
+		"required": false
+	},
+	{
+		"name": "storage",
+		"type": "enum-single",
 		"required": false
 	}
 ]
