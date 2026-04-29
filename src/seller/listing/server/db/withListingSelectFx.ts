@@ -35,14 +35,19 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 		select: query.select([
 			"l.id",
 			"l.status",
+			//
 			"l.withUploadIds",
+			"l.withImageUrl",
+			//
+			"l.title",
+			"l.locationId",
+			//
 			"l.categoryId",
 			"l.restriction",
-			"l.withImageUrl",
+			//
 			"l.expiresAt",
 			"l.createdAt",
 			"l.updatedAt",
-			"l.locationId",
 			(eb) => {
 				return sql<string[]>`to_jsonb(${eb.ref("l.pros")})`.as("pros");
 			},
