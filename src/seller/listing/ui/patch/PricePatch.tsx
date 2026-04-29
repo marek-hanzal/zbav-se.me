@@ -49,6 +49,7 @@ export const PricePatch: FC<PricePatch.Props> = ({ listing, onCancel, setView, .
 			return mutation.mutateAsync({
 				patch: {
 					price: value.price,
+					currency: "CZK",
 				},
 				query: {
 					where: {

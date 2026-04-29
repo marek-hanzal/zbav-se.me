@@ -8,6 +8,7 @@ import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
 import { RatingSchema } from "~/common/listing/schema/RatingSchema";
 import { TitleSchema } from "~/common/listing/schema/TitleSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 import { ListingQuerySchema } from "./ListingQuerySchema";
 
 export const ListingPatchSchema = z
@@ -23,6 +24,7 @@ export const ListingPatchSchema = z
 				//
 				priceType: ListingPriceEnumSchema.optional(),
 				price: z.coerce.number().positive().nullish(),
+				currency: CurrencyEnumSchema.optional(),
 				//
 				expires: ListingExpireEnumSchema.optional(),
 				//

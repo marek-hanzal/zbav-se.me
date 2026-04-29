@@ -48,18 +48,24 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.withImageUrl",
 			//
 			"l.title",
+			"l.description",
+			//
 			"l.locationId",
 			//
 			"l.categoryId",
 			"l.restriction",
 			//
 			"l.price",
+			"l.currency",
 			"l.priceType",
 			//
 			"l.expires",
 			//
 			"l.galleryId",
 			"l.warranty",
+			//
+			"l.age",
+			"l.condition",
 			//
 			"l.expiresAt",
 			"l.createdAt",
