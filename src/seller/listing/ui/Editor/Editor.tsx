@@ -28,6 +28,7 @@ import { RestrictionValue } from "~/user/listing/ui/value/RestrictionValue";
 import { WarrantyValue } from "~/user/listing/ui/value/WarrantyValue";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import { withListingQuery } from "../../query/withListingQuery";
+import { CategoryEditor } from "./CategoryEditor";
 
 export namespace Editor {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
@@ -254,6 +255,8 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 						onClick={() => setView("restriction")}
 					/>
 				</Group>
+
+				<CategoryEditor categoryId={listing.categoryId} />
 			</Container>
 		</TitleContainer>
 	);
