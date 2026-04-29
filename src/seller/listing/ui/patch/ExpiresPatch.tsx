@@ -2,42 +2,36 @@ import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
-import { useSelection } from "@/lib/client/selection";
+import { Mx } from "@/lib/client/mx";
 import { Tx } from "@/lib/client/tx";
-import type { EntitySchema } from "@/lib/common/schema";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
-import { PriceTypeSelect } from "~/common/price-type/ui/PriceTypeSelect";
+import { ExpireAtSelect } from "~/common/expire-at/ui/ExpireAtSelect";
+import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
 import { useAppForm } from "~/common/ui/form";
 import { withListingQuery } from "../../query/withListingQuery";
 import type { ListingSchema } from "../../server/schema/ListingSchema";
 
-const PriceTypeSchema = z
+const FormSchema = z
 	.looseObject({
-		priceType: ListingPriceEnumSchema,
+		expires: ListingExpireEnumSchema,
 	})
 	.strip();
 
-export namespace PriceTypePatch {
+export namespace ExpiresPatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "expires"): void;
+		setView(view: "default"): void;
 	}
 }
 
-export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
-	listing,
-	onCancel,
-	setView,
-	...props
-}) => {
+export const ExpiresPatch: FC<ExpiresPatch.Props> = ({ listing, onCancel, setView, ...props }) => {
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("expires");
+			setView("default");
 		},
 		invalidate: [
 			"collection",
@@ -45,18 +39,22 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 	});
 	const form = useAppForm({
 		defaultValues: {
-			priceType: listing.priceType ?? null,
+			expires: listing.expires,
 		},
 		validators: {
-			onMount: PriceTypeSchema,
-			onChange: PriceTypeSchema,
-			onBlur: PriceTypeSchema,
-			onSubmit: PriceTypeSchema,
+			onMount: FormSchema,
+			onChange: FormSchema,
+			onBlur: FormSchema,
+			onSubmit: FormSchema,
 		},
 		async onSubmit({ value }) {
+			if (!value.expires) {
+				return;
+			}
+
 			mutation.mutate({
 				patch: {
-					priceType: value.priceType ?? undefined,
+					expires: value.expires,
 				},
 				query: {
 					where: {
@@ -66,30 +64,11 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 			});
 		},
 	});
-	const selection = useSelection<EntitySchema.Type>({
-		mode: "single",
-		initial: listing.priceType
-			? [
-					{
-						id: listing.priceType,
-					},
-				]
-			: [],
-		deps: [
-			listing,
-		],
-		onSelect(item) {
-			if (!item) {
-				return;
-			}
-			form.setFieldValue("priceType", item.id as ListingPriceEnumSchema.Type);
-		},
-	});
 
 	return (
 		<TitleContainer
-			data-ui={"PriceTypePatch"}
-			textTitle={translator.text("Price type (title)")}
+			data-ui={"ExpireAtPatch"}
+			textTitle={translator.text("Expire (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -100,8 +79,27 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 				data-ui-inner="default"
 				data-ui-gap="default"
 			>
-				<form.AppField name={"priceType"}>
-					{(_field) => <PriceTypeSelect selection={selection} />}
+				<form.AppField name={"expires"}>
+					{(field) => (
+						<Container>
+							<ExpireAtSelect
+								value={field.state.value ?? undefined}
+								onChange={(value) => {
+									field.handleChange(value);
+									field.handleBlur();
+								}}
+							/>
+
+							<Mx
+								label={"Listing expiration (hint)"}
+								data-ui-tone="neutral"
+								data-ui-theme="light"
+								data-ui-inner="default"
+								data-ui-color="lead"
+								data-ui-opacity="7"
+							/>
+						</Container>
+					)}
 				</form.AppField>
 
 				<form.Subscribe

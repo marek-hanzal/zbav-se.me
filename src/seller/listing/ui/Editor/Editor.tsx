@@ -20,7 +20,7 @@ import { ConditionValue } from "~/user/listing/ui/value/ConditionValue";
 import { ConsValueList } from "~/user/listing/ui/value/ConsValueList";
 import { DeliveryValueList } from "~/user/listing/ui/value/DeliveryValueList";
 import { DescriptionValue } from "~/user/listing/ui/value/DescriptionValue";
-import { ExpireAtValue } from "~/user/listing/ui/value/ExpireAtValue";
+import { ExpiresValue } from "~/user/listing/ui/value/ExpiresValue";
 import { PriceTypeValue } from "~/user/listing/ui/value/PriceTypeValue";
 import { PriceValue } from "~/user/listing/ui/value/PriceValue";
 import { ProsValueList } from "~/user/listing/ui/value/ProsValueList";
@@ -32,7 +32,9 @@ import { withListingQuery } from "../../query/withListingQuery";
 export namespace Editor {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
 		listingId: string;
-		setView(view: "gallery" | "title" | "category" | "location" | "priceType"): void;
+		setView(
+			view: "gallery" | "title" | "category" | "location" | "priceType" | "expires",
+		): void;
 	}
 }
 
@@ -158,11 +160,11 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 				</Group>
 
 				<Group>
-					<ExpireAtValue
+					<ExpiresValue
 						data-ui={"set listing expiration date"}
 						expires={listing.expires}
 						action={<ChevronAction />}
-						// onClick={() => onView("expireAt")}
+						onClick={() => setView("expires")}
 					/>
 				</Group>
 

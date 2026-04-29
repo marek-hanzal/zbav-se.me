@@ -56,6 +56,10 @@ export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
 				listingId: listing.id,
 			});
 
+			if (patch.priceType === "offer") {
+				patch.price = null;
+			}
+
 			if (locationId) {
 				const { geo: withLocation } = yield* tryDbFx(async () => {
 					return kysely

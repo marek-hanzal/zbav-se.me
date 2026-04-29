@@ -3,7 +3,7 @@ import { LabelValue } from "@/lib/client/value";
 import { translator } from "@/lib/common/translator";
 import type { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 
-export namespace ExpireAtValue {
+export namespace ExpiresValue {
 	export interface Props extends LabelValue.PropsEx {
 		expires: ListingExpireEnumSchema.Type | null | undefined;
 	}
@@ -13,7 +13,7 @@ export namespace ExpireAtValue {
  * Renders a read-only expire at value with consistent formatting and empty-state handling.
  * Use it in detail cards, summaries, and previews where editable controls are not needed
  */
-export const ExpireAtValue: FC<ExpireAtValue.Props> = ({ expires, ...props }) => {
+export const ExpiresValue: FC<ExpiresValue.Props> = ({ expires, ...props }) => {
 	const hasExpires = expires != null;
 	return (
 		<LabelValue

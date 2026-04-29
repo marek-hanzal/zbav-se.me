@@ -101,15 +101,20 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 					)}
 				</form.AppField>
 
-				<form.Subscribe selector={(state) => state.isValid}>
-					{(isValid) => (
+				<form.Subscribe
+					selector={(state) => ({
+						isValid: state.isValid,
+						isSubmitting: state.isSubmitting,
+					})}
+				>
+					{({ isValid, isSubmitting }) => (
 						<SaveContainer
 							onCancel={onCancel}
 							onSave={() => {
 								form.handleSubmit();
 							}}
-							loading={mutation.isPending}
-							disabled={!isValid || isSearchPendingSelection || mutation.isPending}
+							loading={isSubmitting}
+							disabled={!isValid || isSearchPendingSelection || isSubmitting}
 							textSave={<Tx label={"Continue (label)"} />}
 							textCancel={<Tx label={"Back (label)"} />}
 							saveProps={{

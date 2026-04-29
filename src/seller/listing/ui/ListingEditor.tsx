@@ -5,6 +5,7 @@ import { TitlePatch } from "~/seller/listing/ui/patch/TitlePatch";
 import { withListingQuery } from "../query/withListingQuery";
 import { Editor } from "./Editor";
 import { CategoryPatch } from "./patch/CategoryPatch";
+import { ExpiresPatch } from "./patch/ExpiresPatch";
 import { LocationPatch } from "./patch/LocationPatch";
 import { PriceTypePatch } from "./patch/PriceTypePatch";
 
@@ -22,7 +23,7 @@ export namespace ListingEditor {
 		| "warranty"
 		| "restriction"
 		| "gallery"
-		| "expireAt"
+		| "expires"
 		| "description"
 		| "pros"
 		| "cons";
@@ -94,6 +95,15 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 						setView={setView}
 					/>`,
 			},
+			expires: {
+				children: (
+					<ExpiresPatch
+						listing={listing}
+						onCancel={onDone}
+						setView={setView}
+					/>
+				),
+			},
 			condition: {
 				children: `<ConditionPatch
 						draft={listing}
@@ -124,13 +134,6 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 			},
 			restriction: {
 				children: `<RestrictionPatch
-						draft={listing}
-						onCancel={onDone}
-						onView={setView}
-					/>`,
-			},
-			expireAt: {
-				children: `<ExpireAtPatch
 						draft={listing}
 						onCancel={onDone}
 						onView={setView}
