@@ -37,12 +37,23 @@ export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
 				scope,
 			});
 
+			logger.trace("listing", {
+				listingId: listing.id,
+			});
+
 			yield* tryDbFx(async () => {
 				return kysely
 					.updateTable("listing")
-					.set(patch)
+					.set({
+						...patch,
+						locationId,
+					})
 					.where("id", "=", listing.id)
 					.execute();
+			});
+
+			logger.trace("patched", {
+				listingId: listing.id,
 			});
 
 			if (locationId) {
@@ -62,6 +73,12 @@ export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
 						})
 						.where("id", "=", listing.id)
 						.execute();
+				});
+
+				logger.trace("locationId", {
+					listingId: listing.id,
+					locationId,
+					withLocation,
 				});
 			}
 

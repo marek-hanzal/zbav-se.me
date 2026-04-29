@@ -46,9 +46,9 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 			log(log) {
 				switch (log.level) {
 					case "error": {
-						logger.error("Kaboom", {
-							error: log.error,
-						});
+						// logger.error("Kaboom", {
+						// 	error: log.error,
+						// });
 						break;
 					}
 					case "query": {
