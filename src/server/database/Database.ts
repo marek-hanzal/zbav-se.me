@@ -26,12 +26,14 @@ import type { UploadTableSchema } from "~/server/database/@table/UploadTableSche
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
 import type { UserRestrictionTableSchema } from "~/server/database/@table/UserRestrictionTableSchema";
+import type { CategoryFieldTableSchema } from "./@table/CategoryFieldTableSchema";
 
 export interface Database {
 	activity: ActivityTableSchema.Type;
 	agent_stream: AgentStreamTableSchema.Type;
 	agent_thread: AgentThreadTableSchema.Type;
 	agent_usage: AgentUsageTableSchema.Type;
+	category_field: CategoryFieldTableSchema.Type;
 	category_miss: CategoryMissTableSchema.Type;
 	category_spotlight: CategorySpotlightTableSchema.Type;
 	category: CategoryTableSchema.Type;

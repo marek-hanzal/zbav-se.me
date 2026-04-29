@@ -26,6 +26,11 @@
 				"name": "storage",
 				"sort": 1,
 				"required": null
+			},
+			{
+				"name": "battery-condition",
+				"sort": 2,
+				"required": null
 			}
 		]
 	},
