@@ -129,7 +129,9 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 						action={<ChevronAction />}
 						onClick={() => setView("category")}
 					/>
+				</Group>
 
+				<Group>
 					<LocationValue
 						data-ui={"select listing location"}
 						_suspense={"I know"}
