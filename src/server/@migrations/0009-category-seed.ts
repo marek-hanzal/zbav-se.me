@@ -76,16 +76,21 @@ export const CategorySeedMigration: Migration = {
 		}
 
 		for await (const { slug, field } of categoriesCsData) {
-			await db
-				.insertInto("category_field")
-				.values(
-					field.map(({ name, ...rest }) => ({
-						categoryId: db.selectFrom("category").select("id").where("slug", "=", slug),
-						fieldId: name,
-						...rest,
-					})),
-				)
-				.execute();
+			if (field.length > 0) {
+				await db
+					.insertInto("category_field")
+					.values(
+						field.map(({ name, ...rest }) => ({
+							categoryId: db
+								.selectFrom("category")
+								.select("id")
+								.where("slug", "=", slug),
+							fieldId: name,
+							...rest,
+						})),
+					)
+					.execute();
+			}
 		}
 	},
 };
