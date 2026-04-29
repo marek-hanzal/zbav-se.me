@@ -44,6 +44,12 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.createdAt",
 			"l.updatedAt",
 			(eb) => {
+				return sql<string[]>`to_jsonb(${eb.ref("l.pros")})`.as("pros");
+			},
+			(eb) => {
+				return sql<string[]>`to_jsonb(${eb.ref("l.cons")})`.as("cons");
+			},
+			(eb) => {
 				return eb.fn
 					.coalesce(
 						sql<RestrictionEnumSchema.Type | null>`

@@ -51,6 +51,9 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						withImageUrl: [],
 						withUploadIds: [],
 						//
+						cons: [],
+						pros: [],
+						//
 						status: "draft",
 						//
 						createdAt: now.toJSDate(),

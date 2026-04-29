@@ -2,6 +2,8 @@ import { z } from "zod";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
+import { DescriptionSchema } from "~/common/listing/schema/DescriptionSchema";
+import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
 import { TitleSchema } from "~/common/listing/schema/TitleSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
@@ -30,7 +32,11 @@ export const ListingTableSchema = z
 		 * Core listing attributes
 		 */
 		title: TitleSchema.nullish(),
+		description: DescriptionSchema.nullish(),
 		locationId: z.string().min(1).nullish(),
+		//
+		pros: ProsConsSchema,
+		cons: ProsConsSchema,
 		//
 		priceType: ListingPriceEnumSchema.nullish(),
 		price: z.number().positive().nullish(),

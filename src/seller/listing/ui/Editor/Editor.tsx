@@ -10,11 +10,14 @@ import { LocationValue } from "~/common/location/ui/LocationValue";
 import { TitleValue } from "~/common/title/ui/TitleValue";
 import { ChevronAction } from "~/common/ui/action/ChevronAction";
 import { CategoryValue } from "~/user/category/ui/CategoryValue";
+import { DescriptionValue } from "~/user/listing/ui/DescriptionValue";
 import { ExpireAtValue } from "~/user/listing/ui/ExpireAtValue";
 import { PriceTypeValue } from "~/user/listing/ui/PriceTypeValue";
 import { PriceValue } from "~/user/listing/ui/PriceValue";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import { withListingQuery } from "../../query/withListingQuery";
+import { ConsValueList } from "~/user/listing/ui/ConsValueList";
+import { ProsValueList } from "~/user/listing/ui/ProsValueList";
 
 export namespace Editor {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -118,6 +121,38 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, ...props }) => 
 					expires={listing.expires}
 					action={<ChevronAction />}
 					// onClick={() => onView("expireAt")}
+				/>
+			</Group>
+
+			<Tx
+				label="Draft - those others (title)"
+				data-ui-tone="secondary"
+				data-ui-theme="light"
+				data-ui-text="md"
+				data-ui-color="lead"
+				data-ui-opacity="8"
+				className={"text-center"}
+			/>
+
+			<Group>
+				<DescriptionValue
+					description={listing.description}
+					action={<ChevronAction />}
+					// onClick={() => onView("description")}
+				/>
+			</Group>
+
+			<Group>
+				<ProsValueList
+					pros={listing.pros}
+					action={<ChevronAction />}
+					// onClick={() => onView("pros")}
+				/>
+
+				<ConsValueList
+					cons={listing.cons}
+					action={<ChevronAction />}
+					// onClick={() => onView("cons")}
 				/>
 			</Group>
 		</Container>
