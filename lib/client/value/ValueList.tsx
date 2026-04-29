@@ -84,7 +84,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 				<Tx
 					label={textLabel}
 					preset={"label"}
-					data-ui-font="semibold"
+					data-ui-font="normal"
 					data-ui-display="block"
 					data-ui-color="lead"
 					{...textLabelProps}

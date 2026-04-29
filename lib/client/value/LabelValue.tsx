@@ -71,7 +71,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 				<Tx
 					label={textLabel}
 					preset={"label"}
-					data-ui-font="semibold"
+					data-ui-font="normal"
 					data-ui-color="lead"
 					{...textLabelProps}
 				/>
