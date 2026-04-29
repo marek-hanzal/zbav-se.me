@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { jsonArrayFrom } from "kysely/helpers/postgres";
 import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 
@@ -27,6 +28,15 @@ export const categoryFieldsFx = Effect.fn("categoryFieldsFx")(function* ({
 				"f.type",
 				(eb) => {
 					return eb.fn.coalesce("cf.required", eb.ref("f.required")).as("required");
+				},
+				(eb) => {
+					return jsonArrayFrom(
+						eb
+							.selectFrom("field_option as fo")
+							.select("fo.value")
+							.whereRef("fo.fieldId", "=", "cf.fieldId")
+							.orderBy("fo.sort", "asc"),
+					).as("options");
 				},
 			])
 			.where("cf.categoryId", "=", categoryId)
