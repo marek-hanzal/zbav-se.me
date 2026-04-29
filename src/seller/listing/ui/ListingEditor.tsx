@@ -6,6 +6,7 @@ import { withListingQuery } from "../query/withListingQuery";
 import { Editor } from "./Editor";
 import { CategoryPatch } from "./patch/CategoryPatch";
 import { LocationPatch } from "./patch/LocationPatch";
+import { PriceTypePatch } from "./patch/PriceTypePatch";
 
 export namespace ListingEditor {
 	export type View =
@@ -77,21 +78,22 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 					/>
 				),
 			},
+			priceType: {
+				children: (
+					<PriceTypePatch
+						listing={listing}
+						onCancel={onDone}
+						setView={setView}
+					/>
+				),
+			},
 			price: {
 				children: `<PricePatch
-						draft={listing}
+						listing={listing}
 						onCancel={onDone}
-						onView={setView}
+						setView={setView}
 					/>`,
 			},
-			priceType: {
-				children: `<PriceTypePatch
-						draft={listing}
-						onCancel={onDone}
-						onView={setView}
-					/>`,
-			},
-
 			condition: {
 				children: `<ConditionPatch
 						draft={listing}

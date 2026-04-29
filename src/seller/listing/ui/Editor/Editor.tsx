@@ -32,7 +32,7 @@ import { withListingQuery } from "../../query/withListingQuery";
 export namespace Editor {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
 		listingId: string;
-		setView(view: "gallery" | "title" | "category" | "location"): void;
+		setView(view: "gallery" | "title" | "category" | "location" | "priceType"): void;
 	}
 }
 
@@ -129,7 +129,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 						data-ui={"set listing price type"}
 						priceType={listing.priceType}
 						action={<ChevronAction />}
-						// onClick={() => onView("priceType")}
+						onClick={() => setView("priceType")}
 					/>
 
 					{match(listing.priceType)

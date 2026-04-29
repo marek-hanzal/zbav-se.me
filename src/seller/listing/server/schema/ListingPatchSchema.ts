@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { TitleSchema } from "~/common/listing/schema/TitleSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { ListingQuerySchema } from "./ListingQuerySchema";
@@ -11,6 +12,7 @@ export const ListingPatchSchema = z
 				categoryId: z.string().min(1).optional(),
 				locationId: z.string().min(1).optional(),
 				restriction: RestrictionEnumSchema.nullish(),
+				priceType: ListingPriceEnumSchema.optional(),
 			})
 			.strip(),
 		query: ListingQuerySchema,

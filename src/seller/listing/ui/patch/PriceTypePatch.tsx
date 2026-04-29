@@ -1,0 +1,128 @@
+import type { FC } from "react";
+import { z } from "zod";
+import { Container } from "@/lib/client/container";
+import { ArrowRightIcon } from "@/lib/client/icon";
+import { useSelection } from "@/lib/client/selection";
+import { Tx } from "@/lib/client/tx";
+import type { EntitySchema } from "@/lib/common/schema";
+import { translator } from "@/lib/common/translator";
+import { SaveContainer } from "~/common/container/ui/SaveContainer";
+import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
+import { PriceTypeSelect } from "~/common/price-type/ui/PriceTypeSelect";
+import { EditAction } from "~/common/ui/action/EditAction";
+import { TitleContainer } from "~/common/ui/container";
+import { useAppForm } from "~/common/ui/form";
+import { withListingQuery } from "../../query/withListingQuery";
+import type { ListingSchema } from "../../server/schema/ListingSchema";
+
+const PriceTypeSchema = z
+	.looseObject({
+		priceType: ListingPriceEnumSchema,
+	})
+	.strip();
+
+export namespace PriceTypePatch {
+	export interface Props extends TitleContainer.Props {
+		listing: ListingSchema.Type;
+		onCancel(): void;
+		setView(view: "expireAt"): void;
+	}
+}
+
+export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
+	listing,
+	onCancel,
+	setView,
+	...props
+}) => {
+	const mutation = withListingQuery.usePatchMutation({
+		onSuccess() {
+			setView("expireAt");
+		},
+		invalidate: [
+			"collection",
+		],
+	});
+	const form = useAppForm({
+		defaultValues: {
+			priceType: listing.priceType ?? null,
+		},
+		validators: {
+			onMount: PriceTypeSchema,
+			onChange: PriceTypeSchema,
+			onBlur: PriceTypeSchema,
+			onSubmit: PriceTypeSchema,
+		},
+		async onSubmit({ value }) {
+			mutation.mutate({
+				patch: {
+					priceType: value.priceType ?? undefined,
+				},
+				query: {
+					where: {
+						id: listing.id,
+					},
+				},
+			});
+		},
+	});
+	const selection = useSelection<EntitySchema.Type>({
+		mode: "single",
+		initial: listing.priceType
+			? [
+					{
+						id: listing.priceType,
+					},
+				]
+			: [],
+		deps: [
+			listing,
+		],
+		onSelect(item) {
+			if (!item) {
+				return;
+			}
+			form.setFieldValue("priceType", item.id as ListingPriceEnumSchema.Type);
+		},
+	});
+
+	return (
+		<TitleContainer
+			textTitle={translator.text("Price type (title)")}
+			data-ui={"Setup-[TitleContainer.price-type]"}
+			left={<EditAction />}
+			{...props}
+		>
+			<Container
+				data-ui-layout="vertical-content-footer"
+				data-ui-height="full"
+				data-ui-width="full"
+				data-ui-inner="default"
+				data-ui-gap="default"
+			>
+				<form.AppField name={"priceType"}>
+					{(_field) => <PriceTypeSelect selection={selection} />}
+				</form.AppField>
+
+				<form.Subscribe selector={(state) => state.isValid}>
+					{(isValid) => (
+						<SaveContainer
+							onCancel={onCancel}
+							onSave={() => {
+								form.handleSubmit();
+							}}
+							loading={mutation.isPending}
+							disabled={!isValid || mutation.isPending}
+							textSave={<Tx label={"Continue (label)"} />}
+							textCancel={<Tx label={"Back (label)"} />}
+							saveProps={{
+								iconEnabled: ArrowRightIcon,
+								iconPosition: "right",
+							}}
+						/>
+					)}
+				</form.Subscribe>
+			</Container>
+		</TitleContainer>
+	);
+};
