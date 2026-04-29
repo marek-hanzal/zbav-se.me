@@ -29,7 +29,12 @@ export const LocationValue = withFallback(
 			);
 		}
 
-		return <Location locationId={locationId} />;
+		return (
+			<Location
+				locationId={locationId}
+				{...props}
+			/>
+		);
 	},
 	({ ...props }: Omit<LocationValue.Props, "_suspense">) => {
 		return (

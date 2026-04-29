@@ -16,14 +16,14 @@ export namespace AgePatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "restriction"): void;
+		setView(view: "restriction" | "default"): void;
 	}
 }
 
 export const AgePatch: FC<AgePatch.Props> = ({ listing, onCancel, setView, ...props }) => {
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("restriction");
+			setView(listing.categoryId ? "restriction" : "default");
 		},
 		invalidate: [
 			"collection",
