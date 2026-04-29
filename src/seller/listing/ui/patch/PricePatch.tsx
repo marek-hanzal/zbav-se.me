@@ -46,7 +46,7 @@ export const PricePatch: FC<PricePatch.Props> = ({ listing, onCancel, setView, .
 			onSubmit: FormSchema,
 		},
 		async onSubmit({ value }) {
-			mutation.mutate({
+			return mutation.mutateAsync({
 				patch: {
 					price: value.price,
 				},

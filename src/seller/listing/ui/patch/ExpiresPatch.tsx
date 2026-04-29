@@ -52,7 +52,7 @@ export const ExpiresPatch: FC<ExpiresPatch.Props> = ({ listing, onCancel, setVie
 				return;
 			}
 
-			mutation.mutate({
+			return mutation.mutateAsync({
 				patch: {
 					expires: value.expires,
 				},

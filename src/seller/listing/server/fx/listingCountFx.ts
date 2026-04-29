@@ -6,16 +6,14 @@ import { withListingSelectFx } from "../db/withListingSelectFx";
 import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace listingCountFx {
-	export interface Scope extends ListingWhereSchema.Type {
-		userId: string;
-	}
-
 	export interface Props extends ListingCountQuerySchema.Type {
-		scope: Scope;
+		userId: string;
+		scope: ListingWhereSchema.Type;
 	}
 }
 
 export const listingCountFx = Effect.fn("listingCountFx")(function* ({
+	userId,
 	filter,
 	where,
 	scope,
@@ -29,6 +27,7 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 
 	return yield* withCountFx({
 		selectFx: withListingSelectFx({
+			userId,
 			sort: [],
 		}),
 		filter,

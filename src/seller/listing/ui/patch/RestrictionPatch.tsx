@@ -1,14 +1,14 @@
 import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
-import { FormField } from "@/lib/client/form";
 import { ArrowRightIcon } from "@/lib/client/icon";
-import { Mx } from "@/lib/client/mx";
-import { Status } from "@/lib/client/status";
+import { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
+import type { EntitySchema } from "@/lib/common/schema";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import { TitleSchema } from "~/common/listing/schema/TitleSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { RestrictionSelect } from "~/common/restriction/ui/RestrictionSelect";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
 import { useAppForm } from "~/common/ui/form";
@@ -17,22 +17,27 @@ import type { ListingSchema } from "../../server/schema/ListingSchema";
 
 const FormSchema = z
 	.looseObject({
-		title: TitleSchema,
+		restriction: RestrictionEnumSchema.nullable(),
 	})
 	.strip();
 
-export namespace TitlePatch {
+export namespace RestrictionPatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "category"): void;
+		setView(view: "default"): void;
 	}
 }
 
-export const TitlePatch: FC<TitlePatch.Props> = ({ listing, onCancel, setView, ...props }) => {
+export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
+	listing,
+	onCancel,
+	setView,
+	...props
+}) => {
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("category");
+			setView("default");
 		},
 		invalidate: [
 			"collection",
@@ -40,7 +45,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ listing, onCancel, setView, .
 	});
 	const form = useAppForm({
 		defaultValues: {
-			title: listing.title ?? "",
+			restriction: listing.restriction,
 		},
 		validators: {
 			onMount: FormSchema,
@@ -51,7 +56,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ listing, onCancel, setView, .
 		async onSubmit({ value }) {
 			return mutation.mutateAsync({
 				patch: {
-					title: value.title,
+					restriction: value.restriction,
 				},
 				query: {
 					where: {
@@ -61,11 +66,31 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ listing, onCancel, setView, .
 			});
 		},
 	});
+	const selection = useSelection<EntitySchema.Type>({
+		mode: "single",
+		initial: listing.restriction
+			? [
+					{
+						id: listing.restriction,
+					},
+				]
+			: [],
+		deps: [
+			listing,
+		],
+		onSelect(item) {
+			form.setFieldValue("restriction", (item?.id as RestrictionEnumSchema.Type) ?? null);
+			form.setFieldMeta("restriction", (meta) => ({
+				...meta,
+				isTouched: true,
+			}));
+		},
+	});
 
 	return (
 		<TitleContainer
-			data-ui={"TitlePatch"}
-			textTitle={translator.text("Listing title (title)")}
+			data-ui={"RestrictionPatch"}
+			textTitle={translator.text("Listing restriction (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -74,51 +99,16 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ listing, onCancel, setView, .
 				data-ui-height="full"
 				data-ui-width="full"
 				data-ui-inner="default"
+				data-ui-gap="default"
 			>
-				<Status
-					action={
-						<form
-							className={"contents"}
-							onSubmit={(e) => {
-								e.preventDefault();
-								e.stopPropagation();
-								form.handleSubmit();
-							}}
-						>
-							<form.AppField name={"title"}>
-								{(field) => (
-									<FormField
-										id={field.name}
-										name={field.name}
-										meta={field.state.meta}
-										required
-									>
-										{(props) => (
-											<field.TextInput
-												value={field.state.value}
-												onChange={(e) => {
-													field.handleChange(e.target.value);
-												}}
-												onBlur={field.handleBlur}
-												placeholder={translator.text(
-													"Listing title (placeholder)",
-												)}
-												autoFocus
-												{...props}
-											/>
-										)}
-									</FormField>
-								)}
-							</form.AppField>
-						</form>
-					}
-				>
-					<Mx
-						label={"Listing title (required)"}
-						data-ui-tone="secondary"
-						data-ui-theme="light"
-					/>
-				</Status>
+				<form.AppField name={"restriction"}>
+					{(_field) => (
+						<RestrictionSelect
+							selection={selection}
+							minLevel={listing.category?.restriction ?? "none"}
+						/>
+					)}
+				</form.AppField>
 
 				<form.Subscribe
 					selector={(state) => ({

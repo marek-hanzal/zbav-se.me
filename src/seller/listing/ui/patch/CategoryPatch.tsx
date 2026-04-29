@@ -53,7 +53,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 			onSubmit: FormSchema,
 		},
 		async onSubmit({ value }) {
-			mutation.mutate({
+			return mutation.mutateAsync({
 				patch: {
 					categoryId: value.categoryId ?? undefined,
 					restriction: null,

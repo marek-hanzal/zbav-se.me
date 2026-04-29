@@ -4,12 +4,20 @@ import { View } from "@/lib/client/view";
 import { TitlePatch } from "~/seller/listing/ui/patch/TitlePatch";
 import { withListingQuery } from "../query/withListingQuery";
 import { Editor } from "./Editor";
+import { AgePatch } from "./patch/AgePatch";
 import { CategoryPatch } from "./patch/CategoryPatch";
+import { ConditionPatch } from "./patch/ConditionPatch";
+import { ConsPatch } from "./patch/ConsPatch";
+import { DeliveryPatch } from "./patch/DeliveryPatch";
+import { DescriptionPatch } from "./patch/DescriptionPatch";
 import { ExpiresPatch } from "./patch/ExpiresPatch";
 import { GalleryPatch } from "./patch/GalleryPatch";
 import { LocationPatch } from "./patch/LocationPatch";
 import { PricePatch } from "./patch/PricePatch";
 import { PriceTypePatch } from "./patch/PriceTypePatch";
+import { ProsPatch } from "./patch/ProsPatch";
+import { RestrictionPatch } from "./patch/RestrictionPatch";
+import { WarrantyPatch } from "./patch/WarrantyPatch";
 
 export namespace ListingEditor {
 	export type View =
@@ -119,60 +127,76 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 				),
 			},
 			condition: {
-				children: `<ConditionPatch
-						draft={listing}
+				children: (
+					<ConditionPatch
+						listing={listing}
 						onCancel={onDone}
-						onView={setView}
-					/>`,
+						setView={setView}
+					/>
+				),
 			},
 			age: {
-				children: `<AgePatch
-						draft={listing}
+				children: (
+					<AgePatch
+						listing={listing}
 						onCancel={onDone}
-						onView={setView}
-					/>`,
+						setView={setView}
+					/>
+				),
 			},
 			delivery: {
-				children: `<DeliveryPatch
-						draft={listing}
+				children: (
+					<DeliveryPatch
+						listing={listing}
 						onCancel={onDone}
-						onView={setView}
-					/>`,
+						setView={setView}
+					/>
+				),
 			},
 			warranty: {
-				children: `<WarrantyPatch
-						draft={listing}
+				children: (
+					<WarrantyPatch
+						listing={listing}
 						onCancel={onDone}
-						onView={setView}
-					/>`,
+						setView={setView}
+					/>
+				),
 			},
 			restriction: {
-				children: `<RestrictionPatch
-						draft={listing}
+				children: (
+					<RestrictionPatch
+						listing={listing}
 						onCancel={onDone}
-						onView={setView}
-					/>`,
+						setView={setView}
+					/>
+				),
 			},
 			description: {
-				children: `<DescriptionPatch
-						draft={listing}
+				children: (
+					<DescriptionPatch
+						listing={listing}
 						onCancel={onDone}
-						onView={setView}
-					/>`,
+						setView={setView}
+					/>
+				),
 			},
 			pros: {
-				children: `<ProsPatch
-						draft={listing}
+				children: (
+					<ProsPatch
+						listing={listing}
 						onCancel={onDone}
-						onView={setView}
-					/>`,
+						setView={setView}
+					/>
+				),
 			},
 			cons: {
-				children: `<ConsPatch
-						draft={listing}
+				children: (
+					<ConsPatch
+						listing={listing}
 						onCancel={onDone}
-						onView={setView}
-					/>`,
+						setView={setView}
+					/>
+				),
 			},
 		};
 	}, [

@@ -39,6 +39,7 @@ export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
 
 			const listing = yield* listingFetchFx({
 				...query,
+				userId,
 				scope,
 			});
 
@@ -140,6 +141,7 @@ export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
 					.updateTable("listing")
 					.set({
 						...patch,
+						userId,
 						locationId,
 					})
 					.where("id", "=", listing.id)
@@ -177,6 +179,7 @@ export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
 			}
 
 			return yield* listingFetchFx({
+				userId,
 				where: {
 					id: listing.id,
 				},

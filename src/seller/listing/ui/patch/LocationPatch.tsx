@@ -52,7 +52,7 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 			onSubmit: FormSchema,
 		},
 		async onSubmit({ value }) {
-			mutation.mutate({
+			return mutation.mutateAsync({
 				patch: {
 					locationId: value.locationId ?? undefined,
 				},

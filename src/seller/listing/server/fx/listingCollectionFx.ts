@@ -6,16 +6,14 @@ import { withListingSelectFx } from "../db/withListingSelectFx";
 import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace listingCollectionFx {
-	export interface Scope extends ListingWhereSchema.Type {
-		userId: string;
-	}
-
 	export interface Props extends ListingQuerySchema.Type {
-		scope: Scope;
+		userId: string;
+		scope: ListingWhereSchema.Type;
 	}
 }
 
 export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
+	userId,
 	cursor = {
 		page: 0,
 		size: 10,
@@ -38,6 +36,7 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 
 	return yield* withCollectionFx({
 		selectFx: withListingSelectFx({
+			userId,
 			sort,
 		}),
 		cursor,

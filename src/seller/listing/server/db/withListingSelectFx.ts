@@ -5,16 +5,20 @@ import { selectFx } from "@/lib/common/select";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
+import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
 import type { ListingSortSchema } from "../schema/ListingSortSchema";
 import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace withListingSelectFx {
 	export interface Props {
+		userId: string;
 		sort?: ListingSortSchema.Type[];
 	}
 }
 
 export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
+	userId,
 	sort,
 }: withListingSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
@@ -30,6 +34,10 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			.with("expiresAt", () => query.orderBy("l.expiresAt", item.order))
 			.exhaustive();
 	}
+
+	const restrictionSql = yield* withUserRestrictionActiveSelectFx({
+		userId,
+	});
 
 	return selectFx({
 		select: query.select([
@@ -55,6 +63,15 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.expiresAt",
 			"l.createdAt",
 			"l.updatedAt",
+			(eb) => {
+				return sql<CategorySchema.Type>`
+                    to_jsonb(${eb.table("cat")}.*)
+                    || jsonb_build_object(
+                        'isRestricted',
+                        ${eb.ref("cat.restriction")} > ${restrictionSql}
+                    )
+                `.as("category");
+			},
 			(eb) => {
 				return sql<string[]>`to_jsonb(${eb.ref("l.pros")})`.as("pros");
 			},

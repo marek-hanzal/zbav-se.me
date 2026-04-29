@@ -33,7 +33,18 @@ export namespace Editor {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
 		listingId: string;
 		setView(
-			view: "gallery" | "title" | "category" | "location" | "priceType" | "expires" | "price",
+			view:
+				| "gallery"
+				| "title"
+				| "category"
+				| "location"
+				| "priceType"
+				| "expires"
+				| "price"
+				| "age"
+				| "pros"
+				| "cons"
+				| "condition",
 		): void;
 	}
 }
@@ -198,13 +209,13 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 					<ProsValueList
 						pros={listing.pros}
 						action={<ChevronAction />}
-						// onClick={() => onView("pros")}
+						onClick={() => setView("pros")}
 					/>
 
 					<ConsValueList
 						cons={listing.cons}
 						action={<ChevronAction />}
-						// onClick={() => onView("cons")}
+						onClick={() => setView("cons")}
 					/>
 				</Group>
 
@@ -220,13 +231,13 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 					<ConditionValue
 						condition={listing.condition}
 						action={<ChevronAction />}
-						// onClick={() => onView("condition")}
+						onClick={() => setView("condition")}
 					/>
 
 					<AgeValue
 						age={listing.age}
 						action={<ChevronAction />}
-						// onClick={() => onView("age")}
+						onClick={() => setView("age")}
 					/>
 				</Group>
 
@@ -235,8 +246,8 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 						data-ui={"set listing restriction"}
 						restriction={listing.restriction}
 						action={<ChevronAction />}
-						// onClick={() => onView("restriction")}
 						data-ui-disabled={!listing.categoryId}
+						// onClick={() => onView("restriction")}
 					/>
 				</Group>
 			</Container>

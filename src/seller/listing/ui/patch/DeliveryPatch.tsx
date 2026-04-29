@@ -1,75 +1,74 @@
-import { type FC, useState } from "react";
+import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
+import { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
+import type { EntitySchema } from "@/lib/common/schema";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
+import { DeliverySelect } from "~/common/delivery/ui/DeliverySelect";
+import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
 import { withListingQuery } from "../../query/withListingQuery";
 import type { ListingSchema } from "../../server/schema/ListingSchema";
 
-export namespace GalleryPatch {
-	export interface Props extends Container.Props {
+export namespace DeliveryPatch {
+	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "title"): void;
-		defaultUploadIds: string[];
+		setView(view: "warranty"): void;
 	}
 }
 
-export const GalleryPatch: FC<GalleryPatch.Props> = ({
+export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
 	listing,
 	onCancel,
 	setView,
-	defaultUploadIds,
 	...props
 }) => {
-	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("title");
+			setView("warranty");
 		},
 		invalidate: [
 			"collection",
 		],
 	});
+	const selection = useSelection<EntitySchema.Type>({
+		mode: "multi",
+		initial: listing.delivery.map((delivery) => ({
+			id: delivery,
+		})),
+		deps: [
+			listing,
+		],
+	});
+
+	const deliveryIds = selection.optional.multiId() as ListingDeliveryEnumSchema.Type[];
 
 	return (
 		<TitleContainer
-			data-ui={"GalleryPatch"}
-			textTitle={translator.text("Listing gallery (title)")}
+			data-ui={"DeliveryPatch"}
+			textTitle={translator.text("Delivery (title)")}
 			left={<EditAction />}
-			data-ui-layout="vertical-header-content"
-			data-ui-height="full"
 			{...props}
 		>
 			<Container
-				data-ui={"GalleryPatch-[Container]"}
 				data-ui-layout="vertical-content-footer"
 				data-ui-height="full"
-				data-ui-gap="default"
+				data-ui-width="full"
 				data-ui-inner="default"
+				data-ui-gap="default"
 			>
-				<GalleryUpload
-					access="private"
-					state={{
-						value: uploadIds,
-						set: setUploadIds,
-					}}
-					limit={10}
-				/>
+				<DeliverySelect selection={selection} />
 
 				<SaveContainer
-					onCancel={() => {
-						setUploadIds(defaultUploadIds);
-						onCancel();
-					}}
+					onCancel={onCancel}
 					onSave={() => {
 						mutation.mutate({
 							patch: {
-								uploadIds,
+								delivery: deliveryIds,
 							},
 							query: {
 								where: {
@@ -79,7 +78,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 						});
 					}}
 					loading={mutation.isPending}
-					disabled={uploadIds.length === 0 || mutation.isPending}
+					disabled={false}
 					textSave={<Tx label={"Continue (label)"} />}
 					textCancel={<Tx label={"Back (label)"} />}
 					saveProps={{

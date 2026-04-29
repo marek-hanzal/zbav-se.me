@@ -1,75 +1,78 @@
-import { type FC, useState } from "react";
+import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
+import { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
 import { translator } from "@/lib/common/translator";
+import { ConditionSelect } from "~/common/condition/ui/ConditionSelect";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
+import type { Rating } from "~/common/ui/rating";
 import { withListingQuery } from "../../query/withListingQuery";
 import type { ListingSchema } from "../../server/schema/ListingSchema";
 
-export namespace GalleryPatch {
-	export interface Props extends Container.Props {
+export namespace ConditionPatch {
+	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "title"): void;
-		defaultUploadIds: string[];
+		setView(view: "age"): void;
 	}
 }
 
-export const GalleryPatch: FC<GalleryPatch.Props> = ({
+export const ConditionPatch: FC<ConditionPatch.Props> = ({
 	listing,
 	onCancel,
 	setView,
-	defaultUploadIds,
 	...props
 }) => {
-	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("title");
+			setView("age");
 		},
 		invalidate: [
 			"collection",
 		],
 	});
+	const selection = useSelection<Rating.RatingItem>({
+		mode: "single",
+		initial: listing.condition
+			? [
+					{
+						id: String(listing.condition),
+					},
+				]
+			: [],
+		deps: [
+			listing,
+		],
+	});
+
+	const itemId = selection.optional.singleId();
+	const condition = itemId ? Number.parseInt(itemId, 10) : null;
 
 	return (
 		<TitleContainer
-			data-ui={"GalleryPatch"}
-			textTitle={translator.text("Listing gallery (title)")}
+			data-ui={"ConditionPatch"}
+			textTitle={translator.text("Condition (title)")}
 			left={<EditAction />}
-			data-ui-layout="vertical-header-content"
-			data-ui-height="full"
 			{...props}
 		>
 			<Container
-				data-ui={"GalleryPatch-[Container]"}
 				data-ui-layout="vertical-content-footer"
 				data-ui-height="full"
-				data-ui-gap="default"
+				data-ui-width="full"
 				data-ui-inner="default"
+				data-ui-gap="default"
 			>
-				<GalleryUpload
-					access="private"
-					state={{
-						value: uploadIds,
-						set: setUploadIds,
-					}}
-					limit={10}
-				/>
+				<ConditionSelect selection={selection} />
 
 				<SaveContainer
-					onCancel={() => {
-						setUploadIds(defaultUploadIds);
-						onCancel();
-					}}
+					onCancel={onCancel}
 					onSave={() => {
 						mutation.mutate({
 							patch: {
-								uploadIds,
+								condition,
 							},
 							query: {
 								where: {
@@ -79,7 +82,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 						});
 					}}
 					loading={mutation.isPending}
-					disabled={uploadIds.length === 0 || mutation.isPending}
+					disabled={false}
 					textSave={<Tx label={"Continue (label)"} />}
 					textCancel={<Tx label={"Back (label)"} />}
 					saveProps={{

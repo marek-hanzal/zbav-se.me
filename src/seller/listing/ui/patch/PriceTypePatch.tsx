@@ -54,7 +54,7 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 			onSubmit: PriceTypeSchema,
 		},
 		async onSubmit({ value }) {
-			mutation.mutate({
+			return mutation.mutateAsync({
 				patch: {
 					priceType: value.priceType ?? undefined,
 				},

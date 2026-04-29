@@ -7,11 +7,13 @@ import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace listingFetchFx {
 	export interface Props extends ListingQuerySchema.Type {
+		userId: string;
 		scope: ListingWhereSchema.Type;
 	}
 }
 
 export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
+	userId,
 	filter,
 	where,
 	scope,
@@ -28,6 +30,7 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 	return yield* withFetchFx({
 		resource: "listing",
 		selectFx: withListingSelectFx({
+			userId,
 			sort,
 		}),
 		filter,
