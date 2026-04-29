@@ -152,6 +152,33 @@ export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
 				listingId: listing.id,
 			});
 
+			if (patch.categoryId && listing.categoryId !== patch.categoryId) {
+				yield* tryDbFx(async () => {
+					return Promise.all([
+						kysely
+							.deleteFrom("attr_decimal")
+							.where("listingId", "=", listing.id)
+							.execute(),
+						kysely
+							.deleteFrom("attr_enum_multi")
+							.where("listingId", "=", listing.id)
+							.execute(),
+						kysely
+							.deleteFrom("attr_enum_single")
+							.where("listingId", "=", listing.id)
+							.execute(),
+						kysely
+							.deleteFrom("attr_number")
+							.where("listingId", "=", listing.id)
+							.execute(),
+						kysely
+							.deleteFrom("attr_text")
+							.where("listingId", "=", listing.id)
+							.execute(),
+					]);
+				});
+			}
+
 			if (locationId) {
 				const { geo: withLocation } = yield* tryDbFx(async () => {
 					return kysely
