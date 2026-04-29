@@ -5,15 +5,13 @@ import { selectFx } from "@/lib/common/select";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { ListingFilterSchema } from "../schema/ListingFilterSchema";
 import type { ListingSortSchema } from "../schema/ListingSortSchema";
+import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace withListingSelectFx {
 	export interface Props {
 		sort?: ListingSortSchema.Type[];
 	}
-
-	export type Select = ReturnType<typeof withListingSelectFx>;
 }
 
 export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
@@ -70,7 +68,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.as("withRestriction");
 			},
 		]),
-		queryFx(select, where: ListingFilterSchema.Type) {
+		queryFx(select, where: ListingWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 

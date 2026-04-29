@@ -1,0 +1,55 @@
+import { Effect } from "effect";
+import { getLoggerFx } from "@/lib/common/log";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import type { ListingPatchSchema } from "../schema/ListingPatchSchema";
+import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
+import { listingFetchFx } from "./listingFetchFx";
+
+export namespace listingPatchFx {
+	export interface Props extends ListingPatchSchema.Type {
+		scope: ListingWhereSchema.Type;
+	}
+}
+
+export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
+	patch,
+	query,
+	scope,
+}: listingPatchFx.Props) {
+	const logger = yield* getLoggerFx("listingPatchFx");
+	logger.trace("listingPatchFx", {
+		patch,
+		query,
+		scope,
+	});
+
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const { kysely } = yield* KyselyContextFx;
+
+			const listing = yield* listingFetchFx({
+				...query,
+				scope,
+			});
+
+			yield* tryDbFx(async () => {
+				return kysely
+					.updateTable("listing")
+					.set(patch)
+					.where("id", "=", listing.id)
+					.executeTakeFirst();
+			});
+
+			return yield* listingFetchFx({
+				where: {
+					id: listing.id,
+				},
+				scope: {},
+			});
+		}),
+	);
+});
+
+export type listingPatchFx = ReturnType<typeof listingPatchFx>;

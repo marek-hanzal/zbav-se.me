@@ -2,16 +2,12 @@ import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
 import { withListingSelectFx } from "~/seller/listing/server/db/withListingSelectFx";
-import type { ListingFilterSchema } from "~/seller/listing/server/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";
+import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace listingFetchFx {
-	export interface Scope extends ListingFilterSchema.Type {
-		userId: string;
-	}
-
 	export interface Props extends ListingQuerySchema.Type {
-		scope: Scope;
+		scope: ListingWhereSchema.Type;
 	}
 }
 

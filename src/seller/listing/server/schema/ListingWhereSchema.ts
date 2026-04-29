@@ -1,14 +1,19 @@
 import { z } from "zod";
-import { ListingFilterSchema } from "~/seller/listing/server/schema/ListingFilterSchema";
+import { FilterSchema } from "@/lib/common/schema";
+import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 
 export const ListingWhereSchema = z
 	.looseObject({
-		...ListingFilterSchema.shape,
+		...FilterSchema.shape,
+		status: ListingStatusEnumSchema.optional(),
+		userId: z.string().optional().meta({
+			description: "ID of the user; does not have an effect on API endpoints",
+		}),
 	})
 	.strip()
 	.meta({
 		id: "ListingWhere",
-		description: "App-based filters",
+		description: "Supported fields for filtering listings",
 	});
 
 export type ListingWhereSchema = typeof ListingWhereSchema;

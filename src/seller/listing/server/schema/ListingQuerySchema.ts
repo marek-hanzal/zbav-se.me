@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { CursorSchema } from "@/lib/common/schema";
-import { ListingFilterSchema } from "~/seller/listing/server/schema/ListingFilterSchema";
 import { ListingSortSchema } from "~/seller/listing/server/schema/ListingSortSchema";
 import { ListingWhereSchema } from "~/seller/listing/server/schema/ListingWhereSchema";
 
@@ -10,8 +9,10 @@ export const ListingQuerySchema = z
 			page: 0,
 			size: 256,
 		}).optional(),
-		filter: ListingFilterSchema.optional(),
+		//
+		filter: ListingWhereSchema.optional(),
 		where: ListingWhereSchema.optional(),
+		//
 		sort: ListingSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({
 			description:
