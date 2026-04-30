@@ -65,59 +65,51 @@ export const AttrDecimal: FC<AttrDecimal.Props> = ({ listingId, attr, view, ...p
 			data-ui-gap="default"
 			{...props}
 		>
-			<Container
-				data-ui-layout="vertical-content-footer"
-				data-ui-height="full"
-				data-ui-width="full"
-				data-ui-inner="default"
-				data-ui-gap="default"
-			>
-				<form.AppField name={"value"}>
-					{(field) => (
-						<Dial
-							value={
-								typeof field.state.value === "number"
-									? String(field.state.value)
-									: undefined
-							}
-							onChange={(value) => {
-								field.handleChange(
-									value === undefined ? null : Number.parseFloat(value),
-								);
-								field.handleBlur();
-							}}
-							placeholder={translator.text("Price (placeholder)")}
-							data-ui-inner="default"
-						/>
-					)}
-				</form.AppField>
+			<form.AppField name={"value"}>
+				{(field) => (
+					<Dial
+						value={
+							typeof field.state.value === "number"
+								? String(field.state.value)
+								: undefined
+						}
+						onChange={(value) => {
+							field.handleChange(
+								value === undefined ? null : Number.parseFloat(value),
+							);
+							field.handleBlur();
+						}}
+						placeholder={translator.text("Price (placeholder)")}
+						data-ui-inner="default"
+					/>
+				)}
+			</form.AppField>
 
-				<form.Subscribe
-					selector={(state) => ({
-						isValid: state.isValid,
-						isSubmitting: state.isSubmitting,
-					})}
-				>
-					{({ isValid, isSubmitting }) => (
-						<SaveContainer
-							onCancel={() => {
-								view.set("default");
-							}}
-							onSave={() => {
-								form.handleSubmit();
-							}}
-							loading={isSubmitting}
-							disabled={!isValid || isSubmitting}
-							textSave={<Tx label={"Continue (label)"} />}
-							textCancel={<Tx label={"Back (label)"} />}
-							saveProps={{
-								iconEnabled: ArrowRightIcon,
-								iconPosition: "right",
-							}}
-						/>
-					)}
-				</form.Subscribe>
-			</Container>
+			<form.Subscribe
+				selector={(state) => ({
+					isValid: state.isValid,
+					isSubmitting: state.isSubmitting,
+				})}
+			>
+				{({ isValid, isSubmitting }) => (
+					<SaveContainer
+						onCancel={() => {
+							view.set("default");
+						}}
+						onSave={() => {
+							form.handleSubmit();
+						}}
+						loading={isSubmitting}
+						disabled={!isValid || isSubmitting}
+						textSave={<Tx label={"Continue (label)"} />}
+						textCancel={<Tx label={"Back (label)"} />}
+						saveProps={{
+							iconEnabled: ArrowRightIcon,
+							iconPosition: "right",
+						}}
+					/>
+				)}
+			</form.Subscribe>
 		</Container>
 	);
 };
