@@ -1,4 +1,5 @@
 import type { TranslationListSchema } from "../schema/TranslationListSchema";
+import type { TranslationSchema } from "../schema/TranslationSchema";
 import { keyOf } from "./keyOf";
 
 export namespace translator {
@@ -8,7 +9,7 @@ export namespace translator {
 	}
 
 	export interface Translator {
-		index: TranslationListSchema.Type;
+		index: Map<string, TranslationSchema.Type>;
 		push(translations: TranslationListSchema.Type): void;
 		value(key: string, fallback?: string): Value;
 		text(key: string, fallback?: string): string;
@@ -16,24 +17,23 @@ export namespace translator {
 }
 
 export const translator: translator.Translator = {
-	index: {},
+	index: new Map<string, TranslationSchema.Type>(),
 	push(translations) {
-		this.index = {
-			...this.index,
-			...translations,
-		};
+		Object.entries(translations).forEach(([key, value]) => {
+			this.index.set(key, value);
+		});
 	},
 	value(key, fallback) {
 		let text: string | undefined;
 
-		if ((text = this.index[keyOf(key)]?.value)) {
+		if ((text = this.index.get(keyOf(key))?.value)) {
 			return {
 				text,
 				type: "hash",
 			};
 		}
 
-		if ((text = this.index[key]?.value)) {
+		if ((text = this.index.get(key)?.value)) {
 			return {
 				text,
 				type: "text",
