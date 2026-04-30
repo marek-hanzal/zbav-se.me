@@ -96,6 +96,9 @@
 0e6cf0e3ce32e8ff03c1c483fa275fb0f2baa4ec9e5e3dcc47b5442f:
     ref: Delivery (title)
     value: Možnost předání
+0eb4f7c2e49a57940ddfb2c5e33a0d5c672fd9212fffac026243e012:
+    ref: Draft - category spec - optional (title)
+    value: Nepovinné
 0f1c8ab326544422049b9f8d33680aeaf123de9ceb1977d85f8e91b7:
     ref: Continue chat (label)
     value: Pokračovat
@@ -729,6 +732,9 @@
 92f8ed3e921515bd08034e9707119cb1472e34759a88f45647289475:
     ref: resolved
     value: resolved
+933f285c6df3cf34ffcf76b5df4f5c594d14a2feaa3e311a83b8cb3f:
+    ref: No value here (label)
+    value: Nemáš vyplněno
 93580224c5f7a548173e9671932098b0671d7deae93ab57295cb300b:
     ref: Transaction status success (label)
     value: Obchod dokončen
@@ -1317,6 +1323,9 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
         message than this :(
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
+be52218f5a55e160e7cdd721f69fcc39230057a6182aafd08aaaef3d:
+    ref: Draft - category spec - required (title)
+    value: Povinné položky v rámci kategorie
 buyer - Buyer rejected the transaction (message):
     value: |
         **Odmítl jsi obchod.**
@@ -1441,6 +1450,9 @@ cf65b78e6d107ecd9f3fe11a78f193542a1d90d08b6451968b7b5a6d:
 d123af005af0e5af73b3d1a3f223b7cbc7a4457fbf74669fd87c5690:
     ref: Description not filled
     value: Bez popisu
+d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f:
+    ref: ""
+    value: ""
 d192dea2dc5f3594d5afc2b7651715be110730ba085647af86a77557:
     ref: Agent reasoning 05
     value: 🧠 Vrtám se v hlavě

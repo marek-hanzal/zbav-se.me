@@ -70,9 +70,9 @@ export const LabelValue: FC<LabelValue.Props> = ({
 			>
 				<Tx
 					label={textLabel}
-					preset={"label"}
 					data-ui-font="normal"
 					data-ui-color="lead"
+					data-ui-text={"sm"}
 					{...textLabelProps}
 				/>
 
@@ -95,7 +95,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 					label={textValue}
 					data-ui-tone="neutral"
 					data-ui-theme="light"
-					data-ui-text="default"
+					data-ui-text="lg"
 					data-ui-truncate={true}
 					{...textValueProps}
 				/>
