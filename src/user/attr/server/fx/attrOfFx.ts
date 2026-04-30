@@ -31,9 +31,7 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 			.select([
 				"f.name",
 				"f.type",
-				(eb) => {
-					return eb.fn.coalesce("cf.required", eb.ref("f.required")).as("required");
-				},
+				"cf.required",
 				(eb) => {
 					return jsonArrayFrom(
 						eb

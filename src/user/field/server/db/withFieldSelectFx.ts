@@ -23,7 +23,6 @@ export const withFieldSelectFx = Effect.fn("withFieldSelectFx")(function* ({
 		query = match(item.field)
 			.with("name", () => query.orderBy("fld.name", item.order))
 			.with("type", () => query.orderBy("fld.type", item.order))
-			.with("required", () => query.orderBy("fld.required", item.order))
 			.exhaustive();
 	}
 
@@ -31,7 +30,6 @@ export const withFieldSelectFx = Effect.fn("withFieldSelectFx")(function* ({
 		select: query.select([
 			"fld.name",
 			"fld.type",
-			"fld.required",
 			(eb) => {
 				return jsonArrayFrom(
 					eb
@@ -48,33 +46,29 @@ export const withFieldSelectFx = Effect.fn("withFieldSelectFx")(function* ({
 		]),
 		queryFx(select, where: FieldFilterSchema.Type) {
 			return Effect.gen(function* () {
-				let q = select;
+				let query = select;
 
 				if (!where) {
 					return yield* Effect.succeed(select);
 				}
 
 				if (where.id) {
-					q = q.where("fld.name", "=", where.id);
+					query = query.where("fld.name", "=", where.id);
 				}
 
 				if (where.idIn && where.idIn.length > 0) {
-					q = q.where("fld.name", "in", where.idIn);
+					query = query.where("fld.name", "in", where.idIn);
 				}
 
 				if (where.name) {
-					q = q.where("fld.name", "=", where.name);
+					query = query.where("fld.name", "=", where.name);
 				}
 
 				if (where.type) {
-					q = q.where("fld.type", "=", where.type);
+					query = query.where("fld.type", "=", where.type);
 				}
 
-				if (where.required !== undefined) {
-					q = q.where("fld.required", "=", where.required);
-				}
-
-				return yield* Effect.succeed(q);
+				return yield* Effect.succeed(query);
 			});
 		},
 	});

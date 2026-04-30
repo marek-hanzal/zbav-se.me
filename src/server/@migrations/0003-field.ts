@@ -21,7 +21,8 @@ export const FieldMigration: Migration = {
 			.createTable("field")
 			.addColumn("name", "text", (col) => col.primaryKey().notNull())
 			.addColumn("type", sql`field_type_enum`, (col) => col.notNull())
-			.addColumn("required", "boolean", (col) => col.notNull())
+			.addColumn("min", "decimal(10, 2)")
+			.addColumn("max", "decimal(10, 2)")
 			.execute();
 	},
 };

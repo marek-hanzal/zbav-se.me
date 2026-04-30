@@ -1,17 +1,29 @@
 [
 	{
 		"name": "ram",
-		"type": "enum-single",
-		"required": false
+		"type": "enum-single"
 	},
 	{
 		"name": "storage",
-		"type": "enum-single",
-		"required": false
+		"type": "enum-single"
 	},
 	{
 		"name": "battery-condition",
+		"type": "number"
+	},
+	{
+		"name": "color",
+		"type": "enum-multi",
+		"max": "3"
+	},
+	{
+		"name": "mod.battery",
+		"type": "enum-single"
+	},
+	{
+		"name": "atomizer.capacity",
 		"type": "number",
-		"required": false
+		"min": 0.8,
+		"max": 5
 	}
 ]

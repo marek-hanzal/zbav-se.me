@@ -20,17 +20,22 @@
 			{
 				"name": "ram",
 				"sort": 0,
-				"required": null
+				"required": false
 			},
 			{
 				"name": "storage",
 				"sort": 1,
-				"required": null
+				"required": true
 			},
 			{
 				"name": "battery-condition",
 				"sort": 2,
-				"required": null
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
 			}
 		]
 	},
@@ -335,7 +340,13 @@
 		"category": "Atomizéry - Boro",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "atomizer.capacity",
+				"sort": 0,
+				"required": true
+			}
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--atomizery-mtl",
@@ -355,7 +366,13 @@
 		"category": "Atomizéry - MTL",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "atomizer.capacity",
+				"sort": 0,
+				"required": true
+			}
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--atomizery-dl",
@@ -375,7 +392,13 @@
 		"category": "Atomizéry - DL",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "atomizer.capacity",
+				"sort": 0,
+				"required": true
+			}
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--atomizery",
@@ -395,7 +418,13 @@
 		"category": "Atomizéry",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "atomizer.capacity",
+				"sort": 0,
+				"required": true
+			}
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--mody",
@@ -414,7 +443,13 @@
 		"category": "Mody",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "mod.battery",
+				"sort": 0,
+				"required": true
+			}
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--clanky-baterie",

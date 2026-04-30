@@ -48,5 +48,45 @@
 		"field": "storage",
 		"value": "More than 1 TB",
 		"sort": 4
+	},
+	{
+		"field": "color",
+		"value": "blue",
+		"sort": 0
+	},
+	{
+		"field": "color",
+		"value": "red",
+		"sort": 1
+	},
+	{
+		"field": "color",
+		"value": "green",
+		"sort": 2
+	},
+	{
+		"field": "color",
+		"value": "rainbow",
+		"sort": 3
+	},
+	{
+		"field": "mod.battery",
+		"value": "18650",
+		"sort": 0
+	},
+	{
+		"field": "mod.battery",
+		"value": "21700",
+		"sort": 1
+	},
+	{
+		"field": "mod.battery",
+		"value": "18350",
+		"sort": 2
+	},
+	{
+		"field": "mod.battery",
+		"value": "other",
+		"sort": 3
 	}
 ]

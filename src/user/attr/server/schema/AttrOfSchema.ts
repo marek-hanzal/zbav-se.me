@@ -47,7 +47,7 @@ const EnumMultiFieldSchema = z
 	.looseObject({
 		...FieldSchema.shape,
 		type: z.literal("enum-multi" satisfies FieldTypeEnumSchema.Type),
-		required: z.literal(false),
+		required: z.boolean(),
 		value: z.array(z.string()),
 	})
 	.strip();

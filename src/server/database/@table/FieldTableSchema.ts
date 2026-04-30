@@ -9,9 +9,6 @@ export const FieldTableSchema = z
 		type: FieldTypeEnumSchema.meta({
 			description: "Type of the field",
 		}),
-		required: z.boolean().meta({
-			description: "Whether the field is required",
-		}),
 	})
 	.meta({
 		id: "FieldTable",

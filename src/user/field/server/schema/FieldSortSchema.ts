@@ -7,7 +7,6 @@ export const FieldSortSchema = z
 			.enum([
 				"name",
 				"type",
-				"required",
 			])
 			.meta({
 				id: "FieldSortField",
