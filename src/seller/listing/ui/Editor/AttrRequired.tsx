@@ -3,6 +3,7 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
+import type { useView } from "@/lib/client/view2";
 import { ChevronAction } from "~/common/ui/action/ChevronAction";
 import { withAttrOfQuery } from "~/user/attr/query/withAttrOfQuery";
 import { AttrOf } from "~/user/attr/ui/AttrOf";
@@ -11,10 +12,11 @@ export namespace AttrRequired {
 	export interface Props extends MarkSuspense.Props {
 		listingId: string;
 		categoryId: string | undefined | null;
+		view: useView.Use<any>;
 	}
 }
 
-export const AttrRequired: FC<AttrRequired.Props> = ({ listingId, categoryId }) => {
+export const AttrRequired: FC<AttrRequired.Props> = ({ listingId, categoryId, view }) => {
 	/**
 	 * We're not filtering fields here as we'll shared same query cache for both required/optional
 	 * fields.
@@ -55,6 +57,9 @@ export const AttrRequired: FC<AttrRequired.Props> = ({ listingId, categoryId }) 
 									"data-ui-tone": field.value ? "neutral" : "primary",
 								}}
 								action={<ChevronAction />}
+								onClick={() => {
+									view.set(`attr.${field.name}`);
+								}}
 							/>
 						</Group>
 					);

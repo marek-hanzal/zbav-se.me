@@ -1,6 +1,7 @@
 import { type FC, useCallback } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
-import { useView } from "@/lib/client/view2";
+import { Panel, useView } from "@/lib/client/view2";
+import { withAttrOfQuery } from "~/user/attr/query/withAttrOfQuery";
 import { withListingQuery } from "../query/withListingQuery";
 import { Editor } from "./Editor";
 import { AgePatch } from "./patch/AgePatch";
@@ -55,6 +56,11 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 	}, [
 		editor,
 	]);
+
+	const { data: fields } = withAttrOfQuery.useSuspenseQuery({
+		listingId,
+		categoryId: listing.categoryId ?? "unknown",
+	});
 
 	return (
 		<editor.View>
@@ -185,6 +191,18 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 					view={editor}
 				/>
 			</editor.Panel>
+
+			{fields.map((field) => {
+				return (
+					<Panel<any>
+						key={field.name}
+						name={`attr.${field.name}`}
+						control={editor}
+					>
+						field {field.name}
+					</Panel>
+				);
+			})}
 		</editor.View>
 	);
 };

@@ -196,6 +196,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, view, ...props 
 					_suspense={"I know"}
 					listingId={listing.id}
 					categoryId={listing.categoryId}
+					view={view}
 				/>
 
 				<Tx
@@ -279,6 +280,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, view, ...props 
 					_suspense={"I know"}
 					listingId={listing.id}
 					categoryId={listing.categoryId}
+					view={view}
 				/>
 			</Container>
 		</TitleContainer>

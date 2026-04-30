@@ -14,6 +14,7 @@ export namespace AttrOf {
 		textLabelProps?: Typo.PropsEx;
 		wrapperProps?: Container.Props;
 		action?: ReactNode;
+        onClick?(): void;
 	}
 }
 
