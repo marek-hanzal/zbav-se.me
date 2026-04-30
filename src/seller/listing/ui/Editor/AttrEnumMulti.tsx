@@ -7,6 +7,7 @@ import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view2";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
+import { withAttrEnumMultiPatchMutation } from "~/seller/attr-enum-multi/mutation/withAttrEnumMultiPatchMutation";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
 
 export namespace AttrEnumMulti {
@@ -23,6 +24,11 @@ export namespace AttrEnumMulti {
 }
 
 export const AttrEnumMulti: FC<AttrEnumMulti.Props> = ({ listingId, attr, view, ...props }) => {
+	const mutation = withAttrEnumMultiPatchMutation.useMutation({
+		onSuccess() {
+			view.set("default");
+		},
+	});
 	const selection = useSelection({
 		mode: "multi",
 		initial: attr.value.map((item) => ({
@@ -90,20 +96,14 @@ export const AttrEnumMulti: FC<AttrEnumMulti.Props> = ({ listingId, attr, view, 
 					view.set("default");
 				}}
 				onSave={() => {
-					// mutation.mutate({
-					// 	patch: {
-					// 		age,
-					// 	},
-					// 	query: {
-					// 		where: {
-					// 			id: listing.id,
-					// 		},
-					// 	},
-					// });
+					mutation.mutate({
+						listingId,
+						fieldId: attr.name,
+						value: selection.optional.multiId(),
+					});
 				}}
-				// loading={mutation.isPending}
-				loading={false}
-				disabled={false}
+				loading={mutation.isPending}
+				disabled={mutation.isPending}
 				textSave={<Tx label={"Continue (label)"} />}
 				textCancel={<Tx label={"Back (label)"} />}
 				saveProps={{

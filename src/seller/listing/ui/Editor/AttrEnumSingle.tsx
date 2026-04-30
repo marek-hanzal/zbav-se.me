@@ -24,7 +24,11 @@ export namespace AttrEnumSingle {
 }
 
 export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ listingId, attr, view, ...props }) => {
-	const mutation = withAttrEnumSinglePatchMutation.useMutation();
+	const mutation = withAttrEnumSinglePatchMutation.useMutation({
+		onSuccess() {
+			view.set("default");
+		},
+	});
 	const selection = useSelection({
 		mode: "single",
 		initial: attr.value

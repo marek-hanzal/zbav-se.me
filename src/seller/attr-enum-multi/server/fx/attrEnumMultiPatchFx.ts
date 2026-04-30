@@ -4,22 +4,22 @@ import { listingCheckIfOwnFx } from "~/seller/listing/server/fx/listingCheckIfOw
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import type { AttrEnumSinglePatchSchema } from "../schema/AttrEnumSinglePatchSchema";
+import type { AttrEnumMultiPatchSchema } from "../schema/AttrEnumMultiPatchSchema";
 
-export namespace attrEnumSinglePatchFx {
-	export interface Props extends AttrEnumSinglePatchSchema.Type {
+export namespace attrEnumMultiPatchFx {
+	export interface Props extends AttrEnumMultiPatchSchema.Type {
 		userId: string;
 	}
 }
 
-export const attrEnumSinglePatchFx = Effect.fn("attrEnumSinglePatchFx")(function* ({
+export const attrEnumMultiPatchFx = Effect.fn("attrEnumMultiPatchFx")(function* ({
 	userId,
 	listingId,
 	fieldId,
 	value,
-}: attrEnumSinglePatchFx.Props) {
-	const logger = yield* getLoggerFx("attrEnumSinglePatchFx");
-	logger.trace("attrEnumSinglePatchFx", {
+}: attrEnumMultiPatchFx.Props) {
+	const logger = yield* getLoggerFx("attrEnumMultiPatchFx");
+	logger.trace("attrEnumMultiPatchFx", {
 		listingId,
 		fieldId,
 		value,
@@ -36,21 +36,23 @@ export const attrEnumSinglePatchFx = Effect.fn("attrEnumSinglePatchFx")(function
 		Effect.gen(function* () {
 			yield* tryDbFx(async () => {
 				return kysely
-					.deleteFrom("attr_enum_single")
+					.deleteFrom("attr_enum_multi")
 					.where("listingId", "=", listingId)
 					.where("fieldId", "=", fieldId)
 					.execute();
 			});
 
-			if (value != null) {
+			if (value.length > 0) {
 				yield* tryDbFx(async () => {
 					return kysely
-						.insertInto("attr_enum_single")
-						.values({
-							fieldId,
-							listingId,
-							value,
-						})
+						.insertInto("attr_enum_multi")
+						.values(
+							value.map((value) => ({
+								fieldId,
+								listingId,
+								value,
+							})),
+						)
 						.execute();
 				});
 			}
@@ -58,4 +60,4 @@ export const attrEnumSinglePatchFx = Effect.fn("attrEnumSinglePatchFx")(function
 	);
 });
 
-export type attrEnumSinglePatchFx = ReturnType<typeof attrEnumSinglePatchFx>;
+export type attrEnumMultiPatchFx = ReturnType<typeof attrEnumMultiPatchFx>;
