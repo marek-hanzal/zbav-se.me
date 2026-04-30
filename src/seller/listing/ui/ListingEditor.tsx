@@ -1,7 +1,6 @@
-import { type FC, useCallback, useMemo, useState } from "react";
+import { type FC, useCallback } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
-import { View } from "@/lib/client/view";
-import { TitlePatch } from "~/seller/listing/ui/patch/TitlePatch";
+import { useView } from "@/lib/client/view2";
 import { withListingQuery } from "../query/withListingQuery";
 import { Editor } from "./Editor";
 import { AgePatch } from "./patch/AgePatch";
@@ -17,27 +16,10 @@ import { PricePatch } from "./patch/PricePatch";
 import { PriceTypePatch } from "./patch/PriceTypePatch";
 import { ProsPatch } from "./patch/ProsPatch";
 import { RestrictionPatch } from "./patch/RestrictionPatch";
+import { TitlePatch } from "./patch/TitlePatch";
 import { WarrantyPatch } from "./patch/WarrantyPatch";
 
 export namespace ListingEditor {
-	export type View =
-		| "default"
-		| "title"
-		| "location"
-		| "price"
-		| "priceType"
-		| "category"
-		| "condition"
-		| "age"
-		| "delivery"
-		| "warranty"
-		| "restriction"
-		| "gallery"
-		| "expires"
-		| "description"
-		| "pros"
-		| "cons";
-
 	export interface Props extends MarkSuspense.Props {
 		listingId: string;
 	}
@@ -45,172 +27,164 @@ export namespace ListingEditor {
 
 export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId }) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
-	const [view, setView] = useState<ListingEditor.View>("default");
+
+	const editor = useView({
+		panels: [
+			"default",
+			"gallery",
+			"title",
+			"category",
+			"location",
+			"price",
+			"priceType",
+			"expires",
+			"condition",
+			"age",
+			"restriction",
+			"delivery",
+			"warranty",
+			"description",
+			"pros",
+			"cons",
+		],
+		defaultPanel: "default",
+	});
 
 	const onDone = useCallback(() => {
-		setView("default");
-	}, []);
-
-	const views = useMemo<View.Views<ListingEditor.View>>(() => {
-		return {
-			default: {
-				children: (
-					<Editor
-						_suspense={"I know"}
-						listingId={listing.id}
-						setView={setView}
-					/>
-				),
-			},
-			gallery: {
-				children: (
-					<GalleryPatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-						defaultUploadIds={listing.withUploadIds}
-					/>
-				),
-			},
-			title: {
-				children: (
-					<TitlePatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-			category: {
-				children: (
-					<CategoryPatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-			location: {
-				children: (
-					<LocationPatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-			priceType: {
-				children: (
-					<PriceTypePatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-			price: {
-				children: (
-					<PricePatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-			expires: {
-				children: (
-					<ExpiresPatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-			condition: {
-				children: (
-					<ConditionPatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-			age: {
-				children: (
-					<AgePatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-			delivery: {
-				children: (
-					<DeliveryPatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-			warranty: {
-				children: (
-					<WarrantyPatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-			restriction: {
-				children: (
-					<RestrictionPatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-			description: {
-				children: (
-					<DescriptionPatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-			pros: {
-				children: (
-					<ProsPatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-			cons: {
-				children: (
-					<ConsPatch
-						listing={listing}
-						onCancel={onDone}
-						setView={setView}
-					/>
-				),
-			},
-		};
+		editor.set("default");
 	}, [
-		listing,
-		onDone,
+		editor,
 	]);
 
 	return (
-		<View
-			state={{
-				value: view,
-				set: setView,
-			}}
-			views={views}
-		/>
+		<editor.View>
+			<editor.Panel name={"default"}>
+				<Editor
+					_suspense={"I know"}
+					listingId={listing.id}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"gallery"}>
+				<GalleryPatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"title"}>
+				<TitlePatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"category"}>
+				<CategoryPatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"location"}>
+				<LocationPatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"priceType"}>
+				<PriceTypePatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"price"}>
+				<PricePatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"expires"}>
+				<ExpiresPatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"condition"}>
+				<ConditionPatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"age"}>
+				<AgePatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"delivery"}>
+				<DeliveryPatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"warranty"}>
+				<WarrantyPatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"restriction"}>
+				<RestrictionPatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"description"}>
+				<DescriptionPatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"pros"}>
+				<ProsPatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+
+			<editor.Panel name={"cons"}>
+				<ConsPatch
+					listing={listing}
+					onCancel={onDone}
+					view={editor}
+				/>
+			</editor.Panel>
+		</editor.View>
 	);
 };

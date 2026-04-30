@@ -3,6 +3,7 @@ import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
+import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translator";
 import { AgeSelection } from "~/common/age/ui/AgeSelection";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
@@ -16,14 +17,14 @@ export namespace AgePatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "restriction" | "default"): void;
+		view: useView.Use<"restriction" | "default">;
 	}
 }
 
-export const AgePatch: FC<AgePatch.Props> = ({ listing, onCancel, setView, ...props }) => {
+export const AgePatch: FC<AgePatch.Props> = ({ listing, onCancel, view, ...props }) => {
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView(listing.categoryId ? "restriction" : "default");
+			view.set(listing.categoryId ? "restriction" : "default");
 		},
 		invalidate: [
 			"collection",

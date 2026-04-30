@@ -3,6 +3,7 @@ import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
+import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { EditAction } from "~/common/ui/action/EditAction";
@@ -22,14 +23,14 @@ export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "expires"): void;
+		view: useView.Use<"expires">;
 	}
 }
 
-export const PricePatch: FC<PricePatch.Props> = ({ listing, onCancel, setView, ...props }) => {
+export const PricePatch: FC<PricePatch.Props> = ({ listing, onCancel, view, ...props }) => {
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("expires");
+			view.set("expires");
 		},
 		invalidate: [
 			"collection",

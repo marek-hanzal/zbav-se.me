@@ -3,6 +3,7 @@ import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
+import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translator";
 import { ConditionSelect } from "~/common/condition/ui/ConditionSelect";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
@@ -16,19 +17,14 @@ export namespace ConditionPatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "age"): void;
+		view: useView.Use<"age">;
 	}
 }
 
-export const ConditionPatch: FC<ConditionPatch.Props> = ({
-	listing,
-	onCancel,
-	setView,
-	...props
-}) => {
+export const ConditionPatch: FC<ConditionPatch.Props> = ({ listing, onCancel, view, ...props }) => {
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("age");
+			view.set("age");
 		},
 		invalidate: [
 			"collection",

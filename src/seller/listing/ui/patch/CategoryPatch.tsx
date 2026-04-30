@@ -4,6 +4,7 @@ import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
+import type { useView } from "@/lib/client/view2";
 import type { EntitySchema } from "@/lib/common/schema";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
@@ -24,19 +25,14 @@ export namespace CategoryPatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "location"): void;
+		view: useView.Use<"location">;
 	}
 }
 
-export const CategoryPatch: FC<CategoryPatch.Props> = ({
-	listing,
-	onCancel,
-	setView,
-	...props
-}) => {
+export const CategoryPatch: FC<CategoryPatch.Props> = ({ listing, onCancel, view, ...props }) => {
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("location");
+			view.set("location");
 		},
 		invalidate: [
 			"collection",

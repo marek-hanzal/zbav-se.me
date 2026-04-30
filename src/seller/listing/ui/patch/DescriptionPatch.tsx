@@ -5,6 +5,7 @@ import { ArrowRightIcon } from "@/lib/client/icon";
 import { Mx } from "@/lib/client/mx";
 import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
+import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { EditAction } from "~/common/ui/action/EditAction";
@@ -18,20 +19,20 @@ export namespace DescriptionPatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "pros"): void;
+		view: useView.Use<"pros">;
 	}
 }
 
 export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 	listing,
 	onCancel,
-	setView,
+	view,
 	...props
 }) => {
 	const [description, setDescription] = useState(listing.description ?? "");
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("pros");
+			view.set("pros");
 		},
 		invalidate: [
 			"collection",

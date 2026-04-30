@@ -6,6 +6,7 @@ import { useLocale } from "@/lib/client/locale";
 import { handleArrowNav } from "@/lib/client/nav";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
+import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translator";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
@@ -34,28 +35,27 @@ import { AttrRequired } from "./AttrRequired";
 export namespace Editor {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
 		listingId: string;
-		setView(
-			view:
-				| "gallery"
-				| "title"
-				| "category"
-				| "location"
-				| "priceType"
-				| "expires"
-				| "price"
-				| "age"
-				| "pros"
-				| "cons"
-				| "delivery"
-				| "description"
-				| "warranty"
-				| "restriction"
-				| "condition",
-		): void;
+		view: useView.Use<
+			| "gallery"
+			| "title"
+			| "category"
+			| "location"
+			| "priceType"
+			| "expires"
+			| "price"
+			| "age"
+			| "pros"
+			| "cons"
+			| "delivery"
+			| "description"
+			| "warranty"
+			| "restriction"
+			| "condition"
+		>;
 	}
 }
 
-export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...props }) => {
+export const Editor: FC<Editor.Props> = ({ _suspense, listingId, view, ...props }) => {
 	const locale = useLocale();
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 
@@ -99,7 +99,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 					<GalleryValue
 						urls={listing.withImageUrl}
 						label={translator.text("Listing photo gallery (label)")}
-						onClick={() => setView("gallery")}
+						onClick={() => view.set("gallery")}
 					/>
 				</Group>
 
@@ -124,7 +124,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 							textLabel={translator.text("Listing title (label)")}
 							textEmpty={translator.text("Listing title not filled")}
 							action={<ChevronAction />}
-							onClick={() => setView("title")}
+							onClick={() => view.set("title")}
 						/>
 
 						<CategoryValue
@@ -132,7 +132,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 							_suspense={"I know"}
 							categoryId={listing.categoryId}
 							action={<ChevronAction />}
-							onClick={() => setView("category")}
+							onClick={() => view.set("category")}
 						/>
 					</Group>
 
@@ -145,7 +145,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 							textEmpty={translator.text("Listing location not selected")}
 							textHint={translator.text("Listing location (hint)")}
 							action={<ChevronAction />}
-							onClick={() => setView("location")}
+							onClick={() => view.set("location")}
 						/>
 					</Group>
 
@@ -154,7 +154,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 							data-ui={"set listing price type"}
 							priceType={listing.priceType}
 							action={<ChevronAction />}
-							onClick={() => setView("priceType")}
+							onClick={() => view.set("priceType")}
 						/>
 
 						{match(listing.priceType)
@@ -165,7 +165,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 										price={listing.price}
 										currency={listing.currency}
 										action={<ChevronAction />}
-										onClick={() => setView("price")}
+										onClick={() => view.set("price")}
 									/>
 								);
 							})
@@ -187,7 +187,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 							data-ui={"set listing expiration date"}
 							expires={listing.expires}
 							action={<ChevronAction />}
-							onClick={() => setView("expires")}
+							onClick={() => view.set("expires")}
 						/>
 					</Group>
 				</Container>
@@ -216,7 +216,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 						<DeliveryValueList
 							deliveryIn={listing.delivery}
 							action={<ChevronAction />}
-							onClick={() => setView("delivery")}
+							onClick={() => view.set("delivery")}
 						/>
 					</Group>
 
@@ -224,7 +224,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 						<DescriptionValue
 							description={listing.description}
 							action={<ChevronAction />}
-							onClick={() => setView("description")}
+							onClick={() => view.set("description")}
 						/>
 					</Group>
 
@@ -232,13 +232,13 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 						<ProsValueList
 							pros={listing.pros}
 							action={<ChevronAction />}
-							onClick={() => setView("pros")}
+							onClick={() => view.set("pros")}
 						/>
 
 						<ConsValueList
 							cons={listing.cons}
 							action={<ChevronAction />}
-							onClick={() => setView("cons")}
+							onClick={() => view.set("cons")}
 						/>
 					</Group>
 
@@ -246,7 +246,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 						<WarrantyValue
 							warranty={listing.warranty}
 							action={<ChevronAction />}
-							onClick={() => setView("warranty")}
+							onClick={() => view.set("warranty")}
 						/>
 					</Group>
 
@@ -254,13 +254,13 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 						<ConditionValue
 							condition={listing.condition}
 							action={<ChevronAction />}
-							onClick={() => setView("condition")}
+							onClick={() => view.set("condition")}
 						/>
 
 						<AgeValue
 							age={listing.age}
 							action={<ChevronAction />}
-							onClick={() => setView("age")}
+							onClick={() => view.set("age")}
 						/>
 					</Group>
 
@@ -270,7 +270,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 							restriction={listing.restriction}
 							action={<ChevronAction />}
 							data-ui-disabled={!listing.categoryId}
-							onClick={() => setView("restriction")}
+							onClick={() => view.set("restriction")}
 						/>
 					</Group>
 				</Container>

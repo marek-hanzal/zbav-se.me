@@ -4,6 +4,7 @@ import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
+import type { useView } from "@/lib/client/view2";
 import type { EntitySchema } from "@/lib/common/schema";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
@@ -25,19 +26,19 @@ export namespace RestrictionPatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "default"): void;
+		view: useView.Use<"default">;
 	}
 }
 
 export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 	listing,
 	onCancel,
-	setView,
+	view,
 	...props
 }) => {
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("default");
+			view.set("default");
 		},
 		invalidate: [
 			"collection",

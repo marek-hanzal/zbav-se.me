@@ -4,6 +4,7 @@ import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { Mx } from "@/lib/client/mx";
 import { Tx } from "@/lib/client/tx";
+import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { ExpireAtSelect } from "~/common/expire-at/ui/ExpireAtSelect";
@@ -24,14 +25,14 @@ export namespace ExpiresPatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "default"): void;
+		view: useView.Use<"default">;
 	}
 }
 
-export const ExpiresPatch: FC<ExpiresPatch.Props> = ({ listing, onCancel, setView, ...props }) => {
+export const ExpiresPatch: FC<ExpiresPatch.Props> = ({ listing, onCancel, view, ...props }) => {
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("default");
+			view.set("default");
 		},
 		invalidate: [
 			"collection",

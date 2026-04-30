@@ -3,6 +3,7 @@ import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
+import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { LocationSelect } from "~/common/location/ui/LocationSelect";
@@ -22,20 +23,15 @@ export namespace LocationPatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "price"): void;
+		view: useView.Use<"price">;
 	}
 }
 
-export const LocationPatch: FC<LocationPatch.Props> = ({
-	listing,
-	onCancel,
-	setView,
-	...props
-}) => {
+export const LocationPatch: FC<LocationPatch.Props> = ({ listing, onCancel, view, ...props }) => {
 	const [isSearchPendingSelection, setIsSearchPendingSelection] = useState(false);
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("price");
+			view.set("price");
 		},
 		invalidate: [
 			"collection",

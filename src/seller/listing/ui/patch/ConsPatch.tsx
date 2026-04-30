@@ -4,6 +4,7 @@ import { FormField } from "@/lib/client/form";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { TextInput } from "@/lib/client/text-input";
 import { Tx } from "@/lib/client/tx";
+import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
@@ -19,11 +20,11 @@ export namespace ConsPatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "delivery"): void;
+		view: useView.Use<"delivery">;
 	}
 }
 
-export const ConsPatch: FC<ConsPatch.Props> = ({ listing, onCancel, setView, ...props }) => {
+export const ConsPatch: FC<ConsPatch.Props> = ({ listing, onCancel, view, ...props }) => {
 	const initialCons = listing.cons;
 	const paddedCons = [
 		...initialCons,
@@ -33,7 +34,7 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ listing, onCancel, setView, ...
 
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("delivery");
+			view.set("delivery");
 		},
 		invalidate: [
 			"collection",

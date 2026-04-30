@@ -2,6 +2,7 @@ import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
+import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
@@ -14,22 +15,15 @@ export namespace GalleryPatch {
 	export interface Props extends Container.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "title"): void;
-		defaultUploadIds: string[];
+		view: useView.Use<"title">;
 	}
 }
 
-export const GalleryPatch: FC<GalleryPatch.Props> = ({
-	listing,
-	onCancel,
-	setView,
-	defaultUploadIds,
-	...props
-}) => {
-	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
+export const GalleryPatch: FC<GalleryPatch.Props> = ({ listing, onCancel, view, ...props }) => {
+	const [uploadIds, setUploadIds] = useState<string[]>(listing.withUploadIds);
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("title");
+			view.set("title");
 		},
 		invalidate: [
 			"collection",
@@ -63,7 +57,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 
 				<SaveContainer
 					onCancel={() => {
-						setUploadIds(defaultUploadIds);
+						setUploadIds(listing.withUploadIds);
 						onCancel();
 					}}
 					onSave={() => {

@@ -6,6 +6,7 @@ import { ArrowRightIcon } from "@/lib/client/icon";
 import { Mx } from "@/lib/client/mx";
 import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
+import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { TitleSchema } from "~/common/listing/schema/TitleSchema";
@@ -25,14 +26,14 @@ export namespace TitlePatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		setView(view: "category"): void;
+		view: useView.Use<"category">;
 	}
 }
 
-export const TitlePatch: FC<TitlePatch.Props> = ({ listing, onCancel, setView, ...props }) => {
+export const TitlePatch: FC<TitlePatch.Props> = ({ listing, onCancel, view, ...props }) => {
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			setView("category");
+			view.set("category");
 		},
 		invalidate: [
 			"collection",
