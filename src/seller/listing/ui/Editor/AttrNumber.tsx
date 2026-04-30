@@ -57,7 +57,7 @@ export const AttrNumber: FC<AttrNumber.Props> = ({ listingId, attr, view, ...pro
 
 	return (
 		<Container
-			data-ui={"AttrEnumMulti"}
+			data-ui={"AttrNumber"}
 			data-ui-layout="vertical-content-footer"
 			data-ui-height="full"
 			data-ui-width="full"

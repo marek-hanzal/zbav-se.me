@@ -1,37 +1,38 @@
 import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
+import { FormField } from "@/lib/client/form";
 import { ArrowRightIcon } from "@/lib/client/icon";
+import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translator";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import { Dial } from "~/common/ui/dial";
 import { useAppForm } from "~/common/ui/form";
-import { withAttrDecimalPatchMutation } from "~/seller/attr-decimal/mutation/withAttrDecimalPatchMutation";
+import { withAttrTextPatchMutation } from "~/seller/attr-text/mutation/withAttrTextPatchMutation";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
 
 const FormSchema = z
 	.looseObject({
-		value: z.number().nullable(),
+		value: z.string().nullable(),
 	})
 	.strip();
 
-export namespace AttrDecimal {
+export namespace AttrText {
 	export interface Props extends Container.Props {
 		listingId: string;
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
-				type: "decimal";
+				type: "text";
 			}
 		>;
 		view: useView.Use<any>;
 	}
 }
 
-export const AttrDecimal: FC<AttrDecimal.Props> = ({ listingId, attr, view, ...props }) => {
-	const mutation = withAttrDecimalPatchMutation.useMutation({
+export const AttrText: FC<AttrText.Props> = ({ listingId, attr, view, ...props }) => {
+	const mutation = withAttrTextPatchMutation.useMutation({
 		onSuccess() {
 			view.set("default");
 		},
@@ -57,7 +58,7 @@ export const AttrDecimal: FC<AttrDecimal.Props> = ({ listingId, attr, view, ...p
 
 	return (
 		<Container
-			data-ui={"AttrDecimal"}
+			data-ui={"AttrText"}
 			data-ui-layout="vertical-content-footer"
 			data-ui-height="full"
 			data-ui-width="full"
@@ -70,27 +71,45 @@ export const AttrDecimal: FC<AttrDecimal.Props> = ({ listingId, attr, view, ...p
 				data-ui-height="full"
 				data-ui-width="full"
 				data-ui-inner="default"
-				data-ui-gap="default"
 			>
-				<form.AppField name={"value"}>
-					{(field) => (
-						<Dial
-							value={
-								typeof field.state.value === "number"
-									? String(field.state.value)
-									: undefined
-							}
-							onChange={(value) => {
-								field.handleChange(
-									value === undefined ? null : Number.parseFloat(value),
-								);
-								field.handleBlur();
+				<Status
+					action={
+						<form
+							className={"contents"}
+							onSubmit={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+								form.handleSubmit();
 							}}
-							placeholder={translator.text("Price (placeholder)")}
-							data-ui-inner="default"
-						/>
-					)}
-				</form.AppField>
+						>
+							<form.AppField name={"value"}>
+								{(field) => (
+									<FormField
+										id={field.name}
+										name={field.name}
+										meta={field.state.meta}
+										required
+									>
+										{(props) => (
+											<field.TextInput
+												value={field.state.value ?? ""}
+												onChange={(e) => {
+													field.handleChange(e.target.value);
+												}}
+												onBlur={field.handleBlur}
+												placeholder={translator.text(
+													"Listing title (placeholder)",
+												)}
+												autoFocus
+												{...props}
+											/>
+										)}
+									</FormField>
+								)}
+							</form.AppField>
+						</form>
+					}
+				/>
 
 				<form.Subscribe
 					selector={(state) => ({

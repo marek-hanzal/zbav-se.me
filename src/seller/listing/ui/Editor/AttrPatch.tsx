@@ -9,6 +9,7 @@ import { AttrDecimal } from "./AttrDecimal";
 import { AttrEnumMulti } from "./AttrEnumMulti";
 import { AttrEnumSingle } from "./AttrEnumSingle";
 import { AttrNumber } from "./AttrNumber";
+import { AttrText } from "./AttrText";
 
 export namespace AttrPatch {
 	export interface Props extends TitleContainer.Props {
@@ -77,6 +78,20 @@ export const AttrPatch: FC<AttrPatch.Props> = ({ listingId, attr, view, ...props
 					(attr) => {
 						return (
 							<AttrNumber
+								listingId={listingId}
+								attr={attr}
+								view={view}
+							/>
+						);
+					},
+				)
+				.with(
+					{
+						type: "text",
+					},
+					(attr) => {
+						return (
+							<AttrText
 								listingId={listingId}
 								attr={attr}
 								view={view}
