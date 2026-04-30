@@ -10,7 +10,7 @@ import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { Pool } from "~/server/database/pg";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 
-const source = `${__dirname}/../src/translation`;
+const source = `${__dirname}/../src/server/@migrations/translation`;
 
 tx({
 	packages: [
