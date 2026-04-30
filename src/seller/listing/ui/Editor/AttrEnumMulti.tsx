@@ -11,6 +11,7 @@ import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
 
 export namespace AttrEnumMulti {
 	export interface Props extends Container.Props {
+		listingId: string;
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
@@ -21,7 +22,7 @@ export namespace AttrEnumMulti {
 	}
 }
 
-export const AttrEnumMulti: FC<AttrEnumMulti.Props> = ({ attr, view, ...props }) => {
+export const AttrEnumMulti: FC<AttrEnumMulti.Props> = ({ listingId, attr, view, ...props }) => {
 	const selection = useSelection({
 		mode: "multi",
 		initial: attr.value.map((item) => ({

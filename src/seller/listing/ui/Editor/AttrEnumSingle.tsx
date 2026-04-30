@@ -7,10 +7,12 @@ import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view2";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
+import { withAttrEnumSinglePatchMutation } from "~/seller/attr-enum-single/mutation/withAttrEnumSinglePatchMutation";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
 
 export namespace AttrEnumSingle {
 	export interface Props extends Container.Props {
+		listingId: string;
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
@@ -21,7 +23,8 @@ export namespace AttrEnumSingle {
 	}
 }
 
-export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ attr, view, ...props }) => {
+export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ listingId, attr, view, ...props }) => {
+	const mutation = withAttrEnumSinglePatchMutation.useMutation();
 	const selection = useSelection({
 		mode: "single",
 		initial: attr.value
@@ -93,20 +96,14 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ attr, view, ...props 
 					view.set("default");
 				}}
 				onSave={() => {
-					// mutation.mutate({
-					// 	patch: {
-					// 		age,
-					// 	},
-					// 	query: {
-					// 		where: {
-					// 			id: listing.id,
-					// 		},
-					// 	},
-					// });
+					mutation.mutate({
+						fieldId: attr.name,
+						listingId,
+						value: selection.optional.singleId() ?? null,
+					});
 				}}
-				// loading={mutation.isPending}
-				loading={false}
-				disabled={false}
+				loading={mutation.isPending}
+				disabled={mutation.isPending}
 				textSave={<Tx label={"Continue (label)"} />}
 				textCancel={<Tx label={"Back (label)"} />}
 				saveProps={{

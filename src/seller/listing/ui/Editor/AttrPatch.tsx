@@ -33,6 +33,7 @@ export const AttrPatch: FC<AttrPatch.Props> = ({ listingId, attr, view, ...props
 					(attr) => {
 						return (
 							<AttrEnumSingle
+								listingId={listingId}
 								attr={attr}
 								view={view}
 							/>
@@ -46,6 +47,7 @@ export const AttrPatch: FC<AttrPatch.Props> = ({ listingId, attr, view, ...props
 					(attr) => {
 						return (
 							<AttrEnumMulti
+								listingId={listingId}
 								attr={attr}
 								view={view}
 							/>
