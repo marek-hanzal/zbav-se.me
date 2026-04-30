@@ -359,7 +359,7 @@ export const tx = ({
 		 * Delete dead keys
 		 */
 		for (const key of diffOf(Object.keys(current), Object.keys(translations))) {
-			if (current[key]?.static) {
+			if (current[key]?.dynamic) {
 				continue;
 			}
 			delete current[key];

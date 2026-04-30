@@ -8,7 +8,7 @@ export const TranslationMigration: Migration = {
 			.addColumn("locale", "text", (col) => col.notNull())
 			.addColumn("key", "text", (col) => col.notNull())
 			.addColumn("value", "text", (col) => col.notNull())
-			.addColumn("static", "boolean", (col) => col.notNull())
+			.addColumn("dynamic", "boolean", (col) => col.notNull())
 
 			.addPrimaryKeyConstraint("translation_[locale-key]_pk", [
 				"locale",

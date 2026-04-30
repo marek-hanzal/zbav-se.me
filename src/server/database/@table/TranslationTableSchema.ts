@@ -11,9 +11,9 @@ export const TranslationTableSchema = z
 		value: z.string().meta({
 			description: "Translated value",
 		}),
-		static: z.boolean().meta({
+		dynamic: z.boolean().meta({
 			description:
-				"Static translations are extracted from source code and dropped when translations are refreshed.",
+				"Dynamic translations are extracted from source code and dropped when translations are refreshed.",
 		}),
 	})
 	.meta({

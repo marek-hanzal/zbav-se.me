@@ -4,7 +4,7 @@ export const TranslationSchema = z
 	.looseObject({
 		ref: z.string().optional(),
 		value: z.string(),
-		static: z.boolean().optional(),
+		dynamic: z.boolean().optional(),
 	})
 	.strip()
 	.meta({
