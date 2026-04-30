@@ -448,6 +448,11 @@
 				"name": "mod.battery",
 				"sort": 0,
 				"required": true
+			},
+			{
+				"name": "color",
+				"sort": 1,
+				"required": false
 			}
 		]
 	},
