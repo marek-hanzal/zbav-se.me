@@ -7,80 +7,50 @@ const FieldSchema = z.object({
 	options: z.array(FieldOptionSchema),
 });
 
-const TextFieldSchema = z.discriminatedUnion("required", [
-	z.object({
+const TextFieldSchema = z
+	.looseObject({
 		...FieldSchema.shape,
 		type: z.literal("text" satisfies FieldTypeEnumSchema.Type),
-		required: z.literal(true),
-		value: z.string(),
-	}),
-	z.object({
-		...FieldSchema.shape,
-		type: z.literal("text" satisfies FieldTypeEnumSchema.Type),
-		required: z.literal(false),
+		required: z.boolean(),
 		value: z.string().nullable(),
-	}),
-]);
+	})
+	.strip();
 
-const DecimalFieldSchema = z.discriminatedUnion("required", [
-	z.object({
+const DecimalFieldSchema = z
+	.looseObject({
 		...FieldSchema.shape,
 		type: z.literal("decimal" satisfies FieldTypeEnumSchema.Type),
-		required: z.literal(true),
-		value: z.number(),
-	}),
-	z.object({
-		...FieldSchema.shape,
-		type: z.literal("decimal" satisfies FieldTypeEnumSchema.Type),
-		required: z.literal(false),
+		required: z.boolean(),
 		value: z.number().nullable(),
-	}),
-]);
+	})
+	.strip();
 
-const NumberFieldSchema = z.discriminatedUnion("required", [
-	z.object({
+const NumberFieldSchema = z
+	.looseObject({
 		...FieldSchema.shape,
 		type: z.literal("number" satisfies FieldTypeEnumSchema.Type),
-		required: z.literal(true),
-		value: z.number(),
-	}),
-	z.object({
-		...FieldSchema.shape,
-		type: z.literal("number" satisfies FieldTypeEnumSchema.Type),
-		required: z.literal(false),
+		required: z.boolean(),
 		value: z.number().nullable(),
-	}),
-]);
+	})
+	.strip();
 
-const EnumSingleFieldSchema = z.discriminatedUnion("required", [
-	z.object({
+const EnumSingleFieldSchema = z
+	.looseObject({
 		...FieldSchema.shape,
 		type: z.literal("enum-single" satisfies FieldTypeEnumSchema.Type),
-		required: z.literal(true),
-		value: z.string(),
-	}),
-	z.object({
-		...FieldSchema.shape,
-		type: z.literal("enum-single" satisfies FieldTypeEnumSchema.Type),
-		required: z.literal(false),
+		required: z.boolean(),
 		value: z.string().nullable(),
-	}),
-]);
+	})
+	.strip();
 
-const EnumMultiFieldSchema = z.discriminatedUnion("required", [
-	z.object({
-		...FieldSchema.shape,
-		type: z.literal("enum-multi" satisfies FieldTypeEnumSchema.Type),
-		required: z.literal(true),
-		value: z.array(z.string()).nonempty(),
-	}),
-	z.object({
+const EnumMultiFieldSchema = z
+	.looseObject({
 		...FieldSchema.shape,
 		type: z.literal("enum-multi" satisfies FieldTypeEnumSchema.Type),
 		required: z.literal(false),
 		value: z.array(z.string()),
-	}),
-]);
+	})
+	.strip();
 
 export const AttrOfSchema = z.union([
 	TextFieldSchema,
