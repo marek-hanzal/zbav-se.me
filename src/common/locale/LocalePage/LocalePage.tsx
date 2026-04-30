@@ -1,20 +1,18 @@
 import type { FC, PropsWithChildren } from "react";
 import { LocaleContext } from "@/lib/client/locale";
-import type { TranslationListSchema } from "@/lib/common/schema";
+import type { TranslationSchema } from "@/lib/common/schema";
 import { translator } from "@/lib/common/translation";
 
 export namespace LocalePage {
 	export interface Props extends PropsWithChildren {
 		locale: string;
-		translations: TranslationListSchema.Type;
+		translations: TranslationSchema.Type[];
 	}
 }
 
 /**
  * Composes the route-level locale screen and arranges the main page structure for this flow.
  * Use it from route definitions as the primary UI boundary for the locale journey.
- *
- * @see src/@routes
  */
 export const LocalePage: FC<LocalePage.Props> = ({ locale, translations, children }) => {
 	/**
@@ -24,7 +22,7 @@ export const LocalePage: FC<LocalePage.Props> = ({ locale, translations, childre
 	 * The core idea is this route won't re-render, to it's quite safe to use it
 	 * this way (out of effect and so on).
 	 */
-	translator.push(translations);
+	translator.from(translations);
 
 	return (
 		<LocaleContext

@@ -1,19 +1,14 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { LocalePage } from "~/common/locale/LocalePage/LocalePage";
-import { defaultLocale } from "~/locales";
+import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
 
 export const Route = createFileRoute("/$locale")({
-	async loader({ params: { locale } }) {
-		try {
-			return {
-				translations: (await import(`../translation/${locale}.yaml`)).default,
-			} as const;
-		} catch {
-			console.warn(`Locale [${locale}] not found, using default locale`);
-			return {
-				translations: (await import(`../translation/${defaultLocale}.yaml`)).default,
-			} as const;
-		}
+	async loader({ params: { locale }, context: { queryClient } }) {
+		return {
+			translations: await withTranslationsQuery.ensure(queryClient, {
+				locale,
+			}),
+		};
 	},
 	component() {
 		const { locale } = Route.useParams();

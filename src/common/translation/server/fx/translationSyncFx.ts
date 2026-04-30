@@ -3,7 +3,8 @@ import { readdir } from "node:fs/promises";
 import { basename, extname, join } from "node:path";
 import { Effect } from "effect";
 import { parse } from "yaml";
-import { TranslationListSchema } from "@/lib/common/schema";
+import { z } from "zod";
+import { TranslationSchema } from "@/lib/common/schema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
@@ -19,7 +20,7 @@ export const translationSyncFx = Effect.fn("translationSyncFx")(function* ({
 	const { kysely } = yield* KyselyContextFx;
 
 	const files = yield* Effect.promise(async () => {
-		return findYamlFiles(source);
+		return withSources(source);
 	});
 
 	function* chunks<T>(items: readonly T[], size: number): Generator<readonly T[]> {
@@ -32,13 +33,18 @@ export const translationSyncFx = Effect.fn("translationSyncFx")(function* ({
 		}
 	}
 
+	const Schema = z.record(
+		z.string(),
+		TranslationSchema.omit({
+			key: true,
+		}),
+	);
+
 	yield* withTransactionFx(
 		Effect.promise(async () => {
 			for await (const file of files) {
 				const name = basename(file, extname(file));
-				const content = Object.entries(
-					TranslationListSchema.parse(parse(readFileSync(file, "utf-8"))),
-				);
+				const content = Object.entries(Schema.parse(parse(readFileSync(file, "utf-8"))));
 
 				await kysely.deleteFrom("translation").where("locale", "=", name).execute();
 
@@ -62,7 +68,7 @@ export const translationSyncFx = Effect.fn("translationSyncFx")(function* ({
 	);
 });
 
-export async function findYamlFiles(dir: string): Promise<string[]> {
+export async function withSources(dir: string): Promise<string[]> {
 	const entries = await readdir(dir, {
 		withFileTypes: true,
 	});
@@ -73,7 +79,7 @@ export async function findYamlFiles(dir: string): Promise<string[]> {
 		const path = join(dir, entry.name);
 
 		if (entry.isDirectory()) {
-			files.push(...(await findYamlFiles(path)));
+			files.push(...(await withSources(path)));
 			continue;
 		}
 

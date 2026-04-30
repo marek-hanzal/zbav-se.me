@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const TranslationSchema = z
 	.looseObject({
+		key: z.string(),
 		ref: z.string().optional(),
 		value: z.string(),
 		dynamic: z.boolean().optional(),
