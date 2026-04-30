@@ -28,6 +28,9 @@ export const attrEnumSinglePatchFx = Effect.fn("attrEnumSinglePatchFx")(function
 	yield* listingCheckIfOwnFx({
 		userId,
 		listingId,
+		status: [
+			"draft",
+		],
 	});
 
 	const { kysely } = yield* KyselyContextFx;

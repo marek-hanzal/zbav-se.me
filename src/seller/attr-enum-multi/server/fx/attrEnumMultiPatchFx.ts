@@ -28,6 +28,9 @@ export const attrEnumMultiPatchFx = Effect.fn("attrEnumMultiPatchFx")(function* 
 	yield* listingCheckIfOwnFx({
 		userId,
 		listingId,
+		status: [
+			"draft",
+		],
 	});
 
 	const { kysely } = yield* KyselyContextFx;
