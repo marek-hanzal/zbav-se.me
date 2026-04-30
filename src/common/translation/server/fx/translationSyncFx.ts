@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import { basename, extname, join } from "node:path";
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { parse } from "yaml";
 import { z } from "zod";
 import { TranslationSchema } from "@/lib/common/schema";
@@ -41,29 +42,35 @@ export const translationSyncFx = Effect.fn("translationSyncFx")(function* ({
 	);
 
 	yield* withTransactionFx(
-		Effect.promise(async () => {
-			for await (const file of files) {
-				const name = basename(file, extname(file));
-				const content = Object.entries(Schema.parse(parse(readFileSync(file, "utf-8"))));
+		Effect.gen(function* () {
+			const { kysely } = yield* KyselyContextFx;
 
-				await kysely.deleteFrom("translation").where("locale", "=", name).execute();
+			yield* Effect.promise(async () => {
+				await sql`truncate table translation`.execute(kysely);
 
-				for (const chunk of chunks(content, 250)) {
-					await kysely
-						.insertInto("translation")
-						.values(
-							chunk.map(([key, values]) => {
-								return {
-									key,
-									locale: name,
-									dynamic: false,
-									...values,
-								};
-							}),
-						)
-						.execute();
+				for await (const file of files) {
+					const name = basename(file, extname(file));
+					const content = Object.entries(
+						Schema.parse(parse(readFileSync(file, "utf-8"))),
+					);
+
+					for (const chunk of chunks(content, 250)) {
+						await kysely
+							.insertInto("translation")
+							.values(
+								chunk.map(([key, values]) => {
+									return {
+										key,
+										locale: name,
+										dynamic: false,
+										...values,
+									};
+								}),
+							)
+							.execute();
+					}
 				}
-			}
+			});
 		}),
 	);
 });

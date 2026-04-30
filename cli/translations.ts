@@ -27,7 +27,7 @@ const database = await databaseFx.pipe(
 		new PostgresDialect({
 			pool: new Pool({
 				connectionString: databaseConfig.SERVER_DATABASE_URL,
-				max: 1,
+				max: 3,
 			}),
 		}),
 	),
