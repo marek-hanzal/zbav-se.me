@@ -1,7 +1,7 @@
 export const defaultLocale = "cs" as const;
 export const locales = [
 	defaultLocale,
-	"en",
+	// "en",
 ];
 
 export const countryToCurrency = {
