@@ -66,77 +66,70 @@ export const AttrText: FC<AttrText.Props> = ({ listingId, attr, view, ...props }
 			data-ui-gap="default"
 			{...props}
 		>
-			<Container
-				data-ui-layout="vertical-content-footer"
-				data-ui-height="full"
-				data-ui-width="full"
-				data-ui-inner="default"
-			>
-				<Status
-					action={
-						<form
-							className={"contents"}
-							onSubmit={(e) => {
-								e.preventDefault();
-								e.stopPropagation();
-								form.handleSubmit();
-							}}
-						>
-							<form.AppField name={"value"}>
-								{(field) => (
-									<FormField
-										id={field.name}
-										name={field.name}
-										meta={field.state.meta}
-										required
-									>
-										{(props) => (
-											<field.TextInput
-												value={field.state.value ?? ""}
-												onChange={(e) => {
-													field.handleChange(e.target.value);
-												}}
-												onBlur={field.handleBlur}
-												placeholder={translator.text(
-													"Listing title (placeholder)",
-												)}
-												autoFocus
-												{...props}
-											/>
-										)}
-									</FormField>
-								)}
-							</form.AppField>
-						</form>
-					}
-				/>
+			<Status
+				action={
+					<form
+						className={"contents"}
+						onSubmit={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
+							form.handleSubmit();
+						}}
+					>
+						<form.AppField name={"value"}>
+							{(field) => (
+								<FormField
+									id={field.name}
+									name={field.name}
+									meta={field.state.meta}
+									required
+								>
+									{(props) => (
+										<field.TextInput
+											value={field.state.value ?? ""}
+											onChange={(e) => {
+												field.handleChange(e.target.value);
+											}}
+											onBlur={field.handleBlur}
+											placeholder={translator.text(
+												"Listing title (placeholder)",
+											)}
+											autoFocus
+											{...props}
+										/>
+									)}
+								</FormField>
+							)}
+						</form.AppField>
+					</form>
+				}
+			/>
 
-				<form.Subscribe
-					selector={(state) => ({
-						isValid: state.isValid,
-						isSubmitting: state.isSubmitting,
-					})}
-				>
-					{({ isValid, isSubmitting }) => (
-						<SaveContainer
-							onCancel={() => {
-								view.set("default");
-							}}
-							onSave={() => {
-								form.handleSubmit();
-							}}
-							loading={isSubmitting}
-							disabled={!isValid || isSubmitting}
-							textSave={<Tx label={"Continue (label)"} />}
-							textCancel={<Tx label={"Back (label)"} />}
-							saveProps={{
-								iconEnabled: ArrowRightIcon,
-								iconPosition: "right",
-							}}
-						/>
-					)}
-				</form.Subscribe>
-			</Container>
+			<form.Subscribe
+				selector={(state) => ({
+					isValid: state.isValid,
+					isSubmitting: state.isSubmitting,
+				})}
+			>
+				{({ isValid, isSubmitting }) => (
+					<SaveContainer
+						onCancel={() => {
+							view.set("default");
+						}}
+						onSave={() => {
+							form.handleSubmit();
+						}}
+						loading={isSubmitting}
+						disabled={!isValid || isSubmitting}
+						textSave={<Tx label={"Continue (label)"} />}
+						textCancel={<Tx label={"Back (label)"} />}
+						saveProps={{
+							iconEnabled: ArrowRightIcon,
+							iconPosition: "right",
+						}}
+					/>
+				)}
+			</form.Subscribe>
 		</Container>
 	);
 };
