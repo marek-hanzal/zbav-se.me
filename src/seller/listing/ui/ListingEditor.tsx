@@ -4,6 +4,7 @@ import { Panel, useView } from "@/lib/client/view2";
 import { withAttrOfQuery } from "~/user/attr/query/withAttrOfQuery";
 import { withListingQuery } from "../query/withListingQuery";
 import { Editor } from "./Editor";
+import { AttrPatch } from "./Editor/AttrPatch";
 import { AgePatch } from "./patch/AgePatch";
 import { CategoryPatch } from "./patch/CategoryPatch";
 import { ConditionPatch } from "./patch/ConditionPatch";
@@ -57,7 +58,7 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 		editor,
 	]);
 
-	const { data: fields } = withAttrOfQuery.useSuspenseQuery({
+	const { data: attrs } = withAttrOfQuery.useSuspenseQuery({
 		listingId,
 		categoryId: listing.categoryId ?? "unknown",
 	});
@@ -192,14 +193,18 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 				/>
 			</editor.Panel>
 
-			{fields.map((field) => {
+			{attrs.map((attr) => {
 				return (
 					<Panel<any>
-						key={field.name}
-						name={`attr.${field.name}`}
+						key={attr.name}
+						name={`attr.${attr.name}`}
 						control={editor}
 					>
-						field {field.name}
+						<AttrPatch
+							listingId={listing.id}
+							attr={attr}
+							view={editor}
+						/>
 					</Panel>
 				);
 			})}
