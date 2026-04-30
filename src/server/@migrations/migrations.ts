@@ -31,11 +31,11 @@ import { AgentThreadMigration } from "~/server/@migrations/0029-agent-thread";
 import { AgentStreamMigration } from "~/server/@migrations/0030-agent-stream";
 import { AgentUsageMigration } from "~/server/@migrations/0031-agent-usage";
 import { UserRestrictionMigration } from "~/server/@migrations/0032-user-restriction";
-import { AttrNumberMigration } from "~/server/@migrations/0034-attr-number";
-import { AttrDecimalMigration } from "~/server/@migrations/0035-attr-decimal";
-import { AttrTextMigration } from "~/server/@migrations/0036-attr-text";
-import { AttrEnumSingleMigration } from "~/server/@migrations/0037-attr-enum-single";
-import { AttrEnumMultiMigration } from "~/server/@migrations/0038-attr-enum-multi";
+import { AttrNumberMigration } from "~/server/@migrations/0033-attr-number";
+import { AttrDecimalMigration } from "~/server/@migrations/0034-attr-decimal";
+import { AttrTextMigration } from "~/server/@migrations/0035-attr-text";
+import { AttrEnumSingleMigration } from "~/server/@migrations/0036-attr-enum-single";
+import { AttrEnumMultiMigration } from "~/server/@migrations/0037-attr-enum-multi";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -71,10 +71,9 @@ export const migrations = {
 	"0030-agent-stream": AgentStreamMigration,
 	"0031-agent-usage": AgentUsageMigration,
 	"0032-user-restriction": UserRestrictionMigration,
-
-	"0034-attr-number": AttrNumberMigration,
-	"0035-attr-decimal": AttrDecimalMigration,
-	"0036-attr-text": AttrTextMigration,
-	"0037-attr-enum-single": AttrEnumSingleMigration,
-	"0038-attr-enum-multi": AttrEnumMultiMigration,
+	"0033-attr-number": AttrNumberMigration,
+	"0034-attr-decimal": AttrDecimalMigration,
+	"0035-attr-text": AttrTextMigration,
+	"0036-attr-enum-single": AttrEnumSingleMigration,
+	"0037-attr-enum-multi": AttrEnumMultiMigration,
 };
