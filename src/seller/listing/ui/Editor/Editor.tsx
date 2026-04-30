@@ -28,7 +28,8 @@ import { RestrictionValue } from "~/user/listing/ui/value/RestrictionValue";
 import { WarrantyValue } from "~/user/listing/ui/value/WarrantyValue";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import { withListingQuery } from "../../query/withListingQuery";
-import { CategoryEditor } from "./CategoryEditor";
+import { AttrOptional } from "./AttrOptional";
+import { AttrRequired } from "./AttrRequired";
 
 export namespace Editor {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
@@ -88,7 +89,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 			<Container
 				data-ui-inner={"default"}
 				data-ui-flow={"vertical"}
-				data-ui-gap={"default"}
+				data-ui-gap={"lg"}
 			>
 				<Group>
 					<CurrentRestriction _suspense={_suspense} />
@@ -112,79 +113,90 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 					className={"text-center"}
 				/>
 
-				<Group>
-					<TitleValue
-						data-action={"set listing title"}
-						title={listing.title}
-						textLabel={translator.text("Listing title (label)")}
-						textEmpty={translator.text("Listing title not filled")}
-						action={<ChevronAction />}
-						onClick={() => setView("title")}
-					/>
+				<Container
+					data-ui-flow={"vertical"}
+					data-ui-gap={"default"}
+				>
+					<Group>
+						<TitleValue
+							data-action={"set listing title"}
+							title={listing.title}
+							textLabel={translator.text("Listing title (label)")}
+							textEmpty={translator.text("Listing title not filled")}
+							action={<ChevronAction />}
+							onClick={() => setView("title")}
+						/>
 
-					<CategoryValue
-						data-action={"select listing category"}
-						_suspense={"I know"}
-						categoryId={listing.categoryId}
-						action={<ChevronAction />}
-						onClick={() => setView("category")}
-					/>
-				</Group>
+						<CategoryValue
+							data-action={"select listing category"}
+							_suspense={"I know"}
+							categoryId={listing.categoryId}
+							action={<ChevronAction />}
+							onClick={() => setView("category")}
+						/>
+					</Group>
 
-				<Group>
-					<LocationValue
-						data-ui={"select listing location"}
-						_suspense={"I know"}
-						locationId={listing.locationId}
-						textLabel={translator.text("Listing location (label)")}
-						textEmpty={translator.text("Listing location not selected")}
-						textHint={translator.text("Listing location (hint)")}
-						action={<ChevronAction />}
-						onClick={() => setView("location")}
-					/>
-				</Group>
+					<Group>
+						<LocationValue
+							data-ui={"select listing location"}
+							_suspense={"I know"}
+							locationId={listing.locationId}
+							textLabel={translator.text("Listing location (label)")}
+							textEmpty={translator.text("Listing location not selected")}
+							textHint={translator.text("Listing location (hint)")}
+							action={<ChevronAction />}
+							onClick={() => setView("location")}
+						/>
+					</Group>
 
-				<Group>
-					<PriceTypeValue
-						data-ui={"set listing price type"}
-						priceType={listing.priceType}
-						action={<ChevronAction />}
-						onClick={() => setView("priceType")}
-					/>
+					<Group>
+						<PriceTypeValue
+							data-ui={"set listing price type"}
+							priceType={listing.priceType}
+							action={<ChevronAction />}
+							onClick={() => setView("priceType")}
+						/>
 
-					{match(listing.priceType)
-						.with("closed", "open", () => {
-							return (
-								<PriceValue
-									data-ui={"set listing price"}
-									price={listing.price}
-									currency={listing.currency}
-									action={<ChevronAction />}
-									onClick={() => setView("price")}
-								/>
-							);
-						})
-						.with("offer", null, undefined, () => {
-							return (
-								<PriceValue
-									price={0}
-									currency={"CZK"}
-									action={<ChevronAction />}
-									data-ui-disabled
-								/>
-							);
-						})
-						.exhaustive()}
-				</Group>
+						{match(listing.priceType)
+							.with("closed", "open", () => {
+								return (
+									<PriceValue
+										data-ui={"set listing price"}
+										price={listing.price}
+										currency={listing.currency}
+										action={<ChevronAction />}
+										onClick={() => setView("price")}
+									/>
+								);
+							})
+							.with("offer", null, undefined, () => {
+								return (
+									<PriceValue
+										price={0}
+										currency={"CZK"}
+										action={<ChevronAction />}
+										data-ui-disabled
+									/>
+								);
+							})
+							.exhaustive()}
+					</Group>
 
-				<Group>
-					<ExpiresValue
-						data-ui={"set listing expiration date"}
-						expires={listing.expires}
-						action={<ChevronAction />}
-						onClick={() => setView("expires")}
-					/>
-				</Group>
+					<Group>
+						<ExpiresValue
+							data-ui={"set listing expiration date"}
+							expires={listing.expires}
+							action={<ChevronAction />}
+							onClick={() => setView("expires")}
+						/>
+					</Group>
+				</Container>
+
+				<AttrRequired
+					_suspense={"I know"}
+					listingId={listing.id}
+					categoryId={listing.categoryId}
+				/>
 
 				<Tx
 					label="Draft - those others (title)"
@@ -196,69 +208,74 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, setView, ...pro
 					className={"text-center"}
 				/>
 
-				<Group>
-					<DeliveryValueList
-						deliveryIn={listing.delivery}
-						action={<ChevronAction />}
-						onClick={() => setView("delivery")}
-					/>
-				</Group>
+				<Container
+					data-ui-flow={"vertical"}
+					data-ui-gap={"default"}
+				>
+					<Group>
+						<DeliveryValueList
+							deliveryIn={listing.delivery}
+							action={<ChevronAction />}
+							onClick={() => setView("delivery")}
+						/>
+					</Group>
 
-				<Group>
-					<DescriptionValue
-						description={listing.description}
-						action={<ChevronAction />}
-						onClick={() => setView("description")}
-					/>
-				</Group>
+					<Group>
+						<DescriptionValue
+							description={listing.description}
+							action={<ChevronAction />}
+							onClick={() => setView("description")}
+						/>
+					</Group>
 
-				<Group>
-					<ProsValueList
-						pros={listing.pros}
-						action={<ChevronAction />}
-						onClick={() => setView("pros")}
-					/>
+					<Group>
+						<ProsValueList
+							pros={listing.pros}
+							action={<ChevronAction />}
+							onClick={() => setView("pros")}
+						/>
 
-					<ConsValueList
-						cons={listing.cons}
-						action={<ChevronAction />}
-						onClick={() => setView("cons")}
-					/>
-				</Group>
+						<ConsValueList
+							cons={listing.cons}
+							action={<ChevronAction />}
+							onClick={() => setView("cons")}
+						/>
+					</Group>
 
-				<Group>
-					<WarrantyValue
-						warranty={listing.warranty}
-						action={<ChevronAction />}
-						onClick={() => setView("warranty")}
-					/>
-				</Group>
+					<Group>
+						<WarrantyValue
+							warranty={listing.warranty}
+							action={<ChevronAction />}
+							onClick={() => setView("warranty")}
+						/>
+					</Group>
 
-				<Group>
-					<ConditionValue
-						condition={listing.condition}
-						action={<ChevronAction />}
-						onClick={() => setView("condition")}
-					/>
+					<Group>
+						<ConditionValue
+							condition={listing.condition}
+							action={<ChevronAction />}
+							onClick={() => setView("condition")}
+						/>
 
-					<AgeValue
-						age={listing.age}
-						action={<ChevronAction />}
-						onClick={() => setView("age")}
-					/>
-				</Group>
+						<AgeValue
+							age={listing.age}
+							action={<ChevronAction />}
+							onClick={() => setView("age")}
+						/>
+					</Group>
 
-				<Group>
-					<RestrictionValue
-						data-ui={"set listing restriction"}
-						restriction={listing.restriction}
-						action={<ChevronAction />}
-						data-ui-disabled={!listing.categoryId}
-						onClick={() => setView("restriction")}
-					/>
-				</Group>
+					<Group>
+						<RestrictionValue
+							data-ui={"set listing restriction"}
+							restriction={listing.restriction}
+							action={<ChevronAction />}
+							data-ui-disabled={!listing.categoryId}
+							onClick={() => setView("restriction")}
+						/>
+					</Group>
+				</Container>
 
-				<CategoryEditor
+				<AttrOptional
 					_suspense={"I know"}
 					listingId={listing.id}
 					categoryId={listing.categoryId}

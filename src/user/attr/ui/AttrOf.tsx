@@ -1,5 +1,6 @@
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 import { match } from "ts-pattern";
+import type { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
 import type { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
@@ -11,6 +12,8 @@ export namespace AttrOf {
 	export interface Props {
 		attrOf: AttrOfSchema.Type;
 		textLabelProps?: Typo.PropsEx;
+		wrapperProps?: Container.Props;
+		action?: ReactNode;
 	}
 }
 
