@@ -12,6 +12,15 @@ export namespace Panel {
 	}
 }
 
+/**
+ * Panel content is snapshotted on visibility changes.
+ *
+ * Hidden panels intentionally do not react to parent renders.
+ * Visible panel content also does not receive parent updates unless visibility changes.
+ *
+ * Use this only for panel flows where opened content owns its local state
+ * or reads live data internally.
+ */
 export const Panel = <TPanel extends string>({
 	name,
 	control,
