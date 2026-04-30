@@ -36,6 +36,7 @@ import { AttrDecimalMigration } from "~/server/@migrations/0034-attr-decimal";
 import { AttrTextMigration } from "~/server/@migrations/0035-attr-text";
 import { AttrEnumSingleMigration } from "~/server/@migrations/0036-attr-enum-single";
 import { AttrEnumMultiMigration } from "~/server/@migrations/0037-attr-enum-multi";
+import { TranslationMigration } from "~/server/@migrations/0038-translation";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -76,4 +77,5 @@ export const migrations = {
 	"0035-attr-text": AttrTextMigration,
 	"0036-attr-enum-single": AttrEnumSingleMigration,
 	"0037-attr-enum-multi": AttrEnumMultiMigration,
+	"0038-translation": TranslationMigration,
 };

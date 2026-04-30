@@ -22,6 +22,7 @@ import type { ThumbTableSchema } from "~/server/database/@table/ThumbTableSchema
 import type { TransactionEntryTableSchema } from "~/server/database/@table/TransactionEntryTableSchema";
 import type { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
 import type { TransactionUserTableSchema } from "~/server/database/@table/TransactionUserTableSchema";
+import type { TranslationTableSchema } from "~/server/database/@table/TranslationTableSchema";
 import type { UploadTableSchema } from "~/server/database/@table/UploadTableSchema";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
@@ -63,6 +64,7 @@ export interface Database {
 	transaction_entry: TransactionEntryTableSchema.Type;
 	transaction_user: TransactionUserTableSchema.Type;
 	transaction: TransactionTableSchema.Type;
+	translation: TranslationTableSchema.Type;
 	upload: UploadTableSchema.Type;
 	user_event: UserEventTableSchema.Type;
 	user_ex: UserExTableSchema.Type;
