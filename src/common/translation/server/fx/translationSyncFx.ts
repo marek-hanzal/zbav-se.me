@@ -42,7 +42,7 @@ export const translationSyncFx = Effect.fn("translationSyncFx")(function* ({
 
 				await kysely.deleteFrom("translation").where("locale", "=", name).execute();
 
-				for (const chunk of chunks(content, 500)) {
+				for (const chunk of chunks(content, 250)) {
 					await kysely
 						.insertInto("translation")
 						.values(
