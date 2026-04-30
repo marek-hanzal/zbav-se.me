@@ -2,7 +2,7 @@ import { type FC, useRef } from "react";
 import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { HeroImage } from "~/common/ui/img";
 import { AckMessage } from "~/seller/transaction/ui/status/AckMessage";

@@ -7,7 +7,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
 import { toTimeDiff } from "@/lib/common/time";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withUserRestrictionQuery } from "~/user/user-restriction/query/withUserRestrictionQuery";
 import type { UserRestrictionSchema } from "~/user/user-restriction/server/schema/UserRestrictionSchema";
 

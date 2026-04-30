@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { FormField } from "@/lib/client/form";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
 import { PackageSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema/PackageSchema";

@@ -3,7 +3,7 @@ import { Icon, SpinnerIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import type { MarkSuspense } from "@/lib/client/type";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
 

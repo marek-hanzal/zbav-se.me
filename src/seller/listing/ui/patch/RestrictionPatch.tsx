@@ -6,7 +6,7 @@ import { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view2";
 import type { EntitySchema } from "@/lib/common/schema";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { RestrictionSelect } from "~/common/restriction/ui/RestrictionSelect";

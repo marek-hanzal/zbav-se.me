@@ -7,7 +7,7 @@ import { handleArrowNav } from "@/lib/client/nav";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view2";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";

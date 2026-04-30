@@ -1,5 +1,5 @@
-import { keyOf } from "../key-of/keyOf";
 import type { TranslationListSchema } from "../schema/TranslationListSchema";
+import { keyOf } from "./keyOf";
 
 export namespace translator {
 	export interface Value {

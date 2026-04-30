@@ -1,7 +1,7 @@
 import type { FC, PropsWithChildren } from "react";
 import { LocaleContext } from "@/lib/client/locale";
 import type { TranslationListSchema } from "@/lib/common/schema";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 
 export namespace LocalePage {
 	export interface Props extends PropsWithChildren {

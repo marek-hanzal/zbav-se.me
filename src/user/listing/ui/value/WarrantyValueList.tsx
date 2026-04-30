@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 
 export namespace WarrantyValueList {

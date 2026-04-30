@@ -4,7 +4,7 @@ import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Status } from "@/lib/client/status";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withListingSellerInfoQuery } from "~/buyer/listing/query/withListingSellerInfoQuery";
 import { SearchIcon } from "~/common/ui/icon";
 import { Header } from "./Header";

@@ -6,7 +6,7 @@ import { ChevronRightIcon, GitHubIcon, Icon } from "@/lib/client/icon";
 import { LinkTo, uiLinkTo } from "@/lib/client/link-to";
 import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import face from "~/assets/face.webp";
 import { HeroImage } from "~/common/ui/img";
 import { Logo } from "~/common/ui/logo";

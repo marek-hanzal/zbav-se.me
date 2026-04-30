@@ -4,7 +4,7 @@ import { CheckIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import type { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 

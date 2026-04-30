@@ -5,7 +5,7 @@ import { ArrowRightIcon } from "@/lib/client/icon";
 import { TextInput } from "@/lib/client/text-input";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view2";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
 import { EditAction } from "~/common/ui/action/EditAction";

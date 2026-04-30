@@ -15,7 +15,7 @@ import {
 	VisibilityProvider,
 	VisibleContainer,
 } from "@/lib/client/visibility";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { getRootLogger } from "~/common/log/getRootLogger";

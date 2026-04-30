@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
 import { LabelValue } from "@/lib/client/value";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 
 export namespace RangeValue {
 	export interface Props extends LabelValue.PropsEx {

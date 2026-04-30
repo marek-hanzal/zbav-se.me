@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 
 /**
  * Entity schema represents any piece of data which has an identity.

@@ -5,7 +5,7 @@ import { ArrowRightIcon } from "@/lib/client/icon";
 import { Mx } from "@/lib/client/mx";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view2";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { ExpireAtSelect } from "~/common/expire-at/ui/ExpireAtSelect";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";

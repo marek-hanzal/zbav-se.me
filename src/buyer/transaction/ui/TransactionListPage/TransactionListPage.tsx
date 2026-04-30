@@ -3,7 +3,7 @@ import { Container } from "@/lib/client/container";
 import { EmptyState } from "@/lib/client/empty-state";
 import { useLocale } from "@/lib/client/locale";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";

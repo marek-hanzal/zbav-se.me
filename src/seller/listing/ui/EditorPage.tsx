@@ -4,7 +4,7 @@ import { useLocale } from "@/lib/client/locale";
 import { handleArrowNav } from "@/lib/client/nav";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";

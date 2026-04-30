@@ -6,7 +6,7 @@ import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { toTimeDiff } from "@/lib/common/time";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListItem } from "~/common/list-item/ListItem";
 import { CloseButton } from "~/common/ui/button";

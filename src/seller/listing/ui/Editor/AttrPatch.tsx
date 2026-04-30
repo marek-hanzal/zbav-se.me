@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import type { useView } from "@/lib/client/view2";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";

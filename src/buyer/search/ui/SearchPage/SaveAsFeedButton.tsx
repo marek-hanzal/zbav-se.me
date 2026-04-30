@@ -12,7 +12,7 @@ import { Status } from "@/lib/client/status";
 import { TextInput } from "@/lib/client/text-input";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";

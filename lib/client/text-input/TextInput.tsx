@@ -1,5 +1,5 @@
 import type { ComponentProps, FC } from "react";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { uiInput } from "../form/uiInput";
 
 export namespace TextInput {

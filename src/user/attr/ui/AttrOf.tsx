@@ -5,7 +5,7 @@ import { useLocale } from "@/lib/client/locale";
 import type { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import type { AttrOfSchema } from "../server/schema/AttrOfSchema";
 
 export namespace AttrOf {

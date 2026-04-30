@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Tx } from "@/lib/client/tx";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 
 export namespace RestrictionValue {

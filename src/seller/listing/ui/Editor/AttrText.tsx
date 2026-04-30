@@ -6,7 +6,7 @@ import { ArrowRightIcon } from "@/lib/client/icon";
 import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view2";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
 import { withAttrTextPatchMutation } from "~/seller/attr-text/mutation/withAttrTextPatchMutation";

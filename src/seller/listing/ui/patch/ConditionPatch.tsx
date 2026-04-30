@@ -4,7 +4,7 @@ import { ArrowRightIcon } from "@/lib/client/icon";
 import { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view2";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { ConditionSelect } from "~/common/condition/ui/ConditionSelect";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { EditAction } from "~/common/ui/action/EditAction";

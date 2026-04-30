@@ -4,9 +4,8 @@ import cliProgress from "cli-progress";
 import { Timer } from "timer-node";
 import { parse, stringify } from "yaml";
 import { diffOf } from "@/lib/common/diff-of";
-import { keyOf } from "@/lib/common/key-of";
 import type { TranslationSchema } from "@/lib/common/schema";
-import type { TranslationSource } from "@/lib/common/translation";
+import { keyOf, type TranslationSource } from "@/lib/common/translation";
 
 export namespace tx {
 	export interface Translation {
@@ -104,6 +103,10 @@ export const tx = ({
 		const text = printed.substring(1, printed.length - 1);
 		const key = keyOf(text);
 
+		if (!key.length) {
+			return;
+		}
+
 		// Track which source extracted this translation
 		if (!translations[key]) {
 			const stats = sourceStats.get(sourceKey) || [];
@@ -112,7 +115,7 @@ export const tx = ({
 		}
 
 		translations[key] = {
-			ref: text,
+			// ref: text,
 			value: text,
 		};
 	};

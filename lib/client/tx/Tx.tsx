@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { Typo } from "../typo/Typo";
 
 export namespace Tx {

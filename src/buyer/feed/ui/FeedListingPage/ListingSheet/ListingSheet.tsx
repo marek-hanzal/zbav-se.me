@@ -4,7 +4,7 @@ import { useRenderLogger } from "@/lib/client/log";
 import { SheetView } from "@/lib/client/sheet-view";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { SellerInfo } from "~/buyer/listing/SellerInfo/SellerInfo";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";

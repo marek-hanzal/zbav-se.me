@@ -5,7 +5,7 @@ import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Typo } from "@/lib/client/typo";
 import { list, rangedom } from "@/lib/common/rangedom";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 
 export namespace Reasoning {

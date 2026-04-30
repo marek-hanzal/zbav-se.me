@@ -4,7 +4,7 @@ import { useLocale } from "@/lib/client/locale";
 import { LabelValue } from "@/lib/client/value";
 import { toTimeDiff } from "@/lib/common/time";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
 
 export namespace Header {

@@ -3,7 +3,7 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { ChevronRightIcon, Icon } from "@/lib/client/icon";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";

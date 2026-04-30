@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import type { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 
 export namespace ExpiresValue {

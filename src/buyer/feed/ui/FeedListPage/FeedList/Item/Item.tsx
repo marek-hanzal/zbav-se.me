@@ -9,7 +9,7 @@ import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { ListingCount } from "~/buyer/listing/ui/ListingCount";
 import { ListItem } from "~/common/list-item/ListItem";
