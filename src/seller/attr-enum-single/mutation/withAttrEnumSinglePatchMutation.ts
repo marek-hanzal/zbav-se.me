@@ -12,6 +12,7 @@ export const withAttrEnumSinglePatchMutation = withMutation({
 	keys(variables: AttrEnumSinglePatchSchema.Type) {
 		return [
 			"attr",
+			"enum-single",
 			"patch",
 			variables,
 		];

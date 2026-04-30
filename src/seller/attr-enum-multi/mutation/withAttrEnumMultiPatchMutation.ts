@@ -12,6 +12,7 @@ export const withAttrEnumMultiPatchMutation = withMutation({
 	keys(variables: AttrEnumMultiPatchSchema.Type) {
 		return [
 			"attr",
+			"enum-multi",
 			"patch",
 			variables,
 		];

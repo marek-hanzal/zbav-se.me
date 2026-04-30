@@ -5,8 +5,10 @@ import { translator } from "@/lib/common/translator";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { AttrDecimal } from "./AttrDecimal";
 import { AttrEnumMulti } from "./AttrEnumMulti";
 import { AttrEnumSingle } from "./AttrEnumSingle";
+import { AttrNumber } from "./AttrNumber";
 
 export namespace AttrPatch {
 	export interface Props extends TitleContainer.Props {
@@ -54,9 +56,35 @@ export const AttrPatch: FC<AttrPatch.Props> = ({ listingId, attr, view, ...props
 						);
 					},
 				)
-				.otherwise((type) => {
-					return `nope: ${type}`;
-				})}
+				.with(
+					{
+						type: "decimal",
+					},
+					(attr) => {
+						return (
+							<AttrDecimal
+								listingId={listingId}
+								attr={attr}
+								view={view}
+							/>
+						);
+					},
+				)
+				.with(
+					{
+						type: "number",
+					},
+					(attr) => {
+						return (
+							<AttrNumber
+								listingId={listingId}
+								attr={attr}
+								view={view}
+							/>
+						);
+					},
+				)
+				.exhaustive()}
 		</TitleContainer>
 	);
 };
