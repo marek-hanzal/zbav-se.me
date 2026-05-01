@@ -1,5 +1,3 @@
-import { dirname } from "node:path";
-import { fileURLToPath } from "node:url";
 import { Effect } from "effect";
 import { MigrationContextFx, withDatabaseFx } from "@/lib/common/database";
 import { getRootLogger } from "~/common/log/getRootLogger";
@@ -20,12 +18,6 @@ export const databaseFx = withDatabaseFx<Database>({
 		await runAuthMigration(dialect);
 	},
 	async onPostMigration(instance) {
-		{
-			const dir = dirname(fileURLToPath(import.meta.url));
-
-			await translationSyncFx({
-				source: `${dir}/../@migrations/translation`,
-			}).pipe(withKyselyFx(instance), Effect.runPromise);
-		}
+		await translationSyncFx().pipe(withKyselyFx(instance), Effect.runPromise);
 	},
 }).pipe(Effect.provideService(MigrationContextFx, migrations));
