@@ -15,8 +15,8 @@ export namespace withDatabaseFx {
 		/**
 		 * Called before the migration is executed.
 		 */
-		onPreMigration?(event: withDatabaseFx.Event<TDatabase>): Promise<void>;
-		onPostMigration?(event: withDatabaseFx.Event<TDatabase>): Promise<void>;
+		onPreMigration?(instance: Instance<TDatabase>): Promise<void>;
+		onPostMigration?(instance: Instance<TDatabase>): Promise<void>;
 	}
 
 	export interface Instance<in out DB> {
@@ -63,16 +63,13 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 		}));
 	};
 
-	return {
+	const instance = {
 		dialect,
 		get kysely() {
 			return kysely();
 		},
 		async migrate() {
-			await onPreMigration?.({
-				dialect,
-				kysely: kysely(),
-			});
+			await onPreMigration?.(instance);
 
 			const migrator = new Migrator({
 				db: kysely(),
@@ -99,12 +96,11 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 				}
 			});
 
-			await onPostMigration?.({
-				dialect,
-				kysely: kysely(),
-			});
+			await onPostMigration?.(instance);
 
 			return results;
 		},
 	} satisfies withDatabaseFx.Instance<TDatabase>;
+
+	return instance;
 });
