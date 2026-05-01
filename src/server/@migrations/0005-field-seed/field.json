@@ -9,12 +9,14 @@
 	},
 	{
 		"name": "battery-condition",
-		"type": "number"
+		"type": "number",
+		"min": 0,
+		"max": 100
 	},
 	{
 		"name": "color",
 		"type": "enum-multi",
-		"max": "3"
+		"max": 3
 	},
 	{
 		"name": "mod.battery",
@@ -23,7 +25,540 @@
 	{
 		"name": "atomizer.capacity",
 		"type": "number",
-		"min": 0.8,
-		"max": 5
+		"min": 1,
+		"max": 15
+	},
+	{
+		"name": "brand",
+		"type": "text"
+	},
+	{
+		"name": "model",
+		"type": "text"
+	},
+	{
+		"name": "compatibility",
+		"type": "text"
+	},
+	{
+		"name": "material",
+		"type": "text"
+	},
+	{
+		"name": "dimensions",
+		"type": "text"
+	},
+	{
+		"name": "part.number",
+		"type": "text"
+	},
+	{
+		"name": "author",
+		"type": "text"
+	},
+	{
+		"name": "artist",
+		"type": "text"
+	},
+	{
+		"name": "language",
+		"type": "text"
+	},
+	{
+		"name": "country",
+		"type": "text"
+	},
+	{
+		"name": "edition",
+		"type": "text"
+	},
+	{
+		"name": "breed",
+		"type": "text"
+	},
+	{
+		"name": "location.note",
+		"type": "text"
+	},
+	{
+		"name": "platform",
+		"type": "text"
+	},
+	{
+		"name": "isbn",
+		"type": "text"
+	},
+	{
+		"name": "series",
+		"type": "text"
+	},
+	{
+		"name": "airsoft.power-source",
+		"type": "enum-single"
+	},
+	{
+		"name": "fuel.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "transmission",
+		"type": "enum-single"
+	},
+	{
+		"name": "tyre.season",
+		"type": "enum-single"
+	},
+	{
+		"name": "helmet.size",
+		"type": "enum-single"
+	},
+	{
+		"name": "appliance.energy-class",
+		"type": "enum-single"
+	},
+	{
+		"name": "stroller.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "seat.mounting",
+		"type": "enum-single"
+	},
+	{
+		"name": "toy.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "baby.stage",
+		"type": "enum-single"
+	},
+	{
+		"name": "pet.gender",
+		"type": "enum-single"
+	},
+	{
+		"name": "pet.life-stage",
+		"type": "enum-single"
+	},
+	{
+		"name": "movie.format",
+		"type": "enum-single"
+	},
+	{
+		"name": "game.format",
+		"type": "enum-single"
+	},
+	{
+		"name": "handedness",
+		"type": "enum-single"
+	},
+	{
+		"name": "power.source",
+		"type": "enum-single"
+	},
+	{
+		"name": "skin.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "hair.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "coffee.machine-type",
+		"type": "enum-single"
+	},
+	{
+		"name": "connector.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "card.format",
+		"type": "enum-single"
+	},
+	{
+		"name": "dual-sim",
+		"type": "enum-single"
+	},
+	{
+		"name": "watch.strap-material",
+		"type": "enum-single"
+	},
+	{
+		"name": "bed.size",
+		"type": "enum-single"
+	},
+	{
+		"name": "property.furnishing",
+		"type": "enum-single"
+	},
+	{
+		"name": "property.heating",
+		"type": "enum-single"
+	},
+	{
+		"name": "land.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "buildability",
+		"type": "enum-single"
+	},
+	{
+		"name": "parking.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "property.electricity",
+		"type": "enum-single"
+	},
+	{
+		"name": "jewelry.material",
+		"type": "enum-single"
+	},
+	{
+		"name": "network.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "panel.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "component.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "storage.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "license.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "platform.os",
+		"type": "enum-single"
+	},
+	{
+		"name": "book.format",
+		"type": "enum-single"
+	},
+	{
+		"name": "record.size",
+		"type": "enum-single"
+	},
+	{
+		"name": "fragrance.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "sensor.type",
+		"type": "enum-single"
+	},
+	{
+		"name": "lens.mount",
+		"type": "enum-single"
+	},
+	{
+		"name": "pyro.class",
+		"type": "enum-single"
+	},
+	{
+		"name": "bike.frame-size",
+		"type": "enum-single"
+	},
+	{
+		"name": "shoe.size",
+		"type": "enum-single"
+	},
+	{
+		"name": "clothing.size",
+		"type": "enum-single"
+	},
+	{
+		"name": "connectivity",
+		"type": "enum-multi",
+		"max": 3
+	},
+	{
+		"name": "vehicle.year",
+		"type": "year",
+		"min": 1950,
+		"max": 2099,
+		"step": 1
+	},
+	{
+		"name": "property.year-built",
+		"type": "year",
+		"min": 1800,
+		"max": 2099,
+		"step": 1
+	},
+	{
+		"name": "release.year",
+		"type": "year",
+		"min": 1900,
+		"max": 2099,
+		"step": 1
+	},
+	{
+		"name": "collectible.year",
+		"type": "year",
+		"min": 1800,
+		"max": 2099,
+		"step": 1
+	},
+	{
+		"name": "art.year",
+		"type": "year",
+		"min": 1800,
+		"max": 2099,
+		"step": 1
+	},
+	{
+		"name": "muzzle.velocity",
+		"type": "range",
+		"min": 40,
+		"max": 250,
+		"step": 1
+	},
+	{
+		"name": "magazine.capacity",
+		"type": "range",
+		"min": 1,
+		"max": 500,
+		"step": 1
+	},
+	{
+		"name": "vehicle.mileage",
+		"type": "range",
+		"min": 0,
+		"max": 500000,
+		"step": 1000
+	},
+	{
+		"name": "engine.volume",
+		"type": "range",
+		"min": 50,
+		"max": 8000,
+		"step": 50
+	},
+	{
+		"name": "wheel.diameter",
+		"type": "range",
+		"min": 10,
+		"max": 29,
+		"step": 1
+	},
+	{
+		"name": "power.output",
+		"type": "range",
+		"min": 1,
+		"max": 5000,
+		"step": 1
+	},
+	{
+		"name": "power.input",
+		"type": "range",
+		"min": 1,
+		"max": 5000,
+		"step": 1
+	},
+	{
+		"name": "volume.capacity",
+		"type": "range",
+		"min": 0.1,
+		"max": 1000,
+		"step": 0.1
+	},
+	{
+		"name": "load.capacity",
+		"type": "range",
+		"min": 1,
+		"max": 20,
+		"step": 1
+	},
+	{
+		"name": "child.age",
+		"type": "range",
+		"min": 0,
+		"max": 216,
+		"step": 1
+	},
+	{
+		"name": "child.weight-max",
+		"type": "range",
+		"min": 1,
+		"max": 50,
+		"step": 1
+	},
+	{
+		"name": "age.recommended",
+		"type": "range",
+		"min": 0,
+		"max": 18,
+		"step": 1
+	},
+	{
+		"name": "player.count",
+		"type": "range",
+		"min": 1,
+		"max": 12,
+		"step": 1
+	},
+	{
+		"name": "package.weight",
+		"type": "range",
+		"min": 0.05,
+		"max": 25,
+		"step": 0.05
+	},
+	{
+		"name": "storage.capacity",
+		"type": "range",
+		"min": 8,
+		"max": 4096,
+		"step": 16
+	},
+	{
+		"name": "display.size",
+		"type": "range",
+		"min": 3,
+		"max": 120,
+		"step": 0.1
+	},
+	{
+		"name": "cable.length",
+		"type": "range",
+		"min": 0.2,
+		"max": 5,
+		"step": 0.1
+	},
+	{
+		"name": "watch.case-size",
+		"type": "range",
+		"min": 28,
+		"max": 55,
+		"step": 1
+	},
+	{
+		"name": "property.area",
+		"type": "range",
+		"min": 10,
+		"max": 2000,
+		"step": 1
+	},
+	{
+		"name": "land.area",
+		"type": "range",
+		"min": 50,
+		"max": 500000,
+		"step": 10
+	},
+	{
+		"name": "rooms.count",
+		"type": "range",
+		"min": 1,
+		"max": 20,
+		"step": 1
+	},
+	{
+		"name": "refresh-rate",
+		"type": "range",
+		"min": 30,
+		"max": 360,
+		"step": 1
+	},
+	{
+		"name": "blade.length",
+		"type": "range",
+		"min": 3,
+		"max": 100,
+		"step": 0.5
+	},
+	{
+		"name": "key.count",
+		"type": "range",
+		"min": 25,
+		"max": 88,
+		"step": 1
+	},
+	{
+		"name": "weight.kg",
+		"type": "range",
+		"min": 0.1,
+		"max": 100,
+		"step": 0.1
+	},
+	{
+		"name": "battery.capacity",
+		"type": "range",
+		"min": 100,
+		"max": 50000,
+		"step": 100
+	},
+	{
+		"name": "brightness.lm",
+		"type": "range",
+		"min": 100,
+		"max": 10000,
+		"step": 100
+	},
+	{
+		"name": "flight.time",
+		"type": "range",
+		"min": 5,
+		"max": 120,
+		"step": 1
+	},
+	{
+		"name": "battery.life",
+		"type": "range",
+		"min": 1,
+		"max": 120,
+		"step": 1
+	},
+	{
+		"name": "resistance.ohm",
+		"type": "range",
+		"min": 0.1,
+		"max": 3,
+		"step": 0.1
+	},
+	{
+		"name": "length.cm",
+		"type": "range",
+		"min": 1,
+		"max": 500,
+		"step": 1
+	},
+	{
+		"name": "count.pieces",
+		"type": "range",
+		"min": 1,
+		"max": 500,
+		"step": 1
+	},
+	{
+		"name": "diameter",
+		"type": "range",
+		"min": 5,
+		"max": 40,
+		"step": 1
+	},
+	{
+		"name": "max.load",
+		"type": "range",
+		"min": 10,
+		"max": 300,
+		"step": 5
+	},
+	{
+		"name": "voucher.value",
+		"type": "range",
+		"min": 100,
+		"max": 50000,
+		"step": 50
 	}
 ]
