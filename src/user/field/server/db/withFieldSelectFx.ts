@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { jsonArrayFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
@@ -30,6 +31,9 @@ export const withFieldSelectFx = Effect.fn("withFieldSelectFx")(function* ({
 		select: query.select([
 			"fld.name",
 			"fld.type",
+			sql<number | null>`fld.min::float8`.as("min"),
+			sql<number | null>`fld.max::float8`.as("max"),
+			sql<number | null>`fld.step::float8`.as("step"),
 			(eb) => {
 				return jsonArrayFrom(
 					eb

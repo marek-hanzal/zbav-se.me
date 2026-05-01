@@ -73,6 +73,9 @@ export const AttrOf: FC<AttrOf.Props> = ({ attrOf, ...props }) => {
 			{
 				type: "decimal",
 			},
+			{
+				type: "range",
+			},
 			(attr) => {
 				return (
 					<LabelValue
@@ -85,6 +88,21 @@ export const AttrOf: FC<AttrOf.Props> = ({ attrOf, ...props }) => {
 									})
 								: null
 						}
+						textEmpty={translator.text("No value here (label)")}
+						{...props}
+					/>
+				);
+			},
+		)
+		.with(
+			{
+				type: "year",
+			},
+			(attr) => {
+				return (
+					<LabelValue
+						textLabel={translator.text(`Field - ${attr.name}`)}
+						textValue={attr.value ? String(attr.value) : null}
 						textEmpty={translator.text("No value here (label)")}
 						{...props}
 					/>

@@ -10,6 +10,8 @@ export const FieldMigration: Migration = {
 				toEnumGuard<FieldTypeEnumSchema.Type>()([
 					"number",
 					"decimal",
+					"year",
+					"range",
 					"text",
 					"enum-single",
 					"enum-multi",
@@ -23,6 +25,7 @@ export const FieldMigration: Migration = {
 			.addColumn("type", sql`field_type_enum`, (col) => col.notNull())
 			.addColumn("min", "decimal(10, 2)")
 			.addColumn("max", "decimal(10, 2)")
+			.addColumn("step", "decimal(10, 2)")
 			.execute();
 	},
 };

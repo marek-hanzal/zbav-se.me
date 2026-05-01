@@ -18,23 +18,33 @@
 		"discovery": "implicit",
 		"field": [
 			{
-				"name": "ram",
+				"name": "brand",
 				"sort": 0,
 				"required": false
 			},
 			{
-				"name": "storage",
+				"name": "model",
 				"sort": 1,
-				"required": true
+				"required": false
 			},
 			{
-				"name": "battery-condition",
+				"name": "ram",
 				"sort": 2,
 				"required": false
 			},
 			{
-				"name": "color",
+				"name": "storage",
 				"sort": 3,
+				"required": true
+			},
+			{
+				"name": "battery-condition",
+				"sort": 4,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 5,
 				"required": false
 			}
 		]
@@ -53,7 +63,28 @@
 		"category": "Tlačítkový telefon",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "dual-sim",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--chytre-hodinky",
@@ -70,7 +101,38 @@
 		"category": "Chytré hodinky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "watch.case-size",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "watch.strap-material",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 4,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 5,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--prislusenstvi-k-mobilum",
@@ -85,7 +147,28 @@
 		"category": "Příslušenství k mobilům",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--powerbanka",
@@ -101,7 +184,28 @@
 		"category": "Powerbanka",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "battery.capacity",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "power.output",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--nabijecky-a-kabely",
@@ -119,7 +223,33 @@
 		"category": "Nabíječky a kabely",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "connector.type",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "cable.length",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--pouzdra-a-skla",
@@ -137,7 +267,28 @@
 		"category": "Pouzdra a skla",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "mobily-a-prislusenstvi--pametove-karty",
@@ -154,7 +305,23 @@
 		"category": "Paměťové karty",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "storage.capacity",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "card.format",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--notebook",
@@ -173,7 +340,38 @@
 		"category": "Notebook",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "ram",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "storage",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "display.size",
+				"sort": 4,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 5,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--stolni-pc",
@@ -190,7 +388,33 @@
 		"category": "Stolní PC",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "ram",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "storage",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--monitor",
@@ -209,7 +433,33 @@
 		"category": "Monitor",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "display.size",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "refresh-rate",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "panel.type",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--pc-komponenty-cpu-gpu-ram",
@@ -229,7 +479,28 @@
 		"category": "PC komponenty (CPU/GPU/RAM)",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "component.type",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--periferie-klavesnice-mys",
@@ -247,7 +518,28 @@
 		"category": "Periferie (klávesnice/myš)",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--sitove-prvky-router-nas",
@@ -266,7 +558,28 @@
 		"category": "Síťové prvky (router/NAS)",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "network.type",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "connectivity",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--tiskarny-a-skenery",
@@ -284,7 +597,28 @@
 		"category": "Tiskárny a skenery",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--uloziste-ssd-hdd",
@@ -303,7 +637,28 @@
 		"category": "Úložiště (SSD/HDD)",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "storage.capacity",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "storage.type",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "connectivity",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "pocitace-a-kancelar--software-a-licence",
@@ -321,7 +676,28 @@
 		"category": "Software a licence",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "license.type",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "platform.os",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--atomizery-boro",
@@ -345,6 +721,16 @@
 				"name": "atomizer.capacity",
 				"sort": 0,
 				"required": true
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
 			}
 		]
 	},
@@ -371,6 +757,16 @@
 				"name": "atomizer.capacity",
 				"sort": 0,
 				"required": true
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
 			}
 		]
 	},
@@ -397,6 +793,16 @@
 				"name": "atomizer.capacity",
 				"sort": 0,
 				"required": true
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
 			}
 		]
 	},
@@ -423,6 +829,16 @@
 				"name": "atomizer.capacity",
 				"sort": 0,
 				"required": true
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
 			}
 		]
 	},
@@ -450,8 +866,13 @@
 				"required": true
 			},
 			{
-				"name": "color",
+				"name": "power.output",
 				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
 				"required": false
 			}
 		]
@@ -473,7 +894,23 @@
 		"category": "Články (baterie)",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "mod.battery",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "battery.capacity",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--spiralky",
@@ -492,7 +929,23 @@
 		"category": "Spirálky",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "compatibility",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "resistance.ohm",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "vape-elektronicke-cigarety--prislusenstvi",
@@ -512,7 +965,23 @@
 		"category": "Příslušenství",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "compatibility",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--damske-obleceni",
@@ -531,7 +1000,28 @@
 		"category": "Dámské oblečení",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "clothing.size",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "brand",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--panske-obleceni",
@@ -550,7 +1040,28 @@
 		"category": "Pánské oblečení",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "clothing.size",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "brand",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--detske-obleceni",
@@ -568,7 +1079,28 @@
 		"category": "Dětské oblečení",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "clothing.size",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "brand",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--boty",
@@ -587,7 +1119,28 @@
 		"category": "Boty",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "shoe.size",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "brand",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--kabelky-a-tasky",
@@ -606,7 +1159,28 @@
 		"category": "Kabelky a tašky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--hodinky-a-sperky",
@@ -625,7 +1199,38 @@
 		"category": "Hodinky a šperky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "watch.case-size",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "watch.strap-material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "jewelry.material",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 4,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 5,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--sportovni-obleceni",
@@ -644,7 +1249,28 @@
 		"category": "Sportovní oblečení",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "clothing.size",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "brand",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "obleceni-a-doplnky--doplnky-cepice-pasky",
@@ -664,7 +1290,28 @@
 		"category": "Doplňky (čepice/pásky)",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "clothing.size",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "brand",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hry-a-konzole--herni-konzole",
@@ -683,7 +1330,33 @@
 		"category": "Herní konzole",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "storage.capacity",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hry-a-konzole--hry-pro-playstation",
@@ -701,7 +1374,28 @@
 		"category": "Hry pro PlayStation",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "game.format",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hry-a-konzole--hry-pro-xbox",
@@ -718,7 +1412,28 @@
 		"category": "Hry pro Xbox",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "game.format",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hry-a-konzole--hry-pro-nintendo",
@@ -737,7 +1452,28 @@
 		"category": "Hry pro Nintendo",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "game.format",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hry-a-konzole--pc-hry",
@@ -755,7 +1491,28 @@
 		"category": "PC hry",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "game.format",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hry-a-konzole--ovladace-a-prislusenstvi",
@@ -773,7 +1530,28 @@
 		"category": "Ovladače a příslušenství",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hry-a-konzole--vr-headsety",
@@ -791,7 +1569,33 @@
 		"category": "VR headsety",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "storage.capacity",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "connectivity",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--televize",
@@ -811,7 +1615,33 @@
 		"category": "Televize",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "display.size",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "panel.type",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--set-top-boxy-a-prehravace",
@@ -829,7 +1659,28 @@
 		"category": "Set-top boxy a přehrávače",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--reproduktory-a-soundbary",
@@ -848,7 +1699,33 @@
 		"category": "Reproduktory a soundbary",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "power.output",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "connectivity",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--sluchatka",
@@ -867,7 +1744,33 @@
 		"category": "Sluchátka",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "battery.life",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--fotoaparaty",
@@ -886,7 +1789,33 @@
 		"category": "Fotoaparáty",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "sensor.type",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--objektivy-a-prislusenstvi",
@@ -904,7 +1833,28 @@
 		"category": "Objektivy a příslušenství",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "lens.mount",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--projektory",
@@ -922,7 +1872,28 @@
 		"category": "Projektory",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "brightness.lm",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--drony-s-kamerou",
@@ -941,7 +1912,33 @@
 		"category": "Drony s kamerou",
 		"restriction": "adult",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "flight.time",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "battery.capacity",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "tv-audio-a-foto--drony-hracky",
@@ -959,7 +1956,33 @@
 		"category": "Drony - hračky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "flight.time",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "battery.capacity",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "detske-zbozi--kocarky",
@@ -976,7 +1999,33 @@
 		"category": "Kočárky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "stroller.type",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "detske-zbozi--autosedacky",
@@ -992,7 +2041,38 @@
 		"category": "Autosedačky",
 		"restriction": "adult",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "seat.mounting",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "child.weight-max",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 4,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 5,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "detske-zbozi--detske-postylky-a-zidlicky",
@@ -1009,7 +2089,33 @@
 		"category": "Dětské postýlky a židličky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "detske-zbozi--hracky",
@@ -1027,7 +2133,33 @@
 		"category": "Hračky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "toy.type",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "age.recommended",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "detske-zbozi--detske-obleceni-a-obuv",
@@ -1043,7 +2175,33 @@
 		"category": "Dětské oblečení a obuv",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "clothing.size",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "shoe.size",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "brand",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "detske-zbozi--prebalovani-a-pece",
@@ -1060,7 +2218,28 @@
 		"category": "Přebalování a péče",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "baby.stage",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "dum-a-bydleni--osvetleni",
@@ -1078,7 +2257,28 @@
 		"category": "Osvětlení",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "power.input",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "dum-a-bydleni--textil-zavesy-koberce",
@@ -1096,7 +2296,23 @@
 		"category": "Textil (závěsy/koberce)",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "dum-a-bydleni--dekorace",
@@ -1114,7 +2330,23 @@
 		"category": "Dekorace",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "dum-a-bydleni--ulozne-boxy-a-organizery",
@@ -1132,7 +2364,23 @@
 		"category": "Úložné boxy a organizéry",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "dum-a-bydleni--zrcadla-a-ramy",
@@ -1149,7 +2397,23 @@
 		"category": "Zrcadla a rámy",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "dum-a-bydleni--smart-home-chytra-domacnost",
@@ -1167,7 +2431,28 @@
 		"category": "Smart home (chytrá domácnost)",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nabytek--pohovky-a-sedaci-soupravy",
@@ -1184,7 +2469,23 @@
 		"category": "Pohovky a sedací soupravy",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nabytek--postele-a-matrace",
@@ -1202,7 +2503,28 @@
 		"category": "Postele a matrace",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "bed.size",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nabytek--skrine-a-komody",
@@ -1219,7 +2541,23 @@
 		"category": "Skříně a komody",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nabytek--stoly-a-zidle",
@@ -1237,7 +2575,23 @@
 		"category": "Stoly a židle",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nabytek--police-a-regaly",
@@ -1255,7 +2609,23 @@
 		"category": "Police a regály",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nabytek--zahradni-nabytek",
@@ -1272,7 +2642,23 @@
 		"category": "Zahradní nábytek",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "bila-technika--lednice-a-mrazaky",
@@ -1290,7 +2676,33 @@
 		"category": "Lednice a mrazáky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "appliance.energy-class",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "bila-technika--pracky-a-susicky",
@@ -1309,7 +2721,33 @@
 		"category": "Pračky a sušičky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "load.capacity",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "appliance.energy-class",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "bila-technika--mycky-nadobi",
@@ -1327,7 +2765,33 @@
 		"category": "Myčky nádobí",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "appliance.energy-class",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "bila-technika--sporaky-a-trouby",
@@ -1346,7 +2810,33 @@
 		"category": "Sporáky a trouby",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "power.input",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "appliance.energy-class",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "bila-technika--mikrovlnky",
@@ -1364,7 +2854,33 @@
 		"category": "Mikrovlnky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "power.input",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "bila-technika--vysavace-a-parni-cistice",
@@ -1382,7 +2898,28 @@
 		"category": "Vysavače a parní čističe",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "power.input",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "kuchyn-a-jidelna--nadobi-a-pribory",
@@ -1400,7 +2937,23 @@
 		"category": "Nádobí a příbory",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "count.pieces",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "kuchyn-a-jidelna--hrnce-a-panve",
@@ -1418,7 +2971,28 @@
 		"category": "Hrnce a pánve",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "diameter",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "kuchyn-a-jidelna--sklenice-a-hrnky",
@@ -1436,7 +3010,28 @@
 		"category": "Sklenice a hrnky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "kuchyn-a-jidelna--kuchynske-spotrebice-male",
@@ -1454,7 +3049,28 @@
 		"category": "Kuchyňské spotřebiče malé",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "power.input",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "kuchyn-a-jidelna--kava-a-kavovary",
@@ -1472,7 +3088,28 @@
 		"category": "Káva a kávovary",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "coffee.machine-type",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "kuchyn-a-jidelna--boxy-a-organizery-do-kuchyne",
@@ -1489,7 +3126,23 @@
 		"category": "Boxy a organizéry do kuchyně",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "jidlo--detske-prikrmy",
@@ -1509,7 +3162,23 @@
 		"category": "Dětské příkrmy",
 		"restriction": "adult",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "baby.stage",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "jidlo--kojenecka-vyziva",
@@ -1525,7 +3194,23 @@
 		"category": "Kojenecká výživa",
 		"restriction": "adult",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "baby.stage",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "jidlo--umela-mleka-a-pokracovaci-mleka",
@@ -1544,7 +3229,23 @@
 		"category": "Umělá mléka a pokračovací mléka",
 		"restriction": "adult",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "baby.stage",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "jidlo--detske-kase",
@@ -1562,7 +3263,23 @@
 		"category": "Dětské kaše",
 		"restriction": "adult",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "baby.stage",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "jidlo--doplnky-stravy-a-vitaminy",
@@ -1579,7 +3296,23 @@
 		"category": "Doplňky stravy a vitamíny",
 		"restriction": "adult",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "jidlo--bezlepkove-a-specialni-potraviny",
@@ -1597,7 +3330,23 @@
 		"category": "Bezlepkové a speciální potraviny",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "jidlo--trvanlive-potraviny",
@@ -1615,7 +3364,23 @@
 		"category": "Trvanlivé potraviny",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "country",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "jidlo--sladkosti-a-snacky",
@@ -1633,7 +3398,23 @@
 		"category": "Sladkosti a snacky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "country",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "jidlo--napoje",
@@ -1651,7 +3432,23 @@
 		"category": "Nápoje",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "country",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "jidlo--caj-a-kava",
@@ -1670,7 +3467,23 @@
 		"category": "Čaj a káva",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "country",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sport-a-outdoor--kola-a-prislusenstvi",
@@ -1688,7 +3501,33 @@
 		"category": "Kola a příslušenství",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "bike.frame-size",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "wheel.diameter",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sport-a-outdoor--beh-a-fitness",
@@ -1706,7 +3545,28 @@
 		"category": "Běh a fitness",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "weight.kg",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sport-a-outdoor--lyze-a-snowboard",
@@ -1723,7 +3583,28 @@
 		"category": "Lyže a snowboard",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "length.cm",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "shoe.size",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sport-a-outdoor--kemping-stany-spacaky",
@@ -1742,7 +3623,28 @@
 		"category": "Kemping (stany/spacáky)",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "player.count",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "weight.kg",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sport-a-outdoor--kolobezky-a-longboardy",
@@ -1760,7 +3662,28 @@
 		"category": "Koloběžky a longboardy",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "wheel.diameter",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "max.load",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sport-a-outdoor--rybareni",
@@ -1778,7 +3701,28 @@
 		"category": "Rybaření",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "length.cm",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "airsoft--airsoftove-pistole",
@@ -1795,7 +3739,33 @@
 		"category": "Airsoftové pistole",
 		"restriction": "sensitive",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "airsoft.power-source",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "muzzle.velocity",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "magazine.capacity",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "airsoft--airsoftove-pusky",
@@ -1812,7 +3782,33 @@
 		"category": "Airsoftové pušky",
 		"restriction": "sensitive",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "airsoft.power-source",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "muzzle.velocity",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "magazine.capacity",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "airsoft--airsoftove-samopaly",
@@ -1829,7 +3825,33 @@
 		"category": "Airsoftové samopaly",
 		"restriction": "sensitive",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "airsoft.power-source",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "muzzle.velocity",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "magazine.capacity",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "airsoft--airsoftove-brokovnice",
@@ -1845,7 +3867,33 @@
 		"category": "Airsoftové brokovnice",
 		"restriction": "sensitive",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "airsoft.power-source",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "muzzle.velocity",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "magazine.capacity",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "airsoft--airsoftove-odstrelovaci-pusky",
@@ -1862,7 +3910,33 @@
 		"category": "Airsoftové odstřelovací pušky",
 		"restriction": "sensitive",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "airsoft.power-source",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "muzzle.velocity",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "magazine.capacity",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "airsoft--airsoftove-prislusenstvi",
@@ -1883,7 +3957,28 @@
 		"category": "Airsoftové příslušenství",
 		"restriction": "sensitive",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "auto-moto--osobni-auta",
@@ -1902,7 +3997,38 @@
 		"category": "Osobní auta",
 		"restriction": "adult",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "vehicle.year",
+				"sort": 2,
+				"required": true
+			},
+			{
+				"name": "vehicle.mileage",
+				"sort": 3,
+				"required": true
+			},
+			{
+				"name": "fuel.type",
+				"sort": 4,
+				"required": false
+			},
+			{
+				"name": "transmission",
+				"sort": 5,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "auto-moto--motocykly-a-skutry",
@@ -1921,7 +4047,38 @@
 		"category": "Motocykly a skútry",
 		"restriction": "adult",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "vehicle.year",
+				"sort": 2,
+				"required": true
+			},
+			{
+				"name": "vehicle.mileage",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "engine.volume",
+				"sort": 4,
+				"required": false
+			},
+			{
+				"name": "fuel.type",
+				"sort": 5,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "auto-moto--pneumatiky-a-disky",
@@ -1940,7 +4097,33 @@
 		"category": "Pneumatiky a disky",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "tyre.season",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "wheel.diameter",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "auto-moto--autodoplnky",
@@ -1957,7 +4140,28 @@
 		"category": "Autodoplňky",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "auto-moto--nahradni-dily",
@@ -1974,7 +4178,28 @@
 		"category": "Náhradní díly",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "part.number",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "vehicle.year",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "auto-moto--helmy-a-vybava",
@@ -1992,7 +4217,28 @@
 		"category": "Helmy a výbava",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "helmet.size",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--sekacky-a-krovinorezy",
@@ -2009,7 +4255,28 @@
 		"category": "Sekačky a křovinořezy",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "power.source",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "length.cm",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--pily-a-retezove-pily",
@@ -2027,7 +4294,28 @@
 		"category": "Pily a řetězové pily",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "power.source",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "blade.length",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--aku-naradi-vrtacky-brusky",
@@ -2046,7 +4334,28 @@
 		"category": "Aku nářadí (vrtačky/brusky)",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "power.source",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "battery.capacity",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--rucni-naradi",
@@ -2065,7 +4374,23 @@
 		"category": "Ruční nářadí",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--zavlazovani-a-zahradni-technika",
@@ -2083,7 +4408,28 @@
 		"category": "Zavlažování a zahradní technika",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "zahrada-a-dilna--grily-a-prislusenstvi",
@@ -2102,7 +4448,28 @@
 		"category": "Grily a příslušenství",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "power.source",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--pelisky-a-boudy",
@@ -2120,7 +4487,23 @@
 		"category": "Pelíšky a boudy",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--misky-a-krmitka",
@@ -2138,7 +4521,23 @@
 		"category": "Misky a krmítka",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--voditka-a-obojky",
@@ -2157,7 +4556,23 @@
 		"category": "Vodítka a obojky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--hracky-pro-zvirata",
@@ -2175,7 +4590,23 @@
 		"category": "Hračky pro zvířata",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "brand",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--akvaria-a-teraria",
@@ -2193,7 +4624,23 @@
 		"category": "Akvária a terária",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--klece-a-prepravky",
@@ -2212,7 +4659,23 @@
 		"category": "Klece a přepravky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--kralici",
@@ -2229,7 +4692,28 @@
 		"category": "Králíci",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--morcata",
@@ -2244,7 +4728,28 @@
 		"category": "Morčata",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--krecici",
@@ -2259,7 +4764,28 @@
 		"category": "Křečci",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--potkani-a-mysi",
@@ -2276,7 +4802,28 @@
 		"category": "Potkani a myši",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--papousci-a-ptaci",
@@ -2294,7 +4841,28 @@
 		"category": "Papoušci a ptáci",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--rybicky",
@@ -2310,7 +4878,28 @@
 		"category": "Rybičky",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--agamy-a-jesteri",
@@ -2329,7 +4918,28 @@
 		"category": "Agamy a ještěři",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--hadi",
@@ -2347,7 +4957,28 @@
 		"category": "Hadi",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--zelvy",
@@ -2362,7 +4993,28 @@
 		"category": "Želvy",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--kocky",
@@ -2379,7 +5031,28 @@
 		"category": "Kočky",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--psi",
@@ -2396,7 +5069,28 @@
 		"category": "Psi",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--krmivo-a-pamlsky",
@@ -2414,7 +5108,23 @@
 		"category": "Krmivo a pamlsky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pet.life-stage",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--stelivo-a-podestylka",
@@ -2431,7 +5141,23 @@
 		"category": "Stelivo a podestýlka",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--terarijni-vybaveni",
@@ -2449,7 +5175,28 @@
 		"category": "Terarijní vybavení",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "power.input",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--akvarijni-vybaveni",
@@ -2466,7 +5213,28 @@
 		"category": "Akvarijní vybavení",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "power.input",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--pece-a-hygiena",
@@ -2484,7 +5252,23 @@
 		"category": "Péče a hygiena",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "skin.type",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "domaci-zvirata--veterinarni-doplnky",
@@ -2501,7 +5285,23 @@
 		"category": "Veterinární doplňky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pet.life-stage",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "knihy--bezne-knihy",
@@ -2519,7 +5319,28 @@
 		"category": "Běžné knihy",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "author",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "book.format",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "knihy--komiksy-a-manga",
@@ -2537,7 +5358,33 @@
 		"category": "Komiksy a manga",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "author",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "book.format",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "knihy--pro-dospele",
@@ -2554,7 +5401,28 @@
 		"category": "Pro dospělé",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "author",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "book.format",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "filmy--bezne-filmy",
@@ -2574,7 +5442,23 @@
 		"category": "Běžné filmy",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "movie.format",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "filmy--vhs",
@@ -2593,7 +5477,18 @@
 		"category": "VHS",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "release.year",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 1,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "filmy--pro-dospele",
@@ -2611,7 +5506,23 @@
 		"category": "Pro dospělé",
 		"restriction": "adult-relaxed",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "movie.format",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hudba--bezna-hudba",
@@ -2629,7 +5540,28 @@
 		"category": "Běžná hudba",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "artist",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hudba--vinyl-a-gramodesky",
@@ -2648,7 +5580,28 @@
 		"category": "Vinyl a gramodesky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "artist",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "record.size",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hudba--cd-a-kazety",
@@ -2667,7 +5620,23 @@
 		"category": "CD a kazety",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "artist",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hudba--noty-a-zpevniky",
@@ -2685,7 +5654,28 @@
 		"category": "Noty a zpěvníky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "author",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "platform",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hobby-a-kreativita--deskovky-a-puzzle",
@@ -2703,7 +5693,28 @@
 		"category": "Deskovky a puzzle",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "player.count",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "age.recommended",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hobby-a-kreativita--modelarstvi-rc-drony",
@@ -2722,7 +5733,28 @@
 		"category": "Modelářství (RC/drony)",
 		"restriction": "adult",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "battery.capacity",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hobby-a-kreativita--3d-tisk-a-filamenty",
@@ -2741,7 +5773,28 @@
 		"category": "3D tisk a filamenty",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hobby-a-kreativita--malovani-a-kresleni",
@@ -2760,7 +5813,28 @@
 		"category": "Malování a kreslení",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hobby-a-kreativita--siti-a-hackovani",
@@ -2779,7 +5853,28 @@
 		"category": "Šití a háčkování",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hobby-a-kreativita--diy-sady-a-material",
@@ -2798,7 +5893,28 @@
 		"category": "DIY sady a materiál",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "age.recommended",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "krasa-a-osobni-pece--parfemy",
@@ -2816,7 +5932,23 @@
 		"category": "Parfémy",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "fragrance.type",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "krasa-a-osobni-pece--pece-o-plet",
@@ -2834,7 +5966,23 @@
 		"category": "Péče o pleť",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "skin.type",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "krasa-a-osobni-pece--pece-o-vlasy",
@@ -2852,7 +6000,23 @@
 		"category": "Péče o vlasy",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "hair.type",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "krasa-a-osobni-pece--holici-strojky-a-epilatory",
@@ -2870,7 +6034,28 @@
 		"category": "Holicí strojky a epilátory",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "power.source",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "krasa-a-osobni-pece--zehlicky-a-kulmy",
@@ -2888,7 +6073,23 @@
 		"category": "Žehličky a kulmy",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "power.input",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "krasa-a-osobni-pece--manikura-a-pedikura",
@@ -2907,7 +6108,23 @@
 		"category": "Manikúra a pedikúra",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "power.input",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hudebni-nastroje--kytary-a-baskytary",
@@ -2925,7 +6142,33 @@
 		"category": "Kytary a baskytary",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "handedness",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hudebni-nastroje--klavesy-a-piana",
@@ -2944,7 +6187,28 @@
 		"category": "Klávesy a piana",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "key.count",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hudebni-nastroje--bici-a-perkuse",
@@ -2963,7 +6227,28 @@
 		"category": "Bicí a perkuse",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hudebni-nastroje--dechove-nastroje",
@@ -2981,7 +6266,28 @@
 		"category": "Dechové nástroje",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "release.year",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hudebni-nastroje--midi-a-studiova-technika",
@@ -2999,7 +6305,28 @@
 		"category": "MIDI a studiová technika",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "hudebni-nastroje--struny-palicky-a-prislusenstvi",
@@ -3017,7 +6344,28 @@
 		"category": "Struny, paličky a příslušenství",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--mince-a-bankovky",
@@ -3035,7 +6383,28 @@
 		"category": "Mince a bankovky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "country",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "collectible.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--postovni-znamky",
@@ -3052,7 +6421,28 @@
 		"category": "Poštovní známky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "country",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "collectible.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "language",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--figurky-a-modely",
@@ -3070,7 +6460,28 @@
 		"category": "Figurky a modely",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "series",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--retro-a-vintage",
@@ -3089,7 +6500,28 @@
 		"category": "Retro a vintage",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "collectible.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--starozitnosti",
@@ -3107,7 +6539,28 @@
 		"category": "Starožitnosti",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "collectible.year",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "country",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sberatelstvi-a-starozitnosti--pamatky-a-kuriozity",
@@ -3125,7 +6578,28 @@
 		"category": "Památky a kuriozity",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "collectible.year",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "country",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "chladne-zbrane--noze",
@@ -3143,7 +6617,28 @@
 		"category": "Nože",
 		"restriction": "sensitive",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "blade.length",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "chladne-zbrane--mece-a-savle",
@@ -3161,7 +6656,28 @@
 		"category": "Meče a šavle",
 		"restriction": "sensitive",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "blade.length",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "chladne-zbrane--dyky",
@@ -3178,7 +6694,28 @@
 		"category": "Dýky",
 		"restriction": "sensitive",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "blade.length",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "chladne-zbrane--bajonety",
@@ -3195,7 +6732,28 @@
 		"category": "Bajonety",
 		"restriction": "sensitive",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "compatibility",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "blade.length",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "brand",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "chladne-zbrane--sekery-a-macety",
@@ -3213,7 +6771,28 @@
 		"category": "Sekery a mačety",
 		"restriction": "sensitive",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "blade.length",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "chladne-zbrane--vrhaci-zbrane",
@@ -3230,7 +6809,28 @@
 		"category": "Vrhací zbraně",
 		"restriction": "sensitive",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "count.pieces",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "chladne-zbrane--repliky-a-dekorace",
@@ -3248,7 +6848,28 @@
 		"category": "Repliky a dekorace",
 		"restriction": "sensitive",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "collectible.year",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "umeni-a-design--obrazy-a-grafiky",
@@ -3267,7 +6888,28 @@
 		"category": "Obrazy a grafiky",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "artist",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "art.year",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "umeni-a-design--plakaty-a-printy",
@@ -3285,7 +6927,28 @@
 		"category": "Plakáty a printy",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "artist",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "art.year",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "umeni-a-design--sochy-a-objekty",
@@ -3303,7 +6966,28 @@
 		"category": "Sochy a objekty",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "art.year",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "artist",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "umeni-a-design--autorsky-design",
@@ -3320,7 +7004,28 @@
 		"category": "Autorský design",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "artist",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "art.year",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "umeni-a-design--ramovani-a-pasparty",
@@ -3338,7 +7043,23 @@
 		"category": "Rámování a pasparty",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "umeni-a-design--umelecke-potreby",
@@ -3355,7 +7076,28 @@
 		"category": "Umělecké potřeby",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "package.weight",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nemovitosti--prodej-bytu",
@@ -3373,7 +7115,33 @@
 		"category": "Prodej bytu",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"required": true
+			},
+			{
+				"name": "rooms.count",
+				"sort": 1,
+				"required": true
+			},
+			{
+				"name": "property.furnishing",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "property.heating",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "property.year-built",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nemovitosti--pronajem-bytu",
@@ -3391,7 +7159,33 @@
 		"category": "Pronájem bytu",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"required": true
+			},
+			{
+				"name": "rooms.count",
+				"sort": 1,
+				"required": true
+			},
+			{
+				"name": "property.furnishing",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "property.heating",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "property.year-built",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nemovitosti--prodej-domu",
@@ -3409,7 +7203,33 @@
 		"category": "Prodej domu",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"required": true
+			},
+			{
+				"name": "land.area",
+				"sort": 1,
+				"required": true
+			},
+			{
+				"name": "rooms.count",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "property.year-built",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "property.heating",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nemovitosti--pronajem-domu",
@@ -3426,7 +7246,33 @@
 		"category": "Pronájem domu",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"required": true
+			},
+			{
+				"name": "land.area",
+				"sort": 1,
+				"required": true
+			},
+			{
+				"name": "rooms.count",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "property.year-built",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "property.heating",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nemovitosti--pozemky",
@@ -3444,7 +7290,28 @@
 		"category": "Pozemky",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "land.area",
+				"sort": 0,
+				"required": true
+			},
+			{
+				"name": "land.type",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "buildability",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "property.electricity",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nemovitosti--garaze-a-parkovani",
@@ -3462,7 +7329,23 @@
 		"category": "Garáže a parkování",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"required": true
+			},
+			{
+				"name": "parking.type",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "property.electricity",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nemovitosti--chaty-a-chalupy",
@@ -3480,7 +7363,33 @@
 		"category": "Chaty a chalupy",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"required": true
+			},
+			{
+				"name": "land.area",
+				"sort": 1,
+				"required": true
+			},
+			{
+				"name": "rooms.count",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "property.year-built",
+				"sort": 3,
+				"required": false
+			},
+			{
+				"name": "property.heating",
+				"sort": 4,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "nemovitosti--komercni-prostory",
@@ -3497,7 +7406,28 @@
 		"category": "Komerční prostory",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"required": true
+			},
+			{
+				"name": "property.furnishing",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "property.heating",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "property.year-built",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "ostatni--darkove-poukazy",
@@ -3514,7 +7444,23 @@
 		"category": "Dárkové poukazy",
 		"restriction": "adult-relaxed",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "voucher.value",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "edition",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "ostatni--ztraty-a-nalezy",
@@ -3532,7 +7478,28 @@
 		"category": "Ztráty a nálezy",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "location.note",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "ostatni--nahradni-dily-ruzne",
@@ -3549,7 +7516,28 @@
 		"category": "Náhradní díly různé",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "part.number",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "compatibility",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "ostatni--nezarazene",
@@ -3566,7 +7554,28 @@
 		"category": "Nezařazené",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--vanoce",
@@ -3587,7 +7596,23 @@
 		"category": "Vánoce",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--valentyn",
@@ -3606,7 +7631,23 @@
 		"category": "Valentýn",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--velikonoce",
@@ -3626,7 +7667,23 @@
 		"category": "Velikonoce",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--halloween",
@@ -3646,7 +7703,23 @@
 		"category": "Halloween",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--zima",
@@ -3669,7 +7742,23 @@
 		"category": "Zima",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--jaro",
@@ -3693,7 +7782,23 @@
 		"category": "Jaro",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--leto",
@@ -3719,7 +7824,23 @@
 		"category": "Léto",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--podzim",
@@ -3743,7 +7864,23 @@
 		"category": "Podzim",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--silvestr",
@@ -3764,7 +7901,23 @@
 		"category": "Silvestr",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--pyrotechnika",
@@ -3783,7 +7936,28 @@
 		"category": "Pyrotechnika",
 		"restriction": "adult",
 		"discovery": "explicit",
-		"field": []
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "pyro.class",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--den-matek",
@@ -3802,7 +7976,23 @@
 		"category": "Den matek",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--den-otcu",
@@ -3820,7 +8010,23 @@
 		"category": "Den otců",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--zacatek-skoly",
@@ -3842,7 +8048,23 @@
 		"category": "Začátek školy",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	},
 	{
 		"slug": "sezona--maturita",
@@ -3862,6 +8084,22 @@
 		"category": "Maturita",
 		"restriction": "none",
 		"discovery": "implicit",
-		"field": []
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"required": false
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"required": false
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"required": false
+			}
+		]
 	}
 ]

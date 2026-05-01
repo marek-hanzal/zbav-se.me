@@ -9,6 +9,15 @@ export const FieldTableSchema = z
 		type: FieldTypeEnumSchema.meta({
 			description: "Type of the field",
 		}),
+		min: z.coerce.number().nullable().optional().meta({
+			description: "Minimum numeric value for the field",
+		}),
+		max: z.coerce.number().nullable().optional().meta({
+			description: "Maximum numeric value for the field",
+		}),
+		step: z.coerce.number().positive().nullable().optional().meta({
+			description: "Step for numeric field controls",
+		}),
 	})
 	.meta({
 		id: "FieldTable",

@@ -31,6 +31,9 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 			.select([
 				"f.name",
 				"f.type",
+				sql<number | null>`f.min::float8`.as("min"),
+				sql<number | null>`f.max::float8`.as("max"),
+				sql<number | null>`f.step::float8`.as("step"),
 				"cf.required",
 				(eb) => {
 					return jsonArrayFrom(
@@ -86,7 +89,29 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 								.whereRef("an.fieldId", "=", "cf.fieldId")
 								.$castTo<number>(),
 						)
+						.when("f.type", "=", "year")
+						.then(
+							eb
+								.selectFrom("attr_number as an")
+								.select([
+									(eb) => sql`to_jsonb(${eb.ref("an.value")})`.as("value"),
+								])
+								.where("an.listingId", "=", listingId)
+								.whereRef("an.fieldId", "=", "cf.fieldId")
+								.$castTo<number>(),
+						)
 						.when("f.type", "=", "decimal")
+						.then(
+							eb
+								.selectFrom("attr_decimal as ad")
+								.select([
+									(eb) => sql`to_jsonb(${eb.ref("ad.value")})`.as("value"),
+								])
+								.where("ad.listingId", "=", listingId)
+								.whereRef("ad.fieldId", "=", "cf.fieldId")
+								.$castTo<number>(),
+						)
+						.when("f.type", "=", "range")
 						.then(
 							eb
 								.selectFrom("attr_decimal as ad")

@@ -4,6 +4,8 @@ export const FieldTypeEnumSchema = z
 	.enum([
 		"number",
 		"decimal",
+		"year",
+		"range",
 		"text",
 		"enum-single",
 		"enum-multi",
