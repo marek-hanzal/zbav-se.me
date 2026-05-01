@@ -83,10 +83,10 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 			>
 				<Tx
 					label={textLabel}
-					preset={"label"}
-					data-ui-font="semibold"
+					data-ui-font="normal"
 					data-ui-display="block"
 					data-ui-color="lead"
+					data-ui-text={"sm"}
 					{...textLabelProps}
 				/>
 
@@ -123,11 +123,13 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 							data-ui-flow={"horizontal"}
 							data-ui-items={"center"}
 							data-ui-gap={"default"}
+							data-ui-text={"lg"}
 							className={"px-0"}
 						>
 							<Icon
 								icon={"icon-[proicons--checkmark]"}
 								data-ui-text={"xl"}
+								data-ui-opacity={"6"}
 							/>
 							{renderFn(item)}
 						</Container>

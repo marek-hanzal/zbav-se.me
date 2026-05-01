@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withAgentUsageCollectionSelectFx } from "~/user/agent/server/db/withAgentUsageCollectionSelectFx";
-import { withAgentUsageQueryBuilderFx } from "~/user/agent/server/db/withAgentUsageQueryBuilderFx";
+import { withAgentUsageSelectFx } from "~/user/agent/server/db/withAgentUsageSelectFx";
 import type { AgentUsageFilterSchema } from "~/user/agent/server/schema/AgentUsageFilterSchema";
 import type { AgentUsageQuerySchema } from "~/user/agent/server/schema/AgentUsageQuerySchema";
 
@@ -34,7 +33,7 @@ export const agentUsageCollectionFx = Effect.fn("agentUsageCollectionFx")(functi
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withAgentUsageCollectionSelectFx({
+		selectFx: withAgentUsageSelectFx({
 			sort,
 		}),
 		cursor,
@@ -42,7 +41,6 @@ export const agentUsageCollectionFx = Effect.fn("agentUsageCollectionFx")(functi
 		filter,
 		where,
 		scope,
-		queryFx: withAgentUsageQueryBuilderFx,
 	});
 });
 

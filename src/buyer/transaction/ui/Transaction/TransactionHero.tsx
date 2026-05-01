@@ -40,7 +40,7 @@ export const TransactionHero: FC<TransactionHero.Props> = ({ transactionId, ...p
 				className={"h-42"}
 			/>
 
-			<ListingPrice
+			{/* <ListingPrice
 				price={transaction.price}
 				priceType={transaction.priceType}
 				currency={transaction.currency}
@@ -55,7 +55,7 @@ export const TransactionHero: FC<TransactionHero.Props> = ({ transactionId, ...p
 				data-ui-snap-to="bottom"
 				data-ui-opacity="8"
 				data-ui-z-index
-			/>
+			/> */}
 		</Container>
 	);
 };

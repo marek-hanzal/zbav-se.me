@@ -5,7 +5,7 @@ import { useLocale } from "@/lib/client/locale";
 import { Typo, uiTypo } from "@/lib/client/typo";
 import { LabelValue } from "@/lib/client/value";
 import { toTimeDiff } from "@/lib/common/time";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { SendPackageIcon } from "~/common/ui/icon";
 import type { TransactionEntryPackage } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/PackageSchema";
 import { TypeContainer } from "./TypeContainer";

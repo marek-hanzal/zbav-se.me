@@ -6,9 +6,10 @@ import type { AgentUsageTableSchema } from "~/server/database/@table/AgentUsageT
 import type { CategoryMissTableSchema } from "~/server/database/@table/CategoryMissTableSchema";
 import type { CategorySpotlightTableSchema } from "~/server/database/@table/CategorySpotlightTableSchema";
 import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
-import type { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
 import type { FavouriteTableSchema } from "~/server/database/@table/FavouriteTableSchema";
 import type { FeedTableSchema } from "~/server/database/@table/FeedTableSchema";
+import type { FieldOptionTableSchema } from "~/server/database/@table/FieldOptionTableSchema";
+import type { FieldTableSchema } from "~/server/database/@table/FieldTableSchema";
 import type { FlagTableSchema } from "~/server/database/@table/FlagTableSchema";
 import type { GalleryItemTableSchema } from "~/server/database/@table/GalleryItemTableSchema";
 import type { GalleryTableSchema } from "~/server/database/@table/GalleryTableSchema";
@@ -21,22 +22,36 @@ import type { ThumbTableSchema } from "~/server/database/@table/ThumbTableSchema
 import type { TransactionEntryTableSchema } from "~/server/database/@table/TransactionEntryTableSchema";
 import type { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
 import type { TransactionUserTableSchema } from "~/server/database/@table/TransactionUserTableSchema";
+import type { TranslationTableSchema } from "~/server/database/@table/TranslationTableSchema";
 import type { UploadTableSchema } from "~/server/database/@table/UploadTableSchema";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
 import type { UserRestrictionTableSchema } from "~/server/database/@table/UserRestrictionTableSchema";
+import type { AttrDecimalTableSchema } from "./@table/AttrDecimalTableSchema";
+import type { AttrEnumMultiSchema } from "./@table/AttrEnumMultiSchema";
+import type { AttrEnumSingleSchema } from "./@table/AttrEnumSingleSchema";
+import type { AttrNumberTableSchema } from "./@table/AttrNumberTableSchema";
+import type { AttrTextSchema } from "./@table/AttrTextSchema";
+import type { CategoryFieldTableSchema } from "./@table/CategoryFieldTableSchema";
 
 export interface Database {
 	activity: ActivityTableSchema.Type;
+	attr_decimal: AttrDecimalTableSchema.Type;
+	attr_number: AttrNumberTableSchema.Type;
+	attr_enum_multi: AttrEnumMultiSchema.Type;
+	attr_enum_single: AttrEnumSingleSchema.Type;
+	attr_text: AttrTextSchema.Type;
 	agent_stream: AgentStreamTableSchema.Type;
 	agent_thread: AgentThreadTableSchema.Type;
 	agent_usage: AgentUsageTableSchema.Type;
+	category_field: CategoryFieldTableSchema.Type;
 	category_miss: CategoryMissTableSchema.Type;
 	category_spotlight: CategorySpotlightTableSchema.Type;
 	category: CategoryTableSchema.Type;
-	draft: DraftTableSchema.Type;
 	favourite: FavouriteTableSchema.Type;
 	feed: FeedTableSchema.Type;
+	field: FieldTableSchema.Type;
+	field_option: FieldOptionTableSchema.Type;
 	flag: FlagTableSchema.Type;
 	gallery_item: GalleryItemTableSchema.Type;
 	gallery: GalleryTableSchema.Type;
@@ -49,6 +64,7 @@ export interface Database {
 	transaction_entry: TransactionEntryTableSchema.Type;
 	transaction_user: TransactionUserTableSchema.Type;
 	transaction: TransactionTableSchema.Type;
+	translation: TranslationTableSchema.Type;
 	upload: UploadTableSchema.Type;
 	user_event: UserEventTableSchema.Type;
 	user_ex: UserExTableSchema.Type;

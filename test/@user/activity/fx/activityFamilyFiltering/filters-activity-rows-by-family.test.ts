@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { withActivityQueryBuilderFx } from "~/user/activity/server/db/withActivityQueryBuilderFx";
 import { withActivitySelectFx } from "~/user/activity/server/db/withActivitySelectFx";
 
 describe("activity family", () => {
@@ -53,13 +52,10 @@ describe("activity family", () => {
 					.execute(),
 			);
 
-			const select = yield* withActivitySelectFx({});
-			const query = yield* withActivityQueryBuilderFx({
-				select,
-				where: {
-					userId: user.id,
-					family: "transaction",
-				},
+			const { select, queryFx } = yield* withActivitySelectFx({});
+			const query = yield* queryFx(select, {
+				userId: user.id,
+				family: "transaction",
 			});
 
 			const rows = yield* Effect.promise(() => query.execute());

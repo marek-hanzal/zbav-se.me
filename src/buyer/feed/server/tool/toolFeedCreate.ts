@@ -24,16 +24,8 @@ const InputSchema = z
 						//
 					})
 					.pick({
-						ageMin: true,
-						ageMax: true,
 						categoryIdIn: true,
-						conditionMin: true,
-						conditionMax: true,
-						priceMin: true,
-						priceMax: true,
-						deliveryIn: true,
 						fulltext: true,
-						range: true,
 					})
 					.strip(),
 				sort: ListingSortSchema.array().optional(),

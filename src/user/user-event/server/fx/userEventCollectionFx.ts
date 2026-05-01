@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withUserEventCollectionSelectFx } from "../db/withUserEventCollectionSelectFx";
-import { withUserEventQueryBuilderFx } from "../db/withUserEventQueryBuilderFx";
+import { withUserEventSelectFx } from "../db/withUserEventSelectFx";
 import type { UserEventFilterSchema } from "../schema/UserEventFilterSchema";
 import type { UserEventQuerySchema } from "../schema/UserEventQuerySchema";
 
@@ -13,15 +12,15 @@ export namespace userEventCollectionFx {
 }
 
 export const userEventCollectionFx = Effect.fn("userEventCollectionFx")(function* ({
-	filter,
-	where,
-	scope,
 	cursor = {
 		page: 0,
 		size: 10,
 	},
-	limit,
+	filter,
+	where,
+	scope,
 	sort,
+	limit,
 }: userEventCollectionFx.Props) {
 	const logger = yield* getLoggerFx("userEventCollectionFx");
 	logger.trace("userEventCollectionFx", {
@@ -29,20 +28,19 @@ export const userEventCollectionFx = Effect.fn("userEventCollectionFx")(function
 		where,
 		scope,
 		cursor,
-		limit,
 		sort,
+		limit,
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withUserEventCollectionSelectFx({
+		selectFx: withUserEventSelectFx({
 			sort,
 		}),
 		cursor,
-		limit,
 		filter,
 		where,
 		scope,
-		queryFx: withUserEventQueryBuilderFx,
+		limit,
 	});
 });
 

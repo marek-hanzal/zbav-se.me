@@ -2,13 +2,12 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
-import { withTransactionCollectionSelectFx } from "~/seller/transaction/server/db/withTransactionCollectionSelectFx";
-import { withTransactionQueryBuilderFx } from "~/seller/transaction/server/db/withTransactionQueryBuilderFx";
 import type { TransactionFilterSchema } from "~/seller/transaction/server/schema/TransactionFilterSchema";
 import type { TransactionPatchCollectionSchema } from "~/seller/transaction/server/schema/TransactionPatchCollectionSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import { withTransactionSelectFx } from "../db/withTransactionSelectFx";
 
 export namespace transactionPatchCollectionFx {
 	export interface Props extends TransactionPatchCollectionSchema.Type {
@@ -34,7 +33,7 @@ export const transactionPatchCollectionFx = Effect.fn("transactionPatchCollectio
 			const dateContext = yield* DateContextFx;
 			const now = dateContext.now().toJSDate();
 
-			let select = yield* withTransactionCollectionSelectFx({
+			let { select, queryFx } = yield* withTransactionSelectFx({
 				sort: query.sort,
 			});
 
@@ -43,10 +42,7 @@ export const transactionPatchCollectionFx = Effect.fn("transactionPatchCollectio
 				query.where,
 				scope,
 			]) {
-				select = yield* withTransactionQueryBuilderFx({
-					select,
-					where: layer,
-				});
+				select = yield* queryFx(select, layer);
 			}
 
 			const selectIds = select.clearSelect().select("lt.id");
@@ -72,7 +68,7 @@ export const transactionPatchCollectionFx = Effect.fn("transactionPatchCollectio
 			}
 
 			return yield* withCollectionFx({
-				selectFx: withTransactionCollectionSelectFx({
+				selectFx: withTransactionSelectFx({
 					sort: query.sort,
 				}),
 				cursor: {
@@ -83,7 +79,6 @@ export const transactionPatchCollectionFx = Effect.fn("transactionPatchCollectio
 					idIn: ids,
 				},
 				scope,
-				queryFx: withTransactionQueryBuilderFx,
 			});
 		}),
 	);

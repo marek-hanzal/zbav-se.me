@@ -11,7 +11,7 @@ import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
 import { onSubmit } from "@/lib/client/submit";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { useAppForm } from "~/common/ui/form";
 import { Logo } from "~/common/ui/logo";
 import { withEmailSignInMutation } from "~/user/auth/mutation/withEmailSignInMutation";

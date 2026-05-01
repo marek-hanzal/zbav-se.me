@@ -6,7 +6,11 @@ import { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 export const FeedSchema = z
 	.looseObject({
 		...FeedTableSchema.shape,
-		query: ListingQuerySchema.meta({
+		query: ListingQuerySchema.pick({
+			filter: true,
+			meta: true,
+			sort: true,
+		}).meta({
 			id: "FeedListingQuery",
 			description: "A query usable directly with Listing domain (fetch, collection, ...)",
 		}),

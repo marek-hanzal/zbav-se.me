@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { withTransactionCollectionSelectFx } from "~/seller/transaction/server/db/withTransactionCollectionSelectFx";
-import { withTransactionQueryBuilderFx } from "~/seller/transaction/server/db/withTransactionQueryBuilderFx";
+import { withTransactionSelectFx } from "~/seller/transaction/server/db/withTransactionSelectFx";
 import type { TransactionCountQuerySchema } from "~/seller/transaction/server/schema/TransactionCountQuerySchema";
 import type { TransactionFilterSchema } from "~/seller/transaction/server/schema/TransactionFilterSchema";
 
@@ -25,11 +24,10 @@ export const transactionCountFx = Effect.fn("transactionCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withTransactionCollectionSelectFx({}),
+		selectFx: withTransactionSelectFx({}),
 		filter,
 		where,
 		scope,
-		queryFx: withTransactionQueryBuilderFx,
 	});
 });
 

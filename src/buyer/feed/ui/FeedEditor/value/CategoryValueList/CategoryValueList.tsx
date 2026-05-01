@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { withFallback } from "@/lib/client/fallback";
 import type { MarkSuspense } from "@/lib/client/type";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withCategoryQuery } from "~/user/category/query/withCategoryQuery";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { CategoryInline } from "~/user/category/ui/CategoryInline";

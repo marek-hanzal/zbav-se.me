@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { withFeedCollectionSelectFx } from "~/buyer/feed/server/db/withFeedCollectionSelectFx";
-import { withFeedQueryBuilderFx } from "~/buyer/feed/server/db/withFeedQueryBuilderFx";
+import { withFeedSelectFx } from "~/buyer/feed/server/db/withFeedSelectFx";
 import type { FeedCountQuerySchema } from "~/buyer/feed/server/schema/FeedCountQuerySchema";
 import type { FeedFilterSchema } from "~/buyer/feed/server/schema/FeedFilterSchema";
 
@@ -25,11 +24,10 @@ export const feedCountFx = Effect.fn("feedCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withFeedCollectionSelectFx({}),
+		selectFx: withFeedSelectFx({}),
 		filter,
 		where,
 		scope,
-		queryFx: withFeedQueryBuilderFx,
 	});
 });
 

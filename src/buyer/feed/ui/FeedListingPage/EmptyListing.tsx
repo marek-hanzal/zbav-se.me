@@ -6,7 +6,7 @@ import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { FirstIcon } from "~/common/ui/icon";
 
 export namespace EmptyListing {
@@ -44,7 +44,7 @@ export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 							data-action={"create first listing"}
 							icon={ChevronRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/app/seller/draft/resolve"}
+							to={"/$locale/app/seller/listing/resolve"}
 							params={{
 								locale,
 							}}

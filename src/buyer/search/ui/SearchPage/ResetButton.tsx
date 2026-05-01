@@ -4,7 +4,7 @@ import { Button } from "@/lib/client/button";
 import { RefreshIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
 

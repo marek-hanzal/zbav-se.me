@@ -30,6 +30,7 @@ describe("listingCollectionFx (seller)", () => {
 			expect(status).toBe("sold");
 
 			const collection = yield* listingCollectionFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},

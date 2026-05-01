@@ -8,6 +8,7 @@ import {
 	withDatabaseName,
 	withDialectFx,
 } from "@/lib/common/database";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import type { Database } from "~/server/database/Database";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 import { expectErrorFx } from "~/test/common/fx/expectErrorFx";
@@ -20,7 +21,11 @@ describe("userExPatchFx", () => {
 	it("creates when missing, updates when existing, and hits conflict branch on concurrent create", async () => {
 		const database = await testabase("userExPatchFx-create-update-conflict");
 		const databaseConfig = ServerDatabaseSchema.parse(process.env);
-		const secondDatabase = await withDatabaseFx<Database>({}).pipe(
+		const secondDatabase = await withDatabaseFx<Database>({
+			logger: getRootLogger([
+				"db",
+			]),
+		}).pipe(
 			withDialectFx(
 				new PostgresDialect({
 					pool: new Pool({

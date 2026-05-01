@@ -3,7 +3,7 @@ import { useState } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { Button } from "@/lib/client/button";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { CloseButton } from "~/common/ui/button";
 import { LocationIcon } from "~/common/ui/icon";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";

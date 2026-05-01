@@ -1,22 +1,19 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { withListingCollectionSelectFx } from "~/seller/listing/server/db/withListingCollectionSelectFx";
-import { withListingQueryBuilderFx } from "~/seller/listing/server/db/withListingQueryBuilderFx";
 import type { ListingCountQuerySchema } from "~/seller/listing/server/schema/ListingCountQuerySchema";
-import type { ListingFilterSchema } from "~/seller/listing/server/schema/ListingFilterSchema";
+import { withListingSelectFx } from "../db/withListingSelectFx";
+import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace listingCountFx {
-	export interface Scope extends ListingFilterSchema.Type {
-		userId: string;
-	}
-
 	export interface Props extends ListingCountQuerySchema.Type {
-		scope: Scope;
+		userId: string;
+		scope: ListingWhereSchema.Type;
 	}
 }
 
 export const listingCountFx = Effect.fn("listingCountFx")(function* ({
+	userId,
 	filter,
 	where,
 	scope,
@@ -29,13 +26,13 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withListingCollectionSelectFx({
-			userId: scope.userId,
+		selectFx: withListingSelectFx({
+			userId,
+			sort: [],
 		}),
 		filter,
 		where,
 		scope,
-		queryFx: withListingQueryBuilderFx,
 	});
 });
 

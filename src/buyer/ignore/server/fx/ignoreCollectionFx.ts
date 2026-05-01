@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withIgnoreCollectionSelectFx } from "~/buyer/ignore/server/db/withIgnoreCollectionSelectFx";
-import { withIgnoreQueryBuilderFx } from "~/buyer/ignore/server/db/withIgnoreQueryBuilderFx";
+import { withIgnoreSelectFx } from "~/buyer/ignore/server/db/withIgnoreSelectFx";
 import type { IgnoreFilterSchema } from "~/buyer/ignore/server/schema/IgnoreFilterSchema";
 import type { IgnoreQuerySchema } from "~/buyer/ignore/server/schema/IgnoreQuerySchema";
 
@@ -34,7 +33,7 @@ export const ignoreCollectionFx = Effect.fn("ignoreCollectionFx")(function* ({
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withIgnoreCollectionSelectFx({
+		selectFx: withIgnoreSelectFx({
 			sort,
 		}),
 		cursor,
@@ -42,7 +41,6 @@ export const ignoreCollectionFx = Effect.fn("ignoreCollectionFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx: withIgnoreQueryBuilderFx,
 	});
 });
 

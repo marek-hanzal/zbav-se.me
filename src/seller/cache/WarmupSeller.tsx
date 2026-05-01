@@ -1,5 +1,4 @@
 import type { FC } from "react";
-import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import { withListingQuery as withSellerListingQuery } from "~/seller/listing/query/withListingQuery";
 import { withTransactionListingQuery } from "~/seller/transaction-listing/query/withTransactionListingQuery";
 
@@ -8,33 +7,6 @@ export namespace WarmupSeller {
 }
 
 export const WarmupSeller: FC<WarmupSeller.Props> = () => {
-	withDraftQuery.useCollectionQuery({
-		where: {
-			usedAtIsNull: true,
-		},
-		cursor: {
-			page: 0,
-			size: 1,
-		},
-		sort: [
-			{
-				field: "updatedAt",
-				order: "desc",
-			},
-		],
-	});
-	withDraftQuery.useCollectionQuery({
-		where: {
-			usedAtIsNull: true,
-		},
-		sort: [
-			{
-				field: "updatedAt",
-				order: "desc",
-			},
-		],
-	});
-
 	withTransactionListingQuery.useCollectionQuery({
 		cursor: {
 			page: 0,

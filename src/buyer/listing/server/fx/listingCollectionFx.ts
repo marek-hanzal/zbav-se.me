@@ -1,11 +1,10 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withListingCollectionSelectFx } from "~/buyer/listing/server/db/withListingCollectionSelectFx";
-import { withListingQueryBuilderFx } from "~/buyer/listing/server/db/withListingQueryBuilderFx";
 import type { ListingFilterSchema } from "~/buyer/listing/server/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
 import { hasExplicitCategory } from "~/common/listing/util/hasExplicitCategory";
+import { withListingSelectFx } from "../db/withListingSelectFx";
 
 export namespace listingCollectionFx {
 	export interface Props extends ListingQuerySchema.Type {
@@ -40,7 +39,7 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withListingCollectionSelectFx({
+		selectFx: withListingSelectFx({
 			userId,
 			sort,
 			meta,
@@ -54,13 +53,6 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx(query) {
-			return withListingQueryBuilderFx({
-				...query,
-				userId,
-				meta,
-			});
-		},
 		limit,
 	});
 });

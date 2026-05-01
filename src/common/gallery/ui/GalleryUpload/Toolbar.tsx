@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
 import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from "@/lib/client/icon";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 
 export namespace Toolbar {
 	export interface Hooks {

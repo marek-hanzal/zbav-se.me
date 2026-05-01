@@ -4,7 +4,7 @@ import { Container } from "@/lib/client/container";
 import { Icon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withProxyMutation } from "~/common/gallery/mutation/withProxyMutation";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { GalleryUploadSheet } from "~/common/gallery/ui/GalleryUploadSheet";

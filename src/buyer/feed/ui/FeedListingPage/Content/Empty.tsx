@@ -3,7 +3,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 import { uiCtaLinkButton } from "~/common/ui/ui";
 
@@ -39,7 +39,7 @@ export const Empty: FC<Empty.Props> = () => {
 						data-action={"create listing"}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
-						to={"/$locale/app/seller/draft/resolve"}
+						to={"/$locale/app/seller/listing/resolve"}
 						params={{
 							locale,
 						}}

@@ -6,7 +6,7 @@ import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { toTimeDiff } from "@/lib/common/time";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListItem } from "~/common/list-item/ListItem";
 import { CloseButton } from "~/common/ui/button";
@@ -55,7 +55,7 @@ export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
 				bottom={
 					<Container data-ui-flow="vertical">
 						<Typo
-							label={listing.title}
+							label={"listing.title"}
 							data-ui-text="sm"
 						/>
 						<Typo
@@ -87,7 +87,6 @@ export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
 			/>
 
 			<BottomSheet
-				data-ui="ActivityThumbItem[BottomSheet]"
 				isOpen={isOpen}
 				onClose={() => {
 					setIsOpen(false);
@@ -98,12 +97,11 @@ export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
 				})}
 			>
 				<Container
-					data-ui="ActivityThumbItem-[ListingCard]"
 					data-ui-inner="default"
 					data-ui-flow="vertical"
 					data-ui-gap="default"
 				>
-					<Tx label={listing.title} />
+					<Tx label={"listing.title"} />
 					<Tx label={`#${listing.id}`} />
 				</Container>
 			</BottomSheet>

@@ -1,21 +1,12 @@
 import { Effect } from "effect";
-import type { SelectQueryBuilder, Simplify } from "kysely";
+import type { Simplify } from "kysely";
 import type { z } from "zod";
 import type { CursorSchema } from "../schema/CursorSchema";
 import type { FilterSchema } from "../schema/FilterSchema";
+import type { selectFx } from "../select/selectFx";
 
 export namespace withCollectionFx {
 	export type Output<TOutputSchema extends z.ZodSchema> = Simplify<z.infer<TOutputSchema>>;
-
-	export namespace Query {
-		export interface Props<
-			TSelect extends SelectQueryBuilder<any, any, any>,
-			TFilter extends FilterSchema.Type,
-		> {
-			select: TSelect;
-			where?: TFilter;
-		}
-	}
 
 	export interface Props<
 		TDB,
@@ -27,14 +18,16 @@ export namespace withCollectionFx {
 		TQueryError,
 		TQueryContext,
 	> {
-		selectFx: Effect.Effect<
-			SelectQueryBuilder<TDB, TTable, TOutput>,
+		selectFx: selectFx<
+			TDB,
+			TTable,
+			TOutput,
+			TFilter,
 			TSelectError,
-			TSelectContext
+			TSelectContext,
+			TQueryError,
+			TQueryContext
 		>;
-		queryFx(
-			props: Query.Props<SelectQueryBuilder<TDB, TTable, TOutput>, TFilter>,
-		): Effect.Effect<SelectQueryBuilder<TDB, TTable, TOutput>, TQueryError, TQueryContext>;
 		//
 		filter?: TFilter;
 		where?: TFilter;
@@ -60,7 +53,6 @@ export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 	const TQueryContext,
 >({
 	selectFx,
-	queryFx,
 	filter,
 	where,
 	scope,
@@ -82,12 +74,9 @@ export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 		scope,
 	] as const;
 
-	let qb = yield* selectFx;
+	let { select: qb, queryFx } = yield* selectFx;
 	for (const layer of layers) {
-		qb = yield* queryFx({
-			select: qb,
-			where: layer,
-		});
+		qb = yield* queryFx(qb, layer);
 	}
 
 	const size = Math.min(limit ?? cursor.size, cursor.size);

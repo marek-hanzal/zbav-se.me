@@ -1,7 +1,7 @@
 import { type FC, Suspense } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
 import type { StateType } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { CloseButton } from "~/common/ui/button";
 import { FeedEditor } from "./FeedEditor";
 

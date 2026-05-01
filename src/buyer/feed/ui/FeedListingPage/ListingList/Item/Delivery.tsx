@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Typo } from "@/lib/client/typo";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 
 export namespace Delivery {

@@ -5,17 +5,6 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { View } from "@/lib/client/view";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { Editor } from "./Editor";
-import { AgePatch } from "./patch/AgePatch";
-import { CategoryPatch } from "./patch/CategoryPatch";
-import { ConditionPatch } from "./patch/ConditionPatch";
-import { DeliveryPatch } from "./patch/DeliveryPatch";
-import { GalleryPatch } from "./patch/GalleryPatch";
-import { LocationPatch } from "./patch/LocationPatch";
-import { NamePatch } from "./patch/NamePatch";
-import { RangePatch } from "./patch/RangePatch";
-import { SortPatch } from "./patch/SortPatch";
-import { TitlePatch } from "./patch/TitlePatch";
-import { WarrantyPatch } from "./patch/WarrantyPatch";
 
 export namespace FeedEditor {
 	export type View =
@@ -64,109 +53,43 @@ export const FeedEditor = withFallback(
 			return {
 				default: editorView,
 				gallery: {
-					children: (
-						<GalleryPatch
-							feed={feed}
-							onCancel={onDone}
-							onSettled={onDone}
-						/>
-					),
+					children: "not yet",
 				},
 				name: {
-					children: (
-						<NamePatch
-							feed={feed}
-							onCancel={onDone}
-							onSettled={onDone}
-						/>
-					),
+					children: "not yet",
 				},
 				category: {
-					children: (
-						<CategoryPatch
-							feed={feed}
-							onCancel={onDone}
-							onSettled={onDone}
-						/>
-					),
+					children: "not yet",
 				},
 				location: {
-					children: (
-						<LocationPatch
-							feed={feed}
-							onCancel={onDone}
-							onSettled={onDone}
-						/>
-					),
+					children: "not yet",
 				},
 				range: {
-					children: (
-						<RangePatch
-							feed={feed}
-							onCancel={onDone}
-							onSettled={onDone}
-						/>
-					),
+					children: "not yet",
 				},
 				sort: {
-					children: (
-						<SortPatch
-							feed={feed}
-							onCancel={onDone}
-							onSettled={onDone}
-						/>
-					),
+					children: "not yet",
 				},
 				condition: {
-					children: (
-						<ConditionPatch
-							feed={feed}
-							onCancel={onDone}
-							onSettled={onDone}
-						/>
-					),
+					children: "not yet",
 				},
 				age: {
-					children: (
-						<AgePatch
-							feed={feed}
-							onCancel={onDone}
-							onSettled={onDone}
-						/>
-					),
+					children: "not yet",
 				},
 				delivery: {
-					children: (
-						<DeliveryPatch
-							feed={feed}
-							onCancel={onDone}
-							onSettled={onDone}
-						/>
-					),
+					children: "not yet",
 				},
 				warranty: {
-					children: (
-						<WarrantyPatch
-							feed={feed}
-							onCancel={onDone}
-							onSettled={onDone}
-						/>
-					),
+					children: "not yet",
 				},
 				title: {
-					children: (
-						<TitlePatch
-							feed={feed}
-							onCancel={onDone}
-							onSettled={onDone}
-						/>
-					),
+					children: "not yet",
 				},
 			};
 		}, [
 			feed,
 			hidden,
-			onDone,
+			// onDone,
 			children,
 		]);
 

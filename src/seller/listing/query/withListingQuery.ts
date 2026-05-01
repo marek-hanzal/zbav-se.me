@@ -8,6 +8,8 @@ import type { ListingCountQuerySchema } from "~/seller/listing/server/schema/Lis
 import type { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreateSchema";
 import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
+import { listingPatchFn } from "../fn/listingPatchFn";
+import type { ListingPatchSchema } from "../server/schema/ListingPatchSchema";
 
 export const withListingQuery = withEntityQuery({
 	logger: getRootLogger([
@@ -18,7 +20,7 @@ export const withListingQuery = withEntityQuery({
 		fetch: listingFetchFn.Error;
 		collection: listingCollectionFn.Error;
 		count: listingCountFn.Error;
-		patch: Error;
+		patch: listingPatchFn.Error;
 		create: listingCreateFn.Error;
 		delete: Error;
 		patchCollection: Error;
@@ -59,8 +61,10 @@ export const withListingQuery = withEntityQuery({
 	async deleteFn(_data: never): Promise<ListingSchema.Type> {
 		throw new Error("Listing delete is not supported.");
 	},
-	async patchFn(_data: never): Promise<ListingSchema.Type> {
-		throw new Error("Listing patch is not supported.");
+	async patchFn(data: ListingPatchSchema.Type): Promise<ListingSchema.Type> {
+		return listingPatchFn({
+			data,
+		});
 	},
 	async patchCollectionFn(_data: never): Promise<ListingSchema.Type[]> {
 		throw new Error("Listing collection patch is not supported.");

@@ -2,7 +2,7 @@ import { withFallback } from "@/lib/client/fallback";
 import { Icon, ShowIcon } from "@/lib/client/icon";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withListingSellerInfoQuery } from "~/buyer/listing/query/withListingSellerInfoQuery";
 import { RatingIcon } from "~/common/score/ui/RatingIcon";
 

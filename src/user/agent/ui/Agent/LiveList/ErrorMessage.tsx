@@ -2,7 +2,7 @@ import type { RunStreamEvent } from "@openai/agents";
 import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";
 import { Typo } from "@/lib/client/typo";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 
 export namespace ErrorMessage {

@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
 import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";

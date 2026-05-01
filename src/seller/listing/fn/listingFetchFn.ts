@@ -33,6 +33,7 @@ export const listingFetchFn = createServerFn()
 			schema: ListingSchema,
 			dataFx: listingFetchFx({
 				...data,
+				userId: user.id,
 				scope: {
 					userId: user.id,
 				},

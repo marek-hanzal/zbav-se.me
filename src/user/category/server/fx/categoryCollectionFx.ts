@@ -2,10 +2,9 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import { categoryMissCreateFx } from "~/session/category-miss/server/fx/categoryMissCreateFx";
-import { withCategoryCollectionSelectFx } from "~/user/category/server/db/withCategoryCollectionSelectFx";
-import { withCategoryQueryBuilderFx } from "~/user/category/server/db/withCategoryQueryBuilderFx";
 import type { CategoryFilterSchema } from "~/user/category/server/schema/CategoryFilterSchema";
 import type { CategoryQuerySchema } from "~/user/category/server/schema/CategoryQuerySchema";
+import { withCategorySelectFx } from "../db/withCategorySelectFx";
 
 export namespace categoryCollectionFx {
 	export interface Props extends CategoryQuerySchema.Type {
@@ -37,21 +36,15 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 	});
 
 	const data = yield* withCollectionFx({
-		selectFx: withCategoryCollectionSelectFx({
+		selectFx: withCategorySelectFx({
 			sort,
 			userId,
 		}),
 		cursor,
-		limit,
 		filter,
 		where,
 		scope,
-		queryFx(query) {
-			return withCategoryQueryBuilderFx({
-				userId,
-				...query,
-			});
-		},
+		limit,
 	});
 
 	if (data.length === 0) {

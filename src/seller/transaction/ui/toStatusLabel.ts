@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 
 export const toStatusLabel = (status: TransactionStatusEnumSchema.Type) => {

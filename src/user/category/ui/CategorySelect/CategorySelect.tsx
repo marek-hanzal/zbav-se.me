@@ -1,4 +1,4 @@
-import { type FC, Suspense, useState } from "react";
+import { type FC, Suspense, useEffect, useRef, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { Fulltext } from "@/lib/client/fulltext";
 import type { useSelection } from "@/lib/client/selection";
@@ -8,6 +8,9 @@ import { ListContainer } from "./ListContainer";
 export namespace CategorySelect {
 	export interface Props extends Container.Props {
 		selection: useSelection.Selection<EntitySchema.Type>;
+		/**
+		 * Scroll to the given category
+		 */
 		categoryId: string | undefined;
 		withRestriction: boolean;
 	}
@@ -23,7 +26,12 @@ export const CategorySelect: FC<CategorySelect.Props> = ({
 	withRestriction,
 	...props
 }) => {
+	const focusRef = useRef<HTMLInputElement>(null);
 	const [fulltext, setFulltext] = useState<Fulltext.Value>();
+
+	useEffect(() => {
+		focusRef.current?.focus();
+	}, []);
 
 	return (
 		<Container
@@ -34,6 +42,8 @@ export const CategorySelect: FC<CategorySelect.Props> = ({
 			{...props}
 		>
 			<Fulltext
+				ref={focusRef}
+				autoFocus
 				state={{
 					value: fulltext,
 					set: setFulltext,

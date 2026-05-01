@@ -3,7 +3,7 @@ import { ChevronRightIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 import { SearchIcon } from "~/common/ui/icon";
 import { uiCtaLinkButton } from "~/common/ui/ui";
@@ -20,7 +20,7 @@ export const Empty: FC = () => {
 				<LinkTo
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
-					to={"/$locale/app/seller/draft/resolve"}
+					to={"/$locale/app/seller/listing/resolve"}
 					params={{
 						locale,
 					}}

@@ -1,11 +1,10 @@
 import { createMiddleware } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import { withUserRestrictionSourceSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionSourceSelectFx";
+import { withUserRestrictionSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionSelectFx";
 
 export const withUserRestrictionMiddleware = createMiddleware()
 	.middleware([
@@ -19,9 +18,7 @@ export const withUserRestrictionMiddleware = createMiddleware()
 		]);
 
 		const restriction = await Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
-			const now = dateContext.now().toJSDate();
-			const select = yield* withUserRestrictionSourceSelectFx({
+			const { select, queryFx } = yield* withUserRestrictionSelectFx({
 				sort: [
 					{
 						field: "availableAt",
@@ -33,17 +30,15 @@ export const withUserRestrictionMiddleware = createMiddleware()
 					},
 				],
 			});
-			const rows = yield* Effect.promise(() =>
-				select
-					.where("ur.userId", "=", user.id)
-					.where((eb) =>
-						eb.or([
-							eb("ur.expiresAt", "is", null),
-							eb("ur.expiresAt", ">", now),
-						]),
-					)
-					.execute(),
-			);
+
+			const query = yield* queryFx(select, {
+				userId: user.id,
+				isExpired: false,
+			});
+
+			const rows = yield* Effect.promise(() => {
+				return query.execute();
+			});
 
 			return {
 				current: rows.findLast((row) => row.isAvailable)?.restriction ?? "none",

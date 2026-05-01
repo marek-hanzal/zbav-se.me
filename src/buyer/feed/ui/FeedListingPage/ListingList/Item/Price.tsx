@@ -5,7 +5,7 @@ import { useLocale } from "@/lib/client/locale";
 import { PriceInline } from "@/lib/client/price-inline";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import type { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 

@@ -30,8 +30,6 @@ const InputSchema = z
 			})
 			.omit({
 				categoryId: true,
-				currency: true,
-				currencyIn: true,
 				expiresAtAfter: true,
 				expiresAtBefore: true,
 				userId: true,
@@ -84,10 +82,10 @@ Hint:
 			items.map((item) => {
 				return {
 					listingId: item.id,
-					title: item.title,
-					description: item.description?.substring(0, 64),
-					price: item.price,
-					distance: item.distance?.toFixed(2),
+					// title: item.title,
+					// description: item.description?.substring(0, 64),
+					// price: item.price,
+					// distance: item.distance?.toFixed(2),
 					favourite: item.isFavourite ? "yes" : "no",
 				};
 			}),

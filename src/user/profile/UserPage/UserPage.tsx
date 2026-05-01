@@ -6,7 +6,7 @@ import { EditIcon, Icon, UserIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { TokenUsage } from "~/user/agent/ui/TokenUsage";

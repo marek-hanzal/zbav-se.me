@@ -34,6 +34,7 @@ export const listingCollectionFn = createServerFn()
 			schema: z.array(ListingSchema),
 			dataFx: listingCollectionFx({
 				...data,
+				userId: user.id,
 				scope: {
 					userId: user.id,
 				},

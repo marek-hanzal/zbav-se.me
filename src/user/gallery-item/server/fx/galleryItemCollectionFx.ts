@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withGalleryItemCollectionSelectFx } from "~/user/gallery-item/server/db/withGalleryItemCollectionSelectFx";
-import { withGalleryItemQueryBuilderFx } from "~/user/gallery-item/server/db/withGalleryItemQueryBuilderFx";
 import type { GalleryItemFilterSchema } from "~/user/gallery-item/server/schema/GalleryItemFilterSchema";
 import type { GalleryItemQuerySchema } from "~/user/gallery-item/server/schema/GalleryItemQuerySchema";
+import { withGalleryItemSelectFx } from "../db/withGalleryItemSelectFx";
 
 export namespace galleryItemCollectionFx {
 	export interface Props extends GalleryItemQuerySchema.Type {
@@ -17,32 +16,31 @@ export const galleryItemCollectionFx = Effect.fn("galleryItemCollectionFx")(func
 		page: 0,
 		size: 10,
 	},
-	limit,
 	filter,
 	where,
 	scope,
 	sort,
+	limit,
 }: galleryItemCollectionFx.Props) {
 	const logger = yield* getLoggerFx("galleryItemCollectionFx");
 	logger.trace("galleryItemCollectionFx", {
 		cursor,
-		limit,
 		filter,
 		where,
 		scope,
 		sort,
+		limit,
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withGalleryItemCollectionSelectFx({
+		selectFx: withGalleryItemSelectFx({
 			sort,
 		}),
 		cursor,
-		limit,
 		filter,
 		where,
 		scope,
-		queryFx: withGalleryItemQueryBuilderFx,
+		limit,
 	});
 });
 

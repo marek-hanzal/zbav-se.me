@@ -92,7 +92,7 @@ describe("seller transactionCollectionFx", () => {
 				].sort(),
 			);
 			expect(statusCount).toBe(3);
-			expect(typeof activeOnly[0]?.unreadCount).toBe("number");
+			expect(typeof activeOnly[0]?.unread).toBe("number");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

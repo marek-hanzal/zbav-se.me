@@ -26,8 +26,7 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 	const { data: transactionListing } =
 		withTransactionListingQuery.useFetchQuery(transactionListingId);
 	const hero = useUpload(transactionListing.withImageUrl);
-	const unreadCount = transactionListing.unreadCount;
-	const isUnread = unreadCount > 0;
+	const isUnread = transactionListing.unread > 0;
 
 	return (
 		<LinkTo
@@ -56,11 +55,11 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 								data-ui-opacity="8"
 								data-ui-text="xs"
 							>
-								{unreadCount > 9
+								{transactionListing.unread > 9
 									? "9+"
 									: toLocaleNumber({
 											locale,
-											number: unreadCount,
+											number: transactionListing.unread,
 										})}
 							</Badge>
 						) : null}
@@ -72,7 +71,7 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 						data-ui-width="full"
 					>
 						<Typo
-							label={transactionListing.title}
+							label={"transactionListing.title"}
 							data-ui-tone="neutral"
 							data-ui-theme="light"
 							data-ui-color="lead"

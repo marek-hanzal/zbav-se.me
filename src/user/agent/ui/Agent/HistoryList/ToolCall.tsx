@@ -4,7 +4,7 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { getToolOutputText } from "~/user/agent/type/getToolOutputText";
 
 export namespace ToolCall {

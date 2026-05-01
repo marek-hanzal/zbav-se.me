@@ -2,7 +2,6 @@ import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
-import { PriceInline } from "@/lib/client/price-inline";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { toTimeDiff } from "@/lib/common/time";
@@ -49,7 +48,7 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 							data-ui-truncate
 						/>
 
-						<Tx
+						{/* <Tx
 							label={transaction.location.address}
 							data-ui-tone="neutral"
 							data-ui-theme="light"
@@ -58,7 +57,7 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 							data-ui-width="full"
 							data-ui-truncate
 							data-ui-opacity="6"
-						/>
+						/> */}
 					</Container>
 				}
 				bottom={
@@ -72,11 +71,11 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 						data-ui-text="sm"
 						data-ui-width="full"
 					>
-						<PriceInline
+						{/* <PriceInline
 							price={transaction.price}
 							locale={locale}
 							currency={transaction.currency}
-						/>
+						/> */}
 
 						<Tx
 							label={toTimeDiff({

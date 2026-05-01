@@ -46,8 +46,8 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	const id = genId();
 	const now = dateContext.now();
 
-	yield* tryDbFx(async () =>
-		kysely
+	yield* tryDbFx(async () => {
+		return kysely
 			.insertInto("upload")
 			.values({
 				...data,
@@ -56,8 +56,8 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 				url,
 				createdAt: now.toJSDate(),
 			})
-			.execute(),
-	);
+			.execute();
+	});
 
 	return {
 		id,

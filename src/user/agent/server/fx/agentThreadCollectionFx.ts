@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withAgentThreadCollectionSelectFx } from "~/user/agent/server/db/withAgentThreadCollectionSelectFx";
-import { withAgentThreadQueryBuilderFx } from "~/user/agent/server/db/withAgentThreadQueryBuilderFx";
 import type { AgentThreadFilterSchema } from "~/user/agent/server/schema/AgentThreadFilterSchema";
 import type { AgentThreadQuerySchema } from "~/user/agent/server/schema/AgentThreadQuerySchema";
+import { withAgentThreadSelectFx } from "../db/withAgentThreadSelectFx";
 
 export namespace agentThreadCollectionFx {
 	export interface Props extends AgentThreadQuerySchema.Type {
@@ -34,7 +33,7 @@ export const agentThreadCollectionFx = Effect.fn("agentThreadCollectionFx")(func
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withAgentThreadCollectionSelectFx({
+		selectFx: withAgentThreadSelectFx({
 			sort,
 		}),
 		cursor,
@@ -42,7 +41,6 @@ export const agentThreadCollectionFx = Effect.fn("agentThreadCollectionFx")(func
 		filter,
 		where,
 		scope,
-		queryFx: withAgentThreadQueryBuilderFx,
 	});
 });
 

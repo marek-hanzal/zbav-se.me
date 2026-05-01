@@ -9,7 +9,7 @@ import {
 import { Container, type uiContainer } from "@/lib/client/container";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Status } from "@/lib/client/status";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 
 type ImageStatus = "loading" | "loaded" | "error";
 

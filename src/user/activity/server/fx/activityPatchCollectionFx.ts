@@ -4,8 +4,6 @@ import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { withActivityCollectionSelectFx } from "~/user/activity/server/db/withActivityCollectionSelectFx";
-import { withActivityQueryBuilderFx } from "~/user/activity/server/db/withActivityQueryBuilderFx";
 import { withActivitySelectFx } from "~/user/activity/server/db/withActivitySelectFx";
 import type { ActivityFilterSchema } from "~/user/activity/server/schema/ActivityFilterSchema";
 import type { ActivityPatchCollectionSchema } from "~/user/activity/server/schema/ActivityPatchCollectionSchema";
@@ -32,7 +30,7 @@ export const activityPatchCollectionFx = Effect.fn("activityPatchCollectionFx")(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
 
-			let select = yield* withActivitySelectFx({
+			let { select, queryFx } = yield* withActivitySelectFx({
 				sort: query.sort,
 			});
 
@@ -41,10 +39,7 @@ export const activityPatchCollectionFx = Effect.fn("activityPatchCollectionFx")(
 				query.where,
 				scope,
 			]) {
-				select = yield* withActivityQueryBuilderFx({
-					select,
-					where: layer,
-				});
+				select = yield* queryFx(select, layer);
 			}
 
 			const selectIds = select.clearSelect().select("i.id");
@@ -64,7 +59,7 @@ export const activityPatchCollectionFx = Effect.fn("activityPatchCollectionFx")(
 			}
 
 			return yield* withCollectionFx({
-				selectFx: withActivityCollectionSelectFx({
+				selectFx: withActivitySelectFx({
 					sort: query.sort,
 				}),
 				cursor: {
@@ -75,7 +70,6 @@ export const activityPatchCollectionFx = Effect.fn("activityPatchCollectionFx")(
 					idIn: ids,
 				},
 				scope,
-				queryFx: withActivityQueryBuilderFx,
 			});
 		}),
 	);

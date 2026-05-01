@@ -2,7 +2,7 @@ import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";
 import { EmptyState } from "@/lib/client/empty-state";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { withTransactionQuery } from "~/seller/transaction/query/withTransactionQuery";
 import { toStatusLabel } from "~/seller/transaction/ui/toStatusLabel";

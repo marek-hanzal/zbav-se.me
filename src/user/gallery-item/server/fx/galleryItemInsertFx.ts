@@ -52,8 +52,8 @@ export const galleryItemInsertFx = Effect.fn("galleryItemInsertFx")(function* ({
 		});
 	}
 
-	yield* tryDbFx(async () =>
-		kysely
+	yield* tryDbFx(async () => {
+		return kysely
 			.insertInto("gallery_item")
 			.values({
 				...data,
@@ -61,8 +61,8 @@ export const galleryItemInsertFx = Effect.fn("galleryItemInsertFx")(function* ({
 				galleryId,
 				createdAt: now.toJSDate(),
 			})
-			.execute(),
-	);
+			.execute();
+	});
 
 	return {
 		id,

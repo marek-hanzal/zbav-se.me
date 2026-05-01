@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withListingEventCollectionSelectFx } from "~/buyer/listing-event/server/db/withListingEventCollectionSelectFx";
-import { withListingEventQueryBuilderFx } from "~/buyer/listing-event/server/db/withListingEventQueryBuilderFx";
+import { withListingEventSelectFx } from "~/buyer/listing-event/server/db/withListingEventSelectFx";
 import type { ListingEventFilterSchema } from "~/buyer/listing-event/server/schema/ListingEventFilterSchema";
 import type { ListingEventQuerySchema } from "~/buyer/listing-event/server/schema/ListingEventQuerySchema";
 
@@ -34,7 +33,7 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withListingEventCollectionSelectFx({
+		selectFx: withListingEventSelectFx({
 			sort,
 		}),
 		cursor,
@@ -42,7 +41,6 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 		filter,
 		where,
 		scope,
-		queryFx: withListingEventQueryBuilderFx,
 	});
 });
 

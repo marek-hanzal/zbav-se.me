@@ -3,7 +3,7 @@ import type { BottomSheet } from "@/lib/client/bottom-sheet";
 import { CloseIcon } from "@/lib/client/icon";
 import { SheetView } from "@/lib/client/sheet-view";
 import type { MarkSuspense, StateType } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { CloseButton } from "~/common/ui/button";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
@@ -36,7 +36,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ _suspense, listing, state
 					/>
 				),
 				header: ({ close }) => ({
-					title: listing.title,
+					title: "listing.title",
 					right: <CloseButton onClick={close} />,
 				}),
 			},

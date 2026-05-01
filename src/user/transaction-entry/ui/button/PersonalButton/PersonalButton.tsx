@@ -3,7 +3,7 @@ import { useState } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { Button } from "@/lib/client/button";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { CloseButton } from "~/common/ui/button";
 import type { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { withTransactionEntryQuery } from "~/user/transaction-entry/query/withTransactionEntryQuery";

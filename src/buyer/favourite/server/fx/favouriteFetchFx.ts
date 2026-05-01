@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withFavouriteQueryBuilderFx } from "~/buyer/favourite/server/db/withFavouriteQueryBuilderFx";
 import { withFavouriteSelectFx } from "~/buyer/favourite/server/db/withFavouriteSelectFx";
 import type { FavouriteFilterSchema } from "~/buyer/favourite/server/schema/FavouriteFilterSchema";
 import type { FavouriteQuerySchema } from "~/buyer/favourite/server/schema/FavouriteQuerySchema";
@@ -34,7 +33,6 @@ export const favouriteFetchFx = Effect.fn("favouriteFetchFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx: withFavouriteQueryBuilderFx,
 	});
 });
 

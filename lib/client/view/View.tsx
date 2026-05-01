@@ -35,6 +35,7 @@ export const View = <TView extends string, TProps = {}>({
 		content: entriesOf(views).map(([key, { scroller = "vertical", children }]) => {
 			return (
 				<Container
+					data-ui={`View-${key}`}
 					key={key}
 					data-ui-scroll={scroller === false ? undefined : scroller}
 					data-ui-height="full"

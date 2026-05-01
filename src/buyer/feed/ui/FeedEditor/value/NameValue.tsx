@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 
 export namespace NameValue {
 	export interface Props extends LabelValue.PropsEx {

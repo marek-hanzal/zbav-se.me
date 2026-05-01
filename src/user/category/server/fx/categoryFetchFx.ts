@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withCategoryQueryBuilderFx } from "~/user/category/server/db/withCategoryQueryBuilderFx";
-import { withCategorySelectFx } from "~/user/category/server/db/withCategorySelectFx";
 import type { CategoryFilterSchema } from "~/user/category/server/schema/CategoryFilterSchema";
 import type { CategoryQuerySchema } from "~/user/category/server/schema/CategoryQuerySchema";
+import { withCategorySelectFx } from "../db/withCategorySelectFx";
 
 export namespace categoryFetchFx {
 	export interface Props extends CategoryQuerySchema.Type {
@@ -31,18 +30,12 @@ export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
 	return yield* withFetchFx({
 		resource: "category",
 		selectFx: withCategorySelectFx({
-			sort,
 			userId,
+			sort,
 		}),
 		filter,
 		where,
 		scope,
-		queryFx(query) {
-			return withCategoryQueryBuilderFx({
-				userId,
-				...query,
-			});
-		},
 	});
 });
 

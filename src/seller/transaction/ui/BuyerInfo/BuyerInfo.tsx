@@ -6,7 +6,7 @@ import { Status } from "@/lib/client/status";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
 import { toTimeDiff } from "@/lib/common/time";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { SearchIcon } from "~/common/ui/icon";
 import { withTransactionBuyerInfoQuery } from "../../query/withTransactionBuyerInfoQuery";
 import { Events } from "./Events";

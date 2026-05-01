@@ -4,7 +4,7 @@ import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
 import { LabelValue } from "@/lib/client/value";
 import { toTimeDiff } from "@/lib/common/time";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import type { UserEventBuyerSchema } from "~/seller/user-event/server/schema/UserEventBuyerSchema";
 
 const percentLabel = (value: number) => `${Math.round(value)}%`;

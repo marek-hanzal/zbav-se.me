@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withUploadQueryBuilderFx } from "~/user/upload/server/db/withUploadQueryBuilderFx";
 import { withUploadSelectFx } from "~/user/upload/server/db/withUploadSelectFx";
 import type { UploadFilterSchema } from "~/user/upload/server/schema/UploadFilterSchema";
 import type { UploadQuerySchema } from "~/user/upload/server/schema/UploadQuerySchema";
@@ -34,7 +33,6 @@ export const uploadFetchFx = Effect.fn("uploadFetchFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx: withUploadQueryBuilderFx,
 	});
 });
 

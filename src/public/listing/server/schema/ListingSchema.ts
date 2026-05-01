@@ -1,28 +1,21 @@
 import { z } from "zod";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
-import { CategorySchema } from "~/public/category/server/schema/CategorySchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
-import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 
 export const ListingSchema = z
 	.looseObject({
 		...ListingTableSchema.pick({
 			id: true,
-			title: true,
-			price: true,
-			priceType: true,
-			currency: true,
-			galleryId: true,
-			withImageUrl: true,
 			createdAt: true,
+			withImageUrl: true,
 		}).shape,
-		restrictions: z.array(RestrictionEnumSchema).meta({
+		withRestriction: RestrictionEnumSchema.meta({
 			description: `
-Computed restrictions from category and listing. Read-only.
+Effective restriction of this listing.
             `.trim(),
 		}),
-		location: LocationSchema,
-		category: CategorySchema,
+		// 		location: LocationSchema,
+		// 		category: CategorySchema,
 	})
 	.strip()
 	.meta({

@@ -26,7 +26,7 @@ export const Item = withFallback(({ _suspense, listingId }: Item.Props) => {
 			hero={hero}
 			title={
 				<Typo
-					label={listing.title}
+					label={"listing.title"}
 					data-ui-tone="neutral"
 					data-ui-theme="light"
 					data-ui-color="lead"

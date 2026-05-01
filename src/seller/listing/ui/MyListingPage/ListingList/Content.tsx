@@ -1,7 +1,6 @@
 import { type FC, Suspense, useCallback } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
 import { VisibleContainer } from "@/lib/client/visibility";
-import { CreateButton } from "~/seller/draft/ui/CreateButton";
 import { ListingItem } from "./ListingItem";
 
 export namespace Content {
@@ -30,8 +29,7 @@ export const Content: FC<Content.Props> = ({ _suspense, listingIds }) => {
 					</VisibleContainer>
 				);
 			})}
-
-			<CreateButton />
+			"CreateButton"
 		</>
 	);
 };

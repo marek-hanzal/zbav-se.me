@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import type { Container } from "@/lib/client/container";
 import { NotificationIcon } from "@/lib/client/icon";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 
 export namespace Empty {

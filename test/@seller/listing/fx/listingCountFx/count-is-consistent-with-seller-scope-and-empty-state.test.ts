@@ -25,12 +25,14 @@ describe("seller listingCountFx", () => {
 			});
 
 			const collection = yield* listingCollectionFx({
+				userId: users.seller.id,
 				scope: {
 					userId: users.seller.id,
 				},
 			});
 
 			const count = yield* listingCountFx({
+				userId: users.seller.id,
 				scope: {
 					userId: users.seller.id,
 				},
@@ -40,6 +42,7 @@ describe("seller listingCountFx", () => {
 			expect(count).toBe(2);
 
 			const empty = yield* listingCountFx({
+				userId: users.seller.id,
 				filter: {
 					fulltext: "not-present",
 				},

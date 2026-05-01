@@ -2,9 +2,8 @@ import { type FC, useRef } from "react";
 import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { useUpload } from "~/common/gallery/hook/useUpload";
-import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { HeroImage } from "~/common/ui/img";
 import { AckMessage } from "~/seller/transaction/ui/status/AckMessage";
 import { TransactionChat } from "~/user/transaction/ui/TransactionChat";
@@ -62,7 +61,7 @@ export const Transaction: FC<Transaction.Props> = ({
 						className={"h-42"}
 					/>
 
-					<ListingPrice
+					{/* <ListingPrice
 						data-ui={"ListingOverlay-[ListingPrice]"}
 						price={transaction.price}
 						priceType={transaction.priceType}
@@ -70,7 +69,7 @@ export const Transaction: FC<Transaction.Props> = ({
 						data-ui-snap-to="top-center"
 						data-ui-opacity="8"
 						data-ui-z-index
-					/>
+					/> */}
 				</Container>
 
 				<TransactionEntryList
