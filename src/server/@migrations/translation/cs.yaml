@@ -1466,6 +1466,12 @@ color - yellow:
 color - blue:
     value: Modrá
     dynamic: true
+color - black:
+    value: Černá
+    dynamic: true
+color - orange:
+    value: Oranžová
+    dynamic: true
 Field patch - ram (title):
     value: Velikost RAMky
     dynamic: true
