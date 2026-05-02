@@ -234,6 +234,10 @@ Chat - transaction resolved - seller cannot write (message):
     value: Máš vyřízeno, nic dalšího tu nemusíš řešit.
 Clear all (button):
     value: Vyčistit vše
+Close draft (button):
+    value: Pokračovat později
+Close draft (hint):
+    value: K rozpracovanému inzerátu se můžeš kdykoliv vrátit.
 Close transaction (button):
     value: Hotovo, zavřít
 Closer p90 (hint):
@@ -378,10 +382,14 @@ Decision rate (hint):
         po předání balíčku kupující transakci neodklikne.
 Decision rate (label):
     value: Poměr dokončených zpráv
+Delete draft (button):
+    value: Smazat rozpracovaný inzerát
+Delete draft - confirm (button):
+    value: Opravdu chceš smazat rozpracovaný inzerát?
 Delete feed (button):
     value: Smazat nastavení
 Delete photo (button):
-    value: Delete photo (button)
+    value: Smazat fotku
 Delivery (title):
     value: Možnost předání
 Description (placeholder):
@@ -394,6 +402,8 @@ Dispute transaction (button):
     value: Vyřešit problém
 Dispute transaction - confirm (button):
     value: Opravdu si přeješ pokračovat?
+Draft - action section (title):
+    value: Co dál?
 Draft - bunch of required (title):
     value: Nutné pro zveřejnění
 Draft - category spec - optional (title):
@@ -503,6 +513,42 @@ Feed sorting (label):
     value: Řazení inzerátů
 Feed sorting not selected:
     value: Výchozí řazení
+Field - battery-condition:
+    value: Stav baterie
+    dynamic: true
+Field - brand:
+    value: Značka
+    dynamic: true
+Field - color:
+    value: Barva
+    dynamic: true
+Field - model:
+    value: Model/Označení
+    dynamic: true
+Field - ram:
+    value: Velikost RAMky
+    dynamic: true
+Field - sensor.type:
+    value: Typ senzoru
+    dynamic: true
+Field - storage:
+    value: Velikost úložiště
+    dynamic: true
+Field patch - battery-condition (title)":
+    value: Stav baterie
+    dynamic: true
+Field patch - brand (title):
+    value: Značka
+    dynamic: true
+Field patch - model (title):
+    value: Model/Označení
+    dynamic: true
+Field patch - ram (title):
+    value: Velikost RAMky
+    dynamic: true
+Field patch - storage (title):
+    value: Velikost úložiště
+    dynamic: true
 Find listings (label):
     value: Hledat
 First listing (message):
@@ -1052,6 +1098,8 @@ Sign out:
     value: Odhlásit se
 Something went wrong (error):
     value: Pardon, tohle je teď rozbité.
+Submit listing (button):
+    value: Vystavit inzerát
 System update (label):
     value: System update (label)
 Thread token usage (label):
@@ -1179,6 +1227,9 @@ You got like (label):
     value: Někomu se líbí tvůj inzerát!
 Your favourites (title):
     value: Oblíbené
+brand - placeholder:
+    value: Vyplň značku
+    dynamic: true
 buyer - Buyer rejected the transaction (message):
     value: |
         **Odmítl jsi obchod.**
@@ -1237,6 +1288,18 @@ buyer - Transaction successful (message):
     dynamic: true
 closed:
     value: closed
+color - black:
+    value: Černá
+    dynamic: true
+color - blue:
+    value: Modrá
+    dynamic: true
+color - orange:
+    value: Oranžová
+    dynamic: true
+color - yellow:
+    value: Žlutá
+    dynamic: true
 dispute:
     value: dispute
 expired:
@@ -1251,6 +1314,9 @@ listing.title:
     value: listing.title
 location:
     value: location
+model - placeholder:
+    value: Vyplň model nebo označení
+    dynamic: true
 offer:
     value: offer
 open:
@@ -1259,6 +1325,12 @@ package:
     value: package
 personal:
     value: personal
+ram - 4 GB or less:
+    value: 4GB nebo méně
+    dynamic: true
+ram - 64 GB or more:
+    value: 64GB nebo více
+    dynamic: true
 rejected:
     value: rejected
 resolved:
@@ -1314,6 +1386,15 @@ seller - Transaction successful (message):
         **Všechno v pohodě, obchod byl úspěšný!**
 
         Dál už tu nic není.
+    dynamic: true
+sensor.type - aps-c:
+    value: APS-C
+    dynamic: true
+sensor.type - compact:
+    value: Compact
+    dynamic: true
+sensor.type - full-frame:
+    value: Full Frame
     dynamic: true
 sold:
     value: sold
@@ -1427,72 +1508,3 @@ transaction - seller - status-trade:
     dynamic: true
 zbav-se.me:
     value: zbav-se.me
-Field patch - brand (title):
-    value: Značka
-    dynamic: true
-Field - brand:
-    value: Značka
-    dynamic: true
-brand - placeholder:
-    value: Vyplň značku
-    dynamic: true
-Field patch - model (title):
-    value: Model/Označení
-    dynamic: true
-model - placeholder:
-    value: Vyplň model nebo označení
-    dynamic: true
-Field - model:
-    value: Model/Označení
-    dynamic: true
-Field - sensor.type:
-    value: Typ senzoru
-    dynamic: true
-sensor.type - full-frame:
-    value: Full Frame
-    dynamic: true
-sensor.type - aps-c:
-    value: APS-C
-    dynamic: true
-sensor.type - compact:
-    value: Compact
-    dynamic: true
-Field - color:
-    value: Barva
-    dynamic: true
-color - yellow:
-    value: Žlutá
-    dynamic: true
-color - blue:
-    value: Modrá
-    dynamic: true
-color - black:
-    value: Černá
-    dynamic: true
-color - orange:
-    value: Oranžová
-    dynamic: true
-Field patch - ram (title):
-    value: Velikost RAMky
-    dynamic: true
-Field - ram:
-    value: Velikost RAMky
-    dynamic: true
-Field patch - storage (title):
-    value: Velikost úložiště
-    dynamic: true
-Field - storage:
-    value: Velikost úložiště
-    dynamic: true
-Field patch - battery-condition (title)":
-    value: Stav baterie
-    dynamic: true
-Field - battery-condition:
-    value: Stav baterie
-    dynamic: true
-ram - 4 GB or less:
-    value: 4GB nebo méně
-    dynamic: true
-ram - 64 GB or more:
-    value: 64GB nebo více
-    dynamic: true
