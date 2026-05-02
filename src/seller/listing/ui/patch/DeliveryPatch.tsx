@@ -18,14 +18,14 @@ export namespace DeliveryPatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		view: useView.Use<"warranty">;
+		view: useView.Use<"description">;
 	}
 }
 
 export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ listing, onCancel, view, ...props }) => {
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			view.set("warranty");
+			view.set("description");
 		},
 		invalidate: [
 			"collection",

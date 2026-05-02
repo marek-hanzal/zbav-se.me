@@ -1427,8 +1427,20 @@ transaction - seller - status-trade:
     dynamic: true
 zbav-se.me:
     value: zbav-se.me
+Field patch - brand (title):
+    value: Značka
+    dynamic: true
 Field - brand:
     value: Značka
+    dynamic: true
+brand - placeholder:
+    value: Vyplň značku
+    dynamic: true
+Field patch - model (title):
+    value: Model/Označení
+    dynamic: true
+model - placeholder:
+    value: Vyplň model nebo označení
     dynamic: true
 Field - model:
     value: Model/Označení
@@ -1453,6 +1465,12 @@ color - yellow:
     dynamic: true
 color - blue:
     value: Modrá
+    dynamic: true
+color - black:
+    value: Černá
+    dynamic: true
+color - orange:
+    value: Oranžová
     dynamic: true
 Field patch - ram (title):
     value: Velikost RAMky
