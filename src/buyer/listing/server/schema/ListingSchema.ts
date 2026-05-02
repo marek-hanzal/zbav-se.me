@@ -8,10 +8,10 @@ export const ListingSchema = z
 		...ListingTableSchema.shape,
 		// location: LocationSchema,
 		// category: CategorySchema,
-		// distance: z.number().nullable().meta({
-		// 	description:
-		// 		"Distance from the input location to the listing (in km; meta lat/lon must be provided)",
-		// }),
+		distance: z.number().nullable().meta({
+			description:
+				"Distance from the input location to the listing (in km; meta lat/lon must be provided)",
+		}),
 		my: z.boolean().meta({
 			description: "Whether the listing belongs to the current user",
 		}),

@@ -146,6 +146,10 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					query = query.where("l.userId", "=", where.userId);
 				}
 
+				if (where.status) {
+					query = query.where("l.status", "=", where.status);
+				}
+
 				return yield* Effect.succeed(query);
 			});
 		},

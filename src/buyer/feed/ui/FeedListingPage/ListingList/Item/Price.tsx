@@ -11,14 +11,18 @@ import type { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 
 export namespace Price {
 	export interface Props extends Container.Props {
-		price: number;
-		currency: CurrencyEnumSchema.Type;
-		type: ListingPriceEnumSchema.Type;
+		price: number | null | undefined;
+		currency: CurrencyEnumSchema.Type | null | undefined;
+		type: ListingPriceEnumSchema.Type | null | undefined;
 	}
 }
 
 export const Price: FC<Price.Props> = ({ price, currency, type, ...props }) => {
 	const locale = useLocale();
+
+	if (price === null || price === undefined || type === null || currency === null) {
+		return null;
+	}
 
 	return (
 		<Container

@@ -25,6 +25,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	meta,
 	hasExplicitCategory,
 }: withListingSelectFx.Props) {
+	const locationId = meta?.locationId;
 	const { kysely } = yield* KyselyContextFx;
 
 	const fallbackSql = sql`${RestrictionEnumSchema.enum.none}::restriction_enum`;
@@ -75,8 +76,36 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				//
 				"l.expires",
 				//
+				"l.price",
+				"l.priceType",
+				"l.currency",
+				//
 				"l.createdAt",
 				"l.updatedAt",
+				(eb) => {
+					return eb
+						.case()
+						.when(sql.lit(locationId != null))
+						.then(() => {
+							const originGeoSelect = eb
+								.selectFrom("location as originLoc")
+								.select("originLoc.geo")
+								// biome-ignore lint/style/noNonNullAssertion: Check is already don, bro
+								.where("originLoc.id", "=", locationId!)
+								.limit(1);
+
+							return sql`
+                                ST_Distance(
+                                    ${eb.ref("l.withLocation")},
+                                    ${originGeoSelect}
+                                ) / 1000
+                            `;
+						})
+						.else(null)
+						.end()
+						.$castTo<number | null>()
+						.as("distance");
+				},
 				(eb) => {
 					return sql<string[]>`to_jsonb(${eb.ref("l.pros")})`.as("pros");
 				},

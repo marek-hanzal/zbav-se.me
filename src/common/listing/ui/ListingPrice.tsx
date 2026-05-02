@@ -8,20 +8,22 @@ import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceE
 
 export namespace ListingPrice {
 	export interface Props extends Badge.Props {
-		price: number;
-		priceType: ListingPriceEnumSchema.Type;
-		currency: string;
+		price: number | null | undefined;
+		priceType: ListingPriceEnumSchema.Type | null | undefined;
+		currency: string | null | undefined;
 	}
 }
 
 /**
  * Formats and displays listing price with locale-aware currency rendering and price-type context.
  * Use it in listing cards and detail views that must show pricing consistently.
- *
- * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const ListingPrice: FC<ListingPrice.Props> = ({ price, priceType, currency, ...props }) => {
 	const locale = useLocale();
+
+	if (price === null || price === undefined || !priceType || !currency) {
+		return null;
+	}
 
 	return (
 		<Badge
