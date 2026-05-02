@@ -30,10 +30,10 @@
 	"[mdx]": {
 		"editor.defaultFormatter": "unifiedjs.vscode-mdx"
 	},
-	"typescript.experimental.useTsgo": false,
-	"chatgpt.commentCodeLensEnabled": false,
-	"typescript.preferences.importModuleSpecifier": "shortest",
-	"javascript.preferences.importModuleSpecifier": "shortest",
+	"js/ts.experimental.useTsgo": false,
+	"js/ts.preferences.importModuleSpecifier": "shortest",
+	"js/ts.tsserver.maxMemory": 4096,
+	"js/ts.hover.maximumLength": 50000,
 	"cSpell.words": [
 		"adduser",
 		"admina",

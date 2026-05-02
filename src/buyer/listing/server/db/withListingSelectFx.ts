@@ -68,6 +68,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				"l.categoryId",
 				//
 				"l.locationId",
+				"l.galleryId",
 				//
 				"l.title",
 				//
@@ -80,6 +81,8 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				"l.priceType",
 				"l.currency",
 				//
+				"l.visibleAt",
+				"l.expiresAt",
 				"l.createdAt",
 				"l.updatedAt",
 				(eb) => {

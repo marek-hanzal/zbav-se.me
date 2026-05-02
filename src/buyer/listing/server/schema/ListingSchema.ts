@@ -6,8 +6,6 @@ import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema"
 export const ListingSchema = z
 	.looseObject({
 		...ListingTableSchema.shape,
-		// location: LocationSchema,
-		// category: CategorySchema,
 		distance: z.number().nullable().meta({
 			description:
 				"Distance from the input location to the listing (in km; meta lat/lon must be provided)",

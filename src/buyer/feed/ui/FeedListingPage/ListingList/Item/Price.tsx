@@ -6,21 +6,18 @@ import { PriceInline } from "@/lib/client/price-inline";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translation";
-import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
-import type { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
+import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
 
 export namespace Price {
 	export interface Props extends Container.Props {
-		price: number | null | undefined;
-		currency: CurrencyEnumSchema.Type | null | undefined;
-		type: ListingPriceEnumSchema.Type | null | undefined;
+		price: ListingPriceSchema.Type;
 	}
 }
 
-export const Price: FC<Price.Props> = ({ price, currency, type, ...props }) => {
+export const Price: FC<Price.Props> = ({ price, ...props }) => {
 	const locale = useLocale();
 
-	if (price === null || price === undefined || type === null || currency === null) {
+	if (!price.priceType) {
 		return null;
 	}
 
@@ -31,31 +28,44 @@ export const Price: FC<Price.Props> = ({ price, currency, type, ...props }) => {
 			data-ui-items={"center"}
 			{...props}
 		>
-			{match(type)
-				.with("open", "closed", () => {
-					if (!price) {
-						return <Tx label={"Price - free"} />;
-					}
+			{match(price)
+				.with(
+					{
+						priceType: "open",
+					},
+					{
+						priceType: "closed",
+					},
+					({ price, currency, priceType }) => {
+						if (!price) {
+							return <Tx label={"Price - free"} />;
+						}
 
-					return (
-						<>
-							<PriceInline
-								price={price}
-								locale={locale}
-								currency={currency}
-							/>
+						return (
+							<>
+								<PriceInline
+									price={price}
+									locale={locale}
+									currency={currency}
+								/>
 
-							<Typo
-								label={`(${translator.text(`Listing price - ${type}`)})`}
-								data-ui-text="sm"
-								data-ui-opacity="6"
-							/>
-						</>
-					);
-				})
-				.with("offer", () => {
-					return <Tx label={"Listing price - offer"} />;
-				})
+								<Typo
+									label={`(${translator.text(`Listing price - ${priceType}`)})`}
+									data-ui-text="sm"
+									data-ui-opacity="6"
+								/>
+							</>
+						);
+					},
+				)
+				.with(
+					{
+						priceType: "offer",
+					},
+					() => {
+						return <Tx label={"Listing price - offer"} />;
+					},
+				)
 				.exhaustive()}
 		</Container>
 	);
