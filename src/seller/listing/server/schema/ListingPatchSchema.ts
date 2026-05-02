@@ -2,6 +2,7 @@ import { z } from "zod";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
+import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import { DescriptionSchema } from "~/common/listing/schema/DescriptionSchema";
 import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
@@ -17,6 +18,9 @@ export const ListingPatchSchema = z
 			.looseObject({
 				title: TitleSchema.optional(),
 				description: DescriptionSchema.nullish(),
+				//
+				status: ListingStatusEnumSchema.optional(),
+				//
 				categoryId: z.string().min(1).optional(),
 				locationId: z.string().min(1).optional(),
 				//

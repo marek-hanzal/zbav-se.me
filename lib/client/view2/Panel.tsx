@@ -28,7 +28,7 @@ export namespace Panel {
 export const Panel = <TPanel extends string>({
 	name,
 	keep = false,
-control,
+	control,
 	children,
 	...props
 }: Panel.Props<TPanel>) => {
