@@ -10,10 +10,12 @@ import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
 import { withAttrEnumSinglePatchMutation } from "~/seller/attr-enum-single/mutation/withAttrEnumSinglePatchMutation";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { useNextAttr } from "./useNextAttr";
 
 export namespace AttrEnumSingle {
 	export interface Props extends Container.Props {
 		listingId: string;
+		attrs: AttrOfSchema.Type[];
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
@@ -24,10 +26,17 @@ export namespace AttrEnumSingle {
 	}
 }
 
-export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ listingId, attr, view, ...props }) => {
+export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({
+	listingId,
+	attrs,
+	attr,
+	view,
+	...props
+}) => {
+	const next = useNextAttr(attr, attrs);
 	const mutation = withAttrEnumSinglePatchMutation.useMutation({
 		onSuccess() {
-			view.set("default");
+			view.set(next ? `attr.${next.name}` : "default");
 		},
 	});
 	const selection = useSelection({

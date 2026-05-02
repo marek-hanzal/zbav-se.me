@@ -54,6 +54,7 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 					set: handleSearchChange,
 				}}
 				textPlaceholder={translator.text("Location search (placeholder)")}
+				autoFocus
 			/>
 
 			<Suspense fallback={<ListContainer.Fallback />}>

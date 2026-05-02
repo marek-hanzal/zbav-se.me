@@ -10,6 +10,7 @@ import { Dial } from "~/common/ui/dial";
 import { useAppForm } from "~/common/ui/form";
 import { withAttrDecimalPatchMutation } from "~/seller/attr-decimal/mutation/withAttrDecimalPatchMutation";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { useNextAttr } from "./useNextAttr";
 
 const FormSchema = z
 	.looseObject({
@@ -20,6 +21,7 @@ const FormSchema = z
 export namespace AttrDecimal {
 	export interface Props extends Container.Props {
 		listingId: string;
+		attrs: AttrOfSchema.Type[];
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
@@ -30,10 +32,11 @@ export namespace AttrDecimal {
 	}
 }
 
-export const AttrDecimal: FC<AttrDecimal.Props> = ({ listingId, attr, view, ...props }) => {
+export const AttrDecimal: FC<AttrDecimal.Props> = ({ listingId, attrs, attr, view, ...props }) => {
+	const next = useNextAttr(attr, attrs);
 	const mutation = withAttrDecimalPatchMutation.useMutation({
 		onSuccess() {
-			view.set("default");
+			view.set(next ? `attr.${next.name}` : "default");
 		},
 	});
 	const form = useAppForm({

@@ -20,7 +20,7 @@ export namespace ConsPatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		view: useView.Use<"delivery">;
+		view: useView.Use<"warranty">;
 	}
 }
 
@@ -34,7 +34,7 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ listing, onCancel, view, ...pro
 
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			view.set("delivery");
+			view.set("warranty");
 		},
 		invalidate: [
 			"collection",

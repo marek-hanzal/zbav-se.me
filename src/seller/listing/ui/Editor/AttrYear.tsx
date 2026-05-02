@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { type FC, useEffect, useMemo, useRef } from "react";
 import { match, P } from "ts-pattern";
 import { Button } from "@/lib/client/button";
@@ -11,6 +12,7 @@ import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
 import { withAttrNumberPatchMutation } from "~/seller/attr-number/mutation/withAttrNumberPatchMutation";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { useNextAttr } from "./useNextAttr";
 
 const toYearBound = (value: number | null | undefined, fallback: number) =>
 	match(value)
@@ -20,6 +22,7 @@ const toYearBound = (value: number | null | undefined, fallback: number) =>
 export namespace AttrYear {
 	export interface Props extends Container.Props {
 		listingId: string;
+		attrs: AttrOfSchema.Type[];
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
@@ -30,10 +33,11 @@ export namespace AttrYear {
 	}
 }
 
-export const AttrYear: FC<AttrYear.Props> = ({ listingId, attr, view, ...props }) => {
+export const AttrYear: FC<AttrYear.Props> = ({ listingId, attrs, attr, view, ...props }) => {
+	const next = useNextAttr(attr, attrs);
 	const mutation = withAttrNumberPatchMutation.useMutation({
 		onSuccess() {
-			view.set("default");
+			view.set(next ? `attr.${next.name}` : "default");
 		},
 	});
 	const min = toYearBound(attr.min, 1900);
@@ -60,7 +64,11 @@ export const AttrYear: FC<AttrYear.Props> = ({ listingId, attr, view, ...props }
 							id: String(clamp(attr.value, min, max)),
 						},
 					]
-				: [],
+				: [
+						{
+							id: String(DateTime.now().year),
+						},
+					],
 	});
 	const selectedYear = selection.optional.singleId();
 	const scrollRef = useRef<HTMLDivElement | null>(null);

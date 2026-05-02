@@ -10,6 +10,7 @@ import { Dial } from "~/common/ui/dial";
 import { useAppForm } from "~/common/ui/form";
 import { withAttrNumberPatchMutation } from "~/seller/attr-number/mutation/withAttrNumberPatchMutation";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { useNextAttr } from "./useNextAttr";
 
 const FormSchema = z
 	.looseObject({
@@ -20,6 +21,7 @@ const FormSchema = z
 export namespace AttrNumber {
 	export interface Props extends Container.Props {
 		listingId: string;
+		attrs: AttrOfSchema.Type[];
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
@@ -30,10 +32,11 @@ export namespace AttrNumber {
 	}
 }
 
-export const AttrNumber: FC<AttrNumber.Props> = ({ listingId, attr, view, ...props }) => {
+export const AttrNumber: FC<AttrNumber.Props> = ({ listingId, attrs, attr, view, ...props }) => {
+	const next = useNextAttr(attr, attrs);
 	const mutation = withAttrNumberPatchMutation.useMutation({
 		onSuccess() {
-			view.set("default");
+			view.set(next ? `attr.${next.name}` : "default");
 		},
 	});
 	const form = useAppForm({

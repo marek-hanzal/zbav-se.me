@@ -13,6 +13,7 @@ import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
 import { withAttrDecimalPatchMutation } from "~/seller/attr-decimal/mutation/withAttrDecimalPatchMutation";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { useNextAttr } from "./useNextAttr";
 
 const toNumericBound = (value: number | null | undefined, fallback: number) => {
 	return match(value)
@@ -23,6 +24,7 @@ const toNumericBound = (value: number | null | undefined, fallback: number) => {
 export namespace AttrRange {
 	export interface Props extends Container.Props {
 		listingId: string;
+		attrs: AttrOfSchema.Type[];
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
@@ -33,11 +35,12 @@ export namespace AttrRange {
 	}
 }
 
-export const AttrRange: FC<AttrRange.Props> = ({ listingId, attr, view, ...props }) => {
+export const AttrRange: FC<AttrRange.Props> = ({ listingId, attrs, attr, view, ...props }) => {
 	const locale = useLocale();
+	const next = useNextAttr(attr, attrs);
 	const mutation = withAttrDecimalPatchMutation.useMutation({
 		onSuccess() {
-			view.set("default");
+			view.set(next ? `attr.${next.name}` : "default");
 		},
 	});
 	const { min, max, step, schema } = useMemo(() => {

@@ -62,10 +62,20 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 		listingId,
 		categoryId: listing.categoryId ?? "unknown",
 	});
+	/**
+	 * This is a trick:
+	 * We want to keep "wizard" flow inside custom fields, thus we need to get two separated groups,
+	 * so we know, which field is the next.
+	 */
+	const recommended = attrs.filter((item) => item.kind === "recommended");
+	const optional = attrs.filter((item) => item.kind === "optional");
 
 	return (
 		<editor.View>
-			<editor.Panel name={"default"}>
+			<editor.Panel
+				name={"default"}
+				keep
+			>
 				<Editor
 					_suspense={"I know"}
 					listingId={listing.id}
@@ -193,7 +203,7 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 				/>
 			</editor.Panel>
 
-			{attrs.map((attr) => {
+			{recommended.map((attr) => {
 				return (
 					<Panel<any>
 						key={attr.name}
@@ -202,6 +212,24 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 					>
 						<AttrPatch
 							listingId={listing.id}
+							attrs={recommended}
+							attr={attr}
+							view={editor}
+						/>
+					</Panel>
+				);
+			})}
+
+			{optional.map((attr) => {
+				return (
+					<Panel<any>
+						key={attr.name}
+						name={`attr.${attr.name}`}
+						control={editor}
+					>
+						<AttrPatch
+							listingId={listing.id}
+							attrs={optional}
 							attr={attr}
 							view={editor}
 						/>

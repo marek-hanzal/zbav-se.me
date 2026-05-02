@@ -16,12 +16,13 @@ import { AttrYear } from "./AttrYear";
 export namespace AttrPatch {
 	export interface Props extends TitleContainer.Props {
 		listingId: string;
+		attrs: AttrOfSchema.Type[];
 		attr: AttrOfSchema.Type;
 		view: useView.Use<any>;
 	}
 }
 
-export const AttrPatch: FC<AttrPatch.Props> = ({ listingId, attr, view, ...props }) => {
+export const AttrPatch: FC<AttrPatch.Props> = ({ listingId, attrs, attr, view, ...props }) => {
 	return (
 		<TitleContainer
 			data-ui={`AttrPatch-${attr.name}`}
@@ -39,6 +40,7 @@ export const AttrPatch: FC<AttrPatch.Props> = ({ listingId, attr, view, ...props
 						return (
 							<AttrEnumSingle
 								listingId={listingId}
+								attrs={attrs}
 								attr={attr}
 								view={view}
 							/>
@@ -53,6 +55,7 @@ export const AttrPatch: FC<AttrPatch.Props> = ({ listingId, attr, view, ...props
 						return (
 							<AttrEnumMulti
 								listingId={listingId}
+								attrs={attrs}
 								attr={attr}
 								view={view}
 							/>
@@ -67,6 +70,7 @@ export const AttrPatch: FC<AttrPatch.Props> = ({ listingId, attr, view, ...props
 						return (
 							<AttrDecimal
 								listingId={listingId}
+								attrs={attrs}
 								attr={attr}
 								view={view}
 							/>
@@ -81,6 +85,7 @@ export const AttrPatch: FC<AttrPatch.Props> = ({ listingId, attr, view, ...props
 						return (
 							<AttrNumber
 								listingId={listingId}
+								attrs={attrs}
 								attr={attr}
 								view={view}
 							/>
@@ -95,6 +100,7 @@ export const AttrPatch: FC<AttrPatch.Props> = ({ listingId, attr, view, ...props
 						return (
 							<AttrYear
 								listingId={listingId}
+								attrs={attrs}
 								attr={attr}
 								view={view}
 							/>
@@ -109,6 +115,7 @@ export const AttrPatch: FC<AttrPatch.Props> = ({ listingId, attr, view, ...props
 						return (
 							<AttrRange
 								listingId={listingId}
+								attrs={attrs}
 								attr={attr}
 								view={view}
 							/>
@@ -123,6 +130,7 @@ export const AttrPatch: FC<AttrPatch.Props> = ({ listingId, attr, view, ...props
 						return (
 							<AttrText
 								listingId={listingId}
+								attrs={attrs}
 								attr={attr}
 								view={view}
 							/>
