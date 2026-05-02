@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { type FC, useEffect, useMemo, useRef } from "react";
 import { match, P } from "ts-pattern";
 import { Button } from "@/lib/client/button";
@@ -20,6 +21,7 @@ const toYearBound = (value: number | null | undefined, fallback: number) =>
 export namespace AttrYear {
 	export interface Props extends Container.Props {
 		listingId: string;
+		attrs: AttrOfSchema.Type[];
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
@@ -30,7 +32,7 @@ export namespace AttrYear {
 	}
 }
 
-export const AttrYear: FC<AttrYear.Props> = ({ listingId, attr, view, ...props }) => {
+export const AttrYear: FC<AttrYear.Props> = ({ listingId, attrs, attr, view, ...props }) => {
 	const mutation = withAttrNumberPatchMutation.useMutation({
 		onSuccess() {
 			view.set("default");
@@ -60,7 +62,11 @@ export const AttrYear: FC<AttrYear.Props> = ({ listingId, attr, view, ...props }
 							id: String(clamp(attr.value, min, max)),
 						},
 					]
-				: [],
+				: [
+						{
+							id: String(DateTime.now().year),
+						},
+					],
 	});
 	const selectedYear = selection.optional.singleId();
 	const scrollRef = useRef<HTMLDivElement | null>(null);

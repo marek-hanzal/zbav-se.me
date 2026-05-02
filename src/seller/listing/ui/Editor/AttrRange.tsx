@@ -23,6 +23,7 @@ const toNumericBound = (value: number | null | undefined, fallback: number) => {
 export namespace AttrRange {
 	export interface Props extends Container.Props {
 		listingId: string;
+		attrs: AttrOfSchema.Type[];
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
@@ -33,7 +34,7 @@ export namespace AttrRange {
 	}
 }
 
-export const AttrRange: FC<AttrRange.Props> = ({ listingId, attr, view, ...props }) => {
+export const AttrRange: FC<AttrRange.Props> = ({ listingId, attrs, attr, view, ...props }) => {
 	const locale = useLocale();
 	const mutation = withAttrDecimalPatchMutation.useMutation({
 		onSuccess() {

@@ -20,6 +20,7 @@ const FormSchema = z
 export namespace AttrNumber {
 	export interface Props extends Container.Props {
 		listingId: string;
+		attrs: AttrOfSchema.Type[];
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
@@ -30,7 +31,7 @@ export namespace AttrNumber {
 	}
 }
 
-export const AttrNumber: FC<AttrNumber.Props> = ({ listingId, attr, view, ...props }) => {
+export const AttrNumber: FC<AttrNumber.Props> = ({ listingId, attrs, attr, view, ...props }) => {
 	const mutation = withAttrNumberPatchMutation.useMutation({
 		onSuccess() {
 			view.set("default");

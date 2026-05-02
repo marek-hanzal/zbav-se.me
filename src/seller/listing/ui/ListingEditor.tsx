@@ -202,6 +202,7 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 					>
 						<AttrPatch
 							listingId={listing.id}
+							attrs={attrs}
 							attr={attr}
 							view={editor}
 						/>

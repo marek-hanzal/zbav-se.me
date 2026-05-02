@@ -20,6 +20,7 @@ const FormSchema = z
 export namespace AttrDecimal {
 	export interface Props extends Container.Props {
 		listingId: string;
+		attrs: AttrOfSchema.Type[];
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
@@ -30,7 +31,7 @@ export namespace AttrDecimal {
 	}
 }
 
-export const AttrDecimal: FC<AttrDecimal.Props> = ({ listingId, attr, view, ...props }) => {
+export const AttrDecimal: FC<AttrDecimal.Props> = ({ listingId, attrs, attr, view, ...props }) => {
 	const mutation = withAttrDecimalPatchMutation.useMutation({
 		onSuccess() {
 			view.set("default");

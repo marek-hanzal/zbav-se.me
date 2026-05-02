@@ -14,6 +14,7 @@ import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
 export namespace AttrEnumSingle {
 	export interface Props extends Container.Props {
 		listingId: string;
+		attrs: AttrOfSchema.Type[];
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
@@ -24,7 +25,13 @@ export namespace AttrEnumSingle {
 	}
 }
 
-export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ listingId, attr, view, ...props }) => {
+export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({
+	listingId,
+	attrs,
+	attr,
+	view,
+	...props
+}) => {
 	const mutation = withAttrEnumSinglePatchMutation.useMutation({
 		onSuccess() {
 			view.set("default");

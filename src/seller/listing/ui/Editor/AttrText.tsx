@@ -21,6 +21,7 @@ const FormSchema = z
 export namespace AttrText {
 	export interface Props extends Container.Props {
 		listingId: string;
+		attrs: AttrOfSchema.Type[];
 		attr: Extract<
 			AttrOfSchema.Type,
 			{
@@ -31,7 +32,7 @@ export namespace AttrText {
 	}
 }
 
-export const AttrText: FC<AttrText.Props> = ({ listingId, attr, view, ...props }) => {
+export const AttrText: FC<AttrText.Props> = ({ listingId, attrs, attr, view, ...props }) => {
 	const mutation = withAttrTextPatchMutation.useMutation({
 		onSuccess() {
 			view.set("default");
