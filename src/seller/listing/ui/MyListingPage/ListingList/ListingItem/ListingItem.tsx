@@ -26,7 +26,7 @@ export const ListingItem = withFallback(({ listingId }: ListingItem.Props) => {
 			hero={hero}
 			title={
 				<Typo
-					label={"Draft (label)"}
+					label={listing.title}
 					data-ui-tone="neutral"
 					data-ui-theme="light"
 					data-ui-color="lead"

@@ -1,5 +1,8 @@
 import { Effect } from "effect";
+import { match } from "ts-pattern";
+import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
+import type { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
@@ -36,12 +39,15 @@ export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
 			const listing = yield* listingFetchFx({
 				...query,
 				userId,
 				scope,
 			});
+
+			const extras: Partial<ListingTableSchema.Type> = {};
 
 			logger.trace("listing", {
 				listingId: listing.id,
@@ -136,11 +142,42 @@ export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
 				patch.withUploadIds = uploadIds;
 			}
 
+			match(patch.status)
+				.with("live", () => {
+					if (!listing.expires) {
+						return;
+					}
+
+					extras.visibleAt = dateContext.now().toJSDate();
+					extras.expiresAt = match(listing.expires)
+						.with("7-days", () => {
+							return dateContext.now().plus({
+								days: 7,
+							});
+						})
+						.with("14-days", () => {
+							return dateContext.now().plus({
+								days: 14,
+							});
+						})
+						.with("1-month", () => {
+							return dateContext.now().plus({
+								month: 1,
+							});
+						})
+						.exhaustive()
+						.toJSDate();
+				})
+				.otherwise(() => {
+					//
+				});
+
 			yield* tryDbFx(async () => {
 				return kysely
 					.updateTable("listing")
 					.set({
 						...patch,
+						...extras,
 						userId,
 						locationId,
 					})

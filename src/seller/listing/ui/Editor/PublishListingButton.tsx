@@ -53,7 +53,7 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 			onClick={() => {
 				mutation.mutate({
 					patch: {
-						status: "live",
+						status: "live",                        
 					},
 					query: {
 						where: {
