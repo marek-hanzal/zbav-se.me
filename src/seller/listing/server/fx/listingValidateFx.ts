@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log/getLoggerFx";
 import type { ValidationErrorSchema } from "@/lib/common/schema";
 import { listingFetchFx } from "~/buyer/listing/server/fx/listingFetchFx";
+import { ListingSchema } from "../schema/ListingSchema";
 
 export namespace listingValidateFx {
 	export interface Props {
@@ -32,9 +33,21 @@ export const listingValidateFx = Effect.fn("listingValidateFx")(function* ({
 	const result = {
 		errors: [],
 		success: true,
-	} as const;
+	} as {
+		errors: ValidationErrorSchema.Type[];
+		success: boolean;
+	};
 
-    
+	{
+		const data = ListingSchema.safeParse(listing.title);
+		if (!listing.title || !data.success) {
+			result.errors.push({
+				field: "title",
+				message: "Title is not filled properly",
+			});
+			result.success = false;
+		}
+	}
 
 	return result as
 		| {

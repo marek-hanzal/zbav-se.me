@@ -36,6 +36,9 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 			data-action={"publish listing"}
 			iconEnabled={"icon-[solar--cloud-upload-linear]"}
 			iconProps={{
+				"data-ui-tone": "secondary",
+				"data-ui-theme": "light",
+				"data-ui-color": "lead",
 				"data-ui-text": "2xl",
 			}}
 			disabled={mutation.isPending}
@@ -53,13 +56,18 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 				});
 			}}
 			{...uiSaveButton({
-				"data-ui-tone": "secondary",
+				"data-ui-tone": "neutral",
 				"data-ui-justify": "start",
 				className,
 			})}
 			{...props}
 		>
-			<Tx label="Submit listing (button)" />
+			<Tx
+				label="Submit listing (button)"
+				data-ui-tone={"secondary"}
+				data-ui-theme={"light"}
+				data-ui-color={"lead"}
+			/>
 		</Button>
 	);
 };
