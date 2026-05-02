@@ -5,6 +5,7 @@ import { ArrowRightIcon } from "@/lib/client/icon";
 import { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view2";
+import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
 import { withAttrEnumMultiPatchMutation } from "~/seller/attr-enum-multi/mutation/withAttrEnumMultiPatchMutation";
@@ -84,7 +85,7 @@ export const AttrEnumMulti: FC<AttrEnumMulti.Props> = ({ listingId, attr, view, 
 									],
 								})}
 							>
-								{option.value}
+								{translator.text(`${attr.name} - ${option.value}`, option.value)}
 							</Button>
 						);
 					})}

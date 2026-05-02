@@ -192,13 +192,6 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, view, ...props 
 					</Group>
 				</Container>
 
-				<AttrRecommended
-					_suspense={"I know"}
-					listingId={listing.id}
-					categoryId={listing.categoryId}
-					view={view}
-				/>
-
 				<Tx
 					label="Draft - those others (title)"
 					data-ui-tone="secondary"
@@ -275,6 +268,13 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, view, ...props 
 						/>
 					</Group>
 				</Container>
+
+				<AttrRecommended
+					_suspense={"I know"}
+					listingId={listing.id}
+					categoryId={listing.categoryId}
+					view={view}
+				/>
 
 				<AttrOptional
 					_suspense={"I know"}
