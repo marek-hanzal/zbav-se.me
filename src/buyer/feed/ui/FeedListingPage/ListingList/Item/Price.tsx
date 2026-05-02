@@ -1,25 +1,21 @@
 import type { FC } from "react";
-import { match } from "ts-pattern";
+import { match, P } from "ts-pattern";
 import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
 import { PriceInline } from "@/lib/client/price-inline";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { translator } from "@/lib/common/translation";
-import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
+import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 
 export namespace Price {
 	export interface Props extends Container.Props {
-		price: ListingPriceSchema.Type;
+		listing: Pick<ListingSchema.Type, "priceType" | "price" | "currency">;
 	}
 }
 
-export const Price: FC<Price.Props> = ({ price, ...props }) => {
+export const Price: FC<Price.Props> = ({ listing, ...props }) => {
 	const locale = useLocale();
-
-	if (!price.priceType) {
-		return null;
-	}
 
 	return (
 		<Container
@@ -28,13 +24,17 @@ export const Price: FC<Price.Props> = ({ price, ...props }) => {
 			data-ui-items={"center"}
 			{...props}
 		>
-			{match(price)
+			{match(listing)
 				.with(
 					{
 						priceType: "open",
+						price: P.number,
+						currency: P.string,
 					},
 					{
 						priceType: "closed",
+						price: P.number,
+						currency: P.string,
 					},
 					({ price, currency, priceType }) => {
 						if (!price) {
@@ -61,9 +61,21 @@ export const Price: FC<Price.Props> = ({ price, ...props }) => {
 				.with(
 					{
 						priceType: "offer",
+						price: P.number.or(P.nullish),
+						currency: P.string.or(P.nullish),
 					},
 					() => {
 						return <Tx label={"Listing price - offer"} />;
+					},
+				)
+				.with(
+					{
+						priceType: P.optional(P.string.or(P.nullish)),
+						price: P.optional(P.number.or(P.nullish)),
+						currency: P.optional(P.string.or(P.nullish)),
+					},
+					() => {
+						return null;
 					},
 				)
 				.exhaustive()}

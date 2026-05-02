@@ -6,7 +6,6 @@ import type { MarkSuspense, StateType } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
-import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
 import { HeroImage } from "~/common/ui/img";
 import { Delivery } from "./Delivery";
 import { Distance } from "./Distance";
@@ -72,7 +71,7 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 					data-ui-flow={"horizontal"}
 					data-ui-justify={"space-between"}
 				>
-					<Price price={listing as ListingPriceSchema.Type} />
+					<Price listing={listing} />
 
 					<Delivery delivery={listing.delivery} />
 				</Container>
