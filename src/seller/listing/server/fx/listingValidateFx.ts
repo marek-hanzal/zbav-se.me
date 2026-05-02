@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log/getLoggerFx";
-import type { ValidationErrorSchema } from "@/lib/common/schema";
-import { listingFetchFx } from "~/buyer/listing/server/fx/listingFetchFx";
+import type { ValidationErrorSchema, ValidationResultSchema } from "@/lib/common/schema";
 import { ListingSchema } from "../schema/ListingSchema";
+import { listingFetchFx } from "./listingFetchFx";
 
 export namespace listingValidateFx {
 	export interface Props {
@@ -39,27 +39,65 @@ export const listingValidateFx = Effect.fn("listingValidateFx")(function* ({
 	};
 
 	{
-		const data = ListingSchema.safeParse(listing.title);
-		if (!listing.title || !data.success) {
-			result.errors.push({
-				field: "title",
-				message: "Title is not filled properly",
-			});
-			result.success = false;
+		{
+			if (!listing.withUploadIds.length) {
+				result.errors.push({
+					field: "gallery",
+					message: "Missing images",
+				});
+			}
+		}
+
+		{
+			const data = ListingSchema.shape.title.safeParse(listing.title);
+			if (!listing.title || !data.success) {
+				result.errors.push({
+					field: "title",
+					message: "Title is not filled properly",
+				});
+			}
+		}
+
+		{
+			if (!listing.categoryId) {
+				result.errors.push({
+					field: "categoryId",
+					message: "Missing category",
+				});
+			}
+		}
+
+		{
+			if (!listing.locationId) {
+				result.errors.push({
+					field: "locationId",
+					message: "Missing location",
+				});
+			}
+		}
+
+		{
+			if (!listing.priceType) {
+				result.errors.push({
+					field: "priceType",
+					message: "Missing price type",
+				});
+			}
+		}
+
+		{
+			if (!listing.expires) {
+				result.errors.push({
+					field: "expires",
+					message: "Missing expiration time",
+				});
+			}
 		}
 	}
 
-	return result as
-		| {
-				success: true;
-		  }
-		| {
-				errors: [
-					ValidationErrorSchema.Type,
-					...ValidationErrorSchema.Type[],
-				];
-				success: false;
-		  };
+	result.success = !result.errors.length;
+
+	return result satisfies ValidationResultSchema.Type;
 });
 
 export type listingValidateFx = ReturnType<typeof listingValidateFx>;

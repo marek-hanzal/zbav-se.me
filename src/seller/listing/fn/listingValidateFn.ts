@@ -1,8 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { z } from "zod";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
+import { ValidationResultSchema } from "@/lib/common/schema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
@@ -30,7 +30,7 @@ export const listingValidateFn = createServerFn()
 		logger.trace(name, data);
 
 		return zodGuardFx({
-			schema: z.any(),
+			schema: ValidationResultSchema,
 			dataFx: listingValidateFx({
 				...data,
 				userId: user.id,

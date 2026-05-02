@@ -8,3 +8,4 @@ export { OrderEnumSchema } from "./OrderEnumSchema";
 export { TranslationListSchema } from "./TranslationListSchema";
 export { TranslationSchema } from "./TranslationSchema";
 export { ValidationErrorSchema } from "./ValidationErrorSchema";
+export { ValidationResultSchema } from "./ValidationResultSchema";

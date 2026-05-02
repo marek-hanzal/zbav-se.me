@@ -5,6 +5,7 @@ import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { uiSaveButton } from "~/common/ui/ui";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
+import { withListingValidationQuery } from "../../query/withListingValidationQuery";
 import type { ListingSchema } from "../../server/schema/ListingSchema";
 
 export namespace PublishListingButton {
@@ -18,6 +19,10 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 	className,
 	...props
 }) => {
+	const { data: validation } = withListingValidationQuery.useSuspenseQuery({
+		listingId: listing.id,
+	});
+
 	const navigate = useNavigate();
 	const locale = useLocale();
 	const mutation = withListingQuery.usePatchMutation({
@@ -31,6 +36,8 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 		},
 	});
 
+	console.log("valid", validation);
+
 	return (
 		<Button
 			data-action={"publish listing"}
@@ -41,7 +48,7 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 				"data-ui-color": "lead",
 				"data-ui-text": "2xl",
 			}}
-			disabled={mutation.isPending}
+			disabled={!validation.success || mutation.isPending}
 			loading={mutation.isPending}
 			onClick={() => {
 				mutation.mutate({

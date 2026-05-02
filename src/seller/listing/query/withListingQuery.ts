@@ -11,6 +11,7 @@ import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQ
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
 import { listingPatchFn } from "../fn/listingPatchFn";
 import type { ListingPatchSchema } from "../server/schema/ListingPatchSchema";
+import { withListingValidationQuery } from "./withListingValidationQuery";
 
 export const withListingQuery = withEntityQuery({
 	logger: getRootLogger([
@@ -71,5 +72,14 @@ export const withListingQuery = withEntityQuery({
 	},
 	async patchCollectionFn(_data: never): Promise<ListingSchema.Type[]> {
 		throw new Error("Listing collection patch is not supported.");
+	},
+	invalidate: {
+		patch: [
+			{
+				async invalidate({ queryClient }) {
+					await withListingValidationQuery.invalidate(queryClient);
+				},
+			},
+		],
 	},
 });

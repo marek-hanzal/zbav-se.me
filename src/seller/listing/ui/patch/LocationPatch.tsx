@@ -23,7 +23,7 @@ export namespace LocationPatch {
 	export interface Props extends TitleContainer.Props {
 		listing: ListingSchema.Type;
 		onCancel(): void;
-		view: useView.Use<"price">;
+		view: useView.Use<"priceType">;
 	}
 }
 
@@ -31,7 +31,7 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ listing, onCancel, view
 	const [isSearchPendingSelection, setIsSearchPendingSelection] = useState(false);
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess() {
-			view.set("price");
+			view.set("priceType");
 		},
 		invalidate: [
 			"collection",
