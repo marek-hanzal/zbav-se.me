@@ -65,7 +65,10 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 
 	return (
 		<editor.View>
-			<editor.Panel name={"default"}>
+			<editor.Panel
+				name={"default"}
+				keep
+			>
 				<Editor
 					_suspense={"I know"}
 					listingId={listing.id}

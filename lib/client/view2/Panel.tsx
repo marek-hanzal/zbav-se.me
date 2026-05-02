@@ -8,6 +8,10 @@ import type { useView } from "./useView";
 export namespace Panel {
 	export interface Props<TPanel extends string> extends Container.Props {
 		name: TPanel;
+		/**
+		 * Keep mounted (useful for "root" pages which keeps e.g. scroll position)
+		 */
+		keep?: boolean;
 		control: useView.Use<TPanel>;
 	}
 }
@@ -23,6 +27,7 @@ export namespace Panel {
  */
 export const Panel = <TPanel extends string>({
 	name,
+	keep = false,
 	control,
 	children,
 	...props
@@ -38,6 +43,10 @@ export const Panel = <TPanel extends string>({
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Ssst
 	const panel = useMemo(() => {
+		if (!isVisible && !keep) {
+			return null;
+		}
+
 		return (
 			<Container
 				data-ui={`Panel-${name}`}
