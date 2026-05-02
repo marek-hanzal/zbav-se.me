@@ -32,10 +32,7 @@ export const AttrOf: FC<AttrOf.Props> = ({ attrOf, ...props }) => {
 						textLabel={translator.text(`Field - ${attr.name}`)}
 						textValue={
 							attr.value
-								? translator.text(
-										`Field - ${attr.name} - ${attr.value}`,
-										attr.value,
-									)
+								? translator.text(`${attr.name} - ${attr.value}`, attr.value)
 								: null
 						}
 						textEmpty={translator.text("No value here (label)")}
@@ -54,10 +51,7 @@ export const AttrOf: FC<AttrOf.Props> = ({ attrOf, ...props }) => {
 						textLabel={translator.text(`Field - ${attr.name}`)}
 						textValue={
 							attr.value
-								? translator.text(
-										`Field Enum - ${attr.name} - ${attr.value}`,
-										attr.value ?? "",
-									)
+								? translator.text(`${attr.name} - ${attr.value}`, attr.value)
 								: null
 						}
 						textEmpty={translator.text("No value here (label)")}
@@ -122,7 +116,7 @@ export const AttrOf: FC<AttrOf.Props> = ({ attrOf, ...props }) => {
 							id: item,
 						}))}
 						renderFn={({ id }) => {
-							return translator.text(`Field Enum - ${attr.name} - ${id}`, id);
+							return translator.text(`${attr.name} - ${id}`, id);
 						}}
 						{...props}
 					/>

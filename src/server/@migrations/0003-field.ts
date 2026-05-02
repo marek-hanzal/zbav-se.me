@@ -1,5 +1,6 @@
 import { type Migration, sql } from "kysely";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
+import type { FieldKindEnumSchema } from "~/user/field/server/schema/FieldKindEnumSchema";
 import type { FieldTypeEnumSchema } from "~/user/field/server/schema/FieldTypeEnumSchema";
 
 export const FieldMigration: Migration = {
@@ -15,6 +16,16 @@ export const FieldMigration: Migration = {
 					"text",
 					"enum-single",
 					"enum-multi",
+				]),
+			)
+			.execute();
+
+		await db.schema
+			.createType("field_kind_enum")
+			.asEnum(
+				toEnumGuard<FieldKindEnumSchema.Type>()([
+					"recommended",
+					"optional",
 				]),
 			)
 			.execute();

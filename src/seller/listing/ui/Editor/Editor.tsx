@@ -30,7 +30,7 @@ import { WarrantyValue } from "~/user/listing/ui/value/WarrantyValue";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import { withListingQuery } from "../../query/withListingQuery";
 import { AttrOptional } from "./AttrOptional";
-import { AttrRequired } from "./AttrRequired";
+import { AttrRecommended } from "./AttrRecommended";
 
 export namespace Editor {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
@@ -192,13 +192,6 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, view, ...props 
 					</Group>
 				</Container>
 
-				<AttrRequired
-					_suspense={"I know"}
-					listingId={listing.id}
-					categoryId={listing.categoryId}
-					view={view}
-				/>
-
 				<Tx
 					label="Draft - those others (title)"
 					data-ui-tone="secondary"
@@ -275,6 +268,13 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, view, ...props 
 						/>
 					</Group>
 				</Container>
+
+				<AttrRecommended
+					_suspense={"I know"}
+					listingId={listing.id}
+					categoryId={listing.categoryId}
+					view={view}
+				/>
 
 				<AttrOptional
 					_suspense={"I know"}

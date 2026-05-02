@@ -397,9 +397,9 @@ Dispute transaction - confirm (button):
 Draft - bunch of required (title):
     value: Nutné pro zveřejnění
 Draft - category spec - optional (title):
-    value: Nepovinné v rámci kategorie
-Draft - category spec - required (title):
-    value: Povinné položky v rámci kategorie
+    value: Specialitky, pokud máš náladu
+Draft - category spec - recommended (title):
+    value: Doporučuji vyplnit
 Draft - those others (title):
     value: Další volby
 Draft expire (hint):
@@ -893,7 +893,7 @@ No transactions, no listings (message):
 No transactions, no listings (title):
     value: Nic neprodáváš...
 No value here (label):
-    value: Nemáš vyplněno
+    value: Přidat
 Notifications (label):
     value: Oznámení
 Open agent menu options (aria):
@@ -1427,3 +1427,54 @@ transaction - seller - status-trade:
     dynamic: true
 zbav-se.me:
     value: zbav-se.me
+Field - brand:
+    value: Značka
+    dynamic: true
+Field - model:
+    value: Model/Označení
+    dynamic: true
+Field - sensor.type:
+    value: Typ senzoru
+    dynamic: true
+sensor.type - full-frame:
+    value: Full Frame
+    dynamic: true
+sensor.type - aps-c:
+    value: APS-C
+    dynamic: true
+sensor.type - compact:
+    value: Compact
+    dynamic: true
+Field - color:
+    value: Barva
+    dynamic: true
+color - yellow:
+    value: Žlutá
+    dynamic: true
+color - blue:
+    value: Modrá
+    dynamic: true
+Field patch - ram (title):
+    value: Velikost RAMky
+    dynamic: true
+Field - ram:
+    value: Velikost RAMky
+    dynamic: true
+Field patch - storage (title):
+    value: Velikost úložiště
+    dynamic: true
+Field - storage:
+    value: Velikost úložiště
+    dynamic: true
+Field patch - battery-condition (title)":
+    value: Stav baterie
+    dynamic: true
+Field - battery-condition:
+    value: Stav baterie
+    dynamic: true
+ram - 4 GB or less:
+    value: 4GB nebo méně
+    dynamic: true
+ram - 64 GB or more:
+    value: 64GB nebo více
+    dynamic: true

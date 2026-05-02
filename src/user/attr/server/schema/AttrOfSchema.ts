@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CategoryFieldTableSchema } from "~/server/database/@table/CategoryFieldTableSchema";
 import { FieldTableSchema } from "~/server/database/@table/FieldTableSchema";
 import type { FieldTypeEnumSchema } from "~/user/field/server/schema/FieldTypeEnumSchema";
 import { FieldOptionSchema } from "~/user/field-option/server/schema/FieldOptionSchema";
@@ -6,6 +7,7 @@ import { FieldOptionSchema } from "~/user/field-option/server/schema/FieldOption
 const FieldSchema = z
 	.looseObject({
 		...FieldTableSchema.shape,
+		kind: CategoryFieldTableSchema.shape.kind,
 		options: z.array(FieldOptionSchema),
 	})
 	.strip();
@@ -14,7 +16,6 @@ const TextFieldSchema = z
 	.looseObject({
 		...FieldSchema.shape,
 		type: z.literal("text" satisfies FieldTypeEnumSchema.Type),
-		required: z.boolean(),
 		value: z.string().nullable(),
 	})
 	.strip();
