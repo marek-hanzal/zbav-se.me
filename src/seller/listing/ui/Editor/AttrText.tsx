@@ -11,6 +11,7 @@ import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
 import { withAttrTextPatchMutation } from "~/seller/attr-text/mutation/withAttrTextPatchMutation";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { useNextAttr } from "./useNextAttr";
 
 const FormSchema = z
 	.looseObject({
@@ -33,9 +34,10 @@ export namespace AttrText {
 }
 
 export const AttrText: FC<AttrText.Props> = ({ listingId, attrs, attr, view, ...props }) => {
+	const next = useNextAttr(attr, attrs);
 	const mutation = withAttrTextPatchMutation.useMutation({
 		onSuccess() {
-			view.set("default");
+			view.set(next ? `attr.${next.name}` : "default");
 		},
 	});
 	const form = useAppForm({

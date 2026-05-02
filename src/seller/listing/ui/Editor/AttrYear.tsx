@@ -12,6 +12,7 @@ import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
 import { withAttrNumberPatchMutation } from "~/seller/attr-number/mutation/withAttrNumberPatchMutation";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { useNextAttr } from "./useNextAttr";
 
 const toYearBound = (value: number | null | undefined, fallback: number) =>
 	match(value)
@@ -33,9 +34,10 @@ export namespace AttrYear {
 }
 
 export const AttrYear: FC<AttrYear.Props> = ({ listingId, attrs, attr, view, ...props }) => {
+	const next = useNextAttr(attr, attrs);
 	const mutation = withAttrNumberPatchMutation.useMutation({
 		onSuccess() {
-			view.set("default");
+			view.set(next ? `attr.${next.name}` : "default");
 		},
 	});
 	const min = toYearBound(attr.min, 1900);

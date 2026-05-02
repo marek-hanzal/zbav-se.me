@@ -10,6 +10,7 @@ import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
 import { withAttrEnumMultiPatchMutation } from "~/seller/attr-enum-multi/mutation/withAttrEnumMultiPatchMutation";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { useNextAttr } from "./useNextAttr";
 
 export namespace AttrEnumMulti {
 	export interface Props extends Container.Props {
@@ -32,9 +33,10 @@ export const AttrEnumMulti: FC<AttrEnumMulti.Props> = ({
 	view,
 	...props
 }) => {
+	const next = useNextAttr(attr, attrs);
 	const mutation = withAttrEnumMultiPatchMutation.useMutation({
 		onSuccess() {
-			view.set("default");
+			view.set(next ? `attr.${next.name}` : "default");
 		},
 	});
 	const selection = useSelection({

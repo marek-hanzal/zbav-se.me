@@ -10,6 +10,7 @@ import { Dial } from "~/common/ui/dial";
 import { useAppForm } from "~/common/ui/form";
 import { withAttrNumberPatchMutation } from "~/seller/attr-number/mutation/withAttrNumberPatchMutation";
 import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { useNextAttr } from "./useNextAttr";
 
 const FormSchema = z
 	.looseObject({
@@ -32,9 +33,10 @@ export namespace AttrNumber {
 }
 
 export const AttrNumber: FC<AttrNumber.Props> = ({ listingId, attrs, attr, view, ...props }) => {
+	const next = useNextAttr(attr, attrs);
 	const mutation = withAttrNumberPatchMutation.useMutation({
 		onSuccess() {
-			view.set("default");
+			view.set(next ? `attr.${next.name}` : "default");
 		},
 	});
 	const form = useAppForm({
