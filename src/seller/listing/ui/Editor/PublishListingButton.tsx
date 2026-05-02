@@ -34,7 +34,7 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 	return (
 		<Button
 			data-action={"publish listing"}
-			iconEnabled={"icon-[solar--globus-linear]"}
+			iconEnabled={"icon-[solar--cloud-upload-linear]"}
 			iconProps={{
 				"data-ui-text": "2xl",
 			}}
