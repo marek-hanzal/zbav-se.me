@@ -1,13 +1,16 @@
-import type { Migration } from "kysely";
+import { type Migration, sql } from "kysely";
 
 export const CategoryFieldMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createTable("category_field")
+			//
 			.addColumn("categoryId", "text", (col) => col.notNull())
 			.addColumn("fieldId", "text", (col) => col.notNull())
+			//
 			.addColumn("sort", "int2", (col) => col.notNull())
-			.addColumn("required", "boolean", (col) => col.notNull())
+			.addColumn("kind", sql`field_kind_enum`, (col) => col.notNull())
+			//
 			.addPrimaryKeyConstraint("category_field_pk", [
 				"categoryId",
 				"fieldId",

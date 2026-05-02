@@ -20,32 +20,32 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "ram",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "storage",
 				"sort": 3,
-				"required": true
+				"kind": "optional"
 			},
 			{
 				"name": "battery-condition",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 5,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -67,22 +67,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dual-sim",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -105,32 +105,32 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "watch.case-size",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "watch.strap-material",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "compatibility",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 5,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -151,22 +151,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -188,22 +188,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "battery.capacity",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.output",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -227,27 +227,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "connector.type",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "cable.length",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -271,22 +271,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -309,17 +309,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "storage.capacity",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "card.format",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -344,32 +344,32 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "ram",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "storage",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "display.size",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "release.year",
 				"sort": 5,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -392,27 +392,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "ram",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "storage",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "release.year",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -437,27 +437,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "display.size",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "refresh-rate",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "panel.type",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -483,22 +483,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "component.type",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "compatibility",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -522,22 +522,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "connectivity",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -562,22 +562,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "network.type",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "connectivity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -601,22 +601,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "connectivity",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -641,22 +641,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "storage.capacity",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "storage.type",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "connectivity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -680,22 +680,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "license.type",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "platform.os",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "release.year",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -720,17 +720,17 @@
 			{
 				"name": "atomizer.capacity",
 				"sort": 0,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -756,17 +756,17 @@
 			{
 				"name": "atomizer.capacity",
 				"sort": 0,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -792,17 +792,17 @@
 			{
 				"name": "atomizer.capacity",
 				"sort": 0,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -828,17 +828,17 @@
 			{
 				"name": "atomizer.capacity",
 				"sort": 0,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -863,17 +863,17 @@
 			{
 				"name": "mod.battery",
 				"sort": 0,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "power.output",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -898,17 +898,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "mod.battery",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "battery.capacity",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -933,17 +933,17 @@
 			{
 				"name": "compatibility",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "resistance.ohm",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "count.pieces",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -969,17 +969,17 @@
 			{
 				"name": "compatibility",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1004,22 +1004,22 @@
 			{
 				"name": "clothing.size",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "brand",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1044,22 +1044,22 @@
 			{
 				"name": "clothing.size",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "brand",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1083,22 +1083,22 @@
 			{
 				"name": "clothing.size",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "brand",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1123,22 +1123,22 @@
 			{
 				"name": "shoe.size",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "brand",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1163,22 +1163,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1203,32 +1203,32 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "watch.case-size",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "watch.strap-material",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "jewelry.material",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "release.year",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 5,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1253,22 +1253,22 @@
 			{
 				"name": "clothing.size",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "brand",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1294,22 +1294,22 @@
 			{
 				"name": "clothing.size",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "brand",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1334,27 +1334,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "storage.capacity",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "release.year",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1378,22 +1378,22 @@
 			{
 				"name": "game.format",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "language",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "edition",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1416,22 +1416,22 @@
 			{
 				"name": "game.format",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "language",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "edition",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1456,22 +1456,22 @@
 			{
 				"name": "game.format",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "language",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "edition",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1495,22 +1495,22 @@
 			{
 				"name": "game.format",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "language",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "edition",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1534,22 +1534,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "connectivity",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1573,27 +1573,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "storage.capacity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "connectivity",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1619,27 +1619,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "display.size",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "panel.type",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "release.year",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1663,22 +1663,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "connectivity",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1703,27 +1703,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.output",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "connectivity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1748,27 +1748,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "connectivity",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "battery.life",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1793,27 +1793,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "sensor.type",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1837,22 +1837,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "lens.mount",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1876,22 +1876,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "brightness.lm",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "release.year",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1916,27 +1916,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "flight.time",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "battery.capacity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -1960,27 +1960,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "flight.time",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "battery.capacity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2003,27 +2003,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "stroller.type",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.age",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2045,32 +2045,32 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "seat.mounting",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.weight-max",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "child.age",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 5,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2093,27 +2093,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.age",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2137,27 +2137,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "toy.type",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "age.recommended",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2179,27 +2179,27 @@
 			{
 				"name": "clothing.size",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "shoe.size",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "brand",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2222,22 +2222,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "baby.stage",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "count.pieces",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "material",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2261,22 +2261,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.input",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2300,17 +2300,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2334,17 +2334,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2368,17 +2368,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2401,17 +2401,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2435,22 +2435,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "connectivity",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "compatibility",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2473,17 +2473,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2507,22 +2507,22 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "bed.size",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2545,17 +2545,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2579,17 +2579,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2613,17 +2613,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2646,17 +2646,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2680,27 +2680,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "appliance.energy-class",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "volume.capacity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2725,27 +2725,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "load.capacity",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "appliance.energy-class",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2769,27 +2769,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "appliance.energy-class",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2814,27 +2814,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.input",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "appliance.energy-class",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2858,27 +2858,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "volume.capacity",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.input",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2902,22 +2902,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.input",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2941,17 +2941,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "count.pieces",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -2975,22 +2975,22 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "diameter",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3014,22 +3014,22 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "volume.capacity",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "count.pieces",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3053,22 +3053,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.input",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3092,22 +3092,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "coffee.machine-type",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "volume.capacity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3130,17 +3130,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3166,17 +3166,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "baby.stage",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "package.weight",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3198,17 +3198,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "baby.stage",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "package.weight",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3233,17 +3233,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "baby.stage",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "package.weight",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3267,17 +3267,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "baby.stage",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "package.weight",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3300,17 +3300,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "package.weight",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "edition",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3334,17 +3334,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "package.weight",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "edition",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3368,17 +3368,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "package.weight",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "country",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3402,17 +3402,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "package.weight",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "country",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3436,17 +3436,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "volume.capacity",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "country",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3471,17 +3471,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "package.weight",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "country",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3505,27 +3505,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "bike.frame-size",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "wheel.diameter",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3549,22 +3549,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "weight.kg",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3587,22 +3587,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "length.cm",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "shoe.size",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3627,22 +3627,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "player.count",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "weight.kg",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3666,22 +3666,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "wheel.diameter",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "max.load",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3705,22 +3705,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "length.cm",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "compatibility",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3743,27 +3743,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "airsoft.power-source",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "muzzle.velocity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "magazine.capacity",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3786,27 +3786,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "airsoft.power-source",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "muzzle.velocity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "magazine.capacity",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3829,27 +3829,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "airsoft.power-source",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "muzzle.velocity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "magazine.capacity",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3871,27 +3871,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "airsoft.power-source",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "muzzle.velocity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "magazine.capacity",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3914,27 +3914,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "airsoft.power-source",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "muzzle.velocity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "magazine.capacity",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -3961,22 +3961,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4001,32 +4001,32 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "vehicle.year",
 				"sort": 2,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "vehicle.mileage",
 				"sort": 3,
-				"required": true
+				"kind": "optional"
 			},
 			{
 				"name": "fuel.type",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "transmission",
 				"sort": 5,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4051,32 +4051,32 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "vehicle.year",
 				"sort": 2,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "vehicle.mileage",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "engine.volume",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "fuel.type",
 				"sort": 5,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4101,27 +4101,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "tyre.season",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "wheel.diameter",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4144,22 +4144,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4182,22 +4182,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "part.number",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "vehicle.year",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4221,22 +4221,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "helmet.size",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4259,22 +4259,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.source",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "length.cm",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4298,22 +4298,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.source",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "blade.length",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4338,22 +4338,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.source",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "battery.capacity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4378,17 +4378,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "count.pieces",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4412,22 +4412,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4452,22 +4452,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.source",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4491,17 +4491,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4525,17 +4525,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "volume.capacity",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4560,17 +4560,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4594,17 +4594,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "brand",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4628,17 +4628,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "volume.capacity",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4663,17 +4663,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4696,22 +4696,22 @@
 			{
 				"name": "breed",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pet.gender",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.age",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4732,22 +4732,22 @@
 			{
 				"name": "breed",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pet.gender",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.age",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4768,22 +4768,22 @@
 			{
 				"name": "breed",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pet.gender",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.age",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4806,22 +4806,22 @@
 			{
 				"name": "breed",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pet.gender",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.age",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4845,22 +4845,22 @@
 			{
 				"name": "breed",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pet.gender",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.age",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4882,22 +4882,22 @@
 			{
 				"name": "breed",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pet.gender",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.age",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4922,22 +4922,22 @@
 			{
 				"name": "breed",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pet.gender",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.age",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4961,22 +4961,22 @@
 			{
 				"name": "breed",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pet.gender",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.age",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -4997,22 +4997,22 @@
 			{
 				"name": "breed",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pet.gender",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.age",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5035,22 +5035,22 @@
 			{
 				"name": "breed",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pet.gender",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.age",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5073,22 +5073,22 @@
 			{
 				"name": "breed",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pet.gender",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "child.age",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5112,17 +5112,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pet.life-stage",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "package.weight",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5145,17 +5145,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "package.weight",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5179,22 +5179,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.input",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "dimensions",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5217,22 +5217,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.input",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "dimensions",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5256,17 +5256,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "volume.capacity",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "skin.type",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5289,17 +5289,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pet.life-stage",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "package.weight",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5323,22 +5323,22 @@
 			{
 				"name": "author",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "language",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "book.format",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5362,27 +5362,27 @@
 			{
 				"name": "author",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "language",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "edition",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "book.format",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5405,22 +5405,22 @@
 			{
 				"name": "author",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "language",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "book.format",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5446,17 +5446,17 @@
 			{
 				"name": "movie.format",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "language",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5481,12 +5481,12 @@
 			{
 				"name": "release.year",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "language",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			}
 		]
 	},
@@ -5510,17 +5510,17 @@
 			{
 				"name": "movie.format",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "language",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5544,22 +5544,22 @@
 			{
 				"name": "artist",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "language",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "edition",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5584,22 +5584,22 @@
 			{
 				"name": "artist",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "record.size",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "edition",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5624,17 +5624,17 @@
 			{
 				"name": "artist",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "edition",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5658,22 +5658,22 @@
 			{
 				"name": "author",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "language",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "edition",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "platform",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5697,22 +5697,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "player.count",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "age.recommended",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "language",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5737,22 +5737,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "battery.capacity",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "compatibility",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5777,22 +5777,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "package.weight",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "compatibility",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5817,22 +5817,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "dimensions",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5857,22 +5857,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "package.weight",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5897,22 +5897,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "count.pieces",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "age.recommended",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5936,17 +5936,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "volume.capacity",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "fragrance.type",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -5970,17 +5970,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "volume.capacity",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "skin.type",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6004,17 +6004,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "volume.capacity",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "hair.type",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6038,22 +6038,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.source",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6077,17 +6077,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.input",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6112,17 +6112,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "power.input",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6146,27 +6146,27 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "release.year",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "handedness",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6191,22 +6191,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "key.count",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6231,22 +6231,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6270,22 +6270,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "release.year",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6309,22 +6309,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "connectivity",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "compatibility",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6348,22 +6348,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "count.pieces",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "material",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6387,22 +6387,22 @@
 			{
 				"name": "country",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "collectible.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "edition",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6425,22 +6425,22 @@
 			{
 				"name": "country",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "collectible.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "edition",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "language",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6464,22 +6464,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "series",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "dimensions",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6504,22 +6504,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "collectible.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6543,22 +6543,22 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "collectible.year",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "country",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6582,22 +6582,22 @@
 			{
 				"name": "collectible.year",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "country",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "edition",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6621,22 +6621,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "blade.length",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6660,22 +6660,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "blade.length",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "dimensions",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6698,22 +6698,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "blade.length",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6736,22 +6736,22 @@
 			{
 				"name": "compatibility",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "blade.length",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "brand",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6775,22 +6775,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "blade.length",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6813,22 +6813,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "count.pieces",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6852,22 +6852,22 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "collectible.year",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6892,22 +6892,22 @@
 			{
 				"name": "artist",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "art.year",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6931,22 +6931,22 @@
 			{
 				"name": "artist",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "art.year",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -6970,22 +6970,22 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "art.year",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "artist",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7008,22 +7008,22 @@
 			{
 				"name": "artist",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "art.year",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7047,17 +7047,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7080,22 +7080,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "package.weight",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7119,27 +7119,27 @@
 			{
 				"name": "property.area",
 				"sort": 0,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "rooms.count",
 				"sort": 1,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "property.furnishing",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "property.heating",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "property.year-built",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7163,27 +7163,27 @@
 			{
 				"name": "property.area",
 				"sort": 0,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "rooms.count",
 				"sort": 1,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "property.furnishing",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "property.heating",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "property.year-built",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7207,27 +7207,27 @@
 			{
 				"name": "property.area",
 				"sort": 0,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "land.area",
 				"sort": 1,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "rooms.count",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "property.year-built",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "property.heating",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7250,27 +7250,27 @@
 			{
 				"name": "property.area",
 				"sort": 0,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "land.area",
 				"sort": 1,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "rooms.count",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "property.year-built",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "property.heating",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7294,22 +7294,22 @@
 			{
 				"name": "land.area",
 				"sort": 0,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "land.type",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "buildability",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "property.electricity",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7333,17 +7333,17 @@
 			{
 				"name": "property.area",
 				"sort": 0,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "parking.type",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "property.electricity",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7367,27 +7367,27 @@
 			{
 				"name": "property.area",
 				"sort": 0,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "land.area",
 				"sort": 1,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "rooms.count",
 				"sort": 2,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "property.year-built",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "property.heating",
 				"sort": 4,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7410,22 +7410,22 @@
 			{
 				"name": "property.area",
 				"sort": 0,
-				"required": true
+				"kind": "recommended"
 			},
 			{
 				"name": "property.furnishing",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "property.heating",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "property.year-built",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7448,17 +7448,17 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "voucher.value",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "edition",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7482,22 +7482,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "location.note",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7520,22 +7520,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "part.number",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "compatibility",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "material",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7558,22 +7558,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "model",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "material",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7600,17 +7600,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7635,17 +7635,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7671,17 +7671,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7707,17 +7707,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7746,17 +7746,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7786,17 +7786,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7828,17 +7828,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7868,17 +7868,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7905,17 +7905,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7940,22 +7940,22 @@
 			{
 				"name": "brand",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "pyro.class",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "count.pieces",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			},
 			{
 				"name": "color",
 				"sort": 3,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -7980,17 +7980,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -8014,17 +8014,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -8052,17 +8052,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	},
@@ -8088,17 +8088,17 @@
 			{
 				"name": "material",
 				"sort": 0,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "dimensions",
 				"sort": 1,
-				"required": false
+				"kind": "recommended"
 			},
 			{
 				"name": "color",
 				"sort": 2,
-				"required": false
+				"kind": "optional"
 			}
 		]
 	}

@@ -8,7 +8,7 @@ import { ChevronAction } from "~/common/ui/action/ChevronAction";
 import { withAttrOfQuery } from "~/user/attr/query/withAttrOfQuery";
 import { AttrOf } from "~/user/attr/ui/AttrOf";
 
-export namespace AttrRequired {
+export namespace AttrRecommended {
 	export interface Props extends MarkSuspense.Props {
 		listingId: string;
 		categoryId: string | undefined | null;
@@ -16,9 +16,9 @@ export namespace AttrRequired {
 	}
 }
 
-export const AttrRequired: FC<AttrRequired.Props> = ({ listingId, categoryId, view }) => {
+export const AttrRecommended: FC<AttrRecommended.Props> = ({ listingId, categoryId, view }) => {
 	/**
-	 * We're not filtering fields here as we'll shared same query cache for both required/optional
+	 * We're not filtering fields here as we'll share the same query cache for both recommended/optional
 	 * fields.
 	 */
 	const { data: fields } = withAttrOfQuery.useSuspenseQuery({
@@ -26,16 +26,16 @@ export const AttrRequired: FC<AttrRequired.Props> = ({ listingId, categoryId, vi
 		categoryId: categoryId ?? "unknown",
 	});
 
-	const required = fields.filter((item) => item.required);
+	const recommended = fields.filter((item) => item.kind === "recommended");
 
-	if (!categoryId || !required.length) {
+	if (!categoryId || !recommended.length) {
 		return null;
 	}
 
 	return (
 		<>
 			<Tx
-				label="Draft - category spec - required (title)"
+				label="Draft - category spec - recommended (title)"
 				data-ui-tone="primary"
 				data-ui-theme="light"
 				data-ui-text="md"
@@ -48,7 +48,7 @@ export const AttrRequired: FC<AttrRequired.Props> = ({ listingId, categoryId, vi
 				data-ui-flow={"vertical"}
 				data-ui-gap={"default"}
 			>
-				{required.map((field) => {
+				{recommended.map((field) => {
 					return (
 						<Group key={field.name}>
 							<AttrOf

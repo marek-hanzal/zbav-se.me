@@ -34,7 +34,7 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 				sql<number | null>`f.min::float8`.as("min"),
 				sql<number | null>`f.max::float8`.as("max"),
 				sql<number | null>`f.step::float8`.as("step"),
-				"cf.required",
+				"cf.kind",
 				(eb) => {
 					return jsonArrayFrom(
 						eb

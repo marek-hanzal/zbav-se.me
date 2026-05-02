@@ -26,7 +26,7 @@ export const AttrOptional: FC<AttrOptional.Props> = ({ listingId, categoryId, vi
 		categoryId: categoryId ?? "unknown",
 	});
 
-	const optional = fields.filter((item) => !item.required);
+	const optional = fields.filter((item) => item.kind === "optional");
 
 	if (!categoryId || !optional.length) {
 		return null;
