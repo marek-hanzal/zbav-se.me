@@ -66,44 +66,48 @@ export const AttrText: FC<AttrText.Props> = ({ listingId, attr, view, ...props }
 			data-ui-gap="default"
 			{...props}
 		>
-			<Status
-				action={
-					<form
-						className={"contents"}
-						onSubmit={(e) => {
-							e.preventDefault();
-							e.stopPropagation();
-							form.handleSubmit();
-						}}
-					>
-						<form.AppField name={"value"}>
-							{(field) => (
-								<FormField
-									id={field.name}
-									name={field.name}
-									meta={field.state.meta}
-									required
-								>
-									{(props) => (
-										<field.TextInput
-											value={field.state.value ?? ""}
-											onChange={(e) => {
-												field.handleChange(e.target.value);
-											}}
-											onBlur={field.handleBlur}
-											placeholder={translator.text(
-												"Listing title (placeholder)",
-											)}
-											autoFocus
-											{...props}
-										/>
-									)}
-								</FormField>
-							)}
-						</form.AppField>
-					</form>
-				}
-			/>
+			<Container data-ui-layout={"vertical-centered"}>
+				<Status
+					data-ui-inner={"4xl"}
+					action={
+						<form
+							className={"contents"}
+							onSubmit={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+								form.handleSubmit();
+							}}
+						>
+							<form.AppField name={"value"}>
+								{(field) => (
+									<FormField
+										id={field.name}
+										name={field.name}
+										meta={field.state.meta}
+										required
+									>
+										{(props) => (
+											<field.TextInput
+												value={field.state.value ?? ""}
+												onChange={(e) => {
+													field.handleChange(e.target.value);
+												}}
+												onBlur={field.handleBlur}
+												placeholder={translator.text(
+													`${attr.name} - placeholder`,
+													attr.name,
+												)}
+												autoFocus
+												{...props}
+											/>
+										)}
+									</FormField>
+								)}
+							</form.AppField>
+						</form>
+					}
+				/>
+			</Container>
 
 			<form.Subscribe
 				selector={(state) => ({
