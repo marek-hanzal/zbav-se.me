@@ -53,7 +53,11 @@ export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
 				listingId: listing.id,
 			});
 
-			if (patch.priceType === "offer") {
+			if (
+				patch.priceType === "ask" ||
+				patch.priceType === "free" ||
+				patch.priceType === "haulaway"
+			) {
 				patch.price = null;
 			}
 

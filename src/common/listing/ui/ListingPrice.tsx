@@ -1,5 +1,4 @@
 import type { FC } from "react";
-import { match } from "ts-pattern";
 import { Badge } from "@/lib/client/badge";
 import { useLocale } from "@/lib/client/locale";
 import { PriceInline } from "@/lib/client/price-inline";
@@ -20,10 +19,6 @@ export namespace ListingPrice {
  */
 export const ListingPrice: FC<ListingPrice.Props> = ({ price, priceType, currency, ...props }) => {
 	const locale = useLocale();
-
-	if (price === null || price === undefined || !priceType || !currency) {
-		return null;
-	}
 
 	return (
 		<Badge
@@ -48,24 +43,14 @@ export const ListingPrice: FC<ListingPrice.Props> = ({ price, priceType, currenc
 						currency={currency}
 					/>
 
-					{match(priceType)
-						/**
-						 * This hack only marks the place with dynamic translation, so it's easy to find it when source
-						 * changes.
-						 */
-						.with("closed", "open", "offer", () => {
-							return (
-								<Tx
-									label={`Listing price - ${priceType}`}
-									data-ui-text="sm"
-									data-ui-opacity="6"
-								/>
-							);
-						})
-						.exhaustive()}
+					<Tx
+						label={`Listing price - ${priceType}`}
+						data-ui-text="sm"
+						data-ui-opacity="6"
+					/>
 				</>
 			) : (
-				<Tx label={"Price - free"} />
+				<Tx label={`Price - ${priceType}`} />
 			)}
 		</Badge>
 	);

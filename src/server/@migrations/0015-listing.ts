@@ -26,9 +26,11 @@ export const ListingMigration: Migration = {
 			.createType("listing_price_enum")
 			.asEnum(
 				toEnumGuard<ListingPriceEnumSchema.Type>()([
-					"closed",
-					"open",
-					"offer",
+					"fixed",
+					"haggle",
+					"ask",
+					"free",
+					"haulaway",
 				]),
 			)
 			.execute();

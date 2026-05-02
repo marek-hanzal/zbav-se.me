@@ -5,15 +5,15 @@ import { ListingPriceEnumSchema } from "../enum/ListingPriceEnumSchema";
 export const ListingPriceSchema = z.discriminatedUnion("priceType", [
 	z.object({
 		priceType: ListingPriceEnumSchema.extract([
-			"open",
-			"closed",
+			"fixed",
+			"haggle",
 		]),
 		price: z.coerce.number().positive(),
 		currency: CurrencyEnumSchema,
 	}),
 	z.object({
 		priceType: ListingPriceEnumSchema.extract([
-			"offer",
+			"ask",
 		]),
 		price: z.null().nullish(),
 		currency: z.null().nullish(),
