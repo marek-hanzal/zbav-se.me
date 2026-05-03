@@ -6,6 +6,12 @@ import type { AgentUsageTableSchema } from "~/server/database/@table/AgentUsageT
 import type { CategoryMissTableSchema } from "~/server/database/@table/CategoryMissTableSchema";
 import type { CategorySpotlightTableSchema } from "~/server/database/@table/CategorySpotlightTableSchema";
 import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
+import type { DraftAttrDecimalTableSchema } from "~/server/database/@table/DraftAttrDecimalTableSchema";
+import type { DraftAttrEnumMultiTableSchema } from "~/server/database/@table/DraftAttrEnumMultiTableSchema";
+import type { DraftAttrEnumSingleTableSchema } from "~/server/database/@table/DraftAttrEnumSingleTableSchema";
+import type { DraftAttrNumberTableSchema } from "~/server/database/@table/DraftAttrNumberTableSchema";
+import type { DraftAttrTextTableSchema } from "~/server/database/@table/DraftAttrTextTableSchema";
+import type { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
 import type { FavouriteTableSchema } from "~/server/database/@table/FavouriteTableSchema";
 import type { FeedTableSchema } from "~/server/database/@table/FeedTableSchema";
 import type { FieldOptionTableSchema } from "~/server/database/@table/FieldOptionTableSchema";
@@ -27,12 +33,12 @@ import type { UploadTableSchema } from "~/server/database/@table/UploadTableSche
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
 import type { UserRestrictionTableSchema } from "~/server/database/@table/UserRestrictionTableSchema";
+import type { CategoryFieldTableSchema } from "./@table/CategoryFieldTableSchema";
 import type { ListingAttrDecimalTableSchema } from "./@table/ListingAttrDecimalTableSchema";
 import type { ListingAttrEnumMultiTableSchema } from "./@table/ListingAttrEnumMultiTableSchema";
 import type { ListingAttrEnumSingleTableSchema } from "./@table/ListingAttrEnumSingleTableSchema";
 import type { ListingAttrNumberTableSchema } from "./@table/ListingAttrNumberTableSchema";
 import type { ListingAttrTextTableSchema } from "./@table/ListingAttrTextTableSchema";
-import type { CategoryFieldTableSchema } from "./@table/CategoryFieldTableSchema";
 
 export interface Database {
 	activity: ActivityTableSchema.Type;
@@ -43,6 +49,12 @@ export interface Database {
 	category_miss: CategoryMissTableSchema.Type;
 	category_spotlight: CategorySpotlightTableSchema.Type;
 	category: CategoryTableSchema.Type;
+	draft: DraftTableSchema.Type;
+	draft_attr_decimal: DraftAttrDecimalTableSchema.Type;
+	draft_attr_number: DraftAttrNumberTableSchema.Type;
+	draft_attr_enum_multi: DraftAttrEnumMultiTableSchema.Type;
+	draft_attr_enum_single: DraftAttrEnumSingleTableSchema.Type;
+	draft_attr_text: DraftAttrTextTableSchema.Type;
 	favourite: FavouriteTableSchema.Type;
 	feed: FeedTableSchema.Type;
 	field: FieldTableSchema.Type;
