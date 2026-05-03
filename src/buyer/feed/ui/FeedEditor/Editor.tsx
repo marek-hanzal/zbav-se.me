@@ -6,6 +6,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view";
 import { translator } from "@/lib/common/translation";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
+import { DeliveryValueList } from "~/common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
@@ -176,7 +177,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 			</Group>
 
 			<Group>
-				{/* <DeliveryValueList
+				<DeliveryValueList
 					data-action={"edit feed delivery"}
 					deliveryIn={feed.query?.filter?.deliveryIn ?? []}
 					action={
@@ -192,7 +193,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 								: "secondary",
 					}}
 					onClick={() => onView("delivery")}
-				/> */}
+				/>
 			</Group>
 
 			<Group>

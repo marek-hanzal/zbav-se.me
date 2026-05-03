@@ -9,6 +9,7 @@ import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view";
 import { translator } from "@/lib/common/translation";
+import { DeliveryValueList } from "~/common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
@@ -20,7 +21,6 @@ import { CategoryValue } from "~/user/category/ui/CategoryValue";
 import { AgeValue } from "~/user/draft/ui/value/AgeValue";
 import { ConditionValue } from "~/user/draft/ui/value/ConditionValue";
 import { ConsValueList } from "~/user/draft/ui/value/ConsValueList";
-import { DeliveryValueList } from "~/user/draft/ui/value/DeliveryValueList";
 import { DescriptionValue } from "~/user/draft/ui/value/DescriptionValue";
 import { ExpiresValue } from "~/user/draft/ui/value/ExpiresValue";
 import { PriceTypeValue } from "~/user/draft/ui/value/PriceTypeValue";
@@ -214,6 +214,9 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 							deliveryIn={draft.delivery}
 							action={<ChevronAction />}
 							onClick={() => view.set("delivery")}
+							wrapperProps={{
+								"data-ui-tone": draft.delivery.length > 0 ? "neutral" : "secondary",
+							}}
 						/>
 					</Group>
 
