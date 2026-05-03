@@ -1,5 +1,6 @@
 import { withEntityQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import { listingCollectionFn } from "~/seller/listing/fn/listingCollectionFn";
 import { listingCountFn } from "~/seller/listing/fn/listingCountFn";
 import { listingCreateFn } from "~/seller/listing/fn/listingCreateFn";
@@ -67,5 +68,17 @@ export const withListingQuery = withEntityQuery({
 	},
 	async patchCollectionFn(_data: never): Promise<ListingSchema.Type[]> {
 		throw new Error("Listing collection patch is not supported.");
+	},
+	invalidate: {
+		create: [
+			{
+				async invalidate({ queryClient }) {
+					await withDraftQuery.invalidator(queryClient, [
+						"collection",
+						"count",
+					]);
+				},
+			},
+		],
 	},
 });
