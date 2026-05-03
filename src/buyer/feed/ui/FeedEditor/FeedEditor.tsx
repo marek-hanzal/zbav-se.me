@@ -8,6 +8,8 @@ import { Editor } from "./Editor";
 import { AgePatch } from "./patch/AgePatch";
 import { CategoryPatch } from "./patch/CategoryPatch";
 import { ConditionPatch } from "./patch/ConditionPatch";
+import { DeliveryPatch } from "./patch/DeliveryPatch";
+import { GalleryPatch } from "./patch/GalleryPatch";
 import { LocationPatch } from "./patch/LocationPatch";
 import { RangePatch } from "./patch/RangePatch";
 import { SortPatch } from "./patch/SortPatch";
@@ -47,11 +49,14 @@ export const FeedEditor = withFallback(
 				"range",
 				"condition",
 				"age",
+				"delivery",
+				"warranty",
+				"title",
 			],
 			defaultPanel: "default",
 		});
 
-		const onDone = useCallback(() => {
+		const onDefaultView = useCallback(() => {
 			view.set("default");
 		}, [
 			view,
@@ -70,75 +75,67 @@ export const FeedEditor = withFallback(
 					</Editor>
 				</view.Panel>
 
+				<view.Panel name="gallery">
+					<GalleryPatch
+						feed={feed}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
+					/>
+				</view.Panel>
+
 				<view.Panel name="category">
 					<CategoryPatch
 						feed={feed}
-						onSettled={() => {
-							view.set("default");
-						}}
-						onCancel={() => {
-							view.set("default");
-						}}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
 					/>
 				</view.Panel>
 
 				<view.Panel name="location">
 					<LocationPatch
 						feed={feed}
-						onSettled={() => {
-							view.set("default");
-						}}
-						onCancel={() => {
-							view.set("default");
-						}}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
 					/>
 				</view.Panel>
 
 				<view.Panel name="range">
 					<RangePatch
 						feed={feed}
-						onSettled={() => {
-							view.set("default");
-						}}
-						onCancel={() => {
-							view.set("default");
-						}}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
 					/>
 				</view.Panel>
 
 				<view.Panel name="condition">
 					<ConditionPatch
 						feed={feed}
-						onSettled={() => {
-							view.set("default");
-						}}
-						onCancel={() => {
-							view.set("default");
-						}}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
 					/>
 				</view.Panel>
 
 				<view.Panel name="age">
 					<AgePatch
 						feed={feed}
-						onSettled={() => {
-							view.set("default");
-						}}
-						onCancel={() => {
-							view.set("default");
-						}}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
+					/>
+				</view.Panel>
+
+				<view.Panel name="delivery">
+					<DeliveryPatch
+						feed={feed}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
 					/>
 				</view.Panel>
 
 				<view.Panel name="sort">
 					<SortPatch
 						feed={feed}
-						onSettled={() => {
-							view.set("default");
-						}}
-						onCancel={() => {
-							view.set("default");
-						}}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
 					/>
 				</view.Panel>
 			</view.View>
