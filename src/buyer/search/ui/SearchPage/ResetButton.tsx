@@ -1,8 +1,7 @@
-import { useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
 import type { FC } from "react";
 import { Button } from "@/lib/client/button";
 import { RefreshIcon } from "@/lib/client/icon";
-import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
@@ -15,19 +14,14 @@ export namespace ResetButton {
 }
 
 export const ResetButton: FC<ResetButton.Props> = ({ feedId, className, ...props }) => {
-	const navigate = useNavigate();
-	const locale = useLocale();
+	const queryClient = useQueryClient();
 	const createMutation = withFeedQuery.useCreateMutation({
 		async onPostMutation() {
-			await navigate({
-				to: "/$locale/app/buyer/search",
-				params: {
-					locale,
-				},
-			});
+			await withFeedQuery.invalidator(queryClient, [
+				"fetch",
+			]);
 		},
 		invalidate: [
-			"fetch",
 			"collection",
 		],
 	});
@@ -38,7 +32,6 @@ export const ResetButton: FC<ResetButton.Props> = ({ feedId, className, ...props
 			);
 		},
 		invalidate: [
-			"fetch",
 			"collection",
 		],
 	});
