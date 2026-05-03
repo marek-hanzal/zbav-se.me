@@ -54,7 +54,7 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 						.when("f.type", "=", "enum-single")
 						.then(
 							eb
-								.selectFrom("attr_enum_single as aes")
+								.selectFrom("listing_attr_enum_single as aes")
 								.select([
 									(eb) => sql`to_jsonb(${eb.ref("aes.value")})`.as("value"),
 								])
@@ -65,7 +65,7 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 						.when("f.type", "=", "enum-multi")
 						.then(
 							eb
-								.selectFrom("attr_enum_multi as aem")
+								.selectFrom("listing_attr_enum_multi as aem")
 								.select((eb) => {
 									return eb.fn
 										.coalesce(
@@ -81,7 +81,7 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 						.when("f.type", "=", "number")
 						.then(
 							eb
-								.selectFrom("attr_number as an")
+								.selectFrom("listing_attr_number as an")
 								.select([
 									(eb) => sql`to_jsonb(${eb.ref("an.value")})`.as("value"),
 								])
@@ -92,7 +92,7 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 						.when("f.type", "=", "year")
 						.then(
 							eb
-								.selectFrom("attr_number as an")
+								.selectFrom("listing_attr_number as an")
 								.select([
 									(eb) => sql`to_jsonb(${eb.ref("an.value")})`.as("value"),
 								])
@@ -103,7 +103,7 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 						.when("f.type", "=", "decimal")
 						.then(
 							eb
-								.selectFrom("attr_decimal as ad")
+								.selectFrom("listing_attr_decimal as ad")
 								.select([
 									(eb) => sql`to_jsonb(${eb.ref("ad.value")})`.as("value"),
 								])
@@ -114,7 +114,7 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 						.when("f.type", "=", "range")
 						.then(
 							eb
-								.selectFrom("attr_decimal as ad")
+								.selectFrom("listing_attr_decimal as ad")
 								.select([
 									(eb) => sql`to_jsonb(${eb.ref("ad.value")})`.as("value"),
 								])
@@ -125,7 +125,7 @@ export const attrOfFx = Effect.fn("attrOfFx")(function* ({
 						.when("f.type", "=", "text")
 						.then(
 							eb
-								.selectFrom("attr_text as at")
+								.selectFrom("listing_attr_text as at")
 								.select([
 									(eb) => sql`to_jsonb(${eb.ref("at.value")})`.as("value"),
 								])

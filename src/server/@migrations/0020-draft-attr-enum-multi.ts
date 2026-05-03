@@ -1,32 +1,32 @@
 import type { Migration } from "kysely";
 
-export const AttrEnumMultiMigration: Migration = {
+export const DraftAttrEnumMultiMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("attr_enum_multi")
-			.addColumn("listingId", "text", (col) => col.notNull())
+			.createTable("draft_attr_enum_multi")
+			.addColumn("draftId", "text", (col) => col.notNull())
 			.addColumn("fieldId", "text", (col) => col.notNull())
 			.addColumn("value", "text", (col) => col.notNull())
 
-			.addPrimaryKeyConstraint("attr_enum_multi_[listingId-fieldId-value]_pk", [
-				"listingId",
+			.addPrimaryKeyConstraint("draft_attr_enum_multi_[draftId-fieldId-value]_pk", [
+				"draftId",
 				"fieldId",
 				"value",
 			])
 
 			.addForeignKeyConstraint(
-				"attr_enum_multi_[listingId]_fk",
+				"draft_attr_enum_multi_[draftId]_fk",
 				[
-					"listingId",
+					"draftId",
 				],
-				"listing",
+				"draft",
 				[
 					"id",
 				],
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"attr_enum_multi_[fieldId]_fk",
+				"draft_attr_enum_multi_[fieldId]_fk",
 				[
 					"fieldId",
 				],
@@ -37,7 +37,7 @@ export const AttrEnumMultiMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"attr_enum_multi_[fieldId-value]_fk",
+				"draft_attr_enum_multi_[fieldId-value]_fk",
 				[
 					"fieldId",
 					"value",
@@ -53,12 +53,12 @@ export const AttrEnumMultiMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("attr_enum_multi_[fieldId-value-listingId]_idx")
-			.on("attr_enum_multi")
+			.createIndex("draft_attr_enum_multi_[fieldId-value-draftId]_idx")
+			.on("draft_attr_enum_multi")
 			.columns([
 				"fieldId",
 				"value",
-				"listingId",
+				"draftId",
 			])
 			.execute();
 	},

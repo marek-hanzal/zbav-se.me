@@ -28,9 +28,6 @@ export const attrEnumSinglePatchFx = Effect.fn("attrEnumSinglePatchFx")(function
 	yield* listingCheckIfOwnFx({
 		userId,
 		listingId,
-		status: [
-			"draft",
-		],
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -39,7 +36,7 @@ export const attrEnumSinglePatchFx = Effect.fn("attrEnumSinglePatchFx")(function
 		Effect.gen(function* () {
 			yield* tryDbFx(async () => {
 				return kysely
-					.deleteFrom("attr_enum_single")
+					.deleteFrom("listing_attr_enum_single")
 					.where("listingId", "=", listingId)
 					.where("fieldId", "=", fieldId)
 					.execute();
@@ -48,7 +45,7 @@ export const attrEnumSinglePatchFx = Effect.fn("attrEnumSinglePatchFx")(function
 			if (value != null) {
 				yield* tryDbFx(async () => {
 					return kysely
-						.insertInto("attr_enum_single")
+						.insertInto("listing_attr_enum_single")
 						.values({
 							fieldId,
 							listingId,

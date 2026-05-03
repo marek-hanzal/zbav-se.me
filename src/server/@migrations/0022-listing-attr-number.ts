@@ -1,22 +1,22 @@
 import type { Migration } from "kysely";
 
-export const AttrNumberMigration: Migration = {
+export const ListingAttrNumberMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("attr_number")
+			.createTable("listing_attr_number")
 			//
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("fieldId", "text", (col) => col.notNull())
 			//
 			.addColumn("value", "integer", (col) => col.notNull())
 
-			.addPrimaryKeyConstraint("attr_number_pk", [
+			.addPrimaryKeyConstraint("listing_attr_number_pk", [
 				"listingId",
 				"fieldId",
 			])
 
 			.addForeignKeyConstraint(
-				"attr_number_[listingId]_fk",
+				"listing_attr_number_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -27,7 +27,7 @@ export const AttrNumberMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"attr_number_[fieldId]_fk",
+				"listing_attr_number_[fieldId]_fk",
 				[
 					"fieldId",
 				],
@@ -41,8 +41,8 @@ export const AttrNumberMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("attr_number_[fieldId-value-listingId]_idx")
-			.on("attr_number")
+			.createIndex("listing_attr_number_[fieldId-value-listingId]_idx")
+			.on("listing_attr_number")
 			.columns([
 				"fieldId",
 				"value",

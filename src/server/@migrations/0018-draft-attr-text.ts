@@ -1,31 +1,31 @@
 import type { Migration } from "kysely";
 
-export const AttrTextMigration: Migration = {
+export const DraftAttrTextMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("attr_text")
-			.addColumn("listingId", "text", (col) => col.notNull())
+			.createTable("draft_attr_text")
+			.addColumn("draftId", "text", (col) => col.notNull())
 			.addColumn("fieldId", "text", (col) => col.notNull())
 			.addColumn("value", "text", (col) => col.notNull())
 
-			.addPrimaryKeyConstraint("attr_text_pk", [
-				"listingId",
+			.addPrimaryKeyConstraint("draft_attr_text_pk", [
+				"draftId",
 				"fieldId",
 			])
 
 			.addForeignKeyConstraint(
-				"attr_text_[listingId]_fk",
+				"draft_attr_text_[draftId]_fk",
 				[
-					"listingId",
+					"draftId",
 				],
-				"listing",
+				"draft",
 				[
 					"id",
 				],
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"attr_text_[fieldId]_fk",
+				"draft_attr_text_[fieldId]_fk",
 				[
 					"fieldId",
 				],
@@ -39,11 +39,11 @@ export const AttrTextMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("attr_text_[fieldId-listingId]_idx")
-			.on("attr_text")
+			.createIndex("draft_attr_text_[fieldId-draftId]_idx")
+			.on("draft_attr_text")
 			.columns([
 				"fieldId",
-				"listingId",
+				"draftId",
 			])
 			.execute();
 	},

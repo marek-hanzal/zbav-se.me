@@ -8,6 +8,7 @@ export const ListingMigration: Migration = {
 			.createType("listing_status_enum")
 			.asEnum(
 				toEnumGuard<ListingStatusEnumSchema.Type>()([
+					"draft",
 					"live",
 					"sold",
 					"on-hold",
@@ -29,7 +30,7 @@ export const ListingMigration: Migration = {
 			//
 			.addColumn("restriction", sql`restriction_enum`)
 			//
-			.addColumn("categoryId", "text")
+			.addColumn("categoryId", "text", (col) => col.notNull())
 			//
 			.addColumn("galleryId", "text", (col) => col.notNull())
 			.addColumn("withUploadIds", sql`text[]`, (col) => {
@@ -42,15 +43,15 @@ export const ListingMigration: Migration = {
 			/**
 			 * Core listing fields (shared across all categories).
 			 */
-			.addColumn("title", "text")
-			.addColumn("withTitle", "text")
+			.addColumn("title", "text", (col) => col.notNull())
+			.addColumn("withTitle", "text", (col) => col.notNull())
 			.addColumn("description", "text")
 			//
+			.addColumn("priceType", sql`price_type_enum`, (col) => col.notNull())
 			.addColumn("price", "decimal(10, 2)")
-			.addColumn("priceType", sql`price_type_enum`)
 			.addColumn("currency", "text")
 			//
-			.addColumn("expires", "text")
+			.addColumn("expires", "text", (col) => col.notNull())
 			//
 			.addColumn("condition", "integer")
 			.addColumn("age", "integer")
@@ -60,8 +61,8 @@ export const ListingMigration: Migration = {
 			})
 			.addColumn("warranty", sql`warranty_enum`)
 			//
-			.addColumn("locationId", "text")
-			.addColumn("withLocation", sql`geography(Point,4326)`)
+			.addColumn("locationId", "text", (col) => col.notNull())
+			.addColumn("withLocation", sql`geography(Point,4326)`, (col) => col.notNull())
 			//
 			.addColumn("pros", sql`text[]`, (col) => {
 				return col.notNull().defaultTo(sql`array[]::text[]`);
@@ -75,8 +76,8 @@ export const ListingMigration: Migration = {
 			.addColumn("updatedAt", "timestamptz", (col) => col.notNull())
 
 			// Public lifecycle. Null while draft.
-			.addColumn("visibleAt", "timestamptz")
-			.addColumn("expiresAt", "timestamptz")
+			.addColumn("visibleAt", "timestamptz", (col) => col.notNull())
+			.addColumn("expiresAt", "timestamptz", (col) => col.notNull())
 
 			.addForeignKeyConstraint(
 				"listing_[userId]_fk",
@@ -129,50 +130,7 @@ export const ListingMigration: Migration = {
                     cardinality("pros") <= 5
                     AND cardinality("cons") <= 5
                 `,
-			)
-
-			// Draft is private/unpublished.
-			.addCheckConstraint(
-				"listing_[draft-lifecycle-null]_check",
-				sql`
-					"status" <> 'draft'
-					OR (
-						"visibleAt" IS NULL
-						AND "expiresAt" IS NULL
-					)
-				`,
-			)
-
-			// Published-ish states must have public lifecycle and category data.
-			// banned is intentionally excluded: admin hard stop can apply to weird states too.
-			.addCheckConstraint(
-				"listing_[published-required]_check",
-				sql`
-					"status" NOT IN ('live', 'sold', 'on-hold', 'expired', 'closed')
-					OR (
-						"categoryId" IS NOT NULL
-						AND "visibleAt" IS NOT NULL
-						AND "expiresAt" IS NOT NULL
-					)
-				`,
-			)
-
-			// If public lifecycle exists, keep it sane.
-			.addCheckConstraint(
-				"listing_[lifecycle-order]_check",
-				sql`
-					(
-						"visibleAt" IS NULL
-						AND "expiresAt" IS NULL
-					)
-					OR (
-						"visibleAt" IS NOT NULL
-						AND "expiresAt" IS NOT NULL
-						AND "visibleAt" < "expiresAt"
-					)
-				`,
-			)
-			.execute();
+			);
 
 		/**
 		 * Owner views.
@@ -224,56 +182,48 @@ export const ListingMigration: Migration = {
 			.execute();
 
 		await sql`
-            CREATE INDEX "listing_[live-title]_trgm_idx"
+            CREATE INDEX "listing_[title]_trgm_idx"
             ON "listing"
             USING gin ("withTitle" gin_trgm_ops)
-            WHERE "status" = 'live'
         `.execute(db);
 
 		/**
 		 * Main feed/search shapes.
 		 */
 		await sql`
-			CREATE INDEX "listing_[live-categoryId-visibleAt]_idx"
+			CREATE INDEX "listing_[categoryId-visibleAt]_idx"
 			ON "listing" ("categoryId", "visibleAt" DESC, "id" DESC)
-			WHERE "status" = 'live'
 		`.execute(db);
 
 		await sql`
-			CREATE INDEX "listing_[live-visibleAt]_idx"
+			CREATE INDEX "listing_[visibleAt]_idx"
 			ON "listing" ("visibleAt" DESC, "id" DESC)
-			WHERE "status" = 'live'
 		`.execute(db);
 
 		/**
 		 * Expiration worker.
 		 */
 		await sql`
-			CREATE INDEX "listing_[live-expiresAt]_idx"
+			CREATE INDEX "listing_[expiresAt]_idx"
 			ON "listing" ("expiresAt")
-			WHERE "status" = 'live'
 		`.execute(db);
 
 		await sql`
-            CREATE INDEX "listing_[live-categoryId-price]_idx"
+            CREATE INDEX "listing_[categoryId-price]_idx"
             ON "listing" ("categoryId", "price", "id")
-            WHERE "status" = 'live'
             AND "price" IS NOT NULL
         `.execute(db);
 
 		await sql`
-            CREATE INDEX "listing_[live-withLocation]_idx"
+            CREATE INDEX "listing_[withLocation]_idx"
             ON "listing"
             USING gist ("withLocation")
-            WHERE "status" = 'live'
-            AND "withLocation" IS NOT NULL
         `.execute(db);
 
 		await sql`
-            CREATE INDEX "listing_[live-delivery]_gin_idx"
+            CREATE INDEX "listing_[delivery]_gin_idx"
             ON "listing"
             USING gin ("delivery")
-            WHERE "status" = 'live'
         `.execute(db);
 	},
 };

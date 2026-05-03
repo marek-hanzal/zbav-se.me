@@ -1,31 +1,33 @@
 import type { Migration } from "kysely";
 
-export const AttrDecimalMigration: Migration = {
+export const DraftAttrNumberMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("attr_decimal")
-			.addColumn("listingId", "text", (col) => col.notNull())
+			.createTable("draft_attr_number")
+			//
+			.addColumn("draftId", "text", (col) => col.notNull())
 			.addColumn("fieldId", "text", (col) => col.notNull())
-			.addColumn("value", "decimal(10, 2)", (col) => col.notNull())
+			//
+			.addColumn("value", "integer", (col) => col.notNull())
 
-			.addPrimaryKeyConstraint("attr_decimal_pk", [
-				"listingId",
+			.addPrimaryKeyConstraint("draft_attr_number_pk", [
+				"draftId",
 				"fieldId",
 			])
 
 			.addForeignKeyConstraint(
-				"attr_decimal_[listingId]_fk",
+				"draft_attr_number_[draftId]_fk",
 				[
-					"listingId",
+					"draftId",
 				],
-				"listing",
+				"draft",
 				[
 					"id",
 				],
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"attr_decimal_[fieldId]_fk",
+				"draft_attr_number_[fieldId]_fk",
 				[
 					"fieldId",
 				],
@@ -39,12 +41,12 @@ export const AttrDecimalMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("attr_decimal_[fieldId-value-listingId]_idx")
-			.on("attr_decimal")
+			.createIndex("draft_attr_number_[fieldId-value-draftId]_idx")
+			.on("draft_attr_number")
 			.columns([
 				"fieldId",
 				"value",
-				"listingId",
+				"draftId",
 			])
 			.execute();
 	},

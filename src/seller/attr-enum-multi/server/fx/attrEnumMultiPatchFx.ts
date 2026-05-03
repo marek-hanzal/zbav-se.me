@@ -28,9 +28,6 @@ export const attrEnumMultiPatchFx = Effect.fn("attrEnumMultiPatchFx")(function* 
 	yield* listingCheckIfOwnFx({
 		userId,
 		listingId,
-		status: [
-			"draft",
-		],
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -39,7 +36,7 @@ export const attrEnumMultiPatchFx = Effect.fn("attrEnumMultiPatchFx")(function* 
 		Effect.gen(function* () {
 			yield* tryDbFx(async () => {
 				return kysely
-					.deleteFrom("attr_enum_multi")
+					.deleteFrom("listing_attr_enum_multi")
 					.where("listingId", "=", listingId)
 					.where("fieldId", "=", fieldId)
 					.execute();
@@ -48,7 +45,7 @@ export const attrEnumMultiPatchFx = Effect.fn("attrEnumMultiPatchFx")(function* 
 			if (value.length > 0) {
 				yield* tryDbFx(async () => {
 					return kysely
-						.insertInto("attr_enum_multi")
+						.insertInto("listing_attr_enum_multi")
 						.values(
 							value.map((value) => ({
 								fieldId,

@@ -28,9 +28,6 @@ export const attrTextPatchFx = Effect.fn("attrTextPatchFx")(function* ({
 	yield* listingCheckIfOwnFx({
 		userId,
 		listingId,
-		status: [
-			"draft",
-		],
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -39,7 +36,7 @@ export const attrTextPatchFx = Effect.fn("attrTextPatchFx")(function* ({
 		Effect.gen(function* () {
 			yield* tryDbFx(async () => {
 				return kysely
-					.deleteFrom("attr_text")
+					.deleteFrom("listing_attr_text")
 					.where("listingId", "=", listingId)
 					.where("fieldId", "=", fieldId)
 					.execute();
@@ -48,7 +45,7 @@ export const attrTextPatchFx = Effect.fn("attrTextPatchFx")(function* ({
 			if (value != null) {
 				yield* tryDbFx(async () => {
 					return kysely
-						.insertInto("attr_text")
+						.insertInto("listing_attr_text")
 						.values({
 							fieldId,
 							listingId,

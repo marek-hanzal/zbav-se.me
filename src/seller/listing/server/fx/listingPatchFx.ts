@@ -197,23 +197,23 @@ export const listingPatchFx = Effect.fn("listingPatchFx")(function* ({
 				yield* tryDbFx(async () => {
 					return Promise.all([
 						kysely
-							.deleteFrom("attr_decimal")
+							.deleteFrom("listing_attr_decimal")
 							.where("listingId", "=", listing.id)
 							.execute(),
 						kysely
-							.deleteFrom("attr_enum_multi")
+							.deleteFrom("listing_attr_enum_multi")
 							.where("listingId", "=", listing.id)
 							.execute(),
 						kysely
-							.deleteFrom("attr_enum_single")
+							.deleteFrom("listing_attr_enum_single")
 							.where("listingId", "=", listing.id)
 							.execute(),
 						kysely
-							.deleteFrom("attr_number")
+							.deleteFrom("listing_attr_number")
 							.where("listingId", "=", listing.id)
 							.execute(),
 						kysely
-							.deleteFrom("attr_text")
+							.deleteFrom("listing_attr_text")
 							.where("listingId", "=", listing.id)
 							.execute(),
 					]);

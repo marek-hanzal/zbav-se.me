@@ -39,7 +39,7 @@ export const attrDecimalPatchFx = Effect.fn("attrDecimalPatchFx")(function* ({
 		Effect.gen(function* () {
 			yield* tryDbFx(async () => {
 				return kysely
-					.deleteFrom("attr_decimal")
+					.deleteFrom("listing_attr_decimal")
 					.where("listingId", "=", listingId)
 					.where("fieldId", "=", fieldId)
 					.execute();
@@ -48,7 +48,7 @@ export const attrDecimalPatchFx = Effect.fn("attrDecimalPatchFx")(function* ({
 			if (value !== null) {
 				yield* tryDbFx(async () => {
 					return kysely
-						.insertInto("attr_decimal")
+						.insertInto("listing_attr_decimal")
 						.values({
 							fieldId,
 							listingId,

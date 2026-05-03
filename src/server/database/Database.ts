@@ -36,11 +36,6 @@ import type { CategoryFieldTableSchema } from "./@table/CategoryFieldTableSchema
 
 export interface Database {
 	activity: ActivityTableSchema.Type;
-	attr_decimal: AttrDecimalTableSchema.Type;
-	attr_number: AttrNumberTableSchema.Type;
-	attr_enum_multi: AttrEnumMultiSchema.Type;
-	attr_enum_single: AttrEnumSingleSchema.Type;
-	attr_text: AttrTextSchema.Type;
 	agent_stream: AgentStreamTableSchema.Type;
 	agent_thread: AgentThreadTableSchema.Type;
 	agent_usage: AgentUsageTableSchema.Type;
@@ -57,6 +52,11 @@ export interface Database {
 	gallery: GalleryTableSchema.Type;
 	github: GitHubTableSchema.Type;
 	ignore: IgnoreTableSchema.Type;
+	listing_attr_decimal: AttrDecimalTableSchema.Type;
+	listing_attr_number: AttrNumberTableSchema.Type;
+	listing_attr_enum_multi: AttrEnumMultiSchema.Type;
+	listing_attr_enum_single: AttrEnumSingleSchema.Type;
+	listing_attr_text: AttrTextSchema.Type;
 	listing_event: ListingEventTableSchema.Type;
 	listing: ListingTableSchema.Type;
 	location: LocationTableSchema.Type;
