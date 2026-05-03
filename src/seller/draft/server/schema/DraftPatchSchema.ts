@@ -24,7 +24,7 @@ export const DraftPatchSchema = z
 				restriction: RestrictionEnumSchema.nullish(),
 				//
 				priceType: PriceTypeEnumSchema.optional(),
-				price: z.coerce.number().positive().nullish(),
+				price: z.coerce.number().positive().optional(),
 				currency: CurrencyEnumSchema.optional(),
 				//
 				expires: ListingExpireEnumSchema.optional(),

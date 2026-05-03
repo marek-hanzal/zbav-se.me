@@ -45,6 +45,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 						...data,
 						id,
 						userId,
+						price: 0,
 						//
 						galleryId: gallery.id,
 						withImageUrl: [],
