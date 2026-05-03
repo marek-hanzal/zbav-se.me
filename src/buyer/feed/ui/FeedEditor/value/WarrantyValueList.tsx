@@ -23,7 +23,7 @@ export namespace WarrantyValueList {
 export const WarrantyValueList: FC<WarrantyValueList.Props> = ({ warrantyIn, ...props }) => {
 	return (
 		<ValueList
-			data-ui={"WarrantyValueList[ValueList]"}
+			data-ui={"WarrantyValueList"}
 			textLabel={translator.text("Listing warranty (label)")}
 			textEmpty={translator.text("Warranty not selected")}
 			items={warrantyIn.map((item) => ({

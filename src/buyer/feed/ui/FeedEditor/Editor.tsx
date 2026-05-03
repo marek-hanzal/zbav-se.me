@@ -16,6 +16,8 @@ import { ConditionValueList } from "./value/ConditionValueList";
 import { NameValue } from "./value/NameValue";
 import { RangeValue } from "./value/RangeValue";
 import { SortValue } from "./value/SortValue";
+import { WarrantyValueList } from "./value/WarrantyValueList";
+import { TitleValue } from "~/common/title/ui/TitleValue";
 
 export namespace Editor {
 	export type Section = "header";
@@ -23,7 +25,17 @@ export namespace Editor {
 	export interface Props extends Omit<Container.Props, "hidden">, MarkSuspense.Props {
 		feed: FeedSchema.Type;
 		view: useView.Use<
-			"gallery" | "name" | "category" | "location" | "range" | "sort" | "condition" | "age"
+			| "gallery"
+			| "name"
+			| "category"
+			| "location"
+			| "range"
+			| "sort"
+			| "condition"
+			| "age"
+			| "delivery"
+			| "warranty"
+			| "title"
 		>;
 		hidden?: readonly Section[];
 	}
@@ -192,12 +204,12 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 								? "neutral"
 								: "secondary",
 					}}
-					onClick={() => onView("delivery")}
+					onClick={() => view.set("delivery")}
 				/>
 			</Group>
 
 			<Group>
-				{/* <WarrantyValueList
+				<WarrantyValueList
 					data-action={"edit feed warranty"}
 					warrantyIn={feed.query?.filter?.warrantyIn ?? []}
 					action={
@@ -206,18 +218,12 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 							data-ui-text="xl"
 						/>
 					}
-					wrapperProps={{
-						"data-ui-tone":
-							(feed.query?.filter?.warrantyIn ?? []).length > 0
-								? "neutral"
-								: "secondary",
-					}}
-					onClick={() => onView("warranty")}
-				/> */}
+					onClick={() => view.set("warranty")}
+				/>
 			</Group>
 
 			<Group>
-				{/* <TitleValue
+				<TitleValue
 					data-action={"edit feed title"}
 					title={feed.query?.filter?.title ?? null}
 					textLabel={translator.text("Feed title (label)")}
@@ -232,8 +238,8 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 					wrapperProps={{
 						"data-ui-tone": feed.query?.filter?.title ? "neutral" : "secondary",
 					}}
-					onClick={() => onView("title")}
-				/> */}
+					onClick={() => view.set("title")}
+				/>
 			</Group>
 
 			<Group>

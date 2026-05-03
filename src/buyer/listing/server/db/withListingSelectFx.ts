@@ -6,6 +6,7 @@ import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSche
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import type { CategorySchema } from "~/public/category/server/schema/CategorySchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { withNormalizedLikeEx } from "~/server/database/expression/withNormalizedLikeEx";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
 import type { ListingMetaSchema } from "../schema/ListingMetaSchema";
@@ -277,6 +278,16 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 				if (where.deliveryIn && where.deliveryIn.length > 0) {
 					query = query.where("l.delivery", "in", where.deliveryIn);
+				}
+
+				if (where.warrantyIn && where.warrantyIn.length > 0) {
+					query = query.where("l.warranty", "in", where.warrantyIn);
+				}
+
+				if (where.title) {
+					query = query.where((eb) =>
+						withNormalizedLikeEx(eb.ref("l.withTitle"), where.title, "both"),
+					);
 				}
 
 				if (where.withOwn === false) {
