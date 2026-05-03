@@ -4,13 +4,12 @@ import { Button } from "@/lib/client/button";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { uiSaveButton } from "~/common/ui/ui";
-import { withListingQuery } from "~/seller/draft/query/withListingQuery";
-import { withListingValidationQuery } from "../../query/withListingValidationQuery";
-import type { ListingSchema } from "../../server/schema/ListingSchema";
+import { withListingValidationQuery } from "~/seller/listing/query/withListingValidationQuery";
+import type { DraftSchema } from "../../server/schema/DraftSchema";
 
 export namespace PublishListingButton {
 	export interface Props extends Button.Props {
-		draft: ListingSchema.Type;
+		draft: DraftSchema.Type;
 	}
 }
 
@@ -28,15 +27,13 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 	const mutation = withListingQuery.usePatchMutation({
 		async onPostMutation() {
 			await navigate({
-				to: "/$locale/app/seller/draft/my",
+				to: "/$locale/app/seller/listing/my",
 				params: {
 					locale,
 				},
 			});
 		},
 	});
-
-	console.log("valid", validation);
 
 	return (
 		<Button
