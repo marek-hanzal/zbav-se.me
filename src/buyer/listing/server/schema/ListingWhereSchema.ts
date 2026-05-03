@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { FilterSchema } from "@/lib/common/schema";
+import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 
 export const ListingWhereSchema = z
 	.looseObject({
@@ -25,6 +26,9 @@ export const ListingWhereSchema = z
 		ageIn: z.array(z.number()).optional().meta({
 			description:
 				"Filter listings based on the provided age groups (e.g. baby, toddler, etc.)",
+		}),
+		deliveryIn: z.array(DeliveryEnumSchema).optional().meta({
+			description: "Filter listings based on the provided delivery options",
 		}),
 		//
 		expiresAtBefore: z.coerce.date().optional().meta({
