@@ -15,7 +15,7 @@ import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 
 const FormSchema = z
 	.looseObject({
-		price: z.number().nullable(),
+		price: z.number(),
 	})
 	.strip();
 
@@ -38,7 +38,7 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, view, ...pro
 	});
 	const form = useAppForm({
 		defaultValues: {
-			price: draft.price ?? null,
+			price: draft.price ?? 0,
 		},
 		validators: {
 			onMount: FormSchema,
@@ -85,7 +85,7 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, view, ...pro
 							}
 							onChange={(value) => {
 								field.handleChange(
-									value === undefined ? null : Number.parseFloat(value),
+									value === undefined ? 0 : Number.parseFloat(value),
 								);
 								field.handleBlur();
 							}}
