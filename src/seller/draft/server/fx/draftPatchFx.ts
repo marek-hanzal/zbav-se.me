@@ -57,7 +57,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 				patch.priceType === "free" ||
 				patch.priceType === "haulaway"
 			) {
-				patch.price = null;
+				patch.price = 0;
 			}
 
 			if (uploadIds && uploadIds.length > 0) {
