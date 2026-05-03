@@ -20,7 +20,7 @@ export const Empty: FC = () => {
 				<LinkTo
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
-					to={"/$locale/app/seller/listing/resolve"}
+					to={"/$locale/app/seller/draft/resolve"}
 					params={{
 						locale,
 					}}

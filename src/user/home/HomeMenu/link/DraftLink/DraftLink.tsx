@@ -8,7 +8,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { DraftIcon } from "~/common/ui/icon";
 import { TypoIcon } from "~/common/ui/typo";
 import { uiMenuButton } from "~/common/ui/ui";
-import { withListingQuery } from "~/seller/listing/query/withListingQuery";
+import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 
 /**
  * Renders a dedicated home menu draft navigation link with domain-specific state handling.
@@ -28,10 +28,7 @@ export const DraftLink = withFallback(
 	({ _suspense, ...props }: DraftLink.Props) => {
 		const locale = useLocale();
 		const matchRoute = useMatchRoute();
-		const { data } = withListingQuery.useCollectionQuery({
-			where: {
-				status: "draft",
-			},
+		const { data } = withDraftQuery.useCollectionQuery({
 			cursor: {
 				page: 0,
 				size: 1,
@@ -53,12 +50,12 @@ export const DraftLink = withFallback(
 						? "icon-[solar--bill-check-linear]"
 						: "icon-[solar--bill-list-linear]"
 				}
-				to="/$locale/app/seller/listing/resolve"
+				to="/$locale/app/seller/draft/resolve"
 				params={{
 					locale,
 				}}
 				{...(matchRoute({
-					to: "/$locale/app/seller/listing/$id/edit",
+					to: "/$locale/app/seller/draft/$id/edit",
 				})
 					? uiMenuButton({
 							"data-ui-tone": "primary",
@@ -91,7 +88,7 @@ export const DraftLink = withFallback(
 				data-action={"create listing"}
 				{...uiMenuButton({})}
 				icon={DraftIcon}
-				to="/$locale/app/seller/listing/resolve"
+				to="/$locale/app/seller/draft/resolve"
 				params={{
 					locale,
 				}}
