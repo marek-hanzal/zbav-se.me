@@ -4,6 +4,7 @@ import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
+import { draftDeleteFx } from "~/seller/draft/server/fx/draftDeleteFx";
 import { draftFetchFx } from "~/seller/draft/server/fx/draftFetchFx";
 import type { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreateSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -296,6 +297,16 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				group: listingId,
 				event: "listing.create",
 				isTerminal: true,
+			});
+
+			yield* draftDeleteFx({
+				userId,
+				where: {
+					id: draftId,
+				},
+				scope: {
+					userId,
+				},
 			});
 
 			return yield* listingFetchFx({
