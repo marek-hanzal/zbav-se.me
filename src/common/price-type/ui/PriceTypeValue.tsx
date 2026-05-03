@@ -15,6 +15,7 @@ export namespace PriceTypeValue {
  */
 export const PriceTypeValue: FC<PriceTypeValue.Props> = ({ priceType, ...props }) => {
 	const hasPriceType = priceType != null;
+
 	return (
 		<LabelValue
 			data-ui={"PriceTypeValue"}

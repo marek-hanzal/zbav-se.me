@@ -11,25 +11,12 @@ import { ConditionPatch } from "./patch/ConditionPatch";
 import { DeliveryPatch } from "./patch/DeliveryPatch";
 import { GalleryPatch } from "./patch/GalleryPatch";
 import { LocationPatch } from "./patch/LocationPatch";
+import { PriceTypePatch } from "./patch/PriceTypePatch";
 import { RangePatch } from "./patch/RangePatch";
 import { SortPatch } from "./patch/SortPatch";
 import { WarrantyPatch } from "./patch/WarrantyPatch";
 
 export namespace FeedEditor {
-	export type View =
-		| "default"
-		| "name"
-		| "category"
-		| "location"
-		| "range"
-		| "sort"
-		| "condition"
-		| "age"
-		| "delivery"
-		| "warranty"
-		| "gallery"
-		| "title";
-
 	export interface Props extends PropsWithChildren, MarkSuspense.Props {
 		feedId: string;
 		hidden?: readonly Editor.Section[];
@@ -53,6 +40,7 @@ export const FeedEditor = withFallback(
 				"delivery",
 				"warranty",
 				"title",
+				"priceType",
 			],
 			defaultPanel: "default",
 		});
@@ -137,6 +125,14 @@ export const FeedEditor = withFallback(
 
 				<view.Panel name="warranty">
 					<WarrantyPatch
+						feed={feed}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
+					/>
+				</view.Panel>
+
+				<view.Panel name="priceType">
+					<PriceTypePatch
 						feed={feed}
 						onSettled={onDefaultView}
 						onCancel={onDefaultView}

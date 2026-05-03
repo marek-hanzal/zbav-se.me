@@ -339,6 +339,10 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					});
 				}
 
+				if (where.priceTypeIn && where.priceTypeIn.length > 0) {
+					query = query.where("l.priceType", "in", where.priceTypeIn);
+				}
+
 				if (where.warrantyIn && where.warrantyIn.length > 0) {
 					query = query.where("l.warranty", "in", where.warrantyIn);
 				}

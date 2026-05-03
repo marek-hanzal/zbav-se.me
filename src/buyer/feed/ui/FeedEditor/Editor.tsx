@@ -10,6 +10,7 @@ import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { DeliveryValueList } from "~/common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
+import { PriceTypeList } from "~/common/price-type/ui/PriceTypeList";
 import { TitleValue } from "~/common/title/ui/TitleValue";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import { AgeValueList } from "./value/AgeValueList";
@@ -37,6 +38,7 @@ export namespace Editor {
 			| "delivery"
 			| "warranty"
 			| "title"
+			| "priceType"
 		>;
 		hidden?: readonly Section[];
 	}
@@ -225,6 +227,20 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 				data-ui-flow={"vertical"}
 				data-ui-gap={"default"}
 			>
+				<Group>
+					<PriceTypeList
+						data-action={"edit feed warranty"}
+						priceType={feed.query?.filter?.priceTypeIn ?? []}
+						action={
+							<Icon
+								icon={ChevronRightIcon}
+								data-ui-text="xl"
+							/>
+						}
+						onClick={() => view.set("priceType")}
+					/>
+				</Group>
+
 				<Group>
 					<WarrantyValueList
 						data-action={"edit feed warranty"}

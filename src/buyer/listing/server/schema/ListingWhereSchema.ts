@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { FilterSchema } from "@/lib/common/schema";
 import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
+import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 
 export const ListingWhereSchema = z
@@ -39,6 +40,11 @@ export const ListingWhereSchema = z
 		}),
 		warrantyIn: z.array(WarrantyEnumSchema).optional().meta({
 			description: "Filter listings based on the provided warranty periods (in months)",
+		}),
+		//
+		priceTypeIn: z.array(PriceTypeEnumSchema).optional().meta({
+			description:
+				"Filter listings based on the provided price types (e.g. free, paid, etc.)",
 		}),
 		//
 		expiresAtBefore: z.coerce.date().optional().meta({
