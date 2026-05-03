@@ -21,9 +21,6 @@ export const PriceTypeValue: FC<PriceTypeValue.Props> = ({ priceType, ...props }
 			textLabel={translator.text("Price type (title)")}
 			textValue={hasPriceType ? translator.text(`Listing price - ${priceType}`) : null}
 			textEmpty={translator.text("Price type not set")}
-			wrapperProps={{
-				"data-ui-tone": hasPriceType ? "neutral" : "primary",
-			}}
 			{...props}
 		/>
 	);

@@ -33,9 +33,6 @@ export const ConsValueList: FC<ConsValueList.Props> = ({ cons, ...props }) => {
 			textEmpty={translator.text("Listing - Cons not filled")}
 			items={consItems}
 			renderFn={(item) => <Tx label={item.con} />}
-			wrapperProps={{
-				"data-ui-tone": cons.length > 0 ? "neutral" : "secondary",
-			}}
 			{...props}
 		/>
 	);

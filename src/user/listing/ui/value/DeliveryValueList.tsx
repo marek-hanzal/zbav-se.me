@@ -32,9 +32,6 @@ export const DeliveryValueList: FC<DeliveryValueList.Props> = ({ deliveryIn, ...
 			textEmpty={translator.text("Feed delivery not selected")}
 			items={items}
 			renderFn={(item) => translator.text(`Listing delivery - ${item.delivery}`)}
-			wrapperProps={{
-				"data-ui-tone": deliveryIn.length > 0 ? "neutral" : "secondary",
-			}}
 			{...props}
 		/>
 	);

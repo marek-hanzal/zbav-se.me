@@ -33,9 +33,6 @@ export const ProsValueList: FC<ProsValueList.Props> = ({ pros, ...props }) => {
 			textEmpty={translator.text("Listing - Pros not filled")}
 			items={prosItems}
 			renderFn={(item) => <Tx label={item.pro} />}
-			wrapperProps={{
-				"data-ui-tone": pros.length > 0 ? "neutral" : "secondary",
-			}}
 			{...props}
 		/>
 	);

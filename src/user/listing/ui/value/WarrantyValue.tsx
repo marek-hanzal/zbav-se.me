@@ -22,9 +22,6 @@ export const WarrantyValue: FC<WarrantyValue.Props> = ({ warranty, ...props }) =
 			textValue={warranty ? translator.text(`Listing warranty - ${warranty}`) : null}
 			textEmpty={translator.text("Warranty not selected")}
 			textHint={translator.text("Listing warranty (hint)")}
-			wrapperProps={{
-				"data-ui-tone": warranty ? "neutral" : "secondary",
-			}}
 			{...props}
 		/>
 	);
