@@ -6,6 +6,7 @@ import { useView } from "@/lib/client/view";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { Editor } from "./Editor";
 import { CategoryPatch } from "./patch/CategoryPatch";
+import { LocationPatch } from "./patch/LocationPatch";
 
 export namespace FeedEditor {
 	export type View =
@@ -65,6 +66,15 @@ export const FeedEditor = withFallback(
 
 				<view.Panel name="category">
 					<CategoryPatch
+						feed={feed}
+						onCancel={() => {
+							view.set("default");
+						}}
+					/>
+				</view.Panel>
+
+				<view.Panel name="location">
+					<LocationPatch
 						feed={feed}
 						onCancel={() => {
 							view.set("default");
