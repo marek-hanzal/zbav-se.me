@@ -2,16 +2,16 @@ import { z } from "zod";
 import { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
+import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 
 export const ListingSchema = z
 	.looseObject({
 		...ListingTableSchema.shape,
-		// location: LocationSchema,
-		// category: CategorySchema,
-		// distance: z.number().nullable().meta({
-		// 	description:
-		// 		"Distance from the input location to the listing (in km; meta lat/lon must be provided)",
-		// }),
+		location: LocationSchema,
+		distance: z.number().nullable().meta({
+			description:
+				"Distance from the input location to the listing (in km; meta lat/lon must be provided)",
+		}),
 		my: z.boolean().meta({
 			description: "Whether the listing belongs to the current user",
 		}),
@@ -40,6 +40,7 @@ Effective restriction applied on the listing.
 		userId: true,
 		galleryId: true,
 		withLocation: true,
+		withTitle: true,
 	})
 	.strip()
 	.meta({

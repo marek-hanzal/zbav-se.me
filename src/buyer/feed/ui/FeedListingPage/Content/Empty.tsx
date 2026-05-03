@@ -39,7 +39,7 @@ export const Empty: FC<Empty.Props> = () => {
 						data-action={"create listing"}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
-						to={"/$locale/app/seller/listing/resolve"}
+						to={"/$locale/app/seller/draft/resolve"}
 						params={{
 							locale,
 						}}

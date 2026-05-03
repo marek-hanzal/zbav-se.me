@@ -33,9 +33,6 @@ export const PriceValue: FC<PriceValue.Props> = ({ price, currency, ...props }) 
 				) : null
 			}
 			textEmpty={translator.text("Price not set")}
-			wrapperProps={{
-				"data-ui-tone": hasPrice ? "neutral" : "primary",
-			}}
 			{...props}
 		/>
 	);

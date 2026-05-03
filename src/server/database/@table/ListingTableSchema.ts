@@ -1,15 +1,15 @@
 import { z } from "zod";
-import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
-import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
-import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import { DescriptionSchema } from "~/common/listing/schema/DescriptionSchema";
 import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
 import { RatingSchema } from "~/common/listing/schema/RatingSchema";
 import { TitleSchema } from "~/common/listing/schema/TitleSchema";
+import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
+import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 
 export const ListingTableSchema = z
 	.looseObject({
@@ -20,48 +20,67 @@ export const ListingTableSchema = z
 			description: "ID of the user who created the listing",
 		}),
 		//
-		categoryId: z.string().min(1).nullish(),
+		categoryId: z.string().min(1),
 		//
 		status: ListingStatusEnumSchema,
-		restriction: RestrictionEnumSchema.nullish(),
+		restriction: RestrictionEnumSchema.nullable(),
 		//
 		galleryId: z.string().min(1),
-		withImageUrl: z.array(z.string().min(1)),
-		withUploadIds: z.array(z.string().min(1)).meta({
-			description:
-				"Denormalized ordered upload IDs used for draft gallery management and consistency checks",
-		}),
+		withImageUrl: z
+			.tuple(
+				[
+					z.string().min(1),
+				],
+				z.string().min(1),
+			)
+			.meta({
+				description: "Ordered image URLs for listing gallery",
+			}),
+		withUploadIds: z
+			.tuple(
+				[
+					z.string().min(1),
+				],
+				z.string().min(1),
+			)
+			.meta({
+				description:
+					"Denormalized ordered upload IDs used for draft gallery management and consistency checks",
+			}),
 		/**
 		 * Core listing attributes
 		 */
-		title: TitleSchema.nullish(),
+		title: TitleSchema,
+		withTitle: z.string().min(1).meta({
+			description: "Lowercase unaccented title used for search",
+		}),
 		description: DescriptionSchema.nullish(),
 		//
-		locationId: z.string().min(1).nullish(),
-		withLocation: z.unknown().nullable().meta({
+		locationId: z.string().min(1),
+		withLocation: z.unknown().meta({
 			description: "Denormalized location geo point for listing search and range queries",
 		}),
 		//
 		pros: ProsConsSchema,
 		cons: ProsConsSchema,
 		//
-		delivery: z.array(ListingDeliveryEnumSchema),
+		delivery: z.array(DeliveryEnumSchema),
 		//
-		warranty: ListingWarrantyEnumSchema.nullish(),
+		warranty: WarrantyEnumSchema.nullish(),
 		//
-		priceType: ListingPriceEnumSchema.nullish(),
+		priceType: PriceTypeEnumSchema,
 		price: z.coerce.number().positive().nullish(),
 		currency: CurrencyEnumSchema.nullish(),
 		//
 		condition: RatingSchema.nullish(),
 		age: RatingSchema.nullish(),
 		//
-		expires: ListingExpireEnumSchema.nullish(),
+		expires: ListingExpireEnumSchema,
 		//
-		visibleAt: z.coerce.date().nullish().meta({
+		visibleAt: z.coerce.date().meta({
 			description: "When a listing goes live",
 		}),
-		expiresAt: z.coerce.date().nullish().meta({
+		expiresAt: z.coerce.date().meta({
 			description: "When a listing dies",
 		}),
 		//

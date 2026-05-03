@@ -234,6 +234,12 @@ Chat - transaction resolved - seller cannot write (message):
     value: Máš vyřízeno, nic dalšího tu nemusíš řešit.
 Clear all (button):
     value: Vyčistit vše
+Clear all sorts (button):
+    value: Clear all sorts (button)
+Close draft (button):
+    value: Pokračovat později
+Close draft (hint):
+    value: K rozpracovanému inzerátu se můžeš kdykoliv vrátit.
 Close transaction (button):
     value: Hotovo, zavřít
 Closer p90 (hint):
@@ -354,6 +360,12 @@ Create listing (label):
     value: Vystavit inzerát
 Create new chat (label):
     value: Nový chat
+Create new draft (hint):
+    value: Něco si hoď na stůl, až budeš mít všechno, můžeš inzerát zveřejnit.
+Create new draft (link):
+    value: Nový inzerát
+Create new draft (title):
+    value: Nový inzerát
 Create new feed (button):
     value: Nový seznam
 Create new feed (hint):
@@ -378,10 +390,14 @@ Decision rate (hint):
         po předání balíčku kupující transakci neodklikne.
 Decision rate (label):
     value: Poměr dokončených zpráv
+Delete draft (button):
+    value: Smazat rozpracovaný inzerát
+Delete draft - confirm (button):
+    value: Opravdu?
 Delete feed (button):
     value: Smazat nastavení
 Delete photo (button):
-    value: Delete photo (button)
+    value: Smazat fotku
 Delivery (title):
     value: Možnost předání
 Description (placeholder):
@@ -394,6 +410,10 @@ Dispute transaction (button):
     value: Vyřešit problém
 Dispute transaction - confirm (button):
     value: Opravdu si přeješ pokračovat?
+Draft (label):
+    value: Rozpracovaný inzerát
+Draft - action section (title):
+    value: Co dál?
 Draft - bunch of required (title):
     value: Nutné pro zveřejnění
 Draft - category spec - optional (title):
@@ -406,6 +426,8 @@ Draft expire (hint):
     value: |
         Nemusíš se bát, čas se spustí až po zveřejnění inzerátu.
 Draft list (label):
+    value: Rozpracované inzeráty
+Draft list (title):
     value: Rozpracované inzeráty
 Email:
     value: Email
@@ -473,6 +495,8 @@ Feed location (label):
     value: Poloha
 Feed location not selected:
     value: Nemáš uvedenou
+Feed location security (hint):
+    value: Feed location security (hint)
 Feed name (default):
     value: Můj seznam
 Feed name (label):
@@ -487,13 +511,17 @@ Feed name (title):
     value: Vyber si název
 Feed photo gallery (label):
     value: Obrázek seznamu
+Feed range (description):
+    value: Feed range (description)
 Feed range (hint):
     value: Nastav si okruh v km, v jakém chceš vidět inzeráty; pro tuto funkci si
         musíš nastavit polohu.
 Feed range (label):
     value: Maximální vzdálenost
+Feed range (placeholder):
+    value: Feed range (placeholder)
 Feed range not set:
-    value: Vzdálenost není nenastavená
+    value: Vzdálenost není nastavená
 Feed select (title):
     value: Uložená hledání
 Feed sorting (hint):
@@ -503,6 +531,48 @@ Feed sorting (label):
     value: Řazení inzerátů
 Feed sorting not selected:
     value: Výchozí řazení
+Feed title (hint):
+    value: Tady si můžeš nastavit hledání podle titulku inzerátu
+Feed title (label):
+    value: Titulek inzerátu
+Feed title not filled:
+    value: Jakýkoli
+Field - battery-condition:
+    value: Stav baterie
+    dynamic: true
+Field - brand:
+    value: Značka
+    dynamic: true
+Field - color:
+    value: Barva
+    dynamic: true
+Field - model:
+    value: Model/Označení
+    dynamic: true
+Field - ram:
+    value: Velikost RAMky
+    dynamic: true
+Field - sensor.type:
+    value: Typ senzoru
+    dynamic: true
+Field - storage:
+    value: Velikost úložiště
+    dynamic: true
+Field patch - battery-condition (title)":
+    value: Stav baterie
+    dynamic: true
+Field patch - brand (title):
+    value: Značka
+    dynamic: true
+Field patch - model (title):
+    value: Model/Označení
+    dynamic: true
+Field patch - ram (title):
+    value: Velikost RAMky
+    dynamic: true
+Field patch - storage (title):
+    value: Velikost úložiště
+    dynamic: true
 Find listings (label):
     value: Hledat
 First listing (message):
@@ -686,24 +756,6 @@ Listing location not selected:
     value: Polohu nemáš vyplněnou
 Listing photo gallery (label):
     value: Nahraj fotky
-Listing price - closed (hint):
-    value: Nastav si, pokud nehodláš o ceně smlouvat.
-    dynamic: true
-Listing price - closed:
-    value: Pevná cena
-    dynamic: true
-Listing price - offer (hint):
-    value: Nech kupující navrhnout cenu
-    dynamic: true
-Listing price - offer:
-    value: Nabídni
-    dynamic: true
-Listing price - open (hint):
-    value: Pokud jsi nakloněn smlouvání, vyber tuto volbu.
-    dynamic: true
-Listing price - open:
-    value: K vyjednávání
-    dynamic: true
 Listing restriction (hint):
     value: >
         Kategorie definuje základní omezení, nicméně máš možnost přitvrdit,
@@ -858,6 +910,11 @@ No categories found (message):
         kategorii přidáme.
 No categories found (title):
     value: Ajajaj, nic jsme nenašli!
+No drafts (message):
+    value: ...ale můžeš si připravit nějaké inzeráty, které si zveřejníš, až budeš
+        chtít.
+No drafts (title):
+    value: Zatím tu nic nemáš...
 No items in favourites (message):
     value: ...ale můžeš se podívat na inzeráty a nějaké si sem přidat!
 No items in favourites (title):
@@ -949,8 +1006,36 @@ Price (placeholder):
     value: Cena
 Price (title):
     value: Nastav cenu
-Price - free:
+Price Type - ask (hint):
+    value: Čekáš, že ti kupující dá nabídku.
+    dynamic: true
+Price Type - ask (label):
+    value: Nabídni
+    dynamic: true
+Price Type - fixed (hint):
+    value: Za touhle cenou si stojíš, nechceš vyjednávat.
+    dynamic: true
+Price Type - fixed (label):
+    value: Pevná cena
+    dynamic: true
+Price Type - free (hint):
+    value: Nechceš nic.
+    dynamic: true
+Price Type - free (label):
     value: Zdarma
+    dynamic: true
+Price Type - haggle (hint):
+    value: Máš představu, ale jsi otevřený vyjednávání.
+    dynamic: true
+Price Type - haggle (label):
+    value: Otevřen vyjednávání
+    dynamic: true
+Price Type - haulaway (hint):
+    value: Nechceš nic, ale zájemce si věc odtáhne sám.
+    dynamic: true
+Price Type - haulaway (label):
+    value: Za odvoz
+    dynamic: true
 Price not set:
     value: Cenu nemáš vyplněnou
 Price type (title):
@@ -1052,6 +1137,8 @@ Sign out:
     value: Odhlásit se
 Something went wrong (error):
     value: Pardon, tohle je teď rozbité.
+Submit draft (button):
+    value: Publikovat inzerát
 System update (label):
     value: System update (label)
 Thread token usage (label):
@@ -1164,7 +1251,7 @@ View transactions (button):
 Warranty (title):
     value: Záruka
 Warranty not selected:
-    value: Není vyplněné
+    value: Není vyplněná
 Welcome (title):
     value: Klikej. Zkoumej. Nemáš tu co posrat.
 With VAT:
@@ -1179,6 +1266,9 @@ You got like (label):
     value: Někomu se líbí tvůj inzerát!
 Your favourites (title):
     value: Oblíbené
+brand - placeholder:
+    value: Vyplň značku
+    dynamic: true
 buyer - Buyer rejected the transaction (message):
     value: |
         **Odmítl jsi obchod.**
@@ -1237,6 +1327,18 @@ buyer - Transaction successful (message):
     dynamic: true
 closed:
     value: closed
+color - black:
+    value: Černá
+    dynamic: true
+color - blue:
+    value: Modrá
+    dynamic: true
+color - orange:
+    value: Oranžová
+    dynamic: true
+color - yellow:
+    value: Žlutá
+    dynamic: true
 dispute:
     value: dispute
 expired:
@@ -1251,14 +1353,19 @@ listing.title:
     value: listing.title
 location:
     value: location
-offer:
-    value: offer
-open:
-    value: open
+model - placeholder:
+    value: Vyplň model nebo označení
+    dynamic: true
 package:
     value: package
 personal:
     value: personal
+ram - 4 GB or less:
+    value: 4GB nebo méně
+    dynamic: true
+ram - 64 GB or more:
+    value: 64GB nebo více
+    dynamic: true
 rejected:
     value: rejected
 resolved:
@@ -1314,6 +1421,15 @@ seller - Transaction successful (message):
         **Všechno v pohodě, obchod byl úspěšný!**
 
         Dál už tu nic není.
+    dynamic: true
+sensor.type - aps-c:
+    value: APS-C
+    dynamic: true
+sensor.type - compact:
+    value: Compact
+    dynamic: true
+sensor.type - full-frame:
+    value: Full Frame
     dynamic: true
 sold:
     value: sold
@@ -1425,74 +1541,7 @@ transaction - seller - status-trade:
 
         _Teď se do toho můžete společně pustit!_
     dynamic: true
+unused:
+    value: unused
 zbav-se.me:
     value: zbav-se.me
-Field patch - brand (title):
-    value: Značka
-    dynamic: true
-Field - brand:
-    value: Značka
-    dynamic: true
-brand - placeholder:
-    value: Vyplň značku
-    dynamic: true
-Field patch - model (title):
-    value: Model/Označení
-    dynamic: true
-model - placeholder:
-    value: Vyplň model nebo označení
-    dynamic: true
-Field - model:
-    value: Model/Označení
-    dynamic: true
-Field - sensor.type:
-    value: Typ senzoru
-    dynamic: true
-sensor.type - full-frame:
-    value: Full Frame
-    dynamic: true
-sensor.type - aps-c:
-    value: APS-C
-    dynamic: true
-sensor.type - compact:
-    value: Compact
-    dynamic: true
-Field - color:
-    value: Barva
-    dynamic: true
-color - yellow:
-    value: Žlutá
-    dynamic: true
-color - blue:
-    value: Modrá
-    dynamic: true
-color - black:
-    value: Černá
-    dynamic: true
-color - orange:
-    value: Oranžová
-    dynamic: true
-Field patch - ram (title):
-    value: Velikost RAMky
-    dynamic: true
-Field - ram:
-    value: Velikost RAMky
-    dynamic: true
-Field patch - storage (title):
-    value: Velikost úložiště
-    dynamic: true
-Field - storage:
-    value: Velikost úložiště
-    dynamic: true
-Field patch - battery-condition (title)":
-    value: Stav baterie
-    dynamic: true
-Field - battery-condition:
-    value: Stav baterie
-    dynamic: true
-ram - 4 GB or less:
-    value: 4GB nebo méně
-    dynamic: true
-ram - 64 GB or more:
-    value: 64GB nebo více
-    dynamic: true

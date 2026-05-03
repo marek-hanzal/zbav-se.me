@@ -21,7 +21,7 @@ export namespace SearchEditor {
 export const SearchEditor = withFallback(({ _suspense, feedId, ...props }: SearchEditor.Props) => {
 	return (
 		<Container
-			data-ui={"SearchEditor[Container]"}
+			data-ui={"SearchEditor"}
 			data-ui-height="full"
 			{...props}
 		>
@@ -31,7 +31,6 @@ export const SearchEditor = withFallback(({ _suspense, feedId, ...props }: Searc
 				hidden={hidden}
 			>
 				<Container
-					data-ui={"SearchEditor-[Container.actions]"}
 					data-ui-flow="vertical"
 					data-ui-gap="default"
 				>
@@ -40,10 +39,12 @@ export const SearchEditor = withFallback(({ _suspense, feedId, ...props }: Searc
 							_suspense={"I know"}
 							feedId={feedId}
 						/>
+
 						<SaveAsFeedButton
 							_suspense={"I know"}
 							feedId={feedId}
 						/>
+
 						<ResetButton feedId={feedId} />
 					</Group>
 				</Container>

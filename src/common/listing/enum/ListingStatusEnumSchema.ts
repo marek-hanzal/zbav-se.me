@@ -3,10 +3,6 @@ import { z } from "zod";
 export const ListingStatusEnumSchema = z
 	.enum([
 		/**
-		 * Not published, probably not ready (needs validation)
-		 */
-		"draft",
-		/**
 		 * Public live listing
 		 */
 		"live",

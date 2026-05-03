@@ -22,9 +22,6 @@ export const ExpiresValue: FC<ExpiresValue.Props> = ({ expires, ...props }) => {
 			textValue={hasExpires ? translator.text(`Expire in ${expires}`) : null}
 			textEmpty={translator.text("Expiration date not set")}
 			textHint={translator.text("Draft expire (hint)")}
-			wrapperProps={{
-				"data-ui-tone": hasExpires ? "neutral" : "primary",
-			}}
 			{...props}
 		/>
 	);

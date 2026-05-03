@@ -13,3 +13,6 @@ that thread so user/thread scope is enforced by the database.
 Restriction enum database type is created by the early restriction migration
 before category tables, because the same type is shared by category, listing,
 draft, and user restriction storage.
+
+Listing-specific attribute rows live in the `listing_attr_*` tables, while draft
+editing has its own mirrored `draft` and `draft_attr_*` persistence layer.

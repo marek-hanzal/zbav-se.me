@@ -117,7 +117,10 @@ export const Rating: FC<Rating.Props> = ({
 					}}
 					data-ui-tone="warning"
 					data-ui-theme="light"
-					data-ui-size="default"
+					data-ui-size={"default"}
+					className={[
+						"shrink-0",
+					]}
 				>
 					<Tx label={"Clear all (button)"} />
 				</Button>

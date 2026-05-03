@@ -15,8 +15,6 @@ export namespace LocationBadge {
 /**
  * Displays location in a compact badge form with emphasized visual treatment.
  * Use it in list rows or cards where location needs quick scanning.
- *
- * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const LocationBadge: FC<LocationBadge.Props> = ({
 	location,

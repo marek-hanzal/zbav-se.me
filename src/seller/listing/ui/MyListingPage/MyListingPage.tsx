@@ -15,8 +15,6 @@ export namespace MyListingPage {
 /**
  * Composes the seller listings page with heading chrome and default query for newest listings first.
  * Use it as the route-level entry screen for managing a seller account listing portfolio.
- *
- * @see src/@routes
  */
 export const MyListingPage: FC<MyListingPage.Props> = (props) => {
 	const locale = useLocale();
@@ -36,7 +34,7 @@ export const MyListingPage: FC<MyListingPage.Props> = (props) => {
 			{...props}
 		>
 			<Suspense fallback={<ListingList.Fallback />}>
-				<ListingList />
+				<ListingList _suspense={"I know"} />
 			</Suspense>
 		</TitleContainer>
 	);

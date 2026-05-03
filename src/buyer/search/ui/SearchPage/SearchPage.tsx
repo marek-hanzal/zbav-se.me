@@ -15,15 +15,13 @@ export namespace SearchPage {
 /**
  * Composes the route-level search screen and arranges the main page structure for this flow.
  * Use it from route definitions as the primary UI boundary for the search journey.
- *
- * @see src/@routes
  */
 export const SearchPage: FC<SearchPage.Props> = ({ feedId, ...props }) => {
 	const locale = useLocale();
 
 	return (
 		<TitleContainer
-			data-ui={"SearchPage[TitleContainer]"}
+			data-ui={"SearchPage"}
 			textTitle={translator.text("Search (title)")}
 			left={
 				<BackHomeButton

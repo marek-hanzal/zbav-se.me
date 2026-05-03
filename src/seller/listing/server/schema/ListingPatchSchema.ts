@@ -1,14 +1,15 @@
 import { z } from "zod";
-import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
-import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
-import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { DescriptionSchema } from "~/common/listing/schema/DescriptionSchema";
 import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
 import { RatingSchema } from "~/common/listing/schema/RatingSchema";
 import { TitleSchema } from "~/common/listing/schema/TitleSchema";
+import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
+import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 import { ListingQuerySchema } from "./ListingQuerySchema";
 
 export const ListingPatchSchema = z
@@ -17,12 +18,15 @@ export const ListingPatchSchema = z
 			.looseObject({
 				title: TitleSchema.optional(),
 				description: DescriptionSchema.nullish(),
+				//
+				status: ListingStatusEnumSchema.optional(),
+				//
 				categoryId: z.string().min(1).optional(),
 				locationId: z.string().min(1).optional(),
 				//
 				restriction: RestrictionEnumSchema.nullish(),
 				//
-				priceType: ListingPriceEnumSchema.optional(),
+				priceType: PriceTypeEnumSchema.optional(),
 				price: z.coerce.number().positive().nullish(),
 				currency: CurrencyEnumSchema.optional(),
 				//
@@ -38,9 +42,9 @@ export const ListingPatchSchema = z
 				pros: ProsConsSchema.optional(),
 				cons: ProsConsSchema.optional(),
 				//
-				delivery: z.array(ListingDeliveryEnumSchema).optional(),
+				delivery: z.array(DeliveryEnumSchema).optional(),
 				//
-				warranty: ListingWarrantyEnumSchema.nullish(),
+				warranty: WarrantyEnumSchema.nullish(),
 			})
 			.strip(),
 		query: ListingQuerySchema,

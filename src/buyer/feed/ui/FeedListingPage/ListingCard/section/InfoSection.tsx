@@ -2,17 +2,18 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import type { MarkSuspense } from "@/lib/client/type";
+import type { useView } from "@/lib/client/view";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { SellerInfo } from "../../SellerInfo";
 
 export namespace InfoSection {
 	export interface Props extends MarkSuspense.Props {
 		listing: ListingSchema.Type;
-		onView(view: "seller-info"): void;
+		view: useView.Use<"seller-info">;
 	}
 }
 
-export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView }) => {
+export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, view }) => {
 	return (
 		<Container
 			data-ui={"InfoSection"}
@@ -129,7 +130,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView 
 					<SellerInfo
 						_suspense={"I know"}
 						listingId={listing.id}
-						onView={onView}
+						view={view}
 					/>
 				</Group>
 			)}

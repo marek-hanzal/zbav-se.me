@@ -17,6 +17,7 @@ Effective restriction applied on the listing.
 		userId: true,
 		galleryId: true,
 		withLocation: true,
+		withTitle: true,
 	})
 	.strip()
 	.meta({

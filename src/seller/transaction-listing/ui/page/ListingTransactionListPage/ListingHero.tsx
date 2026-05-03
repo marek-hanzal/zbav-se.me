@@ -3,7 +3,10 @@ import { useState } from "react";
 import { Container } from "@/lib/client/container";
 import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
+import { Typo } from "@/lib/client/typo";
 import { useUpload } from "~/common/gallery/hook/useUpload";
+import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
+import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroImage } from "~/common/ui/img";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
@@ -45,14 +48,12 @@ export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ...pr
 					className={"h-42"}
 				/>
 
-				{/* <ListingPrice
-					price={listing.price}
-					priceType={listing.priceType}
-					currency={listing.currency}
+				<ListingPrice
+					price={listing as ListingPriceSchema.Type}
 					data-ui-tone="neutral"
 					data-ui-theme="light"
 					data-ui-snap-to="top-center"
-				/> */}
+				/>
 
 				<Container
 					className={"pointer-events-none"}
@@ -66,7 +67,7 @@ export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ...pr
 					data-ui-z-index
 					data-ui-width="full"
 				>
-					{/* <Typo
+					<Typo
 						label={listing.title}
 						data-ui-tone="neutral"
 						data-ui-theme="light"
@@ -78,7 +79,7 @@ export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ...pr
 							"line-clamp-2",
 							"text-center",
 						]}
-					/> */}
+					/>
 				</Container>
 			</Container>
 

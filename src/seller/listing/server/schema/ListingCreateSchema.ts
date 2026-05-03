@@ -2,12 +2,12 @@ import { z } from "zod";
 
 export const ListingCreateSchema = z
 	.looseObject({
-		//
+		draftId: z.string().min(1),
 	})
-	// .strip()
+	.strip()
 	.meta({
 		id: "ListingCreate",
-		description: "Data for creating a new listing",
+		description: "Data for publishing a draft into a listing",
 	});
 
 export type ListingCreateSchema = typeof ListingCreateSchema;

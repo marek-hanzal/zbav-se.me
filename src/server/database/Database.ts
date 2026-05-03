@@ -6,6 +6,12 @@ import type { AgentUsageTableSchema } from "~/server/database/@table/AgentUsageT
 import type { CategoryMissTableSchema } from "~/server/database/@table/CategoryMissTableSchema";
 import type { CategorySpotlightTableSchema } from "~/server/database/@table/CategorySpotlightTableSchema";
 import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
+import type { DraftAttrDecimalTableSchema } from "~/server/database/@table/DraftAttrDecimalTableSchema";
+import type { DraftAttrEnumMultiTableSchema } from "~/server/database/@table/DraftAttrEnumMultiTableSchema";
+import type { DraftAttrEnumSingleTableSchema } from "~/server/database/@table/DraftAttrEnumSingleTableSchema";
+import type { DraftAttrNumberTableSchema } from "~/server/database/@table/DraftAttrNumberTableSchema";
+import type { DraftAttrTextTableSchema } from "~/server/database/@table/DraftAttrTextTableSchema";
+import type { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
 import type { FavouriteTableSchema } from "~/server/database/@table/FavouriteTableSchema";
 import type { FeedTableSchema } from "~/server/database/@table/FeedTableSchema";
 import type { FieldOptionTableSchema } from "~/server/database/@table/FieldOptionTableSchema";
@@ -27,20 +33,15 @@ import type { UploadTableSchema } from "~/server/database/@table/UploadTableSche
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
 import type { UserRestrictionTableSchema } from "~/server/database/@table/UserRestrictionTableSchema";
-import type { AttrDecimalTableSchema } from "./@table/AttrDecimalTableSchema";
-import type { AttrEnumMultiSchema } from "./@table/AttrEnumMultiSchema";
-import type { AttrEnumSingleSchema } from "./@table/AttrEnumSingleSchema";
-import type { AttrNumberTableSchema } from "./@table/AttrNumberTableSchema";
-import type { AttrTextSchema } from "./@table/AttrTextSchema";
 import type { CategoryFieldTableSchema } from "./@table/CategoryFieldTableSchema";
+import type { ListingAttrDecimalTableSchema } from "./@table/ListingAttrDecimalTableSchema";
+import type { ListingAttrEnumMultiTableSchema } from "./@table/ListingAttrEnumMultiTableSchema";
+import type { ListingAttrEnumSingleTableSchema } from "./@table/ListingAttrEnumSingleTableSchema";
+import type { ListingAttrNumberTableSchema } from "./@table/ListingAttrNumberTableSchema";
+import type { ListingAttrTextTableSchema } from "./@table/ListingAttrTextTableSchema";
 
 export interface Database {
 	activity: ActivityTableSchema.Type;
-	attr_decimal: AttrDecimalTableSchema.Type;
-	attr_number: AttrNumberTableSchema.Type;
-	attr_enum_multi: AttrEnumMultiSchema.Type;
-	attr_enum_single: AttrEnumSingleSchema.Type;
-	attr_text: AttrTextSchema.Type;
 	agent_stream: AgentStreamTableSchema.Type;
 	agent_thread: AgentThreadTableSchema.Type;
 	agent_usage: AgentUsageTableSchema.Type;
@@ -48,6 +49,12 @@ export interface Database {
 	category_miss: CategoryMissTableSchema.Type;
 	category_spotlight: CategorySpotlightTableSchema.Type;
 	category: CategoryTableSchema.Type;
+	draft: DraftTableSchema.Type;
+	draft_attr_decimal: DraftAttrDecimalTableSchema.Type;
+	draft_attr_number: DraftAttrNumberTableSchema.Type;
+	draft_attr_enum_multi: DraftAttrEnumMultiTableSchema.Type;
+	draft_attr_enum_single: DraftAttrEnumSingleTableSchema.Type;
+	draft_attr_text: DraftAttrTextTableSchema.Type;
 	favourite: FavouriteTableSchema.Type;
 	feed: FeedTableSchema.Type;
 	field: FieldTableSchema.Type;
@@ -57,6 +64,11 @@ export interface Database {
 	gallery: GalleryTableSchema.Type;
 	github: GitHubTableSchema.Type;
 	ignore: IgnoreTableSchema.Type;
+	listing_attr_decimal: ListingAttrDecimalTableSchema.Type;
+	listing_attr_number: ListingAttrNumberTableSchema.Type;
+	listing_attr_enum_multi: ListingAttrEnumMultiTableSchema.Type;
+	listing_attr_enum_single: ListingAttrEnumSingleTableSchema.Type;
+	listing_attr_text: ListingAttrTextTableSchema.Type;
 	listing_event: ListingEventTableSchema.Type;
 	listing: ListingTableSchema.Type;
 	location: LocationTableSchema.Type;

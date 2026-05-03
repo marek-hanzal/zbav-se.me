@@ -1,5 +1,7 @@
 import { Effect } from "effect";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
+import { draftPatchFx } from "~/seller/draft/server/fx/draftPatchFx";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
 import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
@@ -57,8 +59,35 @@ export const createListingFx = (
 			userId: sellerId,
 		});
 
-		return yield* listingCreateFx({
-			categoryId: resolvedCategoryId,
+		const draft = yield* draftCreateFx({
 			userId: sellerId,
+		});
+
+		yield* draftPatchFx({
+			userId: sellerId,
+			query: {
+				where: {
+					id: draft.id,
+				},
+			},
+			scope: {
+				userId: sellerId,
+			},
+			patch: {
+				categoryId: resolvedCategoryId,
+				title,
+				locationId: resolvedLocationId,
+				restriction,
+				priceType: "free",
+				expires: "7-days",
+				uploadIds: [
+					upload.id,
+				],
+			},
+		});
+
+		return yield* listingCreateFx({
+			userId: sellerId,
+			draftId: draft.id,
 		});
 	});

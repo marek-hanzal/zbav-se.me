@@ -21,9 +21,6 @@ export const ConditionValue: FC<ConditionValue.Props> = ({ condition, ...props }
 			textHint={translator.text("Listing condition (hint)")}
 			textValue={hasCondition ? translator.text(`Condition ${condition} (label)`) : null}
 			textEmpty={translator.text("Condition not selected")}
-			wrapperProps={{
-				"data-ui-tone": hasCondition ? "neutral" : "secondary",
-			}}
 			{...props}
 		/>
 	);

@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
-import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
@@ -70,6 +70,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.expiresAt",
 			"l.createdAt",
 			"l.updatedAt",
+			"l.visibleAt",
 			(eb) => {
 				return sql<CategorySchema.Type>`
                     to_jsonb(${eb.table("cat")}.*)
@@ -86,7 +87,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				return sql<string[]>`to_jsonb(${eb.ref("l.cons")})`.as("cons");
 			},
 			(eb) => {
-				return sql<ListingDeliveryEnumSchema.Type[]>`to_jsonb(${eb.ref("l.delivery")})`.as(
+				return sql<DeliveryEnumSchema.Type[]>`to_jsonb(${eb.ref("l.delivery")})`.as(
 					"delivery",
 				);
 			},
@@ -144,6 +145,10 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 				if (where.userId) {
 					query = query.where("l.userId", "=", where.userId);
+				}
+
+				if (where.status) {
+					query = query.where("l.status", "=", where.status);
 				}
 
 				return yield* Effect.succeed(query);

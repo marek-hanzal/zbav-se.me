@@ -20,9 +20,6 @@ export const DescriptionValue: FC<DescriptionValue.Props> = ({ description, ...p
 			textLabel={translator.text("Description (title)")}
 			textValue={hasDescription ? description : null}
 			textEmpty={translator.text("Description not filled")}
-			wrapperProps={{
-				"data-ui-tone": hasDescription ? "neutral" : "secondary",
-			}}
 			{...props}
 		/>
 	);
