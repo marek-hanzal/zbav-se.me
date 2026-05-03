@@ -56,9 +56,52 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 	for (const item of sort ?? []) {
 		select = match(item.field)
+			.with("price", () => select.orderBy("l.price", item.order))
+			.with("condition", () => select.orderBy("l.condition", item.order))
+			.with("age", () => select.orderBy("l.age", item.order))
+			//
 			.with("createdAt", () => select.orderBy("l.createdAt", item.order))
 			.with("updatedAt", () => select.orderBy("l.updatedAt", item.order))
 			.with("expiresAt", () => select.orderBy("l.expiresAt", item.order))
+			//
+			.with("geo", () => {
+				if (!meta?.locationId) {
+					return select;
+				}
+				const locationId = meta.locationId;
+				const isDesc = item.order === "desc";
+				const sortOrder = isDesc ? "asc" : item.order;
+
+				/**
+				 * KNN GiST over geo works for ASC nearest-neighbour ordering.
+				 * For DESC (farthest-first), order by distance to the antipode ASC,
+				 * which is equivalent and keeps index usage.
+				 */
+				return select.orderBy((eb) => {
+					const origin = eb
+						.selectFrom("location as originLoc")
+						.select((eb) => {
+							return sql`ST_SetSRID(
+									ST_MakePoint(
+										case
+											when ${eb.val(isDesc)} and ${eb.ref("originLoc.lon")} >= 0 then ${eb.ref("originLoc.lon")} - 180
+											when ${eb.val(isDesc)} then ${eb.ref("originLoc.lon")} + 180
+											else ${eb.ref("originLoc.lon")}
+										end,
+										case
+											when ${eb.val(isDesc)} then -${eb.ref("originLoc.lat")}
+											else ${eb.ref("originLoc.lat")}
+										end
+									),
+									4326
+								)`.as("point");
+						})
+						.where("originLoc.id", "=", locationId)
+						.limit(1);
+
+					return sql`${eb.ref("l.withLocation")} <-> (${origin})`;
+				}, sortOrder);
+			})
 			.exhaustive();
 	}
 
