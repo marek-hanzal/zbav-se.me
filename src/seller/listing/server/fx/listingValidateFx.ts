@@ -1,29 +1,29 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log/getLoggerFx";
 import type { ValidationErrorSchema, ValidationResultSchema } from "@/lib/common/schema";
+import { draftFetchFx } from "~/seller/draft/server/fx/draftFetchFx";
 import { ListingSchema } from "../schema/ListingSchema";
-import { listingFetchFx } from "./listingFetchFx";
 
 export namespace listingValidateFx {
 	export interface Props {
 		userId: string;
-		listingId: string;
+		draftId: string;
 	}
 }
 
 export const listingValidateFx = Effect.fn("listingValidateFx")(function* ({
 	userId,
-	listingId,
+	draftId,
 }: listingValidateFx.Props) {
 	const logger = yield* getLoggerFx("listingValidateFx");
 	logger.trace("listingValidateFx", {
-		listingId,
+		draftId,
 	});
 
-	const listing = yield* listingFetchFx({
+	const draft = yield* draftFetchFx({
 		userId,
 		where: {
-			id: listingId,
+			id: draftId,
 		},
 		scope: {
 			userId,
@@ -40,7 +40,7 @@ export const listingValidateFx = Effect.fn("listingValidateFx")(function* ({
 
 	{
 		{
-			if (!listing.withUploadIds.length) {
+			if (!draft.withUploadIds.length) {
 				result.errors.push({
 					field: "gallery",
 					message: "Missing images",
@@ -49,8 +49,8 @@ export const listingValidateFx = Effect.fn("listingValidateFx")(function* ({
 		}
 
 		{
-			const data = ListingSchema.shape.title.safeParse(listing.title);
-			if (!listing.title || !data.success) {
+			const data = ListingSchema.shape.title.safeParse(draft.title);
+			if (!draft.title || !data.success) {
 				result.errors.push({
 					field: "title",
 					message: "Title is not filled properly",
@@ -59,7 +59,7 @@ export const listingValidateFx = Effect.fn("listingValidateFx")(function* ({
 		}
 
 		{
-			if (!listing.categoryId) {
+			if (!draft.categoryId) {
 				result.errors.push({
 					field: "categoryId",
 					message: "Missing category",
@@ -68,7 +68,7 @@ export const listingValidateFx = Effect.fn("listingValidateFx")(function* ({
 		}
 
 		{
-			if (!listing.locationId) {
+			if (!draft.locationId) {
 				result.errors.push({
 					field: "locationId",
 					message: "Missing location",
@@ -77,7 +77,7 @@ export const listingValidateFx = Effect.fn("listingValidateFx")(function* ({
 		}
 
 		{
-			if (!listing.priceType) {
+			if (!draft.priceType) {
 				result.errors.push({
 					field: "priceType",
 					message: "Missing price type",
@@ -86,7 +86,7 @@ export const listingValidateFx = Effect.fn("listingValidateFx")(function* ({
 		}
 
 		{
-			if (!listing.expires) {
+			if (!draft.expires) {
 				result.errors.push({
 					field: "expires",
 					message: "Missing expiration time",

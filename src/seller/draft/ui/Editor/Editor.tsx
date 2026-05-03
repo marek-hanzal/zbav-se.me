@@ -15,8 +15,8 @@ import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleValue } from "~/common/title/ui/TitleValue";
 import { ChevronAction } from "~/common/ui/action/ChevronAction";
 import { TitleContainer } from "~/common/ui/container";
+import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import { CategoryValue } from "~/user/category/ui/CategoryValue";
-import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { AgeValue } from "~/user/draft/ui/value/AgeValue";
 import { ConditionValue } from "~/user/draft/ui/value/ConditionValue";
 import { ConsValueList } from "~/user/draft/ui/value/ConsValueList";
@@ -28,11 +28,12 @@ import { PriceValue } from "~/user/draft/ui/value/PriceValue";
 import { ProsValueList } from "~/user/draft/ui/value/ProsValueList";
 import { RestrictionValue } from "~/user/draft/ui/value/RestrictionValue";
 import { WarrantyValue } from "~/user/draft/ui/value/WarrantyValue";
+import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
-import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import { AttrOptional } from "./AttrOptional";
 import { AttrRecommended } from "./AttrRecommended";
 import { DeleteButton } from "./DeleteButton";
+import { PublishListingButton } from "./PublishListingButton";
 
 export namespace Editor {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
@@ -296,6 +297,14 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 				/>
 
 				<Group>
+					<PublishListingButton
+						draft={draft}
+						data-ui-round={undefined}
+						data-ui-border={false}
+						data-ui-shadow={false}
+						data-ui-inner="lg"
+					/>
+
 					<LinkTo
 						to={"/$locale/app/home"}
 						params={{

@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const ListingValidateSchema = z
 	.looseObject({
-		listingId: z.string().min(1),
+		draftId: z.string().min(1),
 	})
 	.strip();
 

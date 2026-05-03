@@ -11,9 +11,9 @@ import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
 import { useAppForm } from "~/common/ui/form";
-import { CategorySelect } from "~/user/category/ui/CategorySelect";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
+import { CategorySelect } from "~/user/category/ui/CategorySelect";
 
 const FormSchema = z
 	.looseObject({

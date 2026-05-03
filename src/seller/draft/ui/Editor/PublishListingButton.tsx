@@ -4,6 +4,7 @@ import { Button } from "@/lib/client/button";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { uiSaveButton } from "~/common/ui/ui";
+import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 import { withListingValidationQuery } from "~/seller/listing/query/withListingValidationQuery";
 import type { DraftSchema } from "../../server/schema/DraftSchema";
 
@@ -19,12 +20,12 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 	...props
 }) => {
 	const { data: validation } = withListingValidationQuery.useSuspenseQuery({
-		listingId: draft.id,
+		draftId: draft.id,
 	});
 
 	const navigate = useNavigate();
 	const locale = useLocale();
-	const mutation = withListingQuery.usePatchMutation({
+	const mutation = withListingQuery.useCreateMutation({
 		async onPostMutation() {
 			await navigate({
 				to: "/$locale/app/seller/listing/my",
@@ -49,14 +50,7 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 			loading={mutation.isPending}
 			onClick={() => {
 				mutation.mutate({
-					patch: {
-						status: "live",
-					},
-					query: {
-						where: {
-							id: draft.id,
-						},
-					},
+					draftId: draft.id,
 				});
 			}}
 			{...uiSaveButton({
