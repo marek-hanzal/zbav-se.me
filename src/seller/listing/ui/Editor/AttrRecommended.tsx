@@ -5,8 +5,8 @@ import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view2";
 import { ChevronAction } from "~/common/ui/action/ChevronAction";
-import { withAttrOfQuery } from "~/user/attr/query/withAttrOfQuery";
-import { AttrOf } from "~/user/attr/ui/AttrOf";
+import { withListingAttrOfQuery } from "~/user/listing-attr/query/withListingAttrOfQuery";
+import { ListingAttrOf } from "~/user/listing-attr/ui/ListingAttrOf";
 
 export namespace AttrRecommended {
 	export interface Props extends MarkSuspense.Props {
@@ -21,7 +21,7 @@ export const AttrRecommended: FC<AttrRecommended.Props> = ({ listingId, category
 	 * We're not filtering fields here as we'll share the same query cache for both recommended/optional
 	 * fields.
 	 */
-	const { data: fields } = withAttrOfQuery.useSuspenseQuery({
+	const { data: fields } = withListingAttrOfQuery.useSuspenseQuery({
 		listingId,
 		categoryId: categoryId ?? "unknown",
 	});
@@ -51,7 +51,7 @@ export const AttrRecommended: FC<AttrRecommended.Props> = ({ listingId, category
 				{recommended.map((field) => {
 					return (
 						<Group key={field.name}>
-							<AttrOf
+							<ListingAttrOf
 								attrOf={field}
 								wrapperProps={{
 									"data-ui-tone": field.value ? "neutral" : "primary",

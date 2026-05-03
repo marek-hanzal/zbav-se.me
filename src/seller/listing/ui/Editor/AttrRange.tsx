@@ -11,8 +11,8 @@ import { clamp } from "@/lib/common/clamp";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
-import { withAttrDecimalPatchMutation } from "~/seller/attr-decimal/mutation/withAttrDecimalPatchMutation";
-import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { withListingAttrDecimalPatchMutation } from "~/seller/listing-attr-decimal/mutation/withListingAttrDecimalPatchMutation";
+import type { ListingAttrOfSchema } from "~/user/listing-attr/server/schema/ListingAttrOfSchema";
 import { useNextAttr } from "./useNextAttr";
 
 const toNumericBound = (value: number | null | undefined, fallback: number) => {
@@ -24,9 +24,9 @@ const toNumericBound = (value: number | null | undefined, fallback: number) => {
 export namespace AttrRange {
 	export interface Props extends Container.Props {
 		listingId: string;
-		attrs: AttrOfSchema.Type[];
+		attrs: ListingAttrOfSchema.Type[];
 		attr: Extract<
-			AttrOfSchema.Type,
+			ListingAttrOfSchema.Type,
 			{
 				type: "range";
 			}
@@ -38,7 +38,7 @@ export namespace AttrRange {
 export const AttrRange: FC<AttrRange.Props> = ({ listingId, attrs, attr, view, ...props }) => {
 	const locale = useLocale();
 	const next = useNextAttr(attr, attrs);
-	const mutation = withAttrDecimalPatchMutation.useMutation({
+	const mutation = withListingAttrDecimalPatchMutation.useMutation({
 		onSuccess() {
 			view.set(next ? `attr.${next.name}` : "default");
 		},

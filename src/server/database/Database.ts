@@ -27,11 +27,11 @@ import type { UploadTableSchema } from "~/server/database/@table/UploadTableSche
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
 import type { UserRestrictionTableSchema } from "~/server/database/@table/UserRestrictionTableSchema";
-import type { AttrDecimalTableSchema } from "./@table/AttrDecimalTableSchema";
-import type { AttrEnumMultiSchema } from "./@table/AttrEnumMultiSchema";
-import type { AttrEnumSingleSchema } from "./@table/AttrEnumSingleSchema";
-import type { AttrNumberTableSchema } from "./@table/AttrNumberTableSchema";
-import type { AttrTextSchema } from "./@table/AttrTextSchema";
+import type { ListingAttrDecimalTableSchema } from "./@table/ListingAttrDecimalTableSchema";
+import type { ListingAttrEnumMultiTableSchema } from "./@table/ListingAttrEnumMultiTableSchema";
+import type { ListingAttrEnumSingleTableSchema } from "./@table/ListingAttrEnumSingleTableSchema";
+import type { ListingAttrNumberTableSchema } from "./@table/ListingAttrNumberTableSchema";
+import type { ListingAttrTextTableSchema } from "./@table/ListingAttrTextTableSchema";
 import type { CategoryFieldTableSchema } from "./@table/CategoryFieldTableSchema";
 
 export interface Database {
@@ -52,11 +52,11 @@ export interface Database {
 	gallery: GalleryTableSchema.Type;
 	github: GitHubTableSchema.Type;
 	ignore: IgnoreTableSchema.Type;
-	listing_attr_decimal: AttrDecimalTableSchema.Type;
-	listing_attr_number: AttrNumberTableSchema.Type;
-	listing_attr_enum_multi: AttrEnumMultiSchema.Type;
-	listing_attr_enum_single: AttrEnumSingleSchema.Type;
-	listing_attr_text: AttrTextSchema.Type;
+	listing_attr_decimal: ListingAttrDecimalTableSchema.Type;
+	listing_attr_number: ListingAttrNumberTableSchema.Type;
+	listing_attr_enum_multi: ListingAttrEnumMultiTableSchema.Type;
+	listing_attr_enum_single: ListingAttrEnumSingleTableSchema.Type;
+	listing_attr_text: ListingAttrTextTableSchema.Type;
 	listing_event: ListingEventTableSchema.Type;
 	listing: ListingTableSchema.Type;
 	location: LocationTableSchema.Type;

@@ -8,16 +8,16 @@ import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
-import { withAttrEnumSinglePatchMutation } from "~/seller/attr-enum-single/mutation/withAttrEnumSinglePatchMutation";
-import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { withListingAttrEnumSinglePatchMutation } from "~/seller/listing-attr-enum-single/mutation/withListingAttrEnumSinglePatchMutation";
+import type { ListingAttrOfSchema } from "~/user/listing-attr/server/schema/ListingAttrOfSchema";
 import { useNextAttr } from "./useNextAttr";
 
 export namespace AttrEnumSingle {
 	export interface Props extends Container.Props {
 		listingId: string;
-		attrs: AttrOfSchema.Type[];
+		attrs: ListingAttrOfSchema.Type[];
 		attr: Extract<
-			AttrOfSchema.Type,
+			ListingAttrOfSchema.Type,
 			{
 				type: "enum-single";
 			}
@@ -34,7 +34,7 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({
 	...props
 }) => {
 	const next = useNextAttr(attr, attrs);
-	const mutation = withAttrEnumSinglePatchMutation.useMutation({
+	const mutation = withListingAttrEnumSinglePatchMutation.useMutation({
 		onSuccess() {
 			view.set(next ? `attr.${next.name}` : "default");
 		},

@@ -4,7 +4,7 @@ import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translation";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
-import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import type { ListingAttrOfSchema } from "~/user/listing-attr/server/schema/ListingAttrOfSchema";
 import { AttrDecimal } from "./AttrDecimal";
 import { AttrEnumMulti } from "./AttrEnumMulti";
 import { AttrEnumSingle } from "./AttrEnumSingle";
@@ -16,8 +16,8 @@ import { AttrYear } from "./AttrYear";
 export namespace AttrPatch {
 	export interface Props extends TitleContainer.Props {
 		listingId: string;
-		attrs: AttrOfSchema.Type[];
-		attr: AttrOfSchema.Type;
+		attrs: ListingAttrOfSchema.Type[];
+		attr: ListingAttrOfSchema.Type;
 		view: useView.Use<any>;
 	}
 }

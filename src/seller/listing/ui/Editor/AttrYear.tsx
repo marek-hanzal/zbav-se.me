@@ -10,8 +10,8 @@ import type { useView } from "@/lib/client/view2";
 import { clamp } from "@/lib/common/clamp";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
-import { withAttrNumberPatchMutation } from "~/seller/attr-number/mutation/withAttrNumberPatchMutation";
-import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { withListingAttrNumberPatchMutation } from "~/seller/listing-attr-number/mutation/withListingAttrNumberPatchMutation";
+import type { ListingAttrOfSchema } from "~/user/listing-attr/server/schema/ListingAttrOfSchema";
 import { useNextAttr } from "./useNextAttr";
 
 const toYearBound = (value: number | null | undefined, fallback: number) =>
@@ -22,9 +22,9 @@ const toYearBound = (value: number | null | undefined, fallback: number) =>
 export namespace AttrYear {
 	export interface Props extends Container.Props {
 		listingId: string;
-		attrs: AttrOfSchema.Type[];
+		attrs: ListingAttrOfSchema.Type[];
 		attr: Extract<
-			AttrOfSchema.Type,
+			ListingAttrOfSchema.Type,
 			{
 				type: "year";
 			}
@@ -35,7 +35,7 @@ export namespace AttrYear {
 
 export const AttrYear: FC<AttrYear.Props> = ({ listingId, attrs, attr, view, ...props }) => {
 	const next = useNextAttr(attr, attrs);
-	const mutation = withAttrNumberPatchMutation.useMutation({
+	const mutation = withListingAttrNumberPatchMutation.useMutation({
 		onSuccess() {
 			view.set(next ? `attr.${next.name}` : "default");
 		},

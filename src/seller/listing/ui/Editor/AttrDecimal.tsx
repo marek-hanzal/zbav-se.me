@@ -8,8 +8,8 @@ import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { Dial } from "~/common/ui/dial";
 import { useAppForm } from "~/common/ui/form";
-import { withAttrDecimalPatchMutation } from "~/seller/attr-decimal/mutation/withAttrDecimalPatchMutation";
-import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { withListingAttrDecimalPatchMutation } from "~/seller/listing-attr-decimal/mutation/withListingAttrDecimalPatchMutation";
+import type { ListingAttrOfSchema } from "~/user/listing-attr/server/schema/ListingAttrOfSchema";
 import { useNextAttr } from "./useNextAttr";
 
 const FormSchema = z
@@ -21,9 +21,9 @@ const FormSchema = z
 export namespace AttrDecimal {
 	export interface Props extends Container.Props {
 		listingId: string;
-		attrs: AttrOfSchema.Type[];
+		attrs: ListingAttrOfSchema.Type[];
 		attr: Extract<
-			AttrOfSchema.Type,
+			ListingAttrOfSchema.Type,
 			{
 				type: "decimal";
 			}
@@ -34,7 +34,7 @@ export namespace AttrDecimal {
 
 export const AttrDecimal: FC<AttrDecimal.Props> = ({ listingId, attrs, attr, view, ...props }) => {
 	const next = useNextAttr(attr, attrs);
-	const mutation = withAttrDecimalPatchMutation.useMutation({
+	const mutation = withListingAttrDecimalPatchMutation.useMutation({
 		onSuccess() {
 			view.set(next ? `attr.${next.name}` : "default");
 		},

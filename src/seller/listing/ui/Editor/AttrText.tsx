@@ -9,8 +9,8 @@ import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
-import { withAttrTextPatchMutation } from "~/seller/attr-text/mutation/withAttrTextPatchMutation";
-import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { withListingAttrTextPatchMutation } from "~/seller/listing-attr-text/mutation/withListingAttrTextPatchMutation";
+import type { ListingAttrOfSchema } from "~/user/listing-attr/server/schema/ListingAttrOfSchema";
 import { useNextAttr } from "./useNextAttr";
 
 const FormSchema = z
@@ -22,9 +22,9 @@ const FormSchema = z
 export namespace AttrText {
 	export interface Props extends Container.Props {
 		listingId: string;
-		attrs: AttrOfSchema.Type[];
+		attrs: ListingAttrOfSchema.Type[];
 		attr: Extract<
-			AttrOfSchema.Type,
+			ListingAttrOfSchema.Type,
 			{
 				type: "text";
 			}
@@ -35,7 +35,7 @@ export namespace AttrText {
 
 export const AttrText: FC<AttrText.Props> = ({ listingId, attrs, attr, view, ...props }) => {
 	const next = useNextAttr(attr, attrs);
-	const mutation = withAttrTextPatchMutation.useMutation({
+	const mutation = withListingAttrTextPatchMutation.useMutation({
 		onSuccess() {
 			view.set(next ? `attr.${next.name}` : "default");
 		},

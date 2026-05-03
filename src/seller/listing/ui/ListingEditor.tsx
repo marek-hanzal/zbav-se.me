@@ -1,7 +1,7 @@
 import { type FC, useCallback } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Panel, useView } from "@/lib/client/view2";
-import { withAttrOfQuery } from "~/user/attr/query/withAttrOfQuery";
+import { withListingAttrOfQuery } from "~/user/listing-attr/query/withListingAttrOfQuery";
 import { withListingQuery } from "../query/withListingQuery";
 import { Editor } from "./Editor";
 import { AttrPatch } from "./Editor/AttrPatch";
@@ -58,7 +58,7 @@ export const ListingEditor: FC<ListingEditor.Props> = ({ _suspense, listingId })
 		editor,
 	]);
 
-	const { data: attrs } = withAttrOfQuery.useSuspenseQuery({
+	const { data: attrs } = withListingAttrOfQuery.useSuspenseQuery({
 		listingId,
 		categoryId: listing.categoryId ?? "unknown",
 	});

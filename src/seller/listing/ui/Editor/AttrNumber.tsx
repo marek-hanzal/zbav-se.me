@@ -8,8 +8,8 @@ import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { Dial } from "~/common/ui/dial";
 import { useAppForm } from "~/common/ui/form";
-import { withAttrNumberPatchMutation } from "~/seller/attr-number/mutation/withAttrNumberPatchMutation";
-import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { withListingAttrNumberPatchMutation } from "~/seller/listing-attr-number/mutation/withListingAttrNumberPatchMutation";
+import type { ListingAttrOfSchema } from "~/user/listing-attr/server/schema/ListingAttrOfSchema";
 import { useNextAttr } from "./useNextAttr";
 
 const FormSchema = z
@@ -21,9 +21,9 @@ const FormSchema = z
 export namespace AttrNumber {
 	export interface Props extends Container.Props {
 		listingId: string;
-		attrs: AttrOfSchema.Type[];
+		attrs: ListingAttrOfSchema.Type[];
 		attr: Extract<
-			AttrOfSchema.Type,
+			ListingAttrOfSchema.Type,
 			{
 				type: "number";
 			}
@@ -34,7 +34,7 @@ export namespace AttrNumber {
 
 export const AttrNumber: FC<AttrNumber.Props> = ({ listingId, attrs, attr, view, ...props }) => {
 	const next = useNextAttr(attr, attrs);
-	const mutation = withAttrNumberPatchMutation.useMutation({
+	const mutation = withListingAttrNumberPatchMutation.useMutation({
 		onSuccess() {
 			view.set(next ? `attr.${next.name}` : "default");
 		},

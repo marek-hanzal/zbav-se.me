@@ -1,5 +1,5 @@
-import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import type { ListingAttrOfSchema } from "~/user/listing-attr/server/schema/ListingAttrOfSchema";
 
-export const useNextAttr = (current: AttrOfSchema.Type, attrs: AttrOfSchema.Type[]) => {
+export const useNextAttr = (current: ListingAttrOfSchema.Type, attrs: ListingAttrOfSchema.Type[]) => {
 	return attrs[attrs.findIndex((item) => item.name === current.name) + 1];
 };

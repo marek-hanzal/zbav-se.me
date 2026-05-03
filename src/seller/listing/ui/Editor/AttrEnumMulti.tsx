@@ -8,16 +8,16 @@ import type { useView } from "@/lib/client/view2";
 import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
-import { withAttrEnumMultiPatchMutation } from "~/seller/attr-enum-multi/mutation/withAttrEnumMultiPatchMutation";
-import type { AttrOfSchema } from "~/user/attr/server/schema/AttrOfSchema";
+import { withListingAttrEnumMultiPatchMutation } from "~/seller/listing-attr-enum-multi/mutation/withListingAttrEnumMultiPatchMutation";
+import type { ListingAttrOfSchema } from "~/user/listing-attr/server/schema/ListingAttrOfSchema";
 import { useNextAttr } from "./useNextAttr";
 
 export namespace AttrEnumMulti {
 	export interface Props extends Container.Props {
 		listingId: string;
-		attrs: AttrOfSchema.Type[];
+		attrs: ListingAttrOfSchema.Type[];
 		attr: Extract<
-			AttrOfSchema.Type,
+			ListingAttrOfSchema.Type,
 			{
 				type: "enum-multi";
 			}
@@ -34,7 +34,7 @@ export const AttrEnumMulti: FC<AttrEnumMulti.Props> = ({
 	...props
 }) => {
 	const next = useNextAttr(attr, attrs);
-	const mutation = withAttrEnumMultiPatchMutation.useMutation({
+	const mutation = withListingAttrEnumMultiPatchMutation.useMutation({
 		onSuccess() {
 			view.set(next ? `attr.${next.name}` : "default");
 		},
