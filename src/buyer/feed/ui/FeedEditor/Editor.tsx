@@ -9,7 +9,9 @@ import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
+import { AgeValueList } from "./value/AgeValueList";
 import { CategoryValueList } from "./value/CategoryValueList";
+import { ConditionValueList } from "./value/ConditionValueList";
 import { NameValue } from "./value/NameValue";
 import { RangeValue } from "./value/RangeValue";
 import { SortValue } from "./value/SortValue";
@@ -19,7 +21,9 @@ export namespace Editor {
 
 	export interface Props extends Omit<Container.Props, "hidden">, MarkSuspense.Props {
 		feed: FeedSchema.Type;
-		view: useView.Use<"gallery" | "name" | "category" | "location" | "range" | "sort">;
+		view: useView.Use<
+			"gallery" | "name" | "category" | "location" | "range" | "sort" | "condition" | "age"
+		>;
 		hidden?: readonly Section[];
 	}
 }
@@ -29,7 +33,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 
 	return (
 		<Container
-			data-ui={"FeedEditor-[Container.content]"}
+			data-ui={"Editor"}
 			data-ui-flow="vertical"
 			data-ui-inner="default"
 			data-ui-width="full"
@@ -154,7 +158,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 			</Group>
 
 			<Group>
-				{/* <ConditionValueList
+				<ConditionValueList
 					data-action={"edit feed condition"}
 					conditionIn={feed.query?.filter?.conditionIn ?? []}
 					action={
@@ -169,10 +173,10 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 								? "neutral"
 								: "secondary",
 					}}
-					onClick={() => onView("condition")}
-				/> */}
+					onClick={() => view.set("condition")}
+				/>
 
-				{/* <AgeValueList
+				<AgeValueList
 					data-action={"edit feed age"}
 					ageIn={feed.query?.filter?.ageIn ?? []}
 					action={
@@ -185,8 +189,8 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						"data-ui-tone":
 							(feed.query?.filter?.ageIn ?? []).length > 0 ? "neutral" : "secondary",
 					}}
-					onClick={() => onView("age")}
-				/> */}
+					onClick={() => view.set("age")}
+				/>
 			</Group>
 
 			<Group>

@@ -19,6 +19,14 @@ export const ListingWhereSchema = z
 				description: "Filter listings based on the provided category IDs",
 			})
 			.optional(),
+		conditionIn: z.array(z.number()).optional().meta({
+			description: "Filter listings based on the provided conditions (e.g. new, used, etc.)",
+		}),
+		ageIn: z.array(z.number()).optional().meta({
+			description:
+				"Filter listings based on the provided age groups (e.g. baby, toddler, etc.)",
+		}),
+		//
 		expiresAtBefore: z.coerce.date().optional().meta({
 			description: "This filter matches listings that expire before the provided date",
 			type: "string",
