@@ -36,7 +36,7 @@ export const MyListingPage: FC<MyListingPage.Props> = (props) => {
 			{...props}
 		>
 			<Suspense fallback={<ListingList.Fallback />}>
-				<ListingList />
+				<ListingList _suspense={"I know"} />
 			</Suspense>
 		</TitleContainer>
 	);

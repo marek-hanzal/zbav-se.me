@@ -1,31 +1,30 @@
-import { type FC, Suspense, useCallback } from "react";
-import type { MarkSuspense } from "@/lib/client/type";
+import { type FC, useCallback } from "react";
 import { VisibleContainer } from "@/lib/client/visibility";
+import { ListItemPending } from "~/common/list-item/ListItemPending";
+import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
 import { ListingItem } from "./ListingItem";
 
 export namespace Content {
-	export interface Props extends MarkSuspense.Props {
-		listingIds: string[];
+	export interface Props {
+		collection: ListingSchema.Type[];
 	}
 }
 
-export const Content: FC<Content.Props> = ({ _suspense, listingIds }) => {
+export const Content: FC<Content.Props> = ({ collection }) => {
 	const placeholder = useCallback(() => {
-		return <ListingItem.Fallback />;
+		return <ListItemPending />;
 	}, []);
 
 	return (
 		<>
-			{listingIds.map((listingId) => {
+			{collection.map((listing) => {
 				return (
 					<VisibleContainer
-						key={listingId}
-						id={listingId}
+						key={listing.id}
+						id={listing.id}
 						placeholder={placeholder}
 					>
-						<Suspense fallback={<ListingItem.Fallback />}>
-							<ListingItem listingId={listingId} />
-						</Suspense>
+						<ListingItem listing={listing} />
 					</VisibleContainer>
 				);
 			})}
