@@ -3,12 +3,12 @@ import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
 import { hasExplicitCategory } from "~/common/listing/util/hasExplicitCategory";
 import { withListingSelectFx } from "~/public/listing/server/db/withListingSelectFx";
-import type { ListingFilterSchema } from "~/public/listing/server/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/public/listing/server/schema/ListingQuerySchema";
+import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace listingFetchFx {
 	export interface Props extends ListingQuerySchema.Type {
-		scope: ListingFilterSchema.Type;
+		scope: ListingWhereSchema.Type;
 	}
 }
 

@@ -2,6 +2,7 @@ import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { Tx } from "@/lib/client/tx/Tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { FeedEditor } from "~/buyer/feed/ui/FeedEditor/FeedEditor";
 import { ResetButton } from "./ResetButton";
@@ -30,6 +31,16 @@ export const SearchEditor = withFallback(({ _suspense, feedId, ...props }: Searc
 				feedId={feedId}
 				hidden={hidden}
 			>
+				<Tx
+					label="Feed - actions (title)"
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-text="md"
+					data-ui-color="lead"
+					data-ui-opacity="8"
+					className={"text-center"}
+				/>
+
 				<Container
 					data-ui-flow="vertical"
 					data-ui-gap="default"

@@ -25,7 +25,7 @@ export const DraftMigration: Migration = {
 			.addColumn("title", "text")
 			.addColumn("description", "text")
 			//
-			.addColumn("price", "decimal(10, 2)")
+			.addColumn("price", "decimal(10, 2)", (col) => col.notNull())
 			.addColumn("priceType", sql`price_type_enum`)
 			.addColumn("currency", "text")
 			//

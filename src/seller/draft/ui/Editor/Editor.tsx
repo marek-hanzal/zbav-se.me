@@ -23,7 +23,7 @@ import { ConditionValue } from "~/user/draft/ui/value/ConditionValue";
 import { ConsValueList } from "~/user/draft/ui/value/ConsValueList";
 import { DescriptionValue } from "~/user/draft/ui/value/DescriptionValue";
 import { ExpiresValue } from "~/user/draft/ui/value/ExpiresValue";
-import { PriceTypeValue } from "~/user/draft/ui/value/PriceTypeValue";
+import { PriceTypeValue } from "~/common/price-type/ui/PriceTypeValue";
 import { PriceValue } from "~/user/draft/ui/value/PriceValue";
 import { ProsValueList } from "~/user/draft/ui/value/ProsValueList";
 import { RestrictionValue } from "~/user/draft/ui/value/RestrictionValue";

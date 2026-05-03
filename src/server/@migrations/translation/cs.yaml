@@ -460,15 +460,19 @@ Favourites (label):
     value: Moje oblíbené
 Feed (label):
     value: Uložená hledání
+Feed - actions (title):
+    value: Co dál?
+Feed - common stuff (title):
+    value: Běžné nastavení
 Feed - end of road (message):
     value: Došel jsi na konec cesty, nicméně si můžeš buď poladit aktuální seznam,
         nebo se podívej další, které máš připravené.
 Feed - end of road (title):
     value: Konec cesty - prozatím
-Feed age (hint):
-    value: >
-        Jedná se o odhad životnosti nabízeného předmětu - orientační hodnota,
-        podle které můžeš odhadnout, jak starý daný předmět cca je.
+Feed - rest (title):
+    value: Ostatní nastavení
+Feed - sorting (title):
+    value: Řazení inzerátů
 Feed age (label):
     value: Stáří
 Feed age not selected:
@@ -868,6 +872,12 @@ Logo motto (label):
     value: Chytré tržiště pro všechny
 Mark transaction as successful (button):
     value: Jsem spokojený, zavřít
+Maximum price (label):
+    value: Maximální cena
+Maximum price (placeholder):
+    value: Maximální cena
+Maximum price not set:
+    value: Bez horního limitu
 Message location security (hint):
     value: |
         Buď opatrný, komu důvěřuješ - tato poloha může sloužit třeba jako
@@ -884,6 +894,12 @@ Messages - seller (label):
     value: Prodávám
 Messages closed listings section (title):
     value: Uzavřeno (archiv)
+Minimum price (label):
+    value: Minimální cena
+Minimum price (placeholder):
+    value: Minimální cena
+Minimum price not set:
+    value: Bez spodního limitu
 Missing identity for an Entity (id). I'm sorry, but I cannot provide better message than this :(:
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
@@ -1041,7 +1057,7 @@ Price not set:
 Price type (title):
     value: Typ ceny
 Price type not set:
-    value: Typ ceny nemáš nastavený
+    value: Jakýkoli
 Privacy policy (label):
     value: Zpracováním osobních údajů
 Privacy policy not available in this language (description):
@@ -1102,7 +1118,7 @@ Search (button):
 Search (title):
     value: Hledat
 Search - empty (label):
-    value: Ajaj, tady nic zatím není
+    value: Žádné výsledky
 See other feeds (link):
     value: Další seznamy
 Seller - listings (label):
@@ -1251,7 +1267,7 @@ View transactions (button):
 Warranty (title):
     value: Záruka
 Warranty not selected:
-    value: Není vyplněná
+    value: Jakákoli
 Welcome (title):
     value: Klikej. Zkoumej. Nemáš tu co posrat.
 With VAT:

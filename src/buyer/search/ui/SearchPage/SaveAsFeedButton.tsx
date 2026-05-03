@@ -73,7 +73,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 	return (
 		<>
 			<Button
-				data-ui={"SaveAsFeedButton[Button]"}
+				data-ui={"SaveAsFeedButton"}
 				onClick={() => setIsOpen(true)}
 				iconEnabled={SaveIcon}
 				iconProps={{
@@ -96,6 +96,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 			</Button>
 
 			<BottomSheet
+				data-ui={"SaveAsFeedButton"}
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
 				header={() => ({
@@ -107,6 +108,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 						e.preventDefault();
 						form.handleSubmit();
 					}}
+					className={"contents"}
 				>
 					<Container
 						data-ui-layout="vertical-content-footer"
@@ -170,7 +172,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 										form.handleSubmit();
 									}}
 									loading={isSubmitting}
-									disabled={!isValid}
+									disabled={!isValid || isSubmitting}
 								/>
 							)}
 						</form.Subscribe>

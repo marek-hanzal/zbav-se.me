@@ -69,7 +69,7 @@ export const ListingTableSchema = z
 		warranty: WarrantyEnumSchema.nullish(),
 		//
 		priceType: PriceTypeEnumSchema,
-		price: z.coerce.number().positive().nullish(),
+		price: z.coerce.number().nonnegative(),
 		currency: CurrencyEnumSchema.nullish(),
 		//
 		condition: RatingSchema.nullish(),

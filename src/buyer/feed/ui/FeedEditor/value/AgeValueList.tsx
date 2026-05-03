@@ -18,16 +18,13 @@ export namespace AgeValueList {
 /**
  * Renders a read-only list of age values in a consistent label/value style.
  * Use it in detail or preview views when you need to show multiple age entries clearly.
- *
- * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const AgeValueList: FC<AgeValueList.Props> = ({ ageIn, ...props }) => {
 	return (
 		<ValueList
-			data-ui={"AgeValueList[ValueList]"}
+			data-ui={"AgeValueList"}
 			textLabel={translator.text("Feed age (label)")}
 			textEmpty={translator.text("Feed age not selected")}
-			textHint={translator.text("Feed age (hint)")}
 			items={ageIn.map((item) => ({
 				id: String(item),
 				age: String(item),
