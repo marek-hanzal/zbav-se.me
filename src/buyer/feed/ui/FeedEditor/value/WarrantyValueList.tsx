@@ -31,13 +31,9 @@ export const WarrantyValueList: FC<WarrantyValueList.Props> = ({ warrantyIn, ...
 				warranty: item,
 			}))}
 			renderFn={(item) => translator.text(`Listing warranty - ${item.warranty}`)}
+			data-ui-theme={"light"}
 			wrapperProps={{
-				...(warrantyIn.length > 0
-					? {
-							"data-ui-tone": "neutral",
-							"data-ui-theme": "light",
-						}
-					: undefined),
+				"data-ui-tone": warrantyIn.length > 0 ? "neutral" : "secondary",
 			}}
 			{...props}
 		/>

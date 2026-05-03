@@ -13,6 +13,7 @@ import { GalleryPatch } from "./patch/GalleryPatch";
 import { LocationPatch } from "./patch/LocationPatch";
 import { RangePatch } from "./patch/RangePatch";
 import { SortPatch } from "./patch/SortPatch";
+import { WarrantyPatch } from "./patch/WarrantyPatch";
 
 export namespace FeedEditor {
 	export type View =
@@ -64,7 +65,10 @@ export const FeedEditor = withFallback(
 
 		return (
 			<view.View>
-				<view.Panel name="default">
+				<view.Panel
+					name="default"
+					keep
+				>
 					<Editor
 						_suspense={"I know"}
 						feed={feed}
@@ -125,6 +129,14 @@ export const FeedEditor = withFallback(
 
 				<view.Panel name="delivery">
 					<DeliveryPatch
+						feed={feed}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
+					/>
+				</view.Panel>
+
+				<view.Panel name="warranty">
+					<WarrantyPatch
 						feed={feed}
 						onSettled={onDefaultView}
 						onCancel={onDefaultView}

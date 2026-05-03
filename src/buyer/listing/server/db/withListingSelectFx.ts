@@ -320,7 +320,9 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				}
 
 				if (where.deliveryIn && where.deliveryIn.length > 0) {
-					query = query.where("l.delivery", "in", where.deliveryIn);
+					query = query.where((eb) => {
+						return sql`${eb.ref("l.delivery")} && ${sql.val(where.deliveryIn)}::delivery_enum[]`;
+					});
 				}
 
 				if (where.warrantyIn && where.warrantyIn.length > 0) {
@@ -331,6 +333,24 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					query = query.where((eb) =>
 						withNormalizedLikeEx(eb.ref("l.withTitle"), where.title, "both"),
 					);
+				}
+
+				if (locationId && where.range !== undefined) {
+					const range = where.range * 1_000;
+
+					query = query.where((eb) => {
+						const origin = eb
+							.selectFrom("location as originLoc")
+							.select("originLoc.geo")
+							.where("originLoc.id", "=", locationId)
+							.limit(1);
+
+						return sql`ST_DWithin(
+                            ${eb.ref("l.withLocation")},
+                            ${origin},
+                            ${eb.val(range)}
+                        )`;
+					});
 				}
 
 				if (where.withOwn === false) {
