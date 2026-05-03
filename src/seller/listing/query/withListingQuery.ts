@@ -74,8 +74,9 @@ export const withListingQuery = withEntityQuery({
 			{
 				async invalidate({ queryClient }) {
 					await withDraftQuery.invalidator(queryClient, [
-						"collection",
+						"fetch",
 						"count",
+						"collection",
 					]);
 				},
 			},
