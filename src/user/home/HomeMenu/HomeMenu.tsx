@@ -88,18 +88,18 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 				</Group>
 
 				<Group>
-					<SearchLink
+					<ListingsLink
+						_suspense={"I know"}
+						iconProps={icon}
+					/>
+					<DraftLink
 						_suspense={"I know"}
 						iconProps={icon}
 					/>
 				</Group>
 
 				<Group>
-					<ListingsLink
-						_suspense={"I know"}
-						iconProps={icon}
-					/>
-					<DraftLink
+					<SearchLink
 						_suspense={"I know"}
 						iconProps={icon}
 					/>
