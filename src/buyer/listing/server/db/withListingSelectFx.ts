@@ -267,6 +267,14 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					query = query.where("l.categoryId", "in", where.categoryIdIn);
 				}
 
+				if (where.ageIn && where.ageIn.length > 0) {
+					query = query.where("l.age", "in", where.ageIn);
+				}
+
+				if (where.conditionIn && where.conditionIn.length > 0) {
+					query = query.where("l.condition", "in", where.conditionIn);
+				}
+
 				if (where.withOwn === false) {
 					query = query.where("l.userId", "!=", userId);
 				}

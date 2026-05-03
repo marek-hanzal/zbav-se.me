@@ -5,7 +5,9 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { useView } from "@/lib/client/view";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { Editor } from "./Editor";
+import { AgePatch } from "./patch/AgePatch";
 import { CategoryPatch } from "./patch/CategoryPatch";
+import { ConditionPatch } from "./patch/ConditionPatch";
 import { LocationPatch } from "./patch/LocationPatch";
 import { RangePatch } from "./patch/RangePatch";
 import { SortPatch } from "./patch/SortPatch";
@@ -43,6 +45,8 @@ export const FeedEditor = withFallback(
 				"sort",
 				"location",
 				"range",
+				"condition",
+				"age",
 			],
 			defaultPanel: "default",
 		});
@@ -92,6 +96,30 @@ export const FeedEditor = withFallback(
 
 				<view.Panel name="range">
 					<RangePatch
+						feed={feed}
+						onSettled={() => {
+							view.set("default");
+						}}
+						onCancel={() => {
+							view.set("default");
+						}}
+					/>
+				</view.Panel>
+
+				<view.Panel name="condition">
+					<ConditionPatch
+						feed={feed}
+						onSettled={() => {
+							view.set("default");
+						}}
+						onCancel={() => {
+							view.set("default");
+						}}
+					/>
+				</view.Panel>
+
+				<view.Panel name="age">
+					<AgePatch
 						feed={feed}
 						onSettled={() => {
 							view.set("default");

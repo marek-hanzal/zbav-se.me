@@ -140,24 +140,6 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 			</Group>
 
 			<Group>
-				<SortValue
-					data-action={"edit feed sort"}
-					sort={feed.query?.sort ?? []}
-					action={
-						<Icon
-							icon={ChevronRightIcon}
-							data-ui-text="xl"
-						/>
-					}
-					wrapperProps={{
-						"data-ui-tone":
-							(feed.query?.sort ?? []).length > 0 ? "neutral" : "secondary",
-					}}
-					onClick={() => view.set("sort")}
-				/>
-			</Group>
-
-			<Group>
 				<ConditionValueList
 					data-action={"edit feed condition"}
 					conditionIn={feed.query?.filter?.conditionIn ?? []}
@@ -251,6 +233,24 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 					}}
 					onClick={() => onView("title")}
 				/> */}
+			</Group>
+
+			<Group>
+				<SortValue
+					data-action={"edit feed sort"}
+					sort={feed.query?.sort ?? []}
+					action={
+						<Icon
+							icon={ChevronRightIcon}
+							data-ui-text="xl"
+						/>
+					}
+					wrapperProps={{
+						"data-ui-tone":
+							(feed.query?.sort ?? []).length > 0 ? "neutral" : "secondary",
+					}}
+					onClick={() => view.set("sort")}
+				/>
 			</Group>
 
 			{children}
