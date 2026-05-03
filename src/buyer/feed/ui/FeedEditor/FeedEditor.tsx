@@ -11,6 +11,8 @@ import { ConditionPatch } from "./patch/ConditionPatch";
 import { DeliveryPatch } from "./patch/DeliveryPatch";
 import { GalleryPatch } from "./patch/GalleryPatch";
 import { LocationPatch } from "./patch/LocationPatch";
+import { PriceMaxPatch } from "./patch/PriceMaxPatch";
+import { PriceMinPatch } from "./patch/PriceMinPatch";
 import { PriceTypePatch } from "./patch/PriceTypePatch";
 import { RangePatch } from "./patch/RangePatch";
 import { SortPatch } from "./patch/SortPatch";
@@ -41,6 +43,8 @@ export const FeedEditor = withFallback(
 				"warranty",
 				"title",
 				"priceType",
+				"priceMin",
+				"priceMax",
 			],
 			defaultPanel: "default",
 		});
@@ -133,6 +137,22 @@ export const FeedEditor = withFallback(
 
 				<view.Panel name="priceType">
 					<PriceTypePatch
+						feed={feed}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
+					/>
+				</view.Panel>
+
+				<view.Panel name="priceMin">
+					<PriceMinPatch
+						feed={feed}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
+					/>
+				</view.Panel>
+
+				<view.Panel name="priceMax">
+					<PriceMaxPatch
 						feed={feed}
 						onSettled={onDefaultView}
 						onCancel={onDefaultView}

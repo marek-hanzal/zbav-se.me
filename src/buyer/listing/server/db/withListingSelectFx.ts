@@ -343,6 +343,14 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					query = query.where("l.priceType", "in", where.priceTypeIn);
 				}
 
+				if (where.priceMin !== undefined) {
+					query = query.where("l.price", ">=", where.priceMin);
+				}
+
+				if (where.priceMax !== undefined) {
+					query = query.where("l.price", "<=", where.priceMax);
+				}
+
 				if (where.warrantyIn && where.warrantyIn.length > 0) {
 					query = query.where("l.warranty", "in", where.warrantyIn);
 				}

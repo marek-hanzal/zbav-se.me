@@ -872,6 +872,12 @@ Logo motto (label):
     value: Chytré tržiště pro všechny
 Mark transaction as successful (button):
     value: Jsem spokojený, zavřít
+Maximum price (label):
+    value: Maximální cena
+Maximum price (placeholder):
+    value: Maximální cena
+Maximum price not set:
+    value: Jakákoli cena
 Message location security (hint):
     value: |
         Buď opatrný, komu důvěřuješ - tato poloha může sloužit třeba jako
@@ -888,6 +894,12 @@ Messages - seller (label):
     value: Prodávám
 Messages closed listings section (title):
     value: Uzavřeno (archiv)
+Minimum price (label):
+    value: Minimální cena
+Minimum price (placeholder):
+    value: Minimální cena
+Minimum price not set:
+    value: Jakákoli cena
 Missing identity for an Entity (id). I'm sorry, but I cannot provide better message than this :(:
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(

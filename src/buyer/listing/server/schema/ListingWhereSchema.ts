@@ -47,6 +47,13 @@ export const ListingWhereSchema = z
 				"Filter listings based on the provided price types (e.g. free, paid, etc.)",
 		}),
 		//
+		priceMin: z.number().nonnegative().optional().meta({
+			description: "Filter listings with price greater than or equal to the provided value",
+		}),
+		priceMax: z.number().nonnegative().optional().meta({
+			description: "Filter listings with price less than or equal to the provided value",
+		}),
+		//
 		expiresAtBefore: z.coerce.date().optional().meta({
 			description: "This filter matches listings that expire before the provided date",
 			type: "string",

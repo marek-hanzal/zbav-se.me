@@ -17,6 +17,8 @@ import { AgeValueList } from "./value/AgeValueList";
 import { CategoryValueList } from "./value/CategoryValueList";
 import { ConditionValueList } from "./value/ConditionValueList";
 import { NameValue } from "./value/NameValue";
+import { PriceMaxValue } from "./value/PriceMaxValue";
+import { PriceMinValue } from "./value/PriceMinValue";
 import { RangeValue } from "./value/RangeValue";
 import { SortValue } from "./value/SortValue";
 import { WarrantyValueList } from "./value/WarrantyValueList";
@@ -39,6 +41,8 @@ export namespace Editor {
 			| "warranty"
 			| "title"
 			| "priceType"
+			| "priceMin"
+			| "priceMax"
 		>;
 		hidden?: readonly Section[];
 	}
@@ -239,6 +243,28 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						}
 						onClick={() => view.set("priceType")}
 					/>
+
+					<PriceMinValue
+						value={feed.query.filter?.priceMin}
+						action={
+							<Icon
+								icon={ChevronRightIcon}
+								data-ui-text="xl"
+							/>
+						}
+						onClick={() => view.set("priceMin")}
+					/>
+
+					<PriceMaxValue
+						value={feed.query.filter?.priceMax}
+						action={
+							<Icon
+								icon={ChevronRightIcon}
+								data-ui-text="xl"
+							/>
+						}
+						onClick={() => view.set("priceMax")}
+					/>
 				</Group>
 
 				<Group>
@@ -296,7 +322,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 
 			<Tx
 				label="Feed - sorting (title)"
-				data-ui-tone="secondary"
+				data-ui-tone="neutral"
 				data-ui-theme="light"
 				data-ui-text="md"
 				data-ui-color="lead"
