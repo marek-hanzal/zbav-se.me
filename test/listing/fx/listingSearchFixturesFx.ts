@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
-import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import type { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
@@ -29,18 +29,18 @@ type ListingSearchPatch = {
 	price?: number;
 	condition?: number;
 	age?: number;
-	delivery?: ListingDeliveryEnumSchema.Type[];
+	delivery?: DeliveryEnumSchema.Type[];
 	warranty?: ListingWarrantyEnumSchema.Type;
 	status?: ListingStatusEnumSchema.Type;
 	restriction?: RestrictionEnumSchema.Type;
 	title?: string;
 };
 
-export const personalDelivery: ListingDeliveryEnumSchema.Type[] = [
+export const personalDelivery: DeliveryEnumSchema.Type[] = [
 	"personal",
 ];
 
-export const postDelivery: ListingDeliveryEnumSchema.Type[] = [
+export const postDelivery: DeliveryEnumSchema.Type[] = [
 	"post",
 ];
 

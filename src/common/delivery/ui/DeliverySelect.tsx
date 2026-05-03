@@ -4,7 +4,7 @@ import { Container } from "@/lib/client/container";
 import type { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
 import type { EntitySchema } from "@/lib/common/schema";
-import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { uiSelectButton } from "~/common/ui/ui";
 
 export namespace DeliverySelect {
@@ -29,7 +29,7 @@ export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ...props }
 			data-ui-gap="lg"
 			{...props}
 		>
-			{Object.values(ListingDeliveryEnumSchema.enum).map((delivery) => {
+			{Object.values(DeliveryEnumSchema.enum).map((delivery) => {
 				const item = {
 					id: delivery,
 				};

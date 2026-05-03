@@ -7,8 +7,8 @@ import type { useView } from "@/lib/client/view2";
 import type { EntitySchema } from "@/lib/common/schema";
 import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
+import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { DeliverySelect } from "~/common/delivery/ui/DeliverySelect";
-import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
 import { withListingQuery } from "../../query/withListingQuery";
@@ -41,7 +41,7 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ listing, onCancel, view
 		],
 	});
 
-	const deliveryIds = selection.optional.multiId() as ListingDeliveryEnumSchema.Type[];
+	const deliveryIds = selection.optional.multiId() as DeliveryEnumSchema.Type[];
 
 	return (
 		<TitleContainer

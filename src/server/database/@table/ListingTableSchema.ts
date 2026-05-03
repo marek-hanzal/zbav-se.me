@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
@@ -45,7 +45,7 @@ export const ListingTableSchema = z
 		pros: ProsConsSchema,
 		cons: ProsConsSchema,
 		//
-		delivery: z.array(ListingDeliveryEnumSchema),
+		delivery: z.array(DeliveryEnumSchema),
 		//
 		warranty: ListingWarrantyEnumSchema.nullish(),
 		//
