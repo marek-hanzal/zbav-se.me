@@ -3,7 +3,7 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import type { useView } from "@/lib/client/view2";
+import type { useView } from "@/lib/client/view";
 import { ChevronAction } from "~/common/ui/action/ChevronAction";
 import { withDraftAttrOfQuery } from "~/user/draft-attr/query/withDraftAttrOfQuery";
 import { DraftAttrOf } from "~/user/draft-attr/ui/DraftAttrOf";

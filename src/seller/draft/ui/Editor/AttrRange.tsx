@@ -6,7 +6,7 @@ import { ArrowRightIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
-import type { useView } from "@/lib/client/view2";
+import type { useView } from "@/lib/client/view";
 import { clamp } from "@/lib/common/clamp";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";

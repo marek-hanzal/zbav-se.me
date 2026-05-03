@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import type { useView } from "@/lib/client/view2";
+import type { useView } from "@/lib/client/view";
 import { translator } from "@/lib/common/translation";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";

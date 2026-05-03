@@ -1,6 +1,6 @@
 import { type FC, useCallback } from "react";
 import type { MarkSuspense } from "@/lib/client/type";
-import { Panel, useView } from "@/lib/client/view2";
+import { Panel, useView } from "@/lib/client/view";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import { withDraftAttrOfQuery } from "~/user/draft-attr/query/withDraftAttrOfQuery";
 import { Editor } from "./Editor";
