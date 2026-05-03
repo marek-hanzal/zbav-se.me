@@ -6,6 +6,7 @@ import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSche
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import type { CategorySchema } from "~/public/category/server/schema/CategorySchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { withLikeEx } from "~/server/database/expression/withLikeEx";
 import { withNormalizedLikeEx } from "~/server/database/expression/withNormalizedLikeEx";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
@@ -276,27 +277,40 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				}
 
 				if (where.fulltext) {
-					const _fulltext = where.fulltext;
+					const fulltext = where.fulltext;
 
-					/**
-					 * Join also category spotlight for fulltext search
-					 */
-					// query = query.where((eb) => {
-					// 	const categoryIdSelect = eb
-					// 		.selectFrom("category as cat")
-					// 		.select("cat.id")
-					// 		.where((eb) =>
-					// 			eb.or([
-					// 				withLikeEx(eb.ref("cat.category"), fulltext),
-					// 				withLikeEx(eb.ref("cat.group"), fulltext),
-					// 			]),
-					// 		);
+					query = query.where((eb) => {
+						const categoryIdSelect = eb
+							.selectFrom("category as cat")
+							.select("cat.id")
+							.where((eb) =>
+								eb.or([
+									withLikeEx(eb.ref("cat.category"), fulltext),
+									withLikeEx(eb.ref("cat.group"), fulltext),
+									eb.exists(
+										eb
+											.selectFrom("category_spotlight")
+											.select("category_spotlight.categoryId")
+											.whereRef(
+												"category_spotlight.categoryId",
+												"=",
+												"cat.id",
+											)
+											.where((eb) => {
+												return withLikeEx(
+													eb.ref("category_spotlight.text"),
+													fulltext,
+												);
+											}),
+									),
+								]),
+							);
 
-					// 	return eb.or([
-					// 		withNormalizedLikeEx(eb.ref("l.withTitleSearch"), fulltext, "both"),
-					// 		eb("l.categoryId", "in", categoryIdSelect),
-					// 	]);
-					// }) ;
+						return eb.or([
+							withNormalizedLikeEx(eb.ref("l.withTitle"), fulltext, "both"),
+							eb("l.categoryId", "in", categoryIdSelect),
+						]);
+					});
 				}
 
 				if (where.userId) {
@@ -330,9 +344,9 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				}
 
 				if (where.title) {
-					query = query.where((eb) =>
-						withNormalizedLikeEx(eb.ref("l.withTitle"), where.title, "both"),
-					);
+					query = query.where((eb) => {
+						return withNormalizedLikeEx(eb.ref("l.withTitle"), where.title, "both");
+					});
 				}
 
 				if (locationId && where.range !== undefined) {
