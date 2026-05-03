@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
-import type { ListingFilterSchema } from "~/buyer/listing/server/schema/ListingFilterSchema";
+import type { ListingWhereSchema } from "~/buyer/listing/server/schema/ListingWhereSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -93,9 +93,9 @@ describe("buyer listing restriction category input scope", () => {
 			] satisfies {
 				name: string;
 				query: {
-					filter?: ListingFilterSchema.Type;
-					where?: ListingFilterSchema.Type;
-					scope?: ListingFilterSchema.Type;
+					filter?: ListingWhereSchema.Type;
+					where?: ListingWhereSchema.Type;
+					scope?: ListingWhereSchema.Type;
 				};
 			}[];
 
