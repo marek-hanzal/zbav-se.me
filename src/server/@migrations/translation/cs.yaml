@@ -358,6 +358,12 @@ Create listing (label):
     value: Vystavit inzerát
 Create new chat (label):
     value: Nový chat
+Create new draft (hint):
+    value: Něco si hoď na stůl, až budeš mít všechno, můžeš inzerát zveřejnit.
+Create new draft (link):
+    value: Nový inzerát
+Create new draft (title):
+    value: Nový inzerát
 Create new feed (button):
     value: Nový seznam
 Create new feed (hint):
@@ -402,6 +408,8 @@ Dispute transaction (button):
     value: Vyřešit problém
 Dispute transaction - confirm (button):
     value: Opravdu si přeješ pokračovat?
+Draft (label):
+    value: Rozpracovaný inzerát
 Draft - action section (title):
     value: Co dál?
 Draft - bunch of required (title):
@@ -416,6 +424,8 @@ Draft expire (hint):
     value: |
         Nemusíš se bát, čas se spustí až po zveřejnění inzerátu.
 Draft list (label):
+    value: Rozpracované inzeráty
+Draft list (title):
     value: Rozpracované inzeráty
 Email:
     value: Email
@@ -886,6 +896,11 @@ No categories found (message):
         kategorii přidáme.
 No categories found (title):
     value: Ajajaj, nic jsme nenašli!
+No drafts (message):
+    value: ...ale můžeš si připravit nějaké inzeráty, které si zveřejníš, až budeš
+        chtít.
+No drafts (title):
+    value: Zatím tu nic nemáš...
 No items in favourites (message):
     value: ...ale můžeš se podívat na inzeráty a nějaké si sem přidat!
 No items in favourites (title):
