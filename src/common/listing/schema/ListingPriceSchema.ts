@@ -1,10 +1,10 @@
 import { z } from "zod";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
-import { ListingPriceEnumSchema } from "../enum/ListingPriceEnumSchema";
+import { PriceTypeEnumSchema } from "../../price-type/enum/PriceTypeEnumSchema";
 
 export const ListingPriceSchema = z.discriminatedUnion("priceType", [
 	z.object({
-		priceType: ListingPriceEnumSchema.extract([
+		priceType: PriceTypeEnumSchema.extract([
 			"fixed",
 			"haggle",
 		]),
@@ -12,7 +12,7 @@ export const ListingPriceSchema = z.discriminatedUnion("priceType", [
 		currency: CurrencyEnumSchema,
 	}),
 	z.object({
-		priceType: ListingPriceEnumSchema.extract([
+		priceType: PriceTypeEnumSchema.extract([
 			"ask",
 			"free",
 			"haulaway",

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
+import { PriceTypeEnumSchema } from "../../price-type/enum/PriceTypeEnumSchema";
 import { ListingExpireEnumSchema } from "../enum/ListingExpireEnumSchema";
-import { ListingPriceEnumSchema } from "../enum/ListingPriceEnumSchema";
 import { ListingStatusEnumSchema } from "../enum/ListingStatusEnumSchema";
 import { TitleSchema } from "./TitleSchema";
 
@@ -32,7 +32,7 @@ export const LiveListingSchema = ListingTableSchema.safeExtend({
 	title: TitleSchema,
 	//
 	locationId: z.string().min(1),
-	priceType: ListingPriceEnumSchema,
+	priceType: PriceTypeEnumSchema,
 	//
 	expires: ListingExpireEnumSchema,
 	//

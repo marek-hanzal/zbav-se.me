@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import type { useSelection } from "@/lib/client/selection";
 import type { EntitySchema } from "@/lib/common/schema";
-import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
+import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 import { Item } from "./Item";
 
 export namespace PriceTypeSelect {
@@ -27,7 +27,7 @@ export const PriceTypeSelect: FC<PriceTypeSelect.Props> = ({ selection, ...props
 			data-ui-gap="lg"
 			{...props}
 		>
-			{Object.values(ListingPriceEnumSchema.enum).map((priceType) => {
+			{Object.values(PriceTypeEnumSchema.enum).map((priceType) => {
 				return (
 					<Item
 						key={priceType}

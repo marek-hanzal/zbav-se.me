@@ -1,9 +1,9 @@
 import { type Migration, sql } from "kysely";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
-import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import type { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import type { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 
 export const ListingMigration: Migration = {
 	async up(db) {
@@ -11,7 +11,6 @@ export const ListingMigration: Migration = {
 			.createType("listing_status_enum")
 			.asEnum(
 				toEnumGuard<ListingStatusEnumSchema.Type>()([
-					"draft",
 					"live",
 					"sold",
 					"on-hold",
@@ -25,7 +24,7 @@ export const ListingMigration: Migration = {
 		await db.schema
 			.createType("listing_price_enum")
 			.asEnum(
-				toEnumGuard<ListingPriceEnumSchema.Type>()([
+				toEnumGuard<PriceTypeEnumSchema.Type>()([
 					"fixed",
 					"haggle",
 					"ask",

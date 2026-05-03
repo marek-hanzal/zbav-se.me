@@ -1,13 +1,13 @@
 import { z } from "zod";
 import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
-import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import { DescriptionSchema } from "~/common/listing/schema/DescriptionSchema";
 import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
 import { RatingSchema } from "~/common/listing/schema/RatingSchema";
 import { TitleSchema } from "~/common/listing/schema/TitleSchema";
+import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 import { ListingQuerySchema } from "./ListingQuerySchema";
@@ -26,7 +26,7 @@ export const ListingPatchSchema = z
 				//
 				restriction: RestrictionEnumSchema.nullish(),
 				//
-				priceType: ListingPriceEnumSchema.optional(),
+				priceType: PriceTypeEnumSchema.optional(),
 				price: z.coerce.number().positive().nullish(),
 				currency: CurrencyEnumSchema.optional(),
 				//

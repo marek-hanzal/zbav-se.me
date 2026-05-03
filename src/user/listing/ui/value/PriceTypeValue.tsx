@@ -1,11 +1,11 @@
 import type { FC } from "react";
 import { LabelValue } from "@/lib/client/value";
 import { translator } from "@/lib/common/translation";
-import type { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
+import type { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 
 export namespace PriceTypeValue {
 	export interface Props extends LabelValue.PropsEx {
-		priceType: ListingPriceEnumSchema.Type | null | undefined;
+		priceType: PriceTypeEnumSchema.Type | null | undefined;
 	}
 }
 

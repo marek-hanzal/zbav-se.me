@@ -8,7 +8,7 @@ import type { useView } from "@/lib/client/view2";
 import type { EntitySchema } from "@/lib/common/schema";
 import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
+import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 import { PriceTypeSelect } from "~/common/price-type/ui/PriceTypeSelect";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
@@ -18,7 +18,7 @@ import type { ListingSchema } from "../../server/schema/ListingSchema";
 
 const PriceTypeSchema = z
 	.looseObject({
-		priceType: ListingPriceEnumSchema,
+		priceType: PriceTypeEnumSchema,
 	})
 	.strip();
 
@@ -79,7 +79,7 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ listing, onCancel, vi
 			if (!item) {
 				return;
 			}
-			form.setFieldValue("priceType", item.id as ListingPriceEnumSchema.Type);
+			form.setFieldValue("priceType", item.id as PriceTypeEnumSchema.Type);
 		},
 	});
 

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const ListingPriceEnumSchema = z
+export const PriceTypeEnumSchema = z
 	.enum([
 		/**
 		 * Fixed price - seller does not accept offers, price is set in stone.
@@ -32,12 +32,12 @@ export const ListingPriceEnumSchema = z
 		"haulaway",
 	])
 	.meta({
-		id: "ListingPriceEnum",
+		id: "PriceTypeEnum",
 		description: "Price type of the listing",
 	});
 
-export type ListingPriceEnumSchema = typeof ListingPriceEnumSchema;
+export type PriceTypeEnumSchema = typeof PriceTypeEnumSchema;
 
-export namespace ListingPriceEnumSchema {
-	export type Type = z.infer<ListingPriceEnumSchema>;
+export namespace PriceTypeEnumSchema {
+	export type Type = z.infer<PriceTypeEnumSchema>;
 }
