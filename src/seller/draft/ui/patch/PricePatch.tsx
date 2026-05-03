@@ -63,7 +63,7 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, view, ...pro
 
 	return (
 		<TitleContainer
-			data-ui={"Setup-[TitleContainer.price]"}
+			data-ui={"PricePatch"}
 			textTitle={translator.text("Price (title)")}
 			left={<EditAction />}
 			{...props}
