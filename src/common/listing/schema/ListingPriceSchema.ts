@@ -14,6 +14,8 @@ export const ListingPriceSchema = z.discriminatedUnion("priceType", [
 	z.object({
 		priceType: ListingPriceEnumSchema.extract([
 			"ask",
+			"free",
+			"haulaway",
 		]),
 		price: z.null().nullish(),
 		currency: z.null().nullish(),

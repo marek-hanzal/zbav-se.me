@@ -5,6 +5,7 @@ import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { useUpload } from "~/common/gallery/hook/useUpload";
+import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroImage } from "~/common/ui/img";
@@ -48,9 +49,7 @@ export const ListingHero: FC<ListingHero.Props> = ({ _suspense, listingId, ...pr
 				/>
 
 				<ListingPrice
-					price={listing.price}
-					priceType={listing.priceType}
-					currency={listing.currency}
+					price={listing as ListingPriceSchema.Type}
 					data-ui-tone="neutral"
 					data-ui-theme="light"
 					data-ui-snap-to="top-center"

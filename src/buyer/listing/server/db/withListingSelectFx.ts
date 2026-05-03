@@ -4,7 +4,9 @@ import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import type { CategorySchema } from "~/public/category/server/schema/CategorySchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
 import type { ListingFilterSchema } from "../schema/ListingFilterSchema";
 import type { ListingMetaSchema } from "../schema/ListingMetaSchema";
@@ -36,6 +38,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	let select = kysely
 		.selectFrom("listing as l")
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
+		.innerJoin("location as loc", "loc.id", "l.locationId")
 		.where("l.status", "in", [
 			"live",
 		])
@@ -85,6 +88,18 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				"l.expiresAt",
 				"l.createdAt",
 				"l.updatedAt",
+				(eb) => {
+					return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location");
+				},
+				(eb) => {
+					return sql<CategorySchema.Type>`
+                        to_jsonb(${eb.table("cat")}.*)
+                        || jsonb_build_object(
+                            'isRestricted',
+                            ${eb.ref("cat.restriction")} > ${restrictionSql}
+                        )
+                    `.as("category");
+				},
 				(eb) => {
 					return eb
 						.case()

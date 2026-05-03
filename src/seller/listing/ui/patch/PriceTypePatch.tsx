@@ -33,7 +33,7 @@ export namespace PriceTypePatch {
 export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ listing, onCancel, view, ...props }) => {
 	const mutation = withListingQuery.usePatchMutation({
 		onSuccess({ priceType }) {
-			view.set(priceType === "offer" ? "expires" : "price");
+			view.set(priceType === "fixed" || priceType === "haggle" ? "price" : "expires");
 		},
 		invalidate: [
 			"collection",

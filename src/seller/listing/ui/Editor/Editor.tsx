@@ -161,7 +161,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, view, ...props 
 						/>
 
 						{match(listing.priceType)
-							.with("closed", "open", () => {
+							.with("fixed", "haggle", () => {
 								return (
 									<PriceValue
 										data-ui={"set listing price"}
@@ -172,7 +172,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, listingId, view, ...props 
 									/>
 								);
 							})
-							.with("offer", null, undefined, () => {
+							.with("free", "ask", "haulaway", null, undefined, () => {
 								return (
 									<PriceValue
 										price={0}

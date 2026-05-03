@@ -2,10 +2,12 @@ import { z } from "zod";
 import { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
+import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 
 export const ListingSchema = z
 	.looseObject({
 		...ListingTableSchema.shape,
+		location: LocationSchema,
 		distance: z.number().nullable().meta({
 			description:
 				"Distance from the input location to the listing (in km; meta lat/lon must be provided)",
