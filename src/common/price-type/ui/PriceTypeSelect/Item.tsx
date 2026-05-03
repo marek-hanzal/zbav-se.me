@@ -25,21 +25,21 @@ export const Item: FC<Item.Props> = ({ priceType, selection }) => {
 				selection.toggle(item);
 			}}
 			{...uiSelectButton({
+				name: `Item-${priceType}`,
 				isSelected,
 				"data-ui-flow": "horizontal",
 				"data-ui-justify": "start",
 			})}
-			data-ui={`PriceTypeSelect-[Button.${priceType}]`}
 		>
 			<Container
 				data-ui-layout="vertical-flex"
 				data-ui-items="start"
 				data-ui-gap="xs"
 			>
-				<Tx label={`Listing price - ${priceType}`} />
+				<Tx label={`Price Type - ${priceType} (label)`} />
 
 				<Tx
-					label={`Listing price - ${priceType} (hint)`}
+					label={`Price Type - ${priceType} (hint)`}
 					data-ui-text="sm"
 					data-ui-color="icon"
 				/>

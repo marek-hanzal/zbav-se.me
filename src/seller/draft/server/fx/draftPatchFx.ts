@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import type { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -37,6 +38,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
 			const draft = yield* draftFetchFx({
 				...query,
@@ -151,6 +153,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 						...extras,
 						userId,
 						locationId,
+						updatedAt: dateContext.now().toJSDate(),
 					})
 					.where("id", "=", draft.id)
 					.execute();

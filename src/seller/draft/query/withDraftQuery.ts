@@ -9,6 +9,7 @@ import type { DraftCountQuerySchema } from "~/seller/draft/server/schema/DraftCo
 import type { DraftCreateSchema } from "~/seller/draft/server/schema/DraftCreateSchema";
 import type { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
+import { withListingValidationQuery } from "~/seller/listing/query/withListingValidationQuery";
 import { draftPatchFn } from "../fn/draftPatchFn";
 import type { DraftPatchSchema } from "../server/schema/DraftPatchSchema";
 
@@ -71,5 +72,14 @@ export const withDraftQuery = withEntityQuery({
 	},
 	async patchCollectionFn(_data: never): Promise<DraftSchema.Type[]> {
 		throw new Error("Draft collection patch is not supported.");
+	},
+	invalidate: {
+		patch: [
+			{
+				async invalidate({ queryClient }) {
+					await withListingValidationQuery.invalidate(queryClient);
+				},
+			},
+		],
 	},
 });

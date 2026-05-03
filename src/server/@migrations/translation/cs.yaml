@@ -732,24 +732,6 @@ Listing location not selected:
     value: Polohu nemáš vyplněnou
 Listing photo gallery (label):
     value: Nahraj fotky
-Listing price - closed (hint):
-    value: Nastav si, pokud nehodláš o ceně smlouvat.
-    dynamic: true
-Listing price - closed:
-    value: Pevná cena
-    dynamic: true
-Listing price - offer (hint):
-    value: Nech kupující navrhnout cenu
-    dynamic: true
-Listing price - offer:
-    value: Nabídni
-    dynamic: true
-Listing price - open (hint):
-    value: Pokud jsi nakloněn smlouvání, vyber tuto volbu.
-    dynamic: true
-Listing price - open:
-    value: K vyjednávání
-    dynamic: true
 Listing restriction (hint):
     value: >
         Kategorie definuje základní omezení, nicméně máš možnost přitvrdit,
@@ -1508,3 +1490,33 @@ transaction - seller - status-trade:
     dynamic: true
 zbav-se.me:
     value: zbav-se.me
+Price Type - fixed (label):
+    value: Pevná cena
+    dynamic: true
+Price Type - fixed (hint):
+    value: Za touhle cenou si stojíš, nechceš vyjednávat.
+    dynamic: true
+Price Type - haggle (label):
+    value: Otevřen vyjednávání
+    dynamic: true
+Price Type - haggle (hint):
+    value: Máš představu, ale jsi otevřený vyjednávání.
+    dynamic: true
+Price Type - ask (label):
+    value: Nabídni
+    dynamic: true
+Price Type - ask (hint):
+    value: Čekáš, že ti kupující dá nabídku.
+    dynamic: true
+Price Type - free (label):
+    value: Zdarma
+    dynamic: true
+Price Type - free (hint):
+    value: Nechceš nic.
+    dynamic: true
+Price Type - haulaway (label):
+    value: Za odvoz
+    dynamic: true
+Price Type - haulaway (hint):
+    value: Nechceš nic, ale zájemce si věc odtáhne sám.
+    dynamic: true
