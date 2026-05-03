@@ -460,15 +460,19 @@ Favourites (label):
     value: Moje oblíbené
 Feed (label):
     value: Uložená hledání
+Feed - actions (title):
+    value: Co dál?
+Feed - common stuff (title):
+    value: Běžné nastavení
 Feed - end of road (message):
     value: Došel jsi na konec cesty, nicméně si můžeš buď poladit aktuální seznam,
         nebo se podívej další, které máš připravené.
 Feed - end of road (title):
     value: Konec cesty - prozatím
-Feed age (hint):
-    value: >
-        Jedná se o odhad životnosti nabízeného předmětu - orientační hodnota,
-        podle které můžeš odhadnout, jak starý daný předmět cca je.
+Feed - rest (title):
+    value: Ostatní nastavení
+Feed - sorting (title):
+    value: Řazení inzerátů
 Feed age (label):
     value: Stáří
 Feed age not selected:
