@@ -8,7 +8,6 @@ export const ListingMigration: Migration = {
 			.createType("listing_status_enum")
 			.asEnum(
 				toEnumGuard<ListingStatusEnumSchema.Type>()([
-					"draft",
 					"live",
 					"sold",
 					"on-hold",
@@ -75,7 +74,6 @@ export const ListingMigration: Migration = {
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addColumn("updatedAt", "timestamptz", (col) => col.notNull())
 
-			// Public lifecycle. Null while draft.
 			.addColumn("visibleAt", "timestamptz", (col) => col.notNull())
 			.addColumn("expiresAt", "timestamptz", (col) => col.notNull())
 
@@ -130,7 +128,8 @@ export const ListingMigration: Migration = {
                     cardinality("pros") <= 5
                     AND cardinality("cons") <= 5
                 `,
-			);
+			)
+			.execute();
 
 		/**
 		 * Owner views.
@@ -143,12 +142,6 @@ export const ListingMigration: Migration = {
 		await sql`
 			CREATE INDEX "listing_[userId-updatedAt]_idx"
 			ON "listing" ("userId", "updatedAt" DESC, "id" DESC)
-		`.execute(db);
-
-		await sql`
-			CREATE INDEX "listing_[userId-updatedAt]_draft_idx"
-			ON "listing" ("userId", "updatedAt" DESC, "id" DESC)
-			WHERE "status" = 'draft'
 		`.execute(db);
 
 		await sql`
@@ -211,7 +204,7 @@ export const ListingMigration: Migration = {
 		await sql`
             CREATE INDEX "listing_[categoryId-price]_idx"
             ON "listing" ("categoryId", "price", "id")
-            AND "price" IS NOT NULL
+            WHERE "price" IS NOT NULL
         `.execute(db);
 
 		await sql`
