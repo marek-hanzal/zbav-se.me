@@ -84,6 +84,8 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				"l.priceType",
 				"l.currency",
 				//
+				"l.restriction",
+				//
 				"l.visibleAt",
 				"l.expiresAt",
 				"l.createdAt",
