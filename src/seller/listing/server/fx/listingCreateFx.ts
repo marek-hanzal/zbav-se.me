@@ -10,6 +10,8 @@ import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
+import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
+import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 import { listingFetchFx } from "./listingFetchFx";
 import { listingValidateFx } from "./listingValidateFx";
@@ -75,6 +77,11 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			const now = dateContext.now();
 			const listingId = genId();
 
+			const gallery = yield* galleryInsertFx({
+				access: "public",
+				userId,
+			});
+
 			const { geo: withLocation } = yield* tryDbFx(async () => {
 				return kysely
 					.selectFrom("location")
@@ -92,7 +99,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						status: "live",
 						restriction: draft.restriction,
 						categoryId,
-						galleryId: draft.galleryId,
+						galleryId: gallery.id,
 						withUploadIds: draft.withUploadIds,
 						withImageUrl: draft.withImageUrl,
 						title,
@@ -134,6 +141,16 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					} as any)
 					.execute();
 			});
+
+			for (const [sort, uploadId] of draft.withUploadIds.entries()) {
+				yield* galleryItemInsertFx({
+					galleryId: gallery.id,
+					uploadId,
+					sort,
+					userId,
+					check: false,
+				});
+			}
 
 			{
 				const draftAttrDecimal = yield* tryDbFx(async () => {
