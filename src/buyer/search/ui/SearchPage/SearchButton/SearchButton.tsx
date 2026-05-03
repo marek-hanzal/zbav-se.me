@@ -34,7 +34,7 @@ export const SearchButton = withFallback(
 				}}
 				icon={SearchIcon}
 				iconProps={{
-					"data-ui-tone": "primary",
+					"data-ui-tone": hasListings ? "primary" : "neutral",
 					"data-ui-theme": "light",
 					"data-ui-color": "lead",
 					"data-ui-text": "xl",
@@ -56,7 +56,7 @@ export const SearchButton = withFallback(
 					data-ui-flow="horizontal"
 					data-ui-items="center"
 					data-ui-justify="space-between"
-					data-ui-tone="primary"
+					data-ui-tone={hasListings ? "primary" : "neutral"}
 					data-ui-theme="light"
 					data-ui-color="lead"
 					data-ui-width="full"

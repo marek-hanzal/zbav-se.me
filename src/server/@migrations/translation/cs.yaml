@@ -877,7 +877,7 @@ Maximum price (label):
 Maximum price (placeholder):
     value: Maximální cena
 Maximum price not set:
-    value: Jakákoli cena
+    value: Bez horního limitu
 Message location security (hint):
     value: |
         Buď opatrný, komu důvěřuješ - tato poloha může sloužit třeba jako
@@ -899,7 +899,7 @@ Minimum price (label):
 Minimum price (placeholder):
     value: Minimální cena
 Minimum price not set:
-    value: Jakákoli cena
+    value: Bez spodního limitu
 Missing identity for an Entity (id). I'm sorry, but I cannot provide better message than this :(:
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
@@ -1057,7 +1057,7 @@ Price not set:
 Price type (title):
     value: Typ ceny
 Price type not set:
-    value: Typ ceny nemáš nastavený
+    value: Jakýkoli
 Privacy policy (label):
     value: Zpracováním osobních údajů
 Privacy policy not available in this language (description):
@@ -1118,7 +1118,7 @@ Search (button):
 Search (title):
     value: Hledat
 Search - empty (label):
-    value: Ajaj, tady nic zatím není
+    value: Žádné výsledky
 See other feeds (link):
     value: Další seznamy
 Seller - listings (label):
@@ -1267,7 +1267,7 @@ View transactions (button):
 Warranty (title):
     value: Záruka
 Warranty not selected:
-    value: Není vyplněná
+    value: Jakákoli
 Welcome (title):
     value: Klikej. Zkoumej. Nemáš tu co posrat.
 With VAT:

@@ -13,15 +13,13 @@ export namespace RangeValue {
 /**
  * Renders a read-only range value with consistent formatting and empty-state handling.
  * Use it in detail cards, summaries, and previews where editable controls are not needed.
- *
- * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const RangeValue: FC<RangeValue.Props> = ({ range, ...props }) => {
 	const locale = useLocale();
 
 	return (
 		<LabelValue
-			data-ui={"RangeValue[LabelValue]"}
+			data-ui={"RangeValue"}
 			textLabel={translator.text("Feed range (label)")}
 			textValue={
 				range !== undefined
@@ -33,7 +31,6 @@ export const RangeValue: FC<RangeValue.Props> = ({ range, ...props }) => {
 					: null
 			}
 			textEmpty={translator.text("Feed range not set")}
-			textHint={translator.text("Feed range (hint)")}
 			wrapperProps={{
 				...(range !== undefined
 					? {

@@ -145,7 +145,6 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						locationId={locationId}
 						textLabel={translator.text("Feed location (label)")}
 						textEmpty={translator.text("Feed location not selected")}
-						textHint={translator.text("Feed location (hint)")}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
@@ -202,7 +201,6 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						title={feed.query?.filter?.title ?? null}
 						textLabel={translator.text("Feed title (label)")}
 						textEmpty={translator.text("Feed title not filled")}
-						textHint={translator.text("Feed title (hint)")}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
