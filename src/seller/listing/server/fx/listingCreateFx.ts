@@ -10,6 +10,7 @@ import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
+import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 import { listingFetchFx } from "./listingFetchFx";
 import { listingValidateFx } from "./listingValidateFx";
 
@@ -250,6 +251,15 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					});
 				}
 			}
+
+			yield* userEventCreateFx({
+				userId,
+				scope: "user",
+				source: "listing",
+				group: listingId,
+				event: "listing.create",
+				isTerminal: true,
+			});
 
 			return yield* listingFetchFx({
 				userId,
