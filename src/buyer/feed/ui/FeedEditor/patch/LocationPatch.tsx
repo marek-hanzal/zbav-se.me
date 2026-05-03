@@ -15,7 +15,9 @@ export namespace LocationPatch {
 }
 
 export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const patchMutation = withFeedQuery.usePatchMutation();
+	const patchMutation = withFeedQuery.usePatchMutation({
+		onSettled,
+	});
 	const [locationId, setLocationId] = useState<string | undefined | null>(
 		feed.query?.meta?.locationId,
 	);
@@ -38,27 +40,22 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCanc
 			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
-					patchMutation.mutate(
-						{
+					patchMutation.mutate({
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+						patch: {
 							query: {
-								where: {
-									id: feed.id,
-								},
-							},
-							patch: {
-								query: {
-									...feed.query,
-									meta: {
-										...feed.query?.meta,
-										locationId: locationId ?? undefined,
-									},
+								...feed.query,
+								meta: {
+									...feed.query?.meta,
+									locationId: locationId ?? undefined,
 								},
 							},
 						},
-						{
-							onSettled,
-						},
-					);
+					});
 				}}
 				loading={patchMutation.isPending}
 				disabled={false}

@@ -1,13 +1,12 @@
-import type { FC } from "react";
+import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
-import { useSelection } from "@/lib/client/selection";
-import type { EntitySchema } from "@/lib/common/schema";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
+import type { ListingSortSchema } from "~/buyer/listing/server/schema/ListingSortSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import { CategorySelect } from "~/user/category/ui/CategorySelect";
+import { ListingSortSelect } from "./ListingSortSelect";
 
-export namespace CategoryPatch {
+export namespace SortPatch {
 	export interface Props extends Container.Props {
 		feed: FeedSchema.Type;
 		onSettled?(): void;
@@ -15,29 +14,15 @@ export namespace CategoryPatch {
 	}
 }
 
-export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation({
 		onSettled,
 	});
-	const selection = useSelection<EntitySchema.Type>({
-		mode: "single",
-		initial: feed.query?.filter?.categoryId
-			? [
-					{
-						id: feed.query.filter.categoryId,
-					},
-				]
-			: [],
-		deps: [
-			feed,
-		],
-	});
-
-	const categoryId = selection.optional.singleId() ?? undefined;
+	const [sort, setSort] = useState<ListingSortSchema.Type[]>(feed.query?.sort ?? []);
 
 	return (
 		<Container
-			data-ui={"CategoryPatch"}
+			data-ui={"SortPatch"}
 			data-ui-layout="vertical-content-footer"
 			data-ui-height="full"
 			data-ui-width="full"
@@ -45,10 +30,11 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 			data-ui-gap="default"
 			{...props}
 		>
-			<CategorySelect
-				selection={selection}
-				categoryId={categoryId}
-				withRestriction={true}
+			<ListingSortSelect
+				state={{
+					value: sort,
+					set: setSort,
+				}}
 			/>
 
 			<SaveContainer
@@ -63,10 +49,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 						patch: {
 							query: {
 								...feed.query,
-								filter: {
-									...feed.query?.filter,
-									categoryId: selection.optional.singleId(),
-								},
+								sort,
 							},
 						},
 					});
