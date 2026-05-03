@@ -2,14 +2,14 @@ import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
 import type { ListingCountQuerySchema } from "~/buyer/listing/server/schema/ListingCountQuerySchema";
-import type { ListingFilterSchema } from "~/buyer/listing/server/schema/ListingFilterSchema";
 import { hasExplicitCategory } from "~/common/listing/util/hasExplicitCategory";
 import { withListingSelectFx } from "../db/withListingSelectFx";
+import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace listingCountFx {
 	export interface Props extends ListingCountQuerySchema.Type {
 		userId: string;
-		scope: ListingFilterSchema.Type;
+		scope: ListingWhereSchema.Type;
 	}
 }
 

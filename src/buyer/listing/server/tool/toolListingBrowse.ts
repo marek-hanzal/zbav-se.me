@@ -4,8 +4,8 @@ import { z } from "zod";
 import { listingCollectionFn } from "~/buyer/listing/fn/listingCollectionFn";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
-import { ListingFilterSchema } from "../schema/ListingFilterSchema";
 import { ListingQuerySchema } from "../schema/ListingQuerySchema";
+import { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -17,7 +17,7 @@ const InputSchema = z
 		...ListingQuerySchema.shape,
 		filter: z
 			.looseObject({
-				...ListingFilterSchema.shape,
+				...ListingWhereSchema.shape,
 				expiresAtBefore: z.iso.datetime().optional().meta({
 					description:
 						"This filter matches listings that expire before the provided date",

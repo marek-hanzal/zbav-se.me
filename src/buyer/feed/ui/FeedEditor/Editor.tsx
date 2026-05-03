@@ -3,14 +3,15 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { ChevronRightIcon, Icon } from "@/lib/client/icon";
 import type { MarkSuspense } from "@/lib/client/type";
+import type { useView } from "@/lib/client/view";
 import { translator } from "@/lib/common/translation";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
-import type { FeedEditor } from "./FeedEditor";
 import { CategoryValueList } from "./value/CategoryValueList";
 import { NameValue } from "./value/NameValue";
+import { RangeValue } from "./value/RangeValue";
 import { SortValue } from "./value/SortValue";
 
 export namespace Editor {
@@ -18,19 +19,12 @@ export namespace Editor {
 
 	export interface Props extends Omit<Container.Props, "hidden">, MarkSuspense.Props {
 		feed: FeedSchema.Type;
-		onView(view: FeedEditor.View): void;
+		view: useView.Use<"gallery" | "name" | "category" | "location" | "range" | "sort">;
 		hidden?: readonly Section[];
 	}
 }
 
-export const Editor: FC<Editor.Props> = ({
-	_suspense,
-	feed,
-	onView,
-	hidden,
-	children,
-	...props
-}) => {
+export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, children, ...props }) => {
 	const locationId = feed.query?.meta?.locationId;
 
 	return (
@@ -58,7 +52,7 @@ export const Editor: FC<Editor.Props> = ({
 									]
 								: []
 						}
-						onClick={() => onView("gallery")}
+						onClick={() => view.set("gallery")}
 					/>
 
 					<NameValue
@@ -73,7 +67,7 @@ export const Editor: FC<Editor.Props> = ({
 						wrapperProps={{
 							"data-ui-tone": feed.name ? "neutral" : "secondary",
 						}}
-						onClick={() => onView("name")}
+						onClick={() => view.set("name")}
 					/>
 				</Group>
 			)}
@@ -97,7 +91,7 @@ export const Editor: FC<Editor.Props> = ({
 								? "neutral"
 								: "secondary",
 					}}
-					onClick={() => onView("category")}
+					onClick={() => view.set("category")}
 				/>
 			</Group>
 
@@ -118,10 +112,10 @@ export const Editor: FC<Editor.Props> = ({
 					wrapperProps={{
 						"data-ui-tone": locationId ? "neutral" : "secondary",
 					}}
-					onClick={() => onView("location")}
+					onClick={() => view.set("location")}
 				/>
 
-				{/* <RangeValue
+				<RangeValue
 					data-action={"edit feed range"}
 					range={feed.query?.filter?.range}
 					data-ui-disabled={!locationId}
@@ -134,8 +128,8 @@ export const Editor: FC<Editor.Props> = ({
 					wrapperProps={{
 						"data-ui-tone": feed.query?.filter?.range ? "neutral" : "secondary",
 					}}
-					onClick={() => onView("range")}
-				/> */}
+					onClick={() => view.set("range")}
+				/>
 			</Group>
 
 			<Group>
@@ -152,7 +146,7 @@ export const Editor: FC<Editor.Props> = ({
 						"data-ui-tone":
 							(feed.query?.sort ?? []).length > 0 ? "neutral" : "secondary",
 					}}
-					onClick={() => onView("sort")}
+					onClick={() => view.set("sort")}
 				/>
 			</Group>
 
