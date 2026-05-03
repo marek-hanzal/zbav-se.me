@@ -5,6 +5,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { useView } from "@/lib/client/view";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { Editor } from "./Editor";
+import { CategoryPatch } from "./patch/CategoryPatch";
 
 export namespace FeedEditor {
 	export type View =
@@ -62,7 +63,14 @@ export const FeedEditor = withFallback(
 					</Editor>
 				</view.Panel>
 
-				<view.Panel name="category">cat., poyco</view.Panel>
+				<view.Panel name="category">
+					<CategoryPatch
+						feed={feed}
+						onCancel={() => {
+							view.set("default");
+						}}
+					/>
+				</view.Panel>
 			</view.View>
 		);
 	},

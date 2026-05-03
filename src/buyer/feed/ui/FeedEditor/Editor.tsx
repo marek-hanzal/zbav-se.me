@@ -76,7 +76,13 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 				<CategoryValueList
 					_suspense={"I know"}
 					data-action={"edit feed category"}
-					categoryIdIn={feed.query?.filter?.categoryIdIn}
+					categoryIdIn={
+						feed.query?.filter?.categoryId
+							? [
+									feed.query?.filter?.categoryId,
+								]
+							: []
+					}
 					textLabel={translator.text("Feed category (label)")}
 					textEmpty={translator.text("Feed category not selected")}
 					action={
@@ -86,10 +92,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						/>
 					}
 					wrapperProps={{
-						"data-ui-tone":
-							(feed.query?.filter?.categoryIdIn ?? []).length > 0
-								? "neutral"
-								: "secondary",
+						"data-ui-tone": feed.query?.filter?.categoryId ? "neutral" : "secondary",
 					}}
 					onClick={() => view.set("category")}
 				/>
