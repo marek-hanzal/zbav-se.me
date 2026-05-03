@@ -121,8 +121,14 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						restriction: draft.restriction,
 						categoryId,
 						galleryId: gallery.id,
-						withUploadIds,
-						withImageUrl: draft.withImageUrl,
+						withUploadIds: withUploadIds as [
+							string,
+							...string[],
+						],
+						withImageUrl: draft.withImageUrl as [
+							string,
+							...string[],
+						],
 						title,
 						withTitle: sql`lower(immutable_unaccent(${title}))`,
 						description: draft.description,
