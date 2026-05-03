@@ -44,7 +44,7 @@ export const DraftTableSchema = z
 		warranty: WarrantyEnumSchema.nullish(),
 		//
 		priceType: PriceTypeEnumSchema.nullish(),
-		price: z.coerce.number().positive().nullish(),
+		price: z.coerce.number().positive(),
 		currency: CurrencyEnumSchema.nullish(),
 		//
 		condition: RatingSchema.nullish(),

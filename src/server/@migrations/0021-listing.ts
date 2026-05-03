@@ -47,7 +47,7 @@ export const ListingMigration: Migration = {
 			.addColumn("description", "text")
 			//
 			.addColumn("priceType", sql`price_type_enum`, (col) => col.notNull())
-			.addColumn("price", "decimal(10, 2)")
+			.addColumn("price", "decimal(10, 2)", (col) => col.notNull())
 			.addColumn("currency", "text")
 			//
 			.addColumn("expires", "text", (col) => col.notNull())
