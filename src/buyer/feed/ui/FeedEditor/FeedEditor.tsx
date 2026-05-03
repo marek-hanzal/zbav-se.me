@@ -61,6 +61,8 @@ export const FeedEditor = withFallback(
 						{children}
 					</Editor>
 				</view.Panel>
+
+				<view.Panel name="category">cat., poyco</view.Panel>
 			</view.View>
 		);
 	},
