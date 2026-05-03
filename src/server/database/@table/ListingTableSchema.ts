@@ -23,7 +23,7 @@ export const ListingTableSchema = z
 		categoryId: z.string().min(1),
 		//
 		status: ListingStatusEnumSchema,
-		restriction: RestrictionEnumSchema,
+		restriction: RestrictionEnumSchema.nullable(),
 		//
 		galleryId: z.string().min(1),
 		withImageUrl: z
