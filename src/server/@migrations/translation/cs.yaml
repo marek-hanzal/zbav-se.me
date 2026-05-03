@@ -977,8 +977,36 @@ Price (placeholder):
     value: Cena
 Price (title):
     value: Nastav cenu
-Price - free:
+Price Type - ask (hint):
+    value: Čekáš, že ti kupující dá nabídku.
+    dynamic: true
+Price Type - ask (label):
+    value: Nabídni
+    dynamic: true
+Price Type - fixed (hint):
+    value: Za touhle cenou si stojíš, nechceš vyjednávat.
+    dynamic: true
+Price Type - fixed (label):
+    value: Pevná cena
+    dynamic: true
+Price Type - free (hint):
+    value: Nechceš nic.
+    dynamic: true
+Price Type - free (label):
     value: Zdarma
+    dynamic: true
+Price Type - haggle (hint):
+    value: Máš představu, ale jsi otevřený vyjednávání.
+    dynamic: true
+Price Type - haggle (label):
+    value: Otevřen vyjednávání
+    dynamic: true
+Price Type - haulaway (hint):
+    value: Nechceš nic, ale zájemce si věc odtáhne sám.
+    dynamic: true
+Price Type - haulaway (label):
+    value: Za odvoz
+    dynamic: true
 Price not set:
     value: Cenu nemáš vyplněnou
 Price type (title):
@@ -1080,8 +1108,8 @@ Sign out:
     value: Odhlásit se
 Something went wrong (error):
     value: Pardon, tohle je teď rozbité.
-Submit listing (button):
-    value: Vystavit inzerát
+Submit draft (button):
+    value: Publikovat inzerát
 System update (label):
     value: System update (label)
 Thread token usage (label):
@@ -1299,10 +1327,6 @@ location:
 model - placeholder:
     value: Vyplň model nebo označení
     dynamic: true
-offer:
-    value: offer
-open:
-    value: open
 package:
     value: package
 personal:
@@ -1490,33 +1514,3 @@ transaction - seller - status-trade:
     dynamic: true
 zbav-se.me:
     value: zbav-se.me
-Price Type - fixed (label):
-    value: Pevná cena
-    dynamic: true
-Price Type - fixed (hint):
-    value: Za touhle cenou si stojíš, nechceš vyjednávat.
-    dynamic: true
-Price Type - haggle (label):
-    value: Otevřen vyjednávání
-    dynamic: true
-Price Type - haggle (hint):
-    value: Máš představu, ale jsi otevřený vyjednávání.
-    dynamic: true
-Price Type - ask (label):
-    value: Nabídni
-    dynamic: true
-Price Type - ask (hint):
-    value: Čekáš, že ti kupující dá nabídku.
-    dynamic: true
-Price Type - free (label):
-    value: Zdarma
-    dynamic: true
-Price Type - free (hint):
-    value: Nechceš nic.
-    dynamic: true
-Price Type - haulaway (label):
-    value: Za odvoz
-    dynamic: true
-Price Type - haulaway (hint):
-    value: Nechceš nic, ale zájemce si věc odtáhne sám.
-    dynamic: true

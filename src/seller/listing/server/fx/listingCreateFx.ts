@@ -91,6 +91,26 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					.executeTakeFirstOrThrow();
 			});
 
+			const withUploadIds: string[] = [];
+
+			for (const [sort, url] of draft.withImageUrl.entries()) {
+				const upload = yield* uploadCreateFx({
+					userId,
+					access: "public",
+					url,
+				});
+
+				withUploadIds.push(upload.id);
+
+				yield* galleryItemInsertFx({
+					galleryId: gallery.id,
+					uploadId: upload.id,
+					sort,
+					userId,
+					check: false,
+				});
+			}
+
 			yield* tryDbFx(async () => {
 				return kysely
 					.insertInto("listing")
@@ -101,7 +121,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						restriction: draft.restriction,
 						categoryId,
 						galleryId: gallery.id,
-						withUploadIds: draft.withUploadIds,
+						withUploadIds,
 						withImageUrl: draft.withImageUrl,
 						title,
 						withTitle: sql`lower(immutable_unaccent(${title}))`,
@@ -114,10 +134,13 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						age: draft.age,
 						delivery: draft.delivery,
 						warranty: draft.warranty,
+						//
 						locationId,
 						withLocation,
+						//
 						pros: draft.pros,
 						cons: draft.cons,
+						//
 						createdAt: now.toJSDate(),
 						updatedAt: now.toJSDate(),
 						visibleAt: now.toJSDate(),
@@ -139,25 +162,9 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 							})
 							.exhaustive()
 							.toJSDate(),
-					} as any)
+					})
 					.execute();
 			});
-
-			for (const [sort, url] of draft.withImageUrl.entries()) {
-				const upload = yield* uploadCreateFx({
-					userId,
-					access: "public",
-					url,
-				});
-
-				yield* galleryItemInsertFx({
-					galleryId: gallery.id,
-					uploadId: upload.id,
-					sort,
-					userId,
-					check: false,
-				});
-			}
 
 			{
 				const draftAttrDecimal = yield* tryDbFx(async () => {

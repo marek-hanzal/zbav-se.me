@@ -20,25 +20,44 @@ export const ListingTableSchema = z
 			description: "ID of the user who created the listing",
 		}),
 		//
-		categoryId: z.string().min(1).nullish(),
+		categoryId: z.string().min(1),
 		//
 		status: ListingStatusEnumSchema,
-		restriction: RestrictionEnumSchema.nullish(),
+		restriction: RestrictionEnumSchema,
 		//
 		galleryId: z.string().min(1),
-		withImageUrl: z.array(z.string().min(1)),
-		withUploadIds: z.array(z.string().min(1)).meta({
-			description:
-				"Denormalized ordered upload IDs used for draft gallery management and consistency checks",
-		}),
+		withImageUrl: z
+			.tuple(
+				[
+					z.string().min(1),
+				],
+				z.string().min(1),
+			)
+			.meta({
+				description: "Ordered image URLs for listing gallery",
+			}),
+		withUploadIds: z
+			.tuple(
+				[
+					z.string().min(1),
+				],
+				z.string().min(1),
+			)
+			.meta({
+				description:
+					"Denormalized ordered upload IDs used for draft gallery management and consistency checks",
+			}),
 		/**
 		 * Core listing attributes
 		 */
-		title: TitleSchema.nullish(),
+		title: TitleSchema,
+		withTitle: z.string().min(1).meta({
+			description: "Lowercase unaccented title used for search",
+		}),
 		description: DescriptionSchema.nullish(),
 		//
-		locationId: z.string().min(1).nullish(),
-		withLocation: z.unknown().nullable().meta({
+		locationId: z.string().min(1),
+		withLocation: z.unknown().meta({
 			description: "Denormalized location geo point for listing search and range queries",
 		}),
 		//
@@ -49,19 +68,19 @@ export const ListingTableSchema = z
 		//
 		warranty: WarrantyEnumSchema.nullish(),
 		//
-		priceType: PriceTypeEnumSchema.nullish(),
+		priceType: PriceTypeEnumSchema,
 		price: z.coerce.number().positive().nullish(),
 		currency: CurrencyEnumSchema.nullish(),
 		//
 		condition: RatingSchema.nullish(),
 		age: RatingSchema.nullish(),
 		//
-		expires: ListingExpireEnumSchema.nullish(),
+		expires: ListingExpireEnumSchema,
 		//
-		visibleAt: z.coerce.date().nullish().meta({
+		visibleAt: z.coerce.date().meta({
 			description: "When a listing goes live",
 		}),
-		expiresAt: z.coerce.date().nullish().meta({
+		expiresAt: z.coerce.date().meta({
 			description: "When a listing dies",
 		}),
 		//
