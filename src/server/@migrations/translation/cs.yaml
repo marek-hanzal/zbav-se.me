@@ -492,9 +492,6 @@ Feed list empty (message):
         tě napadne.
 Feed list empty (title):
     value: Zatím tu nic nemáš...
-Feed location (hint):
-    value: Poloha je jenom pro tebe - slouží pro řazení a filtrování inzerátů podle
-        vzdálenosti.
 Feed location (label):
     value: Poloha
 Feed location not selected:
@@ -517,9 +514,6 @@ Feed photo gallery (label):
     value: Obrázek seznamu
 Feed range (description):
     value: Feed range (description)
-Feed range (hint):
-    value: Nastav si okruh v km, v jakém chceš vidět inzeráty; pro tuto funkci si
-        musíš nastavit polohu.
 Feed range (label):
     value: Maximální vzdálenost
 Feed range (placeholder):
@@ -528,15 +522,10 @@ Feed range not set:
     value: Vzdálenost není nastavená
 Feed select (title):
     value: Uložená hledání
-Feed sorting (hint):
-    value: |
-        Tvoje vlastní řazení, nicméně zvýrazněné inzeráty můžou řazení přeskočit.
 Feed sorting (label):
     value: Řazení inzerátů
 Feed sorting not selected:
     value: Výchozí řazení
-Feed title (hint):
-    value: Tady si můžeš nastavit hledání podle titulku inzerátu
 Feed title (label):
     value: Titulek inzerátu
 Feed title not filled:
@@ -614,6 +603,16 @@ History activity (hint):
         příspěvků. Dneska je vlevo nahoře.
 Home (label):
     value: Domů
+Home - buyer stuff (title):
+    value: Nakupuju
+Home - interaction (title):
+    value: Rychlé odbavení
+Home - misc (title):
+    value: Podpultovky
+Home - quick tools (title):
+    value: Tržiště
+Home - seller stuff (title):
+    value: Prodávám
 Ignore listing (button):
     value: Ignorovat inzerát
 Ignore listing - confirm (button):
