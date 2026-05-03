@@ -19,10 +19,9 @@ export const FeedSchema = z
 					idIn: true,
 					categoryIdIn: true,
 					userId: true,
-				}),
+				}).optional(),
 			})
 			.strip()
-			.optional()
 			.meta({
 				id: "FeedListingQuery",
 				description: "A query usable directly with Listing domain (fetch, collection, ...)",
