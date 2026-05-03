@@ -9,6 +9,7 @@ import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { DeliveryValueList } from "~/common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
+import { TitleValue } from "~/common/title/ui/TitleValue";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import { AgeValueList } from "./value/AgeValueList";
 import { CategoryValueList } from "./value/CategoryValueList";
@@ -17,7 +18,6 @@ import { NameValue } from "./value/NameValue";
 import { RangeValue } from "./value/RangeValue";
 import { SortValue } from "./value/SortValue";
 import { WarrantyValueList } from "./value/WarrantyValueList";
-import { TitleValue } from "~/common/title/ui/TitleValue";
 
 export namespace Editor {
 	export type Section = "header";
@@ -146,7 +146,8 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						/>
 					}
 					wrapperProps={{
-						"data-ui-tone": feed.query?.filter?.range ? "neutral" : "secondary",
+						"data-ui-tone":
+							!locationId || feed.query?.filter?.range ? "neutral" : "secondary",
 					}}
 					onClick={() => view.set("range")}
 				/>
