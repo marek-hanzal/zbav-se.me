@@ -8,9 +8,9 @@ import type { CategorySchema } from "~/public/category/server/schema/CategorySch
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
-import type { ListingFilterSchema } from "../schema/ListingFilterSchema";
 import type { ListingMetaSchema } from "../schema/ListingMetaSchema";
 import type { ListingSortSchema } from "../schema/ListingSortSchema";
+import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace withListingSelectFx {
 	export interface Props {
@@ -215,7 +215,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					// .$castTo<ThumbEnumSchema.Type | null>()
 					.as("thumb"),
 			]),
-		queryFx(select, where: ListingFilterSchema.Type) {
+		queryFx(select, where: ListingWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 
