@@ -1,6 +1,7 @@
 import { type FC, useCallback } from "react";
 import { VisibleContainer } from "@/lib/client/visibility";
 import { ListItemPending } from "~/common/list-item/ListItemPending";
+import { CreateButton } from "~/seller/draft/ui/DraftListPage/DraftList/CreateButton";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
 import { ListingItem } from "./ListingItem";
 
@@ -28,7 +29,8 @@ export const Content: FC<Content.Props> = ({ collection }) => {
 					</VisibleContainer>
 				);
 			})}
-			"CreateButton"
+
+			<CreateButton />
 		</>
 	);
 };
