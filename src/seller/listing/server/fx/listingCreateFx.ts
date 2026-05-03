@@ -12,6 +12,7 @@ import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
+import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 import { listingFetchFx } from "./listingFetchFx";
 import { listingValidateFx } from "./listingValidateFx";
@@ -142,10 +143,16 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					.execute();
 			});
 
-			for (const [sort, uploadId] of draft.withUploadIds.entries()) {
+			for (const [sort, url] of draft.withImageUrl.entries()) {
+				const upload = yield* uploadCreateFx({
+					userId,
+					access: "public",
+					url,
+				});
+
 				yield* galleryItemInsertFx({
 					galleryId: gallery.id,
-					uploadId,
+					uploadId: upload.id,
 					sort,
 					userId,
 					check: false,
