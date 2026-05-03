@@ -5,9 +5,9 @@ import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { ListingFilterSchema } from "../schema/ListingFilterSchema";
 import type { ListingMetaSchema } from "../schema/ListingMetaSchema";
 import type { ListingSortSchema } from "../schema/ListingSortSchema";
+import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 const publicCategoryRestrictions = [
 	RestrictionEnumSchema.enum.none,
@@ -89,7 +89,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.as("withRestriction");
 			},
 		]),
-		queryFx(select, where: ListingFilterSchema.Type) {
+		queryFx(select, where: ListingWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 
