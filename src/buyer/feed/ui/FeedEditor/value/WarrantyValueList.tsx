@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { ValueList } from "@/lib/client/value";
 import { translator } from "@/lib/common/translation";
-import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import type { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 
 export namespace WarrantyValueList {
 	export interface Item {
@@ -10,7 +10,7 @@ export namespace WarrantyValueList {
 	}
 
 	export interface Props extends Omit<ValueList.PropsEx<Item>, "items" | "renderFn"> {
-		warrantyIn: ListingWarrantyEnumSchema.Type[];
+		warrantyIn: WarrantyEnumSchema.Type[];
 	}
 }
 

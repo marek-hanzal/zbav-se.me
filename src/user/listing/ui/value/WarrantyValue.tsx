@@ -2,11 +2,11 @@ import type { FC } from "react";
 import { LabelValue } from "@/lib/client/value";
 import { translator } from "@/lib/common/translation";
 
-import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import type { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 
 export namespace WarrantyValue {
 	export interface Props extends LabelValue.PropsEx {
-		warranty: ListingWarrantyEnumSchema.Type | null | undefined;
+		warranty: WarrantyEnumSchema.Type | null | undefined;
 	}
 }
 

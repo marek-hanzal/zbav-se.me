@@ -1,5 +1,5 @@
 import { PostgresExtensionsMigration } from "~/server/@migrations/0000-postgres-extensions";
-import { AccessMigration } from "~/server/@migrations/0001-access";
+import { EnumMigration } from "~/server/@migrations/0001-enum";
 import { RestrictionMigration } from "~/server/@migrations/0002-restriction";
 import { FieldMigration } from "~/server/@migrations/0003-field";
 import { FieldOptionMigration } from "~/server/@migrations/0004-field-option";
@@ -40,7 +40,7 @@ import { TranslationMigration } from "~/server/@migrations/0038-translation";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
-	"0001-access": AccessMigration,
+	"0001-enum": EnumMigration,
 	"0002-restriction": RestrictionMigration,
 	"0003-field": FieldMigration,
 	"0004-field-option": FieldOptionMigration,

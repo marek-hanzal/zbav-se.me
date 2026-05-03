@@ -2,7 +2,6 @@ import { z } from "zod";
 import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
-import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import { DescriptionSchema } from "~/common/listing/schema/DescriptionSchema";
 import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
 import { RatingSchema } from "~/common/listing/schema/RatingSchema";
@@ -10,6 +9,7 @@ import { TitleSchema } from "~/common/listing/schema/TitleSchema";
 import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
+import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 import { ListingQuerySchema } from "./ListingQuerySchema";
 
 export const ListingPatchSchema = z
@@ -44,7 +44,7 @@ export const ListingPatchSchema = z
 				//
 				delivery: z.array(DeliveryEnumSchema).optional(),
 				//
-				warranty: ListingWarrantyEnumSchema.nullish(),
+				warranty: WarrantyEnumSchema.nullish(),
 			})
 			.strip(),
 		query: ListingQuerySchema,

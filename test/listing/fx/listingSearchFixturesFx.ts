@@ -4,8 +4,8 @@ import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import type { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
-import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import type { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 import type { testabase } from "~/test/testabase";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
@@ -30,7 +30,7 @@ type ListingSearchPatch = {
 	condition?: number;
 	age?: number;
 	delivery?: DeliveryEnumSchema.Type[];
-	warranty?: ListingWarrantyEnumSchema.Type;
+	warranty?: WarrantyEnumSchema.Type;
 	status?: ListingStatusEnumSchema.Type;
 	restriction?: RestrictionEnumSchema.Type;
 	title?: string;

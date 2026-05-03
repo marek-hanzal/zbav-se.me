@@ -1,9 +1,6 @@
 import { type Migration, sql } from "kysely";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
-import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import type { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
-import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
-import type { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 
 export const ListingMigration: Migration = {
 	async up(db) {
@@ -17,42 +14,6 @@ export const ListingMigration: Migration = {
 					"expired",
 					"closed",
 					"banned",
-				]),
-			)
-			.execute();
-
-		await db.schema
-			.createType("price_type_enum")
-			.asEnum(
-				toEnumGuard<PriceTypeEnumSchema.Type>()([
-					"fixed",
-					"haggle",
-					"ask",
-					"free",
-					"haulaway",
-				]),
-			)
-			.execute();
-
-		await db.schema
-			.createType("delivery_enum")
-			.asEnum(
-				toEnumGuard<DeliveryEnumSchema.Type>()([
-					"personal",
-					"post",
-					"package",
-					"other",
-				]),
-			)
-			.execute();
-
-		await db.schema
-			.createType("listing_warranty_enum")
-			.asEnum(
-				toEnumGuard<ListingWarrantyEnumSchema.Type>()([
-					"warranty",
-					"no-warranty",
-					"custom",
 				]),
 			)
 			.execute();
@@ -86,7 +47,7 @@ export const ListingMigration: Migration = {
 			.addColumn("description", "text")
 			//
 			.addColumn("price", "decimal(10, 2)")
-			.addColumn("priceType", sql`listing_price_enum`)
+			.addColumn("priceType", sql`price_type_enum`)
 			.addColumn("currency", "text")
 			//
 			.addColumn("expires", "text")
@@ -94,10 +55,10 @@ export const ListingMigration: Migration = {
 			.addColumn("condition", "integer")
 			.addColumn("age", "integer")
 			//
-			.addColumn("delivery", sql`listing_delivery_enum[]`, (col) => {
-				return col.notNull().defaultTo(sql`array[]::listing_delivery_enum[]`);
+			.addColumn("delivery", sql`delivery_enum[]`, (col) => {
+				return col.notNull().defaultTo(sql`array[]::delivery_enum[]`);
 			})
-			.addColumn("warranty", sql`listing_warranty_enum`)
+			.addColumn("warranty", sql`warranty_enum`)
 			//
 			.addColumn("locationId", "text")
 			.addColumn("withLocation", sql`geography(Point,4326)`)
