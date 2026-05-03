@@ -70,6 +70,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.expiresAt",
 			"l.createdAt",
 			"l.updatedAt",
+			"l.visibleAt",
 			(eb) => {
 				return sql<CategorySchema.Type>`
                     to_jsonb(${eb.table("cat")}.*)
