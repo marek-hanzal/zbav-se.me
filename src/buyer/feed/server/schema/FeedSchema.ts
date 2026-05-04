@@ -11,6 +11,7 @@ export const FeedSchema = z
 			.looseObject({
 				...ListingQuerySchema.pick({
 					filter: true,
+					attrs: true,
 					meta: true,
 					sort: true,
 				}).shape,

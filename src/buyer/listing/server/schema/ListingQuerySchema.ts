@@ -3,6 +3,7 @@ import { CursorSchema } from "@/lib/common/schema";
 import { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
 import { ListingSortSchema } from "~/buyer/listing/server/schema/ListingSortSchema";
 import { ListingWhereSchema } from "~/buyer/listing/server/schema/ListingWhereSchema";
+import { AttrWhereSchema } from "./AttrWhereSchema";
 
 export const ListingQuerySchema = z
 	.looseObject({
@@ -18,6 +19,7 @@ export const ListingQuerySchema = z
 			id: "ListingWhere",
 			description: "App-based filters",
 		}),
+		attrs: z.record(z.string().min(1), AttrWhereSchema).optional(),
 		sort: ListingSortSchema.array().optional(),
 		meta: ListingMetaSchema.optional(),
 		limit: z.int().nonnegative().optional().meta({
