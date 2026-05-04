@@ -67,6 +67,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 									...feed.query?.filter,
 									categoryId: selection.optional.singleId(),
 								},
+								attrs: {},
 							},
 						},
 					});

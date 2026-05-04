@@ -4,6 +4,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view";
 import { withCategoryAttrOfQuery } from "~/user/category/query/withCategoryAttrOfQuery";
 import type { FeedSchema } from "../../server/schema/FeedSchema";
+import { AttrEnumMulti } from "./attr/AttrEnumMulti";
 import { AttrEnumSingle } from "./attr/AttrEnumSingle";
 
 export namespace AttrEditor {
@@ -44,6 +45,34 @@ export const AttrEditor: FC<AttrEditor.Props> = ({ _suspense, feed, view }) => {
 							name={`attr.${field.name}`}
 						>
 							<AttrEnumSingle
+								feed={feed}
+								field={field}
+								attr={attr}
+								view={view}
+							/>
+						</view.Panel>
+					);
+				},
+			)
+			.with(
+				{
+					field: {
+						type: "enum-multi",
+					},
+					attr: P.union(
+						{
+							type: "enum-multi",
+						},
+						undefined,
+					),
+				},
+				({ field, attr }) => {
+					return (
+						<view.Panel
+							key={`field-${field.name}`}
+							name={`attr.${field.name}`}
+						>
+							<AttrEnumMulti
 								feed={feed}
 								field={field}
 								attr={attr}

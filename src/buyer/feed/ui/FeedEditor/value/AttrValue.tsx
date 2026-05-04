@@ -32,6 +32,17 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 					undefined,
 				),
 			},
+			{
+				field: {
+					type: "enum-multi",
+				},
+				attr: P.union(
+					{
+						type: "enum-multi",
+					},
+					undefined,
+				),
+			},
 			({ field, attr }) => {
 				return (
 					<Group>

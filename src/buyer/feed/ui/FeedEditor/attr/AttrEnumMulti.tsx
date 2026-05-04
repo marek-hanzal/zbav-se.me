@@ -11,20 +11,20 @@ import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
 import type { CategoryAttrOfSchema } from "~/user/category/server/schema/CategoryAttrOfSchema";
 
-export namespace AttrEnumSingle {
+export namespace AttrEnumMulti {
 	export interface Props extends Container.Props {
 		feed: FeedSchema.Type;
 		field: Extract<
 			CategoryAttrOfSchema.Type,
 			{
-				type: "enum-single";
+				type: "enum-multi";
 			}
 		>;
 		attr:
 			| Extract<
 					AttrWhereSchema.Type,
 					{
-						type: "enum-single";
+						type: "enum-multi";
 					}
 			  >
 			| undefined;
@@ -32,7 +32,7 @@ export namespace AttrEnumSingle {
 	}
 }
 
-export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ feed, field, attr, view, ...props }) => {
+export const AttrEnumMulti: FC<AttrEnumMulti.Props> = ({ feed, field, attr, view, ...props }) => {
 	const mutation = withFeedQuery.usePatchMutation({
 		onSuccess() {
 			view.set("default");
@@ -48,7 +48,7 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ feed, field, attr, vi
 
 	return (
 		<Container
-			data-ui={"AttrEnumSingle"}
+			data-ui={"AttrEnumMulti"}
 			data-ui-layout="vertical-content-footer"
 			data-ui-height="full"
 			data-ui-width="full"
@@ -119,7 +119,7 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ feed, field, attr, vi
 									...feed.query?.attrs,
 									[field.name]: {
 										name: field.name,
-										type: "enum-single",
+										type: "enum-multi",
 										value: selection.optional.multiId() ?? undefined,
 									},
 								},
