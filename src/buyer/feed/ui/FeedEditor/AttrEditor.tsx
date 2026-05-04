@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { Fragment, type FC } from "react";
 import { match, P } from "ts-pattern";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view";
@@ -107,7 +107,7 @@ export const AttrEditor: FC<AttrEditor.Props> = ({ _suspense, feed, view }) => {
 				},
 				({ field, attr }) => {
 					return (
-						<>
+						<Fragment key={`field-${field.name}`}>
 							<view.Panel
 								key={`field-${field.name}.min`}
 								name={`attr.${field.name}.min`}
@@ -131,7 +131,7 @@ export const AttrEditor: FC<AttrEditor.Props> = ({ _suspense, feed, view }) => {
 									view={view}
 								/>
 							</view.Panel>
-						</>
+						</Fragment>
 					);
 				},
 			)
