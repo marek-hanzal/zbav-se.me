@@ -73,7 +73,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 					});
 				}}
 				loading={patchMutation.isPending}
-				disabled={false}
+				disabled={patchMutation.isPending}
 			/>
 		</Container>
 	);

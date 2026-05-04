@@ -75,7 +75,7 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 				onCancel={onCancel}
 				onSave={handleSave}
 				loading={patchMutation.isPending}
-				disabled={false}
+				disabled={patchMutation.isPending}
 			/>
 		</Container>
 	);
