@@ -6,6 +6,8 @@ import { withCategoryAttrOfQuery } from "~/user/category/query/withCategoryAttrO
 import type { FeedSchema } from "../../server/schema/FeedSchema";
 import { AttrEnumMulti } from "./attr/AttrEnumMulti";
 import { AttrEnumSingle } from "./attr/AttrEnumSingle";
+import { AttrNumericMax } from "./attr/AttrNumericMax";
+import { AttrNumericMin } from "./attr/AttrNumericMin";
 
 export namespace AttrEditor {
 	export interface Props extends MarkSuspense.Props {
@@ -18,8 +20,6 @@ export const AttrEditor: FC<AttrEditor.Props> = ({ _suspense, feed, view }) => {
 	const { data: fields } = withCategoryAttrOfQuery.useSuspenseQuery({
 		categoryId: feed.query?.filter?.categoryId ?? "<unknown>",
 	});
-
-	console.log("fields", fields);
 
 	return fields.map((field) => {
 		return match({
@@ -79,6 +79,59 @@ export const AttrEditor: FC<AttrEditor.Props> = ({ _suspense, feed, view }) => {
 								view={view}
 							/>
 						</view.Panel>
+					);
+				},
+			)
+			.with(
+				{
+					field: {
+						type: "number",
+					},
+					attr: P.union(
+						{
+							type: "number",
+						},
+						undefined,
+					),
+				},
+				{
+					field: {
+						type: "decimal",
+					},
+					attr: P.union(
+						{
+							type: "decimal",
+						},
+						undefined,
+					),
+				},
+				({ field, attr }) => {
+					return (
+						<>
+							<view.Panel
+								key={`field-${field.name}.min`}
+								name={`attr.${field.name}.min`}
+							>
+								<AttrNumericMin
+									feed={feed}
+									field={field}
+									attr={attr}
+									view={view}
+								/>
+							</view.Panel>
+
+							<view.Panel
+								key={`field-${field.name}.max`}
+								name={`attr.${field.name}.max`}
+							>
+								<AttrNumericMax
+									feed={feed}
+									field={field}
+									attr={attr}
+									view={view}
+								/>
+							</view.Panel>
+						</>
 					);
 				},
 			)
