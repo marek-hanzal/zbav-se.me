@@ -19,6 +19,10 @@ export const AttrValues: FC<AttrValues.Props> = ({ _suspense, feed, view }) => {
 		categoryId: feed.query?.filter?.categoryId ?? "<unknown>",
 	});
 
+	if (!fields.length) {
+		return null;
+	}
+
 	return (
 		<>
 			<Tx
