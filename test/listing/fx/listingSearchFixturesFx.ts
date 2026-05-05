@@ -90,22 +90,11 @@ export const patchListingSearchFixtureFx = (database: TestDatabase, props: Listi
 				.executeTakeFirstOrThrow();
 
 			values.locationId = props.locationId;
-			values.withLocationGeo = location.geo;
+			values.withLocation = location.geo;
 		}
 
 		if (props.categoryId !== undefined) {
-			const category = await database.kysely
-				.selectFrom("category")
-				.select([
-					"discovery",
-					"restriction",
-				])
-				.where("id", "=", props.categoryId)
-				.executeTakeFirstOrThrow();
-
 			values.categoryId = props.categoryId;
-			values.withCategoryDiscovery = category.discovery;
-			values.withCategoryRestriction = category.restriction;
 		}
 
 		if (props.price !== undefined) {
@@ -138,7 +127,7 @@ export const patchListingSearchFixtureFx = (database: TestDatabase, props: Listi
 
 		if (props.title !== undefined) {
 			values.title = props.title;
-			values.withTitleSearch = sql`lower(immutable_unaccent(${props.title}))`;
+			values.withTitle = sql`lower(immutable_unaccent(${props.title}))`;
 		}
 
 		return database.kysely
