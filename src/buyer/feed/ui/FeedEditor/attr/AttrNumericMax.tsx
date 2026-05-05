@@ -105,7 +105,6 @@ export const AttrNumericMax: FC<AttrNumericMax.Props> = ({ feed, field, attr, vi
 						}}
 						placeholder={translator.text("Range minimum (placeholder)")}
 						allowDecimals={field.type === "decimal"}
-						data-ui-inner={"default"}
 					/>
 				)}
 			</form.AppField>

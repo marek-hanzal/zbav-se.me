@@ -31,9 +31,10 @@ const icons = {
 export namespace Dial {
 	export interface Props extends Omit<Container.Props, "onChange"> {
 		value: string | undefined;
-		onChange: (value: string | undefined) => void;
+		onChange(value: string | undefined): void;
 		placeholder: string;
 		allowDecimals: boolean;
+		max?: number;
 	}
 }
 

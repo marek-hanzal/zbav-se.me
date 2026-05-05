@@ -82,7 +82,6 @@ export const PriceMaxPatch: FC<PriceMaxPatch.Props> = ({ feed, onSettled, onCanc
 						}}
 						placeholder={translator.text("Maximum price (placeholder)")}
 						allowDecimals
-						data-ui-inner="default"
 					/>
 				)}
 			</form.AppField>

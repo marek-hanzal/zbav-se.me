@@ -69,7 +69,6 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 					onChange={setRangeValue}
 					placeholder={translator.text("Feed range (placeholder)")}
 					allowDecimals={false}
-					data-ui-inner="default"
 				/>
 			</Container>
 

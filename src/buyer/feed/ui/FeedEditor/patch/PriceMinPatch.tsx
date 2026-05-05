@@ -75,6 +75,8 @@ export const PriceMinPatch: FC<PriceMinPatch.Props> = ({ feed, onSettled, onCanc
 								: undefined
 						}
 						onChange={(value) => {
+							console.log("value", value);
+
 							price.handleChange(
 								value === undefined ? null : Number.parseFloat(value),
 							);
@@ -82,7 +84,6 @@ export const PriceMinPatch: FC<PriceMinPatch.Props> = ({ feed, onSettled, onCanc
 						}}
 						placeholder={translator.text("Minimum price (placeholder)")}
 						allowDecimals
-						data-ui-inner="default"
 					/>
 				)}
 			</form.AppField>
