@@ -72,6 +72,7 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 				flexDirection={"column"}
 				paddingX={1}
 				paddingY={1}
+				flexGrow={1}
 			>
 				<Text bold>Select seed</Text>
 				{match(focusField)
