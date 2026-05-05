@@ -23,13 +23,7 @@ const seedActivityFx = (
 			priority: ActivityPriorityEnumSchema.Type;
 		}
 	>,
-) =>
-	Effect.promise(() =>
-		database.kysely
-			.insertInto("activity")
-			.values(rows)
-			.execute(),
-	);
+) => Effect.promise(() => database.kysely.insertInto("activity").values(rows).execute());
 
 describe("activityArchiveFx", () => {
 	it("archives only fully matching visible message rows when referenceAllIn is used", async () => {
@@ -166,11 +160,15 @@ describe("activityArchiveFx", () => {
 				"visible-active-message",
 			]);
 			expect(afterVisibleCount).toBe(0);
-			expect(rows.find((row) => row.id === "visible-active-message")?.archivedAt).not.toBeNull();
+			expect(
+				rows.find((row) => row.id === "visible-active-message")?.archivedAt,
+			).not.toBeNull();
 			expect(
 				rows.find((row) => row.id === "newer-already-archived-message")?.archivedAt,
 			).not.toBeNull();
-			expect(rows.find((row) => row.id === "partial-reference-message")?.archivedAt).toBeNull();
+			expect(
+				rows.find((row) => row.id === "partial-reference-message")?.archivedAt,
+			).toBeNull();
 			expect(rows.find((row) => row.id === "matching-reaction")?.archivedAt).toBeNull();
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
