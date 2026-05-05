@@ -32,11 +32,9 @@ export function useRenderLogger({ logger, name, meta }: useRenderLogger.Props) {
 	}, []);
 
 	useEffect(() => {
-		if (count.current > 1) {
-			$logger.trace("Render", {
-				...meta,
-				count: count.current,
-			});
-		}
+		$logger.trace("Render", {
+			...meta,
+			count: count.current - 1,
+		});
 	});
 }

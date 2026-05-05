@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { ChevronRightIcon, Icon } from "@/lib/client/icon";
@@ -12,10 +12,9 @@ import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
 import { PriceTypeList } from "~/common/price-type/ui/PriceTypeList";
 import { TitleValue } from "~/common/title/ui/TitleValue";
-import { withCategoryAttrOfQuery } from "~/user/category/query/withCategoryAttrOfQuery";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
+import { AttrValues } from "./AttrValues";
 import { AgeValueList } from "./value/AgeValueList";
-import { AttrValue } from "./value/AttrValue";
 import { CategoryValueList } from "./value/CategoryValueList";
 import { ConditionValueList } from "./value/ConditionValueList";
 import { NameValue } from "./value/NameValue";
@@ -53,9 +52,6 @@ export namespace Editor {
 
 export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, children, ...props }) => {
 	const locationId = feed.query?.meta?.locationId;
-	const { data: fields } = withCategoryAttrOfQuery.useSuspenseQuery({
-		categoryId: feed.query?.filter?.categoryId ?? "<unknown>",
-	});
 
 	return (
 		<Container
@@ -67,7 +63,9 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 			{...props}
 		>
 			<Group>
-				<CurrentRestriction _suspense={_suspense} />
+				<Suspense fallback={"is that you?"}>
+					<CurrentRestriction _suspense={_suspense} />
+				</Suspense>
 			</Group>
 
 			{hidden?.includes("header") ? null : (
@@ -324,35 +322,11 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 				</Group>
 			</Container>
 
-			{fields.length > 0 ? (
-				<>
-					<Tx
-						label="Feed - dynamic fields (title)"
-						data-ui-tone="neutral"
-						data-ui-theme="light"
-						data-ui-text="md"
-						data-ui-color="lead"
-						data-ui-opacity="8"
-						className={"text-center"}
-					/>
-
-					<Container
-						data-ui-flow={"vertical"}
-						data-ui-gap={"default"}
-					>
-						{fields.map((field) => {
-							return (
-								<AttrValue
-									key={`feed-attr-${field.name}`}
-									field={field}
-									attr={feed.query?.attrs?.[field.name]}
-									view={view}
-								/>
-							);
-						})}
-					</Container>
-				</>
-			) : null}
+			<AttrValues
+				_suspense={_suspense}
+				feed={feed}
+				view={view}
+			/>
 
 			<Tx
 				label="Feed - sorting (title)"

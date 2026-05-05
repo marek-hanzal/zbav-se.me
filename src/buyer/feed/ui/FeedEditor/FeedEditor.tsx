@@ -70,7 +70,7 @@ export const FeedEditor = withFallback(
 					keep
 				>
 					<Editor
-						_suspense={"I know"}
+						_suspense={_suspense}
 						feed={feed}
 						view={view}
 						hidden={hidden}

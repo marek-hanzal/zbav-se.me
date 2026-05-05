@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
@@ -27,7 +28,7 @@ export const SearchEditor = withFallback(({ _suspense, feedId, ...props }: Searc
 			{...props}
 		>
 			<FeedEditor
-				_suspense={"I know"}
+				_suspense={_suspense}
 				feedId={feedId}
 				hidden={hidden}
 			>
@@ -46,10 +47,12 @@ export const SearchEditor = withFallback(({ _suspense, feedId, ...props }: Searc
 					data-ui-gap="default"
 				>
 					<Group>
-						<SearchButton
-							_suspense={"I know"}
-							feedId={feedId}
-						/>
+						<Suspense fallback={<SearchButton.Fallback feedId={feedId} />}>
+							<SearchButton
+								_suspense={"I know"}
+								feedId={feedId}
+							/>
+						</Suspense>
 
 						<SaveAsFeedButton
 							_suspense={"I know"}
