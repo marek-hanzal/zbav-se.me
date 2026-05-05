@@ -80,13 +80,11 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, view, ...pro
 						<Dial
 							value={
 								typeof props.state.value === "number"
-									? String(props.state.value)
+									? props.state.value
 									: undefined
 							}
 							onChange={(value) => {
-								props.handleChange(
-									value === undefined ? 0 : Number.parseFloat(value),
-								);
+								props.handleChange(value ?? 0);
 								props.handleBlur();
 							}}
 							placeholder={translator.text("Price (placeholder)")}

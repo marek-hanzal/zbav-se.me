@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { type FC, useEffect, useState } from "react";
 import { tvc } from "@/lib/client/cls";
 import { Container } from "@/lib/client/container";
 import { Icon } from "@/lib/client/icon";
@@ -30,8 +30,8 @@ const icons = {
 
 export namespace Dial {
 	export interface Props extends Omit<Container.Props, "onChange"> {
-		value: string | undefined;
-		onChange(value: string | undefined): void;
+		value: number | undefined;
+		onChange(value: number | undefined): void;
 		placeholder: string;
 		allowDecimals: boolean;
 		max?: number;
@@ -39,6 +39,27 @@ export namespace Dial {
 }
 
 export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecimals, ...props }) => {
+	const [internalValue, setInternalValue] = useState<string | undefined>(
+		value !== undefined ? String(value) : undefined,
+	);
+
+	useEffect(() => {
+		setInternalValue(value !== undefined ? String(value) : undefined);
+	}, [
+		value,
+	]);
+
+	const handleChange = (nextValue: string | undefined) => {
+		setInternalValue(nextValue);
+
+		if (!nextValue) {
+			onChange(undefined);
+			return;
+		}
+
+		onChange(Number.parseFloat(nextValue));
+	};
+
 	return (
 		<Container
 			data-ui={"Dial"}
@@ -60,19 +81,18 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 				data-ui-round="default"
 			>
 				<Value
-					value={value}
+					value={internalValue}
 					placeholder={placeholder}
 				/>
 
 				<Icon
-					data-ui={"Dial-Icon-backspace"}
 					icon={BackspaceIcon}
 					onClick={() => {
-						onChange(value?.slice(0, -1) || undefined);
+						handleChange(internalValue?.slice(0, -1) || undefined);
 					}}
 					data-ui-tone="secondary"
 					data-ui-theme="light"
-					data-ui-disabled={!value}
+					data-ui-disabled={!internalValue}
 					data-ui-text="2xl"
 				/>
 			</Container>
@@ -96,7 +116,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 						}`}
 						icon={icons[(index + 1) as keyof typeof icons]}
 						onClick={() => {
-							onChange(digit(value || "", index + 1));
+							handleChange(digit(internalValue || "", index + 1));
 						}}
 						disabled={false}
 					/>
@@ -104,9 +124,9 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 
 				<Item
 					icon={"icon-[fluent--comma-20-filled]"}
-					disabled={!allowDecimals || !value || value.includes(".")}
+					disabled={!allowDecimals || !internalValue || internalValue.includes(".")}
 					onClick={() => {
-						onChange(digit(value || "", "."));
+						handleChange(digit(internalValue || "", "."));
 					}}
 				/>
 
@@ -114,15 +134,15 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 					icon={icons[0]}
 					disabled={false}
 					onClick={() => {
-						onChange(digit(value || "", 0));
+						handleChange(digit(internalValue || "", 0));
 					}}
 				/>
 
 				<Item
 					icon={ClearIcon}
-					disabled={!value}
+					disabled={!internalValue}
 					onClick={() => {
-						onChange(undefined);
+						handleChange(undefined);
 					}}
 				/>
 			</div>

@@ -70,16 +70,10 @@ export const PriceMinPatch: FC<PriceMinPatch.Props> = ({ feed, onSettled, onCanc
 				{(price) => (
 					<Dial
 						value={
-							typeof price.state.value === "number"
-								? String(price.state.value)
-								: undefined
+							typeof price.state.value === "number" ? price.state.value : undefined
 						}
 						onChange={(value) => {
-							console.log("value", value);
-
-							price.handleChange(
-								value === undefined ? null : Number.parseFloat(value),
-							);
+							price.handleChange(value ?? null);
 							price.handleBlur();
 						}}
 						placeholder={translator.text("Minimum price (placeholder)")}

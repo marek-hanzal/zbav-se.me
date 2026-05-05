@@ -70,14 +70,10 @@ export const PriceMaxPatch: FC<PriceMaxPatch.Props> = ({ feed, onSettled, onCanc
 				{(props) => (
 					<Dial
 						value={
-							typeof props.state.value === "number"
-								? String(props.state.value)
-								: undefined
+							typeof props.state.value === "number" ? props.state.value : undefined
 						}
 						onChange={(value) => {
-							props.handleChange(
-								value === undefined ? null : Number.parseFloat(value),
-							);
+							props.handleChange(value ?? null);
 							props.handleBlur();
 						}}
 						placeholder={translator.text("Maximum price (placeholder)")}
