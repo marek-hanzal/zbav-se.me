@@ -72,8 +72,8 @@ describe("feed contract", () => {
 				beforePatch.updatedAt.getTime(),
 			);
 			expectTaggedErrorFx(foreignResolve, {
-				tag: "NotFoundErrorFx",
-				message: "Resource not found",
+				tag: "AccessDeniedErrorFx",
+				message: "Custom deny message",
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

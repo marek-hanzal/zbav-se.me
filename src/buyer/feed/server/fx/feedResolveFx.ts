@@ -27,9 +27,7 @@ export const feedResolveFx = Effect.fn("feedResolveFx")(function* ({
 		where: {
 			id: feedId,
 		},
-		scope: {
-			userId,
-		},
+		scope: {},
 	});
 
 	if (feed.userId !== userId) {
