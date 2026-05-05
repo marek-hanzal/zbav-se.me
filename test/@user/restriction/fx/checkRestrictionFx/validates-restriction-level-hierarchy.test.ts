@@ -1,54 +1,40 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { checkRestrictionFx } from "~/user/restriction/server/fx/checkRestrictionFx";
 
+const restrictionLevels = [
+	"none",
+	"adult-relaxed",
+	"adult",
+	"sensitive",
+	"restricted",
+] as const satisfies RestrictionEnumSchema.Type[];
+
 describe("checkRestrictionFx", () => {
-	it("succeeds when request level equals required level", () =>
-		checkRestrictionFx({
-			level: "adult",
-			request: "adult",
-		}).pipe(Effect.map((result) => expect(result).toBeUndefined())));
+	it("accepts only equal or stronger requested restriction levels across the whole matrix", async () => {
+		for (const [levelIndex, level] of restrictionLevels.entries()) {
+			for (const [requestIndex, request] of restrictionLevels.entries()) {
+				const result = await Effect.either(
+					checkRestrictionFx({
+						level,
+						request,
+					}),
+				).pipe(Effect.runPromise);
 
-	it("succeeds when request level exceeds required level", () =>
-		checkRestrictionFx({
-			level: "adult-relaxed",
-			request: "adult",
-		}).pipe(Effect.map((result) => expect(result).toBeUndefined())));
+				if (requestIndex >= levelIndex) {
+					expect(result._tag).toBe("Right");
+				} else {
+					expect(result._tag).toBe("Left");
 
-	it("succeeds when request level is the highest restriction", () =>
-		checkRestrictionFx({
-			level: "none",
-			request: "restricted",
-		}).pipe(Effect.map((result) => expect(result).toBeUndefined())));
-
-	it("fails when request level is lower than required level", () =>
-		checkRestrictionFx({
-			level: "adult",
-			request: "adult-relaxed",
-		}).pipe(
-			Effect.mapError((error) => {
-				expect(error._tag).toBe("InvalidRequestErrorFx");
-				expect(error.message).toContain("Cannot use lower restriction level");
-			}),
-		));
-
-	it("fails when request is none and level is adult", () =>
-		checkRestrictionFx({
-			level: "adult",
-			request: "none",
-		}).pipe(
-			Effect.mapError((error) => {
-				expect(error._tag).toBe("InvalidRequestErrorFx");
-			}),
-		));
-
-	it("fails when request is sensitive and level is restricted", () =>
-		checkRestrictionFx({
-			level: "restricted",
-			request: "sensitive",
-		}).pipe(
-			Effect.mapError((error) => {
-				expect(error._tag).toBe("InvalidRequestErrorFx");
-			}),
-		));
+					if (result._tag === "Left") {
+						expect(result.left._tag).toBe("InvalidRequestErrorFx");
+						expect(result.left.message).toContain(
+							`Cannot use lower restriction level [${request}] than [${level}]`,
+						);
+					}
+				}
+			}
+		}
+	});
 });
