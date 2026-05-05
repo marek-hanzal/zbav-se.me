@@ -76,10 +76,6 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ draft, onCancel, view, 
 		],
 		onSelect(item) {
 			form.setFieldValue("categoryId", item?.id ?? null);
-			form.setFieldMeta("categoryId", (meta) => ({
-				...meta,
-				isTouched: true,
-			}));
 		},
 	});
 

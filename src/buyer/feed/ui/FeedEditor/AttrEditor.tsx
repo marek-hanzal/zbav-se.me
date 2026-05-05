@@ -8,6 +8,8 @@ import { AttrEnumMulti } from "./attr/AttrEnumMulti";
 import { AttrEnumSingle } from "./attr/AttrEnumSingle";
 import { AttrNumericMax } from "./attr/AttrNumericMax";
 import { AttrNumericMin } from "./attr/AttrNumericMin";
+import { AttrYearMax } from "./attr/AttrYearMax";
+import { AttrYearMin } from "./attr/AttrYearMin";
 
 export namespace AttrEditor {
 	export interface Props extends MarkSuspense.Props {
@@ -125,6 +127,48 @@ export const AttrEditor: FC<AttrEditor.Props> = ({ _suspense, feed, view }) => {
 								name={`attr.${field.name}.max`}
 							>
 								<AttrNumericMax
+									feed={feed}
+									field={field}
+									attr={attr}
+									view={view}
+								/>
+							</view.Panel>
+						</Fragment>
+					);
+				},
+			)
+			.with(
+				{
+					field: {
+						type: "year",
+					},
+					attr: P.union(
+						{
+							type: "year",
+						},
+						undefined,
+					),
+				},
+				({ field, attr }) => {
+					return (
+						<Fragment key={`field-${field.name}`}>
+							<view.Panel
+								key={`field-${field.name}.min`}
+								name={`attr.${field.name}.min`}
+							>
+								<AttrYearMin
+									feed={feed}
+									field={field}
+									attr={attr}
+									view={view}
+								/>
+							</view.Panel>
+
+							<view.Panel
+								key={`field-${field.name}.max`}
+								name={`attr.${field.name}.max`}
+							>
+								<AttrYearMax
 									feed={feed}
 									field={field}
 									attr={attr}

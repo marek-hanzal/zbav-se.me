@@ -132,6 +132,42 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 		.with(
 			{
 				field: {
+					type: "year",
+				},
+				attr: P.union(
+					{
+						type: "year",
+					},
+					undefined,
+				),
+			},
+			({ field, attr }) => {
+				return (
+					<Group>
+						<LabelValue
+							textLabel={translator.text(`Field - ${field.name} - min year`)}
+							textEmpty={translator.text("No value here (label)")}
+							textValue={attr?.min ?? null}
+							onClick={() => {
+								view.set(`attr.${field.name}.min`);
+							}}
+						/>
+
+						<LabelValue
+							textLabel={translator.text(`Field - ${field.name} - max year`)}
+							textEmpty={translator.text("No value here (label)")}
+							textValue={attr?.max ?? null}
+							onClick={() => {
+								view.set(`attr.${field.name}.max`);
+							}}
+						/>
+					</Group>
+				);
+			},
+		)
+		.with(
+			{
+				field: {
 					type: "text",
 				},
 				attr: P.union(

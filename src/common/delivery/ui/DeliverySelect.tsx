@@ -16,13 +16,11 @@ export namespace DeliverySelect {
 /**
  * Provides an interactive control for selecting delivery values in forms.
  * Use it in editors where users need to choose or update delivery before saving.
- *
- * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ...props }) => {
 	return (
 		<Container
-			data-ui="DeliverySelect[Container]"
+			data-ui="DeliverySelect"
 			data-ui-layout="vertical-flex"
 			data-ui-height="auto"
 			data-ui-width="full"
