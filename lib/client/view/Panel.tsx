@@ -1,4 +1,4 @@
-import { Suspense, useMemo } from "react";
+import { type FC, Suspense } from "react";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { Container } from "../container";
 import { useRenderLogger } from "../log/useRenderLogger";
@@ -29,38 +29,48 @@ export const Panel = <TPanel extends string>({
 	name,
 	keep = false,
 	control,
-	children,
 	...props
 }: Panel.Props<TPanel>) => {
 	const isVisible = control.isVisible(name);
+
+	if (!isVisible && !keep) {
+		return null;
+	}
+
+	return (
+		<Content
+			isVisible={isVisible}
+			name={name}
+			{...props}
+		/>
+	);
+};
+
+// ================================================================================================================
+
+export const Content: FC<
+	Container.Props & {
+		isVisible: boolean;
+		name: string;
+	}
+> = ({ isVisible, name, children, ...props }) => {
 	useRenderLogger({
-		logger: getRootLogger("Panel"),
+		logger: getRootLogger(),
 		name: "Panel",
 		meta: {
 			name,
 		},
 	});
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Ssst
-	const panel = useMemo(() => {
-		if (!isVisible && !keep) {
-			return null;
-		}
-
-		return (
-			<Container
-				data-ui={`Panel-${name}`}
-				className={isVisible ? undefined : "hidden"}
-				data-ui-height={"full"}
-				data-ui-scroll={"vertical"}
-				{...props}
-			>
-				<Suspense fallback={<SpinnerContainer />}>{children}</Suspense>
-			</Container>
-		);
-	}, [
-		isVisible,
-	]);
-
-	return panel;
+	return (
+		<Container
+			data-ui={`Panel-${name}`}
+			className={isVisible ? undefined : "hidden"}
+			data-ui-height={"full"}
+			data-ui-scroll={"vertical"}
+			{...props}
+		>
+			<Suspense fallback={<SpinnerContainer />}>{children}</Suspense>
+		</Container>
+	);
 };

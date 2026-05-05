@@ -1,9 +1,11 @@
 import { type PropsWithChildren, useCallback } from "react";
 import { withFallback } from "@/lib/client/fallback";
+import { useRenderLogger } from "@/lib/client/log";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { useView } from "@/lib/client/view";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import { AttrEditor } from "./AttrEditor";
 import { Editor } from "./Editor";
 import { AgePatch } from "./patch/AgePatch";
@@ -48,6 +50,11 @@ export const FeedEditor = withFallback(
 				"priceMax",
 			],
 			defaultPanel: "default",
+		});
+
+		useRenderLogger({
+			logger: getRootLogger(),
+			name: "FeedEditor",
 		});
 
 		const onDefaultView = useCallback(() => {
