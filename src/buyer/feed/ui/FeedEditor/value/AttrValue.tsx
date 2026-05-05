@@ -1,10 +1,13 @@
 import type { FC } from "react";
 import { match, P } from "ts-pattern";
+import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
+import { ArrowRightIcon, Icon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
-import { LabelValue, ValueList } from "@/lib/client/value";
+import { Tx } from "@/lib/client/tx";
+import { Typo } from "@/lib/client/typo";
+import { ValueList } from "@/lib/client/value";
 import type { useView } from "@/lib/client/view";
-import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { translator } from "@/lib/common/translation";
 import type { AttrWhereSchema } from "~/buyer/listing/server/schema/AttrWhereSchema";
 import type { CategoryAttrOfSchema } from "~/user/category/server/schema/CategoryAttrOfSchema";
@@ -94,37 +97,49 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 			},
 			({ field, attr }) => {
 				return (
-					<Group>
-						<LabelValue
-							textLabel={translator.text(`Field - ${field.name} - min`)}
-							textEmpty={translator.text("No value here (label)")}
-							textValue={
-								attr?.min
-									? toLocaleNumber({
-											locale,
-											number: attr.min,
-										})
-									: null
-							}
-							onClick={() => {
-								view.set(`attr.${field.name}.min`);
-							}}
+					<Group
+						data-ui-tone={"neutral"}
+						data-ui-theme={"light"}
+						data-ui-background={"default"}
+					>
+						<Tx
+							label={`Field - ${field.name} - number range`}
+							data-ui-display={"block"}
+							data-ui-width={"full"}
+							data-ui-inner={"default"}
+							data-ui-text={"sm"}
+							data-ui-color={"lead"}
 						/>
-						<LabelValue
-							textLabel={translator.text(`Field - ${field.name} - max`)}
-							textEmpty={translator.text("No value here (label)")}
-							textValue={
-								attr?.max
-									? toLocaleNumber({
-											locale,
-											number: attr.max,
-										})
-									: null
-							}
-							onClick={() => {
-								view.set(`attr.${field.name}.max`);
-							}}
-						/>
+
+						<Container
+							data-ui-flow={"horizontal"}
+							data-ui-items={"center"}
+							data-ui-justify={"space-evenly"}
+							data-ui-width={"full"}
+							data-ui-inner={"default"}
+						>
+							<Typo
+								label={attr?.min ?? translator.text("No from value here (label)")}
+								onClick={() => {
+									view.set(`attr.${field.name}.min`);
+								}}
+								data-ui-display={"block"}
+							/>
+
+							<Icon
+								icon={ArrowRightIcon}
+								data-ui-text={"xl"}
+								data-ui-opacity={"5"}
+							/>
+
+							<Typo
+								label={attr?.max ?? translator.text("No to value here (label)")}
+								onClick={() => {
+									view.set(`attr.${field.name}.max`);
+								}}
+								data-ui-display={"block"}
+							/>
+						</Container>
 					</Group>
 				);
 			},
@@ -143,24 +158,49 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 			},
 			({ field, attr }) => {
 				return (
-					<Group>
-						<LabelValue
-							textLabel={translator.text(`Field - ${field.name} - min year`)}
-							textEmpty={translator.text("No value here (label)")}
-							textValue={attr?.min ?? null}
-							onClick={() => {
-								view.set(`attr.${field.name}.min`);
-							}}
+					<Group
+						data-ui-tone={"neutral"}
+						data-ui-theme={"light"}
+						data-ui-background={"default"}
+					>
+						<Tx
+							label={`Field - ${field.name} - range year`}
+							data-ui-display={"block"}
+							data-ui-width={"full"}
+							data-ui-inner={"default"}
+							data-ui-text={"sm"}
+							data-ui-color={"lead"}
 						/>
 
-						<LabelValue
-							textLabel={translator.text(`Field - ${field.name} - max year`)}
-							textEmpty={translator.text("No value here (label)")}
-							textValue={attr?.max ?? null}
-							onClick={() => {
-								view.set(`attr.${field.name}.max`);
-							}}
-						/>
+						<Container
+							data-ui-flow={"horizontal"}
+							data-ui-items={"center"}
+							data-ui-justify={"space-evenly"}
+							data-ui-width={"full"}
+							data-ui-inner={"default"}
+						>
+							<Typo
+								label={attr?.min ?? translator.text("No from value here (label)")}
+								onClick={() => {
+									view.set(`attr.${field.name}.min`);
+								}}
+								data-ui-display={"block"}
+							/>
+
+							<Icon
+								icon={ArrowRightIcon}
+								data-ui-text={"xl"}
+								data-ui-opacity={"5"}
+							/>
+
+							<Typo
+								label={attr?.max ?? translator.text("No to value here (label)")}
+								onClick={() => {
+									view.set(`attr.${field.name}.max`);
+								}}
+								data-ui-display={"block"}
+							/>
+						</Container>
 					</Group>
 				);
 			},
@@ -179,38 +219,49 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 			},
 			({ field, attr }) => {
 				return (
-					<Group>
-						<LabelValue
-							textLabel={translator.text(`Field - ${field.name} - min range`)}
-							textEmpty={translator.text("No value here (label)")}
-							textValue={
-								attr?.min
-									? toLocaleNumber({
-											locale,
-											number: attr.min,
-										})
-									: null
-							}
-							onClick={() => {
-								view.set(`attr.${field.name}.min`);
-							}}
+					<Group
+						data-ui-tone={"neutral"}
+						data-ui-theme={"light"}
+						data-ui-background={"default"}
+					>
+						<Tx
+							label={`Field - ${field.name} - range`}
+							data-ui-display={"block"}
+							data-ui-width={"full"}
+							data-ui-inner={"default"}
+							data-ui-text={"sm"}
+							data-ui-color={"lead"}
 						/>
 
-						<LabelValue
-							textLabel={translator.text(`Field - ${field.name} - max range`)}
-							textEmpty={translator.text("No value here (label)")}
-							textValue={
-								attr?.max
-									? toLocaleNumber({
-											locale,
-											number: attr.max,
-										})
-									: null
-							}
-							onClick={() => {
-								view.set(`attr.${field.name}.max`);
-							}}
-						/>
+						<Container
+							data-ui-flow={"horizontal"}
+							data-ui-items={"center"}
+							data-ui-justify={"space-evenly"}
+							data-ui-width={"full"}
+							data-ui-inner={"default"}
+						>
+							<Typo
+								label={attr?.min ?? translator.text("No from value here (label)")}
+								onClick={() => {
+									view.set(`attr.${field.name}.min`);
+								}}
+								data-ui-display={"block"}
+							/>
+
+							<Icon
+								icon={ArrowRightIcon}
+								data-ui-text={"xl"}
+								data-ui-opacity={"5"}
+							/>
+
+							<Typo
+								label={attr?.max ?? translator.text("No to value here (label)")}
+								onClick={() => {
+									view.set(`attr.${field.name}.max`);
+								}}
+								data-ui-display={"block"}
+							/>
+						</Container>
 					</Group>
 				);
 			},
