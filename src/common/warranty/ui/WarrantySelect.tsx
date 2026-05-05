@@ -9,7 +9,7 @@ import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 
 export namespace WarrantySelect {
 	export interface Props extends Container.Props {
-		selection: useSelection.Selection<EntitySchema.Type>;
+		selection: useSelection.Use<EntitySchema.Type>;
 	}
 }
 

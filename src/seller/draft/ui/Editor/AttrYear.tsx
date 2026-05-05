@@ -1,23 +1,15 @@
 import { DateTime } from "luxon";
-import { type FC, useEffect, useMemo, useRef } from "react";
-import { match, P } from "ts-pattern";
-import { Button } from "@/lib/client/button";
+import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view";
-import { clamp } from "@/lib/common/clamp";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import { uiSelectButton } from "~/common/ui/ui";
+import { YearSelect } from "~/common/ui/year/YearSelect";
 import { withDraftAttrNumberPatchMutation } from "~/seller/draft-attr-number/mutation/withDraftAttrNumberPatchMutation";
 import type { DraftAttrOfSchema } from "~/user/draft-attr/server/schema/DraftAttrOfSchema";
 import { useNextAttr } from "./useNextAttr";
-
-const toYearBound = (value: number | null | undefined, fallback: number) =>
-	match(value)
-		.with(P.number, (value) => (Number.isNaN(value) ? fallback : Math.round(value)))
-		.otherwise(() => fallback);
 
 export namespace AttrYear {
 	export interface Props extends Container.Props {
@@ -40,28 +32,14 @@ export const AttrYear: FC<AttrYear.Props> = ({ draftId, attrs, attr, view, ...pr
 			view.set(next ? `attr.${next.name}` : "default");
 		},
 	});
-	const min = toYearBound(attr.min, 1900);
-	const max = Math.max(min, toYearBound(attr.max, 2099));
-	const years = useMemo(
-		() =>
-			Array.from(
-				{
-					length: max - min + 1,
-				},
-				(_, index) => min + index,
-			),
-		[
-			max,
-			min,
-		],
-	);
+
 	const selection = useSelection({
 		mode: "single",
 		initial:
 			typeof attr.value === "number"
 				? [
 						{
-							id: String(clamp(attr.value, min, max)),
+							id: String(attr.value),
 						},
 					]
 				: [
@@ -71,19 +49,6 @@ export const AttrYear: FC<AttrYear.Props> = ({ draftId, attrs, attr, view, ...pr
 					],
 	});
 	const selectedYear = selection.optional.singleId();
-	const scrollRef = useRef<HTMLDivElement | null>(null);
-
-	useEffect(() => {
-		scrollRef.current
-			?.querySelector<HTMLElement>(`[data-selected-year="${selectedYear ?? ""}"]`)
-			?.scrollIntoView({
-				block: "center",
-				inline: "center",
-				behavior: "smooth",
-			});
-	}, [
-		selectedYear,
-	]);
 
 	return (
 		<Container
@@ -95,51 +60,11 @@ export const AttrYear: FC<AttrYear.Props> = ({ draftId, attrs, attr, view, ...pr
 			data-ui-gap="default"
 			{...props}
 		>
-			<Container
-				data-ui={"AttrYear-List"}
-				data-ui-height="full"
-				data-ui-scroll="vertical"
-				ref={scrollRef}
-			>
-				<div
-					data-ui={"AttrYear-grid"}
-					className={[
-						"grid",
-						"grid-cols-3",
-						"gap-3",
-						"pb-2",
-					].join(" ")}
-				>
-					{years.map((year) => {
-						const value = String(year);
-						const selected = selection.isSelected(value);
-
-						return (
-							<Button
-								key={value}
-								data-selected-year={selected ? value : undefined}
-								onClick={() => {
-									selection.toggle({
-										id: value,
-									});
-								}}
-								{...uiSelectButton({
-									isSelected: selected,
-									"data-ui-size": "default",
-									"data-ui-justify": "center",
-									"data-ui-items": "center",
-									"data-ui-text": "lg",
-									className: [
-										"min-h-14",
-									],
-								})}
-							>
-								{value}
-							</Button>
-						);
-					})}
-				</div>
-			</Container>
+			<YearSelect
+				from={attr.min}
+				to={attr.max}
+				selection={selection}
+			/>
 
 			<SaveContainer
 				onCancel={() => {

@@ -9,7 +9,7 @@ import { uiSelectButton } from "~/common/ui/ui";
 
 export namespace DeliverySelect {
 	export interface Props extends Container.Props {
-		selection: useSelection.Selection<EntitySchema.Type>;
+		selection: useSelection.Use<EntitySchema.Type>;
 	}
 }
 

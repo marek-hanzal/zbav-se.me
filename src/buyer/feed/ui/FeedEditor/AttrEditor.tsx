@@ -1,4 +1,4 @@
-import { Fragment, type FC } from "react";
+import { type FC, Fragment } from "react";
 import { match, P } from "ts-pattern";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view";

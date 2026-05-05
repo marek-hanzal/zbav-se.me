@@ -11,7 +11,7 @@ import type { CategorySchema } from "~/user/category/server/schema/CategorySchem
 export namespace CategoryItem {
 	export interface Props {
 		category: CategorySchema.Type;
-		selection: useSelection.Selection<EntitySchema.Type>;
+		selection: useSelection.Use<EntitySchema.Type>;
 	}
 }
 

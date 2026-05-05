@@ -18,7 +18,7 @@ const getSelectableRestrictions = (
 
 export namespace RestrictionSelect {
 	export interface Props extends Container.Props {
-		selection: useSelection.Selection<EntitySchema.Type>;
+		selection: useSelection.Use<EntitySchema.Type>;
 		allowClear?: boolean;
 		/**
 		 * Minimum selectable level.

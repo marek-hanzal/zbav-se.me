@@ -7,7 +7,7 @@ import { Item } from "./Item";
 
 export namespace PriceTypeSelect {
 	export interface Props extends Container.Props {
-		selection: useSelection.Selection<EntitySchema.Type>;
+		selection: useSelection.Use<EntitySchema.Type>;
 	}
 }
 

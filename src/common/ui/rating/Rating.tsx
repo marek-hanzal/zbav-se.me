@@ -28,7 +28,7 @@ export namespace Rating {
 	export interface Props extends Container.Props {
 		textRatingFn?(rating: RatingToIcon.Value): string;
 		textHintFn?(rating: RatingToIcon.Value): string;
-		selection: useSelection.Selection<RatingItem>;
+		selection: useSelection.Use<RatingItem>;
 		allowClear?: boolean;
 	}
 }

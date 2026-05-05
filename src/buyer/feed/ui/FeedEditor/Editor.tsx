@@ -69,6 +69,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 			<Group>
 				<CurrentRestriction _suspense={_suspense} />
 			</Group>
+
 			{hidden?.includes("header") ? null : (
 				<Group>
 					<GalleryValue
@@ -100,6 +101,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 					/>
 				</Group>
 			)}
+
 			<Tx
 				label="Feed - common stuff (title)"
 				data-ui-tone="secondary"
@@ -109,6 +111,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 				data-ui-opacity="8"
 				className={"text-center"}
 			/>
+
 			<Container
 				data-ui-flow={"vertical"}
 				data-ui-gap={"default"}
@@ -333,16 +336,21 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						className={"text-center"}
 					/>
 
-					{fields.map((field) => {
-						return (
-							<AttrValue
-								key={`feed-attr-${field.name}`}
-								field={field}
-								attr={feed.query?.attrs?.[field.name]}
-								view={view}
-							/>
-						);
-					})}
+					<Container
+						data-ui-flow={"vertical"}
+						data-ui-gap={"default"}
+					>
+						{fields.map((field) => {
+							return (
+								<AttrValue
+									key={`feed-attr-${field.name}`}
+									field={field}
+									attr={feed.query?.attrs?.[field.name]}
+									view={view}
+								/>
+							);
+						})}
+					</Container>
 				</>
 			) : null}
 
@@ -377,6 +385,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 					/>
 				</Group>
 			</Container>
+
 			{children}
 		</Container>
 	);

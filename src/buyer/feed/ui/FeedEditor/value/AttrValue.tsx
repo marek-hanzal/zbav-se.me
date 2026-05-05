@@ -129,6 +129,33 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 				);
 			},
 		)
+		.with(
+			{
+				field: {
+					type: "text",
+				},
+				attr: P.union(
+					{
+						type: "text",
+					},
+					undefined,
+				),
+			},
+			{
+				field: {
+					type: "text",
+				},
+				attr: P.union(
+					{
+						type: "text",
+					},
+					undefined,
+				),
+			},
+			() => {
+				return null;
+			},
+		)
 		.otherwise(() => {
 			return "nope";
 		});
