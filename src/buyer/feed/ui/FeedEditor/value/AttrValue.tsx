@@ -183,10 +183,14 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 						<LabelValue
 							textLabel={translator.text(`Field - ${field.name} - min range`)}
 							textEmpty={translator.text("No value here (label)")}
-							textValue={attr?.min ? toLocaleNumber({
-                                locale,
-                                number: attr.min,
-                            }) ? null}
+							textValue={
+								attr?.min
+									? toLocaleNumber({
+											locale,
+											number: attr.min,
+										})
+									: null
+							}
 							onClick={() => {
 								view.set(`attr.${field.name}.min`);
 							}}
@@ -195,10 +199,14 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 						<LabelValue
 							textLabel={translator.text(`Field - ${field.name} - max range`)}
 							textEmpty={translator.text("No value here (label)")}
-							textValue={attr?.max ? toLocaleNumber({
-                                locale,
-                                number: attr.max,
-                            }) ? null}
+							textValue={
+								attr?.max
+									? toLocaleNumber({
+											locale,
+											number: attr.max,
+										})
+									: null
+							}
 							onClick={() => {
 								view.set(`attr.${field.name}.max`);
 							}}
