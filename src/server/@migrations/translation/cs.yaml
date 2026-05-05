@@ -464,6 +464,8 @@ Feed - actions (title):
     value: Co dál?
 Feed - common stuff (title):
     value: Běžné nastavení
+Feed - dynamic fields (title):
+    value: Hledání v rámci kategorie
 Feed - end of road (message):
     value: Došel jsi na konec cesty, nicméně si můžeš buď poladit aktuální seznam,
         nebo se podívej další, které máš připravené.
@@ -930,6 +932,8 @@ No drafts (message):
         chtít.
 No drafts (title):
     value: Zatím tu nic nemáš...
+No from value here (label):
+    value: Od
 No items in favourites (message):
     value: ...ale můžeš se podívat na inzeráty a nějaké si sem přidat!
 No items in favourites (title):
@@ -950,6 +954,8 @@ No my listings (message):
     value: Koukni kolem sebe, jestli si něco nezaslouží druhou šanci.
 No my listings (title):
     value: Zatím nic neprodáváš
+No to value here (label):
+    value: Do
 No tokens used yet (label):
     value: Zatím jsi mě nic nestál, ale můžeš s tím něco udělat 😁
 No transactions as buyer (message):
@@ -1078,6 +1084,8 @@ Pros 3 (placeholder):
 Pros 4 (placeholder):
     value: Přidám příslušenství
     dynamic: true
+Range minimum (placeholder):
+    value: Range minimum (placeholder)
 Reaction p90 (hint):
     value: Zevrubná doba reakce kupujícího na zprávu (pro zvědavce, p90).
 Reaction p90 (label):
