@@ -23,14 +23,14 @@ export namespace AttrNumericMin {
 		field: Extract<
 			CategoryAttrOfSchema.Type,
 			{
-				type: "number" | "decimal";
+				type: "number" | "decimal" | "range";
 			}
 		>;
 		attr:
 			| Extract<
 					AttrWhereSchema.Type,
 					{
-						type: "number" | "decimal";
+						type: "number" | "decimal" | "range";
 					}
 			  >
 			| undefined;

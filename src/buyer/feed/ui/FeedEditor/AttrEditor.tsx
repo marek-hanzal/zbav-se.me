@@ -107,6 +107,17 @@ export const AttrEditor: FC<AttrEditor.Props> = ({ _suspense, feed, view }) => {
 						undefined,
 					),
 				},
+				{
+					field: {
+						type: "range",
+					},
+					attr: P.union(
+						{
+							type: "range",
+						},
+						undefined,
+					),
+				},
 				({ field, attr }) => {
 					return (
 						<Fragment key={`field-${field.name}`}>
