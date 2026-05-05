@@ -127,29 +127,33 @@ const toSmoothedEtaSeconds = (current: number | null, next: number | null) => {
 		current,
 		next,
 	})
-		.with({
-			next: null,
-		}, () => null)
-		.with({
-			current: null,
-			next: P.number,
-		}, ({
-			next: nextEtaSeconds,
-		}) => nextEtaSeconds)
-		.with({
-			current: P.number,
-			next: P.number,
-		}, ({
-			current: currentEtaSeconds,
-			next: nextEtaSeconds,
-		}) => {
-			const blended = Math.round(currentEtaSeconds * 0.8 + nextEtaSeconds * 0.2);
-			const maxDelta = Math.max(2, Math.round(currentEtaSeconds * 0.12));
-			const lowerBound = Math.max(0, currentEtaSeconds - maxDelta);
-			const upperBound = currentEtaSeconds + maxDelta;
+		.with(
+			{
+				next: null,
+			},
+			() => null,
+		)
+		.with(
+			{
+				current: null,
+				next: P.number,
+			},
+			({ next: nextEtaSeconds }) => nextEtaSeconds,
+		)
+		.with(
+			{
+				current: P.number,
+				next: P.number,
+			},
+			({ current: currentEtaSeconds, next: nextEtaSeconds }) => {
+				const blended = Math.round(currentEtaSeconds * 0.8 + nextEtaSeconds * 0.2);
+				const maxDelta = Math.max(2, Math.round(currentEtaSeconds * 0.12));
+				const lowerBound = Math.max(0, currentEtaSeconds - maxDelta);
+				const upperBound = currentEtaSeconds + maxDelta;
 
-			return Math.min(upperBound, Math.max(lowerBound, blended));
-		})
+				return Math.min(upperBound, Math.max(lowerBound, blended));
+			},
+		)
 		.exhaustive();
 };
 
@@ -193,6 +197,7 @@ export const RunScreen: FC<RunScreen.Props> = ({
 		return toEtaSeconds(phase);
 	});
 	const phaseRef = useRef(phase);
+	const phaseKey = phase ? `${phase.name}:${phase.startedAt}` : null;
 	const logLimit = Math.max(4, Math.min(10, rows - 18 - phaseRows.length * 3));
 	const visibleLogs = logLines.slice(-logLimit);
 	const keyedVisibleLogs = (() => {
@@ -216,7 +221,7 @@ export const RunScreen: FC<RunScreen.Props> = ({
 	]);
 
 	useEffect(() => {
-		if (!phaseRef.current) {
+		if (phaseKey === null || !phaseRef.current) {
 			setDisplayedEtaSeconds(null);
 			return;
 		}
@@ -235,8 +240,7 @@ export const RunScreen: FC<RunScreen.Props> = ({
 			clearInterval(interval);
 		};
 	}, [
-		phase?.name,
-		phase?.startedAt,
+		phaseKey,
 	]);
 
 	const eta = formatEta(displayedEtaSeconds);

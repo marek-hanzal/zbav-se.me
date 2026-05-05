@@ -88,7 +88,9 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 							onChange={onSeedChange}
 						/>
 					))
-					.otherwise(() => <Text>{selectedSeedLabel}</Text>)}
+					.otherwise(() => (
+						<Text>{selectedSeedLabel}</Text>
+					))}
 			</Box>
 
 			<Box
@@ -122,7 +124,9 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 					))}
 				{match(errors.get("count"))
 					.with(undefined, () => null)
-					.otherwise((message) => <Text color={"red"}>{message}</Text>)}
+					.otherwise((message) => (
+						<Text color={"red"}>{message}</Text>
+					))}
 			</Box>
 
 			<Box
@@ -154,7 +158,9 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 					))}
 				{match(errors.get("userEmail"))
 					.with(undefined, () => null)
-					.otherwise((message) => <Text color={"red"}>{message}</Text>)}
+					.otherwise((message) => (
+						<Text color={"red"}>{message}</Text>
+					))}
 			</Box>
 
 			<Box marginTop={1}>

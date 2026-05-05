@@ -1,4 +1,12 @@
 import { Effect } from "effect";
+import { list } from "@/lib/common/rangedom/list";
+import { rangedom } from "@/lib/common/rangedom/rangedom";
+import { sample } from "@/lib/common/rangedom/sample";
+import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
+import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
+import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
+import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
+import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 import type { SeedRunSummary } from "~/seed/seed/SeedRunSummary";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { draftPatchFx } from "~/seller/draft/server/fx/draftPatchFx";
@@ -6,33 +14,19 @@ import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import ListingCategorySeedData from "~/server/@system/seed/data/listing-category-seed.json" with {
 	type: "json",
 };
+import LocationQueries from "~/server/@system/seed/data/location.json" with { type: "json" };
 import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
 import { categoryAttrOfFx } from "~/user/category/server/fx/categoryAttrOfFx";
-import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
-import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { ensureSeedUploadPoolFx } from "./ensureSeedUploadPoolFx";
 import { ensureSeedUserFx } from "./ensureSeedUserFx";
 import { SeedProgressContextFx } from "./SeedProgressContextFx";
 
-const LOCATION_QUERIES = [
-	"Praha",
-	"Brno",
-	"Ostrava",
-	"Plzen",
-	"Olomouc",
-] as const;
-
 const LISTING_CONDITIONS = [
-	3,
-	4,
-	5,
-	6,
-] as const;
-
-const LISTING_AGES = [
+	1,
 	2,
 	3,
 	4,
@@ -40,17 +34,18 @@ const LISTING_AGES = [
 	6,
 ] as const;
 
-const LISTING_EXPIRATIONS = [
-	"7-days",
-	"14-days",
-	"1-month",
+const LISTING_AGES = [
+	1,
+	2,
+	3,
+	4,
+	5,
+	6,
 ] as const;
 
-const LISTING_WARRANTIES = [
-	"warranty",
-	"no-warranty",
-	"custom",
-] as const;
+const LISTING_EXPIRATIONS = Object.values(ListingExpireEnumSchema.enum);
+const LISTING_WARRANTIES = Object.values(WarrantyEnumSchema.enum);
+const LOCATION_QUERY_POOL = LocationQueries as string[];
 
 type SeedBranchRecord = {
 	title: string;
@@ -60,7 +55,7 @@ type SeedBranchRecord = {
 	priceMin: number;
 	priceMax: number;
 	priceSpikes: number[];
-	delivery: Array<"other" | "package" | "personal" | "post">;
+	delivery: DeliveryEnumSchema.Type[];
 };
 
 type SeedDataset = Record<string, SeedBranchRecord[]>;
@@ -70,19 +65,23 @@ type CategoryAttrMeta = {
 
 const seedDataset = ListingCategorySeedData as SeedDataset;
 
-const withRandomItem = <T>(items: readonly T[], random = Math.random) => {
-	if (items.length === 0) {
-		throw new Error("Expected at least one item in random selection.");
+const withShuffle = <T>(items: readonly T[]) => {
+	const next = items.slice();
+
+	for (let index = next.length - 1; index > 0; index -= 1) {
+		const swapIndex = Math.floor(Math.random() * (index + 1));
+		const current = next[index];
+		const swap = next[swapIndex];
+
+		if (current === undefined || swap === undefined) {
+			continue;
+		}
+
+		next[index] = swap;
+		next[swapIndex] = current;
 	}
 
-	const index = Math.floor(random() * items.length);
-	const item = items[index];
-
-	if (item === undefined) {
-		throw new Error("Random selection resolved to an undefined item.");
-	}
-
-	return item;
+	return next;
 };
 
 const toSeedBranch = (slug: string) => {
@@ -91,35 +90,43 @@ const toSeedBranch = (slug: string) => {
 
 const toPriceType = (record: SeedBranchRecord, random = Math.random) => {
 	if (record.priceMax <= 0) {
-		return "free" as const;
+		return PriceTypeEnumSchema.enum.free;
 	}
 
-	return random() < 0.82 ? "fixed" : "haggle";
+	return random() < 0.82 ? PriceTypeEnumSchema.enum.fixed : PriceTypeEnumSchema.enum.haggle;
 };
 
 const toPrice = (record: SeedBranchRecord, random = Math.random) => {
 	const shouldUseSpike = record.priceSpikes.length > 0 && random() < 0.18;
 
 	if (shouldUseSpike) {
-		return withRandomItem(record.priceSpikes, random);
+		return list(record.priceSpikes);
 	}
 
 	if (record.priceMax <= record.priceMin) {
 		return record.priceMin;
 	}
 
-	const delta = record.priceMax - record.priceMin;
-	return record.priceMin + Math.round(random() * delta);
+	return rangedom(record.priceMin, record.priceMax);
 };
 
-const toUploadUrls = (cdn: string, seed: number, count: number) => {
-	const normalizedCdn = cdn.replace(/\/$/, "");
+const withProsCons = (record: SeedBranchRecord) => {
+	return {
+		pros: sample(record.pros, rangedom(0, Math.min(5, record.pros.length))),
+		cons: sample(record.cons, rangedom(0, Math.min(5, record.cons.length))),
+	};
+};
 
-	return Array.from({
-		length: count,
-	}).map((_, index) => {
-		return `${normalizedCdn}/seed/listings/${seed}-${index + 1}.jpg`;
-	});
+const withDeliverySelection = (record: SeedBranchRecord) => {
+	if (record.delivery.length === 0) {
+		return list([
+			[
+				DeliveryEnumSchema.enum.personal,
+			],
+		]);
+	}
+
+	return sample(record.delivery, rangedom(1, record.delivery.length));
 };
 
 const withListingTotalFx = Effect.fn("withListingTotalFx")(function* () {
@@ -165,29 +172,41 @@ const withSupportedCategoriesFx = Effect.fn("withSupportedCategoriesFx")(functio
 	return supported;
 });
 
-const withSeedLocationsFx = Effect.fn("withSeedLocationsFx")(function* () {
+const withSeedLocationsFx = Effect.fn("withSeedLocationsFx")(function* ({
+	count,
+}: {
+	count: number;
+}) {
 	const resolved: Array<{
 		id: string;
 		label: string;
 	}> = [];
+	const queryPool = withShuffle(LOCATION_QUERY_POOL);
+	const targetCount = Math.max(12, Math.min(queryPool.length, count));
+	const seenIds = new Set<string>();
 
-	for (const query of LOCATION_QUERIES) {
+	for (const query of queryPool) {
 		const locations = yield* locationAutocompleteFx({
 			text: query,
 			lang: "cs",
-			limit: 1,
+			limit: 5,
 		});
 
-		const location = locations[0];
+		for (const location of locations) {
+			if (!location?.id || seenIds.has(location.id)) {
+				continue;
+			}
 
-		if (!location?.id) {
-			continue;
+			seenIds.add(location.id);
+			resolved.push({
+				id: location.id,
+				label: location.city ?? location.address ?? query,
+			});
+
+			if (resolved.length >= targetCount) {
+				return resolved;
+			}
 		}
-
-		resolved.push({
-			id: location.id,
-			label: location.city ?? location.address ?? query,
-		});
 	}
 
 	if (resolved.length === 0) {
@@ -211,7 +230,6 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 	userEmail,
 }: listingSeedFx.Props) {
 	const progress = yield* SeedProgressContextFx;
-	const uploadContext = yield* UploadContextFx;
 	const phasePlan: SeedRunSummary.Phase[] = [
 		{
 			name: "Resolving user",
@@ -222,7 +240,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		{
 			name: "Preparing categories/assets/lookups",
 			done: 0,
-			total: 3,
+			total: 4,
 			status: "pending",
 		},
 		{
@@ -294,9 +312,20 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 	});
 	yield* progress.advance();
 
-	const locations = yield* withSeedLocationsFx();
+	const locations = yield* withSeedLocationsFx({
+		count,
+	});
 	yield* progress.log({
 		message: `Prepared ${locations.length} reusable locations`,
+	});
+	yield* progress.advance();
+
+	const uploadPool = yield* ensureSeedUploadPoolFx({
+		userId: user.id,
+		targetCount: Math.min(64, Math.max(12, count * 2)),
+	});
+	yield* progress.log({
+		message: `Prepared ${uploadPool.length} reusable uploads`,
 	});
 	yield* progress.advance();
 	yield* progress.finishPhase();
@@ -304,6 +333,12 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 	if (supportedCategories.length === 0) {
 		return yield* new RuntimeErrorFx({
 			message: "No publishable categories are available for listing seed.",
+		});
+	}
+
+	if (uploadPool.length === 0) {
+		return yield* new RuntimeErrorFx({
+			message: "No reusable uploads are available for listing seed.",
 		});
 	}
 
@@ -331,7 +366,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 	});
 
 	for (let index = 0; index < count; index++) {
-		const category = withRandomItem(supportedCategories);
+		const category = list(supportedCategories);
 		const branch = toSeedBranch(category.slug);
 
 		if (branch.length === 0) {
@@ -340,23 +375,14 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 			});
 		}
 
-		const record = withRandomItem(branch);
+		const record = list(branch);
 		const priceType = toPriceType(record);
-		const price = priceType === "free" ? 0 : toPrice(record);
-		const location = withRandomItem(locations);
-		const uploadCount = 1 + (index % 3);
-		const uploadUrls = toUploadUrls(uploadContext.cdn, index + 1, uploadCount);
-		const uploadIds: string[] = [];
-
-		for (const url of uploadUrls) {
-			const upload = yield* uploadCreateFx({
-				userId: user.id,
-				access: "public",
-				url,
-			});
-
-			uploadIds.push(upload.id);
-		}
+		const price = priceType === PriceTypeEnumSchema.enum.free ? 0 : toPrice(record);
+		const location = list(locations);
+		const uploadCount = rangedom(1, Math.min(4, uploadPool.length));
+		const uploadIds = sample(uploadPool, uploadCount);
+		const prosCons = withProsCons(record);
+		const delivery = withDeliverySelection(record);
 
 		const draft = yield* draftCreateFx({
 			userId: user.id,
@@ -379,15 +405,19 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 				locationId: location.id,
 				priceType,
 				price,
-				currency: "CZK",
-				expires: withRandomItem(LISTING_EXPIRATIONS),
+				currency: CurrencyEnumSchema.enum.CZK,
+				expires: list(LISTING_EXPIRATIONS),
 				uploadIds,
-				delivery: record.delivery,
-				pros: record.pros.slice(0, 5),
-				cons: record.cons.slice(0, 5),
-				warranty: withRandomItem(LISTING_WARRANTIES),
-				condition: withRandomItem(LISTING_CONDITIONS),
-				age: withRandomItem(LISTING_AGES),
+				delivery,
+				pros: prosCons.pros,
+				cons: prosCons.cons,
+				warranty: list(LISTING_WARRANTIES),
+				condition: list([
+					...LISTING_CONDITIONS,
+				]),
+				age: list([
+					...LISTING_AGES,
+				]),
 			},
 		});
 
@@ -402,9 +432,9 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 			price,
 			uploadIds,
 			uploadCount,
-			delivery: record.delivery,
-			pros: record.pros.slice(0, 5),
-			cons: record.cons.slice(0, 5),
+			delivery,
+			pros: prosCons.pros,
+			cons: prosCons.cons,
 		});
 
 		yield* progress.log({
