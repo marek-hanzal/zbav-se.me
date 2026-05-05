@@ -63,10 +63,12 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 					data-ui-tone="secondary"
 					data-ui-text="sm"
 				/>
+
 				<Dial
 					value={rangeValue}
 					onChange={setRangeValue}
 					placeholder={translator.text("Feed range (placeholder)")}
+					allowDecimals={false}
 					data-ui-inner="default"
 				/>
 			</Container>

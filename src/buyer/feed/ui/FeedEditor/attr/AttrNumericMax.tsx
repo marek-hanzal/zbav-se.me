@@ -90,21 +90,22 @@ export const AttrNumericMax: FC<AttrNumericMax.Props> = ({ feed, field, attr, vi
 			{...props}
 		>
 			<form.AppField name={"value"}>
-				{(field) => (
+				{(props) => (
 					<Dial
 						value={
-							typeof field.state.value === "number"
-								? String(field.state.value)
+							typeof props.state.value === "number"
+								? String(props.state.value)
 								: undefined
 						}
 						onChange={(value) => {
-							field.handleChange(
+							props.handleChange(
 								value === undefined ? null : Number.parseFloat(value),
 							);
-							field.handleBlur();
+							props.handleBlur();
 						}}
 						placeholder={translator.text("Range minimum (placeholder)")}
-						data-ui-inner="default"
+						allowDecimals={field.type === "decimal"}
+						data-ui-inner={"default"}
 					/>
 				)}
 			</form.AppField>

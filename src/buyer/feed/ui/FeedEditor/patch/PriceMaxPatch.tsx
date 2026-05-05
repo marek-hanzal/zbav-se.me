@@ -67,20 +67,21 @@ export const PriceMaxPatch: FC<PriceMaxPatch.Props> = ({ feed, onSettled, onCanc
 			{...props}
 		>
 			<form.AppField name={"price"}>
-				{(field) => (
+				{(props) => (
 					<Dial
 						value={
-							typeof field.state.value === "number"
-								? String(field.state.value)
+							typeof props.state.value === "number"
+								? String(props.state.value)
 								: undefined
 						}
 						onChange={(value) => {
-							field.handleChange(
+							props.handleChange(
 								value === undefined ? null : Number.parseFloat(value),
 							);
-							field.handleBlur();
+							props.handleBlur();
 						}}
 						placeholder={translator.text("Maximum price (placeholder)")}
+						allowDecimals
 						data-ui-inner="default"
 					/>
 				)}

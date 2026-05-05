@@ -33,10 +33,11 @@ export namespace Dial {
 		value: string | undefined;
 		onChange: (value: string | undefined) => void;
 		placeholder: string;
+		allowDecimals: boolean;
 	}
 }
 
-export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ...props }) => {
+export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecimals, ...props }) => {
 	return (
 		<Container
 			data-ui={"Dial"}
@@ -46,7 +47,6 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ...props })
 			{...props}
 		>
 			<Container
-				data-ui={"Dial-Badge-value-wrapper"}
 				data-ui-tone="neutral"
 				data-ui-theme="light"
 				data-ui-flow="horizontal"
@@ -77,7 +77,6 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ...props })
 			</Container>
 
 			<div
-				data-ui={"Dial-grid"}
 				className={tvc([
 					"grid",
 					"grid-cols-3",
@@ -103,16 +102,14 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ...props })
 				))}
 
 				<Item
-					data-ui={"Dial-Item-comma"}
 					icon={"icon-[fluent--comma-20-filled]"}
-					disabled={!value || value.includes(".")}
+					disabled={!allowDecimals || !value || value.includes(".")}
 					onClick={() => {
 						onChange(digit(value || "", "."));
 					}}
 				/>
 
 				<Item
-					data-ui={"Dial-Item-zero"}
 					icon={icons[0]}
 					disabled={false}
 					onClick={() => {
@@ -121,7 +118,6 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ...props })
 				/>
 
 				<Item
-					data-ui={"Dial-Item-clear"}
 					icon={ClearIcon}
 					disabled={!value}
 					onClick={() => {

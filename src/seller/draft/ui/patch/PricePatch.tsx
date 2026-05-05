@@ -76,20 +76,21 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, view, ...pro
 				data-ui-gap="default"
 			>
 				<form.AppField name={"price"}>
-					{(field) => (
+					{(props) => (
 						<Dial
 							value={
-								typeof field.state.value === "number"
-									? String(field.state.value)
+								typeof props.state.value === "number"
+									? String(props.state.value)
 									: undefined
 							}
 							onChange={(value) => {
-								field.handleChange(
+								props.handleChange(
 									value === undefined ? 0 : Number.parseFloat(value),
 								);
-								field.handleBlur();
+								props.handleBlur();
 							}}
 							placeholder={translator.text("Price (placeholder)")}
+							allowDecimals
 							data-ui-inner="default"
 						/>
 					)}
