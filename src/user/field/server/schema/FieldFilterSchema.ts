@@ -11,9 +11,6 @@ export const FieldFilterSchema = z
 		type: FieldTypeEnumSchema.optional().meta({
 			description: "Exact field type",
 		}),
-		required: z.boolean().optional().meta({
-			description: "Field required flag",
-		}),
 	})
 	.strip()
 	.meta({
