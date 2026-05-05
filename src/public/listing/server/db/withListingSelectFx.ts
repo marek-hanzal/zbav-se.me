@@ -5,6 +5,8 @@ import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { withLikeEx } from "~/server/database/expression/withLikeEx";
+import { withNormalizedLikeEx } from "~/server/database/expression/withNormalizedLikeEx";
 import type { ListingMetaSchema } from "../schema/ListingMetaSchema";
 import type { ListingSortSchema } from "../schema/ListingSortSchema";
 import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
@@ -54,6 +56,44 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			.with("createdAt", () => select.orderBy("l.createdAt", item.order))
 			.with("updatedAt", () => select.orderBy("l.updatedAt", item.order))
 			.with("expiresAt", () => select.orderBy("l.expiresAt", item.order))
+			.with("geo", () => {
+				if (!meta?.locationId) {
+					return select;
+				}
+				const locationId = meta.locationId;
+				const isDesc = item.order === "desc";
+				const sortOrder = isDesc ? "asc" : item.order;
+
+				/**
+				 * KNN GiST over geo works for ASC nearest-neighbour ordering.
+				 * For DESC (farthest-first), order by distance to the antipode ASC,
+				 * which is equivalent and keeps index usage.
+				 */
+				return select.orderBy((eb) => {
+					const origin = eb
+						.selectFrom("location as originLoc")
+						.select((eb) => {
+							return sql`ST_SetSRID(
+                                ST_MakePoint(
+                                    case
+                                        when ${eb.val(isDesc)} and ${eb.ref("originLoc.lon")} >= 0 then ${eb.ref("originLoc.lon")} - 180
+                                        when ${eb.val(isDesc)} then ${eb.ref("originLoc.lon")} + 180
+                                        else ${eb.ref("originLoc.lon")}
+                                    end,
+                                    case
+                                        when ${eb.val(isDesc)} then -${eb.ref("originLoc.lat")}
+                                        else ${eb.ref("originLoc.lat")}
+                                    end
+                                ),
+                                4326
+                            )`.as("point");
+						})
+						.where("originLoc.id", "=", locationId)
+						.limit(1);
+
+					return sql`${eb.ref("l.withLocation")} <-> (${origin})`;
+				}, sortOrder);
+			})
 			.exhaustive();
 	}
 
@@ -106,24 +146,24 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				}
 
 				if (where.fulltext) {
-					const _fulltext = where.fulltext;
+					const fulltext = where.fulltext;
 
-					// query = query.where((eb) => {
-					// 	const categoryIdSelect = eb
-					// 		.selectFrom("category as cat")
-					// 		.select("cat.id")
-					// 		.where((eb) =>
-					// 			eb.or([
-					// 				withLikeEx(eb.ref("cat.category"), fulltext),
-					// 				withLikeEx(eb.ref("cat.group"), fulltext),
-					// 			]),
-					// 		);
+					query = query.where((eb) => {
+						const categoryIdSelect = eb
+							.selectFrom("category as cat")
+							.select("cat.id")
+							.where((eb) => {
+								return eb.or([
+									withLikeEx(eb.ref("cat.category"), fulltext),
+									withLikeEx(eb.ref("cat.group"), fulltext),
+								]);
+							});
 
-					// 	return eb.or([
-					// 		withNormalizedLikeEx(eb.ref("l.withTitleSearch"), fulltext, "both"),
-					// 		eb("l.categoryId", "in", categoryIdSelect),
-					// 	]);
-					// }) as TSelect;
+						return eb.or([
+							withNormalizedLikeEx(eb.ref("l.withTitle"), fulltext, "both"),
+							eb("l.categoryId", "in", categoryIdSelect),
+						]);
+					});
 				}
 
 				if (where.categoryId) {
