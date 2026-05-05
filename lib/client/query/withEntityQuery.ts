@@ -358,6 +358,7 @@ export const withEntityQuery = <
 		});
 
 		if (!invalidate) {
+			logger.trace("withEntityQuery::invalidator - skipped");
 			return;
 		}
 
@@ -683,6 +684,7 @@ export const withEntityQuery = <
 			async mutationFn(request) {
 				logger.trace("withEntityQuery::usePatchMutation::mutateFn", {
 					request,
+					invalidate,
 				});
 
 				await onPreMutation?.({

@@ -15,7 +15,7 @@ export namespace YearSelect {
 }
 
 export const YearSelect: FC<YearSelect.Props> = ({ from, to, selection }) => {
-	const min = Math.max(from ?? 1900, 1900);
+	const min = Math.max(from ?? 1940, 1940);
 	const max = Math.max(min, Math.min(to ?? 2099, 2099));
 	const years = useMemo(() => {
 		return Array.from(

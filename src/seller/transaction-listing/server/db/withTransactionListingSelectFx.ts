@@ -13,8 +13,6 @@ export namespace withTransactionListingSelectFx {
 	export interface Props {
 		sort?: TransactionListingSortSchema.Type[];
 	}
-
-	export type Select = ReturnType<typeof withTransactionListingSelectFx>;
 }
 
 export const withTransactionListingSelectFx = Effect.fn("withTransactionListingSelectFx")(
