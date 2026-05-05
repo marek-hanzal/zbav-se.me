@@ -69,20 +69,17 @@ export const AttrDecimal: FC<AttrDecimal.Props> = ({ draftId, attrs, attr, view,
 			{...props}
 		>
 			<form.AppField name={"value"}>
-				{(field) => (
+				{(props) => (
 					<Dial
 						value={
-							typeof field.state.value === "number"
-								? String(field.state.value)
-								: undefined
+							typeof props.state.value === "number" ? props.state.value : undefined
 						}
 						onChange={(value) => {
-							field.handleChange(
-								value === undefined ? null : Number.parseFloat(value),
-							);
-							field.handleBlur();
+							props.handleChange(value ?? null);
+							props.handleBlur();
 						}}
 						placeholder={translator.text("Price (placeholder)")}
+						allowDecimals
 						data-ui-inner="default"
 					/>
 				)}

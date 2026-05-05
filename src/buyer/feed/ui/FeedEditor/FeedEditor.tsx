@@ -4,6 +4,7 @@ import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { useView } from "@/lib/client/view";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
+import { AttrEditor } from "./AttrEditor";
 import { Editor } from "./Editor";
 import { AgePatch } from "./patch/AgePatch";
 import { CategoryPatch } from "./patch/CategoryPatch";
@@ -166,6 +167,12 @@ export const FeedEditor = withFallback(
 						onCancel={onDefaultView}
 					/>
 				</view.Panel>
+
+				<AttrEditor
+					_suspense={_suspense}
+					feed={feed}
+					view={view}
+				/>
 			</view.View>
 		);
 	},

@@ -9,7 +9,7 @@ import { uiSelectButton } from "~/common/ui/ui";
 export namespace Item {
 	export interface Props {
 		priceType: string;
-		selection: useSelection.Selection<EntitySchema.Type>;
+		selection: useSelection.Use<EntitySchema.Type>;
 	}
 }
 

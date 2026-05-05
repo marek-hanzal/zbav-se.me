@@ -9,20 +9,18 @@ import { uiSelectButton } from "~/common/ui/ui";
 
 export namespace DeliverySelect {
 	export interface Props extends Container.Props {
-		selection: useSelection.Selection<EntitySchema.Type>;
+		selection: useSelection.Use<EntitySchema.Type>;
 	}
 }
 
 /**
  * Provides an interactive control for selecting delivery values in forms.
  * Use it in editors where users need to choose or update delivery before saving.
- *
- * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ...props }) => {
 	return (
 		<Container
-			data-ui="DeliverySelect[Container]"
+			data-ui="DeliverySelect"
 			data-ui-layout="vertical-flex"
 			data-ui-height="auto"
 			data-ui-width="full"

@@ -7,7 +7,7 @@ import { ListContainer } from "./ListContainer";
 
 export namespace CategorySelect {
 	export interface Props extends Container.Props {
-		selection: useSelection.Selection<EntitySchema.Type>;
+		selection: useSelection.Use<EntitySchema.Type>;
 		/**
 		 * Scroll to the given category
 		 */

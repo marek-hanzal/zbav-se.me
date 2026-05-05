@@ -67,21 +67,17 @@ export const PriceMinPatch: FC<PriceMinPatch.Props> = ({ feed, onSettled, onCanc
 			{...props}
 		>
 			<form.AppField name={"price"}>
-				{(field) => (
+				{(price) => (
 					<Dial
 						value={
-							typeof field.state.value === "number"
-								? String(field.state.value)
-								: undefined
+							typeof price.state.value === "number" ? price.state.value : undefined
 						}
 						onChange={(value) => {
-							field.handleChange(
-								value === undefined ? null : Number.parseFloat(value),
-							);
-							field.handleBlur();
+							price.handleChange(value ?? null);
+							price.handleBlur();
 						}}
 						placeholder={translator.text("Minimum price (placeholder)")}
-						data-ui-inner="default"
+						allowDecimals
 					/>
 				)}
 			</form.AppField>

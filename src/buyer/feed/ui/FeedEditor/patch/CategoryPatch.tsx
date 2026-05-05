@@ -67,12 +67,13 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 									...feed.query?.filter,
 									categoryId: selection.optional.singleId(),
 								},
+								attrs: {},
 							},
 						},
 					});
 				}}
 				loading={patchMutation.isPending}
-				disabled={false}
+				disabled={patchMutation.isPending}
 			/>
 		</Container>
 	);

@@ -4,8 +4,6 @@ import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
-import { ListingPrice } from "~/common/listing/ui/ListingPrice";
-import { LocationBadge } from "~/common/location/ui/LocationBadge";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroImage } from "~/common/ui/img";
 

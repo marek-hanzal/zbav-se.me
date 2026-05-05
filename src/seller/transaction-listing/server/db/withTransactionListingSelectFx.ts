@@ -126,7 +126,7 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 					}
 
 					if (where.fulltext) {
-						const fulltext = where.fulltext;
+						const _fulltext = where.fulltext;
 						// fulltext search (commented out in original) could be added here if needed
 					}
 

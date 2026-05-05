@@ -8,7 +8,7 @@ import { uiSelectButton } from "~/common/ui/ui";
 export namespace Item {
 	export interface Props {
 		restriction: string;
-		selection: useSelection.Selection<EntitySchema.Type>;
+		selection: useSelection.Use<EntitySchema.Type>;
 		allowClear?: boolean;
 	}
 }

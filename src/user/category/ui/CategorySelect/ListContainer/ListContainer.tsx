@@ -15,7 +15,7 @@ import { Empty } from "./Data/Empty";
 export namespace ListContainer {
 	export interface Props extends Container.Props {
 		fulltext: Fulltext.Value;
-		selection: useSelection.Selection<EntitySchema.Type>;
+		selection: useSelection.Use<EntitySchema.Type>;
 		categoryId: string | undefined;
 		/**
 		 * Controls if restricted categories are shown: useful e.g. for drafts when

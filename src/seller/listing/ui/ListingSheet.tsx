@@ -22,42 +22,6 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ _suspense, listing, state
 		defaultPanel: "default",
 	});
 
-	// const views = useMemo<SheetView.Views<ListingSheet.View>>(() => {
-	// 	return {
-	// 		detail: {
-	// 			children: (
-	// 				<ListingCard
-	// 					_suspense={"I know"}
-	// 					data-ui={"ListingSheet-[ListingCardContainer]"}
-	// 					listing={listing}
-	// 					data-ui-inner="default"
-	// 					hooks={{
-	// 						onGallery: () => setView("gallery"),
-	// 					}}
-	// 				/>
-	// 			),
-	// 			header: ({ close }) => ({
-	// 				title: "listing.title",
-	// 				right: <CloseButton onClick={close} />,
-	// 			}),
-	// 		},
-	// 		gallery: {
-	// 			children: ,
-	// 			header: () => ({
-	// 				title: translator.text("Listing gallery (title)"),
-	// 				right: (
-	// 					<CloseButton
-	// 						iconEnabled={CloseIcon}
-	// 						onClick={() => setView("detail")}
-	// 					/>
-	// 				),
-	// 			}),
-	// 		},
-	// 	};
-	// }, [
-	// 	listing,
-	// ]);
-
 	return (
 		<view.View>
 			<BottomSheet
@@ -68,6 +32,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ _suspense, listing, state
 					view.set("default");
 				}}
 				detent={"default"}
+				{...props}
 			>
 				<view.Panel name="default">
 					<ListingCard

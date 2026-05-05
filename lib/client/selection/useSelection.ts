@@ -38,7 +38,7 @@ export namespace useSelection {
 		multiId(): string[];
 	}
 
-	export interface Selection<T extends EntitySchema.Type> {
+	export interface Use<T extends EntitySchema.Type> {
 		selection: T[];
 		mode: Mode;
 
@@ -73,7 +73,7 @@ export function useSelection<T extends EntitySchema.Type>({
 	onSingle,
 	onMulti,
 	onSelect,
-}: useSelection.Props<T>): useSelection.Selection<T> {
+}: useSelection.Props<T>): useSelection.Use<T> {
 	const [selection, setSelection] = useState<T[]>(() => normalize(initial, mode));
 	const selectionRef = useRef(selection);
 	selectionRef.current = selection;

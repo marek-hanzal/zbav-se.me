@@ -5,6 +5,8 @@ import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { withLikeEx } from "~/server/database/expression/withLikeEx";
+import { withNormalizedLikeEx } from "~/server/database/expression/withNormalizedLikeEx";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
 import type { ListingSortSchema } from "../schema/ListingSortSchema";
@@ -125,22 +127,22 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				if (where.fulltext) {
 					const fulltext = where.fulltext;
 
-					// query = query.where((eb) => {
-					// 	const categoryIdSelect = eb
-					// 		.selectFrom("category as cat")
-					// 		.select("cat.id")
-					// 		.where((eb) =>
-					// 			eb.or([
-					// 				withLikeEx(eb.ref("cat.category"), fulltext),
-					// 				withLikeEx(eb.ref("cat.group"), fulltext),
-					// 			]),
-					// 		);
+					query = query.where((eb) => {
+						const categoryIdSelect = eb
+							.selectFrom("category as cat")
+							.select("cat.id")
+							.where((eb) =>
+								eb.or([
+									withLikeEx(eb.ref("cat.category"), fulltext),
+									withLikeEx(eb.ref("cat.group"), fulltext),
+								]),
+							);
 
-					// 	return eb.or([
-					// 		withNormalizedLikeEx(eb.ref("l.withTitleSearch"), fulltext, "both"),
-					// 		eb("l.categoryId", "in", categoryIdSelect),
-					// 	]);
-					// }) as TSelect;
+						return eb.or([
+							withNormalizedLikeEx(eb.ref("l.withTitle"), fulltext, "both"),
+							eb("l.categoryId", "in", categoryIdSelect),
+						]);
+					});
 				}
 
 				if (where.userId) {

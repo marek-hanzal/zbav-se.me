@@ -5,6 +5,7 @@ import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { withLikeEx } from "~/server/database/expression/withLikeEx";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
 import type { DraftSortSchema } from "../schema/DraftSortSchema";
@@ -24,13 +25,13 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely
-		.selectFrom("draft as l")
-		.leftJoin("category as cat", "cat.id", "l.categoryId");
+		.selectFrom("draft as d")
+		.leftJoin("category as cat", "cat.id", "d.categoryId");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("l.createdAt", item.order))
-			.with("updatedAt", () => query.orderBy("l.updatedAt", item.order))
+			.with("createdAt", () => query.orderBy("d.createdAt", item.order))
+			.with("updatedAt", () => query.orderBy("d.updatedAt", item.order))
 			.exhaustive();
 	}
 
@@ -40,33 +41,33 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 
 	return selectFx({
 		select: query.select([
-			"l.id",
+			"d.id",
 			//
-			"l.withUploadIds",
-			"l.withImageUrl",
+			"d.withUploadIds",
+			"d.withImageUrl",
 			//
-			"l.title",
-			"l.description",
+			"d.title",
+			"d.description",
 			//
-			"l.locationId",
+			"d.locationId",
 			//
-			"l.categoryId",
-			"l.restriction",
+			"d.categoryId",
+			"d.restriction",
 			//
-			"l.price",
-			"l.currency",
-			"l.priceType",
+			"d.price",
+			"d.currency",
+			"d.priceType",
 			//
-			"l.expires",
+			"d.expires",
 			//
-			"l.galleryId",
-			"l.warranty",
+			"d.galleryId",
+			"d.warranty",
 			//
-			"l.age",
-			"l.condition",
+			"d.age",
+			"d.condition",
 			//
-			"l.createdAt",
-			"l.updatedAt",
+			"d.createdAt",
+			"d.updatedAt",
 			(eb) => {
 				return sql<CategorySchema.Type>`
                     to_jsonb(${eb.table("cat")}.*)
@@ -77,13 +78,13 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
                 `.as("category");
 			},
 			(eb) => {
-				return sql<string[]>`to_jsonb(${eb.ref("l.pros")})`.as("pros");
+				return sql<string[]>`to_jsonb(${eb.ref("d.pros")})`.as("pros");
 			},
 			(eb) => {
-				return sql<string[]>`to_jsonb(${eb.ref("l.cons")})`.as("cons");
+				return sql<string[]>`to_jsonb(${eb.ref("d.cons")})`.as("cons");
 			},
 			(eb) => {
-				return sql<DeliveryEnumSchema.Type[]>`to_jsonb(${eb.ref("l.delivery")})`.as(
+				return sql<DeliveryEnumSchema.Type[]>`to_jsonb(${eb.ref("d.delivery")})`.as(
 					"delivery",
 				);
 			},
@@ -93,7 +94,7 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 						sql<RestrictionEnumSchema.Type | null>`
                             greatest(
                                 ${eb.ref("cat.restriction")},
-                                ${eb.ref("l.restriction")}
+                                ${eb.ref("d.restriction")}
                             )
 			            `,
 						sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`,
@@ -111,36 +112,36 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 				}
 
 				if (where.id) {
-					query = query.where("l.id", "=", where.id);
+					query = query.where("d.id", "=", where.id);
 				}
 
 				if (where.idIn && where.idIn.length > 0) {
-					query = query.where("l.id", "in", where.idIn);
+					query = query.where("d.id", "in", where.idIn);
 				}
 
 				if (where.fulltext) {
 					const fulltext = where.fulltext;
 
-					// query = query.where((eb) => {
-					// 	const categoryIdSelect = eb
-					// 		.selectFrom("category as cat")
-					// 		.select("cat.id")
-					// 		.where((eb) =>
-					// 			eb.or([
-					// 				withLikeEx(eb.ref("cat.category"), fulltext),
-					// 				withLikeEx(eb.ref("cat.group"), fulltext),
-					// 			]),
-					// 		);
+					query = query.where((eb) => {
+						const categoryIdSelect = eb
+							.selectFrom("category as cat")
+							.select("cat.id")
+							.where((eb) =>
+								eb.or([
+									withLikeEx(eb.ref("cat.category"), fulltext),
+									withLikeEx(eb.ref("cat.group"), fulltext),
+								]),
+							);
 
-					// 	return eb.or([
-					// 		withNormalizedLikeEx(eb.ref("l.withTitleSearch"), fulltext, "both"),
-					// 		eb("l.categoryId", "in", categoryIdSelect),
-					// 	]);
-					// }) as TSelect;
+						return eb.or([
+							withLikeEx(eb.ref("d.title"), fulltext, "both"),
+							eb("d.categoryId", "in", categoryIdSelect),
+						]);
+					});
 				}
 
 				if (where.userId) {
-					query = query.where("l.userId", "=", where.userId);
+					query = query.where("d.userId", "=", where.userId);
 				}
 
 				return yield* Effect.succeed(query);

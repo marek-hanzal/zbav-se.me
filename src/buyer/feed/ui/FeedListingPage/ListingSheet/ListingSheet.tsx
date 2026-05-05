@@ -1,4 +1,4 @@
-import { type FC, type PropsWithChildren, useCallback } from "react";
+import type { FC } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense, StateType } from "@/lib/client/type";
@@ -10,7 +10,7 @@ import { getRootLogger } from "~/common/log/getRootLogger";
 import { ListingCard } from "../ListingCard";
 
 export namespace ListingSheet {
-	export interface Props extends PropsWithChildren, MarkSuspense.Props {
+	export interface Props extends BottomSheet.PropsEx, MarkSuspense.Props {
 		feedId: string;
 		listingId: string;
 		state: StateType.State<boolean>;
@@ -43,12 +43,6 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 		},
 	});
 
-	const $onClose = useCallback(() => {
-		view.set("default");
-	}, [
-		view,
-	]);
-
 	return (
 		<view.View>
 			<BottomSheet
@@ -59,6 +53,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					view.set("default");
 				}}
 				detent={"default"}
+				{...props}
 			>
 				<view.Panel name="default">
 					<ListingCard

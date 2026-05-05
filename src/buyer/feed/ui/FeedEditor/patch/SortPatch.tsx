@@ -55,7 +55,7 @@ export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ...p
 					});
 				}}
 				loading={patchMutation.isPending}
-				disabled={false}
+				disabled={patchMutation.isPending}
 			/>
 		</Container>
 	);
