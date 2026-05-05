@@ -1,1 +1,3 @@
-console.log("Some other nice day, bro");
+import { runSeedApp } from "~/seed";
+
+await runSeedApp();
