@@ -12,7 +12,7 @@ import { RunScreen } from "./RunScreen";
 import { SetupScreen } from "./SetupScreen";
 
 type ScreenState = "completed" | "failed" | "running" | "setup";
-type FocusField = "count" | "seed" | "user";
+type FocusField = "count" | "seed" | "submit" | "user";
 
 type PhaseState = {
 	done: number;
@@ -28,6 +28,7 @@ const focusOrder: FocusField[] = [
 	"seed",
 	"count",
 	"user",
+	"submit",
 ];
 
 const readErrorMessage = (error: unknown) => {
@@ -385,7 +386,7 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 					return;
 				}
 
-				if (focusField === "seed" && key.return) {
+				if (focusField === "submit" && key.return) {
 					submitSetup();
 				}
 			})
@@ -436,8 +437,10 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 							setCountInput(String(nextSeed.defaultCount));
 							setUserEmailInput(nextSeed.defaultUserEmail);
 						}}
-						onSubmit={submitSetup}
 						onUserEmailChange={setUserEmailInput}
+						onUserEmailSubmit={() => {
+							setFocusField("submit");
+						}}
 						selectedSeedId={selectedSeed.id}
 						seedOptions={seedRegistry.map((seed) => ({
 							label: seed.label,

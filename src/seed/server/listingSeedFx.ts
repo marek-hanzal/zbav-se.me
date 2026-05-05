@@ -322,7 +322,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 
 	const uploadPool = yield* ensureSeedUploadPoolFx({
 		userId: user.id,
-		targetCount: Math.min(64, Math.max(12, count * 2)),
+		targetCount: Math.min(64, Math.max(1, count)),
 	});
 	yield* progress.log({
 		message: `Prepared ${uploadPool.length} reusable uploads`,

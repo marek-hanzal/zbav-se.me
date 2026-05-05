@@ -3,7 +3,7 @@ import { Box, Text } from "ink";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
-type FocusField = "count" | "seed" | "user";
+type FocusField = "count" | "seed" | "submit" | "user";
 
 export namespace SetupScreen {
 	export interface Props {
@@ -14,8 +14,8 @@ export namespace SetupScreen {
 		onCountChange(value: string): void;
 		onCountSubmit(): void;
 		onSeedChange(seedId: string): void;
-		onSubmit(): void;
 		onUserEmailChange(value: string): void;
+		onUserEmailSubmit(): void;
 		selectedSeedId: string;
 		seedOptions: Array<{
 			label: string;
@@ -33,8 +33,8 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 	onCountChange,
 	onCountSubmit,
 	onSeedChange,
-	onSubmit,
 	onUserEmailChange,
+	onUserEmailSubmit,
 	selectedSeedId,
 	seedOptions,
 	userEmailInput,
@@ -139,7 +139,7 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 							defaultValue={userEmailInput}
 							placeholder={"seed-listings@test.cz"}
 							onChange={onUserEmailChange}
-							onSubmit={onSubmit}
+							onSubmit={onUserEmailSubmit}
 						/>
 					))
 					.otherwise(() => (
@@ -156,11 +156,31 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 					))}
 			</Box>
 
+			<Box
+				borderColor={match(focusField)
+					.with("submit", () => "green")
+					.otherwise(() => "gray")}
+				borderStyle={"round"}
+				paddingX={1}
+				paddingY={1}
+			>
+				<Text
+					bold={focusField === "submit"}
+					color={match(errors.size)
+						.with(0, () => "green")
+						.otherwise(() => "gray")}
+				>
+					{match(errors.size)
+						.with(0, () => "Run seed")
+						.otherwise(() => "Run seed (disabled)")}
+				</Text>
+			</Box>
+
 			<Box>
 				{match(errors.size)
 					.with(0, () => (
 						<StatusMessage variant={"success"}>
-							Press Enter on the User field to start seeding.
+							Move to Run seed and press Enter to start seeding.
 						</StatusMessage>
 					))
 					.otherwise(() => (
