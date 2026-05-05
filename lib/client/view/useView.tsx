@@ -1,4 +1,6 @@
+import { getLogger } from "@logtape/logtape";
 import { type FC, useMemo, useRef, useState } from "react";
+import { useRenderLogger } from "../log/useRenderLogger";
 import { Panel } from "./Panel";
 import { View } from "./View";
 
@@ -27,6 +29,14 @@ export const useView = <TPanel extends string>({
 	panels: _,
 	defaultPanel,
 }: useView.Props<TPanel>): useView.Use<TPanel> => {
+	useRenderLogger({
+		logger: getLogger([
+			"lib",
+			"client",
+		]),
+		name: "useView",
+	});
+
 	const [panel, setPanel] = useState(defaultPanel);
 
 	const panelRef = useRef(defaultPanel);
