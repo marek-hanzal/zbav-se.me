@@ -8,6 +8,7 @@ import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
+import { SeedProgressContextFx } from "./SeedProgressContextFx";
 
 const MAX_UPLOAD_FETCH = 128;
 const MAX_PHOTOBANK_FETCH_PER_RUN = 64;
@@ -52,6 +53,7 @@ export const ensureSeedUploadPoolFx = Effect.fn("ensureSeedUploadPoolFx")(functi
 	userId,
 	targetCount,
 }: ensureSeedUploadPoolFx.Props) {
+	const progress = yield* SeedProgressContextFx;
 	const { kysely } = yield* KyselyContextFx;
 	const { bucket } = yield* S3ContextFx;
 	const { cdn } = yield* UploadContextFx;
@@ -86,8 +88,8 @@ export const ensureSeedUploadPoolFx = Effect.fn("ensureSeedUploadPoolFx")(functi
 		Array.from({
 			length: fetchBudget,
 		}),
-		() =>
-			Effect.gen(function* () {
+		() => {
+			return Effect.gen(function* () {
 				const data = yield* fetchPhotoBufferFx();
 				const key = `${userId}/seed/${randomUUID()}.jpg`;
 
@@ -105,16 +107,21 @@ export const ensureSeedUploadPoolFx = Effect.fn("ensureSeedUploadPoolFx")(functi
 				});
 
 				const upload = yield* uploadCreateFx({
-					access: "private",
+					access: "public",
 					userId,
 					url: `${cdn.replace(/\/$/, "")}/${key}`,
+				});
+
+				progress.log({
+					message: `Uploaded [${upload.url}]`,
 				});
 
 				return {
 					id: upload.id,
 					url: upload.url,
 				};
-			}),
+			});
+		},
 		{
 			concurrency: PHOTOBANK_FETCH_CONCURRENCY,
 		},

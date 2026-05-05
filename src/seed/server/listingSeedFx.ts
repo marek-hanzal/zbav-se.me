@@ -240,7 +240,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		{
 			name: "Preparing categories/assets/lookups",
 			done: 0,
-			total: 3,
+			total: 4,
 			status: "pending",
 		},
 		{
@@ -292,7 +292,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 
 	yield* progress.startPhase({
 		name: "Preparing categories/assets/lookups",
-		total: 3,
+		total: 4,
 	});
 
 	const beforeTotal = yield* withListingTotalFx();
