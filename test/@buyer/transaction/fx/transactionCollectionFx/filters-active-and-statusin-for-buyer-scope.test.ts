@@ -80,7 +80,9 @@ describe("buyer transactionCollectionFx", () => {
 			expect(inactiveOnly.map((item) => item.id)).toEqual([
 				passiveScenario.transactionId,
 			]);
-			// expect(typeof activeOnly[0]?.unreadCount).toBe("number");
+			expect(typeof activeOnly[0]?.unread).toBe("number");
+			expect(activeOnly[0]?.unread).toBe(2);
+			expect(inactiveOnly[0]?.unread).toBe(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 
