@@ -177,6 +177,25 @@ const toFooter = (screenState: ScreenState, errorMessage: string | null) => {
 		.exhaustive();
 };
 
+const MAX_VISIBLE_PHASES = 3;
+
+const toVisiblePhases = (phases: SeedRunSummary.Phase[]) => {
+	if (phases.length <= MAX_VISIBLE_PHASES) {
+		return phases;
+	}
+
+	const activeIndex = phases.findIndex((phase) => phase.status === "running");
+	const pendingIndex = phases.findIndex((phase) => phase.status === "pending");
+	const anchorIndex =
+		activeIndex >= 0 ? activeIndex : pendingIndex >= 0 ? pendingIndex : phases.length - 1;
+	const windowStart = Math.max(
+		0,
+		Math.min(anchorIndex - 1, phases.length - MAX_VISIBLE_PHASES),
+	);
+
+	return phases.slice(windowStart, windowStart + MAX_VISIBLE_PHASES);
+};
+
 export const RunScreen: FC<RunScreen.Props> = ({
 	errorMessage,
 	logLines,
@@ -193,12 +212,13 @@ export const RunScreen: FC<RunScreen.Props> = ({
 	const progressValue =
 		progressTotal > 0 ? Math.round((progressDone / Math.max(1, progressTotal)) * 100) : 0;
 	const phaseRows = summary.phases ?? [];
+	const visiblePhaseRows = toVisiblePhases(phaseRows);
 	const [displayedEtaSeconds, setDisplayedEtaSeconds] = useState<number | null>(() => {
 		return toEtaSeconds(phase);
 	});
 	const phaseRef = useRef(phase);
 	const phaseKey = phase ? `${phase.name}:${phase.startedAt}` : null;
-	const logLimit = Math.max(4, Math.min(10, rows - 18 - phaseRows.length * 3));
+	const logLimit = Math.max(4, Math.min(10, rows - 18 - visiblePhaseRows.length * 3));
 	const visibleLogs = logLines.slice(-logLimit);
 	const keyedVisibleLogs = (() => {
 		const duplicateCounts = new Map<string, number>();
@@ -275,7 +295,7 @@ export const RunScreen: FC<RunScreen.Props> = ({
 					marginTop={1}
 				>
 					{phaseRows.length > 0 ? (
-						phaseRows.map((phaseRow) => {
+						visiblePhaseRows.map((phaseRow) => {
 							const isRunning = phaseRow.status === "running";
 							const label = toPhaseLabel(phaseRow, eta);
 
