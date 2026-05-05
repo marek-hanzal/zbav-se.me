@@ -8,6 +8,7 @@ import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { ValueList } from "@/lib/client/value";
 import type { useView } from "@/lib/client/view";
+import { toLocaleNumber } from "@/lib/common/to-locale-number";
 import { translator } from "@/lib/common/translation";
 import type { AttrWhereSchema } from "~/buyer/listing/server/schema/AttrWhereSchema";
 import type { CategoryAttrOfSchema } from "~/user/category/server/schema/CategoryAttrOfSchema";
@@ -119,7 +120,14 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 							data-ui-inner={"default"}
 						>
 							<Typo
-								label={attr?.min ?? translator.text("No from value here (label)")}
+								label={
+									attr?.min
+										? toLocaleNumber({
+												locale,
+												number: attr.min,
+											})
+										: translator.text("No from value here (label)")
+								}
 								onClick={() => {
 									view.set(`attr.${field.name}.min`);
 								}}
@@ -133,7 +141,14 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 							/>
 
 							<Typo
-								label={attr?.max ?? translator.text("No to value here (label)")}
+								label={
+									attr?.max
+										? toLocaleNumber({
+												locale,
+												number: attr.max,
+											})
+										: translator.text("No to value here (label)")
+								}
 								onClick={() => {
 									view.set(`attr.${field.name}.max`);
 								}}
@@ -241,7 +256,14 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 							data-ui-inner={"default"}
 						>
 							<Typo
-								label={attr?.min ?? translator.text("No from value here (label)")}
+								label={
+									attr?.min
+										? toLocaleNumber({
+												locale,
+												number: attr.min,
+											})
+										: translator.text("No from value here (label)")
+								}
 								onClick={() => {
 									view.set(`attr.${field.name}.min`);
 								}}
@@ -255,7 +277,14 @@ export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
 							/>
 
 							<Typo
-								label={attr?.max ?? translator.text("No to value here (label)")}
+								label={
+									attr?.max
+										? toLocaleNumber({
+												locale,
+												number: attr.max,
+											})
+										: translator.text("No to value here (label)")
+								}
 								onClick={() => {
 									view.set(`attr.${field.name}.max`);
 								}}
