@@ -369,23 +369,20 @@ export const RunScreen: FC<RunScreen.Props> = ({
 				paddingX={1}
 				paddingY={1}
 			>
-				<Text bold>Logs</Text>
-				<Box flexDirection={"column"}>
-					{visibleLogs.length > 0 ? (
-						keyedVisibleLogs.map((item) => {
-							return (
-								<Text
-									key={item.key}
-									wrap={"truncate-end"}
-								>
-									{item.line}
-								</Text>
-							);
-						})
-					) : (
-						<Text dimColor>No logs yet.</Text>
-					)}
-				</Box>
+				{visibleLogs.length > 0 ? (
+					keyedVisibleLogs.map((item) => {
+						return (
+							<Text
+								key={item.key}
+								wrap={"truncate-end"}
+							>
+								{item.line}
+							</Text>
+						);
+					})
+				) : (
+					<Text dimColor>No logs yet.</Text>
+				)}
 			</Box>
 
 			<Box

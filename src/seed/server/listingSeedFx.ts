@@ -240,7 +240,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		{
 			name: "Preparing categories/assets/lookups",
 			done: 0,
-			total: 4,
+			total: 3,
 			status: "pending",
 		},
 		{
