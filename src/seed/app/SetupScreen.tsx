@@ -55,6 +55,7 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 			flexGrow={1}
 			paddingX={2}
 			paddingY={1}
+			gap={1}
 		>
 			<Text
 				bold
@@ -63,19 +64,12 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 				Seeder
 			</Text>
 
-			<Box marginTop={1}>
-				<Text dimColor>
-					Fullscreen setup screen. Tab moves focus, Enter confirms, Ctrl+C quits.
-				</Text>
-			</Box>
-
 			<Box
 				borderColor={match(focusField)
 					.with("seed", () => "green")
 					.otherwise(() => "gray")}
 				borderStyle={"round"}
 				flexDirection={"column"}
-				marginTop={1}
 				paddingX={1}
 				paddingY={1}
 			>
@@ -99,7 +93,6 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 					.otherwise(() => "gray")}
 				borderStyle={"round"}
 				flexDirection={"column"}
-				marginTop={1}
 				paddingX={1}
 				paddingY={1}
 			>
@@ -135,7 +128,6 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 					.otherwise(() => "gray")}
 				borderStyle={"round"}
 				flexDirection={"column"}
-				marginTop={1}
 				paddingX={1}
 				paddingY={1}
 			>
@@ -163,7 +155,7 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 					))}
 			</Box>
 
-			<Box marginTop={1}>
+			<Box>
 				{match(errors.size)
 					.with(0, () => (
 						<StatusMessage variant={"success"}>
@@ -180,7 +172,7 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 			{match(errorMessage)
 				.with(null, () => null)
 				.otherwise((message) => (
-					<Box marginTop={1}>
+					<Box>
 						<StatusMessage variant={"error"}>{message}</StatusMessage>
 					</Box>
 				))}

@@ -188,10 +188,7 @@ const toVisiblePhases = (phases: SeedRunSummary.Phase[]) => {
 	const pendingIndex = phases.findIndex((phase) => phase.status === "pending");
 	const anchorIndex =
 		activeIndex >= 0 ? activeIndex : pendingIndex >= 0 ? pendingIndex : phases.length - 1;
-	const windowStart = Math.max(
-		0,
-		Math.min(anchorIndex - 1, phases.length - MAX_VISIBLE_PHASES),
-	);
+	const windowStart = Math.max(0, Math.min(anchorIndex - 1, phases.length - MAX_VISIBLE_PHASES));
 
 	return phases.slice(windowStart, windowStart + MAX_VISIBLE_PHASES);
 };
@@ -273,6 +270,7 @@ export const RunScreen: FC<RunScreen.Props> = ({
 			flexGrow={1}
 			paddingX={2}
 			paddingY={1}
+			gap={1}
 		>
 			<Text
 				bold
@@ -285,14 +283,13 @@ export const RunScreen: FC<RunScreen.Props> = ({
 				borderColor={"gray"}
 				borderStyle={"round"}
 				flexDirection={"column"}
-				marginTop={1}
+				flexShrink={0}
 				paddingX={1}
 				paddingY={1}
 			>
-				<Text bold>Progress</Text>
 				<Box
 					flexDirection={"column"}
-					marginTop={1}
+					gap={1}
 				>
 					{phaseRows.length > 0 ? (
 						visiblePhaseRows.map((phaseRow) => {
@@ -303,20 +300,38 @@ export const RunScreen: FC<RunScreen.Props> = ({
 								<Box
 									flexDirection={"column"}
 									key={phaseRow.name}
-									marginBottom={1}
+									width={"100%"}
 								>
-									<Text bold={isRunning}>
-										{phaseRow.name}
-										{toPhaseStatusLabel(phaseRow.status)}
-									</Text>
-									<Box marginTop={1}>
+									<Box
+										width={"100%"}
+										justifyContent={"space-between"}
+									>
+										<Box
+											flexShrink={1}
+											marginRight={1}
+										>
+											<Text
+												bold={isRunning}
+												wrap={"truncate-end"}
+											>
+												{phaseRow.name}
+											</Text>
+										</Box>
+
+										<Text bold={isRunning}>
+											{toPhaseStatusLabel(phaseRow.status)}
+										</Text>
+									</Box>
+
+									<Box>
 										{isRunning ? (
 											<Spinner label={label} />
 										) : (
 											<Text>{label}</Text>
 										)}
 									</Box>
-									<Box marginTop={1}>
+
+									<Box>
 										<ProgressBar value={toPhaseValue(phaseRow)} />
 									</Box>
 								</Box>
@@ -324,7 +339,8 @@ export const RunScreen: FC<RunScreen.Props> = ({
 						})
 					) : (
 						<>
-							<Text bold>{progressName}</Text>
+							<Text bold>{progressName}aaa</Text>
+
 							<Box marginTop={1}>
 								{screenState === "running" ? (
 									<Spinner
@@ -336,7 +352,8 @@ export const RunScreen: FC<RunScreen.Props> = ({
 									</Text>
 								)}
 							</Box>
-							<Box marginTop={1}>
+
+							<Box>
 								<ProgressBar value={progressValue} />
 							</Box>
 						</>
@@ -349,15 +366,11 @@ export const RunScreen: FC<RunScreen.Props> = ({
 				borderStyle={"round"}
 				flexDirection={"column"}
 				flexGrow={1}
-				marginTop={1}
 				paddingX={1}
 				paddingY={1}
 			>
-				<Text bold>Run log</Text>
-				<Box
-					flexDirection={"column"}
-					marginTop={1}
-				>
+				<Text bold>Logs</Text>
+				<Box flexDirection={"column"}>
 					{visibleLogs.length > 0 ? (
 						keyedVisibleLogs.map((item) => {
 							return (
@@ -379,7 +392,6 @@ export const RunScreen: FC<RunScreen.Props> = ({
 				borderColor={"gray"}
 				borderStyle={"round"}
 				flexDirection={"column"}
-				marginTop={1}
 				paddingX={1}
 				paddingY={1}
 			>
@@ -396,7 +408,7 @@ export const RunScreen: FC<RunScreen.Props> = ({
 				<Text dimColor>User: {summary.userEmail ?? "-"}</Text>
 			</Box>
 
-			<Box marginTop={1}>{toFooter(screenState, errorMessage)}</Box>
+			<Box>{toFooter(screenState, errorMessage)}</Box>
 		</Box>
 	);
 };
