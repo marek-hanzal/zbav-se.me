@@ -40,11 +40,29 @@ export const withActivitySelectFx = Effect.fn("withActivitySelectFx")(function* 
 								return sql<boolean>`${eb.ref("newer.payload")} ->> 'transactionId' = ${eb.ref("i.payload")} ->> 'transactionId'`;
 							})
 							.where((eb) => {
-								return eb.or([
+								const newerIsMoreRecent = eb.or([
 									eb("newer.timestamp", ">", eb.ref("i.timestamp")),
 									eb.and([
 										eb("newer.timestamp", "=", eb.ref("i.timestamp")),
 										eb("newer.id", ">", eb.ref("i.id")),
+									]),
+								]);
+
+								return eb.or([
+									eb.and([
+										eb("i.archivedAt", "is", null),
+										eb("newer.archivedAt", "is", null),
+										newerIsMoreRecent,
+									]),
+									eb.and([
+										eb("i.archivedAt", "is not", null),
+										eb.or([
+											eb("newer.archivedAt", "is", null),
+											eb.and([
+												eb("newer.archivedAt", "is not", null),
+												newerIsMoreRecent,
+											]),
+										]),
 									]),
 								]);
 							}),
