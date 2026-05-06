@@ -150,27 +150,23 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
                     `.as("category");
 				},
 				(eb) => {
-					return eb
-						.case()
-						.when(sql.lit(locationId != null))
-						.then(() => {
-							const originGeoSelect = eb
-								.selectFrom("location as originLoc")
-								.select("originLoc.geo")
-								// biome-ignore lint/style/noNonNullAssertion: Check is already don, bro
-								.where("originLoc.id", "=", locationId!)
-								.limit(1);
+					if (!locationId) {
+						return eb.lit(null).as("distance");
+					}
 
-							return sql`
+					const originGeoSelect = eb
+						.selectFrom("location as originLoc")
+						.select("originLoc.geo")
+						.where("originLoc.id", "=", locationId)
+						.limit(1);
+
+					return sql`
                                 ST_Distance(
                                     ${eb.ref("l.withLocation")},
                                     ${originGeoSelect}
                                 ) / 1000
-                            `;
-						})
-						.else(null)
-						.end()
-						.$castTo<number | null>()
+                            `
+						.$castTo<number>()
 						.as("distance");
 				},
 				(eb) => {
