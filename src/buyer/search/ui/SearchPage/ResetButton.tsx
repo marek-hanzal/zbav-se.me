@@ -21,19 +21,15 @@ export const ResetButton: FC<ResetButton.Props> = ({ feedId, className, ...props
 				"fetch",
 			]);
 		},
-		invalidate: [
-			"collection",
-		],
+		invalidate: [],
 	});
 	const deleteMutation = withFeedQuery.useDeleteMutation({
 		async onPostMutation() {
-			await createMutation.mutateAsync(
+            await createMutation.mutateAsync(
 				getFeedDefaultCreate(translator.text("Search (title)"), "search"),
 			);
 		},
-		invalidate: [
-			"collection",
-		],
+		invalidate: [],
 	});
 
 	return (
