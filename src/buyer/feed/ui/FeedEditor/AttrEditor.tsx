@@ -26,7 +26,7 @@ export const AttrEditor: FC<AttrEditor.Props> = ({ _suspense, feed, view }) => {
 	return fields.map((field) => {
 		return match({
 			field,
-			attr: feed.query?.attrs?.[field.name],
+			attr: feed.query?.filter?.attrs?.[field.name],
 		})
 			.with(
 				{

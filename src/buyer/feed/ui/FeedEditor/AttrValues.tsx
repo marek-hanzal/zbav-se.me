@@ -44,7 +44,7 @@ export const AttrValues: FC<AttrValues.Props> = ({ _suspense, feed, view }) => {
 						<AttrValue
 							key={`feed-attr-${field.name}`}
 							field={field}
-							attr={feed.query?.attrs?.[field.name]}
+							attr={feed.query?.filter?.attrs?.[field.name]}
 							view={view}
 						/>
 					);
