@@ -88,7 +88,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 		select: query
 			.selectAll("lt")
 			.select("l.withImageUrl")
-			.select((eb) => eb.val("not yet").as("title"))
+			.select("l.title")
 			.select((eb) => {
 				const lastActivitySelect = eb
 					.selectFrom("transaction_entry as te")
