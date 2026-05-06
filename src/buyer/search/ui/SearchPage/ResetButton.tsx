@@ -25,7 +25,7 @@ export const ResetButton: FC<ResetButton.Props> = ({ feedId, className, ...props
 	});
 	const deleteMutation = withFeedQuery.useDeleteMutation({
 		async onPostMutation() {
-            await createMutation.mutateAsync(
+			await createMutation.mutateAsync(
 				getFeedDefaultCreate(translator.text("Search (title)"), "search"),
 			);
 		},
