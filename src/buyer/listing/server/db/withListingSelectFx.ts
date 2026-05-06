@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
+import { getLoggerFx } from "@/lib/common/log";
 import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
@@ -31,6 +32,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 }: withListingSelectFx.Props) {
 	const locationId = meta?.locationId;
 	const { kysely } = yield* KyselyContextFx;
+	const logger = yield* getLoggerFx("withListingSelectFx", "buyer");
 
 	const fallbackSql = sql`${RestrictionEnumSchema.enum.none}::restriction_enum`;
 	const restrictionSql = yield* withUserRestrictionActiveSelectFx({
@@ -409,6 +411,125 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 								.where("f.userId", "=", userId),
 						);
 					});
+				}
+
+				if (where.attrs) {
+					const attrs = Object.values(where.attrs);
+
+					for (const attr of attrs) {
+						query = match(attr)
+							.with(
+								{
+									type: "decimal",
+								},
+								{
+									type: "range",
+								},
+								({ name, min, max, value }) => {
+									return query.where(({ exists, selectFrom }) => {
+										let select = selectFrom("listing_attr_decimal as lad")
+											.select("lad.listingId")
+											.whereRef("lad.listingId", "=", "l.id")
+											.where("lad.fieldId", "=", name);
+
+										if (min != null) {
+											select = select.where("lad.value", ">=", min);
+										}
+										if (max != null) {
+											select = select.where("lad.value", "<=", max);
+										}
+										if (value != null) {
+											select = select.where("lad.value", "=", value);
+										}
+
+										return exists(select);
+									});
+								},
+							)
+							.with(
+								{
+									type: "number",
+								},
+								{
+									type: "year",
+								},
+								({ name, min, max, value }) => {
+									return query.where(({ exists, selectFrom }) => {
+										let select = selectFrom("listing_attr_number as lan")
+											.select("lan.listingId")
+											.whereRef("lan.listingId", "=", "l.id")
+											.where("lan.fieldId", "=", name);
+
+										if (min != null) {
+											select = select.where("lan.value", ">=", min);
+										}
+										if (max != null) {
+											select = select.where("lan.value", "<=", max);
+										}
+										if (value != null) {
+											select = select.where("lan.value", "=", value);
+										}
+
+										return exists(select);
+									});
+								},
+							)
+							.with(
+								{
+									type: "text",
+								},
+								() => {
+									logger.warn(
+										"Filtering extra field by text value (not supported yet)!",
+									);
+									/**
+									 * Not yet
+									 */
+									return query;
+								},
+							)
+							.with(
+								{
+									type: "enum-single",
+								},
+								({ name, value }) => {
+									if (!value) {
+										return query;
+									}
+
+									return query.where(({ exists, selectFrom }) => {
+										return exists(
+											selectFrom("listing_attr_enum_single as laes")
+												.select("laes.listingId")
+												.whereRef("laes.listingId", "=", "l.id")
+												.where("laes.fieldId", "=", name)
+												.where("laes.value", "=", value),
+										);
+									});
+								},
+							)
+							.with(
+								{
+									type: "enum-multi",
+								},
+								({ name, value }) => {
+									if (!value?.length) {
+										return query;
+									}
+
+									return query.where(({ exists, selectFrom }) => {
+										return exists(
+											selectFrom("listing_attr_enum_multi as laem")
+												.select("laem.listingId")
+												.whereRef("laem.listingId", "=", "l.id")
+												.where("laem.fieldId", "=", name)
+												.where("laem.value", "in", value),
+										);
+									});
+								},
+							)
+							.exhaustive();
+					}
 				}
 
 				return yield* Effect.succeed(query);
