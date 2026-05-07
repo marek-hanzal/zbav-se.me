@@ -10,13 +10,13 @@ import { TypoIcon } from "~/common/ui/typo";
 import { uiMenuButton } from "~/common/ui/ui";
 
 export namespace MessageLink {
-	export interface Props extends MarkSuspense.Props {
+	export interface Props extends Group.Props, MarkSuspense.Props {
 		iconProps?: Icon.PropsEx;
 	}
 }
 
 export const MessageLink = withFallback(
-	({ _suspense, iconProps }: MessageLink.Props) => {
+	({ _suspense, iconProps, ...props }: MessageLink.Props) => {
 		const locale = useLocale();
 
 		return (
@@ -24,6 +24,7 @@ export const MessageLink = withFallback(
 				data-ui-tone="neutral"
 				data-ui-theme="light"
 				data-ui-background="default"
+				{...props}
 			>
 				<TypoIcon
 					icon={MessageIcon}
