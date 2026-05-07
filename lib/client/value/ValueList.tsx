@@ -58,7 +58,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 }: ValueList.Props<TItem>) => {
 	return (
 		<Container
-			data-root="ValueList[Container]"
+			data-root="ValueList"
 			data-ui-tone="neutral"
 			data-ui-theme="light"
 			data-ui-inner="default"
@@ -71,7 +71,6 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 			{...props}
 		>
 			<Container
-				data-ui={"ValueList-[Container.label-wrapper]"}
 				data-ui-tone="neutral"
 				data-ui-theme="light"
 				data-ui-flow="horizontal"
@@ -83,10 +82,10 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 			>
 				<Tx
 					label={textLabel}
-					preset={"label"}
-					data-ui-font="semibold"
+					data-ui-font="normal"
 					data-ui-display="block"
 					data-ui-color="lead"
+					data-ui-text={"sm"}
 					{...textLabelProps}
 				/>
 
@@ -105,14 +104,10 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 			) : null}
 
 			{loading ? null : (
-				<Group
-					data-ui="ValueList-[Container.content]"
-					data-ui-shadow={false}
-				>
+				<Group data-ui-shadow={false}>
 					{items.map((item) => (
 						<Container
 							key={item.id}
-							data-ui="ValueList-[Container.item]"
 							data-ui-tone="neutral"
 							data-ui-theme="light"
 							data-ui-background="default"
@@ -123,11 +118,13 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 							data-ui-flow={"horizontal"}
 							data-ui-items={"center"}
 							data-ui-gap={"default"}
+							data-ui-text={"lg"}
 							className={"px-0"}
 						>
 							<Icon
-								icon={"icon-[proicons--checkmark]"}
+								icon={"icon-[solar--forward-2-linear]"}
 								data-ui-text={"xl"}
+								data-ui-opacity={"4"}
 							/>
 							{renderFn(item)}
 						</Container>

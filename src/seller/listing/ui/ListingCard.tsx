@@ -1,17 +1,9 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
-import { Markdown } from "@/lib/client/markdown";
-import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { Typo } from "@/lib/client/typo";
-import { LabelValue, ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
-import { ConditionIcon } from "~/common/condition/ui/ConditionIcon";
 import { useUpload } from "~/common/gallery/hook/useUpload";
-import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { HeroImage } from "~/common/ui/img";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
-import { CategoryInline } from "~/user/category/ui/CategoryInline";
 
 export namespace ListingCard {
 	export interface Hooks {
@@ -39,7 +31,7 @@ export const ListingCard: FC<ListingCard.Props> = ({ _suspense, listing, hooks, 
 				data-ui={"ListingCard-[Container.hero]"}
 				data-ui-position="relative"
 			>
-				<ListingPrice
+				{/* <ListingPrice
 					data-ui={"ListingOverlay-[ListingPrice]"}
 					price={listing.price}
 					priceType={listing.priceType}
@@ -47,7 +39,7 @@ export const ListingCard: FC<ListingCard.Props> = ({ _suspense, listing, hooks, 
 					data-ui-snap-to="top-center"
 					data-ui-opacity="8"
 					data-ui-z-index
-				/>
+				/> */}
 
 				<HeroImage
 					data-ui={"ListingCard-[HeroImage]"}
@@ -64,7 +56,7 @@ export const ListingCard: FC<ListingCard.Props> = ({ _suspense, listing, hooks, 
 				data-ui-layout="vertical-flex"
 				data-ui-gap="default"
 			>
-				<LabelValue
+				{/* <LabelValue
 					textLabel={translator.text("Listing category (label)")}
 					textValue={
 						<CategoryInline
@@ -141,7 +133,7 @@ export const ListingCard: FC<ListingCard.Props> = ({ _suspense, listing, hooks, 
 						textLabel={translator.text("Listing age (label)")}
 						textValue={`Condition - Age [${listing.age}] (hint)`}
 					/>
-				) : null}
+				) : null} */}
 			</Container>
 		</Container>
 	);

@@ -1,0 +1,1542 @@
+[
+	{
+		"field": "ram",
+		"value": "4 GB or less",
+		"sort": 0
+	},
+	{
+		"field": "ram",
+		"value": "8 GB",
+		"sort": 1
+	},
+	{
+		"field": "ram",
+		"value": "16 GB",
+		"sort": 2
+	},
+	{
+		"field": "ram",
+		"value": "32 GB",
+		"sort": 3
+	},
+	{
+		"field": "ram",
+		"value": "64 GB or more",
+		"sort": 4
+	},
+	{
+		"field": "storage",
+		"value": "64 GB or less",
+		"sort": 0
+	},
+	{
+		"field": "storage",
+		"value": "128 GB",
+		"sort": 1
+	},
+	{
+		"field": "storage",
+		"value": "256 GB",
+		"sort": 2
+	},
+	{
+		"field": "storage",
+		"value": "512 GB",
+		"sort": 3
+	},
+	{
+		"field": "storage",
+		"value": "1 TB",
+		"sort": 4
+	},
+	{
+		"field": "storage",
+		"value": "2 TB or more",
+		"sort": 5
+	},
+	{
+		"field": "color",
+		"value": "black",
+		"sort": 0
+	},
+	{
+		"field": "color",
+		"value": "white",
+		"sort": 1
+	},
+	{
+		"field": "color",
+		"value": "silver",
+		"sort": 2
+	},
+	{
+		"field": "color",
+		"value": "gray",
+		"sort": 3
+	},
+	{
+		"field": "color",
+		"value": "blue",
+		"sort": 4
+	},
+	{
+		"field": "color",
+		"value": "red",
+		"sort": 5
+	},
+	{
+		"field": "color",
+		"value": "green",
+		"sort": 6
+	},
+	{
+		"field": "color",
+		"value": "yellow",
+		"sort": 7
+	},
+	{
+		"field": "color",
+		"value": "orange",
+		"sort": 8
+	},
+	{
+		"field": "color",
+		"value": "pink",
+		"sort": 9
+	},
+	{
+		"field": "color",
+		"value": "purple",
+		"sort": 10
+	},
+	{
+		"field": "color",
+		"value": "brown",
+		"sort": 11
+	},
+	{
+		"field": "color",
+		"value": "gold",
+		"sort": 12
+	},
+	{
+		"field": "color",
+		"value": "transparent",
+		"sort": 13
+	},
+	{
+		"field": "color",
+		"value": "multicolor",
+		"sort": 14
+	},
+	{
+		"field": "mod.battery",
+		"value": "18650",
+		"sort": 0
+	},
+	{
+		"field": "mod.battery",
+		"value": "21700",
+		"sort": 1
+	},
+	{
+		"field": "mod.battery",
+		"value": "18350",
+		"sort": 2
+	},
+	{
+		"field": "mod.battery",
+		"value": "integrated",
+		"sort": 3
+	},
+	{
+		"field": "mod.battery",
+		"value": "other",
+		"sort": 4
+	},
+	{
+		"field": "airsoft.power-source",
+		"value": "electric",
+		"sort": 0
+	},
+	{
+		"field": "airsoft.power-source",
+		"value": "gas",
+		"sort": 1
+	},
+	{
+		"field": "airsoft.power-source",
+		"value": "co2",
+		"sort": 2
+	},
+	{
+		"field": "airsoft.power-source",
+		"value": "spring",
+		"sort": 3
+	},
+	{
+		"field": "airsoft.power-source",
+		"value": "hpa",
+		"sort": 4
+	},
+	{
+		"field": "fuel.type",
+		"value": "petrol",
+		"sort": 0
+	},
+	{
+		"field": "fuel.type",
+		"value": "diesel",
+		"sort": 1
+	},
+	{
+		"field": "fuel.type",
+		"value": "electric",
+		"sort": 2
+	},
+	{
+		"field": "fuel.type",
+		"value": "hybrid",
+		"sort": 3
+	},
+	{
+		"field": "fuel.type",
+		"value": "lpg",
+		"sort": 4
+	},
+	{
+		"field": "fuel.type",
+		"value": "cng",
+		"sort": 5
+	},
+	{
+		"field": "transmission",
+		"value": "manual",
+		"sort": 0
+	},
+	{
+		"field": "transmission",
+		"value": "automatic",
+		"sort": 1
+	},
+	{
+		"field": "transmission",
+		"value": "semi-automatic",
+		"sort": 2
+	},
+	{
+		"field": "tyre.season",
+		"value": "summer",
+		"sort": 0
+	},
+	{
+		"field": "tyre.season",
+		"value": "winter",
+		"sort": 1
+	},
+	{
+		"field": "tyre.season",
+		"value": "all-season",
+		"sort": 2
+	},
+	{
+		"field": "helmet.size",
+		"value": "XS",
+		"sort": 0
+	},
+	{
+		"field": "helmet.size",
+		"value": "S",
+		"sort": 1
+	},
+	{
+		"field": "helmet.size",
+		"value": "M",
+		"sort": 2
+	},
+	{
+		"field": "helmet.size",
+		"value": "L",
+		"sort": 3
+	},
+	{
+		"field": "helmet.size",
+		"value": "XL",
+		"sort": 4
+	},
+	{
+		"field": "helmet.size",
+		"value": "XXL",
+		"sort": 5
+	},
+	{
+		"field": "appliance.energy-class",
+		"value": "A",
+		"sort": 0
+	},
+	{
+		"field": "appliance.energy-class",
+		"value": "B",
+		"sort": 1
+	},
+	{
+		"field": "appliance.energy-class",
+		"value": "C",
+		"sort": 2
+	},
+	{
+		"field": "appliance.energy-class",
+		"value": "D",
+		"sort": 3
+	},
+	{
+		"field": "appliance.energy-class",
+		"value": "E",
+		"sort": 4
+	},
+	{
+		"field": "appliance.energy-class",
+		"value": "F",
+		"sort": 5
+	},
+	{
+		"field": "appliance.energy-class",
+		"value": "G",
+		"sort": 6
+	},
+	{
+		"field": "stroller.type",
+		"value": "deep",
+		"sort": 0
+	},
+	{
+		"field": "stroller.type",
+		"value": "sport",
+		"sort": 1
+	},
+	{
+		"field": "stroller.type",
+		"value": "combined",
+		"sort": 2
+	},
+	{
+		"field": "stroller.type",
+		"value": "golf",
+		"sort": 3
+	},
+	{
+		"field": "stroller.type",
+		"value": "sibling",
+		"sort": 4
+	},
+	{
+		"field": "seat.mounting",
+		"value": "isofix",
+		"sort": 0
+	},
+	{
+		"field": "seat.mounting",
+		"value": "belt",
+		"sort": 1
+	},
+	{
+		"field": "seat.mounting",
+		"value": "both",
+		"sort": 2
+	},
+	{
+		"field": "toy.type",
+		"value": "plush",
+		"sort": 0
+	},
+	{
+		"field": "toy.type",
+		"value": "building",
+		"sort": 1
+	},
+	{
+		"field": "toy.type",
+		"value": "educational",
+		"sort": 2
+	},
+	{
+		"field": "toy.type",
+		"value": "figure",
+		"sort": 3
+	},
+	{
+		"field": "toy.type",
+		"value": "board-game",
+		"sort": 4
+	},
+	{
+		"field": "toy.type",
+		"value": "outdoor",
+		"sort": 5
+	},
+	{
+		"field": "baby.stage",
+		"value": "newborn",
+		"sort": 0
+	},
+	{
+		"field": "baby.stage",
+		"value": "0+",
+		"sort": 1
+	},
+	{
+		"field": "baby.stage",
+		"value": "6+",
+		"sort": 2
+	},
+	{
+		"field": "baby.stage",
+		"value": "12+",
+		"sort": 3
+	},
+	{
+		"field": "baby.stage",
+		"value": "24+",
+		"sort": 4
+	},
+	{
+		"field": "baby.stage",
+		"value": "36+",
+		"sort": 5
+	},
+	{
+		"field": "pet.gender",
+		"value": "male",
+		"sort": 0
+	},
+	{
+		"field": "pet.gender",
+		"value": "female",
+		"sort": 1
+	},
+	{
+		"field": "pet.gender",
+		"value": "unknown",
+		"sort": 2
+	},
+	{
+		"field": "pet.life-stage",
+		"value": "junior",
+		"sort": 0
+	},
+	{
+		"field": "pet.life-stage",
+		"value": "adult",
+		"sort": 1
+	},
+	{
+		"field": "pet.life-stage",
+		"value": "senior",
+		"sort": 2
+	},
+	{
+		"field": "pet.life-stage",
+		"value": "all-ages",
+		"sort": 3
+	},
+	{
+		"field": "movie.format",
+		"value": "dvd",
+		"sort": 0
+	},
+	{
+		"field": "movie.format",
+		"value": "blu-ray",
+		"sort": 1
+	},
+	{
+		"field": "movie.format",
+		"value": "4k-blu-ray",
+		"sort": 2
+	},
+	{
+		"field": "movie.format",
+		"value": "digital",
+		"sort": 3
+	},
+	{
+		"field": "movie.format",
+		"value": "vhs",
+		"sort": 4
+	},
+	{
+		"field": "game.format",
+		"value": "disc",
+		"sort": 0
+	},
+	{
+		"field": "game.format",
+		"value": "cartridge",
+		"sort": 1
+	},
+	{
+		"field": "game.format",
+		"value": "code",
+		"sort": 2
+	},
+	{
+		"field": "game.format",
+		"value": "digital",
+		"sort": 3
+	},
+	{
+		"field": "handedness",
+		"value": "right-handed",
+		"sort": 0
+	},
+	{
+		"field": "handedness",
+		"value": "left-handed",
+		"sort": 1
+	},
+	{
+		"field": "power.source",
+		"value": "battery",
+		"sort": 0
+	},
+	{
+		"field": "power.source",
+		"value": "corded",
+		"sort": 1
+	},
+	{
+		"field": "power.source",
+		"value": "manual",
+		"sort": 2
+	},
+	{
+		"field": "power.source",
+		"value": "gas",
+		"sort": 3
+	},
+	{
+		"field": "power.source",
+		"value": "usb",
+		"sort": 4
+	},
+	{
+		"field": "power.source",
+		"value": "solar",
+		"sort": 5
+	},
+	{
+		"field": "skin.type",
+		"value": "all-skin-types",
+		"sort": 0
+	},
+	{
+		"field": "skin.type",
+		"value": "dry",
+		"sort": 1
+	},
+	{
+		"field": "skin.type",
+		"value": "oily",
+		"sort": 2
+	},
+	{
+		"field": "skin.type",
+		"value": "combination",
+		"sort": 3
+	},
+	{
+		"field": "skin.type",
+		"value": "sensitive",
+		"sort": 4
+	},
+	{
+		"field": "hair.type",
+		"value": "all-hair-types",
+		"sort": 0
+	},
+	{
+		"field": "hair.type",
+		"value": "dry",
+		"sort": 1
+	},
+	{
+		"field": "hair.type",
+		"value": "oily",
+		"sort": 2
+	},
+	{
+		"field": "hair.type",
+		"value": "curly",
+		"sort": 3
+	},
+	{
+		"field": "hair.type",
+		"value": "straight",
+		"sort": 4
+	},
+	{
+		"field": "hair.type",
+		"value": "damaged",
+		"sort": 5
+	},
+	{
+		"field": "coffee.machine-type",
+		"value": "capsule",
+		"sort": 0
+	},
+	{
+		"field": "coffee.machine-type",
+		"value": "lever",
+		"sort": 1
+	},
+	{
+		"field": "coffee.machine-type",
+		"value": "automatic",
+		"sort": 2
+	},
+	{
+		"field": "coffee.machine-type",
+		"value": "drip",
+		"sort": 3
+	},
+	{
+		"field": "coffee.machine-type",
+		"value": "moka",
+		"sort": 4
+	},
+	{
+		"field": "coffee.machine-type",
+		"value": "french-press",
+		"sort": 5
+	},
+	{
+		"field": "coffee.machine-type",
+		"value": "grinder",
+		"sort": 6
+	},
+	{
+		"field": "connector.type",
+		"value": "usb-a",
+		"sort": 0
+	},
+	{
+		"field": "connector.type",
+		"value": "usb-c",
+		"sort": 1
+	},
+	{
+		"field": "connector.type",
+		"value": "lightning",
+		"sort": 2
+	},
+	{
+		"field": "connector.type",
+		"value": "micro-usb",
+		"sort": 3
+	},
+	{
+		"field": "connector.type",
+		"value": "magsafe",
+		"sort": 4
+	},
+	{
+		"field": "connector.type",
+		"value": "jack-3.5",
+		"sort": 5
+	},
+	{
+		"field": "connector.type",
+		"value": "hdmi",
+		"sort": 6
+	},
+	{
+		"field": "connector.type",
+		"value": "displayport",
+		"sort": 7
+	},
+	{
+		"field": "card.format",
+		"value": "microSD",
+		"sort": 0
+	},
+	{
+		"field": "card.format",
+		"value": "SD",
+		"sort": 1
+	},
+	{
+		"field": "card.format",
+		"value": "CFexpress",
+		"sort": 2
+	},
+	{
+		"field": "card.format",
+		"value": "CompactFlash",
+		"sort": 3
+	},
+	{
+		"field": "card.format",
+		"value": "Memory Stick",
+		"sort": 4
+	},
+	{
+		"field": "card.format",
+		"value": "XQD",
+		"sort": 5
+	},
+	{
+		"field": "dual-sim",
+		"value": "single-sim",
+		"sort": 0
+	},
+	{
+		"field": "dual-sim",
+		"value": "dual-sim",
+		"sort": 1
+	},
+	{
+		"field": "dual-sim",
+		"value": "esim",
+		"sort": 2
+	},
+	{
+		"field": "watch.strap-material",
+		"value": "silicone",
+		"sort": 0
+	},
+	{
+		"field": "watch.strap-material",
+		"value": "leather",
+		"sort": 1
+	},
+	{
+		"field": "watch.strap-material",
+		"value": "metal",
+		"sort": 2
+	},
+	{
+		"field": "watch.strap-material",
+		"value": "nylon",
+		"sort": 3
+	},
+	{
+		"field": "watch.strap-material",
+		"value": "textile",
+		"sort": 4
+	},
+	{
+		"field": "watch.strap-material",
+		"value": "other",
+		"sort": 5
+	},
+	{
+		"field": "bed.size",
+		"value": "80x200",
+		"sort": 0
+	},
+	{
+		"field": "bed.size",
+		"value": "90x200",
+		"sort": 1
+	},
+	{
+		"field": "bed.size",
+		"value": "120x200",
+		"sort": 2
+	},
+	{
+		"field": "bed.size",
+		"value": "140x200",
+		"sort": 3
+	},
+	{
+		"field": "bed.size",
+		"value": "160x200",
+		"sort": 4
+	},
+	{
+		"field": "bed.size",
+		"value": "180x200",
+		"sort": 5
+	},
+	{
+		"field": "bed.size",
+		"value": "200x200",
+		"sort": 6
+	},
+	{
+		"field": "property.furnishing",
+		"value": "unfurnished",
+		"sort": 0
+	},
+	{
+		"field": "property.furnishing",
+		"value": "partly-furnished",
+		"sort": 1
+	},
+	{
+		"field": "property.furnishing",
+		"value": "furnished",
+		"sort": 2
+	},
+	{
+		"field": "property.heating",
+		"value": "gas",
+		"sort": 0
+	},
+	{
+		"field": "property.heating",
+		"value": "electric",
+		"sort": 1
+	},
+	{
+		"field": "property.heating",
+		"value": "central",
+		"sort": 2
+	},
+	{
+		"field": "property.heating",
+		"value": "solid-fuel",
+		"sort": 3
+	},
+	{
+		"field": "property.heating",
+		"value": "heat-pump",
+		"sort": 4
+	},
+	{
+		"field": "land.type",
+		"value": "building",
+		"sort": 0
+	},
+	{
+		"field": "land.type",
+		"value": "recreational",
+		"sort": 1
+	},
+	{
+		"field": "land.type",
+		"value": "agricultural",
+		"sort": 2
+	},
+	{
+		"field": "land.type",
+		"value": "forest",
+		"sort": 3
+	},
+	{
+		"field": "land.type",
+		"value": "commercial",
+		"sort": 4
+	},
+	{
+		"field": "buildability",
+		"value": "buildable",
+		"sort": 0
+	},
+	{
+		"field": "buildability",
+		"value": "non-buildable",
+		"sort": 1
+	},
+	{
+		"field": "buildability",
+		"value": "partial",
+		"sort": 2
+	},
+	{
+		"field": "parking.type",
+		"value": "garage",
+		"sort": 0
+	},
+	{
+		"field": "parking.type",
+		"value": "parking-space",
+		"sort": 1
+	},
+	{
+		"field": "parking.type",
+		"value": "covered",
+		"sort": 2
+	},
+	{
+		"field": "parking.type",
+		"value": "outdoor",
+		"sort": 3
+	},
+	{
+		"field": "property.electricity",
+		"value": "available",
+		"sort": 0
+	},
+	{
+		"field": "property.electricity",
+		"value": "not-available",
+		"sort": 1
+	},
+	{
+		"field": "jewelry.material",
+		"value": "steel",
+		"sort": 0
+	},
+	{
+		"field": "jewelry.material",
+		"value": "silver",
+		"sort": 1
+	},
+	{
+		"field": "jewelry.material",
+		"value": "gold",
+		"sort": 2
+	},
+	{
+		"field": "jewelry.material",
+		"value": "titanium",
+		"sort": 3
+	},
+	{
+		"field": "jewelry.material",
+		"value": "leather",
+		"sort": 4
+	},
+	{
+		"field": "jewelry.material",
+		"value": "beads",
+		"sort": 5
+	},
+	{
+		"field": "jewelry.material",
+		"value": "other",
+		"sort": 6
+	},
+	{
+		"field": "network.type",
+		"value": "router",
+		"sort": 0
+	},
+	{
+		"field": "network.type",
+		"value": "nas",
+		"sort": 1
+	},
+	{
+		"field": "network.type",
+		"value": "switch",
+		"sort": 2
+	},
+	{
+		"field": "network.type",
+		"value": "access-point",
+		"sort": 3
+	},
+	{
+		"field": "network.type",
+		"value": "mesh",
+		"sort": 4
+	},
+	{
+		"field": "network.type",
+		"value": "modem",
+		"sort": 5
+	},
+	{
+		"field": "panel.type",
+		"value": "ips",
+		"sort": 0
+	},
+	{
+		"field": "panel.type",
+		"value": "va",
+		"sort": 1
+	},
+	{
+		"field": "panel.type",
+		"value": "tn",
+		"sort": 2
+	},
+	{
+		"field": "panel.type",
+		"value": "oled",
+		"sort": 3
+	},
+	{
+		"field": "panel.type",
+		"value": "qled",
+		"sort": 4
+	},
+	{
+		"field": "panel.type",
+		"value": "mini-led",
+		"sort": 5
+	},
+	{
+		"field": "component.type",
+		"value": "cpu",
+		"sort": 0
+	},
+	{
+		"field": "component.type",
+		"value": "gpu",
+		"sort": 1
+	},
+	{
+		"field": "component.type",
+		"value": "ram",
+		"sort": 2
+	},
+	{
+		"field": "component.type",
+		"value": "motherboard",
+		"sort": 3
+	},
+	{
+		"field": "component.type",
+		"value": "psu",
+		"sort": 4
+	},
+	{
+		"field": "component.type",
+		"value": "cooler",
+		"sort": 5
+	},
+	{
+		"field": "component.type",
+		"value": "case",
+		"sort": 6
+	},
+	{
+		"field": "storage.type",
+		"value": "ssd",
+		"sort": 0
+	},
+	{
+		"field": "storage.type",
+		"value": "hdd",
+		"sort": 1
+	},
+	{
+		"field": "storage.type",
+		"value": "nvme",
+		"sort": 2
+	},
+	{
+		"field": "storage.type",
+		"value": "external-ssd",
+		"sort": 3
+	},
+	{
+		"field": "storage.type",
+		"value": "external-hdd",
+		"sort": 4
+	},
+	{
+		"field": "storage.type",
+		"value": "usb-flash",
+		"sort": 5
+	},
+	{
+		"field": "license.type",
+		"value": "perpetual",
+		"sort": 0
+	},
+	{
+		"field": "license.type",
+		"value": "subscription",
+		"sort": 1
+	},
+	{
+		"field": "license.type",
+		"value": "one-device",
+		"sort": 2
+	},
+	{
+		"field": "license.type",
+		"value": "multi-device",
+		"sort": 3
+	},
+	{
+		"field": "license.type",
+		"value": "boxed",
+		"sort": 4
+	},
+	{
+		"field": "license.type",
+		"value": "code",
+		"sort": 5
+	},
+	{
+		"field": "platform.os",
+		"value": "windows",
+		"sort": 0
+	},
+	{
+		"field": "platform.os",
+		"value": "macos",
+		"sort": 1
+	},
+	{
+		"field": "platform.os",
+		"value": "linux",
+		"sort": 2
+	},
+	{
+		"field": "platform.os",
+		"value": "android",
+		"sort": 3
+	},
+	{
+		"field": "platform.os",
+		"value": "ios",
+		"sort": 4
+	},
+	{
+		"field": "platform.os",
+		"value": "multi-platform",
+		"sort": 5
+	},
+	{
+		"field": "book.format",
+		"value": "hardcover",
+		"sort": 0
+	},
+	{
+		"field": "book.format",
+		"value": "paperback",
+		"sort": 1
+	},
+	{
+		"field": "book.format",
+		"value": "ebook",
+		"sort": 2
+	},
+	{
+		"field": "book.format",
+		"value": "magazine",
+		"sort": 3
+	},
+	{
+		"field": "record.size",
+		"value": "7-inch",
+		"sort": 0
+	},
+	{
+		"field": "record.size",
+		"value": "10-inch",
+		"sort": 1
+	},
+	{
+		"field": "record.size",
+		"value": "12-inch",
+		"sort": 2
+	},
+	{
+		"field": "fragrance.type",
+		"value": "edt",
+		"sort": 0
+	},
+	{
+		"field": "fragrance.type",
+		"value": "edp",
+		"sort": 1
+	},
+	{
+		"field": "fragrance.type",
+		"value": "parfum",
+		"sort": 2
+	},
+	{
+		"field": "fragrance.type",
+		"value": "body-mist",
+		"sort": 3
+	},
+	{
+		"field": "fragrance.type",
+		"value": "oil",
+		"sort": 4
+	},
+	{
+		"field": "sensor.type",
+		"value": "full-frame",
+		"sort": 0
+	},
+	{
+		"field": "sensor.type",
+		"value": "aps-c",
+		"sort": 1
+	},
+	{
+		"field": "sensor.type",
+		"value": "micro-four-thirds",
+		"sort": 2
+	},
+	{
+		"field": "sensor.type",
+		"value": "1-inch",
+		"sort": 3
+	},
+	{
+		"field": "sensor.type",
+		"value": "compact",
+		"sort": 4
+	},
+	{
+		"field": "lens.mount",
+		"value": "canon-ef",
+		"sort": 0
+	},
+	{
+		"field": "lens.mount",
+		"value": "canon-rf",
+		"sort": 1
+	},
+	{
+		"field": "lens.mount",
+		"value": "nikon-f",
+		"sort": 2
+	},
+	{
+		"field": "lens.mount",
+		"value": "nikon-z",
+		"sort": 3
+	},
+	{
+		"field": "lens.mount",
+		"value": "sony-e",
+		"sort": 4
+	},
+	{
+		"field": "lens.mount",
+		"value": "fuji-x",
+		"sort": 5
+	},
+	{
+		"field": "lens.mount",
+		"value": "mft",
+		"sort": 6
+	},
+	{
+		"field": "lens.mount",
+		"value": "l-mount",
+		"sort": 7
+	},
+	{
+		"field": "lens.mount",
+		"value": "other",
+		"sort": 8
+	},
+	{
+		"field": "pyro.class",
+		"value": "f1",
+		"sort": 0
+	},
+	{
+		"field": "pyro.class",
+		"value": "f2",
+		"sort": 1
+	},
+	{
+		"field": "pyro.class",
+		"value": "f3",
+		"sort": 2
+	},
+	{
+		"field": "pyro.class",
+		"value": "p1",
+		"sort": 3
+	},
+	{
+		"field": "pyro.class",
+		"value": "other",
+		"sort": 4
+	},
+	{
+		"field": "bike.frame-size",
+		"value": "XXS",
+		"sort": 0
+	},
+	{
+		"field": "bike.frame-size",
+		"value": "XS",
+		"sort": 1
+	},
+	{
+		"field": "bike.frame-size",
+		"value": "S",
+		"sort": 2
+	},
+	{
+		"field": "bike.frame-size",
+		"value": "M",
+		"sort": 3
+	},
+	{
+		"field": "bike.frame-size",
+		"value": "L",
+		"sort": 4
+	},
+	{
+		"field": "bike.frame-size",
+		"value": "XL",
+		"sort": 5
+	},
+	{
+		"field": "shoe.size",
+		"value": "20",
+		"sort": 0
+	},
+	{
+		"field": "shoe.size",
+		"value": "21",
+		"sort": 1
+	},
+	{
+		"field": "shoe.size",
+		"value": "22",
+		"sort": 2
+	},
+	{
+		"field": "shoe.size",
+		"value": "23",
+		"sort": 3
+	},
+	{
+		"field": "shoe.size",
+		"value": "24",
+		"sort": 4
+	},
+	{
+		"field": "shoe.size",
+		"value": "25",
+		"sort": 5
+	},
+	{
+		"field": "shoe.size",
+		"value": "26",
+		"sort": 6
+	},
+	{
+		"field": "shoe.size",
+		"value": "27",
+		"sort": 7
+	},
+	{
+		"field": "shoe.size",
+		"value": "28",
+		"sort": 8
+	},
+	{
+		"field": "shoe.size",
+		"value": "29",
+		"sort": 9
+	},
+	{
+		"field": "shoe.size",
+		"value": "30",
+		"sort": 10
+	},
+	{
+		"field": "shoe.size",
+		"value": "31",
+		"sort": 11
+	},
+	{
+		"field": "shoe.size",
+		"value": "32",
+		"sort": 12
+	},
+	{
+		"field": "shoe.size",
+		"value": "33",
+		"sort": 13
+	},
+	{
+		"field": "shoe.size",
+		"value": "34",
+		"sort": 14
+	},
+	{
+		"field": "shoe.size",
+		"value": "35",
+		"sort": 15
+	},
+	{
+		"field": "shoe.size",
+		"value": "36",
+		"sort": 16
+	},
+	{
+		"field": "shoe.size",
+		"value": "37",
+		"sort": 17
+	},
+	{
+		"field": "shoe.size",
+		"value": "38",
+		"sort": 18
+	},
+	{
+		"field": "shoe.size",
+		"value": "39",
+		"sort": 19
+	},
+	{
+		"field": "shoe.size",
+		"value": "40",
+		"sort": 20
+	},
+	{
+		"field": "shoe.size",
+		"value": "41",
+		"sort": 21
+	},
+	{
+		"field": "shoe.size",
+		"value": "42",
+		"sort": 22
+	},
+	{
+		"field": "shoe.size",
+		"value": "43",
+		"sort": 23
+	},
+	{
+		"field": "shoe.size",
+		"value": "44",
+		"sort": 24
+	},
+	{
+		"field": "shoe.size",
+		"value": "45",
+		"sort": 25
+	},
+	{
+		"field": "shoe.size",
+		"value": "46",
+		"sort": 26
+	},
+	{
+		"field": "shoe.size",
+		"value": "47",
+		"sort": 27
+	},
+	{
+		"field": "shoe.size",
+		"value": "48",
+		"sort": 28
+	},
+	{
+		"field": "clothing.size",
+		"value": "XXS",
+		"sort": 0
+	},
+	{
+		"field": "clothing.size",
+		"value": "XS",
+		"sort": 1
+	},
+	{
+		"field": "clothing.size",
+		"value": "S",
+		"sort": 2
+	},
+	{
+		"field": "clothing.size",
+		"value": "M",
+		"sort": 3
+	},
+	{
+		"field": "clothing.size",
+		"value": "L",
+		"sort": 4
+	},
+	{
+		"field": "clothing.size",
+		"value": "XL",
+		"sort": 5
+	},
+	{
+		"field": "clothing.size",
+		"value": "XXL",
+		"sort": 6
+	},
+	{
+		"field": "clothing.size",
+		"value": "3XL",
+		"sort": 7
+	},
+	{
+		"field": "clothing.size",
+		"value": "4XL",
+		"sort": 8
+	},
+	{
+		"field": "clothing.size",
+		"value": "one-size",
+		"sort": 9
+	},
+	{
+		"field": "connectivity",
+		"value": "wired",
+		"sort": 0
+	},
+	{
+		"field": "connectivity",
+		"value": "bluetooth",
+		"sort": 1
+	},
+	{
+		"field": "connectivity",
+		"value": "wifi",
+		"sort": 2
+	},
+	{
+		"field": "connectivity",
+		"value": "ethernet",
+		"sort": 3
+	},
+	{
+		"field": "connectivity",
+		"value": "usb-c",
+		"sort": 4
+	},
+	{
+		"field": "connectivity",
+		"value": "lightning",
+		"sort": 5
+	},
+	{
+		"field": "connectivity",
+		"value": "zigbee",
+		"sort": 6
+	},
+	{
+		"field": "connectivity",
+		"value": "thread",
+		"sort": 7
+	},
+	{
+		"field": "connectivity",
+		"value": "matter",
+		"sort": 8
+	},
+	{
+		"field": "connectivity",
+		"value": "hdmi",
+		"sort": 9
+	},
+	{
+		"field": "connectivity",
+		"value": "displayport",
+		"sort": 10
+	},
+	{
+		"field": "connectivity",
+		"value": "aux-3.5",
+		"sort": 11
+	},
+	{
+		"field": "connectivity",
+		"value": "nfc",
+		"sort": 12
+	}
+]

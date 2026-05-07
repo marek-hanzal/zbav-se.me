@@ -1,39 +1,52 @@
 import { z } from "zod";
-import { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
-import { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
+import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
+import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
+import { DescriptionSchema } from "~/common/listing/schema/DescriptionSchema";
+import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
+import { RatingSchema } from "~/common/listing/schema/RatingSchema";
+import { TitleSchema } from "~/common/listing/schema/TitleSchema";
+import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
+import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
+import { DraftQuerySchema } from "./DraftQuerySchema";
 
 export const DraftPatchSchema = z
 	.looseObject({
 		patch: z
 			.looseObject({
-				...DraftTableSchema.shape,
-				uploadIds: z.array(z.string()).optional().meta({
-					description:
-						"IDs of the uploads; order of uploads defines order in the gallery",
-				}),
+				title: TitleSchema.optional(),
+				description: DescriptionSchema.nullish(),
+				//
+				categoryId: z.string().min(1).optional(),
+				locationId: z.string().min(1).optional(),
+				//
+				restriction: RestrictionEnumSchema.nullish(),
+				//
+				priceType: PriceTypeEnumSchema.optional(),
+				price: z.coerce.number().positive().optional(),
+				currency: CurrencyEnumSchema.optional(),
+				//
+				expires: ListingExpireEnumSchema.optional(),
+				//
+				uploadIds: z.array(z.string().min(1)).min(1).optional(),
+				withImageUrl: z.array(z.string().min(1)).min(1).optional(),
+				withUploadIds: z.array(z.string().min(1)).min(1).optional(),
+				//
+				condition: RatingSchema.nullish(),
+				age: RatingSchema.nullish(),
+				//
+				pros: ProsConsSchema.optional(),
+				cons: ProsConsSchema.optional(),
+				//
+				delivery: z.array(DeliveryEnumSchema).optional(),
+				//
+				warranty: WarrantyEnumSchema.nullish(),
 			})
-			.omit({
-				id: true,
-				userId: true,
-				currency: true,
-				createdAt: true,
-				updatedAt: true,
-				withImageUrl: true,
-				withUploadIds: true,
-			})
-			.partial()
-			.strip()
-			.meta({
-				id: "DraftPatchData",
-				description: "Fields to update (all optional)",
-			}),
+			.strip(),
 		query: DraftQuerySchema,
 	})
-	.strip()
-	.meta({
-		id: "DraftPatch",
-		description: "Data for updating an existing draft",
-	});
+	.strip();
 
 export type DraftPatchSchema = typeof DraftPatchSchema;
 

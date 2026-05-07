@@ -1,13 +1,14 @@
 import { z } from "zod";
-import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
-import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
-import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import { DescriptionSchema } from "~/common/listing/schema/DescriptionSchema";
 import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
+import { RatingSchema } from "~/common/listing/schema/RatingSchema";
 import { TitleSchema } from "~/common/listing/schema/TitleSchema";
+import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
+import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 
 export const DraftTableSchema = z
 	.looseObject({
@@ -18,65 +19,38 @@ export const DraftTableSchema = z
 			description: "ID of the user who created the draft",
 		}),
 		//
-		price: z.coerce.number().nullable().meta({
-			description: "Price of the draft",
-		}),
-		priceType: ListingPriceEnumSchema.nullable().meta({
-			description: "Price type of the draft",
-		}),
+		categoryId: z.string().min(1).nullish(),
+		restriction: RestrictionEnumSchema.nullish(),
 		//
-		currency: CurrencyEnumSchema.nullable().meta({
-			description: "Currency of the draft",
-		}),
-		//
-		condition: z.number().nullable().meta({
-			description: "Condition of the item (0-based index)",
-		}),
-		//
-		age: z.number().nullable().meta({
-			description: "Age of the item (0-based index)",
-		}),
-		//
-		delivery: z.array(ListingDeliveryEnumSchema).nullable().meta({
-			description: "Delivery methods for the draft",
-		}),
-		//
-		warranty: ListingWarrantyEnumSchema.nullable().meta({
-			description: "Warranty type for the draft",
-		}),
-		//
-		restriction: RestrictionEnumSchema.nullish().meta({
-			description: `
-Restriction override for the listing (draft). May be only higher level than
-category of the listing - e.g. "adult" category cannot get "none" restriction.
-
-If not provided, listing will be controlled from category only.
-            `.trim(),
-		}),
-		//
-		locationId: z.string().nullable().meta({
-			description: "ID of the location",
-		}),
-		categoryId: z.string().nullable().meta({
-			description: "ID of the category",
-		}),
-		galleryId: z.string().meta({
-			description: "ID of the gallery",
-		}),
-		expiresAt: ListingExpireEnumSchema.nullable().meta({
-			description: "Expiration timestamp",
+		galleryId: z.string().min(1),
+		withImageUrl: z.array(z.string().min(1)),
+		withUploadIds: z.array(z.string().min(1)).meta({
+			description:
+				"Denormalized ordered upload IDs used for draft gallery management and consistency checks",
 		}),
 		//
 		title: TitleSchema.nullish(),
-		//
 		description: DescriptionSchema.nullish(),
 		//
-		pros: ProsConsSchema.nullable().meta({
-			description: "Pros of the item",
+		locationId: z.string().min(1).nullish(),
+		withLocation: z.unknown().nullable().meta({
+			description: "Denormalized location geo point for draft search and range queries",
 		}),
-		cons: ProsConsSchema.nullable().meta({
-			description: "Cons of the item",
-		}),
+		//
+		pros: ProsConsSchema,
+		cons: ProsConsSchema,
+		//
+		delivery: z.array(DeliveryEnumSchema),
+		warranty: WarrantyEnumSchema.nullish(),
+		//
+		priceType: PriceTypeEnumSchema.nullish(),
+		price: z.coerce.number().nonnegative(),
+		currency: CurrencyEnumSchema.nullish(),
+		//
+		condition: RatingSchema.nullish(),
+		age: RatingSchema.nullish(),
+		//
+		expires: ListingExpireEnumSchema.nullish(),
 		//
 		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",
@@ -84,22 +58,10 @@ If not provided, listing will be controlled from category only.
 		updatedAt: z.coerce.date().meta({
 			description: "Last update timestamp",
 		}),
-		usedAt: z.coerce.date().nullable().meta({
-			description: "Timestamp when the draft was used to create a listing",
-		}),
-		//
-		withImageUrl: z.array(z.string()).meta({
-			description:
-				"Denormalized ordered public image URLs used for draft gallery previews and list reads",
-		}),
-		withUploadIds: z.array(z.string()).meta({
-			description:
-				"Denormalized ordered upload IDs used for draft gallery management and consistency checks",
-		}),
 	})
 	.meta({
 		id: "DraftTable",
-		description: "Database row for a draft listing.",
+		description: "Database row for a draft.",
 	})
 	.strip();
 

@@ -2,9 +2,11 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
+import type { useView } from "@/lib/client/view";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { useUpload } from "~/common/gallery/hook/useUpload";
+import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/common/location/ui/LocationBadge";
 import { getRootLogger } from "~/common/log/getRootLogger";
@@ -16,11 +18,11 @@ export namespace HeroSection {
 	export interface Props extends MarkSuspense.Props {
 		feedId: string;
 		listing: ListingSchema.Type;
-		onView(view: "gallery"): void;
+		view: useView.Use<"gallery">;
 	}
 }
 
-export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) => {
+export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, view }) => {
 	const hero = useUpload(listing.withImageUrl);
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 
@@ -40,9 +42,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 				data-ui-position="relative"
 			>
 				<ListingPrice
-					price={listing.price}
-					priceType={listing.priceType}
-					currency={listing.currency}
+					price={listing as ListingPriceSchema.Type}
 					data-ui-snap-to="top-center"
 					data-ui-opacity="8"
 					data-ui-z-index
@@ -82,7 +82,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 					src={hero}
 					alt={`Hero image for listing ${listing.id}`}
 					data-action={"open listing gallery"}
-					onClick={() => onView("gallery")}
+					onClick={() => view.set("gallery")}
 					data-ui-round="default"
 					className={"h-64"}
 				/>

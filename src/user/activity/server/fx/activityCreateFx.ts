@@ -36,8 +36,8 @@ export const activityCreateFx = Effect.fn("activityCreateFx")(function* ({
 			const dateContext = yield* DateContextFx;
 			const id = genId();
 
-			yield* tryDbFx(async () =>
-				kysely
+			yield* tryDbFx(async () => {
+				return kysely
 					.insertInto("activity")
 					.values({
 						id,
@@ -51,8 +51,8 @@ export const activityCreateFx = Effect.fn("activityCreateFx")(function* ({
 						archivedAt: null,
 					})
 					.returningAll()
-					.executeTakeFirstOrThrow(),
-			);
+					.executeTakeFirstOrThrow();
+			});
 
 			return yield* activityFetchFx({
 				where: {

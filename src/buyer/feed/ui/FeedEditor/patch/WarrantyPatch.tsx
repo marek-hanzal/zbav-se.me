@@ -5,7 +5,7 @@ import type { EntitySchema } from "@/lib/common/schema";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import type { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 import { WarrantySelect } from "~/common/warranty/ui/WarrantySelect";
 
 export namespace WarrantyPatch {
@@ -17,7 +17,9 @@ export namespace WarrantyPatch {
 }
 
 export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const patchMutation = withFeedQuery.usePatchMutation();
+	const patchMutation = withFeedQuery.usePatchMutation({
+		onSettled,
+	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
 		initial: (feed.query?.filter?.warrantyIn ?? []).map((warranty) => ({
@@ -30,7 +32,7 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ feed, onSettled, onCanc
 
 	return (
 		<Container
-			data-ui={"WarrantyPatch[Container]"}
+			data-ui={"WarrantyPatch"}
 			data-ui-layout="vertical-content-footer"
 			data-ui-height="full"
 			data-ui-width="full"
@@ -43,31 +45,26 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ feed, onSettled, onCanc
 			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
-					patchMutation.mutate(
-						{
+					patchMutation.mutate({
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+						patch: {
 							query: {
-								where: {
-									id: feed.id,
-								},
-							},
-							patch: {
-								query: {
-									...feed.query,
-									filter: {
-										...feed.query?.filter,
-										warrantyIn:
-											selection.optional.multiId() as ListingWarrantyEnumSchema.Type[],
-									},
+								...feed.query,
+								filter: {
+									...feed.query?.filter,
+									warrantyIn:
+										selection.optional.multiId() as WarrantyEnumSchema.Type[],
 								},
 							},
 						},
-						{
-							onSettled,
-						},
-					);
+					});
 				}}
 				loading={patchMutation.isPending}
-				disabled={false}
+				disabled={patchMutation.isPending}
 			/>
 		</Container>
 	);

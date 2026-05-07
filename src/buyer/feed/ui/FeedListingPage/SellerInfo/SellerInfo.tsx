@@ -2,19 +2,20 @@ import { withFallback } from "@/lib/client/fallback";
 import { Icon, ShowIcon } from "@/lib/client/icon";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
+import type { useView } from "@/lib/client/view";
+import { translator } from "@/lib/common/translation";
 import { withListingSellerInfoQuery } from "~/buyer/listing/query/withListingSellerInfoQuery";
 import { RatingIcon } from "~/common/score/ui/RatingIcon";
 
 export namespace SellerInfo {
 	export interface Props extends MarkSuspense.Props {
 		listingId: string;
-		onView(view: "seller-info"): void;
+		view: useView.Use<"seller-info">;
 	}
 }
 
 export const SellerInfo = withFallback(
-	({ _suspense, listingId, onView }: SellerInfo.Props) => {
+	({ _suspense, listingId, view }: SellerInfo.Props) => {
 		const { data: sellerInfo } = withListingSellerInfoQuery.useSuspenseQuery({
 			id: listingId,
 		});
@@ -29,7 +30,7 @@ export const SellerInfo = withFallback(
 				}
 				textEmpty={translator.text("Listing seller info not available (empty)")}
 				action={<Icon icon={ShowIcon} />}
-				onClick={() => onView("seller-info")}
+				onClick={() => view.set("seller-info")}
 			/>
 		);
 	},

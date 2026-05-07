@@ -35,7 +35,7 @@ describe("buyer listing active restriction ordering", () => {
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title: "Buyer time restriction marker",
+					// title: "Buyer time restriction marker",
 					categoryIdIn: [
 						...fixtures.categoryIdIn,
 					],
@@ -83,7 +83,7 @@ describe("buyer listing active restriction ordering", () => {
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title: "Buyer newest restriction marker",
+					// title: "Buyer newest restriction marker",
 					categoryIdIn: [
 						...fixtures.categoryIdIn,
 					],
@@ -125,7 +125,7 @@ describe("buyer listing active restriction ordering", () => {
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title: "Buyer expired restriction marker",
+					// title: "Buyer expired restriction marker",
 					categoryIdIn: [
 						...fixtures.categoryIdIn,
 					],

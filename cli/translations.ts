@@ -6,7 +6,7 @@ tx({
 	packages: [
 		`${__dirname}/..`,
 	],
-	output: `${__dirname}/../src/translation`,
+	output: `${__dirname}/../src/server/@migrations/translation`,
 	locales,
 	sources: TranslationSources,
 });

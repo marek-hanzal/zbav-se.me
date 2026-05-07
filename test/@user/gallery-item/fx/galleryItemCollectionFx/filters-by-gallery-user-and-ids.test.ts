@@ -1,12 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { testUploadUrl } from "~/test/common/fn/testUploadUrl";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 import { galleryItemCollectionFx } from "~/user/gallery-item/server/fx/galleryItemCollectionFx";
 import { galleryItemCountFx } from "~/user/gallery-item/server/fx/galleryItemCountFx";
+import { galleryItemFetchFx } from "~/user/gallery-item/server/fx/galleryItemFetchFx";
+import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 describe("galleryItemCollectionFx", () => {
@@ -32,20 +34,32 @@ describe("galleryItemCollectionFx", () => {
 				url: testUploadUrl("gallery-item-collection-3.jpg"),
 			});
 
-			const sellerDraft = yield* draftCreateFx({
+			const sellerGallery = yield* galleryInsertFx({
+				access: "private",
 				userId: seller.id,
-				title: "Seller Gallery",
-				uploadIds: [
-					sellerFirstUpload.id,
-					sellerSecondUpload.id,
-				],
 			});
-			const buyerDraft = yield* draftCreateFx({
+			const buyerGallery = yield* galleryInsertFx({
+				access: "private",
 				userId: buyer.id,
-				title: "Buyer Gallery",
-				uploadIds: [
-					buyerUpload.id,
-				],
+			});
+
+			const sellerLaterItem = yield* galleryItemInsertFx({
+				galleryId: sellerGallery.id,
+				sort: 2,
+				uploadId: sellerSecondUpload.id,
+				userId: seller.id,
+			});
+			const sellerEarlierItem = yield* galleryItemInsertFx({
+				galleryId: sellerGallery.id,
+				sort: 1,
+				uploadId: sellerFirstUpload.id,
+				userId: seller.id,
+			});
+			yield* galleryItemInsertFx({
+				galleryId: buyerGallery.id,
+				sort: 1,
+				uploadId: buyerUpload.id,
+				userId: buyer.id,
 			});
 
 			const sellerItems = yield* galleryItemCollectionFx({
@@ -53,23 +67,23 @@ describe("galleryItemCollectionFx", () => {
 					userId: seller.id,
 				},
 				where: {
-					galleryId: sellerDraft.galleryId,
+					galleryId: sellerGallery.id,
 				},
+				sort: [
+					{
+						field: "sort",
+						order: "asc",
+					},
+				],
 			});
-
-			const firstSellerItem = sellerItems[0];
-
-			if (!firstSellerItem) {
-				throw new Error("Expected seller gallery to contain at least one item");
-			}
-
 			const filteredByIds = yield* galleryItemCollectionFx({
 				scope: {
 					userId: seller.id,
 				},
 				where: {
+					galleryId: sellerGallery.id,
 					idIn: [
-						firstSellerItem.id,
+						sellerLaterItem.id,
 						"missing-gallery-item-id",
 					],
 				},
@@ -79,7 +93,15 @@ describe("galleryItemCollectionFx", () => {
 					userId: seller.id,
 				},
 				where: {
-					galleryId: sellerDraft.galleryId,
+					galleryId: sellerGallery.id,
+				},
+			});
+			const fetched = yield* galleryItemFetchFx({
+				scope: {
+					userId: seller.id,
+				},
+				where: {
+					id: sellerEarlierItem.id,
 				},
 			});
 			const strangerItems = yield* galleryItemCollectionFx({
@@ -87,7 +109,7 @@ describe("galleryItemCollectionFx", () => {
 					userId: stranger.id,
 				},
 				where: {
-					galleryId: sellerDraft.galleryId,
+					galleryId: sellerGallery.id,
 				},
 			});
 			const buyerOwnItems = yield* galleryItemCollectionFx({
@@ -95,16 +117,26 @@ describe("galleryItemCollectionFx", () => {
 					userId: buyer.id,
 				},
 				where: {
-					galleryId: buyerDraft.galleryId,
+					galleryId: buyerGallery.id,
 				},
 			});
 
-			expect(sellerItems).toHaveLength(2);
+			expect(sellerItems.map((item) => item.id)).toEqual([
+				sellerEarlierItem.id,
+				sellerLaterItem.id,
+			]);
+			expect(sellerItems.map((item) => item.upload.id)).toEqual([
+				sellerFirstUpload.id,
+				sellerSecondUpload.id,
+			]);
 			expect(filteredByIds).toHaveLength(1);
-			expect(filteredByIds[0]?.id).toBe(firstSellerItem.id);
+			expect(filteredByIds[0]?.id).toBe(sellerLaterItem.id);
 			expect(sellerCount).toBe(2);
+			expect(fetched.id).toBe(sellerEarlierItem.id);
+			expect(fetched.upload.id).toBe(sellerFirstUpload.id);
 			expect(strangerItems).toEqual([]);
 			expect(buyerOwnItems).toHaveLength(1);
+			expect(buyerOwnItems[0]?.upload.id).toBe(buyerUpload.id);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

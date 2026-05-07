@@ -34,7 +34,7 @@ export const SearchButton = withFallback(
 				}}
 				icon={SearchIcon}
 				iconProps={{
-					"data-ui-tone": "primary",
+					"data-ui-tone": hasListings ? "primary" : "neutral",
 					"data-ui-theme": "light",
 					"data-ui-color": "lead",
 					"data-ui-text": "xl",
@@ -56,7 +56,7 @@ export const SearchButton = withFallback(
 					data-ui-flow="horizontal"
 					data-ui-items="center"
 					data-ui-justify="space-between"
-					data-ui-tone="primary"
+					data-ui-tone={hasListings ? "primary" : "neutral"}
 					data-ui-theme="light"
 					data-ui-color="lead"
 					data-ui-width="full"
@@ -104,7 +104,7 @@ export const SearchButton = withFallback(
 				}}
 				icon={SearchIcon}
 				iconProps={{
-					"data-ui-tone": "primary",
+					"data-ui-tone": "neutral",
 					"data-ui-theme": "light",
 					"data-ui-color": "lead",
 					"data-ui-text": "xl",
@@ -123,26 +123,23 @@ export const SearchButton = withFallback(
 				{...props}
 			>
 				<Container
-					data-ui={"SearchButton-[Container.content.pending]"}
 					data-ui-flow="horizontal"
 					data-ui-items="center"
 					data-ui-gap="default"
 					data-ui-justify="space-between"
 					data-ui-width="full"
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-color="lead"
 				>
 					<Tx
 						label="Search (button)"
-						data-ui-tone="primary"
-						data-ui-theme="light"
-						data-ui-color="lead"
-						data-ui-text="xl"
+						data-ui-text="lg"
+						data-ui-font="bold"
 					/>
 
 					<Tx
 						label="Loading... (label)"
-						data-ui-tone="neutral"
-						data-ui-theme="light"
-						data-ui-color="lead"
 						data-ui-text="xs"
 						data-ui-opacity="6"
 					/>

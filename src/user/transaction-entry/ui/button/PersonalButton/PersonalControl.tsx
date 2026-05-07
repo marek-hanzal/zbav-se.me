@@ -4,7 +4,7 @@ import { Container } from "@/lib/client/container";
 import { FormField } from "@/lib/client/form";
 import { Tx } from "@/lib/client/tx";
 import { cleanOf } from "@/lib/common/clean-of";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
 import type { PersonalSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema/PersonalSchema";

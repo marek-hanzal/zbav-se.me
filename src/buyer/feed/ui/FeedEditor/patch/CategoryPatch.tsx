@@ -16,22 +16,28 @@ export namespace CategoryPatch {
 }
 
 export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const patchMutation = withFeedQuery.usePatchMutation();
+	const patchMutation = withFeedQuery.usePatchMutation({
+		onSettled,
+	});
 	const selection = useSelection<EntitySchema.Type>({
-		mode: "multi",
-		initial: feed.query?.filter?.categoryIdIn?.map((id) => ({
-			id,
-		})),
+		mode: "single",
+		initial: feed.query?.filter?.categoryId
+			? [
+					{
+						id: feed.query.filter.categoryId,
+					},
+				]
+			: [],
 		deps: [
 			feed,
 		],
 	});
 
-	const categoryId = selection.optional.singleId() ?? null;
+	const categoryId = selection.optional.singleId() ?? undefined;
 
 	return (
 		<Container
-			data-ui={"CategoryPatch[Container]"}
+			data-ui={"CategoryPatch"}
 			data-ui-layout="vertical-content-footer"
 			data-ui-height="full"
 			data-ui-width="full"
@@ -41,37 +47,33 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 		>
 			<CategorySelect
 				selection={selection}
-				categoryId={categoryId ?? undefined}
-				withRestriction={false}
+				categoryId={categoryId}
+				withRestriction={true}
 			/>
 
 			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
-					patchMutation.mutate(
-						{
+					patchMutation.mutate({
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+						patch: {
 							query: {
-								where: {
-									id: feed.id,
-								},
-							},
-							patch: {
-								query: {
-									...feed.query,
-									filter: {
-										...feed.query?.filter,
-										categoryIdIn: selection.optional.multiId(),
-									},
+								...feed.query,
+								filter: {
+									...feed.query?.filter,
+									categoryId: selection.optional.singleId(),
+									attrs: {},
 								},
 							},
 						},
-						{
-							onSettled,
-						},
-					);
+					});
 				}}
 				loading={patchMutation.isPending}
-				disabled={false}
+				disabled={patchMutation.isPending}
 			/>
 		</Container>
 	);

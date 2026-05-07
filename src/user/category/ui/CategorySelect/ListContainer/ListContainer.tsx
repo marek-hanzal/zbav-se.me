@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import type { Fulltext } from "@/lib/client/fulltext";
@@ -15,7 +15,7 @@ import { Empty } from "./Data/Empty";
 export namespace ListContainer {
 	export interface Props extends Container.Props {
 		fulltext: Fulltext.Value;
-		selection: useSelection.Selection<EntitySchema.Type>;
+		selection: useSelection.Use<EntitySchema.Type>;
 		categoryId: string | undefined;
 		/**
 		 * Controls if restricted categories are shown: useful e.g. for drafts when
@@ -34,7 +34,7 @@ export namespace ListContainer {
 export const ListContainer = withFallback(
 	({ ref, fulltext, selection, categoryId, withRestriction, ...props }: ListContainer.Props) => {
 		const locale = useLocale();
-		const { data: categoryIds } = withCategoryQuery.useIdsQuery({
+		const { data: categories } = withCategoryQuery.useCollectionQuery({
 			filter: {
 				locale,
 				fulltext,
@@ -52,12 +52,6 @@ export const ListContainer = withFallback(
 					order: "asc",
 				},
 			],
-		});
-		const { data: categoryCount } = withCategoryQuery.useCollectionQuery({
-			cursor: {
-				page: 0,
-				size: 1,
-			},
 		});
 
 		const containerRef = useRef<HTMLDivElement>(null);
@@ -77,10 +71,10 @@ export const ListContainer = withFallback(
 		}, [
 			categoryId,
 			scrollTo,
-			categoryIds,
+			categories,
 		]);
 
-		if (categoryCount.length === 0) {
+		if (categories.length === 0) {
 			return <Empty />;
 		}
 
@@ -96,17 +90,13 @@ export const ListContainer = withFallback(
 					data-ui-gap="default"
 					{...props}
 				>
-					{categoryIds.map((categoryId) => {
+					{categories.map((category) => {
 						return (
-							<Suspense
-								key={categoryId}
-								fallback={<CategoryItem.Fallback />}
-							>
-								<CategoryItem
-									categoryId={categoryId}
-									selection={selection}
-								/>
-							</Suspense>
+							<CategoryItem
+								key={category.id}
+								category={category}
+								selection={selection}
+							/>
 						);
 					})}
 				</Container>

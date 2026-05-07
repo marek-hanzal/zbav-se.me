@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withAgentStreamQueryBuilderFx } from "~/user/agent/server/db/withAgentStreamQueryBuilderFx";
 import { withAgentStreamSelectFx } from "~/user/agent/server/db/withAgentStreamSelectFx";
 import type { AgentStreamFilterSchema } from "~/user/agent/server/schema/AgentStreamFilterSchema";
 import type { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStreamQuerySchema";
@@ -34,7 +33,6 @@ export const agentStreamFetchFx = Effect.fn("agentStreamFetchFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx: withAgentStreamQueryBuilderFx,
 	});
 });
 

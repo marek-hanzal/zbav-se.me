@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withCategoryQueryBuilderFx } from "~/public/category/server/db/withCategoryQueryBuilderFx";
 import { withCategorySelectFx } from "~/public/category/server/db/withCategorySelectFx";
 import type { CategoryFilterSchema } from "~/public/category/server/schema/CategoryFilterSchema";
 import type { CategoryQuerySchema } from "~/public/category/server/schema/CategoryQuerySchema";
@@ -34,7 +33,6 @@ export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx: withCategoryQueryBuilderFx,
 	});
 });
 

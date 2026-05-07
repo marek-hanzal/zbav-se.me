@@ -22,8 +22,7 @@ export namespace Item {
 export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.Props) => {
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
-	const unreadCount = transaction.unreadCount ?? 0;
-	const isUnread = unreadCount > 0;
+	const isUnread = transaction.unread > 0;
 
 	return (
 		<LinkTo
@@ -57,9 +56,11 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 						data-ui-justify="space-between"
 						data-ui-items="center"
 					>
-						{unreadCount > 0 ? (
+						{transaction.unread > 0 ? (
 							<TypoIcon icon={MessageIcon}>
-								<Typo label={`x${unreadCount > 9 ? "9+" : unreadCount}`} />
+								<Typo
+									label={`x${transaction.unread > 9 ? "9+" : transaction.unread}`}
+								/>
 							</TypoIcon>
 						) : (
 							<div />

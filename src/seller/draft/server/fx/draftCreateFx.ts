@@ -8,7 +8,6 @@ import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
-import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
 
 export namespace draftCreateFx {
 	export interface Props extends DraftCreateSchema.Type {
@@ -18,13 +17,11 @@ export namespace draftCreateFx {
 
 export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 	userId,
-	uploadIds = [],
 	...data
 }: draftCreateFx.Props) {
 	const logger = yield* getLoggerFx("draftCreateFx");
 	logger.trace("draftCreateFx", {
 		userId,
-		uploadIds,
 		...data,
 	});
 
@@ -34,78 +31,39 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 			const dateContext = yield* DateContextFx;
 
 			const id = genId();
-			const now = dateContext.now().toJSDate();
+			const now = dateContext.now();
 
 			const gallery = yield* galleryInsertFx({
-				access: "private",
+				access: "public",
 				userId,
 			});
-
-			if (uploadIds && uploadIds.length > 0) {
-				let sort = 0;
-				for (const uploadId of uploadIds) {
-					yield* galleryItemInsertFx({
-						galleryId: gallery.id,
-						uploadId,
-						sort,
-						userId,
-						check: false,
-					});
-					sort++;
-				}
-			}
-
-			let withImageUrl: string[] = [];
-			let withUploadIds: string[] = [];
-			if (uploadIds && uploadIds.length > 0) {
-				const withUpload = yield* tryDbFx(async () => {
-					return kysely
-						.selectFrom("upload")
-						.select([
-							"id",
-							"url",
-						])
-						.where("userId", "=", userId)
-						.where("id", "in", uploadIds)
-						.execute();
-				});
-
-				const urlById = new Map(
-					withUpload.map((row) => [
-						row.id,
-						row.url,
-					]),
-				);
-
-				withImageUrl = uploadIds.flatMap((uploadId) => {
-					const imageUrl = urlById.get(uploadId);
-					return imageUrl
-						? [
-								imageUrl,
-							]
-						: [];
-				});
-				withUploadIds = uploadIds.filter((uploadId) => urlById.has(uploadId));
-			}
 
 			yield* tryDbFx(async () => {
 				return kysely
 					.insertInto("draft")
 					.values({
 						...data,
-						userId,
 						id,
+						userId,
+						price: 0,
+						//
 						galleryId: gallery.id,
-						createdAt: now,
-						updatedAt: now,
-						currency: "CZK",
-						withImageUrl,
-						withUploadIds,
+						withImageUrl: [],
+						withUploadIds: [],
+						//
+						delivery: [],
+						//
+						cons: [],
+						pros: [],
+						//
+						createdAt: now.toJSDate(),
+						updatedAt: now.toJSDate(),
 					})
 					.execute();
 			});
 
 			return yield* draftFetchFx({
+				userId,
 				where: {
 					id,
 				},

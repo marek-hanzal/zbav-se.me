@@ -29,10 +29,12 @@ export const draftCollectionFn = createServerFn()
 			name,
 		]);
 		logger.trace(name, data);
+
 		return zodGuardFx({
 			schema: z.array(DraftSchema),
 			dataFx: draftCollectionFx({
 				...data,
+				userId: user.id,
 				scope: {
 					userId: user.id,
 				},

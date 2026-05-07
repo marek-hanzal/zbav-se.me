@@ -2,10 +2,10 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
-import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import type { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
-import type { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import type { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 import type { testabase } from "~/test/testabase";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
@@ -29,18 +29,18 @@ type ListingSearchPatch = {
 	price?: number;
 	condition?: number;
 	age?: number;
-	delivery?: ListingDeliveryEnumSchema.Type[];
-	warranty?: ListingWarrantyEnumSchema.Type;
+	delivery?: DeliveryEnumSchema.Type[];
+	warranty?: WarrantyEnumSchema.Type;
 	status?: ListingStatusEnumSchema.Type;
 	restriction?: RestrictionEnumSchema.Type;
 	title?: string;
 };
 
-export const personalDelivery: ListingDeliveryEnumSchema.Type[] = [
+export const personalDelivery: DeliveryEnumSchema.Type[] = [
 	"personal",
 ];
 
-export const postDelivery: ListingDeliveryEnumSchema.Type[] = [
+export const postDelivery: DeliveryEnumSchema.Type[] = [
 	"post",
 ];
 
@@ -90,22 +90,11 @@ export const patchListingSearchFixtureFx = (database: TestDatabase, props: Listi
 				.executeTakeFirstOrThrow();
 
 			values.locationId = props.locationId;
-			values.withLocationGeo = location.geo;
+			values.withLocation = location.geo;
 		}
 
 		if (props.categoryId !== undefined) {
-			const category = await database.kysely
-				.selectFrom("category")
-				.select([
-					"discovery",
-					"restriction",
-				])
-				.where("id", "=", props.categoryId)
-				.executeTakeFirstOrThrow();
-
 			values.categoryId = props.categoryId;
-			values.withCategoryDiscovery = category.discovery;
-			values.withCategoryRestriction = category.restriction;
 		}
 
 		if (props.price !== undefined) {
@@ -138,7 +127,7 @@ export const patchListingSearchFixtureFx = (database: TestDatabase, props: Listi
 
 		if (props.title !== undefined) {
 			values.title = props.title;
-			values.withTitleSearch = sql`lower(immutable_unaccent(${props.title}))`;
+			values.withTitle = sql`lower(immutable_unaccent(${props.title}))`;
 		}
 
 		return database.kysely
@@ -154,8 +143,8 @@ export const patchCategoryDiscoveryFx = (
 		id: string;
 		discovery: "explicit" | "implicit";
 	},
-) =>
-	Effect.promise(async () => {
+) => {
+	return Effect.promise(async () => {
 		await database.kysely
 			.updateTable("category")
 			.set({
@@ -163,15 +152,8 @@ export const patchCategoryDiscoveryFx = (
 			})
 			.where("id", "=", props.id)
 			.executeTakeFirstOrThrow();
-
-		return database.kysely
-			.updateTable("listing")
-			.set({
-				withCategoryDiscovery: props.discovery,
-			})
-			.where("categoryId", "=", props.id)
-			.executeTakeFirstOrThrow();
 	});
+};
 
 export const categoryIdBySlugFx = (database: TestDatabase, slug: string) =>
 	Effect.promise(() =>

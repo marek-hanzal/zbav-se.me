@@ -1,5 +1,6 @@
 import { withDatabaseFx, withMigrationFx } from "@/lib/common/database";
 import { testabase as coolTestabase } from "@/lib/server/testabase";
+import { getRootLogger } from "~/common/log/getRootLogger";
 import type { Database } from "~/server/database/Database";
 
 export namespace testabase {
@@ -10,7 +11,11 @@ export namespace testabase {
 
 export const testabase = (props: testabase.Props) => {
 	return coolTestabase({
-		databaseFx: withDatabaseFx<Database>({}).pipe(withMigrationFx({})),
+		databaseFx: withDatabaseFx<Database>({
+			logger: getRootLogger([
+				"db",
+			]),
+		}).pipe(withMigrationFx({})),
 		template: "e2e",
 		...props,
 	});

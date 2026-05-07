@@ -93,7 +93,7 @@ describe("buyer listing discovery flow", () => {
 				name: "Portable consoles",
 				query: {
 					where: {
-						title: "portable console",
+						// title: "portable console",
 					},
 				},
 			});
@@ -133,7 +133,7 @@ describe("buyer listing discovery flow", () => {
 				meta: filteredMeta,
 				sort: [
 					{
-						field: "geo",
+						field: "createdAt",
 						order: "asc",
 					},
 				],

@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withGalleryCollectionSelectFx } from "~/user/gallery/server/db/withGalleryCollectionSelectFx";
-import { withGalleryQueryBuilderFx } from "~/user/gallery/server/db/withGalleryQueryBuilderFx";
 import type { GalleryFilterSchema } from "~/user/gallery/server/schema/GalleryFilterSchema";
 import type { GalleryQuerySchema } from "~/user/gallery/server/schema/GalleryQuerySchema";
+import { withGallerySelectFx } from "../db/withGallerySelectFx";
 
 export namespace galleryCollectionFx {
 	export interface Props extends GalleryQuerySchema.Type {
@@ -17,11 +16,11 @@ export const galleryCollectionFx = Effect.fn("galleryCollectionFx")(function* ({
 		page: 0,
 		size: 10,
 	},
-	limit,
 	filter,
 	where,
 	scope,
 	sort,
+	limit,
 }: galleryCollectionFx.Props) {
 	const logger = yield* getLoggerFx("galleryCollectionFx");
 	logger.trace("galleryCollectionFx", {
@@ -34,15 +33,14 @@ export const galleryCollectionFx = Effect.fn("galleryCollectionFx")(function* ({
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withGalleryCollectionSelectFx({
+		selectFx: withGallerySelectFx({
 			sort,
 		}),
 		cursor,
-		limit,
 		filter,
 		where,
 		scope,
-		queryFx: withGalleryQueryBuilderFx,
+		limit,
 	});
 });
 

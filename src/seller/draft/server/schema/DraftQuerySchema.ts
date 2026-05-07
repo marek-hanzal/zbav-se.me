@@ -1,14 +1,18 @@
 import { z } from "zod";
 import { CursorSchema } from "@/lib/common/schema";
-import { DraftFilterSchema } from "~/seller/draft/server/schema/DraftFilterSchema";
 import { DraftSortSchema } from "~/seller/draft/server/schema/DraftSortSchema";
 import { DraftWhereSchema } from "~/seller/draft/server/schema/DraftWhereSchema";
 
 export const DraftQuerySchema = z
 	.looseObject({
-		cursor: CursorSchema.optional(),
-		filter: DraftFilterSchema.optional(),
+		cursor: CursorSchema.default({
+			page: 0,
+			size: 256,
+		}).optional(),
+		//
+		filter: DraftWhereSchema.optional(),
 		where: DraftWhereSchema.optional(),
+		//
 		sort: DraftSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({
 			description:

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { LinkTo, type uiLinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { HomeIcon } from "~/common/ui/icon";
 
 export namespace HomeMenuButton {

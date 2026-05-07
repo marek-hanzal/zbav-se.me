@@ -1,22 +1,19 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withListingCollectionSelectFx } from "~/seller/listing/server/db/withListingCollectionSelectFx";
-import { withListingQueryBuilderFx } from "~/seller/listing/server/db/withListingQueryBuilderFx";
-import type { ListingFilterSchema } from "~/seller/listing/server/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";
+import { withListingSelectFx } from "../db/withListingSelectFx";
+import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace listingCollectionFx {
-	export interface Scope extends ListingFilterSchema.Type {
-		userId: string;
-	}
-
 	export interface Props extends ListingQuerySchema.Type {
-		scope: Scope;
+		userId: string;
+		scope: ListingWhereSchema.Type;
 	}
 }
 
 export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
+	userId,
 	cursor = {
 		page: 0,
 		size: 10,
@@ -38,15 +35,14 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withListingCollectionSelectFx({
+		selectFx: withListingSelectFx({
+			userId,
 			sort,
-			userId: scope.userId,
 		}),
 		cursor,
 		filter,
 		where,
 		scope,
-		queryFx: withListingQueryBuilderFx,
 		limit,
 	});
 });

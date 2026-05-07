@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { withFlagCollectionSelectFx } from "~/buyer/flag/server/db/withFlagCollectionSelectFx";
-import { withFlagQueryBuilderFx } from "~/buyer/flag/server/db/withFlagQueryBuilderFx";
+import { withFlagSelectFx } from "~/buyer/flag/server/db/withFlagSelectFx";
 import type { FlagCountQuerySchema } from "~/buyer/flag/server/schema/FlagCountQuerySchema";
 import type { FlagFilterSchema } from "~/buyer/flag/server/schema/FlagFilterSchema";
 
@@ -25,11 +24,10 @@ export const flagCountFx = Effect.fn("flagCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withFlagCollectionSelectFx({}),
+		selectFx: withFlagSelectFx({}),
 		filter,
 		where,
 		scope,
-		queryFx: withFlagQueryBuilderFx,
 	});
 });
 

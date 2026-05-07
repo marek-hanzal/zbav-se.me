@@ -9,7 +9,7 @@ import { Typo } from "@/lib/client/typo";
 import { LabelValue } from "@/lib/client/value";
 import { ofGoogleMap, ofLatLonText } from "@/lib/common/location";
 import { toTimeDiff } from "@/lib/common/time";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withLocationFetchQuery } from "~/session/location/withLocationFetchQuery";
 import type { TransactionEntryLocation } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/LocationSchema";
 import { TypeContainer } from "./TypeContainer";

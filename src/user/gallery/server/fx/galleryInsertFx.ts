@@ -15,36 +15,32 @@ export namespace galleryInsertFx {
 
 export const galleryInsertFx = Effect.fn("galleryInsertFx")(function* ({
 	userId,
-	id,
+	id = genId(),
 	...props
 }: galleryInsertFx.Props) {
 	const logger = yield* getLoggerFx("galleryInsertFx");
 	logger.trace("galleryInsertFx", {
 		userId,
-		id,
 		...props,
 	});
 
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 
-	const galleryId = id ?? genId();
-
-	yield* tryDbFx(async () =>
-		kysely
+	yield* tryDbFx(async () => {
+		return kysely
 			.insertInto("gallery")
 			.values({
 				...props,
-				id: galleryId,
+				id,
 				userId,
 				createdAt: dateContext.now().toJSDate(),
 			})
-			.onConflict((eb) => eb.doNothing())
-			.execute(),
-	);
+			.execute();
+	});
 
 	return {
-		id: galleryId,
+		id,
 	} as const;
 });
 

@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
@@ -21,6 +21,8 @@ const REPO = "marek-hanzal/zbav-se.me";
 const ENV_DIRECTORY = "@env";
 
 function printUsage(reason?: string, exitCode = 1): never {
+	const availableEnvironments = listAvailableEnvironments();
+
 	if (reason) {
 		console.error(reason);
 		console.error("");
@@ -28,11 +30,28 @@ function printUsage(reason?: string, exitCode = 1): never {
 
 	console.error("Usage: bun run env:sync <environment> <vercel-project-id>");
 	console.error("");
+	console.error(`Available environments: ${availableEnvironments.join(", ") || "(none found)"}`);
+	console.error("");
 	console.error("Examples:");
-	console.error("  bun run env:sync uat prj_xxx");
-	console.error("  bun run env:sync production prj_xxx");
+
+	for (const environment of availableEnvironments) {
+		console.error(`  bun run env:sync ${environment} prj_xxx`);
+	}
 
 	process.exit(exitCode);
+}
+
+function listAvailableEnvironments() {
+	const absoluteDirectory = path.resolve(process.cwd(), ENV_DIRECTORY);
+
+	if (!existsSync(absoluteDirectory)) {
+		return [];
+	}
+
+	return readdirSync(absoluteDirectory)
+		.filter((entry) => entry.endsWith(".json"))
+		.map((entry) => path.basename(entry, ".json"))
+		.sort((left, right) => left.localeCompare(right));
 }
 
 function resolveEnvFilePath(input: string) {
@@ -373,12 +392,12 @@ async function main() {
 	const envInput = process.argv[2];
 	const vercelProjectId = process.argv[3];
 
-	if (!envInput || !vercelProjectId) {
-		printUsage("Missing environment name or Vercel project ID.", 1);
-	}
-
 	if (envInput === "--help" || envInput === "-h") {
 		printUsage(undefined, 0);
+	}
+
+	if (!envInput || !vercelProjectId) {
+		printUsage("Missing environment name or Vercel project ID.", 1);
 	}
 
 	const filePath = resolveEnvFilePath(envInput);

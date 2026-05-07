@@ -1,13 +1,15 @@
 import { z } from "zod";
-import { CategoryDiscoveryEnumSchema } from "~/common/category/enum/CategoryDiscoveryEnumSchema";
-import { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
-import { ListingPriceEnumSchema } from "~/common/listing/enum/ListingPriceEnumSchema";
+import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
+import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
-import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
+import { DescriptionSchema } from "~/common/listing/schema/DescriptionSchema";
 import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
+import { RatingSchema } from "~/common/listing/schema/RatingSchema";
+import { TitleSchema } from "~/common/listing/schema/TitleSchema";
+import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
-import { VectorSchema } from "~/common/schema/VectorSchema";
+import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 
 export const ListingTableSchema = z
 	.looseObject({
@@ -18,74 +20,68 @@ export const ListingTableSchema = z
 			description: "ID of the user who created the listing",
 		}),
 		//
-		price: z.coerce.number().meta({
-			description: "Price of the listing",
-			type: "number",
-		}),
-		priceType: ListingPriceEnumSchema,
-		//
-		currency: CurrencyEnumSchema,
-		//
-		condition: z.number().nullable().meta({
-			description: "Condition of the item (0-based index)",
-		}),
-		//
-		age: z.number().nullable().meta({
-			description: "Age of the item (0-based index)",
-		}),
-		//
-		delivery: z.array(ListingDeliveryEnumSchema).nullable(),
-		//
-		warranty: ListingWarrantyEnumSchema.nullable(),
+		categoryId: z.string().min(1),
 		//
 		status: ListingStatusEnumSchema,
+		restriction: RestrictionEnumSchema.nullable(),
 		//
-		restriction: RestrictionEnumSchema.nullish(),
-		withCategoryDiscovery: CategoryDiscoveryEnumSchema,
-		withCategoryRestriction: RestrictionEnumSchema.nullish(),
-		//
-		locationId: z.string().meta({
-			description: "ID of the location",
+		galleryId: z.string().min(1),
+		withImageUrl: z
+			.tuple(
+				[
+					z.string().min(1),
+				],
+				z.string().min(1),
+			)
+			.meta({
+				description: "Ordered image URLs for listing gallery",
+			}),
+		withUploadIds: z
+			.tuple(
+				[
+					z.string().min(1),
+				],
+				z.string().min(1),
+			)
+			.meta({
+				description:
+					"Denormalized ordered upload IDs used for draft gallery management and consistency checks",
+			}),
+		/**
+		 * Core listing attributes
+		 */
+		title: TitleSchema,
+		withTitle: z.string().min(1).meta({
+			description: "Lowercase unaccented title used for search",
 		}),
-		withLocationGeo: z.unknown().nullable().meta({
+		description: DescriptionSchema.nullish(),
+		//
+		locationId: z.string().min(1),
+		withLocation: z.unknown().meta({
 			description: "Denormalized location geo point for listing search and range queries",
 		}),
-		categoryId: z.string().meta({
-			description: "ID of the category",
-		}),
-		galleryId: z.string().meta({
-			description: "ID of the gallery",
-		}),
-		draftId: z.string().nullable().meta({
-			description: "ID of the draft this listing was created from",
+		//
+		pros: ProsConsSchema,
+		cons: ProsConsSchema,
+		//
+		delivery: z.array(DeliveryEnumSchema),
+		//
+		warranty: WarrantyEnumSchema.nullish(),
+		//
+		priceType: PriceTypeEnumSchema,
+		price: z.coerce.number().nonnegative(),
+		currency: CurrencyEnumSchema.nullish(),
+		//
+		condition: RatingSchema.nullish(),
+		age: RatingSchema.nullish(),
+		//
+		expires: ListingExpireEnumSchema,
+		//
+		visibleAt: z.coerce.date().meta({
+			description: "When a listing goes live",
 		}),
 		expiresAt: z.coerce.date().meta({
-			description: "Expiration timestamp",
-		}),
-		//
-		title: z.string().meta({
-			description: "Title of the item",
-		}),
-		withImageUrl: z.array(z.string()).meta({
-			description:
-				"Denormalized ordered public image URLs used for listing gallery previews and list reads",
-		}),
-		withTitleSearch: z.string().meta({
-			description: "Denormalized normalized title search text for listing search predicates",
-		}),
-		titleVec: VectorSchema.meta({
-			description: "Embedding vector for title similarity search",
-		}),
-		//
-		description: z.string().nullable().meta({
-			description: "Description of the item",
-		}),
-		//
-		pros: ProsConsSchema.nullable().meta({
-			description: "Pros of the item",
-		}),
-		cons: ProsConsSchema.nullable().meta({
-			description: "Cons of the item",
+			description: "When a listing dies",
 		}),
 		//
 		createdAt: z.coerce.date().meta({

@@ -30,6 +30,7 @@ export const draftCreateFn = createServerFn({
 			name,
 		]);
 		logger.trace(name, data);
+
 		return zodGuardFx({
 			schema: DraftSchema,
 			dataFx: draftCreateFx({

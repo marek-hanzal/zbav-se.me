@@ -1,77 +1,160 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
-import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
-import { withListingSourceSelectFx } from "~/seller/listing/server/db/withListingSourceSelectFx";
-import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
+import { match } from "ts-pattern";
+import { selectFx } from "@/lib/common/select";
+import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
+import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { withLikeEx } from "~/server/database/expression/withLikeEx";
+import { withNormalizedLikeEx } from "~/server/database/expression/withNormalizedLikeEx";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
-import { withActiveUserRestrictionSelectFx } from "~/user/user-restriction/server/db/withActiveUserRestrictionSelectFx";
+import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
+import type { ListingSortSchema } from "../schema/ListingSortSchema";
+import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace withListingSelectFx {
-	export interface Props extends withListingSourceSelectFx.Props {
+	export interface Props {
 		userId: string;
+		sort?: ListingSortSchema.Type[];
 	}
-
-	export type Select = ReturnType<typeof withListingSelectFx>;
 }
 
 export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
-	sort,
 	userId,
+	sort,
 }: withListingSelectFx.Props) {
-	const listingSourceSelect = yield* withListingSourceSelectFx({
-		sort,
-	});
+	const { kysely } = yield* KyselyContextFx;
 
-	const restrictionSql = yield* withActiveUserRestrictionSelectFx({
+	let query = kysely
+		.selectFrom("listing as l")
+		.leftJoin("category as cat", "cat.id", "l.categoryId");
+
+	for (const item of sort ?? []) {
+		query = match(item.field)
+			.with("createdAt", () => query.orderBy("l.createdAt", item.order))
+			.with("updatedAt", () => query.orderBy("l.updatedAt", item.order))
+			.with("expiresAt", () => query.orderBy("l.expiresAt", item.order))
+			.exhaustive();
+	}
+
+	const restrictionSql = yield* withUserRestrictionActiveSelectFx({
 		userId,
 	});
 
-	return listingSourceSelect
-		.innerJoin("location as loc", "loc.id", "l.locationId")
-		.innerJoin("category as cat", "cat.id", "l.categoryId")
-		.select((eb) => [
+	return selectFx({
+		select: query.select([
 			"l.id",
-			"l.price",
-			"l.priceType",
-			"l.currency",
-			"l.condition",
-			"l.age",
-			"l.warranty",
 			"l.status",
-			"l.restriction",
-			sql<RestrictionEnumSchema.Type[]>`to_jsonb(array(
-				select restriction_item.restriction
-				from unnest(array[
-					${eb.ref("cat.restriction")},
-					${eb.ref("l.restriction")}
-				]::restriction_enum[]) with ordinality as restriction_item(restriction, ord)
-				where restriction_item.restriction is not null
-				group by restriction_item.restriction
-				order by min(restriction_item.ord)
-			))`.as("restrictions"),
-			"l.locationId",
-			"l.categoryId",
-			"l.galleryId",
+			//
+			"l.withUploadIds",
 			"l.withImageUrl",
-			"l.draftId",
-			"l.expiresAt",
+			//
 			"l.title",
 			"l.description",
+			//
+			"l.locationId",
+			//
+			"l.categoryId",
+			"l.restriction",
+			//
+			"l.price",
+			"l.currency",
+			"l.priceType",
+			//
+			"l.expires",
+			//
+			"l.galleryId",
+			"l.warranty",
+			//
+			"l.age",
+			"l.condition",
+			//
+			"l.expiresAt",
 			"l.createdAt",
 			"l.updatedAt",
-			sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
-			sql<CategorySchema.Type>`
-				to_jsonb(${eb.table("cat")}.*)
-				|| jsonb_build_object(
-					'isRestricted',
-					${eb.ref("cat.restriction")} > ${restrictionSql}
-				)
-			`.as("category"),
-			sql<ListingDeliveryEnumSchema.Type[] | null>`to_jsonb(${eb.ref("l.delivery")})`.as(
-				"delivery",
-			),
-			sql<string[] | null>`to_jsonb(${eb.ref("l.pros")})`.as("pros"),
-			sql<string[] | null>`to_jsonb(${eb.ref("l.cons")})`.as("cons"),
-		]);
+			"l.visibleAt",
+			(eb) => {
+				return sql<CategorySchema.Type>`
+                    to_jsonb(${eb.table("cat")}.*)
+                    || jsonb_build_object(
+                        'isRestricted',
+                        ${eb.ref("cat.restriction")} > ${restrictionSql}
+                    )
+                `.as("category");
+			},
+			(eb) => {
+				return sql<string[]>`to_jsonb(${eb.ref("l.pros")})`.as("pros");
+			},
+			(eb) => {
+				return sql<string[]>`to_jsonb(${eb.ref("l.cons")})`.as("cons");
+			},
+			(eb) => {
+				return sql<DeliveryEnumSchema.Type[]>`to_jsonb(${eb.ref("l.delivery")})`.as(
+					"delivery",
+				);
+			},
+			(eb) => {
+				return eb.fn
+					.coalesce(
+						sql<RestrictionEnumSchema.Type | null>`
+                            greatest(
+                                ${eb.ref("cat.restriction")},
+                                ${eb.ref("l.restriction")}
+                            )
+			            `,
+						sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`,
+					)
+					.$castTo<RestrictionEnumSchema.Type>()
+					.as("withRestriction");
+			},
+		]),
+		queryFx(select, where: ListingWhereSchema.Type) {
+			return Effect.gen(function* () {
+				let query = select;
+
+				if (!where) {
+					return yield* Effect.succeed(select);
+				}
+
+				if (where.id) {
+					query = query.where("l.id", "=", where.id);
+				}
+
+				if (where.idIn && where.idIn.length > 0) {
+					query = query.where("l.id", "in", where.idIn);
+				}
+
+				if (where.fulltext) {
+					const fulltext = where.fulltext;
+
+					query = query.where((eb) => {
+						const categoryIdSelect = eb
+							.selectFrom("category as cat")
+							.select("cat.id")
+							.where((eb) =>
+								eb.or([
+									withLikeEx(eb.ref("cat.category"), fulltext),
+									withLikeEx(eb.ref("cat.group"), fulltext),
+								]),
+							);
+
+						return eb.or([
+							withNormalizedLikeEx(eb.ref("l.withTitle"), fulltext, "both"),
+							eb("l.categoryId", "in", categoryIdSelect),
+						]);
+					});
+				}
+
+				if (where.userId) {
+					query = query.where("l.userId", "=", where.userId);
+				}
+
+				if (where.status) {
+					query = query.where("l.status", "=", where.status);
+				}
+
+				return yield* Effect.succeed(query);
+			});
+		},
+	});
 });

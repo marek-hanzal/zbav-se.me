@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { withCategoryCollectionSelectFx } from "~/public/category/server/db/withCategoryCollectionSelectFx";
-import { withCategoryQueryBuilderFx } from "~/public/category/server/db/withCategoryQueryBuilderFx";
 import type { CategoryCountQuerySchema } from "~/public/category/server/schema/CategoryCountQuerySchema";
 import type { CategoryFilterSchema } from "~/public/category/server/schema/CategoryFilterSchema";
+import { withCategorySelectFx } from "../db/withCategorySelectFx";
 
 export namespace categoryCountFx {
 	export interface Props extends CategoryCountQuerySchema.Type {
@@ -25,11 +24,10 @@ export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withCategoryCollectionSelectFx({}),
+		selectFx: withCategorySelectFx({}),
 		filter,
 		where,
 		scope,
-		queryFx: withCategoryQueryBuilderFx,
 	});
 });
 

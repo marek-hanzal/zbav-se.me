@@ -28,7 +28,7 @@ export namespace Rating {
 	export interface Props extends Container.Props {
 		textRatingFn?(rating: RatingToIcon.Value): string;
 		textHintFn?(rating: RatingToIcon.Value): string;
-		selection: useSelection.Selection<RatingItem>;
+		selection: useSelection.Use<RatingItem>;
 		allowClear?: boolean;
 	}
 }
@@ -117,7 +117,10 @@ export const Rating: FC<Rating.Props> = ({
 					}}
 					data-ui-tone="warning"
 					data-ui-theme="light"
-					data-ui-size="default"
+					data-ui-size={"default"}
+					className={[
+						"shrink-0",
+					]}
 				>
 					<Tx label={"Clear all (button)"} />
 				</Button>

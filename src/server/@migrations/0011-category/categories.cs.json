@@ -1,0 +1,8105 @@
+[
+	{
+		"slug": "mobily-a-prislusenstvi--smartphone",
+		"locale": "cs",
+		"spotlight": [
+			"mobil",
+			"telefon",
+			"chytrý telefon",
+			"android",
+			"iphone",
+			"samsung",
+			"huawei",
+			"xiaomi"
+		],
+		"group": "Mobily a příslušenství",
+		"category": "Smartphone",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "ram",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "storage",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "battery-condition",
+				"sort": 4,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 5,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "mobily-a-prislusenstvi--tlacitkovy-telefon",
+		"locale": "cs",
+		"spotlight": [
+			"klasický telefon",
+			"starý telefon",
+			"tlačítkový",
+			"nokia",
+			"motorola"
+		],
+		"group": "Mobily a příslušenství",
+		"category": "Tlačítkový telefon",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "dual-sim",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "mobily-a-prislusenstvi--chytre-hodinky",
+		"locale": "cs",
+		"spotlight": [
+			"smartwatch",
+			"apple watch",
+			"samsung galaxy watch",
+			"fitbit",
+			"garmin",
+			"sportovní hodinky"
+		],
+		"group": "Mobily a příslušenství",
+		"category": "Chytré hodinky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "watch.case-size",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "watch.strap-material",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "compatibility",
+				"sort": 4,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 5,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "mobily-a-prislusenstvi--prislusenstvi-k-mobilum",
+		"locale": "cs",
+		"spotlight": [
+			"mobilní doplňky",
+			"telefonní příslušenství",
+			"akcesory",
+			"doplňky"
+		],
+		"group": "Mobily a příslušenství",
+		"category": "Příslušenství k mobilům",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "mobily-a-prislusenstvi--powerbanka",
+		"locale": "cs",
+		"spotlight": [
+			"baterka",
+			"přenosná baterie",
+			"power bank",
+			"nabíječka",
+			"externí baterie"
+		],
+		"group": "Mobily a příslušenství",
+		"category": "Powerbanka",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "battery.capacity",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.output",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "mobily-a-prislusenstvi--nabijecky-a-kabely",
+		"locale": "cs",
+		"spotlight": [
+			"nabíječka",
+			"kabel",
+			"usb kabel",
+			"lightning",
+			"usb-c",
+			"wireless charger",
+			"bezdrátová nabíječka"
+		],
+		"group": "Mobily a příslušenství",
+		"category": "Nabíječky a kabely",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "connector.type",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "cable.length",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "mobily-a-prislusenstvi--pouzdra-a-skla",
+		"locale": "cs",
+		"spotlight": [
+			"pouzdro",
+			"obal",
+			"ochranné sklo",
+			"tempered glass",
+			"case",
+			"cover",
+			"folie"
+		],
+		"group": "Mobily a příslušenství",
+		"category": "Pouzdra a skla",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "mobily-a-prislusenstvi--pametove-karty",
+		"locale": "cs",
+		"spotlight": [
+			"microsd",
+			"sd karta",
+			"paměťová karta",
+			"flash karta",
+			"memory card",
+			"úložiště"
+		],
+		"group": "Mobily a příslušenství",
+		"category": "Paměťové karty",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "storage.capacity",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "card.format",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "pocitace-a-kancelar--notebook",
+		"locale": "cs",
+		"spotlight": [
+			"laptop",
+			"přenosný počítač",
+			"macbook",
+			"thinkpad",
+			"asus",
+			"hp",
+			"dell",
+			"lenovo"
+		],
+		"group": "Počítače a kancelář",
+		"category": "Notebook",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "ram",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "storage",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "display.size",
+				"sort": 4,
+				"kind": "optional"
+			},
+			{
+				"name": "release.year",
+				"sort": 5,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "pocitace-a-kancelar--stolni-pc",
+		"locale": "cs",
+		"spotlight": [
+			"desktop",
+			"stolní počítač",
+			"pc",
+			"počítač",
+			"komputer",
+			"workstation"
+		],
+		"group": "Počítače a kancelář",
+		"category": "Stolní PC",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "ram",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "storage",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "release.year",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "pocitace-a-kancelar--monitor",
+		"locale": "cs",
+		"spotlight": [
+			"displej",
+			"obrazovka",
+			"screen",
+			"lcd",
+			"led",
+			"oled",
+			"4k",
+			"ultrawide"
+		],
+		"group": "Počítače a kancelář",
+		"category": "Monitor",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "display.size",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "refresh-rate",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "panel.type",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "pocitace-a-kancelar--pc-komponenty-cpu-gpu-ram",
+		"locale": "cs",
+		"spotlight": [
+			"procesor",
+			"grafická karta",
+			"paměť",
+			"ram",
+			"cpu",
+			"gpu",
+			"intel",
+			"amd",
+			"nvidia"
+		],
+		"group": "Počítače a kancelář",
+		"category": "PC komponenty (CPU/GPU/RAM)",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "component.type",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "pocitace-a-kancelar--periferie-klavesnice-mys",
+		"locale": "cs",
+		"spotlight": [
+			"klávesnice",
+			"myš",
+			"keyboard",
+			"mouse",
+			"gaming",
+			"mechanická",
+			"bezdrátová"
+		],
+		"group": "Počítače a kancelář",
+		"category": "Periferie (klávesnice/myš)",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "pocitace-a-kancelar--sitove-prvky-router-nas",
+		"locale": "cs",
+		"spotlight": [
+			"router",
+			"wifi",
+			"nas",
+			"switch",
+			"modem",
+			"síť",
+			"internet",
+			"wi-fi"
+		],
+		"group": "Počítače a kancelář",
+		"category": "Síťové prvky (router/NAS)",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "network.type",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "connectivity",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "pocitace-a-kancelar--tiskarny-a-skenery",
+		"locale": "cs",
+		"spotlight": [
+			"tiskárna",
+			"skener",
+			"printer",
+			"scanner",
+			"laserová",
+			"inkoustová",
+			"multifunkční"
+		],
+		"group": "Počítače a kancelář",
+		"category": "Tiskárny a skenery",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "pocitace-a-kancelar--uloziste-ssd-hdd",
+		"locale": "cs",
+		"spotlight": [
+			"ssd",
+			"hdd",
+			"disk",
+			"úložiště",
+			"hard disk",
+			"solid state",
+			"nvme",
+			"m.2"
+		],
+		"group": "Počítače a kancelář",
+		"category": "Úložiště (SSD/HDD)",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "storage.capacity",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "storage.type",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "connectivity",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "pocitace-a-kancelar--software-a-licence",
+		"locale": "cs",
+		"spotlight": [
+			"software",
+			"program",
+			"aplikace",
+			"licence",
+			"windows",
+			"office",
+			"antivirus"
+		],
+		"group": "Počítače a kancelář",
+		"category": "Software a licence",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "license.type",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "platform.os",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "release.year",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--atomizery-boro",
+		"locale": "cs",
+		"spotlight": [
+			"atomizér",
+			"atomizer",
+			"boro",
+			"boro tank",
+			"boro atomizér",
+			"bridge",
+			"boro bridge",
+			"billet box"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Atomizéry - Boro",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "atomizer.capacity",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--atomizery-mtl",
+		"locale": "cs",
+		"spotlight": [
+			"atomizér",
+			"atomizer",
+			"mtl",
+			"mouth to lung",
+			"tank",
+			"clearomizér",
+			"rta",
+			"rda",
+			"rdta"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Atomizéry - MTL",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "atomizer.capacity",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--atomizery-dl",
+		"locale": "cs",
+		"spotlight": [
+			"atomizér",
+			"atomizer",
+			"dl",
+			"direct lung",
+			"tank",
+			"clearomizér",
+			"rta",
+			"rda",
+			"rdta"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Atomizéry - DL",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "atomizer.capacity",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--atomizery",
+		"locale": "cs",
+		"spotlight": [
+			"atomizér",
+			"atomizéry",
+			"atomizer",
+			"tank",
+			"clearomizér",
+			"vape tank",
+			"rta",
+			"rda",
+			"rdta"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Atomizéry",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "atomizer.capacity",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--mody",
+		"locale": "cs",
+		"spotlight": [
+			"mod",
+			"mód",
+			"vape mod",
+			"box mod",
+			"grip",
+			"baterkový mod",
+			"elektronická cigareta",
+			"ecigareta"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Mody",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "mod.battery",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.output",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--clanky-baterie",
+		"locale": "cs",
+		"spotlight": [
+			"článek",
+			"články",
+			"baterie",
+			"akumulátor",
+			"18650",
+			"21700",
+			"26650",
+			"vape baterie"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Články (baterie)",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "mod.battery",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "battery.capacity",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--spiralky",
+		"locale": "cs",
+		"spotlight": [
+			"spirálka",
+			"spirálky",
+			"coil",
+			"coily",
+			"žhavicí hlava",
+			"hlava",
+			"mesh",
+			"odpor"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Spirálky",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "compatibility",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "resistance.ohm",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "vape-elektronicke-cigarety--prislusenstvi",
+		"locale": "cs",
+		"spotlight": [
+			"vape příslušenství",
+			"příslušenství",
+			"náustek",
+			"drip tip",
+			"sklíčko",
+			"těsnění",
+			"vaty",
+			"bavlna",
+			"nabíječka"
+		],
+		"group": "Vape/Elektronické cigarety",
+		"category": "Příslušenství",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "compatibility",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "obleceni-a-doplnky--damske-obleceni",
+		"locale": "cs",
+		"spotlight": [
+			"dámské",
+			"ženské",
+			"sukně",
+			"šaty",
+			"kalhoty",
+			"trička",
+			"svetry",
+			"obleky"
+		],
+		"group": "Oblečení a doplňky",
+		"category": "Dámské oblečení",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "clothing.size",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "brand",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "obleceni-a-doplnky--panske-obleceni",
+		"locale": "cs",
+		"spotlight": [
+			"pánské",
+			"mužské",
+			"košile",
+			"kalhoty",
+			"trička",
+			"svetry",
+			"obleky",
+			"kraťasy"
+		],
+		"group": "Oblečení a doplňky",
+		"category": "Pánské oblečení",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "clothing.size",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "brand",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "obleceni-a-doplnky--detske-obleceni",
+		"locale": "cs",
+		"spotlight": [
+			"dětské",
+			"children",
+			"kids",
+			"baby",
+			"kojenecké",
+			"batolecí",
+			"children clothing"
+		],
+		"group": "Oblečení a doplňky",
+		"category": "Dětské oblečení",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "clothing.size",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "brand",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "obleceni-a-doplnky--boty",
+		"locale": "cs",
+		"spotlight": [
+			"obuv",
+			"sandály",
+			"tenisky",
+			"kozačky",
+			"lodičky",
+			"sneakers",
+			"boots",
+			"sandals"
+		],
+		"group": "Oblečení a doplňky",
+		"category": "Boty",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "shoe.size",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "brand",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "obleceni-a-doplnky--kabelky-a-tasky",
+		"locale": "cs",
+		"spotlight": [
+			"kabelka",
+			"taška",
+			"batoh",
+			"aktovka",
+			"handbag",
+			"backpack",
+			"messenger",
+			"tote"
+		],
+		"group": "Oblečení a doplňky",
+		"category": "Kabelky a tašky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "obleceni-a-doplnky--hodinky-a-sperky",
+		"locale": "cs",
+		"spotlight": [
+			"hodinky",
+			"šperky",
+			"náramek",
+			"náhrdelník",
+			"prsten",
+			"watch",
+			"jewelry",
+			"bracelet"
+		],
+		"group": "Oblečení a doplňky",
+		"category": "Hodinky a šperky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "watch.case-size",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "watch.strap-material",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "jewelry.material",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "release.year",
+				"sort": 4,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 5,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "obleceni-a-doplnky--sportovni-obleceni",
+		"locale": "cs",
+		"spotlight": [
+			"sport",
+			"fitness",
+			"běh",
+			"cvičení",
+			"sportovní",
+			"athletic",
+			"workout",
+			"gym"
+		],
+		"group": "Oblečení a doplňky",
+		"category": "Sportovní oblečení",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "clothing.size",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "brand",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "obleceni-a-doplnky--doplnky-cepice-pasky",
+		"locale": "cs",
+		"spotlight": [
+			"čepice",
+			"klobouk",
+			"pásek",
+			"šátek",
+			"rukavice",
+			"hat",
+			"cap",
+			"belt",
+			"scarf"
+		],
+		"group": "Oblečení a doplňky",
+		"category": "Doplňky (čepice/pásky)",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "clothing.size",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "brand",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hry-a-konzole--herni-konzole",
+		"locale": "cs",
+		"spotlight": [
+			"konzole",
+			"playstation",
+			"xbox",
+			"nintendo",
+			"switch",
+			"ps5",
+			"ps4",
+			"xbox series"
+		],
+		"group": "Hry a konzole",
+		"category": "Herní konzole",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "storage.capacity",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "release.year",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hry-a-konzole--hry-pro-playstation",
+		"locale": "cs",
+		"spotlight": [
+			"playstation hry",
+			"ps hry",
+			"ps4 hry",
+			"ps5 hry",
+			"sony",
+			"exclusive",
+			"playstation games"
+		],
+		"group": "Hry a konzole",
+		"category": "Hry pro PlayStation",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "game.format",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hry-a-konzole--hry-pro-xbox",
+		"locale": "cs",
+		"spotlight": [
+			"xbox hry",
+			"xbox games",
+			"microsoft",
+			"xbox series",
+			"xbox one",
+			"game pass"
+		],
+		"group": "Hry a konzole",
+		"category": "Hry pro Xbox",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "game.format",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hry-a-konzole--hry-pro-nintendo",
+		"locale": "cs",
+		"spotlight": [
+			"nintendo hry",
+			"switch hry",
+			"wii",
+			"3ds",
+			"nintendo games",
+			"mario",
+			"zelda",
+			"pokemon"
+		],
+		"group": "Hry a konzole",
+		"category": "Hry pro Nintendo",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "game.format",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hry-a-konzole--pc-hry",
+		"locale": "cs",
+		"spotlight": [
+			"pc hry",
+			"počítačové hry",
+			"steam",
+			"epic games",
+			"origin",
+			"pc games",
+			"gaming"
+		],
+		"group": "Hry a konzole",
+		"category": "PC hry",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "game.format",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hry-a-konzole--ovladace-a-prislusenstvi",
+		"locale": "cs",
+		"spotlight": [
+			"ovladač",
+			"controller",
+			"gamepad",
+			"joystick",
+			"příslušenství",
+			"accessories",
+			"gaming"
+		],
+		"group": "Hry a konzole",
+		"category": "Ovladače a příslušenství",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hry-a-konzole--vr-headsety",
+		"locale": "cs",
+		"spotlight": [
+			"vr",
+			"virtual reality",
+			"oculus",
+			"htc vive",
+			"vr headset",
+			"meta quest",
+			"vr brýle"
+		],
+		"group": "Hry a konzole",
+		"category": "VR headsety",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "storage.capacity",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "connectivity",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "tv-audio-a-foto--televize",
+		"locale": "cs",
+		"spotlight": [
+			"tv",
+			"televize",
+			"led tv",
+			"oled",
+			"4k",
+			"smart tv",
+			"samsung",
+			"lg",
+			"sony"
+		],
+		"group": "TV, audio a foto",
+		"category": "Televize",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "display.size",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "panel.type",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "release.year",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "tv-audio-a-foto--set-top-boxy-a-prehravace",
+		"locale": "cs",
+		"spotlight": [
+			"set-top box",
+			"přehrávač",
+			"android tv",
+			"chromecast",
+			"apple tv",
+			"roku",
+			"streaming"
+		],
+		"group": "TV, audio a foto",
+		"category": "Set-top boxy a přehrávače",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "tv-audio-a-foto--reproduktory-a-soundbary",
+		"locale": "cs",
+		"spotlight": [
+			"reproduktory",
+			"soundbar",
+			"hifi",
+			"bluetooth",
+			"wireless",
+			"jbl",
+			"bose",
+			"sonos"
+		],
+		"group": "TV, audio a foto",
+		"category": "Reproduktory a soundbary",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.output",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "connectivity",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "tv-audio-a-foto--sluchatka",
+		"locale": "cs",
+		"spotlight": [
+			"sluchátka",
+			"headphones",
+			"earphones",
+			"bezdrátová",
+			"bluetooth",
+			"airpods",
+			"sony",
+			"sennheiser"
+		],
+		"group": "TV, audio a foto",
+		"category": "Sluchátka",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "battery.life",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "tv-audio-a-foto--fotoaparaty",
+		"locale": "cs",
+		"spotlight": [
+			"fotoaparát",
+			"camera",
+			"canon",
+			"nikon",
+			"sony",
+			"dslr",
+			"mirrorless",
+			"kompaktní"
+		],
+		"group": "TV, audio a foto",
+		"category": "Fotoaparáty",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "sensor.type",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "tv-audio-a-foto--objektivy-a-prislusenstvi",
+		"locale": "cs",
+		"spotlight": [
+			"objektiv",
+			"lens",
+			"teleobjektiv",
+			"širokoúhlý",
+			"makro",
+			"filtry",
+			"stativ"
+		],
+		"group": "TV, audio a foto",
+		"category": "Objektivy a příslušenství",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "lens.mount",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "tv-audio-a-foto--projektory",
+		"locale": "cs",
+		"spotlight": [
+			"projektor",
+			"beamer",
+			"promítání",
+			"4k projektor",
+			"full hd",
+			"epson",
+			"benq"
+		],
+		"group": "TV, audio a foto",
+		"category": "Projektory",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "brightness.lm",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "release.year",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "tv-audio-a-foto--drony-s-kamerou",
+		"locale": "cs",
+		"spotlight": [
+			"dron",
+			"quadcopter",
+			"fpv",
+			"dji",
+			"mavic",
+			"phantom",
+			"air",
+			"mini"
+		],
+		"group": "TV, audio a foto",
+		"category": "Drony s kamerou",
+		"restriction": "adult",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "flight.time",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "battery.capacity",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "tv-audio-a-foto--drony-hracky",
+		"locale": "cs",
+		"spotlight": [
+			"dron hračka",
+			"hračkářský dron",
+			"dětský dron",
+			"toy drone",
+			"mini dron",
+			"dron pro děti",
+			"malý dron"
+		],
+		"group": "TV, audio a foto",
+		"category": "Drony - hračky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "flight.time",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "battery.capacity",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "detske-zbozi--kocarky",
+		"locale": "cs",
+		"spotlight": [
+			"kočárek",
+			"buggy",
+			"sportovní kočárek",
+			"golf",
+			"baby",
+			"dětský kočárek"
+		],
+		"group": "Dětské zboží",
+		"category": "Kočárky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "stroller.type",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.age",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "detske-zbozi--autosedacky",
+		"locale": "cs",
+		"spotlight": [
+			"autosedačka",
+			"car seat",
+			"dětská sedačka",
+			"bezpečnostní sedačka",
+			"baby seat"
+		],
+		"group": "Dětské zboží",
+		"category": "Autosedačky",
+		"restriction": "adult",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "seat.mounting",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.weight-max",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "child.age",
+				"sort": 4,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 5,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "detske-zbozi--detske-postylky-a-zidlicky",
+		"locale": "cs",
+		"spotlight": [
+			"postýlka",
+			"židlička",
+			"baby bed",
+			"high chair",
+			"stolička",
+			"dětský nábytek"
+		],
+		"group": "Dětské zboží",
+		"category": "Dětské postýlky a židličky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.age",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "detske-zbozi--hracky",
+		"locale": "cs",
+		"spotlight": [
+			"hračky",
+			"toys",
+			"dětské hračky",
+			"lego",
+			"barbie",
+			"panenky",
+			"autíčka"
+		],
+		"group": "Dětské zboží",
+		"category": "Hračky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "toy.type",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "age.recommended",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "detske-zbozi--detske-obleceni-a-obuv",
+		"locale": "cs",
+		"spotlight": [
+			"dětské oblečení",
+			"dětské boty",
+			"baby clothes",
+			"dětská obuv",
+			"kojenecké oblečení"
+		],
+		"group": "Dětské zboží",
+		"category": "Dětské oblečení a obuv",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "clothing.size",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "shoe.size",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "brand",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "detske-zbozi--prebalovani-a-pece",
+		"locale": "cs",
+		"spotlight": [
+			"přebalování",
+			"plenky",
+			"dětská péče",
+			"baby care",
+			"kojenecké potřeby",
+			"hygiena"
+		],
+		"group": "Dětské zboží",
+		"category": "Přebalování a péče",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "baby.stage",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "material",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "dum-a-bydleni--osvetleni",
+		"locale": "cs",
+		"spotlight": [
+			"osvětlení",
+			"svítidla",
+			"lampy",
+			"lustr",
+			"stolní lampa",
+			"led",
+			"žárovky"
+		],
+		"group": "Dům a bydlení",
+		"category": "Osvětlení",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.input",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "dum-a-bydleni--textil-zavesy-koberce",
+		"locale": "cs",
+		"spotlight": [
+			"textil",
+			"závěsy",
+			"koberce",
+			"záclony",
+			"koberec",
+			"podložky",
+			"deky"
+		],
+		"group": "Dům a bydlení",
+		"category": "Textil (závěsy/koberce)",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "dum-a-bydleni--dekorace",
+		"locale": "cs",
+		"spotlight": [
+			"dekorace",
+			"ozdoby",
+			"květináče",
+			"svíčky",
+			"obrazy",
+			"sošky",
+			"interiér"
+		],
+		"group": "Dům a bydlení",
+		"category": "Dekorace",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "dum-a-bydleni--ulozne-boxy-a-organizery",
+		"locale": "cs",
+		"spotlight": [
+			"úložné boxy",
+			"organizéry",
+			"koše",
+			"boxy",
+			"organizace",
+			"úložiště",
+			"kontejnery"
+		],
+		"group": "Dům a bydlení",
+		"category": "Úložné boxy a organizéry",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "dum-a-bydleni--zrcadla-a-ramy",
+		"locale": "cs",
+		"spotlight": [
+			"zrcadla",
+			"rámy",
+			"obrazové rámy",
+			"zrcadlo",
+			"fotografické rámy",
+			"dekorativní rámy"
+		],
+		"group": "Dům a bydlení",
+		"category": "Zrcadla a rámy",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "dum-a-bydleni--smart-home-chytra-domacnost",
+		"locale": "cs",
+		"spotlight": [
+			"smart home",
+			"chytrá domácnost",
+			"iot",
+			"alexa",
+			"google home",
+			"smart",
+			"automatizace"
+		],
+		"group": "Dům a bydlení",
+		"category": "Smart home (chytrá domácnost)",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nabytek--pohovky-a-sedaci-soupravy",
+		"locale": "cs",
+		"spotlight": [
+			"pohovka",
+			"sedací souprava",
+			"gauč",
+			"sofa",
+			"sedací nábytek",
+			"rohová pohovka"
+		],
+		"group": "Nábytek",
+		"category": "Pohovky a sedací soupravy",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nabytek--postele-a-matrace",
+		"locale": "cs",
+		"spotlight": [
+			"postel",
+			"matrace",
+			"lůžko",
+			"spaní",
+			"ložnice",
+			"postelový nábytek",
+			"pružiny"
+		],
+		"group": "Nábytek",
+		"category": "Postele a matrace",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "bed.size",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nabytek--skrine-a-komody",
+		"locale": "cs",
+		"spotlight": [
+			"skříň",
+			"komoda",
+			"šatní skříň",
+			"úložný nábytek",
+			"vestavěná skříň",
+			"wardrobe"
+		],
+		"group": "Nábytek",
+		"category": "Skříně a komody",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nabytek--stoly-a-zidle",
+		"locale": "cs",
+		"spotlight": [
+			"stoly",
+			"židle",
+			"jídelní stůl",
+			"kancelářská židle",
+			"křeslo",
+			"sedací nábytek",
+			"stolní nábytek"
+		],
+		"group": "Nábytek",
+		"category": "Stoly a židle",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nabytek--police-a-regaly",
+		"locale": "cs",
+		"spotlight": [
+			"police",
+			"regály",
+			"knihovna",
+			"úložné police",
+			"skříňky",
+			"poličky",
+			"úložný systém"
+		],
+		"group": "Nábytek",
+		"category": "Police a regály",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nabytek--zahradni-nabytek",
+		"locale": "cs",
+		"spotlight": [
+			"zahradní nábytek",
+			"terasa",
+			"balkon",
+			"zahradní stůl",
+			"zahradní židle",
+			"outdoor nábytek"
+		],
+		"group": "Nábytek",
+		"category": "Zahradní nábytek",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "bila-technika--lednice-a-mrazaky",
+		"locale": "cs",
+		"spotlight": [
+			"lednice",
+			"mrazák",
+			"chladnička",
+			"mraznička",
+			"bosh",
+			"siemens",
+			"electrolux"
+		],
+		"group": "Bílá technika",
+		"category": "Lednice a mrazáky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "appliance.energy-class",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "bila-technika--pracky-a-susicky",
+		"locale": "cs",
+		"spotlight": [
+			"pračka",
+			"sušička",
+			"praní",
+			"sušení",
+			"bosh",
+			"siemens",
+			"electrolux",
+			"whirlpool"
+		],
+		"group": "Bílá technika",
+		"category": "Pračky a sušičky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "load.capacity",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "appliance.energy-class",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "bila-technika--mycky-nadobi",
+		"locale": "cs",
+		"spotlight": [
+			"myčka",
+			"myčka nádobí",
+			"bosh",
+			"siemens",
+			"electrolux",
+			"whirlpool",
+			"miele"
+		],
+		"group": "Bílá technika",
+		"category": "Myčky nádobí",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "appliance.energy-class",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "bila-technika--sporaky-a-trouby",
+		"locale": "cs",
+		"spotlight": [
+			"sporák",
+			"trouba",
+			"vaření",
+			"pečení",
+			"bosh",
+			"siemens",
+			"electrolux",
+			"induction"
+		],
+		"group": "Bílá technika",
+		"category": "Sporáky a trouby",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.input",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "appliance.energy-class",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "bila-technika--mikrovlnky",
+		"locale": "cs",
+		"spotlight": [
+			"mikrovlnka",
+			"mikrovlnná trouba",
+			"microwave",
+			"ohřev",
+			"bosh",
+			"siemens",
+			"electrolux"
+		],
+		"group": "Bílá technika",
+		"category": "Mikrovlnky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.input",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "bila-technika--vysavace-a-parni-cistice",
+		"locale": "cs",
+		"spotlight": [
+			"vysavač",
+			"parní čistič",
+			"vacuum",
+			"steam cleaner",
+			"dyson",
+			"bosh",
+			"siemens"
+		],
+		"group": "Bílá technika",
+		"category": "Vysavače a parní čističe",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.input",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "kuchyn-a-jidelna--nadobi-a-pribory",
+		"locale": "cs",
+		"spotlight": [
+			"nádobí",
+			"příbory",
+			"talíře",
+			"sklenice",
+			"poháry",
+			"kuchyňské nádobí",
+			"jídelní souprava"
+		],
+		"group": "Kuchyň a jídelna",
+		"category": "Nádobí a příbory",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "count.pieces",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "kuchyn-a-jidelna--hrnce-a-panve",
+		"locale": "cs",
+		"spotlight": [
+			"hrnce",
+			"pánve",
+			"vaření",
+			"kuchyňské nádobí",
+			"teflon",
+			"nerez",
+			"cast iron"
+		],
+		"group": "Kuchyň a jídelna",
+		"category": "Hrnce a pánve",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "diameter",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "kuchyn-a-jidelna--sklenice-a-hrnky",
+		"locale": "cs",
+		"spotlight": [
+			"sklenice",
+			"hrnky",
+			"poháry",
+			"šálky",
+			"hrnečky",
+			"sklo",
+			"porcelán"
+		],
+		"group": "Kuchyň a jídelna",
+		"category": "Sklenice a hrnky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "kuchyn-a-jidelna--kuchynske-spotrebice-male",
+		"locale": "cs",
+		"spotlight": [
+			"malé spotřebiče",
+			"mixér",
+			"blender",
+			"kávovar",
+			"toustovač",
+			"mixer",
+			"robot"
+		],
+		"group": "Kuchyň a jídelna",
+		"category": "Kuchyňské spotřebiče malé",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.input",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "kuchyn-a-jidelna--kava-a-kavovary",
+		"locale": "cs",
+		"spotlight": [
+			"káva",
+			"kávovar",
+			"espresso",
+			"nespresso",
+			"dolce gusto",
+			"french press",
+			"moka"
+		],
+		"group": "Kuchyň a jídelna",
+		"category": "Káva a kávovary",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "coffee.machine-type",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "kuchyn-a-jidelna--boxy-a-organizery-do-kuchyne",
+		"locale": "cs",
+		"spotlight": [
+			"boxy",
+			"organizéry",
+			"kuchyňské boxy",
+			"úložné boxy",
+			"kontejnery",
+			"organizace"
+		],
+		"group": "Kuchyň a jídelna",
+		"category": "Boxy a organizéry do kuchyně",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "jidlo--detske-prikrmy",
+		"locale": "cs",
+		"spotlight": [
+			"dětské příkrmy",
+			"prikrm",
+			"příkrm",
+			"kojenecký příkrm",
+			"baby food",
+			"kendamil",
+			"hipp",
+			"gerber",
+			"sunar"
+		],
+		"group": "Jídlo",
+		"category": "Dětské příkrmy",
+		"restriction": "adult",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "baby.stage",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "jidlo--kojenecka-vyziva",
+		"locale": "cs",
+		"spotlight": [
+			"kojenecká výživa",
+			"kojenecké jídlo",
+			"dětská výživa",
+			"baby nutrition",
+			"bio příkrmy"
+		],
+		"group": "Jídlo",
+		"category": "Kojenecká výživa",
+		"restriction": "adult",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "baby.stage",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "jidlo--umela-mleka-a-pokracovaci-mleka",
+		"locale": "cs",
+		"spotlight": [
+			"umělé mléko",
+			"umela vyziva",
+			"pokračovací mléko",
+			"sunar",
+			"kendamil",
+			"nutrilon",
+			"bebivita",
+			"formula"
+		],
+		"group": "Jídlo",
+		"category": "Umělá mléka a pokračovací mléka",
+		"restriction": "adult",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "baby.stage",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "jidlo--detske-kase",
+		"locale": "cs",
+		"spotlight": [
+			"dětská kaše",
+			"kaše",
+			"rýžová kaše",
+			"ovesná kaše",
+			"krupicová",
+			"cereals",
+			"porridge"
+		],
+		"group": "Jídlo",
+		"category": "Dětské kaše",
+		"restriction": "adult",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "baby.stage",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "jidlo--doplnky-stravy-a-vitaminy",
+		"locale": "cs",
+		"spotlight": [
+			"vitamíny",
+			"doplněk stravy",
+			"omega 3",
+			"probiotika",
+			"minerály",
+			"suplementy"
+		],
+		"group": "Jídlo",
+		"category": "Doplňky stravy a vitamíny",
+		"restriction": "adult",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "package.weight",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "edition",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "jidlo--bezlepkove-a-specialni-potraviny",
+		"locale": "cs",
+		"spotlight": [
+			"bezlepkové",
+			"gluten free",
+			"bez laktózy",
+			"lactose free",
+			"vegan",
+			"bio",
+			"speciální dieta"
+		],
+		"group": "Jídlo",
+		"category": "Bezlepkové a speciální potraviny",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "package.weight",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "edition",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "jidlo--trvanlive-potraviny",
+		"locale": "cs",
+		"spotlight": [
+			"trvanlivé potraviny",
+			"konzervy",
+			"těstoviny",
+			"ryže",
+			"luštěniny",
+			"mouka",
+			"cukr"
+		],
+		"group": "Jídlo",
+		"category": "Trvanlivé potraviny",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "package.weight",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "country",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "jidlo--sladkosti-a-snacky",
+		"locale": "cs",
+		"spotlight": [
+			"sladkosti",
+			"čokoláda",
+			"bonbóny",
+			"sušenky",
+			"snacky",
+			"krekry",
+			"tyčinky"
+		],
+		"group": "Jídlo",
+		"category": "Sladkosti a snacky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "package.weight",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "country",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "jidlo--napoje",
+		"locale": "cs",
+		"spotlight": [
+			"nápoje",
+			"džus",
+			"juice",
+			"sirup",
+			"minerálka",
+			"voda",
+			"limonáda"
+		],
+		"group": "Jídlo",
+		"category": "Nápoje",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "country",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "jidlo--caj-a-kava",
+		"locale": "cs",
+		"spotlight": [
+			"čaj",
+			"káva",
+			"kafe",
+			"espresso",
+			"zrnková káva",
+			"sypaný čaj",
+			"tea",
+			"coffee"
+		],
+		"group": "Jídlo",
+		"category": "Čaj a káva",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "package.weight",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "country",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sport-a-outdoor--kola-a-prislusenstvi",
+		"locale": "cs",
+		"spotlight": [
+			"kolo",
+			"bike",
+			"cyklistika",
+			"horská kola",
+			"silniční kola",
+			"elektrokola",
+			"cyklistické doplňky"
+		],
+		"group": "Sport a outdoor",
+		"category": "Kola a příslušenství",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "bike.frame-size",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "wheel.diameter",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sport-a-outdoor--beh-a-fitness",
+		"locale": "cs",
+		"spotlight": [
+			"běh",
+			"fitness",
+			"cvičení",
+			"běžecké boty",
+			"fitness vybavení",
+			"gym",
+			"workout"
+		],
+		"group": "Sport a outdoor",
+		"category": "Běh a fitness",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "weight.kg",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sport-a-outdoor--lyze-a-snowboard",
+		"locale": "cs",
+		"spotlight": [
+			"lyže",
+			"snowboard",
+			"zimní sporty",
+			"sjezdové lyže",
+			"běžky",
+			"snowboardové boty"
+		],
+		"group": "Sport a outdoor",
+		"category": "Lyže a snowboard",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "length.cm",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "shoe.size",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sport-a-outdoor--kemping-stany-spacaky",
+		"locale": "cs",
+		"spotlight": [
+			"kemping",
+			"stany",
+			"spacáky",
+			"outdoor",
+			"camping",
+			"stan",
+			"spacák",
+			"turistika"
+		],
+		"group": "Sport a outdoor",
+		"category": "Kemping (stany/spacáky)",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "player.count",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "weight.kg",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sport-a-outdoor--kolobezky-a-longboardy",
+		"locale": "cs",
+		"spotlight": [
+			"koloběžky",
+			"longboardy",
+			"scooter",
+			"skateboard",
+			"longboard",
+			"koloběžka",
+			"skate"
+		],
+		"group": "Sport a outdoor",
+		"category": "Koloběžky a longboardy",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "wheel.diameter",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "max.load",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sport-a-outdoor--rybareni",
+		"locale": "cs",
+		"spotlight": [
+			"rybaření",
+			"fishing",
+			"rybářské potřeby",
+			"udice",
+			"návnady",
+			"rybářský prut",
+			"rybářské náčiní"
+		],
+		"group": "Sport a outdoor",
+		"category": "Rybaření",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "length.cm",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "airsoft--airsoftove-pistole",
+		"locale": "cs",
+		"spotlight": [
+			"airsoft pistole",
+			"airsoftová pistole",
+			"plynová pistole",
+			"co2 pistole",
+			"gbb pistole",
+			"aep pistole"
+		],
+		"group": "Airsoft",
+		"category": "Airsoftové pistole",
+		"restriction": "sensitive",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "airsoft.power-source",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "muzzle.velocity",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "magazine.capacity",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "airsoft--airsoftove-pusky",
+		"locale": "cs",
+		"spotlight": [
+			"airsoft puška",
+			"airsoftová puška",
+			"aeg puška",
+			"elektrická puška",
+			"m4 airsoft",
+			"ak airsoft"
+		],
+		"group": "Airsoft",
+		"category": "Airsoftové pušky",
+		"restriction": "sensitive",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "airsoft.power-source",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "muzzle.velocity",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "magazine.capacity",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "airsoft--airsoftove-samopaly",
+		"locale": "cs",
+		"spotlight": [
+			"airsoft samopal",
+			"airsoftový samopal",
+			"smg airsoft",
+			"mp5 airsoft",
+			"p90 airsoft",
+			"kompaktní airsoft"
+		],
+		"group": "Airsoft",
+		"category": "Airsoftové samopaly",
+		"restriction": "sensitive",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "airsoft.power-source",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "muzzle.velocity",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "magazine.capacity",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "airsoft--airsoftove-brokovnice",
+		"locale": "cs",
+		"spotlight": [
+			"airsoft brokovnice",
+			"airsoftová brokovnice",
+			"shotgun airsoft",
+			"pumpovací brokovnice",
+			"manuální brokovnice"
+		],
+		"group": "Airsoft",
+		"category": "Airsoftové brokovnice",
+		"restriction": "sensitive",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "airsoft.power-source",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "muzzle.velocity",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "magazine.capacity",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "airsoft--airsoftove-odstrelovaci-pusky",
+		"locale": "cs",
+		"spotlight": [
+			"airsoft sniper",
+			"odstřelovací puška",
+			"airsoft odstřelovačka",
+			"sniper rifle",
+			"manuální sniper",
+			"dmr airsoft"
+		],
+		"group": "Airsoft",
+		"category": "Airsoftové odstřelovací pušky",
+		"restriction": "sensitive",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "airsoft.power-source",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "muzzle.velocity",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "magazine.capacity",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "airsoft--airsoftove-prislusenstvi",
+		"locale": "cs",
+		"spotlight": [
+			"airsoft příslušenství",
+			"airsoftové příslušenství",
+			"airsoft kuličky",
+			"bb kuličky",
+			"zásobník",
+			"zásobníky",
+			"kolimátor",
+			"optika",
+			"airsoft baterie",
+			"ochranné brýle"
+		],
+		"group": "Airsoft",
+		"category": "Airsoftové příslušenství",
+		"restriction": "sensitive",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "auto-moto--osobni-auta",
+		"locale": "cs",
+		"spotlight": [
+			"auto",
+			"osobní auto",
+			"automobil",
+			"vozidlo",
+			"car",
+			"sedan",
+			"hatchback",
+			"suv"
+		],
+		"group": "Auto-moto",
+		"category": "Osobní auta",
+		"restriction": "adult",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "vehicle.year",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "vehicle.mileage",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "fuel.type",
+				"sort": 4,
+				"kind": "optional"
+			},
+			{
+				"name": "transmission",
+				"sort": 5,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "auto-moto--motocykly-a-skutry",
+		"locale": "cs",
+		"spotlight": [
+			"motocykl",
+			"skútr",
+			"moto",
+			"motorcycle",
+			"scooter",
+			"bike",
+			"čtyřkolka",
+			"atv"
+		],
+		"group": "Auto-moto",
+		"category": "Motocykly a skútry",
+		"restriction": "adult",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "vehicle.year",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "vehicle.mileage",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "engine.volume",
+				"sort": 4,
+				"kind": "optional"
+			},
+			{
+				"name": "fuel.type",
+				"sort": 5,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "auto-moto--pneumatiky-a-disky",
+		"locale": "cs",
+		"spotlight": [
+			"pneumatiky",
+			"disky",
+			"kola",
+			"tires",
+			"wheels",
+			"ráfky",
+			"letní pneumatiky",
+			"zimní pneumatiky"
+		],
+		"group": "Auto-moto",
+		"category": "Pneumatiky a disky",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "tyre.season",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "wheel.diameter",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "auto-moto--autodoplnky",
+		"locale": "cs",
+		"spotlight": [
+			"autodoplňky",
+			"car accessories",
+			"auto doplňky",
+			"automotive",
+			"car parts",
+			"auto příslušenství"
+		],
+		"group": "Auto-moto",
+		"category": "Autodoplňky",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "auto-moto--nahradni-dily",
+		"locale": "cs",
+		"spotlight": [
+			"náhradní díly",
+			"auto díly",
+			"car parts",
+			"spare parts",
+			"automotive parts",
+			"auto komponenty"
+		],
+		"group": "Auto-moto",
+		"category": "Náhradní díly",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "part.number",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "vehicle.year",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "auto-moto--helmy-a-vybava",
+		"locale": "cs",
+		"spotlight": [
+			"helmy",
+			"výbava",
+			"helmets",
+			"gear",
+			"motocyklová helma",
+			"ochranné pomůcky",
+			"motocyklová výbava"
+		],
+		"group": "Auto-moto",
+		"category": "Helmy a výbava",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "helmet.size",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "zahrada-a-dilna--sekacky-a-krovinorezy",
+		"locale": "cs",
+		"spotlight": [
+			"sekačky",
+			"křovinořezy",
+			"trávníkové sekačky",
+			"motorové sekačky",
+			"strunové sekačky",
+			"garden tools"
+		],
+		"group": "Zahrada a dílna",
+		"category": "Sekačky a křovinořezy",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.source",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "length.cm",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "zahrada-a-dilna--pily-a-retezove-pily",
+		"locale": "cs",
+		"spotlight": [
+			"pily",
+			"řetězové pily",
+			"chainsaw",
+			"circular saw",
+			"handsaw",
+			"jigsaw",
+			"reciprocating saw"
+		],
+		"group": "Zahrada a dílna",
+		"category": "Pily a řetězové pily",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.source",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "blade.length",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "zahrada-a-dilna--aku-naradi-vrtacky-brusky",
+		"locale": "cs",
+		"spotlight": [
+			"aku nářadí",
+			"vrtačky",
+			"brusky",
+			"cordless tools",
+			"battery tools",
+			"drill",
+			"grinder",
+			"sander"
+		],
+		"group": "Zahrada a dílna",
+		"category": "Aku nářadí (vrtačky/brusky)",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.source",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "battery.capacity",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "zahrada-a-dilna--rucni-naradi",
+		"locale": "cs",
+		"spotlight": [
+			"ruční nářadí",
+			"hand tools",
+			"kladiva",
+			"šroubováky",
+			"kleště",
+			"hammers",
+			"screwdrivers",
+			"pliers"
+		],
+		"group": "Zahrada a dílna",
+		"category": "Ruční nářadí",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "zahrada-a-dilna--zavlazovani-a-zahradni-technika",
+		"locale": "cs",
+		"spotlight": [
+			"zavlažování",
+			"zahradní technika",
+			"irrigation",
+			"garden tools",
+			"zahradní nářadí",
+			"watering",
+			"garden equipment"
+		],
+		"group": "Zahrada a dílna",
+		"category": "Zavlažování a zahradní technika",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "zahrada-a-dilna--grily-a-prislusenstvi",
+		"locale": "cs",
+		"spotlight": [
+			"grily",
+			"grill",
+			"barbecue",
+			"bbq",
+			"grilování",
+			"charcoal grill",
+			"gas grill",
+			"electric grill"
+		],
+		"group": "Zahrada a dílna",
+		"category": "Grily a příslušenství",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.source",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--pelisky-a-boudy",
+		"locale": "cs",
+		"spotlight": [
+			"pelíšky",
+			"boudy",
+			"pet beds",
+			"dog houses",
+			"cat beds",
+			"psí boudy",
+			"kočičí pelíšky"
+		],
+		"group": "Domácí zvířata",
+		"category": "Pelíšky a boudy",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--misky-a-krmitka",
+		"locale": "cs",
+		"spotlight": [
+			"misky",
+			"krmítka",
+			"pet bowls",
+			"feeding bowls",
+			"water bowls",
+			"automatic feeders",
+			"pet feeders"
+		],
+		"group": "Domácí zvířata",
+		"category": "Misky a krmítka",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--voditka-a-obojky",
+		"locale": "cs",
+		"spotlight": [
+			"vodítka",
+			"obojky",
+			"leashes",
+			"collars",
+			"dog leash",
+			"cat collar",
+			"harness",
+			"retractable leash"
+		],
+		"group": "Domácí zvířata",
+		"category": "Vodítka a obojky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--hracky-pro-zvirata",
+		"locale": "cs",
+		"spotlight": [
+			"hračky pro zvířata",
+			"pet toys",
+			"dog toys",
+			"cat toys",
+			"chew toys",
+			"interactive toys",
+			"pet play"
+		],
+		"group": "Domácí zvířata",
+		"category": "Hračky pro zvířata",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "brand",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--akvaria-a-teraria",
+		"locale": "cs",
+		"spotlight": [
+			"akvária",
+			"terária",
+			"aquariums",
+			"terrariums",
+			"fish tanks",
+			"reptile tanks",
+			"aquarium equipment"
+		],
+		"group": "Domácí zvířata",
+		"category": "Akvária a terária",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--klece-a-prepravky",
+		"locale": "cs",
+		"spotlight": [
+			"klece",
+			"přepravky",
+			"cages",
+			"carriers",
+			"pet carriers",
+			"travel cages",
+			"bird cages",
+			"hamster cages"
+		],
+		"group": "Domácí zvířata",
+		"category": "Klece a přepravky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--kralici",
+		"locale": "cs",
+		"spotlight": [
+			"králík",
+			"kralik",
+			"zakrslý králík",
+			"králíček",
+			"bunny",
+			"rabbit"
+		],
+		"group": "Domácí zvířata",
+		"category": "Králíci",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--morcata",
+		"locale": "cs",
+		"spotlight": [
+			"morče",
+			"morce",
+			"guinea pig",
+			"morčátko"
+		],
+		"group": "Domácí zvířata",
+		"category": "Morčata",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--krecici",
+		"locale": "cs",
+		"spotlight": [
+			"křeček",
+			"krecek",
+			"hamster",
+			"křečík"
+		],
+		"group": "Domácí zvířata",
+		"category": "Křečci",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--potkani-a-mysi",
+		"locale": "cs",
+		"spotlight": [
+			"potkan",
+			"myš",
+			"mys",
+			"rat",
+			"mouse",
+			"hlodavec"
+		],
+		"group": "Domácí zvířata",
+		"category": "Potkani a myši",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--papousci-a-ptaci",
+		"locale": "cs",
+		"spotlight": [
+			"papoušek",
+			"korela",
+			"andulka",
+			"pták",
+			"ptáci",
+			"bird",
+			"parrot"
+		],
+		"group": "Domácí zvířata",
+		"category": "Papoušci a ptáci",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--rybicky",
+		"locale": "cs",
+		"spotlight": [
+			"rybičky",
+			"ryby",
+			"akvarijní ryby",
+			"akvarium",
+			"fish"
+		],
+		"group": "Domácí zvířata",
+		"category": "Rybičky",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--agamy-a-jesteri",
+		"locale": "cs",
+		"spotlight": [
+			"agama",
+			"agamy",
+			"vousatá agama",
+			"pogona",
+			"ještěr",
+			"lizard",
+			"gekon",
+			"chameleon"
+		],
+		"group": "Domácí zvířata",
+		"category": "Agamy a ještěři",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--hadi",
+		"locale": "cs",
+		"spotlight": [
+			"had",
+			"hadi",
+			"snake",
+			"užovka",
+			"python",
+			"krajta",
+			"korálovka"
+		],
+		"group": "Domácí zvířata",
+		"category": "Hadi",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--zelvy",
+		"locale": "cs",
+		"spotlight": [
+			"želva",
+			"zelva",
+			"turtle",
+			"terrapin"
+		],
+		"group": "Domácí zvířata",
+		"category": "Želvy",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--kocky",
+		"locale": "cs",
+		"spotlight": [
+			"kočka",
+			"kocka",
+			"kittens",
+			"kotě",
+			"kote",
+			"cat"
+		],
+		"group": "Domácí zvířata",
+		"category": "Kočky",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--psi",
+		"locale": "cs",
+		"spotlight": [
+			"pes",
+			"psi",
+			"štěně",
+			"stene",
+			"dog",
+			"puppy"
+		],
+		"group": "Domácí zvířata",
+		"category": "Psi",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "breed",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pet.gender",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "child.age",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--krmivo-a-pamlsky",
+		"locale": "cs",
+		"spotlight": [
+			"krmivo",
+			"granule",
+			"konzervy",
+			"pamlsky",
+			"treats",
+			"hay",
+			"seno"
+		],
+		"group": "Domácí zvířata",
+		"category": "Krmivo a pamlsky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pet.life-stage",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--stelivo-a-podestylka",
+		"locale": "cs",
+		"spotlight": [
+			"stelivo",
+			"podestýlka",
+			"hobliny",
+			"litter",
+			"cat litter",
+			"toaleta"
+		],
+		"group": "Domácí zvířata",
+		"category": "Stelivo a podestýlka",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "package.weight",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--terarijni-vybaveni",
+		"locale": "cs",
+		"spotlight": [
+			"terárium",
+			"terarijní",
+			"žárovka",
+			"UVB",
+			"topná podložka",
+			"vlhkoměr",
+			"substrát"
+		],
+		"group": "Domácí zvířata",
+		"category": "Terarijní vybavení",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.input",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "dimensions",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--akvarijni-vybaveni",
+		"locale": "cs",
+		"spotlight": [
+			"akvarijní",
+			"filtr",
+			"ohřívač",
+			"vzduch",
+			"osvětlení",
+			"akvarijní technika"
+		],
+		"group": "Domácí zvířata",
+		"category": "Akvarijní vybavení",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.input",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "dimensions",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--pece-a-hygiena",
+		"locale": "cs",
+		"spotlight": [
+			"péče",
+			"hygiena",
+			"šampon",
+			"kartáč",
+			"odčervení",
+			"stříhání drápů",
+			"grooming"
+		],
+		"group": "Domácí zvířata",
+		"category": "Péče a hygiena",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "skin.type",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "domaci-zvirata--veterinarni-doplnky",
+		"locale": "cs",
+		"spotlight": [
+			"veterina",
+			"vitamíny",
+			"doplněk stravy",
+			"antiparazitika",
+			"pipeta",
+			"obojek proti klíšťatům"
+		],
+		"group": "Domácí zvířata",
+		"category": "Veterinární doplňky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pet.life-stage",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "knihy--bezne-knihy",
+		"locale": "cs",
+		"spotlight": [
+			"knihy",
+			"books",
+			"literatura",
+			"romány",
+			"beletrie",
+			"naučná literatura",
+			"knihkupectví"
+		],
+		"group": "Knihy",
+		"category": "Běžné knihy",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "author",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "book.format",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "knihy--komiksy-a-manga",
+		"locale": "cs",
+		"spotlight": [
+			"komiksy",
+			"manga",
+			"comics",
+			"graphic novels",
+			"superhero comics",
+			"japanese manga",
+			"comic books"
+		],
+		"group": "Knihy",
+		"category": "Komiksy a manga",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "author",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "book.format",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "knihy--pro-dospele",
+		"locale": "cs",
+		"spotlight": [
+			"knihy pro dospělé",
+			"adult books",
+			"erotická literatura",
+			"erotické knihy",
+			"18+ literatura",
+			"adult literatura"
+		],
+		"group": "Knihy",
+		"category": "Pro dospělé",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "author",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "book.format",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "filmy--bezne-filmy",
+		"locale": "cs",
+		"spotlight": [
+			"dvd",
+			"blu-ray",
+			"filmy",
+			"movies",
+			"films",
+			"dvds",
+			"blu ray",
+			"movie discs",
+			"film collection"
+		],
+		"group": "Filmy",
+		"category": "Běžné filmy",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "movie.format",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "filmy--vhs",
+		"locale": "cs",
+		"spotlight": [
+			"vhs",
+			"videokazeta",
+			"videokazety",
+			"video kazeta",
+			"video kazety",
+			"vcr",
+			"kazety s filmy",
+			"retro filmy"
+		],
+		"group": "Filmy",
+		"category": "VHS",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "release.year",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "language",
+				"sort": 1,
+				"kind": "recommended"
+			}
+		]
+	},
+	{
+		"slug": "filmy--pro-dospele",
+		"locale": "cs",
+		"spotlight": [
+			"filmy pro dospělé",
+			"adult filmy",
+			"erotické filmy",
+			"18+ filmy",
+			"adult movies",
+			"adult dvd",
+			"adult blu-ray"
+		],
+		"group": "Filmy",
+		"category": "Pro dospělé",
+		"restriction": "adult-relaxed",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "movie.format",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hudba--bezna-hudba",
+		"locale": "cs",
+		"spotlight": [
+			"hudba",
+			"music",
+			"alba",
+			"album",
+			"nahrávky",
+			"audio",
+			"poslech"
+		],
+		"group": "Hudba",
+		"category": "Běžná hudba",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "artist",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "language",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hudba--vinyl-a-gramodesky",
+		"locale": "cs",
+		"spotlight": [
+			"vinyl",
+			"gramodesky",
+			"vinyl records",
+			"lp",
+			"vinyl lp",
+			"vinyl albums",
+			"record player",
+			"turntable"
+		],
+		"group": "Hudba",
+		"category": "Vinyl a gramodesky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "artist",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "record.size",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hudba--cd-a-kazety",
+		"locale": "cs",
+		"spotlight": [
+			"cd",
+			"kazety",
+			"cds",
+			"cassettes",
+			"music cds",
+			"audio cassettes",
+			"cd albums",
+			"tape cassettes"
+		],
+		"group": "Hudba",
+		"category": "CD a kazety",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "artist",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "edition",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hudba--noty-a-zpevniky",
+		"locale": "cs",
+		"spotlight": [
+			"noty",
+			"zpěvníky",
+			"sheet music",
+			"songbooks",
+			"music sheets",
+			"piano music",
+			"guitar tabs"
+		],
+		"group": "Hudba",
+		"category": "Noty a zpěvníky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "author",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "language",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "edition",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "platform",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hobby-a-kreativita--deskovky-a-puzzle",
+		"locale": "cs",
+		"spotlight": [
+			"deskovky",
+			"puzzle",
+			"board games",
+			"jigsaw puzzles",
+			"card games",
+			"strategy games",
+			"family games"
+		],
+		"group": "Hobby a kreativita",
+		"category": "Deskovky a puzzle",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "player.count",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "age.recommended",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "language",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hobby-a-kreativita--modelarstvi-rc-drony",
+		"locale": "cs",
+		"spotlight": [
+			"modelářství",
+			"rc",
+			"drony",
+			"model building",
+			"remote control",
+			"rc cars",
+			"rc planes",
+			"model kits"
+		],
+		"group": "Hobby a kreativita",
+		"category": "Modelářství (RC/drony)",
+		"restriction": "adult",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "battery.capacity",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hobby-a-kreativita--3d-tisk-a-filamenty",
+		"locale": "cs",
+		"spotlight": [
+			"3d tisk",
+			"filamenty",
+			"3d printing",
+			"filaments",
+			"pla",
+			"abs",
+			"petg",
+			"3d printer"
+		],
+		"group": "Hobby a kreativita",
+		"category": "3D tisk a filamenty",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "package.weight",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hobby-a-kreativita--malovani-a-kresleni",
+		"locale": "cs",
+		"spotlight": [
+			"malování",
+			"kreslení",
+			"painting",
+			"drawing",
+			"art supplies",
+			"brushes",
+			"paints",
+			"canvas"
+		],
+		"group": "Hobby a kreativita",
+		"category": "Malování a kreslení",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "dimensions",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hobby-a-kreativita--siti-a-hackovani",
+		"locale": "cs",
+		"spotlight": [
+			"šití",
+			"háčkování",
+			"sewing",
+			"crocheting",
+			"knitting",
+			"yarn",
+			"fabric",
+			"needles"
+		],
+		"group": "Hobby a kreativita",
+		"category": "Šití a háčkování",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "package.weight",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hobby-a-kreativita--diy-sady-a-material",
+		"locale": "cs",
+		"spotlight": [
+			"diy sady",
+			"materiál",
+			"diy kits",
+			"craft supplies",
+			"diy projects",
+			"materials",
+			"tools",
+			"supplies"
+		],
+		"group": "Hobby a kreativita",
+		"category": "DIY sady a materiál",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "age.recommended",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "krasa-a-osobni-pece--parfemy",
+		"locale": "cs",
+		"spotlight": [
+			"parfémy",
+			"perfumes",
+			"fragrances",
+			"colognes",
+			"eau de toilette",
+			"eau de parfum",
+			"parfum"
+		],
+		"group": "Krása a osobní péče",
+		"category": "Parfémy",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "fragrance.type",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "krasa-a-osobni-pece--pece-o-plet",
+		"locale": "cs",
+		"spotlight": [
+			"péče o pleť",
+			"skincare",
+			"face care",
+			"moisturizers",
+			"cleansers",
+			"serums",
+			"face masks"
+		],
+		"group": "Krása a osobní péče",
+		"category": "Péče o pleť",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "skin.type",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "krasa-a-osobni-pece--pece-o-vlasy",
+		"locale": "cs",
+		"spotlight": [
+			"péče o vlasy",
+			"hair care",
+			"shampoo",
+			"conditioner",
+			"hair products",
+			"hair treatments",
+			"styling"
+		],
+		"group": "Krása a osobní péče",
+		"category": "Péče o vlasy",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "volume.capacity",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "hair.type",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "krasa-a-osobni-pece--holici-strojky-a-epilatory",
+		"locale": "cs",
+		"spotlight": [
+			"holicí strojky",
+			"epilátory",
+			"razors",
+			"electric razors",
+			"epilators",
+			"shaving",
+			"hair removal"
+		],
+		"group": "Krása a osobní péče",
+		"category": "Holicí strojky a epilátory",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.source",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "krasa-a-osobni-pece--zehlicky-a-kulmy",
+		"locale": "cs",
+		"spotlight": [
+			"žehličky",
+			"kulmy",
+			"hair straighteners",
+			"curling irons",
+			"hair styling",
+			"flat irons",
+			"hair tools"
+		],
+		"group": "Krása a osobní péče",
+		"category": "Žehličky a kulmy",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.input",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "krasa-a-osobni-pece--manikura-a-pedikura",
+		"locale": "cs",
+		"spotlight": [
+			"manikúra",
+			"pedikúra",
+			"nail care",
+			"nail polish",
+			"nail art",
+			"nail tools",
+			"nail files",
+			"cuticle care"
+		],
+		"group": "Krása a osobní péče",
+		"category": "Manikúra a pedikúra",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "power.input",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hudebni-nastroje--kytary-a-baskytary",
+		"locale": "cs",
+		"spotlight": [
+			"kytary",
+			"baskytary",
+			"guitars",
+			"bass guitars",
+			"acoustic guitar",
+			"electric guitar",
+			"classical guitar"
+		],
+		"group": "Hudební nástroje",
+		"category": "Kytary a baskytary",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "release.year",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "handedness",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hudebni-nastroje--klavesy-a-piana",
+		"locale": "cs",
+		"spotlight": [
+			"klávesy",
+			"piana",
+			"keyboards",
+			"pianos",
+			"digital piano",
+			"synthesizer",
+			"organ",
+			"keyboard"
+		],
+		"group": "Hudební nástroje",
+		"category": "Klávesy a piana",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "key.count",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hudebni-nastroje--bici-a-perkuse",
+		"locale": "cs",
+		"spotlight": [
+			"bicí",
+			"perkuse",
+			"drums",
+			"percussion",
+			"drum set",
+			"cymbals",
+			"snare drum",
+			"drum kit"
+		],
+		"group": "Hudební nástroje",
+		"category": "Bicí a perkuse",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hudebni-nastroje--dechove-nastroje",
+		"locale": "cs",
+		"spotlight": [
+			"dechové nástroje",
+			"wind instruments",
+			"flute",
+			"saxophone",
+			"trumpet",
+			"clarinet",
+			"trombone"
+		],
+		"group": "Hudební nástroje",
+		"category": "Dechové nástroje",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "release.year",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hudebni-nastroje--midi-a-studiova-technika",
+		"locale": "cs",
+		"spotlight": [
+			"midi",
+			"studiová technika",
+			"studio equipment",
+			"audio interface",
+			"mixer",
+			"microphone",
+			"recording"
+		],
+		"group": "Hudební nástroje",
+		"category": "MIDI a studiová technika",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "connectivity",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "compatibility",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "hudebni-nastroje--struny-palicky-a-prislusenstvi",
+		"locale": "cs",
+		"spotlight": [
+			"struny",
+			"paličky",
+			"příslušenství",
+			"strings",
+			"drumsticks",
+			"guitar strings",
+			"accessories"
+		],
+		"group": "Hudební nástroje",
+		"category": "Struny, paličky a příslušenství",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "material",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sberatelstvi-a-starozitnosti--mince-a-bankovky",
+		"locale": "cs",
+		"spotlight": [
+			"mince",
+			"bankovky",
+			"coins",
+			"banknotes",
+			"numismatics",
+			"currency",
+			"collectible coins"
+		],
+		"group": "Sběratelství a starožitnosti",
+		"category": "Mince a bankovky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "country",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "collectible.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sberatelstvi-a-starozitnosti--postovni-znamky",
+		"locale": "cs",
+		"spotlight": [
+			"poštovní známky",
+			"stamps",
+			"philately",
+			"postage stamps",
+			"collectible stamps",
+			"postal stamps"
+		],
+		"group": "Sběratelství a starožitnosti",
+		"category": "Poštovní známky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "country",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "collectible.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "edition",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "language",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sberatelstvi-a-starozitnosti--figurky-a-modely",
+		"locale": "cs",
+		"spotlight": [
+			"figurky",
+			"modely",
+			"figures",
+			"models",
+			"action figures",
+			"collectible figures",
+			"scale models"
+		],
+		"group": "Sběratelství a starožitnosti",
+		"category": "Figurky a modely",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "series",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "dimensions",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sberatelstvi-a-starozitnosti--retro-a-vintage",
+		"locale": "cs",
+		"spotlight": [
+			"retro",
+			"vintage",
+			"antique",
+			"old",
+			"classic",
+			"nostalgic",
+			"collectible",
+			"rare"
+		],
+		"group": "Sběratelství a starožitnosti",
+		"category": "Retro a vintage",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "collectible.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sberatelstvi-a-starozitnosti--starozitnosti",
+		"locale": "cs",
+		"spotlight": [
+			"starožitnosti",
+			"antiques",
+			"historical",
+			"old items",
+			"vintage",
+			"collectible",
+			"museum pieces"
+		],
+		"group": "Sběratelství a starožitnosti",
+		"category": "Starožitnosti",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "collectible.year",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "country",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sberatelstvi-a-starozitnosti--pamatky-a-kuriozity",
+		"locale": "cs",
+		"spotlight": [
+			"památky",
+			"kuriozity",
+			"memorabilia",
+			"curiosities",
+			"souvenirs",
+			"collectibles",
+			"unique items"
+		],
+		"group": "Sběratelství a starožitnosti",
+		"category": "Památky a kuriozity",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "collectible.year",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "country",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "edition",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "chladne-zbrane--noze",
+		"locale": "cs",
+		"spotlight": [
+			"nůž",
+			"nože",
+			"kapesní nůž",
+			"zavírací nůž",
+			"lovecký nůž",
+			"taktický nůž",
+			"pevná čepel"
+		],
+		"group": "Chladné zbraně",
+		"category": "Nože",
+		"restriction": "sensitive",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "blade.length",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "chladne-zbrane--mece-a-savle",
+		"locale": "cs",
+		"spotlight": [
+			"meč",
+			"meče",
+			"šavle",
+			"katana",
+			"wakizashi",
+			"rapír",
+			"historický meč"
+		],
+		"group": "Chladné zbraně",
+		"category": "Meče a šavle",
+		"restriction": "sensitive",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "blade.length",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "dimensions",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "chladne-zbrane--dyky",
+		"locale": "cs",
+		"spotlight": [
+			"dýka",
+			"dýky",
+			"dagger",
+			"stiletto",
+			"bodná zbraň",
+			"historická dýka"
+		],
+		"group": "Chladné zbraně",
+		"category": "Dýky",
+		"restriction": "sensitive",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "blade.length",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "chladne-zbrane--bajonety",
+		"locale": "cs",
+		"spotlight": [
+			"bajonet",
+			"bajonety",
+			"bodák",
+			"vojenský bajonet",
+			"historický bajonet",
+			"puškový bajonet"
+		],
+		"group": "Chladné zbraně",
+		"category": "Bajonety",
+		"restriction": "sensitive",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "compatibility",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "blade.length",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "brand",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "chladne-zbrane--sekery-a-macety",
+		"locale": "cs",
+		"spotlight": [
+			"sekera",
+			"sekery",
+			"mačeta",
+			"mačety",
+			"tomahawk",
+			"taktická sekera",
+			"kukri"
+		],
+		"group": "Chladné zbraně",
+		"category": "Sekery a mačety",
+		"restriction": "sensitive",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "blade.length",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "chladne-zbrane--vrhaci-zbrane",
+		"locale": "cs",
+		"spotlight": [
+			"vrhací nůž",
+			"vrhací nože",
+			"vrhací hvězdice",
+			"shuriken",
+			"vrhací sekera",
+			"throwing knife"
+		],
+		"group": "Chladné zbraně",
+		"category": "Vrhací zbraně",
+		"restriction": "sensitive",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "count.pieces",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "chladne-zbrane--repliky-a-dekorace",
+		"locale": "cs",
+		"spotlight": [
+			"replika zbraně",
+			"repliky zbraní",
+			"dekorativní zbraň",
+			"historická replika",
+			"fantasy meč",
+			"filmová replika",
+			"dekorace na zeď"
+		],
+		"group": "Chladné zbraně",
+		"category": "Repliky a dekorace",
+		"restriction": "sensitive",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "collectible.year",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "umeni-a-design--obrazy-a-grafiky",
+		"locale": "cs",
+		"spotlight": [
+			"obrazy",
+			"grafiky",
+			"paintings",
+			"graphics",
+			"art",
+			"prints",
+			"artwork",
+			"visual art"
+		],
+		"group": "Umění a design",
+		"category": "Obrazy a grafiky",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "artist",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "art.year",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "umeni-a-design--plakaty-a-printy",
+		"locale": "cs",
+		"spotlight": [
+			"plakáty",
+			"printy",
+			"posters",
+			"prints",
+			"wall art",
+			"decorative prints",
+			"art prints"
+		],
+		"group": "Umění a design",
+		"category": "Plakáty a printy",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "artist",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "art.year",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "umeni-a-design--sochy-a-objekty",
+		"locale": "cs",
+		"spotlight": [
+			"sochy",
+			"objekty",
+			"sculptures",
+			"statues",
+			"art objects",
+			"decorative objects",
+			"figurines"
+		],
+		"group": "Umění a design",
+		"category": "Sochy a objekty",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "art.year",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "artist",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "umeni-a-design--autorsky-design",
+		"locale": "cs",
+		"spotlight": [
+			"autorský design",
+			"design",
+			"original design",
+			"custom design",
+			"unique design",
+			"artistic design"
+		],
+		"group": "Umění a design",
+		"category": "Autorský design",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "artist",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "art.year",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "umeni-a-design--ramovani-a-pasparty",
+		"locale": "cs",
+		"spotlight": [
+			"rámování",
+			"pasparty",
+			"framing",
+			"matting",
+			"picture frames",
+			"art framing",
+			"custom frames"
+		],
+		"group": "Umění a design",
+		"category": "Rámování a pasparty",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "umeni-a-design--umelecke-potreby",
+		"locale": "cs",
+		"spotlight": [
+			"umělecké potřeby",
+			"art supplies",
+			"art materials",
+			"painting supplies",
+			"drawing supplies",
+			"craft supplies"
+		],
+		"group": "Umění a design",
+		"category": "Umělecké potřeby",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "package.weight",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nemovitosti--prodej-bytu",
+		"locale": "cs",
+		"spotlight": [
+			"prodej bytu",
+			"apartment sale",
+			"flat sale",
+			"byt na prodej",
+			"apartment",
+			"flat",
+			"real estate"
+		],
+		"group": "Nemovitosti",
+		"category": "Prodej bytu",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "rooms.count",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "property.furnishing",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "property.heating",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "property.year-built",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nemovitosti--pronajem-bytu",
+		"locale": "cs",
+		"spotlight": [
+			"pronájem bytu",
+			"apartment rental",
+			"flat rental",
+			"byt k pronájmu",
+			"rental",
+			"lease",
+			"apartment rent"
+		],
+		"group": "Nemovitosti",
+		"category": "Pronájem bytu",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "rooms.count",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "property.furnishing",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "property.heating",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "property.year-built",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nemovitosti--prodej-domu",
+		"locale": "cs",
+		"spotlight": [
+			"prodej domu",
+			"house sale",
+			"dům na prodej",
+			"house",
+			"home",
+			"family house",
+			"villa"
+		],
+		"group": "Nemovitosti",
+		"category": "Prodej domu",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "land.area",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "rooms.count",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "property.year-built",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "property.heating",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nemovitosti--pronajem-domu",
+		"locale": "cs",
+		"spotlight": [
+			"pronájem domu",
+			"house rental",
+			"dům k pronájmu",
+			"house rent",
+			"villa rental",
+			"family house rent"
+		],
+		"group": "Nemovitosti",
+		"category": "Pronájem domu",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "land.area",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "rooms.count",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "property.year-built",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "property.heating",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nemovitosti--pozemky",
+		"locale": "cs",
+		"spotlight": [
+			"pozemky",
+			"land",
+			"plots",
+			"building land",
+			"agricultural land",
+			"development land",
+			"vacant land"
+		],
+		"group": "Nemovitosti",
+		"category": "Pozemky",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "land.area",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "land.type",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "buildability",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "property.electricity",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nemovitosti--garaze-a-parkovani",
+		"locale": "cs",
+		"spotlight": [
+			"garáže",
+			"parkování",
+			"garages",
+			"parking",
+			"parking spaces",
+			"garage sale",
+			"parking spots"
+		],
+		"group": "Nemovitosti",
+		"category": "Garáže a parkování",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "parking.type",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "property.electricity",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nemovitosti--chaty-a-chalupy",
+		"locale": "cs",
+		"spotlight": [
+			"chaty",
+			"chalupy",
+			"cottages",
+			"cabins",
+			"summer houses",
+			"weekend houses",
+			"vacation homes"
+		],
+		"group": "Nemovitosti",
+		"category": "Chaty a chalupy",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "land.area",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "rooms.count",
+				"sort": 2,
+				"kind": "recommended"
+			},
+			{
+				"name": "property.year-built",
+				"sort": 3,
+				"kind": "optional"
+			},
+			{
+				"name": "property.heating",
+				"sort": 4,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "nemovitosti--komercni-prostory",
+		"locale": "cs",
+		"spotlight": [
+			"komerční prostory",
+			"commercial spaces",
+			"office spaces",
+			"retail spaces",
+			"business premises",
+			"commercial real estate"
+		],
+		"group": "Nemovitosti",
+		"category": "Komerční prostory",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "property.area",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "property.furnishing",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "property.heating",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "property.year-built",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "ostatni--darkove-poukazy",
+		"locale": "cs",
+		"spotlight": [
+			"dárkové poukazy",
+			"gift cards",
+			"vouchers",
+			"gift certificates",
+			"prepaid cards",
+			"gift vouchers"
+		],
+		"group": "Ostatní",
+		"category": "Dárkové poukazy",
+		"restriction": "adult-relaxed",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "voucher.value",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "edition",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "ostatni--ztraty-a-nalezy",
+		"locale": "cs",
+		"spotlight": [
+			"ztráty",
+			"nálezy",
+			"lost and found",
+			"lost items",
+			"found items",
+			"lost property",
+			"missing items"
+		],
+		"group": "Ostatní",
+		"category": "Ztráty a nálezy",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "location.note",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "ostatni--nahradni-dily-ruzne",
+		"locale": "cs",
+		"spotlight": [
+			"náhradní díly",
+			"spare parts",
+			"replacement parts",
+			"various parts",
+			"miscellaneous parts",
+			"generic parts"
+		],
+		"group": "Ostatní",
+		"category": "Náhradní díly různé",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "part.number",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "compatibility",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "material",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "ostatni--nezarazene",
+		"locale": "cs",
+		"spotlight": [
+			"nezařazené",
+			"miscellaneous",
+			"unclassified",
+			"other",
+			"various",
+			"mixed items"
+		],
+		"group": "Ostatní",
+		"category": "Nezařazené",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "model",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "material",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--vanoce",
+		"locale": "cs",
+		"spotlight": [
+			"vánoce",
+			"vánoční",
+			"christmas",
+			"vánoční dárky",
+			"vánoční dekorace",
+			"vánoční ozdoby",
+			"betlém",
+			"jesličky",
+			"advent",
+			"mikuláš"
+		],
+		"group": "Sezóna",
+		"category": "Vánoce",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--valentyn",
+		"locale": "cs",
+		"spotlight": [
+			"valentýn",
+			"valentýnský",
+			"valentine",
+			"valentýnské dárky",
+			"svatý valentýn",
+			"14. únor",
+			"romantika",
+			"láska"
+		],
+		"group": "Sezóna",
+		"category": "Valentýn",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--velikonoce",
+		"locale": "cs",
+		"spotlight": [
+			"velikonoce",
+			"velikonoční",
+			"easter",
+			"velikonoční dekorace",
+			"velikonoční vajíčka",
+			"pomlázka",
+			"beránek",
+			"zajíček",
+			"velikonoční košík"
+		],
+		"group": "Sezóna",
+		"category": "Velikonoce",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--halloween",
+		"locale": "cs",
+		"spotlight": [
+			"halloween",
+			"dušičky",
+			"svátek zesnulých",
+			"halloweenské",
+			"dýně",
+			"strašidelný",
+			"kostým",
+			"masky",
+			"31. říjen"
+		],
+		"group": "Sezóna",
+		"category": "Halloween",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--zima",
+		"locale": "cs",
+		"spotlight": [
+			"zima",
+			"zimní",
+			"winter",
+			"zimní oblečení",
+			"zimní boty",
+			"zimní sporty",
+			"lyže",
+			"snowboard",
+			"brusle",
+			"zimní dekorace",
+			"sníh",
+			"mráz"
+		],
+		"group": "Sezóna",
+		"category": "Zima",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--jaro",
+		"locale": "cs",
+		"spotlight": [
+			"jaro",
+			"jarní",
+			"spring",
+			"jarní oblečení",
+			"jarní dekorace",
+			"květiny",
+			"kvetení",
+			"příroda",
+			"jarní úklid",
+			"zahrada",
+			"březen",
+			"duben",
+			"květen"
+		],
+		"group": "Sezóna",
+		"category": "Jaro",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--leto",
+		"locale": "cs",
+		"spotlight": [
+			"léto",
+			"letní",
+			"summer",
+			"letní oblečení",
+			"letní boty",
+			"plavky",
+			"sluneční brýle",
+			"letní dekorace",
+			"dovolená",
+			"prázdniny",
+			"slunce",
+			"pláž",
+			"červen",
+			"červenec",
+			"srpen"
+		],
+		"group": "Sezóna",
+		"category": "Léto",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--podzim",
+		"locale": "cs",
+		"spotlight": [
+			"podzim",
+			"podzimní",
+			"autumn",
+			"fall",
+			"podzimní oblečení",
+			"podzimní dekorace",
+			"listí",
+			"dýně",
+			"sklizeň",
+			"zahrada",
+			"září",
+			"říjen",
+			"listopad"
+		],
+		"group": "Sezóna",
+		"category": "Podzim",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--silvestr",
+		"locale": "cs",
+		"spotlight": [
+			"silvestr",
+			"silvestrovský",
+			"nový rok",
+			"new year",
+			"silvestrovské oslavy",
+			"silvestrovské dekorace",
+			"party",
+			"oslava",
+			"31. prosinec",
+			"1. leden"
+		],
+		"group": "Sezóna",
+		"category": "Silvestr",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--pyrotechnika",
+		"locale": "cs",
+		"spotlight": [
+			"pyrotechnika",
+			"petardy",
+			"ohňostroj",
+			"rachejtle",
+			"dělobuchy",
+			"fontány",
+			"prskavky",
+			"silvestrovská pyrotechnika"
+		],
+		"group": "Sezóna",
+		"category": "Pyrotechnika",
+		"restriction": "adult",
+		"discovery": "explicit",
+		"field": [
+			{
+				"name": "brand",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "pyro.class",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "count.pieces",
+				"sort": 2,
+				"kind": "optional"
+			},
+			{
+				"name": "color",
+				"sort": 3,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--den-matek",
+		"locale": "cs",
+		"spotlight": [
+			"den matek",
+			"den matek dárky",
+			"mother's day",
+			"maminka",
+			"dárek pro maminku",
+			"květiny",
+			"kytice",
+			"druhá květnová neděle"
+		],
+		"group": "Sezóna",
+		"category": "Den matek",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--den-otcu",
+		"locale": "cs",
+		"spotlight": [
+			"den otců",
+			"den otců dárky",
+			"father's day",
+			"tatínek",
+			"dárek pro tatínka",
+			"dárek pro otce",
+			"třetí červnová neděle"
+		],
+		"group": "Sezóna",
+		"category": "Den otců",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--zacatek-skoly",
+		"locale": "cs",
+		"spotlight": [
+			"začátek školy",
+			"začátek školního roku",
+			"back to school",
+			"školní potřeby",
+			"aktovka",
+			"batoh",
+			"penál",
+			"sešity",
+			"učebnice",
+			"školní pomůcky",
+			"září"
+		],
+		"group": "Sezóna",
+		"category": "Začátek školy",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	},
+	{
+		"slug": "sezona--maturita",
+		"locale": "cs",
+		"spotlight": [
+			"maturita",
+			"maturitní",
+			"graduation",
+			"promoce",
+			"absolventský",
+			"maturitní ples",
+			"absolvent",
+			"vysvědčení",
+			"konec školy"
+		],
+		"group": "Sezóna",
+		"category": "Maturita",
+		"restriction": "none",
+		"discovery": "implicit",
+		"field": [
+			{
+				"name": "material",
+				"sort": 0,
+				"kind": "recommended"
+			},
+			{
+				"name": "dimensions",
+				"sort": 1,
+				"kind": "recommended"
+			},
+			{
+				"name": "color",
+				"sort": 2,
+				"kind": "optional"
+			}
+		]
+	}
+]

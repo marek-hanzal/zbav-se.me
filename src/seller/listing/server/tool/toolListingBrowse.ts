@@ -48,9 +48,9 @@ Do not use for buyer-visible marketplace search.
 		return stringify(
 			items.map((item) => ({
 				listingId: item.id,
-				title: item.title,
-				price: item.price,
-				category: `${item.category.group} / ${item.category.category}`,
+				// title: item.title,
+				// price: item.price,
+				// category: `${item.category.group} / ${item.category.category}`,
 			})),
 			{
 				header: true,

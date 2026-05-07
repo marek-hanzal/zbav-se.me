@@ -1,0 +1,247 @@
+name: Dev Deploy
+
+on:
+    push:
+        branches: ["dev"]
+
+concurrency:
+    group: dev-deploy
+    cancel-in-progress: false
+
+permissions:
+    contents: read
+
+env:
+    FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    # -------------------------------
+    # Common env. variables
+    # -------------------------------
+    VITE_APP_ASSETS: ${{ vars.VITE_APP_ASSETS }}
+    VITE_CONTENT_CDN: ${{ vars.VITE_CONTENT_CDN }}
+    VITE_ORIGIN: ${{ vars.VITE_ORIGIN }}
+    NODE_OPTIONS: --max-old-space-size=1300
+
+    # -------------------------------
+    # Server env. variables
+    # -------------------------------
+    SERVER_S3_API: ${{ vars.SERVER_S3_API }}
+    SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
+    SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
+    SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
+    SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
+    SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
+    SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
+    SERVER_GITHUB: ${{ secrets.SERVER_GITHUB }}
+    SERVER_AI_TOKEN: ${{ secrets.SERVER_AI_TOKEN }}
+    SERVER_AI_SERVER_URL: ${{ vars.SERVER_AI_SERVER_URL }}
+    SERVER_AI_MODEL: ${{ vars.SERVER_AI_MODEL }}
+    # -------------------------------
+    # Local (GHA only)
+    # -------------------------------
+    BUNNY_HOST: ${{ vars.BUNNY_HOST }}
+    BUNNY_USER: ${{ vars.BUNNY_USER }}
+    BUNNY_PASSWORD: ${{ secrets.BUNNY_PASSWORD }}
+
+    NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+    NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
+
+    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+    VERCEL_APP_PROJECT_ID: ${{ vars.VERCEL_APP_PROJECT_ID }}
+
+    MIGRATION_URL: ${{ vars.VITE_ORIGIN }}/api/public/migration/run
+
+jobs:
+    validate-env:
+        name: Validate env variables
+        runs-on: ubuntu-latest
+        environment: dev
+        steps:
+            - name: Check common environment variables
+              run: |
+                  set -euo pipefail
+
+                  check_var() {
+                    local var_name="$1"
+                    local var_value="${!var_name:-}"
+                    if [ -z "$var_value" ]; then
+                      echo "Error: Environment variable '$var_name' is missing or empty"
+                      exit 1
+                    fi
+                  }
+
+                  # Common env. variables
+                  check_var VITE_APP_ASSETS
+                  check_var VITE_CONTENT_CDN
+                  check_var VITE_ORIGIN
+
+                  # Server env. variables
+                  check_var SERVER_S3_API
+                  check_var SERVER_S3_BUCKET
+                  check_var SERVER_S3_KEY
+                  check_var SERVER_S3_SECRET
+                  check_var SERVER_BETTER_AUTH_SECRET
+                  check_var SERVER_GEOAPIFY_TOKEN
+                  check_var SERVER_JWT_SECRET
+                  check_var SERVER_GITHUB
+                  check_var SERVER_AI_TOKEN
+                  check_var SERVER_AI_SERVER_URL
+                  check_var SERVER_AI_MODEL
+
+                  # Local (GHA only)
+                  check_var BUNNY_HOST
+                  check_var BUNNY_PASSWORD
+                  check_var BUNNY_USER
+
+                  check_var NEON_API_KEY
+                  check_var NEON_PROJECT_ID
+
+                  check_var VERCEL_ORG_ID
+                  check_var VERCEL_TOKEN
+                  check_var VERCEL_APP_PROJECT_ID
+
+                  echo "OK: required variables present."
+
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        environment: dev
+        needs: [validate-env]
+        steps:
+            - uses: actions/checkout@v6.0.2
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v6.3.0
+              with:
+                  node-version: "24"
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
+
+            - name: Build
+              run: bun run build
+
+            - name: Cache save (app prebuilt)
+              uses: actions/cache/save@v5.0.3
+              with:
+                  path: .vercel/output
+                  key: app-${{ github.run_id }}
+
+    deploy:
+        name: Deploy app to Vercel
+        runs-on: ubuntu-latest
+        environment: dev
+        needs: [build]
+        steps:
+            - name: Cache restore (app prebuilt)
+              uses: actions/cache/restore@v5.0.3
+              with:
+                  path: .vercel/output
+                  key: app-${{ github.run_id }}
+                  fail-on-cache-miss: true
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v6.3.0
+              with:
+                  node-version: "24"
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Strip assets
+              run: rm -rf .vercel/output/static/assets || true
+
+            - name: Deploy to Vercel (app)
+              env:
+                  VERCEL_PROJECT_ID: ${{ env.VERCEL_APP_PROJECT_ID }}
+              run: |
+                  bunx -y vercel@latest deploy \
+                    --prebuilt \
+                    --prod --yes \
+                    --token "$VERCEL_TOKEN"
+
+    cdn:
+        name: Update CDN
+        runs-on: ubuntu-latest
+        environment: dev
+        needs: [build]
+        steps:
+            - name: Cache restore (app prebuilt)
+              uses: actions/cache/restore@v5.0.3
+              with:
+                  path: .vercel/output
+                  key: app-${{ github.run_id }}
+                  fail-on-cache-miss: true
+
+            - name: Prepare rclone config
+              run: |
+                  set -euo pipefail
+                  CONF="${GITHUB_WORKSPACE}/rclone.conf"
+                  OBF=$(docker run --rm rclone/rclone:1.73.2 obscure "${BUNNY_PASSWORD}")
+                  cat > "$CONF" <<EOF
+                  [bunny]
+                  type = sftp
+                  host = ${BUNNY_HOST}
+                  user = ${BUNNY_USER}
+                  port = 22
+                  pass = ${OBF}
+                  EOF
+                  echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
+
+            - name: Sync CDN (app assets)
+              uses: docker://rclone/rclone:1.73.2
+              with:
+                  args: >
+                      sync /github/workspace/.vercel/output/static/assets bunny:/dev/app/assets
+                      --config /github/workspace/rclone.conf
+                      --inplace
+                      --sftp-set-modtime=false
+                      --size-only
+                      --transfers=8
+                      --checkers=16
+                      --fast-list
+                      --timeout=2m
+                      --retries=5
+                      --low-level-retries=10
+                      --verbose
+
+            - name: Copy root favicon/manifest to CDN /
+              uses: docker://rclone/rclone:1.73.2
+              with:
+                  args: >
+                      copy /github/workspace/.vercel/output/static bunny:/dev/app/
+                      --config /github/workspace/rclone.conf
+                      --inplace
+                      --include "/favicon*.ico"
+                      --include "/favicon*.png"
+                      --include "/favicon*.svg"
+                      --include "/apple-touch-icon*.png"
+                      --include "/site.webmanifest"
+                      --exclude "*"
+                      --sftp-set-modtime=false
+                      --transfers=4
+                      --checkers=8
+                      --timeout=2m
+                      --retries=5
+                      --low-level-retries=10
+                      --verbose
+
+    migration:
+        name: Run migrations
+        runs-on: ubuntu-latest
+        environment: dev
+        needs: [deploy]
+        steps:
+            - name: Trigger migrations endpoint
+              run: |
+                  set -euo pipefail
+                  code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST "$MIGRATION_URL")
+                  echo "HTTP $code from $MIGRATION_URL"
+                  if [ "$code" != "200" ] && [ "$code" != "204" ]; then
+                    echo "Migration trigger failed (expected 200/204)."
+                    exit 1
+                  fi

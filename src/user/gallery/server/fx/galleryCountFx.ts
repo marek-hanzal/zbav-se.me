@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { withGalleryCollectionSelectFx } from "~/user/gallery/server/db/withGalleryCollectionSelectFx";
-import { withGalleryQueryBuilderFx } from "~/user/gallery/server/db/withGalleryQueryBuilderFx";
 import type { GalleryCountQuerySchema } from "~/user/gallery/server/schema/GalleryCountQuerySchema";
 import type { GalleryFilterSchema } from "~/user/gallery/server/schema/GalleryFilterSchema";
+import { withGallerySelectFx } from "../db/withGallerySelectFx";
 
 export namespace galleryCountFx {
 	export interface Props extends GalleryCountQuerySchema.Type {
@@ -25,11 +24,10 @@ export const galleryCountFx = Effect.fn("galleryCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withGalleryCollectionSelectFx({}),
+		selectFx: withGallerySelectFx({}),
 		filter,
 		where,
 		scope,
-		queryFx: withGalleryQueryBuilderFx,
 	});
 });
 

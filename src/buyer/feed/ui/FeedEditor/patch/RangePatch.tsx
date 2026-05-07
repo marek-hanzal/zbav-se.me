@@ -1,7 +1,7 @@
 import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
@@ -16,40 +16,37 @@ export namespace RangePatch {
 }
 
 export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const patchMutation = withFeedQuery.usePatchMutation();
+	const patchMutation = withFeedQuery.usePatchMutation({
+		onSettled,
+	});
 	const currentRange = feed.query?.filter?.range;
-	const [rangeValue, setRangeValue] = useState<string | undefined>(
-		currentRange !== undefined ? String(currentRange) : undefined,
-	);
+	const [rangeValue, setRangeValue] = useState<number | undefined>(currentRange);
 
 	const handleSave = () => {
-		const range = rangeValue ? parseFloat(rangeValue) : undefined;
-		patchMutation.mutate(
-			{
+		patchMutation.mutate({
+			query: {
+				where: {
+					id: feed.id,
+				},
+			},
+			patch: {
 				query: {
-					where: {
-						id: feed.id,
-					},
-				},
-				patch: {
-					query: {
-						...feed.query,
-						filter: {
-							...feed.query?.filter,
-							range: range !== undefined && !Number.isNaN(range) ? range : undefined,
-						},
+					...feed.query,
+					filter: {
+						...feed.query?.filter,
+						range:
+							rangeValue !== undefined && !Number.isNaN(rangeValue)
+								? rangeValue
+								: undefined,
 					},
 				},
 			},
-			{
-				onSettled,
-			},
-		);
+		});
 	};
 
 	return (
 		<Container
-			data-ui={"RangePatch[Container]"}
+			data-ui={"RangePatch"}
 			data-ui-layout="vertical-content-footer"
 			data-ui-height="full"
 			data-ui-width="full"
@@ -66,11 +63,12 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 					data-ui-tone="secondary"
 					data-ui-text="sm"
 				/>
+
 				<Dial
 					value={rangeValue}
 					onChange={setRangeValue}
 					placeholder={translator.text("Feed range (placeholder)")}
-					data-ui-inner="default"
+					allowDecimals={false}
 				/>
 			</Container>
 
@@ -78,7 +76,7 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 				onCancel={onCancel}
 				onSave={handleSave}
 				loading={patchMutation.isPending}
-				disabled={false}
+				disabled={patchMutation.isPending}
 			/>
 		</Container>
 	);

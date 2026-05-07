@@ -2,7 +2,7 @@ import { type FC, Suspense, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { Fulltext } from "@/lib/client/fulltext";
 import type { Status } from "@/lib/client/status";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { ListContainer } from "~/common/location/ui/LocationSelect/ListContainer";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 
@@ -54,6 +54,7 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 					set: handleSearchChange,
 				}}
 				textPlaceholder={translator.text("Location search (placeholder)")}
+				autoFocus
 			/>
 
 			<Suspense fallback={<ListContainer.Fallback />}>

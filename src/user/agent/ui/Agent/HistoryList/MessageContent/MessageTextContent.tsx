@@ -4,7 +4,7 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { uiLinkTo } from "@/lib/client/link-to";
 import { Markdown } from "@/lib/client/markdown";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 
 export namespace MessageTextContent {

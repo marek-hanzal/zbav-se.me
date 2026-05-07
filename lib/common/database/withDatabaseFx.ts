@@ -1,3 +1,4 @@
+import type { Logger } from "@logtape/logtape";
 import { Effect } from "effect";
 import { type Dialect, Kysely, type MigrationResult, Migrator } from "kysely";
 import { DialectContextFx } from "./DialectContextFx";
@@ -10,11 +11,12 @@ export namespace withDatabaseFx {
 	}
 
 	export interface Props<in out TDatabase> {
+		logger: Logger;
 		/**
 		 * Called before the migration is executed.
 		 */
-		onPreMigration?(event: withDatabaseFx.Event<TDatabase>): Promise<void>;
-		onPostMigration?(event: withDatabaseFx.Event<TDatabase>): Promise<void>;
+		onPreMigration?(instance: Instance<TDatabase>): Promise<void>;
+		onPostMigration?(instance: Instance<TDatabase>): Promise<void>;
 	}
 
 	export interface Instance<in out DB> {
@@ -25,6 +27,7 @@ export namespace withDatabaseFx {
 }
 
 export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TDatabase>({
+	logger,
 	onPreMigration,
 	onPostMigration,
 }: withDatabaseFx.Props<TDatabase>) {
@@ -43,11 +46,16 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 			log(log) {
 				switch (log.level) {
 					case "error": {
-						console.error(log.error);
+						// logger.error("Kaboom", {
+						// 	error: log.error,
+						// });
 						break;
 					}
 					case "query": {
-						// console.log(log.query.sql);
+						logger.trace(log.query.sql, {
+							ms: log.queryDurationMillis,
+							params: log.query.parameters,
+						});
 						break;
 					}
 				}
@@ -55,16 +63,13 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 		}));
 	};
 
-	return {
+	const instance = {
 		dialect,
 		get kysely() {
 			return kysely();
 		},
 		async migrate() {
-			await onPreMigration?.({
-				dialect,
-				kysely: kysely(),
-			});
+			await onPreMigration?.(instance);
 
 			const migrator = new Migrator({
 				db: kysely(),
@@ -91,12 +96,11 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 				}
 			});
 
-			await onPostMigration?.({
-				dialect,
-				kysely: kysely(),
-			});
+			await onPostMigration?.(instance);
 
 			return results;
 		},
 	} satisfies withDatabaseFx.Instance<TDatabase>;
+
+	return instance;
 });

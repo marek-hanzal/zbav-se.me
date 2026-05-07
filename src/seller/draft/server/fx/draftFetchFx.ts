@@ -1,22 +1,19 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import { withDraftQueryBuilderFx } from "~/seller/draft/server/db/withDraftQueryBuilderFx";
 import { withDraftSelectFx } from "~/seller/draft/server/db/withDraftSelectFx";
-import type { DraftFilterSchema } from "~/seller/draft/server/schema/DraftFilterSchema";
 import type { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
+import type { DraftWhereSchema } from "../schema/DraftWhereSchema";
 
 export namespace draftFetchFx {
-	export interface Scope extends DraftFilterSchema.Type {
-		userId: string;
-	}
-
 	export interface Props extends DraftQuerySchema.Type {
-		scope: Scope;
+		userId: string;
+		scope: DraftWhereSchema.Type;
 	}
 }
 
 export const draftFetchFx = Effect.fn("draftFetchFx")(function* ({
+	userId,
 	filter,
 	where,
 	scope,
@@ -33,13 +30,12 @@ export const draftFetchFx = Effect.fn("draftFetchFx")(function* ({
 	return yield* withFetchFx({
 		resource: "draft",
 		selectFx: withDraftSelectFx({
+			userId,
 			sort,
-			userId: scope.userId,
 		}),
 		filter,
 		where,
 		scope,
-		queryFx: withDraftQueryBuilderFx,
 	});
 });
 

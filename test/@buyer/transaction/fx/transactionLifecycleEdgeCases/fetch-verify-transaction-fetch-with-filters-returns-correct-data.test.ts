@@ -74,7 +74,8 @@ describe("transactionLifecycleEdgeCases (buyer)", () => {
 			});
 
 			expect(result).toHaveLength(2);
-			expect(typeof result[0]?.unreadCount).toBe("number");
+			expect(result.every((item) => typeof item.unread === "number")).toBe(true);
+			expect(result.some((item) => item.unread > 0)).toBe(true);
 			const transactionIds = result.map((t) => t.id);
 			expect(transactionIds).toContain(tx1.id);
 			expect(transactionIds).toContain(tx2.id);

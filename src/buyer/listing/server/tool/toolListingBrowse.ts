@@ -4,8 +4,8 @@ import { z } from "zod";
 import { listingCollectionFn } from "~/buyer/listing/fn/listingCollectionFn";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
-import { ListingFilterSchema } from "../schema/ListingFilterSchema";
 import { ListingQuerySchema } from "../schema/ListingQuerySchema";
+import { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 const logger = getRootLogger([
 	"tool",
@@ -17,7 +17,7 @@ const InputSchema = z
 		...ListingQuerySchema.shape,
 		filter: z
 			.looseObject({
-				...ListingFilterSchema.shape,
+				...ListingWhereSchema.shape,
 				expiresAtBefore: z.iso.datetime().optional().meta({
 					description:
 						"This filter matches listings that expire before the provided date",
@@ -30,8 +30,6 @@ const InputSchema = z
 			})
 			.omit({
 				categoryId: true,
-				currency: true,
-				currencyIn: true,
 				expiresAtAfter: true,
 				expiresAtBefore: true,
 				userId: true,
@@ -84,10 +82,10 @@ Hint:
 			items.map((item) => {
 				return {
 					listingId: item.id,
-					title: item.title,
-					description: item.description?.substring(0, 64),
-					price: item.price,
-					distance: item.distance?.toFixed(2),
+					// title: item.title,
+					// description: item.description?.substring(0, 64),
+					// price: item.price,
+					// distance: item.distance?.toFixed(2),
 					favourite: item.isFavourite ? "yes" : "no",
 				};
 			}),

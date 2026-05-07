@@ -1,23 +1,22 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import pgvector from "pgvector";
 import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
-import { embedMinHash } from "@/lib/common/embedding";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
-import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
+import { draftDeleteFx } from "~/seller/draft/server/fx/draftDeleteFx";
+import { draftFetchFx } from "~/seller/draft/server/fx/draftFetchFx";
 import type { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreateSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
-import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
-import { checkRestrictionFx } from "~/user/restriction/server/fx/checkRestrictionFx";
-import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
+import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { listingFetchFx } from "./listingFetchFx";
+import { listingValidateFx } from "./listingValidateFx";
 
 export namespace listingCreateFx {
 	export interface Props extends ListingCreateSchema.Type {
@@ -27,20 +26,12 @@ export namespace listingCreateFx {
 
 export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 	userId,
-	uploadIds,
-	categoryId,
-	locationId,
-	restriction,
-	...data
+	draftId,
 }: listingCreateFx.Props) {
 	const logger = yield* getLoggerFx("listingCreateFx");
 	logger.trace("listingCreateFx", {
 		userId,
-		uploadIds,
-		categoryId,
-		locationId,
-		restriction,
-		...data,
+		draftId,
 	});
 
 	return yield* withTransactionFx(
@@ -48,51 +39,52 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 
-			const id = genId();
-			const now = dateContext.now();
+			const draft = yield* draftFetchFx({
+				userId,
+				where: {
+					id: draftId,
+				},
+				scope: {
+					userId,
+				},
+			});
 
-			if (uploadIds.length === 0) {
+			const validation = yield* listingValidateFx({
+				userId,
+				draftId,
+			});
+
+			if (!validation.success) {
 				return yield* new InvalidRequestErrorFx({
-					message: "At least one upload is required",
+					message: validation.errors.map((item) => item.message).join(", "),
 				});
 			}
 
 			/**
-			 * We need ensure user does not use under-level restriction
-			 * on his listing.
+			 * Here we're only going to make TypeScript happy
 			 */
-			if (restriction) {
-				const category = yield* categoryFetchFx({
-					userId,
-					where: {
-						id: categoryId,
-					},
-					scope: {},
-				});
-
-				yield* checkRestrictionFx({
-					level: category.restriction,
-					request: restriction,
+			if (
+				!draft.title ||
+				!draft.categoryId ||
+				!draft.locationId ||
+				!draft.priceType ||
+				!draft.expires
+			) {
+				return yield* new InvalidRequestErrorFx({
+					message: "Draft is missing required data for publish.",
 				});
 			}
+
+			const { title, categoryId, locationId, priceType, expires } = draft;
+			const now = dateContext.now();
+			const listingId = genId();
 
 			const gallery = yield* galleryInsertFx({
 				access: "public",
 				userId,
 			});
 
-			const withCategory = yield* tryDbFx(async () => {
-				return kysely
-					.selectFrom("category")
-					.select([
-						"discovery",
-						"restriction",
-					])
-					.where("id", "=", categoryId)
-					.executeTakeFirstOrThrow();
-			});
-
-			const withLocation = yield* tryDbFx(async () => {
+			const { geo: withLocation } = yield* tryDbFx(async () => {
 				return kysely
 					.selectFrom("location")
 					.select("geo")
@@ -100,142 +92,227 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					.executeTakeFirstOrThrow();
 			});
 
-			yield* tryDbFx(async () => {
-				return kysely
-					.updateTable("upload")
-					.set({
-						access: "public",
-					})
-					.where("userId", "=", userId)
-					.where("id", "in", uploadIds)
-					.execute();
-			});
+			const withUploadIds: string[] = [];
 
-			const withUpload = yield* tryDbFx(async () => {
-				return kysely
-					.selectFrom("upload")
-					.select([
-						"id",
-						"url",
-					])
-					.where("userId", "=", userId)
-					.where("id", "in", uploadIds)
-					.orderBy("createdAt", "asc")
-					.execute();
-			});
-
-			/**
-			 * This is a hack how to manually reorder uploaded images to
-			 * listing, so they preserve user's image order.
-			 */
-			const withImageUrl = ((
-				withUpload: Pick<UploadSchema.Type, "id" | "url">[],
-				uploadIds: string[],
-			) => {
-				const urlById = new Map(
-					withUpload.map((row) => [
-						row.id,
-						row.url,
-					]),
-				);
-
-				return uploadIds.flatMap((uploadId) => {
-					const imageUrl = urlById.get(uploadId);
-
-					return imageUrl
-						? [
-								imageUrl,
-							]
-						: [];
+			for (const [sort, url] of draft.withImageUrl.entries()) {
+				const upload = yield* uploadCreateFx({
+					userId,
+					access: "public",
+					url,
 				});
-			})(withUpload, uploadIds);
 
-			let sort = 0;
-			for (const uploadId of uploadIds) {
+				withUploadIds.push(upload.id);
+
 				yield* galleryItemInsertFx({
 					galleryId: gallery.id,
-					uploadId,
+					uploadId: upload.id,
 					sort,
 					userId,
 					check: false,
 				});
-				sort++;
 			}
 
-			yield* tryDbFx(async () =>
-				kysely
+			yield* tryDbFx(async () => {
+				return kysely
 					.insertInto("listing")
 					.values({
-						...data,
-						id,
+						id: listingId,
 						userId,
+						status: "live",
+						restriction: draft.restriction,
 						categoryId,
 						galleryId: gallery.id,
+						withUploadIds: withUploadIds as [
+							string,
+							...string[],
+						],
+						withImageUrl: draft.withImageUrl as [
+							string,
+							...string[],
+						],
+						title,
+						withTitle: sql`lower(immutable_unaccent(${title}))`,
+						description: draft.description,
+						priceType,
+						price: draft.price,
+						currency: draft.currency,
+						expires,
+						condition: draft.condition,
+						age: draft.age,
+						delivery: draft.delivery,
+						warranty: draft.warranty,
+						//
+						locationId,
+						withLocation,
+						//
+						pros: draft.pros,
+						cons: draft.cons,
+						//
 						createdAt: now.toJSDate(),
 						updatedAt: now.toJSDate(),
-						currency: "CZK",
-						status: "live",
-						restriction,
-						locationId,
-						withCategoryDiscovery: withCategory.discovery,
-						withCategoryRestriction: withCategory.restriction,
-						withLocationGeo: withLocation.geo,
-						withImageUrl,
-						withTitleSearch: sql`lower(immutable_unaccent(${data.title}))`,
-						titleVec: pgvector.toSql(
-							embedMinHash({
-								value: data.title,
-							}),
-						),
-						expiresAt: match(data.expiresAt)
-							.with("7-days", () =>
-								now.plus({
+						visibleAt: now.toJSDate(),
+						expiresAt: match(expires)
+							.with("7-days", () => {
+								return now.plus({
 									days: 7,
-								}),
-							)
-							.with("14-days", () =>
-								now.plus({
+								});
+							})
+							.with("14-days", () => {
+								return now.plus({
 									days: 14,
-								}),
-							)
-							.with("1-month", () =>
-								now.plus({
-									months: 1,
-								}),
-							)
+								});
+							})
+							.with("1-month", () => {
+								return now.plus({
+									month: 1,
+								});
+							})
 							.exhaustive()
 							.toJSDate(),
 					})
-					.execute(),
-			);
+					.execute();
+			});
 
-			if (data.draftId) {
-				const draftId = data.draftId;
-				yield* tryDbFx(async () =>
-					kysely
-						.updateTable("draft")
-						.set({
-							usedAt: now.toJSDate(),
-							updatedAt: now.toJSDate(),
-						})
-						.where("id", "=", draftId)
-						.where("userId", "=", userId)
-						.execute(),
-				);
+			{
+				const draftAttrDecimal = yield* tryDbFx(async () => {
+					return kysely
+						.selectFrom("draft_attr_decimal")
+						.selectAll()
+						.where("draftId", "=", draftId)
+						.execute();
+				});
+
+				if (draftAttrDecimal.length > 0) {
+					yield* tryDbFx(async () => {
+						return kysely
+							.insertInto("listing_attr_decimal")
+							.values(
+								draftAttrDecimal.map((item) => ({
+									listingId,
+									fieldId: item.fieldId,
+									value: item.value,
+								})),
+							)
+							.execute();
+					});
+				}
+
+				const draftAttrNumber = yield* tryDbFx(async () => {
+					return kysely
+						.selectFrom("draft_attr_number")
+						.selectAll()
+						.where("draftId", "=", draftId)
+						.execute();
+				});
+
+				if (draftAttrNumber.length > 0) {
+					yield* tryDbFx(async () => {
+						return kysely
+							.insertInto("listing_attr_number")
+							.values(
+								draftAttrNumber.map((item) => ({
+									listingId,
+									fieldId: item.fieldId,
+									value: item.value,
+								})),
+							)
+							.execute();
+					});
+				}
+
+				const draftAttrEnumSingle = yield* tryDbFx(async () => {
+					return kysely
+						.selectFrom("draft_attr_enum_single")
+						.selectAll()
+						.where("draftId", "=", draftId)
+						.execute();
+				});
+
+				if (draftAttrEnumSingle.length > 0) {
+					yield* tryDbFx(async () => {
+						return kysely
+							.insertInto("listing_attr_enum_single")
+							.values(
+								draftAttrEnumSingle.map((item) => ({
+									listingId,
+									fieldId: item.fieldId,
+									value: item.value,
+								})),
+							)
+							.execute();
+					});
+				}
+
+				const draftAttrEnumMulti = yield* tryDbFx(async () => {
+					return kysely
+						.selectFrom("draft_attr_enum_multi")
+						.selectAll()
+						.where("draftId", "=", draftId)
+						.execute();
+				});
+
+				if (draftAttrEnumMulti.length > 0) {
+					yield* tryDbFx(async () => {
+						return kysely
+							.insertInto("listing_attr_enum_multi")
+							.values(
+								draftAttrEnumMulti.map((item) => ({
+									listingId,
+									fieldId: item.fieldId,
+									value: item.value,
+								})),
+							)
+							.execute();
+					});
+				}
+
+				const draftAttrText = yield* tryDbFx(async () => {
+					return kysely
+						.selectFrom("draft_attr_text")
+						.selectAll()
+						.where("draftId", "=", draftId)
+						.execute();
+				});
+
+				if (draftAttrText.length > 0) {
+					yield* tryDbFx(async () => {
+						return kysely
+							.insertInto("listing_attr_text")
+							.values(
+								draftAttrText.map((item) => ({
+									listingId,
+									fieldId: item.fieldId,
+									value: item.value,
+								})),
+							)
+							.execute();
+					});
+				}
 			}
 
 			yield* userEventCreateFx({
 				userId,
 				scope: "user",
 				source: "listing",
-				group: id,
+				group: listingId,
 				event: "listing.create",
 				isTerminal: true,
 			});
 
-			return yield* listingFetchFx({
+			yield* draftDeleteFx({
+				userId,
 				where: {
-					id,
+					id: draftId,
+				},
+				scope: {
+					userId,
+				},
+			});
+
+			return yield* listingFetchFx({
+				userId,
+				where: {
+					id: listingId,
 				},
 				scope: {
 					userId,

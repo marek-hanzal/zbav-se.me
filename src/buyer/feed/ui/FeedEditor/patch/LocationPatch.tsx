@@ -1,6 +1,6 @@
 import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
@@ -15,14 +15,16 @@ export namespace LocationPatch {
 }
 
 export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const patchMutation = withFeedQuery.usePatchMutation();
+	const patchMutation = withFeedQuery.usePatchMutation({
+		onSettled,
+	});
 	const [locationId, setLocationId] = useState<string | undefined | null>(
 		feed.query?.meta?.locationId,
 	);
 
 	return (
 		<Container
-			data-ui={"LocationPatch[Container]"}
+			data-ui={"LocationPatch"}
 			data-ui-layout="vertical-content-footer"
 			data-ui-height="full"
 			data-ui-inner="default"
@@ -38,30 +40,25 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCanc
 			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
-					patchMutation.mutate(
-						{
+					patchMutation.mutate({
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+						patch: {
 							query: {
-								where: {
-									id: feed.id,
-								},
-							},
-							patch: {
-								query: {
-									...feed.query,
-									meta: {
-										...feed.query?.meta,
-										locationId: locationId ?? undefined,
-									},
+								...feed.query,
+								meta: {
+									...feed.query?.meta,
+									locationId: locationId ?? undefined,
 								},
 							},
 						},
-						{
-							onSettled,
-						},
-					);
+					});
 				}}
 				loading={patchMutation.isPending}
-				disabled={false}
+				disabled={patchMutation.isPending}
 			/>
 		</Container>
 	);

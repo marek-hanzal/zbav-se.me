@@ -2,14 +2,14 @@ import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
-import { draftDeleteFx } from "~/seller/draft/server/fx/draftDeleteFx";
-import { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
-import { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+import { draftDeleteFx } from "../server/fx/draftDeleteFx";
+import { DraftQuerySchema } from "../server/schema/DraftQuerySchema";
+import { DraftSchema } from "../server/schema/DraftSchema";
 
 export namespace draftDeleteFn {
 	export type Error = Effect.Effect.Error<draftDeleteFx>;
@@ -30,18 +30,20 @@ export const draftDeleteFn = createServerFn({
 			name,
 		]);
 		logger.trace(name, data);
+
 		return zodGuardFx({
 			schema: DraftSchema,
 			dataFx: draftDeleteFx({
 				...data,
+				userId: user.id,
 				scope: {
 					userId: user.id,
 				},
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withDateFx,
 			withLoggerFx(rootLogger),
+			withDateFx,
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

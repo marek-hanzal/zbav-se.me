@@ -33,6 +33,7 @@ export const listingCountFn = createServerFn()
 			schema: CountSchema,
 			dataFx: listingCountFx({
 				...data,
+				userId: user.id,
 				scope: {
 					userId: user.id,
 				},

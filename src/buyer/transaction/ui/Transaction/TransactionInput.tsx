@@ -3,7 +3,7 @@ import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
 import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
 import { RejectedMessage } from "~/buyer/transaction/ui/status/RejectedMessage";
 import { TransactionMenu } from "~/buyer/transaction/ui/TransactionMenu";

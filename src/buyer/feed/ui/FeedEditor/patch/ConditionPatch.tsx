@@ -21,7 +21,9 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 	onCancel,
 	...props
 }) => {
-	const patchMutation = withFeedQuery.usePatchMutation();
+	const patchMutation = withFeedQuery.usePatchMutation({
+		onSettled,
+	});
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "multi",
 		initial: feed.query?.filter?.conditionIn?.map((item) => ({
@@ -34,7 +36,7 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 
 	return (
 		<Container
-			data-ui={"ConditionPatch[Container]"}
+			data-ui={"ConditionPatch"}
 			data-ui-layout="vertical-content-footer"
 			data-ui-height="full"
 			data-ui-width="full"
@@ -50,32 +52,27 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
-					patchMutation.mutate(
-						{
+					patchMutation.mutate({
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+						patch: {
 							query: {
-								where: {
-									id: feed.id,
-								},
-							},
-							patch: {
-								query: {
-									...feed.query,
-									filter: {
-										...feed.query?.filter,
-										conditionIn: selection.optional
-											.multiId()
-											.map((id) => Number.parseInt(id, 10)),
-									},
+								...feed.query,
+								filter: {
+									...feed.query?.filter,
+									conditionIn: selection.optional
+										.multiId()
+										.map((id) => Number.parseInt(id, 10)),
 								},
 							},
 						},
-						{
-							onSettled,
-						},
-					);
+					});
 				}}
 				loading={patchMutation.isPending}
-				disabled={false}
+				disabled={patchMutation.isPending}
 			/>
 		</Container>
 	);

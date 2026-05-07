@@ -27,7 +27,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({ feed, onSettled, onCancel
 
 	return (
 		<Container
-			data-ui={"FeedDetailContainer-[GalleryUploadSheet]"}
+			data-ui={"GalleryPatch"}
 			data-ui-layout="vertical-content-footer"
 			data-ui-height="full"
 			data-ui-gap="default"
@@ -60,7 +60,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({ feed, onSettled, onCancel
 					});
 				}}
 				loading={mutation.isPending}
-				disabled={uploadIds.length === 0}
+				disabled={uploadIds.length === 0 || mutation.isPending}
 			/>
 		</Container>
 	);

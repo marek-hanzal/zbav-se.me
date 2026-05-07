@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withLocationQueryBuilderFx } from "~/session/location/server/db/withLocationQueryBuilderFx";
 import { withLocationSelectFx } from "~/session/location/server/db/withLocationSelectFx";
 import type { LocationFilterSchema } from "~/session/location/server/schema/LocationFilterSchema";
 import type { LocationQuerySchema } from "~/session/location/server/schema/LocationQuerySchema";
@@ -42,7 +41,6 @@ export const withLocationListFx = Effect.fn("withLocationListFx")(function* ({
 		scope,
 		cursor,
 		limit,
-		queryFx: withLocationQueryBuilderFx,
 	});
 });
 

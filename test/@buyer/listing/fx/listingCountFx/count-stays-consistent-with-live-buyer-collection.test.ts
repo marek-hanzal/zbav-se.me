@@ -39,7 +39,7 @@ describe("buyer listingCountFx", () => {
 
 			const empty = yield* listingCountFx({
 				userId: users.buyer.id,
-				filter: {
+				where: {
 					title: "definitely-not-present",
 				},
 				scope: {},

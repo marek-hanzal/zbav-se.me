@@ -23,8 +23,8 @@ describe("feedLifecycleFx", () => {
 				type: "search",
 				name: "MacBooks",
 				query: {
-					where: {
-						title: "macbook",
+					filter: {
+						fulltext: "macbook",
 					},
 				},
 			});
@@ -55,17 +55,15 @@ describe("feedLifecycleFx", () => {
 				patch: {
 					name: "Updated MacBooks",
 					query: {
-						where: {
-							title: "macbook pro",
+						filter: {
+							fulltext: "macbook pro",
 						},
 					},
 				},
 			});
 
-			const patchedQuery = patched.query;
-
 			expect(patched.name).toBe("Updated MacBooks");
-			expect(patchedQuery.where?.title).toBe("macbook pro");
+			expect(patched.query.filter?.fulltext).toBe("macbook pro");
 
 			const foreignPatch = yield* Effect.either(
 				feedPatchFx({
@@ -97,6 +95,7 @@ describe("feedLifecycleFx", () => {
 			});
 
 			expect(fetched.name).toBe("Updated MacBooks");
+			expect(fetched.query.filter?.fulltext).toBe("macbook pro");
 
 			const collection = yield* feedCollectionFx({
 				scope: {

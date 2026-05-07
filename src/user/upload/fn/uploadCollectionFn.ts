@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
+import { z } from "zod";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
@@ -29,7 +30,7 @@ export const uploadCollectionFn = createServerFn()
 		logger.trace(name, data);
 
 		return zodGuardFx({
-			schema: UploadSchema.array(),
+			schema: z.array(UploadSchema),
 			dataFx: uploadCollectionFx({
 				...data,
 				scope: {

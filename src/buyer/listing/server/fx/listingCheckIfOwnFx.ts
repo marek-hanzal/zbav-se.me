@@ -31,13 +31,13 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 
 	const { kysely } = yield* KyselyContextFx;
 
-	const listing = yield* tryDbFx(async () =>
-		kysely
+	const listing = yield* tryDbFx(async () => {
+		return kysely
 			.selectFrom("listing")
 			.select("userId")
 			.where("id", "=", listingId)
-			.executeTakeFirst(),
-	);
+			.executeTakeFirst();
+	});
 
 	if (!listing) {
 		return yield* new NotFoundErrorFx({

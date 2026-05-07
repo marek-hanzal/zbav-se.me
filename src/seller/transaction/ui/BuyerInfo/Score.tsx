@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Tx } from "@/lib/client/tx";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { RatingIcon } from "~/common/score/ui/RatingIcon";
 
 export namespace Score {

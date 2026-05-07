@@ -15,12 +15,14 @@ export namespace SortPatch {
 }
 
 export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const patchMutation = withFeedQuery.usePatchMutation();
+	const patchMutation = withFeedQuery.usePatchMutation({
+		onSettled,
+	});
 	const [sort, setSort] = useState<ListingSortSchema.Type[]>(feed.query?.sort ?? []);
 
 	return (
 		<Container
-			data-ui={"SortPatch[Container]"}
+			data-ui={"SortPatch"}
 			data-ui-layout="vertical-content-footer"
 			data-ui-height="full"
 			data-ui-width="full"
@@ -38,27 +40,22 @@ export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ...p
 			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
-					patchMutation.mutate(
-						{
+					patchMutation.mutate({
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+						patch: {
 							query: {
-								where: {
-									id: feed.id,
-								},
-							},
-							patch: {
-								query: {
-									...feed.query,
-									sort,
-								},
+								...feed.query,
+								sort,
 							},
 						},
-						{
-							onSettled,
-						},
-					);
+					});
 				}}
 				loading={patchMutation.isPending}
-				disabled={false}
+				disabled={patchMutation.isPending}
 			/>
 		</Container>
 	);

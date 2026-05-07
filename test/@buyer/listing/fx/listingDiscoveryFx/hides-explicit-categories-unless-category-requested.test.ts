@@ -49,21 +49,21 @@ describe("buyer listing discovery flow", () => {
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title,
+					// title,
 				},
 			});
 			const defaultCount = yield* listingCountFx({
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title,
+					// title,
 				},
 			});
 			const explicitByCategory = yield* listingCollectionFx({
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title,
+					// title,
 					categoryId: explicitCategory.id,
 				},
 			});
@@ -71,7 +71,7 @@ describe("buyer listing discovery flow", () => {
 				userId: users.buyer.id,
 				scope: {},
 				where: {
-					title,
+					// title,
 					categoryIdIn: [
 						explicitCategory.id,
 					],

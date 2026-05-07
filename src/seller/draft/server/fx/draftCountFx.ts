@@ -1,22 +1,19 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { withDraftCollectionSelectFx } from "~/seller/draft/server/db/withDraftCollectionSelectFx";
-import { withDraftQueryBuilderFx } from "~/seller/draft/server/db/withDraftQueryBuilderFx";
 import type { DraftCountQuerySchema } from "~/seller/draft/server/schema/DraftCountQuerySchema";
-import type { DraftFilterSchema } from "~/seller/draft/server/schema/DraftFilterSchema";
+import { withDraftSelectFx } from "../db/withDraftSelectFx";
+import type { DraftWhereSchema } from "../schema/DraftWhereSchema";
 
 export namespace draftCountFx {
-	export interface Scope extends DraftFilterSchema.Type {
-		userId: string;
-	}
-
 	export interface Props extends DraftCountQuerySchema.Type {
-		scope: Scope;
+		userId: string;
+		scope: DraftWhereSchema.Type;
 	}
 }
 
 export const draftCountFx = Effect.fn("draftCountFx")(function* ({
+	userId,
 	filter,
 	where,
 	scope,
@@ -29,13 +26,13 @@ export const draftCountFx = Effect.fn("draftCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withDraftCollectionSelectFx({
-			userId: scope.userId,
+		selectFx: withDraftSelectFx({
+			userId,
+			sort: [],
 		}),
 		filter,
 		where,
 		scope,
-		queryFx: withDraftQueryBuilderFx,
 	});
 });
 

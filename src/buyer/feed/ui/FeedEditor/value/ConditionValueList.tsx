@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 
 export namespace ConditionValueList {
 	export interface Props
@@ -18,13 +18,11 @@ export namespace ConditionValueList {
 /**
  * Renders a read-only list of condition values in a consistent label/value style.
  * Use it in detail or preview views when you need to show multiple condition entries clearly.
- *
- * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const ConditionValueList: FC<ConditionValueList.Props> = ({ conditionIn, ...props }) => {
 	return (
 		<ValueList
-			data-ui={"ConditionValueList[ValueList]"}
+			data-ui={"ConditionValueList"}
 			textLabel={translator.text("Listing condition (label)")}
 			textEmpty={translator.text("Listing condition not selected")}
 			items={conditionIn.map((item) => ({

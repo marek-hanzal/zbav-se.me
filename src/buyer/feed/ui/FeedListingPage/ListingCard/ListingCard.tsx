@@ -3,6 +3,7 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
+import type { useView } from "@/lib/client/view";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { useListingEvent } from "~/buyer/listing/hook/useListingEvent";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
@@ -18,7 +19,7 @@ export namespace ListingCard {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		feedId: string;
 		listingId: string;
-		onView(view: "gallery" | "seller-info"): void;
+		view: useView.Use<"gallery" | "seller-info">;
 	}
 }
 
@@ -26,7 +27,7 @@ export const ListingCard: FC<ListingCard.Props> = ({
 	_suspense,
 	feedId,
 	listingId,
-	onView,
+	view,
 	children,
 	...props
 }: ListingCard.Props) => {
@@ -63,13 +64,13 @@ export const ListingCard: FC<ListingCard.Props> = ({
 				_suspense={_suspense}
 				feedId={feedId}
 				listing={listing}
-				onView={onView}
+				view={view}
 			/>
 
 			<InfoSection
 				_suspense={_suspense}
 				listing={listing}
-				onView={onView}
+				view={view}
 			/>
 
 			{listing.my ? null : (

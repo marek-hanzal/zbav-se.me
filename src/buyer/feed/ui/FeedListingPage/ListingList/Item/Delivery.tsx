@@ -1,12 +1,12 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Typo } from "@/lib/client/typo";
-import { translator } from "@/lib/common/translator";
-import type { ListingDeliveryEnumSchema } from "~/common/listing/enum/ListingDeliveryEnumSchema";
+import { translator } from "@/lib/common/translation";
+import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 
 export namespace Delivery {
 	export interface Props extends Typo.PropsEx {
-		delivery: ListingDeliveryEnumSchema.Type[] | undefined | null;
+		delivery: DeliveryEnumSchema.Type[] | undefined | null;
 	}
 }
 

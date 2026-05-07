@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Tx } from "@/lib/client/tx";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 
 export namespace SortValue {
 	export interface Sort {
@@ -25,16 +25,13 @@ export namespace SortValue {
 /**
  * Renders a read-only sort value with consistent formatting and empty-state handling.
  * Use it in detail cards, summaries, and previews where editable controls are not needed.
- *
- * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const SortValue: FC<SortValue.Props> = ({ sort, ...props }) => {
 	return (
 		<ValueList
-			data-ui={"SortValue[ValueList]"}
+			data-ui={"SortValue"}
 			textLabel={translator.text("Feed sorting (label)")}
 			textEmpty={translator.text("Feed sorting not selected")}
-			textHint={translator.text("Feed sorting (hint)")}
 			items={sort.map((sortItem, index) => ({
 				id: `${sortItem.field}-${index}`,
 				...sortItem,

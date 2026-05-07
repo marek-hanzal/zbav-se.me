@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 
 export namespace DeliveryValueList {
 	export interface Props
@@ -18,8 +18,6 @@ export namespace DeliveryValueList {
 /**
  * Renders a read-only list of delivery values in a consistent label/value style.
  * Use it in detail or preview views when you need to show multiple delivery entries clearly.
- *
- * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const DeliveryValueList: FC<DeliveryValueList.Props> = ({ deliveryIn, ...props }) => {
 	const items = deliveryIn.map((item) => ({
@@ -29,7 +27,7 @@ export const DeliveryValueList: FC<DeliveryValueList.Props> = ({ deliveryIn, ...
 
 	return (
 		<ValueList
-			data-ui={"DeliveryValueList[ValueList]"}
+			data-ui={"DeliveryValueList"}
 			textLabel={translator.text("Feed delivery (label)")}
 			textEmpty={translator.text("Feed delivery not selected")}
 			items={items}

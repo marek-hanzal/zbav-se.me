@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { withActivityCollectionSelectFx } from "~/user/activity/server/db/withActivityCollectionSelectFx";
-import { withActivityQueryBuilderFx } from "~/user/activity/server/db/withActivityQueryBuilderFx";
 import type { ActivityCountQuerySchema } from "~/user/activity/server/schema/ActivityCountQuerySchema";
 import type { ActivityFilterSchema } from "~/user/activity/server/schema/ActivityFilterSchema";
+import { withActivitySelectFx } from "../db/withActivitySelectFx";
 
 export namespace activityCountFx {
 	export interface Props extends ActivityCountQuerySchema.Type {
@@ -25,11 +24,10 @@ export const activityCountFx = Effect.fn("activityCountFx")(function* ({
 	});
 
 	return yield* withCountFx({
-		selectFx: withActivityCollectionSelectFx({}),
+		selectFx: withActivitySelectFx({}),
 		filter,
 		where,
 		scope,
-		queryFx: withActivityQueryBuilderFx,
 	});
 });
 

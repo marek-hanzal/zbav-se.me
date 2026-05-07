@@ -1,5 +1,5 @@
 import { createMiddleware } from "@tanstack/react-start";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { defaultLocale } from "~/locales";
 import { withLocaleMiddleware } from "~/server/middleware/withLocaleMiddleware";
 

@@ -9,27 +9,19 @@ export const TransactionListingSchema = z
 		listingId: z.string().meta({
 			description: "ID of the listing that has at least one transaction",
 		}),
-		galleryId: z.string().meta({
-			description: "ID of the listing gallery",
-		}),
-		title: z.string().meta({
-			description: "Title of the listing",
-		}),
 		withImageUrl: z.array(z.string()).meta({
 			description: "Ordered listing image URLs",
 		}),
 		count: z.coerce.number().int().nonnegative().meta({
 			description: "Total number of transactions for this listing (within the current scope)",
 		}),
-		unreadCount: z.coerce.number().int().nonnegative().meta({
+		unread: z.coerce.number().int().nonnegative().meta({
 			description: "Unread activity transaction-event count for this listing",
-			type: "number",
 		}),
 		entry: TransactionEntrySchema,
 		lastAt: z.coerce.date().meta({
 			description:
 				"Timestamp of the most recent activity in any transaction under this listing",
-			type: "string",
 		}),
 	})
 	.strip()

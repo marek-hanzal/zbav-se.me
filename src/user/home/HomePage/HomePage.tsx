@@ -1,5 +1,5 @@
 import { type FC, Suspense } from "react";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenu } from "../HomeMenu";
 

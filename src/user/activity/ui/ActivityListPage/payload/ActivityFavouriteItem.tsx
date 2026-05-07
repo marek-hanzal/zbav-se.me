@@ -38,7 +38,7 @@ export const ActivityFavouriteItem: FC<ActivityFavouriteItem.Props> = ({ item })
 			}
 			bottom={
 				<Container data-ui-flow="vertical">
-					<Typo label={listing.title} />
+					<Typo label={"listing.title"} />
 					<Typo
 						label={toTimeDiff({
 							locale,

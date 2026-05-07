@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Badge } from "@/lib/client/badge";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { TypoIcon } from "~/common/ui/typo";
 
 export namespace ErrorBadge {

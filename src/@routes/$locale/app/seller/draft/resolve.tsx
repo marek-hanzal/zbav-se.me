@@ -1,20 +1,17 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { DateTime } from "luxon";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
-import { DraftEditor } from "~/seller/draft/ui/DraftEditPage/DraftEditor/DraftEditor";
+import { DraftEditorPage } from "~/seller/draft/ui/DraftEditorPage";
 
 export const Route = createFileRoute("/$locale/app/seller/draft/resolve")({
 	async loader({ context: { queryClient }, params: { locale } }) {
 		const current = await withDraftQuery
 			.ensureEntityQuery(queryClient, {
-				where: {
-					updatedAtGte: DateTime.now()
-						.minus({
-							days: 3,
-						})
-						.toJSDate(),
-					usedAtIsNull: true,
-				},
+				sort: [
+					{
+						field: "updatedAt",
+						order: "desc",
+					},
+				],
 			})
 			.catch(() => undefined);
 
@@ -40,5 +37,5 @@ export const Route = createFileRoute("/$locale/app/seller/draft/resolve")({
 			},
 		});
 	},
-	pendingComponent: DraftEditor.Fallback,
+	pendingComponent: DraftEditorPage.Fallback,
 });

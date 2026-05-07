@@ -6,6 +6,7 @@ import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import type { uiIcon } from "@/lib/client/icon";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { AgentLink } from "~/user/home/HomeMenu/link/AgentLink";
 import { DraftLink } from "./link/DraftLink";
@@ -61,7 +62,7 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 				data-ui-height="full"
 				data-ui-inner="default"
 				data-ui-items="center"
-				data-ui-gap="md"
+				data-ui-gap="lg"
 			>
 				{isHome ? null : (
 					<Group>
@@ -72,38 +73,80 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 					</Group>
 				)}
 
-				<Group>
-					<AgentLink
-						_suspense={"I know"}
-						iconProps={icon}
-					/>
-				</Group>
+				<Tx
+					label="Home - interaction (title)"
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-text="md"
+					data-ui-color="lead"
+					data-ui-opacity="8"
+					className={"text-center"}
+				/>
 
-				<Group>
-					<NotificationLink
-						_suspense={"I know"}
-						onLinkClick={onLinkClick}
-						iconProps={icon}
-					/>
-				</Group>
+				<Container
+					data-ui-flow={"vertical"}
+					data-ui-gap={"default"}
+					data-ui-width={"full"}
+				>
+					<Group>
+						<AgentLink
+							_suspense={"I know"}
+							iconProps={icon}
+						/>
+					</Group>
 
-				<Group>
-					<SearchLink
-						_suspense={"I know"}
-						iconProps={icon}
-					/>
-				</Group>
+					<Group>
+						<NotificationLink
+							_suspense={"I know"}
+							onLinkClick={onLinkClick}
+							iconProps={icon}
+						/>
+					</Group>
+				</Container>
 
-				<Group>
-					<ListingsLink
-						_suspense={"I know"}
-						iconProps={icon}
-					/>
-					<DraftLink
-						_suspense={"I know"}
-						iconProps={icon}
-					/>
-				</Group>
+				<Tx
+					label="Home - quick tools (title)"
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-text="md"
+					data-ui-color="lead"
+					data-ui-opacity="8"
+					className={"text-center"}
+				/>
+
+				<Container
+					data-ui-flow={"vertical"}
+					data-ui-gap={"default"}
+					data-ui-width={"full"}
+				>
+					<Group>
+						<ListingsLink
+							_suspense={"I know"}
+							iconProps={icon}
+						/>
+						<DraftLink
+							_suspense={"I know"}
+							iconProps={icon}
+						/>
+					</Group>
+
+					<Group>
+						<SearchLink
+							_suspense={"I know"}
+							iconProps={icon}
+						/>
+					</Group>
+				</Container>
+
+				<Tx
+					label="Home - seller stuff (title)"
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-text="md"
+					data-ui-color="lead"
+					data-ui-opacity="8"
+					className={"text-center"}
+				/>
 
 				<Group>
 					<MyListingsLink
@@ -116,28 +159,60 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 					/>
 				</Group>
 
-				<Group>
-					<FeedLink
-						_suspense={"I know"}
-						iconProps={icon}
-					/>
-					<FavouritesLink
-						_suspense={"I know"}
-						iconProps={icon}
-					/>
-				</Group>
-
-				<MessageLink
-					_suspense={"I know"}
-					iconProps={icon}
+				<Tx
+					label="Home - buyer stuff (title)"
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-text="md"
+					data-ui-color="lead"
+					data-ui-opacity="8"
+					className={"text-center"}
 				/>
 
-				<Group>
-					<ProfileLink
+				<Container
+					data-ui-flow={"vertical"}
+					data-ui-gap={"default"}
+					data-ui-width={"full"}
+				>
+					<Group>
+						<FeedLink
+							_suspense={"I know"}
+							iconProps={icon}
+						/>
+						<FavouritesLink
+							_suspense={"I know"}
+							iconProps={icon}
+						/>
+					</Group>
+				</Container>
+
+				<Tx
+					label="Home - misc (title)"
+					data-ui-tone="neutral"
+					data-ui-theme="light"
+					data-ui-text="md"
+					data-ui-color="lead"
+					data-ui-opacity="8"
+					className={"text-center"}
+				/>
+
+				<Container
+					data-ui-flow={"vertical"}
+					data-ui-gap={"default"}
+					data-ui-width={"full"}
+				>
+					<MessageLink
 						_suspense={"I know"}
 						iconProps={icon}
 					/>
-				</Group>
+
+					<Group>
+						<ProfileLink
+							_suspense={"I know"}
+							iconProps={icon}
+						/>
+					</Group>
+				</Container>
 			</Container>
 		</Container>
 	);

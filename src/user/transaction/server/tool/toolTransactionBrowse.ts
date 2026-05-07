@@ -90,9 +90,9 @@ Browse the user's trade transactions from both seller and buyer side in one list
 		const seller = stringify(
 			sellerItems.map((item) => ({
 				transactionId: item.id,
-				title: item.title,
+				// title: item.title,
 				status: item.status,
-				unreadCount: item.unreadCount,
+				unread: item.unread,
 				updatedAt: item.updatedAt.toISOString(),
 				expiresAt: item.expiresAt.toISOString(),
 			})),
@@ -102,7 +102,7 @@ Browse the user's trade transactions from both seller and buyer side in one list
 				columns: [
 					"transactionId",
 					"title",
-					"unreadCount",
+					"unread",
 					"status",
 					"updatedAt",
 					"expiresAt",
@@ -114,7 +114,7 @@ Browse the user's trade transactions from both seller and buyer side in one list
 				transactionId: item.id,
 				title: item.title,
 				status: item.status,
-				unreadCount: item.unreadCount,
+				unread: item.unread,
 				updatedAt: item.updatedAt.toISOString(),
 				expiresAt: item.expiresAt.toISOString(),
 			})),
@@ -124,7 +124,7 @@ Browse the user's trade transactions from both seller and buyer side in one list
 				columns: [
 					"transactionId",
 					"title",
-					"unreadCount",
+					"unread",
 					"status",
 					"updatedAt",
 					"expiresAt",

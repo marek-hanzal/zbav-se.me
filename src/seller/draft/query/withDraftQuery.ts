@@ -5,12 +5,13 @@ import { draftCountFn } from "~/seller/draft/fn/draftCountFn";
 import { draftCreateFn } from "~/seller/draft/fn/draftCreateFn";
 import { draftDeleteFn } from "~/seller/draft/fn/draftDeleteFn";
 import { draftFetchFn } from "~/seller/draft/fn/draftFetchFn";
-import { draftPatchFn } from "~/seller/draft/fn/draftPatchFn";
 import type { DraftCountQuerySchema } from "~/seller/draft/server/schema/DraftCountQuerySchema";
 import type { DraftCreateSchema } from "~/seller/draft/server/schema/DraftCreateSchema";
-import type { DraftPatchSchema } from "~/seller/draft/server/schema/DraftPatchSchema";
 import type { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
+import { withListingValidationQuery } from "~/seller/listing/query/withListingValidationQuery";
+import { draftPatchFn } from "../fn/draftPatchFn";
+import type { DraftPatchSchema } from "../server/schema/DraftPatchSchema";
 
 export const withDraftQuery = withEntityQuery({
 	logger: getRootLogger([
@@ -28,6 +29,7 @@ export const withDraftQuery = withEntityQuery({
 	},
 	keys() {
 		return [
+			"seller",
 			"draft",
 		];
 	},
@@ -58,17 +60,26 @@ export const withDraftQuery = withEntityQuery({
 			data,
 		});
 	},
-	async deleteFn(data: DraftQuerySchema.Type) {
+	async deleteFn(data: DraftQuerySchema.Type): Promise<DraftSchema.Type> {
 		return draftDeleteFn({
 			data,
 		});
 	},
-	async patchFn(data: DraftPatchSchema.Type) {
+	async patchFn(data: DraftPatchSchema.Type): Promise<DraftSchema.Type> {
 		return draftPatchFn({
 			data,
 		});
 	},
 	async patchCollectionFn(_data: never): Promise<DraftSchema.Type[]> {
 		throw new Error("Draft collection patch is not supported.");
+	},
+	invalidate: {
+		patch: [
+			{
+				async invalidate({ queryClient }) {
+					await withListingValidationQuery.invalidate(queryClient);
+				},
+			},
+		],
 	},
 });

@@ -29,9 +29,6 @@ export const DraftLink = withFallback(
 		const locale = useLocale();
 		const matchRoute = useMatchRoute();
 		const { data } = withDraftQuery.useCollectionQuery({
-			where: {
-				usedAtIsNull: true,
-			},
 			cursor: {
 				page: 0,
 				size: 1,

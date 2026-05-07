@@ -4,7 +4,7 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { getFunctionCallResultItem } from "~/user/agent/type/getFunctionCallResultItem";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 

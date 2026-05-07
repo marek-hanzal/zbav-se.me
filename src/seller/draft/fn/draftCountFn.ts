@@ -28,10 +28,12 @@ export const draftCountFn = createServerFn()
 			name,
 		]);
 		logger.trace(name, data);
+
 		return zodGuardFx({
 			schema: CountSchema,
 			dataFx: draftCountFx({
 				...data,
+				userId: user.id,
 				scope: {
 					userId: user.id,
 				},

@@ -55,7 +55,7 @@ export const GalleryValue: FC<GalleryValue.Props> = ({ urls, label, statusProps,
 						"data-ui-font": "normal",
 						"data-ui-text": "lg",
 					}}
-					data-ui-tone="neutral"
+					data-ui-tone={urls.length > 0 ? "neutral" : "primary"}
 					data-ui-theme="light"
 					data-ui-text="default"
 					{...statusProps}

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Status } from "@/lib/client/status";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { PhotoIcon } from "~/common/ui/icon";
 
 export namespace Placeholder {

@@ -4,7 +4,6 @@ import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { withActivityQueryBuilderFx } from "~/user/activity/server/db/withActivityQueryBuilderFx";
 import { withActivitySelectFx } from "~/user/activity/server/db/withActivitySelectFx";
 import type { ActivityFilterSchema } from "~/user/activity/server/schema/ActivityFilterSchema";
 import type { ActivityQuerySchema } from "~/user/activity/server/schema/ActivityQuerySchema";
@@ -16,7 +15,10 @@ export namespace activityArchiveFx {
 }
 
 export const activityArchiveFx = Effect.fn("activityArchiveFx")(function* ({
-	cursor,
+	cursor = {
+		page: 0,
+		size: 1000,
+	},
 	filter,
 	where,
 	scope,
@@ -35,12 +37,8 @@ export const activityArchiveFx = Effect.fn("activityArchiveFx")(function* ({
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
-			const cursorValue = cursor ?? {
-				page: 0,
-				size: 1000,
-			};
 
-			let select = yield* withActivitySelectFx({
+			let { select, queryFx } = yield* withActivitySelectFx({
 				sort,
 			});
 
@@ -49,28 +47,25 @@ export const activityArchiveFx = Effect.fn("activityArchiveFx")(function* ({
 				where,
 				scope,
 			]) {
-				select = yield* withActivityQueryBuilderFx({
-					select,
-					where: layer,
-				});
+				select = yield* queryFx(select, layer);
 			}
 
 			const archivedAt = dateContext.now().toJSDate();
 			const selectIds = select
 				.clearSelect()
 				.select("i.id")
-				.limit(cursorValue.size)
-				.offset(cursorValue.page * cursorValue.size);
+				.limit(cursor.size)
+				.offset(cursor.page * cursor.size);
 
-			yield* tryDbFx(async () =>
-				kysely
+			yield* tryDbFx(async () => {
+				return kysely
 					.updateTable("activity")
 					.set({
 						archivedAt,
 					})
 					.where("activity.id", "in", selectIds)
-					.execute(),
-			);
+					.execute();
+			});
 		}),
 	);
 });

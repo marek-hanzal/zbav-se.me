@@ -4,12 +4,12 @@ import { Container } from "@/lib/client/container";
 import type { useSelection } from "@/lib/client/selection";
 import { Tx } from "@/lib/client/tx";
 import type { EntitySchema } from "@/lib/common/schema";
-import { ListingWarrantyEnumSchema } from "~/common/listing/enum/ListingWarrantyEnumSchema";
 import { uiSelectButton } from "~/common/ui/ui";
+import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 
 export namespace WarrantySelect {
 	export interface Props extends Container.Props {
-		selection: useSelection.Selection<EntitySchema.Type>;
+		selection: useSelection.Use<EntitySchema.Type>;
 	}
 }
 
@@ -29,7 +29,7 @@ export const WarrantySelect: FC<WarrantySelect.Props> = ({ selection, ...props }
 			data-ui-gap="lg"
 			{...props}
 		>
-			{Object.values(ListingWarrantyEnumSchema.enum).map((warranty) => {
+			{Object.values(WarrantyEnumSchema.enum).map((warranty) => {
 				const item = {
 					id: warranty,
 				};

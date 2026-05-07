@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
-import type { ListingFilterSchema } from "~/buyer/listing/server/schema/ListingFilterSchema";
+import type { ListingWhereSchema } from "~/buyer/listing/server/schema/ListingWhereSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -30,7 +30,7 @@ describe("buyer listing restriction category input scope", () => {
 					name: "where categoryId",
 					query: {
 						where: {
-							title: "Buyer category input restriction marker",
+							// title: "Buyer category input restriction marker",
 							categoryId: fixtures.restrictedCategory.id,
 						},
 					},
@@ -39,7 +39,7 @@ describe("buyer listing restriction category input scope", () => {
 					name: "filter categoryId",
 					query: {
 						filter: {
-							title: "Buyer category input restriction marker",
+							// title: "Buyer category input restriction marker",
 							categoryId: fixtures.restrictedCategory.id,
 						},
 					},
@@ -48,7 +48,7 @@ describe("buyer listing restriction category input scope", () => {
 					name: "scope categoryId",
 					query: {
 						where: {
-							title: "Buyer category input restriction marker",
+							// title: "Buyer category input restriction marker",
 						},
 						scope: {
 							categoryId: fixtures.restrictedCategory.id,
@@ -59,7 +59,7 @@ describe("buyer listing restriction category input scope", () => {
 					name: "where categoryIdIn",
 					query: {
 						where: {
-							title: "Buyer category input restriction marker",
+							// title: "Buyer category input restriction marker",
 							categoryIdIn: [
 								fixtures.restrictedCategory.id,
 							],
@@ -70,7 +70,7 @@ describe("buyer listing restriction category input scope", () => {
 					name: "filter categoryIdIn",
 					query: {
 						filter: {
-							title: "Buyer category input restriction marker",
+							// title: "Buyer category input restriction marker",
 							categoryIdIn: [
 								fixtures.restrictedCategory.id,
 							],
@@ -81,7 +81,7 @@ describe("buyer listing restriction category input scope", () => {
 					name: "scope categoryIdIn",
 					query: {
 						where: {
-							title: "Buyer category input restriction marker",
+							// title: "Buyer category input restriction marker",
 						},
 						scope: {
 							categoryIdIn: [
@@ -93,9 +93,9 @@ describe("buyer listing restriction category input scope", () => {
 			] satisfies {
 				name: string;
 				query: {
-					filter?: ListingFilterSchema.Type;
-					where?: ListingFilterSchema.Type;
-					scope?: ListingFilterSchema.Type;
+					filter?: ListingWhereSchema.Type;
+					where?: ListingWhereSchema.Type;
+					scope?: ListingWhereSchema.Type;
 				};
 			}[];
 

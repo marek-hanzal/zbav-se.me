@@ -7,7 +7,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
 import { toTimeDiff } from "@/lib/common/time";
-import { translator } from "@/lib/common/translator";
+import { translator } from "@/lib/common/translation";
 import { withUserRestrictionQuery } from "~/user/user-restriction/query/withUserRestrictionQuery";
 import type { UserRestrictionSchema } from "~/user/user-restriction/server/schema/UserRestrictionSchema";
 
@@ -43,7 +43,7 @@ export const CurrentRestriction = withFallback(
 				textEmpty={translator.text("Current Restriction value (empty)")}
 				textHint={translator.text("Current Restriction value (hint)")}
 				textLabelProps={{
-					"data-ui-tone": "brand",
+					"data-ui-tone": "primary",
 					"data-ui-theme": "light",
 					"data-ui-color": "lead",
 				}}
@@ -53,8 +53,9 @@ export const CurrentRestriction = withFallback(
 						<Container data-ui-width={"full"}>
 							<Tx
 								label={`Listing restriction - ${restriction.restriction}`}
-								data-ui-font={restriction.isAvailable ? "bold" : undefined}
+								data-ui-font={restriction.isAvailable ? "semibold" : undefined}
 								data-ui-width={"full"}
+								data-ui-text={"default"}
 							/>
 
 							{restriction.isAvailable ? null : (
@@ -76,10 +77,10 @@ export const CurrentRestriction = withFallback(
 											locale,
 											time: restriction.availableAt,
 										})}
-										data-ui-tone={"brand"}
+										data-ui-tone={"primary"}
 										data-ui-theme={"light"}
 										data-ui-color={"lead"}
-										data-ui-font={"bold"}
+										data-ui-font={"semibold"}
 										data-ui-text={"sm"}
 										data-ui-opacity={"8"}
 									/>

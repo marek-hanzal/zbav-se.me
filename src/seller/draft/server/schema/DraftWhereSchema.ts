@@ -1,14 +1,17 @@
 import { z } from "zod";
-import { DraftFilterSchema } from "~/seller/draft/server/schema/DraftFilterSchema";
+import { FilterSchema } from "@/lib/common/schema";
 
 export const DraftWhereSchema = z
 	.looseObject({
-		...DraftFilterSchema.shape,
+		...FilterSchema.shape,
+		userId: z.string().optional().meta({
+			description: "ID of the user; does not have an effect on API endpoints",
+		}),
 	})
 	.strip()
 	.meta({
 		id: "DraftWhere",
-		description: "App-based filters",
+		description: "Supported fields for filtering drafts",
 	});
 
 export type DraftWhereSchema = typeof DraftWhereSchema;

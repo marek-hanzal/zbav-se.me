@@ -2,14 +2,13 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import { hasExplicitCategory } from "~/common/listing/util/hasExplicitCategory";
-import { withListingCollectionSelectFx } from "~/public/listing/server/db/withListingCollectionSelectFx";
-import { withListingQueryBuilderFx } from "~/public/listing/server/db/withListingQueryBuilderFx";
-import type { ListingFilterSchema } from "~/public/listing/server/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/public/listing/server/schema/ListingQuerySchema";
+import { withListingSelectFx } from "../db/withListingSelectFx";
+import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
 export namespace listingCollectionFx {
 	export interface Props extends ListingQuerySchema.Type {
-		scope: ListingFilterSchema.Type;
+		scope: ListingWhereSchema.Type;
 	}
 }
 
@@ -18,26 +17,26 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 		page: 0,
 		size: 10,
 	},
-	limit,
 	filter,
 	where,
 	scope,
 	sort,
 	meta,
+	limit,
 }: listingCollectionFx.Props) {
 	const logger = yield* getLoggerFx("listingCollectionFx");
 	logger.trace("listingCollectionFx", {
 		cursor,
-		limit,
 		filter,
 		where,
 		scope,
 		sort,
 		meta,
+		limit,
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withListingCollectionSelectFx({
+		selectFx: withListingSelectFx({
 			sort,
 			meta,
 			hasExplicitCategory: hasExplicitCategory([
@@ -47,16 +46,10 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 			]),
 		}),
 		cursor,
-		limit,
 		filter,
 		where,
 		scope,
-		queryFx(query) {
-			return withListingQueryBuilderFx({
-				...query,
-				meta,
-			});
-		},
+		limit,
 	});
 });
 

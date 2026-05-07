@@ -48,8 +48,10 @@ export const Item = withFallback(({ _suspense, listingId, feedId }: Item.Props) 
 				_suspense={_suspense}
 				feedId={feedId}
 				listingId={listingId}
-				isOpen={detail}
-				onClose={() => setDetail(false)}
+				state={{
+					value: detail,
+					set: setDetail,
+				}}
 			/>
 		</>
 	);

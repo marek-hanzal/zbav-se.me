@@ -18,7 +18,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ state, ...props
 
 	return (
 		<Container
-			data-ui={"ListingSortSelect[Container]"}
+			data-ui={"ListingSortSelect"}
 			data-ui-layout="vertical-flex"
 			data-ui-scroll="vertical"
 			data-ui-gap="sm"
@@ -109,9 +109,17 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ state, ...props
 				onClick={() => {
 					state.set([]);
 				}}
-				data-ui-tone="warning"
+				{...uiSelectButton({
+					isSelected: false,
+				})}
+				iconProps={{
+					"data-ui-text": "xl",
+				}}
+				data-ui-tone={"warning"}
 				data-ui-theme="light"
-				data-ui-size="default"
+				data-ui-flow={"horizontal"}
+				data-ui-justify={"start"}
+				data-ui-items={"center"}
 			>
 				<Tx label="Clear all sorts (button)" />
 			</Button>

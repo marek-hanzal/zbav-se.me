@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { withFlagCollectionSelectFx } from "~/buyer/flag/server/db/withFlagCollectionSelectFx";
-import { withFlagQueryBuilderFx } from "~/buyer/flag/server/db/withFlagQueryBuilderFx";
+import { withFlagSelectFx } from "~/buyer/flag/server/db/withFlagSelectFx";
 import type { FlagFilterSchema } from "~/buyer/flag/server/schema/FlagFilterSchema";
 import type { FlagQuerySchema } from "~/buyer/flag/server/schema/FlagQuerySchema";
 
@@ -34,7 +33,7 @@ export const flagCollectionFx = Effect.fn("flagCollectionFx")(function* ({
 	});
 
 	return yield* withCollectionFx({
-		selectFx: withFlagCollectionSelectFx({
+		selectFx: withFlagSelectFx({
 			sort,
 		}),
 		cursor,
@@ -42,7 +41,6 @@ export const flagCollectionFx = Effect.fn("flagCollectionFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx: withFlagQueryBuilderFx,
 	});
 });
 

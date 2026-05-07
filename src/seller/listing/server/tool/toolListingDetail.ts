@@ -41,16 +41,16 @@ Fetch seller listing detail based on 'listingId'.
 		})
 			.then((item) => {
 				return `
-Title: ${item.title}
-Price: ${item.price.toFixed(2)}
-Category: ${item.category.group} / ${item.category.category}
-Location: ${item.location.address}
+Title: {item.title}
+Price: {item.price.toFixed(2)}
+Category: {item.category.group} / {item.category.category}
+Location: {item.location.address}
 
 Images:
 ${item.withImageUrl.join("\n")}
 
 Description:
-${item.description ?? "not set"}
+{item.description ?? "not set"}
 				`.trim();
 			})
 			.catch(() => {

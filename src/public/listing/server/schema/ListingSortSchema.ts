@@ -5,9 +5,6 @@ export const ListingSortSchema = z
 	.looseObject({
 		field: z
 			.enum([
-				"price",
-				"condition",
-				"age",
 				"createdAt",
 				"updatedAt",
 				"expiresAt",

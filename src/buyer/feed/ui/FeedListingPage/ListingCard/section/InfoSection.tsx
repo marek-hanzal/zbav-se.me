@@ -1,31 +1,26 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
-import { Markdown } from "@/lib/client/markdown";
-import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { Typo } from "@/lib/client/typo";
-import { LabelValue, ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translator";
+import type { useView } from "@/lib/client/view";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
-import { CategoryInline } from "~/user/category/ui/CategoryInline";
 import { SellerInfo } from "../../SellerInfo";
 
 export namespace InfoSection {
 	export interface Props extends MarkSuspense.Props {
 		listing: ListingSchema.Type;
-		onView(view: "seller-info"): void;
+		view: useView.Use<"seller-info">;
 	}
 }
 
-export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView }) => {
+export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, view }) => {
 	return (
 		<Container
 			data-ui={"InfoSection"}
 			data-ui-layout="vertical-flex"
 			data-ui-gap="default"
 		>
-			<Group>
+			{/* <Group>
 				<ValueList
 					textLabel={translator.text("Listing restrictions (label)")}
 					textEmpty={translator.text("Listing restrictions (empty)")}
@@ -36,9 +31,9 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView 
 						return <Tx label={`Listing restriction - ${id}`} />;
 					}}
 				/>
-			</Group>
+			</Group> */}
 
-			<Group>
+			{/* <Group>
 				<LabelValue
 					textLabel={translator.text("Listing category (label)")}
 					textValue={
@@ -50,9 +45,9 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView 
 						/>
 					}
 				/>
-			</Group>
+			</Group> */}
 
-			{listing.description ? (
+			{/* {listing.description ? (
 				<Group>
 					<LabelValue
 						textLabel={translator.text("Listing description (label)")}
@@ -128,14 +123,14 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, onView 
 						/>
 					) : null}
 				</Group>
-			) : null}
+			) : null} */}
 
 			{listing.my ? null : (
 				<Group>
 					<SellerInfo
 						_suspense={"I know"}
 						listingId={listing.id}
-						onView={onView}
+						view={view}
 					/>
 				</Group>
 			)}

@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
-import { withTransactionEntryQueryBuilderFx } from "../db/withTransactionEntryQueryBuilderFx";
 import { withTransactionEntrySelectFx } from "../db/withTransactionEntrySelectFx";
 import type { TransactionEntryCountQuerySchema } from "../schema/TransactionEntryCountQuerySchema";
 import type { TransactionEntryFilterSchema } from "../schema/TransactionEntryFilterSchema";
@@ -34,12 +33,6 @@ export const transactionEntryCountFx = Effect.fn("transactionEntryCountFx")(func
 		filter,
 		where,
 		scope,
-		queryFx(query) {
-			return withTransactionEntryQueryBuilderFx({
-				...query,
-				userId,
-			});
-		},
 	});
 });
 

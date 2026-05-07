@@ -1,23 +1,19 @@
-import { type FC, type PropsWithChildren, Suspense, useCallback, useMemo, useState } from "react";
-import { CloseIcon } from "@/lib/client/icon";
+import type { FC } from "react";
+import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { useRenderLogger } from "@/lib/client/log";
-import { SheetView } from "@/lib/client/sheet-view";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translator";
+import type { MarkSuspense, StateType } from "@/lib/client/type";
+import { useView } from "@/lib/client/view";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { SellerInfo } from "~/buyer/listing/SellerInfo/SellerInfo";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { CloseButton } from "~/common/ui/button";
 import { ListingCard } from "../ListingCard";
 
 export namespace ListingSheet {
-	export type View = "default" | "gallery" | "seller-info";
-
-	export interface Props extends PropsWithChildren, SheetView.PropsEx<View>, MarkSuspense.Props {
+	export interface Props extends BottomSheet.PropsEx, MarkSuspense.Props {
 		feedId: string;
 		listingId: string;
+		state: StateType.State<boolean>;
 	}
 }
 
@@ -25,12 +21,19 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 	_suspense,
 	feedId,
 	listingId,
-	onClose,
+	state,
 	children,
 	...props
 }) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
-	const [view, setView] = useState<ListingSheet.View>("default");
+	const view = useView({
+		panels: [
+			"default",
+			"gallery",
+			"seller-info",
+		],
+		defaultPanel: "default",
+	});
 
 	useRenderLogger({
 		logger: getRootLogger(),
@@ -40,94 +43,44 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 		},
 	});
 
-	const $onClose = useCallback(() => {
-		setView("default");
-	}, []);
-
-	const views = useMemo<SheetView.Views<ListingSheet.View>>(() => {
-		return {
-			default: {
-				children: (
+	return (
+		<view.View>
+			<BottomSheet
+				data-ui={"ListingSheet"}
+				isOpen={state.value}
+				onClose={() => {
+					state.set(false);
+					view.set("default");
+				}}
+				detent={"default"}
+				{...props}
+			>
+				<view.Panel name="default">
 					<ListingCard
 						_suspense={"I know"}
 						feedId={feedId}
 						listingId={listing.id}
-						onView={setView}
+						view={view}
 					/>
-				),
-				header: ({ close }) => ({
-					title: listing.title,
-					right: (
-						<CloseButton
-							data-action={"close listing detail"}
-							onClick={close}
-						/>
-					),
-				}),
-			},
-			gallery: {
-				children: (
+				</view.Panel>
+
+				<view.Panel name="gallery">
 					<GalleryPreview
 						urls={listing.withImageUrl}
 						onClick={() => {
-							setView("default");
+							view.set("default");
 						}}
 					/>
-				),
-				header: () => ({
-					title: translator.text("Listing gallery (title)"),
-					right: (
-						<CloseButton
-							data-action={"close listing gallery"}
-							iconEnabled={CloseIcon}
-							onClick={$onClose}
-						/>
-					),
-				}),
-			},
-			"seller-info": {
-				children: (
+				</view.Panel>
+
+				<view.Panel name="seller-info">
 					<SellerInfo
 						_suspense={"I know"}
 						listingId={listingId}
 						data-ui-inner="default"
 					/>
-				),
-				header: () => ({
-					title: translator.text("Seller info (title)"),
-					right: (
-						<CloseButton
-							data-action={"close seller info"}
-							iconEnabled={CloseIcon}
-							onClick={$onClose}
-						/>
-					),
-				}),
-			},
-		};
-	}, [
-		feedId,
-		listingId,
-		listing,
-		$onClose,
-	]);
-
-	return (
-		<Suspense fallback={<SpinnerContainer />}>
-			<SheetView<ListingSheet.View>
-				data-ui={"ListingSheet"}
-				state={{
-					value: view,
-					set: setView,
-				}}
-				views={views}
-				detent={"default"}
-				onClose={() => {
-					onClose();
-					setView("default");
-				}}
-				{...props}
-			/>
-		</Suspense>
+				</view.Panel>
+			</BottomSheet>
+		</view.View>
 	);
 };

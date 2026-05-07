@@ -1,6 +1,7 @@
 import { type FC, Suspense } from "react";
 import { useLocale } from "@/lib/client/locale";
-import { translator } from "@/lib/common/translator";
+import { SpinnerContainer } from "@/lib/client/spinner";
+import { translator } from "@/lib/common/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
@@ -15,8 +16,6 @@ export namespace DraftListPage {
 /**
  * Composes the draft-list page with title framing and sorted draft collection rendering.
  * Use it as the route-level screen for browsing and continuing seller draft edits.
- *
- * @see src/@routes
  */
 export const DraftListPage: FC<DraftListPage.Props> = (props) => {
 	const locale = useLocale();
@@ -35,7 +34,7 @@ export const DraftListPage: FC<DraftListPage.Props> = (props) => {
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<Suspense fallback={<DraftList.Fallback />}>
+			<Suspense fallback={<SpinnerContainer />}>
 				<DraftList
 					_suspense={"I know"}
 					data-ui-inner="default"

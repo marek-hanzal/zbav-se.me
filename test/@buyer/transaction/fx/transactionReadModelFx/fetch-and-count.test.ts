@@ -70,7 +70,8 @@ describe("buyer transaction read model fetch and count", () => {
 			);
 			expect(resolvedCount).toBe(0);
 			expect(fetched.id).toBe(openScenario.transactionId);
-			expect(typeof fetched.unreadCount).toBe("number");
+			expect(typeof fetched.unread).toBe("number");
+			expect(fetched.unread).toBe(1);
 			expect(fetched.status).toBe("trade");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

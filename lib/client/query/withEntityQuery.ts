@@ -358,6 +358,7 @@ export const withEntityQuery = <
 		});
 
 		if (!invalidate) {
+			logger.trace("withEntityQuery::invalidator - skipped");
 			return;
 		}
 
@@ -393,6 +394,14 @@ export const withEntityQuery = <
 		return Promise.all(what);
 	}
 
+	function $fetchFn(data: TFetchRequest) {
+		logger.trace("withEntityQuery::$fetchFn", {
+			data,
+		});
+
+		return fetchFn(data);
+	}
+
 	function ensureEntityQuery(
 		queryClient: QueryClient,
 		data: TFetchRequest,
@@ -409,13 +418,7 @@ export const withEntityQuery = <
 		return queryClient.ensureQueryData({
 			queryKey,
 			queryFn() {
-				logger.trace("withEntityQuery::ensureEntityQuery::queryFn", {
-					queryKey,
-					data,
-					opts,
-				});
-
-				return fetchFn(data);
+				return $fetchFn(data);
 			},
 			...opts,
 		});
@@ -439,13 +442,7 @@ export const withEntityQuery = <
 		return useSuspenseQuery({
 			queryKey,
 			queryFn() {
-				logger.trace("withEntityQuery::useEntityQuery::queryFn", {
-					queryKey,
-					data,
-					opts,
-				});
-
-				return fetchFn(data);
+				return $fetchFn(data);
 			},
 			...opts,
 		});
@@ -457,11 +454,17 @@ export const withEntityQuery = <
 	) {
 		const queryKey = $keys("fetch", data);
 
+		logger.trace("withEntityQuery::useMaybeEntityQuery", {
+			queryKey,
+			data,
+			opts,
+		});
+
 		return useSuspenseQuery({
 			queryKey,
 			async queryFn() {
 				try {
-					return await fetchFn(data);
+					return await $fetchFn(data);
 				} catch {
 					return null;
 				}
@@ -478,10 +481,16 @@ export const withEntityQuery = <
 		const data = toIdKey(id);
 		const queryKey = $keys("fetch", data);
 
+		logger.trace("withEntityQuery::ensureFetchQuery", {
+			queryKey,
+			data,
+			opts,
+		});
+
 		return queryClient.ensureQueryData({
 			queryKey,
 			queryFn() {
-				return fetchFn(data);
+				return $fetchFn(data);
 			},
 			...opts,
 		});
@@ -503,10 +512,20 @@ export const withEntityQuery = <
 	) {
 		const request = toIdKey(id);
 
+		logger.trace("withEntityQuery::useFetchQuery", {
+			id,
+			request,
+			opts,
+		});
+
 		return useEntityQuery(request, opts);
 	}
 
 	async function $collectionFn(queryClient: QueryClient, data: TCollectionRequest) {
+		logger.trace("withEntityQuery::$collectionFn", {
+			data,
+		});
+
 		const result = await collectionFn(data);
 
 		await notifyManager.batch(async () => {
@@ -526,6 +545,12 @@ export const withEntityQuery = <
 		opts?: withEntityQuery.QueryOptions<TEntity[], TErrors["collection"]>,
 	) {
 		const queryKey = $keys("collection", data);
+
+		logger.trace("withEntityQuery::ensureCollectionQuery", {
+			data,
+			queryKey,
+			opts,
+		});
 
 		return queryClient.ensureQueryData({
 			queryKey,
@@ -552,6 +577,12 @@ export const withEntityQuery = <
 		const queryClient = useQueryClient();
 		const queryKey = $keys("collection", data);
 
+		logger.trace("withEntityQuery::useCollectionQuery", {
+			data,
+			queryKey,
+			opts,
+		});
+
 		return useSuspenseQuery({
 			queryKey,
 			async queryFn() {
@@ -568,6 +599,12 @@ export const withEntityQuery = <
 		const queryClient = useQueryClient();
 		const queryKey = $keys("collection", data);
 
+		logger.trace("withEntityQuery::useIdsQuery", {
+			data,
+			queryKey,
+			opts,
+		});
+
 		return useSuspenseQuery({
 			queryKey,
 			async queryFn() {
@@ -577,6 +614,14 @@ export const withEntityQuery = <
 		});
 	}
 
+	function $countFn(data: TCountRequest) {
+		logger.trace("withEntityQuery::$countFn", {
+			data,
+		});
+
+		return countFn(data);
+	}
+
 	function ensureCountQuery(
 		queryClient: QueryClient,
 		data: TCountRequest,
@@ -584,10 +629,16 @@ export const withEntityQuery = <
 	) {
 		const queryKey = $keys("count", data);
 
+		logger.trace("withEntityQuery::ensureCountQuery", {
+			data,
+			queryKey,
+			opts,
+		});
+
 		return queryClient.ensureQueryData({
 			queryKey,
 			queryFn() {
-				return countFn(data);
+				return $countFn(data);
 			},
 			...opts,
 		});
@@ -605,10 +656,16 @@ export const withEntityQuery = <
 	) {
 		const queryKey = $keys("count", data);
 
+		logger.trace("withEntityQuery::useCountQuery", {
+			data,
+			queryKey,
+			opts,
+		});
+
 		return useSuspenseQuery({
 			queryKey,
 			async queryFn() {
-				return countFn(data);
+				return $countFn(data);
 			},
 			...opts,
 		});
@@ -627,6 +684,11 @@ export const withEntityQuery = <
 		request: TPatchRequest,
 		invalidate?: withEntityQuery.Invalidator.Type[],
 	) {
+		logger.trace("withEntityQuery::$patchFn", {
+			request,
+			invalidate,
+		});
+
 		const result = await patchFn(request);
 		const key = toIdKey(result.id);
 
@@ -653,6 +715,11 @@ export const withEntityQuery = <
 		request: TPatchCollectionRequest,
 		invalidate?: withEntityQuery.Invalidator.Type[],
 	) {
+		logger.trace("withEntityQuery::$patchCollectionFn", {
+			request,
+			invalidate,
+		});
+
 		const result = await patchCollectionFn(request);
 
 		for (const item of result) {
@@ -679,12 +746,13 @@ export const withEntityQuery = <
 		const queryClient = useQueryClient();
 		const { invalidate, onPreMutation, onPostMutation, meta, ...$opts } = opts || {};
 
+		logger.trace("withEntityQuery::usePatchMutation", {
+			invalidate,
+			opts,
+		});
+
 		return useMutation({
 			async mutationFn(request) {
-				logger.trace("withEntityQuery::usePatchMutation::mutateFn", {
-					request,
-				});
-
 				await onPreMutation?.({
 					variables: request,
 				});
@@ -717,6 +785,11 @@ export const withEntityQuery = <
 		const queryClient = useQueryClient();
 		const { invalidate, onPreMutation, onPostMutation, meta, ...$opts } = opts || {};
 
+		logger.trace("withEntityQuery::usePatchCollectionMutation", {
+			invalidate,
+			opts,
+		});
+
 		return useMutation({
 			async mutationFn(request) {
 				await onPreMutation?.({
@@ -748,6 +821,11 @@ export const withEntityQuery = <
 		request: TCreateRequest,
 		invalidate?: withEntityQuery.Invalidator.Type[],
 	) {
+		logger.trace("withEntityQuery::$createFn", {
+			request,
+			invalidate,
+		});
+
 		const result = await createFn(request);
 		const key = toIdKey(result.id);
 
@@ -780,12 +858,12 @@ export const withEntityQuery = <
 		const queryClient = useQueryClient();
 		const { invalidate, onPreMutation, onPostMutation, meta, ...$opts } = opts || {};
 
+		logger.trace("withEntityQuery::useCreateMutation", {
+			invalidate,
+		});
+
 		return useMutation({
 			async mutationFn(request) {
-				logger.trace("withEntityQuery::useCreateMutation::mutateFn", {
-					request,
-				});
-
 				await onPreMutation?.({
 					variables: request,
 				});
@@ -815,6 +893,11 @@ export const withEntityQuery = <
 		request: TDeleteRequest,
 		invalidate?: withEntityQuery.Invalidator.Type[],
 	) {
+		logger.trace("withEntityQuery::$deleteFn", {
+			request,
+			invalidate,
+		});
+
 		const result = await deleteFn(request);
 		const key = toIdKey(result.id);
 
@@ -849,6 +932,10 @@ export const withEntityQuery = <
 	) {
 		const queryClient = useQueryClient();
 		const { invalidate, onPreMutation, onPostMutation, meta, ...$opts } = opts || {};
+
+		logger.trace("withEntityQuery::useDeleteMutation", {
+			invalidate,
+		});
 
 		return useMutation({
 			async mutationFn(request) {
@@ -901,14 +988,14 @@ export const withEntityQuery = <
 	return {
 		keys: $keys,
 		//
-		fetchFn,
+		fetchFn: $fetchFn,
 		ensureFetchQuery,
 		ensureEntityQuery,
 		//
 		collectionFn,
 		ensureCollectionQuery,
 		//
-		countFn,
+		countFn: $countFn,
 		ensureCountQuery,
 		//
 		updateFn: $updateFn,
