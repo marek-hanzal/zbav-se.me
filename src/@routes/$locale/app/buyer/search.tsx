@@ -29,8 +29,6 @@ export const Route = createFileRoute("/$locale/app/buyer/search")({
 	},
 	pendingComponent: SearchPagePending,
 	component() {
-		const feed = Route.useLoaderData();
-
-		return <SearchPage feedId={feed.id} />;
+		return <SearchPage _suspense={"I know"} />;
 	},
 });

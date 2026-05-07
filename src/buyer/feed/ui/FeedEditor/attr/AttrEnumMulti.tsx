@@ -115,12 +115,15 @@ export const AttrEnumMulti: FC<AttrEnumMulti.Props> = ({ feed, field, attr, view
 						patch: {
 							query: {
 								...feed.query,
-								attrs: {
-									...feed.query?.attrs,
-									[field.name]: {
-										name: field.name,
-										type: "enum-multi",
-										value: selection.optional.multiId() ?? undefined,
+								filter: {
+									...feed.query?.filter,
+									attrs: {
+										...feed.query?.filter?.attrs,
+										[field.name]: {
+											name: field.name,
+											type: "enum-multi",
+											value: selection.optional.multiId() ?? undefined,
+										},
 									},
 								},
 							},

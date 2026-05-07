@@ -45,8 +45,8 @@ describe("seller transaction read model", () => {
 
 			expect(collection).toHaveLength(1);
 			expect(collection[0]?.id).toBe(ownScenario.transactionId);
-			// expect(typeof collection[0]?.unreadCount).toBe("number");
-			// expect(collection[0]?.unreadCount).toBeGreaterThan(0);
+			expect(typeof collection[0]?.unread).toBe("number");
+			expect(collection[0]?.unread).toBe(1);
 			expect(collection[0]?.entry.kind).toBe("status-interest");
 			expect(collection[0]?.lastAt.getTime()).toBe(
 				new Date(collection[0]?.entry.createdAt ?? 0).getTime(),
@@ -65,7 +65,8 @@ describe("seller transaction read model", () => {
 			});
 
 			expect(fetched.id).toBe(ownScenario.transactionId);
-			// expect(typeof fetched.unreadCount).toBe("number");
+			expect(typeof fetched.unread).toBe("number");
+			expect(fetched.unread).toBe(1);
 			expect(fetched.entry.kind).toBe("status-interest");
 			expect(fetched.lastAt.getTime()).toBe(new Date(fetched.entry.createdAt).getTime());
 			expect(fetched.lastAt.getTime()).toBeLessThan(hiddenTextEntry.createdAt.getTime());

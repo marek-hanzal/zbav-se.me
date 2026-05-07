@@ -21,9 +21,7 @@ export const ResetButton: FC<ResetButton.Props> = ({ feedId, className, ...props
 				"fetch",
 			]);
 		},
-		invalidate: [
-			"collection",
-		],
+		invalidate: [],
 	});
 	const deleteMutation = withFeedQuery.useDeleteMutation({
 		async onPostMutation() {
@@ -31,9 +29,7 @@ export const ResetButton: FC<ResetButton.Props> = ({ feedId, className, ...props
 				getFeedDefaultCreate(translator.text("Search (title)"), "search"),
 			);
 		},
-		invalidate: [
-			"collection",
-		],
+		invalidate: [],
 	});
 
 	return (

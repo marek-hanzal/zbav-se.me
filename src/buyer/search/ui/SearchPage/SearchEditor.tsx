@@ -49,13 +49,13 @@ export const SearchEditor = withFallback(({ _suspense, feedId, ...props }: Searc
 					<Group>
 						<Suspense fallback={<SearchButton.Fallback feedId={feedId} />}>
 							<SearchButton
-								_suspense={"I know"}
+								_suspense={_suspense}
 								feedId={feedId}
 							/>
 						</Suspense>
 
 						<SaveAsFeedButton
-							_suspense={"I know"}
+							_suspense={_suspense}
 							feedId={feedId}
 						/>
 

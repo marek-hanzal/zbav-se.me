@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
+import { rangedom } from "@/lib/common/rangedom/rangedom";
 import { S3ContextFx } from "~/common/s3/server/context/S3ContextFx";
 import { s3ClientFx } from "~/common/s3/server/fx/s3ClientFx";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -13,6 +14,7 @@ import { SeedProgressContextFx } from "./SeedProgressContextFx";
 const MAX_UPLOAD_FETCH = 128;
 const MAX_PHOTOBANK_FETCH_PER_RUN = 64;
 const PHOTOBANK_FETCH_CONCURRENCY = 3;
+const UPLOAD_INSERT_CHUNK = 1000;
 
 const fetchPhotoBufferFx = Effect.fn("fetchPhotoBufferFx")(function* () {
 	const target = `https://picsum.photos/seed/${genId()}/1024/768.jpg`;
@@ -77,6 +79,7 @@ export const ensureSeedUploadPoolFx = Effect.fn("ensureSeedUploadPoolFx")(functi
 	}));
 	const desiredPoolSize = Math.min(MAX_UPLOAD_FETCH, Math.max(1, targetCount));
 	const missingPool = Math.max(0, desiredPoolSize - pool.length);
+	let created = 0;
 
 	if (missingPool <= 0) {
 		return pool.map((item) => item.id);
@@ -107,13 +110,16 @@ export const ensureSeedUploadPoolFx = Effect.fn("ensureSeedUploadPoolFx")(functi
 				});
 
 				const upload = yield* uploadCreateFx({
-					access: "public",
+					access: "private",
 					userId,
 					url: `${cdn.replace(/\/$/, "")}/${key}`,
 				});
 
-				progress.log({
+				yield* progress.log({
 					message: `Uploaded [${upload.url}]`,
+				});
+				yield* progress.advance({
+					delta: 1,
 				});
 
 				return {
@@ -128,6 +134,61 @@ export const ensureSeedUploadPoolFx = Effect.fn("ensureSeedUploadPoolFx")(functi
 	);
 
 	pool.push(...fetched);
+	created += fetched.length;
+
+	let remaining = Math.max(0, desiredPoolSize - pool.length);
+
+	while (remaining > 0 && pool.length > 0) {
+		const chunk = Math.min(remaining, UPLOAD_INSERT_CHUNK);
+		const rows: Array<{
+			id: string;
+			userId: string;
+			url: string;
+			access: "private";
+			createdAt: Date;
+		}> = [];
+
+		for (let index = 0; index < chunk; index += 1) {
+			const source = pool[rangedom(0, pool.length - 1)];
+
+			if (!source) {
+				break;
+			}
+
+			rows.push({
+				id: genId(),
+				userId,
+				url: source.url,
+				access: "private",
+				createdAt: new Date(),
+			});
+		}
+
+		if (rows.length === 0) {
+			break;
+		}
+
+		yield* tryDbFx(async () => {
+			return kysely.insertInto("upload").values(rows).execute();
+		});
+
+		for (const row of rows) {
+			pool.push({
+				id: row.id,
+				url: row.url,
+			});
+		}
+
+		created += rows.length;
+		remaining -= rows.length;
+		yield* progress.advance({
+			delta: rows.length,
+		});
+	}
+
+	yield* progress.log({
+		message: `Upload pool ready (${pool.length} records, created ${created})`,
+	});
 
 	return pool.map((item) => item.id);
 });

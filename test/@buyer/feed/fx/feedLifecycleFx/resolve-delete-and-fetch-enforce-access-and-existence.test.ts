@@ -40,7 +40,8 @@ describe("feedLifecycleFx", () => {
 			);
 
 			expectTaggedErrorFx(foreignResolution, {
-				tag: "NotFoundErrorFx",
+				tag: "AccessDeniedErrorFx",
+				message: "You are not allowed to access this feed",
 			});
 
 			const foreignPatch = yield* Effect.either(

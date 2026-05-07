@@ -3,6 +3,7 @@ import { FilterSchema } from "@/lib/common/schema";
 import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
+import { AttrWhereSchema } from "./AttrWhereSchema";
 
 export const ListingWhereSchema = z
 	.looseObject({
@@ -79,6 +80,10 @@ export const ListingWhereSchema = z
 		}),
 		isFavourite: z.boolean().optional().meta({
 			description: "Show listing that are in the user's favourites",
+		}),
+		//
+		attrs: z.record(z.string().min(1), AttrWhereSchema).optional().meta({
+			description: "Filter by extra attributes",
 		}),
 	})
 	.strip()

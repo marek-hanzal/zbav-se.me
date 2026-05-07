@@ -13,7 +13,9 @@ describe("listingCollectionFx (seller)", () => {
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
 
-			yield* createListingFx(seller.id);
+			yield* createListingFx(seller.id, {
+				title: "seller fulltext target listing",
+			});
 
 			const collection = yield* listingCollectionFx({
 				userId: seller.id,
@@ -21,12 +23,14 @@ describe("listingCollectionFx (seller)", () => {
 					userId: seller.id,
 				},
 				where: {
-					fulltext: "Test listing",
+					fulltext: "target listing",
 				},
 			});
 
 			expect(collection.length).toBeGreaterThanOrEqual(1);
-			// expect(collection.every((l) => l.title.toLowerCase().includes("test"))).toBe(true);
+			expect(collection.every((item) => item.title.toLowerCase().includes("target"))).toBe(
+				true,
+			);
 
 			const empty = yield* listingCollectionFx({
 				userId: seller.id,

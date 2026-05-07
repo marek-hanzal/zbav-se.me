@@ -17,10 +17,59 @@ export const withActivitySelectFx = Effect.fn("withActivitySelectFx")(function* 
 	sort,
 }: withActivitySelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
+	const deduplicatedMessageTypes = [
+		"buyer-message",
+		"seller-message",
+	] as const;
 
 	let select = kysely
 		.selectFrom("activity as i")
 		.selectAll("i")
+		.where((eb) => {
+			return eb.or([
+				eb("i.type", "not in", deduplicatedMessageTypes),
+				eb.not(
+					eb.exists(
+						eb
+							.selectFrom("activity as newer")
+							.select("newer.id")
+							.whereRef("newer.userId", "=", "i.userId")
+							.whereRef("newer.family", "=", "i.family")
+							.whereRef("newer.type", "=", "i.type")
+							.where((eb) => {
+								return sql<boolean>`${eb.ref("newer.payload")} ->> 'transactionId' = ${eb.ref("i.payload")} ->> 'transactionId'`;
+							})
+							.where((eb) => {
+								const newerIsMoreRecent = eb.or([
+									eb("newer.timestamp", ">", eb.ref("i.timestamp")),
+									eb.and([
+										eb("newer.timestamp", "=", eb.ref("i.timestamp")),
+										eb("newer.id", ">", eb.ref("i.id")),
+									]),
+								]);
+
+								return eb.or([
+									eb.and([
+										eb("i.archivedAt", "is", null),
+										eb("newer.archivedAt", "is", null),
+										newerIsMoreRecent,
+									]),
+									eb.and([
+										eb("i.archivedAt", "is not", null),
+										eb.or([
+											eb("newer.archivedAt", "is", null),
+											eb.and([
+												eb("newer.archivedAt", "is not", null),
+												newerIsMoreRecent,
+											]),
+										]),
+									]),
+								]);
+							}),
+					),
+				),
+			]);
+		})
 		.$castTo<ActivityTableSchema.Type>();
 
 	for (const item of sort ?? []) {

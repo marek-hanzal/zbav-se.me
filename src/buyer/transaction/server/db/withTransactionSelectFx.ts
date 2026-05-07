@@ -3,6 +3,7 @@ import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
+import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
@@ -19,6 +20,13 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 	sort,
 }: withTransactionSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
+	const archivedStatuses = [
+		"sold",
+		"rejected",
+		"expired",
+		"success",
+		"closed",
+	] satisfies TransactionStatusEnumSchema.Type[];
 
 	let query = kysely
 		.selectFrom("transaction as lt")
@@ -80,7 +88,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 		select: query
 			.selectAll("lt")
 			.select("l.withImageUrl")
-			.select((eb) => eb.val("not yet").as("title"))
+			.select("l.title")
 			.select((eb) => {
 				const lastActivitySelect = eb
 					.selectFrom("transaction_entry as te")
@@ -199,6 +207,8 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 								),
 							]),
 						);
+					} else if (flow === "archived") {
+						query = query.where("lt.status", "in", archivedStatuses);
 					}
 				}
 

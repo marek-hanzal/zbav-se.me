@@ -64,13 +64,16 @@ export const AttrNumericMax: FC<AttrNumericMax.Props> = ({ feed, field, attr, vi
 				patch: {
 					query: {
 						...feed.query,
-						attrs: {
-							...feed.query?.attrs,
-							[field.name]: {
-								...attr,
-								name: field.name,
-								type: field.type,
-								max: value.value ?? undefined,
+						filter: {
+							...feed.query?.filter,
+							attrs: {
+								...feed.query?.filter?.attrs,
+								[field.name]: {
+									...attr,
+									name: field.name,
+									type: field.type,
+									max: value.value ?? undefined,
+								},
 							},
 						},
 					},

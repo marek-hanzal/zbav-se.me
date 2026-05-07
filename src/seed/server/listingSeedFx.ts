@@ -1,4 +1,6 @@
 import { Effect } from "effect";
+import { match } from "ts-pattern";
+import { genId } from "@/lib/common/gen-id";
 import { list } from "@/lib/common/rangedom/list";
 import { rangedom } from "@/lib/common/rangedom/rangedom";
 import { sample } from "@/lib/common/rangedom/sample";
@@ -10,6 +12,11 @@ import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 import type { SeedRunSummary } from "~/seed/seed/SeedRunSummary";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { draftPatchFx } from "~/seller/draft/server/fx/draftPatchFx";
+import { draftAttrDecimalPatchFx } from "~/seller/draft-attr-decimal/server/fx/draftAttrDecimalPatchFx";
+import { draftAttrEnumMultiPatchFx } from "~/seller/draft-attr-enum-multi/server/fx/draftAttrEnumMultiPatchFx";
+import { draftAttrEnumSinglePatchFx } from "~/seller/draft-attr-enum-single/server/fx/draftAttrEnumSinglePatchFx";
+import { draftAttrNumberPatchFx } from "~/seller/draft-attr-number/server/fx/draftAttrNumberPatchFx";
+import { draftAttrTextPatchFx } from "~/seller/draft-attr-text/server/fx/draftAttrTextPatchFx";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import ListingCategorySeedData from "~/server/@system/seed/data/listing-category-seed.json" with {
 	type: "json",
@@ -21,6 +28,7 @@ import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
 import { categoryAttrOfFx } from "~/user/category/server/fx/categoryAttrOfFx";
+import { fieldOptionCollectionFx } from "~/user/field-option/server/fx/fieldOptionCollectionFx";
 import { ensureSeedUploadPoolFx } from "./ensureSeedUploadPoolFx";
 import { ensureSeedUserFx } from "./ensureSeedUserFx";
 import { SeedProgressContextFx } from "./SeedProgressContextFx";
@@ -322,7 +330,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 
 	const uploadPool = yield* ensureSeedUploadPoolFx({
 		userId: user.id,
-		targetCount: Math.min(64, Math.max(12, count * 2)),
+		targetCount: Math.min(64, Math.max(1, count)),
 	});
 	yield* progress.log({
 		message: `Prepared ${uploadPool.length} reusable uploads`,
@@ -343,19 +351,8 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 	}
 
 	type DraftPlan = {
-		category: CategoryTableSchema.Type;
-		description: string;
-		delivery: SeedBranchRecord["delivery"];
 		draftId: string;
-		price: number;
-		priceType: "fixed" | "free" | "haggle";
-		cons: string[];
-		locationId: string;
-		locationLabel: string;
-		pros: string[];
 		title: string;
-		uploadCount: number;
-		uploadIds: string[];
 	};
 
 	const draftPlans: DraftPlan[] = [];
@@ -421,20 +418,127 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 			},
 		});
 
+		const fields = yield* categoryAttrOfFx({
+			categoryId: category.id,
+		});
+
+		for (const field of fields) {
+			yield* match(field)
+				.with(
+					{
+						type: "decimal",
+					},
+					({ min, max }) => {
+						return draftAttrDecimalPatchFx({
+							draftId: draft.id,
+							fieldId: field.name,
+							userId: user.id,
+							value: rangedom(min ?? 0, max ?? 1024) / 100,
+						});
+					},
+				)
+				.with(
+					{
+						type: "number",
+					},
+					({ min, max }) => {
+						return draftAttrNumberPatchFx({
+							draftId: draft.id,
+							fieldId: field.name,
+							userId: user.id,
+							value: rangedom(min ?? 0, max ?? 1024),
+						});
+					},
+				)
+				.with(
+					{
+						type: "range",
+					},
+					({ min, max }) => {
+						return draftAttrDecimalPatchFx({
+							draftId: draft.id,
+							fieldId: field.name,
+							userId: user.id,
+							value: rangedom(min ?? 0, max ?? 1024),
+						});
+					},
+				)
+				.with(
+					{
+						type: "year",
+					},
+					({ min, max }) => {
+						return draftAttrNumberPatchFx({
+							draftId: draft.id,
+							fieldId: field.name,
+							userId: user.id,
+							value: rangedom(min ?? 1940, max ?? 2099),
+						});
+					},
+				)
+				.with(
+					{
+						type: "text",
+					},
+					() => {
+						return draftAttrTextPatchFx({
+							draftId: draft.id,
+							fieldId: field.name,
+							userId: user.id,
+							value: genId(),
+						});
+					},
+				)
+				.with(
+					{
+						type: "enum-multi",
+					},
+					({ name, max }) => {
+						return Effect.gen(function* () {
+							const values = yield* fieldOptionCollectionFx({
+								where: {
+									fieldId: name,
+								},
+								scope: {},
+							});
+
+							yield* draftAttrEnumMultiPatchFx({
+								draftId: draft.id,
+								fieldId: field.name,
+								userId: user.id,
+								value: sample(values, max ?? 3).map(({ value }) => value),
+							});
+						});
+					},
+				)
+				.with(
+					{
+						type: "enum-single",
+					},
+					({ name }) => {
+						return Effect.gen(function* () {
+							const values = yield* fieldOptionCollectionFx({
+								where: {
+									fieldId: name,
+								},
+								scope: {},
+							});
+
+							yield* draftAttrEnumSinglePatchFx({
+								draftId: draft.id,
+								fieldId: field.name,
+								userId: user.id,
+								value: list(values).value,
+							});
+						});
+					},
+				)
+				.exhaustive();
+		}
+
 		draftPlans.push({
 			draftId: draft.id,
-			category,
 			title: record.title,
-			description: record.description,
-			locationId: location.id,
-			locationLabel: location.label,
-			priceType,
-			price,
-			uploadIds,
-			uploadCount,
-			delivery,
-			pros: prosCons.pros,
-			cons: prosCons.cons,
 		});
 
 		yield* progress.log({

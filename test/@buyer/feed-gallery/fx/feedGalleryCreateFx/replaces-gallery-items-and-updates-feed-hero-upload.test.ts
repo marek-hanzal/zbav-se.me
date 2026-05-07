@@ -114,7 +114,8 @@ describe("feedGalleryCreateFx", () => {
 			);
 
 			expectTaggedErrorFx(foreignAttempt, {
-				tag: "NotFoundErrorFx",
+				tag: "AccessDeniedErrorFx",
+				message: "You are not allowed to create a gallery for this feed",
 			});
 
 			const itemsAfterForeignAttempt = yield* Effect.promise(() =>
