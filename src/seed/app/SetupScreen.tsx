@@ -137,7 +137,7 @@ export const SetupScreen: FC<SetupScreen.Props> = ({
 					.with("user", () => (
 						<EmailInput
 							defaultValue={userEmailInput}
-							placeholder={"seed-listings@test.cz"}
+							placeholder={"b@x32.cz"}
 							onChange={onUserEmailChange}
 							onSubmit={onUserEmailSubmit}
 						/>

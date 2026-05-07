@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
+import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 
 export const TransactionSchema = z
@@ -16,6 +17,7 @@ export const TransactionSchema = z
 		title: z.string().meta({
 			description: "Transaction title",
 		}),
+		location: LocationSchema,
 		withImageUrl: z.array(z.string()).meta({
 			description: "Ordered listing image URLs",
 		}),

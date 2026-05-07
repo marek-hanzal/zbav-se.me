@@ -6,9 +6,9 @@ import { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/T
 export const TransactionSchema = z
 	.looseObject({
 		...TransactionTableSchema.shape,
-		// title: z.string().meta({
-		// 	description: "Transaction title",
-		// }),
+		title: z.string().meta({
+			description: "Transaction title",
+		}),
 		status: TransactionStatusEnumSchema,
 		entry: TransactionEntrySchema,
 		lastAt: z.coerce.date().meta({
