@@ -7,7 +7,6 @@ import { translator } from "@/lib/common/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
-import { withTransactionListingQuery } from "~/seller/transaction-listing/query/withTransactionListingQuery";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { Empty } from "./Empty";
 import { EmptyListings } from "./EmptyListings";
@@ -31,11 +30,14 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 			size: 1,
 		},
 	});
-	const { data: hasTransactionListing } = withTransactionListingQuery.useCollectionQuery(
+	const { data: hasTransactionListing } = withListingQuery.useCollectionQuery(
 		{
 			cursor: {
 				page: 0,
 				size: 1,
+			},
+			filter: {
+				withTransaction: true,
 			},
 		},
 		{

@@ -12,8 +12,8 @@ import { useUpload } from "~/common/gallery/hook/useUpload";
 import { Image } from "~/common/list-item/Image";
 import { ListItem } from "~/common/list-item/ListItem";
 import { ListItemPending } from "~/common/list-item/ListItemPending";
+import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 import { toActivityLabel } from "~/seller/transaction/ui/toActivityLabel";
-import { withTransactionListingQuery } from "~/seller/transaction-listing/query/withTransactionListingQuery";
 
 export namespace Item {
 	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {
@@ -23,10 +23,14 @@ export namespace Item {
 
 export const Item = withFallback(({ _suspense, transactionListingId, ...props }: Item.Props) => {
 	const locale = useLocale();
-	const { data: transactionListing } =
-		withTransactionListingQuery.useFetchQuery(transactionListingId);
+	const { data: transactionListing } = withListingQuery.useFetchQuery(transactionListingId);
+	const transactionEntry = transactionListing.withTransactionEntry;
 	const hero = useUpload(transactionListing.withImageUrl);
-	const isUnread = transactionListing.unread > 0;
+	const isUnread = transactionListing.withUnreadCount > 0;
+
+	if (!transactionEntry) {
+		return null;
+	}
 
 	return (
 		<LinkTo
@@ -55,11 +59,11 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 								data-ui-opacity="8"
 								data-ui-text="xs"
 							>
-								{transactionListing.unread > 9
+								{transactionListing.withUnreadCount > 9
 									? "9+"
 									: toLocaleNumber({
 											locale,
-											number: transactionListing.unread,
+											number: transactionListing.withUnreadCount,
 										})}
 							</Badge>
 						) : null}
@@ -71,7 +75,7 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 						data-ui-width="full"
 					>
 						<Typo
-							label={"transactionListing.title"}
+							label={transactionListing.title}
 							data-ui-tone="neutral"
 							data-ui-theme="light"
 							data-ui-color="lead"
@@ -82,7 +86,7 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 
 						<Typo
 							label={toActivityLabel({
-								entry: transactionListing.entry,
+								entry: transactionEntry,
 							})}
 							data-ui-text="xs"
 							data-ui-tone="neutral"
@@ -109,7 +113,7 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 						<Tx
 							label={toTimeDiff({
 								locale,
-								time: transactionListing.entry.createdAt,
+								time: transactionEntry.createdAt,
 							})}
 							data-ui-opacity="6"
 						/>

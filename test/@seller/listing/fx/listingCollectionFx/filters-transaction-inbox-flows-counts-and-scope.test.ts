@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
-import { transactionListingCollectionFx } from "~/seller/transaction-listing/server/fx/transactionListingCollectionFx";
-import { transactionListingCountFx } from "~/seller/transaction-listing/server/fx/transactionListingCountFx";
+import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
+import { listingCountFx } from "~/seller/listing/server/fx/listingCountFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createOpenScenarioFx } from "~/test/transaction/fx/createOpenScenarioFx";
@@ -11,9 +11,9 @@ import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedSc
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
 
-describe("seller transaction-listing inbox flows", () => {
+describe("seller listing inbox flows", () => {
 	it("filters buyer-to-seller, seller-to-buyer and archived listings inside seller scope", async () => {
-		const database = await testabase("seller-transaction-listing-flow-filters");
+		const database = await testabase("seller-listing-flow-filters");
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
@@ -60,51 +60,59 @@ describe("seller transaction-listing inbox flows", () => {
 				},
 			});
 
-			const buyerToSellerCollection = yield* transactionListingCollectionFx({
+			const buyerToSellerCollection = yield* listingCollectionFx({
+				userId: users.seller.id,
 				scope: {
 					userId: users.seller.id,
 				},
 				where: {
 					flow: "buyer-to-seller",
+					withTransaction: true,
 				},
 			});
-			const sellerToBuyerCollection = yield* transactionListingCollectionFx({
+			const sellerToBuyerCollection = yield* listingCollectionFx({
+				userId: users.seller.id,
 				scope: {
 					userId: users.seller.id,
 				},
 				where: {
 					flow: "seller-to-buyer",
+					withTransaction: true,
 				},
 			});
-			const archivedCollection = yield* transactionListingCollectionFx({
+			const archivedCollection = yield* listingCollectionFx({
+				userId: users.seller.id,
 				scope: {
 					userId: users.seller.id,
 				},
 				where: {
 					flow: "archived",
+					withTransaction: true,
 				},
 			});
-			const archivedCount = yield* transactionListingCountFx({
+			const archivedCount = yield* listingCountFx({
+				userId: users.seller.id,
 				scope: {
 					userId: users.seller.id,
 				},
 				where: {
 					flow: "archived",
+					withTransaction: true,
 				},
 			});
 
 			expect(buyerToSellerCollection.map((item) => item.id)).toEqual([
 				buyerToSeller.listingId,
 			]);
-			expect(buyerToSellerCollection[0]?.unread).toBe(1);
+			expect(buyerToSellerCollection[0]?.withUnreadCount).toBe(1);
 			expect(sellerToBuyerCollection.map((item) => item.id)).toEqual([
 				sellerToBuyer.listingId,
 			]);
-			expect(sellerToBuyerCollection[0]?.unread).toBe(0);
+			expect(sellerToBuyerCollection[0]?.withUnreadCount).toBe(0);
 			expect(archivedCollection.map((item) => item.id)).toEqual([
 				archived.listingId,
 			]);
-			expect(archivedCollection[0]?.unread).toBe(0);
+			expect(archivedCollection[0]?.withUnreadCount).toBe(0);
 			expect(archivedCount).toBe(archivedCollection.length);
 			expect(
 				[

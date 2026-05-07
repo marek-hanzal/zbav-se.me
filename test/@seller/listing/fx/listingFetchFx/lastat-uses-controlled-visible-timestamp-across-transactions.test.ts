@@ -3,9 +3,9 @@ import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { DateContextFx } from "@/lib/common/date";
 import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
+import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
+import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { transactionListingCollectionFx } from "~/seller/transaction-listing/server/fx/transactionListingCollectionFx";
-import { transactionListingFetchFx } from "~/seller/transaction-listing/server/fx/transactionListingFetchFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
@@ -19,9 +19,9 @@ const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 		}),
 	);
 
-describe("seller transaction-listing read model", () => {
+describe("seller listing transaction read model", () => {
 	it("uses the latest visible timestamp across transactions and ignores newer hidden interest text", async () => {
-		const database = await testabase("seller-transaction-listing-lastat-controlled-timestamps");
+		const database = await testabase("seller-listing-lastat-controlled-timestamps");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -75,12 +75,17 @@ describe("seller transaction-listing read model", () => {
 				}),
 			);
 
-			const collection = yield* transactionListingCollectionFx({
+			const collection = yield* listingCollectionFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
+				where: {
+					withTransaction: true,
+				},
 			});
-			const fetched = yield* transactionListingFetchFx({
+			const fetched = yield* listingFetchFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
@@ -92,10 +97,10 @@ describe("seller transaction-listing read model", () => {
 			expect(collection.map((item) => item.id)).toEqual([
 				listing.id,
 			]);
-			expect(fetched.entry.id).toBe(visibleEntry.id);
-			expect(fetched.lastAt.toISOString()).toBe("2026-04-02T11:30:00.000Z");
-			expect(collection[0]?.entry.id).toBe(visibleEntry.id);
-			expect(collection[0]?.lastAt.toISOString()).toBe("2026-04-02T11:30:00.000Z");
+			expect(fetched.withTransactionEntry?.id).toBe(visibleEntry.id);
+			expect(fetched.withLastAt?.toISOString()).toBe("2026-04-02T11:30:00.000Z");
+			expect(collection[0]?.withTransactionEntry?.id).toBe(visibleEntry.id);
+			expect(collection[0]?.withLastAt?.toISOString()).toBe("2026-04-02T11:30:00.000Z");
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

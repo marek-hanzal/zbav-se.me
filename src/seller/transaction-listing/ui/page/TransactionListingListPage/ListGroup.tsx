@@ -1,13 +1,13 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Typo } from "@/lib/client/typo";
-import { withTransactionListingQuery } from "~/seller/transaction-listing/query/withTransactionListingQuery";
-import type { TransactionListingFilterSchema } from "~/seller/transaction-listing/server/schema/TransactionListingFilterSchema";
+import { withListingQuery } from "~/seller/listing/query/withListingQuery";
+import type { ListingWhereSchema } from "~/seller/listing/server/schema/ListingWhereSchema";
 import { TransactionListingList } from "./TransactionListingList";
 
 export namespace ListGroup {
 	export interface Props extends Container.Props {
-		filter: TransactionListingFilterSchema.Type;
+		filter: ListingWhereSchema.Type;
 		label: string;
 		refetchInterval: number;
 		typoProps?: Typo.PropsEx;
@@ -21,16 +21,19 @@ export const ListGroup: FC<ListGroup.Props> = ({
 	typoProps,
 	...props
 }) => {
-	const { data: transactionListingCollection } = withTransactionListingQuery.useIdsQuery(
+	const { data: transactionListingCollection } = withListingQuery.useIdsQuery(
 		{
-			filter,
+			filter: {
+				...filter,
+				withTransaction: true,
+			},
 			cursor: {
 				page: 0,
 				size: 1000,
 			},
 			sort: [
 				{
-					field: "lastAt",
+					field: "withLastAt",
 					order: "desc",
 				},
 			],

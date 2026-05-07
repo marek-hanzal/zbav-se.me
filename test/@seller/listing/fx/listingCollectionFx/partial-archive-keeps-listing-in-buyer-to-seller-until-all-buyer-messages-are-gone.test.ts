@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
+import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { transactionListingCollectionFx } from "~/seller/transaction-listing/server/fx/transactionListingCollectionFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
@@ -10,9 +10,9 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { activityArchiveFx } from "~/user/activity/server/fx/activityArchiveFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 
-describe("seller transaction-listing flows", () => {
+describe("seller listing flows", () => {
 	it("stays in buyer-to-seller until every buyer-message under the listing is archived", async () => {
-		const database = await testabase("seller-transaction-listing-partial-archive-flow");
+		const database = await testabase("seller-listing-partial-archive-flow");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -50,12 +50,14 @@ describe("seller transaction-listing flows", () => {
 				},
 			});
 
-			const buyerToSellerBeforeArchive = yield* transactionListingCollectionFx({
+			const buyerToSellerBeforeArchive = yield* listingCollectionFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
 				where: {
 					flow: "buyer-to-seller",
+					withTransaction: true,
 				},
 			});
 
@@ -69,20 +71,24 @@ describe("seller transaction-listing flows", () => {
 				},
 			});
 
-			const buyerToSellerAfterPartialArchive = yield* transactionListingCollectionFx({
+			const buyerToSellerAfterPartialArchive = yield* listingCollectionFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
 				where: {
 					flow: "buyer-to-seller",
+					withTransaction: true,
 				},
 			});
-			const sellerToBuyerAfterPartialArchive = yield* transactionListingCollectionFx({
+			const sellerToBuyerAfterPartialArchive = yield* listingCollectionFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
 				where: {
 					flow: "seller-to-buyer",
+					withTransaction: true,
 				},
 			});
 
@@ -96,37 +102,41 @@ describe("seller transaction-listing flows", () => {
 				},
 			});
 
-			const buyerToSellerAfterFullArchive = yield* transactionListingCollectionFx({
+			const buyerToSellerAfterFullArchive = yield* listingCollectionFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
 				where: {
 					flow: "buyer-to-seller",
+					withTransaction: true,
 				},
 			});
-			const sellerToBuyerAfterFullArchive = yield* transactionListingCollectionFx({
+			const sellerToBuyerAfterFullArchive = yield* listingCollectionFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
 				where: {
 					flow: "seller-to-buyer",
+					withTransaction: true,
 				},
 			});
 
 			expect(buyerToSellerBeforeArchive.map((item) => item.id)).toEqual([
 				listing.id,
 			]);
-			expect(buyerToSellerBeforeArchive[0]?.unread).toBe(2);
+			expect(buyerToSellerBeforeArchive[0]?.withUnreadCount).toBe(2);
 			expect(buyerToSellerAfterPartialArchive.map((item) => item.id)).toEqual([
 				listing.id,
 			]);
-			expect(buyerToSellerAfterPartialArchive[0]?.unread).toBe(1);
+			expect(buyerToSellerAfterPartialArchive[0]?.withUnreadCount).toBe(1);
 			expect(sellerToBuyerAfterPartialArchive).toEqual([]);
 			expect(buyerToSellerAfterFullArchive).toEqual([]);
 			expect(sellerToBuyerAfterFullArchive.map((item) => item.id)).toEqual([
 				listing.id,
 			]);
-			expect(sellerToBuyerAfterFullArchive[0]?.unread).toBe(0);
+			expect(sellerToBuyerAfterFullArchive[0]?.withUnreadCount).toBe(0);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

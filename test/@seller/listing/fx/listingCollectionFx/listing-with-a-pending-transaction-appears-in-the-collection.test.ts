@@ -1,16 +1,16 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionListingCollectionFx } from "~/seller/transaction-listing/server/fx/transactionListingCollectionFx";
-import { transactionListingFetchFx } from "~/seller/transaction-listing/server/fx/transactionListingFetchFx";
+import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
+import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 
-describe("transactionListingCollectionFx (seller dashboard)", () => {
+describe("listingCollectionFx (seller dashboard transactions)", () => {
 	it("listing with an interest transaction appears in the collection", async () => {
-		const database = await testabase("txListing-with-interest");
+		const database = await testabase("listing-with-interest");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -29,14 +29,19 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 				},
 			});
 
-			const collection = yield* transactionListingCollectionFx({
+			const collection = yield* listingCollectionFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
+				where: {
+					withTransaction: true,
+				},
 			});
 
-			const item = collection.find((l) => l.id === listingId);
-			const fetched = yield* transactionListingFetchFx({
+			const item = collection.find((listing) => listing.id === listingId);
+			const fetched = yield* listingFetchFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
@@ -45,21 +50,25 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 				},
 			});
 
-			const ids = collection.map((l) => l.id);
+			const ids = collection.map((listing) => listing.id);
 			expect(ids).toContain(listingId);
-			expect(typeof item?.count).toBe("number");
-			expect(item?.count).toBe(1);
-			expect(item?.entry.kind).toBe("status-interest");
-			expect(item?.lastAt.getTime()).toBe(new Date(item?.entry.createdAt ?? 0).getTime());
-			expect(item?.lastAt.getTime()).toBeLessThan(hiddenTextEntry.createdAt.getTime());
-			expect(fetched.entry.kind).toBe("status-interest");
-			expect(fetched.lastAt.getTime()).toBe(new Date(fetched.entry.createdAt).getTime());
-			expect(fetched.lastAt.getTime()).toBeLessThan(hiddenTextEntry.createdAt.getTime());
+			expect(typeof item?.withTransactionCount).toBe("number");
+			expect(item?.withTransactionCount).toBe(1);
+			expect(item?.withTransactionEntry?.kind).toBe("status-interest");
+			expect(item?.withLastAt?.getTime()).toBe(
+				new Date(item?.withTransactionEntry?.createdAt ?? 0).getTime(),
+			);
+			expect(item?.withLastAt?.getTime()).toBeLessThan(hiddenTextEntry.createdAt.getTime());
+			expect(fetched.withTransactionEntry?.kind).toBe("status-interest");
+			expect(fetched.withLastAt?.getTime()).toBe(
+				new Date(fetched.withTransactionEntry?.createdAt ?? 0).getTime(),
+			);
+			expect(fetched.withLastAt?.getTime()).toBeLessThan(hiddenTextEntry.createdAt.getTime());
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 
-	it("lastAt sorting ignores buffered buyer text across seller listings", async () => {
-		const database = await testabase("txListing-lastAt-interest-buffer");
+	it("withLastAt sorting ignores buffered buyer text across seller listings", async () => {
+		const database = await testabase("listing-lastAt-interest-buffer");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -82,13 +91,17 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 				},
 			});
 
-			const collection = yield* transactionListingCollectionFx({
+			const collection = yield* listingCollectionFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
+				where: {
+					withTransaction: true,
+				},
 				sort: [
 					{
-						field: "lastAt",
+						field: "withLastAt",
 						order: "desc",
 					},
 				],
@@ -102,8 +115,10 @@ describe("transactionListingCollectionFx (seller dashboard)", () => {
 			expect(newerIndex).toBeGreaterThanOrEqual(0);
 			expect(olderIndex).toBeGreaterThanOrEqual(0);
 			expect(newerIndex).toBeLessThan(olderIndex);
-			expect(olderItem?.entry.kind).toBe("status-interest");
-			expect(olderItem?.lastAt.getTime()).toBeLessThan(hiddenTextEntry.createdAt.getTime());
+			expect(olderItem?.withTransactionEntry?.kind).toBe("status-interest");
+			expect(olderItem?.withLastAt?.getTime()).toBeLessThan(
+				hiddenTextEntry.createdAt.getTime(),
+			);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

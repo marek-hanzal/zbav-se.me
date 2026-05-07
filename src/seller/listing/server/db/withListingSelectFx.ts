@@ -27,6 +27,9 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	sort,
 }: withListingSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
+	const restrictionSql = yield* withUserRestrictionActiveSelectFx({
+		userId,
+	});
 
 	let query = kysely
 		.selectFrom("listing as l")
@@ -168,10 +171,6 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			.with("withLastAt", () => query.orderBy("withLastAt", item.order))
 			.exhaustive();
 	}
-
-	const restrictionSql = yield* withUserRestrictionActiveSelectFx({
-		userId,
-	});
 
 	return selectFx({
 		select: query,

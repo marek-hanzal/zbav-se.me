@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionListingCollectionFx } from "~/seller/transaction-listing/server/fx/transactionListingCollectionFx";
-import { transactionListingFetchFx } from "~/seller/transaction-listing/server/fx/transactionListingFetchFx";
+import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
+import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
@@ -9,9 +9,9 @@ import { testabase } from "~/test/testabase";
 import { createPendingScenarioFx } from "~/test/transaction/fx/createPendingScenarioFx";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
-describe("seller transaction-listing read model foreign isolation", () => {
+describe("seller listing transaction foreign isolation", () => {
 	it("keeps foreign seller listings out", async () => {
-		const database = await testabase("sellerTransactionListingReadModelFx-foreign");
+		const database = await testabase("seller-listing-transaction-foreign");
 
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -30,11 +30,13 @@ describe("seller transaction-listing read model foreign isolation", () => {
 				listing,
 			});
 
-			const mixedIds = yield* transactionListingCollectionFx({
+			const mixedIds = yield* listingCollectionFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
 				where: {
+					withTransaction: true,
 					idIn: [
 						ownScenario.listingId,
 						foreignScenario.listingId,
@@ -42,7 +44,8 @@ describe("seller transaction-listing read model foreign isolation", () => {
 				},
 			});
 			const foreignFetch = yield* Effect.either(
-				transactionListingFetchFx({
+				listingFetchFx({
+					userId: seller.id,
 					scope: {
 						userId: seller.id,
 					},

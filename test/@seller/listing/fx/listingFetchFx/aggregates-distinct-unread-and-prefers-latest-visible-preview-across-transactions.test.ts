@@ -1,18 +1,18 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
+import { listingCollectionFx } from "~/seller/listing/server/fx/listingCollectionFx";
+import { listingFetchFx } from "~/seller/listing/server/fx/listingFetchFx";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
-import { transactionListingCollectionFx } from "~/seller/transaction-listing/server/fx/transactionListingCollectionFx";
-import { transactionListingFetchFx } from "~/seller/transaction-listing/server/fx/transactionListingFetchFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 
-describe("seller transaction-listing read model", () => {
+describe("seller listing transaction read model", () => {
 	it("counts unread by distinct transaction and keeps preview on the latest visible activity across transactions", async () => {
-		const database = await testabase("seller-transaction-listing-distinct-unread-preview");
+		const database = await testabase("seller-listing-distinct-unread-preview");
 
 		return Effect.gen(function* () {
 			const { seller, buyer, stranger } = yield* createUsersFx({});
@@ -61,12 +61,17 @@ describe("seller transaction-listing read model", () => {
 				},
 			});
 
-			const collection = yield* transactionListingCollectionFx({
+			const collection = yield* listingCollectionFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
+				where: {
+					withTransaction: true,
+				},
 			});
-			const fetched = yield* transactionListingFetchFx({
+			const fetched = yield* listingFetchFx({
+				userId: seller.id,
 				scope: {
 					userId: seller.id,
 				},
@@ -77,21 +82,23 @@ describe("seller transaction-listing read model", () => {
 
 			expect(collection.map((item) => item.id)).toContain(listing.id);
 			expect(fetched.id).toBe(listing.id);
-			expect(fetched.count).toBe(2);
-			expect(fetched.unread).toBe(2);
-			expect(fetched.entry.kind).toBe("text");
-			expect(fetched.entry.id).toBe(latestVisibleEntry.id);
-			expect(fetched.lastAt.getTime()).toBe(latestVisibleEntry.createdAt.getTime());
-			expect(fetched.lastAt.getTime()).toBeLessThan(
+			expect(fetched.withTransactionCount).toBe(2);
+			expect(fetched.withUnreadCount).toBe(2);
+			expect(fetched.withTransactionEntry?.kind).toBe("text");
+			expect(fetched.withTransactionEntry?.id).toBe(latestVisibleEntry.id);
+			expect(fetched.withLastAt?.getTime()).toBe(latestVisibleEntry.createdAt.getTime());
+			expect(fetched.withLastAt?.getTime()).toBeLessThan(
 				hiddenNewestPendingEntry.createdAt.getTime(),
 			);
 
 			const collectionItem = collection.find((item) => item.id === listing.id);
-			expect(collectionItem?.count).toBe(2);
-			expect(collectionItem?.unread).toBe(2);
-			expect(collectionItem?.entry.id).toBe(latestVisibleEntry.id);
-			expect(collectionItem?.lastAt.getTime()).toBe(latestVisibleEntry.createdAt.getTime());
-			expect(collectionItem?.lastAt.getTime()).toBeLessThan(
+			expect(collectionItem?.withTransactionCount).toBe(2);
+			expect(collectionItem?.withUnreadCount).toBe(2);
+			expect(collectionItem?.withTransactionEntry?.id).toBe(latestVisibleEntry.id);
+			expect(collectionItem?.withLastAt?.getTime()).toBe(
+				latestVisibleEntry.createdAt.getTime(),
+			);
+			expect(collectionItem?.withLastAt?.getTime()).toBeLessThan(
 				hiddenNewestPendingEntry.createdAt.getTime(),
 			);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
