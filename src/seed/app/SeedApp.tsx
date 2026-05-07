@@ -96,7 +96,7 @@ export const SeedApp: FC<SeedApp.Props> = () => {
 	const [selectedSeedIndex, setSelectedSeedIndex] = useState(0);
 	const [summary, setSummary] = useState<SummaryState>({});
 	const [userEmailInput, setUserEmailInput] = useState(
-		seedRegistry[0]?.defaultUserEmail ?? "seed-listings@test.cz",
+		seedRegistry[0]?.defaultUserEmail ?? "b@x32.cz",
 	);
 
 	const selectedSeed = seedRegistry[selectedSeedIndex] ?? seedRegistry[0];
