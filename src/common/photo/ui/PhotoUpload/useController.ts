@@ -1,0 +1,99 @@
+import {
+	type ChangeEvent,
+	type KeyboardEvent,
+	type RefObject,
+	useCallback,
+	useRef,
+	useState,
+} from "react";
+import type { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
+import { withUploadMutation } from "~/user/upload/mutation/withUploadMutation";
+import { withUploadQuery } from "~/user/upload/query/withUploadQuery";
+import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
+
+export namespace useController {
+	export type Value = string | undefined;
+	export type OnChangeFn = (uploadId: Value) => void;
+	export type OnUploadFn = (upload: UploadSchema.Type | undefined) => void;
+
+	export interface Props {
+		onChange: OnChangeFn;
+		access: AccessEnumSchema.Type;
+		onUpload?: OnUploadFn;
+		mutationId?: string;
+	}
+
+	export interface Result {
+		inputRef: RefObject<HTMLInputElement | null>;
+		progress: number;
+		isPending: boolean;
+		pick(): void;
+		onKeyDown(e: KeyboardEvent): void;
+		onUpload(e: ChangeEvent<HTMLInputElement>): Promise<void>;
+	}
+}
+
+export function useController({
+	onChange,
+	access,
+	onUpload,
+	mutationId,
+}: useController.Props): useController.Result {
+	const inputRef = useRef<HTMLInputElement>(null);
+	const [progress, setProgress] = useState(0);
+	const setUpload = withUploadQuery.useUpdate();
+
+	const pick = useCallback(() => {
+		inputRef.current?.click();
+	}, []);
+
+	const onKeyDown = useCallback((e: KeyboardEvent) => {
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			inputRef.current?.click();
+		}
+	}, []);
+
+	const uploadMutation = withUploadMutation.useMutation({
+		meta: {
+			mutationId,
+		},
+		async onPreMutation() {
+			setProgress(0);
+		},
+		async onPostMutation({ result }) {
+			setUpload(result);
+			onChange(result.id);
+			onUpload?.(result);
+		},
+	});
+
+	return {
+		inputRef,
+		progress,
+		isPending: uploadMutation.isPending,
+		pick,
+		onKeyDown,
+		onUpload: useCallback(
+			async (e: ChangeEvent<HTMLInputElement>) => {
+				const file = e.target.files?.[0];
+				if (!file) {
+					return;
+				}
+
+				uploadMutation.mutate({
+					access,
+					blob: file,
+					name: file.name,
+					onProgress: setProgress,
+				});
+
+				e.target.value = "";
+			},
+			[
+				access,
+				uploadMutation,
+			],
+		),
+	} as const;
+}

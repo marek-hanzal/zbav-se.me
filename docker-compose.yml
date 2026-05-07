@@ -1,9 +1,6 @@
 services:
     postgres:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        platform: linux/amd64
+        image: nhost/postgres:17-20260320-1
         container_name: zbav-se-postgres
         restart: always
         ports:

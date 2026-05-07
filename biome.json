@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.4.7/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.4.14/schema.json",
 	"vcs": {
 		"enabled": false,
 		"clientKind": "git",
@@ -14,10 +14,10 @@
 			"!**/.output",
 			"!**/.nitro",
 			"!**/.vercel",
+			"!**/.venv",
 			"!**/.tanstack",
 			"!**/sdk/src/api",
-			"!**/apps/blog/.docusaurus",
-			"!**/apps/blog/build"
+			"!**/coverage"
 		]
 	},
 	"formatter": {
@@ -53,35 +53,7 @@
 				"noDangerouslySetInnerHtml": "off"
 			},
 			"style": {
-				"useComponentExportOnlyModules": "off",
-				"noRestrictedImports": {
-					"level": "error",
-					"options": {
-						"patterns": [
-							{
-								"group": [
-									"~/app/@seller/**",
-									"!~/app/@seller/**/~public/**"
-								],
-								"message": "Use public import"
-							},
-							{
-								"group": [
-									"~/app/@buyer/**",
-									"!~/app/@buyer/**/~public/**"
-								],
-								"message": "Use public import"
-							},
-							{
-								"group": [
-									"~/app/@user/**",
-									"!~/app/@user/**/~public/**"
-								],
-								"message": "Use public import"
-							}
-						]
-					}
-				}
+				"useComponentExportOnlyModules": "off"
 			},
 			"correctness": {
 				"useHookAtTopLevel": "off"

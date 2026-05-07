@@ -1,3 +1,9 @@
+---
+key: MASTER
+title: Zdroj pravdy pro aplikaci, produkt a pravidla
+summary: Primární dokument, kde jsou popsané všechny části aplikace, co umí, pravidla a další; slouží jako hlavní zdroj pravdy.
+---
+
 # MASTER
 
 Tohle je finální „single source of truth“ pro Zbav-se.me. Je to moje produktová ústava: popisuje **co je pravda** (koncepty, pravidla, hranice) a **proč**. Neřeší, jak to technicky nakóduju.
@@ -66,7 +72,7 @@ Pozn.: **Obsah je autorita pořadí.** Pořadí kapitol a konceptů v dokumentu 
   - [Flag uživatele](#koncept-flag-uzivatele)
   - [Transakce](#koncept-transakce)
   - [Zprávy](#koncept-zpravy)
-  - [Notifikace (Inbox)](#koncept-notifikace)
+  - [Notifikace (Activity)](#koncept-notifikace)
   - [Dispute](#koncept-dispute)
   - [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu)
   - [Pass: Delší expirace inzerátu (Za měsíc)](#koncept-pass-delsi-expirace-inzeratu)
@@ -194,7 +200,7 @@ Důvěra u mě není odměna ani razítko po „ověření identity“. Je to vl
 Co z toho plyne:
 - Nehoním lidi přes občanky. Držím rámec, ve kterým se dá chovat normálně.
 - Hranice jsou jasný a vymahatelný: co nejde, prostě nejde (a nejde to obcházet).
-- Odpovědnost začíná přijetím: nezájem není zločin, přijetí je závazek. (Viz [Transakce](#koncept-transakce).)
+- Odpovědnost začíná otevřením obchodu: zájem není závazek, obchod je závazek. (Viz [Transakce](#koncept-transakce).)
 - „Zavřeno je zavřeno“ je fyzika systému, ne prosba. (Viz [Transakce](#koncept-transakce).)
 
 <a id="ferova-monetizace"></a>
@@ -363,7 +369,7 @@ Poloha je součást inzerátu, vzdálenost je signál, radius je nástroj. (Viz 
 Transakce má začátek a konec. Konec je definitivní. Další kontakt = nová transakce. (Viz [Transakce](#koncept-transakce).)
 
 5) **Ochrana prodejce jako feature**
-Odpovědnost začíná až přijetím. `pending` není kanál pro spam. (Viz [Transakce](#koncept-transakce).)
+Odpovědnost začíná až obchodem. Kupující může psát hned, ale `interest` není kanál na prodejce: prodejce zprávy neuvidí, dokud z toho neudělá `trade`. (Viz [Transakce](#koncept-transakce).)
 
 6) **Transparentnost jako systémová vlastnost**
 Pravidla jsou pojmenovaný. Když něco omezím, má to čitelnej důvod. (Viz [Seznam inzerátů](#koncept-seznam-inzeratu), [Kodex](#kodex).)
@@ -387,7 +393,7 @@ Nové inzeráty mají [Release window](#koncept-release-window) (baseline férov
 Kupující si můžou vypnout zvýraznění ([Anti-topper](#koncept-anti-topper)) bez toho, aby tím „okrádali“ prodejce. Systém to vidí a prodejce dostane [Payback](#koncept-payback). Boosty existují, ale důvěra v systém zůstává. (Viz [Anti-topper](#koncept-anti-topper), [Payback](#koncept-payback).)
 
 13) **Automatické ukončování všeho, co by jinde hnilo**
-Inzeráty, transakce i předplatné mají tvrdý kontrakt konce. Žádný zombie inzeráty, žádný nekonečný „pending“, žádný suby běžící na mrtvolky. (Viz [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu), [Automatické ukončení: Transakce](#koncept-automaticke-ukonceni-transakce), [Automatické ukončení: Předplatné (neaktivita)](#koncept-automaticke-ukonceni-predplatneho).)
+Inzeráty, transakce i předplatné mají tvrdý kontrakt konce. Žádný zombie inzeráty, žádný nekonečný „interest“, žádný suby běžící na mrtvolky. (Viz [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu), [Automatické ukončení: Transakce](#koncept-automaticke-ukonceni-transakce), [Automatické ukončení: Předplatné (neaktivita)](#koncept-automaticke-ukonceni-predplatneho).)
 
 14) **Ekonomika čitelná z jednoho místa**
 Jednotný model [Tokeny](#koncept-tokeny) / [Kupón](#koncept-kupon) / [Pass](#koncept-pass). [Ceník](#koncept-cenik) obsahuje všechno. [Exclusive](#koncept-exclusive) je jen viditelné označení, ne tajná výjimka. Když něco existuje, je v ceníku. Když je zamčené, je u toho nápis. (Viz [Ceník](#koncept-cenik), [Exclusive](#koncept-exclusive), [Aktivace](#koncept-aktivace), [Ekonomika](#ekonomika).)
@@ -434,14 +440,14 @@ Pravidlo proti duplicitám (znovu a naposled):
 ### Uživatel
 ← [předchozí](#co-nedelam) | [další](#koncept-kategorie) →
 
-Uživatel je core entita. Je na něj navázaný skoro všechno (inzeráty, drafty, feedy, transakce, inbox), ale **PII držím na minimu** (typicky email). Zároveň pro funkci produktu ukládám doménový data účtu (feedy, drafty, transakce, inbox, eventy/metriky, flagy…). Všechno navíc je jen riziko a dluh.
+Uživatel je core entita. Je na něj navázaný skoro všechno (inzeráty, drafty, feedy, transakce, activity), ale **PII držím na minimu** (typicky email). Zároveň pro funkci produktu ukládám doménový data účtu (feedy, drafty, transakce, activity, eventy/metriky, flagy…). Všechno navíc je jen riziko a dluh.
 
 Co uživatel reálně ovládá:
 - kontext trhu přes [Feedy](#koncept-feed),
 - rozpracovaný věci přes [Drafty](#koncept-draft),
 - publikovaný věci přes [Inzeráty](#koncept-inzerat),
 - obchodní kontext přes [Transakce](#koncept-transakce) a [Zprávy](#koncept-zpravy),
-- „co se stalo“ přes [Inbox](#koncept-notifikace),
+- „co se stalo“ přes [Activity](#koncept-notifikace),
 - hranice obsahu přes [Citlivost](#koncept-citlivost-inzeratu) a osobní úklid přes [Ignor](#koncept-ignorace-inzeratu),
 - aktivace a limity přes [Ekonomiku](#ekonomika) a [Limit počtu feedů](#koncept-limit-poctu-feedu), [Limit fotek](#koncept-limit-poctu-fotek), [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu).
 
@@ -456,7 +462,7 @@ Related:
 - [Inzeráty](#koncept-inzerat)
 - [Transakce](#koncept-transakce)
 - [Zprávy](#koncept-zpravy)
-- [Inbox](#koncept-notifikace)
+- [Activity](#koncept-notifikace)
 
 ---
 
@@ -470,6 +476,13 @@ Kategorie nese mimo jiné:
 - **název**
 - **slug**
 - **locale**
+- **discovery režim v defaultním listingu**
+
+Discovery režim kategorie:
+- `implicit` = normální kategorie. Její inzeráty se můžou objevit v obecném feedu/hledání bez výběru kategorie.
+- `explicit` = tichá kategorie. Její inzeráty nelezou do obecného feedu/hledání samy od sebe; uživatel si o tu kategorii musí vědomě říct filtrem.
+
+Tohle není [Citlivost](#koncept-citlivost-inzeratu). `explicit` neznamená zakázaný ani 18+. Je to hygienická brzda veřejného feedu: věci, které existují a jsou normálně dostupné, ale nemusejí být hned na první dobrou všem v ksichtu.
 
 <a id="koncept-category-spec"></a>
 #### Category Spec (parametry)
@@ -656,7 +669,7 @@ Related:
 ### Inzerát: Cena
 ← [předchozí](#koncept-inzerat-titulek) | [další](#koncept-inzerat-delivery) →
 
-Cena je povinná. Bez ceny je to jen „piš mi do zpráv“ a to je přesně ten chaos, kterej chci zabít ještě dřív, než vznikne.
+Cena je povinná. Typ ceny jen říká, jak pevně se prodávající té částky drží. Nesmí vzniknout mlha typu „piš mi do zpráv“.
 
 Položky:
 - **Cena**: konkrétní částka.
@@ -665,9 +678,12 @@ Položky:
 Typ ceny:
 - `closed` = pevná cena („nesmlouvám“)
 - `open` = výchozí cena („můžeme se domluvit“)
+- `offer` = představa prodávajícího („takovou mám představu, nabídni mi“)
 
 Tvrdý pravidlo:
-- I u `open` je cena pořád povinná. Žádný „dohodou“ jako únik z reality.
+- U všech typů ceny (`closed`, `open`, `offer`) je konkrétní částka povinná.
+- `offer` není „bez ceny“. Je to cenová představa prodávajícího a výzva, aby kupující přišel s vlastní nabídkou.
+- `offer` nesmí být maskovaný „dohodou“ bordel. Musí být jasně pojmenovaný v UI i ve feedu, aby kupující předem věděl, do čeho leze.
 
 Related:
 - [Inzerát](#koncept-inzerat)
@@ -1001,12 +1017,18 @@ Tvrdý pravidlo:
 Ostatní brány jsou pravidla listingu (ne zákaz otevření):
 - ignor,
 - životní cyklus [Inzerátu](#koncept-inzerat) (`expired` / `closed` / `sold`),
+- discovery režim [Kategorie](#koncept-kategorie) (`explicit` se zobrazí jen při vědomém category filtru),
 - [Release window](#koncept-release-window),
 - anti-topper a podobný mechaniky pořadí.
 
 Co se v listingu defaultně neukazuje:
 - `expired` a `closed` (jen přes vědomej filtr / historickej režim),
-- `sold` (není k dispozici).
+- `sold` (není k dispozici),
+- inzeráty v kategoriích s discovery režimem `explicit`, pokud dotaz nemá konkrétní category filtr.
+
+Explicitní category filtr znamená, že dotaz obsahuje konkrétní kategorii nebo seznam kategorií. Prázdnej seznam kategorií se bere jako „bez category filtru“, takže pořád platí jen `implicit`.
+
+Veřejný listing má pevný citlivostní strop: můžou se v něm objevit jen inzeráty s výslednou citlivostí `none` nebo `adult-relaxed`. Tenhle strop nejde uživatelsky ovlivnit ani obejít category filtrem.
 
 Kontrakt detailu mimo `live`:
 - Detail se otevře (krom citlivosti), ale je read-only a místo „Mám zájem“ ukážu jasnej status („Už není dostupný“). UI má být fér.
@@ -1124,7 +1146,7 @@ Related:
 
 Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec vidět*. **Citlivost** je hard gate: chrání veřejnej prostor před obsahem, kterej určitá skupina lidí buď **nechce**, nebo ho **ani nesmí** vidět.
 
-Úrovně (stupňovaně): `none < adult < adult-relaxed < sensitive < restricted`.
+Úrovně (stupňovaně): `none < adult-relaxed < adult < sensitive < restricted`.
 
 | Úroveň             | Enum            | Poznámka                                                                                                                                                                                                                   |
 | ------------------ | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1132,7 +1154,12 @@ Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec v
 | Pro dospělé        | `adult`         | 18+ kontext                                                                                                                                                                                                                |
 | Pro dospělé (soft) | `adult-relaxed` | adult lze odkliknout na základě varovné hlášky (jen pro 18+)                                                                                                                                                              |
 | Citlivé            | `sensitive`     | věci „na hraně“, co nechci cpát všem                                                                                                                                                                                       |
-| Omezené            | `restricted`    | zákonný omezení / oprávnění (systém ho **neověřuje**); nutná součást ochrany je také běžící cooldown 24h — tzn. člověk musí vědět, co dělá; tento cooldown se zapne pokaždé, když si člověk v profilu zapne "restricted" úroveň |
+| Omezené            | `restricted`    | zákonný omezení / oprávnění (systém ho **neověřuje**); nutná součást ochrany je také běžící cooldown — tzn. člověk musí vědět, co dělá |
+
+Cooldown při zapnutí vyšší úrovně:
+- `adult`: 1h
+- `sensitive`: 2h
+- `restricted`: 24h
 
 Gating a viditelnost (dvoufázově, schválně):
 - **Profil** = nastavíš maximum (co *smíš / jsi ochotnej* vidět).
@@ -1140,7 +1167,10 @@ Gating a viditelnost (dvoufázově, schválně):
 
 Hard gate pravidla:
 - V listingu (feed/search/seznam) se cokoliv nad maximum **vůbec nedostane do výsledků**.
+- Veřejný listing má systémové maximum `adult-relaxed`; `adult`, `sensitive` a `restricted` do něj nikdy nelezou.
 - Na detail přes přímý odkaz vracím při nesouladu maxima **404** (žádný obcházení přes link, žádný „aspoň víš že to existuje“).
+- Nová omezená akce (např. otevření transakce, reakce, metrika viditelnosti) musí respektovat aktuální maximum. Nižší profilová citlivost nesmí spustit akci nad vyšším inzerátem.
+- Historický/post-akční přístup je měkčí: když se uživatel k inzerátu legálně dostal dřív (např. existující transakce, seller info v kontextu otevřené interakce), UI může zachovat potřebný kontext i po snížení maxima. To je kontext, ne nová permission k omezené akci.
 - **Citlivost** je **jediná uživatelská** věc, která smí detail tvrdě schovat (404). Kromě citlivosti existuje ještě **admin hard removal** (výjimečná stopka pro nelegální/škodlivý obsah), která je **404** a nastavuje stav `banned` (viz [Ban](#koncept-ban) a [Inzerát](#koncept-inzerat)). Ostatní brány můžou ovlivnit seznam, ale nemaj dělat „ten inzerát pro tebe neexistuje“.
 
 Odpovědnost:
@@ -1219,7 +1249,7 @@ Related:
 Nahlásit člověka bez kontextu je toxická zbraň. Proto to gateuju chováním systému.
 
 Kontrakt:
-- Je to tvrdá akce dostupná **jen v rámci transakce** a až po `open`.
+- Je to tvrdá akce dostupná **jen v rámci transakce** a až po `trade`.
 - Není to toggle.
 - Stejně jako u inzerátu: žádný auto-efekt, jen signál a metrika.
 
@@ -1246,8 +1276,8 @@ Stavový model (prakticky):
 
 | Stav       | Kdy                                                                                          | Co je povolený                                                                                                                                                   |
 | ---------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pending`  | kupující klikne „Mám zájem“                                                                  | kupující **nemůže psát**, ale může **couvnout** (zrušit zájem → `rejected`); prodejce jen **Přijmout** / **Odmítnout**                                           |
-| `open`     | prodejce přijme                                                                              | odemknou se zprávy + strukturovaný widgety                                                                                                                       |
+| `interest` | kupující klikne „Mám zájem“                                                                  | kupující může psát a posílat user-authored záznamy do timeline, ale **jen pro sebe**; prodejce je neuvidí a nedostane z nich notifikace, dokud z toho neudělá obchod; kupující může **couvnout** (zrušit zájem → `rejected`); prodejce jen **Obchod** / **Odmítnout** |
+| `trade`    | prodejce otevře obchod                                                                       | prodejci se odkryje dosavadní buyer-side komunikace a dál běží zprávy + strukturovaný widgety pro obě strany                                                     |
 | `resolved` | prodejce označí „vyřešeno“                                                                   | tahle transakce běží dál, dokud kupující nedá finále (`success`/`closed`); strukturovaná komunikace se omezí a zůstává jen to, co dává smysl pro dotažení konce    |
 | `dispute`  | někdo přepne do sporu                                                                        | běží dál (řeší se), dokud kupující nedá finále (`success`/`closed`)                                                                                              |
 | `rejected` | kupující nebo prodejce odmítne („bez emocí“)                                                 | read-only                                                                                                                                                        |
@@ -1262,9 +1292,10 @@ Poznámky ke koncům:
 - `sold` = systémová stopka „už prodáno“ (bez emocí, bez dohadů).
 
 Anti-spam a ochrana prodejce:
-- Prodejce může zájem **ignorovat bez postihu**. Odpovědnost začíná až přijetím.
-- Kupující v `pending` **nemůže spamovat zprávama**.
-- Kupující může v `pending` couvnout — a je to signál do metrik (viz [Metrika: Closer rate](#koncept-metrika-closer-rate)).
+- Prodejce může zájem **ignorovat bez postihu**. Odpovědnost začíná až obchodem.
+- Kupující v `interest` může psát, ale je to **buyer-side buffer**, ne inbox prodejce.
+- Zprávy a user-authored záznamy z `interest` se prodejci zobrazí až po `trade`; do té doby prodejce nevidí obsah, náhledy, počet zpráv ani z nich nedostává notifikace.
+- Kupující může v `interest` couvnout — a je to signál do metrik (viz [Metrika: Closer rate](#koncept-metrika-closer-rate)).
 - Odmítnutí je legitimní volba bez vysvětlování. Žádnej mentální dluh.
 
 Timeline místo chatu:
@@ -1297,8 +1328,9 @@ Co v transaction timeline žije:
 - systémové/status záznamy jako fakt „co se stalo“.
 
 Kontrakt:
-- V `pending` se user-authored komunikace neposílá.
-- `open` a `dispute` dovolují text i strukturovaný zápisy podle role.
+- V `interest` může kupující vytvářet user-authored komunikaci bez omezení, ale vidí ji jen kupující.
+- `trade` odkryje prodejci buyer-side komunikaci z `interest` a dál dovoluje text i strukturovaný zápisy podle role.
+- `dispute` dovoluje text i strukturovaný zápisy podle role.
 - `resolved` nechává už jen to, co dává smysl pro dotažení konce.
 - Terminal stavy jsou read-only.
 - Systémové/status záznamy vznikají automaticky ze změn stavu a nesmí se tvářit jako samostatnej chat.
@@ -1318,7 +1350,7 @@ Related:
 ---
 
 <a id="koncept-notifikace"></a>
-### Notifikace (Inbox)
+### Notifikace (Activity)
 ← [předchozí](#koncept-zpravy) | [další](#koncept-dispute) →
 
 Notifikace nejsou nástroj na otravování. Jsou to **zrcadlo reality**, aby člověk věděl, co se stalo, a nemusel paranoidně refreshovat appku.
@@ -1327,19 +1359,19 @@ Filosofie ticha:
 - Defaultní stav je ticho. Žádný umělý FOMO.
 - Notifikace vzniká jen z reálný události (typicky změna stavu [Transakce](#koncept-transakce) nebo příchozí [Zpráva](#koncept-zpravy)).
 
-Inbox First:
-- Inbox je jediný zdroj pravdy pro „co se stalo“.
-- Všechno ostatní (push/email) je jen mirror toho, co už existuje v Inboxu.
-- Inbox musí umět nést realitu transakce: zprávu od kupujícího, zprávu od prodávajícího, systémovou transaction událost i čistě systémovou událost.
+Activity First:
+- Activity je jediný zdroj pravdy pro „co se stalo“.
+- Všechno ostatní (push/email) je jen mirror toho, co už existuje v Activity.
+- Activity musí umět nést realitu transakce: zprávu od kupujícího, zprávu od prodávajícího, systémovou transaction událost i čistě systémovou událost.
 
 Email jako zrcadlo:
-- Email není primární kanál. Je to volitelný forward/digest toho, co už je v Inboxu.
-- Když email nedojde, nic se „neztratilo“. Autorita je Inbox.
+- Email není primární kanál. Je to volitelný forward/digest toho, co už je v Activity.
+- Když email nedojde, nic se „neztratilo“. Autorita je Activity.
 
 Kontrakt:
-- Notifikace se nesmí stát další paralelní svět. Když něco umím zjistit v Inboxu, nesmím k tomu psát nový pravidla do emailu/pushe.
+- Notifikace se nesmí stát další paralelní svět. Když něco umím zjistit v Activity, nesmím k tomu psát nový pravidla do emailu/pushe.
 - Deduplikace je normální (nebudu spamovat ten samej fakt víckrát, jen protože to jde).
-- Inbox typ události musí odpovídat tomu, odkud ta věc reálně přišla: buyer / seller / transaction / system. `unknown` je jen nouzovej fallback, ne běžná realita.
+- Activity typ události musí odpovídat tomu, odkud ta věc reálně přišla: buyer / seller / transaction / system. `unknown` je jen nouzovej fallback, ne běžná realita.
 
 Kritické výjimky:
 - Některý věci se neptají a jdou vždy (reset hesla, bezpečnostní alerty).
@@ -1557,7 +1589,7 @@ Related:
 Karma je hodnocení člověka v kontextu konkrétní transakce. Žádný hvězdičky, žádnej román.
 
 Kontrakt:
-- Karma existuje jen v rámci transakce a až po `open`.
+- Karma existuje jen v rámci transakce a až po `trade`.
 - Dvě volby: Like (Dobrý) / Dislike (Špatný).
 - Kdo nehlasuje = neutrál (žádná penalizace za „nechci to řešit“).
 - Karma != [Flag uživatele](#koncept-flag-uzivatele). Karma je zkušenost. Flag je průser.
@@ -1602,7 +1634,7 @@ Proč existuje:
 - Chci dát prodejci signál „jak se lidem obchodovalo“. Ne román. Jedno kliknutí.
 
 Kontrakt:
-- Karma se uděluje v rámci transakce a až po `open`.
+- Karma se uděluje v rámci transakce a až po `trade`.
 - Je to agregovaná metrika, která se **zobrazuje u prodávajícího** (v rámci jeho metrik).
 - Kdo nehlasuje = neutrál.
 - Karma není [Flag uživatele](#koncept-flag-uzivatele). Karma je zkušenost. Flag je průser.
@@ -1641,7 +1673,7 @@ Eventy, se kterýma počítám (dnes):
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `listing`     | `listing.create`, `listing.sold`                                                                                                                                                                        |
 | `user`        | `user.active` (heartbeat: 1× za hodinu při pobytu v appce, počítáno od prvního otevření)                                                                                                                |
-| `transaction` | `transaction.create`, `transaction.open`, `transaction.message`, `transaction.resolved`, `transaction.sold`, `transaction.success`, `transaction.rejected`, `transaction.closed`, `transaction.expired` |
+| `transaction` | `transaction.create`, `transaction.trade`, `transaction.message`, `transaction.resolved`, `transaction.sold`, `transaction.success`, `transaction.rejected`, `transaction.closed`, `transaction.expired` |
 
 Na co to používám:
 - výpočet [Metrik prodávajícího](#koncept-metriky-prodavaciho) a [Metrik kupujícího](#koncept-metriky-kupujiciho),
@@ -1769,7 +1801,7 @@ Proč existuje:
 - Rozlišuju „člověk se podíval a odmítl“ vs. „člověk to jen mechanicky zavírá“. To je kvalita trhu.
 
 Kontrakt:
-- Počítám odmítnutí, který proběhly bez toho, aby došlo k reálný interakci v `open`.
+- Počítám odmítnutí, který proběhly bez toho, aby došlo k reálný interakci v `trade`.
 - Odmítnutí je legitimní volba (viz `rejected` v [Transakcích](#koncept-transakce)); metrika je jenom popis chování, ne moralizování.
 
 Related:
@@ -1786,7 +1818,7 @@ Proč existuje:
 - Chci vidět, jak často protistrana dotahuje obchody do „vyřešenýho“ stavu, ne jak často nechává věci hnít.
 
 Kontrakt:
-- Metrika se vztahuje jen na transakce, který se reálně rozjely (`open` a dál).
+- Metrika se vztahuje jen na transakce, který se reálně rozjely (`trade` a dál).
 - Neexistuje tu žádnej „tajnej downgrade“ — definice musí být čitelná.
 
 Related:
@@ -1877,7 +1909,7 @@ Proč existuje:
 Kontrakt:
 - Metrika popisuje rychlý ukončování bez smysluplný interakce.
 - Neplete se to s `rejected` jako legitimní stopkou (hlavně když odmítá prodejce). Je to chování v čase.
-- Výjimka: couvnutí kupujícího v `pending` (`rejected`) se do closer počítá (otevření obchodu není random klik, je to vědomý rozhodnutí).
+- Výjimka: couvnutí kupujícího v `interest` (`rejected`) se do closer počítá (projevení zájmu není random klik, je to vědomý rozhodnutí).
 
 Related:
 - [Metriky kupujícího](#koncept-metriky-kupujiciho)
@@ -2296,7 +2328,7 @@ Kontrakt:
 
 Related:
 - [Předplatné](#koncept-predplatne)
-- [Notifikace (Inbox)](#koncept-notifikace)
+- [Notifikace (Activity)](#koncept-notifikace)
 - [Ekonomika](#ekonomika)
 
 ---
@@ -2556,7 +2588,7 @@ Related:
 - [Draft](#koncept-draft)
 - [Feed](#koncept-feed)
 - [Hledat](#koncept-hledat)
-- [Notifikace (Inbox)](#koncept-notifikace)
+- [Notifikace (Activity)](#koncept-notifikace)
 - [Můj účet](#koncept-muj-ucet)
 - [Ekonomika](#ekonomika)
 
@@ -2570,7 +2602,7 @@ Můj účet není sociální profil. Je to místo pro preference a hranice: kdo 
 
 Co tu řeším:
 - maximum [Citlivosti](#koncept-citlivost-inzeratu),
-- nastavení ticha a přeposílání/digestu pro [Inbox](#koncept-notifikace),
+- nastavení ticha a přeposílání/digestu pro [Activity](#koncept-notifikace),
 - základní účetní věci typu email (minimum identit, žádný „profilovky pro pocit“).
 
 Kontrakt:
@@ -2579,7 +2611,7 @@ Kontrakt:
 Related:
 - [Uživatel](#koncept-uzivatel)
 - [Citlivost](#koncept-citlivost-inzeratu)
-- [Notifikace (Inbox)](#koncept-notifikace)
+- [Notifikace (Activity)](#koncept-notifikace)
 - [Ekonomika](#ekonomika)
 
 ---
@@ -2618,7 +2650,7 @@ Co tu je:
 - Rychlý skoky: typicky „Inzeráty“ a „Nový inzerát“ (vstupy do existujících konceptů, ne vlastní svět).
 
 Related:
-- [Notifikace (Inbox)](#koncept-notifikace)
+- [Notifikace (Activity)](#koncept-notifikace)
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
 - [Draft](#koncept-draft)
 
@@ -2859,7 +2891,7 @@ Fázování:
 
 Kontrakt komunikace:
 - Neučím. Nevysvětluju. Rozdíl se má projevit chováním UI (viz [Landing](#koncept-landing), [Navigace](#koncept-navigace)).
-- “Ticho” je default i v růstu: žádnej spam. Inbox je autorita (viz [Notifikace](#koncept-notifikace)).
+- “Ticho” je default i v růstu: žádnej spam. Activity je autorita (viz [Notifikace](#koncept-notifikace)).
 
 Slogany:
 - „Hoď to sem taky.“
@@ -3043,7 +3075,7 @@ Related:
   - [Flag uživatele](#koncept-flag-uzivatele)
   - [Transakce](#koncept-transakce)
   - [Zprávy](#koncept-zpravy)
-  - [Notifikace (Inbox)](#koncept-notifikace)
+  - [Notifikace (Activity)](#koncept-notifikace)
   - [Dispute](#koncept-dispute)
   - [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu)
   - [Pass: Delší expirace inzerátu (Za měsíc)](#koncept-pass-delsi-expirace-inzeratu)

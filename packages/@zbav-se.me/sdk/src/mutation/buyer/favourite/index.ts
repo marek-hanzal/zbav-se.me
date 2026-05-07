@@ -1,1 +1,0 @@
-export { withFavouriteToggleMutation } from "./withFavouriteToggleMutation";

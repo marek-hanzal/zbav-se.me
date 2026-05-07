@@ -1,0 +1,67 @@
+import { Button } from "@/lib/client/button";
+import { Tx } from "@/lib/client/tx";
+import { GalleryUploadSheet } from "~/common/gallery/ui/GalleryUploadSheet";
+import { PhotoIcon } from "~/common/ui/icon";
+
+export namespace GalleryUploadButton {
+	export interface Props<TData extends GalleryUploadSheet.Uploads, TResult>
+		extends Button.Props,
+			Pick<
+				GalleryUploadSheet.Props<TData, TResult>,
+				| "withMutation"
+				| "toMutation"
+				| "onSuccess"
+				| "onCancel"
+				| "state"
+				| "limit"
+				| "access"
+			> {
+		defaultUploadIds: string[];
+	}
+}
+
+/**
+ * Renders a single action button that toggles the gallery upload sheet and wires upload callbacks through.
+ * Use it in editors where photo upload should start from a clear CTA while keeping upload flow encapsulated.
+ *
+ * @see src/draft/ui/DraftEditor/patch/GalleryPatch.tsx
+ */
+export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads, TResult>({
+	withMutation,
+	toMutation,
+	onSuccess,
+	onCancel,
+	state,
+	defaultUploadIds,
+	limit,
+	access,
+	...props
+}: GalleryUploadButton.Props<TData, TResult>) => {
+	return (
+		<>
+			<Button
+				iconEnabled={PhotoIcon}
+				onClick={() => state.set((prev) => !prev)}
+				data-ui-tone="primary"
+				data-ui-theme="light"
+				data-ui-size="xl"
+				data-ui-justify="start"
+				{...props}
+			>
+				<Tx label="Upload photos (button)" />
+			</Button>
+
+			<GalleryUploadSheet
+				withMutation={withMutation}
+				toMutation={toMutation}
+				onSuccess={onSuccess}
+				onCancel={onCancel}
+				state={state}
+				defaultUploadIds={defaultUploadIds}
+				limit={limit}
+				access={access}
+				detent={"default"}
+			/>
+		</>
+	);
+};

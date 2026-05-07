@@ -1,0 +1,123 @@
+[
+	{
+		"label": "dev",
+		"command": "bun run dev",
+		"allow_concurrent_runs": false,
+		"use_new_terminal": false,
+		"reveal": "always",
+		"reveal_target": "dock",
+		"hide": "never",
+		"show_summary": true,
+		"show_command": true
+	},
+	{
+		"label": "build",
+		"command": "bun run build",
+		"allow_concurrent_runs": false,
+		"use_new_terminal": false,
+		"reveal": "always",
+		"reveal_target": "dock",
+		"hide": "never",
+		"show_summary": true,
+		"show_command": true
+	},
+	{
+		"label": "check",
+		"command": "bun run workflow:check",
+		"allow_concurrent_runs": false,
+		"use_new_terminal": false,
+		"reveal": "always",
+		"reveal_target": "dock",
+		"hide": "never",
+		"show_summary": true,
+		"show_command": true
+	},
+	{
+		"label": "knip",
+		"command": "bun run knip",
+		"allow_concurrent_runs": false,
+		"use_new_terminal": false,
+		"reveal": "always",
+		"reveal_target": "dock",
+		"hide": "never",
+		"show_summary": true,
+		"show_command": true
+	},
+	{
+		"label": "update",
+		"command": "bun run workflow:update",
+		"allow_concurrent_runs": false,
+		"use_new_terminal": false,
+		"reveal": "always",
+		"reveal_target": "dock",
+		"hide": "never",
+		"show_summary": true,
+		"show_command": true
+	},
+	{
+		"label": "translations",
+		"command": "bun run translations",
+		"allow_concurrent_runs": false,
+		"use_new_terminal": false,
+		"reveal": "always",
+		"reveal_target": "dock",
+		"hide": "never",
+		"show_summary": true,
+		"show_command": true
+	},
+	{
+		"label": "format",
+		"command": "bun run format",
+		"allow_concurrent_runs": false,
+		"use_new_terminal": false,
+		"reveal": "always",
+		"reveal_target": "dock",
+		"hide": "on_success",
+		"show_summary": true,
+		"show_command": true
+	},
+	{
+		"label": "test",
+		"command": "bun run test",
+		"allow_concurrent_runs": false,
+		"use_new_terminal": false,
+		"reveal": "always",
+		"reveal_target": "dock",
+		"hide": "never",
+		"show_summary": true,
+		"show_command": true
+	},
+	{
+		"label": "e2e",
+		"command": "bun run e2e",
+		"allow_concurrent_runs": false,
+		"use_new_terminal": false,
+		"reveal": "always",
+		"reveal_target": "dock",
+		"hide": "never",
+		"show_summary": true,
+		"show_command": true
+	},
+	{
+		"label": "e2e:dev",
+		"command": "bun run e2e:dev",
+		"allow_concurrent_runs": false,
+		"use_new_terminal": false,
+		"reveal": "always",
+		"reveal_target": "dock",
+		"hide": "never",
+		"show_summary": true,
+		"show_command": true
+	},
+	{
+		"label": "e2e:ui",
+		"command": "bun run e2e:ui",
+		"allow_concurrent_runs": false,
+		"use_new_terminal": false,
+		"reveal": "always",
+		"reveal_target": "dock",
+		"hide": "never",
+		"show_summary": true,
+		"show_command": true
+	}
+]

@@ -1,0 +1,23 @@
+{
+	"$schema": "https://opencode.ai/config.json",
+	"mcp": {
+		"context-mode": {
+			"type": "local",
+			"command": [
+				"context-mode"
+			]
+		},
+		"playwright": {
+			"type": "local",
+			"command": [
+				"bunx",
+				"@playwright/mcp@latest",
+				"--browser",
+				"chromium"
+			]
+		}
+	},
+	"plugin": [
+		"context-mode"
+	]
+}

@@ -1,0 +1,57 @@
+import path from "node:path";
+import { test as base, expect } from "@playwright/test";
+import { testabase } from "./utils/testabase";
+
+function toDatabaseName(file: string, title: string, workerIndex: number, retry: number) {
+	const fileName = path.basename(file, path.extname(file));
+	const rawName = [
+		fileName,
+		title,
+		`w${workerIndex}`,
+		`r${retry}`,
+	]
+		.join("-")
+		.toLowerCase()
+		.replace(/[^a-z0-9_-]+/g, "-")
+		.replace(/-+/g, "-")
+		.replace(/^-+|-+$/g, "");
+
+	return `e2e-${rawName || "test"}`.slice(0, 63);
+}
+
+type TestDatabase = Awaited<ReturnType<typeof testabase>>;
+
+export const test = base.extend<{
+	db: string;
+	database: TestDatabase;
+}>({
+	// biome-ignore lint/correctness/noEmptyPattern: Ssst
+	async db({}, use, testInfo) {
+		await use(
+			toDatabaseName(testInfo.file, testInfo.title, testInfo.workerIndex, testInfo.retry),
+		);
+	},
+	async database({ db }, use) {
+		let cleanup = async () => {};
+
+		const database = await testabase({
+			name: db,
+			onTestFinished(callbackFn) {
+				cleanup = callbackFn;
+			},
+		});
+
+		await use(database);
+
+		await cleanup();
+	},
+	async page({ page, db }, use) {
+		await page.context().setExtraHTTPHeaders({
+			"x-e2e-db": db,
+		});
+
+		await use(page);
+	},
+});
+
+export { expect };

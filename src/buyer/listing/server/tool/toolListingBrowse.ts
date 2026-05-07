@@ -1,0 +1,106 @@
+import { tool } from "@openai/agents";
+import { stringify } from "csv-stringify/sync";
+import { z } from "zod";
+import { listingCollectionFn } from "~/buyer/listing/fn/listingCollectionFn";
+import { getRootLogger } from "~/common/log/getRootLogger";
+import { unsafeJsonSchema } from "~/server/openai/unsafeJsonSchema";
+import { ListingQuerySchema } from "../schema/ListingQuerySchema";
+import { ListingWhereSchema } from "../schema/ListingWhereSchema";
+
+const logger = getRootLogger([
+	"tool",
+	"toolListingBrowse",
+]);
+
+const InputSchema = z
+	.looseObject({
+		...ListingQuerySchema.shape,
+		filter: z
+			.looseObject({
+				...ListingWhereSchema.shape,
+				expiresAtBefore: z.iso.datetime().optional().meta({
+					description:
+						"This filter matches listings that expire before the provided date",
+					type: "string",
+				}),
+				expiresAtAfter: z.iso.datetime().optional().meta({
+					description: "This filter matches listings that expire after the provided date",
+					type: "string",
+				}),
+			})
+			.omit({
+				categoryId: true,
+				expiresAtAfter: true,
+				expiresAtBefore: true,
+				userId: true,
+				idIn: true,
+			})
+			.strip(),
+	})
+	.omit({
+		where: true,
+		limit: true,
+	})
+	.strip()
+	.meta({
+		id: "ListingToolQuery",
+		description: "Query object for listing tools",
+	});
+
+export const toolListingBrowse = tool({
+	name: "buyer-listing-browse",
+	needsApproval: false,
+	description: `
+Browse listings, find candidates, sort them.
+
+Hint:
+- normalize inputs (e.g. category/location) before using this tool
+- for 'filter.range' you must provide 'meta.locationId'
+- for sort by 'geo' you must provide 'meta.locationId'
+    `.trim(),
+	strict: true,
+	parameters: unsafeJsonSchema(InputSchema),
+	async execute(input) {
+		logger.trace("toolListingBrowse", {
+			input,
+		});
+
+		const query = await InputSchema.parseAsync(input);
+
+		const items = await listingCollectionFn({
+			data: {
+				...query,
+				limit: 8,
+			},
+		});
+
+		if (!items.length) {
+			return "nothing";
+		}
+
+		return stringify(
+			items.map((item) => {
+				return {
+					listingId: item.id,
+					// title: item.title,
+					// description: item.description?.substring(0, 64),
+					// price: item.price,
+					// distance: item.distance?.toFixed(2),
+					favourite: item.isFavourite ? "yes" : "no",
+				};
+			}),
+			{
+				header: true,
+				delimiter: "\t",
+				columns: [
+					"listingId",
+					"title",
+					"description",
+					"distance",
+					"price",
+					"favourite",
+				],
+			},
+		);
+	},
+});

@@ -1,1 +1,0 @@
-export { TypoIcon } from "./TypoIcon";

@@ -1,0 +1,114 @@
+import { Effect } from "effect";
+import { sql } from "kysely";
+import { match } from "ts-pattern";
+import { selectFx } from "@/lib/common/select";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { withLikeEx } from "~/server/database/expression/withLikeEx";
+import type { LocationSortSchema } from "~/session/location/server/schema/LocationSortSchema";
+import type { LocationFilterSchema } from "../schema/LocationFilterSchema";
+
+export namespace withLocationSelectFx {
+	export interface Props {
+		sort?: LocationSortSchema.Type[];
+	}
+}
+
+export const withLocationSelectFx = Effect.fn("withLocationSelectFx")(function* ({
+	sort,
+}: withLocationSelectFx.Props) {
+	const { kysely } = yield* KyselyContextFx;
+
+	let select = kysely.selectFrom("location as loc").select([
+		"loc.id",
+		"loc.query",
+		"loc.lang",
+		"loc.country",
+		"loc.code",
+		"loc.county",
+		"loc.municipality",
+		"loc.state",
+		"loc.address",
+		"loc.city",
+		"loc.street",
+		"loc.zip",
+		"loc.hash",
+		sql<number>`loc.confidence::float8`.as("confidence"),
+		sql<number>`loc.lat::float8`.as("lat"),
+		sql<number>`loc.lon::float8`.as("lon"),
+		"loc.geo",
+	]);
+
+	for (const item of sort ?? []) {
+		select = match(item.field)
+			.with("confidence", () => select.orderBy("loc.confidence", item.order))
+			.with("query", () => select.orderBy("loc.query", item.order))
+			.with("country", () => select.orderBy("loc.country", item.order))
+			.with("address", () => select.orderBy("loc.address", item.order))
+			.exhaustive();
+	}
+
+	return selectFx({
+		select,
+		queryFx(select, where: LocationFilterSchema.Type) {
+			return Effect.gen(function* () {
+				let query = select;
+
+				if (!where) {
+					return yield* Effect.succeed(select);
+				}
+
+				if (where.id) {
+					query = query.where("loc.id", "=", where.id);
+				}
+
+				if (where.idIn && where.idIn.length > 0) {
+					query = query.where("loc.id", "in", where.idIn);
+				}
+
+				if (where.fulltext) {
+					const term = where.fulltext;
+					query = query.where((eb) => {
+						return eb.or([
+							withLikeEx(eb.ref("loc.query"), term),
+							withLikeEx(eb.ref("loc.address"), term),
+							withLikeEx(eb.ref("loc.country"), term),
+							withLikeEx(eb.ref("loc.municipality"), term),
+							withLikeEx(eb.ref("loc.state"), term),
+							withLikeEx(eb.ref("loc.county"), term),
+						]);
+					});
+				}
+
+				if (where.query) {
+					const value = where.query;
+					query = query.where((eb) => {
+						return eb.or([
+							eb("loc.id", "=", value),
+							eb("loc.query", "ilike", value),
+						]);
+					});
+				}
+
+				if (where.lang) {
+					query = query.where("loc.lang", "=", where.lang);
+				}
+
+				if (where.country) {
+					query = query.where("loc.country", "=", where.country);
+				}
+
+				if (where.code) {
+					query = query.where("loc.code", "=", where.code);
+				}
+
+				if (where.confidenceMin !== undefined) {
+					query = query.where("loc.confidence", ">=", where.confidenceMin);
+				}
+
+				return yield* Effect.succeed(query);
+			});
+		},
+	});
+});
+
+export type withLocationSelectFx = ReturnType<typeof withLocationSelectFx>;

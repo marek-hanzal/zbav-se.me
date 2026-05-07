@@ -1,0 +1,53 @@
+import type { FC, ReactNode } from "react";
+import { useState } from "react";
+import { BottomSheet } from "@/lib/client/bottom-sheet";
+import { Button } from "@/lib/client/button";
+
+export namespace TransactionMenuButton {
+	export type Close = () => void;
+
+	export interface Props extends Omit<Button.Props, "children"> {
+		children(close: Close): ReactNode;
+	}
+}
+
+export const TransactionMenuButton: FC<TransactionMenuButton.Props> = ({ children, ...props }) => {
+	const [isOpen, setIsOpen] = useState(false);
+	const close = () => {
+		setIsOpen(false);
+	};
+
+	return (
+		<>
+			<Button
+				data-ui={"TransactionMenuButton"}
+				iconEnabled={"icon-[solar--paperclip-linear]"}
+				iconProps={{
+					"data-ui-text": "xl",
+				}}
+				onClick={() => {
+					setIsOpen(true);
+				}}
+				data-ui-tone="neutral"
+				data-ui-theme="light"
+				data-ui-square="sm"
+				data-ui-justify="center"
+				data-ui-items="center"
+				data-ui-color={"lead"}
+				data-ui-border={false}
+				data-ui-shadow={false}
+				data-ui-background={undefined}
+				{...props}
+			/>
+
+			<BottomSheet
+				data-ui={"TransactionMenuButton[BottomSheet]"}
+				isOpen={isOpen}
+				onClose={close}
+				detent={"content"}
+			>
+				{children(close)}
+			</BottomSheet>
+		</>
+	);
+};

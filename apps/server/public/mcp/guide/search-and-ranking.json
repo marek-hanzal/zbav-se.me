@@ -1,7 +1,0 @@
-{
-	"name": "search-and-ranking",
-	"title": "Guide: Search and Ranking",
-	"description": "Agent-facing guide for buyer listing search, filter usage, pagination, sorting, and geo-aware queries.",
-	"kind": "guide",
-	"text": "# Search and Ranking\n\nTL;DR:\n- Use filter for public buyer-facing constraints.\n- Use listingCollection for browse/search and listingFetch for one concrete result.\n- range is expressed in kilometers and works together with meta.latLon.\n\nTool choice:\n- buyer.listingCollection: browse, search, paginate, and sort published listings.\n- buyer.listingFetch: retrieve one concrete published listing that matches a focused query.\n\nQuery rules:\n- Prefer filter for all public MCP filtering.\n- Treat where as an internal app compatibility concept, not as the public MCP path.\n- Use sort when ordering matters.\n- Use cursor for pagination.\n\nGeo behavior:\n- range is measured in kilometers.\n- range only makes sense together with meta.latLon.\n- When geo context is available, distance is returned in kilometers and geo sorting becomes meaningful.\n\nCanonical examples:\n- Listings with personal pickup: filter.deliveryIn = [\"personal\"]\n- Listings delivered by post: filter.deliveryIn = [\"post\"]\n- My listings in buyer context: filter.my = true\n- Listings within 30 km: filter.range = 30 plus meta.latLon\n- One concrete listing by id: buyer.listingFetch with filter.id\n"
-}

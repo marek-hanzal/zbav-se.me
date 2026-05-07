@@ -1,0 +1,60 @@
+import { Effect } from "effect";
+import { sql } from "kysely";
+import { DateContextFx } from "@/lib/common/date";
+import { genId } from "@/lib/common/gen-id";
+import { getLoggerFx } from "@/lib/common/log";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { tryDbFx } from "~/server/database/fx/tryDbFx";
+
+export namespace categoryMissCreateFx {
+	export interface Props {
+		fulltext: string | undefined;
+		limit?: number;
+	}
+}
+
+export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* ({
+	fulltext,
+	limit = 4,
+}: categoryMissCreateFx.Props) {
+	const logger = yield* getLoggerFx("categoryMissCreateFx");
+	logger.trace("categoryMissCreateFx", {
+		fulltext,
+		limit,
+	});
+
+	const { kysely } = yield* KyselyContextFx;
+	const dateContext = yield* DateContextFx;
+
+	if (!fulltext || fulltext.length < limit) {
+		return yield* Effect.void;
+	}
+
+	const now = dateContext.now();
+
+	yield* tryDbFx(async () =>
+		kysely
+			.insertInto("category_miss")
+			.values({
+				id: genId(),
+				category: fulltext,
+				count: 1,
+				updatedAt: now.toJSDate(),
+			})
+			.onConflict((oc) =>
+				oc
+					.columns([
+						"category",
+					])
+					.doUpdateSet({
+						count: sql`category_miss.count + 1`,
+						updatedAt: now.toJSDate(),
+					}),
+			)
+			.execute(),
+	);
+
+	return yield* Effect.void;
+});
+
+export type categoryMissCreateFx = ReturnType<typeof categoryMissCreateFx>;

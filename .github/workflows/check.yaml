@@ -4,6 +4,8 @@ on:
     push:
         branches-ignore:
             - main
+            - dev
+            - uat
 
 concurrency:
     group: check
@@ -14,92 +16,26 @@ permissions:
 
 env:
     FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
-    # -------------------------------
-    # Common env. variables
-    # -------------------------------
-    VITE_DOMAIN: ${{ vars.VITE_DOMAIN }}
-    VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
-    NODE_OPTIONS: --max-old-space-size=1300
-
-    # -------------------------------
-    # Server env. variables
-    # -------------------------------
-    SERVER_S3_API: ${{ vars.SERVER_S3_API }}
-    SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
-    SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
-    SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
+    NODE_OPTIONS: --max-old-space-size=1600
+    VITE_CONTENT_CDN: ${{ vars.VITE_CONTENT_CDN }}
+    VITE_ORIGIN: https://zbav-se.me.localhost:1355
+    SERVER_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:55432
     SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
     SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
-    SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
-    SERVER_UPSTASH_REDIS_TOKEN: ${{ secrets.SERVER_UPSTASH_REDIS_TOKEN }}
-    SERVER_UPSTASH_REDIS_URL: ${{ secrets.SERVER_UPSTASH_REDIS_URL }}
-    SERVER_CONTENT_CDN: ${{ vars.SERVER_CONTENT_CDN }}
+    SERVER_S3_API: ${{ vars.SERVER_S3_API }}
+    SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
+    SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
+    SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
     SERVER_GITHUB: ${{ secrets.SERVER_GITHUB }}
-    # -------------------------------
-    # Local (GHA only)
-    # -------------------------------
-    BUNNY_HOST: ${{ vars.BUNNY_HOST }}
-    BUNNY_USER: ${{ vars.BUNNY_USER }}
-    BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
-
-    NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
-    NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
-
-    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-    VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
-    VERCEL_WEB_PROJECT_ID: ${{ vars.VERCEL_WEB_PROJECT_ID }}
-    VERCEL_APP_PROJECT_ID: ${{ vars.VERCEL_APP_PROJECT_ID }}
-    VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
-
-    MIGRATION_URL: ${{ vars.VITE_SERVER_API }}/api/public/migration/run
-
-    # -------------------------------
-    # Web environment variables list (multiline)
-    # -------------------------------
-    VITE_WEB_ASSETS: ${{ vars.VITE_WEB_ASSETS }}
-    VITE_WEB_ORIGIN: ${{ vars.VITE_WEB_ORIGIN }}
-    WEB_ENV_KEYS: |
-        VITE_WEB_ASSETS
-        VITE_WEB_ORIGIN
-        VITE_SERVER_API
-        VITE_DOMAIN
-
-    # -------------------------------
-    # App environment variables list (multiline)
-    # -------------------------------
-    VITE_APP_ASSETS: ${{ vars.VITE_APP_ASSETS }}
-    VITE_APP_ORIGIN: ${{ vars.VITE_APP_ORIGIN }}
-    APP_ENV_KEYS: |
-        VITE_APP_ASSETS
-        VITE_APP_ORIGIN
-        VITE_SERVER_API
-        VITE_DOMAIN
-
-    # -------------------------------
-    # Server environment variables list (multiline)
-    # -------------------------------
-    SERVER_ENV_KEYS: |
-        SERVER_BETTER_AUTH_SECRET
-        SERVER_CONTENT_CDN
-        SERVER_GEOAPIFY_TOKEN
-        SERVER_GITHUB
-        SERVER_JWT_SECRET
-        SERVER_S3_API
-        SERVER_S3_BUCKET
-        SERVER_S3_KEY
-        SERVER_S3_SECRET
-        SERVER_UPSTASH_REDIS_TOKEN
-        SERVER_UPSTASH_REDIS_URL
-        VITE_APP_ORIGIN
-        VITE_WEB_ORIGIN
-        VITE_DOMAIN
-        VITE_SERVER_API
+    SERVER_AI_TOKEN: ${{ secrets.SERVER_AI_TOKEN }}
+    SERVER_AI_SERVER_URL: ${{ vars.SERVER_AI_SERVER_URL }}
+    SERVER_AI_MODEL: ${{ vars.SERVER_AI_MODEL }}
 
 jobs:
-    check:
-        name: Check
+    lint:
+        name: Lint
         runs-on: ubuntu-latest
+        environment: uat
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -111,16 +47,16 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2.2.0
 
-            - name: Install dependencies (root)
-              run: bun install
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
 
-            - name: Check
-              run: bun run workflow:check
+            - name: Lint
+              run: bun run lint
 
-    test:
-        name: Test
+    dc:
+        name: Dependency Cruiser
         runs-on: ubuntu-latest
-        environment: staging
+        environment: uat
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -132,8 +68,180 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2.2.0
 
-            - name: Install dependencies (root)
-              run: bun install
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
+
+            - name: Dependency Cruiser
+              run: bun run dc
+
+    typecheck:
+        name: Typecheck
+        runs-on: ubuntu-latest
+        environment: uat
+        steps:
+            - uses: actions/checkout@v6.0.2
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v6.3.0
+              with:
+                  node-version: "24"
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
+
+            - name: Typecheck
+              run: bun run typecheck
+
+    knip:
+        name: Knip
+        runs-on: ubuntu-latest
+        environment: uat
+        steps:
+            - uses: actions/checkout@v6.0.2
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v6.3.0
+              with:
+                  node-version: "24"
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
+
+            - name: Knip
+              run: bun run knip
+
+    vitest:
+        name: Vitest
+        runs-on: ubuntu-latest
+        environment: uat
+        steps:
+            - uses: actions/checkout@v6.0.2
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v6.3.0
+              with:
+                  node-version: "24"
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
 
             - name: Test
               run: bun run test
+
+            - name: Publish coverage summary
+              if: always()
+              run: |
+                  node <<'EOF'
+                  const fs = require("node:fs");
+                  const summaryPath = "coverage/vitest/coverage-summary.json";
+                  const outputPath = process.env.GITHUB_STEP_SUMMARY;
+
+                  if (!outputPath || !fs.existsSync(summaryPath)) {
+                    process.exit(0);
+                  }
+
+                  const summary = JSON.parse(fs.readFileSync(summaryPath, "utf8"));
+                  const total = summary.total;
+
+                  const lines = [
+                    "## Vitest Coverage",
+                    "",
+                    "| Metric | Covered | Total | % |",
+                    "| --- | ---: | ---: | ---: |",
+                    `| Lines | ${total.lines.covered} | ${total.lines.total} | ${total.lines.pct}% |`,
+                    `| Statements | ${total.statements.covered} | ${total.statements.total} | ${total.statements.pct}% |`,
+                    `| Functions | ${total.functions.covered} | ${total.functions.total} | ${total.functions.pct}% |`,
+                    `| Branches | ${total.branches.covered} | ${total.branches.total} | ${total.branches.pct}% |`,
+                    "",
+                    "Artifacts:",
+                    "- `coverage/vitest/index.html`",
+                    "- `coverage/vitest/lcov.info`",
+                    "- `coverage/vitest/cobertura-coverage.xml`",
+                    "- `coverage/vitest/coverage-summary.json`",
+                    "",
+                  ];
+
+                  fs.appendFileSync(outputPath, lines.join("\n"));
+                  EOF
+
+            - name: Upload coverage artifact
+              if: always()
+              uses: actions/upload-artifact@v7
+              with:
+                  name: vitest-coverage
+                  if-no-files-found: ignore
+                  path: coverage/vitest
+    # e2e:
+    #     name: Full-Stack Test
+    #     runs-on: ubuntu-latest
+    #     environment: uat
+    #     env:
+    #         NITRO_PRESET: node_server
+    #         SERVER_E2E: e2e
+    #         PORTLESS_STATE_DIR: /tmp/portless
+    #         NODE_EXTRA_CA_CERTS: /tmp/portless/ca.pem
+    #         SSL_CERT_FILE: /tmp/portless/ca.pem
+    #     steps:
+    #         - uses: actions/checkout@v6.0.2
+
+    #         - name: Setup Node.js
+    #           uses: actions/setup-node@v6.3.0
+    #           with:
+    #               node-version: "24"
+
+    #         - name: Setup Bun
+    #           uses: oven-sh/setup-bun@v2.2.0
+
+    #         - name: Install dependencies
+    #           run: bun install --frozen-lockfile
+
+    #         - name: Resolve Playwright version
+    #           id: playwright-version
+    #           run: |
+    #               VERSION=$(node -p 'require("./package.json").devDependencies["@playwright/test"]')
+    #               echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+    #         - name: Install portless
+    #           run: bun install -g portless
+
+    #         - name: Start portless proxy
+    #           run: portless proxy start -p 1355 --https
+
+    #         - name: Restore Playwright browser cache
+    #           id: playwright-cache
+    #           uses: actions/cache/restore@v5.0.3
+    #           with:
+    #               path: ~/.cache/ms-playwright
+    #               key: ${{ runner.os }}-playwright-chromium-${{ steps.playwright-version.outputs.version }}
+
+    #         - name: Install Playwright browsers
+    #           run: bunx playwright install --with-deps chromium
+
+    #         - name: Save Playwright browser cache
+    #           if: steps.playwright-cache.outputs.cache-hit != 'true'
+    #           uses: actions/cache/save@v5.0.3
+    #           with:
+    #               path: ~/.cache/ms-playwright
+    #               key: ${{ runner.os }}-playwright-chromium-${{ steps.playwright-version.outputs.version }}
+
+    #         - name: Run Playwright
+    #           run: bun run e2e
+
+    #         - name: Upload Playwright artifacts
+    #           if: always()
+    #           uses: actions/upload-artifact@v7
+    #           with:
+    #               name: playwright-artifacts
+    #               if-no-files-found: ignore
+    #               path: |
+    #                   playwright-report
+    #                   results
