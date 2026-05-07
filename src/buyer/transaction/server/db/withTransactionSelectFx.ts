@@ -5,6 +5,7 @@ import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 import type { TransactionFilterSchema } from "../schema/TransactionFilterSchema";
@@ -30,7 +31,8 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 
 	let query = kysely
 		.selectFrom("transaction as lt")
-		.innerJoin("listing as l", "lt.listingId", "l.id");
+		.innerJoin("listing as l", "lt.listingId", "l.id")
+		.innerJoin("location as loc", "l.locationId", "loc.id");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
@@ -89,6 +91,9 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 			.selectAll("lt")
 			.select("l.withImageUrl")
 			.select("l.title")
+			.select((eb) => {
+				return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location");
+			})
 			.select((eb) => {
 				const lastActivitySelect = eb
 					.selectFrom("transaction_entry as te")

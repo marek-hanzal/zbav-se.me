@@ -112,17 +112,20 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 			return [
 				jsonObjectFrom(
-					activitySql.selectAll("te").select((eb) => {
-						return eb
-							.case()
-							.when("te.userId", "is", null)
-							.then(TransactionEntryDirectionEnumSchema.enum.system)
-							.when("te.userId", "=", eb.ref("l.userId"))
-							.then(TransactionEntryDirectionEnumSchema.enum.out)
-							.else(TransactionEntryDirectionEnumSchema.enum.in)
-							.end()
-							.as("direction");
-					}),
+					activitySql
+						.selectAll("te")
+						.select("lt.listingId as listingId")
+						.select((eb) => {
+							return eb
+								.case()
+								.when("te.userId", "is", null)
+								.then(TransactionEntryDirectionEnumSchema.enum.system)
+								.when("te.userId", "=", eb.ref("l.userId"))
+								.then(TransactionEntryDirectionEnumSchema.enum.out)
+								.else(TransactionEntryDirectionEnumSchema.enum.in)
+								.end()
+								.as("direction");
+						}),
 				)
 					.$notNull()
 					.$castTo<TransactionEntrySchema.Type>()
