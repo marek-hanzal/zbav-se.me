@@ -44,88 +44,86 @@ export const TransactionList: FC<TransactionList.Props> = ({
 	 * This must be here, because we're using translations - so when put outside of the component,
 	 * translations are... not being translated :).
 	 */
-	const groups = useMemo(
-		() =>
-			[
-				{
-					label: translator.text("Transaction - buyer-to-seller - seller (title)"),
-					filter: {
-						statusIn: [],
-						activity: "unread",
-					},
+	const groups = useMemo(() => {
+		return [
+			{
+				label: translator.text("Transaction - buyer-to-seller - seller (title)"),
+				filter: {
+					statusIn: [],
+					activity: "unread",
 				},
-				{
-					label: toStatusLabel(TransactionStatusEnumSchema.enum.interest),
-					filter: {
-						statusIn: [
-							TransactionStatusEnumSchema.enum.interest,
-						],
-						activity: "archived",
-					},
-					typoProps: {
-						"data-ui-tone": "neutral",
-						"data-ui-theme": "light",
-					},
+			},
+			{
+				label: toStatusLabel(TransactionStatusEnumSchema.enum.interest),
+				filter: {
+					statusIn: [
+						TransactionStatusEnumSchema.enum.interest,
+					],
+					activity: "archived",
 				},
-				{
-					label: toStatusLabel(TransactionStatusEnumSchema.enum.trade),
-					filter: {
-						statusIn: [
-							TransactionStatusEnumSchema.enum.trade,
-						],
-						activity: "archived",
-					},
-					typoProps: {
-						"data-ui-font": "normal",
-					},
+				typoProps: {
+					"data-ui-tone": "neutral",
+					"data-ui-theme": "light",
 				},
-				{
-					label: toStatusLabel(TransactionStatusEnumSchema.enum.dispute),
-					filter: {
-						statusIn: [
-							TransactionStatusEnumSchema.enum.dispute,
-						],
-						activity: "archived",
-					},
-					typoProps: {
-						"data-ui-font": "normal",
-					},
+			},
+			{
+				label: toStatusLabel(TransactionStatusEnumSchema.enum.trade),
+				filter: {
+					statusIn: [
+						TransactionStatusEnumSchema.enum.trade,
+					],
+					activity: "archived",
 				},
-				{
-					label: toStatusLabel(TransactionStatusEnumSchema.enum.resolved),
-					filter: {
-						statusIn: [
-							TransactionStatusEnumSchema.enum.resolved,
-						],
-						activity: "archived",
-					},
-					typoProps: {
-						"data-ui-font": "normal",
-					},
+				typoProps: {
+					"data-ui-font": "normal",
 				},
-				{
-					label: translator.text("Messages closed listings section (title)"),
-					filter: {
-						statusIn: [
-							TransactionStatusEnumSchema.enum.success,
-							TransactionStatusEnumSchema.enum.rejected,
-							TransactionStatusEnumSchema.enum.sold,
-							TransactionStatusEnumSchema.enum.closed,
-							TransactionStatusEnumSchema.enum.expired,
-						],
-						activity: "archived",
-					},
+			},
+			{
+				label: toStatusLabel(TransactionStatusEnumSchema.enum.dispute),
+				filter: {
+					statusIn: [
+						TransactionStatusEnumSchema.enum.dispute,
+					],
+					activity: "archived",
+				},
+				typoProps: {
+					"data-ui-font": "normal",
+				},
+			},
+			{
+				label: toStatusLabel(TransactionStatusEnumSchema.enum.resolved),
+				filter: {
+					statusIn: [
+						TransactionStatusEnumSchema.enum.resolved,
+					],
+					activity: "archived",
+				},
+				typoProps: {
+					"data-ui-font": "normal",
+				},
+			},
+			{
+				label: translator.text("Messages closed listings section (title)"),
+				filter: {
+					statusIn: [
+						TransactionStatusEnumSchema.enum.success,
+						TransactionStatusEnumSchema.enum.rejected,
+						TransactionStatusEnumSchema.enum.sold,
+						TransactionStatusEnumSchema.enum.closed,
+						TransactionStatusEnumSchema.enum.expired,
+					],
+					activity: "archived",
+				},
+				"data-ui-opacity": "7",
+				typoProps: {
+					"data-ui-tone": "neutral",
+					"data-ui-theme": "light",
 					"data-ui-opacity": "7",
-					typoProps: {
-						"data-ui-tone": "neutral",
-						"data-ui-theme": "light",
-						"data-ui-opacity": "7",
-						"data-ui-font": "normal",
-					},
+					"data-ui-font": "normal",
 				},
-			] satisfies Group[],
-		[],
-	);
+			},
+		] satisfies Group[];
+	}, []);
 
 	return (
 		<Container
