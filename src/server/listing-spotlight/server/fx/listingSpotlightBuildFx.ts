@@ -147,7 +147,19 @@ export const listingSpotlightBuildFx = Effect.fn("listingSpotlightBuildFx")(func
 					return;
 				}
 
-				await kysely.insertInto("listing_spotlight").values(rows).execute();
+				await kysely
+					.insertInto("listing_spotlight")
+					.values(rows)
+					.onConflict((oc) => {
+						return oc
+							.columns([
+								"listingId",
+								"text",
+								"ranking",
+							])
+							.doNothing();
+					})
+					.execute();
 			});
 		}),
 	);

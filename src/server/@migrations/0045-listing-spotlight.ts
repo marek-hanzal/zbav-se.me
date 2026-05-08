@@ -7,9 +7,10 @@ export const ListingSpotlightMigration: Migration = {
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("text", "text", (col) => col.notNull())
 			.addColumn("ranking", "integer", (col) => col.notNull())
-			.addPrimaryKeyConstraint("listing_spotlight_[listingId-text]_pk", [
+			.addPrimaryKeyConstraint("listing_spotlight_[listingId-text-ranking]_pk", [
 				"listingId",
 				"text",
+				"ranking",
 			])
 			.addForeignKeyConstraint(
 				"listing_spotlight_[listingId]_fk",
