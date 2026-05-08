@@ -19,6 +19,7 @@ import { PriceMinPatch } from "./patch/PriceMinPatch";
 import { PriceTypePatch } from "./patch/PriceTypePatch";
 import { RangePatch } from "./patch/RangePatch";
 import { SortPatch } from "./patch/SortPatch";
+import { TitlePatch } from "./patch/TitlePatch";
 import { WarrantyPatch } from "./patch/WarrantyPatch";
 
 export namespace FeedEditor {
@@ -169,6 +170,14 @@ export const FeedEditor = withFallback(
 
 				<view.Panel name="sort">
 					<SortPatch
+						feed={feed}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
+					/>
+				</view.Panel>
+
+				<view.Panel name="title">
+					<TitlePatch
 						feed={feed}
 						onSettled={onDefaultView}
 						onCancel={onDefaultView}
