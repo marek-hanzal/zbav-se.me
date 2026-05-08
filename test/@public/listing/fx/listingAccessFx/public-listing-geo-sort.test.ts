@@ -75,7 +75,9 @@ describe("public listing geo sort", () => {
 			const nearestFirst = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					fulltext: "qxpublicgeo",
+					fulltext: [
+						"qxpublicgeo",
+					],
 				},
 				meta: {
 					locationId: "loc_public_geo_brno",
@@ -90,7 +92,9 @@ describe("public listing geo sort", () => {
 			const farthestFirst = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					fulltext: "qxpublicgeo",
+					fulltext: [
+						"qxpublicgeo",
+					],
 				},
 				meta: {
 					locationId: "loc_public_geo_brno",

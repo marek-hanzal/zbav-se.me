@@ -21,7 +21,7 @@ export const FulltextPatch: FC<FulltextPatch.Props> = ({ feed, onSettled, onCanc
 	const patchMutation = withFeedQuery.usePatchMutation({
 		onSettled,
 	});
-	const [fulltext, setFulltext] = useState(feed.query?.filter?.fulltext ?? "");
+	const [fulltext, setFulltext] = useState(feed.query?.filter?.fulltext?.[0] ?? "");
 
 	return (
 		<Container
@@ -78,7 +78,11 @@ export const FulltextPatch: FC<FulltextPatch.Props> = ({ feed, onSettled, onCanc
 								...feed.query,
 								filter: {
 									...feed.query?.filter,
-									fulltext,
+									fulltext: fulltext
+										? [
+												fulltext,
+											]
+										: undefined,
 								},
 							},
 						},

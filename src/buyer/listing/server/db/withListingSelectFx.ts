@@ -7,7 +7,7 @@ import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSche
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import type { CategorySchema } from "~/public/category/server/schema/CategorySchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { withLikeEx } from "~/server/database/expression/withLikeEx";
+import { withNormalizedContainsEx } from "~/server/database/expression/withNormalizedContainsEx";
 import { withNormalizedLikeEx } from "~/server/database/expression/withNormalizedLikeEx";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
@@ -287,40 +287,26 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					query = query.where("l.id", "in", where.idIn);
 				}
 
-				if (where.fulltext) {
+				if (where.fulltext?.length) {
 					const fulltext = where.fulltext;
 
 					query = query.where((eb) => {
-						const categoryIdSelect = eb
-							.selectFrom("category as cat")
-							.select("cat.id")
-							.where((eb) =>
-								eb.or([
-									withLikeEx(eb.ref("cat.category"), fulltext),
-									withLikeEx(eb.ref("cat.group"), fulltext),
-									eb.exists(
-										eb
-											.selectFrom("category_spotlight")
-											.select("category_spotlight.categoryId")
-											.whereRef(
-												"category_spotlight.categoryId",
-												"=",
-												"cat.id",
-											)
-											.where((eb) => {
-												return withLikeEx(
-													eb.ref("category_spotlight.text"),
-													fulltext,
-												);
-											}),
-									),
-								]),
-							);
-
-						return eb.or([
-							withNormalizedLikeEx(eb.ref("l.withTitle"), fulltext, "both"),
-							eb("l.categoryId", "in", categoryIdSelect),
-						]);
+						return eb.and(
+							fulltext.map((term) =>
+								eb.exists(
+									eb
+										.selectFrom("listing_spotlight as ls")
+										.select("ls.listingId")
+										.whereRef("ls.listingId", "=", "l.id")
+										.where((eb) => {
+											return withNormalizedContainsEx(
+												eb.ref("ls.text"),
+												term,
+											);
+										}),
+								),
+							),
+						);
 					});
 				}
 

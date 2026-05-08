@@ -108,7 +108,9 @@ describe("buyer listing discovery flow", () => {
 			});
 
 			const filteredWhere = {
-				fulltext: "portable console",
+				fulltext: [
+					"portable console",
+				],
 				categoryIdIn: [
 					listingDefaults.categoryId,
 				],

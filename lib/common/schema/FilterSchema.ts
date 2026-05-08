@@ -19,7 +19,7 @@ export const FilterSchema = z
 		 * Usually it's somehow possible to search for the Entity by some text, thus it's present,
 		 * but not necessarily required.
 		 */
-		fulltext: z.string().nullish(),
+		fulltext: z.array(z.string().min(1)).nullish(),
 	})
 	.strip()
 	.meta({

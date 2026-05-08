@@ -111,20 +111,26 @@ describe("public listing visibility", () => {
 			const fulltextByTitle = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					fulltext: "qxpubimplicit987",
+					fulltext: [
+						"qxpubimplicit987",
+					],
 				},
 			});
 			const hiddenByCategoryFulltext = yield* listingCollectionFx({
 				scope: {},
 				where: {
-					fulltext: explicitCategory.category,
+					fulltext: [
+						"qxpubexplicit987",
+					],
 				},
 			});
 			const explicitByCategory = yield* listingCollectionFx({
 				scope: {},
 				where: {
 					categoryId: explicitCategory.id,
-					fulltext: explicitCategory.category,
+					fulltext: [
+						"qxpubexplicit987",
+					],
 				},
 			});
 			const explicitByCategoryIn = yield* listingCollectionFx({

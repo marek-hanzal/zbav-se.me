@@ -121,7 +121,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						data-action={"edit feed fulltext"}
 						textLabel={translator.text("Feed fulltext (label)")}
 						textEmpty={translator.text("Feed fulltext not filled")}
-						textValue={feed.query?.filter?.fulltext || null}
+						textValue={feed.query?.filter?.fulltext?.join(", ") || null}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
@@ -129,7 +129,9 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 							/>
 						}
 						wrapperProps={{
-							"data-ui-tone": feed.query?.filter?.fulltext ? "neutral" : "secondary",
+							"data-ui-tone": feed.query?.filter?.fulltext?.length
+								? "neutral"
+								: "secondary",
 						}}
 						onClick={() => view.set("fulltext")}
 					/>

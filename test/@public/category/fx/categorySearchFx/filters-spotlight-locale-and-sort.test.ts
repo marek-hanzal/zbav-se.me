@@ -86,13 +86,17 @@ describe("public category search", () => {
 			const spotlightCollection = yield* categoryCollectionFx({
 				scope: {},
 				where: {
-					fulltext: "qxspotlight987",
+					fulltext: [
+						"qxspotlight987",
+					],
 				},
 			});
 			const spotlightCount = yield* categoryCountFx({
 				scope: {},
 				where: {
-					fulltext: "qxspotlight987",
+					fulltext: [
+						"qxspotlight987",
+					],
 				},
 			});
 			const localeCollection = yield* categoryCollectionFx({

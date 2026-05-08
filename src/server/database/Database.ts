@@ -22,6 +22,7 @@ import type { GalleryTableSchema } from "~/server/database/@table/GalleryTableSc
 import type { GitHubTableSchema } from "~/server/database/@table/GitHubTableSchema";
 import type { IgnoreTableSchema } from "~/server/database/@table/IgnoreTableSchema";
 import type { ListingEventTableSchema } from "~/server/database/@table/ListingEventTableSchema";
+import type { ListingSpotlightTableSchema } from "~/server/database/@table/ListingSpotlightTableSchema";
 import type { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
 import type { ThumbTableSchema } from "~/server/database/@table/ThumbTableSchema";
@@ -70,6 +71,7 @@ export interface Database {
 	listing_attr_enum_single: ListingAttrEnumSingleTableSchema.Type;
 	listing_attr_text: ListingAttrTextTableSchema.Type;
 	listing_event: ListingEventTableSchema.Type;
+	listing_spotlight: ListingSpotlightTableSchema.Type;
 	listing: ListingTableSchema.Type;
 	location: LocationTableSchema.Type;
 	thumb: ThumbTableSchema.Type;

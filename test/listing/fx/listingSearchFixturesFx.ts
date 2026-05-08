@@ -6,6 +6,7 @@ import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSche
 import type { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import type { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
+import { listingSpotlightBuildFx } from "~/server/listing-spotlight/server/fx/listingSpotlightBuildFx";
 import type { testabase } from "~/test/testabase";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
@@ -34,6 +35,7 @@ type ListingSearchPatch = {
 	status?: ListingStatusEnumSchema.Type;
 	restriction?: RestrictionEnumSchema.Type;
 	title?: string;
+	description?: string;
 };
 
 export const personalDelivery: DeliveryEnumSchema.Type[] = [
@@ -79,17 +81,20 @@ export const seedLocationFixtureFx = (database: TestDatabase, location: Location
 	);
 
 export const patchListingSearchFixtureFx = (database: TestDatabase, props: ListingSearchPatch) =>
-	Effect.promise(async () => {
+	Effect.gen(function* () {
 		const values: Record<string, unknown> = {};
 
 		if (props.locationId !== undefined) {
-			const location = await database.kysely
-				.selectFrom("location")
-				.select("geo")
-				.where("id", "=", props.locationId)
-				.executeTakeFirstOrThrow();
+			const locationId = props.locationId;
+			const location = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("location")
+					.select("geo")
+					.where("id", "=", locationId)
+					.executeTakeFirstOrThrow(),
+			);
 
-			values.locationId = props.locationId;
+			values.locationId = locationId;
 			values.withLocation = location.geo;
 		}
 
@@ -127,14 +132,25 @@ export const patchListingSearchFixtureFx = (database: TestDatabase, props: Listi
 
 		if (props.title !== undefined) {
 			values.title = props.title;
-			values.withTitle = sql`lower(immutable_unaccent(${props.title}))`;
 		}
 
-		return database.kysely
-			.updateTable("listing")
-			.set(values)
-			.where("id", "=", props.id)
-			.executeTakeFirstOrThrow();
+		if (props.description !== undefined) {
+			values.description = props.description;
+		}
+
+		yield* Effect.promise(() =>
+			database.kysely
+				.updateTable("listing")
+				.set(values)
+				.where("id", "=", props.id)
+				.executeTakeFirstOrThrow(),
+		);
+
+		if (props.title !== undefined || props.description !== undefined) {
+			yield* listingSpotlightBuildFx({
+				listingId: props.id,
+			});
+		}
 	});
 
 export const patchCategoryDiscoveryFx = (
