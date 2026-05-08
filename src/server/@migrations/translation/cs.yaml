@@ -491,9 +491,15 @@ Feed delivery not selected:
 Feed editor (title):
     value: Editace seznamu
 Feed fulltext (hint):
-    value: Zkus, co tě napadne, vyhrabu toho dost
+    value: |
+        Tohle je agresivní hledání, které bere široké okolí inzerátu,
+        např. kategorie, doprovodné výrazy kategorie, titulek inzerátu
+        a další.
+
+        Můžeš začít tímto políčkem, jen pozor, můžeš najít mnohem víc věcí,
+        než čekáš - kategorie nebo limit cen také pomůže.
 Feed fulltext (label):
-    value: Hledám...
+    value: Hledám
 Feed fulltext (placeholder):
     value: Najde téměř všechno
 Feed fulltext (title):
