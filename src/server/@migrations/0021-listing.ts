@@ -184,6 +184,11 @@ export const ListingMigration: Migration = {
 		 * Main feed/search shapes.
 		 */
 		await sql`
+			CREATE INDEX "listing_[status-createdAt]_idx"
+			ON "listing" ("status", "createdAt" DESC, "id" DESC)
+		`.execute(db);
+
+		await sql`
 			CREATE INDEX "listing_[categoryId-visibleAt]_idx"
 			ON "listing" ("categoryId", "visibleAt" DESC, "id" DESC)
 		`.execute(db);

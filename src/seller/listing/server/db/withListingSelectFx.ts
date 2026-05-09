@@ -186,6 +186,8 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			.exhaustive();
 	}
 
+	query = query.orderBy("l.id", "desc");
+
 	return selectFx({
 		select: query,
 		queryFx(select, where: ListingWhereSchema.Type) {
