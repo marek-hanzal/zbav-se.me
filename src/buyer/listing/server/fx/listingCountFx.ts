@@ -1,8 +1,11 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
 import type { ListingCountQuerySchema } from "~/buyer/listing/server/schema/ListingCountQuerySchema";
 import { hasExplicitCategory } from "~/common/listing/util/hasExplicitCategory";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { withListingSelectFx } from "../db/withListingSelectFx";
 import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
@@ -29,20 +32,30 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 		meta,
 	});
 
-	return yield* withCountFx({
-		selectFx: withListingSelectFx({
-			userId,
-			meta,
-			hasExplicitCategory: hasExplicitCategory([
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const { kysely } = yield* KyselyContextFx;
+
+			yield* Effect.promise(async () => {
+				return sql`SET LOCAL work_mem = '32MB';`.execute(kysely);
+			});
+
+			return yield* withCountFx({
+				selectFx: withListingSelectFx({
+					userId,
+					meta,
+					hasExplicitCategory: hasExplicitCategory([
+						filter,
+						where,
+						scope,
+					]),
+				}),
 				filter,
 				where,
 				scope,
-			]),
+			});
 		}),
-		filter,
-		where,
-		scope,
-	});
+	);
 });
 
 export type listingCountFx = ReturnType<typeof listingCountFx>;
