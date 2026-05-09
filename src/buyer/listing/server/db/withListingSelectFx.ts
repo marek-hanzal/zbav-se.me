@@ -161,6 +161,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 						})
 						.whereRef("loc.id", "=", "l.locationId")
 						.limit(1)
+						.$asScalar()
 						.$castTo<LocationSchema.Type>()
 						.as("location");
 				},
