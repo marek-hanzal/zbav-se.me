@@ -7,6 +7,7 @@ import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSche
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withNormalizedContainsEx } from "~/server/database/expression/withNormalizedContainsEx";
+import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
@@ -65,6 +66,17 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.updatedAt",
 			"l.visibleAt",
 		])
+		.select((eb) => {
+			return eb
+				.selectFrom("location as loc")
+				.select((eb) => {
+					return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("json");
+				})
+				.whereRef("loc.id", "=", "l.locationId")
+				.limit(1)
+				.$castTo<LocationSchema.Type>()
+				.as("location");
+		})
 		.select((eb) => {
 			return eb
 				.selectFrom("transaction as lt")

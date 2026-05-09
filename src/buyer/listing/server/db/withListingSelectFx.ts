@@ -42,7 +42,6 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	let select = kysely
 		.selectFrom("listing as l")
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
-		.innerJoin("location as loc", "loc.id", "l.locationId")
 		.where("l.status", "in", [
 			"live",
 		])
@@ -153,7 +152,17 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				"l.updatedAt",
 
 				(eb) => {
-					return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location");
+					return eb
+						.selectFrom("location as loc")
+						.select((eb) => {
+							return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as(
+								"json",
+							);
+						})
+						.whereRef("loc.id", "=", "l.locationId")
+						.limit(1)
+						.$castTo<LocationSchema.Type>()
+						.as("location");
 				},
 
 				(eb) => {

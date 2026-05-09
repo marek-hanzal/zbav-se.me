@@ -52,10 +52,19 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 						break;
 					}
 					case "query": {
+						if (log.queryDurationMillis >= 30) {
+							logger.warn(log.query.sql, {
+								ms: log.queryDurationMillis,
+								params: log.query.parameters,
+							});
+							break;
+						}
+
 						logger.trace(log.query.sql, {
 							ms: log.queryDurationMillis,
 							params: log.query.parameters,
 						});
+
 						break;
 					}
 				}
