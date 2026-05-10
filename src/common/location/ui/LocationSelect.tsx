@@ -49,6 +49,7 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 			{...props}
 		>
 			<Fulltext
+				data-action={"search location"}
 				state={{
 					value: search,
 					set: handleSearchChange,

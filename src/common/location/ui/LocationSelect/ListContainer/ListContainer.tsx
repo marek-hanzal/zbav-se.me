@@ -75,6 +75,7 @@ export const ListContainer = withFallback(
 						return (
 							<Button
 								key={item.id}
+								data-action={"select location"}
 								onClick={() => {
 									if (allowClear && value === item.id) {
 										onChange(null);

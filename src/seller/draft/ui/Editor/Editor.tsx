@@ -100,6 +100,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 				<Group>
 					<GalleryValue
+						data-action={"set draft gallery"}
 						urls={draft.withImageUrl}
 						label={translator.text("Listing photo gallery (label)")}
 						onClick={() => view.set("gallery")}
@@ -141,7 +142,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 					<Group>
 						<LocationValue
-							data-ui={"select draft location"}
+							data-action={"select draft location"}
 							_suspense={"I know"}
 							locationId={draft.locationId}
 							textLabel={translator.text("Listing location (label)")}
@@ -154,7 +155,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 					<Group>
 						<PriceTypeValue
-							data-ui={"set draft price type"}
+							data-action={"set draft price type"}
 							priceType={draft.priceType}
 							action={<ChevronAction />}
 							onClick={() => view.set("priceType")}
@@ -164,7 +165,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 							.with("fixed", "haggle", () => {
 								return (
 									<PriceValue
-										data-ui={"set draft price"}
+										data-action={"set draft price"}
 										price={draft.price}
 										currency={draft.currency}
 										action={<ChevronAction />}
@@ -187,7 +188,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 					<Group>
 						<ExpiresValue
-							data-ui={"set draft expiration date"}
+							data-action={"set draft expiration date"}
 							expires={draft.expires}
 							action={<ChevronAction />}
 							onClick={() => view.set("expires")}

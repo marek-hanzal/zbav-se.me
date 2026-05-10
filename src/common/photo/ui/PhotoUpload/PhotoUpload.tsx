@@ -77,6 +77,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	return (
 		<Container
 			data-ui={"PhotoUpload[Container]"}
+			data-action={"pick photo"}
 			data-ui-tone="neutral"
 			data-ui-theme="light"
 			data-ui-round="default"
@@ -93,6 +94,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 		>
 			<input
 				data-ui="PhotoUpload-[Input]"
+				data-action="upload photo"
 				ref={controller.inputRef}
 				type="file"
 				accept="image/*"

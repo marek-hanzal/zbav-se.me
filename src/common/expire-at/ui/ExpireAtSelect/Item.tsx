@@ -18,6 +18,7 @@ export namespace Item {
 export const Item: FC<Item.Props> = ({ expire, isSelected, onChange }) => {
 	return (
 		<Button
+			data-action={`select expiration ${expire}`}
 			onClick={() => {
 				onChange(expire);
 			}}

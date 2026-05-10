@@ -25,6 +25,7 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ category, selection }) =>
 	return (
 		<Button
 			data-id={category.id}
+			data-action={"select category"}
 			onClick={() => {
 				selection.toggle(category);
 			}}

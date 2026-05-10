@@ -21,6 +21,7 @@ export const Item: FC<Item.Props> = ({ priceType, selection }) => {
 
 	return (
 		<Button
+			data-action={`select price type ${priceType}`}
 			onClick={() => {
 				selection.toggle(item);
 			}}
