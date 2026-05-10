@@ -12,7 +12,9 @@ describe("categoryMissCreateFx", () => {
 
 		return Effect.gen(function* () {
 			yield* categoryMissCreateFx({
-				fulltext: "pc",
+				fulltext: [
+					"pc",
+				],
 				limit: 4,
 			});
 			yield* categoryMissCreateFx({
@@ -27,15 +29,21 @@ describe("categoryMissCreateFx", () => {
 			expect(before).toEqual([]);
 
 			yield* categoryMissCreateFx({
-				fulltext: "notebooky",
+				fulltext: [
+					"notebooky",
+				],
 				limit: 4,
 			});
 			yield* categoryMissCreateFx({
-				fulltext: "notebooky",
+				fulltext: [
+					"notebooky",
+				],
 				limit: 4,
 			});
 			yield* categoryMissCreateFx({
-				fulltext: "monitory",
+				fulltext: [
+					"monitory",
+				],
 				limit: 4,
 			});
 
@@ -71,7 +79,9 @@ describe("categoryMissCreateFx", () => {
 				select,
 				where: {
 					category: null,
-					fulltext: "not",
+					fulltext: [
+						"not",
+					],
 					idIn: rows.map((row) => row.id),
 				},
 			});

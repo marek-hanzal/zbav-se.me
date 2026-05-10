@@ -11,6 +11,7 @@ import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
+import { listingSpotlightBuildFx } from "~/server/listing-spotlight/server/fx/listingSpotlightBuildFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
@@ -289,6 +290,10 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					});
 				}
 			}
+
+			yield* listingSpotlightBuildFx({
+				listingId,
+			});
 
 			yield* userEventCreateFx({
 				userId,

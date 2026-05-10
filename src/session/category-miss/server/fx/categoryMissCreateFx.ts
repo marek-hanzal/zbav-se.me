@@ -8,7 +8,7 @@ import { tryDbFx } from "~/server/database/fx/tryDbFx";
 
 export namespace categoryMissCreateFx {
 	export interface Props {
-		fulltext: string | undefined;
+		fulltext: string[] | undefined;
 		limit?: number;
 	}
 }
@@ -25,8 +25,9 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
+	const category = fulltext?.join(" ").trim();
 
-	if (!fulltext || fulltext.length < limit) {
+	if (!category || category.length < limit) {
 		return yield* Effect.void;
 	}
 
@@ -37,7 +38,7 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 			.insertInto("category_miss")
 			.values({
 				id: genId(),
-				category: fulltext,
+				category,
 				count: 1,
 				updatedAt: now.toJSDate(),
 			})

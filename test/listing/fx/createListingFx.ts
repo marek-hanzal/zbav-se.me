@@ -12,6 +12,7 @@ export namespace createListingFx {
 	export interface Props {
 		categoryId?: string;
 		title?: string;
+		description?: string;
 		locationId?: string;
 		restriction?: RestrictionEnumSchema.Type | null;
 	}
@@ -21,6 +22,7 @@ export const createListingFx = (
 	sellerId: string,
 	{
 		title = "Test listing",
+		description,
 		locationId,
 		categoryId,
 		restriction = null,
@@ -76,6 +78,7 @@ export const createListingFx = (
 			patch: {
 				categoryId: resolvedCategoryId,
 				title,
+				description,
 				locationId: resolvedLocationId,
 				restriction,
 				priceType: "free",

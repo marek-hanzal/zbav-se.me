@@ -37,8 +37,6 @@ export namespace HomeMenu {
 /**
  * Builds the home navigation surface with links to key app destinations.
  * Use it as the main navigation entry inside user-facing hub screens.
- *
- * @see src/@user/home/page/HomePage.tsx
  */
 export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: HomeMenu.Props) => {
 	const containerRef = useRef<HTMLDivElement>(null);

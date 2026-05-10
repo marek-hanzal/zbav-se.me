@@ -43,6 +43,7 @@ import { AgentStreamMigration } from "~/server/@migrations/0041-agent-stream";
 import { AgentUsageMigration } from "~/server/@migrations/0042-agent-usage";
 import { UserRestrictionMigration } from "~/server/@migrations/0043-user-restriction";
 import { TranslationMigration } from "~/server/@migrations/0044-translation";
+import { ListingSpotlightMigration } from "~/server/@migrations/0045-listing-spotlight";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -90,4 +91,5 @@ export const migrations = {
 	"0042-agent-usage": AgentUsageMigration,
 	"0043-user-restriction": UserRestrictionMigration,
 	"0044-translation": TranslationMigration,
+	"0045-listing-spotlight": ListingSpotlightMigration,
 };

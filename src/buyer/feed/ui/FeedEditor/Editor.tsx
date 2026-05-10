@@ -4,6 +4,7 @@ import { Group } from "@/lib/client/group";
 import { ChevronRightIcon, Icon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
+import { LabelValue } from "@/lib/client/value";
 import type { useView } from "@/lib/client/view";
 import { translator } from "@/lib/common/translation";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
@@ -45,6 +46,7 @@ export namespace Editor {
 			| "priceType"
 			| "priceMin"
 			| "priceMax"
+			| "fulltext"
 		>;
 		hidden?: readonly Section[];
 	}
@@ -114,6 +116,27 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 				data-ui-flow={"vertical"}
 				data-ui-gap={"default"}
 			>
+				<Group>
+					<LabelValue
+						data-action={"edit feed fulltext"}
+						textLabel={translator.text("Feed fulltext (label)")}
+						textEmpty={translator.text("Feed fulltext not filled")}
+						textValue={feed.query?.filter?.fulltext?.join(", ") || null}
+						action={
+							<Icon
+								icon={ChevronRightIcon}
+								data-ui-text="xl"
+							/>
+						}
+						wrapperProps={{
+							"data-ui-tone": feed.query?.filter?.fulltext?.length
+								? "neutral"
+								: "secondary",
+						}}
+						onClick={() => view.set("fulltext")}
+					/>
+				</Group>
+
 				<Group>
 					<CategoryValueList
 						_suspense={"I know"}
@@ -337,6 +360,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 				data-ui-opacity="8"
 				className={"text-center"}
 			/>
+
 			<Container
 				data-ui-flow={"vertical"}
 				data-ui-gap={"default"}

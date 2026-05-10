@@ -28,8 +28,6 @@ export namespace ListContainer {
 /**
  * Coordinates category result rendering across loading, empty, and resolved query states.
  * Use it in category pickers that combine fulltext input with async category fetching.
- *
- * @see src/draft/ui/DraftEditor/patch/CategoryPatch.tsx
  */
 export const ListContainer = withFallback(
 	({ ref, fulltext, selection, categoryId, withRestriction, ...props }: ListContainer.Props) => {
@@ -37,7 +35,11 @@ export const ListContainer = withFallback(
 		const { data: categories } = withCategoryQuery.useCollectionQuery({
 			filter: {
 				locale,
-				fulltext,
+				fulltext: fulltext
+					? [
+							fulltext,
+						]
+					: undefined,
 			},
 			where: {
 				withRestriction,

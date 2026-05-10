@@ -16,3 +16,6 @@ draft, and user restriction storage.
 
 Listing-specific attribute rows live in the `listing_attr_*` tables, while draft
 editing has its own mirrored `draft` and `draft_attr_*` persistence layer.
+
+Listing fulltext phrases live in `listing_spotlight`, so search-oriented text
+can evolve independently from the main listing row shape.

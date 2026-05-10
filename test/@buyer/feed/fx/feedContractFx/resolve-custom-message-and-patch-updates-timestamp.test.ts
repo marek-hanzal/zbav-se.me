@@ -21,7 +21,9 @@ describe("feed contract", () => {
 				name: "Original Feed",
 				query: {
 					filter: {
-						fulltext: "old-title",
+						fulltext: [
+							"old-title",
+						],
 					},
 				},
 			});
@@ -46,7 +48,9 @@ describe("feed contract", () => {
 					name: "Patched Feed",
 					query: {
 						filter: {
-							fulltext: "new-title",
+							fulltext: [
+								"new-title",
+							],
 						},
 					},
 				},
@@ -67,7 +71,9 @@ describe("feed contract", () => {
 			);
 
 			expect(patched.name).toBe("Patched Feed");
-			expect(patched.query.filter?.fulltext).toBe("new-title");
+			expect(patched.query.filter?.fulltext).toEqual([
+				"new-title",
+			]);
 			expect(afterPatch.updatedAt.getTime()).toBeGreaterThanOrEqual(
 				beforePatch.updatedAt.getTime(),
 			);

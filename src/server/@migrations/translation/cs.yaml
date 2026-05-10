@@ -5,8 +5,6 @@ About me (title):
     value: Marek Hanzal
 Accept transaction (button):
     value: Přijmout a pokračovat
-Acknowledge transaction (aria):
-    value: Kliknutím potvrď transakci
 Acknowledge transaction (button):
     value: Hotovo
 Activity (title):
@@ -23,7 +21,8 @@ Activity thumb (title):
 Age (title):
     value: Odhad životnosti
 Age 1 (hint):
-    value: Na konci životnosti. Spíš na dojetí / záchranu / pro někoho, kdo ví, do
+    value:
+        Na konci životnosti. Spíš na dojetí / záchranu / pro někoho, kdo ví, do
         čeho jde.
     dynamic: true
 Age 1 (label):
@@ -36,7 +35,8 @@ Age 2 (label):
     value: E — Pozdní roky
     dynamic: true
 Age 3 (hint):
-    value: Známky času jdou vidět, ale pořád funguje / drží se. Zhruba “půlka až za
+    value:
+        Známky času jdou vidět, ale pořád funguje / drží se. Zhruba “půlka až za
         půlkou”.
     dynamic: true
 Age 3 (label):
@@ -67,7 +67,8 @@ Agent (label):
 Agent (title):
     value: Asistent
 Agent empty welcome (content):
-    value: Umím vyřešit cokoli, co umí appka, jen líp a rychleji, pojď mě pořádně
+    value:
+        Umím vyřešit cokoli, co umí appka, jen líp a rychleji, pojď mě pořádně
         protáhnout!
 Agent empty welcome (title):
     value: Co máš dneska na srdci?
@@ -187,8 +188,8 @@ Buyer info (title):
     value: Informace o kupujícím
 Buyer load (hint):
     value: >
-        Pokud kupující odbavuje více zpráv, promítne se to v tomto údaji - tobě
-        to může nastavit očekávání např. v
+        Pokud kupující odbavuje více zpráv, promítne se to v tomto údaji - tobě to
+        může nastavit očekávání např. v
 
         čekání na odpověď.
 Buyer load (label):
@@ -243,8 +244,7 @@ Close draft (hint):
 Close transaction (button):
     value: Hotovo, zavřít
 Closer p90 (hint):
-    value: Udává čas, za jak dlouho kupující obvykle zavře zprávu bez další
-        interakce.
+    value: Udává čas, za jak dlouho kupující obvykle zavře zprávu bez další interakce.
 Closer p90 (label):
     value: Čas zavření zprávy
 Closer rate (hint):
@@ -452,8 +452,8 @@ Expire in 7-days:
     dynamic: true
 Expired rate (hint):
     value: >
-        Nastavuje očekávání, kdy se kupující např. po předání balíčku už ke
-        zprávám nevrátí a obchod neuzavře.
+        Nastavuje očekávání, kdy se kupující např. po předání balíčku už ke zprávám
+        nevrátí a obchod neuzavře.
 Expired rate (label):
     value: Poměr automaticky zavřených zpráv
 Favourites (label):
@@ -467,7 +467,8 @@ Feed - common stuff (title):
 Feed - dynamic fields (title):
     value: Hledání v rámci kategorie
 Feed - end of road (message):
-    value: Došel jsi na konec cesty, nicméně si můžeš buď poladit aktuální seznam,
+    value:
+        Došel jsi na konec cesty, nicméně si můžeš buď poladit aktuální seznam,
         nebo se podívej další, které máš připravené.
 Feed - end of road (title):
     value: Konec cesty - prozatím
@@ -489,8 +490,25 @@ Feed delivery not selected:
     value: Jakékoli
 Feed editor (title):
     value: Editace seznamu
+Feed fulltext (hint):
+    value: |
+        Tohle je agresivní hledání, které bere široké okolí inzerátu,
+        např. kategorie, doprovodné výrazy kategorie, titulek inzerátu
+        a další.
+
+        Můžeš začít tímto políčkem, jen pozor, můžeš najít mnohem víc věcí,
+        než čekáš - kategorie nebo limit cen také pomůže.
+Feed fulltext (label):
+    value: Hledám
+Feed fulltext (placeholder):
+    value: Najde téměř všechno
+Feed fulltext (title):
+    value: Hledej všude
+Feed fulltext not filled:
+    value: Zajímá tě všechno
 Feed list empty (message):
-    value: ...ale můžeš si nějaký seznam vytvořit - třeba pro sebe, děti, auto, co
+    value:
+        ...ale můžeš si nějaký seznam vytvořit - třeba pro sebe, děti, auto, co
         tě napadne.
 Feed list empty (title):
     value: Zatím tu nic nemáš...
@@ -508,8 +526,8 @@ Feed name (placeholder):
     value: Např. nářadí
 Feed name (required):
     value: >
-        Nastav si svůj název seznamu, abys poznal, co v něm očekáváš (např.
-        zimní pneu).
+        Nastav si svůj název seznamu, abys poznal, co v něm očekáváš (např. zimní
+        pneu).
 Feed name (title):
     value: Vyber si název
 Feed photo gallery (label):
@@ -528,8 +546,14 @@ Feed sorting (label):
     value: Řazení inzerátů
 Feed sorting not selected:
     value: Výchozí řazení
+Feed title (hint):
+    value: Feed title (hint)
 Feed title (label):
     value: Titulek inzerátu
+Feed title (placeholder):
+    value: Feed title (placeholder)
+Feed title (title):
+    value: Feed title (title)
 Feed title not filled:
     value: Jakýkoli
 Field - battery-condition:
@@ -704,8 +728,7 @@ Listing common sort value price - unused:
     value: Cena (bez řazení)
     dynamic: true
 Listing condition (hint):
-    value: Stav má přímý vliv na možnosti doručení inzerátu, přesto se snaž být
-        upřímný.
+    value: Stav má přímý vliv na možnosti doručení inzerátu, přesto se snaž být upřímný.
 Listing condition (label):
     value: Stav
 Listing condition not selected:
@@ -745,14 +768,14 @@ Listing gallery (title):
     value: Fotky
 Listing ignore (hint):
     value: >
-        Pokud vidíš něco nezákonného, nahlas to. Inzerát musí vysloveně
-        porušovat zákon nebo podmínky
+        Pokud vidíš něco nezákonného, nahlas to. Inzerát musí vysloveně porušovat
+        zákon nebo podmínky
 
         používání.
 
 
-        _**Hlášení jsou kontrolována na obou stranách - zneužití může vést k
-        postihu (např. omezení účtu).**_
+        _**Hlášení jsou kontrolována na obou stranách - zneužití může vést k postihu
+        (např. omezení účtu).**_
 Listing location (hint):
     value: Pozor, umístění je veřejný údaj, ale můžeš napsat třeba název obce.
 Listing location (label):
@@ -763,8 +786,8 @@ Listing photo gallery (label):
     value: Nahraj fotky
 Listing restriction (hint):
     value: >
-        Kategorie definuje základní omezení, nicméně máš možnost přitvrdit,
-        pokud to tak cítíš.
+        Kategorie definuje základní omezení, nicméně máš možnost přitvrdit, pokud to
+        tak cítíš.
 Listing restriction (label):
     value: Nastavení omezení
 Listing restriction (title):
@@ -789,7 +812,8 @@ Listing restriction - none:
     value: Běžný obsah
     dynamic: true
 Listing restriction - restricted (hint):
-    value: Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podléhá zvláštním
+    value:
+        Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podléhá zvláštním
         pravidlům.
     dynamic: true
 Listing restriction - restricted:
@@ -928,7 +952,8 @@ No categories found (message):
 No categories found (title):
     value: Ajajaj, nic jsme nenašli!
 No drafts (message):
-    value: ...ale můžeš si připravit nějaké inzeráty, které si zveřejníš, až budeš
+    value:
+        ...ale můžeš si připravit nějaké inzeráty, které si zveřejníš, až budeš
         chtít.
 No drafts (title):
     value: Zatím tu nic nemáš...
@@ -1471,8 +1496,8 @@ transaction - buyer - status-dispute-seller:
         **Je potřeba tvoje pozornost**
 
 
-        _Prodejce si žádá vyřešit problém - společně se na to podívejte a
-        domluvte se._
+        _Prodejce si žádá vyřešit problém - společně se na to podívejte a domluvte
+        se._
     dynamic: true
 transaction - buyer - status-interest:
     value: |

@@ -6,8 +6,8 @@ import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { withLikeEx } from "~/server/database/expression/withLikeEx";
-import { withNormalizedLikeEx } from "~/server/database/expression/withNormalizedLikeEx";
+import { withNormalizedContainsEx } from "~/server/database/expression/withNormalizedContainsEx";
+import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
@@ -66,6 +66,17 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.updatedAt",
 			"l.visibleAt",
 		])
+		.select((eb) => {
+			return eb
+				.selectFrom("location as loc")
+				.select((eb) => {
+					return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("json");
+				})
+				.whereRef("loc.id", "=", "l.locationId")
+				.limit(1)
+				.$castTo<LocationSchema.Type>()
+				.as("location");
+		})
 		.select((eb) => {
 			return eb
 				.selectFrom("transaction as lt")
@@ -175,6 +186,8 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			.exhaustive();
 	}
 
+	query = query.orderBy("l.id", "desc");
+
 	return selectFx({
 		select: query,
 		queryFx(select, where: ListingWhereSchema.Type) {
@@ -193,24 +206,26 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					query = query.where("l.id", "in", where.idIn);
 				}
 
-				if (where.fulltext) {
+				if (where.fulltext?.length) {
 					const fulltext = where.fulltext;
 
 					query = query.where((eb) => {
-						const categoryIdSelect = eb
-							.selectFrom("category as cat")
-							.select("cat.id")
-							.where((eb) =>
-								eb.or([
-									withLikeEx(eb.ref("cat.category"), fulltext),
-									withLikeEx(eb.ref("cat.group"), fulltext),
-								]),
-							);
-
-						return eb.or([
-							withNormalizedLikeEx(eb.ref("l.withTitle"), fulltext, "both"),
-							eb("l.categoryId", "in", categoryIdSelect),
-						]);
+						return eb.and(
+							fulltext.map((term) =>
+								eb.exists(
+									eb
+										.selectFrom("listing_spotlight as ls")
+										.select("ls.listingId")
+										.whereRef("ls.listingId", "=", "l.id")
+										.where((eb) => {
+											return withNormalizedContainsEx(
+												eb.ref("ls.text"),
+												term,
+											);
+										}),
+								),
+							),
+						);
 					});
 				}
 

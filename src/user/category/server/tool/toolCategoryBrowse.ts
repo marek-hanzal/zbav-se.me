@@ -41,7 +41,9 @@ Available:
 		const items = await categoryCollectionFn({
 			data: {
 				filter: {
-					fulltext: query,
+					fulltext: [
+						query,
+					],
 				},
 				limit: 20,
 			},

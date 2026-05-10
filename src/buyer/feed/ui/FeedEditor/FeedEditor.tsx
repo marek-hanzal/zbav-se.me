@@ -12,6 +12,7 @@ import { AgePatch } from "./patch/AgePatch";
 import { CategoryPatch } from "./patch/CategoryPatch";
 import { ConditionPatch } from "./patch/ConditionPatch";
 import { DeliveryPatch } from "./patch/DeliveryPatch";
+import { FulltextPatch } from "./patch/FulltextPatch";
 import { GalleryPatch } from "./patch/GalleryPatch";
 import { LocationPatch } from "./patch/LocationPatch";
 import { PriceMaxPatch } from "./patch/PriceMaxPatch";
@@ -19,6 +20,7 @@ import { PriceMinPatch } from "./patch/PriceMinPatch";
 import { PriceTypePatch } from "./patch/PriceTypePatch";
 import { RangePatch } from "./patch/RangePatch";
 import { SortPatch } from "./patch/SortPatch";
+import { TitlePatch } from "./patch/TitlePatch";
 import { WarrantyPatch } from "./patch/WarrantyPatch";
 
 export namespace FeedEditor {
@@ -48,6 +50,7 @@ export const FeedEditor = withFallback(
 				"priceType",
 				"priceMin",
 				"priceMax",
+				"fulltext",
 			],
 			defaultPanel: "default",
 		});
@@ -169,6 +172,22 @@ export const FeedEditor = withFallback(
 
 				<view.Panel name="sort">
 					<SortPatch
+						feed={feed}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
+					/>
+				</view.Panel>
+
+				<view.Panel name="title">
+					<TitlePatch
+						feed={feed}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
+					/>
+				</view.Panel>
+
+				<view.Panel name="fulltext">
+					<FulltextPatch
 						feed={feed}
 						onSettled={onDefaultView}
 						onCancel={onDefaultView}
