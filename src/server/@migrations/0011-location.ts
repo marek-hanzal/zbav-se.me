@@ -1,5 +1,5 @@
-import type { Migration } from "kysely";
 import { sql } from "kysely";
+import type { Migration } from "kysely/migration";
 
 export const LocationMigration: Migration = {
 	async up(db) {

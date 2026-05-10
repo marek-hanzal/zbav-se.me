@@ -1,4 +1,5 @@
-import { type Migration, sql } from "kysely";
+import { sql } from "kysely";
+import type { Migration } from "kysely/migration";
 
 export const DraftMigration: Migration = {
 	async up(db) {

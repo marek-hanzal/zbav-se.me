@@ -1,6 +1,7 @@
 import type { Logger } from "@logtape/logtape";
 import { Effect } from "effect";
-import { type Dialect, Kysely, type MigrationResult, Migrator } from "kysely";
+import { type Dialect, Kysely } from "kysely";
+import { type MigrationResult, Migrator } from "kysely/migration";
 import { DialectContextFx } from "./DialectContextFx";
 import { MigrationContextFx } from "./MigrationContextFx";
 

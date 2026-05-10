@@ -1,4 +1,4 @@
-import type { Migration } from "kysely";
+import type { Migration } from "kysely/migration";
 
 export const ListingAttrDecimalMigration: Migration = {
 	async up(db) {

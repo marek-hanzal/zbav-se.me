@@ -1,4 +1,5 @@
-import { type Migration, sql } from "kysely";
+import { sql } from "kysely";
+import type { Migration } from "kysely/migration";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { TransactionSideEnumSchema } from "~/common/user-transaction/enum/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";

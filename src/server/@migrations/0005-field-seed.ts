@@ -1,4 +1,4 @@
-import type { Migration } from "kysely";
+import type { Migration } from "kysely/migration";
 import fieldSeedData from "~/server/@migrations/0005-field-seed/field.json" with { type: "json" };
 import fieldOptionSeedData from "~/server/@migrations/0005-field-seed/field-option.json" with {
 	type: "json",
