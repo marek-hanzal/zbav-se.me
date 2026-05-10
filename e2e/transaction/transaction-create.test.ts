@@ -5,6 +5,7 @@ import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { expect, test } from "../test";
+import { shot } from "../utils/shot";
 import { uploadFixtureViaS3 } from "../utils/uploadFixtureViaS3";
 
 const seller = {
@@ -45,7 +46,7 @@ test.setTimeout(120_000);
 test("buyer creates transaction from listing feed and sees messages button", async ({
 	page,
 	database,
-}) => {
+}, testInfo) => {
 	const ath = auth(() => database.dialect);
 
 	await ath.api.signUpEmail({
@@ -87,11 +88,16 @@ test("buyer creates transaction from listing feed and sees messages button", asy
 	await page.locator('[data-action="open listings"]').click();
 	await page.waitForURL(/\/cs\/app\/buyer\/feed\/[^/]+\/list$/);
 
+	await shot(page, testInfo, "buyer-feed");
+
 	await expect(page.getByText(title)).toBeVisible();
 	await page.locator(`[data-action="open listing detail"][data-id="${listing.id}"]`).click();
 
 	await expect(page.locator('[data-ui="ListingSheet"]')).toBeVisible();
 	await expectImageLoaded(page.locator('[data-ui="ListingSheet"] img').first());
+
+    await shot(page, testInfo, "listing-pre-transaction");
+
 	await expect(page.locator('[data-action="create transaction"]')).toBeVisible();
 	await page.locator('[data-action="create transaction"]').click();
 

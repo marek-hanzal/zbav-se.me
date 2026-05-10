@@ -6,7 +6,7 @@ export default defineConfig({
 	testDir: "./e2e",
 	globalSetup: "./e2e/init.ts",
 	outputDir: "./results",
-	workers: 1,
+	// workers: 1,
 	webServer: [
 		{
 			name: "App",
@@ -22,7 +22,7 @@ export default defineConfig({
 		},
 	],
 	failOnFlakyTests: true,
-	fullyParallel: false,
+	fullyParallel: true,
 	reporter: process.env.CI
 		? [
 				[
