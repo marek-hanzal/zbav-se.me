@@ -17,7 +17,8 @@
 			"!**/.venv",
 			"!**/.tanstack",
 			"!**/sdk/src/api",
-			"!**/coverage"
+			"!**/coverage",
+			"!**/results"
 		]
 	},
 	"formatter": {

@@ -4,6 +4,9 @@ Server-side code, never should leak to client.
 
 Middleware keeps per-DSN dialect and auth caches so the same runtime reuses the
 same server objects for each database target.
+E2E teardown explicitly closes the cached dialect for its temporary database
+before the database is dropped, so server pools do not outlive short-lived test
+databases.
 Request-scoped logging is also injected there, so server `*Fn` and `*Fx`
 handlers only consume the logger context and do not build it themselves.
 

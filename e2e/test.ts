@@ -2,6 +2,8 @@ import path from "node:path";
 import { test as base, expect } from "@playwright/test";
 import { testabase } from "./utils/testabase";
 
+const appOrigin = process.env.VITE_ORIGIN ?? "https://zbav-se.me.localhost:1355";
+
 function toDatabaseName(file: string, title: string, workerIndex: number, retry: number) {
 	const fileName = path.basename(file, path.extname(file));
 	const rawName = [
@@ -42,6 +44,13 @@ export const test = base.extend<{
 		});
 
 		await use(database);
+
+		await fetch(new URL("/api/e2e", appOrigin), {
+			method: "DELETE",
+			headers: {
+				"x-e2e-db": db,
+			},
+		});
 
 		await cleanup();
 	},
