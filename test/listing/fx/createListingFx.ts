@@ -15,6 +15,7 @@ export namespace createListingFx {
 		description?: string;
 		locationId?: string;
 		restriction?: RestrictionEnumSchema.Type | null;
+		uploadId?: string;
 	}
 }
 
@@ -26,6 +27,7 @@ export const createListingFx = (
 		locationId,
 		categoryId,
 		restriction = null,
+		uploadId,
 	}: createListingFx.Props = {},
 ) =>
 	Effect.gen(function* () {
@@ -53,13 +55,18 @@ export const createListingFx = (
 			throw new Error("Expected location autocomplete to return Praha");
 		}
 
-		const uploadContext = yield* UploadContextFx;
+		const resolvedUploadId =
+			uploadId ??
+			(yield* Effect.gen(function* () {
+				const uploadContext = yield* UploadContextFx;
+				const upload = yield* uploadCreateFx({
+					access: "public",
+					url: `${uploadContext.cdn.replace(/\/$/, "")}/test.jpg`,
+					userId: sellerId,
+				});
 
-		const upload = yield* uploadCreateFx({
-			access: "public",
-			url: `${uploadContext.cdn.replace(/\/$/, "")}/test.jpg`,
-			userId: sellerId,
-		});
+				return upload.id;
+			}));
 
 		const draft = yield* draftCreateFx({
 			userId: sellerId,
@@ -84,7 +91,7 @@ export const createListingFx = (
 				priceType: "free",
 				expires: "7-days",
 				uploadIds: [
-					upload.id,
+					resolvedUploadId,
 				],
 			},
 		});
