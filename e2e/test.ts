@@ -55,8 +55,22 @@ export const test = base.extend<{
 		await cleanup();
 	},
 	async page({ page, db }, use) {
-		await page.context().setExtraHTTPHeaders({
-			"x-e2e-db": db,
+		await page.context().route("**/*", async (route) => {
+			const request = route.request();
+			const headers = {
+				...request.headers(),
+			};
+			const isAppRequest = new URL(request.url()).origin === appOrigin;
+
+			if (isAppRequest) {
+				headers["x-e2e-db"] = db;
+			} else {
+				delete headers["x-e2e-db"];
+			}
+
+			await route.continue({
+				headers,
+			});
 		});
 
 		await use(page);

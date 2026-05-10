@@ -1,14 +1,25 @@
 import path from "node:path";
-import type { Page } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 import { auth } from "~/server/auth/auth";
 import { expect, test } from "../test";
 import { createUser } from "../utils/createUser";
 
-const fixturePath = path.resolve(import.meta.dirname, "../fixtures/listing-create-image.png");
+const fixturePath = path.resolve(import.meta.dirname, "../fixtures/listing-create-image.jpg");
 
 async function clickSave(page: Page) {
 	await expect(page.locator('[data-action="save"]')).toBeEnabled();
 	await page.locator('[data-action="save"]').click();
+}
+
+async function expectImageLoaded(locator: Locator) {
+	await expect(locator).toBeVisible();
+	await expect
+		.poll(async () => {
+			return locator.evaluate((img) => {
+				return img instanceof HTMLImageElement && img.complete && img.naturalWidth > 0;
+			});
+		})
+		.toBe(true);
 }
 
 test.setTimeout(120_000);
@@ -41,7 +52,7 @@ test("seller creates listing from draft flow", async ({ page, database }) => {
 	await page.locator('[data-action="set draft gallery"]').click();
 	await expect(page.locator('[data-ui="GalleryPatch"]')).toBeVisible();
 	await page.locator('[data-action="upload photo"]').first().setInputFiles(fixturePath);
-	await expect(page.locator('[data-ui="PhotoUpload[Container]"] img').first()).toBeVisible();
+	await expectImageLoaded(page.locator('[data-ui="PhotoUpload[Container]"] img').first());
 	await clickSave(page);
 
 	await expect(page.locator('[data-ui="TitlePatch"]')).toBeVisible();

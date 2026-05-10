@@ -1,5 +1,5 @@
 import path from "node:path";
-import type { Page } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 import { Effect } from "effect";
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
@@ -17,7 +17,18 @@ const buyer = {
 	password: "12345678",
 } as const;
 
-const fixturePath = path.resolve(import.meta.dirname, "../fixtures/listing-create-image.png");
+const fixturePath = path.resolve(import.meta.dirname, "../fixtures/listing-create-image.jpg");
+
+async function expectImageLoaded(locator: Locator) {
+	await expect(locator).toBeVisible();
+	await expect
+		.poll(async () => {
+			return locator.evaluate((img) => {
+				return img instanceof HTMLImageElement && img.complete && img.naturalWidth > 0;
+			});
+		})
+		.toBe(true);
+}
 
 async function signIn(page: Page, user: typeof seller | typeof buyer) {
 	await page.goto("/cs/landing");
@@ -80,6 +91,7 @@ test("buyer creates transaction from listing feed and sees messages button", asy
 	await page.locator(`[data-action="open listing detail"][data-id="${listing.id}"]`).click();
 
 	await expect(page.locator('[data-ui="ListingSheet"]')).toBeVisible();
+	await expectImageLoaded(page.locator('[data-ui="ListingSheet"] img').first());
 	await expect(page.locator('[data-action="create transaction"]')).toBeVisible();
 	await page.locator('[data-action="create transaction"]').click();
 
