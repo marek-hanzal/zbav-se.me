@@ -17,15 +17,28 @@ export const mailtoFx = Effect.fn("mailtoFx")(function* ({ to, title, content }:
 	const mailContext = yield* MailContextFx;
 	const logger = yield* getLoggerFx("mailtoFx", "server-email");
 
-	const { data, error } = yield* Effect.promise(async () => {
-		const resend = new Resend(mailContext.key);
+	const { data, error } = yield* Effect.tryPromise({
+		try: async () => {
+			const resend = new Resend(mailContext.key);
 
-		return resend.emails.send({
-			from: mailContext.from,
-			to,
-			subject: title,
-			react: content,
-		});
+			return resend.emails.send({
+				from: mailContext.from,
+				to,
+				subject: title,
+				react: content,
+			});
+		},
+		catch: (error) => {
+			logger.error("Resend email send threw", {
+				error,
+				title,
+				to,
+			});
+
+			return new MailErrorFx({
+				message: error instanceof Error ? error.message : "Failed to send email",
+			});
+		},
 	});
 
 	if (error) {
