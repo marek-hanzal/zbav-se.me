@@ -4,14 +4,12 @@ import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense, StateType } from "@/lib/client/type";
 import { useView } from "@/lib/client/view";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
-import { SellerInfo } from "~/buyer/listing/SellerInfo/SellerInfo";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { ListingCard } from "../ListingCard";
+import { ListingCard } from "./ListingCard";
 
 export namespace ListingSheet {
 	export interface Props extends BottomSheet.PropsEx, MarkSuspense.Props {
-		feedId: string;
 		listingId: string;
 		state: StateType.State<boolean>;
 	}
@@ -19,7 +17,6 @@ export namespace ListingSheet {
 
 export const ListingSheet: FC<ListingSheet.Props> = ({
 	_suspense,
-	feedId,
 	listingId,
 	state,
 	children,
@@ -30,7 +27,6 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 		panels: [
 			"default",
 			"gallery",
-			"seller-info",
 		],
 		defaultPanel: "default",
 	});
@@ -57,8 +53,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 			>
 				<view.Panel name="default">
 					<ListingCard
-						_suspense={"I know"}
-						feedId={feedId}
+						_suspense={_suspense}
 						listingId={listing.id}
 						view={view}
 					/>
@@ -67,17 +62,11 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				<view.Panel name="gallery">
 					<GalleryPreview
 						urls={listing.withImageUrl}
-						onClick={() => {
+						onClick={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
 							view.set("default");
 						}}
-					/>
-				</view.Panel>
-
-				<view.Panel name="seller-info">
-					<SellerInfo
-						_suspense={"I know"}
-						listingId={listingId}
-						data-ui-inner="default"
 					/>
 				</view.Panel>
 			</BottomSheet>
