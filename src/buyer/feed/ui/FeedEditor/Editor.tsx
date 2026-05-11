@@ -55,9 +55,11 @@ export namespace Editor {
 
 export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, children, ...props }) => {
 	const locationId = feed.query?.meta?.locationId;
-	const { data: location } = withLocationQuery.useFetchQuery(
-		feed.query?.meta?.locationId ?? "<nope>",
-	);
+	const { data: location } = withLocationQuery.useMaybeEntityQuery({
+		where: {
+			id: feed.query?.meta?.locationId ?? "<nope>",
+		},
+	});
 
 	return (
 		<Container

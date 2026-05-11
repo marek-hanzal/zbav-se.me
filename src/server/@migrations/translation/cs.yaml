@@ -735,6 +735,9 @@ Listing condition (label):
     value: Stav
 Listing condition not selected:
     value: Jakýkoli stav
+Listing price - haggle:
+    value: Možnost jednání
+    dynamic: true
 Listing count - empty (label):
     value: Kde nic, tu nic - uprav si nastavení
 Listing delivery (label):

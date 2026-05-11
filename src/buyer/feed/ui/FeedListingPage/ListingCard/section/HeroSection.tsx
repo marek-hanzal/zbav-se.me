@@ -1,14 +1,16 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
+import { Group } from "@/lib/client/group";
 import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
+import { LabelValue } from "@/lib/client/value";
 import type { useView } from "@/lib/client/view";
+import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
-import { LocationBadge } from "~/common/location/ui/LocationBadge";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroImage } from "~/common/ui/img";
 import { FavouriteButton } from "../../FavouriteButton";
@@ -40,22 +42,9 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, view }) =>
 			<Container
 				data-ui={"HeroSection"}
 				data-ui-position="relative"
+				data-ui-flow={"vertical"}
+				data-ui-gap={"default"}
 			>
-				<ListingPrice
-					price={listing as ListingPriceSchema.Type}
-					data-ui-snap-to="top-center"
-					data-ui-opacity="8"
-					data-ui-z-index
-				/>
-
-				<LocationBadge
-					location={listing.location}
-					distance={listing.distance}
-					data-ui-snap-to="bottom"
-					data-ui-opacity="8"
-					data-ui-z-index
-				/>
-
 				{listing.my ? null : (
 					<FavouriteButton
 						_suspense={"I know"}
@@ -86,6 +75,20 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, view }) =>
 					data-ui-round="default"
 					className={"h-64"}
 				/>
+
+				<Container>
+					<Group>
+						<LabelValue
+							textLabel={translator.text("Listing price (label)")}
+							textValue={<ListingPrice price={listing as ListingPriceSchema.Type} />}
+						/>
+
+						<LabelValue
+							textLabel={translator.text("Listing location (label)")}
+							textValue={listing.location.address}
+						/>
+					</Group>
+				</Container>
 			</Container>
 
 			{listing.my ? null : (
