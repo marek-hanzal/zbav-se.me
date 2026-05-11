@@ -80,8 +80,8 @@ export const rateLimitEventFx = Effect.fn("rateLimitEventFx")(function* ({
 						window,
 						count: 1,
 					})
-					.onConflict((oc) =>
-						oc
+					.onConflict((oc) => {
+						return oc
 							.columns([
 								"rule",
 								"key",
@@ -89,8 +89,8 @@ export const rateLimitEventFx = Effect.fn("rateLimitEventFx")(function* ({
 							])
 							.doUpdateSet({
 								count: sql`rate_limit_event.count + 1`,
-							}),
-					)
+							});
+					})
 					.returningAll()
 					.executeTakeFirstOrThrow();
 			});
