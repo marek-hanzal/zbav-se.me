@@ -738,7 +738,7 @@ Listing condition not selected:
 Listing count - empty (label):
     value: Kde nic, tu nic - uprav si nastavení
 Listing delivery (label):
-    value: Listing delivery (label)
+    value: Možnosti doručení
 Listing delivery - other:
     value: Domluvou/ostatní
     dynamic: true
@@ -840,7 +840,7 @@ Listing restriction - sensitive:
 Listing restrictions (empty):
     value: Listing restrictions (empty)
 Listing restrictions (label):
-    value: Listing restrictions (label)
+    value: Dostupnost obsahu inzerátu
 Listing seller hint (label):
     value: Informace o prodejci
 Listing seller info not available (empty):
