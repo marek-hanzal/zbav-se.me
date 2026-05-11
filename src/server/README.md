@@ -25,3 +25,6 @@ can evolve independently from the main listing row shape.
 
 Rate limiting persistence is split between `rate_limit_rule` for reusable rule
 definitions and `rate_limit_event` for per-key, per-window counters.
+
+`rateLimitEventFx` hashes composite caller keys with HMAC-SHA256 before writing
+the per-window counter bucket and uses an atomic conflict update for increments.
