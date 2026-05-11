@@ -1,9 +1,13 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
+import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
+import { LabelValue } from "@/lib/client/value";
 import type { useView } from "@/lib/client/view";
+import { translator } from "@/lib/common/translation";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
+import { CategoryInline } from "~/user/category/ui/CategoryInline";
 import { SellerInfo } from "../../SellerInfo";
 
 export namespace InfoSection {
@@ -20,32 +24,30 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, view })
 			data-ui-layout="vertical-flex"
 			data-ui-gap="default"
 		>
-			{/* <Group>
-				<ValueList
+			<Group>
+				<LabelValue
 					textLabel={translator.text("Listing restrictions (label)")}
 					textEmpty={translator.text("Listing restrictions (empty)")}
-					items={listing.restrictions.map((id) => ({
-						id,
-					}))}
-					renderFn={({ id }) => {
-						return <Tx label={`Listing restriction - ${id}`} />;
-					}}
+					textValue={
+						listing.withRestriction ? (
+							<Tx label={`Listing restriction - ${listing.withRestriction}`} />
+						) : null
+					}
 				/>
-			</Group> */}
+			</Group>
 
-			{/* <Group>
+			<Group>
 				<LabelValue
 					textLabel={translator.text("Listing category (label)")}
 					textValue={
 						<CategoryInline
-							_suspense={"I know"}
-							categoryId={listing.category.id}
+							category={listing.category}
 							data-ui-tone="secondary"
 							data-ui-theme="light"
 						/>
 					}
 				/>
-			</Group> */}
+			</Group>
 
 			{/* {listing.description ? (
 				<Group>

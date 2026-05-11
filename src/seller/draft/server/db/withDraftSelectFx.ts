@@ -6,6 +6,7 @@ import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSche
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withContainsEx } from "~/server/database/expression/withContainsEx";
+import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
 import type { DraftSortSchema } from "../schema/DraftSortSchema";
@@ -68,6 +69,20 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 			//
 			"d.createdAt",
 			"d.updatedAt",
+			//
+			(eb) => {
+				return eb
+					.selectFrom("location as loc")
+					.select((eb) => {
+						return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("json");
+					})
+					.whereRef("loc.id", "=", "d.locationId")
+					.limit(1)
+					.$asScalar()
+					.$castTo<LocationSchema.Type | null>()
+					.as("location");
+			},
+			//
 			(eb) => {
 				return sql<CategorySchema.Type>`
                     to_jsonb(${eb.table("cat")}.*)

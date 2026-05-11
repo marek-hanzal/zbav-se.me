@@ -10,7 +10,7 @@ import { LabelValue } from "@/lib/client/value";
 import { ofGoogleMap, ofLatLonText } from "@/lib/common/location";
 import { toTimeDiff } from "@/lib/common/time";
 import { translator } from "@/lib/common/translation";
-import { withLocationFetchQuery } from "~/session/location/withLocationFetchQuery";
+import { withLocationQuery } from "~/session/location/query/withLocationQuery";
 import type { TransactionEntryLocation } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/LocationSchema";
 import { TypeContainer } from "./TypeContainer";
 
@@ -23,11 +23,9 @@ export namespace Location {
 export const Location = withFallback(
 	({ _suspense, transactionEntry, ...props }: Location.Props) => {
 		const locale = useLocale();
-		const { data: location } = withLocationFetchQuery.useSuspenseQuery({
-			where: {
-				id: transactionEntry.payload.locationId,
-			},
-		});
+		const { data: location } = withLocationQuery.useFetchQuery(
+			transactionEntry.payload.locationId,
+		);
 
 		return (
 			<TypeContainer

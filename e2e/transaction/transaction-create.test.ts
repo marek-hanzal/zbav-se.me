@@ -96,7 +96,7 @@ test("buyer creates transaction from listing feed and sees messages button", asy
 	await expect(page.locator('[data-ui="ListingSheet"]')).toBeVisible();
 	await expectImageLoaded(page.locator('[data-ui="ListingSheet"] img').first());
 
-    await shot(page, testInfo, "listing-pre-transaction");
+	await shot(page, testInfo, "listing-pre-transaction");
 
 	await expect(page.locator('[data-action="create transaction"]')).toBeVisible();
 	await page.locator('[data-action="create transaction"]').click();

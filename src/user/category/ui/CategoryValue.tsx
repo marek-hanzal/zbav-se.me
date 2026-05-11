@@ -1,12 +1,12 @@
 import type { FC } from "react";
-import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
 import { translator } from "@/lib/common/translation";
+import type { CategorySchema } from "../server/schema/CategorySchema";
 import { CategoryInline } from "./CategoryInline";
 
 export namespace CategoryValue {
-	export interface Props extends LabelValue.PropsEx, MarkSuspense.Props {
-		categoryId: string | undefined | null;
+	export interface Props extends LabelValue.PropsEx {
+		category: CategorySchema.Type | undefined | null;
 	}
 }
 
@@ -14,24 +14,23 @@ export namespace CategoryValue {
  * Renders a read-only category value with consistent formatting and empty-state handling.
  * Use it in detail cards, summaries, and previews where editable controls are not needed.
  */
-export const CategoryValue: FC<CategoryValue.Props> = ({ _suspense, categoryId, ...props }) => {
+export const CategoryValue: FC<CategoryValue.Props> = ({ category, ...props }) => {
 	return (
 		<LabelValue
 			data-ui={"CategoryValue"}
 			textLabel={translator.text("Listing category (label)")}
 			textEmpty={translator.text("Listing category not selected")}
 			textValue={
-				categoryId ? (
+				category ? (
 					<CategoryInline
-						_suspense={"I know"}
-						categoryId={categoryId}
+						category={category}
 						data-ui-tone="secondary"
 						data-ui-theme="light"
 					/>
 				) : null
 			}
 			wrapperProps={{
-				"data-ui-tone": categoryId ? "neutral" : "primary",
+				"data-ui-tone": category ? "neutral" : "primary",
 			}}
 			{...props}
 		/>

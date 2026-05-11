@@ -30,7 +30,7 @@ export const ListingCard: FC<ListingCard.Props> = ({
 	view,
 	children,
 	...props
-}: ListingCard.Props) => {
+}) => {
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 
