@@ -46,6 +46,7 @@ export const FavouriteButton = withFallback(
 				data-ui-size="xl"
 				data-ui-justify="start"
 				data-ui-shadow={false}
+				data-ui-border={false}
 				{...props}
 			/>
 		);
@@ -65,6 +66,7 @@ export const FavouriteButton = withFallback(
 				data-ui-inner={undefined}
 				data-ui-snap-to="top-right"
 				data-ui-shadow={false}
+				data-ui-border={false}
 				{...props}
 			>
 				<Tx label="Loading... (button)" />
