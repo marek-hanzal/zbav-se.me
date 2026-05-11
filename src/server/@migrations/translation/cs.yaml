@@ -735,9 +735,6 @@ Listing condition (label):
     value: Stav
 Listing condition not selected:
     value: Jakýkoli stav
-Listing price - haggle:
-    value: Možnost jednání
-    dynamic: true
 Listing count - empty (label):
     value: Kde nic, tu nic - uprav si nastavení
 Listing delivery (label):
@@ -795,6 +792,15 @@ Listing photo gallery (label):
     value: Nahraj fotky
 Listing price (label):
     value: Cena
+Listing price - ask:
+    value: Nabídni cenu
+    dynamic: true
+Listing price - fixed:
+    value: Pevná cena
+    dynamic: true
+Listing price - haggle:
+    value: Možnost jednání
+    dynamic: true
 Listing restriction (hint):
     value: >
         Kategorie definuje základní omezení, nicméně máš možnost přitvrdit, pokud to
@@ -803,9 +809,6 @@ Listing restriction (label):
     value: Nastavení omezení
 Listing restriction (title):
     value: Nastavení omezení
-Listing price - fixed:
-    value: Pevná cena
-    dynamic: true
 Listing restriction - adult (hint):
     value: Obsah jen pro dospělé; není možné obejít.
     dynamic: true
