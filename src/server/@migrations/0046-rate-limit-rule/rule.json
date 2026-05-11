@@ -3,5 +3,10 @@
 		"name": "listing-event",
 		"window": 600,
 		"limit": 1
+	},
+	{
+		"name": "password-reset-request",
+		"window": 900,
+		"limit": 3
 	}
 ]

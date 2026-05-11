@@ -34,3 +34,6 @@ with mandatory rule metadata when a request crosses the configured limit.
 
 The initial seeded rule `listing-event` caps repeated `(listingId, event)` pairs
 to one hit per 10-minute window.
+
+The seeded rule `password-reset-request` caps reset requests to three attempts
+per email address in a 15-minute window.
