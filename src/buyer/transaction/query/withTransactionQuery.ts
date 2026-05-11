@@ -88,6 +88,19 @@ export const withTransactionQuery = withEntityQuery({
 									where: {
 										id: result.listingId,
 									},
+								},
+							},
+						),
+						withListingQuery.invalidator(
+							queryClient,
+							[
+								"fetch",
+							],
+							{
+								fetch: {
+									where: {
+										id: result.listingId,
+									},
 									meta: variables.meta,
 								},
 							},
