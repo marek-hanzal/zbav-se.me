@@ -8,5 +8,10 @@
 		"name": "password-reset-request",
 		"window": 900,
 		"limit": 3
+	},
+	{
+		"name": "password-reset-request-source",
+		"window": 900,
+		"limit": 10
 	}
 ]

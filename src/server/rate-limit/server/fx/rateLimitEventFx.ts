@@ -5,6 +5,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
 import { hash } from "@/lib/server/hmac";
+import { RateLimitRuleTableSchema } from "~/server/database/@table/RateLimitRuleTableSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
@@ -38,13 +39,14 @@ export const rateLimitEventFx = Effect.fn("rateLimitEventFx")(function* ({
 		key,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 	const hmacConfig = ServerHmacSchema.parse(process.env);
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const rateLimitRule = yield* tryDbFx(async () => {
+			const { kysely } = yield* KyselyContextFx;
+
+			const rateLimitRuleRow = yield* tryDbFx(async () => {
 				return kysely
 					.selectFrom("rate_limit_rule")
 					.select([
@@ -55,13 +57,18 @@ export const rateLimitEventFx = Effect.fn("rateLimitEventFx")(function* ({
 					.executeTakeFirst();
 			});
 
-			if (!rateLimitRule) {
+			if (!rateLimitRuleRow) {
 				return yield* new NotFoundErrorFx({
 					resource: "rate-limit-rule",
 					resourceId: rule,
 					message: `Rate limit rule '${rule}' was not found`,
 				});
 			}
+
+			const rateLimitRule = RateLimitRuleTableSchema.pick({
+				window: true,
+				limit: true,
+			}).parse(rateLimitRuleRow);
 
 			const hashedKey = hash({
 				key,

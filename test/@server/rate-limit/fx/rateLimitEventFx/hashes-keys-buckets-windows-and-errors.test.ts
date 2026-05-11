@@ -160,7 +160,7 @@ describe("rateLimitEventFx", () => {
 				{
 					key: hash({
 						key: [
-							"user:1",
+							"user:2",
 						],
 						secret: hmacConfig.SERVER_HMAC_SECRET,
 					}),
@@ -170,7 +170,7 @@ describe("rateLimitEventFx", () => {
 				{
 					key: hash({
 						key: [
-							"user:2",
+							"user:1",
 						],
 						secret: hmacConfig.SERVER_HMAC_SECRET,
 					}),
