@@ -74,6 +74,10 @@ export const Transaction: FC<Transaction.Props> = ({
 							<LabelValue
 								textLabel={translator.text("Listing location (label)")}
 								textValue={transaction.location.address}
+								textValueProps={{
+									"data-ui-truncate": false,
+									"data-ui-wrap": "wrap",
+								}}
 							/>
 						</Group>
 					</Container>
