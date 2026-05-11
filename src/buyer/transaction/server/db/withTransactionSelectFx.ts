@@ -31,8 +31,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 
 	let query = kysely
 		.selectFrom("transaction as lt")
-		.innerJoin("listing as l", "lt.listingId", "l.id")
-		.innerJoin("location as loc", "l.locationId", "loc.id");
+		.innerJoin("listing as l", "lt.listingId", "l.id");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
@@ -90,9 +89,23 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 		select: query
 			.selectAll("lt")
 			.select("l.withImageUrl")
+			//
 			.select("l.title")
+			.select("l.price")
+			.select("l.priceType")
+			.select("l.currency")
+			//
 			.select((eb) => {
-				return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location");
+				return eb
+					.selectFrom("location as loc")
+					.select((eb) => {
+						return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("json");
+					})
+					.whereRef("loc.id", "=", "l.locationId")
+					.limit(1)
+					.$asScalar()
+					.$castTo<LocationSchema.Type>()
+					.as("location");
 			})
 			.select((eb) => {
 				const lastActivitySelect = eb

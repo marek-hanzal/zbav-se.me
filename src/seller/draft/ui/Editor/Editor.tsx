@@ -133,8 +133,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 						<CategoryValue
 							data-action={"select draft category"}
-							_suspense={"I know"}
-							categoryId={draft.categoryId}
+							category={draft.category}
 							action={<ChevronAction />}
 							onClick={() => view.set("category")}
 						/>
@@ -143,8 +142,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 					<Group>
 						<LocationValue
 							data-action={"select draft location"}
-							_suspense={"I know"}
-							locationId={draft.locationId}
+							location={draft.location}
 							textLabel={translator.text("Listing location (label)")}
 							textEmpty={translator.text("Listing location not selected")}
 							textHint={translator.text("Listing location (hint)")}

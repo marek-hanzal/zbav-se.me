@@ -5,8 +5,8 @@ import type { Fulltext } from "@/lib/client/fulltext";
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { uiSelectButton } from "~/common/ui/ui";
+import { withLocationAutocompleteQuery } from "~/session/location/query/withLocationAutocompleteQuery";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
-import { withLocationAutocompleteQuery } from "~/session/location/withLocationAutocompleteQuery";
 import { Empty } from "./Data/Empty";
 import { Default } from "./Default";
 

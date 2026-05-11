@@ -1,11 +1,13 @@
 import { z } from "zod";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
+import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 
 export const DraftSchema = z
 	.looseObject({
 		...DraftTableSchema.shape,
+		location: LocationSchema.nullable(),
 		category: CategorySchema.nullable(),
 		withRestriction: RestrictionEnumSchema.meta({
 			description: `

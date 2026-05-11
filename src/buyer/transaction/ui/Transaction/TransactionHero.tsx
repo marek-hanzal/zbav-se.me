@@ -3,9 +3,12 @@ import { Container } from "@/lib/client/container";
 import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
-import { useUpload } from "~/common/gallery/hook/useUpload";
+import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
+import { ListingPrice } from "~/common/listing/ui/ListingPrice";
+import { LocationBadge } from "~/common/location/ui/LocationBadge";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroImage } from "~/common/ui/img";
+import { ListingSheet } from "./ListingSheet";
 
 export namespace TransactionHero {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -13,10 +16,14 @@ export namespace TransactionHero {
 	}
 }
 
-export const TransactionHero: FC<TransactionHero.Props> = ({ transactionId, ...props }) => {
+export const TransactionHero: FC<TransactionHero.Props> = ({
+	_suspense,
+	transactionId,
+	...props
+}) => {
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
-	const [, setDetail] = useState(false);
-	const hero = useUpload(transaction.withImageUrl);
+	const [detail, setDetail] = useState(false);
+	const [hero] = transaction.withImageUrl;
 
 	useRenderLogger({
 		logger: getRootLogger(),
@@ -38,10 +45,8 @@ export const TransactionHero: FC<TransactionHero.Props> = ({ transactionId, ...p
 				className={"h-42"}
 			/>
 
-			{/* <ListingPrice
-				price={transaction.price}
-				priceType={transaction.priceType}
-				currency={transaction.currency}
+			<ListingPrice
+				price={transaction as ListingPriceSchema.Type}
 				data-ui-snap-to="top-center"
 				data-ui-opacity="8"
 				data-ui-z-index
@@ -53,7 +58,16 @@ export const TransactionHero: FC<TransactionHero.Props> = ({ transactionId, ...p
 				data-ui-snap-to="bottom"
 				data-ui-opacity="8"
 				data-ui-z-index
-			/> */}
+			/>
+
+			<ListingSheet
+				_suspense={_suspense}
+				listingId={transaction.listingId}
+				state={{
+					value: detail,
+					set: setDetail,
+				}}
+			/>
 		</Container>
 	);
 };

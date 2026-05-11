@@ -13,6 +13,7 @@ import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
 import { PriceTypeList } from "~/common/price-type/ui/PriceTypeList";
 import { TitleValue } from "~/common/title/ui/TitleValue";
+import { withLocationQuery } from "~/session/location/query/withLocationQuery";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import { AttrValues } from "./AttrValues";
 import { AgeValueList } from "./value/AgeValueList";
@@ -54,6 +55,9 @@ export namespace Editor {
 
 export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, children, ...props }) => {
 	const locationId = feed.query?.meta?.locationId;
+	const { data: location } = withLocationQuery.useFetchQuery(
+		feed.query?.meta?.locationId ?? "<nope>",
+	);
 
 	return (
 		<Container
@@ -167,9 +171,8 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 
 				<Group>
 					<LocationValue
-						_suspense={"I know"}
 						data-action={"edit feed location"}
-						locationId={locationId}
+						location={location}
 						textLabel={translator.text("Feed location (label)")}
 						textEmpty={translator.text("Feed location not selected")}
 						action={

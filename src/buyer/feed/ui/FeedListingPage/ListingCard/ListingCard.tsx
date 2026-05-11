@@ -10,8 +10,10 @@ import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { FlagButton } from "../FlagButton";
 import { IgnoreButton } from "../IgnoreButton";
+import { SellerInfo } from "../SellerInfo";
 import { ThumbDislikeButton } from "../ThumbDislikeButton";
 import { ThumbLikeButton } from "../ThumbLikeButton";
+import { AttrSection } from "./section/AttrSection";
 import { HeroSection } from "./section/HeroSection";
 import { InfoSection } from "./section/InfoSection";
 
@@ -30,7 +32,7 @@ export const ListingCard: FC<ListingCard.Props> = ({
 	view,
 	children,
 	...props
-}: ListingCard.Props) => {
+}) => {
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 
@@ -67,11 +69,23 @@ export const ListingCard: FC<ListingCard.Props> = ({
 				view={view}
 			/>
 
-			<InfoSection
+			<InfoSection listing={listing} />
+
+			<AttrSection
 				_suspense={_suspense}
-				listing={listing}
-				view={view}
+				listingId={listing.id}
+				categoryId={listing.categoryId}
 			/>
+
+			{listing.my ? null : (
+				<Group>
+					<SellerInfo
+						_suspense={"I know"}
+						listingId={listing.id}
+						view={view}
+					/>
+				</Group>
+			)}
 
 			{listing.my ? null : (
 				<>
