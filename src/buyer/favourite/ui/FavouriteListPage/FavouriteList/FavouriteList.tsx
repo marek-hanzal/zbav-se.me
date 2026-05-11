@@ -1,14 +1,19 @@
-import { useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { Container } from "@/lib/client/container";
 import { EmptyState } from "@/lib/client/empty-state";
 import { withFallback } from "@/lib/client/fallback";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { createVisibilityStore } from "@/lib/client/visibility";
-import { useElementVisibility, VisibilityProvider } from "@/lib/client/visibility";
+import {
+	useElementVisibility,
+	VisibilityProvider,
+	VisibleContainer,
+} from "@/lib/client/visibility";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
-import { Content } from "./Content";
-import { Empty } from "./Data/Empty";
+import { ListItemPending } from "~/common/list-item/ListItemPending";
+import { Empty } from "./Empty";
+import { Item } from "./Item";
 
 export namespace FavouriteList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -30,7 +35,7 @@ export const FavouriteList = withFallback(
 				},
 			});
 
-		const { data: listingCollection } = withListingQuery.useIdsQuery({
+		const { data: listingCollection } = withListingQuery.useCollectionQuery({
 			where: {
 				isFavourite: true,
 				withIgnored: false,
@@ -58,6 +63,8 @@ export const FavouriteList = withFallback(
 			listingCollection,
 		]);
 
+		const placeholder = useCallback(() => <ListItemPending />, []);
+
 		return (
 			<Container
 				data-ui={"FavouriteList"}
@@ -71,10 +78,17 @@ export const FavouriteList = withFallback(
 			>
 				<EmptyState check={check}>
 					<VisibilityProvider store={visibilityStore}>
-						<Content
-							_suspense={"I know"}
-							listingIds={listingCollection}
-						/>
+						{listingCollection.map((listing) => {
+							return (
+								<VisibleContainer
+									key={listing.id}
+									id={listing.id}
+									placeholder={placeholder}
+								>
+									<Item listing={listing} />
+								</VisibleContainer>
+							);
+						})}
 					</VisibilityProvider>
 				</EmptyState>
 			</Container>

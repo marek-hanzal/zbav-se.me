@@ -97,6 +97,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 					})
 					.whereRef("loc.id", "=", "l.locationId")
 					.limit(1)
+					.$asScalar()
 					.$castTo<LocationSchema.Type>()
 					.as("location");
 			})

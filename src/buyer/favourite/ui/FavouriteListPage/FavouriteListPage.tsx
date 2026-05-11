@@ -7,7 +7,9 @@ import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { FavouriteList } from "./FavouriteList";
 
 export namespace FavouriteListPage {
-	export interface Props extends TitleContainer.Props {}
+	export interface Props extends TitleContainer.Props {
+		//
+	}
 }
 
 export const FavouriteListPage: FC<FavouriteListPage.Props> = (props) => {

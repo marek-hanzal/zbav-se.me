@@ -1,23 +1,19 @@
-import { withFallback } from "@/lib/client/fallback";
+import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
-import { SpinnerContainer } from "@/lib/client/spinner";
-import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { toTimeDiff } from "@/lib/common/time";
-import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
-import { useUpload } from "~/common/gallery/hook/useUpload";
+import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { ListItem } from "~/common/list-item/ListItem";
 
 export namespace Item {
-	export interface Props extends MarkSuspense.Props {
-		listingId: string;
+	export interface Props {
+		listing: ListingSchema.Type;
 	}
 }
 
-export const Item = withFallback(({ _suspense, listingId }: Item.Props) => {
+export const Item: FC<Item.Props> = ({ listing }) => {
 	const locale = useLocale();
-	const { data: listing } = withListingQuery.useFetchQuery(listingId);
-	const hero = useUpload(listing.withImageUrl);
+	const [hero] = listing.withImageUrl;
 
 	return (
 		<ListItem
@@ -26,7 +22,7 @@ export const Item = withFallback(({ _suspense, listingId }: Item.Props) => {
 			hero={hero}
 			title={
 				<Typo
-					label={"listing.title"}
+					label={listing.title}
 					data-ui-tone="neutral"
 					data-ui-theme="light"
 					data-ui-color="lead"
@@ -59,4 +55,4 @@ export const Item = withFallback(({ _suspense, listingId }: Item.Props) => {
 			}
 		/>
 	);
-}, SpinnerContainer);
+};
