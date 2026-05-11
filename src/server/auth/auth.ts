@@ -1,14 +1,22 @@
 import { betterAuth } from "better-auth";
 import { anonymous, customSession } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
+import { Effect } from "effect";
 import { type Dialect, Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
+import { createElement } from "react";
 import { match } from "ts-pattern";
 import { genId } from "@/lib/common/gen-id";
+import { withLoggerFx } from "@/lib/common/log";
+import { translator } from "@/lib/common/translation";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import type { Database } from "~/server/database/Database";
+import { mailtoFx } from "~/server/email/fx/mailtoFx";
+import { withMailContextFx } from "~/server/email/fx/withMailContextFx";
+import { PasswordResetEmail } from "~/server/email/ui/PasswordResetEmail";
 import { ServerBetterAuthSchema } from "~/server/env/ServerBetterAuthSchema";
+import { ServerMailSchema } from "~/server/env/ServerMailSchema";
 
 const logger = getRootLogger("auth");
 
@@ -29,6 +37,7 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 	const connection = dialect();
 
 	const betterAuthConfig = ServerBetterAuthSchema.parse(process.env);
+	const mailConfig = ServerMailSchema.parse(process.env);
 	const viteConfig = ViteEnvSchema.parse(process.env);
 	const { hostname: originHost } = new URL(viteConfig.VITE_ORIGIN);
 
@@ -115,6 +124,25 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 		},
 		emailAndPassword: {
 			enabled: true,
+			revokeSessionsOnPasswordReset: true,
+			async sendResetPassword({ user, url }) {
+				await mailtoFx({
+					to: [
+						user.email,
+					],
+					title: translator.text("Password reset email subject"),
+					content: createElement(PasswordResetEmail, {
+						resetUrl: url,
+					}),
+				}).pipe(
+					withMailContextFx({
+						key: mailConfig.SERVER_RESEND,
+						from: mailConfig.SERVER_RESEND_FROM,
+					}),
+					withLoggerFx(logger),
+					Effect.runPromise,
+				);
+			},
 		},
 		advanced: {
 			crossSubDomainCookies: {

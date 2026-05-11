@@ -22,8 +22,10 @@ import { Route as ApiCronRouteImport } from './@routes/api/$cron'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleSignUpRouteImport } from './@routes/$locale/sign-up'
 import { Route as LocaleSignInRouteImport } from './@routes/$locale/sign-in'
+import { Route as LocaleResetPasswordRouteImport } from './@routes/$locale/reset-password'
 import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
 import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
+import { Route as LocaleForgotPasswordRouteImport } from './@routes/$locale/forgot-password'
 import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
 import { Route as LocaleAppIndexRouteImport } from './@routes/$locale/app/index'
 import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
@@ -118,6 +120,11 @@ const LocaleSignInRoute = LocaleSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => LocaleRoute,
 } as any)
+const LocaleResetPasswordRoute = LocaleResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => LocaleRoute,
+} as any)
 const LocalePrivacyRoute = LocalePrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -126,6 +133,11 @@ const LocalePrivacyRoute = LocalePrivacyRouteImport.update({
 const LocaleLandingRoute = LocaleLandingRouteImport.update({
   id: '/landing',
   path: '/landing',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleForgotPasswordRoute = LocaleForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleAppRoute = LocaleAppRouteImport.update({
@@ -290,8 +302,10 @@ export interface FileRoutesByFullPath {
   '/api': typeof ApiRouteWithChildren
   '/mcp': typeof McpRoute
   '/$locale/app': typeof LocaleAppRouteWithChildren
+  '/$locale/forgot-password': typeof LocaleForgotPasswordRoute
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
+  '/$locale/reset-password': typeof LocaleResetPasswordRoute
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
@@ -333,8 +347,10 @@ export interface FileRoutesByTo {
   '/.well-known': typeof DotwellKnownRoute
   '/api': typeof ApiRouteWithChildren
   '/mcp': typeof McpRoute
+  '/$locale/forgot-password': typeof LocaleForgotPasswordRoute
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
+  '/$locale/reset-password': typeof LocaleResetPasswordRoute
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
@@ -379,8 +395,10 @@ export interface FileRoutesById {
   '/api': typeof ApiRouteWithChildren
   '/mcp': typeof McpRoute
   '/$locale/app': typeof LocaleAppRouteWithChildren
+  '/$locale/forgot-password': typeof LocaleForgotPasswordRoute
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
+  '/$locale/reset-password': typeof LocaleResetPasswordRoute
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
@@ -426,8 +444,10 @@ export interface FileRouteTypes {
     | '/api'
     | '/mcp'
     | '/$locale/app'
+    | '/$locale/forgot-password'
     | '/$locale/landing'
     | '/$locale/privacy'
+    | '/$locale/reset-password'
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
@@ -469,8 +489,10 @@ export interface FileRouteTypes {
     | '/.well-known'
     | '/api'
     | '/mcp'
+    | '/$locale/forgot-password'
     | '/$locale/landing'
     | '/$locale/privacy'
+    | '/$locale/reset-password'
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
@@ -514,8 +536,10 @@ export interface FileRouteTypes {
     | '/api'
     | '/mcp'
     | '/$locale/app'
+    | '/$locale/forgot-password'
     | '/$locale/landing'
     | '/$locale/privacy'
+    | '/$locale/reset-password'
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
@@ -655,6 +679,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleSignInRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/$locale/reset-password': {
+      id: '/$locale/reset-password'
+      path: '/reset-password'
+      fullPath: '/$locale/reset-password'
+      preLoaderRoute: typeof LocaleResetPasswordRouteImport
+      parentRoute: typeof LocaleRoute
+    }
     '/$locale/privacy': {
       id: '/$locale/privacy'
       path: '/privacy'
@@ -667,6 +698,13 @@ declare module '@tanstack/react-router' {
       path: '/landing'
       fullPath: '/$locale/landing'
       preLoaderRoute: typeof LocaleLandingRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/forgot-password': {
+      id: '/$locale/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/$locale/forgot-password'
+      preLoaderRoute: typeof LocaleForgotPasswordRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/app': {
@@ -932,8 +970,10 @@ const LocaleAppRouteWithChildren = LocaleAppRoute._addFileChildren(
 
 interface LocaleRouteChildren {
   LocaleAppRoute: typeof LocaleAppRouteWithChildren
+  LocaleForgotPasswordRoute: typeof LocaleForgotPasswordRoute
   LocaleLandingRoute: typeof LocaleLandingRoute
   LocalePrivacyRoute: typeof LocalePrivacyRoute
+  LocaleResetPasswordRoute: typeof LocaleResetPasswordRoute
   LocaleSignInRoute: typeof LocaleSignInRoute
   LocaleSignUpRoute: typeof LocaleSignUpRoute
   LocaleTosRoute: typeof LocaleTosRoute
@@ -942,8 +982,10 @@ interface LocaleRouteChildren {
 
 const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleAppRoute: LocaleAppRouteWithChildren,
+  LocaleForgotPasswordRoute: LocaleForgotPasswordRoute,
   LocaleLandingRoute: LocaleLandingRoute,
   LocalePrivacyRoute: LocalePrivacyRoute,
+  LocaleResetPasswordRoute: LocaleResetPasswordRoute,
   LocaleSignInRoute: LocaleSignInRoute,
   LocaleSignUpRoute: LocaleSignUpRoute,
   LocaleTosRoute: LocaleTosRoute,

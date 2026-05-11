@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import type { ReactNode } from "react";
 import { Resend } from "resend";
+import { getLoggerFx } from "@/lib/common/log";
 import { MailContextFx } from "../context/MailContextFx";
 import { MailErrorFx } from "../error/MailErrorFx";
 
@@ -14,6 +15,7 @@ export namespace mailtoFx {
 
 export const mailtoFx = Effect.fn("mailtoFx")(function* ({ to, title, content }: mailtoFx.Props) {
 	const mailContext = yield* MailContextFx;
+	const logger = yield* getLoggerFx("mailtoFx", "server-email");
 
 	const { data, error } = yield* Effect.promise(async () => {
 		const resend = new Resend(mailContext.key);
@@ -27,6 +29,14 @@ export const mailtoFx = Effect.fn("mailtoFx")(function* ({ to, title, content }:
 	});
 
 	if (error) {
+		yield* Effect.sync(() => {
+			logger.error("Resend email send failed", {
+				error,
+				title,
+				to,
+			});
+		});
+
 		return yield* new MailErrorFx({
 			message: error.message,
 		});

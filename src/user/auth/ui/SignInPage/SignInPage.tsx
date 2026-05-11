@@ -35,11 +35,11 @@ type SignInSchema = typeof SignInSchema;
 
 export namespace SignInPage {
 	export interface Props extends Container.Props {
-		//
+		notice?: "password-reset";
 	}
 }
 
-export const SignInPage: FC<SignInPage.Props> = ({ ...props }) => {
+export const SignInPage: FC<SignInPage.Props> = ({ notice, ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
 
@@ -112,10 +112,22 @@ export const SignInPage: FC<SignInPage.Props> = ({ ...props }) => {
 							onSubmit={(e) => {
 								e.preventDefault();
 								e.stopPropagation();
-								form.handleSubmit();
+								void form.handleSubmit();
 							}}
 							className={"space-y-2"}
 						>
+							{notice === "password-reset" && (
+								<Container data-ui-width="full">
+									<Tx
+										label={
+											"Your password has been updated. You can sign in now."
+										}
+										data-ui-display="block"
+										data-ui-align="center"
+									/>
+								</Container>
+							)}
+
 							<form.AppField name={"email"}>
 								{(field) => (
 									<FormField
@@ -149,7 +161,7 @@ export const SignInPage: FC<SignInPage.Props> = ({ ...props }) => {
 										label={<Tx label={"Password"} />}
 										meta={field.state.meta}
 									>
-										{(props) => (
+										{(fieldProps) => (
 											<field.TextInput
 												data-ui={"SignInPage[PasswordInput]"}
 												type={"password"}
@@ -158,7 +170,7 @@ export const SignInPage: FC<SignInPage.Props> = ({ ...props }) => {
 												onChange={(e) => field.handleChange(e.target.value)}
 												onBlur={field.handleBlur}
 												placeholder={translator.text("Enter your password")}
-												{...props}
+												{...fieldProps}
 											/>
 										)}
 									</FormField>
@@ -200,6 +212,21 @@ export const SignInPage: FC<SignInPage.Props> = ({ ...props }) => {
 										</>
 									)}
 								</form.Subscribe>
+
+								<LinkTo
+									to={"/$locale/forgot-password"}
+									params={{
+										locale,
+									}}
+								>
+									<Tx
+										label={"Forgot password? (link)"}
+										data-ui-tone="link"
+										data-ui-theme="light"
+										data-ui-text="md"
+										data-ui-color="lead"
+									/>
+								</LinkTo>
 
 								<LinkTo
 									to={"/$locale/sign-up"}

@@ -333,6 +333,8 @@ Confirm Password:
     value: Potvrdit heslo
 Confirm your password:
     value: Potvrďte své heslo
+Confirm your new password:
+    value: Potvrď nové heslo
 Cons 0 (placeholder):
     value: Bez dokladu
     dynamic: true
@@ -1020,6 +1022,8 @@ No value here (label):
     value: Přidat
 Notifications (label):
     value: Oznámení
+Check your email for the reset link.:
+    value: Mrkni do mailu, poslali jsme ti odkaz pro reset hesla.
 Open agent menu options (aria):
     value: Kliknutím otevře spodní panel s nabídkou příloh a možností chatu s
         asistentem.
@@ -1039,6 +1043,8 @@ Password must be at least 8 characters:
     value: Heslo by mělo mít alespoň 8 znaků.
 Password:
     value: Heslo
+Password reset email subject:
+    value: Reset hesla
 Passwords do not match:
     value: Hesla nesedí, zkontrolujte si je.
 Personal - Email (label):
@@ -1148,6 +1154,10 @@ Register (link):
     value: Jsi tu nový? Přidej se!
 Register:
     value: Registrace
+Reset password (button):
+    value: Nastavit nové heslo
+Reset your password:
+    value: Reset hesla
 Reject transaction (button):
     value: Odmítnout a zavřít
 Reject transaction - confirm (button):
@@ -1188,6 +1198,8 @@ Seller score 2:
     dynamic: true
 Send message to agent (aria):
     value: Odešle agentovi zprávu, včetně případných příloh (jako jsou obrázky)
+Send reset link:
+    value: Poslat odkaz
 Share contact info (button):
     value: Sdílet osobní údaje
 Share contact info (title):
@@ -1200,18 +1212,32 @@ Share package (button):
     value: Trasování balíčku
 Shop (title):
     value: Obchod
+Sign in:
+    value: Přihlášení
 Sign in (button):
     value: Přihlásit se
 Sign out:
     value: Odhlásit se
 Something went wrong (error):
     value: Pardon, tohle je teď rozbité.
+This reset link is invalid or expired:
+    value: Tenhle reset link je neplatný nebo už expiroval.
 Submit draft (button):
     value: Publikovat inzerát
 System update (label):
     value: System update (label)
+Your password has been updated. You can sign in now.:
+    value: Heslo je změněné. Teď se můžeš normálně přihlásit.
 Thread token usage (label):
     value: Projebané tokeny
+Forgot password? (link):
+    value: Zapomněl jsi heslo?
+Back to sign in:
+    value: Zpátky na přihlášení
+Choose a new password:
+    value: Zvol nové heslo
+Enter your new password:
+    value: Zadej nové heslo
 ToS agreement (label):
     value: Podmínkami použití služby
 ToS not available in this language (description):
