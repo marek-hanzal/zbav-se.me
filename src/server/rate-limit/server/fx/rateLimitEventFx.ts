@@ -11,13 +11,13 @@ import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { ServerHmacSchema } from "~/server/env/ServerHmacSchema";
 
 function toRateLimitWindowStart(now: DateTime, windowSeconds: number) {
-	const windowMs = windowSeconds * 1000;
-	const elapsedMs = now.toMillis() % windowMs;
+	const elapsedSeconds = Math.floor(now.toSeconds()) % windowSeconds;
 
 	return now
 		.minus({
-			milliseconds: elapsedMs,
+			seconds: elapsedSeconds,
 		})
+		.startOf("second")
 		.toJSDate();
 }
 
@@ -98,6 +98,7 @@ export const rateLimitEventFx = Effect.fn("rateLimitEventFx")(function* ({
 			return {
 				...event,
 				limit: rateLimitRule.limit,
+				seconds: rateLimitRule.window,
 			} as const;
 		}),
 	);

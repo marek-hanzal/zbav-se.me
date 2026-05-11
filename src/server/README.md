@@ -28,3 +28,9 @@ definitions and `rate_limit_event` for per-key, per-window counters.
 
 `rateLimitEventFx` hashes composite caller keys with HMAC-SHA256 before writing
 the per-window counter bucket and uses an atomic conflict update for increments.
+
+`rateLimitCheckFx` builds on the bucket writer and raises `RateLimitErrorFx`
+with mandatory rule metadata when a request crosses the configured limit.
+
+The initial seeded rule `listing-event` caps repeated `(listingId, event)` pairs
+to one hit per 10-minute window.

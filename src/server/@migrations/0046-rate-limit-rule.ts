@@ -1,5 +1,8 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
+import rateLimitRuleSeedData from "~/server/@migrations/0046-rate-limit-rule/rule.json" with {
+	type: "json",
+};
 
 export const RateLimitRuleMigration: Migration = {
 	async up(db) {
@@ -11,5 +14,7 @@ export const RateLimitRuleMigration: Migration = {
 			.addCheckConstraint("rate_limit_rule_[window]_chk", sql`"window" > 0`)
 			.addCheckConstraint("rate_limit_rule_[limit]_chk", sql`"limit" >= 0`)
 			.execute();
+
+		await db.insertInto("rate_limit_rule").values(rateLimitRuleSeedData).execute();
 	},
 };
