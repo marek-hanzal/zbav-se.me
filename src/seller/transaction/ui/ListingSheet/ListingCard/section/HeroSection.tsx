@@ -2,9 +2,6 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { useRenderLogger } from "@/lib/client/log";
 import type { useView } from "@/lib/client/view";
-import { useUpload } from "~/common/gallery/hook/useUpload";
-import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
-import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { HeroImage } from "~/common/ui/img";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
@@ -17,7 +14,7 @@ export namespace HeroSection {
 }
 
 export const HeroSection: FC<HeroSection.Props> = ({ listing, view }) => {
-	const hero = useUpload(listing.withImageUrl);
+	const [hero] = listing.withImageUrl;
 
 	useRenderLogger({
 		logger: getRootLogger(),
@@ -28,17 +25,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ listing, view }) => {
 	});
 
 	return (
-		<Container
-			data-ui={"HeroSection"}
-			data-ui-position="relative"
-		>
-			<ListingPrice
-				price={listing as ListingPriceSchema.Type}
-				data-ui-snap-to="top-center"
-				data-ui-opacity="8"
-				data-ui-z-index
-			/>
-
+		<Container data-ui={"HeroSection"}>
 			<HeroImage
 				src={hero}
 				alt={`Hero image for listing ${listing.id}`}

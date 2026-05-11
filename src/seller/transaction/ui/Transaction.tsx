@@ -1,7 +1,9 @@
 import { type FC, useRef, useState } from "react";
 import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
+import { Group } from "@/lib/client/group";
 import type { MarkSuspense } from "@/lib/client/type";
+import { LabelValue } from "@/lib/client/value";
 import { translator } from "@/lib/common/translation";
 import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
@@ -52,10 +54,7 @@ export const Transaction: FC<Transaction.Props> = ({
 					"pb-[50%]",
 				]}
 			>
-				<Container
-					data-ui-position="relative"
-					data-ui-height="content"
-				>
+				<Container data-ui-height="content">
 					<HeroImage
 						src={hero}
 						alt={`Hero image for transaction ${transaction.id}`}
@@ -63,12 +62,21 @@ export const Transaction: FC<Transaction.Props> = ({
 						onClick={() => setDetail((value) => !value)}
 					/>
 
-					<ListingPrice
-						price={transaction as ListingPriceSchema.Type}
-						data-ui-snap-to="top-center"
-						data-ui-opacity="8"
-						data-ui-z-index
-					/>
+					<Container data-ui-inner={"default"}>
+						<Group>
+							<LabelValue
+								textLabel={translator.text("Listing price (label)")}
+								textValue={
+									<ListingPrice price={transaction as ListingPriceSchema.Type} />
+								}
+							/>
+
+							<LabelValue
+								textLabel={translator.text("Listing location (label)")}
+								textValue={transaction.location.address}
+							/>
+						</Group>
+					</Container>
 				</Container>
 
 				<TransactionEntryList

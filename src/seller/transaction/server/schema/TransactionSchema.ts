@@ -3,11 +3,13 @@ import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchem
 import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
+import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 
 export const TransactionSchema = z
 	.looseObject({
 		...TransactionTableSchema.shape,
+		location: LocationSchema,
 		title: z.string().meta({
 			description: "Transaction title",
 		}),
