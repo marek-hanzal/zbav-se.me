@@ -1,5 +1,4 @@
 import type { FC } from "react";
-import { Container } from "@/lib/client/container";
 import { useRenderLogger } from "@/lib/client/log";
 import type { useView } from "@/lib/client/view";
 import { getRootLogger } from "~/common/log/getRootLogger";
@@ -25,19 +24,18 @@ export const HeroSection: FC<HeroSection.Props> = ({ listing, view }) => {
 	});
 
 	return (
-		<Container data-ui={"HeroSection"}>
-			<HeroImage
-				src={hero}
-				alt={`Hero image for listing ${listing.id}`}
-				data-action={"open listing gallery"}
-				onClick={(e) => {
-					e.preventDefault();
-					e.stopPropagation();
-					view.set("gallery");
-				}}
-				data-ui-round="default"
-				className={"h-64"}
-			/>
-		</Container>
+		<HeroImage
+			data-ui={"HeroSection"}
+			src={hero}
+			alt={`Hero image for listing ${listing.id}`}
+			data-action={"open listing gallery"}
+			onClick={(e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				view.set("gallery");
+			}}
+			data-ui-round="default"
+			className={"h-64"}
+		/>
 	);
 };
