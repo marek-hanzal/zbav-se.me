@@ -44,6 +44,8 @@ import { AgentUsageMigration } from "~/server/@migrations/0042-agent-usage";
 import { UserRestrictionMigration } from "~/server/@migrations/0043-user-restriction";
 import { TranslationMigration } from "~/server/@migrations/0044-translation";
 import { ListingSpotlightMigration } from "~/server/@migrations/0045-listing-spotlight";
+import { RateLimitRuleMigration } from "~/server/@migrations/0046-rate-limit-rule";
+import { RateLimitEventMigration } from "~/server/@migrations/0047-rate-limit-event";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -92,4 +94,6 @@ export const migrations = {
 	"0043-user-restriction": UserRestrictionMigration,
 	"0044-translation": TranslationMigration,
 	"0045-listing-spotlight": ListingSpotlightMigration,
+	"0046-rate-limit-rule": RateLimitRuleMigration,
+	"0047-rate-limit-event": RateLimitEventMigration,
 };

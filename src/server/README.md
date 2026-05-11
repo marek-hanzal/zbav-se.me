@@ -22,3 +22,18 @@ editing has its own mirrored `draft` and `draft_attr_*` persistence layer.
 
 Listing fulltext phrases live in `listing_spotlight`, so search-oriented text
 can evolve independently from the main listing row shape.
+
+Rate limiting persistence is split between `rate_limit_rule` for reusable rule
+definitions and `rate_limit_event` for per-key, per-window counters.
+
+`rateLimitEventFx` hashes composite caller keys with HMAC-SHA256 before writing
+the per-window counter bucket and uses an atomic conflict update for increments.
+
+`rateLimitCheckFx` builds on the bucket writer and raises `RateLimitErrorFx`
+with mandatory rule metadata when a request crosses the configured limit.
+
+The initial seeded rule `listing-event` caps repeated `(listingId, event)` pairs
+to one hit per 10-minute window.
+
+The seeded rule `password-reset-request` caps reset requests to three attempts
+per email address in a 15-minute window.

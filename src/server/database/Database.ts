@@ -25,6 +25,8 @@ import type { ListingEventTableSchema } from "~/server/database/@table/ListingEv
 import type { ListingSpotlightTableSchema } from "~/server/database/@table/ListingSpotlightTableSchema";
 import type { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
+import type { RateLimitEventTableSchema } from "~/server/database/@table/RateLimitEventTableSchema";
+import type { RateLimitRuleTableSchema } from "~/server/database/@table/RateLimitRuleTableSchema";
 import type { ThumbTableSchema } from "~/server/database/@table/ThumbTableSchema";
 import type { TransactionEntryTableSchema } from "~/server/database/@table/TransactionEntryTableSchema";
 import type { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
@@ -74,6 +76,8 @@ export interface Database {
 	listing_spotlight: ListingSpotlightTableSchema.Type;
 	listing: ListingTableSchema.Type;
 	location: LocationTableSchema.Type;
+	rate_limit_event: RateLimitEventTableSchema.Type;
+	rate_limit_rule: RateLimitRuleTableSchema.Type;
 	thumb: ThumbTableSchema.Type;
 	transaction_entry: TransactionEntryTableSchema.Type;
 	transaction_user: TransactionUserTableSchema.Type;
