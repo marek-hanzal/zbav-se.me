@@ -1,0 +1,36 @@
+import { Effect } from "effect";
+import type { ReactNode } from "react";
+import { Resend } from "resend";
+import { MailContextFx } from "../context/MailContextFx";
+import { MailErrorFx } from "../error/MailErrorFx";
+
+export namespace mailtoFx {
+	export interface Props {
+		to: string[];
+		title: string;
+		content: ReactNode;
+	}
+}
+
+export const mailtoFx = Effect.fn("mailtoFx")(function* ({ to, title, content }: mailtoFx.Props) {
+	const mailContext = yield* MailContextFx;
+
+	const { data, error } = yield* Effect.promise(async () => {
+		const resend = new Resend(mailContext.key);
+
+		return resend.emails.send({
+			from: mailContext.from,
+			to,
+			subject: title,
+			react: content,
+		});
+	});
+
+	if (error) {
+		return yield* new MailErrorFx({
+			message: error.message,
+		});
+	}
+
+	return data;
+});
