@@ -50,15 +50,15 @@ describe("listingEventRateLimitFx", () => {
 				rule?: string;
 				limit?: number;
 				count?: number;
-				exceededBy?: number;
-				windowSeconds?: number;
+				exceeded?: number;
+				window?: number;
 			};
 
 			expect(duplicateError.rule).toBe("listing-event");
 			expect(duplicateError.limit).toBe(1);
 			expect(duplicateError.count).toBe(2);
-			expect(duplicateError.exceededBy).toBe(1);
-			expect(duplicateError.windowSeconds).toBe(600);
+			expect(duplicateError.exceeded).toBe(1);
+			expect(duplicateError.window).toBe(600);
 
 			const duplicateCount = yield* Effect.promise(() =>
 				database.kysely

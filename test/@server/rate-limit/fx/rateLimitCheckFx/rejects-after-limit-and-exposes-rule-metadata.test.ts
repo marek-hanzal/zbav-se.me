@@ -67,16 +67,16 @@ describe("rateLimitCheckFx", () => {
 				rule?: string;
 				limit?: number;
 				count?: number;
-				exceededBy?: number;
-				windowSeconds?: number;
+				exceeded?: number;
+				window?: number;
 				retryAt?: string;
 			};
 
 			expect(error.rule).toBe("listing-contact");
 			expect(error.limit).toBe(2);
 			expect(error.count).toBe(3);
-			expect(error.exceededBy).toBe(1);
-			expect(error.windowSeconds).toBe(60);
+			expect(error.exceeded).toBe(1);
+			expect(error.window).toBe(60);
 			expect(error.retryAt).toBe("2026-05-11T10:06:00.000Z");
 
 			const rows = yield* Effect.promise(() =>
@@ -130,13 +130,13 @@ describe("rateLimitCheckFx", () => {
 				rule?: string;
 				limit?: number;
 				count?: number;
-				exceededBy?: number;
+				exceeded?: number;
 			};
 
 			expect(error.rule).toBe("listing-flag");
 			expect(error.limit).toBe(0);
 			expect(error.count).toBe(1);
-			expect(error.exceededBy).toBe(1);
+			expect(error.exceeded).toBe(1);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 
