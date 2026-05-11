@@ -22,3 +22,6 @@ editing has its own mirrored `draft` and `draft_attr_*` persistence layer.
 
 Listing fulltext phrases live in `listing_spotlight`, so search-oriented text
 can evolve independently from the main listing row shape.
+
+Rate limiting persistence is split between `rate_limit_rule` for reusable rule
+definitions and `rate_limit_event` for per-key, per-window counters.
