@@ -3,28 +3,25 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { Markdown } from "@/lib/client/markdown";
 import { Tx } from "@/lib/client/tx";
-import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
-import type { useView } from "@/lib/client/view";
 import { translator } from "@/lib/common/translation";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { CategoryInline } from "~/user/category/ui/CategoryInline";
-import { SellerInfo } from "../../SellerInfo";
 
 export namespace InfoSection {
-	export interface Props extends MarkSuspense.Props {
+	export interface Props extends Container.Props {
 		listing: ListingSchema.Type;
-		view: useView.Use<"seller-info">;
 	}
 }
 
-export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, view }) => {
+export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 	return (
 		<Container
 			data-ui={"InfoSection"}
 			data-ui-layout="vertical-flex"
 			data-ui-gap="default"
+			{...props}
 		>
 			<Group>
 				<LabelValue
@@ -102,7 +99,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, view })
 				</Group>
 			) : null}
 
-			{listing.warranty !== null ? (
+			{listing.warranty != null ? (
 				<Group>
 					<LabelValue
 						textLabel={translator.text("Listing warranty (label)")}
@@ -128,16 +125,6 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, view })
 					) : null}
 				</Group>
 			) : null}
-
-			{listing.my ? null : (
-				<Group>
-					<SellerInfo
-						_suspense={"I know"}
-						listingId={listing.id}
-						view={view}
-					/>
-				</Group>
-			)}
 		</Container>
 	);
 };
