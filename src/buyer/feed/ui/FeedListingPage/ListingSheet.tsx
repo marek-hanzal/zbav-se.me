@@ -55,7 +55,10 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				detent={"default"}
 				{...props}
 			>
-				<view.Panel name="default">
+				<view.Panel
+					name="default"
+					keep
+				>
 					<ListingCard
 						_suspense={"I know"}
 						feedId={feedId}
