@@ -6,6 +6,7 @@ import { useView } from "@/lib/client/view";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { CloseButton } from "~/common/ui/button";
 import { ListingCard } from "./ListingCard";
 
 export namespace ListingSheet {
@@ -29,6 +30,16 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 			"gallery",
 		],
 		defaultPanel: "default",
+		props: {
+			default: {
+				header({ close }) {
+					return {
+						title: listing.title,
+						right: <CloseButton onClick={close} />,
+					};
+				},
+			} satisfies BottomSheet.PropsEx,
+		},
 	});
 
 	useRenderLogger({
@@ -50,6 +61,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				}}
 				detent={"default"}
 				{...props}
+				{...view.props}
 			>
 				<view.Panel name="default">
 					<ListingCard

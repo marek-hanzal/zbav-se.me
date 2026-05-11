@@ -5,6 +5,7 @@ import type { MarkSuspense, StateType } from "@/lib/client/type";
 import { useView } from "@/lib/client/view";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { CloseButton } from "~/common/ui/button";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 import { ListingCard } from "./ListingCard";
 
@@ -29,6 +30,16 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 			"gallery",
 		],
 		defaultPanel: "default",
+		props: {
+			default: {
+				header({ close }) {
+					return {
+						title: listing.title,
+						right: <CloseButton onClick={close} />,
+					};
+				},
+			} satisfies BottomSheet.PropsEx,
+		},
 	});
 
 	useRenderLogger({
@@ -50,6 +61,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				}}
 				detent={"default"}
 				{...props}
+				{...view.props}
 			>
 				<view.Panel name="default">
 					<ListingCard
