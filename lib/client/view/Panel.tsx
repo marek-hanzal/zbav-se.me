@@ -6,13 +6,14 @@ import { SpinnerContainer } from "../spinner/SpinnerContainer";
 import type { useView } from "./useView";
 
 export namespace Panel {
-	export interface Props<TPanel extends string> extends Container.Props {
+	export interface Props<TPanel extends string, TProps extends object | unknown = unknown>
+		extends Container.Props {
 		name: TPanel;
 		/**
 		 * Keep mounted (useful for "root" pages which keeps e.g. scroll position)
 		 */
 		keep?: boolean;
-		control: useView.Use<TPanel>;
+		control: useView.Use<TPanel, TProps>;
 	}
 }
 
@@ -25,12 +26,12 @@ export namespace Panel {
  * Use this only for panel flows where opened content owns its local state
  * or reads live data internally.
  */
-export const Panel = <TPanel extends string>({
+export const Panel = <TPanel extends string, TProps extends object | unknown = unknown>({
 	name,
 	keep = false,
 	control,
 	...props
-}: Panel.Props<TPanel>) => {
+}: Panel.Props<TPanel, TProps>) => {
 	const isVisible = control.isVisible(name);
 
 	if (!isVisible && !keep) {

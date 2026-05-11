@@ -1,12 +1,15 @@
 import type { FC } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
+import { CloseIcon } from "@/lib/client/icon";
 import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense, StateType } from "@/lib/client/type";
 import { useView } from "@/lib/client/view";
+import { translator } from "@/lib/common/translation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { SellerInfo } from "~/buyer/listing/SellerInfo/SellerInfo";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { CloseButton } from "~/common/ui/button";
 import { ListingCard } from "./ListingCard";
 
 export namespace ListingSheet {
@@ -33,6 +36,29 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 			"seller-info",
 		],
 		defaultPanel: "default",
+		props: {
+			default: {
+				header({ close }) {
+					return {
+						title: listing.title,
+						right: <CloseButton onClick={close} />,
+					};
+				},
+			} satisfies BottomSheet.PropsEx,
+			"seller-info": {
+				header() {
+					return {
+						title: translator.text("Seller info (title)"),
+						right: (
+							<CloseButton
+								iconEnabled={CloseIcon}
+								onClick={() => view.set("default")}
+							/>
+						),
+					};
+				},
+			} satisfies BottomSheet.PropsEx,
+		},
 	});
 
 	useRenderLogger({
@@ -54,6 +80,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				}}
 				detent={"default"}
 				{...props}
+				{...view.props}
 			>
 				<view.Panel
 					name="default"
