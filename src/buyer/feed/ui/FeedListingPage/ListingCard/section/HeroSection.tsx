@@ -86,6 +86,10 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, view }) =>
 						<LabelValue
 							textLabel={translator.text("Listing location (label)")}
 							textValue={listing.location.address}
+							textValueProps={{
+								"data-ui-truncate": false,
+								"data-ui-wrap": "wrap",
+							}}
 						/>
 					</Group>
 				</Container>

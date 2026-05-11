@@ -60,6 +60,11 @@ export const TransactionHero: FC<TransactionHero.Props> = ({
 						<LabelValue
 							textLabel={translator.text("Listing location (label)")}
 							textValue={transaction.location.address}
+							textValueProps={{
+								"data-ui-truncate": false,
+								"data-ui-wrap": "wrap",
+							}}
+							data-ui-width={"full"}
 						/>
 					</Group>
 				</Container>
