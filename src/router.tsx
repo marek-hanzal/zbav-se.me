@@ -63,6 +63,7 @@ export async function getRouter() {
 				gcTime: staleTime * 2,
 				refetchOnWindowFocus: true,
 				refetchOnReconnect: true,
+				refetchOnMount: true,
 			},
 		},
 	});
