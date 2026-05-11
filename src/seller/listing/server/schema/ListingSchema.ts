@@ -7,7 +7,7 @@ import { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/T
 export const ListingSchema = z
 	.looseObject({
 		...ListingTableSchema.shape,
-		category: CategorySchema.nullable(),
+		category: CategorySchema,
 		withTransactionCount: z.coerce.number().int().nonnegative(),
 		withUnreadCount: z.coerce.number().int().nonnegative(),
 		withTransactionEntry: TransactionEntrySchema.nullable(),

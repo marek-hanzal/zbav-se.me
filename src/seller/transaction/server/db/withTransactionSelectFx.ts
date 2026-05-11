@@ -84,6 +84,9 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 			.select([
 				"l.title",
 				"l.withImageUrl",
+				"l.price",
+				"l.priceType",
+				"l.currency",
 			])
 			.select((eb) => {
 				/**
