@@ -1,1 +1,1 @@
-export const LetterBIcon = "icon-[tabler--hexagon-letter-b-filled]";
+export const LetterBIcon = "icon-[arcticons--letter-uppercase-square-b]";
