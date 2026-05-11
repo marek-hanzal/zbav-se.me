@@ -56,15 +56,16 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 						_suspense={_suspense}
 						listingId={listing.id}
 						view={view}
+						onClick={() => {
+							state.set(false);
+						}}
 					/>
 				</view.Panel>
 
 				<view.Panel name="gallery">
 					<GalleryPreview
 						urls={listing.withImageUrl}
-						onClick={(e) => {
-							e.preventDefault();
-							e.stopPropagation();
+						onClick={() => {
 							view.set("default");
 						}}
 					/>
