@@ -17,7 +17,12 @@ export const databaseFx = withDatabaseFx<Database>({
 	async onPreMigration({ dialect }) {
 		await runAuthMigration(dialect);
 	},
-	async onPostMigration(instance) {
-		await translationSyncFx().pipe(withKyselyFx(instance), Effect.runPromise);
-	},
+	imports: [
+		{
+			name: "translations",
+			async run(instance) {
+				return translationSyncFx().pipe(withKyselyFx(instance), Effect.runPromise);
+			},
+		},
+	],
 }).pipe(Effect.provideService(MigrationContextFx, migrations));
