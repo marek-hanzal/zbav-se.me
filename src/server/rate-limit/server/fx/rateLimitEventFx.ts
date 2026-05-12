@@ -58,6 +58,10 @@ export const rateLimitEventFx = Effect.fn("rateLimitEventFx")(function* ({
 			});
 
 			if (!rateLimitRuleRow) {
+				logger.trace(`Rate limit rule '${rule}' was not found`, {
+					rule,
+				});
+
 				return yield* new NotFoundErrorFx({
 					resource: "rate-limit-rule",
 					resourceId: rule,

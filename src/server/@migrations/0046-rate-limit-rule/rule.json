@@ -13,5 +13,10 @@
 		"name": "password-reset-request-source",
 		"window": 900,
 		"limit": 10
+	},
+	{
+		"name": "s3:presign",
+		"window": 600,
+		"limit": 24
 	}
 ]
