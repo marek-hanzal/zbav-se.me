@@ -5,6 +5,7 @@ import { linkTo } from "@/lib/common/link-to";
 import { getLoggerFx } from "@/lib/common/log";
 import { S3ContextFx } from "~/common/s3/server/context/S3ContextFx";
 import { s3ClientFx } from "~/common/s3/server/fx/s3ClientFx";
+import { rateLimitCheckFx } from "~/server/rate-limit/server/fx/rateLimitCheckFx";
 import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
 
 export namespace s3PreSignFx {
@@ -25,6 +26,14 @@ export const s3PreSignFx = Effect.fn("s3PreSignFx")(function* ({
 		userId,
 		path,
 		extension,
+	});
+
+	yield* rateLimitCheckFx({
+		key: [
+			userId,
+		],
+		rule: "s3:presign",
+		message: "You've reached rate limit for uploaded images.",
 	});
 
 	const { cdn } = yield* UploadContextFx;

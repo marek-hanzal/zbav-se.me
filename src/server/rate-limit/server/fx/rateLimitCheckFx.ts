@@ -28,6 +28,10 @@ export const rateLimitCheckFx = Effect.fn("rateLimitCheckFx")(function* ({
 		key,
 	});
 
+	logger.trace(`Rate limit for [${rule}]`, {
+		...rateLimitEvent,
+	});
+
 	if (rateLimitEvent.count > rateLimitEvent.limit) {
 		const retryAtDateTime = DateTime.fromJSDate(rateLimitEvent.window)
 			.plus({
