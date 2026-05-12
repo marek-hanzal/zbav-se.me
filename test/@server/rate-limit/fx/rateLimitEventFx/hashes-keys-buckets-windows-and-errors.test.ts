@@ -9,6 +9,16 @@ import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 
+type BucketRow = {
+	key: string;
+	window: string;
+	count: number;
+};
+
+function compareBucketRows(a: BucketRow, b: BucketRow) {
+	return a.window.localeCompare(b.window) || a.key.localeCompare(b.key);
+}
+
 describe("rateLimitEventFx", () => {
 	it("hashes keys and increments the same bucket through onConflict", async () => {
 		const database = await testabase("rateLimitEventFx-same-bucket");
@@ -140,13 +150,12 @@ describe("rateLimitEventFx", () => {
 			);
 
 			expect(rows).toHaveLength(3);
-			expect(
-				rows.map((item) => ({
-					key: item.key,
-					window: item.window.toISOString(),
-					count: item.count,
-				})),
-			).toEqual([
+			const actual: BucketRow[] = rows.map((item) => ({
+				key: item.key,
+				window: item.window.toISOString(),
+				count: item.count,
+			}));
+			const expected: BucketRow[] = [
 				{
 					key: hash({
 						key: [
@@ -177,7 +186,11 @@ describe("rateLimitEventFx", () => {
 					window: "2026-05-11T10:06:00.000Z",
 					count: 1,
 				},
-			]);
+			];
+
+			expect(actual.toSorted(compareBucketRows)).toEqual(
+				expected.toSorted(compareBucketRows),
+			);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 

@@ -18,5 +18,10 @@
 		"name": "s3:presign",
 		"window": 600,
 		"limit": 24
+	},
+	{
+		"name": "sign-up",
+		"window": 600,
+		"limit": 100
 	}
 ]
