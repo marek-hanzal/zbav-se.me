@@ -17,6 +17,6 @@
 	{
 		"name": "s3:presign",
 		"window": 600,
-		"limit": 1
+		"limit": 24
 	}
 ]
