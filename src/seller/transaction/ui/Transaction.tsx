@@ -2,9 +2,9 @@ import { type FC, useRef, useState } from "react";
 import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { HeroImage } from "~/common/ui/img";
@@ -30,6 +30,7 @@ export const Transaction: FC<Transaction.Props> = ({
 	refresh,
 	...props
 }) => {
+	const translator = useTranslator();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId, {
 		refetchInterval: refresh,

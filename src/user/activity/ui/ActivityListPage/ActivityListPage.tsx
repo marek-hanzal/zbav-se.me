@@ -1,6 +1,6 @@
 import { type FC, Suspense } from "react";
 import { useLocale } from "@/lib/client/locale";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import type { ActivityPriorityEnumSchema } from "~/common/activity/enum/ActivityPriorityEnumSchema";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
@@ -14,6 +14,7 @@ export namespace ActivityListPage {
 }
 
 export const ActivityListPage: FC<ActivityListPage.Props> = ({ priority, ...props }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 
 	return (

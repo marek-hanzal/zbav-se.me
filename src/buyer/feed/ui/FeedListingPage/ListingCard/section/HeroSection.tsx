@@ -2,10 +2,10 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { useRenderLogger } from "@/lib/client/log";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { useUpload } from "~/common/gallery/hook/useUpload";
@@ -25,6 +25,7 @@ export namespace HeroSection {
 }
 
 export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, view }) => {
+	const translator = useTranslator();
 	const hero = useUpload(listing.withImageUrl);
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 

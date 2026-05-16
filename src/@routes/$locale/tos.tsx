@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container } from "@/lib/client/container";
 import { Status } from "@/lib/client/status";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 
 export const Route = createFileRoute("/$locale/tos")({
 	component() {
+		const translator = useTranslator();
 		return (
 			<Container>
 				<Status

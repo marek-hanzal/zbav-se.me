@@ -1,6 +1,7 @@
 import path from "node:path";
 import type { Locator, Page } from "@playwright/test";
 import { auth } from "~/server/auth/auth";
+import { withTranslator } from "~/translator/server/withTranslator";
 import { expect, test } from "../test";
 import { createUser } from "../utils/createUser";
 
@@ -28,7 +29,7 @@ test("seller creates listing from draft flow", async ({ page, database }) => {
 	const user = createUser();
 	const ath = auth({
 		dialect: () => database.dialect,
-		locale: "cs",
+		translator: await withTranslator("cs"),
 	});
 
 	await ath.api.signUpEmail({

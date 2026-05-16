@@ -5,8 +5,8 @@ import { ChevronRightIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { Logo } from "~/common/ui/logo";
 
 export namespace WelcomePage {
@@ -18,11 +18,10 @@ export namespace WelcomePage {
 /**
  * Composes the route-level welcome screen and arranges the main page structure for this flow.
  * Use it from route definitions as the primary UI boundary for the welcome journey.
- *
- * @see src/@routes
  */
 export const WelcomePage: FC<WelcomePage.Props> = ({ ...props }) => {
 	const locale = useLocale();
+	const translator = useTranslator();
 	const actionRef = useRef<HTMLAnchorElement>(null);
 
 	useEffect(() => {

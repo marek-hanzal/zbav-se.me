@@ -2,9 +2,9 @@ import type { AgentInputItem, FunctionCallItem, FunctionCallResultItem } from "@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
-import { translator } from "@/lib/common/translation";
 import { getToolOutputText } from "~/user/agent/type/getToolOutputText";
 
 export namespace ToolCall {
@@ -16,6 +16,7 @@ export namespace ToolCall {
 }
 
 export const ToolCall: FC<ToolCall.Props> = ({ item, items, inline, ...props }) => {
+	const translator = useTranslator();
 	if (inline) {
 		return (
 			<Group

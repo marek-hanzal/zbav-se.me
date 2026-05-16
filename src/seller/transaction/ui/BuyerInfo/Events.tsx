@@ -2,9 +2,9 @@ import { DateTime } from "luxon";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import { LabelValue } from "@/lib/client/value";
 import { toTimeDiff } from "@/lib/common/time";
-import { translator } from "@/lib/common/translation";
 import type { UserEventBuyerSchema } from "~/seller/user-event/server/schema/UserEventBuyerSchema";
 
 const percentLabel = (value: number) => `${Math.round(value)}%`;
@@ -16,6 +16,7 @@ export namespace Events {
 }
 
 export const Events: FC<Events.Props> = ({ events }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 
 	return (

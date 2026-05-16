@@ -1,23 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { auth } from "~/server/auth/auth";
-import { withLocaleMiddleware } from "~/server/middleware/withLocaleMiddleware";
+import { withTranslationMiddleware } from "~/server/middleware/withTranslationMiddleware";
 
 export const Route = createFileRoute("/api/auth/$")({
 	server: {
 		middleware: [
-			withLocaleMiddleware,
+			withTranslationMiddleware,
 		],
 		handlers: {
-			async GET({ request, context: { database, locale } }) {
+			async GET({ request, context: { database, translator } }) {
 				return auth({
 					dialect: () => database.dialect,
-					locale,
+					translator,
 				}).handler(request);
 			},
-			async POST({ request, context: { database, locale } }) {
+			async POST({ request, context: { database, translator } }) {
 				return auth({
 					dialect: () => database.dialect,
-					locale,
+					translator,
 				}).handler(request);
 			},
 		},

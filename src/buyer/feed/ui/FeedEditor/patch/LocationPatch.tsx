@@ -1,6 +1,6 @@
 import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
@@ -15,6 +15,7 @@ export namespace LocationPatch {
 }
 
 export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+	const translator = useTranslator();
 	const patchMutation = withFeedQuery.usePatchMutation({
 		onSettled,
 	});

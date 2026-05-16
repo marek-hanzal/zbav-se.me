@@ -8,6 +8,7 @@ export namespace translator {
 	}
 
 	export interface Translator {
+		list(): TranslationSchema.Type[];
 		value(key: string, fallback?: string): Value;
 		text(key: string, fallback?: string): string;
 	}
@@ -26,6 +27,9 @@ export const translator = ({ translations }: translator.Props): translator.Trans
 	);
 
 	return {
+		list() {
+			return Array.from(index.values());
+		},
 		value(key, fallback) {
 			let text: string | undefined;
 

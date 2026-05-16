@@ -1,14 +1,15 @@
 import { betterAuth } from "better-auth";
 import { anonymous, customSession } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
+import type { translator as Translator } from "@/lib/common/translation/translator";
 import { Effect } from "effect";
 import { type Dialect, Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { createElement } from "react";
 import { match } from "ts-pattern";
+import { TranslationContext } from "@/lib/client/translation";
 import { genId } from "@/lib/common/gen-id";
 import { withLoggerFx } from "@/lib/common/log";
-import { translator } from "@/lib/common/translation";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import type { Database } from "~/server/database/Database";
@@ -29,11 +30,26 @@ export namespace auth {
 	export interface Config {
 		basePath?: string;
 	}
+
+	export interface Props {
+		/**
+		 * Connection to database Dialect.
+		 */
+		dialect(): Dialect;
+		/**
+		 * Optional auth config
+		 */
+		config?: auth.Config;
+		/**
+		 * Prepared translator used for auth-side translations.
+		 */
+		translator: Translator.Translator;
+	}
 }
 
 export type auth = ReturnType<typeof auth>;
 
-export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
+export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 	const connection = dialect();
 
 	const betterAuthConfig = ServerBetterAuthSchema.parse(process.env);
@@ -131,9 +147,15 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 						user.email,
 					],
 					title: translator.text("Password reset email subject"),
-					content: createElement(PasswordResetEmail, {
-						resetUrl: url,
-					}),
+					content: createElement(
+						TranslationContext,
+						{
+							value: translator.list(),
+						},
+						createElement(PasswordResetEmail, {
+							resetUrl: url,
+						}),
+					),
 				}).pipe(
 					withMailContextFx({
 						key: mailConfig.SERVER_RESEND,

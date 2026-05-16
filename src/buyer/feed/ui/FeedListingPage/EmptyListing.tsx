@@ -5,8 +5,8 @@ import { ChevronRightIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { FirstIcon } from "~/common/ui/icon";
 
 export namespace EmptyListing {
@@ -16,6 +16,7 @@ export namespace EmptyListing {
 }
 
 export const EmptyListing: FC<EmptyListing.Props> = (props) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 
 	return (

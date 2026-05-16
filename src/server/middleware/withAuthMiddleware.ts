@@ -2,7 +2,7 @@ import { createMiddleware } from "@tanstack/react-start";
 import { auth } from "~/server/auth/auth";
 import { withDialectMiddleware } from "~/server/middleware/withDialectMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
-import { withLocaleMiddleware } from "./withLocaleMiddleware";
+import { withTranslationMiddleware } from "./withTranslationMiddleware";
 
 const authMap = new Map<string, auth>();
 
@@ -10,25 +10,27 @@ export const withAuthMiddleware = createMiddleware()
 	.middleware([
 		withLogMiddleware,
 		withDialectMiddleware,
-		withLocaleMiddleware,
+		withTranslationMiddleware,
 	])
-	.server(async ({ next, context: { dialect, dsn, rootLogger, locale } }) => {
+	.server(async ({ next, context: { dialect, dsn, rootLogger, locale, translator } }) => {
 		const logger = rootLogger.getChild([
 			"middleware",
 			"withAuthMiddleware",
 		]);
-		let instance = authMap.get(dsn);
+		const cacheKey = `${dsn}:${locale}`;
+		let instance = authMap.get(cacheKey);
 
 		if (!instance) {
 			logger.trace("Creating auth instance", {
 				dsn,
+				locale,
 			});
 
 			instance = auth({
 				dialect: () => dialect,
-				locale,
+				translator,
 			});
-			authMap.set(dsn, instance);
+			authMap.set(cacheKey, instance);
 		}
 
 		return next({

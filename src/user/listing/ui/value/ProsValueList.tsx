@@ -1,7 +1,7 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 
 export namespace ProsValueList {
 	export interface Props
@@ -21,6 +21,7 @@ export namespace ProsValueList {
  * Use it in detail or preview views when you need to show multiple pros entries clearly.
  */
 export const ProsValueList: FC<ProsValueList.Props> = ({ pros, ...props }) => {
+	const translator = useTranslator();
 	const prosItems = pros.map((pro, index) => ({
 		id: String(index),
 		pro,

@@ -2,6 +2,7 @@ import path from "node:path";
 import type { Locator, Page } from "@playwright/test";
 import { Effect } from "effect";
 import { auth } from "~/server/auth/auth";
+import { withTranslator } from "~/translator/server/withTranslator";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { expect, test } from "../test";
@@ -49,7 +50,7 @@ test("buyer creates transaction from listing feed and sees messages button", asy
 }, testInfo) => {
 	const ath = auth({
 		dialect: () => database.dialect,
-		locale: "cs",
+		translator: await withTranslator("cs"),
 	});
 
 	await ath.api.signUpEmail({

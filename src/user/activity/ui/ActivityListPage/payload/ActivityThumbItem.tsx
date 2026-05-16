@@ -3,10 +3,10 @@ import { useState } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { toTimeDiff } from "@/lib/common/time";
-import { translator } from "@/lib/common/translation";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import { ListItem } from "~/common/list-item/ListItem";
 import { CloseButton } from "~/common/ui/button";
@@ -21,6 +21,7 @@ export namespace ActivityThumbItem {
 }
 
 export const ActivityThumbItem: FC<ActivityThumbItem.Props> = ({ item }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const [isOpen, setIsOpen] = useState(false);
 	const { data: listing } = withListingQuery.useFetchQuery(item.payload.listingId);

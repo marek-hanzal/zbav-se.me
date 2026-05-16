@@ -3,8 +3,8 @@ import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { getFunctionCallResultItem } from "~/user/agent/type/getFunctionCallResultItem";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 
@@ -15,6 +15,7 @@ export namespace ThinkingIndicator {
 }
 
 export const ThinkingIndicator: FC<ThinkingIndicator.Props> = ({ events, ...props }) => {
+	const translator = useTranslator();
 	const state = useThinking(events);
 	if (!state.isVisible) {
 		return null;

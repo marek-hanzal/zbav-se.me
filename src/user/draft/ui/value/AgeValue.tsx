@@ -1,6 +1,6 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 
 export namespace AgeValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {
@@ -13,6 +13,7 @@ export namespace AgeValue {
  * Use it in detail cards, summaries, and previews where editable controls are not needed.
  */
 export const AgeValue: FC<AgeValue.Props> = ({ age, ...props }) => {
+	const translator = useTranslator();
 	const hasAge = age != null;
 	return (
 		<LabelValue

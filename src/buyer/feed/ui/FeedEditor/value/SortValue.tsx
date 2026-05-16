@@ -1,7 +1,7 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 
 export namespace SortValue {
 	export interface Sort {
@@ -27,6 +27,7 @@ export namespace SortValue {
  * Use it in detail cards, summaries, and previews where editable controls are not needed.
  */
 export const SortValue: FC<SortValue.Props> = ({ sort, ...props }) => {
+	const translator = useTranslator();
 	return (
 		<ValueList
 			data-ui={"SortValue"}

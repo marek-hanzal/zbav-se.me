@@ -2,8 +2,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { FC } from "react";
 import { Button } from "@/lib/client/button";
 import { RefreshIcon } from "@/lib/client/icon";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
 
@@ -15,6 +15,7 @@ export namespace ResetButton {
 
 export const ResetButton: FC<ResetButton.Props> = ({ feedId, className, ...props }) => {
 	const queryClient = useQueryClient();
+	const translator = useTranslator();
 	const createMutation = withFeedQuery.useCreateMutation({
 		async onPostMutation() {
 			await withFeedQuery.invalidator(queryClient, [

@@ -3,10 +3,10 @@ import { withFallback } from "@/lib/client/fallback";
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Status } from "@/lib/client/status";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
 import { toTimeDiff } from "@/lib/common/time";
-import { translator } from "@/lib/common/translation";
 import { SearchIcon } from "~/common/ui/icon";
 import { withTransactionBuyerInfoQuery } from "../../query/withTransactionBuyerInfoQuery";
 import { Events } from "./Events";
@@ -25,6 +25,7 @@ export namespace BuyerInfo {
  * @see src/transaction/ui/BuyerInfoButton.tsx
  */
 export const BuyerInfo = withFallback(({ _suspense, transactionId, ...props }: BuyerInfo.Props) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const { data } = withTransactionBuyerInfoQuery.useSuspenseQuery({
 		where: {

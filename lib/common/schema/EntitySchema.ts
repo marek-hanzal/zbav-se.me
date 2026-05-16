@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { translator } from "@/lib/common/translation";
 
 /**
  * Entity schema represents any piece of data which has an identity.
@@ -13,9 +12,7 @@ export const EntitySchema = z
 			.string()
 			.min(1, {
 				error() {
-					return translator.text(
-						"Missing identity for an Entity (id). I'm sorry, but I cannot provide better message than this :(",
-					);
+					return "Missing identity for an Entity (id). I'm sorry, but I cannot provide better message than this :(";
 				},
 			})
 			.meta({

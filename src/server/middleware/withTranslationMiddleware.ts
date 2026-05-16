@@ -1,18 +1,15 @@
 import { createMiddleware } from "@tanstack/react-start";
-import { translator } from "@/lib/common/translation";
-import { defaultLocale } from "~/locales";
-import { withLocaleMiddleware } from "~/server/middleware/withLocaleMiddleware";
+import { withTranslator } from "~/translator/server/withTranslator";
+import { withLocaleMiddleware } from "./withLocaleMiddleware";
 
 export const withTranslationMiddleware = createMiddleware()
 	.middleware([
 		withLocaleMiddleware,
 	])
 	.server(async ({ next, context: { locale } }) => {
-		try {
-			translator.push((await import(`../../translation/${locale}.yaml`)).default);
-		} catch {
-			translator.push((await import(`../../translation/${defaultLocale}.yaml`)).default);
-		}
-
-		return next();
+		return next({
+			context: {
+				translator: await withTranslator(locale),
+			},
+		});
 	});

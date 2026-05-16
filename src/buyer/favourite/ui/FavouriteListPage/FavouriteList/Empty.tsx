@@ -2,8 +2,8 @@ import type { FC } from "react";
 import { ChevronRightIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 import { FavouriteIcon } from "~/common/ui/icon";
 import { uiCtaLinkButton } from "~/common/ui/ui";
@@ -15,6 +15,7 @@ export namespace Empty {
 }
 
 export const Empty: FC<Empty.Props> = (props) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 
 	return (

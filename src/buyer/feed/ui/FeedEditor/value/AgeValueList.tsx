@@ -1,6 +1,6 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 
 export namespace AgeValueList {
 	export interface Props
@@ -20,6 +20,7 @@ export namespace AgeValueList {
  * Use it in detail or preview views when you need to show multiple age entries clearly.
  */
 export const AgeValueList: FC<AgeValueList.Props> = ({ ageIn, ...props }) => {
+	const translator = useTranslator();
 	return (
 		<ValueList
 			data-ui={"AgeValueList"}

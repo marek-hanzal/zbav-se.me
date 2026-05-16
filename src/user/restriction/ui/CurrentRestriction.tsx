@@ -2,12 +2,12 @@ import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
 import { toTimeDiff } from "@/lib/common/time";
-import { translator } from "@/lib/common/translation";
 import { withUserRestrictionQuery } from "~/user/user-restriction/query/withUserRestrictionQuery";
 import type { UserRestrictionSchema } from "~/user/user-restriction/server/schema/UserRestrictionSchema";
 
@@ -23,8 +23,9 @@ export namespace CurrentRestriction {
 }
 
 export const CurrentRestriction = withFallback(
-	({ _suspense, ...props }: CurrentRestriction.Props) => {
+	({ ...props }: CurrentRestriction.Props) => {
 		const locale = useLocale();
+		const translator = useTranslator();
 		const { data: restrictions } = withUserRestrictionQuery.useCollectionQuery({
 			where: {
 				isExpired: false,
@@ -94,6 +95,8 @@ export const CurrentRestriction = withFallback(
 		);
 	},
 	({ ...props }: Omit<CurrentRestriction.Props, "_suspense">) => {
+		const translator = useTranslator();
+
 		return (
 			<LabelValue
 				textLabel={translator.text("Current Restriction value (label)")}

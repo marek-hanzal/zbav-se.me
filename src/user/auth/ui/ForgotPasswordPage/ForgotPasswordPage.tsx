@@ -1,4 +1,5 @@
 import { type FC, useState } from "react";
+import { useRouter } from "@tanstack/react-router";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { ErrorBadge } from "@/lib/client/error";
@@ -8,23 +9,27 @@ import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
 import { onSubmit } from "@/lib/client/submit";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { useAppForm } from "~/common/ui/form";
 import { Logo } from "~/common/ui/logo";
 import { withPasswordResetRequestMutation } from "~/user/auth/mutation/withPasswordResetRequestMutation";
 
-const ForgotPasswordSchema = z
-	.looseObject({
-		email: z.email({
-			error() {
-				return translator.text("Invalid email address");
-			},
-		}),
-	})
-	.strip();
+const useForgotPasswordSchema = () => {
+	const translator = useTranslator();
 
-type ForgotPasswordSchema = typeof ForgotPasswordSchema;
+	return z
+		.looseObject({
+			email: z.email({
+				error() {
+					return translator.text("Invalid email address");
+				},
+			}),
+		})
+		.strip();
+};
+
+type ForgotPasswordSchema = ReturnType<typeof useForgotPasswordSchema>;
 
 export namespace ForgotPasswordPage {
 	export interface Props extends Container.Props {
@@ -34,7 +39,10 @@ export namespace ForgotPasswordPage {
 
 export const ForgotPasswordPage: FC<ForgotPasswordPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
+	const router = useRouter();
+	const translator = useTranslator();
 	const [isEmailSent, setIsEmailSent] = useState(false);
+	const schema = useForgotPasswordSchema();
 
 	const mutation = withPasswordResetRequestMutation.useMutation({
 		async onPostMutation() {
@@ -47,17 +55,21 @@ export const ForgotPasswordPage: FC<ForgotPasswordPage.Props> = ({ ...props }) =
 			email: "",
 		} satisfies z.infer<ForgotPasswordSchema>,
 		validators: {
-			onMount: ForgotPasswordSchema,
-			onSubmit: ForgotPasswordSchema,
+			onMount: schema,
+			onSubmit: schema,
 		},
 		onSubmit: onSubmit({
 			map: async ({ values }) => {
+				const link = router.buildLocation({
+					to: "/$locale/reset-password",
+					params: {
+						locale,
+					},
+				});
+
 				return {
 					email: values.email,
-					/**
-					 * TODO: Use router, eventually onPostMutation with redirect, not this piece of shit here
-					 */
-					redirectTo: `${window.location.origin}/${locale}/reset-password`,
+					redirectTo: link.href,
 				};
 			},
 			mutation,

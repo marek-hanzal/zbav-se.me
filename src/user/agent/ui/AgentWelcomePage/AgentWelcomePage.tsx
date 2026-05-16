@@ -4,7 +4,7 @@ import { AiIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
 import { handleArrowNav } from "@/lib/client/nav";
 import { Status } from "@/lib/client/status";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
@@ -19,6 +19,7 @@ export namespace AgentWelcomePage {
 }
 
 export const AgentWelcomePage = ({ ...props }: AgentWelcomePage.Props) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const { data: threadCount } = withAgentThreadQuery.useCountQuery({});
 

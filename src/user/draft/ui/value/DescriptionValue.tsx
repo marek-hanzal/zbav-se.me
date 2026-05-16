@@ -1,6 +1,6 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 
 export namespace DescriptionValue {
 	export interface Props extends LabelValue.PropsEx {
@@ -13,6 +13,7 @@ export namespace DescriptionValue {
  * Use it in detail cards, summaries, and previews where editable controls are not needed.
  */
 export const DescriptionValue: FC<DescriptionValue.Props> = ({ description, ...props }) => {
+	const translator = useTranslator();
 	const hasDescription = description != null && description !== "";
 	return (
 		<LabelValue

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
@@ -19,6 +19,7 @@ export namespace SearchPage {
  * Use it from route definitions as the primary UI boundary for the search journey.
  */
 export const SearchPage: FC<SearchPage.Props> = ({ _suspense, ...props }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const {
 		data: { id: feedId },

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
@@ -23,6 +23,7 @@ export namespace PriceMaxPatch {
 }
 
 export const PriceMaxPatch: FC<PriceMaxPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+	const translator = useTranslator();
 	const mutation = withFeedQuery.usePatchMutation({
 		onSettled,
 	});

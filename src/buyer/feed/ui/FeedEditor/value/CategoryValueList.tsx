@@ -1,7 +1,7 @@
 import { withFallback } from "@/lib/client/fallback";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 import { withCategoryQuery } from "~/user/category/query/withCategoryQuery";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { CategoryInline } from "~/user/category/ui/CategoryInline";
@@ -51,6 +51,7 @@ export const CategoryValueList = withFallback(
 	({
 		...props
 	}: Omit<CategoryValueList.Props, "_suspense" | "categoryIdIn" | "textLabel" | "textEmpty">) => {
+		const translator = useTranslator();
 		return (
 			<ValueList
 				textLabel={translator.text("Loading... (label)")}

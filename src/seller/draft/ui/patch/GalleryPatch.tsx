@@ -1,9 +1,9 @@
 import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
 import { EditAction } from "~/common/ui/action/EditAction";
@@ -20,6 +20,7 @@ export namespace GalleryPatch {
 }
 
 export const GalleryPatch: FC<GalleryPatch.Props> = ({ draft, onCancel, view, ...props }) => {
+	const translator = useTranslator();
 	const [uploadIds, setUploadIds] = useState<string[]>(draft.withUploadIds);
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {

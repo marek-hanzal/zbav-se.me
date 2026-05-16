@@ -10,9 +10,9 @@ import { useLocale } from "@/lib/client/locale";
 import { Mx } from "@/lib/client/mx";
 import { Status } from "@/lib/client/status";
 import { TextInput } from "@/lib/client/text-input";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
@@ -34,6 +34,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 	className,
 	...props
 }) => {
+	const translator = useTranslator();
 	const navigate = useNavigate();
 	const locale = useLocale();
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);

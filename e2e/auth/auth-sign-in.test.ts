@@ -1,4 +1,5 @@
 import { auth } from "~/server/auth/auth";
+import { withTranslator } from "~/translator/server/withTranslator";
 import { expect, test } from "../test";
 import { createUser } from "../utils/createUser";
 
@@ -7,7 +8,7 @@ test("auth sign in", async ({ page, database }) => {
 
 	const ath = auth({
 		dialect: () => database.dialect,
-		locale: "cs",
+		translator: await withTranslator("cs"),
 	});
 	await ath.api.signUpEmail({
 		body: {

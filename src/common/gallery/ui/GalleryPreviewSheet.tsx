@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { CloseButton } from "~/common/ui/button";
 
@@ -17,6 +17,7 @@ export namespace GalleryPreviewSheet {
  * @see src/draft/ui/DraftEditor/patch/GalleryPatch.tsx
  */
 export const GalleryPreviewSheet: FC<GalleryPreviewSheet.Props> = ({ urls, ...props }) => {
+	const translator = useTranslator();
 	return (
 		<BottomSheet
 			data-ui={"GalleryPreviewSheet"}

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Status } from "@/lib/client/status";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { PhotoIcon } from "~/common/ui/icon";
 
 export namespace Placeholder {
@@ -11,6 +11,7 @@ export namespace Placeholder {
 }
 
 export const Placeholder: FC<Placeholder.Props> = ({ disabled }) => {
+	const translator = useTranslator();
 	return (
 		<Container
 			data-ui={"PhotoUpload-[Container.placeholder]"}

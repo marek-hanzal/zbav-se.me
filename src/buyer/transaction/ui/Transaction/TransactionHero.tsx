@@ -2,9 +2,9 @@ import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { useRenderLogger } from "@/lib/client/log";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
 import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
 import { ListingPrice } from "~/common/listing/ui/ListingPrice";
@@ -23,6 +23,7 @@ export const TransactionHero: FC<TransactionHero.Props> = ({
 	transactionId,
 	...props
 }) => {
+	const translator = useTranslator();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 	const [detail, setDetail] = useState(false);
 	const [hero] = transaction.withImageUrl;

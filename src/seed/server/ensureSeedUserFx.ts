@@ -4,6 +4,7 @@ import { auth } from "~/server/auth/auth";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
+import { withTranslator } from "~/translator/server/withTranslator";
 
 const SEED_USER_PASSWORD = "12345678";
 
@@ -28,7 +29,7 @@ export const ensureSeedUserFx = Effect.fn("ensureSeedUserFx")(function* ({
 
 	const { api } = auth({
 		dialect: () => dialect,
-		locale: "cs",
+		translator: yield* Effect.promise(() => withTranslator("cs")),
 	});
 
 	yield* Effect.tryPromise({

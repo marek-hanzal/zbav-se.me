@@ -2,9 +2,9 @@ import { type FC, useState } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { LocationSelect } from "~/common/location/ui/LocationSelect";
 import { EditAction } from "~/common/ui/action/EditAction";
@@ -28,6 +28,7 @@ export namespace LocationPatch {
 }
 
 export const LocationPatch: FC<LocationPatch.Props> = ({ draft, onCancel, view, ...props }) => {
+	const translator = useTranslator();
 	const [isSearchPendingSelection, setIsSearchPendingSelection] = useState(false);
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {

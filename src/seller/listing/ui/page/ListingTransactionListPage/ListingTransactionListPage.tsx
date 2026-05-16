@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
@@ -20,6 +20,7 @@ export const ListingTransactionListPage: FC<ListingTransactionListPage.Props> = 
 	listingId,
 	...props
 }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 
 	return (

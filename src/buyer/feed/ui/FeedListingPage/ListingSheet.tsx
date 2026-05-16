@@ -2,9 +2,9 @@ import type { FC } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { CloseIcon } from "@/lib/client/icon";
 import { useRenderLogger } from "@/lib/client/log";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense, StateType } from "@/lib/client/type";
 import { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { SellerInfo } from "~/buyer/listing/SellerInfo/SellerInfo";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
@@ -29,6 +29,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 	...props
 }) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
+	const translator = useTranslator();
 	const view = useView({
 		panels: [
 			"default",

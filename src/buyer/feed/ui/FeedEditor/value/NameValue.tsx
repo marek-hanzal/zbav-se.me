@@ -1,6 +1,6 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 
 export namespace NameValue {
 	export interface Props extends LabelValue.PropsEx {
@@ -15,6 +15,7 @@ export namespace NameValue {
  * @see src/draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const NameValue: FC<NameValue.Props> = ({ name, ...props }) => {
+	const translator = useTranslator();
 	return (
 		<LabelValue
 			data-ui={"NameValue[LabelValue]"}

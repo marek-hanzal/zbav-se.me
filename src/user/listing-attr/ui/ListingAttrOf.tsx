@@ -2,10 +2,10 @@ import type { FC, ReactNode } from "react";
 import { match } from "ts-pattern";
 import type { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import type { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
-import { translator } from "@/lib/common/translation";
 import type { ListingAttrOfSchema } from "../server/schema/ListingAttrOfSchema";
 
 export namespace ListingAttrOf {
@@ -19,6 +19,7 @@ export namespace ListingAttrOf {
 }
 
 export const ListingAttrOf: FC<ListingAttrOf.Props> = ({ attrOf, ...props }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 
 	return match(attrOf)

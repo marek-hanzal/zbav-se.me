@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 
 export namespace PasswordResetEmail {
 	export interface Props {
@@ -7,14 +8,16 @@ export namespace PasswordResetEmail {
 }
 
 export const PasswordResetEmail: FC<PasswordResetEmail.Props> = ({ resetUrl }) => {
+	const translator = useTranslator();
+
 	return (
 		<div>
-			<h1>Reset your password</h1>
-			<p>We received a request to reset your password.</p>
+			<h1>{translator.text("Password reset email title")}</h1>
+			<p>{translator.text("Password reset email message")}</p>
 			<p>
-				<a href={resetUrl}>Open password reset</a>
+				<a href={resetUrl}>{translator.text("Password reset email action")}</a>
 			</p>
-			<p>If you did not request this change, you can safely ignore this email.</p>
+			<p>{translator.text("Password reset email footer")}</p>
 		</div>
 	);
 };

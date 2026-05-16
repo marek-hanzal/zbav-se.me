@@ -1,27 +1,9 @@
-import type { TranslationSchema } from "@/lib/common/schema";
-import { translator as coolTranslator } from "@/lib/common/translation";
 import { useMemo } from "react";
-import { useLocale } from "../locale/useLocale";
-import type { withQuery } from "../query/withQuery";
-import type { MarkSuspense } from "../type/MarkSuspense";
+import { translator as coolTranslator } from "@/lib/common/translation";
+import { useTranslationContext } from "./useTranslationContext";
 
-export namespace useTranslator {
-	export interface Props extends MarkSuspense.Props {
-		query: withQuery.Api<
-			{
-				locale: string;
-			},
-			TranslationSchema.Type[],
-			any
-		>;
-	}
-}
-
-export const useTranslator = ({ _suspense, query }: useTranslator.Props) => {
-	const locale = useLocale();
-	const { data: translations } = query.useSuspenseQuery({
-		locale,
-	});
+export const useTranslator = () => {
+	const translations = useTranslationContext();
 
 	const translator = useMemo(() => {
 		return coolTranslator({

@@ -3,9 +3,9 @@ import { match, P } from "ts-pattern";
 import { Container } from "@/lib/client/container";
 import { useLocale } from "@/lib/client/locale";
 import { PriceInline } from "@/lib/client/price-inline";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
-import { translator } from "@/lib/common/translation";
 import type { ListingPriceSchema } from "../schema/ListingPriceSchema";
 
 export namespace ListingPrice {
@@ -15,6 +15,7 @@ export namespace ListingPrice {
 }
 
 export const ListingPrice: FC<ListingPrice.Props> = ({ price, ...props }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 
 	return (

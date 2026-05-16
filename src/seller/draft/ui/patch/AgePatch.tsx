@@ -2,9 +2,9 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { useSelection } from "@/lib/client/selection";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { AgeSelection } from "~/common/age/ui/AgeSelection";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { EditAction } from "~/common/ui/action/EditAction";
@@ -22,6 +22,7 @@ export namespace AgePatch {
 }
 
 export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, view, ...props }) => {
+	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
 			view.set(draft.categoryId ? "restriction" : "default");

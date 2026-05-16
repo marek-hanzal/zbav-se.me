@@ -6,10 +6,10 @@ import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import type { uiIcon } from "@/lib/client/icon";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { Typo } from "@/lib/client/typo";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 import { AgentLink } from "~/user/home/HomeMenu/link/AgentLink";
 import { DraftLink } from "./link/DraftLink";
 import { DraftListLink } from "./link/DraftListLink";
@@ -39,6 +39,7 @@ export namespace HomeMenu {
  * Use it as the main navigation entry inside user-facing hub screens.
  */
 export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: HomeMenu.Props) => {
+	const translator = useTranslator();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const isHome = useMatchRoute()({
 		to: "/$locale/app/home",

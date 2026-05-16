@@ -1,6 +1,6 @@
 import { useDebouncedCallback } from "@tanstack/react-pacer";
 import { type ComponentProps, type FC, useRef, useState } from "react";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { uiInput } from "../form/uiInput";
 import { Icon } from "../icon/Icon";
 import { useMergeRefs } from "../ref/useMergeRefs";
@@ -35,6 +35,7 @@ export const Fulltext: FC<Fulltext.Props> = ({
 	className,
 	...props
 }) => {
+	const translator = useTranslator();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const mergeRef = useMergeRefs([
 		ref,

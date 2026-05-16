@@ -1,6 +1,6 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 import type { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 
 export namespace WarrantyValueList {
@@ -19,6 +19,7 @@ export namespace WarrantyValueList {
  * Use it in detail or preview views when you need to show multiple warranty entries clearly.
  */
 export const WarrantyValueList: FC<WarrantyValueList.Props> = ({ warrantyIn, ...props }) => {
+	const translator = useTranslator();
 	return (
 		<ValueList
 			data-ui={"WarrantyValueList"}
