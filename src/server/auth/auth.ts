@@ -1,7 +1,6 @@
 import { betterAuth } from "better-auth";
 import { anonymous, customSession } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
-import type { translator as Translator } from "@/lib/common/translation/translator";
 import { Effect } from "effect";
 import { type Dialect, Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
@@ -10,6 +9,7 @@ import { match } from "ts-pattern";
 import { TranslationContext } from "@/lib/client/translation";
 import { genId } from "@/lib/common/gen-id";
 import { withLoggerFx } from "@/lib/common/log";
+import type { translator } from "@/lib/common/translation/translator";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import type { Database } from "~/server/database/Database";
@@ -43,7 +43,7 @@ export namespace auth {
 		/**
 		 * Prepared translator used for auth-side translations.
 		 */
-		translator: Translator.Translator;
+		translator: translator.Translator;
 	}
 }
 

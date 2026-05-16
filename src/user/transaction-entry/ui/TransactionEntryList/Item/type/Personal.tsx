@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import { CopyIconAction } from "@/lib/client/clipboard/CopyIconAction";
 import type { Container as ContainerType } from "@/lib/client/container";
 import { Container } from "@/lib/client/container";
@@ -8,7 +9,6 @@ import { LabelValue } from "@/lib/client/value";
 import { toTimeDiff } from "@/lib/common/time";
 import type { TransactionEntryPersonal } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/PersonalSchema";
 import { TypeContainer } from "./TypeContainer";
-import { FC } from "react";
 
 export namespace Personal {
 	export interface Props extends ContainerType.Props {

@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
-import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
 import { SearchPage } from "~/buyer/search/ui/SearchPage/SearchPage";
 import { SearchPagePending } from "~/buyer/search/ui/SearchPage/SearchPagePending";
+import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
 
 export const Route = createFileRoute("/$locale/app/buyer/search")({
 	async loader({ context: { queryClient }, params: { locale } }) {

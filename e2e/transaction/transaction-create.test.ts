@@ -2,9 +2,9 @@ import path from "node:path";
 import type { Locator, Page } from "@playwright/test";
 import { Effect } from "effect";
 import { auth } from "~/server/auth/auth";
-import { withTranslator } from "~/translator/server/withTranslator";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
+import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
 import { expect, test } from "../test";
 import { shot } from "../utils/shot";
 import { uploadFixtureViaS3 } from "../utils/uploadFixtureViaS3";
@@ -50,7 +50,9 @@ test("buyer creates transaction from listing feed and sees messages button", asy
 }, testInfo) => {
 	const ath = auth({
 		dialect: () => database.dialect,
-		translator: await withTranslator("cs"),
+		translator: await withTranslatorFx({
+			locale: "cs",
+		}).pipe(withRuntimeFx(database), Effect.runPromise),
 	});
 
 	await ath.api.signUpEmail({
