@@ -47,7 +47,10 @@ test("buyer creates transaction from listing feed and sees messages button", asy
 	page,
 	database,
 }, testInfo) => {
-	const ath = auth(() => database.dialect);
+	const ath = auth({
+		dialect: () => database.dialect,
+		locale: "cs",
+	});
 
 	await ath.api.signUpEmail({
 		body: {

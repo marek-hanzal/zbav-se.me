@@ -1,5 +1,7 @@
-.aigiscode
+*.log
 .DS_Store
+.aigiscode
+.env
 .env.local
 .logs
 .million
@@ -12,11 +14,10 @@
 .turbo
 .vercel
 .vscode/chrome-debug-profile
-*.log
 coverage
 dist
-node_modules
 node-compile-cache
+node_modules
 playwright-report
 results
 temp

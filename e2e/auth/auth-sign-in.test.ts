@@ -5,7 +5,10 @@ import { createUser } from "../utils/createUser";
 test("auth sign in", async ({ page, database }) => {
 	const user = createUser();
 
-	const ath = auth(() => database.dialect);
+	const ath = auth({
+		dialect: () => database.dialect,
+		locale: "cs",
+	});
 	await ath.api.signUpEmail({
 		body: {
 			name: user.email,

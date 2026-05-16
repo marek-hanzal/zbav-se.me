@@ -1,0 +1,1 @@
+GET {{VITE_ORIGIN}}/api/public/migration/run

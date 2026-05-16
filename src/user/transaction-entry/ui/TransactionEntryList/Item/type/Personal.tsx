@@ -8,7 +8,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { LabelValue } from "@/lib/client/value";
 import { toTimeDiff } from "@/lib/common/time";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "~/common/translation/hook/useTranslator";
 import type { TransactionEntryPersonal } from "~/user/transaction-entry/server/schema/TransactionEntrySchema/PersonalSchema";
 import { TypeContainer } from "./TypeContainer";
 
@@ -21,6 +21,9 @@ export namespace Personal {
 export const Personal = withFallback(
 	({ _suspense, transactionEntry, ...props }: Personal.Props) => {
 		const locale = useLocale();
+		const translator = useTranslator({
+			_suspense,
+		});
 		const { name, phone, email } = transactionEntry.payload;
 
 		return (

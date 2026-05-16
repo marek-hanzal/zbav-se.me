@@ -26,7 +26,10 @@ test.setTimeout(120_000);
 
 test("seller creates listing from draft flow", async ({ page, database }) => {
 	const user = createUser();
-	const ath = auth(() => database.dialect);
+	const ath = auth({
+		dialect: () => database.dialect,
+		locale: "cs",
+	});
 
 	await ath.api.signUpEmail({
 		body: {

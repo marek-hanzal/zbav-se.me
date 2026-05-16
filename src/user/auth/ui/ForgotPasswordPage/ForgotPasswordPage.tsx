@@ -54,6 +54,9 @@ export const ForgotPasswordPage: FC<ForgotPasswordPage.Props> = ({ ...props }) =
 			map: async ({ values }) => {
 				return {
 					email: values.email,
+					/**
+					 * TODO: Use router, eventually onPostMutation with redirect, not this piece of shit here
+					 */
 					redirectTo: `${window.location.origin}/${locale}/reset-password`,
 				};
 			},

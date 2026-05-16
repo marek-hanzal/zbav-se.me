@@ -26,7 +26,10 @@ export const ensureSeedUserFx = Effect.fn("ensureSeedUserFx")(function* ({
 		return current;
 	}
 
-	const { api } = auth(() => dialect);
+	const { api } = auth({
+		dialect: () => dialect,
+		locale: "cs",
+	});
 
 	yield* Effect.tryPromise({
 		try: async () => {
