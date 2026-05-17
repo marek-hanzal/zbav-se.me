@@ -1169,6 +1169,8 @@ Reset password (button):
     value: Nastavit nové heslo
 Reset search (button):
     value: Resetovat
+Reset your password:
+    value: Reset hesla
 Resolve transaction (button):
     value: Vyřízeno
 Restriction available in (label):
