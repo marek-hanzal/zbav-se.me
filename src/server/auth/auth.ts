@@ -12,10 +12,10 @@ import { withLoggerFx } from "@/lib/common/log";
 import type { translator } from "@/lib/common/translation/translator";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { PasswordResetEmail } from "~/email/template/PasswordResetEmail";
 import type { Database } from "~/server/database/Database";
 import { mailtoFx } from "~/server/email/fx/mailtoFx";
 import { withMailContextFx } from "~/server/email/fx/withMailContextFx";
-import { PasswordResetEmail } from "~/server/email/ui/PasswordResetEmail";
 import { ServerBetterAuthSchema } from "~/server/env/ServerBetterAuthSchema";
 import { ServerMailSchema } from "~/server/env/ServerMailSchema";
 

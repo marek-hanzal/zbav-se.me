@@ -1,9 +1,9 @@
 import { Section } from "@react-email/components";
 import type { FC } from "react";
 import { useTranslator } from "@/lib/client/translation";
-import { MailButton } from "./MailButton";
-import { MailCopy } from "./MailCopy";
-import { MailLayout } from "./MailLayout";
+import { MailButton } from "../ui/MailButton";
+import { MailCopy } from "../ui/MailCopy";
+import { MailLayout } from "../ui/MailLayout";
 
 export namespace PasswordResetEmail {
 	export interface Props {

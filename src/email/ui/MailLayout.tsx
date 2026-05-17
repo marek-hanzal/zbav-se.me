@@ -31,10 +31,10 @@ export const MailLayout: FC<MailLayout.Props> = ({ children, preview, title, lea
 			<Tailwind config={theme.tailwind}>
 				<Body
 					className={"m-0 bg-slate-50 px-4 py-8 font-sans"}
-						style={{
-							backgroundColor: theme.colors.canvas,
-							color: theme.colors.text,
-						}}
+					style={{
+						backgroundColor: theme.colors.canvas,
+						color: theme.colors.text,
+					}}
 				>
 					<Container
 						className={

@@ -15,7 +15,7 @@ import { useAppForm } from "~/common/ui/form";
 import { Logo } from "~/common/ui/logo";
 import { withPasswordResetRequestMutation } from "~/user/auth/mutation/withPasswordResetRequestMutation";
 
-const useForgotPasswordSchema = () => {
+const useFormSchema = () => {
 	const translator = useTranslator();
 
 	return z
@@ -29,7 +29,7 @@ const useForgotPasswordSchema = () => {
 		.strip();
 };
 
-type ForgotPasswordSchema = ReturnType<typeof useForgotPasswordSchema>;
+type FormSchema = ReturnType<typeof useFormSchema>;
 
 export namespace ForgotPasswordPage {
 	export interface Props extends Container.Props {
@@ -42,7 +42,7 @@ export const ForgotPasswordPage: FC<ForgotPasswordPage.Props> = ({ ...props }) =
 	const navigate = useNavigate();
 	const router = useRouter();
 	const translator = useTranslator();
-	const schema = useForgotPasswordSchema();
+	const schema = useFormSchema();
 
 	const mutation = withPasswordResetRequestMutation.useMutation({
 		async onPostMutation() {
@@ -58,7 +58,7 @@ export const ForgotPasswordPage: FC<ForgotPasswordPage.Props> = ({ ...props }) =
 	const form = useAppForm({
 		defaultValues: {
 			email: "",
-		} satisfies z.infer<ForgotPasswordSchema>,
+		} satisfies z.infer<FormSchema>,
 		validators: {
 			onMount: schema,
 			onSubmit: schema,
