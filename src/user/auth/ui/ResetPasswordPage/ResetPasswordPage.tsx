@@ -45,7 +45,7 @@ type ResetPasswordSchema = ReturnType<typeof useResetPasswordSchema>;
 export namespace ResetPasswordPage {
 	export interface Props extends Container.Props {
 		resetError?: string;
-		token?: string;
+		token: string;
 	}
 }
 
@@ -79,7 +79,7 @@ export const ResetPasswordPage: FC<ResetPasswordPage.Props> = ({ resetError, tok
 			map: async ({ values }) => {
 				return {
 					newPassword: values.password,
-					token: token ?? "",
+					token,
 				};
 			},
 			mutation,
@@ -87,7 +87,7 @@ export const ResetPasswordPage: FC<ResetPasswordPage.Props> = ({ resetError, tok
 	});
 
 	const invalidTokenMessage =
-		resetError === "INVALID_TOKEN" || !token
+		resetError === "INVALID_TOKEN"
 			? translator.text("This reset link is invalid or expired")
 			: undefined;
 
@@ -209,7 +209,7 @@ export const ResetPasswordPage: FC<ResetPasswordPage.Props> = ({ resetError, tok
 											data-ui={"ResetPasswordPage[SubmitButton]"}
 											iconEnabled={ChevronRightIcon}
 											iconPosition={"right"}
-											disabled={!token || !isValid || isSubmitting}
+											disabled={!isValid || isSubmitting}
 										>
 											{mutation.isPending ? (
 												<Tx label={"Please wait..."} />

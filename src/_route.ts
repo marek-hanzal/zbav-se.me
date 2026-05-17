@@ -22,7 +22,6 @@ import { Route as ApiCronRouteImport } from './@routes/api/$cron'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleSignUpRouteImport } from './@routes/$locale/sign-up'
 import { Route as LocaleSignInRouteImport } from './@routes/$locale/sign-in'
-import { Route as LocaleResetPasswordRouteImport } from './@routes/$locale/reset-password'
 import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
 import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 import { Route as LocaleForgotPasswordRouteImport } from './@routes/$locale/forgot-password'
@@ -30,6 +29,7 @@ import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
 import { Route as LocaleAppIndexRouteImport } from './@routes/$locale/app/index'
 import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
 import { Route as ApiAgentThreadIdRouteImport } from './@routes/api/agent/$threadId'
+import { Route as LocaleResetPasswordTokenRouteImport } from './@routes/$locale/reset-password/$token'
 import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welcome'
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
 import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
@@ -120,11 +120,6 @@ const LocaleSignInRoute = LocaleSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleResetPasswordRoute = LocaleResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => LocaleRoute,
-} as any)
 const LocalePrivacyRoute = LocalePrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -160,6 +155,12 @@ const ApiAgentThreadIdRoute = ApiAgentThreadIdRouteImport.update({
   path: '/agent/$threadId',
   getParentRoute: () => ApiRoute,
 } as any)
+const LocaleResetPasswordTokenRoute =
+  LocaleResetPasswordTokenRouteImport.update({
+    id: '/reset-password/$token',
+    path: '/reset-password/$token',
+    getParentRoute: () => LocaleRoute,
+  } as any)
 const LocaleAppWelcomeRoute = LocaleAppWelcomeRouteImport.update({
   id: '/welcome',
   path: '/welcome',
@@ -305,7 +306,6 @@ export interface FileRoutesByFullPath {
   '/$locale/forgot-password': typeof LocaleForgotPasswordRoute
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
-  '/$locale/reset-password': typeof LocaleResetPasswordRoute
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
@@ -318,6 +318,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/$locale/reset-password/$token': typeof LocaleResetPasswordTokenRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
@@ -350,7 +351,6 @@ export interface FileRoutesByTo {
   '/$locale/forgot-password': typeof LocaleForgotPasswordRoute
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
-  '/$locale/reset-password': typeof LocaleResetPasswordRoute
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
@@ -363,6 +363,7 @@ export interface FileRoutesByTo {
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/$locale/reset-password/$token': typeof LocaleResetPasswordTokenRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/$locale/app': typeof LocaleAppIndexRoute
@@ -398,7 +399,6 @@ export interface FileRoutesById {
   '/$locale/forgot-password': typeof LocaleForgotPasswordRoute
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
-  '/$locale/reset-password': typeof LocaleResetPasswordRoute
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
@@ -411,6 +411,7 @@ export interface FileRoutesById {
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/$locale/reset-password/$token': typeof LocaleResetPasswordTokenRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
@@ -447,7 +448,6 @@ export interface FileRouteTypes {
     | '/$locale/forgot-password'
     | '/$locale/landing'
     | '/$locale/privacy'
-    | '/$locale/reset-password'
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
@@ -460,6 +460,7 @@ export interface FileRouteTypes {
     | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
+    | '/$locale/reset-password/$token'
     | '/api/agent/$threadId'
     | '/api/auth/$'
     | '/$locale/app/'
@@ -492,7 +493,6 @@ export interface FileRouteTypes {
     | '/$locale/forgot-password'
     | '/$locale/landing'
     | '/$locale/privacy'
-    | '/$locale/reset-password'
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
@@ -505,6 +505,7 @@ export interface FileRouteTypes {
     | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
+    | '/$locale/reset-password/$token'
     | '/api/agent/$threadId'
     | '/api/auth/$'
     | '/$locale/app'
@@ -539,7 +540,6 @@ export interface FileRouteTypes {
     | '/$locale/forgot-password'
     | '/$locale/landing'
     | '/$locale/privacy'
-    | '/$locale/reset-password'
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
@@ -552,6 +552,7 @@ export interface FileRouteTypes {
     | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
+    | '/$locale/reset-password/$token'
     | '/api/agent/$threadId'
     | '/api/auth/$'
     | '/$locale/app/'
@@ -679,13 +680,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleSignInRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/reset-password': {
-      id: '/$locale/reset-password'
-      path: '/reset-password'
-      fullPath: '/$locale/reset-password'
-      preLoaderRoute: typeof LocaleResetPasswordRouteImport
-      parentRoute: typeof LocaleRoute
-    }
     '/$locale/privacy': {
       id: '/$locale/privacy'
       path: '/privacy'
@@ -734,6 +728,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/agent/$threadId'
       preLoaderRoute: typeof ApiAgentThreadIdRouteImport
       parentRoute: typeof ApiRoute
+    }
+    '/$locale/reset-password/$token': {
+      id: '/$locale/reset-password/$token'
+      path: '/reset-password/$token'
+      fullPath: '/$locale/reset-password/$token'
+      preLoaderRoute: typeof LocaleResetPasswordTokenRouteImport
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/app/welcome': {
       id: '/$locale/app/welcome'
@@ -973,11 +974,11 @@ interface LocaleRouteChildren {
   LocaleForgotPasswordRoute: typeof LocaleForgotPasswordRoute
   LocaleLandingRoute: typeof LocaleLandingRoute
   LocalePrivacyRoute: typeof LocalePrivacyRoute
-  LocaleResetPasswordRoute: typeof LocaleResetPasswordRoute
   LocaleSignInRoute: typeof LocaleSignInRoute
   LocaleSignUpRoute: typeof LocaleSignUpRoute
   LocaleTosRoute: typeof LocaleTosRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
+  LocaleResetPasswordTokenRoute: typeof LocaleResetPasswordTokenRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
@@ -985,11 +986,11 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleForgotPasswordRoute: LocaleForgotPasswordRoute,
   LocaleLandingRoute: LocaleLandingRoute,
   LocalePrivacyRoute: LocalePrivacyRoute,
-  LocaleResetPasswordRoute: LocaleResetPasswordRoute,
   LocaleSignInRoute: LocaleSignInRoute,
   LocaleSignUpRoute: LocaleSignUpRoute,
   LocaleTosRoute: LocaleTosRoute,
   LocaleIndexRoute: LocaleIndexRoute,
+  LocaleResetPasswordTokenRoute: LocaleResetPasswordTokenRoute,
 }
 
 const LocaleRouteWithChildren =

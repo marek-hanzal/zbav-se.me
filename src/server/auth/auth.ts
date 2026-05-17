@@ -141,7 +141,11 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 		emailAndPassword: {
 			enabled: true,
 			revokeSessionsOnPasswordReset: true,
-			async sendResetPassword({ user, url }) {
+			async sendResetPassword({ user, url, token }) {
+				const resetUrl = new URL(url);
+				resetUrl.pathname = resetUrl.pathname.replace("-placeholder-", token);
+				resetUrl.searchParams.delete("token");
+
 				await mailtoFx({
 					to: [
 						user.email,
@@ -153,7 +157,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 							value: translator.list(),
 						},
 						createElement(PasswordResetEmail, {
-							resetUrl: url,
+							resetUrl: resetUrl.toString(),
 						}),
 					),
 				}).pipe(
