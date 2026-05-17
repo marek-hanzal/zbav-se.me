@@ -66,10 +66,11 @@ export const ForgotPasswordPage: FC<ForgotPasswordPage.Props> = ({ ...props }) =
 						locale,
 					},
 				});
+				const redirectTo = new URL(link.href, import.meta.env.VITE_ORIGIN).toString();
 
 				return {
 					email: values.email,
-					redirectTo: link.href,
+					redirectTo,
 				};
 			},
 			mutation,
@@ -102,7 +103,7 @@ export const ForgotPasswordPage: FC<ForgotPasswordPage.Props> = ({ ...props }) =
 							<Logo />
 						</LinkTo>
 					}
-					textTitle={"Reset your password"}
+					textTitle={translator.text("Reset your password")}
 					textMessage={isEmailSent ? "Check your email for the reset link." : undefined}
 					data-ui-inner="default"
 				>
