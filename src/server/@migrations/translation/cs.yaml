@@ -1044,6 +1044,8 @@ Password reset email action:
     value: Otevřít reset hesla
 Password reset email footer:
     value: Pokud sis o tuhle změnu neřekl(a), tenhle email můžeš v klidu ignorovat.
+If the button does not work, copy this link into your browser::
+    value: Když tlačítko nezafunguje, zkopíruj tenhle odkaz do prohlížeče.
 Password reset email message:
     value: Dostali jsme požadavek na reset tvého hesla.
 Password reset email subject:
