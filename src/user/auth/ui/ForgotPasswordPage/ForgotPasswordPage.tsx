@@ -1,5 +1,5 @@
-import { useRouter } from "@tanstack/react-router";
-import { type FC, useState } from "react";
+import { useNavigate, useRouter } from "@tanstack/react-router";
+import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { ErrorBadge } from "@/lib/client/error";
@@ -39,14 +39,19 @@ export namespace ForgotPasswordPage {
 
 export const ForgotPasswordPage: FC<ForgotPasswordPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
+	const navigate = useNavigate();
 	const router = useRouter();
 	const translator = useTranslator();
-	const [isEmailSent, setIsEmailSent] = useState(false);
 	const schema = useForgotPasswordSchema();
 
 	const mutation = withPasswordResetRequestMutation.useMutation({
 		async onPostMutation() {
-			setIsEmailSent(true);
+			await navigate({
+				to: "/$locale/forgot/sent",
+				params: {
+					locale,
+				},
+			});
 		},
 	});
 
@@ -108,7 +113,6 @@ export const ForgotPasswordPage: FC<ForgotPasswordPage.Props> = ({ ...props }) =
 						</LinkTo>
 					}
 					textTitle={translator.text("Reset your password")}
-					textMessage={isEmailSent ? "Check your email for the reset link." : undefined}
 					data-ui-inner="default"
 				>
 					<form

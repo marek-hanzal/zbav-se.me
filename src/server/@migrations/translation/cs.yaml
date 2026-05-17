@@ -1171,6 +1171,8 @@ Reset search (button):
     value: Resetovat
 Reset your password:
     value: Reset hesla
+Check your email for the reset link.:
+    value: Mrkni do mailu pro odkaz na reset hesla.
 Resolve transaction (button):
     value: Vyřízeno
 Restriction available in (label):

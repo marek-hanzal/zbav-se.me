@@ -220,7 +220,7 @@ export const SignInPage: FC<SignInPage.Props> = ({ notice, ...props }) => {
 								</form.Subscribe>
 
 								<LinkTo
-									to={"/$locale/forgot-password"}
+									to={"/$locale/forgot/password"}
 									params={{
 										locale,
 									}}
