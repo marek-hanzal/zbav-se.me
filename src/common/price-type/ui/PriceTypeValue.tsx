@@ -1,6 +1,6 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 import type { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 
 export namespace PriceTypeValue {
@@ -14,6 +14,7 @@ export namespace PriceTypeValue {
  * Use it in detail cards, summaries, and previews where editable controls are not needed.
  */
 export const PriceTypeValue: FC<PriceTypeValue.Props> = ({ priceType, ...props }) => {
+	const translator = useTranslator();
 	const hasPriceType = priceType != null;
 
 	return (

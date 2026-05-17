@@ -2,8 +2,8 @@ import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";
 import { EmptyState } from "@/lib/client/empty-state";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
@@ -22,6 +22,7 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 	refetchInterval = 5_000,
 	...props
 }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const { data: hasTransaction } = withTransactionQuery.useCollectionQuery({
 		cursor: {

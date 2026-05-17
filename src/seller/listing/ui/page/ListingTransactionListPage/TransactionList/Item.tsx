@@ -3,6 +3,7 @@ import { withFallback } from "@/lib/client/fallback";
 import { MessageIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { toTimeDiff } from "@/lib/common/time";
@@ -21,6 +22,7 @@ export namespace Item {
 
 export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.Props) => {
 	const locale = useLocale();
+	const translator = useTranslator();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 	const isUnread = transaction.unread > 0;
 
@@ -39,6 +41,7 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 					<Typo
 						label={toActivityLabel({
 							entry: transaction.entry,
+							translator,
 						})}
 						data-ui-tone="neutral"
 						data-ui-theme="light"

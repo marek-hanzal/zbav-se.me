@@ -1,6 +1,6 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 
 export namespace DeliveryValueList {
 	export interface Props
@@ -20,6 +20,7 @@ export namespace DeliveryValueList {
  * Use it in detail or preview views when you need to show multiple delivery entries clearly.
  */
 export const DeliveryValueList: FC<DeliveryValueList.Props> = ({ deliveryIn, ...props }) => {
+	const translator = useTranslator();
 	const items = deliveryIn.map((item) => ({
 		id: item,
 		delivery: item,

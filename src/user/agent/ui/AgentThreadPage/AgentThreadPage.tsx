@@ -1,8 +1,8 @@
 import { withFallback } from "@/lib/client/fallback";
 import { useLocale } from "@/lib/client/locale";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { Agent } from "~/user/agent/ui/Agent";
@@ -16,6 +16,7 @@ export namespace AgentThreadPage {
 
 export const AgentThreadPage = withFallback<AgentThreadPage.Props, TitleContainer>(
 	({ threadId, ...props }) => {
+		const translator = useTranslator();
 		const locale = useLocale();
 
 		return (
@@ -41,6 +42,7 @@ export const AgentThreadPage = withFallback<AgentThreadPage.Props, TitleContaine
 		);
 	},
 	(props) => {
+		const translator = useTranslator();
 		const locale = useLocale();
 
 		return (

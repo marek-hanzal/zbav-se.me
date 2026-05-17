@@ -4,7 +4,7 @@ import { FormField } from "@/lib/client/form";
 import { Mx } from "@/lib/client/mx";
 import { Status } from "@/lib/client/status";
 import { TextInput } from "@/lib/client/text-input";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
@@ -18,6 +18,7 @@ export namespace TitlePatch {
 }
 
 export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+	const translator = useTranslator();
 	const patchMutation = withFeedQuery.usePatchMutation({
 		onSettled,
 	});

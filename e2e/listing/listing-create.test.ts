@@ -1,6 +1,9 @@
 import path from "node:path";
 import type { Locator, Page } from "@playwright/test";
+import { Effect } from "effect";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
 import { expect, test } from "../test";
 import { createUser } from "../utils/createUser";
 
@@ -26,7 +29,12 @@ test.setTimeout(120_000);
 
 test("seller creates listing from draft flow", async ({ page, database }) => {
 	const user = createUser();
-	const ath = auth(() => database.dialect);
+	const ath = auth({
+		dialect: () => database.dialect,
+		translator: await withTranslatorFx({
+			locale: "cs",
+		}).pipe(withRuntimeFx(database), Effect.runPromise),
+	});
 
 	await ath.api.signUpEmail({
 		body: {

@@ -3,7 +3,7 @@ import { Container } from "@/lib/client/container";
 import { SpinnerIcon } from "@/lib/client/icon";
 import { Progress } from "@/lib/client/progress";
 import { Status } from "@/lib/client/status";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import type { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 import { Placeholder } from "./Placeholder";
 import { Preview } from "./Preview";
@@ -12,6 +12,7 @@ import { useController } from "./useController";
 const UploadPending: FC<{
 	progress: number;
 }> = ({ progress }) => {
+	const translator = useTranslator();
 	return (
 		<Container
 			data-ui={"PhotoUpload-[Container.spinner]"}

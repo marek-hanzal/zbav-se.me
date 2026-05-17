@@ -10,28 +10,32 @@ import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
 import { onSubmit } from "@/lib/client/submit";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { useAppForm } from "~/common/ui/form";
 import { Logo } from "~/common/ui/logo";
 import { withEmailSignInMutation } from "~/user/auth/mutation/withEmailSignInMutation";
 
-const SignInSchema = z
-	.looseObject({
-		email: z.email({
-			error() {
-				return translator.text("Invalid email address");
-			},
-		}),
-		password: z.string().min(1, {
-			error() {
-				return translator.text("Password is required");
-			},
-		}),
-	})
-	.strip();
+const useSignInSchema = () => {
+	const translator = useTranslator();
 
-type SignInSchema = typeof SignInSchema;
+	return z
+		.looseObject({
+			email: z.email({
+				error() {
+					return translator.text("Invalid email address");
+				},
+			}),
+			password: z.string().min(1, {
+				error() {
+					return translator.text("Password is required");
+				},
+			}),
+		})
+		.strip();
+};
+
+type SignInSchema = ReturnType<typeof useSignInSchema>;
 
 export namespace SignInPage {
 	export interface Props extends Container.Props {
@@ -40,8 +44,10 @@ export namespace SignInPage {
 }
 
 export const SignInPage: FC<SignInPage.Props> = ({ notice, ...props }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const navigate = useNavigate();
+	const schema = useSignInSchema();
 
 	const signInMutation = withEmailSignInMutation.useMutation({
 		async onPostMutation() {
@@ -60,8 +66,8 @@ export const SignInPage: FC<SignInPage.Props> = ({ notice, ...props }) => {
 			password: "",
 		} satisfies z.infer<SignInSchema>,
 		validators: {
-			onMount: SignInSchema,
-			onSubmit: SignInSchema,
+			onMount: schema,
+			onSubmit: schema,
 		},
 		onSubmit: onSubmit({
 			mutation: signInMutation,
@@ -214,7 +220,7 @@ export const SignInPage: FC<SignInPage.Props> = ({ notice, ...props }) => {
 								</form.Subscribe>
 
 								<LinkTo
-									to={"/$locale/forgot-password"}
+									to={"/$locale/forgot/password"}
 									params={{
 										locale,
 									}}

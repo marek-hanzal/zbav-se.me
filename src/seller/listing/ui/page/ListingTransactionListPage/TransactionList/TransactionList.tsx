@@ -1,8 +1,8 @@
 import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";
 import { EmptyState } from "@/lib/client/empty-state";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { withTransactionQuery } from "~/seller/transaction/query/withTransactionQuery";
 import { toStatusLabel } from "~/seller/transaction/ui/toStatusLabel";
@@ -26,6 +26,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 	refetchInterval = 5_000,
 	...props
 }) => {
+	const translator = useTranslator();
 	const { data: hasTransaction } = withTransactionQuery.useCollectionQuery(
 		{
 			where: {
@@ -54,7 +55,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 				},
 			},
 			{
-				label: toStatusLabel(TransactionStatusEnumSchema.enum.interest),
+				label: toStatusLabel(TransactionStatusEnumSchema.enum.interest, translator),
 				filter: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.interest,
@@ -67,7 +68,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 				},
 			},
 			{
-				label: toStatusLabel(TransactionStatusEnumSchema.enum.trade),
+				label: toStatusLabel(TransactionStatusEnumSchema.enum.trade, translator),
 				filter: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.trade,
@@ -79,7 +80,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 				},
 			},
 			{
-				label: toStatusLabel(TransactionStatusEnumSchema.enum.dispute),
+				label: toStatusLabel(TransactionStatusEnumSchema.enum.dispute, translator),
 				filter: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.dispute,
@@ -91,7 +92,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 				},
 			},
 			{
-				label: toStatusLabel(TransactionStatusEnumSchema.enum.resolved),
+				label: toStatusLabel(TransactionStatusEnumSchema.enum.resolved, translator),
 				filter: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.resolved,
@@ -123,7 +124,9 @@ export const TransactionList: FC<TransactionList.Props> = ({
 				},
 			},
 		] satisfies Group[];
-	}, []);
+	}, [
+		translator,
+	]);
 
 	return (
 		<Container

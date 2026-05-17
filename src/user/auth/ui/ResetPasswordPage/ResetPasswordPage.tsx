@@ -9,45 +9,51 @@ import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
 import { onSubmit } from "@/lib/client/submit";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { useAppForm } from "~/common/ui/form";
 import { Logo } from "~/common/ui/logo";
 import { withResetPasswordMutation } from "~/user/auth/mutation/withResetPasswordMutation";
 
-const ResetPasswordSchema = z
-	.looseObject({
-		confirmPassword: z.string().min(1, {
-			error() {
-				return translator.text("Password confirmation is required");
-			},
-		}),
-		password: z.string().min(8, {
-			error() {
-				return translator.text("Password must be at least 8 characters");
-			},
-		}),
-	})
-	.refine((data) => data.password === data.confirmPassword, {
-		message: translator.text("Passwords do not match"),
-		path: [
-			"confirmPassword",
-		],
-	})
-	.strip();
+const useResetPasswordSchema = () => {
+	const translator = useTranslator();
 
-type ResetPasswordSchema = typeof ResetPasswordSchema;
+	return z
+		.looseObject({
+			confirmPassword: z.string().min(1, {
+				error() {
+					return translator.text("Password confirmation is required");
+				},
+			}),
+			password: z.string().min(8, {
+				error() {
+					return translator.text("Password must be at least 8 characters");
+				},
+			}),
+		})
+		.refine((data) => data.password === data.confirmPassword, {
+			message: translator.text("Passwords do not match"),
+			path: [
+				"confirmPassword",
+			],
+		})
+		.strip();
+};
+
+type ResetPasswordSchema = ReturnType<typeof useResetPasswordSchema>;
 
 export namespace ResetPasswordPage {
 	export interface Props extends Container.Props {
 		resetError?: string;
-		token?: string;
+		token: string;
 	}
 }
 
 export const ResetPasswordPage: FC<ResetPasswordPage.Props> = ({ resetError, token, ...props }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const navigate = useNavigate();
+	const schema = useResetPasswordSchema();
 
 	const mutation = withResetPasswordMutation.useMutation({
 		async onPostMutation() {
@@ -66,14 +72,14 @@ export const ResetPasswordPage: FC<ResetPasswordPage.Props> = ({ resetError, tok
 			password: "",
 		} satisfies z.infer<ResetPasswordSchema>,
 		validators: {
-			onMount: ResetPasswordSchema,
-			onSubmit: ResetPasswordSchema,
+			onMount: schema,
+			onSubmit: schema,
 		},
 		onSubmit: onSubmit({
 			map: async ({ values }) => {
 				return {
 					newPassword: values.password,
-					token: token ?? "",
+					token,
 				};
 			},
 			mutation,
@@ -81,7 +87,7 @@ export const ResetPasswordPage: FC<ResetPasswordPage.Props> = ({ resetError, tok
 	});
 
 	const invalidTokenMessage =
-		resetError === "INVALID_TOKEN" || !token
+		resetError === "INVALID_TOKEN"
 			? translator.text("This reset link is invalid or expired")
 			: undefined;
 
@@ -203,7 +209,7 @@ export const ResetPasswordPage: FC<ResetPasswordPage.Props> = ({ resetError, tok
 											data-ui={"ResetPasswordPage[SubmitButton]"}
 											iconEnabled={ChevronRightIcon}
 											iconPosition={"right"}
-											disabled={!token || !isValid || isSubmitting}
+											disabled={!isValid || isSubmitting}
 										>
 											{mutation.isPending ? (
 												<Tx label={"Please wait..."} />

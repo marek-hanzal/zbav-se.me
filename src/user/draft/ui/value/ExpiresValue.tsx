@@ -1,6 +1,6 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 import type { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
 
 export namespace ExpiresValue {
@@ -14,6 +14,7 @@ export namespace ExpiresValue {
  * Use it in detail cards, summaries, and previews where editable controls are not needed
  */
 export const ExpiresValue: FC<ExpiresValue.Props> = ({ expires, ...props }) => {
+	const translator = useTranslator();
 	const hasExpires = expires != null;
 	return (
 		<LabelValue

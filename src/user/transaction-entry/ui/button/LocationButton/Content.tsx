@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
+import { useTranslator } from "@/lib/client/translation";
 import type { StateType } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { LocationSelect } from "~/common/location/ui/LocationSelect";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
@@ -24,6 +24,8 @@ export const Content: FC<Content.Props> = ({
 	onCancel,
 	...props
 }) => {
+	const translator = useTranslator();
+
 	return (
 		<Container
 			data-ui="LocationButton[LocationSelectContainer]"

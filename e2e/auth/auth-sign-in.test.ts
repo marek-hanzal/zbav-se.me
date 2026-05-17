@@ -1,11 +1,19 @@
+import { Effect } from "effect";
 import { auth } from "~/server/auth/auth";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
 import { expect, test } from "../test";
 import { createUser } from "../utils/createUser";
 
 test("auth sign in", async ({ page, database }) => {
 	const user = createUser();
 
-	const ath = auth(() => database.dialect);
+	const ath = auth({
+		dialect: () => database.dialect,
+		translator: await withTranslatorFx({
+			locale: "cs",
+		}).pipe(withRuntimeFx(database), Effect.runPromise),
+	});
 	await ath.api.signUpEmail({
 		body: {
 			name: user.email,

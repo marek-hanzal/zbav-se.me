@@ -1,6 +1,6 @@
 import { type FC, Suspense } from "react";
 import { useLocale } from "@/lib/client/locale";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
@@ -13,6 +13,7 @@ export namespace FavouriteListPage {
 }
 
 export const FavouriteListPage: FC<FavouriteListPage.Props> = (props) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 
 	return (

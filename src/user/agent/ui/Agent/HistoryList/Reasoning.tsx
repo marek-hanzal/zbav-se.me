@@ -1,8 +1,8 @@
 import type { AgentInputItem } from "@openai/agents-core";
 import type { FC } from "react";
 import { Group } from "@/lib/client/group";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 
 export namespace Reasoning {
 	export interface Props extends Group.Props {
@@ -11,6 +11,7 @@ export namespace Reasoning {
 }
 
 export const Reasoning: FC<Reasoning.Props> = ({ item, ...props }) => {
+	const translator = useTranslator();
 	return (
 		<Group
 			data-ui={"Reasoning"}

@@ -1,7 +1,7 @@
 import { type FC, Suspense } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
+import { useTranslator } from "@/lib/client/translation";
 import type { StateType } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
 import { CloseButton } from "~/common/ui/button";
 import { FeedEditor } from "./FeedEditor";
 
@@ -12,6 +12,7 @@ export namespace FeedEditorSheet {
 }
 
 export const FeedEditorSheet: FC<FeedEditorSheet.Props> = ({ state, ...props }) => {
+	const translator = useTranslator();
 	return (
 		<BottomSheet
 			isOpen={state.value}

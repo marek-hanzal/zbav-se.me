@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { Transaction } from "~/seller/transaction/ui/Transaction";
@@ -19,6 +19,7 @@ export const TransactionDetailPage: FC<TransactionDetailPage.Props> = ({
 	transactionId,
 	...props
 }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 

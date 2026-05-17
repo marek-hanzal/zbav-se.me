@@ -1,4 +1,5 @@
-import { type FC, useState } from "react";
+import { useNavigate, useRouter } from "@tanstack/react-router";
+import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { ErrorBadge } from "@/lib/client/error";
@@ -8,23 +9,27 @@ import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
 import { onSubmit } from "@/lib/client/submit";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { useAppForm } from "~/common/ui/form";
 import { Logo } from "~/common/ui/logo";
 import { withPasswordResetRequestMutation } from "~/user/auth/mutation/withPasswordResetRequestMutation";
 
-const ForgotPasswordSchema = z
-	.looseObject({
-		email: z.email({
-			error() {
-				return translator.text("Invalid email address");
-			},
-		}),
-	})
-	.strip();
+const useFormSchema = () => {
+	const translator = useTranslator();
 
-type ForgotPasswordSchema = typeof ForgotPasswordSchema;
+	return z
+		.looseObject({
+			email: z.email({
+				error() {
+					return translator.text("Invalid email address");
+				},
+			}),
+		})
+		.strip();
+};
+
+type FormSchema = ReturnType<typeof useFormSchema>;
 
 export namespace ForgotPasswordPage {
 	export interface Props extends Container.Props {
@@ -34,27 +39,47 @@ export namespace ForgotPasswordPage {
 
 export const ForgotPasswordPage: FC<ForgotPasswordPage.Props> = ({ ...props }) => {
 	const locale = useLocale();
-	const [isEmailSent, setIsEmailSent] = useState(false);
+	const navigate = useNavigate();
+	const router = useRouter();
+	const translator = useTranslator();
+	const schema = useFormSchema();
 
 	const mutation = withPasswordResetRequestMutation.useMutation({
 		async onPostMutation() {
-			setIsEmailSent(true);
+			await navigate({
+				to: "/$locale/forgot/sent",
+				params: {
+					locale,
+				},
+			});
 		},
 	});
 
 	const form = useAppForm({
 		defaultValues: {
 			email: "",
-		} satisfies z.infer<ForgotPasswordSchema>,
+		} satisfies z.infer<FormSchema>,
 		validators: {
-			onMount: ForgotPasswordSchema,
-			onSubmit: ForgotPasswordSchema,
+			onMount: schema,
+			onSubmit: schema,
 		},
 		onSubmit: onSubmit({
 			map: async ({ values }) => {
+				const localeResetPasswordPath = router.buildLocation({
+					to: "/$locale/reset-password/$token",
+					params: {
+						locale,
+						token: "-placeholder-",
+					},
+				});
+				const redirectTo = new URL(
+					localeResetPasswordPath.href,
+					import.meta.env.VITE_ORIGIN,
+				).toString();
+
 				return {
 					email: values.email,
-					redirectTo: `${window.location.origin}/${locale}/reset-password`,
+					redirectTo,
 				};
 			},
 			mutation,
@@ -87,8 +112,7 @@ export const ForgotPasswordPage: FC<ForgotPasswordPage.Props> = ({ ...props }) =
 							<Logo />
 						</LinkTo>
 					}
-					textTitle={"Reset your password"}
-					textMessage={isEmailSent ? "Check your email for the reset link." : undefined}
+					textTitle={translator.text("Reset your password")}
 					data-ui-inner="default"
 				>
 					<form

@@ -2,9 +2,9 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { useSelection } from "@/lib/client/selection";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { ConditionSelect } from "~/common/condition/ui/ConditionSelect";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { EditAction } from "~/common/ui/action/EditAction";
@@ -22,6 +22,7 @@ export namespace ConditionPatch {
 }
 
 export const ConditionPatch: FC<ConditionPatch.Props> = ({ draft, onCancel, view, ...props }) => {
+	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
 			view.set("age");

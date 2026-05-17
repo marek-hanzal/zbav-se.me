@@ -4,6 +4,7 @@ import { Effect } from "effect";
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
+import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
 import { expect, test } from "../test";
 import { shot } from "../utils/shot";
 import { uploadFixtureViaS3 } from "../utils/uploadFixtureViaS3";
@@ -47,7 +48,12 @@ test("buyer creates transaction from listing feed and sees messages button", asy
 	page,
 	database,
 }, testInfo) => {
-	const ath = auth(() => database.dialect);
+	const ath = auth({
+		dialect: () => database.dialect,
+		translator: await withTranslatorFx({
+			locale: "cs",
+		}).pipe(withRuntimeFx(database), Effect.runPromise),
+	});
 
 	await ath.api.signUpEmail({
 		body: {

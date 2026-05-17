@@ -6,15 +6,16 @@ import { type Dialect, Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { createElement } from "react";
 import { match } from "ts-pattern";
+import { TranslationContext } from "@/lib/client/translation";
 import { genId } from "@/lib/common/gen-id";
 import { withLoggerFx } from "@/lib/common/log";
-import { translator } from "@/lib/common/translation";
+import type { translator } from "@/lib/common/translation/translator";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { PasswordResetEmail } from "~/email/template/PasswordResetEmail";
 import type { Database } from "~/server/database/Database";
 import { mailtoFx } from "~/server/email/fx/mailtoFx";
 import { withMailContextFx } from "~/server/email/fx/withMailContextFx";
-import { PasswordResetEmail } from "~/server/email/ui/PasswordResetEmail";
 import { ServerBetterAuthSchema } from "~/server/env/ServerBetterAuthSchema";
 import { ServerMailSchema } from "~/server/env/ServerMailSchema";
 
@@ -29,11 +30,26 @@ export namespace auth {
 	export interface Config {
 		basePath?: string;
 	}
+
+	export interface Props {
+		/**
+		 * Connection to database Dialect.
+		 */
+		dialect(): Dialect;
+		/**
+		 * Optional auth config
+		 */
+		config?: auth.Config;
+		/**
+		 * Prepared translator used for auth-side translations.
+		 */
+		translator: translator.Translator;
+	}
 }
 
 export type auth = ReturnType<typeof auth>;
 
-export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
+export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 	const connection = dialect();
 
 	const betterAuthConfig = ServerBetterAuthSchema.parse(process.env);
@@ -125,15 +141,23 @@ export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 		emailAndPassword: {
 			enabled: true,
 			revokeSessionsOnPasswordReset: true,
-			async sendResetPassword({ user, url }) {
+			async sendResetPassword({ user, url, token }) {
+				const link = new URL(url.replace("-placeholder-", token));
+
 				await mailtoFx({
 					to: [
 						user.email,
 					],
 					title: translator.text("Password reset email subject"),
-					content: createElement(PasswordResetEmail, {
-						resetUrl: url,
-					}),
+					content: createElement(
+						TranslationContext,
+						{
+							value: translator.list(),
+						},
+						createElement(PasswordResetEmail, {
+							resetUrl: link.toString(),
+						}),
+					),
 				}).pipe(
 					withMailContextFx({
 						key: mailConfig.SERVER_RESEND,

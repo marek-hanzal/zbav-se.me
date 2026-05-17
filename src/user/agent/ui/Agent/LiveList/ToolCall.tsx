@@ -3,9 +3,9 @@ import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
-import { translator } from "@/lib/common/translation";
 import { getFunctionCallResultItem } from "~/user/agent/type/getFunctionCallResultItem";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 import { getToolOutputText } from "~/user/agent/type/getToolOutputText";
@@ -19,6 +19,7 @@ export namespace ToolCall {
 }
 
 export const ToolCall: FC<ToolCall.Props> = ({ events, itemId, inline, className, ...props }) => {
+	const translator = useTranslator();
 	const state = useToolCalls(events, itemId);
 
 	if (inline) {

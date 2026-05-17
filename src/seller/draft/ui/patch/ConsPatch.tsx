@@ -3,9 +3,9 @@ import { Container } from "@/lib/client/container";
 import { FormField } from "@/lib/client/form";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { TextInput } from "@/lib/client/text-input";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { ProsConsSchema } from "~/common/listing/schema/ProsConsSchema";
 import { EditAction } from "~/common/ui/action/EditAction";
@@ -25,6 +25,7 @@ export namespace ConsPatch {
 }
 
 export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, view, ...props }) => {
+	const translator = useTranslator();
 	const initialCons = draft.cons;
 	const paddedCons = [
 		...initialCons,

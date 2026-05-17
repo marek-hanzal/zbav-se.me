@@ -1,5 +1,5 @@
+import { useTranslator } from "@/lib/client/translation";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 import type { EntrySchema } from "~/server/database/@table/TransactionEntryTableSchema/EntrySchema";
 import type { PriceTypeEnumSchema } from "../enum/PriceTypeEnumSchema";
 
@@ -10,6 +10,7 @@ export namespace PriceTypeList {
 }
 
 export const PriceTypeList: React.FC<PriceTypeList.Props> = ({ priceType, ...props }) => {
+	const translator = useTranslator();
 	return (
 		<ValueList
 			data-ui={"PriceTypeList"}

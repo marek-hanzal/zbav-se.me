@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
 import { PriceInline } from "@/lib/client/price-inline";
+import { useTranslator } from "@/lib/client/translation";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 import type { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 
 export namespace PriceValue {
@@ -17,6 +17,7 @@ export namespace PriceValue {
  * Use it in detail cards, summaries, and previews where editable controls are not needed.
  */
 export const PriceValue: FC<PriceValue.Props> = ({ price, currency, ...props }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const hasPrice = price != null && currency != null;
 	return (

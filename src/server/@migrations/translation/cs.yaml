@@ -163,6 +163,8 @@ Back to agent welcome page (aria):
     value: Zpět na domovskou stránku práce s agentem
 Back to home (link):
     value: Zpět domů
+Back to sign in:
+    value: Zpátky na přihlášení
 Behind corner (label):
     value: Za rohem!
 Buyer activity (hint):
@@ -331,10 +333,10 @@ Condition not selected:
     value: Stav nemáš vybraný
 Confirm Password:
     value: Potvrdit heslo
-Confirm your password:
-    value: Potvrďte své heslo
 Confirm your new password:
     value: Potvrď nové heslo
+Confirm your password:
+    value: Potvrďte své heslo
 Cons 0 (placeholder):
     value: Bez dokladu
     dynamic: true
@@ -439,6 +441,8 @@ Embedded image - url (label):
     value: (odkaz na obrázek)
 Enter your email:
     value: Zadej svůj email
+Enter your new password:
+    value: Zadej nové heslo
 Enter your password:
     value: Zadej své heslo
 Expiration date not set:
@@ -522,8 +526,6 @@ Feed location not selected:
     value: Nemáš uvedenou
 Feed location security (hint):
     value: Feed location security (hint)
-Feed name (default):
-    value: Můj seznam
 Feed name (label):
     value: Název seznamu
 Feed name (placeholder):
@@ -608,6 +610,8 @@ Flag listing (button):
     value: Nahlásit inzerát
 Flag listing - confirm (button):
     value: Závažná akce - opravdu?
+Forgot password? (link):
+    value: Zapomněl jsi heslo?
 Fulltext (placeholder):
     value: Najít
 Gallery (title):
@@ -948,9 +952,6 @@ Minimum price (placeholder):
     value: Minimální cena
 Minimum price not set:
     value: Bez spodního limitu
-Missing identity for an Entity (id). I'm sorry, but I cannot provide better message than this :(:
-    value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
-        better message than this :(
 Move photo left (button):
     value: Move photo left (button)
 Move photo right (button):
@@ -1022,8 +1023,6 @@ No value here (label):
     value: Přidat
 Notifications (label):
     value: Oznámení
-Check your email for the reset link.:
-    value: Mrkni do mailu, poslali jsme ti odkaz pro reset hesla.
 Open agent menu options (aria):
     value: Kliknutím otevře spodní panel s nabídkou příloh a možností chatu s
         asistentem.
@@ -1041,10 +1040,20 @@ Password is required:
     value: Heslo je povinné, bez něj to nepůjde...
 Password must be at least 8 characters:
     value: Heslo by mělo mít alespoň 8 znaků.
-Password:
-    value: Heslo
+Password reset email action:
+    value: Otevřít reset hesla
+Password reset email footer:
+    value: Pokud sis o tuhle změnu neřekl(a), tenhle email můžeš v klidu ignorovat.
+If the button does not work, copy this link into your browser::
+    value: Když tlačítko nezafunguje, zkopíruj tenhle odkaz do prohlížeče.
+Password reset email message:
+    value: Dostali jsme požadavek na reset tvého hesla.
 Password reset email subject:
     value: Reset hesla
+Password reset email title:
+    value: Reset hesla
+Password:
+    value: Heslo
 Passwords do not match:
     value: Hesla nesedí, zkontrolujte si je.
 Personal - Email (label):
@@ -1154,16 +1163,18 @@ Register (link):
     value: Jsi tu nový? Přidej se!
 Register:
     value: Registrace
-Reset password (button):
-    value: Nastavit nové heslo
-Reset your password:
-    value: Reset hesla
 Reject transaction (button):
     value: Odmítnout a zavřít
 Reject transaction - confirm (button):
     value: Opravdu?
+Reset password (button):
+    value: Nastavit nové heslo
 Reset search (button):
     value: Resetovat
+Reset your password:
+    value: Reset hesla
+Check your email for the reset link.:
+    value: Mrkni do mailu pro odkaz na reset hesla.
 Resolve transaction (button):
     value: Vyřízeno
 Restriction available in (label):
@@ -1212,32 +1223,20 @@ Share package (button):
     value: Trasování balíčku
 Shop (title):
     value: Obchod
-Sign in:
-    value: Přihlášení
 Sign in (button):
     value: Přihlásit se
 Sign out:
     value: Odhlásit se
 Something went wrong (error):
     value: Pardon, tohle je teď rozbité.
-This reset link is invalid or expired:
-    value: Tenhle reset link je neplatný nebo už expiroval.
 Submit draft (button):
     value: Publikovat inzerát
 System update (label):
     value: System update (label)
-Your password has been updated. You can sign in now.:
-    value: Heslo je změněné. Teď se můžeš normálně přihlásit.
+This reset link is invalid or expired:
+    value: Tenhle reset link je neplatný nebo už expiroval.
 Thread token usage (label):
     value: Projebané tokeny
-Forgot password? (link):
-    value: Zapomněl jsi heslo?
-Back to sign in:
-    value: Zpátky na přihlášení
-Choose a new password:
-    value: Zvol nové heslo
-Enter your new password:
-    value: Zadej nové heslo
 ToS agreement (label):
     value: Podmínkami použití služby
 ToS not available in this language (description):
@@ -1361,6 +1360,8 @@ You got like (label):
     value: Někomu se líbí tvůj inzerát!
 Your favourites (title):
     value: Oblíbené
+Your password has been updated. You can sign in now.:
+    value: Heslo je změněné. Teď se můžeš normálně přihlásit.
 brand - placeholder:
     value: Vyplň značku
     dynamic: true
@@ -1528,6 +1529,26 @@ sensor.type - full-frame:
     dynamic: true
 sold:
     value: sold
+status-closed:
+    value: status-closed
+status-dispute-buyer:
+    value: status-dispute-buyer
+status-dispute-seller:
+    value: status-dispute-seller
+status-expired:
+    value: status-expired
+status-rejected-buyer:
+    value: status-rejected-buyer
+status-rejected-seller:
+    value: status-rejected-seller
+status-resolved:
+    value: status-resolved
+status-sold:
+    value: status-sold
+status-success:
+    value: status-success
+status-trade:
+    value: status-trade
 success:
     value: success
 trade:

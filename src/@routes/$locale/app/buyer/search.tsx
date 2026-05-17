@@ -4,9 +4,16 @@ import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
 import { SearchPage } from "~/buyer/search/ui/SearchPage/SearchPage";
 import { SearchPagePending } from "~/buyer/search/ui/SearchPage/SearchPagePending";
+import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
 
 export const Route = createFileRoute("/$locale/app/buyer/search")({
-	async loader({ context: { queryClient } }) {
+	async loader({ context: { queryClient }, params: { locale } }) {
+		const t = translator({
+			translations: await withTranslationsQuery.ensure(queryClient, {
+				locale,
+			}),
+		});
+
 		return (
 			(await withFeedQuery
 				.ensureEntityQuery(queryClient, {
@@ -23,7 +30,7 @@ export const Route = createFileRoute("/$locale/app/buyer/search")({
 				.catch(() => undefined)) ??
 			(await withFeedQuery.createFn(
 				queryClient,
-				getFeedDefaultCreate(translator.text("Search (title)"), "search"),
+				getFeedDefaultCreate(t.text("Search (title)"), "search"),
 			))
 		);
 	},

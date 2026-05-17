@@ -4,7 +4,7 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { uiLinkTo } from "@/lib/client/link-to";
 import { Markdown } from "@/lib/client/markdown";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 
 export namespace MessageTextContent {
@@ -15,6 +15,7 @@ export namespace MessageTextContent {
 }
 
 export const MessageTextContent: FC<MessageTextContent.Props> = ({ groupId, text, ...props }) => {
+	const translator = useTranslator();
 	const value = text.trim();
 	if (!value.length) {
 		return null;

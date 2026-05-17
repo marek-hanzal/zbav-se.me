@@ -2,7 +2,7 @@ import { type FC, Suspense, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { Fulltext } from "@/lib/client/fulltext";
 import type { Status } from "@/lib/client/status";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { ListContainer } from "~/common/location/ui/LocationSelect/ListContainer";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 
@@ -34,6 +34,7 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 	warningStatusProps,
 	...props
 }) => {
+	const translator = useTranslator();
 	const [search, setSearch] = useState<Fulltext.Value>();
 	const handleSearchChange = (value: Fulltext.Value) => {
 		setSearch(value);

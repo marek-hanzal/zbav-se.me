@@ -1,7 +1,7 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 
 export namespace RestrictionValue {
@@ -15,6 +15,7 @@ export namespace RestrictionValue {
  * Use it in detail cards, summaries, and previews where editable controls are not needed.
  */
 export const RestrictionValue: FC<RestrictionValue.Props> = ({ restriction, ...props }) => {
+	const translator = useTranslator();
 	return (
 		<LabelValue
 			data-ui={"RestrictionValue"}

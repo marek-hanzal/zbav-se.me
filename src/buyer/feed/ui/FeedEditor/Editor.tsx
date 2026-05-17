@@ -2,11 +2,11 @@ import { type FC, Suspense } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { ChevronRightIcon, Icon } from "@/lib/client/icon";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { DeliveryValueList } from "~/common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
@@ -54,6 +54,7 @@ export namespace Editor {
 }
 
 export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, children, ...props }) => {
+	const translator = useTranslator();
 	const locationId = feed.query?.meta?.locationId;
 	const { data: location } = withLocationQuery.useMaybeEntityQuery({
 		where: {

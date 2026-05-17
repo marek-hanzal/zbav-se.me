@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
 import { useRenderLogger } from "@/lib/client/log";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
@@ -20,6 +20,7 @@ export const TransactionDetailPage: FC<TransactionDetailPage.Props> = ({
 	transactionId,
 	...props
 }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 
 	useRenderLogger({

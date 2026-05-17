@@ -3,6 +3,7 @@ import { Container } from "@/lib/client/container";
 import { withFallback } from "@/lib/client/fallback";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
@@ -23,6 +24,7 @@ export namespace Item {
 
 export const Item = withFallback(({ _suspense, transactionListingId, ...props }: Item.Props) => {
 	const locale = useLocale();
+	const translator = useTranslator();
 	const { data: transactionListing } = withListingQuery.useFetchQuery(transactionListingId);
 	const transactionEntry = transactionListing.withTransactionEntry;
 	const hero = useUpload(transactionListing.withImageUrl);
@@ -87,6 +89,7 @@ export const Item = withFallback(({ _suspense, transactionListingId, ...props }:
 						<Typo
 							label={toActivityLabel({
 								entry: transactionEntry,
+								translator,
 							})}
 							data-ui-text="xs"
 							data-ui-tone="neutral"

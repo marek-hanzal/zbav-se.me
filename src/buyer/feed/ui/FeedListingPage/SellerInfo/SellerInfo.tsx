@@ -1,9 +1,9 @@
 import { withFallback } from "@/lib/client/fallback";
 import { Icon, ShowIcon } from "@/lib/client/icon";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { withListingSellerInfoQuery } from "~/buyer/listing/query/withListingSellerInfoQuery";
 import { RatingIcon } from "~/common/score/ui/RatingIcon";
 
@@ -16,6 +16,7 @@ export namespace SellerInfo {
 
 export const SellerInfo = withFallback(
 	({ _suspense, listingId, view }: SellerInfo.Props) => {
+		const translator = useTranslator();
 		const { data: sellerInfo } = withListingSellerInfoQuery.useSuspenseQuery({
 			id: listingId,
 		});
@@ -35,6 +36,7 @@ export const SellerInfo = withFallback(
 		);
 	},
 	(props: Omit<SellerInfo.Props, "_suspense">) => {
+		const translator = useTranslator();
 		return (
 			<LabelValue
 				textLabel={translator.text("Listing seller hint (label)")}

@@ -3,9 +3,9 @@ import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { Mx } from "@/lib/client/mx";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { ExpireAtSelect } from "~/common/expire-at/ui/ExpireAtSelect";
 import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
@@ -30,6 +30,7 @@ export namespace ExpiresPatch {
 }
 
 export const ExpiresPatch: FC<ExpiresPatch.Props> = ({ draft, onCancel, view, ...props }) => {
+	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
 			view.set("default");

@@ -3,9 +3,9 @@ import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { useSelection } from "@/lib/client/selection";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { uiSelectButton } from "~/common/ui/ui";
 import { withDraftAttrEnumMultiPatchMutation } from "~/seller/draft-attr-enum-multi/mutation/withDraftAttrEnumMultiPatchMutation";
@@ -33,6 +33,7 @@ export const AttrEnumMulti: FC<AttrEnumMulti.Props> = ({
 	view,
 	...props
 }) => {
+	const translator = useTranslator();
 	const next = useNextAttr(attr, attrs);
 	const mutation = withDraftAttrEnumMultiPatchMutation.useMutation({
 		onSuccess() {

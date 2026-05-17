@@ -4,9 +4,9 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { EditIcon, Icon, UserIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { TokenUsage } from "~/user/agent/ui/TokenUsage";
@@ -26,10 +26,9 @@ export namespace UserPage {
 /**
  * Composes the route-level user screen and arranges the main page structure for this flow.
  * Use it from route definitions as the primary UI boundary for the user journey.
- *
- * @see src/@routes
  */
 export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
+	const translator = useTranslator();
 	const queryClient = useQueryClient();
 	const locale = useLocale();
 	const user = useUser();

@@ -4,12 +4,12 @@ import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { ArrowRightIcon, Icon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { ValueList } from "@/lib/client/value";
 import type { useView } from "@/lib/client/view";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
-import { translator } from "@/lib/common/translation";
 import type { AttrWhereSchema } from "~/buyer/listing/server/schema/AttrWhereSchema";
 import type { CategoryAttrOfSchema } from "~/user/category/server/schema/CategoryAttrOfSchema";
 
@@ -22,6 +22,7 @@ export namespace AttrValue {
 }
 
 export const AttrValue: FC<AttrValue.Props> = ({ field, attr, view }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 
 	return match({

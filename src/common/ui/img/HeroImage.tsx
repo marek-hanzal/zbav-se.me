@@ -9,7 +9,7 @@ import {
 import { Container, type uiContainer } from "@/lib/client/container";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Status } from "@/lib/client/status";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 
 type ImageStatus = "loading" | "loaded" | "error";
 
@@ -83,6 +83,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	//
 	...props
 }) => {
+	const translator = useTranslator();
 	const [state, setState] = useState<ImageState>({
 		src: props.src,
 		status: "loading",

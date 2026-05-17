@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 import { RatingIcon } from "~/common/score/ui/RatingIcon";
 
 export namespace Score {
@@ -12,6 +12,7 @@ export namespace Score {
 }
 
 export const Score: FC<Score.Props> = ({ rank }) => {
+	const translator = useTranslator();
 	return (
 		<LabelValue
 			textLabel={translator.text("User score (label)")}

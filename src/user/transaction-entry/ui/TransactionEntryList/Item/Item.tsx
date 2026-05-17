@@ -100,12 +100,7 @@ export const Item = withFallback(({ _suspense, side, transactionEntryId }: Item.
 			{
 				kind: "personal",
 			},
-			(transactionEntry) => (
-				<Personal
-					_suspense={"I know"}
-					transactionEntry={transactionEntry}
-				/>
-			),
+			(transactionEntry) => <Personal transactionEntry={transactionEntry} />,
 		)
 		.with(
 			{

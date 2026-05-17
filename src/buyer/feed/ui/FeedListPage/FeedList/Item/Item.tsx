@@ -6,10 +6,10 @@ import { Group } from "@/lib/client/group";
 import { EditIcon } from "@/lib/client/icon";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
-import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { ListingCount } from "~/buyer/listing/ui/ListingCount";
 import { ListItem } from "~/common/list-item/ListItem";
@@ -131,6 +131,7 @@ export const Item = withFallback(
 		);
 	},
 	(props: ListItem.PropsEx) => {
+		const translator = useTranslator();
 		return (
 			<ListItem
 				hero={undefined}

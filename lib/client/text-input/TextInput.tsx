@@ -1,5 +1,5 @@
 import type { ComponentProps, FC } from "react";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { uiInput } from "../form/uiInput";
 
 export namespace TextInput {
@@ -9,6 +9,7 @@ export namespace TextInput {
 }
 
 export const TextInput: FC<TextInput.Props> = ({ placeholder, className, ...props }) => {
+	const translator = useTranslator();
 	return (
 		<input
 			type={"text"}

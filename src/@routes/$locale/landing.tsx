@@ -5,8 +5,8 @@ import { Container } from "@/lib/client/container";
 import { ChevronRightIcon, GitHubIcon, Icon } from "@/lib/client/icon";
 import { LinkTo, uiLinkTo } from "@/lib/client/link-to";
 import { Status } from "@/lib/client/status";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import face from "~/assets/face.webp";
 import { HeroImage } from "~/common/ui/img";
 import { Logo } from "~/common/ui/logo";
@@ -15,6 +15,7 @@ import { HistoryPending } from "~/public/ui/HistoryPending";
 
 export const Route = createFileRoute("/$locale/landing")({
 	component() {
+		const translator = useTranslator();
 		const { locale } = Route.useParams();
 
 		return (

@@ -5,10 +5,10 @@ import { Group } from "@/lib/client/group";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { handleArrowNav } from "@/lib/client/nav";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { DeliveryValueList } from "~/common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
@@ -59,6 +59,7 @@ export namespace Editor {
 }
 
 export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const { data: draft } = withDraftQuery.useFetchQuery(draftId);
 
