@@ -1,1 +1,0 @@
-export { ThumbDislikeButton } from "./ThumbDislikeButton";

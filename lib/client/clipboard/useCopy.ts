@@ -16,11 +16,11 @@ export namespace useCopy {
 	}
 
 	export interface Props extends MutateOptions<void, Error, Variables> {
-		//
+		delay?: number;
 	}
 }
 
-export const useCopy = ({ onError, ...opts }: useCopy.Props = {}) => {
+export const useCopy = ({ onError, delay = 500, ...opts }: useCopy.Props = {}) => {
 	return useMutation<void, Error, useCopy.Variables>({
 		mutationKey: [
 			"navigator",
@@ -33,7 +33,7 @@ export const useCopy = ({ onError, ...opts }: useCopy.Props = {}) => {
 			/**
 			 * Synthetic slowdown to make a "copy effect".
 			 */
-			await sleep(500);
+			await sleep(delay);
 			return copy(text);
 		},
 		onError(error, variables, onMutationResult, context) {

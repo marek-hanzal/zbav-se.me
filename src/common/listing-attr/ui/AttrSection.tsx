@@ -2,8 +2,8 @@ import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import type { MarkSuspense } from "@/lib/client/type";
-import { withListingAttrOfQuery } from "~/user/listing-attr/query/withListingAttrOfQuery";
-import { ListingAttrOf } from "~/user/listing-attr/ui/ListingAttrOf";
+import { withListingAttrOfQuery } from "../query/withListingAttrOfQuery";
+import { ListingAttrOf } from "./ListingAttrOf";
 
 export namespace AttrSection {
 	export interface Props extends Container.Props, MarkSuspense.Props {

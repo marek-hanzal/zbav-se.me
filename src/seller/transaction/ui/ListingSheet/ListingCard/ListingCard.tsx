@@ -3,9 +3,9 @@ import { Container } from "@/lib/client/container";
 import { useRenderLogger } from "@/lib/client/log";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view";
+import { AttrSection } from "~/common/listing-attr/ui/AttrSection";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
-import { AttrSection } from "./section/AttrSection";
 import { HeroSection } from "./section/HeroSection";
 import { InfoSection } from "./section/InfoSection";
 

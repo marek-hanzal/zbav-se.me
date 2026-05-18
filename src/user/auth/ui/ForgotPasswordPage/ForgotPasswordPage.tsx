@@ -65,17 +65,14 @@ export const ForgotPasswordPage: FC<ForgotPasswordPage.Props> = ({ ...props }) =
 		},
 		onSubmit: onSubmit({
 			map: async ({ values }) => {
-				const localeResetPasswordPath = router.buildLocation({
+				const link = router.buildLocation({
 					to: "/$locale/reset-password/$token",
 					params: {
 						locale,
 						token: "-placeholder-",
 					},
 				});
-				const redirectTo = new URL(
-					localeResetPasswordPath.href,
-					import.meta.env.VITE_ORIGIN,
-				).toString();
+				const redirectTo = new URL(link.href, import.meta.env.VITE_ORIGIN).toString();
 
 				return {
 					email: values.email,

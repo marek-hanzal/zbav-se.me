@@ -7,13 +7,14 @@ import type { useView } from "@/lib/client/view";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { useListingEvent } from "~/buyer/listing/hook/useListingEvent";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
+import { AttrSection } from "~/common/listing-attr/ui/AttrSection";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { FlagButton } from "../FlagButton";
 import { IgnoreButton } from "../IgnoreButton";
 import { SellerInfo } from "../SellerInfo";
+import { ShareButton } from "../ShareButton";
 import { ThumbDislikeButton } from "../ThumbDislikeButton";
 import { ThumbLikeButton } from "../ThumbLikeButton";
-import { AttrSection } from "./section/AttrSection";
 import { HeroSection } from "./section/HeroSection";
 import { InfoSection } from "./section/InfoSection";
 
@@ -86,6 +87,10 @@ export const ListingCard: FC<ListingCard.Props> = ({
 					/>
 				</Group>
 			)}
+
+			<Group>
+				<ShareButton listingId={listingId} />
+			</Group>
 
 			{listing.my ? null : (
 				<>

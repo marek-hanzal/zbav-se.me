@@ -4,8 +4,10 @@ import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import type { CategorySchema } from "~/public/category/server/schema/CategorySchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withNormalizedContainsEx } from "~/server/database/expression/withNormalizedContainsEx";
+import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import type { ListingMetaSchema } from "../schema/ListingMetaSchema";
 import type { ListingSortSchema } from "../schema/ListingSortSchema";
 import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
@@ -99,9 +101,29 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	return selectFx({
 		select: select.select([
 			"l.id",
+			"l.categoryId",
 			"l.galleryId",
 			"l.withImageUrl",
 			"l.createdAt",
+			"l.title",
+			//
+			(eb) => {
+				return eb
+					.selectFrom("location as loc")
+					.select((eb) => {
+						return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("json");
+					})
+					.whereRef("loc.id", "=", "l.locationId")
+					.limit(1)
+					.$asScalar()
+					.$castTo<LocationSchema.Type>()
+					.as("location");
+			},
+			//
+			(eb) => {
+				return sql<CategorySchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category");
+			},
+			//
 			(eb) => {
 				return sql<string[]>`to_jsonb(${eb.ref("l.pros")})`.as("pros");
 			},

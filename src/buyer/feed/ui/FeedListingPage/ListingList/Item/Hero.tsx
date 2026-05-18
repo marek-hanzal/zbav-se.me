@@ -7,8 +7,8 @@ import { Typo } from "@/lib/client/typo";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
+import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { HeroImage } from "~/common/ui/img";
-import { ListingPrice } from "../../../../../../common/listing/ui/ListingPrice";
 import { Delivery } from "./Delivery";
 import { Distance } from "./Distance";
 

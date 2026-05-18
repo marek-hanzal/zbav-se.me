@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Typo } from "@/lib/client/typo";
-import type { CategorySchema } from "../server/schema/CategorySchema";
+import type { CategorySchema } from "~/public/category/server/schema/CategorySchema";
 
 export namespace CategoryInline {
 	export interface Props extends Container.Props {

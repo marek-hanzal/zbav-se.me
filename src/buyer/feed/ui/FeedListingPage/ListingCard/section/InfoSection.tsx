@@ -7,7 +7,7 @@ import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
-import { CategoryInline } from "~/user/category/ui/CategoryInline";
+import { CategoryInline } from "~/common/category/ui/CategoryInline";
 
 export namespace InfoSection {
 	export interface Props extends Container.Props {

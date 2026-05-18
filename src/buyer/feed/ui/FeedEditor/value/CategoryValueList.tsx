@@ -2,9 +2,9 @@ import { withFallback } from "@/lib/client/fallback";
 import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
 import { ValueList } from "@/lib/client/value";
+import { CategoryInline } from "~/common/category/ui/CategoryInline";
 import { withCategoryQuery } from "~/user/category/query/withCategoryQuery";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
-import { CategoryInline } from "~/user/category/ui/CategoryInline";
 
 export namespace CategoryValueList {
 	export interface Props
