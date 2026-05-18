@@ -1,11 +1,11 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getRequestHeader } from "@tanstack/react-start/server";
 import { defaultLocale, locales } from "~/locales";
 
 export const getLocaleFn = createServerFn().handler(async () => {
 	const { pick } = await import("@escapace/accept-language-parser");
-	const { getRequestHeader } = await import("@tanstack/react-start/server");
 
-	const [locale] = pick(getRequestHeader("accept-language") ?? "", locales, {
+	const [locale] = pick(getRequestHeader("accept-language") ?? defaultLocale, locales, {
 		type: "lookup",
 	});
 
