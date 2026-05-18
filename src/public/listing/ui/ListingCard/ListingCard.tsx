@@ -5,13 +5,13 @@ import { useRenderLogger } from "@/lib/client/log";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import type { MarkSuspense } from "@/lib/client/type";
 import { useView } from "@/lib/client/view";
+import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { AttrSection } from "~/common/listing-attr/ui/AttrSection";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { CloseButton } from "~/common/ui/button/CloseButton";
 import { withListingQuery } from "../../query/withListingQuery";
 import { HeroSection } from "./section/HeroSection";
 import { InfoSection } from "./section/InfoSection";
-import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 
 export namespace ListingCard {
 	export interface Props extends Container.Props, MarkSuspense.Props {
