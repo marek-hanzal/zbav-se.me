@@ -26,7 +26,11 @@ export const sendFx = Effect.fn("sendFx")(function* ({
 	const mailContext = yield* MailContextFx;
 	const logger = yield* getLoggerFx("sendFx", "server-email");
 	const headers = {
-		...(refId ? { "X-Entity-Ref-ID": refId } : {}),
+		...(refId
+			? {
+					"X-Entity-Ref-ID": refId,
+				}
+			: {}),
 		...(keyId
 			? {
 					"Resend-Idempotency-Key": keyId,
@@ -39,7 +43,11 @@ export const sendFx = Effect.fn("sendFx")(function* ({
 		subject: title,
 		html,
 		text,
-		...(Object.keys(headers).length ? { headers } : {}),
+		...(Object.keys(headers).length
+			? {
+					headers,
+				}
+			: {}),
 	};
 
 	return yield* Effect.tryPromise({

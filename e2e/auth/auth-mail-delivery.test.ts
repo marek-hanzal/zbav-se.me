@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
-import { test, expect } from "../test";
+import { expect, test } from "../test";
 
 const mailpitBaseUrl = process.env.MAILPIT_BASE_URL;
 
