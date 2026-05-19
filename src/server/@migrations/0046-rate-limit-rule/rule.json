@@ -1,5 +1,15 @@
 [
 	{
+		"name": "email-verification-request",
+		"window": 900,
+		"limit": 1
+	},
+	{
+		"name": "email-verification-request-source",
+		"window": 900,
+		"limit": 10
+	},
+	{
 		"name": "listing-event",
 		"window": 600,
 		"limit": 1

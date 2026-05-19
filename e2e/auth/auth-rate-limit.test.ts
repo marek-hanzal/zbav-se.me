@@ -6,11 +6,7 @@ import { createUser } from "../utils/createUser";
 const signUpEmailPath = signUpEmail().path;
 const requestPasswordResetPath = requestPasswordReset.path;
 
-async function createAuthRequest(
-	appOrigin: string,
-	db: string,
-	request: APIRequest,
-) {
+async function createAuthRequest(appOrigin: string, db: string, request: APIRequest) {
 	return request.newContext({
 		baseURL: appOrigin,
 		extraHTTPHeaders: {

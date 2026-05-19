@@ -1,5 +1,11 @@
 import { betterAuth } from "better-auth";
-import { APIError, createAuthMiddleware, requestPasswordReset, signUpEmail } from "better-auth/api";
+import {
+	APIError,
+	createAuthMiddleware,
+	requestPasswordReset,
+	sendVerificationEmail,
+	signUpEmail,
+} from "better-auth/api";
 import { anonymous, customSession } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { Effect } from "effect";
@@ -14,6 +20,7 @@ import { withLoggerFx } from "@/lib/common/log";
 import type { translator } from "@/lib/common/translation/translator";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { EmailVerificationEmail } from "~/email/template/EmailVerificationEmail";
 import { PasswordResetEmail } from "~/email/template/PasswordResetEmail";
 import type { Database } from "~/server/database/Database";
 import { withDateFx } from "~/server/database/fx/withDateFx";
@@ -132,6 +139,32 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 							body: {
 								email: P.string,
 							},
+							path: sendVerificationEmail.path,
+						},
+						({ body: { email } }): rateLimitCheckFx.Props[] => [
+							{
+								key: [
+									email.toLowerCase(),
+								],
+								rule: "email-verification-request",
+								message:
+									"Too many verification email requests. Please try again later.",
+							},
+							{
+								key: [
+									requestSource,
+								],
+								rule: "email-verification-request-source",
+								message:
+									"Too many verification email requests. Please try again later.",
+							},
+						],
+					)
+					.with(
+						{
+							body: {
+								email: P.string,
+							},
 							path: requestPasswordReset.path,
 						},
 						({ body: { email } }): rateLimitCheckFx.Props[] => [
@@ -239,6 +272,33 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 						},
 						createElement(PasswordResetEmail, {
 							resetUrl: link.toString(),
+						}),
+					),
+				}).pipe(
+					withMailContextFx({
+						key: mailConfig.SERVER_RESEND,
+						from: mailConfig.SERVER_RESEND_FROM,
+					}),
+					withLoggerFx(logger),
+					Effect.runPromise,
+				);
+			},
+		},
+		emailVerification: {
+			sendOnSignUp: true,
+			async sendVerificationEmail({ user, url }) {
+				await mailtoFx({
+					to: [
+						user.email,
+					],
+					title: translator.text("Email verification email subject"),
+					content: createElement(
+						TranslationContext,
+						{
+							value: translator.list(),
+						},
+						createElement(EmailVerificationEmail, {
+							verifyUrl: url,
 						}),
 					),
 				}).pipe(

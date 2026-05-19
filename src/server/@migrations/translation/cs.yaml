@@ -436,6 +436,20 @@ Draft list (label):
     value: Rozpracované inzeráty
 Draft list (title):
     value: Rozpracované inzeráty
+Email verification email action:
+    value: Kliknutím potvrď svůj email
+Email verification email footer:
+    value: |
+        Tahle zpráva chodí po registraci a na tvou žádost. Pokud se ani jedno nestalo,
+        dej nám vědět.
+Email verification email message:
+    value: |
+        Abys mohl používat nějaké další pokročilé funkce, musíme vědět, že
+        tvůj email je platný.
+Email verification email subject:
+    value: Ověření tvého mailu
+Email verification email title:
+    value: Ověř si svůj email
 Email:
     value: Email
 Embedded image - url (label):
@@ -1213,6 +1227,8 @@ Send message to agent (aria):
     value: Odešle agentovi zprávu, včetně případných příloh (jako jsou obrázky)
 Send reset link:
     value: Poslat odkaz
+Send verification email:
+    value: Ověř si svůj email
 Share contact info (button):
     value: Sdílet osobní údaje
 Share contact info (title):
@@ -1330,8 +1346,6 @@ Uploading photo (title):
 User already exists. Use another email.:
     value: Bohužel, tento email už je obsazený.
     dynamic: true
-User email (hint):
-    value: Já ti to říkal - nic jiného o tobě nevím.
 User email (label):
     value: Tímhle se přihlašuješ
 User profile (title):
@@ -1344,6 +1358,8 @@ User score (hint):
         pohodě, D zvedlé obočí a E/F už může být risk.
 User score (label):
     value: Skóre
+Verification email sent. Check your inbox.:
+    value: Poslal jsem ti link na mail, jukni tam.
 View transactions (button):
     value: Zprávy
 Warranty (title):
@@ -1362,6 +1378,10 @@ You got dislike (label):
     value: Někomu se nelíbí tvůj inzerát
 You got like (label):
     value: Někomu se líbí tvůj inzerát!
+Your email is not verified yet.:
+    value: Tvůj email zatím nemám ověřený
+Your email is verified.:
+    value: Všechno v pohodě, email máš ověřený
 Your favourites (title):
     value: Oblíbené
 Your password has been updated. You can sign in now.:
