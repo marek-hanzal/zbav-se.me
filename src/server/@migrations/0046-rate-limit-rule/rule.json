@@ -2,7 +2,7 @@
 	{
 		"name": "email-verification-request",
 		"window": 900,
-		"limit": 3
+		"limit": 1
 	},
 	{
 		"name": "email-verification-request-source",
