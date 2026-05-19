@@ -10,9 +10,9 @@ databases.
 Request-scoped logging is also injected there, so server `*Fn` and `*Fx`
 handlers only consume the logger context and do not build it themselves.
 
-Transactional emails are rendered from React components in `src/server/email/ui`
-using React Email primitives and a mail-specific Tailwind theme, so email-safe
-markup stays isolated from the web CSS runtime.
+Transactional emails are rendered from React components with React Email and are
+then delivered through the shared SMTP transport, so template rendering stays
+separate from mail delivery concerns.
 
 Agent persistence is anchored by `agent_thread`; stream and usage rows reference
 that thread so user/thread scope is enforced by the database.

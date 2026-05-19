@@ -42,7 +42,7 @@ export const ErrorBadge: FC<ErrorBadge.Props> = ({ error, placeholder, ...props 
 			data-ui-text="default"
 			data-ui-badge="xs"
 			data-ui-color="lead"
-            data-ui-width="full"
+			data-ui-width="full"
 			{...props}
 		>
 			<TypoIcon icon={"icon-[solar--adhesive-plaster-linear]"}>

@@ -276,8 +276,11 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 					),
 				}).pipe(
 					withMailContextFx({
-						key: mailConfig.SERVER_RESEND,
-						from: mailConfig.SERVER_RESEND_FROM,
+						host: mailConfig.SERVER_SMTP_HOST,
+						port: mailConfig.SERVER_SMTP_PORT,
+						username: mailConfig.SERVER_SMTP_USERNAME,
+						password: mailConfig.SERVER_SMTP_PASSWORD,
+						from: mailConfig.SERVER_SMTP_FROM,
 					}),
 					withLoggerFx(logger),
 					Effect.runPromise,
@@ -303,8 +306,11 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 					),
 				}).pipe(
 					withMailContextFx({
-						key: mailConfig.SERVER_RESEND,
-						from: mailConfig.SERVER_RESEND_FROM,
+						host: mailConfig.SERVER_SMTP_HOST,
+						port: mailConfig.SERVER_SMTP_PORT,
+						username: mailConfig.SERVER_SMTP_USERNAME,
+						password: mailConfig.SERVER_SMTP_PASSWORD,
+						from: mailConfig.SERVER_SMTP_FROM,
 					}),
 					withLoggerFx(logger),
 					Effect.runPromise,
