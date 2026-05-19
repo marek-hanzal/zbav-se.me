@@ -106,6 +106,9 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			"l.withImageUrl",
 			"l.createdAt",
 			"l.title",
+            "l.price",
+            "l.currency",
+            "l.priceType",
 			//
 			(eb) => {
 				return eb

@@ -10,7 +10,7 @@ export namespace Group {
 export const Group: FC<Group.Props> = ({ children, className, ...props }) => {
 	return (
 		<Container
-			data-ui="Group[Container]"
+			data-ui="Group"
 			data-ui-shadow
 			data-ui-round={"default"}
 			data-ui-width={"full"}
