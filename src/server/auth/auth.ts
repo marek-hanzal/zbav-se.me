@@ -68,9 +68,9 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 	const connection = dialect();
 
 	const betterAuthConfig = ServerBetterAuthSchema.parse(process.env);
-	const mailConfig = ServerMailSchema.parse(process.env);
 	const viteConfig = ViteEnvSchema.parse(process.env);
 	const { hostname: originHost } = new URL(viteConfig.VITE_ORIGIN);
+	const getMailConfig = () => ServerMailSchema.parse(process.env);
 
 	/**
 	 * Necessary - resolves circular dependency
@@ -259,6 +259,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 			enabled: true,
 			revokeSessionsOnPasswordReset: true,
 			async sendResetPassword({ user, url, token }) {
+				const mailConfig = getMailConfig();
 				const link = new URL(url.replace("-placeholder-", token));
 
 				await mailtoFx({
@@ -295,6 +296,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 		emailVerification: {
 			sendOnSignUp: true,
 			async sendVerificationEmail({ user, url }) {
+				const mailConfig = getMailConfig();
 				await mailtoFx({
 					to: [
 						user.email,
