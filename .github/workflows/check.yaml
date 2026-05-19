@@ -28,8 +28,11 @@ env:
     SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
     SERVER_GITHUB: ${{ secrets.SERVER_GITHUB }}
     SERVER_HMAC_SECRET: ${{ secrets.SERVER_HMAC_SECRET }}
-    SERVER_RESEND: ${{ secrets.SERVER_RESEND }}
-    SERVER_RESEND_FROM: ${{ vars.SERVER_RESEND_FROM }}
+    SERVER_SMTP_HOST: ${{ vars.SERVER_SMTP_HOST }}
+    SERVER_SMTP_PORT: ${{ vars.SERVER_SMTP_PORT }}
+    SERVER_SMTP_USERNAME: ${{ vars.SERVER_SMTP_USERNAME }}
+    SERVER_SMTP_PASSWORD: ${{ secrets.SERVER_SMTP_PASSWORD }}
+    SERVER_SMTP_FROM: ${{ vars.SERVER_SMTP_FROM }}
     SERVER_AI_TOKEN: ${{ secrets.SERVER_AI_TOKEN }}
     SERVER_AI_SERVER_URL: ${{ vars.SERVER_AI_SERVER_URL }}
     SERVER_AI_MODEL: ${{ vars.SERVER_AI_MODEL }}
@@ -208,9 +211,24 @@ jobs:
         name: Full-Stack Test
         runs-on: ubuntu-latest
         environment: dev
+        services:
+            mailpit:
+                image: axllent/mailpit:v1.27
+                ports:
+                    - 1025:1025
+                    - 8025:8025
+                env:
+                    MP_SMTP_AUTH: mailpit:mailpit
+                    MP_SMTP_AUTH_ALLOW_INSECURE: 1
         env:
             NITRO_PRESET: node_server
             SERVER_E2E: e2e
+            SERVER_SMTP_HOST: 127.0.0.1
+            SERVER_SMTP_PORT: 1025
+            SERVER_SMTP_USERNAME: mailpit
+            SERVER_SMTP_PASSWORD: mailpit
+            SERVER_SMTP_FROM: Zbavík <info@zbav-se.me>
+            MAILPIT_BASE_URL: http://127.0.0.1:8025
             PORTLESS_STATE_DIR: /tmp/portless
             NODE_EXTRA_CA_CERTS: /tmp/portless/ca.pem
             SSL_CERT_FILE: /tmp/portless/ca.pem

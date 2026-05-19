@@ -25,6 +25,7 @@ import { PasswordResetEmail } from "~/email/template/PasswordResetEmail";
 import type { Database } from "~/server/database/Database";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { toMailKeyId } from "~/server/email/fn/toMailKeyId";
 import { mailtoFx } from "~/server/email/fx/mailtoFx";
 import { withMailContextFx } from "~/server/email/fx/withMailContextFx";
 import { ServerBetterAuthSchema } from "~/server/env/ServerBetterAuthSchema";
@@ -67,9 +68,9 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 	const connection = dialect();
 
 	const betterAuthConfig = ServerBetterAuthSchema.parse(process.env);
-	const mailConfig = ServerMailSchema.parse(process.env);
 	const viteConfig = ViteEnvSchema.parse(process.env);
 	const { hostname: originHost } = new URL(viteConfig.VITE_ORIGIN);
+	const getMailConfig = () => ServerMailSchema.parse(process.env);
 
 	/**
 	 * Necessary - resolves circular dependency
@@ -258,6 +259,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 			enabled: true,
 			revokeSessionsOnPasswordReset: true,
 			async sendResetPassword({ user, url, token }) {
+				const mailConfig = getMailConfig();
 				const link = new URL(url.replace("-placeholder-", token));
 
 				await mailtoFx({
@@ -265,6 +267,10 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 						user.email,
 					],
 					title: translator.text("Password reset email subject"),
+					keyId: toMailKeyId("password-reset", {
+						email: user.email,
+						token,
+					}),
 					content: createElement(
 						TranslationContext,
 						{
@@ -276,8 +282,11 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 					),
 				}).pipe(
 					withMailContextFx({
-						key: mailConfig.SERVER_RESEND,
-						from: mailConfig.SERVER_RESEND_FROM,
+						host: mailConfig.SERVER_SMTP_HOST,
+						port: mailConfig.SERVER_SMTP_PORT,
+						username: mailConfig.SERVER_SMTP_USERNAME,
+						password: mailConfig.SERVER_SMTP_PASSWORD,
+						from: mailConfig.SERVER_SMTP_FROM,
 					}),
 					withLoggerFx(logger),
 					Effect.runPromise,
@@ -287,11 +296,16 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 		emailVerification: {
 			sendOnSignUp: true,
 			async sendVerificationEmail({ user, url }) {
+				const mailConfig = getMailConfig();
 				await mailtoFx({
 					to: [
 						user.email,
 					],
 					title: translator.text("Email verification email subject"),
+					keyId: toMailKeyId("email-verification", {
+						email: user.email,
+						url,
+					}),
 					content: createElement(
 						TranslationContext,
 						{
@@ -303,8 +317,11 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 					),
 				}).pipe(
 					withMailContextFx({
-						key: mailConfig.SERVER_RESEND,
-						from: mailConfig.SERVER_RESEND_FROM,
+						host: mailConfig.SERVER_SMTP_HOST,
+						port: mailConfig.SERVER_SMTP_PORT,
+						username: mailConfig.SERVER_SMTP_USERNAME,
+						password: mailConfig.SERVER_SMTP_PASSWORD,
+						from: mailConfig.SERVER_SMTP_FROM,
 					}),
 					withLoggerFx(logger),
 					Effect.runPromise,

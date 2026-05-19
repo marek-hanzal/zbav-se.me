@@ -29,8 +29,11 @@ env:
     SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
     SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
     SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
-    SERVER_RESEND: ${{ secrets.SERVER_RESEND }}
-    SERVER_RESEND_FROM: ${{ vars.SERVER_RESEND_FROM }}
+    SERVER_SMTP_HOST: ${{ vars.SERVER_SMTP_HOST }}
+    SERVER_SMTP_PORT: ${{ vars.SERVER_SMTP_PORT }}
+    SERVER_SMTP_USERNAME: ${{ vars.SERVER_SMTP_USERNAME }}
+    SERVER_SMTP_PASSWORD: ${{ secrets.SERVER_SMTP_PASSWORD }}
+    SERVER_SMTP_FROM: ${{ vars.SERVER_SMTP_FROM }}
     SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
     SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
     SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
@@ -83,6 +86,11 @@ jobs:
                   check_var SERVER_S3_BUCKET
                   check_var SERVER_S3_KEY
                   check_var SERVER_S3_SECRET
+                  check_var SERVER_SMTP_HOST
+                  check_var SERVER_SMTP_PORT
+                  check_var SERVER_SMTP_USERNAME
+                  check_var SERVER_SMTP_PASSWORD
+                  check_var SERVER_SMTP_FROM
                   check_var SERVER_BETTER_AUTH_SECRET
                   check_var SERVER_GEOAPIFY_TOKEN
                   check_var SERVER_JWT_SECRET

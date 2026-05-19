@@ -1,7 +1,10 @@
 import { Context } from "effect";
 
 export interface MailContext {
-	key: string;
+	host: string;
+	port: number;
+	username: string;
+	password: string;
 	from: string;
 }
 
