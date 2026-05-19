@@ -1,12 +1,14 @@
 import { betterAuth } from "better-auth";
+import { APIError, createAuthMiddleware, requestPasswordReset, signUpEmail } from "better-auth/api";
 import { anonymous, customSession } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { Effect } from "effect";
 import { type Dialect, Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { createElement } from "react";
-import { match } from "ts-pattern";
+import { match, P } from "ts-pattern";
 import { TranslationContext } from "@/lib/client/translation";
+import type { withDatabaseFx } from "@/lib/common/database";
 import { genId } from "@/lib/common/gen-id";
 import { withLoggerFx } from "@/lib/common/log";
 import type { translator } from "@/lib/common/translation/translator";
@@ -14,10 +16,15 @@ import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { PasswordResetEmail } from "~/email/template/PasswordResetEmail";
 import type { Database } from "~/server/database/Database";
+import { withDateFx } from "~/server/database/fx/withDateFx";
+import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { mailtoFx } from "~/server/email/fx/mailtoFx";
 import { withMailContextFx } from "~/server/email/fx/withMailContextFx";
 import { ServerBetterAuthSchema } from "~/server/env/ServerBetterAuthSchema";
 import { ServerMailSchema } from "~/server/env/ServerMailSchema";
+import { RateLimitErrorFx } from "~/server/error/RateLimitErrorFx";
+import { toRequestSource } from "~/server/middleware/toRequestSource";
+import { rateLimitCheckFx } from "~/server/rate-limit/server/fx/rateLimitCheckFx";
 
 const logger = getRootLogger("auth");
 
@@ -66,6 +73,13 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 			"error",
 		],
 	});
+	const database = {
+		dialect: connection,
+		kysely,
+		async migrate() {
+			return undefined;
+		},
+	} satisfies withDatabaseFx.Instance<Database>;
 
 	return betterAuth({
 		database: connection,
@@ -91,6 +105,75 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 					})
 					.exhaustive();
 			},
+		},
+		hooks: {
+			before: createAuthMiddleware(async (ctx) => {
+				const requestSource = toRequestSource(ctx.headers ?? new Headers());
+				const checks = match({
+					body: ctx.body,
+					path: ctx.path,
+				})
+					.with(
+						{
+							path: signUpEmail().path,
+						},
+						(): rateLimitCheckFx.Props[] => [
+							{
+								key: [
+									requestSource,
+								],
+								rule: "sign-up",
+								message: "Too many requests from the single IP, sorry",
+							},
+						],
+					)
+					.with(
+						{
+							body: {
+								email: P.string,
+							},
+							path: requestPasswordReset.path,
+						},
+						({ body: { email } }): rateLimitCheckFx.Props[] => [
+							{
+								key: [
+									email.toLowerCase(),
+								],
+								rule: "password-reset-request",
+								message:
+									"Too many password reset requests. Please try again later.",
+							},
+							{
+								key: [
+									requestSource,
+								],
+								rule: "password-reset-request-source",
+								message:
+									"Too many password reset requests. Please try again later.",
+							},
+						],
+					)
+					.otherwise((): rateLimitCheckFx.Props[] => []);
+
+				try {
+					for (const check of checks) {
+						await rateLimitCheckFx(check).pipe(
+							withKyselyFx(database),
+							withDateFx,
+							withLoggerFx(logger),
+							Effect.runPromise,
+						);
+					}
+				} catch (error) {
+					if (error instanceof RateLimitErrorFx) {
+						throw new APIError("TOO_MANY_REQUESTS", {
+							message: error.message,
+						});
+					}
+
+					throw error;
+				}
+			}),
 		},
 		plugins: [
 			anonymous({
@@ -169,10 +252,6 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 			},
 		},
 		advanced: {
-			crossSubDomainCookies: {
-				enabled: true,
-				domain: originHost,
-			},
 			database: {
 				generateId: () => genId(),
 			},

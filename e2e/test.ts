@@ -24,9 +24,13 @@ function toDatabaseName(file: string, title: string, workerIndex: number, retry:
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 
 export const test = base.extend<{
+	appOrigin: string;
 	db: string;
 	database: TestDatabase;
 }>({
+	async appOrigin({}, use) {
+		await use(appOrigin);
+	},
 	// biome-ignore lint/correctness/noEmptyPattern: Ssst
 	async db({}, use, testInfo) {
 		await use(

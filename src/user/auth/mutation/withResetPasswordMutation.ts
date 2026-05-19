@@ -1,6 +1,6 @@
 import { withMutation } from "@/lib/client/mutation";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { resetPasswordFn } from "~/user/auth/fn/resetPasswordFn";
+import { authClient } from "~/user/auth/authClient";
 
 export namespace withResetPasswordMutation {
 	export interface Props {
@@ -26,8 +26,15 @@ export const withResetPasswordMutation = withMutation<
 		];
 	},
 	async mutationFn(data) {
-		return resetPasswordFn({
-			data,
+		const result = await authClient.resetPassword({
+			newPassword: data.newPassword,
+			token: data.token,
 		});
+
+		if (result.error) {
+			throw new Error(result.error.message);
+		}
+
+		return result.data;
 	},
 });
