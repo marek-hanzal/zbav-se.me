@@ -42,7 +42,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 }) => {
 	return (
 		<Container
-			data-ui={"LabelValue[Container]"}
+			data-ui={"LabelValue"}
 			data-ui-tone="neutral"
 			data-ui-theme="light"
 			data-ui-inner="default"
@@ -57,7 +57,6 @@ export const LabelValue: FC<LabelValue.Props> = ({
 			{...props}
 		>
 			<Container
-				data-ui={"LabelValue-[Container.label-wrapper]"}
 				data-ui-tone="neutral"
 				data-ui-theme="light"
 				data-ui-flow="horizontal"
