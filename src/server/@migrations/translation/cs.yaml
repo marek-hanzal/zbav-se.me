@@ -439,8 +439,10 @@ Draft list (title):
 Email verification email action:
     value: Kliknutím potvrď svůj email
 Email verification email footer:
-    value: |
-        Tahle zpráva chodí po registraci a na tvou žádost. Pokud se ani jedno nestalo,
+    value: >
+        Tahle zpráva chodí po registraci a na tvou žádost. Pokud se ani jedno
+        nestalo,
+
         dej nám vědět.
 Email verification email message:
     value: |
@@ -479,6 +481,10 @@ Expired rate (hint):
         nevrátí a obchod neuzavře.
 Expired rate (label):
     value: Poměr automaticky zavřených zpráv
+Extra attr - label (label):
+    value: Vlastnost
+Extra attr - value (label):
+    value: Hodnota
 Favourites (label):
     value: Moje oblíbené
 Feed (label):
@@ -699,6 +705,8 @@ Listing - Pros (title):
     value: Co chci vyzdvihnout
 Listing - Pros not filled:
     value: Nechceš něco vyzdvihnout?
+Listing - extras (label):
+    value: Vlastnosti kategorie
 Listing age (hint):
     value: |
         Definuje, jak moc moderní věc je.
@@ -793,6 +801,8 @@ Listing expiration (hint):
         všechny, až bude věc prodaná.
 Listing favourited (label):
     value: Inzerát je oblíbený!
+Listing gallery (label):
+    value: Obrázky
 Listing gallery (title):
     value: Fotky
 Listing ignore (hint):
@@ -1386,6 +1396,10 @@ Your favourites (title):
     value: Oblíbené
 Your password has been updated. You can sign in now.:
     value: Heslo je změněné. Teď se můžeš normálně přihlásit.
+ask:
+    value: ask
+auth sign up sends verification email:
+    value: auth sign up sends verification email
 brand - placeholder:
     value: Vyplň značku
     dynamic: true
@@ -1463,8 +1477,16 @@ dispute:
     value: dispute
 expired:
     value: expired
+fixed:
+    value: fixed
+free:
+    value: free
 gallery:
     value: gallery
+haggle:
+    value: haggle
+haulaway:
+    value: haulaway
 interest:
     value: interest
 like:
