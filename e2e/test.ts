@@ -28,6 +28,7 @@ export const test = base.extend<{
 	db: string;
 	database: TestDatabase;
 }>({
+	// biome-ignore lint/correctness/noEmptyPattern: Ssst
 	async appOrigin({}, use) {
 		await use(appOrigin);
 	},
