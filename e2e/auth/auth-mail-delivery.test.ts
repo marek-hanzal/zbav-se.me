@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
 import { test, expect } from "../test";
@@ -9,7 +8,6 @@ const mailpitBaseUrl = process.env.MAILPIT_BASE_URL;
 
 type MessageMatch = {
 	recipient: string;
-	subject: string;
 };
 
 type MailpitMessageListItem = {
@@ -25,10 +23,11 @@ type MailpitMessageList = {
 };
 
 type MailpitMessage = {
+	Subject: string;
 	Text: string;
 };
 
-async function waitForMailpitMessage({ recipient, subject }: MessageMatch) {
+async function waitForMailpitMessage({ recipient }: MessageMatch) {
 	if (!mailpitBaseUrl) {
 		throw new Error("MAILPIT_BASE_URL is required for the auth mail delivery e2e test");
 	}
@@ -47,12 +46,9 @@ async function waitForMailpitMessage({ recipient, subject }: MessageMatch) {
 
 		const list = (await listResponse.json()) as MailpitMessageList;
 		const message = list.messages.find((item) => {
-			return (
-				item.Subject === subject &&
-				item.To.some((target) => {
-					return target.Address === recipient;
-				})
-			);
+			return item.To.some((target) => {
+				return target.Address === recipient;
+			});
 		});
 
 		if (message) {
@@ -63,7 +59,7 @@ async function waitForMailpitMessage({ recipient, subject }: MessageMatch) {
 			if (messageResponse.ok) {
 				const detail = (await messageResponse.json()) as MailpitMessage;
 
-				return detail.Text;
+				return detail;
 			}
 		}
 
@@ -72,10 +68,10 @@ async function waitForMailpitMessage({ recipient, subject }: MessageMatch) {
 		});
 	}
 
-	throw new Error(`Mailpit did not capture email for ${recipient} with subject "${subject}"`);
+	throw new Error(`Mailpit did not capture email for recipient "${recipient}"`);
 }
 
-test("auth sign up sends verification email", async ({ database }) => {
+test("auth sign up sends verification email", async ({ page, database }) => {
 	const email = `${genId()}@x32.cz`;
 	const password = `pw-${genId()}`;
 	const translator = await withTranslatorFx({
@@ -83,24 +79,21 @@ test("auth sign up sends verification email", async ({ database }) => {
 	}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 	const subject = translator.text("Email verification email subject");
-	const ath = auth({
-		dialect: () => database.dialect,
-		translator,
-	});
 
-	await ath.api.signUpEmail({
-		body: {
-			name: email,
-			email,
-			password,
-		},
-	});
+	await page.goto("/cs/landing");
+	await page.click('[data-action="goto sign-up"]');
+	await page.waitForURL("/cs/sign-up");
+	await page.locator('[data-ui="SignUpPage[EmailInput]"]').fill(email);
+	await page.locator('[data-ui="SignUpPage[PasswordInput]"]').fill(password);
+	await page.locator('[data-ui="SignUpPage[ConfirmPasswordInput]"]').fill(password);
+	await page.locator('[data-action="sign up"]').click();
+	await page.waitForURL("/cs/app/welcome");
 
-	const text = await waitForMailpitMessage({
+	const mail = await waitForMailpitMessage({
 		recipient: email,
-		subject,
 	});
 
-	await expect(text).toContain("Kliknutím potvrď svůj email");
-	await expect(text).toContain("/api/auth/verify-email?token=");
+	await expect(mail.Subject).toBe(subject);
+	await expect(mail.Text).toContain("Kliknutím potvrď svůj email");
+	await expect(mail.Text).toContain("/api/auth/verify-email?token=");
 });
