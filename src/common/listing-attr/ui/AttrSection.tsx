@@ -26,6 +26,12 @@ export const AttrSection: FC<AttrSection.Props> = ({ listingId, categoryId, ...p
 			{...props}
 		>
 			{attrs.map((attr) => {
+				if (attr.value === null || attr.value === undefined) {
+					return null;
+				} else if (Array.isArray(attr.value) && !attr.value.length) {
+					return null;
+				}
+
 				return (
 					<Group key={`attr-${attr.name}`}>
 						<ListingAttrOf attrOf={attr} />

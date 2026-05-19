@@ -1,6 +1,5 @@
 About me (message):
-    value: |
-        Bez keců. Bez ojebů
+    value: Bez keců. Bez ojebů
 About me (title):
     value: Marek Hanzal
 Accept transaction (button):
@@ -235,6 +234,8 @@ Chat - transaction closed (message):
     value: Vše vyřízeno, chat je vypnutý.
 Chat - transaction resolved - seller cannot write (message):
     value: Máš vyřízeno, nic dalšího tu nemusíš řešit.
+Check your email for the reset link.:
+    value: Mrkni do mailu pro odkaz na reset hesla.
 Clear all (button):
     value: Vyčistit vše
 Clear all sorts (button):
@@ -647,6 +648,8 @@ Home - quick tools (title):
     value: Tržiště
 Home - seller stuff (title):
     value: Prodávám
+"If the button does not work, copy this link into your browser:":
+    value: Když tlačítko nezafunguje, zkopíruj tenhle odkaz do prohlížeče.
 Ignore listing (button):
     value: Ignorovat inzerát
 Ignore listing - confirm (button):
@@ -803,6 +806,9 @@ Listing price - ask:
     dynamic: true
 Listing price - fixed:
     value: Pevná cena
+    dynamic: true
+Listing price - free:
+    value: Zdarma
     dynamic: true
 Listing price - haggle:
     value: Možnost jednání
@@ -1044,8 +1050,6 @@ Password reset email action:
     value: Otevřít reset hesla
 Password reset email footer:
     value: Pokud sis o tuhle změnu neřekl(a), tenhle email můžeš v klidu ignorovat.
-If the button does not work, copy this link into your browser::
-    value: Když tlačítko nezafunguje, zkopíruj tenhle odkaz do prohlížeče.
 Password reset email message:
     value: Dostali jsme požadavek na reset tvého hesla.
 Password reset email subject:
@@ -1173,8 +1177,6 @@ Reset search (button):
     value: Resetovat
 Reset your password:
     value: Reset hesla
-Check your email for the reset link.:
-    value: Mrkni do mailu pro odkaz na reset hesla.
 Resolve transaction (button):
     value: Vyřízeno
 Restriction available in (label):
@@ -1215,6 +1217,8 @@ Share contact info (button):
     value: Sdílet osobní údaje
 Share contact info (title):
     value: Sdílet osobní údaje
+Share listing (label):
+    value: Zkopírovat odkaz
 Share location (button):
     value: Sdílet adresu
 Share location (title):

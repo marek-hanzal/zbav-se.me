@@ -9,6 +9,9 @@ export const ListingSchema = z
 		...ListingTableSchema.pick({
 			id: true,
 			categoryId: true,
+			priceType: true,
+			price: true,
+			currency: true,
 			title: true,
 			description: true,
 			condition: true,
