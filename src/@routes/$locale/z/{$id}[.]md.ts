@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { match } from "ts-pattern";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
+import { listingAttrOfFn } from "~/common/listing-attr/fn/listingAttrOfFn";
 import { withListingQuery } from "~/public/listing/query/withListingQuery";
 import { withTranslationMiddleware } from "~/server/middleware/withTranslationMiddleware";
-import { listingAttrOfFn } from "~/common/listing-attr/fn/listingAttrOfFn";
 
 export const Route = createFileRoute("/$locale/z/{$id}.md")({
 	server: {
@@ -145,7 +145,11 @@ export const Route = createFileRoute("/$locale/z/{$id}.md")({
 										type: "enum-multi",
 									},
 									(attr) => {
-										return attr.value.map(item => translator.text(`${attr.name} - ${item}`, item)).join(", ")
+										return attr.value
+											.map((item) =>
+												translator.text(`${attr.name} - ${item}`, item),
+											)
+											.join(", ");
 									},
 								)
 								.exhaustive()} |`,
