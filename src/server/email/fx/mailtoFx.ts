@@ -8,10 +8,18 @@ export namespace mailtoFx {
 		to: string[];
 		title: string;
 		content: ReactNode;
+		refId?: string;
+		keyId?: string;
 	}
 }
 
-export const mailtoFx = Effect.fn("mailtoFx")(function* ({ to, title, content }: mailtoFx.Props) {
+export const mailtoFx = Effect.fn("mailtoFx")(function* ({
+	to,
+	title,
+	content,
+	refId,
+	keyId,
+}: mailtoFx.Props) {
 	const { html, text } = yield* renderMailFx({
 		content,
 	});
@@ -21,5 +29,7 @@ export const mailtoFx = Effect.fn("mailtoFx")(function* ({ to, title, content }:
 		title,
 		html,
 		text,
+		refId,
+		keyId,
 	});
 });

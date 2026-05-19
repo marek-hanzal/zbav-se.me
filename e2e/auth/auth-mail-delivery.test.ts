@@ -12,22 +12,59 @@ type MessageMatch = {
 	subject: string;
 };
 
+type MailpitMessageListItem = {
+	ID: string;
+	Subject: string;
+	To: Array<{
+		Address: string;
+	}>;
+};
+
+type MailpitMessageList = {
+	messages: MailpitMessageListItem[];
+};
+
+type MailpitMessage = {
+	Text: string;
+};
+
 async function waitForMailpitMessage({ recipient, subject }: MessageMatch) {
 	if (!mailpitBaseUrl) {
 		throw new Error("MAILPIT_BASE_URL is required for the auth mail delivery e2e test");
 	}
 
 	const deadline = Date.now() + 20_000;
-	const query = `to:"${recipient}" subject:"${subject}"`;
 
 	while (Date.now() < deadline) {
-		const url = new URL("/view/latest.txt", mailpitBaseUrl);
-		url.searchParams.set("query", query);
+		const listResponse = await fetch(new URL("/api/v1/messages", mailpitBaseUrl));
 
-		const response = await fetch(url);
+		if (!listResponse.ok) {
+			await new Promise((resolve) => {
+				setTimeout(resolve, 500);
+			});
+			continue;
+		}
 
-		if (response.ok) {
-			return response.text();
+		const list = (await listResponse.json()) as MailpitMessageList;
+		const message = list.messages.find((item) => {
+			return (
+				item.Subject === subject &&
+				item.To.some((target) => {
+					return target.Address === recipient;
+				})
+			);
+		});
+
+		if (message) {
+			const messageResponse = await fetch(
+				new URL(`/api/v1/message/${message.ID}`, mailpitBaseUrl),
+			);
+
+			if (messageResponse.ok) {
+				const detail = (await messageResponse.json()) as MailpitMessage;
+
+				return detail.Text;
+			}
 		}
 
 		await new Promise((resolve) => {

@@ -10,18 +10,36 @@ export namespace sendFx {
 		title: string;
 		html: string;
 		text: string;
+		refId?: string;
+		keyId?: string;
 	}
 }
 
-export const sendFx = Effect.fn("sendFx")(function* ({ to, title, html, text }: sendFx.Props) {
+export const sendFx = Effect.fn("sendFx")(function* ({
+	to,
+	title,
+	html,
+	text,
+	refId,
+	keyId,
+}: sendFx.Props) {
 	const mailContext = yield* MailContextFx;
 	const logger = yield* getLoggerFx("sendFx", "server-email");
+	const headers = {
+		...(refId ? { "X-Entity-Ref-ID": refId } : {}),
+		...(keyId
+			? {
+					"Resend-Idempotency-Key": keyId,
+				}
+			: {}),
+	};
 	const message = {
 		from: mailContext.from,
 		to,
 		subject: title,
 		html,
 		text,
+		...(Object.keys(headers).length ? { headers } : {}),
 	};
 
 	return yield* Effect.tryPromise({
