@@ -9,12 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './@routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './@routes/sitemap[.]xml'
+import { Route as RobotsDottxtRouteImport } from './@routes/robots[.]txt'
 import { Route as McpRouteImport } from './@routes/mcp'
 import { Route as ApiRouteImport } from './@routes/api'
 import { Route as DotwellKnownRouteImport } from './@routes/[.]well-known'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
+import { Route as SitemapsPagesDotxmlRouteImport } from './@routes/sitemaps/pages[.]xml'
 import { Route as RedirectSignInRouteImport } from './@routes/redirect/sign-in'
 import { Route as ApiHealthRouteImport } from './@routes/api/health'
 import { Route as ApiE2eRouteImport } from './@routes/api/e2e'
@@ -37,6 +40,7 @@ import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welc
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
 import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
 import { Route as LocaleAppHomeRouteImport } from './@routes/$locale/app/home'
+import { Route as SitemapsListingsDayChar123pageChar125DotxmlRouteImport } from './@routes/sitemaps/listings/$day/{$page}[.]xml'
 import { Route as ApiPublicMigrationRunRouteImport } from './@routes/api/public/migration/run'
 import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
 import { Route as LocaleAppAgentWelcomeRouteImport } from './@routes/$locale/app/agent/welcome'
@@ -58,6 +62,16 @@ import { Route as LocaleAppBuyerTransactionTransactionIdDetailRouteImport } from
 import { Route as LocaleAppBuyerFeedIdListRouteImport } from './@routes/$locale/app/buyer/feed/$id/list'
 import { Route as LocaleAppBuyerFeedIdFavouriteListRouteImport } from './@routes/$locale/app/buyer/feed/$id/favourite/list'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
@@ -87,6 +101,11 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LocaleRoute,
+} as any)
+const SitemapsPagesDotxmlRoute = SitemapsPagesDotxmlRouteImport.update({
+  id: '/sitemaps/pages.xml',
+  path: '/sitemaps/pages.xml',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const RedirectSignInRoute = RedirectSignInRouteImport.update({
   id: '/redirect/sign-in',
@@ -200,6 +219,12 @@ const LocaleAppHomeRoute = LocaleAppHomeRouteImport.update({
   path: '/home',
   getParentRoute: () => LocaleAppRoute,
 } as any)
+const SitemapsListingsDayChar123pageChar125DotxmlRoute =
+  SitemapsListingsDayChar123pageChar125DotxmlRouteImport.update({
+    id: '/sitemaps/listings/$day/{$page}.xml',
+    path: '/sitemaps/listings/$day/{$page}.xml',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicMigrationRunRoute = ApiPublicMigrationRunRouteImport.update({
   id: '/public/migration/run',
   path: '/public/migration/run',
@@ -321,6 +346,8 @@ export interface FileRoutesByFullPath {
   '/.well-known': typeof DotwellKnownRoute
   '/api': typeof ApiRouteWithChildren
   '/mcp': typeof McpRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$locale/app': typeof LocaleAppRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
@@ -331,6 +358,7 @@ export interface FileRoutesByFullPath {
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
+  '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
@@ -350,6 +378,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
+  '/sitemaps/listings/$day/{$page}.xml': typeof SitemapsListingsDayChar123pageChar125DotxmlRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
   '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
@@ -370,6 +399,8 @@ export interface FileRoutesByTo {
   '/.well-known': typeof DotwellKnownRoute
   '/api': typeof ApiRouteWithChildren
   '/mcp': typeof McpRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/sign-in': typeof LocaleSignInRoute
@@ -379,6 +410,7 @@ export interface FileRoutesByTo {
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
+  '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
@@ -398,6 +430,7 @@ export interface FileRoutesByTo {
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
+  '/sitemaps/listings/$day/{$page}.xml': typeof SitemapsListingsDayChar123pageChar125DotxmlRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
   '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
@@ -420,6 +453,8 @@ export interface FileRoutesById {
   '/.well-known': typeof DotwellKnownRoute
   '/api': typeof ApiRouteWithChildren
   '/mcp': typeof McpRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$locale/app': typeof LocaleAppRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
@@ -430,6 +465,7 @@ export interface FileRoutesById {
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
+  '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
@@ -449,6 +485,7 @@ export interface FileRoutesById {
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
+  '/sitemaps/listings/$day/{$page}.xml': typeof SitemapsListingsDayChar123pageChar125DotxmlRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
   '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
@@ -472,6 +509,8 @@ export interface FileRouteTypes {
     | '/.well-known'
     | '/api'
     | '/mcp'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/$locale/app'
     | '/$locale/landing'
     | '/$locale/privacy'
@@ -482,6 +521,7 @@ export interface FileRouteTypes {
     | '/api/e2e'
     | '/api/health'
     | '/redirect/sign-in'
+    | '/sitemaps/pages.xml'
     | '/$locale/'
     | '/$locale/app/home'
     | '/$locale/app/shop'
@@ -501,6 +541,7 @@ export interface FileRouteTypes {
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
     | '/api/public/migration/run'
+    | '/sitemaps/listings/$day/{$page}.xml'
     | '/$locale/app/buyer/favourite/list'
     | '/$locale/app/buyer/feed/default'
     | '/$locale/app/buyer/feed/list'
@@ -521,6 +562,8 @@ export interface FileRouteTypes {
     | '/.well-known'
     | '/api'
     | '/mcp'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/$locale/landing'
     | '/$locale/privacy'
     | '/$locale/sign-in'
@@ -530,6 +573,7 @@ export interface FileRouteTypes {
     | '/api/e2e'
     | '/api/health'
     | '/redirect/sign-in'
+    | '/sitemaps/pages.xml'
     | '/$locale'
     | '/$locale/app/home'
     | '/$locale/app/shop'
@@ -549,6 +593,7 @@ export interface FileRouteTypes {
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
     | '/api/public/migration/run'
+    | '/sitemaps/listings/$day/{$page}.xml'
     | '/$locale/app/buyer/favourite/list'
     | '/$locale/app/buyer/feed/default'
     | '/$locale/app/buyer/feed/list'
@@ -570,6 +615,8 @@ export interface FileRouteTypes {
     | '/.well-known'
     | '/api'
     | '/mcp'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/$locale/app'
     | '/$locale/landing'
     | '/$locale/privacy'
@@ -580,6 +627,7 @@ export interface FileRouteTypes {
     | '/api/e2e'
     | '/api/health'
     | '/redirect/sign-in'
+    | '/sitemaps/pages.xml'
     | '/$locale/'
     | '/$locale/app/home'
     | '/$locale/app/shop'
@@ -599,6 +647,7 @@ export interface FileRouteTypes {
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
     | '/api/public/migration/run'
+    | '/sitemaps/listings/$day/{$page}.xml'
     | '/$locale/app/buyer/favourite/list'
     | '/$locale/app/buyer/feed/default'
     | '/$locale/app/buyer/feed/list'
@@ -621,11 +670,29 @@ export interface RootRouteChildren {
   DotwellKnownRoute: typeof DotwellKnownRoute
   ApiRoute: typeof ApiRouteWithChildren
   McpRoute: typeof McpRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   RedirectSignInRoute: typeof RedirectSignInRoute
+  SitemapsPagesDotxmlRoute: typeof SitemapsPagesDotxmlRoute
+  SitemapsListingsDayChar123pageChar125DotxmlRoute: typeof SitemapsListingsDayChar123pageChar125DotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mcp': {
       id: '/mcp'
       path: '/mcp'
@@ -667,6 +734,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/'
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
+    }
+    '/sitemaps/pages.xml': {
+      id: '/sitemaps/pages.xml'
+      path: '/sitemaps/pages.xml'
+      fullPath: '/sitemaps/pages.xml'
+      preLoaderRoute: typeof SitemapsPagesDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/redirect/sign-in': {
       id: '/redirect/sign-in'
@@ -821,6 +895,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/app/home'
       preLoaderRoute: typeof LocaleAppHomeRouteImport
       parentRoute: typeof LocaleAppRoute
+    }
+    '/sitemaps/listings/$day/{$page}.xml': {
+      id: '/sitemaps/listings/$day/{$page}.xml'
+      path: '/sitemaps/listings/$day/{$page}.xml'
+      fullPath: '/sitemaps/listings/$day/{$page}.xml'
+      preLoaderRoute: typeof SitemapsListingsDayChar123pageChar125DotxmlRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/public/migration/run': {
       id: '/api/public/migration/run'
@@ -1086,7 +1167,12 @@ const rootRouteChildren: RootRouteChildren = {
   DotwellKnownRoute: DotwellKnownRoute,
   ApiRoute: ApiRouteWithChildren,
   McpRoute: McpRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   RedirectSignInRoute: RedirectSignInRoute,
+  SitemapsPagesDotxmlRoute: SitemapsPagesDotxmlRoute,
+  SitemapsListingsDayChar123pageChar125DotxmlRoute:
+    SitemapsListingsDayChar123pageChar125DotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

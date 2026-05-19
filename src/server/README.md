@@ -9,6 +9,8 @@ before the database is dropped, so server pools do not outlive short-lived test
 databases.
 Request-scoped logging is also injected there, so server `*Fn` and `*Fx`
 handlers only consume the logger context and do not build it themselves.
+Canonical app origin parsing is also exposed through middleware, so server
+routes can consume `context.origin` instead of reparsing `VITE_ORIGIN`.
 
 Transactional emails are rendered from React components with React Email and are
 then delivered through the shared SMTP transport, so template rendering stays
