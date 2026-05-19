@@ -59,17 +59,15 @@ export const VerifyEmailButton: FC<VerifyEmailButton.Props> = ({ email, ...props
 				data-ui-width="full"
 				data-ui-text="md"
 			>
-				<Tx label={"Send verification email"} />
+				{isSent ? (
+					<Tx
+						label={"Verification email sent. Check your inbox."}
+						data-ui-color="lead"
+					/>
+				) : (
+					<Tx label={"Send verification email"} />
+				)}
 			</Button>
-
-			{isSent ? (
-				<Tx
-					label={"Verification email sent. Check your inbox."}
-					data-ui-text="sm"
-					data-ui-color="lead"
-				/>
-			) : null}
-
 			<ErrorBadge error={mutation.error} />
 		</Container>
 	);
