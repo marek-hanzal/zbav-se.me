@@ -13,6 +13,7 @@ import { TokenUsage } from "~/user/agent/ui/TokenUsage";
 import { useUser } from "~/user/auth/hook/useUser";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { SignOutButton } from "~/user/profile/UserPage/SignOutButton";
+import { VerifyEmailButton } from "~/user/profile/UserPage/VerifyEmailButton";
 import { CurrentRestriction } from "~/user/restriction/ui/CurrentRestriction";
 import { withUserRestrictionQuery } from "~/user/user-restriction/query/withUserRestrictionQuery";
 import { RestrictionSheet } from "./RestrictionSheet";
@@ -103,9 +104,15 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 				<Group>
 					<LabelValue
 						textLabel={translator.text("User email (label)")}
-						textHint={translator.text("User email (hint)")}
+						textHint={translator.text(
+							user.emailVerified
+								? "Your email is verified."
+								: "Your email is not verified yet.",
+						)}
 						textValue={user.email}
 					/>
+
+					{!user.emailVerified ? <VerifyEmailButton email={user.email} /> : null}
 				</Group>
 
 				<Group>
