@@ -25,6 +25,7 @@ import { PasswordResetEmail } from "~/email/template/PasswordResetEmail";
 import type { Database } from "~/server/database/Database";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
+import { toMailKeyId } from "~/server/email/fn/toMailKeyId";
 import { mailtoFx } from "~/server/email/fx/mailtoFx";
 import { withMailContextFx } from "~/server/email/fx/withMailContextFx";
 import { ServerBetterAuthSchema } from "~/server/env/ServerBetterAuthSchema";
@@ -265,6 +266,10 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 						user.email,
 					],
 					title: translator.text("Password reset email subject"),
+					keyId: toMailKeyId("password-reset", {
+						email: user.email,
+						token,
+					}),
 					content: createElement(
 						TranslationContext,
 						{
@@ -295,6 +300,10 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 						user.email,
 					],
 					title: translator.text("Email verification email subject"),
+					keyId: toMailKeyId("email-verification", {
+						email: user.email,
+						url,
+					}),
 					content: createElement(
 						TranslationContext,
 						{
