@@ -32,14 +32,18 @@ can evolve independently from the main listing row shape.
 Rate limiting persistence is split between `rate_limit_rule` for reusable rule
 definitions and `rate_limit_event` for per-key, per-window counters.
 
+Seeded and runtime rate-limit rule names use the canonical `domain:rule`
+format with a singular domain segment such as `listing:event`,
+`auth:password-reset`, or `email:source`.
+
 `rateLimitEventFx` hashes composite caller keys with HMAC-SHA256 before writing
 the per-window counter bucket and uses an atomic conflict update for increments.
 
 `rateLimitCheckFx` builds on the bucket writer and raises `RateLimitErrorFx`
 with mandatory rule metadata when a request crosses the configured limit.
 
-The initial seeded rule `listing-event` caps repeated `(listingId, event)` pairs
+The initial seeded rule `listing:event` caps repeated `(listingId, event)` pairs
 to one hit per 10-minute window.
 
-The seeded rule `password-reset-request` caps reset requests to three attempts
+The seeded rule `auth:password-reset` caps reset requests to three attempts
 per email address in a 15-minute window.

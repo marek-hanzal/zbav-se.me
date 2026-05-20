@@ -17,7 +17,7 @@ describe("rateLimitCheckFx", () => {
 				database.kysely
 					.insertInto("rate_limit_rule")
 					.values({
-						name: "listing-contact",
+						name: "listing:contact",
 						window: 60,
 						limit: 2,
 					})
@@ -25,7 +25,7 @@ describe("rateLimitCheckFx", () => {
 			);
 
 			const first = yield* rateLimitCheckFx({
-				rule: "listing-contact",
+				rule: "listing:contact",
 				key: [
 					"user:1",
 				],
@@ -35,7 +35,7 @@ describe("rateLimitCheckFx", () => {
 				}),
 			);
 			const second = yield* rateLimitCheckFx({
-				rule: "listing-contact",
+				rule: "listing:contact",
 				key: [
 					"user:1",
 				],
@@ -46,7 +46,7 @@ describe("rateLimitCheckFx", () => {
 			);
 			const third = yield* Effect.either(
 				rateLimitCheckFx({
-					rule: "listing-contact",
+					rule: "listing:contact",
 					key: [
 						"user:1",
 					],
@@ -62,7 +62,7 @@ describe("rateLimitCheckFx", () => {
 
 			const error = expectTaggedErrorFx(third, {
 				tag: "RateLimitErrorFx",
-				message: "Rate limit 'listing-contact' exceeded: 3/2 in 60s window",
+				message: "Rate limit 'listing:contact' exceeded: 3/2 in 60s window",
 			}) as {
 				rule?: string;
 				limit?: number;
@@ -72,7 +72,7 @@ describe("rateLimitCheckFx", () => {
 				retryAt?: string;
 			};
 
-			expect(error.rule).toBe("listing-contact");
+			expect(error.rule).toBe("listing:contact");
 			expect(error.limit).toBe(2);
 			expect(error.count).toBe(3);
 			expect(error.exceeded).toBe(1);
@@ -83,7 +83,7 @@ describe("rateLimitCheckFx", () => {
 				database.kysely
 					.selectFrom("rate_limit_event")
 					.selectAll()
-					.where("rule", "=", "listing-contact")
+					.where("rule", "=", "listing:contact")
 					.execute(),
 			);
 
@@ -101,7 +101,7 @@ describe("rateLimitCheckFx", () => {
 				database.kysely
 					.insertInto("rate_limit_rule")
 					.values({
-						name: "listing-flag",
+						name: "listing:flag",
 						window: 60,
 						limit: 0,
 					})
@@ -110,7 +110,7 @@ describe("rateLimitCheckFx", () => {
 
 			const result = yield* Effect.either(
 				rateLimitCheckFx({
-					rule: "listing-flag",
+					rule: "listing:flag",
 					key: [
 						"user:1",
 						"listing:1",
@@ -133,7 +133,7 @@ describe("rateLimitCheckFx", () => {
 				exceeded?: number;
 			};
 
-			expect(error.rule).toBe("listing-flag");
+			expect(error.rule).toBe("listing:flag");
 			expect(error.limit).toBe(0);
 			expect(error.count).toBe(1);
 			expect(error.exceeded).toBe(1);
@@ -146,7 +146,7 @@ describe("rateLimitCheckFx", () => {
 		return Effect.gen(function* () {
 			const result = yield* Effect.either(
 				rateLimitCheckFx({
-					rule: "missing-rule",
+					rule: "missing:rule",
 					key: [
 						"user:404",
 					],
@@ -155,7 +155,7 @@ describe("rateLimitCheckFx", () => {
 
 			expectTaggedErrorFx(result, {
 				tag: "NotFoundErrorFx",
-				messageIncludes: "missing-rule",
+				messageIncludes: "missing:rule",
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

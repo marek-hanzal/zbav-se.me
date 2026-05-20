@@ -130,7 +130,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 								key: [
 									requestSource,
 								],
-								rule: "sign-up",
+								rule: "sign-up:request",
 								message: "Too many requests from the single IP, sorry",
 							},
 						],
@@ -147,7 +147,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 								key: [
 									email.toLowerCase(),
 								],
-								rule: "email-verification-request",
+								rule: "email:request",
 								message:
 									"Too many verification email requests. Please try again later.",
 							},
@@ -155,7 +155,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 								key: [
 									requestSource,
 								],
-								rule: "email-verification-request-source",
+								rule: "email:source",
 								message:
 									"Too many verification email requests. Please try again later.",
 							},
@@ -173,7 +173,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 								key: [
 									email.toLowerCase(),
 								],
-								rule: "password-reset-request",
+								rule: "auth:password-reset",
 								message:
 									"Too many password reset requests. Please try again later.",
 							},
@@ -181,7 +181,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 								key: [
 									requestSource,
 								],
-								rule: "password-reset-request-source",
+								rule: "auth:password-reset-source",
 								message:
 									"Too many password reset requests. Please try again later.",
 							},
