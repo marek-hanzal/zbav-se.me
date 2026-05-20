@@ -9,12 +9,14 @@ export namespace listingAttrOfFx {
 	export interface Props {
 		listingId: string;
 		categoryId: string;
+		nonEmpty?: boolean;
 	}
 }
 
 export const listingAttrOfFx = Effect.fn("listingAttrOfFx")(function* ({
 	listingId,
 	categoryId,
+	nonEmpty = true,
 }: listingAttrOfFx.Props) {
 	const logger = yield* getLoggerFx("listingAttrOfFx");
 	logger.trace("listingAttrOfFx", {
@@ -141,7 +143,24 @@ export const listingAttrOfFx = Effect.fn("listingAttrOfFx")(function* ({
 			.where("cf.categoryId", "=", categoryId)
 			.orderBy("cf.sort", "asc")
 			.$castTo<ListingAttrOfSchema.Type>()
-			.execute();
+			.execute()
+			.then((items) => {
+				if (nonEmpty !== true) {
+					return items;
+				}
+
+				return items
+					.filter((attr) => {
+						return attr.value !== null && attr.value !== undefined;
+					})
+					.filter((attr) => {
+						if (Array.isArray(attr.value) && !attr.value.length) {
+							return false;
+						}
+
+						return true;
+					});
+			});
 	});
 });
 

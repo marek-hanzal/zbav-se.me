@@ -23,6 +23,7 @@ export const listingAttrOfFn = createServerFn()
 			.looseObject({
 				listingId: z.string().min(1),
 				categoryId: z.string().min(1),
+				nonEmpty: z.boolean().optional(),
 			})
 			.strip(),
 	)

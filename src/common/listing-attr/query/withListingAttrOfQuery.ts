@@ -6,6 +6,7 @@ export namespace withListingAttrOfQuery {
 	export interface Data {
 		listingId: string;
 		categoryId: string;
+		nonEmpty: boolean | undefined;
 	}
 }
 

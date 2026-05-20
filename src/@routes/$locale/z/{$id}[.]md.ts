@@ -71,24 +71,13 @@ export const Route = createFileRoute("/$locale/z/{$id}.md")({
 					});
 				}
 
-				const attrs = (
-					await listingAttrOfFn({
-						data: {
-							listingId: listing.id,
-							categoryId: listing.categoryId,
-						},
-					})
-				)
-					.filter((attr) => {
-						return attr.value !== null && attr.value !== undefined;
-					})
-					.filter((attr) => {
-						if (Array.isArray(attr.value) && !attr.value.length) {
-							return false;
-						}
-
-						return true;
-					});
+				const attrs = await listingAttrOfFn({
+					data: {
+						listingId: listing.id,
+						categoryId: listing.categoryId,
+						nonEmpty: true,
+					},
+				});
 
 				if (attrs.length) {
 					md.push(`\n### ${translator.text("Listing - extras (label)")}`);
