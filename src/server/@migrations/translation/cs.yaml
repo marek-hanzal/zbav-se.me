@@ -1,3 +1,7 @@
+" | ":
+    value: " | "
+", ":
+    value: ", "
 About me (message):
     value: Bez keců. Bez ojebů
 About me (title):
@@ -166,6 +170,8 @@ Back to sign in:
     value: Zpátky na přihlášení
 Behind corner (label):
     value: Za rohem!
+Browse listing on (label):
+    value: Jukni se na Zbav-se.mě!
 Buyer activity (hint):
     value: >
         Zevrubná aktivita napovídá, zda je kupující jinak aktivní, nastavuje
