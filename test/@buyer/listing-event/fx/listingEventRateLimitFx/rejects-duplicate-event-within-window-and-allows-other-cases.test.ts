@@ -54,7 +54,7 @@ describe("listingEventRateLimitFx", () => {
 				window?: number;
 			};
 
-			expect(duplicateError.rule).toBe("listing-event");
+			expect(duplicateError.rule).toBe("listing:event");
 			expect(duplicateError.limit).toBe(1);
 			expect(duplicateError.count).toBe(2);
 			expect(duplicateError.exceeded).toBe(1);

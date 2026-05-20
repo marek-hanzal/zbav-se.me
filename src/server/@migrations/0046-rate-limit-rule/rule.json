@@ -1,26 +1,26 @@
 [
 	{
-		"name": "email-verification-request",
+		"name": "email:request",
 		"window": 900,
 		"limit": 1
 	},
 	{
-		"name": "email-verification-request-source",
+		"name": "email:source",
 		"window": 900,
 		"limit": 10
 	},
 	{
-		"name": "listing-event",
+		"name": "listing:event",
 		"window": 600,
 		"limit": 1
 	},
 	{
-		"name": "password-reset-request",
+		"name": "auth:password-reset",
 		"window": 900,
 		"limit": 3
 	},
 	{
-		"name": "password-reset-request-source",
+		"name": "auth:password-reset-source",
 		"window": 900,
 		"limit": 10
 	},
@@ -30,7 +30,7 @@
 		"limit": 24
 	},
 	{
-		"name": "sign-up",
+		"name": "sign-up:request",
 		"window": 600,
 		"limit": 100
 	}

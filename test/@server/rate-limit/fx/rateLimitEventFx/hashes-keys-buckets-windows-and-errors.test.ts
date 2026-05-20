@@ -29,7 +29,7 @@ describe("rateLimitEventFx", () => {
 				database.kysely
 					.insertInto("rate_limit_rule")
 					.values({
-						name: "listing-impression",
+						name: "listing:impression",
 						window: 60,
 						limit: 5,
 					})
@@ -38,7 +38,7 @@ describe("rateLimitEventFx", () => {
 
 			const fixedNow = DateTime.fromISO("2026-05-11T10:05:45.000Z");
 			const first = yield* rateLimitEventFx({
-				rule: "listing-impression",
+				rule: "listing:impression",
 				key: [
 					"user:1",
 					"route:/listing/abc",
@@ -49,7 +49,7 @@ describe("rateLimitEventFx", () => {
 				}),
 			);
 			const second = yield* rateLimitEventFx({
-				rule: "listing-impression",
+				rule: "listing:impression",
 				key: [
 					"user:1",
 					"route:/listing/abc",
@@ -64,7 +64,7 @@ describe("rateLimitEventFx", () => {
 				database.kysely
 					.selectFrom("rate_limit_event")
 					.selectAll()
-					.where("rule", "=", "listing-impression")
+					.where("rule", "=", "listing:impression")
 					.execute(),
 			);
 
@@ -74,7 +74,7 @@ describe("rateLimitEventFx", () => {
 			expect(second.limit).toBe(5);
 			expect(rows).toHaveLength(1);
 			expect(rows[0]).toMatchObject({
-				rule: "listing-impression",
+				rule: "listing:impression",
 				key: hash({
 					key: [
 						"user:1",
@@ -97,7 +97,7 @@ describe("rateLimitEventFx", () => {
 				database.kysely
 					.insertInto("rate_limit_rule")
 					.values({
-						name: "listing-contact",
+						name: "listing:contact",
 						window: 60,
 						limit: 2,
 					})
@@ -105,7 +105,7 @@ describe("rateLimitEventFx", () => {
 			);
 
 			yield* rateLimitEventFx({
-				rule: "listing-contact",
+				rule: "listing:contact",
 				key: [
 					"user:1",
 				],
@@ -115,7 +115,7 @@ describe("rateLimitEventFx", () => {
 				}),
 			);
 			yield* rateLimitEventFx({
-				rule: "listing-contact",
+				rule: "listing:contact",
 				key: [
 					"user:1",
 				],
@@ -125,7 +125,7 @@ describe("rateLimitEventFx", () => {
 				}),
 			);
 			yield* rateLimitEventFx({
-				rule: "listing-contact",
+				rule: "listing:contact",
 				key: [
 					"user:2",
 				],
@@ -143,7 +143,7 @@ describe("rateLimitEventFx", () => {
 						"window",
 						"count",
 					])
-					.where("rule", "=", "listing-contact")
+					.where("rule", "=", "listing:contact")
 					.orderBy("window", "asc")
 					.orderBy("key", "asc")
 					.execute(),
@@ -200,7 +200,7 @@ describe("rateLimitEventFx", () => {
 		return Effect.gen(function* () {
 			const result = yield* Effect.either(
 				rateLimitEventFx({
-					rule: "missing-rule",
+					rule: "missing:rule",
 					key: [
 						"user:404",
 					],
@@ -209,7 +209,7 @@ describe("rateLimitEventFx", () => {
 
 			expectTaggedErrorFx(result, {
 				tag: "NotFoundErrorFx",
-				messageIncludes: "missing-rule",
+				messageIncludes: "missing:rule",
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
