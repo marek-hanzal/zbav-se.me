@@ -16,6 +16,20 @@ export const ListingWhereSchema = z
 				description: "Filter listings based on the provided category IDs",
 			})
 			.optional(),
+		visibleAtBefore: z.coerce.date().optional().meta({
+			description:
+				"This filter matches listings that become visible before the provided date",
+			type: "string",
+		}),
+		visibleAtLte: z.coerce.date().optional().meta({
+			description:
+				"This filter matches listings that become visible on or before the provided date",
+			type: "string",
+		}),
+		visibleAtAfter: z.coerce.date().optional().meta({
+			description: "This filter matches listings that become visible after the provided date",
+			type: "string",
+		}),
 		expiresAtBefore: z.coerce.date().optional().meta({
 			description: "This filter matches listings that expire before the provided date",
 			type: "string",

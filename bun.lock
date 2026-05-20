@@ -51,6 +51,7 @@
         "tailwind-merge": "3.6.0",
         "timer-node": "5.0.9",
         "ts-pattern": "5.9.0",
+        "xmlbuilder2": "4.0.3",
         "yaml": "2.9.0",
         "zod": "4.4.3",
         "zustand": "5.0.13",

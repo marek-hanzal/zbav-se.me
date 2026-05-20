@@ -200,6 +200,26 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					query = query.where("l.categoryId", "in", where.categoryIdIn);
 				}
 
+				if (where.visibleAtBefore) {
+					query = query.where("l.visibleAt", "<", where.visibleAtBefore);
+				}
+
+				if (where.visibleAtLte) {
+					query = query.where("l.visibleAt", "<=", where.visibleAtLte);
+				}
+
+				if (where.visibleAtAfter) {
+					query = query.where("l.visibleAt", ">", where.visibleAtAfter);
+				}
+
+				if (where.expiresAtBefore) {
+					query = query.where("l.expiresAt", "<", where.expiresAtBefore);
+				}
+
+				if (where.expiresAtAfter) {
+					query = query.where("l.expiresAt", ">", where.expiresAtAfter);
+				}
+
 				return yield* Effect.succeed(query);
 			});
 		},
