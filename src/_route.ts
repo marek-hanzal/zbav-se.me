@@ -32,7 +32,7 @@ import { Route as LocaleAppIndexRouteImport } from './@routes/$locale/app/index'
 import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
 import { Route as ApiAgentThreadIdRouteImport } from './@routes/api/agent/$threadId'
 import { Route as LocaleZChar123idChar125DotmdRouteImport } from './@routes/$locale/z/{$id}[.]md'
-import { Route as LocaleZIdRouteImport } from './@routes/$locale/z/$id'
+import { Route as LocaleZUnavailableRouteImport } from './@routes/$locale/z/unavailable'
 import { Route as LocaleStatusMagicLinkRouteImport } from './@routes/$locale/status/magic-link'
 import { Route as LocaleResetPasswordTokenRouteImport } from './@routes/$locale/reset-password/$token'
 import { Route as LocaleForgotSentRouteImport } from './@routes/$locale/forgot/sent'
@@ -43,6 +43,7 @@ import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
 import { Route as LocaleAppHomeRouteImport } from './@routes/$locale/app/home'
 import { Route as SitemapsListingsDayChar123pageChar125DotxmlRouteImport } from './@routes/sitemaps/listings/$day/{$page}[.]xml'
 import { Route as ApiPublicMigrationRunRouteImport } from './@routes/api/public/migration/run'
+import { Route as LocaleZIdViewRouteImport } from './@routes/$locale/z/$id/view'
 import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
 import { Route as LocaleAppAgentWelcomeRouteImport } from './@routes/$locale/app/agent/welcome'
 import { Route as LocaleAppAgentContinueRouteImport } from './@routes/$locale/app/agent/continue'
@@ -179,9 +180,9 @@ const LocaleZChar123idChar125DotmdRoute =
     path: '/z/{$id}.md',
     getParentRoute: () => LocaleRoute,
   } as any)
-const LocaleZIdRoute = LocaleZIdRouteImport.update({
-  id: '/z/$id',
-  path: '/z/$id',
+const LocaleZUnavailableRoute = LocaleZUnavailableRouteImport.update({
+  id: '/z/unavailable',
+  path: '/z/unavailable',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleStatusMagicLinkRoute = LocaleStatusMagicLinkRouteImport.update({
@@ -235,6 +236,11 @@ const ApiPublicMigrationRunRoute = ApiPublicMigrationRunRouteImport.update({
   id: '/public/migration/run',
   path: '/public/migration/run',
   getParentRoute: () => ApiRoute,
+} as any)
+const LocaleZIdViewRoute = LocaleZIdViewRouteImport.update({
+  id: '/z/$id/view',
+  path: '/z/$id/view',
+  getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleAppBuyerSearchRoute = LocaleAppBuyerSearchRouteImport.update({
   id: '/buyer/search',
@@ -374,7 +380,7 @@ export interface FileRoutesByFullPath {
   '/$locale/forgot/sent': typeof LocaleForgotSentRoute
   '/$locale/reset-password/$token': typeof LocaleResetPasswordTokenRoute
   '/$locale/status/magic-link': typeof LocaleStatusMagicLinkRoute
-  '/$locale/z/$id': typeof LocaleZIdRoute
+  '/$locale/z/unavailable': typeof LocaleZUnavailableRoute
   '/$locale/z/{$id}.md': typeof LocaleZChar123idChar125DotmdRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -384,6 +390,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/agent/continue': typeof LocaleAppAgentContinueRoute
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
+  '/$locale/z/$id/view': typeof LocaleZIdViewRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
   '/sitemaps/listings/$day/{$page}.xml': typeof SitemapsListingsDayChar123pageChar125DotxmlRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
@@ -427,7 +434,7 @@ export interface FileRoutesByTo {
   '/$locale/forgot/sent': typeof LocaleForgotSentRoute
   '/$locale/reset-password/$token': typeof LocaleResetPasswordTokenRoute
   '/$locale/status/magic-link': typeof LocaleStatusMagicLinkRoute
-  '/$locale/z/$id': typeof LocaleZIdRoute
+  '/$locale/z/unavailable': typeof LocaleZUnavailableRoute
   '/$locale/z/{$id}.md': typeof LocaleZChar123idChar125DotmdRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -437,6 +444,7 @@ export interface FileRoutesByTo {
   '/$locale/app/agent/continue': typeof LocaleAppAgentContinueRoute
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
+  '/$locale/z/$id/view': typeof LocaleZIdViewRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
   '/sitemaps/listings/$day/{$page}.xml': typeof SitemapsListingsDayChar123pageChar125DotxmlRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
@@ -483,7 +491,7 @@ export interface FileRoutesById {
   '/$locale/forgot/sent': typeof LocaleForgotSentRoute
   '/$locale/reset-password/$token': typeof LocaleResetPasswordTokenRoute
   '/$locale/status/magic-link': typeof LocaleStatusMagicLinkRoute
-  '/$locale/z/$id': typeof LocaleZIdRoute
+  '/$locale/z/unavailable': typeof LocaleZUnavailableRoute
   '/$locale/z/{$id}.md': typeof LocaleZChar123idChar125DotmdRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -493,6 +501,7 @@ export interface FileRoutesById {
   '/$locale/app/agent/continue': typeof LocaleAppAgentContinueRoute
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
+  '/$locale/z/$id/view': typeof LocaleZIdViewRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
   '/sitemaps/listings/$day/{$page}.xml': typeof SitemapsListingsDayChar123pageChar125DotxmlRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
@@ -540,7 +549,7 @@ export interface FileRouteTypes {
     | '/$locale/forgot/sent'
     | '/$locale/reset-password/$token'
     | '/$locale/status/magic-link'
-    | '/$locale/z/$id'
+    | '/$locale/z/unavailable'
     | '/$locale/z/{$id}.md'
     | '/api/agent/$threadId'
     | '/api/auth/$'
@@ -550,6 +559,7 @@ export interface FileRouteTypes {
     | '/$locale/app/agent/continue'
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
+    | '/$locale/z/$id/view'
     | '/api/public/migration/run'
     | '/sitemaps/listings/$day/{$page}.xml'
     | '/$locale/app/buyer/favourite/list'
@@ -593,7 +603,7 @@ export interface FileRouteTypes {
     | '/$locale/forgot/sent'
     | '/$locale/reset-password/$token'
     | '/$locale/status/magic-link'
-    | '/$locale/z/$id'
+    | '/$locale/z/unavailable'
     | '/$locale/z/{$id}.md'
     | '/api/agent/$threadId'
     | '/api/auth/$'
@@ -603,6 +613,7 @@ export interface FileRouteTypes {
     | '/$locale/app/agent/continue'
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
+    | '/$locale/z/$id/view'
     | '/api/public/migration/run'
     | '/sitemaps/listings/$day/{$page}.xml'
     | '/$locale/app/buyer/favourite/list'
@@ -648,7 +659,7 @@ export interface FileRouteTypes {
     | '/$locale/forgot/sent'
     | '/$locale/reset-password/$token'
     | '/$locale/status/magic-link'
-    | '/$locale/z/$id'
+    | '/$locale/z/unavailable'
     | '/$locale/z/{$id}.md'
     | '/api/agent/$threadId'
     | '/api/auth/$'
@@ -658,6 +669,7 @@ export interface FileRouteTypes {
     | '/$locale/app/agent/continue'
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
+    | '/$locale/z/$id/view'
     | '/api/public/migration/run'
     | '/sitemaps/listings/$day/{$page}.xml'
     | '/$locale/app/buyer/favourite/list'
@@ -852,11 +864,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleZChar123idChar125DotmdRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/z/$id': {
-      id: '/$locale/z/$id'
-      path: '/z/$id'
-      fullPath: '/$locale/z/$id'
-      preLoaderRoute: typeof LocaleZIdRouteImport
+    '/$locale/z/unavailable': {
+      id: '/$locale/z/unavailable'
+      path: '/z/unavailable'
+      fullPath: '/$locale/z/unavailable'
+      preLoaderRoute: typeof LocaleZUnavailableRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/status/magic-link': {
@@ -928,6 +940,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/public/migration/run'
       preLoaderRoute: typeof ApiPublicMigrationRunRouteImport
       parentRoute: typeof ApiRoute
+    }
+    '/$locale/z/$id/view': {
+      id: '/$locale/z/$id/view'
+      path: '/z/$id/view'
+      fullPath: '/$locale/z/$id/view'
+      preLoaderRoute: typeof LocaleZIdViewRouteImport
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/app/buyer/search': {
       id: '/$locale/app/buyer/search'
@@ -1139,8 +1158,9 @@ interface LocaleRouteChildren {
   LocaleForgotSentRoute: typeof LocaleForgotSentRoute
   LocaleResetPasswordTokenRoute: typeof LocaleResetPasswordTokenRoute
   LocaleStatusMagicLinkRoute: typeof LocaleStatusMagicLinkRoute
-  LocaleZIdRoute: typeof LocaleZIdRoute
+  LocaleZUnavailableRoute: typeof LocaleZUnavailableRoute
   LocaleZChar123idChar125DotmdRoute: typeof LocaleZChar123idChar125DotmdRoute
+  LocaleZIdViewRoute: typeof LocaleZIdViewRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
@@ -1155,8 +1175,9 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleForgotSentRoute: LocaleForgotSentRoute,
   LocaleResetPasswordTokenRoute: LocaleResetPasswordTokenRoute,
   LocaleStatusMagicLinkRoute: LocaleStatusMagicLinkRoute,
-  LocaleZIdRoute: LocaleZIdRoute,
+  LocaleZUnavailableRoute: LocaleZUnavailableRoute,
   LocaleZChar123idChar125DotmdRoute: LocaleZChar123idChar125DotmdRoute,
+  LocaleZIdViewRoute: LocaleZIdViewRoute,
 }
 
 const LocaleRouteWithChildren =
