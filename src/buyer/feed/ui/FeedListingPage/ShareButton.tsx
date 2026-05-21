@@ -43,7 +43,7 @@ export const ShareButton: FC<ShareButton.Props> = ({ listingId }) => {
 			disabled={copy.isPending}
 			onClick={() => {
 				const location = router.buildLocation({
-					to: "/$locale/z/$id",
+					to: "/$locale/z/$id/view",
 					params: {
 						id: listingId,
 						locale,

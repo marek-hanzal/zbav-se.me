@@ -57,7 +57,7 @@ export const Route = createFileRoute("/sitemaps/listings/$day/{$page}.xml")({
 							for (const locale of locales) {
 								yield {
 									loc: new URL(
-										pathOf("/$locale/z/$id")
+										pathOf("/$locale/z/$id/view")
 											.replace("$locale", locale)
 											.replace("$id", item.id),
 										origin,
