@@ -64,7 +64,7 @@ export const FormField: FC<FormField.Props> = (props) => {
 
 	return (
 		<Container
-			data-ui="FormField[Container]"
+			data-ui="FormField"
 			data-ui-tone="neutral"
 			data-ui-theme={theme}
 			data-ui-layout="vertical-flex"
@@ -76,7 +76,6 @@ export const FormField: FC<FormField.Props> = (props) => {
 		>
 			{label || hint ? (
 				<Container
-					data-ui="FormField-[Container.header]"
 					data-ui-layout="vertical-flex"
 					data-ui-gap="xs"
 				>

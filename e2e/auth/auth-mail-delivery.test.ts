@@ -8,6 +8,7 @@ const mailpitBaseUrl = process.env.MAILPIT_BASE_URL;
 
 type MessageMatch = {
 	recipient: string;
+	subject?: string;
 };
 
 type MailpitMessageListItem = {
@@ -27,7 +28,17 @@ type MailpitMessage = {
 	Text: string;
 };
 
-async function waitForMailpitMessage({ recipient }: MessageMatch) {
+function parseMagicLink(text: string) {
+	const match = text.match(/https?:\/\/\S+\/api\/auth\/magic-link\/verify\?\S+/);
+
+	if (!match) {
+		throw new Error("Magic link email does not contain a verification URL");
+	}
+
+	return match[0].replace(/[.)\]]+$/, "");
+}
+
+async function waitForMailpitMessage({ recipient, subject }: MessageMatch) {
 	if (!mailpitBaseUrl) {
 		throw new Error("MAILPIT_BASE_URL is required for the auth mail delivery e2e test");
 	}
@@ -46,6 +57,10 @@ async function waitForMailpitMessage({ recipient }: MessageMatch) {
 
 		const list = (await listResponse.json()) as MailpitMessageList;
 		const message = list.messages.find((item) => {
+			if (subject && item.Subject !== subject) {
+				return false;
+			}
+
 			return item.To.some((target) => {
 				return target.Address === recipient;
 			});
@@ -96,4 +111,69 @@ test("auth sign up sends verification email", async ({ page, database }) => {
 	await expect(mail.Subject).toBe(subject);
 	await expect(mail.Text).toContain("Kliknutím potvrď svůj email");
 	await expect(mail.Text).toContain("/api/auth/verify-email?token=");
+});
+
+test("auth magic link sends email and signs in", async ({ page, database }) => {
+	const email = `${genId()}@x32.cz`;
+	const translator = await withTranslatorFx({
+		locale: "cs",
+	}).pipe(withRuntimeFx(database), Effect.runPromise);
+
+	const subject = translator.text("Magic link email subject");
+
+	await page.goto("/cs/app/home");
+	await page.waitForURL("/cs/sign-in");
+	const magicEmailInput = page.locator('[data-ui="SignInPage[MagicEmailInput]"]');
+
+	await magicEmailInput.scrollIntoViewIfNeeded();
+	await magicEmailInput.fill(email);
+	await page.locator('[data-action="sign in with magic link"]').click();
+	await page.waitForURL("/cs/status/magic-link");
+
+	const mail = await waitForMailpitMessage({
+		recipient: email,
+		subject,
+	});
+
+	await expect(mail.Subject).toBe(subject);
+	await expect(mail.Text).toContain("/api/auth/magic-link/verify?token=");
+
+	await page.goto(parseMagicLink(mail.Text));
+	await page.waitForURL("/cs/app/home");
+
+	await expect(page.locator('[data-ui="HomeMenu"]')).toBeVisible();
+});
+
+test("auth magic link rate limit returns a client-safe error", async ({ page, db, database }) => {
+	void database;
+
+	const email = `${genId()}@x32.cz`;
+	const body = {
+		email,
+		callbackURL: new URL("/cs/app/home", process.env.VITE_ORIGIN).toString(),
+	};
+	const headers = {
+		"x-e2e-db": db,
+	};
+	const expectedMessage = "Too many magic link requests. Please try again later.";
+
+	for (let attempt = 0; attempt < 3; attempt++) {
+		const response = await page.request.post("/api/auth/sign-in/magic-link", {
+			data: body,
+			headers,
+		});
+
+		await expect(response.ok()).toBe(true);
+	}
+
+	const response = await page.request.post("/api/auth/sign-in/magic-link", {
+		data: body,
+		headers,
+	});
+	const text = await response.text();
+
+	await expect(response.status()).toBe(429);
+	await expect(text).toContain(expectedMessage);
+	await expect(text).not.toContain("SERVER_ERROR");
+	await expect(text).not.toContain("FiberFailure");
 });

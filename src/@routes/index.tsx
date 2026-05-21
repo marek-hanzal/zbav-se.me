@@ -1,19 +1,13 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getLocaleFn } from "~/common/locale/getLocaleFn";
-import { withSessionQuery } from "~/user/auth/query/withSessionQuery";
+import { getSessionFn } from "~/user/auth/fn/getSessionFn";
 
 export const Route = createFileRoute("/")({
-	async loader({ context: { queryClient } }) {
+	async loader() {
 		const locale = await getLocaleFn();
-		const sessionQuery = await withSessionQuery.ensure(
-			queryClient,
-			"No input data here, bro!",
-			{
-				throwOnError: true,
-			},
-		);
+		const session = await getSessionFn();
 
-		if (sessionQuery?.user) {
+		if (session?.user) {
 			throw redirect({
 				to: "/$locale/app/home",
 				params: {

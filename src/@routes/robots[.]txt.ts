@@ -6,6 +6,7 @@ const blocked = [
 	"/api",
 	"/mcp",
 	"/redirect",
+	"/*/status/",
 	"/*/app/",
 ] as const;
 

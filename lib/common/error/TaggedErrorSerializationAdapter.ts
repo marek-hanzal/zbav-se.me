@@ -23,9 +23,13 @@ const isTaggedError = (value: unknown): value is TaggedErrorSerializationAdapter
 	);
 };
 
-const ofFiberFailure = (
+export const toTaggedError = (
 	value: unknown,
 ): TaggedErrorSerializationAdapter.TaggedError | undefined => {
+	if (isTaggedError(value)) {
+		return value;
+	}
+
 	if (!Runtime.isFiberFailure(value)) {
 		return undefined;
 	}
@@ -43,13 +47,13 @@ export const TaggedErrorSerializationAdapter = createSerializationAdapter<
 >({
 	key: "TaggedError",
 	test(value): value is TaggedErrorSerializationAdapter.Input {
-		return !!ofFiberFailure(value);
+		return !!toTaggedError(value);
 	},
 	toSerializable(value) {
-		const error = ofFiberFailure(value);
+		const error = toTaggedError(value);
 
 		if (!error) {
-			throw new Error("TaggedErrorSerializationAdapter received untagged FiberFailure");
+			throw new Error("TaggedErrorSerializationAdapter received untagged error");
 		}
 
 		return {

@@ -15,6 +15,16 @@
 		"limit": 1
 	},
 	{
+		"name": "auth:magic-link",
+		"window": 900,
+		"limit": 3
+	},
+	{
+		"name": "auth:magic-link-source",
+		"window": 900,
+		"limit": 10
+	},
+	{
 		"name": "auth:password-reset",
 		"window": 900,
 		"limit": 3

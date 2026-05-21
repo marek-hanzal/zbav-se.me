@@ -33,6 +33,7 @@ import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
 import { Route as ApiAgentThreadIdRouteImport } from './@routes/api/agent/$threadId'
 import { Route as LocaleZChar123idChar125DotmdRouteImport } from './@routes/$locale/z/{$id}[.]md'
 import { Route as LocaleZIdRouteImport } from './@routes/$locale/z/$id'
+import { Route as LocaleStatusMagicLinkRouteImport } from './@routes/$locale/status/magic-link'
 import { Route as LocaleResetPasswordTokenRouteImport } from './@routes/$locale/reset-password/$token'
 import { Route as LocaleForgotSentRouteImport } from './@routes/$locale/forgot/sent'
 import { Route as LocaleForgotPasswordRouteImport } from './@routes/$locale/forgot/password'
@@ -181,6 +182,11 @@ const LocaleZChar123idChar125DotmdRoute =
 const LocaleZIdRoute = LocaleZIdRouteImport.update({
   id: '/z/$id',
   path: '/z/$id',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleStatusMagicLinkRoute = LocaleStatusMagicLinkRouteImport.update({
+  id: '/status/magic-link',
+  path: '/status/magic-link',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleResetPasswordTokenRoute =
@@ -367,6 +373,7 @@ export interface FileRoutesByFullPath {
   '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
   '/$locale/forgot/sent': typeof LocaleForgotSentRoute
   '/$locale/reset-password/$token': typeof LocaleResetPasswordTokenRoute
+  '/$locale/status/magic-link': typeof LocaleStatusMagicLinkRoute
   '/$locale/z/$id': typeof LocaleZIdRoute
   '/$locale/z/{$id}.md': typeof LocaleZChar123idChar125DotmdRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
@@ -419,6 +426,7 @@ export interface FileRoutesByTo {
   '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
   '/$locale/forgot/sent': typeof LocaleForgotSentRoute
   '/$locale/reset-password/$token': typeof LocaleResetPasswordTokenRoute
+  '/$locale/status/magic-link': typeof LocaleStatusMagicLinkRoute
   '/$locale/z/$id': typeof LocaleZIdRoute
   '/$locale/z/{$id}.md': typeof LocaleZChar123idChar125DotmdRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
@@ -474,6 +482,7 @@ export interface FileRoutesById {
   '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
   '/$locale/forgot/sent': typeof LocaleForgotSentRoute
   '/$locale/reset-password/$token': typeof LocaleResetPasswordTokenRoute
+  '/$locale/status/magic-link': typeof LocaleStatusMagicLinkRoute
   '/$locale/z/$id': typeof LocaleZIdRoute
   '/$locale/z/{$id}.md': typeof LocaleZChar123idChar125DotmdRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
@@ -530,6 +539,7 @@ export interface FileRouteTypes {
     | '/$locale/forgot/password'
     | '/$locale/forgot/sent'
     | '/$locale/reset-password/$token'
+    | '/$locale/status/magic-link'
     | '/$locale/z/$id'
     | '/$locale/z/{$id}.md'
     | '/api/agent/$threadId'
@@ -582,6 +592,7 @@ export interface FileRouteTypes {
     | '/$locale/forgot/password'
     | '/$locale/forgot/sent'
     | '/$locale/reset-password/$token'
+    | '/$locale/status/magic-link'
     | '/$locale/z/$id'
     | '/$locale/z/{$id}.md'
     | '/api/agent/$threadId'
@@ -636,6 +647,7 @@ export interface FileRouteTypes {
     | '/$locale/forgot/password'
     | '/$locale/forgot/sent'
     | '/$locale/reset-password/$token'
+    | '/$locale/status/magic-link'
     | '/$locale/z/$id'
     | '/$locale/z/{$id}.md'
     | '/api/agent/$threadId'
@@ -845,6 +857,13 @@ declare module '@tanstack/react-router' {
       path: '/z/$id'
       fullPath: '/$locale/z/$id'
       preLoaderRoute: typeof LocaleZIdRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/status/magic-link': {
+      id: '/$locale/status/magic-link'
+      path: '/status/magic-link'
+      fullPath: '/$locale/status/magic-link'
+      preLoaderRoute: typeof LocaleStatusMagicLinkRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/reset-password/$token': {
@@ -1119,6 +1138,7 @@ interface LocaleRouteChildren {
   LocaleForgotPasswordRoute: typeof LocaleForgotPasswordRoute
   LocaleForgotSentRoute: typeof LocaleForgotSentRoute
   LocaleResetPasswordTokenRoute: typeof LocaleResetPasswordTokenRoute
+  LocaleStatusMagicLinkRoute: typeof LocaleStatusMagicLinkRoute
   LocaleZIdRoute: typeof LocaleZIdRoute
   LocaleZChar123idChar125DotmdRoute: typeof LocaleZChar123idChar125DotmdRoute
 }
@@ -1134,6 +1154,7 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleForgotPasswordRoute: LocaleForgotPasswordRoute,
   LocaleForgotSentRoute: LocaleForgotSentRoute,
   LocaleResetPasswordTokenRoute: LocaleResetPasswordTokenRoute,
+  LocaleStatusMagicLinkRoute: LocaleStatusMagicLinkRoute,
   LocaleZIdRoute: LocaleZIdRoute,
   LocaleZChar123idChar125DotmdRoute: LocaleZChar123idChar125DotmdRoute,
 }

@@ -6,7 +6,7 @@ import {
 	sendVerificationEmail,
 	signUpEmail,
 } from "better-auth/api";
-import { anonymous, customSession } from "better-auth/plugins";
+import { anonymous, customSession, magicLink } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { Effect } from "effect";
 import { type Dialect, Kysely } from "kysely";
@@ -21,6 +21,7 @@ import type { translator } from "@/lib/common/translation/translator";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { EmailVerificationEmail } from "~/email/template/EmailVerificationEmail";
+import { MagicLinkEmail } from "~/email/template/MagicLinkEmail";
 import { PasswordResetEmail } from "~/email/template/PasswordResetEmail";
 import type { Database } from "~/server/database/Database";
 import { withDateFx } from "~/server/database/fx/withDateFx";
@@ -97,19 +98,19 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 		logger: {
 			level: "debug",
 			disabled: false,
-			log(level, message) {
+			log(level, message, ...args) {
 				return match(level)
 					.with("info", () => {
-						return logger.info(message);
+						return logger.info(message, ...args);
 					})
 					.with("error", () => {
-						return logger.error(message);
+						return logger.error(message, ...args);
 					})
 					.with("warn", () => {
-						return logger.warn(message);
+						return logger.warn(message, ...args);
 					})
 					.with("debug", () => {
-						return logger.trace(message);
+						return logger.trace(message, ...args);
 					})
 					.exhaustive();
 			},
@@ -166,6 +167,30 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 							body: {
 								email: P.string,
 							},
+							path: "/sign-in/magic-link",
+						},
+						({ body: { email } }): rateLimitCheckFx.Props[] => [
+							{
+								key: [
+									email.toLowerCase(),
+								],
+								rule: "auth:magic-link",
+								message: "Too many magic link requests. Please try again later.",
+							},
+							{
+								key: [
+									requestSource,
+								],
+								rule: "auth:magic-link-source",
+								message: "Too many magic link requests. Please try again later.",
+							},
+						],
+					)
+					.with(
+						{
+							body: {
+								email: P.string,
+							},
 							path: requestPasswordReset.path,
 						},
 						({ body: { email } }): rateLimitCheckFx.Props[] => [
@@ -189,23 +214,19 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 					)
 					.otherwise((): rateLimitCheckFx.Props[] => []);
 
-				try {
-					for (const check of checks) {
-						await rateLimitCheckFx(check).pipe(
-							withKyselyFx(database),
-							withDateFx,
-							withLoggerFx(logger),
-							Effect.runPromise,
-						);
-					}
-				} catch (error) {
-					if (error instanceof RateLimitErrorFx) {
-						throw new APIError("TOO_MANY_REQUESTS", {
-							message: error.message,
-						});
-					}
+				const rateLimitError = await Effect.forEach(checks, rateLimitCheckFx).pipe(
+					withKyselyFx(database),
+					withDateFx,
+					withLoggerFx(logger),
+					Effect.as(undefined),
+					Effect.catchTag("RateLimitErrorFx", (error) => Effect.succeed(error)),
+					Effect.runPromise,
+				);
 
-					throw error;
+				if (rateLimitError instanceof RateLimitErrorFx) {
+					throw new APIError("TOO_MANY_REQUESTS", {
+						message: rateLimitError.message,
+					});
 				}
 			}),
 		},
@@ -240,6 +261,41 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 					},
 					session,
 				} as const;
+			}),
+			magicLink({
+				async sendMagicLink({ email, url, token }) {
+					const mailConfig = getMailConfig();
+
+					await mailtoFx({
+						to: [
+							email,
+						],
+						title: translator.text("Magic link email subject"),
+						keyId: toMailKeyId("magic-link", {
+							email,
+							token,
+						}),
+						content: createElement(
+							TranslationContext,
+							{
+								value: translator.list(),
+							},
+							createElement(MagicLinkEmail, {
+								signInUrl: url,
+							}),
+						),
+					}).pipe(
+						withMailContextFx({
+							host: mailConfig.SERVER_SMTP_HOST,
+							port: mailConfig.SERVER_SMTP_PORT,
+							username: mailConfig.SERVER_SMTP_USERNAME,
+							password: mailConfig.SERVER_SMTP_PASSWORD,
+							from: mailConfig.SERVER_SMTP_FROM,
+						}),
+						withLoggerFx(logger),
+						Effect.runPromise,
+					);
+				},
 			}),
 			tanstackStartCookies(),
 		],
