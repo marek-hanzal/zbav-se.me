@@ -214,23 +214,19 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 					)
 					.otherwise((): rateLimitCheckFx.Props[] => []);
 
-				try {
-					for (const check of checks) {
-						await rateLimitCheckFx(check).pipe(
-							withKyselyFx(database),
-							withDateFx,
-							withLoggerFx(logger),
-							Effect.runPromise,
-						);
-					}
-				} catch (error) {
-					if (error instanceof RateLimitErrorFx) {
-						throw new APIError("TOO_MANY_REQUESTS", {
-							message: error.message,
-						});
-					}
+				const rateLimitError = await Effect.forEach(checks, rateLimitCheckFx).pipe(
+					withKyselyFx(database),
+					withDateFx,
+					withLoggerFx(logger),
+					Effect.as(undefined),
+					Effect.catchTag("RateLimitErrorFx", (error) => Effect.succeed(error)),
+					Effect.runPromise,
+				);
 
-					throw error;
+				if (rateLimitError instanceof RateLimitErrorFx) {
+					throw new APIError("TOO_MANY_REQUESTS", {
+						message: rateLimitError.message,
+					});
 				}
 			}),
 		},

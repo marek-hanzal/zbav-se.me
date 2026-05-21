@@ -139,3 +139,30 @@ test("auth magic link sends email and signs in", async ({ page, database }) => {
 
 	await expect(page.locator('[data-ui="HomeMenu"]')).toBeVisible();
 });
+
+test("auth magic link rate limit returns a client-safe error", async ({ page }) => {
+	const email = `${genId()}@x32.cz`;
+	const body = {
+		email,
+		callbackURL: new URL("/cs/app/home", process.env.VITE_ORIGIN).toString(),
+	};
+	const expectedMessage = "Too many magic link requests. Please try again later.";
+
+	for (let attempt = 0; attempt < 3; attempt++) {
+		const response = await page.request.post("/api/auth/sign-in/magic-link", {
+			data: body,
+		});
+
+		await expect(response.ok()).toBe(true);
+	}
+
+	const response = await page.request.post("/api/auth/sign-in/magic-link", {
+		data: body,
+	});
+	const text = await response.text();
+
+	await expect(response.status()).toBe(429);
+	await expect(text).toContain(expectedMessage);
+	await expect(text).not.toContain("SERVER_ERROR");
+	await expect(text).not.toContain("FiberFailure");
+});
