@@ -30,11 +30,11 @@ export const PublicListingUnavailablePage: FC<PublicListingUnavailablePage.Props
 			{...props}
 		>
 			<Container
-                data-ui-flow="horizontal"
-                data-ui-items="center"
-                data-ui-justify="center"
-                data-ui-inner="default"
-            >
+				data-ui-flow="horizontal"
+				data-ui-items="center"
+				data-ui-justify="center"
+				data-ui-inner="default"
+			>
 				<LinkTo
 					to={"/$locale/landing"}
 					params={{
