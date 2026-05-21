@@ -38,7 +38,9 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 			"collection",
 		],
 		async onSuccess() {
-			return queryClient.clear();
+			setTimeout(() => {
+				return queryClient.clear();
+			}, 250);
 		},
 	});
 	const {
