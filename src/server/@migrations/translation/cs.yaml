@@ -236,6 +236,10 @@ Buyer score 6:
     dynamic: true
 Cancel current agent work (aria):
     value: Kliknutím zruší aktuální práci agenta
+Change password (label):
+    value: Změna hesla
+Change password (title):
+    value: Změň si heslo
 Chat - transaction closed (message):
     value: Vše vyřízeno, chat je vypnutý.
 Chat - transaction resolved - seller cannot write (message):
@@ -395,6 +399,8 @@ Current Restriction value (hint):
         ve vyhledávání. Změníš ho ve svém účtu.
 Current Restriction value (label):
     value: Režim obsahu
+Current password (label):
+    value: Stávající heslo
 Decision rate (hint):
     value: >
         Sleduje explicitně dokončené obchody; nízké procento pouze vyjadřuje
@@ -464,6 +470,8 @@ Email:
     value: Email
 Embedded image - url (label):
     value: (odkaz na obrázek)
+Enter you current password (placeholder):
+    value: Tvoje stávající heslo
 Enter your email:
     value: Zadej svůj email
 Enter your new password:
@@ -693,6 +701,9 @@ Invalid email address:
     value: Špatně vyplněná emailová adresa...
 Invalid email or password:
     value: Email, heslo, něco hapruje.
+    dynamic: true
+Invalid password:
+    value: Špatné heslo
     dynamic: true
 Landing - Hero (title):
     value: Nakupuješ nebo prodáváš?
@@ -1748,6 +1759,3 @@ unused:
     value: unused
 zbav-se.me:
     value: zbav-se.me
-Invalid password:
-    value: Špatné heslo
-    dynamic: true

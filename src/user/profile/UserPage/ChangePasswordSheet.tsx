@@ -82,7 +82,11 @@ export const ChangePasswordSheet: FC<ChangePasswordSheet.Props> = ({ state, ...p
 			})}
 			{...props}
 		>
-			<Container data-ui-inner="default">
+			<Container
+				data-ui-flow="vertical"
+				data-ui-gap="default"
+				data-ui-inner="default"
+			>
 				<form
 					onSubmit={(e) => {
 						e.preventDefault();
