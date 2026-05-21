@@ -776,6 +776,8 @@ Listing condition not selected:
     value: Jakýkoli stav
 Listing count - empty (label):
     value: Kde nic, tu nic - uprav si nastavení
+Listing created at (label):
+    value: Datum publikace
 Listing delivery (label):
     value: Možnosti doručení
 Listing delivery - other:
@@ -807,6 +809,10 @@ Listing expiration (hint):
 
         Pokud např. prodáváš na **více bazarech zároveň**, nemusíš myslet na
         všechny, až bude věc prodaná.
+Listing expires at (hint):
+    value: Za jak dlouho tento inzerát bude archivován.
+Listing expires at (label):
+    value: Zbývající čas
 Listing favourited (label):
     value: Inzerát je oblíbený!
 Listing gallery (label):

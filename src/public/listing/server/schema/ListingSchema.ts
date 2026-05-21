@@ -21,6 +21,8 @@ export const ListingSchema = z
 			pros: true,
 			cons: true,
 			createdAt: true,
+            visibleAt: true,
+            expiresAt: true,
 			withImageUrl: true,
 		}).shape,
 		withRestriction: RestrictionEnumSchema.meta({
