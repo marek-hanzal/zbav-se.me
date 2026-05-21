@@ -15,7 +15,7 @@ import { useAppForm } from "~/common/ui/form";
 import { Logo } from "~/common/ui/logo";
 import { withEmailSignInMutation } from "../../mutation/withEmailSignInMutation";
 
-const useSignInSchema = () => {
+const useFormSchema = () => {
 	const translator = useTranslator();
 
 	return z
@@ -34,7 +34,7 @@ const useSignInSchema = () => {
 		.strip();
 };
 
-type SignInSchema = ReturnType<typeof useSignInSchema>;
+type FormSchema = ReturnType<typeof useFormSchema>;
 
 export namespace WithEmail {
 	export interface Props extends Container.Props {
@@ -44,9 +44,9 @@ export namespace WithEmail {
 
 export const WithEmail: FC<WithEmail.Props> = ({ ...props }) => {
 	const locale = useLocale();
+    const navigate = useNavigate();
 	const translator = useTranslator();
-	const navigate = useNavigate();
-	const schema = useSignInSchema();
+	const schema = useFormSchema();
 
 	const signInMutation = withEmailSignInMutation.useMutation({
 		async onPostMutation() {
@@ -63,7 +63,7 @@ export const WithEmail: FC<WithEmail.Props> = ({ ...props }) => {
 		defaultValues: {
 			email: "",
 			password: "",
-		} satisfies z.infer<SignInSchema>,
+		} satisfies z.infer<FormSchema>,
 		validators: {
 			onMount: schema,
 			onSubmit: schema,
