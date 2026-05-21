@@ -263,6 +263,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 				} as const;
 			}),
 			magicLink({
+				disableSignUp: true,
 				async sendMagicLink({ email, url, token }) {
 					const mailConfig = getMailConfig();
 
