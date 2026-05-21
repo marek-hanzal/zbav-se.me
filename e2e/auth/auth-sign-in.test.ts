@@ -24,12 +24,12 @@ test("auth sign in", async ({ page, database }) => {
 
 	await page.goto("/cs/app/home");
 
-	await page.waitForURL("/cs/sign-in");
+	await page.waitForURL(/\/cs\/sign-in(?:\?.*)?$/);
 
 	await page.goto("/cs/landing");
 	await page.click('[data-action="goto sign-in"]');
 
-	await page.waitForURL("/cs/sign-in");
+	await page.waitForURL(/\/cs\/sign-in(?:\?.*)?$/);
 
 	await page.locator('[data-ui="SignInPage[EmailInput]"]').fill(user.email);
 	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(user.password);
