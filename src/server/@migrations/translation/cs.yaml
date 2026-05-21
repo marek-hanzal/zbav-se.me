@@ -661,6 +661,8 @@ Go to my feed (button):
     value: Objevuj!
 Go to my listings (button):
     value: Moje inzeráty
+Go to sign-in (label):
+    value: Přihlášení
 History activity (hint):
     value: Sleduj, jak jsem na projektu aktivní - čím větší číslo, tím víc
         příspěvků. Dneska je vlevo nahoře.
@@ -922,6 +924,12 @@ Listing title (title):
     value: Titulek
 Listing title not filled:
     value: Titulek nemáš vyplněný
+Listing unavailable (message):
+    value:
+        Je mi líto, ale tento inzerát vyžaduje přihlášení. Ne všechno můžu hodit
+        veřejně do internetu.
+Listing unavailable (title):
+    value: Tento inzerát není veřejně dostupný
 Listing unfavourited (label):
     value: Inzerát už není v oblíbených
 Listing warranty (hint):
