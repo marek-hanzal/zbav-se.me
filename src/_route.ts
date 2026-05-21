@@ -61,6 +61,7 @@ import { Route as LocaleAppSellerTransactionTransactionIdDetailRouteImport } fro
 import { Route as LocaleAppSellerTransactionListingIdListRouteImport } from './@routes/$locale/app/seller/transaction/$listingId/list'
 import { Route as LocaleAppSellerDraftIdEditRouteImport } from './@routes/$locale/app/seller/draft/$id/edit'
 import { Route as LocaleAppBuyerTransactionTransactionIdDetailRouteImport } from './@routes/$locale/app/buyer/transaction/$transactionId/detail'
+import { Route as LocaleAppBuyerListingIdViewRouteImport } from './@routes/$locale/app/buyer/listing/$id/view'
 import { Route as LocaleAppBuyerFeedIdListRouteImport } from './@routes/$locale/app/buyer/feed/$id/list'
 import { Route as LocaleAppBuyerFeedIdFavouriteListRouteImport } from './@routes/$locale/app/buyer/feed/$id/favourite/list'
 
@@ -339,6 +340,12 @@ const LocaleAppBuyerTransactionTransactionIdDetailRoute =
     path: '/buyer/transaction/$transactionId/detail',
     getParentRoute: () => LocaleAppRoute,
   } as any)
+const LocaleAppBuyerListingIdViewRoute =
+  LocaleAppBuyerListingIdViewRouteImport.update({
+    id: '/buyer/listing/$id/view',
+    path: '/buyer/listing/$id/view',
+    getParentRoute: () => LocaleAppRoute,
+  } as any)
 const LocaleAppBuyerFeedIdListRoute =
   LocaleAppBuyerFeedIdListRouteImport.update({
     id: '/buyer/feed/$id/list',
@@ -402,6 +409,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/seller/listing/my': typeof LocaleAppSellerListingMyRoute
   '/$locale/app/seller/transaction/list': typeof LocaleAppSellerTransactionListRoute
   '/$locale/app/buyer/feed/$id/list': typeof LocaleAppBuyerFeedIdListRoute
+  '/$locale/app/buyer/listing/$id/view': typeof LocaleAppBuyerListingIdViewRoute
   '/$locale/app/buyer/transaction/$transactionId/detail': typeof LocaleAppBuyerTransactionTransactionIdDetailRoute
   '/$locale/app/seller/draft/$id/edit': typeof LocaleAppSellerDraftIdEditRoute
   '/$locale/app/seller/transaction/$listingId/list': typeof LocaleAppSellerTransactionListingIdListRoute
@@ -456,6 +464,7 @@ export interface FileRoutesByTo {
   '/$locale/app/seller/listing/my': typeof LocaleAppSellerListingMyRoute
   '/$locale/app/seller/transaction/list': typeof LocaleAppSellerTransactionListRoute
   '/$locale/app/buyer/feed/$id/list': typeof LocaleAppBuyerFeedIdListRoute
+  '/$locale/app/buyer/listing/$id/view': typeof LocaleAppBuyerListingIdViewRoute
   '/$locale/app/buyer/transaction/$transactionId/detail': typeof LocaleAppBuyerTransactionTransactionIdDetailRoute
   '/$locale/app/seller/draft/$id/edit': typeof LocaleAppSellerDraftIdEditRoute
   '/$locale/app/seller/transaction/$listingId/list': typeof LocaleAppSellerTransactionListingIdListRoute
@@ -513,6 +522,7 @@ export interface FileRoutesById {
   '/$locale/app/seller/listing/my': typeof LocaleAppSellerListingMyRoute
   '/$locale/app/seller/transaction/list': typeof LocaleAppSellerTransactionListRoute
   '/$locale/app/buyer/feed/$id/list': typeof LocaleAppBuyerFeedIdListRoute
+  '/$locale/app/buyer/listing/$id/view': typeof LocaleAppBuyerListingIdViewRoute
   '/$locale/app/buyer/transaction/$transactionId/detail': typeof LocaleAppBuyerTransactionTransactionIdDetailRoute
   '/$locale/app/seller/draft/$id/edit': typeof LocaleAppSellerDraftIdEditRoute
   '/$locale/app/seller/transaction/$listingId/list': typeof LocaleAppSellerTransactionListingIdListRoute
@@ -571,6 +581,7 @@ export interface FileRouteTypes {
     | '/$locale/app/seller/listing/my'
     | '/$locale/app/seller/transaction/list'
     | '/$locale/app/buyer/feed/$id/list'
+    | '/$locale/app/buyer/listing/$id/view'
     | '/$locale/app/buyer/transaction/$transactionId/detail'
     | '/$locale/app/seller/draft/$id/edit'
     | '/$locale/app/seller/transaction/$listingId/list'
@@ -625,6 +636,7 @@ export interface FileRouteTypes {
     | '/$locale/app/seller/listing/my'
     | '/$locale/app/seller/transaction/list'
     | '/$locale/app/buyer/feed/$id/list'
+    | '/$locale/app/buyer/listing/$id/view'
     | '/$locale/app/buyer/transaction/$transactionId/detail'
     | '/$locale/app/seller/draft/$id/edit'
     | '/$locale/app/seller/transaction/$listingId/list'
@@ -681,6 +693,7 @@ export interface FileRouteTypes {
     | '/$locale/app/seller/listing/my'
     | '/$locale/app/seller/transaction/list'
     | '/$locale/app/buyer/feed/$id/list'
+    | '/$locale/app/buyer/listing/$id/view'
     | '/$locale/app/buyer/transaction/$transactionId/detail'
     | '/$locale/app/seller/draft/$id/edit'
     | '/$locale/app/seller/transaction/$listingId/list'
@@ -1067,6 +1080,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppBuyerTransactionTransactionIdDetailRouteImport
       parentRoute: typeof LocaleAppRoute
     }
+    '/$locale/app/buyer/listing/$id/view': {
+      id: '/$locale/app/buyer/listing/$id/view'
+      path: '/buyer/listing/$id/view'
+      fullPath: '/$locale/app/buyer/listing/$id/view'
+      preLoaderRoute: typeof LocaleAppBuyerListingIdViewRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
     '/$locale/app/buyer/feed/$id/list': {
       id: '/$locale/app/buyer/feed/$id/list'
       path: '/buyer/feed/$id/list'
@@ -1104,6 +1124,7 @@ interface LocaleAppRouteChildren {
   LocaleAppSellerListingMyRoute: typeof LocaleAppSellerListingMyRoute
   LocaleAppSellerTransactionListRoute: typeof LocaleAppSellerTransactionListRoute
   LocaleAppBuyerFeedIdListRoute: typeof LocaleAppBuyerFeedIdListRoute
+  LocaleAppBuyerListingIdViewRoute: typeof LocaleAppBuyerListingIdViewRoute
   LocaleAppBuyerTransactionTransactionIdDetailRoute: typeof LocaleAppBuyerTransactionTransactionIdDetailRoute
   LocaleAppSellerDraftIdEditRoute: typeof LocaleAppSellerDraftIdEditRoute
   LocaleAppSellerTransactionListingIdListRoute: typeof LocaleAppSellerTransactionListingIdListRoute
@@ -1131,6 +1152,7 @@ const LocaleAppRouteChildren: LocaleAppRouteChildren = {
   LocaleAppSellerListingMyRoute: LocaleAppSellerListingMyRoute,
   LocaleAppSellerTransactionListRoute: LocaleAppSellerTransactionListRoute,
   LocaleAppBuyerFeedIdListRoute: LocaleAppBuyerFeedIdListRoute,
+  LocaleAppBuyerListingIdViewRoute: LocaleAppBuyerListingIdViewRoute,
   LocaleAppBuyerTransactionTransactionIdDetailRoute:
     LocaleAppBuyerTransactionTransactionIdDetailRoute,
   LocaleAppSellerDraftIdEditRoute: LocaleAppSellerDraftIdEditRoute,

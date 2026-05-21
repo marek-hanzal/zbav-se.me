@@ -6,11 +6,11 @@ import { WithMagic } from "./WithMagic";
 
 export namespace SignInPage {
 	export interface Props extends Container.Props {
-		//
+		target?: string;
 	}
 }
 
-export const SignInPage: FC<SignInPage.Props> = ({ ...props }) => {
+export const SignInPage: FC<SignInPage.Props> = ({ target, ...props }) => {
 	const rootRef = useRef<HTMLDivElement>(null);
 
 	return (
@@ -30,9 +30,9 @@ export const SignInPage: FC<SignInPage.Props> = ({ ...props }) => {
 				data-ui-snap-align="center"
 				data-ui-height="full"
 			>
-				<WithEmail />
+				<WithEmail target={target} />
 
-				<WithMagic />
+				<WithMagic target={target} />
 			</Container>
 		</Container>
 	);
