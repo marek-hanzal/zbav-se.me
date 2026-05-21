@@ -1,6 +1,10 @@
 import { Effect } from "effect";
 import { describe, expect, test } from "vitest";
-import { TaggedError, TaggedErrorSerializationAdapter, toTaggedError } from "@/lib/common/error";
+import { TaggedError } from "@/lib/common/error";
+import {
+	TaggedErrorSerializationAdapter,
+	toTaggedError,
+} from "@/lib/common/error/TaggedErrorSerializationAdapter";
 import { RateLimitErrorFx } from "~/server/error/RateLimitErrorFx";
 
 const rateLimitError = new RateLimitErrorFx({

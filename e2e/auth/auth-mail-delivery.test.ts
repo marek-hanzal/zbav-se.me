@@ -140,17 +140,23 @@ test("auth magic link sends email and signs in", async ({ page, database }) => {
 	await expect(page.locator('[data-ui="HomeMenu"]')).toBeVisible();
 });
 
-test("auth magic link rate limit returns a client-safe error", async ({ page }) => {
+test("auth magic link rate limit returns a client-safe error", async ({ page, db, database }) => {
+	void database;
+
 	const email = `${genId()}@x32.cz`;
 	const body = {
 		email,
 		callbackURL: new URL("/cs/app/home", process.env.VITE_ORIGIN).toString(),
+	};
+	const headers = {
+		"x-e2e-db": db,
 	};
 	const expectedMessage = "Too many magic link requests. Please try again later.";
 
 	for (let attempt = 0; attempt < 3; attempt++) {
 		const response = await page.request.post("/api/auth/sign-in/magic-link", {
 			data: body,
+			headers,
 		});
 
 		await expect(response.ok()).toBe(true);
@@ -158,6 +164,7 @@ test("auth magic link rate limit returns a client-safe error", async ({ page }) 
 
 	const response = await page.request.post("/api/auth/sign-in/magic-link", {
 		data: body,
+		headers,
 	});
 	const text = await response.text();
 
