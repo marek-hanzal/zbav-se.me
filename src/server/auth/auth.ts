@@ -98,19 +98,19 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 		logger: {
 			level: "debug",
 			disabled: false,
-			log(level, message) {
+			log(level, message, ...args) {
 				return match(level)
 					.with("info", () => {
-						return logger.info(message);
+						return logger.info(message, ...args);
 					})
 					.with("error", () => {
-						return logger.error(message);
+						return logger.error(message, ...args);
 					})
 					.with("warn", () => {
-						return logger.warn(message);
+						return logger.warn(message, ...args);
 					})
 					.with("debug", () => {
-						return logger.trace(message);
+						return logger.trace(message, ...args);
 					})
 					.exhaustive();
 			},

@@ -123,7 +123,10 @@ test("auth magic link sends email and signs in", async ({ page, database }) => {
 
 	await page.goto("/cs/app/home");
 	await page.waitForURL("/cs/sign-in");
-	await page.locator('[data-ui="SignInPage[MagicEmailInput]"]').fill(email);
+	const magicEmailInput = page.locator('[data-ui="SignInPage[MagicEmailInput]"]');
+
+	await magicEmailInput.scrollIntoViewIfNeeded();
+	await magicEmailInput.fill(email);
 	await page.locator('[data-action="sign in with magic link"]').click();
 	await page.waitForURL("/cs/status/magic-link");
 
