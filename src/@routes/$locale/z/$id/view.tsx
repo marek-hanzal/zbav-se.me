@@ -36,8 +36,9 @@ export const Route = createFileRoute("/$locale/z/$id/view")({
 			}
 
 			throw redirect({
-				to: "/$locale/z/unavailable",
+				to: "/$locale/z/$id/unavailable",
 				params: {
+					id,
 					locale,
 				},
 				throw: true,

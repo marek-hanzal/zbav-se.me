@@ -924,6 +924,8 @@ Listing title (title):
     value: Titulek
 Listing title not filled:
     value: Titulek nemáš vyplněný
+Listing unavailable (description):
+    value: Inzerát existuje, nicméně pro jeho zobrazení je potřeba se přihlásit.
 Listing unavailable (message):
     value:
         Je mi líto, ale tento inzerát vyžaduje přihlášení. Ne všechno můžu hodit

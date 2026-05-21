@@ -1,3 +1,4 @@
+import { useRouter } from "@tanstack/react-router";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { ChevronRightIcon } from "@/lib/client/icon";
@@ -12,15 +13,17 @@ import { uiCtaLinkButton } from "~/common/ui/ui";
 
 export namespace PublicListingUnavailablePage {
 	export interface Props extends FlowContainer.Props {
-		//
+		listingId: string;
 	}
 }
 
 export const PublicListingUnavailablePage: FC<PublicListingUnavailablePage.Props> = ({
+	listingId,
 	...props
 }) => {
 	const locale = useLocale();
 	const translator = useTranslator();
+	const router = useRouter();
 
 	return (
 		<FlowContainer
@@ -69,6 +72,18 @@ export const PublicListingUnavailablePage: FC<PublicListingUnavailablePage.Props
 							to="/$locale/sign-in"
 							params={{
 								locale,
+							}}
+							search={{
+								target: new URL(
+									router.buildLocation({
+										to: "/$locale/app/buyer/listing/$id/view",
+										params: {
+											locale,
+											id: listingId,
+										},
+									}).href,
+									import.meta.env.VITE_ORIGIN,
+								).toString(),
 							}}
 							{...uiCtaLinkButton({})}
 						>
