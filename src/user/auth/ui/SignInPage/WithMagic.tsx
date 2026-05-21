@@ -1,18 +1,19 @@
-import type { FC } from "react";
-import { Container } from "@/lib/client/container";
-import { useTranslator } from "@/lib/client/translation";
-import { z } from "zod";
-import { useAppForm } from "~/common/ui/form";
-import { onSubmit } from "@/lib/client/submit";
-import { useLocale } from "@/lib/client/locale";
 import { useNavigate } from "@tanstack/react-router";
-import { Status } from "@/lib/client/status";
-import { LinkTo } from "@/lib/client/link-to";
-import { Logo } from "~/common/ui/logo";
+import type { FC } from "react";
+import { z } from "zod";
+import { Container } from "@/lib/client/container";
+import { ErrorBadge } from "@/lib/client/error";
 import { FormField } from "@/lib/client/form";
 import { ChevronRightIcon } from "@/lib/client/icon";
+import { LinkTo } from "@/lib/client/link-to";
+import { useLocale } from "@/lib/client/locale";
+import { Status } from "@/lib/client/status";
+import { onSubmit } from "@/lib/client/submit";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { ErrorBadge } from "@/lib/client/error";
+import { useAppForm } from "~/common/ui/form";
+import { Logo } from "~/common/ui/logo";
+import { withMagicLinkSignInMutation } from "../../mutation/withMagicLinkSignInMutation";
 
 const useFormSchema = () => {
 	const translator = useTranslator();
@@ -42,7 +43,7 @@ export const WithMagic: FC<WithMagic.Props> = ({ ...props }) => {
 	const translator = useTranslator();
 	const schema = useFormSchema();
 
-	const signInMutation = withEmailSignInMutation.useMutation({
+	const signInMutation = withMagicLinkSignInMutation.useMutation({
 		async onPostMutation() {
 			return navigate({
 				to: "/$locale/app/home",
@@ -58,7 +59,7 @@ export const WithMagic: FC<WithMagic.Props> = ({ ...props }) => {
 			email: "",
 		} satisfies z.infer<FormSchema>,
 		validators: {
-			onMount: schema,
+			// onMount: schema,
 			onSubmit: schema,
 		},
 		onSubmit: onSubmit({
@@ -106,7 +107,6 @@ export const WithMagic: FC<WithMagic.Props> = ({ ...props }) => {
 							>
 								{(props) => (
 									<field.TextInput
-										data-ui={"SignInPage[EmailInput]"}
 										type={"email"}
 										autoComplete={"email webauthn"}
 										autoFocus
@@ -145,7 +145,7 @@ export const WithMagic: FC<WithMagic.Props> = ({ ...props }) => {
 										{signInMutation.isPending ? (
 											<Tx label={"Please wait..."} />
 										) : (
-											<Tx label={"Sign in (button)"} />
+											<Tx label={"Send magic link (label)"} />
 										)}
 									</form.SubmitButton>
 
@@ -156,21 +156,6 @@ export const WithMagic: FC<WithMagic.Props> = ({ ...props }) => {
 								</>
 							)}
 						</form.Subscribe>
-
-						<LinkTo
-							to={"/$locale/forgot/password"}
-							params={{
-								locale,
-							}}
-						>
-							<Tx
-								label={"Forgot password? (link)"}
-								data-ui-tone="link"
-								data-ui-theme="light"
-								data-ui-text="md"
-								data-ui-color="lead"
-							/>
-						</LinkTo>
 
 						<LinkTo
 							to={"/$locale/sign-up"}

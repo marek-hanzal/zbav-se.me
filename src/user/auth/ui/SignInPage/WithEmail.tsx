@@ -65,7 +65,7 @@ export const WithEmail: FC<WithEmail.Props> = ({ ...props }) => {
 			password: "",
 		} satisfies z.infer<FormSchema>,
 		validators: {
-			onMount: schema,
+			// onMount: schema,
 			onSubmit: schema,
 		},
 		onSubmit: onSubmit({
