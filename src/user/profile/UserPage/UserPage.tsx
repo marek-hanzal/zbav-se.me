@@ -123,13 +123,13 @@ export const UserPage: FC<UserPage.Props> = ({ ...props }) => {
 							"data-ui-tone": "neutral",
 						}}
 						_suspense={"I know"}
+						onClick={() => {
+							setIsRestriction((open) => !open);
+						}}
 						action={
 							<Icon
 								icon={EditIcon}
 								data-ui-text={"lg"}
-								onClick={() => {
-									setIsRestriction((open) => !open);
-								}}
 							/>
 						}
 					/>
