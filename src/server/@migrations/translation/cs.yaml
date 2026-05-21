@@ -242,6 +242,8 @@ Chat - transaction resolved - seller cannot write (message):
     value: Máš vyřízeno, nic dalšího tu nemusíš řešit.
 Check your email for the reset link.:
     value: Mrkni do mailu pro odkaz na reset hesla.
+Check your email for the sign-in link.:
+    value: Check your email for the sign-in link.
 Clear all (button):
     value: Vyčistit vše
 Clear all sorts (button):
@@ -958,6 +960,18 @@ Login (link):
     value: Máš účet? Přihlas se!
 Logo motto (label):
     value: Chytré tržiště pro všechny
+Magic link email action:
+    value: Magic link email action
+Magic link email footer:
+    value: Magic link email footer
+Magic link email message:
+    value: Magic link email message
+Magic link email subject:
+    value: Magic link email subject
+Magic link email title:
+    value: Magic link email title
+Magic link sent:
+    value: Magic link sent
 Mark transaction as successful (button):
     value: Jsem spokojený, zavřít
 Maximum price (label):
@@ -1239,6 +1253,8 @@ Seller score 1:
 Seller score 2:
     value: Vyšší riziko
     dynamic: true
+Send magic link (label):
+    value: Poslat odkaz pro přihlášení
 Send message to agent (aria):
     value: Odešle agentovi zprávu, včetně případných příloh (jako jsou obrázky)
 Send reset link:
@@ -1283,6 +1299,9 @@ Token usage (hint):
     value: AIčko je drahý, moc. A tohle jsou tokeny, které jsi profrčel
 Token usage (label):
     value: Propálené tokeny
+Too many magic link requests. Please try again later.:
+    value: Počkej chvilku, nebo mě uvaříš.
+    dynamic: true
 "Too small: expected string to have >=5 characters":
     value: Přitlač - potřebuju nejméně pět znaků.
     dynamic: true
@@ -1400,10 +1419,10 @@ Your email is verified.:
     value: Všechno v pohodě, email máš ověřený
 Your favourites (title):
     value: Oblíbené
-Your password has been updated. You can sign in now.:
-    value: Heslo je změněné. Teď se můžeš normálně přihlásit.
 ask:
     value: ask
+auth magic link sends email and signs in:
+    value: auth magic link sends email and signs in
 auth sign up sends verification email:
     value: auth sign up sends verification email
 brand - placeholder:
