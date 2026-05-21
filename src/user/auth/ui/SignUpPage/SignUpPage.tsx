@@ -120,7 +120,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ...props }) => {
 							e.stopPropagation();
 							form.handleSubmit();
 						}}
-						className={"space-y-2"}
+						className={"contents"}
 					>
 						<form.AppField name={"email"}>
 							{(field) => (
