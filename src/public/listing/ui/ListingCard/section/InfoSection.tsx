@@ -1,11 +1,14 @@
+import { DateTime } from "luxon";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
+import { useLocale } from "@/lib/client/locale";
 import { Markdown } from "@/lib/client/markdown";
 import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
 import { LabelValue, ValueList } from "@/lib/client/value";
+import { toTimeDiff } from "@/lib/common/time";
 import { CategoryInline } from "~/common/category/ui/CategoryInline";
 import type { ListingSchema } from "~/public/listing/server/schema/ListingSchema";
 
@@ -17,6 +20,10 @@ export namespace InfoSection {
 
 export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 	const translator = useTranslator();
+	const locale = useLocale();
+
+	const days = DateTime.fromJSDate(listing.expiresAt).diffNow("days").days;
+
 	return (
 		<Container
 			data-ui={"InfoSection"}
@@ -24,6 +31,29 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 			data-ui-gap="default"
 			{...props}
 		>
+			<Group>
+				<LabelValue
+					textLabel={translator.text("Listing created at (label)")}
+					textValue={toTimeDiff({
+						locale,
+						time: listing.visibleAt,
+						type: "relative",
+					})}
+				/>
+
+				{days > 0 && days <= 3 ? (
+					<LabelValue
+						textLabel={translator.text("Listing expires at (label)")}
+						textHint={translator.text("Listing expires at (hint)")}
+						textValue={toTimeDiff({
+							locale,
+							time: listing.expiresAt,
+							type: "human",
+						})}
+					/>
+				) : null}
+			</Group>
+
 			<Group>
 				<LabelValue
 					textLabel={translator.text("Listing restrictions (label)")}

@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
@@ -38,23 +38,28 @@ type FormSchema = ReturnType<typeof useFormSchema>;
 
 export namespace WithEmail {
 	export interface Props extends Container.Props {
-		//
+		target?: string;
 	}
 }
 
-export const WithEmail: FC<WithEmail.Props> = ({ ...props }) => {
+export const WithEmail: FC<WithEmail.Props> = ({ target, ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
+	const router = useRouter();
 	const translator = useTranslator();
 	const schema = useFormSchema();
 
 	const signInMutation = withEmailSignInMutation.useMutation({
 		async onPostMutation() {
-			return navigate({
+			const fallback = router.buildLocation({
 				to: "/$locale/app/home",
 				params: {
 					locale,
 				},
+			});
+
+			return navigate({
+				href: target ?? fallback.href,
 			});
 		},
 	});

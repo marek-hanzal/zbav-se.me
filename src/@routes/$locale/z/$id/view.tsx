@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { translator as coolTranslator } from "@/lib/common/translation";
 import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
+import { withListingPingFn } from "~/public/listing/fn/withListingPingFn";
 import { withListingQuery } from "~/public/listing/query/withListingQuery";
 import { PublicListingPage } from "~/public/listing/ui/PublicListingPage";
 import { PublicListingPagePending } from "~/public/listing/ui/PublicListingPagePending";
@@ -9,19 +10,42 @@ function toSingleLine(value: string | null | undefined) {
 	return value?.replace(/\s+/g, " ").trim() ?? "";
 }
 
-export const Route = createFileRoute("/$locale/z/$id")({
+export const Route = createFileRoute("/$locale/z/$id/view")({
 	async loader({ context: { queryClient }, params: { id, locale } }) {
-		const listing = await withListingQuery.ensureFetchQuery(queryClient, id);
-		const translations = await withTranslationsQuery.ensure(queryClient, {
-			locale,
-		});
+		try {
+			const listing = await withListingQuery.ensureFetchQuery(queryClient, id);
+			const translations = await withTranslationsQuery.ensure(queryClient, {
+				locale,
+			});
 
-		return {
-			listing,
-			translations,
-		} as const;
+			return {
+				listing,
+				translations,
+			} as const;
+		} catch {
+			const ping = await withListingPingFn({
+				data: {
+					id,
+				},
+			});
+
+			if (!ping) {
+				throw notFound({
+					throw: true,
+				});
+			}
+
+			throw redirect({
+				to: "/$locale/z/$id/unavailable",
+				params: {
+					id,
+					locale,
+				},
+				throw: true,
+			});
+		}
 	},
-	head: ({ loaderData }) => {
+	head({ loaderData }) {
 		if (!loaderData) {
 			return {};
 		}

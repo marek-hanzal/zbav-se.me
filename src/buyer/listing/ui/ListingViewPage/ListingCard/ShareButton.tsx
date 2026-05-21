@@ -7,12 +7,12 @@ import { useTranslator } from "@/lib/client/translation";
 import { CheckIcon } from "~/common/ui/icon";
 
 export namespace ShareButton {
-	export interface Props {
+	export interface Props extends Button.Props {
 		listingId: string;
 	}
 }
 
-export const ShareButton: FC<ShareButton.Props> = ({ listingId }) => {
+export const ShareButton: FC<ShareButton.Props> = ({ listingId, ...props }) => {
 	const router = useRouter();
 	const locale = useLocale();
 	const translator = useTranslator();
@@ -29,6 +29,7 @@ export const ShareButton: FC<ShareButton.Props> = ({ listingId }) => {
 
 	return (
 		<Button
+			data-ui={"ShareButton"}
 			iconEnabled={success ? CheckIcon : "icon-[solar--screen-share-linear]"}
 			iconProps={{
 				"data-ui-text": "xl",
@@ -54,6 +55,7 @@ export const ShareButton: FC<ShareButton.Props> = ({ listingId }) => {
 					text: new URL(location, import.meta.env.VITE_ORIGIN).toString(),
 				});
 			}}
+			{...props}
 		>
 			{translator.text("Share listing (label)")}
 		</Button>

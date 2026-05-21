@@ -33,11 +33,11 @@ type FormSchema = ReturnType<typeof useFormSchema>;
 
 export namespace WithMagic {
 	export interface Props extends Container.Props {
-		//
+		target?: string;
 	}
 }
 
-export const WithMagic: FC<WithMagic.Props> = ({ ...props }) => {
+export const WithMagic: FC<WithMagic.Props> = ({ target, ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
 	const router = useRouter();
@@ -64,6 +64,13 @@ export const WithMagic: FC<WithMagic.Props> = ({ ...props }) => {
 		},
 		onSubmit: onSubmit({
 			map: async ({ values }) => {
+				if (target) {
+					return {
+						email: values.email,
+						callbackURL: target,
+					};
+				}
+
 				const link = router.buildLocation({
 					to: "/$locale/app/home",
 					params: {
