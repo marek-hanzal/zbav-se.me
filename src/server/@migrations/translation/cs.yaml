@@ -1748,3 +1748,6 @@ unused:
     value: unused
 zbav-se.me:
     value: zbav-se.me
+Invalid password:
+    value: Špatné heslo
+    dynamic: true
