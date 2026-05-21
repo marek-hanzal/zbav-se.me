@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
@@ -40,13 +40,14 @@ export namespace WithMagic {
 export const WithMagic: FC<WithMagic.Props> = ({ ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
+	const router = useRouter();
 	const translator = useTranslator();
 	const schema = useFormSchema();
 
 	const signInMutation = withMagicLinkSignInMutation.useMutation({
 		async onPostMutation() {
 			return navigate({
-				to: "/$locale/app/home",
+				to: "/$locale/sign-in/magic",
 				params: {
 					locale,
 				},
@@ -59,10 +60,22 @@ export const WithMagic: FC<WithMagic.Props> = ({ ...props }) => {
 			email: "",
 		} satisfies z.infer<FormSchema>,
 		validators: {
-			// onMount: schema,
 			onSubmit: schema,
 		},
 		onSubmit: onSubmit({
+			map: async ({ values }) => {
+				const link = router.buildLocation({
+					to: "/$locale/app/home",
+					params: {
+						locale,
+					},
+				});
+
+				return {
+					email: values.email,
+					callbackURL: new URL(link.href, import.meta.env.VITE_ORIGIN).toString(),
+				};
+			},
 			mutation: signInMutation,
 		}),
 	});
@@ -107,6 +120,7 @@ export const WithMagic: FC<WithMagic.Props> = ({ ...props }) => {
 							>
 								{(props) => (
 									<field.TextInput
+										data-ui={"SignInPage[MagicEmailInput]"}
 										type={"email"}
 										autoComplete={"email webauthn"}
 										autoFocus
@@ -136,7 +150,7 @@ export const WithMagic: FC<WithMagic.Props> = ({ ...props }) => {
 							{({ isValid, isSubmitting }) => (
 								<>
 									<form.SubmitButton
-										data-action={"sign in"}
+										data-action={"sign in with magic link"}
 										data-ui={"SignInPage[SubmitButton]"}
 										iconEnabled={ChevronRightIcon}
 										iconPosition={"right"}

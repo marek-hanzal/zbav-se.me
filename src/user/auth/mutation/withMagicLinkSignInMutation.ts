@@ -5,11 +5,15 @@ import { authClient } from "~/user/auth/authClient";
 export namespace withMagicLinkSignInMutation {
 	export interface Props {
 		email: string;
-		password: string;
+		callbackURL: string;
 	}
 }
 
-export const withMagicLinkSignInMutation = withMutation<withMagicLinkSignInMutation.Props, unknown, Error>({
+export const withMagicLinkSignInMutation = withMutation<
+	withMagicLinkSignInMutation.Props,
+	unknown,
+	Error
+>({
 	logger: getRootLogger([
 		"mutation",
 		"withMagicLinkSignInMutation",
@@ -22,9 +26,9 @@ export const withMagicLinkSignInMutation = withMutation<withMagicLinkSignInMutat
 		];
 	},
 	async mutationFn(data) {
-		const result = await authClient.signIn.email({
+		const result = await authClient.signIn.magicLink({
 			email: data.email,
-			password: data.password,
+			callbackURL: data.callbackURL,
 		});
 
 		if (result.error) {

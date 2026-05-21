@@ -44,7 +44,7 @@ export namespace WithEmail {
 
 export const WithEmail: FC<WithEmail.Props> = ({ ...props }) => {
 	const locale = useLocale();
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 	const translator = useTranslator();
 	const schema = useFormSchema();
 
@@ -65,7 +65,6 @@ export const WithEmail: FC<WithEmail.Props> = ({ ...props }) => {
 			password: "",
 		} satisfies z.infer<FormSchema>,
 		validators: {
-			// onMount: schema,
 			onSubmit: schema,
 		},
 		onSubmit: onSubmit({
