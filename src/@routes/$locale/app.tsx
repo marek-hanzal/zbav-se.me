@@ -8,6 +8,7 @@ export const Route = createFileRoute("/$locale/app")({
 			queryClient,
 			"No input data here, bro!",
 			{
+				staleTime: 0,
 				throwOnError: true,
 			},
 		);

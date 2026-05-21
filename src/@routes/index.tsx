@@ -9,6 +9,7 @@ export const Route = createFileRoute("/")({
 			queryClient,
 			"No input data here, bro!",
 			{
+				staleTime: 0,
 				throwOnError: true,
 			},
 		);

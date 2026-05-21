@@ -121,7 +121,8 @@ test("auth magic link sends email and signs in", async ({ page, database }) => {
 
 	const subject = translator.text("Magic link email subject");
 
-	await page.goto("/cs/sign-in");
+	await page.goto("/cs/app/home");
+	await page.waitForURL("/cs/sign-in");
 	await page.locator('[data-ui="SignInPage[MagicEmailInput]"]').fill(email);
 	await page.locator('[data-action="sign in with magic link"]').click();
 	await page.waitForURL("/cs/status/magic-link");
