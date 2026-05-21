@@ -47,7 +47,7 @@ export const WithMagic: FC<WithMagic.Props> = ({ ...props }) => {
 	const signInMutation = withMagicLinkSignInMutation.useMutation({
 		async onPostMutation() {
 			return navigate({
-				to: "/$locale/sign-in/magic",
+				to: "/$locale/status/magic-link",
 				params: {
 					locale,
 				},
