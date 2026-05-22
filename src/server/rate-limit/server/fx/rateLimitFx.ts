@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import { sql } from "kysely";
 import { DateContextFx } from "@/lib/common/date";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
@@ -9,21 +8,21 @@ import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { tryDbFx } from "~/server/database/fx/tryDbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { ServerHmacSchema } from "~/server/env/ServerHmacSchema";
+import type { RateLimitQuerySchema } from "~/server/rate-limit/server/schema/RateLimitQuerySchema";
 import { getWindowFx } from "./getWindowFx";
 
-export namespace rateLimitEventFx {
-	export interface Props {
-		rule: string;
-		key: string[];
+export namespace rateLimitFx {
+	export interface Props extends RateLimitQuerySchema.Type {
+		//
 	}
 }
 
-export const rateLimitEventFx = Effect.fn("rateLimitEventFx")(function* ({
-	rule,
-	key,
-}: rateLimitEventFx.Props) {
-	const logger = yield* getLoggerFx("rateLimitEventFx");
-	logger.trace("rateLimitEventFx", {
+/**
+ * Returns current snapshot (info) of rate limit
+ */
+export const rateLimitFx = Effect.fn("rateLimitFx")(function* ({ rule, key }: rateLimitFx.Props) {
+	const logger = yield* getLoggerFx("rateLimitFx");
+	logger.trace("rateLimitFx", {
 		rule,
 		key,
 	});
@@ -67,6 +66,7 @@ export const rateLimitEventFx = Effect.fn("rateLimitEventFx")(function* ({
 				key,
 				secret: hmacConfig.SERVER_HMAC_SECRET,
 			});
+
 			const now = dateContext.now();
 
 			const window = yield* getWindowFx({
@@ -74,32 +74,24 @@ export const rateLimitEventFx = Effect.fn("rateLimitEventFx")(function* ({
 				seconds: rateLimitRule.window,
 			});
 
-			const event = yield* tryDbFx(async () => {
+			const current = yield* tryDbFx(async () => {
 				return kysely
-					.insertInto("rate_limit_event")
-					.values({
-						rule,
-						key: hashedKey,
-						window: window.toJSDate(),
-						count: 1,
-					})
-					.onConflict((oc) => {
-						return oc
-							.columns([
-								"rule",
-								"key",
-								"window",
-							])
-							.doUpdateSet({
-								count: sql`rate_limit_event.count + 1`,
-							});
-					})
-					.returningAll()
-					.executeTakeFirstOrThrow();
+					.selectFrom("rate_limit_event as rle")
+					.select([
+						"rle.count",
+					])
+					.where("rle.rule", "=", rule)
+					.where("rle.key", "=", hashedKey)
+					.where("rle.window", "=", window.toJSDate())
+					.executeTakeFirst();
 			});
+			const count = current?.count ?? 0;
 
 			return {
-				...event,
+				rule,
+				key: hashedKey,
+				window: window.toJSDate(),
+				count,
 				limit: rateLimitRule.limit,
 				seconds: rateLimitRule.window,
 			} as const;
@@ -107,4 +99,4 @@ export const rateLimitEventFx = Effect.fn("rateLimitEventFx")(function* ({
 	);
 });
 
-export type rateLimitEventFx = ReturnType<typeof rateLimitEventFx>;
+export type rateLimitFx = ReturnType<typeof rateLimitFx>;

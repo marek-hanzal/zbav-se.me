@@ -16,9 +16,9 @@ export const ChangePasswordButton: FC<ChangePasswordButton.Props> = ({ ...props 
 		<>
 			<Button
 				iconEnabled={"icon-[solar--key-minimalistic-square-linear]"}
-                iconProps={{
-                    "data-ui-text": 'xl',
-                }}
+				iconProps={{
+					"data-ui-text": "xl",
+				}}
 				data-ui-tone="neutral"
 				data-ui-theme="light"
 				data-ui-shadow={false}

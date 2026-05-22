@@ -39,6 +39,9 @@ format with a singular domain segment such as `listing:event`,
 `rateLimitEventFx` hashes composite caller keys with HMAC-SHA256 before writing
 the per-window counter bucket and uses an atomic conflict update for increments.
 
+`rateLimitFx` exposes the same hashed per-window bucket as a read-only snapshot,
+so client queries can inspect the current counter without mutating it.
+
 `rateLimitCheckFx` builds on the bucket writer and raises `RateLimitErrorFx`
 with mandatory rule metadata when a request crosses the configured limit.
 
