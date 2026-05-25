@@ -14,7 +14,7 @@ const CronSchema = z.enum([
 	"noop",
 ]);
 
-export const Route = createFileRoute("/api/$cron")({
+export const Route = createFileRoute("/api/cron/$cron")({
 	server: {
 		handlers: {
 			async POST({ params: { cron } }) {
