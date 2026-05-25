@@ -3,11 +3,9 @@ import { DateContextFx } from "@/lib/common/date";
 import { S3ContextFx } from "~/common/s3/server/context/S3ContextFx";
 import { s3ClientFx } from "~/common/s3/server/fx/s3ClientFx";
 import type { CleanupSchema } from "~/server/@system/janitor/schema/CleanupSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 
 export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
-	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 	const { bucket } = yield* S3ContextFx;
 
@@ -23,7 +21,7 @@ export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
 		})
 		.toJSDate();
 
-	const uploads = yield* tryDbFx(async () => {
+	const uploads = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("upload as u")
 			.where("u.createdAt", "<", cutoffDate)

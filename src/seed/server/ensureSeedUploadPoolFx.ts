@@ -4,8 +4,7 @@ import { genId } from "@/lib/common/gen-id";
 import { rangedom } from "@/lib/common/rangedom/rangedom";
 import { S3ContextFx } from "~/common/s3/server/context/S3ContextFx";
 import { s3ClientFx } from "~/common/s3/server/fx/s3ClientFx";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
@@ -56,11 +55,10 @@ export const ensureSeedUploadPoolFx = Effect.fn("ensureSeedUploadPoolFx")(functi
 	targetCount,
 }: ensureSeedUploadPoolFx.Props) {
 	const progress = yield* SeedProgressContextFx;
-	const { kysely } = yield* KyselyContextFx;
 	const { bucket } = yield* S3ContextFx;
 	const { cdn } = yield* UploadContextFx;
 
-	const existingByUser = yield* tryDbFx(async () => {
+	const existingByUser = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("upload")
 			.select([
@@ -168,7 +166,7 @@ export const ensureSeedUploadPoolFx = Effect.fn("ensureSeedUploadPoolFx")(functi
 			break;
 		}
 
-		yield* tryDbFx(async () => {
+		yield* dbFx(async (kysely) => {
 			return kysely.insertInto("upload").values(rows).execute();
 		});
 

@@ -6,8 +6,7 @@ import { listingCheckIfOwnFx } from "~/buyer/listing/server/fx/listingCheckIfOwn
 import { listingFetchFx } from "~/buyer/listing/server/fx/listingFetchFx";
 import { listingEventRateLimitFx } from "~/buyer/listing-event/server/fx/listingEventRateLimitFx";
 import type { ListingEventCreateSchema } from "~/buyer/listing-event/server/schema/ListingEventCreateSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 export namespace listingEventCreateFx {
@@ -32,7 +31,6 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 
 			yield* listingCheckIfOwnFx({
@@ -58,8 +56,8 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 				event,
 			});
 
-			return yield* tryDbFx(async () =>
-				kysely
+			return yield* dbFx(async (kysely) => {
+				return kysely
 					.insertInto("listing_event")
 					.values({
 						id: genId(),
@@ -68,8 +66,8 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 						createdAt: now.toJSDate(),
 					})
 					.returningAll()
-					.executeTakeFirstOrThrow(),
-			);
+					.executeTakeFirstOrThrow();
+			});
 		}),
 	);
 });

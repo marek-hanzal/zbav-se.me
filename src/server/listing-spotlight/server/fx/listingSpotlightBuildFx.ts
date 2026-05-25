@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
 import type { ListingSpotlightTableSchema } from "~/server/database/@table/ListingSpotlightTableSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 type SpotlightParts = {
@@ -91,9 +90,7 @@ export const listingSpotlightBuildFx = Effect.fn("listingSpotlightBuildFx")(func
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
-
-			const listing = yield* tryDbFx<SpotlightParts>(async () => {
+			const listing = yield* dbFx<SpotlightParts>(async (kysely) => {
 				const item = await kysely
 					.selectFrom("listing")
 					.select([
@@ -137,7 +134,7 @@ export const listingSpotlightBuildFx = Effect.fn("listingSpotlightBuildFx")(func
 
 			const rows = toRows(listingId, phrases);
 
-			yield* tryDbFx(async () => {
+			yield* dbFx(async (kysely) => {
 				await kysely
 					.deleteFrom("listing_spotlight")
 					.where("listingId", "=", listingId)

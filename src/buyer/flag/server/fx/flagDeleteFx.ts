@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
 import { flagFetchFx } from "~/buyer/flag/server/fx/flagFetchFx";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 export namespace flagDeleteFx {
@@ -24,8 +23,6 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
-
 			const flag = yield* flagFetchFx({
 				where: {
 					listingId,
@@ -35,9 +32,9 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 				},
 			});
 
-			yield* tryDbFx(async () =>
-				kysely.deleteFrom("flag").where("id", "=", flag.id).execute(),
-			);
+			yield* dbFx(async (kysely) => {
+				return kysely.deleteFrom("flag").where("id", "=", flag.id).execute();
+			});
 
 			return flag;
 		}),

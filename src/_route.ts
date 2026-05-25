@@ -21,7 +21,6 @@ import { Route as SitemapsPagesDotxmlRouteImport } from './@routes/sitemaps/page
 import { Route as RedirectSignInRouteImport } from './@routes/redirect/sign-in'
 import { Route as ApiHealthRouteImport } from './@routes/api/health'
 import { Route as ApiE2eRouteImport } from './@routes/api/e2e'
-import { Route as ApiCronRouteImport } from './@routes/api/$cron'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleSignUpRouteImport } from './@routes/$locale/sign-up'
 import { Route as LocaleSignInRouteImport } from './@routes/$locale/sign-in'
@@ -29,6 +28,7 @@ import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
 import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
 import { Route as LocaleAppIndexRouteImport } from './@routes/$locale/app/index'
+import { Route as ApiCronCronRouteImport } from './@routes/api/cron/$cron'
 import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
 import { Route as ApiAgentThreadIdRouteImport } from './@routes/api/agent/$threadId'
 import { Route as LocaleZChar123idChar125DotmdRouteImport } from './@routes/$locale/z/{$id}[.]md'
@@ -125,11 +125,6 @@ const ApiE2eRoute = ApiE2eRouteImport.update({
   path: '/e2e',
   getParentRoute: () => ApiRoute,
 } as any)
-const ApiCronRoute = ApiCronRouteImport.update({
-  id: '/$cron',
-  path: '/$cron',
-  getParentRoute: () => ApiRoute,
-} as any)
 const LocaleTosRoute = LocaleTosRouteImport.update({
   id: '/tos',
   path: '/tos',
@@ -164,6 +159,11 @@ const LocaleAppIndexRoute = LocaleAppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LocaleAppRoute,
+} as any)
+const ApiCronCronRoute = ApiCronCronRouteImport.update({
+  id: '/cron/$cron',
+  path: '/cron/$cron',
+  getParentRoute: () => ApiRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/auth/$',
@@ -373,7 +373,6 @@ export interface FileRoutesByFullPath {
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
-  '/api/$cron': typeof ApiCronRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
@@ -390,6 +389,7 @@ export interface FileRoutesByFullPath {
   '/$locale/z/{$id}.md': typeof LocaleZChar123idChar125DotmdRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/cron/$cron': typeof ApiCronCronRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
@@ -428,7 +428,6 @@ export interface FileRoutesByTo {
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
-  '/api/$cron': typeof ApiCronRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
@@ -445,6 +444,7 @@ export interface FileRoutesByTo {
   '/$locale/z/{$id}.md': typeof LocaleZChar123idChar125DotmdRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/cron/$cron': typeof ApiCronCronRoute
   '/$locale/app': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
@@ -486,7 +486,6 @@ export interface FileRoutesById {
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
-  '/api/$cron': typeof ApiCronRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
@@ -503,6 +502,7 @@ export interface FileRoutesById {
   '/$locale/z/{$id}.md': typeof LocaleZChar123idChar125DotmdRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/cron/$cron': typeof ApiCronCronRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
@@ -545,7 +545,6 @@ export interface FileRouteTypes {
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
-    | '/api/$cron'
     | '/api/e2e'
     | '/api/health'
     | '/redirect/sign-in'
@@ -562,6 +561,7 @@ export interface FileRouteTypes {
     | '/$locale/z/{$id}.md'
     | '/api/agent/$threadId'
     | '/api/auth/$'
+    | '/api/cron/$cron'
     | '/$locale/app/'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
@@ -600,7 +600,6 @@ export interface FileRouteTypes {
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
-    | '/api/$cron'
     | '/api/e2e'
     | '/api/health'
     | '/redirect/sign-in'
@@ -617,6 +616,7 @@ export interface FileRouteTypes {
     | '/$locale/z/{$id}.md'
     | '/api/agent/$threadId'
     | '/api/auth/$'
+    | '/api/cron/$cron'
     | '/$locale/app'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
@@ -657,7 +657,6 @@ export interface FileRouteTypes {
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
-    | '/api/$cron'
     | '/api/e2e'
     | '/api/health'
     | '/redirect/sign-in'
@@ -674,6 +673,7 @@ export interface FileRouteTypes {
     | '/$locale/z/{$id}.md'
     | '/api/agent/$threadId'
     | '/api/auth/$'
+    | '/api/cron/$cron'
     | '/$locale/app/'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
@@ -800,13 +800,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiE2eRouteImport
       parentRoute: typeof ApiRoute
     }
-    '/api/$cron': {
-      id: '/api/$cron'
-      path: '/$cron'
-      fullPath: '/api/$cron'
-      preLoaderRoute: typeof ApiCronRouteImport
-      parentRoute: typeof ApiRoute
-    }
     '/$locale/tos': {
       id: '/$locale/tos'
       path: '/tos'
@@ -855,6 +848,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/app/'
       preLoaderRoute: typeof LocaleAppIndexRouteImport
       parentRoute: typeof LocaleAppRoute
+    }
+    '/api/cron/$cron': {
+      id: '/api/cron/$cron'
+      path: '/cron/$cron'
+      fullPath: '/api/cron/$cron'
+      preLoaderRoute: typeof ApiCronCronRouteImport
+      parentRoute: typeof ApiRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -1206,20 +1206,20 @@ const LocaleRouteWithChildren =
   LocaleRoute._addFileChildren(LocaleRouteChildren)
 
 interface ApiRouteChildren {
-  ApiCronRoute: typeof ApiCronRoute
   ApiE2eRoute: typeof ApiE2eRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiAgentThreadIdRoute: typeof ApiAgentThreadIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiCronCronRoute: typeof ApiCronCronRoute
   ApiPublicMigrationRunRoute: typeof ApiPublicMigrationRunRoute
 }
 
 const ApiRouteChildren: ApiRouteChildren = {
-  ApiCronRoute: ApiCronRoute,
   ApiE2eRoute: ApiE2eRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiAgentThreadIdRoute: ApiAgentThreadIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiCronCronRoute: ApiCronCronRoute,
   ApiPublicMigrationRunRoute: ApiPublicMigrationRunRoute,
 }
 

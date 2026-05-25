@@ -1,6 +1,5 @@
 import { Effect } from "effect";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import type { LocaleSchema } from "../schema/LocaleSchema";
 
 export namespace translationsFx {
@@ -12,9 +11,7 @@ export namespace translationsFx {
 export const translationsFx = Effect.fn("translationsFx")(function* ({
 	locale,
 }: translationsFx.Props) {
-	const { kysely } = yield* KyselyContextFx;
-
-	return yield* tryDbFx(async () => {
+	return yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("translation as t")
 			.selectAll("t")

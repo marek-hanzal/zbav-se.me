@@ -4,8 +4,7 @@ import { zodGuardFx } from "@/lib/common/fx";
 import { getLoggerFx } from "@/lib/common/log";
 import { TransactionBuyerInfoSchema } from "~/seller/transaction/server/schema/TransactionBuyerInfoSchema";
 import { userEventBuyerInfoFx } from "~/seller/user-event/server/fx/userEventBuyerInfoFx";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 
 export namespace transactionGetBuyerInfoFx {
 	export interface Props {
@@ -24,10 +23,8 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 		transactionId,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
-
-	const userInfo = yield* tryDbFx(async () =>
-		kysely
+	const userInfo = yield* dbFx(async (kysely) => {
+		return kysely
 			.selectFrom("user as u")
 			.innerJoin("transaction as lt", (eb) => {
 				return eb.onRef("lt.userId", "=", "u.id").on("lt.id", "=", transactionId);
@@ -39,8 +36,8 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 				"u.id",
 				"u.createdAt",
 			])
-			.executeTakeFirst(),
-	);
+			.executeTakeFirst();
+	});
 
 	if (!userInfo) {
 		return yield* new NotFoundErrorFx({

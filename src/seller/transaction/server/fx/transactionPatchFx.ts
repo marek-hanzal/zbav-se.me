@@ -4,8 +4,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
 import type { TransactionFilterSchema } from "~/seller/transaction/server/schema/TransactionFilterSchema";
 import type { TransactionPatchSchema } from "~/seller/transaction/server/schema/TransactionPatchSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { TransactionContextFx } from "~/user/transaction/server/context/TransactionContextFx";
 
@@ -32,7 +31,6 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 			const config = yield* TransactionContextFx;
 
@@ -43,8 +41,8 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 
 			const now = dateContext.now();
 
-			yield* tryDbFx(async () =>
-				kysely
+			yield* dbFx(async (kysely) => {
+				return kysely
 					.updateTable("transaction")
 					.set({
 						...patch,
@@ -56,8 +54,8 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 							.toJSDate(),
 					})
 					.where("id", "=", transaction.id)
-					.executeTakeFirst(),
-			);
+					.executeTakeFirst();
+			});
 
 			return yield* transactionFetchFx({
 				where: {

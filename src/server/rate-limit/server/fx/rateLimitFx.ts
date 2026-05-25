@@ -4,8 +4,7 @@ import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
 import { hash } from "@/lib/server/hmac";
 import { RateLimitRuleTableSchema } from "~/server/database/@table/RateLimitRuleTableSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { ServerHmacSchema } from "~/server/env/ServerHmacSchema";
 import type { RateLimitQuerySchema } from "~/server/rate-limit/server/schema/RateLimitQuerySchema";
@@ -32,9 +31,7 @@ export const rateLimitFx = Effect.fn("rateLimitFx")(function* ({ rule, key }: ra
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
-
-			const rateLimitRuleRow = yield* tryDbFx(async () => {
+			const rateLimitRuleRow = yield* dbFx(async (kysely) => {
 				return kysely
 					.selectFrom("rate_limit_rule")
 					.select([
@@ -74,7 +71,7 @@ export const rateLimitFx = Effect.fn("rateLimitFx")(function* ({ rule, key }: ra
 				seconds: rateLimitRule.window,
 			});
 
-			const current = yield* tryDbFx(async () => {
+			const current = yield* dbFx(async (kysely) => {
 				return kysely
 					.selectFrom("rate_limit_event as rle")
 					.select([

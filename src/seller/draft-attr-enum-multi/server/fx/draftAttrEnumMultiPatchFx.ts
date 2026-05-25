@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
 import { draftCheckIfOwnFx } from "~/seller/draft/server/fx/draftCheckIfOwnFx";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import type { DraftAttrEnumMultiPatchSchema } from "../schema/DraftAttrEnumMultiPatchSchema";
 
@@ -30,11 +29,9 @@ export const draftAttrEnumMultiPatchFx = Effect.fn("draftAttrEnumMultiPatchFx")(
 		draftId,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			yield* tryDbFx(async () => {
+			yield* dbFx(async (kysely) => {
 				return kysely
 					.deleteFrom("draft_attr_enum_multi")
 					.where("draftId", "=", draftId)
@@ -43,7 +40,7 @@ export const draftAttrEnumMultiPatchFx = Effect.fn("draftAttrEnumMultiPatchFx")(
 			});
 
 			if (value.length > 0) {
-				yield* tryDbFx(async () => {
+				yield* dbFx(async (kysely) => {
 					return kysely
 						.insertInto("draft_attr_enum_multi")
 						.values(

@@ -5,8 +5,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import type { TransactionSideEnumSchema } from "~/common/user-transaction/enum/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import type { TransactionEntryTableSchema } from "~/server/database/@table/TransactionEntryTableSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 
 const KindMap = {
 	"interest:buyer": "status-interest",
@@ -50,7 +49,6 @@ export const transactionStatusMessageFx = Effect.fn("transactionStatusMessageFx"
 		userId,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 	const key: transactionStatusMessageFx.Key = `${request}:${target ?? "null"}`;
 	const kind = KindMap[key as keyof typeof KindMap];
@@ -59,8 +57,8 @@ export const transactionStatusMessageFx = Effect.fn("transactionStatusMessageFx"
 		return;
 	}
 
-	yield* tryDbFx(async () =>
-		kysely
+	yield* dbFx(async (kysely) => {
+		return kysely
 			.insertInto("transaction_entry")
 			.values({
 				id: genId(),
@@ -72,8 +70,8 @@ export const transactionStatusMessageFx = Effect.fn("transactionStatusMessageFx"
 				},
 				createdAt: dateContext.now().toJSDate(),
 			})
-			.executeTakeFirstOrThrow(),
-	);
+			.executeTakeFirstOrThrow();
+	});
 });
 
 export type transactionStatusMessageFx = ReturnType<typeof transactionStatusMessageFx>;

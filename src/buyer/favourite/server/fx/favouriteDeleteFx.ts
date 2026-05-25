@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
 import { favouriteFetchFx } from "~/buyer/favourite/server/fx/favouriteFetchFx";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 export namespace favouriteDeleteFx {
@@ -24,8 +23,6 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
-
 			const favourite = yield* favouriteFetchFx({
 				where: {
 					listingId,
@@ -35,9 +32,9 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 				},
 			});
 
-			yield* tryDbFx(async () =>
-				kysely.deleteFrom("favourite").where("id", "=", favourite.id).execute(),
-			);
+			yield* dbFx(async (kysely) => {
+				return kysely.deleteFrom("favourite").where("id", "=", favourite.id).execute();
+			});
 
 			return favourite;
 		}),

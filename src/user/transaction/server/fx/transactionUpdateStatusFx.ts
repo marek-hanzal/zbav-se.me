@@ -3,8 +3,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import type { TransactionSideEnumSchema } from "~/common/user-transaction/enum/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { transactionTransitionFx } from "~/user/transaction/server/fx/transactionTransitionFx";
 import { transactionEntryCleanupSensitiveFx } from "~/user/transaction-entry/server/fx/transactionEntryCleanupSensitiveFx";
 
@@ -51,12 +50,11 @@ export const transactionUpdateStatusFx = Effect.fn("transactionUpdateStatusFx")(
 		side: target,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 	const now = dateContext.now().toJSDate();
 
-	yield* tryDbFx(async () =>
-		kysely
+	yield* dbFx(async (kysely) => {
+		return kysely
 			.updateTable("transaction")
 			.set({
 				status: request,
@@ -64,8 +62,8 @@ export const transactionUpdateStatusFx = Effect.fn("transactionUpdateStatusFx")(
 				updatedAt: now,
 			})
 			.where("id", "=", transactionId)
-			.executeTakeFirstOrThrow(),
-	);
+			.executeTakeFirstOrThrow();
+	});
 
 	yield* transactionEntryCleanupSensitiveFx({
 		transactionId,

@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { CleanupSchema } from "~/server/@system/janitor/schema/CleanupSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 
 const terminalStatuses = [
 	"rejected",
@@ -12,15 +11,13 @@ const terminalStatuses = [
 ] as const;
 
 export const cleanupTransactionFx = Effect.fn("cleanupTransactionFx")(function* () {
-	const { kysely } = yield* KyselyContextFx;
-
 	const threshold = DateTime.now()
 		.minus({
 			months: 3,
 		})
 		.toJSDate();
 
-	const candidates = yield* tryDbFx(async () => {
+	const candidates = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("transaction as t")
 			.select("t.id")
@@ -32,7 +29,7 @@ export const cleanupTransactionFx = Effect.fn("cleanupTransactionFx")(function* 
 	let deleted = 0;
 
 	for (const candidate of candidates) {
-		yield* tryDbFx(async () => {
+		yield* dbFx(async (kysely) => {
 			return kysely
 				.deleteFrom("transaction")
 				.where("id", "=", candidate.id)

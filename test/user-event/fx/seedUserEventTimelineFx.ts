@@ -2,8 +2,7 @@ import { Effect } from "effect";
 import type { DateTime } from "luxon";
 import { genId } from "@/lib/common/gen-id";
 import { keyOf } from "@/lib/common/key-of";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import type { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
 
 export namespace seedUserEventTimelineFx {
@@ -26,9 +25,7 @@ export const seedUserEventTimelineFx = Effect.fn("seedUserEventTimelineFx")(func
 	userId,
 	events,
 }: seedUserEventTimelineFx.Props) {
-	const { kysely } = yield* KyselyContextFx;
-
-	yield* tryDbFx(async () =>
+	yield* dbFx(async (kysely) =>
 		kysely
 			.insertInto("user_event")
 			.values(

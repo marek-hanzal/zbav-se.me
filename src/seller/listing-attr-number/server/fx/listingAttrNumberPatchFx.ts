@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
 import { listingCheckIfOwnFx } from "~/seller/listing/server/fx/listingCheckIfOwnFx";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import type { ListingAttrNumberPatchSchema } from "../schema/ListingAttrNumberPatchSchema";
 
@@ -30,11 +29,9 @@ export const listingAttrNumberPatchFx = Effect.fn("listingAttrNumberPatchFx")(fu
 		listingId,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			yield* tryDbFx(async () => {
+			yield* dbFx(async (kysely) => {
 				return kysely
 					.deleteFrom("listing_attr_number")
 					.where("listingId", "=", listingId)
@@ -43,7 +40,7 @@ export const listingAttrNumberPatchFx = Effect.fn("listingAttrNumberPatchFx")(fu
 			});
 
 			if (value !== null) {
-				yield* tryDbFx(async () => {
+				yield* dbFx(async (kysely) => {
 					return kysely
 						.insertInto("listing_attr_number")
 						.values({

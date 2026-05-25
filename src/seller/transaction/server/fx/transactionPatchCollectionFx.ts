@@ -4,8 +4,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import type { TransactionFilterSchema } from "~/seller/transaction/server/schema/TransactionFilterSchema";
 import type { TransactionPatchCollectionSchema } from "~/seller/transaction/server/schema/TransactionPatchCollectionSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { withTransactionSelectFx } from "../db/withTransactionSelectFx";
 
@@ -29,7 +28,6 @@ export const transactionPatchCollectionFx = Effect.fn("transactionPatchCollectio
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 			const now = dateContext.now().toJSDate();
 
@@ -47,8 +45,8 @@ export const transactionPatchCollectionFx = Effect.fn("transactionPatchCollectio
 
 			const selectIds = select.clearSelect().select("lt.id");
 
-			const updated = yield* tryDbFx(async () =>
-				kysely
+			const updated = yield* dbFx(async (kysely) => {
+				return kysely
 					.updateTable("transaction")
 					.set({
 						...patch,
@@ -59,8 +57,8 @@ export const transactionPatchCollectionFx = Effect.fn("transactionPatchCollectio
 					})
 					.where("id", "in", selectIds)
 					.returning("id")
-					.execute(),
-			);
+					.execute();
+			});
 			const ids = updated.map(({ id }) => id);
 
 			if (ids.length === 0) {
