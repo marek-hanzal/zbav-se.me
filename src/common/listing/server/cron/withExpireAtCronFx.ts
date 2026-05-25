@@ -1,9 +1,13 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
+import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 export const withExpireAtCronFx = Effect.fn("withExpireAtCronFx")(function* () {
+	const logger = yield* getLoggerFx("withExpireAtCronFx", "cron");
+	logger.trace("withExpireAtCronFx");
+
 	yield* withTransactionFx(
 		Effect.gen(function* () {
 			const dateContext = yield* DateContextFx;
@@ -21,7 +25,8 @@ export const withExpireAtCronFx = Effect.fn("withExpireAtCronFx")(function* () {
 					.set({
 						status: "expired",
 					})
-					.where("id", "in", source);
+					.where("id", "in", source)
+					.execute();
 			});
 		}),
 	);
