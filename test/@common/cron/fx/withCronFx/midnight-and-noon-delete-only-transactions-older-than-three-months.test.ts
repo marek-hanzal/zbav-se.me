@@ -12,7 +12,10 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
 		Effect.provideService(DateContextFx, {
-			now: () => DateTime.fromISO(iso),
+			now: () =>
+				DateTime.fromISO(iso, {
+					setZone: true,
+				}),
 		}),
 	);
 

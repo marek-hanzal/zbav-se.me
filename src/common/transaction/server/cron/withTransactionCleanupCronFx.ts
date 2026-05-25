@@ -11,10 +11,11 @@ export const withTransactionCleanupCronFx = Effect.fn("vwithTransactionCleanupCr
 		const dateContext = yield* DateContextFx;
 
 		yield* dbFx(async (kysely) => {
-			return kysely
-				.deleteFrom("transaction")
+			const source = kysely
+				.selectFrom("transaction as t")
+				.select("t.id")
 				.where(
-					"statusUpdatedAt",
+					"t.statusUpdatedAt",
 					"<=",
 					dateContext
 						.now()
@@ -23,8 +24,11 @@ export const withTransactionCleanupCronFx = Effect.fn("vwithTransactionCleanupCr
 						})
 						.toJSDate(),
 				)
-				.limit(50_000)
-				.execute();
+				.orderBy("t.statusUpdatedAt", "asc")
+				.orderBy("t.id", "asc")
+				.limit(50_000);
+
+			return kysely.deleteFrom("transaction").where("id", "in", source).execute();
 		});
 	},
 );
