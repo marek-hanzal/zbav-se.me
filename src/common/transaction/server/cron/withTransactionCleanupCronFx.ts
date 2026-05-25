@@ -23,7 +23,7 @@ export const withTransactionCleanupCronFx = Effect.fn("vwithTransactionCleanupCr
 						})
 						.toJSDate(),
 				)
-                .limit(50_000)
+				.limit(50_000)
 				.execute();
 		});
 	},
