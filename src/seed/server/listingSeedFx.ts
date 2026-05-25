@@ -5,8 +5,7 @@ import ListingCategorySeedData from "~/server/@system/seed/data/listing-category
 };
 import LocationQueries from "~/server/@system/seed/data/location.json" with { type: "json" };
 import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
 import { categoryAttrOfFx } from "~/user/category/server/fx/categoryAttrOfFx";
@@ -62,9 +61,7 @@ const toSeedBranch = (slug: string) => {
 };
 
 const withListingTotalFx = Effect.fn("withListingTotalFx")(function* () {
-	const { kysely } = yield* KyselyContextFx;
-
-	const row = yield* tryDbFx(async () => {
+	const row = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("listing")
 			.select((eb) => eb.fn.countAll<string>().as("count"))
@@ -75,9 +72,7 @@ const withListingTotalFx = Effect.fn("withListingTotalFx")(function* () {
 });
 
 const withSupportedCategoriesFx = Effect.fn("withSupportedCategoriesFx")(function* () {
-	const { kysely } = yield* KyselyContextFx;
-
-	const categories = yield* tryDbFx(async () => {
+	const categories = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("category")
 			.selectAll()
@@ -161,7 +156,6 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 	count,
 	userEmail,
 }: listingSeedFx.Props) {
-	const { kysely } = yield* KyselyContextFx;
 	const progress = yield* SeedProgressContextFx;
 	const phasePlan: SeedRunSummary.Phase[] = [
 		{
@@ -280,7 +274,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		total: count,
 	});
 
-	const uploadRows = yield* tryDbFx(async () => {
+	const uploadRows = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("upload")
 			.select([

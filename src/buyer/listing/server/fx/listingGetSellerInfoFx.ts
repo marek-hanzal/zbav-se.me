@@ -4,8 +4,7 @@ import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 
 export namespace listingGetSellerInfoFx {
 	export interface Props {
@@ -21,9 +20,7 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 		listingId,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
-
-	const userInfo = yield* tryDbFx(async () => {
+	const userInfo = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("listing as l")
 			.innerJoin("user as u", "u.id", "l.userId")

@@ -3,8 +3,7 @@ import { sql } from "kysely";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 
 export namespace categoryMissCreateFx {
 	export interface Props {
@@ -23,7 +22,6 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 		limit,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 	const category = fulltext?.join(" ").trim();
 
@@ -33,8 +31,8 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 
 	const now = dateContext.now();
 
-	yield* tryDbFx(async () =>
-		kysely
+	yield* dbFx(async (kysely) => {
+		return kysely
 			.insertInto("category_miss")
 			.values({
 				id: genId(),
@@ -52,8 +50,8 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 						updatedAt: now.toJSDate(),
 					}),
 			)
-			.execute(),
-	);
+			.execute();
+	});
 
 	return yield* Effect.void;
 });

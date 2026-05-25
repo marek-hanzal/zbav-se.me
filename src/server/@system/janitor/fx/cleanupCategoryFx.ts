@@ -2,11 +2,9 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { DateContextFx } from "@/lib/common/date";
 import type { CleanupSchema } from "~/server/@system/janitor/schema/CleanupSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 
 export const cleanupCategoryFx = Effect.fn("cleanupCategoryFx")(function* () {
-	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 
 	const cutoffDate = dateContext
@@ -16,16 +14,19 @@ export const cleanupCategoryFx = Effect.fn("cleanupCategoryFx")(function* () {
 		})
 		.toJSDate();
 
-	const total = yield* tryDbFx(async () =>
-		kysely
+	const total = yield* dbFx(async (kysely) => {
+		return kysely
 			.selectFrom("category_miss")
 			.select(sql<number>`count(*)::int`.as("count"))
-			.executeTakeFirstOrThrow(),
-	);
+			.executeTakeFirstOrThrow();
+	});
 
-	const result = yield* tryDbFx(async () =>
-		kysely.deleteFrom("category_miss").where("updatedAt", "<", cutoffDate).executeTakeFirst(),
-	);
+	const result = yield* dbFx(async (kysely) => {
+		return kysely
+			.deleteFrom("category_miss")
+			.where("updatedAt", "<", cutoffDate)
+			.executeTakeFirst();
+	});
 
 	return {
 		type: "category",

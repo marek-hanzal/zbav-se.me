@@ -4,8 +4,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import type { FeedFilterSchema } from "~/buyer/feed/server/schema/FeedFilterSchema";
 import type { FeedPatchSchema } from "~/buyer/feed/server/schema/FeedPatchSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 export namespace feedPatchFx {
@@ -28,7 +27,6 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 
 			const feed = yield* feedFetchFx({
@@ -36,8 +34,8 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 				scope,
 			});
 
-			yield* tryDbFx(async () =>
-				kysely
+			yield* dbFx(async (kysely) => {
+				return kysely
 					.updateTable("feed")
 					.set({
 						...patch,
@@ -45,8 +43,8 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 						updatedAt: dateContext.now().toJSDate(),
 					})
 					.where("id", "=", feed.id)
-					.executeTakeFirst(),
-			);
+					.executeTakeFirst();
+			});
 
 			return yield* feedFetchFx({
 				where: {

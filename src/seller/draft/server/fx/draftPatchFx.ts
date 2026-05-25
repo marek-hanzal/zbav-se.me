@@ -2,8 +2,7 @@ import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import type { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
@@ -37,7 +36,6 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 
 			const draft = yield* draftFetchFx({
@@ -64,7 +62,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 				/**
 				 * Delete old items, except those already
 				 */
-				yield* tryDbFx(async () => {
+				yield* dbFx(async (kysely) => {
 					return kysely
 						.deleteFrom("gallery_item as gi")
 						.where("gi.galleryId", "=", draft.galleryId)
@@ -80,7 +78,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 						.execute();
 				});
 
-				yield* tryDbFx(async () => {
+				yield* dbFx(async (kysely) => {
 					return kysely
 						.updateTable("upload")
 						.set({
@@ -91,7 +89,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 						.execute();
 				});
 
-				const withUpload = yield* tryDbFx(async () => {
+				const withUpload = yield* dbFx(async (kysely) => {
 					return kysely
 						.selectFrom("upload")
 						.select([
@@ -145,7 +143,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 				patch.withUploadIds = uploadIds;
 			}
 
-			yield* tryDbFx(async () => {
+			yield* dbFx(async (kysely) => {
 				return kysely
 					.updateTable("draft")
 					.set({
@@ -164,7 +162,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 			});
 
 			if (patch.categoryId && draft.categoryId !== patch.categoryId) {
-				yield* tryDbFx(async () => {
+				yield* dbFx(async (kysely) => {
 					return Promise.all([
 						kysely
 							.deleteFrom("draft_attr_decimal")
@@ -191,7 +189,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 			}
 
 			if (locationId) {
-				const { geo: withLocation } = yield* tryDbFx(async () => {
+				const { geo: withLocation } = yield* dbFx(async (kysely) => {
 					return kysely
 						.selectFrom("location")
 						.select("geo")
@@ -199,7 +197,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 						.executeTakeFirstOrThrow();
 				});
 
-				yield* tryDbFx(async () => {
+				yield* dbFx(async (kysely) => {
 					return kysely
 						.updateTable("draft")
 						.set({

@@ -4,8 +4,7 @@ import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { draftFetchFx } from "~/seller/draft/server/fx/draftFetchFx";
 import type { DraftCreateSchema } from "~/seller/draft/server/schema/DraftCreateSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 
@@ -27,7 +26,6 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 
 			const id = genId();
@@ -38,7 +36,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 				userId,
 			});
 
-			yield* tryDbFx(async () => {
+			yield* dbFx(async (kysely) => {
 				return kysely
 					.insertInto("draft")
 					.values({

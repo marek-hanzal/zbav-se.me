@@ -2,8 +2,7 @@ import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { galleryFetchFx } from "~/user/gallery/server/fx/galleryFetchFx";
 import type { GalleryItemCreateSchema } from "~/user/gallery-item/server/schema/GalleryItemCreateSchema";
 
@@ -32,7 +31,6 @@ export const galleryItemInsertFx = Effect.fn("galleryItemInsertFx")(function* ({
 		...data,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 
 	const now = dateContext.now();
@@ -52,7 +50,7 @@ export const galleryItemInsertFx = Effect.fn("galleryItemInsertFx")(function* ({
 		});
 	}
 
-	yield* tryDbFx(async () => {
+	yield* dbFx(async (kysely) => {
 		return kysely
 			.insertInto("gallery_item")
 			.values({

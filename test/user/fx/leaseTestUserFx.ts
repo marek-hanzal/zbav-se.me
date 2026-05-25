@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 
 const TEST_USER_KEYS = [
 	"a",
@@ -60,7 +60,7 @@ export const leaseTestUserFx = Effect.fn("leaseTestUserFx")(function* ({
 	const resolvedKey = key ?? getNextLeaseKey(kysely);
 	const seededEmail = `test-${resolvedKey}@test.cz`;
 
-	return yield* tryDbFx(async () =>
+	return yield* dbFx(async (kysely) =>
 		kysely
 			.selectFrom("user")
 			.selectAll()

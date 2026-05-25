@@ -2,8 +2,7 @@ import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import type { GalleryCreateSchema } from "~/user/gallery/server/schema/GalleryCreateSchema";
 
 export namespace galleryInsertFx {
@@ -24,10 +23,9 @@ export const galleryInsertFx = Effect.fn("galleryInsertFx")(function* ({
 		...props,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 
-	yield* tryDbFx(async () => {
+	yield* dbFx(async (kysely) => {
 		return kysely
 			.insertInto("gallery")
 			.values({

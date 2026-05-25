@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { withAgentUsageSelectFx } from "~/user/agent/server/db/withAgentUsageSelectFx";
 import type { AgentUsageFilterSchema } from "~/user/agent/server/schema/AgentUsageFilterSchema";
@@ -23,8 +22,6 @@ export const agentUsageDeleteCollectionFx = Effect.fn("agentUsageDeleteCollectio
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
-
 			let { select, queryFx } = yield* withAgentUsageSelectFx({
 				sort: query.sort,
 			});
@@ -37,7 +34,7 @@ export const agentUsageDeleteCollectionFx = Effect.fn("agentUsageDeleteCollectio
 				select = yield* queryFx(select, layer);
 			}
 
-			return yield* tryDbFx(async () => {
+			return yield* dbFx(async (kysely) => {
 				const { numDeletedRows } = await kysely
 					.deleteFrom("agent_usage")
 					.where("id", "in", select.clearSelect().select("au.id"))

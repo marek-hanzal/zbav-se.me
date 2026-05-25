@@ -14,9 +14,8 @@ import type { ListingAttrNumberTableSchema } from "~/server/database/@table/List
 import type { ListingAttrTextTableSchema } from "~/server/database/@table/ListingAttrTextTableSchema";
 import type { ListingSpotlightTableSchema } from "~/server/database/@table/ListingSpotlightTableSchema";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { Database } from "~/server/database/Database";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import type { SeedListingPlan } from "./listingSeedPlanFx";
@@ -125,11 +124,10 @@ const insertChunkedRowsFx = Effect.fn("insertChunkedRowsFx")(function* <
 		return;
 	}
 
-	const { kysely } = yield* KyselyContextFx;
 	const chunks = withChunks(rows);
 
 	for (const [chunkIndex, chunk] of chunks.entries()) {
-		yield* tryDbFx(async () => {
+		yield* dbFx(async (kysely) => {
 			let query = kysely.insertInto(table).values(chunk as never);
 
 			if (onConflictDoNothing) {
@@ -173,7 +171,6 @@ export const listingSeedPublishFx = Effect.fn("listingSeedPublishFx")(function* 
 		return;
 	}
 
-	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 	const locationIds = Array.from(
 		new Set(
@@ -183,7 +180,7 @@ export const listingSeedPublishFx = Effect.fn("listingSeedPublishFx")(function* 
 		),
 	);
 	const now = dateContext.now();
-	const locationRows = yield* tryDbFx(async () => {
+	const locationRows = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("location")
 			.select([

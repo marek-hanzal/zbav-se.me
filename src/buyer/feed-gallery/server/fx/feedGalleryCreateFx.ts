@@ -3,8 +3,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { feedPatchFx } from "~/buyer/feed/server/fx/feedPatchFx";
 import { feedResolveFx } from "~/buyer/feed/server/fx/feedResolveFx";
 import type { FeedGalleryCreateSchema } from "~/buyer/feed-gallery/server/schema/FeedGalleryCreateSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { galleryCreateFx } from "~/user/gallery/server/fx/galleryCreateFx";
@@ -31,8 +30,6 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
-
 			const feed = yield* feedResolveFx({
 				feedId,
 				userId,
@@ -62,9 +59,9 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 				}),
 			);
 
-			yield* tryDbFx(async () =>
-				kysely.deleteFrom("gallery_item").where("galleryId", "=", gallery.id).execute(),
-			);
+			yield* dbFx(async (kysely) => {
+				kysely.deleteFrom("gallery_item").where("galleryId", "=", gallery.id).execute();
+			});
 
 			let sort = 0;
 			for (const uploadId of uploadIds) {

@@ -3,8 +3,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import type { FlagCreateSchema } from "~/buyer/flag/server/schema/FlagCreateSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 
 export namespace flagCreateFx {
 	export interface Props extends FlagCreateSchema.Type {
@@ -22,13 +21,12 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 		listingId,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 
 	const id = genId();
 
-	return yield* tryDbFx(async () =>
-		kysely
+	return yield* dbFx(async (kysely) => {
+		return kysely
 			.insertInto("flag")
 			.values({
 				id,
@@ -38,8 +36,8 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 			})
 			.onConflict((eb) => eb.doNothing())
 			.returningAll()
-			.executeTakeFirstOrThrow(),
-	);
+			.executeTakeFirstOrThrow();
+	});
 });
 
 export type flagCreateFx = ReturnType<typeof flagCreateFx>;

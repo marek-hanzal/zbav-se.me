@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
 import { ignoreFetchFx } from "~/buyer/ignore/server/fx/ignoreFetchFx";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
 export namespace ignoreDeleteFx {
@@ -24,8 +23,6 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
-
 			const ignore = yield* ignoreFetchFx({
 				where: {
 					listingId,
@@ -35,9 +32,9 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 				},
 			});
 
-			yield* tryDbFx(async () =>
-				kysely.deleteFrom("ignore").where("id", "=", ignore.id).execute(),
-			);
+			yield* dbFx(async (kysely) => {
+				return kysely.deleteFrom("ignore").where("id", "=", ignore.id).execute();
+			});
 
 			return ignore;
 		}),

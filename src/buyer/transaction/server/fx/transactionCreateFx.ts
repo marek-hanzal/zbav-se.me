@@ -7,7 +7,7 @@ import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEve
 import { transactionFetchFx } from "~/buyer/transaction/server/fx/transactionFetchFx";
 import type { TransactionCreateSchema } from "~/buyer/transaction/server/schema/TransactionCreateSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
 import { TransactionContextFx } from "~/user/transaction/server/context/TransactionContextFx";
@@ -52,7 +52,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 
 			const id = genId();
 
-			yield* tryDbFx(async () =>
+			yield* dbFx(async () =>
 				kysely
 					.insertInto("transaction")
 					.values({

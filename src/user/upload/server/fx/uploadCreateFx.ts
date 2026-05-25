@@ -2,8 +2,7 @@ import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
 import type { UploadCreateSchema } from "~/user/upload/server/schema/UploadCreateSchema";
@@ -26,7 +25,6 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 		...data,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
 	const uploadContext = yield* UploadContextFx;
 	const dateContext = yield* DateContextFx;
 
@@ -46,7 +44,7 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	const id = genId();
 	const now = dateContext.now();
 
-	yield* tryDbFx(async () => {
+	yield* dbFx(async (kysely) => {
 		return kysely
 			.insertInto("upload")
 			.values({

@@ -3,8 +3,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import type { IgnoreCreateSchema } from "~/buyer/ignore/server/schema/IgnoreCreateSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 
 export namespace ignoreCreateFx {
 	export interface Props extends IgnoreCreateSchema.Type {
@@ -22,13 +21,12 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 		listingId,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 
 	const id = genId();
 
-	return yield* tryDbFx(async () =>
-		kysely
+	return yield* dbFx(async (kysely) => {
+		return kysely
 			.insertInto("ignore")
 			.values({
 				id,
@@ -38,8 +36,8 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 			})
 			.onConflict((eb) => eb.doNothing())
 			.returningAll()
-			.executeTakeFirstOrThrow(),
-	);
+			.executeTakeFirstOrThrow();
+	});
 });
 
 export type ignoreCreateFx = ReturnType<typeof ignoreCreateFx>;

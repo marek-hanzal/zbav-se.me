@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { TransactionContextFx } from "~/user/transaction/server/context/TransactionContextFx";
 
 export namespace transactionTouchFx {
@@ -20,13 +19,12 @@ export const transactionTouchFx = Effect.fn("transactionTouchFx")(function* ({
 		transactionId,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 	const config = yield* TransactionContextFx;
 	const now = dateContext.now();
 
-	yield* tryDbFx(async () =>
-		kysely
+	yield* dbFx(async (kysely) => {
+		return kysely
 			.updateTable("transaction")
 			.set({
 				updatedAt: now.toJSDate(),
@@ -37,6 +35,6 @@ export const transactionTouchFx = Effect.fn("transactionTouchFx")(function* ({
 					.toJSDate(),
 			})
 			.where("id", "=", transactionId)
-			.executeTakeFirst(),
-	);
+			.executeTakeFirst();
+	});
 });
