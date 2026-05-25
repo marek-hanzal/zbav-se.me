@@ -18,6 +18,8 @@ export const withExpireAtCronFx = Effect.fn("withExpireAtCronFx")(function* () {
 					.select("l.id")
 					.where("l.status", "=", "live")
 					.where("l.expiresAt", "<=", dateContext.now().toJSDate())
+					.orderBy("l.expiresAt", "asc")
+					.orderBy("l.id", "asc")
 					.limit(50_000);
 
 				return kysely
