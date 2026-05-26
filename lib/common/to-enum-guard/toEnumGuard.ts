@@ -9,6 +9,7 @@ export namespace toEnumGuard {
 }
 
 export function toEnumGuard<TGuard extends string>() {
-	return <const TEnum extends readonly TGuard[]>(input: toEnumGuard.Complete<TGuard, TEnum>) =>
-		input;
+	return <const TEnum extends readonly TGuard[]>(input: toEnumGuard.Complete<TGuard, TEnum>) => {
+		return input;
+	};
 }

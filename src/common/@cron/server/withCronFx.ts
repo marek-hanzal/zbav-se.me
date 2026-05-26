@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import type { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import type { ScheduleSchema } from "../schema/ScheduleSchema";
 import { withCron00Fx } from "./schedule/withCron00Fx";
 import { withCron04Fx } from "./schedule/withCron04Fx";
@@ -20,7 +19,7 @@ const crons = {
 	hourly: withCronHourlyFx,
 	monthly: withCronMonthlyFx,
 	noop: () => Effect.void,
-} satisfies Record<ScheduleSchema.Type, () => Effect.Effect<any, RuntimeErrorFx, unknown>>;
+} satisfies Record<ScheduleSchema.Type, () => Effect.Effect<any, never, unknown>>;
 
 export namespace withCronFx {
 	export interface Props {

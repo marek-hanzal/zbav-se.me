@@ -1657,6 +1657,12 @@ transaction - buyer - status-closed:
 
         _Tady už je všechno vyřešeno, můžete jít dál._
     dynamic: true
+transaction - buyer - status-expired:
+    value: |
+        **Čas vypršel**
+
+        Automaticky ukončený obchod, dlouho se nic nedělo.
+    dynamic: true
 transaction - buyer - status-dispute-seller:
     value: >
         **Je potřeba tvoje pozornost**
@@ -1712,6 +1718,12 @@ transaction - seller - status-closed:
         **Hotovo**
 
         _Tady už je všechno vyřešeno, můžete jít dál._
+    dynamic: true
+transaction - seller - status-expired:
+    value: |
+        **Čas vypršel**
+
+        Automaticky ukončený obchod, dlouho se nic nedělo.
     dynamic: true
 transaction - seller - status-dispute-seller:
     value: |

@@ -1,26 +1,12 @@
 import { Effect } from "effect";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
+import { leaseTestUserFx, TEST_USER_PASSWORD } from "~/test/user/fx/leaseTestUserFx";
 import { expect, test } from "../test";
-import { createUser } from "../utils/createUser";
 
 test("auth sign in", async ({ page, database }) => {
-	const user = createUser();
-
-	const ath = auth({
-		dialect: () => database.dialect,
-		translator: await withTranslatorFx({
-			locale: "cs",
-		}).pipe(withRuntimeFx(database), Effect.runPromise),
-	});
-	await ath.api.signUpEmail({
-		body: {
-			name: user.email,
-			email: user.email,
-			password: user.password,
-		},
-	});
+	const user = await leaseTestUserFx({
+		key: "a",
+	}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 	await page.goto("/cs/app/home");
 
@@ -32,7 +18,7 @@ test("auth sign in", async ({ page, database }) => {
 	await page.waitForURL(/\/cs\/sign-in(?:\?.*)?$/);
 
 	await page.locator('[data-ui="SignInPage[EmailInput]"]').fill(user.email);
-	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(user.password);
+	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(TEST_USER_PASSWORD);
 	await page.locator('[data-action="sign in"]').click();
 
 	await page.waitForURL("/cs/app/home");
