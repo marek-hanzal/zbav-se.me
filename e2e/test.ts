@@ -72,7 +72,9 @@ export const test = base.extend<{
 
 		await cleanup();
 	},
-	async page({ page, db }, use) {
+	async page({ page, db, database }, use) {
+		void database;
+
 		await page.context().route("**/*", async (route) => {
 			const request = route.request();
 			const headers = {
