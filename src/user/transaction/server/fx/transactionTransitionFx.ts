@@ -293,6 +293,16 @@ export namespace Transitions {
 	];
 
 	/**
+	 * Non-terminal transaction statuses considered live/running by background jobs.
+	 */
+	export const LiveStatus: readonly TransactionStatusEnumSchema.Type[] = [
+		"interest",
+		"trade",
+		"resolved",
+		"dispute",
+	];
+
+	/**
 	 * Main transaction state machine.
 	 *
 	 * This is the server-side source of truth for transaction flow rules.
