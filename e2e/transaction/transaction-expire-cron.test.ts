@@ -1,6 +1,7 @@
 import path from "node:path";
 import type { Locator, Page } from "@playwright/test";
 import { Effect } from "effect";
+import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
 import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
@@ -137,6 +138,101 @@ test("buyer sees cron-expired transaction as a system message", async ({
 	expect(cronResponse.ok).toBe(true);
 
 	await page.goto(`/cs/app/buyer/transaction/${transaction.id}/detail`);
+	await expect(
+		page.getByText("Systém tenhle obchod automaticky ukončil kvůli neaktivitě."),
+	).toBeVisible();
+
+	await expect
+		.poll(async () => {
+			const expiredTransaction = await database.kysely
+				.selectFrom("transaction")
+				.select("status")
+				.where("id", "=", transaction.id)
+				.executeTakeFirstOrThrow();
+
+			return expiredTransaction.status;
+		})
+		.toBe("expired");
+});
+
+test("seller sees cron-expired transaction as a system message", async ({
+	page,
+	database,
+	db,
+	appOrigin,
+}) => {
+	const ath = auth({
+		dialect: () => database.dialect,
+		translator: await withTranslatorFx({
+			locale: "cs",
+		}).pipe(withRuntimeFx(database), Effect.runPromise),
+	});
+
+	await ath.api.signUpEmail({
+		body: {
+			name: seller.email,
+			email: seller.email,
+			password: seller.password,
+		},
+	});
+
+	await ath.api.signUpEmail({
+		body: {
+			name: buyer.email,
+			email: buyer.email,
+			password: buyer.password,
+		},
+	});
+
+	const sellerUser = await database.kysely
+		.selectFrom("user")
+		.select("id")
+		.where("email", "=", seller.email)
+		.executeTakeFirstOrThrow();
+
+	const buyerUser = await database.kysely
+		.selectFrom("user")
+		.select("id")
+		.where("email", "=", buyer.email)
+		.executeTakeFirstOrThrow();
+
+	const title = `E2E seller expired transaction ${Date.now()}`;
+	const upload = await uploadFixtureViaS3({
+		database,
+		userId: sellerUser.id,
+		path: fixturePath,
+	});
+
+	const listing = await createListingFx(sellerUser.id, {
+		title,
+		uploadId: upload.id,
+	}).pipe(withRuntimeFx(database), Effect.runPromise);
+
+	const transaction = await transactionCreateFx({
+		listingId: listing.id,
+		userId: buyerUser.id,
+	}).pipe(withRuntimeFx(database), Effect.runPromise);
+
+	await database.kysely
+		.updateTable("transaction")
+		.set({
+			expiresAt: new Date("2026-05-10T03:59:59.000Z"),
+		})
+		.where("id", "=", transaction.id)
+		.execute();
+
+	await signIn(page, seller);
+
+	const cronResponse = await fetch(new URL("/api/cron/04", appOrigin), {
+		method: "POST",
+		headers: {
+			"x-e2e-db": db,
+		},
+	});
+
+	expect(cronResponse.ok).toBe(true);
+
+	await page.goto(`/cs/app/seller/transaction/${transaction.id}/detail`);
 	await expect(
 		page.getByText("Systém tenhle obchod automaticky ukončil kvůli neaktivitě."),
 	).toBeVisible();
