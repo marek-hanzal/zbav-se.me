@@ -1,11 +1,9 @@
 import path from "node:path";
 import type { Locator, Page } from "@playwright/test";
 import { Effect } from "effect";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
-import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
+import { leaseTestUserFx, TEST_USER_PASSWORD } from "~/test/user/fx/leaseTestUserFx";
 import { expect, test } from "../test";
-import { createUser } from "../utils/createUser";
 
 const fixturePath = path.resolve(import.meta.dirname, "../fixtures/listing-create-image.jpg");
 
@@ -28,28 +26,16 @@ async function expectImageLoaded(locator: Locator) {
 test.setTimeout(120_000);
 
 test("seller creates listing from draft flow", async ({ page, database }) => {
-	const user = createUser();
-	const ath = auth({
-		dialect: () => database.dialect,
-		translator: await withTranslatorFx({
-			locale: "cs",
-		}).pipe(withRuntimeFx(database), Effect.runPromise),
-	});
-
-	await ath.api.signUpEmail({
-		body: {
-			name: user.email,
-			email: user.email,
-			password: user.password,
-		},
-	});
+	const user = await leaseTestUserFx({
+		key: "a",
+	}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 	await page.goto("/cs/landing");
 	await page.click('[data-action="goto sign-in"]');
 	await page.waitForURL("/cs/sign-in");
 
 	await page.locator('[data-ui="SignInPage[EmailInput]"]').fill(user.email);
-	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(user.password);
+	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(TEST_USER_PASSWORD);
 	await page.locator('[data-action="sign in"]').click();
 	await page.waitForURL("/cs/app/home");
 

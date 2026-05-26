@@ -4,9 +4,16 @@ import { testabase } from "./utils/testabase";
 
 const appOrigin = process.env.VITE_ORIGIN ?? "https://zbav-se.me.localhost:1355";
 
-function toDatabaseName(file: string, title: string, workerIndex: number, retry: number) {
+function toDatabaseName(
+	file: string,
+	projectName: string,
+	title: string,
+	workerIndex: number,
+	retry: number,
+) {
 	const fileName = path.basename(file, path.extname(file));
 	const rawName = [
+		projectName,
 		fileName,
 		title,
 		`w${workerIndex}`,
@@ -35,7 +42,13 @@ export const test = base.extend<{
 	// biome-ignore lint/correctness/noEmptyPattern: Ssst
 	async db({}, use, testInfo) {
 		await use(
-			toDatabaseName(testInfo.file, testInfo.title, testInfo.workerIndex, testInfo.retry),
+			toDatabaseName(
+				testInfo.file,
+				testInfo.project.name,
+				testInfo.title,
+				testInfo.workerIndex,
+				testInfo.retry,
+			),
 		);
 	},
 	async database({ db }, use) {

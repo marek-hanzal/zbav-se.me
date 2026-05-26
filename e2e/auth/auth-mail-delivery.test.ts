@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
 import { expect, test } from "../test";
-import { createUser } from "../utils/createUser";
 
 const mailpitBaseUrl = process.env.MAILPIT_BASE_URL;
 
@@ -116,23 +115,13 @@ test("auth sign up sends verification email", async ({ page, database }) => {
 });
 
 test("auth magic link sends email and signs in", async ({ page, database }) => {
-	const user = createUser();
+	const user = await leaseTestUserFx({
+		key: "a",
+	}).pipe(withRuntimeFx(database), Effect.runPromise);
 	const translator = await withTranslatorFx({
 		locale: "cs",
 	}).pipe(withRuntimeFx(database), Effect.runPromise);
-	const ath = auth({
-		dialect: () => database.dialect,
-		translator,
-	});
 	const subject = translator.text("Magic link email subject");
-
-	await ath.api.signUpEmail({
-		body: {
-			name: user.email,
-			email: user.email,
-			password: user.password,
-		},
-	});
 
 	await page.goto("/cs/app/home");
 	await page.waitForURL(/\/cs\/sign-in(?:\?.*)?$/);

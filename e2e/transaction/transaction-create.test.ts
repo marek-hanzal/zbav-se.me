@@ -1,23 +1,12 @@
 import path from "node:path";
 import type { Locator, Page } from "@playwright/test";
 import { Effect } from "effect";
-import { auth } from "~/server/auth/auth";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
+import { leaseTestUserFx, TEST_USER_PASSWORD } from "~/test/user/fx/leaseTestUserFx";
 import { expect, test } from "../test";
 import { shot } from "../utils/shot";
 import { uploadFixtureViaS3 } from "../utils/uploadFixtureViaS3";
-
-const seller = {
-	email: "a@x32.cz",
-	password: "12345678",
-} as const;
-
-const buyer = {
-	email: "b@x32.cz",
-	password: "12345678",
-} as const;
 
 const fixturePath = path.resolve(import.meta.dirname, "../fixtures/listing-create-image.jpg");
 
@@ -32,12 +21,17 @@ async function expectImageLoaded(locator: Locator) {
 		.toBe(true);
 }
 
-async function signIn(page: Page, user: typeof seller | typeof buyer) {
+async function signIn(
+	page: Page,
+	user: {
+		email: string;
+	},
+) {
 	await page.goto("/cs/landing");
 	await page.locator('[data-action="goto sign-in"]').click();
 	await page.waitForURL("/cs/sign-in");
 	await page.locator('[data-ui="SignInPage[EmailInput]"]').fill(user.email);
-	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(user.password);
+	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(TEST_USER_PASSWORD);
 	await page.locator('[data-action="sign in"]').click();
 	await page.waitForURL("/cs/app/home");
 }
@@ -48,34 +42,19 @@ test("buyer creates transaction from listing feed and sees messages button", asy
 	page,
 	database,
 }, testInfo) => {
-	const ath = auth({
-		dialect: () => database.dialect,
-		translator: await withTranslatorFx({
-			locale: "cs",
-		}).pipe(withRuntimeFx(database), Effect.runPromise),
-	});
+	const { sellerUser, buyerUser } = await Effect.gen(function* () {
+		const sellerUser = yield* leaseTestUserFx({
+			key: "a",
+		});
+		const buyerUser = yield* leaseTestUserFx({
+			key: "b",
+		});
 
-	await ath.api.signUpEmail({
-		body: {
-			name: seller.email,
-			email: seller.email,
-			password: seller.password,
-		},
-	});
-
-	await ath.api.signUpEmail({
-		body: {
-			name: buyer.email,
-			email: buyer.email,
-			password: buyer.password,
-		},
-	});
-
-	const sellerUser = await database.kysely
-		.selectFrom("user")
-		.select("id")
-		.where("email", "=", seller.email)
-		.executeTakeFirstOrThrow();
+		return {
+			sellerUser,
+			buyerUser,
+		};
+	}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 	const title = `E2E buyer transaction ${Date.now()}`;
 	const upload = await uploadFixtureViaS3({
@@ -89,7 +68,7 @@ test("buyer creates transaction from listing feed and sees messages button", asy
 		uploadId: upload.id,
 	}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-	await signIn(page, buyer);
+	await signIn(page, buyerUser);
 
 	await page.locator('[data-action="open listings"]').click();
 	await page.waitForURL(/\/cs\/app\/buyer\/feed\/[^/]+\/list$/);

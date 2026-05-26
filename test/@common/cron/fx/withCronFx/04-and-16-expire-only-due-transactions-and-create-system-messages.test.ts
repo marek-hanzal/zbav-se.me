@@ -9,6 +9,7 @@ import { transactionRejectFx } from "~/buyer/transaction/server/fx/transactionRe
 import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
 import type { ScheduleSchema } from "~/common/@cron/schema/ScheduleSchema";
 import { withCronFx } from "~/common/@cron/server/withCronFx";
+import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
@@ -94,6 +95,12 @@ describe("withCronFx transaction expiration", () => {
 				sellerId: seller.id,
 				buyerId: buyer.id,
 			});
+			const dueTransactionIds = [
+				dueInterestScenario.transactionId,
+				dueTradeScenario.transactionId,
+				dueResolvedScenario.transactionId,
+				dueDisputeScenario.transactionId,
+			];
 
 			yield* Effect.promise(() =>
 				database.kysely
@@ -145,6 +152,38 @@ describe("withCronFx transaction expiration", () => {
 					.execute(),
 			);
 
+			yield* Effect.promise(() =>
+				database.kysely
+					.insertInto("transaction_entry")
+					.values(
+						dueTransactionIds.flatMap((transactionId, index) => {
+							return [
+								...TransactionEntrySensitiveKindEnumSchema.options.map((kind) => ({
+									id: `${transactionId}-${kind}`,
+									transactionId,
+									kind,
+									userId: buyer.id,
+									payload: {
+										text: `${kind}-${index}`,
+									},
+									createdAt: before.toJSDate(),
+								})),
+								{
+									id: `${transactionId}-text`,
+									transactionId,
+									kind: "text" as const,
+									userId: buyer.id,
+									payload: {
+										text: `keep-${index}`,
+									},
+									createdAt: before.toJSDate(),
+								},
+							];
+						}),
+					)
+					.execute(),
+			);
+
 			yield* atFx(
 				now,
 				withCronFx({
@@ -153,10 +192,7 @@ describe("withCronFx transaction expiration", () => {
 			);
 
 			const transactionIds = [
-				dueInterestScenario.transactionId,
-				dueTradeScenario.transactionId,
-				dueResolvedScenario.transactionId,
-				dueDisputeScenario.transactionId,
+				...dueTransactionIds,
 				futureTradeScenario.transactionId,
 			];
 
@@ -249,6 +285,34 @@ describe("withCronFx transaction expiration", () => {
 					}),
 				]),
 			);
+
+			const survivingStructuredEntries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select([
+						"transactionId",
+						"kind",
+					])
+					.where("transactionId", "in", dueTransactionIds)
+					.where("kind", "in", TransactionEntrySensitiveKindEnumSchema.options)
+					.execute(),
+			);
+
+			expect(survivingStructuredEntries).toHaveLength(0);
+
+			const survivingTextEntries = yield* Effect.promise(() =>
+				database.kysely
+					.selectFrom("transaction_entry")
+					.select([
+						"transactionId",
+						"kind",
+					])
+					.where("transactionId", "in", dueTransactionIds)
+					.where("kind", "=", "text")
+					.execute(),
+			);
+
+			expect(survivingTextEntries).toHaveLength(4);
 
 			const activities = yield* Effect.promise(() =>
 				database.kysely

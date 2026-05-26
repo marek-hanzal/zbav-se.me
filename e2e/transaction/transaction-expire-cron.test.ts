@@ -2,31 +2,26 @@ import path from "node:path";
 import type { Locator, Page } from "@playwright/test";
 import { Effect } from "effect";
 import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { auth } from "~/server/auth/auth";
+import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
-import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
+import { leaseTestUserFx, TEST_USER_PASSWORD } from "~/test/user/fx/leaseTestUserFx";
 import { expect, test } from "../test";
 import { uploadFixtureViaS3 } from "../utils/uploadFixtureViaS3";
 
-const seller = {
-	email: "expire-seller@x32.cz",
-	password: "12345678",
-} as const;
-
-const buyer = {
-	email: "expire-buyer@x32.cz",
-	password: "12345678",
-} as const;
-
 const fixturePath = path.resolve(import.meta.dirname, "../fixtures/listing-create-image.jpg");
 
-async function signIn(page: Page, user: typeof seller | typeof buyer) {
+async function signIn(
+	page: Page,
+	user: {
+		email: string;
+	},
+) {
 	await page.goto("/cs/landing");
 	await page.locator('[data-action="goto sign-in"]').click();
 	await page.waitForURL("/cs/sign-in");
 	await page.locator('[data-ui="SignInPage[EmailInput]"]').fill(user.email);
-	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(user.password);
+	await page.locator('[data-ui="SignInPage[PasswordInput]"]').fill(TEST_USER_PASSWORD);
 	await page.locator('[data-action="sign in"]').click();
 	await page.waitForURL("/cs/app/home");
 }
@@ -50,40 +45,19 @@ test("buyer sees cron-expired transaction as a system message", async ({
 	db,
 	appOrigin,
 }) => {
-	const ath = auth({
-		dialect: () => database.dialect,
-		translator: await withTranslatorFx({
-			locale: "cs",
-		}).pipe(withRuntimeFx(database), Effect.runPromise),
-	});
+	const { sellerUser, buyerUser } = await Effect.gen(function* () {
+		const sellerUser = yield* leaseTestUserFx({
+			key: "a",
+		});
+		const buyerUser = yield* leaseTestUserFx({
+			key: "b",
+		});
 
-	await ath.api.signUpEmail({
-		body: {
-			name: seller.email,
-			email: seller.email,
-			password: seller.password,
-		},
-	});
-
-	await ath.api.signUpEmail({
-		body: {
-			name: buyer.email,
-			email: buyer.email,
-			password: buyer.password,
-		},
-	});
-
-	const sellerUser = await database.kysely
-		.selectFrom("user")
-		.select("id")
-		.where("email", "=", seller.email)
-		.executeTakeFirstOrThrow();
-
-	const buyerUser = await database.kysely
-		.selectFrom("user")
-		.select("id")
-		.where("email", "=", buyer.email)
-		.executeTakeFirstOrThrow();
+		return {
+			sellerUser,
+			buyerUser,
+		};
+	}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 	const title = `E2E expired transaction ${Date.now()}`;
 	const upload = await uploadFixtureViaS3({
@@ -97,7 +71,7 @@ test("buyer sees cron-expired transaction as a system message", async ({
 		uploadId: upload.id,
 	}).pipe(withRuntimeFx(database), Effect.runPromise);
 
-	await signIn(page, buyer);
+	await signIn(page, buyerUser);
 
 	await page.locator('[data-action="open listings"]').click();
 	await page.waitForURL(/\/cs\/app\/buyer\/feed\/[^/]+\/list$/);
@@ -128,6 +102,32 @@ test("buyer sees cron-expired transaction as a system message", async ({
 		.where("id", "=", transaction.id)
 		.execute();
 
+	await database.kysely
+		.insertInto("transaction_entry")
+		.values([
+			...TransactionEntrySensitiveKindEnumSchema.options.map((kind) => ({
+				id: `${transaction.id}-${kind}`,
+				transactionId: transaction.id,
+				kind,
+				userId: buyerUser.id,
+				payload: {
+					text: kind,
+				},
+				createdAt: new Date("2026-05-10T03:50:00.000Z"),
+			})),
+			{
+				id: `${transaction.id}-text`,
+				transactionId: transaction.id,
+				kind: "text" as const,
+				userId: buyerUser.id,
+				payload: {
+					text: "keep me",
+				},
+				createdAt: new Date("2026-05-10T03:50:00.000Z"),
+			},
+		])
+		.execute();
+
 	const cronResponse = await fetch(new URL("/api/cron/04", appOrigin), {
 		method: "POST",
 		headers: {
@@ -153,6 +153,18 @@ test("buyer sees cron-expired transaction as a system message", async ({
 			return expiredTransaction.status;
 		})
 		.toBe("expired");
+
+	const remainingKinds = await database.kysely
+		.selectFrom("transaction_entry")
+		.select("kind")
+		.where("transactionId", "=", transaction.id)
+		.execute();
+
+	expect(remainingKinds.map(({ kind }) => kind)).not.toEqual(
+		expect.arrayContaining(Array.from(TransactionEntrySensitiveKindEnumSchema.options)),
+	);
+	expect(remainingKinds.map(({ kind }) => kind)).toContain("text");
+	expect(remainingKinds.map(({ kind }) => kind)).toContain("status-expired");
 });
 
 test("seller sees cron-expired transaction as a system message", async ({
@@ -161,40 +173,19 @@ test("seller sees cron-expired transaction as a system message", async ({
 	db,
 	appOrigin,
 }) => {
-	const ath = auth({
-		dialect: () => database.dialect,
-		translator: await withTranslatorFx({
-			locale: "cs",
-		}).pipe(withRuntimeFx(database), Effect.runPromise),
-	});
+	const { sellerUser, buyerUser } = await Effect.gen(function* () {
+		const sellerUser = yield* leaseTestUserFx({
+			key: "a",
+		});
+		const buyerUser = yield* leaseTestUserFx({
+			key: "b",
+		});
 
-	await ath.api.signUpEmail({
-		body: {
-			name: seller.email,
-			email: seller.email,
-			password: seller.password,
-		},
-	});
-
-	await ath.api.signUpEmail({
-		body: {
-			name: buyer.email,
-			email: buyer.email,
-			password: buyer.password,
-		},
-	});
-
-	const sellerUser = await database.kysely
-		.selectFrom("user")
-		.select("id")
-		.where("email", "=", seller.email)
-		.executeTakeFirstOrThrow();
-
-	const buyerUser = await database.kysely
-		.selectFrom("user")
-		.select("id")
-		.where("email", "=", buyer.email)
-		.executeTakeFirstOrThrow();
+		return {
+			sellerUser,
+			buyerUser,
+		};
+	}).pipe(withRuntimeFx(database), Effect.runPromise);
 
 	const title = `E2E seller expired transaction ${Date.now()}`;
 	const upload = await uploadFixtureViaS3({
@@ -221,7 +212,7 @@ test("seller sees cron-expired transaction as a system message", async ({
 		.where("id", "=", transaction.id)
 		.execute();
 
-	await signIn(page, seller);
+	await signIn(page, sellerUser);
 
 	const cronResponse = await fetch(new URL("/api/cron/04", appOrigin), {
 		method: "POST",

@@ -1,6 +1,9 @@
 import { Effect } from "effect";
 import type { withDatabaseFx } from "@/lib/common/database";
+import { translator } from "@/lib/common/translation";
+import { auth } from "~/server/auth/auth";
 import type { Database } from "~/server/database/Database";
+import { TEST_USER_PASSWORD, toLeasedTestUserEmail } from "~/test/user/fx/leaseTestUserFx";
 
 const TEST_USER_KEYS = [
 	"a",
@@ -40,23 +43,26 @@ export namespace seedTestUsersFx {
 export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 	database,
 }: seedTestUsersFx.Props) {
-	const now = new Date("2026-01-01T00:00:00.000Z");
+	const seedTranslator = translator({
+		translations: [],
+	});
+	const { api } = auth({
+		dialect: () => database.dialect,
+		translator: seedTranslator,
+	});
 
-	yield* Effect.promise(() =>
-		database.kysely
-			.insertInto("user")
-			.values(
-				TEST_USER_KEYS.map((key) => ({
-					id: `user_test_${key}`,
-					email: `test-${key}@test.cz`,
-					name: `Test ${key.toUpperCase()}`,
-					emailVerified: false,
-					image: null,
-					createdAt: now,
-					updatedAt: now,
-				})),
-			)
-			.onConflict((oc) => oc.column("email").doNothing())
-			.execute(),
+	yield* Effect.forEach(TEST_USER_KEYS, (key) =>
+		Effect.tryPromise({
+			try: async () => {
+				await api.signUpEmail({
+					body: {
+						email: toLeasedTestUserEmail(key),
+						name: `Test ${key.toUpperCase()}`,
+						password: TEST_USER_PASSWORD,
+					},
+				});
+			},
+			catch: (cause) => cause,
+		}),
 	);
 });
