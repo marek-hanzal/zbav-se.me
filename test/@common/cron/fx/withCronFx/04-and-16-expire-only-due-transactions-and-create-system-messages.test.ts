@@ -9,7 +9,7 @@ import { transactionRejectFx } from "~/buyer/transaction/server/fx/transactionRe
 import { transactionSuccessFx } from "~/buyer/transaction/server/fx/transactionSuccessFx";
 import type { ScheduleSchema } from "~/common/@cron/schema/ScheduleSchema";
 import { withCronFx } from "~/common/@cron/server/withCronFx";
-import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
+import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntrySensitiveKindEnumSchema";
 import { transactionAcceptFx } from "~/seller/transaction/server/fx/transactionAcceptFx";
 import { transactionResolveFx } from "~/seller/transaction/server/fx/transactionResolveFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";

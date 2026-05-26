@@ -2,7 +2,7 @@ import path from "node:path";
 import type { Locator, Page } from "@playwright/test";
 import { Effect } from "effect";
 import { transactionCreateFx } from "~/buyer/transaction/server/fx/transactionCreateFx";
-import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
+import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntrySensitiveKindEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { leaseTestUserFx, TEST_USER_PASSWORD } from "~/test/user/fx/leaseTestUserFx";

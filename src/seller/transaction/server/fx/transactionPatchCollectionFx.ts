@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
+import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntrySensitiveKindEnumSchema";
 import type { TransactionFilterSchema } from "~/seller/transaction/server/schema/TransactionFilterSchema";
 import type { TransactionPatchCollectionSchema } from "~/seller/transaction/server/schema/TransactionPatchCollectionSchema";
 import { dbFx } from "~/server/database/fx/dbFx";
@@ -74,11 +75,7 @@ export const transactionPatchCollectionFx = Effect.fn("transactionPatchCollectio
 					return kysely
 						.deleteFrom("transaction_entry")
 						.where("transactionId", "in", ids)
-						.where("kind", "in", [
-							"location",
-							"package",
-							"personal",
-						])
+						.where("kind", "in", TransactionEntrySensitiveKindEnumSchema.options)
 						.executeTakeFirst();
 				});
 			}

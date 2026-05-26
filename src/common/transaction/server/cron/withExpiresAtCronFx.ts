@@ -1,13 +1,16 @@
-import { Effect } from "effect";
+import { Chunk, Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
+import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntrySensitiveKindEnumSchema";
 import type { ActivityTableSchema } from "~/server/database/@table/ActivityTableSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { Transitions } from "~/user/transaction/server/fx/transactionTransitionFx";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
+
+const INSERT_CHUNK_SIZE = 1_000;
 
 export const withExpiresAtCronFx = Effect.fn("withExpiresAtCronFx")(function* () {
 	const logger = yield* getLoggerFx("withExpiresAtCronFx", "cron");
@@ -43,7 +46,7 @@ export const withExpiresAtCronFx = Effect.fn("withExpiresAtCronFx")(function* ()
 				return;
 			}
 
-			const transactionEnvelopes = transactions.map((transaction) => ({
+			const envelopes = transactions.map((transaction) => ({
 				transaction,
 				transactionEntry: {
 					id: genId(),
@@ -59,6 +62,14 @@ export const withExpiresAtCronFx = Effect.fn("withExpiresAtCronFx")(function* ()
 
 			yield* dbFx(async (kysely) => {
 				return kysely
+					.deleteFrom("transaction_entry")
+					.where("transactionId", "in", sourceQuery.select("t.id"))
+					.where("kind", "in", TransactionEntrySensitiveKindEnumSchema.options)
+					.executeTakeFirst();
+			});
+
+			yield* dbFx(async (kysely) => {
+				return kysely
 					.updateTable("transaction")
 					.set({
 						status: "expired",
@@ -69,66 +80,90 @@ export const withExpiresAtCronFx = Effect.fn("withExpiresAtCronFx")(function* ()
 					.execute();
 			});
 
-			yield* dbFx(async (kysely) => {
-				return kysely
-					.insertInto("transaction_entry")
-					.values(
-						transactionEnvelopes.map(({ transactionEntry }) => {
-							return transactionEntry;
-						}),
-					)
-					.execute();
+			const entries = envelopes.map(({ transactionEntry }) => transactionEntry);
+
+			const activities = envelopes.flatMap(({ transaction, transactionEntry }) => {
+				return [
+					{
+						id: genId(),
+						userId: transaction.sellerId,
+						reference: [
+							transaction.listingId,
+							transaction.id,
+						],
+						family: "transaction",
+						type: "system",
+						payload: {
+							transactionId: transaction.id,
+							listingId: transaction.listingId,
+							transactionEntryId: transactionEntry.id,
+							target: "seller",
+						},
+						priority: "high",
+						timestamp: now,
+						archivedAt: null,
+					} satisfies ActivityTableSchema.Type,
+					{
+						id: genId(),
+						userId: transaction.buyerId,
+						reference: [
+							transaction.listingId,
+							transaction.id,
+						],
+						family: "transaction",
+						type: "system",
+						payload: {
+							transactionId: transaction.id,
+							listingId: transaction.listingId,
+							transactionEntryId: transactionEntry.id,
+							target: "buyer" as const,
+						},
+						priority: "high",
+						timestamp: now,
+						archivedAt: null,
+					} satisfies ActivityTableSchema.Type,
+				];
 			});
 
-			yield* dbFx(async (kysely) => {
-				return kysely
-					.insertInto("activity")
-					.values(
-						transactionEnvelopes.flatMap(({ transaction, transactionEntry }) => {
-							return [
-								{
-									id: genId(),
-									userId: transaction.sellerId,
-									reference: [
-										transaction.listingId,
-										transaction.id,
-									],
-									family: "transaction",
-									type: "system",
-									payload: {
-										transactionId: transaction.id,
-										listingId: transaction.listingId,
-										transactionEntryId: transactionEntry.id,
-										target: "seller",
-									},
-									priority: "high",
-									timestamp: now,
-									archivedAt: null,
-								} satisfies ActivityTableSchema.Type,
-								{
-									id: genId(),
-									userId: transaction.buyerId,
-									reference: [
-										transaction.listingId,
-										transaction.id,
-									],
-									family: "transaction",
-									type: "system",
-									payload: {
-										transactionId: transaction.id,
-										listingId: transaction.listingId,
-										transactionEntryId: transactionEntry.id,
-										target: "buyer" as const,
-									},
-									priority: "high",
-									timestamp: now,
-									archivedAt: null,
-								} satisfies ActivityTableSchema.Type,
-							];
-						}),
-					)
-					.execute();
-			});
+			const insertEntriesFx = Effect.forEach(
+				Chunk.chunksOf(Chunk.fromIterable(entries), INSERT_CHUNK_SIZE),
+				(chunk) => {
+					return dbFx(async (kysely) => {
+						return kysely
+							.insertInto("transaction_entry")
+							.values(Chunk.toReadonlyArray(chunk))
+							.execute();
+					});
+				},
+				{
+					concurrency: 2,
+				},
+			);
+
+			const insertActivitiesFx = Effect.forEach(
+				Chunk.chunksOf(Chunk.fromIterable(activities), INSERT_CHUNK_SIZE),
+				(chunk) => {
+					return dbFx(async (kysely) => {
+						return kysely
+							.insertInto("activity")
+							.values(Chunk.toReadonlyArray(chunk))
+							.execute();
+					});
+				},
+				{
+					concurrency: 2,
+				},
+			);
+
+			yield* Effect.all(
+				[
+					insertEntriesFx,
+					insertActivitiesFx,
+				],
+				{
+					concurrency: 2,
+				},
+			);
 		}),
 	);
 });
