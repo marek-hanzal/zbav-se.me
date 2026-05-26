@@ -111,7 +111,7 @@ describe("feedLifecycleFx", () => {
 				},
 			});
 
-			expect(collection).toHaveLength(2);
+			expect(collection).toHaveLength(3);
 			expect(collection.every((item) => item.userId === owner.id)).toBe(true);
 
 			const count = yield* feedCountFx({
@@ -120,7 +120,7 @@ describe("feedLifecycleFx", () => {
 				},
 			});
 
-			expect(count).toBe(2);
+			expect(count).toBe(3);
 
 			const foreignFetch = yield* Effect.either(
 				feedFetchFx({
