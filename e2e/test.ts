@@ -1,4 +1,5 @@
 import path from "node:path";
+import type { APIRequestContext } from "@playwright/test";
 import { test as base, expect } from "@playwright/test";
 import { testabase } from "./utils/testabase";
 
@@ -30,10 +31,13 @@ function toDatabaseName(
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 
+type WithRequest = <T>(callback: (request: APIRequestContext) => Promise<T>) => Promise<T>;
+
 export const test = base.extend<{
 	appOrigin: string;
 	db: string;
 	database: TestDatabase;
+	withRequest: WithRequest;
 }>({
 	// biome-ignore lint/correctness/noEmptyPattern: Ssst
 	async appOrigin({}, use) {
@@ -71,6 +75,37 @@ export const test = base.extend<{
 		});
 
 		await cleanup();
+	},
+	async withRequest({ appOrigin, db, playwright }, use) {
+		const contexts = new Set<APIRequestContext>();
+
+		const withRequest: WithRequest = async (callback) => {
+			const context = await playwright.request.newContext({
+				baseURL: appOrigin,
+				extraHTTPHeaders: {
+					origin: appOrigin,
+					"x-e2e-db": db,
+				},
+				ignoreHTTPSErrors: true,
+			});
+
+			contexts.add(context);
+
+			try {
+				return await callback(context);
+			} finally {
+				contexts.delete(context);
+				await context.dispose();
+			}
+		};
+
+		await use(withRequest);
+
+		await Promise.all(
+			Array.from(contexts).map(async (context) => {
+				await context.dispose();
+			}),
+		);
 	},
 	async page({ page, db, database }, use) {
 		void database;
