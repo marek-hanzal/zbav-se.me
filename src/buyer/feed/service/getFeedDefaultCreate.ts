@@ -8,6 +8,9 @@ export const getFeedDefaultCreate = (name: string, type: FeedTypeEnumSchema.Type
 		query: {
 			where: {
 				withIgnored: false,
+				statusIn: [
+					"live",
+				],
 			},
 			sort: [
 				{
