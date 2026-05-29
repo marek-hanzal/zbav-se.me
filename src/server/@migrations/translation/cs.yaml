@@ -848,6 +848,22 @@ Listing location (label):
     value: Umístění
 Listing location not selected:
     value: Polohu nemáš vyplněnou
+Listing status (label):
+    value: Stav inzerátu
+Listing status - closed:
+    value: Uzavřené
+    dynamic: true
+Listing status - expired:
+    value: Vypršelé
+    dynamic: true
+Listing status - live:
+    value: Aktivní
+    dynamic: true
+Listing status - sold:
+    value: Prodané
+    dynamic: true
+Listing status not selected:
+    value: Jakýkoli stav
 Listing photo gallery (label):
     value: Nahraj fotky
 Listing price (label):

@@ -92,7 +92,7 @@ describe("buyer listing discovery flow", () => {
 				type: "search",
 				name: "Portable consoles",
 				query: {
-					where: {
+					filter: {
 						// title: "portable console",
 					},
 				},

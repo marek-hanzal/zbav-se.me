@@ -10,6 +10,7 @@ import type { useView } from "@/lib/client/view";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { DeliveryValueList } from "~/common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
+import { ListingStatusValueList } from "~/common/listing/ui/ListingStatusValueList";
 import { LocationValue } from "~/common/location/ui/LocationValue";
 import { PriceTypeList } from "~/common/price-type/ui/PriceTypeList";
 import { TitleValue } from "~/common/title/ui/TitleValue";
@@ -26,6 +27,8 @@ import { RangeValue } from "./value/RangeValue";
 import { SortValue } from "./value/SortValue";
 import { WarrantyValueList } from "./value/WarrantyValueList";
 
+export { ListingStatusValueList } from "~/common/listing/ui/ListingStatusValueList";
+
 export namespace Editor {
 	export type Section = "header";
 
@@ -41,6 +44,7 @@ export namespace Editor {
 			| "sort"
 			| "condition"
 			| "age"
+			| "status"
 			| "delivery"
 			| "warranty"
 			| "title"
@@ -56,6 +60,7 @@ export namespace Editor {
 export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, children, ...props }) => {
 	const translator = useTranslator();
 	const locationId = feed.query?.meta?.locationId;
+	const statusIn = feed.query?.filter?.statusIn ?? [];
 	const { data: location } = withLocationQuery.useMaybeEntityQuery({
 		where: {
 			id: feed.query?.meta?.locationId ?? "<nope>",
@@ -205,6 +210,23 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 								!locationId || feed.query?.filter?.range ? "neutral" : "secondary",
 						}}
 						onClick={() => view.set("range")}
+					/>
+				</Group>
+
+				<Group>
+					<ListingStatusValueList
+						data-action={"edit feed status"}
+						statusIn={statusIn}
+						action={
+							<Icon
+								icon={ChevronRightIcon}
+								data-ui-text="xl"
+							/>
+						}
+						wrapperProps={{
+							"data-ui-tone": statusIn.length > 0 ? "neutral" : "secondary",
+						}}
+						onClick={() => view.set("status")}
 					/>
 				</Group>
 
