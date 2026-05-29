@@ -57,7 +57,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 						textValue={toTimeDiff({
 							locale,
 							time: listing.expiresAt,
-							type: "human",
+							type: "relative",
 						})}
 					/>
 				)}
