@@ -1,0 +1,11 @@
+[
+	{
+		"name": "listing.count"
+	},
+	{
+		"name": "feed.count"
+	},
+	{
+		"name": "listing.gallery.count"
+	}
+]

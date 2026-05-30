@@ -92,7 +92,10 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, view }) =>
 								"data-ui-text": "2xl",
 							}}
 						>
-							<Tx label={"Listing no longer active (label)"} data-ui-text="lg" />
+							<Tx
+								label={"Listing no longer active (label)"}
+								data-ui-text="lg"
+							/>
 							<Tx
 								label={"Listing no longer active (hint)"}
 								data-ui-opacity="6"

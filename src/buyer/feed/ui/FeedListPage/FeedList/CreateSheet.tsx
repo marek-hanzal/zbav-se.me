@@ -13,6 +13,7 @@ import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate"
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { CloseButton } from "~/common/ui/button";
 import { useAppForm } from "~/common/ui/form";
+import { useResourceLimit } from "~/user/user-resource/hook/useResourceLimit";
 
 const FormSchema = FeedCreateSchema.pick({
 	name: true,
@@ -26,6 +27,16 @@ export namespace CreateSheet {
 
 export const CreateSheet: FC<CreateSheet.Props> = ({ state, ...props }) => {
 	const translator = useTranslator();
+	const { data: feedCount } = withFeedQuery.useCountQuery({
+		filter: {
+			type: "user",
+		},
+	});
+	const resourceLimit = useResourceLimit({
+		resource: "feed.count",
+		count: feedCount,
+		enabled: state.value,
+	});
 	const feedCreateMutation = withFeedQuery.useCreateMutation({
 		onSettled() {
 			state.set(false);
@@ -44,6 +55,10 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ state, ...props }) => {
 			onSubmit: FormSchema,
 		},
 		async onSubmit({ value: { name } }) {
+			if (!resourceLimit.isAvailable) {
+				return;
+			}
+
 			return feedCreateMutation.mutateAsync(getFeedDefaultCreate(name));
 		},
 	});
@@ -136,7 +151,7 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ state, ...props }) => {
 									form.handleSubmit();
 								}}
 								loading={isSubmitting}
-								disabled={!isValid}
+								disabled={!isValid || !resourceLimit.isAvailable}
 							/>
 						)}
 					</form.Subscribe>

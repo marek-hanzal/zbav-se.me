@@ -17,6 +17,7 @@ import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
+import { useResourceLimit } from "~/user/user-resource/hook/useResourceLimit";
 
 const FormSchema = FeedCreateSchema.pick({
 	name: true,
@@ -38,6 +39,15 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 	const navigate = useNavigate();
 	const locale = useLocale();
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
+	const { data: feedCount } = withFeedQuery.useCountQuery({
+		filter: {
+			type: "user",
+		},
+	});
+	const resourceLimit = useResourceLimit({
+		resource: "feed.count",
+		count: feedCount,
+	});
 	const [isOpen, setIsOpen] = useState(false);
 	const [name, setName] = useState("");
 	const createMutation = withFeedQuery.useCreateMutation({
@@ -64,6 +74,10 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 			onSubmit: FormSchema,
 		},
 		async onSubmit({ value }) {
+			if (!resourceLimit.isAvailable) {
+				return;
+			}
+
 			return createMutation.mutateAsync({
 				...feed,
 				...value,
@@ -75,7 +89,14 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 		<>
 			<Button
 				data-ui={"SaveAsFeedButton"}
-				onClick={() => setIsOpen(true)}
+				onClick={() => {
+					if (!resourceLimit.isAvailable) {
+						return;
+					}
+
+					setIsOpen(true);
+				}}
+				disabled={!resourceLimit.isAvailable}
 				iconEnabled={SaveIcon}
 				iconProps={{
 					"data-ui-text": "xl",
@@ -173,7 +194,9 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 										form.handleSubmit();
 									}}
 									loading={isSubmitting}
-									disabled={!isValid || isSubmitting}
+									disabled={
+										!isValid || isSubmitting || !resourceLimit.isAvailable
+									}
 								/>
 							)}
 						</form.Subscribe>

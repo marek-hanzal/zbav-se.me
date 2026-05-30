@@ -1,7 +1,9 @@
 import { type FC, useState } from "react";
 import { Icon, PlusIcon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
+import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { ListItem } from "~/common/list-item/ListItem";
+import { useResourceLimit } from "~/user/user-resource/hook/useResourceLimit";
 import { CreateSheet } from "./CreateSheet";
 
 export namespace CreateButton {
@@ -12,12 +14,23 @@ export namespace CreateButton {
 
 export const CreateButton: FC<CreateButton.Props> = ({ className, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
+	const { data: feedCount } = withFeedQuery.useCountQuery({
+		filter: {
+			type: "user",
+		},
+	});
+	const resourceLimit = useResourceLimit({
+		resource: "feed.count",
+		count: feedCount,
+	});
+	const disabled = resourceLimit.isLoading || !resourceLimit.isAvailable;
 
 	return (
 		<>
 			<ListItem
 				data-ui={"CreateButton[Button]"}
 				data-action={"create new feed"}
+				data-ui-disabled={disabled}
 				hero={
 					<Icon
 						icon={PlusIcon}
@@ -39,7 +52,13 @@ export const CreateButton: FC<CreateButton.Props> = ({ className, ...props }) =>
 						data-ui-opacity="6"
 					/>
 				}
-				onClick={() => setIsOpen(true)}
+				onClick={() => {
+					if (disabled) {
+						return;
+					}
+
+					setIsOpen(true);
+				}}
 				{...props}
 			/>
 

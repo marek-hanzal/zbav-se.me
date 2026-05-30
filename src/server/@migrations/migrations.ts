@@ -46,6 +46,8 @@ import { TranslationMigration } from "~/server/@migrations/0044-translation";
 import { ListingSpotlightMigration } from "~/server/@migrations/0045-listing-spotlight";
 import { RateLimitRuleMigration } from "~/server/@migrations/0046-rate-limit-rule";
 import { RateLimitEventMigration } from "~/server/@migrations/0047-rate-limit-event";
+import { ResourceDefinitionMigration } from "~/server/@migrations/0048-resource-definition";
+import { UserResourceLimitMigration } from "~/server/@migrations/0049-user-resource-limit";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -96,4 +98,6 @@ export const migrations = {
 	"0045-listing-spotlight": ListingSpotlightMigration,
 	"0046-rate-limit-rule": RateLimitRuleMigration,
 	"0047-rate-limit-event": RateLimitEventMigration,
+	"0048-resource-definition": ResourceDefinitionMigration,
+	"0049-user-resource-limit": UserResourceLimitMigration,
 };
