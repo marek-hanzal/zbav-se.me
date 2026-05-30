@@ -2571,17 +2571,10 @@ Related:
 
 Navigace je schválně nudná a stabilní. Uživatel se nemá proklikávat labyrintem. Má mít jistotu, že vždycky ví, kde je, a vždycky má únik.
 
-Bottom nav (5 ikon, pořád stejně):
-| Ikona          | Sekce                | Poznámka                   |
-| -------------- | -------------------- | -------------------------- |
-| Home           | Centrální Dashboard  | společnej entrypoint       |
-| Chci prodávat  | Seller home          | mindset „prodávám“         |
-| Chci nakupovat | Buyer home           | mindset „nakupuju“         |
-| Bonusy         | ekonomika / aktivace | rozšíření, passy, tokeny   |
-| Můj účet       | profil / nastavení   | preference, hranice, ticho |
-
 Kontrakt:
+- Navigace má držet několik stabilních vstupů do hlavních produktových kontextů: společný přehled, prodej, nákup, účet a ekonomiku / aktivace.
 - Role nejsou identita ani přepínač „jsem seller/buyer“. Je to rychlej vstup do dvou nejčastějších mindsetů.
+- Konkrétní podoba navigace není součástí pravdy tohohle dokumentu. Důležitý je jen to, jaké kontexty má zpřístupnit a jak se v nich má člověk orientovat.
 
 Related:
 - [Landing](#koncept-landing)
@@ -2642,12 +2635,11 @@ Related:
 ### UI: Dashboard
 ← [předchozí](#koncept-ui-ramec) | [další](#koncept-ui-seller) →
 
-Dashboard je launcher. Není to feed. Má být krátkej, jasnej, bez potřeby scrollovat jak blázen.
+Dashboard je společný entrypoint. Není to feed ani další samostatný svět.
 
-Co tu je:
-- Novinky / pulz: co přibylo.
-- Notifikace: co čeká na reakci.
-- Rychlý skoky: typicky „Inzeráty“ a „Nový inzerát“ (vstupy do existujících konceptů, ne vlastní svět).
+Kontrakt:
+- Má rychle ukázat „co je nového“, „co čeká na reakci“ a „kam mám teď nejspíš jít“.
+- Je to přehled a rozcestník, ne místo, kde se znovu vymýšlí logika ostatních konceptů.
 
 Related:
 - [Notifikace (Activity)](#koncept-notifikace)
@@ -2660,15 +2652,11 @@ Related:
 ### UI: Chci prodávat
 ← [předchozí](#koncept-ui-dashboard) | [další](#koncept-ui-buyer) →
 
-Domov pro „prodávám“. Velký karty, jasný volby, žádný menu v menu.
+Tohle je produktový kontext „prodávám“.
 
-Karty:
-| Karta                     | Co dělá                  | Pravidlo                                                                                            |
-| ------------------------- | ------------------------ | --------------------------------------------------------------------------------------------------- |
-| Nový inzerát / Pokračovat | primární vstup do tvorby | když existuje draft → „Pokračovat“, jinak „Nový inzerát“; při „Nový inzerát“ může nastat Draft Gate |
-| Zprávy                    | moje rozjednané prodeje  | transakce přeložený do řeči lidí                                                                    |
-| Šablony                   | seznam draftů            | název „Šablony“, protože mentálně „mám to připravený“                                               |
-| Moje inzeráty             | přehled publikovaných    | stavy `live/expired/closed/sold/banned`                                                             |
+Kontrakt:
+- Má soustředit tvorbu, rozpracované věci, publikované nabídky a rozjednané obchody do jednoho srozumitelného prostoru.
+- Má podporovat flow „začít / navázat / spravovat / dotáhnout“, ne rozpadnout ho do náhodných odboček.
 
 Related:
 - [Draft](#koncept-draft)
@@ -2681,15 +2669,11 @@ Related:
 ### UI: Chci nakupovat
 ← [předchozí](#koncept-ui-seller) | [další](#koncept-ui-rozsireni) →
 
-Domov pro „nakupuju“. Velký karty, jasný volby, žádný menu v menu.
+Tohle je produktový kontext „nakupuju“.
 
-Karty:
-| Karta        | Co dělá               | Poznámka                              |
-| ------------ | --------------------- | ------------------------------------- |
-| Inzeráty     | vstup do listu        | typicky návrat do posledního kontextu |
-| Zprávy       | moje nákupy / domluvy | pořád transakce, jen lidský název     |
-| Moje seznamy | uložený feedy         | správa „co chci vidět“                |
-| Oblíbené     | moje uložený inzeráty | rychlá paměť, žádný algoritmy         |
+Kontrakt:
+- Má soustředit návrat do listingu, správu vlastních feedů, oblíbené a rozjednané nákupy do jednoho mentálního rámce.
+- Má držet kontinuitu nákupního kontextu, aby člověk nemusel znovu hledat, co už si rozkoukal nebo rozjednal.
 
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
@@ -2703,14 +2687,13 @@ Related:
 ### UI: Rozšíření
 ← [předchozí](#koncept-ui-buyer) | [další](#koncept-ui-bonusy) →
 
-Rozšíření jsou centrální ovládací pult pro věci, co se dají zapnout. Uživateli to dává jedno místo, kde vidí „co mám aktivní, co mi končí, co můžu zapnout, a čím to zaplatím“.
+Rozšíření jsou produktový kontext pro věci, které se dají aktivovat nebo odemknout.
 
 Kontrakt:
 - Rozšíření je katalog toho, co jde aktivovat (viz [Ceník](#koncept-cenik)) a co je zamčený ([Exclusive](#koncept-exclusive)).
 - Každá položka má jednu jasnou akci: `Aktivovat` → pravidla drží [Aktivace](#koncept-aktivace).
-- UI vždycky ukáže, jestli spotřebovávám [Kupón](#koncept-kupon), nebo platím [Tokeny](#koncept-tokeny), nebo jen využívám nárok z [Předplatného](#koncept-predplatne).
-- Součástí je „inventář“ kontextu: kolik mám [Tokenů](#koncept-tokeny), kolik mám [Kupónů](#koncept-kupon), jaké mám aktivní [Passy](#koncept-pass) a kdy končí.
-- Pod rozšířeníma je místo pro kupóny, který nejsou „zapni pass“ (jednorázovky).
+- Musí být čitelné, jaký je stav aktivace, na jakém principu se věc odemyká a co je k tomu potřeba.
+- Musí držet pohromadě aktivní stav, dostupné možnosti a důsledky aktivace, ale konkrétní rozložení UI není součástí tohohle dokumentu.
 
 Related:
 - [Aktivace](#koncept-aktivace)
@@ -2727,13 +2710,13 @@ Related:
 ### UI: Bonusy
 ← [předchozí](#koncept-ui-rozsireni) | [další](#koncept-ban) →
 
-Bonusy je UI kapsa na ekonomiku v malým: vyzvednout bonusy, vidět historii, mít po ruce aktivace, a zároveň si pořídit věci navíc (suby + balíčky tokenů).
+Bonusy jsou produktový kontext pro vědomé vyzvedávání odměn a práci s drobnější ekonomickou vrstvou.
 
 Kontrakt:
 - Bonusy jsou místo, kde si **vědomě vyzvednu** věci typu denní drop. Nic se „nevyzvedává samo“.
 - Bonusy jsou místo, kde si můžu pořídit **[Předplatné](#koncept-predplatne)** a **balíčky [Tokenů](#koncept-tokeny)**. Neříkám tomu „obchod“, ale je to tenhle účel.
 - Pravidla bonusů a anti-abuse drží [Tokeny: Získávání](#koncept-tokeny-ziskavani). Tady je jen UI přístup.
-- Bonusy jsou vstupní bod zpátky do [Rozšíření](#koncept-ui-rozsireni): když už mám tokeny, chci hned vidět, co s nima jde dělat.
+- Bonusy mají navazovat na [Rozšíření](#koncept-ui-rozsireni), ale konkrétní UI propojení není součástí tohohle dokumentu.
 
 Related:
 - [Tokeny: Získávání](#koncept-tokeny-ziskavani)
