@@ -3,11 +3,11 @@ import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
 import { withUserRestrictionSelectFx } from "../db/withUserRestrictionSelectFx";
 import type { UserRestrictionCountQuerySchema } from "../schema/UserRestrictionCountQuerySchema";
-import type { UserRestrictionFilterSchema } from "../schema/UserRestrictionFilterSchema";
+import type { UserRestrictionWhereSchema } from "../schema/UserRestrictionWhereSchema";
 
 export namespace userRestrictionCountFx {
 	export interface Props extends UserRestrictionCountQuerySchema.Type {
-		scope: UserRestrictionFilterSchema.Type;
+		scope: UserRestrictionWhereSchema.Type;
 	}
 }
 

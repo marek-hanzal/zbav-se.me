@@ -1,13 +1,12 @@
 import { z } from "zod";
 import { CursorSchema } from "@/lib/common/schema";
-import { UserResourceLimitFilterSchema } from "./UserResourceLimitFilterSchema";
 import { UserResourceLimitSortSchema } from "./UserResourceLimitSortSchema";
 import { UserResourceLimitWhereSchema } from "./UserResourceLimitWhereSchema";
 
 export const UserResourceLimitQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
-		filter: UserResourceLimitFilterSchema.omit({
+		filter: UserResourceLimitWhereSchema.omit({
 			userId: true,
 		}).optional(),
 		where: UserResourceLimitWhereSchema.optional(),

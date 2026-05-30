@@ -120,7 +120,7 @@ describe("userResourceLimit read model fx", () => {
 					},
 					where: {
 						resourceDefinitionId: "listing.count",
-						reference: null,
+						reference: undefined,
 					},
 				}),
 			);

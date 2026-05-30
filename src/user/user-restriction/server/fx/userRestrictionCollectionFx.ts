@@ -2,12 +2,12 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import { withUserRestrictionSelectFx } from "../db/withUserRestrictionSelectFx";
-import type { UserRestrictionFilterSchema } from "../schema/UserRestrictionFilterSchema";
 import type { UserRestrictionQuerySchema } from "../schema/UserRestrictionQuerySchema";
+import type { UserRestrictionWhereSchema } from "../schema/UserRestrictionWhereSchema";
 
 export namespace userRestrictionCollectionFx {
 	export interface Props extends UserRestrictionQuerySchema.Type {
-		scope: UserRestrictionFilterSchema.Type;
+		scope: UserRestrictionWhereSchema.Type;
 	}
 }
 

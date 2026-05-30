@@ -1,12 +1,14 @@
 import { z } from "zod";
-import { UserResourceLimitFilterSchema } from "./UserResourceLimitFilterSchema";
+import { FilterSchema } from "@/lib/common/schema";
+import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 
 export const UserResourceLimitWhereSchema = z
 	.looseObject({
-		...UserResourceLimitFilterSchema.shape,
-	})
-	.omit({
-		userId: true,
+		...FilterSchema.shape,
+		resourceDefinitionId: ResourceDefinitionEnumSchema.optional(),
+		resourceDefinitionIdIn: z.array(ResourceDefinitionEnumSchema).optional(),
+		reference: z.string().min(1).optional(),
+		userId: z.string().min(1).optional(),
 	})
 	.strip()
 	.meta({
