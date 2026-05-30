@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
 import { selectFx } from "@/lib/common/select";
@@ -27,7 +28,7 @@ export const withUserResourceLimitSelectFx = Effect.fn("withUserResourceLimitSel
 			"url.createdAt",
 			"url.availableAt",
 			"url.expiresAt",
-			"url.limit",
+			sql<number>`url.limit::float8`.as("limit"),
 		])
 		.where("url.availableAt", "<=", now)
 		.where((eb) =>
