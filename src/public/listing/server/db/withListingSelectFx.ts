@@ -1,8 +1,10 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
+import { DateContextFx } from "@/lib/common/date";
 import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
+import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import type { CategorySchema } from "~/public/category/server/schema/CategorySchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
@@ -30,13 +32,16 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	meta,
 	hasExplicitCategory,
 }: withListingSelectFx.Props) {
+	const dateContext = yield* DateContextFx;
 	const { kysely } = yield* KyselyContextFx;
+	const now = dateContext.now().toJSDate();
 
 	let select = kysely
 		.selectFrom("listing as l")
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
-		.where("l.status", "in", [
-			"live",
+		.where("l.status", "not in", [
+			"on-hold",
+			"banned",
 		])
 		.where((eb) => {
 			return eb("cat.restriction", "in", publicCategoryRestrictions);
@@ -153,6 +158,15 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					)
 					.$castTo<RestrictionEnumSchema.Type>()
 					.as("withRestriction");
+			},
+			(eb) => {
+				return eb
+					.and([
+						eb("l.status", "=", ListingStatusEnumSchema.enum.live),
+						eb("l.expiresAt", ">", now),
+					])
+					.$castTo<boolean>()
+					.as("isActive");
 			},
 		]),
 		queryFx(select, where: ListingWhereSchema.Type) {

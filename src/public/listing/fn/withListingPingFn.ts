@@ -5,6 +5,7 @@ import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { EntitySchema } from "@/lib/common/schema";
 import { withListingPingFx } from "~/public/listing/server/fx/withListingPingFx";
+import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -31,6 +32,7 @@ export const withListingPingFn = createServerFn()
 			dataFx: withListingPingFx(data),
 		}).pipe(
 			withKyselyFx(database),
+			withDateFx,
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {

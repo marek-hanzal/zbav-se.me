@@ -1,9 +1,11 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
+import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
+import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withNormalizedContainsEx } from "~/server/database/expression/withNormalizedContainsEx";
@@ -31,8 +33,10 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	hasExplicitCategory,
 }: withListingSelectFx.Props) {
 	const locationId = meta?.locationId;
+	const dateContext = yield* DateContextFx;
 	const { kysely } = yield* KyselyContextFx;
 	const logger = yield* getLoggerFx("withListingSelectFx", "buyer");
+	const now = dateContext.now().toJSDate();
 
 	const fallbackSql = sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`;
 	const restrictionSql = yield* withUserRestrictionActiveSelectFx({
@@ -256,6 +260,14 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					)
 					.$castTo<boolean>()
 					.as("hasFlag"),
+
+				eb
+					.and([
+						eb("l.status", "=", ListingStatusEnumSchema.enum.live),
+						eb("l.expiresAt", ">", now),
+					])
+					.$castTo<boolean>()
+					.as("isActive"),
 
 				eb
 					.selectFrom("transaction as lt")

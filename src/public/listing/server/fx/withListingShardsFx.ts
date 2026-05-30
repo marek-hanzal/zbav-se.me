@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
+import { DateContextFx } from "@/lib/common/date";
 import { withListingSelectFx } from "~/public/listing/server/db/withListingSelectFx";
 
 export namespace withListingShardsFx {
@@ -13,8 +14,10 @@ export namespace withListingShardsFx {
 export const withListingShardsFx = Effect.fn("withListingShardsFx")(function* ({
 	day,
 	page,
-	now = DateTime.now(),
+	now,
 }: withListingShardsFx.Props) {
+	const dateContext = yield* DateContextFx;
+	const currentNow = now ?? dateContext.now();
 	const limit = 50_000;
 	const offset = (page - 1) * limit;
 	const dayStart = DateTime.fromISO(day, {
@@ -27,8 +30,8 @@ export const withListingShardsFx = Effect.fn("withListingShardsFx")(function* ({
 		hasExplicitCategory: false,
 	});
 	const currentSelect = yield* queryFx(select, {
-		visibleAtLte: now.toJSDate(),
-		expiresAtAfter: now.toJSDate(),
+		visibleAtLte: currentNow.toJSDate(),
+		expiresAtAfter: currentNow.toJSDate(),
 	});
 	const scopedSelect = yield* queryFx(currentSelect, {
 		visibleAtAfter: dayStart
