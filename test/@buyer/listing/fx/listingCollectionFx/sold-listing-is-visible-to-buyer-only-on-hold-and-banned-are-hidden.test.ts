@@ -7,7 +7,7 @@ import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedSc
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
 
 describe("listingCollectionFx (buyer) — listing status visibility", () => {
-	it("sold listing is NOT visible to buyer (only live listings shown)", async () => {
+	it("sold listing remains visible to buyer after filters were opened", async () => {
 		const database = await testabase("listingCollection-sold-hidden");
 		return Effect.gen(function* () {
 			const seller = yield* leaseTestUserFx({});
@@ -34,7 +34,7 @@ describe("listingCollectionFx (buyer) — listing status visibility", () => {
 			});
 
 			const ids = collection.map((l) => l.id);
-			expect(ids).not.toContain(listingId);
+			expect(ids).toContain(listingId);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });
