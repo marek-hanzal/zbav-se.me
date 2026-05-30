@@ -1,9 +1,16 @@
 import { z } from "zod";
-import { ResourceDefinitionFilterSchema } from "./ResourceDefinitionFilterSchema";
+import { FilterSchema } from "@/lib/common/schema";
+import { ResourceDefinitionEnumSchema } from "../../enum/ResourceDefinitionEnumSchema";
 
 export const ResourceDefinitionWhereSchema = z
 	.looseObject({
-		...ResourceDefinitionFilterSchema.shape,
+		...FilterSchema.shape,
+		name: ResourceDefinitionEnumSchema.optional().meta({
+			description: "Exact resource definition name",
+		}),
+		nameIn: z.array(ResourceDefinitionEnumSchema).min(1).optional().meta({
+			description: "Collection of resource definition names",
+		}),
 	})
 	.strip()
 	.meta({

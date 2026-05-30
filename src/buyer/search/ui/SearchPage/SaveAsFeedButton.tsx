@@ -45,6 +45,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 		},
 	});
 	const resourceLimit = useResourceLimit({
+		_suspense,
 		resource: "feed.count",
 		count: feedCount,
 	});

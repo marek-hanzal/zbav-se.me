@@ -38,11 +38,12 @@ export const FeedList = withFallback(({ _suspense, ...props }: FeedList.Props) =
 					return !feedCollection.length;
 				},
 				render() {
-					return <Empty />;
+					return <Empty _suspense={_suspense} />;
 				},
 			},
 		] satisfies EmptyState.Check[];
 	}, [
+		_suspense,
 		feedCollection,
 	]);
 
@@ -71,7 +72,7 @@ export const FeedList = withFallback(({ _suspense, ...props }: FeedList.Props) =
 					);
 				})}
 
-				<CreateButton />
+				<CreateButton _suspense={_suspense} />
 			</EmptyState>
 		</Container>
 	);

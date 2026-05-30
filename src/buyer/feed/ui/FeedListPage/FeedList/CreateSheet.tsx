@@ -6,7 +6,7 @@ import { Mx } from "@/lib/client/mx";
 import { Status } from "@/lib/client/status";
 import { TextInput } from "@/lib/client/text-input";
 import { useTranslator } from "@/lib/client/translation";
-import type { StateType } from "@/lib/client/type";
+import type { MarkSuspense, StateType } from "@/lib/client/type";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
@@ -20,12 +20,12 @@ const FormSchema = FeedCreateSchema.pick({
 });
 
 export namespace CreateSheet {
-	export interface Props extends BottomSheet.PropsEx {
+	export interface Props extends MarkSuspense.Props, BottomSheet.PropsEx {
 		state: StateType.Simple<boolean>;
 	}
 }
 
-export const CreateSheet: FC<CreateSheet.Props> = ({ state, ...props }) => {
+export const CreateSheet: FC<CreateSheet.Props> = ({ _suspense, state, ...props }) => {
 	const translator = useTranslator();
 	const { data: feedCount } = withFeedQuery.useCountQuery({
 		filter: {
@@ -33,9 +33,9 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ state, ...props }) => {
 		},
 	});
 	const resourceLimit = useResourceLimit({
+		_suspense,
 		resource: "feed.count",
 		count: feedCount,
-		enabled: state.value,
 	});
 	const feedCreateMutation = withFeedQuery.useCreateMutation({
 		onSettled() {

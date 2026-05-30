@@ -3,18 +3,19 @@ import { Button } from "@/lib/client/button";
 import { ChevronRightIcon } from "@/lib/client/icon";
 import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
+import type { MarkSuspense } from "@/lib/client/type";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 import { FeedIcon } from "~/common/ui/icon";
 import { uiCtaLinkButton } from "~/common/ui/ui";
 import { CreateSheet } from "./CreateSheet";
 
 export namespace Empty {
-	export interface Props extends EmptyStatus.Props {
+	export interface Props extends MarkSuspense.Props, EmptyStatus.Props {
 		//
 	}
 }
 
-export const Empty: FC<Empty.Props> = (props) => {
+export const Empty: FC<Empty.Props> = ({ _suspense, ...props }) => {
 	const translator = useTranslator();
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -39,6 +40,7 @@ export const Empty: FC<Empty.Props> = (props) => {
 			/>
 
 			<CreateSheet
+				_suspense={_suspense}
 				state={{
 					value: isOpen,
 					set: setIsOpen,

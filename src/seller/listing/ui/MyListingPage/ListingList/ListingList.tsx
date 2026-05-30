@@ -59,7 +59,7 @@ export const ListingList = withFallback(({ _suspense, ...props }: ListingList.Pr
 
 	return (
 		<Container
-			data-ui={"MyListing[Container]"}
+			data-ui={"ListingList"}
 			ref={scrollerRef}
 			data-ui-flow="vertical"
 			data-ui-scroll="vertical"
@@ -70,7 +70,10 @@ export const ListingList = withFallback(({ _suspense, ...props }: ListingList.Pr
 		>
 			<EmptyState check={check}>
 				<VisibilityProvider store={visible}>
-					<Content collection={collection} />
+					<Content
+						_suspense={_suspense}
+						collection={collection}
+					/>
 				</VisibilityProvider>
 			</EmptyState>
 		</Container>

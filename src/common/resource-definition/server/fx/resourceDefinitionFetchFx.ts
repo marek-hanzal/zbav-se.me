@@ -2,12 +2,12 @@ import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
 import { withResourceDefinitionSelectFx } from "../db/withResourceDefinitionSelectFx";
-import type { ResourceDefinitionFilterSchema } from "../schema/ResourceDefinitionFilterSchema";
 import type { ResourceDefinitionQuerySchema } from "../schema/ResourceDefinitionQuerySchema";
+import type { ResourceDefinitionWhereSchema } from "../schema/ResourceDefinitionWhereSchema";
 
 export namespace resourceDefinitionFetchFx {
 	export interface Props extends ResourceDefinitionQuerySchema.Type {
-		scope?: ResourceDefinitionFilterSchema.Type;
+		scope?: ResourceDefinitionWhereSchema.Type;
 	}
 }
 

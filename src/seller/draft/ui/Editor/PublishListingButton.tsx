@@ -3,24 +3,37 @@ import type { FC } from "react";
 import { Button } from "@/lib/client/button";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
+import type { MarkSuspense } from "@/lib/client/type";
 import { uiSaveButton } from "~/common/ui/ui";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 import { withListingValidationQuery } from "~/seller/listing/query/withListingValidationQuery";
+import { useResourceLimit } from "~/user/user-resource/hook/useResourceLimit";
 import type { DraftSchema } from "../../server/schema/DraftSchema";
 
 export namespace PublishListingButton {
-	export interface Props extends Button.Props {
+	export interface Props extends MarkSuspense.Props, Button.Props {
 		draft: DraftSchema.Type;
 	}
 }
 
 export const PublishListingButton: FC<PublishListingButton.Props> = ({
+	_suspense,
 	draft,
 	className,
 	...props
 }) => {
 	const { data: validation } = withListingValidationQuery.useSuspenseQuery({
 		draftId: draft.id,
+	});
+	const { data: listingCount } = withListingQuery.useCountQuery({
+		where: {
+			status: "live",
+		},
+	});
+	const resourceLimit = useResourceLimit({
+		_suspense,
+		resource: "listing.count",
+		count: listingCount,
 	});
 
 	const navigate = useNavigate();
@@ -46,9 +59,13 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 				"data-ui-color": "lead",
 				"data-ui-text": "2xl",
 			}}
-			disabled={!validation.success || mutation.isPending}
+			disabled={!validation.success || mutation.isPending || !resourceLimit.isAvailable}
 			loading={mutation.isPending}
 			onClick={() => {
+				if (!resourceLimit.isAvailable) {
+					return;
+				}
+
 				mutation.mutate({
 					draftId: draft.id,
 				});
