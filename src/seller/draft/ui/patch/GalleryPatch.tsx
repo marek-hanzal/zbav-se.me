@@ -3,7 +3,7 @@ import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { MarkSuspense } from "@/lib/client/type";
+import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";

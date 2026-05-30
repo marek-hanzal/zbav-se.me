@@ -4,7 +4,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { UserRestrictionSortSchema } from "../schema/UserRestrictionSortSchema";
-import { UserRestrictionWhereSchema } from "../schema/UserRestrictionWhereSchema";
+import type { UserRestrictionWhereSchema } from "../schema/UserRestrictionWhereSchema";
 
 export namespace withUserRestrictionSelectFx {
 	export interface Props {

@@ -4,9 +4,6 @@ import { UserResourceLimitTableSchema } from "~/server/database/@table/UserResou
 export const UserResourceLimitSchema = z
 	.looseObject({
 		...UserResourceLimitTableSchema.shape,
-		isAvailable: z.boolean().meta({
-			description: "Whether the row is currently active",
-		}),
 	})
 	.omit({
 		userId: true,
