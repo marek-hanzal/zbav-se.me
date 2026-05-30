@@ -850,6 +850,10 @@ Listing location (label):
     value: Umístění
 Listing location not selected:
     value: Polohu nemáš vyplněnou
+Listing no longer active (hint):
+    value: Nestihl jsi to? Nevadí - pohlídej si prodejce, třeba vystaví něco nového.
+Listing no longer active (label):
+    value: Toto je archivovaný inzerát
 Listing photo gallery (label):
     value: Nahraj fotky
 Listing price (label):

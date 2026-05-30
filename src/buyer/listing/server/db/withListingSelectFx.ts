@@ -345,6 +345,14 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					query = query.where("l.categoryId", "in", where.categoryIdIn);
 				}
 
+				if (where.statusIn && where.statusIn.length > 0) {
+					query = query.where("l.status", "in", where.statusIn);
+				}
+
+				if (where.statusNotIn && where.statusNotIn.length > 0) {
+					query = query.where("l.status", "not in", where.statusNotIn);
+				}
+
 				if (where.ageIn && where.ageIn.length > 0) {
 					query = query.where("l.age", "in", where.ageIn);
 				}

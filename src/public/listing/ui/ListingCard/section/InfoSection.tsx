@@ -32,15 +32,6 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 			{...props}
 		>
 			<Group>
-				<LabelValue
-					textLabel={translator.text("Listing created at (label)")}
-					textValue={toTimeDiff({
-						locale,
-						time: listing.visibleAt,
-						type: "relative",
-					})}
-				/>
-
 				{days > 0 ? (
 					<LabelValue
 						textLabel={translator.text("Listing expires at (label)")}
