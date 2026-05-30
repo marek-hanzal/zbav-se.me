@@ -11,37 +11,39 @@ export namespace resourceDefinitionCollectionFx {
 	}
 }
 
-export const resourceDefinitionCollectionFx = Effect.fn("resourceDefinitionCollectionFx")(function* ({
-	cursor = {
-		page: 0,
-		size: 10,
-	},
-	filter,
-	where,
-	scope,
-	sort,
-	limit,
-}: resourceDefinitionCollectionFx.Props) {
-	const logger = yield* getLoggerFx("resourceDefinitionCollectionFx");
-	logger.trace("resourceDefinitionCollectionFx", {
+export const resourceDefinitionCollectionFx = Effect.fn("resourceDefinitionCollectionFx")(
+	function* ({
+		cursor = {
+			page: 0,
+			size: 10,
+		},
 		filter,
 		where,
 		scope,
-		cursor,
 		sort,
 		limit,
-	});
-
-	return yield* withCollectionFx({
-		selectFx: withResourceDefinitionSelectFx({
+	}: resourceDefinitionCollectionFx.Props) {
+		const logger = yield* getLoggerFx("resourceDefinitionCollectionFx");
+		logger.trace("resourceDefinitionCollectionFx", {
+			filter,
+			where,
+			scope,
+			cursor,
 			sort,
-		}),
-		cursor,
-		filter,
-		where,
-		scope,
-		limit,
-	});
-});
+			limit,
+		});
+
+		return yield* withCollectionFx({
+			selectFx: withResourceDefinitionSelectFx({
+				sort,
+			}),
+			cursor,
+			filter,
+			where,
+			scope,
+			limit,
+		});
+	},
+);
 
 export type resourceDefinitionCollectionFx = ReturnType<typeof resourceDefinitionCollectionFx>;
