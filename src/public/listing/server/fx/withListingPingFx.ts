@@ -20,7 +20,11 @@ export const withListingPingFx = Effect.fn("withListingPingFx")(function* ({
 	const { select } = yield* withListingSelectFx({
 		hasExplicitCategory: true,
 	});
-	return !!select.clearWhere().where("l.id", "=", id).executeTakeFirst();
+	const listing = yield* Effect.promise(() =>
+		select.clearWhere().where("l.id", "=", id).executeTakeFirst(),
+	);
+
+	return !!listing;
 });
 
 export type withListingPingFx = ReturnType<typeof withListingPingFx>;
