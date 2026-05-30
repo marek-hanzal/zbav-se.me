@@ -26,6 +26,9 @@ export const ListingSchema = z
 		hasFlag: z.boolean().meta({
 			description: "Whether the user flagged this listing",
 		}),
+		isActive: z.boolean().meta({
+			description: "Whether the listing is currently live and not yet expired",
+		}),
 		transactionId: z.string().nullable().meta({
 			description: "Whether the user has a transaction with this listing",
 		}),

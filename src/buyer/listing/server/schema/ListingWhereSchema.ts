@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { FilterSchema } from "@/lib/common/schema";
 import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
+import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 import { AttrWhereSchema } from "./AttrWhereSchema";
@@ -24,6 +25,9 @@ export const ListingWhereSchema = z
 				description: "Filter listings based on the provided category IDs",
 			})
 			.optional(),
+		//
+		statusIn: z.array(ListingStatusEnumSchema).optional(),
+		statusNotIn: z.array(ListingStatusEnumSchema).optional(),
 		//
 		title: z.string().optional().meta({
 			description: "Filter listings based on the provided title",

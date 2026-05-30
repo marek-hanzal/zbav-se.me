@@ -33,6 +33,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ state, ...props
 						"price",
 						"condition",
 						"geo",
+						"createdAt",
 					] satisfies (ListingSortSchema.Field | undefined)[]
 				).filter(Boolean) as ListingSortSchema.Field[]
 			).map((sortValue) => {

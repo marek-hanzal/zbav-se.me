@@ -139,7 +139,7 @@ test("buyer sees cron-expired transaction as a system message", async ({
 
 	await page.goto(`/cs/app/buyer/transaction/${transaction.id}/detail`);
 	await expect(
-		page.getByText("Systém tenhle obchod automaticky ukončil kvůli neaktivitě."),
+		page.getByText("Automaticky ukončený obchod, dlouho se nic nedělo."),
 	).toBeVisible();
 
 	await expect
@@ -225,7 +225,7 @@ test("seller sees cron-expired transaction as a system message", async ({
 
 	await page.goto(`/cs/app/seller/transaction/${transaction.id}/detail`);
 	await expect(
-		page.getByText("Systém tenhle obchod automaticky ukončil kvůli neaktivitě."),
+		page.getByText("Automaticky ukončený obchod, dlouho se nic nedělo."),
 	).toBeVisible();
 
 	await expect

@@ -30,6 +30,9 @@ export const ListingSchema = z
 Effective restriction of this listing.
             `.trim(),
 		}),
+		isActive: z.boolean().meta({
+			description: "Whether the listing is currently live and not yet expired",
+		}),
 		location: LocationSchema,
 		category: CategorySchema,
 	})

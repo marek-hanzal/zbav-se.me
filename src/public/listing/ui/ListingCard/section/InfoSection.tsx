@@ -32,16 +32,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 			{...props}
 		>
 			<Group>
-				<LabelValue
-					textLabel={translator.text("Listing created at (label)")}
-					textValue={toTimeDiff({
-						locale,
-						time: listing.visibleAt,
-						type: "relative",
-					})}
-				/>
-
-				{days > 0 && days <= 3 ? (
+				{days > 0 ? (
 					<LabelValue
 						textLabel={translator.text("Listing expires at (label)")}
 						textHint={translator.text("Listing expires at (hint)")}
@@ -51,7 +42,16 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
 							type: "human",
 						})}
 					/>
-				) : null}
+				) : (
+					<LabelValue
+						textLabel={translator.text("Listing expired at (label)")}
+						textValue={toTimeDiff({
+							locale,
+							time: listing.expiresAt,
+							type: "relative",
+						})}
+					/>
+				)}
 			</Group>
 
 			<Group>

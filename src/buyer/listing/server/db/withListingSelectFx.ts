@@ -1,9 +1,11 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
+import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
+import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withNormalizedContainsEx } from "~/server/database/expression/withNormalizedContainsEx";
@@ -31,8 +33,10 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	hasExplicitCategory,
 }: withListingSelectFx.Props) {
 	const locationId = meta?.locationId;
+	const dateContext = yield* DateContextFx;
 	const { kysely } = yield* KyselyContextFx;
 	const logger = yield* getLoggerFx("withListingSelectFx", "buyer");
+	const now = dateContext.now().toJSDate();
 
 	const fallbackSql = sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`;
 	const restrictionSql = yield* withUserRestrictionActiveSelectFx({
@@ -42,8 +46,9 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	let select = kysely
 		.selectFrom("listing as l")
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
-		.where("l.status", "in", [
-			"live",
+		.where("l.status", "not in", [
+			"on-hold",
+			"banned",
 		])
 		.where((eb) => {
 			return eb(
@@ -257,6 +262,14 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.as("hasFlag"),
 
 				eb
+					.and([
+						eb("l.status", "=", ListingStatusEnumSchema.enum.live),
+						eb("l.expiresAt", ">", now),
+					])
+					.$castTo<boolean>()
+					.as("isActive"),
+
+				eb
 					.selectFrom("transaction as lt")
 					.select("lt.id")
 					.whereRef("lt.listingId", "=", "l.id")
@@ -330,6 +343,14 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 				if (where.categoryIdIn && where.categoryIdIn.length > 0) {
 					query = query.where("l.categoryId", "in", where.categoryIdIn);
+				}
+
+				if (where.statusIn && where.statusIn.length > 0) {
+					query = query.where("l.status", "in", where.statusIn);
+				}
+
+				if (where.statusNotIn && where.statusNotIn.length > 0) {
+					query = query.where("l.status", "not in", where.statusNotIn);
 				}
 
 				if (where.ageIn && where.ageIn.length > 0) {

@@ -822,6 +822,8 @@ Listing expiration (hint):
 
         Pokud např. prodáváš na **více bazarech zároveň**, nemusíš myslet na
         všechny, až bude věc prodaná.
+Listing expired at (label):
+    value: Datum ukončení inzerátu
 Listing expires at (hint):
     value: Za jak dlouho tento inzerát bude archivován.
 Listing expires at (label):
@@ -848,6 +850,10 @@ Listing location (label):
     value: Umístění
 Listing location not selected:
     value: Polohu nemáš vyplněnou
+Listing no longer active (hint):
+    value: Nestihl jsi to? Nevadí - pohlídej si prodejce, třeba vystaví něco nového.
+Listing no longer active (label):
+    value: Toto je archivovaný inzerát
 Listing photo gallery (label):
     value: Nahraj fotky
 Listing price (label):
@@ -920,6 +926,22 @@ Listing seller info not available (message):
         intuici.
 Listing seller info not available (title):
     value: Zatím nemám dost dat
+Listing status (label):
+    value: Stav inzerátu
+Listing status - closed:
+    value: Uzavřené
+    dynamic: true
+Listing status - expired:
+    value: Vypršelé
+    dynamic: true
+Listing status - live:
+    value: Aktivní
+    dynamic: true
+Listing status - sold:
+    value: Prodané
+    dynamic: true
+Listing status not selected:
+    value: Jakýkoli stav
 Listing title (label):
     value: Titulek
 Listing title (placeholder):
@@ -1657,12 +1679,6 @@ transaction - buyer - status-closed:
 
         _Tady už je všechno vyřešeno, můžete jít dál._
     dynamic: true
-transaction - buyer - status-expired:
-    value: |
-        **Čas vypršel**
-
-        Automaticky ukončený obchod, dlouho se nic nedělo.
-    dynamic: true
 transaction - buyer - status-dispute-seller:
     value: >
         **Je potřeba tvoje pozornost**
@@ -1670,6 +1686,12 @@ transaction - buyer - status-dispute-seller:
 
         _Prodejce si žádá vyřešit problém - společně se na to podívejte a domluvte
         se._
+    dynamic: true
+transaction - buyer - status-expired:
+    value: |
+        **Čas vypršel**
+
+        Automaticky ukončený obchod, dlouho se nic nedělo.
     dynamic: true
 transaction - buyer - status-interest:
     value: |
@@ -1719,17 +1741,17 @@ transaction - seller - status-closed:
 
         _Tady už je všechno vyřešeno, můžete jít dál._
     dynamic: true
-transaction - seller - status-expired:
-    value: |
-        **Čas vypršel**
-
-        Automaticky ukončený obchod, dlouho se nic nedělo.
-    dynamic: true
 transaction - seller - status-dispute-seller:
     value: |
         **Otevřel jsi řešení problému**
 
         _Domluvte se, co je špatně a společně problém rozlouskněte._
+    dynamic: true
+transaction - seller - status-expired:
+    value: |
+        **Čas vypršel**
+
+        Automaticky ukončený obchod, dlouho se nic nedělo.
     dynamic: true
 transaction - seller - status-interest:
     value: |

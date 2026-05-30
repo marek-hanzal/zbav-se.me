@@ -20,6 +20,7 @@ import { PriceMinPatch } from "./patch/PriceMinPatch";
 import { PriceTypePatch } from "./patch/PriceTypePatch";
 import { RangePatch } from "./patch/RangePatch";
 import { SortPatch } from "./patch/SortPatch";
+import { StatusPatch } from "./patch/StatusPatch";
 import { TitlePatch } from "./patch/TitlePatch";
 import { WarrantyPatch } from "./patch/WarrantyPatch";
 
@@ -44,6 +45,7 @@ export const FeedEditor = withFallback(
 				"range",
 				"condition",
 				"age",
+				"status",
 				"delivery",
 				"warranty",
 				"title",
@@ -132,6 +134,14 @@ export const FeedEditor = withFallback(
 
 				<view.Panel name="delivery">
 					<DeliveryPatch
+						feed={feed}
+						onSettled={onDefaultView}
+						onCancel={onDefaultView}
+					/>
+				</view.Panel>
+
+				<view.Panel name="status">
+					<StatusPatch
 						feed={feed}
 						onSettled={onDefaultView}
 						onCancel={onDefaultView}

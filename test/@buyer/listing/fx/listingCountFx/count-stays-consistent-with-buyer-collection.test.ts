@@ -9,7 +9,7 @@ import { createResolvedScenarioFx } from "~/test/transaction/fx/createResolvedSc
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 
 describe("buyer listingCountFx", () => {
-	it("matches buyer-visible live collection and supports empty state", async () => {
+	it("matches the buyer-visible collection and supports empty state", async () => {
 		const database = await testabase("buyer-listingCountFx-live-consistency");
 
 		return Effect.gen(function* () {
@@ -34,7 +34,7 @@ describe("buyer listingCountFx", () => {
 				scope: {},
 			});
 
-			expect(collection).toHaveLength(1);
+			expect(collection).toHaveLength(2);
 			expect(count).toBe(collection.length);
 
 			const empty = yield* listingCountFx({

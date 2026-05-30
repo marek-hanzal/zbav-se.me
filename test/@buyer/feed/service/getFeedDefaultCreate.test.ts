@@ -9,8 +9,11 @@ describe("getFeedDefaultCreate", () => {
 			type: "user",
 			name: "My Saved Feed",
 			query: {
-				where: {
+				filter: {
 					withIgnored: false,
+					statusIn: [
+						"live",
+					],
 				},
 				sort: [
 					{
@@ -27,6 +30,6 @@ describe("getFeedDefaultCreate", () => {
 
 		expect(feed.type).toBe("search");
 		expect(feed.name).toBe("Search Feed");
-		expect(feed.query.where.withIgnored).toBe(false);
+		expect(feed.query.filter.withIgnored).toBe(false);
 	});
 });
