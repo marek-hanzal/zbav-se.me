@@ -16,21 +16,24 @@ export const useResourceLimit = ({
 	count,
 	reference,
 }: useResourceLimit.Props) => {
-	const {
-		data: { limit },
-	} = withUserResourceLimitQuery.useEntityQuery({
+	const { data } = withUserResourceLimitQuery.useMaybeEntityQuery({
 		where: {
 			resourceDefinitionId: resource,
 			reference,
 		},
 	});
 
-	const remaining = Math.max(limit - count, 0);
-
-	return {
-		count,
-		limit,
-		remaining,
-		isAvailable: count < limit,
-	} as const;
+	return data
+		? ({
+				count,
+				limit: data.limit,
+				remaining: Math.max(data.limit - count, 0),
+				isAvailable: count < data.limit,
+			} as const)
+		: ({
+				count,
+				limit: 0,
+				remaining: 0,
+				isAvailable: false,
+			} as const);
 };
