@@ -5,6 +5,7 @@ export const UserResourceLimitMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createTable("user_resource_limit")
+			.addColumn("id", "text", (col) => col.primaryKey())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("resourceDefinitionId", "text", (col) => col.notNull())
 			.addColumn("reference", "text")

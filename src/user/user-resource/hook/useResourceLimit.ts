@@ -18,7 +18,7 @@ export const useResourceLimit = ({
 }: useResourceLimit.Props) => {
 	const {
 		data: { limit },
-	} = withUserResourceLimitQuery.useFetchQuery({
+	} = withUserResourceLimitQuery.useEntityQuery({
 		where: {
 			resourceDefinitionId: resource,
 			reference,

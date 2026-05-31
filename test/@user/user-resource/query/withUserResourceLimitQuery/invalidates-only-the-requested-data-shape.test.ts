@@ -17,10 +17,10 @@ describe("withUserResourceLimitQuery invalidator", () => {
 			},
 		};
 
-		queryClient.setQueryData(withUserResourceLimitQuery.keys.fetch(target), {
+		queryClient.setQueryData(withUserResourceLimitQuery.keys("fetch", target), {
 			limit: 2,
 		});
-		queryClient.setQueryData(withUserResourceLimitQuery.keys.fetch(other), {
+		queryClient.setQueryData(withUserResourceLimitQuery.keys("fetch", other), {
 			limit: 5,
 		});
 
@@ -35,10 +35,12 @@ describe("withUserResourceLimitQuery invalidator", () => {
 		);
 
 		expect(
-			queryClient.getQueryState(withUserResourceLimitQuery.keys.fetch(target))?.isInvalidated,
+			queryClient.getQueryState(withUserResourceLimitQuery.keys("fetch", target))
+				?.isInvalidated,
 		).toBe(true);
 		expect(
-			queryClient.getQueryState(withUserResourceLimitQuery.keys.fetch(other))?.isInvalidated,
+			queryClient.getQueryState(withUserResourceLimitQuery.keys("fetch", other))
+				?.isInvalidated,
 		).toBe(false);
 	});
 });

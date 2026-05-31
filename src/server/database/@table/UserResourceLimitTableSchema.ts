@@ -3,6 +3,9 @@ import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/
 
 export const UserResourceLimitTableSchema = z
 	.looseObject({
+		id: z.string().meta({
+			description: "Unique ID of the user resource limit row",
+		}),
 		userId: z.string().meta({
 			description: "ID of the user owning the limit row",
 		}),

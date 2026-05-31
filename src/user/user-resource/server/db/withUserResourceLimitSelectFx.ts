@@ -23,6 +23,7 @@ export const withUserResourceLimitSelectFx = Effect.fn("withUserResourceLimitSel
 	let query = kysely
 		.selectFrom("user_resource_limit as url")
 		.select([
+			"url.id",
 			"url.resourceDefinitionId",
 			"url.reference",
 			"url.createdAt",
@@ -95,6 +96,10 @@ export const withUserResourceLimitSelectFx = Effect.fn("withUserResourceLimitSel
 
 				if (!where) {
 					return yield* Effect.succeed(query);
+				}
+
+				if (where.id) {
+					query = query.where("url.id", "=", where.id);
 				}
 
 				if (where.userId) {

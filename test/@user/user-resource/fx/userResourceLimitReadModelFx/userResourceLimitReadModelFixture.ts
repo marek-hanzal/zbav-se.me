@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { DateContextFx } from "@/lib/common/date";
+import { genId } from "@/lib/common/gen-id";
 import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import type { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -8,6 +9,7 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 
 interface UserResourceLimitInsert {
+	id: string;
 	userId: string;
 	resourceDefinitionId: ResourceDefinitionEnumSchema.Type;
 	reference: string | null;
@@ -28,6 +30,7 @@ const limitRow = (
 	expiresAt: string | null,
 	limit: number,
 ): UserResourceLimitInsert => ({
+	id: genId(),
 	userId,
 	resourceDefinitionId,
 	reference,
