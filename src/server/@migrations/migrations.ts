@@ -55,6 +55,7 @@ import { PlanResourceLimitMigration } from "~/server/@migrations/0053-plan-resou
 import { PlanResourceInventoryMigration } from "~/server/@migrations/0054-plan-resource-inventory";
 import { UserPlanMigration } from "~/server/@migrations/0055-user-plan";
 import { UserPlanStripeMigration } from "~/server/@migrations/0056-user-plan-stripe";
+import { StripeEventMigration } from "~/server/@migrations/0057-stripe-event";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -114,4 +115,5 @@ export const migrations = {
 	"0054-plan-resource-inventory": PlanResourceInventoryMigration,
 	"0055-user-plan": UserPlanMigration,
 	"0056-user-plan-stripe": UserPlanStripeMigration,
+	"0057-stripe-event": StripeEventMigration,
 };
