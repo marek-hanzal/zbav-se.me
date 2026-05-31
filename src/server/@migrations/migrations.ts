@@ -48,6 +48,10 @@ import { RateLimitRuleMigration } from "~/server/@migrations/0046-rate-limit-rul
 import { RateLimitEventMigration } from "~/server/@migrations/0047-rate-limit-event";
 import { ResourceDefinitionMigration } from "~/server/@migrations/0048-resource-definition";
 import { UserResourceLimitMigration } from "~/server/@migrations/0049-user-resource-limit";
+import { PlanMigration } from "~/server/@migrations/0050-plan";
+import { PlanResourceLimitMigration } from "~/server/@migrations/0051-plan-resource-limit";
+import { PlanResourceInventoryMigration } from "~/server/@migrations/0052-plan-resource-inventory";
+import { UserPlanMigration } from "~/server/@migrations/0053-user-plan";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -100,4 +104,8 @@ export const migrations = {
 	"0047-rate-limit-event": RateLimitEventMigration,
 	"0048-resource-definition": ResourceDefinitionMigration,
 	"0049-user-resource-limit": UserResourceLimitMigration,
+	"0050-plan": PlanMigration,
+	"0051-plan-resource-limit": PlanResourceLimitMigration,
+	"0052-plan-resource-inventory": PlanResourceInventoryMigration,
+	"0053-user-plan": UserPlanMigration,
 };
