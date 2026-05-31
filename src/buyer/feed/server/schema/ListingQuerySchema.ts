@@ -8,7 +8,7 @@ export const ListingQuerySchema = z
 			meta: true,
 			sort: true,
 		}).shape,
-		filter: ListingWhereSchema.omit({
+		where: ListingWhereSchema.omit({
 			id: true,
 			idIn: true,
 			categoryIdIn: true,

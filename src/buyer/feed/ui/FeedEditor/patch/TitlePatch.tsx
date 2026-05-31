@@ -22,7 +22,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ..
 	const patchMutation = withFeedQuery.usePatchMutation({
 		onSettled,
 	});
-	const [title, setTitle] = useState(feed.query?.filter?.title ?? "");
+	const [title, setTitle] = useState(feed.query?.where?.title ?? "");
 
 	return (
 		<Container
@@ -77,8 +77,8 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ..
 						patch: {
 							query: {
 								...feed.query,
-								filter: {
-									...feed.query?.filter,
+								where: {
+									...feed.query?.where,
 									title,
 								},
 							},

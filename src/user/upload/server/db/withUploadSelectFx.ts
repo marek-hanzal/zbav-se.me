@@ -3,7 +3,7 @@ import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { UploadSortSchema } from "../schema/UploadSortSchema";
-import { UploadWhereSchema } from "../schema/UploadWhereSchema";
+import type { UploadWhereSchema } from "../schema/UploadWhereSchema";
 
 export namespace withUploadSelectFx {
 	export interface Props {

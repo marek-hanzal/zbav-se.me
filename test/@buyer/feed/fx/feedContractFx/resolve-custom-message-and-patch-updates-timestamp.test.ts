@@ -20,7 +20,7 @@ describe("feed contract", () => {
 				type: "search",
 				name: "Original Feed",
 				query: {
-					filter: {
+					where: {
 						fulltext: [
 							"old-title",
 						],
@@ -47,7 +47,7 @@ describe("feed contract", () => {
 				patch: {
 					name: "Patched Feed",
 					query: {
-						filter: {
+						where: {
 							fulltext: [
 								"new-title",
 							],

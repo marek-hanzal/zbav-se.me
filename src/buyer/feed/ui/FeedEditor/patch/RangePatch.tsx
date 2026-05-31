@@ -20,7 +20,7 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 	const patchMutation = withFeedQuery.usePatchMutation({
 		onSettled,
 	});
-	const currentRange = feed.query?.filter?.range;
+	const currentRange = feed.query?.where?.range;
 	const [rangeValue, setRangeValue] = useState<number | undefined>(currentRange);
 
 	const handleSave = () => {
@@ -33,8 +33,8 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 			patch: {
 				query: {
 					...feed.query,
-					filter: {
-						...feed.query?.filter,
+					where: {
+						...feed.query?.where,
 						range:
 							rangeValue !== undefined && !Number.isNaN(rangeValue)
 								? rangeValue

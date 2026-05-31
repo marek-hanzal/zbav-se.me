@@ -3,7 +3,7 @@ import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { FieldOptionSortSchema } from "../schema/FieldOptionSortSchema";
-import { FieldOptionWhereSchema } from "../schema/FieldOptionWhereSchema";
+import type { FieldOptionWhereSchema } from "../schema/FieldOptionWhereSchema";
 
 export namespace withFieldOptionSelectFx {
 	export interface Props {

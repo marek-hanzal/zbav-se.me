@@ -3,7 +3,7 @@ import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
 import { withTransactionEntrySelectFx } from "~/user/transaction-entry/server/db/withTransactionEntrySelectFx";
 import type { TransactionEntryQuerySchema } from "~/user/transaction-entry/server/schema/TransactionEntryQuerySchema";
-import { TransactionEntryWhereSchema } from "../schema/TransactionEntryWhereSchema";
+import type { TransactionEntryWhereSchema } from "../schema/TransactionEntryWhereSchema";
 
 export namespace transactionEntryFetchFx {
 	export interface Props extends TransactionEntryQuerySchema.Type {

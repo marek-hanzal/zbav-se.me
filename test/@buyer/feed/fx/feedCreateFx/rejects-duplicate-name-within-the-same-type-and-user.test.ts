@@ -19,7 +19,7 @@ describe("feedCreateFx", () => {
 				type: "search",
 				name: "Saved finds",
 				query: {
-					filter: {
+					where: {
 						fulltext: [
 							"monitor",
 						],

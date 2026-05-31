@@ -21,7 +21,7 @@ export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...pro
 	});
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "multi",
-		initial: feed.query?.filter?.ageIn?.map((item) => ({
+		initial: feed.query?.where?.ageIn?.map((item) => ({
 			id: String(item),
 		})),
 		deps: [
@@ -56,8 +56,8 @@ export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...pro
 						patch: {
 							query: {
 								...feed.query,
-								filter: {
-									...feed.query?.filter,
+								where: {
+									...feed.query?.where,
 									ageIn: selection.optional
 										.multiId()
 										.map((id) => Number.parseInt(id, 10)),

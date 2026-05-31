@@ -7,6 +7,6 @@ describe("getFeedDefaultCreate", () => {
 
 		expect(feed.type).toBe("search");
 		expect(feed.name).toBe("Search Feed");
-		expect(feed.query.filter.withIgnored).toBe(false);
+		expect(feed.query.where.withIgnored).toBe(false);
 	});
 });

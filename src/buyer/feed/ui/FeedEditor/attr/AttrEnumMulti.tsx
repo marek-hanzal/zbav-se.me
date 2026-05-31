@@ -116,10 +116,10 @@ export const AttrEnumMulti: FC<AttrEnumMulti.Props> = ({ feed, field, attr, view
 						patch: {
 							query: {
 								...feed.query,
-								filter: {
-									...feed.query?.filter,
+								where: {
+									...feed.query?.where,
 									attrs: {
-										...feed.query?.filter?.attrs,
+										...feed.query?.where?.attrs,
 										[field.name]: {
 											name: field.name,
 											type: "enum-multi",

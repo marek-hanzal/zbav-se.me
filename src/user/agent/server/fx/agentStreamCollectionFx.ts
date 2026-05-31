@@ -3,7 +3,7 @@ import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import { withAgentStreamSelectFx } from "../db/withAgentStreamSelectFx";
 import type { AgentStreamQuerySchema } from "../schema/AgentStreamQuerySchema";
-import { AgentStreamWhereSchema } from "../schema/AgentStreamWhereSchema";
+import type { AgentStreamWhereSchema } from "../schema/AgentStreamWhereSchema";
 
 export namespace agentStreamCollectionFx {
 	export interface Props extends AgentStreamQuerySchema.Type {

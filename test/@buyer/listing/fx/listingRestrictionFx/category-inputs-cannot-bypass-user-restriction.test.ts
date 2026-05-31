@@ -8,7 +8,7 @@ import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { createRestrictionProbeListings, createUserRestriction } from "./restrictionFixtures";
 
 describe("buyer listing restriction category input scope", () => {
-	it("does not let filter, where, or scope category inputs bypass user restriction", async () => {
+	it("does not let where or scope category inputs bypass user restriction", async () => {
 		const database = await testabase("buyer-listing-restriction-category-inputs");
 
 		return Effect.gen(function* () {
@@ -30,16 +30,6 @@ describe("buyer listing restriction category input scope", () => {
 					name: "where categoryId",
 					query: {
 						where: {
-							// title: "Buyer category input restriction marker",
-							categoryId: fixtures.restrictedCategory.id,
-						},
-					},
-				},
-				{
-					name: "filter categoryId",
-					query: {
-						filter: {
-							// title: "Buyer category input restriction marker",
 							categoryId: fixtures.restrictedCategory.id,
 						},
 					},
@@ -47,9 +37,6 @@ describe("buyer listing restriction category input scope", () => {
 				{
 					name: "scope categoryId",
 					query: {
-						where: {
-							// title: "Buyer category input restriction marker",
-						},
 						scope: {
 							categoryId: fixtures.restrictedCategory.id,
 						},
@@ -59,18 +46,6 @@ describe("buyer listing restriction category input scope", () => {
 					name: "where categoryIdIn",
 					query: {
 						where: {
-							// title: "Buyer category input restriction marker",
-							categoryIdIn: [
-								fixtures.restrictedCategory.id,
-							],
-						},
-					},
-				},
-				{
-					name: "filter categoryIdIn",
-					query: {
-						filter: {
-							// title: "Buyer category input restriction marker",
 							categoryIdIn: [
 								fixtures.restrictedCategory.id,
 							],
@@ -80,9 +55,6 @@ describe("buyer listing restriction category input scope", () => {
 				{
 					name: "scope categoryIdIn",
 					query: {
-						where: {
-							// title: "Buyer category input restriction marker",
-						},
 						scope: {
 							categoryIdIn: [
 								fixtures.restrictedCategory.id,
@@ -93,7 +65,6 @@ describe("buyer listing restriction category input scope", () => {
 			] satisfies {
 				name: string;
 				query: {
-					filter?: ListingWhereSchema.Type;
 					where?: ListingWhereSchema.Type;
 					scope?: ListingWhereSchema.Type;
 				};

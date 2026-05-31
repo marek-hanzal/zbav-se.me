@@ -23,7 +23,7 @@ describe("feedLifecycleFx", () => {
 				type: "search",
 				name: "MacBooks",
 				query: {
-					filter: {
+					where: {
 						fulltext: [
 							"macbook",
 						],
@@ -57,7 +57,7 @@ describe("feedLifecycleFx", () => {
 				patch: {
 					name: "Updated MacBooks",
 					query: {
-						filter: {
+						where: {
 							fulltext: [
 								"macbook pro",
 							],

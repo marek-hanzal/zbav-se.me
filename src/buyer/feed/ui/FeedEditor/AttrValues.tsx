@@ -16,7 +16,7 @@ export namespace AttrValues {
 
 export const AttrValues: FC<AttrValues.Props> = ({ _suspense, feed, view }) => {
 	const { data: fields } = withCategoryAttrOfQuery.useSuspenseQuery({
-		categoryId: feed.query?.filter?.categoryId ?? "<unknown>",
+		categoryId: feed.query?.where?.categoryId ?? "<unknown>",
 	});
 
 	if (!fields.length) {
@@ -44,7 +44,7 @@ export const AttrValues: FC<AttrValues.Props> = ({ _suspense, feed, view }) => {
 						<AttrValue
 							key={`feed-attr-${field.name}`}
 							field={field}
-							attr={feed.query?.filter?.attrs?.[field.name]}
+							attr={feed.query?.where?.attrs?.[field.name]}
 							view={view}
 						/>
 					);

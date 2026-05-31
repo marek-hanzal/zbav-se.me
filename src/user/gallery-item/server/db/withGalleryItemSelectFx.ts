@@ -5,7 +5,7 @@ import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withUploadSelectFx } from "~/user/upload/server/db/withUploadSelectFx";
 import type { GalleryItemSortSchema } from "../schema/GalleryItemSortSchema";
-import { GalleryItemWhereSchema } from "../schema/GalleryItemWhereSchema";
+import type { GalleryItemWhereSchema } from "../schema/GalleryItemWhereSchema";
 
 export namespace withGalleryItemSelectFx {
 	export interface Props {

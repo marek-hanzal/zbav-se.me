@@ -49,16 +49,7 @@ export const selectFx = <
 		>
 	>,
 ): Effect.Effect.Success<
-	selectFx<
-		TDB,
-		TTable,
-		TOutput,
-		TWhere,
-		TSelectError,
-		TSelectContext,
-		TQueryError,
-		TQueryContext
-	>
+	selectFx<TDB, TTable, TOutput, TWhere, TSelectError, TSelectContext, TQueryError, TQueryContext>
 > => {
 	return select;
 };

@@ -22,7 +22,7 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ feed, onSettled, onCanc
 	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
-		initial: (feed.query?.filter?.deliveryIn ?? []).map((delivery) => ({
+		initial: (feed.query?.where?.deliveryIn ?? []).map((delivery) => ({
 			id: delivery,
 		})),
 		deps: [
@@ -54,8 +54,8 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ feed, onSettled, onCanc
 						patch: {
 							query: {
 								...feed.query,
-								filter: {
-									...feed.query?.filter,
+								where: {
+									...feed.query?.where,
 									deliveryIn:
 										selection.optional.multiId() as DeliveryEnumSchema.Type[],
 								},

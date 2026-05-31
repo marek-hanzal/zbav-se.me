@@ -60,7 +60,7 @@ export namespace Editor {
 export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, children, ...props }) => {
 	const translator = useTranslator();
 	const locationId = feed.query?.meta?.locationId;
-	const statusIn = feed.query?.filter?.statusIn ?? [];
+	const statusIn = feed.query?.where?.statusIn ?? [];
 	const { data: location } = withLocationQuery.useMaybeEntityQuery({
 		where: {
 			id: feed.query?.meta?.locationId ?? "<nope>",
@@ -133,7 +133,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						data-action={"edit feed fulltext"}
 						textLabel={translator.text("Feed fulltext (label)")}
 						textEmpty={translator.text("Feed fulltext not filled")}
-						textValue={feed.query?.filter?.fulltext?.join(", ") || null}
+						textValue={feed.query?.where?.fulltext?.join(", ") || null}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
@@ -141,7 +141,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 							/>
 						}
 						wrapperProps={{
-							"data-ui-tone": feed.query?.filter?.fulltext?.length
+							"data-ui-tone": feed.query?.where?.fulltext?.length
 								? "neutral"
 								: "secondary",
 						}}
@@ -154,9 +154,9 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						_suspense={"I know"}
 						data-action={"edit feed category"}
 						categoryIdIn={
-							feed.query?.filter?.categoryId
+							feed.query?.where?.categoryId
 								? [
-										feed.query?.filter?.categoryId,
+										feed.query?.where?.categoryId,
 									]
 								: []
 						}
@@ -169,9 +169,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 							/>
 						}
 						wrapperProps={{
-							"data-ui-tone": feed.query?.filter?.categoryId
-								? "neutral"
-								: "secondary",
+							"data-ui-tone": feed.query?.where?.categoryId ? "neutral" : "secondary",
 						}}
 						onClick={() => view.set("category")}
 					/>
@@ -197,7 +195,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 
 					<RangeValue
 						data-action={"edit feed range"}
-						range={feed.query?.filter?.range}
+						range={feed.query?.where?.range}
 						data-ui-disabled={!locationId}
 						action={
 							<Icon
@@ -207,7 +205,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						}
 						wrapperProps={{
 							"data-ui-tone":
-								!locationId || feed.query?.filter?.range ? "neutral" : "secondary",
+								!locationId || feed.query?.where?.range ? "neutral" : "secondary",
 						}}
 						onClick={() => view.set("range")}
 					/>
@@ -233,7 +231,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 				<Group>
 					<DeliveryValueList
 						data-action={"edit feed delivery"}
-						deliveryIn={feed.query?.filter?.deliveryIn ?? []}
+						deliveryIn={feed.query?.where?.deliveryIn ?? []}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
@@ -242,7 +240,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						}
 						wrapperProps={{
 							"data-ui-tone":
-								(feed.query?.filter?.deliveryIn ?? []).length > 0
+								(feed.query?.where?.deliveryIn ?? []).length > 0
 									? "neutral"
 									: "secondary",
 						}}
@@ -253,7 +251,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 				<Group>
 					<TitleValue
 						data-action={"edit feed title"}
-						title={feed.query?.filter?.title ?? null}
+						title={feed.query?.where?.title ?? null}
 						textLabel={translator.text("Feed title (label)")}
 						textEmpty={translator.text("Feed title not filled")}
 						action={
@@ -263,7 +261,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 							/>
 						}
 						wrapperProps={{
-							"data-ui-tone": feed.query?.filter?.title ? "neutral" : "secondary",
+							"data-ui-tone": feed.query?.where?.title ? "neutral" : "secondary",
 						}}
 						onClick={() => view.set("title")}
 					/>
@@ -287,7 +285,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 				<Group>
 					<PriceTypeList
 						data-action={"edit feed warranty"}
-						priceType={feed.query?.filter?.priceTypeIn ?? []}
+						priceType={feed.query?.where?.priceTypeIn ?? []}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
@@ -298,7 +296,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 					/>
 
 					<PriceMinValue
-						value={feed.query.filter?.priceMin}
+						value={feed.query.where?.priceMin}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
@@ -309,7 +307,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 					/>
 
 					<PriceMaxValue
-						value={feed.query.filter?.priceMax}
+						value={feed.query.where?.priceMax}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
@@ -323,7 +321,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 				<Group>
 					<WarrantyValueList
 						data-action={"edit feed warranty"}
-						warrantyIn={feed.query?.filter?.warrantyIn ?? []}
+						warrantyIn={feed.query?.where?.warrantyIn ?? []}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
@@ -337,7 +335,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 				<Group>
 					<ConditionValueList
 						data-action={"edit feed condition"}
-						conditionIn={feed.query?.filter?.conditionIn ?? []}
+						conditionIn={feed.query?.where?.conditionIn ?? []}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
@@ -346,7 +344,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						}
 						wrapperProps={{
 							"data-ui-tone":
-								(feed.query?.filter?.conditionIn ?? []).length > 0
+								(feed.query?.where?.conditionIn ?? []).length > 0
 									? "neutral"
 									: "secondary",
 						}}
@@ -355,7 +353,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 
 					<AgeValueList
 						data-action={"edit feed age"}
-						ageIn={feed.query?.filter?.ageIn ?? []}
+						ageIn={feed.query?.where?.ageIn ?? []}
 						action={
 							<Icon
 								icon={ChevronRightIcon}
@@ -364,7 +362,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, feed, view, hidden, childr
 						}
 						wrapperProps={{
 							"data-ui-tone":
-								(feed.query?.filter?.ageIn ?? []).length > 0
+								(feed.query?.where?.ageIn ?? []).length > 0
 									? "neutral"
 									: "secondary",
 						}}

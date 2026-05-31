@@ -9,7 +9,7 @@ describe("getFeedDefaultCreate", () => {
 			type: "user",
 			name: "My Saved Feed",
 			query: {
-				filter: {
+				where: {
 					withIgnored: false,
 					statusIn: [
 						"live",
