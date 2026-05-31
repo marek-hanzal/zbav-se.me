@@ -30,6 +30,7 @@ import { toMailKeyId } from "~/server/email/fn/toMailKeyId";
 import { mailtoFx } from "~/server/email/fx/mailtoFx";
 import { withMailContextFx } from "~/server/email/fx/withMailContextFx";
 import { ServerBetterAuthSchema } from "~/server/env/ServerBetterAuthSchema";
+import { ServerE2eSchema } from "~/server/env/ServerE2eSchema";
 import { ServerMailSchema } from "~/server/env/ServerMailSchema";
 import { RateLimitErrorFx } from "~/server/error/RateLimitErrorFx";
 import { toRequestSource } from "~/server/middleware/toRequestSource";
@@ -69,6 +70,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 	const connection = dialect();
 
 	const betterAuthConfig = ServerBetterAuthSchema.parse(process.env);
+	const e2eConfig = ServerE2eSchema.parse(process.env);
 	const viteConfig = ViteEnvSchema.parse(process.env);
 	const { hostname: originHost } = new URL(viteConfig.VITE_ORIGIN);
 	const getMailConfig = () => ServerMailSchema.parse(process.env);
@@ -304,6 +306,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 			viteConfig.VITE_ORIGIN,
 		],
 		rateLimit: {
+			enabled: e2eConfig.SERVER_E2E !== "e2e",
 			window: 10,
 			max: 100,
 		},
