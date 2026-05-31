@@ -134,6 +134,7 @@ bun run workflow:check
 Vitest coverage is scoped to server-side `Fx` and DB `Fx` business flows. Thin `Fn` wrappers, routes, UI, tools, migrations, and seed scripts are intentionally out of the coverage denominator.
 
 The Playwright e2e flow uses `x-e2e-db` to select the per-test database. That header is ignored unless `SERVER_E2E=e2e` is present.
+Playwright runs e2e files in parallel by default. Use `E2E_WORKERS=<count> bun run e2e` to tune local or CI concurrency.
 
 ## Dependency Hygiene
 

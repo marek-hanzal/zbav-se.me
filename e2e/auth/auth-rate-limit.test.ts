@@ -33,7 +33,14 @@ async function postAuth(
 }
 
 test("auth sign up rate limit", async ({ database, withRequest }) => {
-	void database;
+	await database.kysely
+		.updateTable("rate_limit_rule")
+		.set({
+			limit: 2,
+		})
+		.where("name", "=", "sign-up:request")
+		.executeTakeFirstOrThrow();
+
 	for (let index = 0; index < 2; index++) {
 		const user = createUser();
 		const response = await withRequest(async (request) => {
