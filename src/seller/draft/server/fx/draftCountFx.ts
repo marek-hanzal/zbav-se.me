@@ -14,13 +14,11 @@ export namespace draftCountFx {
 
 export const draftCountFx = Effect.fn("draftCountFx")(function* ({
 	userId,
-	filter,
 	where,
 	scope,
 }: draftCountFx.Props) {
 	const logger = yield* getLoggerFx("draftCountFx");
 	logger.trace("draftCountFx", {
-		filter,
 		where,
 		scope,
 	});
@@ -30,7 +28,6 @@ export const draftCountFx = Effect.fn("draftCountFx")(function* ({
 			userId,
 			sort: [],
 		}),
-		filter,
 		where,
 		scope,
 	});

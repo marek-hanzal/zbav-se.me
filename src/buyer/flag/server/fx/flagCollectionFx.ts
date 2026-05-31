@@ -2,12 +2,12 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import { withFlagSelectFx } from "~/buyer/flag/server/db/withFlagSelectFx";
-import type { FlagFilterSchema } from "~/buyer/flag/server/schema/FlagFilterSchema";
 import type { FlagQuerySchema } from "~/buyer/flag/server/schema/FlagQuerySchema";
+import type { FlagWhereSchema } from "../schema/FlagWhereSchema";
 
 export namespace flagCollectionFx {
 	export interface Props extends FlagQuerySchema.Type {
-		scope: FlagFilterSchema.Type;
+		scope: FlagWhereSchema.Type;
 	}
 }
 
@@ -17,7 +17,6 @@ export const flagCollectionFx = Effect.fn("flagCollectionFx")(function* ({
 		size: 10,
 	},
 	limit,
-	filter,
 	where,
 	scope,
 	sort,
@@ -26,7 +25,6 @@ export const flagCollectionFx = Effect.fn("flagCollectionFx")(function* ({
 	logger.trace("flagCollectionFx", {
 		cursor,
 		limit,
-		filter,
 		where,
 		scope,
 		sort,
@@ -38,7 +36,6 @@ export const flagCollectionFx = Effect.fn("flagCollectionFx")(function* ({
 		}),
 		cursor,
 		limit,
-		filter,
 		where,
 		scope,
 	});

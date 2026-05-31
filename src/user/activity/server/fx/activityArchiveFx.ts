@@ -4,12 +4,12 @@ import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { withActivitySelectFx } from "~/user/activity/server/db/withActivitySelectFx";
-import type { ActivityFilterSchema } from "~/user/activity/server/schema/ActivityFilterSchema";
 import type { ActivityQuerySchema } from "~/user/activity/server/schema/ActivityQuerySchema";
+import type { ActivityWhereSchema } from "../schema/ActivityWhereSchema";
 
 export namespace activityArchiveFx {
 	export interface Props extends ActivityQuerySchema.Type {
-		scope: ActivityFilterSchema.Type;
+		scope: ActivityWhereSchema.Type;
 	}
 }
 
@@ -18,7 +18,6 @@ export const activityArchiveFx = Effect.fn("activityArchiveFx")(function* ({
 		page: 0,
 		size: 1000,
 	},
-	filter,
 	where,
 	scope,
 	sort,
@@ -26,7 +25,6 @@ export const activityArchiveFx = Effect.fn("activityArchiveFx")(function* ({
 	const logger = yield* getLoggerFx("activityArchiveFx");
 	logger.trace("activityArchiveFx", {
 		cursor,
-		filter,
 		where,
 		scope,
 		sort,
@@ -41,7 +39,6 @@ export const activityArchiveFx = Effect.fn("activityArchiveFx")(function* ({
 			});
 
 			for (const layer of [
-				filter,
 				where,
 				scope,
 			]) {

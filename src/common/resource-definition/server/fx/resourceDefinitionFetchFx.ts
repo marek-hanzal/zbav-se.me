@@ -12,14 +12,12 @@ export namespace resourceDefinitionFetchFx {
 }
 
 export const resourceDefinitionFetchFx = Effect.fn("resourceDefinitionFetchFx")(function* ({
-	filter,
 	where,
 	scope,
 	sort,
 }: resourceDefinitionFetchFx.Props) {
 	const logger = yield* getLoggerFx("resourceDefinitionFetchFx");
 	logger.trace("resourceDefinitionFetchFx", {
-		filter,
 		where,
 		scope,
 		sort,
@@ -30,7 +28,6 @@ export const resourceDefinitionFetchFx = Effect.fn("resourceDefinitionFetchFx")(
 		selectFx: withResourceDefinitionSelectFx({
 			sort,
 		}),
-		filter,
 		where,
 		scope,
 	});

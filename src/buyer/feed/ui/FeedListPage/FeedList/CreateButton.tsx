@@ -16,7 +16,7 @@ export namespace CreateButton {
 export const CreateButton: FC<CreateButton.Props> = ({ _suspense, className, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const { data: feedCount } = withFeedQuery.useCountQuery({
-		filter: {
+		where: {
 			type: "user",
 		},
 	});

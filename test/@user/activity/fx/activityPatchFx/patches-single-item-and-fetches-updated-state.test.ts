@@ -122,7 +122,7 @@ describe("activityPatchFx", () => {
 				scope: {
 					userId: user.id,
 				},
-				filter: {
+				where: {
 					archivedAtIsNull: true,
 				},
 			});

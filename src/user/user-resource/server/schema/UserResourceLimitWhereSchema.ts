@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { FilterSchema } from "@/lib/common/schema";
+import { WhereSchema } from "@/lib/common/schema";
 import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 
 export const UserResourceLimitWhereSchema = z
 	.looseObject({
-		...FilterSchema.shape,
+		...WhereSchema.shape,
 		resourceDefinitionId: ResourceDefinitionEnumSchema.optional(),
 		resourceDefinitionIdIn: z.array(ResourceDefinitionEnumSchema).optional(),
 		reference: z.string().min(1).optional(),

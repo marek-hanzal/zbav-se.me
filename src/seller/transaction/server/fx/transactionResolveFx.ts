@@ -49,7 +49,7 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 					status: "sold",
 				},
 				query: {
-					filter: {
+					where: {
 						listingId: transaction.listingId,
 						statusIn: [
 							"interest",

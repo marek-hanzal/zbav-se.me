@@ -1,13 +1,11 @@
 import { z } from "zod";
 import { CursorSchema } from "@/lib/common/schema";
-import { UploadFilterSchema } from "~/user/upload/server/schema/UploadFilterSchema";
 import { UploadSortSchema } from "~/user/upload/server/schema/UploadSortSchema";
 import { UploadWhereSchema } from "~/user/upload/server/schema/UploadWhereSchema";
 
 export const UploadQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
-		filter: UploadFilterSchema.optional(),
 		where: UploadWhereSchema.optional(),
 		sort: UploadSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({

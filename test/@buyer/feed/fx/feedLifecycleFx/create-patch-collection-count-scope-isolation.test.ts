@@ -67,7 +67,7 @@ describe("feedLifecycleFx", () => {
 			});
 
 			expect(patched.name).toBe("Updated MacBooks");
-			expect(patched.query.filter?.fulltext).toEqual([
+			expect(patched.query.where?.fulltext).toEqual([
 				"macbook pro",
 			]);
 
@@ -101,7 +101,7 @@ describe("feedLifecycleFx", () => {
 			});
 
 			expect(fetched.name).toBe("Updated MacBooks");
-			expect(fetched.query.filter?.fulltext).toEqual([
+			expect(fetched.query.where?.fulltext).toEqual([
 				"macbook pro",
 			]);
 

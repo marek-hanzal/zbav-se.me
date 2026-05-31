@@ -1,9 +1,12 @@
 import { z } from "zod";
-import { ListingEventFilterSchema } from "~/buyer/listing-event/server/schema/ListingEventFilterSchema";
+import { WhereSchema } from "@/lib/common/schema";
 
 export const ListingEventWhereSchema = z
 	.looseObject({
-		...ListingEventFilterSchema.shape,
+		...WhereSchema.shape,
+		listingId: z.string().optional().meta({
+			description: "This filter matches the exact listingId",
+		}),
 	})
 	.strip()
 	.meta({

@@ -1,27 +1,25 @@
 import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
-import type { CategoryFilterSchema } from "~/user/category/server/schema/CategoryFilterSchema";
 import type { CategoryQuerySchema } from "~/user/category/server/schema/CategoryQuerySchema";
 import { withCategorySelectFx } from "../db/withCategorySelectFx";
+import type { CategoryWhereSchema } from "../schema/CategoryWhereSchema";
 
 export namespace categoryFetchFx {
 	export interface Props extends CategoryQuerySchema.Type {
 		userId: string;
-		scope: CategoryFilterSchema.Type;
+		scope: CategoryWhereSchema.Type;
 	}
 }
 
 export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
 	userId,
-	filter,
 	where,
 	scope,
 	sort,
 }: categoryFetchFx.Props) {
 	const logger = yield* getLoggerFx("categoryFetchFx");
 	logger.trace("categoryFetchFx", {
-		filter,
 		where,
 		scope,
 		sort,
@@ -33,7 +31,6 @@ export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
 			userId,
 			sort,
 		}),
-		filter,
 		where,
 		scope,
 	});

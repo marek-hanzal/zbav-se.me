@@ -1,13 +1,11 @@
 import { z } from "zod";
 import { CursorSchema } from "@/lib/common/schema";
-import { AgentUsageFilterSchema } from "~/user/agent/server/schema/AgentUsageFilterSchema";
 import { AgentUsageSortSchema } from "~/user/agent/server/schema/AgentUsageSortSchema";
 import { AgentUsageWhereSchema } from "~/user/agent/server/schema/AgentUsageWhereSchema";
 
 export const AgentUsageQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
-		filter: AgentUsageFilterSchema.optional(),
 		where: AgentUsageWhereSchema.optional(),
 		sort: AgentUsageSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({

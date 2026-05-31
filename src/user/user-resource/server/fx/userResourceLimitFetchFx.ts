@@ -12,14 +12,12 @@ export namespace userResourceLimitFetchFx {
 }
 
 export const userResourceLimitFetchFx = Effect.fn("userResourceLimitFetchFx")(function* ({
-	filter,
 	where,
 	scope,
 	sort,
 }: userResourceLimitFetchFx.Props) {
 	const logger = yield* getLoggerFx("userResourceLimitFetchFx");
 	logger.trace("userResourceLimitFetchFx", {
-		filter,
 		where,
 		scope,
 		sort,
@@ -30,7 +28,6 @@ export const userResourceLimitFetchFx = Effect.fn("userResourceLimitFetchFx")(fu
 		selectFx: withUserResourceLimitSelectFx({
 			sort,
 		}),
-		filter,
 		where,
 		scope,
 	});

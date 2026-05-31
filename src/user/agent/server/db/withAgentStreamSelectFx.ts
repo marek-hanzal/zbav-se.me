@@ -3,8 +3,8 @@ import { match } from "ts-pattern";
 import { getLoggerFx } from "@/lib/common/log";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { AgentStreamFilterSchema } from "../schema/AgentStreamFilterSchema";
 import type { AgentStreamSortSchema } from "../schema/AgentStreamSortSchema";
+import type { AgentStreamWhereSchema } from "../schema/AgentStreamWhereSchema";
 
 export namespace withAgentStreamSelectFx {
 	export interface Props {
@@ -33,7 +33,7 @@ export const withAgentStreamSelectFx = Effect.fn("withAgentStreamSelectFx")(func
 			"as.payload",
 			"as.sort",
 		]),
-		queryFx(select, where: AgentStreamFilterSchema.Type) {
+		queryFx(select, where: AgentStreamWhereSchema.Type) {
 			return Effect.gen(function* () {
 				const logger = yield* getLoggerFx("withAgentStreamQueryBuilderFx");
 				logger.trace("withAgentStreamQueryBuilderFx", {

@@ -6,9 +6,6 @@ import { UserResourceLimitWhereSchema } from "./UserResourceLimitWhereSchema";
 export const UserResourceLimitQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
-		filter: UserResourceLimitWhereSchema.omit({
-			userId: true,
-		}).optional(),
 		where: UserResourceLimitWhereSchema.optional(),
 		sort: UserResourceLimitSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({

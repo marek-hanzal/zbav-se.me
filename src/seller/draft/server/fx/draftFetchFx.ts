@@ -14,14 +14,12 @@ export namespace draftFetchFx {
 
 export const draftFetchFx = Effect.fn("draftFetchFx")(function* ({
 	userId,
-	filter,
 	where,
 	scope,
 	sort,
 }: draftFetchFx.Props) {
 	const logger = yield* getLoggerFx("draftFetchFx");
 	logger.trace("draftFetchFx", {
-		filter,
 		where,
 		scope,
 		sort,
@@ -33,7 +31,6 @@ export const draftFetchFx = Effect.fn("draftFetchFx")(function* ({
 			userId,
 			sort,
 		}),
-		filter,
 		where,
 		scope,
 	});

@@ -62,7 +62,7 @@ describe("activity bulk mutation scope isolation", () => {
 					userId: owner.id,
 				},
 				query: {
-					filter: {
+					where: {
 						reference: "listing-bulk",
 						type: "buyer-message",
 					},

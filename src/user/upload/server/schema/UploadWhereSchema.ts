@@ -1,9 +1,16 @@
 import { z } from "zod";
-import { UploadFilterSchema } from "~/user/upload/server/schema/UploadFilterSchema";
+import { WhereSchema } from "@/lib/common/schema";
+import { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 
 export const UploadWhereSchema = z
 	.looseObject({
-		...UploadFilterSchema.shape,
+		...WhereSchema.shape,
+		userId: z.string().optional().meta({
+			description: "This filter matches uploads with the exact userId",
+		}),
+		access: AccessEnumSchema.optional().meta({
+			description: "This filter matches uploads with the exact visibility",
+		}),
 	})
 	.strip()
 	.meta({

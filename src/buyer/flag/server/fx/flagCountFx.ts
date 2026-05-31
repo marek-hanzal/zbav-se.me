@@ -3,29 +3,26 @@ import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
 import { withFlagSelectFx } from "~/buyer/flag/server/db/withFlagSelectFx";
 import type { FlagCountQuerySchema } from "~/buyer/flag/server/schema/FlagCountQuerySchema";
-import type { FlagFilterSchema } from "~/buyer/flag/server/schema/FlagFilterSchema";
+import type { FlagWhereSchema } from "../schema/FlagWhereSchema";
 
 export namespace flagCountFx {
 	export interface Props extends FlagCountQuerySchema.Type {
-		scope: FlagFilterSchema.Type;
+		scope: FlagWhereSchema.Type;
 	}
 }
 
 export const flagCountFx = Effect.fn("flagCountFx")(function* ({
-	filter,
 	where,
 	scope,
 }: flagCountFx.Props) {
 	const logger = yield* getLoggerFx("flagCountFx");
 	logger.trace("flagCountFx", {
-		filter,
 		where,
 		scope,
 	});
 
 	return yield* withCountFx({
 		selectFx: withFlagSelectFx({}),
-		filter,
 		where,
 		scope,
 	});

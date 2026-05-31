@@ -4,7 +4,6 @@ import { TransactionQuerySchema } from "~/seller/transaction/server/schema/Trans
 export const TransactionCountQuerySchema = z
 	.looseObject({
 		...TransactionQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

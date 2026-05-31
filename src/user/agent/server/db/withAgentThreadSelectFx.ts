@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { AgentThreadFilterSchema } from "../schema/AgentThreadFilterSchema";
 import type { AgentThreadSortSchema } from "../schema/AgentThreadSortSchema";
+import type { AgentThreadWhereSchema } from "../schema/AgentThreadWhereSchema";
 
 export namespace withAgentThreadSelectFx {
 	export interface Props {
@@ -27,7 +27,7 @@ export const withAgentThreadSelectFx = Effect.fn("withAgentThreadSelectFx")(func
 
 	return selectFx({
 		select: select.selectAll("at"),
-		queryFx(select, where: AgentThreadFilterSchema.Type) {
+		queryFx(select, where: AgentThreadWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 

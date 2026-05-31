@@ -4,7 +4,6 @@ import { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
 export const FeedCountQuerySchema = z
 	.looseObject({
 		...FeedQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { NotFoundErrorFx } from "../error/NotFoundErrorFx";
-import type { FilterSchema } from "../schema/FilterSchema";
+import type { WhereSchema } from "../schema/WhereSchema";
 import type { selectFx } from "../select";
 
 export namespace withFetchFx {
@@ -8,7 +8,7 @@ export namespace withFetchFx {
 		TDB,
 		TTable extends keyof TDB,
 		TOutput,
-		TFilter extends FilterSchema.Type,
+		TWhere extends WhereSchema.Type,
 		TSelectError,
 		TSelectContext,
 		TQueryError,
@@ -19,24 +19,20 @@ export namespace withFetchFx {
 			TDB,
 			TTable,
 			TOutput,
-			TFilter,
+			TWhere,
 			TSelectError,
 			TSelectContext,
 			TQueryError,
 			TQueryContext
 		>;
 		/**
-		 * User-land filters - lowest priority
-		 */
-		filter?: TFilter;
-		/**
 		 * User-land filter setting default context (e.g. by objectId, whatever)
 		 */
-		where?: TFilter;
+		where?: TWhere;
 		/**
 		 * Scope is used only by the server - guards against accessing resources outside of the scope (e.g. general userId etc.)
 		 */
-		scope?: TFilter;
+		scope?: TWhere;
 	}
 }
 
@@ -44,7 +40,7 @@ export const withFetchFx = Effect.fn("withFetchFx")(function* <
 	const TDB,
 	const TTable extends keyof TDB,
 	const TOutput,
-	const TFilter extends FilterSchema.Type,
+	const TWhere extends WhereSchema.Type,
 	const TSelectError,
 	const TSelectContext,
 	const TQueryError,
@@ -52,21 +48,19 @@ export const withFetchFx = Effect.fn("withFetchFx")(function* <
 >({
 	resource,
 	selectFx,
-	filter,
 	where,
 	scope,
 }: withFetchFx.Props<
 	TDB,
 	TTable,
 	TOutput,
-	TFilter,
+	TWhere,
 	TSelectError,
 	TSelectContext,
 	TQueryError,
 	TQueryContext
 >) {
 	const layers = [
-		filter,
 		where,
 		scope,
 	] as const;
@@ -84,7 +78,6 @@ export const withFetchFx = Effect.fn("withFetchFx")(function* <
 		return yield* new NotFoundErrorFx({
 			resource,
 			resourceId: JSON.stringify({
-				filter,
 				where,
 				scope,
 			}),

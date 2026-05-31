@@ -5,17 +5,17 @@ import { withLocationSelectFx } from "~/session/location/server/db/withLocationS
 import type { LocationQuerySchema } from "~/session/location/server/schema/LocationQuerySchema";
 
 export namespace locationFetchFx {
-	export type Props = LocationQuerySchema.Type;
+	export interface Props extends LocationQuerySchema.Type {
+		//
+	}
 }
 
 export const locationFetchFx = Effect.fn("locationFetchFx")(function* ({
-	filter,
 	where,
 	sort,
 }: locationFetchFx.Props) {
 	const logger = yield* getLoggerFx("locationFetchFx");
 	logger.trace("locationFetchFx", {
-		filter,
 		where,
 		sort,
 	});
@@ -25,7 +25,6 @@ export const locationFetchFx = Effect.fn("locationFetchFx")(function* ({
 		selectFx: withLocationSelectFx({
 			sort,
 		}),
-		filter,
 		where,
 	});
 });

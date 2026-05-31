@@ -5,12 +5,12 @@ import type { AgentThreadTableSchema } from "~/server/database/@table/AgentThrea
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { agentThreadFetchFx } from "~/user/agent/server/fx/agentThreadFetchFx";
-import type { AgentThreadFilterSchema } from "~/user/agent/server/schema/AgentThreadFilterSchema";
 import type { AgentThreadPatchSchema } from "~/user/agent/server/schema/AgentThreadPatchSchema";
+import type { AgentThreadWhereSchema } from "../schema/AgentThreadWhereSchema";
 
 export namespace agentThreadPatchFx {
 	export interface Props extends AgentThreadPatchSchema.Type {
-		scope: AgentThreadFilterSchema.Type;
+		scope: AgentThreadWhereSchema.Type;
 	}
 }
 

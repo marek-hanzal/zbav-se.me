@@ -17,7 +17,6 @@ export const resourceDefinitionCollectionFx = Effect.fn("resourceDefinitionColle
 			page: 0,
 			size: 10,
 		},
-		filter,
 		where,
 		scope,
 		sort,
@@ -25,7 +24,6 @@ export const resourceDefinitionCollectionFx = Effect.fn("resourceDefinitionColle
 	}: resourceDefinitionCollectionFx.Props) {
 		const logger = yield* getLoggerFx("resourceDefinitionCollectionFx");
 		logger.trace("resourceDefinitionCollectionFx", {
-			filter,
 			where,
 			scope,
 			cursor,
@@ -38,7 +36,6 @@ export const resourceDefinitionCollectionFx = Effect.fn("resourceDefinitionColle
 				sort,
 			}),
 			cursor,
-			filter,
 			where,
 			scope,
 			limit,

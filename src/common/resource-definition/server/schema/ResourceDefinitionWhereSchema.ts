@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { FilterSchema } from "@/lib/common/schema";
+import { WhereSchema } from "@/lib/common/schema";
 import { ResourceDefinitionEnumSchema } from "../../enum/ResourceDefinitionEnumSchema";
 
 export const ResourceDefinitionWhereSchema = z
 	.looseObject({
-		...FilterSchema.shape,
+		...WhereSchema.shape,
 		name: ResourceDefinitionEnumSchema.optional().meta({
 			description: "Exact resource definition name",
 		}),

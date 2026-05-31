@@ -4,8 +4,8 @@ import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withUploadSelectFx } from "~/user/upload/server/db/withUploadSelectFx";
-import type { GalleryItemFilterSchema } from "../schema/GalleryItemFilterSchema";
 import type { GalleryItemSortSchema } from "../schema/GalleryItemSortSchema";
+import { GalleryItemWhereSchema } from "../schema/GalleryItemWhereSchema";
 
 export namespace withGalleryItemSelectFx {
 	export interface Props {
@@ -43,7 +43,7 @@ export const withGalleryItemSelectFx = Effect.fn("withGalleryItemSelectFx")(func
 					.as("upload");
 			},
 		]),
-		queryFx(select, where: GalleryItemFilterSchema.Type) {
+		queryFx(select, where: GalleryItemWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 

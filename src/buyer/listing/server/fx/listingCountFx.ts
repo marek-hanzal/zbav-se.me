@@ -18,7 +18,6 @@ export namespace listingCountFx {
 
 export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	userId,
-	filter,
 	where,
 	scope,
 	meta,
@@ -26,7 +25,6 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	const logger = yield* getLoggerFx("listingCountFx");
 	logger.trace("listingCountFx", {
 		userId,
-		filter,
 		where,
 		scope,
 		meta,
@@ -45,12 +43,10 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 					userId,
 					meta,
 					hasExplicitCategory: hasExplicitCategory([
-						filter,
 						where,
 						scope,
 					]),
 				}),
-				filter,
 				where,
 				scope,
 			});

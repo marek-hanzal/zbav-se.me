@@ -1,13 +1,11 @@
 import { z } from "zod";
 import { CursorSchema } from "@/lib/common/schema";
-import { FavouriteFilterSchema } from "~/buyer/favourite/server/schema/FavouriteFilterSchema";
 import { FavouriteSortSchema } from "~/buyer/favourite/server/schema/FavouriteSortSchema";
 import { FavouriteWhereSchema } from "~/buyer/favourite/server/schema/FavouriteWhereSchema";
 
 export const FavouriteQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
-		filter: FavouriteFilterSchema.optional(),
 		where: FavouriteWhereSchema.optional(),
 		sort: FavouriteSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({

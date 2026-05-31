@@ -11,7 +11,7 @@ export const WarmupSeller: FC<WarmupSeller.Props> = () => {
 			page: 0,
 			size: 1000,
 		},
-		filter: {
+		where: {
 			flow: "seller-to-buyer",
 			withTransaction: true,
 		},
@@ -27,7 +27,7 @@ export const WarmupSeller: FC<WarmupSeller.Props> = () => {
 			page: 0,
 			size: 1000,
 		},
-		filter: {
+		where: {
 			flow: "archived",
 			withTransaction: true,
 		},
@@ -43,7 +43,7 @@ export const WarmupSeller: FC<WarmupSeller.Props> = () => {
 			page: 0,
 			size: 1000,
 		},
-		filter: {
+		where: {
 			flow: "buyer-to-seller",
 			withTransaction: true,
 		},
@@ -55,7 +55,7 @@ export const WarmupSeller: FC<WarmupSeller.Props> = () => {
 		],
 	});
 	withSellerListingQuery.useCountQuery({
-		filter: {
+		where: {
 			withTransaction: true,
 		},
 	});

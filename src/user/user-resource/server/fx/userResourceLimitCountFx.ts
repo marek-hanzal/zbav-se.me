@@ -12,13 +12,11 @@ export namespace userResourceLimitCountFx {
 }
 
 export const userResourceLimitCountFx = Effect.fn("userResourceLimitCountFx")(function* ({
-	filter,
 	where,
 	scope,
 }: userResourceLimitCountFx.Props) {
 	const logger = yield* getLoggerFx("userResourceLimitCountFx");
 	logger.trace("userResourceLimitCountFx", {
-		filter,
 		where,
 		scope,
 	});
@@ -27,7 +25,6 @@ export const userResourceLimitCountFx = Effect.fn("userResourceLimitCountFx")(fu
 		selectFx: withUserResourceLimitSelectFx({
 			sort: [],
 		}),
-		filter,
 		where,
 		scope,
 	});

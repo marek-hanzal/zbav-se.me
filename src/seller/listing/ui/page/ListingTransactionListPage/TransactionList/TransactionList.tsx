@@ -49,14 +49,14 @@ export const TransactionList: FC<TransactionList.Props> = ({
 		return [
 			{
 				label: translator.text("Transaction - buyer-to-seller - seller (title)"),
-				filter: {
+				where: {
 					statusIn: [],
 					activity: "unread",
 				},
 			},
 			{
 				label: toStatusLabel(TransactionStatusEnumSchema.enum.interest, translator),
-				filter: {
+				where: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.interest,
 					],
@@ -69,7 +69,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 			},
 			{
 				label: toStatusLabel(TransactionStatusEnumSchema.enum.trade, translator),
-				filter: {
+				where: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.trade,
 					],
@@ -81,7 +81,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 			},
 			{
 				label: toStatusLabel(TransactionStatusEnumSchema.enum.dispute, translator),
-				filter: {
+				where: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.dispute,
 					],
@@ -93,7 +93,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 			},
 			{
 				label: toStatusLabel(TransactionStatusEnumSchema.enum.resolved, translator),
-				filter: {
+				where: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.resolved,
 					],
@@ -105,7 +105,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 			},
 			{
 				label: translator.text("Messages closed listings section (title)"),
-				filter: {
+				where: {
 					statusIn: [
 						TransactionStatusEnumSchema.enum.success,
 						TransactionStatusEnumSchema.enum.rejected,
@@ -149,14 +149,14 @@ export const TransactionList: FC<TransactionList.Props> = ({
 					},
 				]}
 			>
-				{groups.map(({ label, filter, ...props }) => {
+				{groups.map(({ label, where, ...props }) => {
 					return (
 						<ListGroup
-							key={filter.statusIn.join(":")}
+							key={where.statusIn.join(":")}
 							_suspense={_suspense}
 							label={label}
-							filter={{
-								...filter,
+							where={{
+								...where,
 								listingId,
 							}}
 							refetchInterval={refetchInterval}

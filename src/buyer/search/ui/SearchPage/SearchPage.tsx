@@ -24,7 +24,7 @@ export const SearchPage: FC<SearchPage.Props> = ({ _suspense, ...props }) => {
 	const {
 		data: { id: feedId },
 	} = withFeedQuery.useEntityQuery({
-		filter: {
+		where: {
 			type: "search",
 		},
 		sort: [

@@ -3,8 +3,8 @@ import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { UserEventFilterSchema } from "../schema/UserEventFilterSchema";
 import type { UserEventSortSchema } from "../schema/UserEventSortSchema";
+import type { UserEventWhereSchema } from "../schema/UserEventWhereSchema";
 
 export namespace withUserEventSelectFx {
 	export interface Props {
@@ -29,7 +29,7 @@ export const withUserEventSelectFx = Effect.fn("withUserEventSelectFx")(function
 
 	return selectFx({
 		select,
-		queryFx(select, where: UserEventFilterSchema.Type) {
+		queryFx(select, where: UserEventWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 

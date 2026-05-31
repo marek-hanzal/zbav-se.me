@@ -94,7 +94,7 @@ describe("activityPatchCollectionFx", () => {
 					userId: owner.id,
 				},
 				query: {
-					filter: {
+					where: {
 						family: "transaction",
 					},
 				},
@@ -115,7 +115,7 @@ describe("activityPatchCollectionFx", () => {
 				scope: {
 					userId: owner.id,
 				},
-				filter: {
+				where: {
 					archivedAtIsNull: true,
 				},
 			});
@@ -126,7 +126,7 @@ describe("activityPatchCollectionFx", () => {
 				scope: {
 					userId: stranger.id,
 				},
-				filter: {
+				where: {
 					archivedAtIsNull: true,
 				},
 			});

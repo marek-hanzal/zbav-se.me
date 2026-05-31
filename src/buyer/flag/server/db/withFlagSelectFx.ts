@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { FlagFilterSchema } from "../schema/FlagFilterSchema";
 import type { FlagSortSchema } from "../schema/FlagSortSchema";
+import type { FlagWhereSchema } from "../schema/FlagWhereSchema";
 
 export namespace withFlagSelectFx {
 	export interface Props {
@@ -29,7 +29,7 @@ export const withFlagSelectFx = Effect.fn("withFlagSelectFx")(function* ({
 			"f.id",
 			"f.listingId",
 		]),
-		queryFx(select, where: FlagFilterSchema.Type) {
+		queryFx(select, where: FlagWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let q = select;
 

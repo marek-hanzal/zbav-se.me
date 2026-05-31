@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { FilterSchema } from "@/lib/common/schema";
+import { WhereSchema } from "@/lib/common/schema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 
 export const UserRestrictionWhereSchema = z
 	.looseObject({
-		...FilterSchema.shape,
+		...WhereSchema.shape,
 		userId: z.string().optional().meta({
 			description: "This filter matches the exact userId",
 		}),

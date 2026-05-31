@@ -4,8 +4,8 @@ import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { FeedFilterSchema } from "../schema/FeedFilterSchema";
 import type { FeedSortSchema } from "../schema/FeedSortSchema";
+import type { FeedWhereSchema } from "../schema/FeedWhereSchema";
 
 export namespace withFeedSelectFx {
 	export interface Props {
@@ -48,7 +48,7 @@ export const withFeedSelectFx = Effect.fn("withFeedSelectFx")(function* ({
 						.limit(1),
 				).as("upload"),
 			),
-		queryFx(select, where: FeedFilterSchema.Type) {
+		queryFx(select, where: FeedWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let q = select;
 

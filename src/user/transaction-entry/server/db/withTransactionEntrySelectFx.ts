@@ -5,7 +5,7 @@ import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 import type { TransactionEntrySortSchema } from "~/user/transaction-entry/server/schema/TransactionEntrySortSchema";
-import type { TransactionEntryFilterSchema } from "../schema/TransactionEntryFilterSchema";
+import type { TransactionEntryWhereSchema } from "../schema/TransactionEntryWhereSchema";
 
 export namespace withTransactionEntrySelectFx {
 	export interface Props {
@@ -48,7 +48,7 @@ export const withTransactionEntrySelectFx = Effect.fn("withTransactionEntrySelec
 
 	return selectFx({
 		select,
-		queryFx(select, where: TransactionEntryFilterSchema.Type) {
+		queryFx(select, where: TransactionEntryWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select.where((eb) => {
 					return eb.exists((eb) => {

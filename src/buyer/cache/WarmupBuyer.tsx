@@ -9,7 +9,7 @@ export namespace WarmupBuyer {
 
 export const WarmupBuyer: FC<WarmupBuyer.Props> = () => {
 	withFeedQuery.useCollectionQuery({
-		filter: {
+		where: {
 			type: "user",
 		},
 		sort: [
@@ -20,7 +20,7 @@ export const WarmupBuyer: FC<WarmupBuyer.Props> = () => {
 		],
 	});
 	const { data: feed } = withFeedQuery.useMaybeEntityQuery({
-		filter: {
+		where: {
 			type: "user",
 		},
 		sort: [
@@ -34,7 +34,7 @@ export const WarmupBuyer: FC<WarmupBuyer.Props> = () => {
 	withBuyerListingQuery.useCountQuery(feed?.query ?? {});
 
 	const { data: search } = withFeedQuery.useMaybeEntityQuery({
-		filter: {
+		where: {
 			type: "search",
 		},
 		sort: [
@@ -56,7 +56,7 @@ export const WarmupBuyer: FC<WarmupBuyer.Props> = () => {
 	}, []);
 
 	withFeedQuery.useCountQuery({
-		filter: {
+		where: {
 			type: "user",
 		},
 	});

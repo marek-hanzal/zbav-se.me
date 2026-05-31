@@ -5,7 +5,7 @@ import { selectFx } from "@/lib/common/select";
 import type { ActivityTableSchema } from "~/server/database/@table/ActivityTableSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { ActivitySortSchema } from "~/user/activity/server/schema/ActivitySortSchema";
-import type { ActivityFilterSchema } from "../schema/ActivityFilterSchema";
+import type { ActivityWhereSchema } from "../schema/ActivityWhereSchema";
 
 export namespace withActivitySelectFx {
 	export interface Props {
@@ -82,7 +82,7 @@ export const withActivitySelectFx = Effect.fn("withActivitySelectFx")(function* 
 
 	return selectFx({
 		select,
-		queryFx(select, where: ActivityFilterSchema.Type) {
+		queryFx(select, where: ActivityWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 

@@ -6,7 +6,6 @@ import { ResourceDefinitionWhereSchema } from "./ResourceDefinitionWhereSchema";
 export const ResourceDefinitionQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
-		filter: ResourceDefinitionWhereSchema.optional(),
 		where: ResourceDefinitionWhereSchema.optional(),
 		sort: ResourceDefinitionSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({

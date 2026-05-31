@@ -40,7 +40,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 	const locale = useLocale();
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 	const { data: feedCount } = withFeedQuery.useCountQuery({
-		filter: {
+		where: {
 			type: "user",
 		},
 	});

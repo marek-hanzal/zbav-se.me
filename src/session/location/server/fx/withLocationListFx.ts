@@ -2,17 +2,16 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import { withLocationSelectFx } from "~/session/location/server/db/withLocationSelectFx";
-import type { LocationFilterSchema } from "~/session/location/server/schema/LocationFilterSchema";
 import type { LocationQuerySchema } from "~/session/location/server/schema/LocationQuerySchema";
+import type { LocationWhereSchema } from "../schema/LocationWhereSchema";
 
 export namespace withLocationListFx {
 	export interface Props extends LocationQuerySchema.Type {
-		scope: LocationFilterSchema.Type;
+		scope: LocationWhereSchema.Type;
 	}
 }
 
 export const withLocationListFx = Effect.fn("withLocationListFx")(function* ({
-	filter,
 	where,
 	scope,
 	cursor = {
@@ -24,7 +23,6 @@ export const withLocationListFx = Effect.fn("withLocationListFx")(function* ({
 }: withLocationListFx.Props) {
 	const logger = yield* getLoggerFx("withLocationListFx");
 	logger.trace("withLocationListFx", {
-		filter,
 		where,
 		scope,
 		cursor,
@@ -36,7 +34,6 @@ export const withLocationListFx = Effect.fn("withLocationListFx")(function* ({
 		selectFx: withLocationSelectFx({
 			sort,
 		}),
-		filter,
 		where,
 		scope,
 		cursor,

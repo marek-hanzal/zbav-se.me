@@ -71,7 +71,7 @@ describe("feed contract", () => {
 			);
 
 			expect(patched.name).toBe("Patched Feed");
-			expect(patched.query.filter?.fulltext).toEqual([
+			expect(patched.query.where?.fulltext).toEqual([
 				"new-title",
 			]);
 			expect(afterPatch.updatedAt.getTime()).toBeGreaterThanOrEqual(

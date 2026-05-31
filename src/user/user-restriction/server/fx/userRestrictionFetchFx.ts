@@ -12,14 +12,12 @@ export namespace userRestrictionFetchFx {
 }
 
 export const userRestrictionFetchFx = Effect.fn("userRestrictionFetchFx")(function* ({
-	filter,
 	where,
 	scope,
 	sort,
 }: userRestrictionFetchFx.Props) {
 	const logger = yield* getLoggerFx("userRestrictionFetchFx");
 	logger.trace("userRestrictionFetchFx", {
-		filter,
 		where,
 		scope,
 		sort,
@@ -30,7 +28,6 @@ export const userRestrictionFetchFx = Effect.fn("userRestrictionFetchFx")(functi
 		selectFx: withUserRestrictionSelectFx({
 			sort,
 		}),
-		filter,
 		where,
 		scope,
 	});

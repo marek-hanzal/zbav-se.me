@@ -16,7 +16,6 @@ export const userResourceLimitCollectionFx = Effect.fn("userResourceLimitCollect
 		page: 0,
 		size: 10,
 	},
-	filter,
 	where,
 	scope,
 	sort,
@@ -24,7 +23,6 @@ export const userResourceLimitCollectionFx = Effect.fn("userResourceLimitCollect
 }: userResourceLimitCollectionFx.Props) {
 	const logger = yield* getLoggerFx("userResourceLimitCollectionFx");
 	logger.trace("userResourceLimitCollectionFx", {
-		filter,
 		where,
 		scope,
 		cursor,
@@ -37,7 +35,6 @@ export const userResourceLimitCollectionFx = Effect.fn("userResourceLimitCollect
 			sort,
 		}),
 		cursor,
-		filter,
 		where,
 		scope,
 		limit,

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FilterSchema } from "@/lib/common/schema";
+import { WhereSchema } from "@/lib/common/schema";
 import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
@@ -8,7 +8,7 @@ import { AttrWhereSchema } from "./AttrWhereSchema";
 
 export const ListingWhereSchema = z
 	.looseObject({
-		...FilterSchema.shape,
+		...WhereSchema.shape,
 		userId: z.string().optional().meta({
 			description: "ID of the user; does not have an effect on API endpoints",
 		}),

@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { CursorSchema } from "@/lib/common/schema";
-import { UploadFilterSchema } from "~/public/upload/server/schema/UploadFilterSchema";
 import { UploadSortSchema } from "~/public/upload/server/schema/UploadSortSchema";
 import { UploadWhereSchema } from "~/public/upload/server/schema/UploadWhereSchema";
 
@@ -10,7 +9,6 @@ export const UploadQuerySchema = z
 			page: 0,
 			size: 10,
 		}).optional(),
-		filter: UploadFilterSchema.optional(),
 		where: UploadWhereSchema.optional(),
 		sort: UploadSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({

@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { GalleryFilterSchema } from "~/public/gallery/server/schema/GalleryFilterSchema";
+import { WhereSchema } from "@/lib/common/schema";
 
 export const GalleryWhereSchema = z
 	.looseObject({
-		...GalleryFilterSchema.shape,
+		...WhereSchema.shape,
 	})
 	.strip()
 	.meta({

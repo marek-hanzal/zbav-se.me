@@ -4,7 +4,6 @@ import { UserResourceLimitQuerySchema } from "./UserResourceLimitQuerySchema";
 export const UserResourceLimitCountQuerySchema = z
 	.looseObject({
 		...UserResourceLimitQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

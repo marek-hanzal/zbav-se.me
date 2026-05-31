@@ -2,12 +2,12 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import { withListingEventSelectFx } from "~/buyer/listing-event/server/db/withListingEventSelectFx";
-import type { ListingEventFilterSchema } from "~/buyer/listing-event/server/schema/ListingEventFilterSchema";
 import type { ListingEventQuerySchema } from "~/buyer/listing-event/server/schema/ListingEventQuerySchema";
+import type { ListingEventWhereSchema } from "../schema/ListingEventWhereSchema";
 
 export namespace listingEventCollectionFx {
 	export interface Props extends ListingEventQuerySchema.Type {
-		scope: ListingEventFilterSchema.Type;
+		scope: ListingEventWhereSchema.Type;
 	}
 }
 
@@ -17,7 +17,6 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 		size: 10,
 	},
 	limit,
-	filter,
 	where,
 	sort,
 	scope,
@@ -26,7 +25,6 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 	logger.trace("listingEventCollectionFx", {
 		cursor,
 		limit,
-		filter,
 		where,
 		sort,
 		scope,
@@ -38,7 +36,6 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 		}),
 		cursor,
 		limit,
-		filter,
 		where,
 		scope,
 	});

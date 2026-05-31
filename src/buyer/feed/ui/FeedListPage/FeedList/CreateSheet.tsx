@@ -28,7 +28,7 @@ export namespace CreateSheet {
 export const CreateSheet: FC<CreateSheet.Props> = ({ _suspense, state, ...props }) => {
 	const translator = useTranslator();
 	const { data: feedCount } = withFeedQuery.useCountQuery({
-		filter: {
+		where: {
 			type: "user",
 		},
 	});

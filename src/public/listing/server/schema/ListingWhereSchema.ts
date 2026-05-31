@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { FilterSchema } from "@/lib/common/schema/FilterSchema";
+import { WhereSchema } from "@/lib/common/schema";
 
 export const ListingWhereSchema = z
 	.looseObject({
-		...FilterSchema.shape,
+		...WhereSchema.shape,
 		categoryId: z.string().min(1, "Category ID is required").optional().meta({
 			id: "PublicCategoryId",
 			description: "ID of the category",

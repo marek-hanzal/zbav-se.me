@@ -20,7 +20,7 @@ export const FeedList = withFallback(({ _suspense, ...props }: FeedList.Props) =
 	 * This is intentional to trigger parent suspense
 	 */
 	const { data: feedCollection } = withFeedQuery.useIdsQuery({
-		filter: {
+		where: {
 			type: "user",
 		},
 		sort: [

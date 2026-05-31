@@ -17,7 +17,7 @@ export const Route = createFileRoute("/$locale/app/buyer/search")({
 		return (
 			(await withFeedQuery
 				.ensureEntityQuery(queryClient, {
-					filter: {
+					where: {
 						type: "search",
 					},
 					sort: [

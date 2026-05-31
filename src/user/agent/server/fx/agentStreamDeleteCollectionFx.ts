@@ -3,12 +3,12 @@ import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { withAgentStreamSelectFx } from "~/user/agent/server/db/withAgentStreamSelectFx";
-import type { AgentStreamFilterSchema } from "~/user/agent/server/schema/AgentStreamFilterSchema";
 import type { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStreamQuerySchema";
+import type { AgentStreamWhereSchema } from "../schema/AgentStreamWhereSchema";
 
 export namespace agentStreamDeleteCollectionFx {
 	export interface Props extends AgentStreamQuerySchema.Type {
-		scope: AgentStreamFilterSchema.Type;
+		scope: AgentStreamWhereSchema.Type;
 	}
 }
 
@@ -27,7 +27,6 @@ export const agentStreamDeleteCollectionFx = Effect.fn("agentStreamDeleteCollect
 			});
 
 			for (const layer of [
-				query.filter,
 				query.where,
 				query.scope,
 			]) {

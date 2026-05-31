@@ -5,7 +5,7 @@ import { z } from "zod";
  *
  * @group schema
  */
-export const FilterSchema = z
+export const WhereSchema = z
 	.looseObject({
 		/**
 		 * Basically any entity should have an ID, thus it's present in the default schema.
@@ -23,12 +23,12 @@ export const FilterSchema = z
 	})
 	.strip()
 	.meta({
-		id: "Filter",
-		description: "Default entity filter object",
+		id: "Where",
+		description: "Base filter every entity should understand",
 	});
 
-export type FilterSchema = typeof FilterSchema;
+export type WhereSchema = typeof WhereSchema;
 
-export namespace FilterSchema {
-	export type Type = z.infer<FilterSchema>;
+export namespace WhereSchema {
+	export type Type = z.infer<WhereSchema>;
 }

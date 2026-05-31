@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import type { ActivityFilterSchema } from "~/user/activity/server/schema/ActivityFilterSchema";
 import type { ActivityQuerySchema } from "~/user/activity/server/schema/ActivityQuerySchema";
 import { withActivitySelectFx } from "../db/withActivitySelectFx";
+import type { ActivityWhereSchema } from "../schema/ActivityWhereSchema";
 
 export namespace activityCollectionFx {
 	export interface Props extends ActivityQuerySchema.Type {
-		scope: ActivityFilterSchema.Type;
+		scope: ActivityWhereSchema.Type;
 	}
 }
 
@@ -17,7 +17,6 @@ export const activityCollectionFx = Effect.fn("activityCollectionFx")(function* 
 		size: 30,
 	},
 	limit,
-	filter,
 	where,
 	scope,
 	sort,
@@ -26,7 +25,6 @@ export const activityCollectionFx = Effect.fn("activityCollectionFx")(function* 
 	logger.trace("activityCollectionFx", {
 		cursor,
 		limit,
-		filter,
 		where,
 		scope,
 		sort,
@@ -38,7 +36,6 @@ export const activityCollectionFx = Effect.fn("activityCollectionFx")(function* 
 		}),
 		cursor,
 		limit,
-		filter,
 		where,
 		scope,
 	});

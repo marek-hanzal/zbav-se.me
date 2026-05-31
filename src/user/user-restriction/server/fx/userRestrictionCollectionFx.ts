@@ -16,7 +16,6 @@ export const userRestrictionCollectionFx = Effect.fn("userRestrictionCollectionF
 		page: 0,
 		size: 10,
 	},
-	filter,
 	where,
 	scope,
 	sort,
@@ -24,7 +23,6 @@ export const userRestrictionCollectionFx = Effect.fn("userRestrictionCollectionF
 }: userRestrictionCollectionFx.Props) {
 	const logger = yield* getLoggerFx("userRestrictionCollectionFx");
 	logger.trace("userRestrictionCollectionFx", {
-		filter,
 		where,
 		scope,
 		cursor,
@@ -37,7 +35,6 @@ export const userRestrictionCollectionFx = Effect.fn("userRestrictionCollectionF
 			sort,
 		}),
 		cursor,
-		filter,
 		where,
 		scope,
 		limit,

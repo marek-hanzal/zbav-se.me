@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { FlagFilterSchema } from "~/buyer/flag/server/schema/FlagFilterSchema";
+import { FlagWhereSchema } from "./FlagWhereSchema";
 
 export const FlagCountWhereSchema = z
 	.looseObject({
-		...FlagFilterSchema.shape,
+		...FlagWhereSchema.shape,
 	})
 	.omit({
 		userId: true,

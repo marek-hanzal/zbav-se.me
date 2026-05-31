@@ -6,9 +6,6 @@ import { UserRestrictionWhereSchema } from "./UserRestrictionWhereSchema";
 export const UserRestrictionQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
-		filter: UserRestrictionWhereSchema.omit({
-			userId: true,
-		}).optional(),
 		where: UserRestrictionWhereSchema.optional(),
 		sort: UserRestrictionSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({

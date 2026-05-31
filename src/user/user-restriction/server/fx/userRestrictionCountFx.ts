@@ -12,13 +12,11 @@ export namespace userRestrictionCountFx {
 }
 
 export const userRestrictionCountFx = Effect.fn("userRestrictionCountFx")(function* ({
-	filter,
 	where,
 	scope,
 }: userRestrictionCountFx.Props) {
 	const logger = yield* getLoggerFx("userRestrictionCountFx");
 	logger.trace("userRestrictionCountFx", {
-		filter,
 		where,
 		scope,
 	});
@@ -27,7 +25,6 @@ export const userRestrictionCountFx = Effect.fn("userRestrictionCountFx")(functi
 		selectFx: withUserRestrictionSelectFx({
 			sort: [],
 		}),
-		filter,
 		where,
 		scope,
 	});

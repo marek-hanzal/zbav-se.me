@@ -4,7 +4,6 @@ import { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySc
 export const ListingCountQuerySchema = z
 	.looseObject({
 		...ListingQuerySchema.pick({
-			filter: true,
 			where: true,
 			meta: true,
 		}).shape,

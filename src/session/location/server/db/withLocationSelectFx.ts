@@ -5,7 +5,7 @@ import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withContainsEx } from "~/server/database/expression/withContainsEx";
 import type { LocationSortSchema } from "~/session/location/server/schema/LocationSortSchema";
-import type { LocationFilterSchema } from "../schema/LocationFilterSchema";
+import type { LocationWhereSchema } from "../schema/LocationWhereSchema";
 
 export namespace withLocationSelectFx {
 	export interface Props {
@@ -49,7 +49,7 @@ export const withLocationSelectFx = Effect.fn("withLocationSelectFx")(function* 
 
 	return selectFx({
 		select,
-		queryFx(select, where: LocationFilterSchema.Type) {
+		queryFx(select, where: LocationWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 

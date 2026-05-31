@@ -3,16 +3,16 @@ import { withCollectionFx } from "@/lib/common/collection";
 import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntrySensitiveKindEnumSchema";
-import type { TransactionFilterSchema } from "~/seller/transaction/server/schema/TransactionFilterSchema";
 import type { TransactionPatchCollectionSchema } from "~/seller/transaction/server/schema/TransactionPatchCollectionSchema";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { Transitions } from "~/user/transaction/server/fx/transactionTransitionFx";
 import { withTransactionSelectFx } from "../db/withTransactionSelectFx";
+import type { TransactionWhereSchema } from "../schema/TransactionWhereSchema";
 
 export namespace transactionPatchCollectionFx {
 	export interface Props extends TransactionPatchCollectionSchema.Type {
-		scope: TransactionFilterSchema.Type;
+		scope: TransactionWhereSchema.Type;
 	}
 }
 
@@ -38,7 +38,6 @@ export const transactionPatchCollectionFx = Effect.fn("transactionPatchCollectio
 			});
 
 			for (const layer of [
-				query.filter,
 				query.where,
 				scope,
 			]) {
