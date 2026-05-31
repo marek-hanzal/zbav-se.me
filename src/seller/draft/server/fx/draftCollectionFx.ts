@@ -18,7 +18,6 @@ export const draftCollectionFx = Effect.fn("draftCollectionFx")(function* ({
 		page: 0,
 		size: 10,
 	},
-	filter,
 	where,
 	scope,
 	sort,
@@ -27,7 +26,6 @@ export const draftCollectionFx = Effect.fn("draftCollectionFx")(function* ({
 	const logger = yield* getLoggerFx("draftCollectionFx");
 	logger.trace("draftCollectionFx", {
 		cursor,
-		filter,
 		where,
 		scope,
 		sort,
@@ -40,7 +38,6 @@ export const draftCollectionFx = Effect.fn("draftCollectionFx")(function* ({
 			sort,
 		}),
 		cursor,
-		filter,
 		where,
 		scope,
 		limit,

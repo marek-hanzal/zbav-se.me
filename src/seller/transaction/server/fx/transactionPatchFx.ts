@@ -2,16 +2,16 @@ import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
-import type { TransactionFilterSchema } from "~/seller/transaction/server/schema/TransactionFilterSchema";
 import type { TransactionPatchSchema } from "~/seller/transaction/server/schema/TransactionPatchSchema";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { TransactionContextFx } from "~/user/transaction/server/context/TransactionContextFx";
+import type { TransactionWhereSchema } from "../schema/TransactionWhereSchema";
 
 export namespace transactionPatchFx {
 	export interface Props extends TransactionPatchSchema.Type {
 		userId: string;
-		scope: TransactionFilterSchema.Type;
+		scope: TransactionWhereSchema.Type;
 	}
 }
 

@@ -4,7 +4,6 @@ import { AgentThreadQuerySchema } from "~/user/agent/server/schema/AgentThreadQu
 export const AgentThreadCountQuerySchema = z
 	.looseObject({
 		...AgentThreadQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

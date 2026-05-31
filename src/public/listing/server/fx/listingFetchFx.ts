@@ -13,7 +13,6 @@ export namespace listingFetchFx {
 }
 
 export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
-	filter,
 	where,
 	scope,
 	sort,
@@ -21,7 +20,6 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 }: listingFetchFx.Props) {
 	const logger = yield* getLoggerFx("listingFetchFx");
 	logger.trace("listingFetchFx", {
-		filter,
 		where,
 		scope,
 		sort,
@@ -34,12 +32,10 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 			sort,
 			meta,
 			hasExplicitCategory: hasExplicitCategory([
-				filter,
 				where,
 				scope,
 			]),
 		}),
-		filter,
 		where,
 		scope,
 	});

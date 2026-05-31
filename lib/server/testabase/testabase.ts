@@ -11,6 +11,7 @@ import { genId } from "@/lib/common/gen-id";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
 import { createDatabaseFromTemplate } from "./createDatabaseFromTemplate";
 import { dropDatabase } from "./dropDatabase";
+import { waitForDatabaseConnections } from "./waitForDatabaseConnections";
 import { withAdminDatabase } from "./withAdminDatabase";
 import { withTemplateLock } from "./withTemplateLock";
 
@@ -52,9 +53,11 @@ export const testabase = async <const TDatabase>({
 					kysely,
 					template,
 					callback: async () => {
-						await sql`DROP DATABASE IF EXISTS ${sql.ref(name)} WITH (FORCE)`.execute(
+						await waitForDatabaseConnections({
 							kysely,
-						);
+							name,
+						});
+						await sql`DROP DATABASE IF EXISTS ${sql.ref(name)}`.execute(kysely);
 						await createDatabaseFromTemplate({
 							kysely,
 							name,

@@ -9,10 +9,7 @@ export const ListingQuerySchema = z
 			page: 0,
 			size: 256,
 		}).optional(),
-		//
-		filter: ListingWhereSchema.optional(),
 		where: ListingWhereSchema.optional(),
-		//
 		sort: ListingSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({
 			description:

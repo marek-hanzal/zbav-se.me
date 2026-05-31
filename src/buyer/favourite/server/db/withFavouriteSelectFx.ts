@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { FavouriteFilterSchema } from "../schema/FavouriteFilterSchema";
 import type { FavouriteSortSchema } from "../schema/FavouriteSortSchema";
+import type { FavouriteWhereSchema } from "../schema/FavouriteWhereSchema";
 
 export namespace withFavouriteSelectFx {
 	export interface Props {
@@ -26,7 +26,7 @@ export const withFavouriteSelectFx = Effect.fn("withFavouriteSelectFx")(function
 
 	return selectFx({
 		select: query.selectAll("f"),
-		queryFx(select, where: FavouriteFilterSchema.Type) {
+		queryFx(select, where: FavouriteWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let q = select;
 

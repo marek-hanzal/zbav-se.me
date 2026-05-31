@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { IgnoreFilterSchema } from "../schema/IgnoreFilterSchema";
 import type { IgnoreSortSchema } from "../schema/IgnoreSortSchema";
+import type { IgnoreWhereSchema } from "../schema/IgnoreWhereSchema";
 
 export namespace withIgnoreSelectFx {
 	export interface Props {
@@ -29,7 +29,7 @@ export const withIgnoreSelectFx = Effect.fn("withIgnoreSelectFx")(function* ({
 			"i.id",
 			"i.listingId",
 		]),
-		queryFx(select, where: IgnoreFilterSchema.Type) {
+		queryFx(select, where: IgnoreWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 

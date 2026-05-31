@@ -65,10 +65,10 @@ export const AttrNumericMin: FC<AttrNumericMin.Props> = ({ feed, field, attr, vi
 				patch: {
 					query: {
 						...feed.query,
-						filter: {
-							...feed.query?.filter,
+						where: {
+							...feed.query?.where,
 							attrs: {
-								...feed.query?.filter?.attrs,
+								...feed.query?.where?.attrs,
 								[field.name]: {
 									...attr,
 									name: field.name,

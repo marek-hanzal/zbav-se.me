@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { UploadFilterSchema } from "~/public/upload/server/schema/UploadFilterSchema";
+import { WhereSchema } from "@/lib/common/schema";
 
 export const UploadWhereSchema = z
 	.looseObject({
-		...UploadFilterSchema.shape,
+		...WhereSchema.shape,
 	})
 	.strip()
 	.meta({

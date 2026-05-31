@@ -4,7 +4,6 @@ import { ActivityQuerySchema } from "./ActivityQuerySchema";
 export const ActivityCountQuerySchema = z
 	.looseObject({
 		...ActivityQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

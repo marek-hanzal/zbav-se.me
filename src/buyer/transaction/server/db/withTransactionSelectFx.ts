@@ -8,8 +8,8 @@ import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
-import type { TransactionFilterSchema } from "../schema/TransactionFilterSchema";
 import type { TransactionSortSchema } from "../schema/TransactionSortSchema";
+import type { TransactionWhereSchema } from "../schema/TransactionWhereSchema";
 
 export namespace withTransactionSelectFx {
 	export interface Props {
@@ -158,7 +158,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 					eb.ref("lt.status").$notNull().as("status"),
 				];
 			}),
-		queryFx(select, where: TransactionFilterSchema.Type) {
+		queryFx(select, where: TransactionWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 

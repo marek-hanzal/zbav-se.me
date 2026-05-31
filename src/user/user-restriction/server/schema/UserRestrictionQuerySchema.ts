@@ -1,15 +1,11 @@
 import { z } from "zod";
 import { CursorSchema } from "@/lib/common/schema";
-import { UserRestrictionFilterSchema } from "./UserRestrictionFilterSchema";
 import { UserRestrictionSortSchema } from "./UserRestrictionSortSchema";
 import { UserRestrictionWhereSchema } from "./UserRestrictionWhereSchema";
 
 export const UserRestrictionQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
-		filter: UserRestrictionFilterSchema.omit({
-			userId: true,
-		}).optional(),
 		where: UserRestrictionWhereSchema.optional(),
 		sort: UserRestrictionSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({

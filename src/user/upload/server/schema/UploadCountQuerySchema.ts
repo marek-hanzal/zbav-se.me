@@ -4,7 +4,6 @@ import { UploadQuerySchema } from "~/user/upload/server/schema/UploadQuerySchema
 export const UploadCountQuerySchema = z
 	.looseObject({
 		...UploadQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

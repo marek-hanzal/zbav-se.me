@@ -140,7 +140,7 @@ describe("transactionEntry workflow", () => {
 					payload: {
 						name: "Buyer",
 						phone: "+420123456789",
-						email: "buyer@test.cz",
+						email: "buyer@zbav-se.me",
 					},
 				}),
 			);

@@ -4,7 +4,6 @@ import { FavouriteQuerySchema } from "~/buyer/favourite/server/schema/FavouriteQ
 export const FavouriteCountQuerySchema = z
 	.looseObject({
 		...FavouriteQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

@@ -18,7 +18,7 @@ const InputSchema = z
 		...FeedCreateSchema.shape,
 		query: z
 			.looseObject({
-				filter: z
+				where: z
 					.looseObject({
 						...ListingWhereSchema.shape,
 						//

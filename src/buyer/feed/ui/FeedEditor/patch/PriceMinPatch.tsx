@@ -29,7 +29,7 @@ export const PriceMinPatch: FC<PriceMinPatch.Props> = ({ feed, onSettled, onCanc
 	});
 	const form = useAppForm({
 		defaultValues: {
-			price: feed.query.filter?.priceMin ?? null,
+			price: feed.query.where?.priceMin ?? null,
 		},
 		validators: {
 			onMount: FormSchema,
@@ -47,8 +47,8 @@ export const PriceMinPatch: FC<PriceMinPatch.Props> = ({ feed, onSettled, onCanc
 				patch: {
 					query: {
 						...feed.query,
-						filter: {
-							...feed.query?.filter,
+						where: {
+							...feed.query?.where,
 							priceMin: value.price ?? undefined,
 						},
 					},

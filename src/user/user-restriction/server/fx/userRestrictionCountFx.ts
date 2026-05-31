@@ -3,22 +3,20 @@ import { withCountFx } from "@/lib/common/count";
 import { getLoggerFx } from "@/lib/common/log";
 import { withUserRestrictionSelectFx } from "../db/withUserRestrictionSelectFx";
 import type { UserRestrictionCountQuerySchema } from "../schema/UserRestrictionCountQuerySchema";
-import type { UserRestrictionFilterSchema } from "../schema/UserRestrictionFilterSchema";
+import type { UserRestrictionWhereSchema } from "../schema/UserRestrictionWhereSchema";
 
 export namespace userRestrictionCountFx {
 	export interface Props extends UserRestrictionCountQuerySchema.Type {
-		scope: UserRestrictionFilterSchema.Type;
+		scope: UserRestrictionWhereSchema.Type;
 	}
 }
 
 export const userRestrictionCountFx = Effect.fn("userRestrictionCountFx")(function* ({
-	filter,
 	where,
 	scope,
 }: userRestrictionCountFx.Props) {
 	const logger = yield* getLoggerFx("userRestrictionCountFx");
 	logger.trace("userRestrictionCountFx", {
-		filter,
 		where,
 		scope,
 	});
@@ -27,7 +25,6 @@ export const userRestrictionCountFx = Effect.fn("userRestrictionCountFx")(functi
 		selectFx: withUserRestrictionSelectFx({
 			sort: [],
 		}),
-		filter,
 		where,
 		scope,
 	});

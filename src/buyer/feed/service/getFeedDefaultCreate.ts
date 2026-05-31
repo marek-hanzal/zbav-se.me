@@ -6,7 +6,7 @@ export const getFeedDefaultCreate = (name: string, type: FeedTypeEnumSchema.Type
 		type,
 		name,
 		query: {
-			filter: {
+			where: {
 				withIgnored: false,
 				statusIn: [
 					"live",

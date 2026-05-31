@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import type { UploadFilterSchema } from "~/user/upload/server/schema/UploadFilterSchema";
 import type { UploadQuerySchema } from "~/user/upload/server/schema/UploadQuerySchema";
 import { withUploadSelectFx } from "../db/withUploadSelectFx";
+import type { UploadWhereSchema } from "../schema/UploadWhereSchema";
 
 export namespace uploadCollectionFx {
 	export interface Props extends UploadQuerySchema.Type {
-		scope: UploadFilterSchema.Type;
+		scope: UploadWhereSchema.Type;
 	}
 }
 
@@ -16,7 +16,6 @@ export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
 		page: 0,
 		size: 10,
 	},
-	filter,
 	where,
 	scope,
 	sort,
@@ -25,7 +24,6 @@ export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
 	const logger = yield* getLoggerFx("uploadCollectionFx");
 	logger.trace("uploadCollectionFx", {
 		cursor,
-		filter,
 		where,
 		scope,
 		sort,
@@ -37,7 +35,6 @@ export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
 			sort,
 		}),
 		cursor,
-		filter,
 		where,
 		scope,
 		limit,

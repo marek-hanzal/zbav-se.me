@@ -20,13 +20,13 @@ export namespace AttrEditor {
 
 export const AttrEditor: FC<AttrEditor.Props> = ({ _suspense, feed, view }) => {
 	const { data: fields } = withCategoryAttrOfQuery.useSuspenseQuery({
-		categoryId: feed.query?.filter?.categoryId ?? "<unknown>",
+		categoryId: feed.query?.where?.categoryId ?? "<unknown>",
 	});
 
 	return fields.map((field) => {
 		return match({
 			field,
-			attr: feed.query?.filter?.attrs?.[field.name],
+			attr: feed.query?.where?.attrs?.[field.name],
 		})
 			.with(
 				{

@@ -1,13 +1,11 @@
 import { z } from "zod";
 import { CursorSchema } from "@/lib/common/schema";
-import { FieldOptionFilterSchema } from "./FieldOptionFilterSchema";
 import { FieldOptionSortSchema } from "./FieldOptionSortSchema";
 import { FieldOptionWhereSchema } from "./FieldOptionWhereSchema";
 
 export const FieldOptionQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
-		filter: FieldOptionFilterSchema.optional(),
 		where: FieldOptionWhereSchema.optional(),
 		sort: FieldOptionSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({

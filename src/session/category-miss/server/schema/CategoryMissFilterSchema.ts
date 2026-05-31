@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { FilterSchema } from "@/lib/common/schema";
+import { WhereSchema } from "@/lib/common/schema";
 
 export const CategoryMissFilterSchema = z
 	.looseObject({
-		...FilterSchema.shape,
+		...WhereSchema.shape,
 		category: z.string().nullable().meta({
 			description: "This filter matches the exact category name that was missed",
 		}),

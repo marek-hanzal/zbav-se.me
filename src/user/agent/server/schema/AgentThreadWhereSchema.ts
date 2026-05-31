@@ -1,9 +1,23 @@
 import { z } from "zod";
-import { AgentThreadFilterSchema } from "~/user/agent/server/schema/AgentThreadFilterSchema";
+import { WhereSchema } from "@/lib/common/schema";
 
 export const AgentThreadWhereSchema = z
 	.looseObject({
-		...AgentThreadFilterSchema.shape,
+		...WhereSchema.shape,
+		userId: z.string().optional().meta({
+			description: "Exact user id",
+		}),
+		archivedAt: z
+			.enum([
+				"archived",
+				"active",
+				"any",
+			])
+			.optional()
+			.meta({
+				id: "AgentThreadArchivedAtFilter",
+				description: "Filter by archive state",
+			}),
 	})
 	.strip()
 	.meta({

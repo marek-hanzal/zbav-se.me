@@ -33,16 +33,14 @@ export const ListContainer = withFallback(
 	({ ref, fulltext, selection, categoryId, withRestriction, ...props }: ListContainer.Props) => {
 		const locale = useLocale();
 		const { data: categories } = withCategoryQuery.useCollectionQuery({
-			filter: {
+			where: {
+				withRestriction,
 				locale,
 				fulltext: fulltext
 					? [
 							fulltext,
 						]
 					: undefined,
-			},
-			where: {
-				withRestriction,
 			},
 			cursor: {
 				page: 0,

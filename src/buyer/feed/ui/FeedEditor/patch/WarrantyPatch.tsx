@@ -22,7 +22,7 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ feed, onSettled, onCanc
 	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
-		initial: (feed.query?.filter?.warrantyIn ?? []).map((warranty) => ({
+		initial: (feed.query?.where?.warrantyIn ?? []).map((warranty) => ({
 			id: warranty,
 		})),
 		deps: [
@@ -54,8 +54,8 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ feed, onSettled, onCanc
 						patch: {
 							query: {
 								...feed.query,
-								filter: {
-									...feed.query?.filter,
+								where: {
+									...feed.query?.where,
 									warrantyIn:
 										selection.optional.multiId() as WarrantyEnumSchema.Type[],
 								},

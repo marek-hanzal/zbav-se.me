@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import type { GalleryFilterSchema } from "~/user/gallery/server/schema/GalleryFilterSchema";
 import type { GalleryQuerySchema } from "~/user/gallery/server/schema/GalleryQuerySchema";
 import { withGallerySelectFx } from "../db/withGallerySelectFx";
+import type { GalleryWhereSchema } from "../schema/GalleryWhereSchema";
 
 export namespace galleryCollectionFx {
 	export interface Props extends GalleryQuerySchema.Type {
-		scope: GalleryFilterSchema.Type;
+		scope: GalleryWhereSchema.Type;
 	}
 }
 
@@ -16,7 +16,6 @@ export const galleryCollectionFx = Effect.fn("galleryCollectionFx")(function* ({
 		page: 0,
 		size: 10,
 	},
-	filter,
 	where,
 	scope,
 	sort,
@@ -26,7 +25,6 @@ export const galleryCollectionFx = Effect.fn("galleryCollectionFx")(function* ({
 	logger.trace("galleryCollectionFx", {
 		cursor,
 		limit,
-		filter,
 		where,
 		scope,
 		sort,
@@ -37,7 +35,6 @@ export const galleryCollectionFx = Effect.fn("galleryCollectionFx")(function* ({
 			sort,
 		}),
 		cursor,
-		filter,
 		where,
 		scope,
 		limit,

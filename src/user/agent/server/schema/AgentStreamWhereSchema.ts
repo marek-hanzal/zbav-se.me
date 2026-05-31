@@ -1,9 +1,15 @@
 import { z } from "zod";
-import { AgentStreamFilterSchema } from "~/user/agent/server/schema/AgentStreamFilterSchema";
+import { WhereSchema } from "@/lib/common/schema";
 
 export const AgentStreamWhereSchema = z
 	.looseObject({
-		...AgentStreamFilterSchema.shape,
+		...WhereSchema.shape,
+		userId: z.string().optional().meta({
+			description: "Exact user id",
+		}),
+		threadId: z.string().optional().meta({
+			description: "Exact thread id",
+		}),
 	})
 	.strip()
 	.meta({

@@ -7,7 +7,7 @@ import { TransactionListingList } from "./TransactionListingList";
 
 export namespace ListGroup {
 	export interface Props extends Container.Props {
-		filter: ListingWhereSchema.Type;
+		where: ListingWhereSchema.Type;
 		label: string;
 		refetchInterval: number;
 		typoProps?: Typo.PropsEx;
@@ -15,7 +15,7 @@ export namespace ListGroup {
 }
 
 export const ListGroup: FC<ListGroup.Props> = ({
-	filter,
+	where,
 	label,
 	refetchInterval,
 	typoProps,
@@ -23,8 +23,8 @@ export const ListGroup: FC<ListGroup.Props> = ({
 }) => {
 	const { data: transactionListingCollection } = withListingQuery.useIdsQuery(
 		{
-			filter: {
-				...filter,
+			where: {
+				...where,
 				withTransaction: true,
 			},
 			cursor: {

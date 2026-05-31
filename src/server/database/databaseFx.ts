@@ -9,10 +9,14 @@ import fieldOptionSeedData from "~/server/@migrations/0005-field-seed/field-opti
 import rateLimitRuleSeedData from "~/server/@migrations/0046-rate-limit-rule/rule.json" with {
 	type: "json",
 };
+import resourceDefinitionSeedData from "~/server/@migrations/0048-resource-definition/resource-definition.json" with {
+	type: "json",
+};
 import { migrations } from "~/server/@migrations/migrations";
 import { runAuthMigration } from "~/server/auth/runAuthMigration";
 import type { Database } from "~/server/database/Database";
 import type { FieldTableSchema } from "./@table/FieldTableSchema";
+import type { ResourceDefinitionTableSchema } from "./@table/ResourceDefinitionTableSchema";
 import { withKyselyFx } from "./fx/withKyselyFx";
 
 /**
@@ -76,6 +80,18 @@ export const databaseFx = withDatabaseFx<Database>({
 							limit: eb.ref("excluded.limit"),
 							window: eb.ref("excluded.window"),
 						}));
+					})
+					.execute();
+			},
+		},
+		{
+			name: "resource-definition",
+			async run({ kysely }) {
+				return kysely
+					.insertInto("resource_definition")
+					.values(resourceDefinitionSeedData as ResourceDefinitionTableSchema.Type[])
+					.onConflict((oc) => {
+						return oc.column("name").doNothing();
 					})
 					.execute();
 			},

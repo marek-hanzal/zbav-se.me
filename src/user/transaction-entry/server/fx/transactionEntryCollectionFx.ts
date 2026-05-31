@@ -2,13 +2,13 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import { withTransactionEntrySelectFx } from "../db/withTransactionEntrySelectFx";
-import type { TransactionEntryFilterSchema } from "../schema/TransactionEntryFilterSchema";
 import type { TransactionEntryQuerySchema } from "../schema/TransactionEntryQuerySchema";
+import type { TransactionEntryWhereSchema } from "../schema/TransactionEntryWhereSchema";
 
 export namespace transactionEntryCollectionFx {
 	export interface Props extends TransactionEntryQuerySchema.Type {
 		userId: string;
-		scope?: TransactionEntryFilterSchema.Type;
+		scope?: TransactionEntryWhereSchema.Type;
 	}
 }
 
@@ -18,7 +18,6 @@ export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectio
 		page: 0,
 		size: 30,
 	},
-	filter,
 	where,
 	scope,
 	sort,
@@ -28,7 +27,6 @@ export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectio
 	logger.trace("transactionEntryCollectionFx", {
 		userId,
 		cursor,
-		filter,
 		where,
 		scope,
 		sort,
@@ -41,7 +39,6 @@ export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectio
 			sort,
 		}),
 		cursor,
-		filter,
 		where,
 		scope,
 		limit,

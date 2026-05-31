@@ -49,11 +49,11 @@ Status explanation:
 			input,
 		});
 
-		const filter = await InputSchema.parseAsync(input);
+		const where = await InputSchema.parseAsync(input);
 
 		const items = await transactionEntryCollectionFn({
 			data: {
-				filter,
+				where,
 				sort: [
 					{
 						field: "createdAt",

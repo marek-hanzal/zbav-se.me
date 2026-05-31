@@ -1,15 +1,13 @@
 import { z } from "zod";
 import { TransactionQuerySchema } from "./TransactionQuerySchema";
-import { TransactionToolFilterSchema } from "./TransactionToolFilterSchema";
+import { TransactionToolWhereSchema } from "./TransactionToolWhereSchema";
 
 export const TransactionToolQuerySchema = z
 	.looseObject({
 		...TransactionQuerySchema.shape,
-		filter: TransactionToolFilterSchema.optional(),
-		where: TransactionToolFilterSchema.optional(),
+		where: TransactionToolWhereSchema.optional(),
 	})
 	.omit({
-		where: true,
 		limit: true,
 	})
 	.strip()

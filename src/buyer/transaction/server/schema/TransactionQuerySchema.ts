@@ -1,13 +1,11 @@
 import { z } from "zod";
 import { CursorSchema } from "@/lib/common/schema";
-import { TransactionFilterSchema } from "~/buyer/transaction/server/schema/TransactionFilterSchema";
 import { TransactionSortSchema } from "~/buyer/transaction/server/schema/TransactionSortSchema";
 import { TransactionWhereSchema } from "~/buyer/transaction/server/schema/TransactionWhereSchema";
 
 export const TransactionQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
-		filter: TransactionFilterSchema.optional(),
 		where: TransactionWhereSchema.optional(),
 		sort: TransactionSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({

@@ -4,7 +4,6 @@ import { CategoryQuerySchema } from "~/public/category/server/schema/CategoryQue
 export const CategoryCountQuerySchema = z
 	.looseObject({
 		...CategoryQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

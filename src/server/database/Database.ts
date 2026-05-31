@@ -27,6 +27,7 @@ import type { ListingTableSchema } from "~/server/database/@table/ListingTableSc
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
 import type { RateLimitEventTableSchema } from "~/server/database/@table/RateLimitEventTableSchema";
 import type { RateLimitRuleTableSchema } from "~/server/database/@table/RateLimitRuleTableSchema";
+import type { ResourceDefinitionTableSchema } from "~/server/database/@table/ResourceDefinitionTableSchema";
 import type { ThumbTableSchema } from "~/server/database/@table/ThumbTableSchema";
 import type { TransactionEntryTableSchema } from "~/server/database/@table/TransactionEntryTableSchema";
 import type { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
@@ -35,6 +36,7 @@ import type { TranslationTableSchema } from "~/server/database/@table/Translatio
 import type { UploadTableSchema } from "~/server/database/@table/UploadTableSchema";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
+import type { UserResourceLimitTableSchema } from "~/server/database/@table/UserResourceLimitTableSchema";
 import type { UserRestrictionTableSchema } from "~/server/database/@table/UserRestrictionTableSchema";
 import type { CategoryFieldTableSchema } from "./@table/CategoryFieldTableSchema";
 import type { ListingAttrDecimalTableSchema } from "./@table/ListingAttrDecimalTableSchema";
@@ -78,6 +80,7 @@ export interface Database {
 	location: LocationTableSchema.Type;
 	rate_limit_event: RateLimitEventTableSchema.Type;
 	rate_limit_rule: RateLimitRuleTableSchema.Type;
+	resource_definition: ResourceDefinitionTableSchema.Type;
 	thumb: ThumbTableSchema.Type;
 	transaction_entry: TransactionEntryTableSchema.Type;
 	transaction_user: TransactionUserTableSchema.Type;
@@ -86,6 +89,7 @@ export interface Database {
 	upload: UploadTableSchema.Type;
 	user_event: UserEventTableSchema.Type;
 	user_ex: UserExTableSchema.Type;
+	user_resource_limit: UserResourceLimitTableSchema.Type;
 	user_restriction: UserRestrictionTableSchema.Type;
 	user: auth.User;
 }

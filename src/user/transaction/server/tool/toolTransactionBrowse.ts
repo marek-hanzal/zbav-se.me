@@ -54,12 +54,12 @@ Browse the user's trade transactions from both seller and buyer side in one list
 			input,
 		});
 
-		const filter = await InputSchema.parseAsync(input);
+		const where = await InputSchema.parseAsync(input);
 
 		const [sellerItems, buyerItems] = await Promise.all([
 			sellerTransactionCollectionFn({
 				data: {
-					filter,
+					where,
 					sort: [
 						{
 							field: "lastAt",
@@ -71,7 +71,7 @@ Browse the user's trade transactions from both seller and buyer side in one list
 			}),
 			buyerTransactionCollectionFn({
 				data: {
-					filter,
+					where,
 					sort: [
 						{
 							field: "lastAt",

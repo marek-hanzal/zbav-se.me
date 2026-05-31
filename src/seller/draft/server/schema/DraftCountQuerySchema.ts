@@ -4,7 +4,6 @@ import { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema"
 export const DraftCountQuerySchema = z
 	.looseObject({
 		...DraftQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

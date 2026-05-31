@@ -2,14 +2,14 @@ import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
-import type { FeedFilterSchema } from "~/buyer/feed/server/schema/FeedFilterSchema";
 import type { FeedPatchSchema } from "~/buyer/feed/server/schema/FeedPatchSchema";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import type { FeedWhereSchema } from "../schema/FeedWhereSchema";
 
 export namespace feedPatchFx {
 	export interface Props extends FeedPatchSchema.Type {
-		scope: FeedFilterSchema.Type;
+		scope: FeedWhereSchema.Type;
 	}
 }
 

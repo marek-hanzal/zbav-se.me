@@ -20,7 +20,7 @@ export const StatusPatch: FC<StatusPatch.Props> = ({ feed, onSettled, onCancel, 
 	const patchMutation = withFeedQuery.usePatchMutation({
 		onSettled,
 	});
-	const statusIn = feed.query?.filter?.statusIn ?? [];
+	const statusIn = feed.query?.where?.statusIn ?? [];
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
 		initial: statusIn.map((status) => ({
@@ -55,8 +55,8 @@ export const StatusPatch: FC<StatusPatch.Props> = ({ feed, onSettled, onCancel, 
 						patch: {
 							query: {
 								...feed.query,
-								filter: {
-									...feed.query?.filter,
+								where: {
+									...feed.query?.where,
 									statusIn:
 										selection.optional.multiId() as ListingStatusEnumSchema.Type[],
 								},

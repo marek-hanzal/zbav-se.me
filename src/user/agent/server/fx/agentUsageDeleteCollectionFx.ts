@@ -3,12 +3,12 @@ import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { withAgentUsageSelectFx } from "~/user/agent/server/db/withAgentUsageSelectFx";
-import type { AgentUsageFilterSchema } from "~/user/agent/server/schema/AgentUsageFilterSchema";
 import type { AgentUsageQuerySchema } from "~/user/agent/server/schema/AgentUsageQuerySchema";
+import type { AgentUsageWhereSchema } from "../schema/AgentUsageWhereSchema";
 
 export namespace agentUsageDeleteCollectionFx {
 	export interface Props extends AgentUsageQuerySchema.Type {
-		scope: AgentUsageFilterSchema.Type;
+		scope: AgentUsageWhereSchema.Type;
 	}
 }
 
@@ -27,7 +27,6 @@ export const agentUsageDeleteCollectionFx = Effect.fn("agentUsageDeleteCollectio
 			});
 
 			for (const layer of [
-				query.filter,
 				query.where,
 				query.scope,
 			]) {

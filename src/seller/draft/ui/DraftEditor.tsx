@@ -85,6 +85,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ _suspense, draftId }) => {
 
 			<editor.Panel name={"gallery"}>
 				<GalleryPatch
+					_suspense={_suspense}
 					draft={draft}
 					onCancel={onDone}
 					view={editor}

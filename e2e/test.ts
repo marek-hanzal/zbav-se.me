@@ -128,7 +128,13 @@ export const test = base.extend<{
 			});
 		});
 
-		await use(page);
+		try {
+			await use(page);
+		} finally {
+			if (!page.isClosed()) {
+				await page.close();
+			}
+		}
 	},
 });
 

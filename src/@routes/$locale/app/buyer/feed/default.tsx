@@ -23,7 +23,7 @@ export const Route = createFileRoute("/$locale/app/buyer/feed/default")({
 		const feed =
 			(await withFeedQuery
 				.ensureEntityQuery(queryClient, {
-					filter: {
+					where: {
 						type: "user",
 					},
 					sort: [

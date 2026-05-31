@@ -2,17 +2,16 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import { withFavouriteSelectFx } from "~/buyer/favourite/server/db/withFavouriteSelectFx";
-import type { FavouriteFilterSchema } from "~/buyer/favourite/server/schema/FavouriteFilterSchema";
 import type { FavouriteQuerySchema } from "~/buyer/favourite/server/schema/FavouriteQuerySchema";
+import type { FavouriteWhereSchema } from "../schema/FavouriteWhereSchema";
 
 export namespace favouriteCollectionFx {
 	export interface Props extends FavouriteQuerySchema.Type {
-		scope: FavouriteFilterSchema.Type;
+		scope: FavouriteWhereSchema.Type;
 	}
 }
 
 export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function* ({
-	filter,
 	where,
 	scope,
 	cursor = {
@@ -24,7 +23,6 @@ export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function
 }: favouriteCollectionFx.Props) {
 	const logger = yield* getLoggerFx("favouriteCollectionFx", "favourite");
 	logger.trace("Request", {
-		filter,
 		where,
 		scope,
 		cursor,
@@ -37,7 +35,6 @@ export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function
 			sort,
 		}),
 		cursor,
-		filter,
 		where,
 		scope,
 		limit,

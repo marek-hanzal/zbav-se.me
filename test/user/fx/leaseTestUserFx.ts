@@ -40,7 +40,7 @@ const leaseIndexByKysely = new WeakMap<object, number>();
 export const TEST_USER_PASSWORD = "12345678";
 
 export function toLeasedTestUserEmail(key: LeaseKey) {
-	return `test-${key}@test.cz`;
+	return `test-${key}@zbav-se.me`;
 }
 
 function getNextLeaseKey(kysely: object) {

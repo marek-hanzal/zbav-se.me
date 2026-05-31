@@ -19,7 +19,7 @@ describe("feedCollectionFx", () => {
 				type: "search",
 				name: "Search Feed",
 				query: {
-					filter: {
+					where: {
 						// title: "macbook",
 					},
 				},

@@ -4,12 +4,12 @@ import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { withActivitySelectFx } from "~/user/activity/server/db/withActivitySelectFx";
-import type { ActivityFilterSchema } from "~/user/activity/server/schema/ActivityFilterSchema";
 import type { ActivityPatchCollectionSchema } from "~/user/activity/server/schema/ActivityPatchCollectionSchema";
+import type { ActivityWhereSchema } from "../schema/ActivityWhereSchema";
 
 export namespace activityPatchCollectionFx {
 	export interface Props extends ActivityPatchCollectionSchema.Type {
-		scope: ActivityFilterSchema.Type;
+		scope: ActivityWhereSchema.Type;
 	}
 }
 
@@ -32,7 +32,6 @@ export const activityPatchCollectionFx = Effect.fn("activityPatchCollectionFx")(
 			});
 
 			for (const layer of [
-				query.filter,
 				query.where,
 				scope,
 			]) {

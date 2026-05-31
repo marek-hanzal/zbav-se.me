@@ -1,12 +1,12 @@
 import type { Effect } from "effect";
 import type { SelectQueryBuilder } from "kysely";
-import type { FilterSchema } from "../schema/FilterSchema";
+import type { WhereSchema } from "../schema/WhereSchema";
 
 export type selectFx<
 	TDB,
 	TTable extends keyof TDB,
 	TOutput,
-	TFilter extends FilterSchema.Type,
+	TWhere extends WhereSchema.Type,
 	TSelectError,
 	TSelectContext,
 	TQueryError,
@@ -16,7 +16,7 @@ export type selectFx<
 		select: SelectQueryBuilder<TDB, TTable, TOutput>;
 		queryFx(
 			select: SelectQueryBuilder<TDB, TTable, TOutput>,
-			where: TFilter | undefined,
+			where: TWhere | undefined,
 		): Effect.Effect<SelectQueryBuilder<TDB, TTable, TOutput>, TQueryError, TQueryContext>;
 	},
 	TSelectError,
@@ -30,7 +30,7 @@ export const selectFx = <
 	TDB,
 	TTable extends keyof TDB,
 	TOutput,
-	TFilter extends FilterSchema.Type,
+	TWhere extends WhereSchema.Type,
 	TSelectError,
 	TSelectContext,
 	TQueryError,
@@ -41,7 +41,7 @@ export const selectFx = <
 			TDB,
 			TTable,
 			TOutput,
-			TFilter,
+			TWhere,
 			TSelectError,
 			TSelectContext,
 			TQueryError,
@@ -49,16 +49,7 @@ export const selectFx = <
 		>
 	>,
 ): Effect.Effect.Success<
-	selectFx<
-		TDB,
-		TTable,
-		TOutput,
-		TFilter,
-		TSelectError,
-		TSelectContext,
-		TQueryError,
-		TQueryContext
-	>
+	selectFx<TDB, TTable, TOutput, TWhere, TSelectError, TSelectContext, TQueryError, TQueryContext>
 > => {
 	return select;
 };

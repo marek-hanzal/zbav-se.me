@@ -3,8 +3,8 @@ import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import { withContainsEx } from "~/server/database/expression/withContainsEx";
-import type { CategoryFilterSchema } from "../schema/CategoryFilterSchema";
 import type { CategorySortSchema } from "../schema/CategorySortSchema";
+import type { CategoryWhereSchema } from "../schema/CategoryWhereSchema";
 
 export namespace withCategorySelectFx {
 	export interface Props {
@@ -32,7 +32,7 @@ export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* 
 
 	return selectFx({
 		select,
-		queryFx(select, where: CategoryFilterSchema.Type) {
+		queryFx(select, where: CategoryWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query: typeof select = select;
 

@@ -14,14 +14,12 @@ export namespace listingFetchFx {
 
 export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 	userId,
-	filter,
 	where,
 	scope,
 	sort,
 }: listingFetchFx.Props) {
 	const logger = yield* getLoggerFx("listingFetchFx");
 	logger.trace("listingFetchFx", {
-		filter,
 		where,
 		scope,
 		sort,
@@ -33,7 +31,6 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 			userId,
 			sort,
 		}),
-		filter,
 		where,
 		scope,
 	});

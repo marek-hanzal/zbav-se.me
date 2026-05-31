@@ -9,10 +9,7 @@ export const DraftQuerySchema = z
 			page: 0,
 			size: 256,
 		}).optional(),
-		//
-		filter: DraftWhereSchema.optional(),
 		where: DraftWhereSchema.optional(),
-		//
 		sort: DraftSortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({
 			description:

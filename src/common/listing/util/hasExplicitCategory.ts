@@ -1,12 +1,12 @@
 export namespace hasExplicitCategory {
-	export interface Filter {
+	export interface Where {
 		categoryId?: string;
 		categoryIdIn?: string[];
 	}
 }
 
-export const hasExplicitCategory = (input: (hasExplicitCategory.Filter | undefined)[]) => {
-	return input.some((filter) => {
-		return Boolean(filter?.categoryId) || Boolean(filter?.categoryIdIn?.length);
+export const hasExplicitCategory = (input: (hasExplicitCategory.Where | undefined)[]) => {
+	return input.some((where) => {
+		return Boolean(where?.categoryId) || Boolean(where?.categoryIdIn?.length);
 	});
 };

@@ -3,12 +3,12 @@ import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { activityFetchFx } from "~/user/activity/server/fx/activityFetchFx";
-import type { ActivityFilterSchema } from "~/user/activity/server/schema/ActivityFilterSchema";
 import type { ActivityPatchSchema } from "~/user/activity/server/schema/ActivityPatchSchema";
+import type { ActivityWhereSchema } from "../schema/ActivityWhereSchema";
 
 export namespace activityPatchFx {
 	export interface Props extends ActivityPatchSchema.Type {
-		scope: ActivityFilterSchema.Type;
+		scope: ActivityWhereSchema.Type;
 	}
 }
 

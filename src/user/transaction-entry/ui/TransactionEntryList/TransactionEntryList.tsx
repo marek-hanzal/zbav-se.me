@@ -33,7 +33,7 @@ export const TransactionEntryList: FC<TransactionEntryList.Props> = ({
 	});
 	const { data } = withTransactionEntryQuery.useIdsQuery(
 		{
-			filter: {
+			where: {
 				transactionId,
 			},
 			cursor: {

@@ -301,6 +301,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 				<Group>
 					<PublishListingButton
+						_suspense={_suspense}
 						draft={draft}
 						data-ui-round={undefined}
 						data-ui-border={false}

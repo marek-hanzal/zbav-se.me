@@ -3,8 +3,8 @@ import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { UserRestrictionFilterSchema } from "../schema/UserRestrictionFilterSchema";
 import type { UserRestrictionSortSchema } from "../schema/UserRestrictionSortSchema";
+import type { UserRestrictionWhereSchema } from "../schema/UserRestrictionWhereSchema";
 
 export namespace withUserRestrictionSelectFx {
 	export interface Props {
@@ -54,7 +54,7 @@ export const withUserRestrictionSelectFx = Effect.fn("withUserRestrictionSelectF
 					.$castTo<boolean>()
 					.as("isAvailable");
 			}),
-		queryFx(select, where: UserRestrictionFilterSchema.Type) {
+		queryFx(select, where: UserRestrictionWhereSchema.Type) {
 			return Effect.gen(function* () {
 				const dateContext = yield* DateContextFx;
 				const now = dateContext.now().toJSDate();

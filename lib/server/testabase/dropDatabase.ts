@@ -1,6 +1,7 @@
 import type { Effect } from "effect";
 import { sql } from "kysely";
 import type { DialectContextFx, withDatabaseFx } from "@/lib/common/database";
+import { waitForDatabaseConnections } from "./waitForDatabaseConnections";
 import { withAdminDatabase } from "./withAdminDatabase";
 
 export namespace dropDatabase {
@@ -26,7 +27,11 @@ export const dropDatabase = async <TDatabase>({
 	});
 
 	try {
-		await sql`DROP DATABASE IF EXISTS ${sql.ref(name)} WITH (FORCE)`.execute(kysely);
+		await waitForDatabaseConnections({
+			kysely,
+			name,
+		});
+		await sql`DROP DATABASE IF EXISTS ${sql.ref(name)}`.execute(kysely);
 	} finally {
 		await kysely.destroy();
 	}

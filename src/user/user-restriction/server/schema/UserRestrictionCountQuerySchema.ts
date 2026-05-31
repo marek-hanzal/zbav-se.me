@@ -4,7 +4,6 @@ import { UserRestrictionQuerySchema } from "./UserRestrictionQuerySchema";
 export const UserRestrictionCountQuerySchema = z
 	.looseObject({
 		...UserRestrictionQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

@@ -4,7 +4,6 @@ import { IgnoreQuerySchema } from "~/buyer/ignore/server/schema/IgnoreQuerySchem
 export const IgnoreCountQuerySchema = z
 	.looseObject({
 		...IgnoreQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

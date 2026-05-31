@@ -29,7 +29,7 @@ This is a source of 'feedId'
 
 		const items = await feedCollectionFn({
 			data: {
-				filter: {
+				where: {
 					//
 					type: "user",
 				},

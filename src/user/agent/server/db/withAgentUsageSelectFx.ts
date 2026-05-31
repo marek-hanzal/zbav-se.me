@@ -2,15 +2,13 @@ import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { AgentUsageFilterSchema } from "../schema/AgentUsageFilterSchema";
 import type { AgentUsageSortSchema } from "../schema/AgentUsageSortSchema";
+import type { AgentUsageWhereSchema } from "../schema/AgentUsageWhereSchema";
 
 export namespace withAgentUsageSelectFx {
 	export interface Props {
 		sort?: AgentUsageSortSchema.Type[];
 	}
-
-	export type Select = ReturnType<typeof withAgentUsageSelectFx>;
 }
 
 export const withAgentUsageSelectFx = Effect.fn("withAgentUsageSelectFx")(function* ({
@@ -28,7 +26,7 @@ export const withAgentUsageSelectFx = Effect.fn("withAgentUsageSelectFx")(functi
 
 	return selectFx({
 		select: query.selectAll("au"),
-		queryFx(select, where: AgentUsageFilterSchema.Type) {
+		queryFx(select, where: AgentUsageWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let q = select;
 

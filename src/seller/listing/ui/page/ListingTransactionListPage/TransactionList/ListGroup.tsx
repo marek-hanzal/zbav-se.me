@@ -3,12 +3,12 @@ import { Container } from "@/lib/client/container";
 import type { MarkSuspense } from "@/lib/client/type";
 import { Typo } from "@/lib/client/typo";
 import { withTransactionQuery } from "~/seller/transaction/query/withTransactionQuery";
-import type { TransactionFilterSchema } from "~/seller/transaction/server/schema/TransactionFilterSchema";
+import type { TransactionWhereSchema } from "~/seller/transaction/server/schema/TransactionWhereSchema";
 import { List } from "./List";
 
 export namespace ListGroup {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		filter: TransactionFilterSchema.Type;
+		where: TransactionWhereSchema.Type;
 		label: string;
 		refetchInterval: number;
 		typoProps?: Typo.PropsEx;
@@ -17,7 +17,7 @@ export namespace ListGroup {
 
 export const ListGroup: FC<ListGroup.Props> = ({
 	_suspense,
-	filter,
+	where: filter,
 	label,
 	refetchInterval,
 	typoProps,

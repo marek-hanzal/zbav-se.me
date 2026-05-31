@@ -1,12 +1,15 @@
 import { z } from "zod";
-import { FlagFilterSchema } from "~/buyer/flag/server/schema/FlagFilterSchema";
+import { WhereSchema } from "@/lib/common/schema";
 
 export const FlagWhereSchema = z
 	.looseObject({
-		...FlagFilterSchema.shape,
-	})
-	.omit({
-		userId: true,
+		...WhereSchema.shape,
+		userId: z.string().optional().meta({
+			description: "This filter matches the exact userId",
+		}),
+		listingId: z.string().optional().meta({
+			description: "This filter matches the exact listingId",
+		}),
 	})
 	.strip()
 	.meta({

@@ -2,24 +2,22 @@ import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
 import { withFlagSelectFx } from "~/buyer/flag/server/db/withFlagSelectFx";
-import type { FlagFilterSchema } from "~/buyer/flag/server/schema/FlagFilterSchema";
 import type { FlagQuerySchema } from "~/buyer/flag/server/schema/FlagQuerySchema";
+import type { FlagWhereSchema } from "../schema/FlagWhereSchema";
 
 export namespace flagFetchFx {
 	export interface Props extends FlagQuerySchema.Type {
-		scope: FlagFilterSchema.Type;
+		scope: FlagWhereSchema.Type;
 	}
 }
 
 export const flagFetchFx = Effect.fn("flagFetchFx")(function* ({
-	filter,
 	where,
 	sort,
 	scope,
 }: flagFetchFx.Props) {
 	const logger = yield* getLoggerFx("flagFetchFx");
 	logger.trace("flagFetchFx", {
-		filter,
 		where,
 		sort,
 		scope,
@@ -30,7 +28,6 @@ export const flagFetchFx = Effect.fn("flagFetchFx")(function* ({
 		selectFx: withFlagSelectFx({
 			sort,
 		}),
-		filter,
 		where,
 		scope,
 	});

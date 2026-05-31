@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { type SelectQueryBuilder, sql } from "kysely";
-import type { FilterSchema } from "../schema/FilterSchema";
+import type { WhereSchema } from "../schema/WhereSchema";
 import type { selectFx } from "../select/selectFx";
 
 export namespace withCountFx {
@@ -8,7 +8,7 @@ export namespace withCountFx {
 		TDB,
 		TTable extends keyof TDB,
 		TOutput,
-		TFilter extends FilterSchema.Type,
+		TWhere extends WhereSchema.Type,
 		TSelectError,
 		TSelectContext,
 		TQueryError,
@@ -18,16 +18,15 @@ export namespace withCountFx {
 			TDB,
 			TTable,
 			TOutput,
-			TFilter,
+			TWhere,
 			TSelectError,
 			TSelectContext,
 			TQueryError,
 			TQueryContext
 		>;
 		//
-		filter?: TFilter;
-		where?: TFilter;
-		scope?: TFilter;
+		where?: TWhere;
+		scope?: TWhere;
 	}
 }
 
@@ -35,28 +34,26 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 	const TDB,
 	const TTable extends keyof TDB,
 	const TOutput,
-	const TFilter extends FilterSchema.Type,
+	const TWhere extends WhereSchema.Type,
 	const TSelectError,
 	const TSelectContext,
 	const TQueryError,
 	const TQueryContext,
 >({
 	selectFx,
-	filter,
 	where,
 	scope,
 }: withCountFx.Props<
 	TDB,
 	TTable,
 	TOutput,
-	TFilter,
+	TWhere,
 	TSelectError,
 	TSelectContext,
 	TQueryError,
 	TQueryContext
 >) {
 	const layers = [
-		filter,
 		where,
 		scope,
 	] as const;

@@ -116,10 +116,10 @@ export const AttrEnumSingle: FC<AttrEnumSingle.Props> = ({ feed, field, attr, vi
 						patch: {
 							query: {
 								...feed.query,
-								filter: {
-									...feed.query?.filter,
+								where: {
+									...feed.query?.where,
 									attrs: {
-										...feed.query?.filter?.attrs,
+										...feed.query?.where?.attrs,
 										[field.name]: {
 											name: field.name,
 											type: "enum-single",
