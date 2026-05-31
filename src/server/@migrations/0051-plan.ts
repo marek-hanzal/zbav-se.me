@@ -6,7 +6,6 @@ export const PlanMigration: Migration = {
 			.createTable("plan")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("name", "text", (col) => col.notNull())
-			.addColumn("url", "text")
 			.addUniqueConstraint("plan_[name]_unique_idx", [
 				"name",
 			])
