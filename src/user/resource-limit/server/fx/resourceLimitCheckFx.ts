@@ -32,7 +32,7 @@ export const resourceLimitCheckFx = Effect.fn("resourceLimitCheckFx")(function* 
 		count,
 		limit,
 		remaining: Math.max(limit - count, 0),
-		isAvailable: count < limit,
+		isAvailable: count <= limit,
 	};
 });
 
