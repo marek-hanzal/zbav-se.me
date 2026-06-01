@@ -4,12 +4,7 @@ import { getRootLogger } from "~/common/log/getRootLogger";
 import { migrations } from "~/server/@migrations/migrations";
 import { runAuthMigration } from "~/server/auth/runAuthMigration";
 import type { Database } from "~/server/database/Database";
-import { importField } from "./databaseFx/importField";
-import { importFieldOption } from "./databaseFx/importFieldOption";
-import { importRateLimitRule } from "./databaseFx/importRateLimitRule";
-import { importResourceBundle } from "./databaseFx/importResourceBundle";
-import { importResourceBundleItem } from "./databaseFx/importResourceBundleItem";
-import { importResourceDefinition } from "./databaseFx/importResourceDefinition";
+import { imports } from "./databaseFx/imports";
 import { importTranslations } from "./databaseFx/importTranslations";
 
 /**
@@ -24,11 +19,6 @@ export const databaseFx = withDatabaseFx<Database>({
 	},
 	imports: [
 		importTranslations,
-		importField,
-		importFieldOption,
-		importRateLimitRule,
-		importResourceDefinition,
-		importResourceBundle,
-		importResourceBundleItem,
+		...imports,
 	],
 }).pipe(Effect.provideService(MigrationContextFx, migrations));

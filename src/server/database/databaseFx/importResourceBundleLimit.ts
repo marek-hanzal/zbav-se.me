@@ -1,28 +1,20 @@
 import type { withDatabaseFx } from "@/lib/common/database";
 import { genId } from "@/lib/common/gen-id";
 import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
-import resourceBundleItemSeedData from "~/server/@migrations/0049-resource-bundle/resource-bundle-item.json" with {
+import resourceBundleLimitSeedData from "~/server/@migrations/0049-resource-bundle/resource-bundle-limit.json" with {
 	type: "json",
 };
-import type { ResourceBundleItemTableSchema } from "../@table/ResourceBundleItemTableSchema";
+import type { ResourceBundleLimitTableSchema } from "../@table/ResourceBundleLimitTableSchema";
 import type { Database } from "../Database";
 
-type ResourceBundleItemImportRow = Pick<
-	ResourceBundleItemTableSchema.Type,
-	"id" | "resourceBundleId" | "resourceDefinitionId" | "amount" | "expiration"
->;
+type ResourceBundleLimitImportRow = ResourceBundleLimitTableSchema.Type;
 
-export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
-	name: "resource-bundle-item",
+export const importResourceBundleLimit: withDatabaseFx.Import<Database> = {
+	name: "resource-bundle-limit",
 	async run({ kysely }) {
-		const resourceBundleItems = resourceBundleItemSeedData;
-
-		if (resourceBundleItems.length === 0) {
-			return;
-		}
-
+		const resourceBundleLimits = resourceBundleLimitSeedData;
 		const resourceBundleNames = [
-			...new Set(resourceBundleItems.map((item) => item.name)),
+			...new Set(resourceBundleLimits.map((item) => item.name)),
 		];
 		const resourceBundles = await kysely
 			.selectFrom("resource_bundle")
@@ -38,7 +30,7 @@ export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 				resourceBundle.id,
 			]),
 		);
-		const values = resourceBundleItems.map((item): ResourceBundleItemImportRow => {
+		const values = resourceBundleLimits.map((item): ResourceBundleLimitImportRow => {
 			const resourceBundleId = resourceBundleIdByName.get(item.name);
 
 			if (!resourceBundleId) {
@@ -49,13 +41,12 @@ export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 				id: genId(),
 				resourceBundleId,
 				resourceDefinitionId: item.resource as ResourceDefinitionEnumSchema.Type,
-				amount: item.amount,
-				expiration: item.expiration,
+				limit: item.limit,
 			};
 		});
 
 		return kysely
-			.insertInto("resource_bundle_item")
+			.insertInto("resource_bundle_limit")
 			.values(values)
 			.onConflict((oc) => {
 				return oc
@@ -64,8 +55,7 @@ export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 						"resourceDefinitionId",
 					])
 					.doUpdateSet((eb) => ({
-						amount: eb.ref("excluded.amount"),
-						expiration: eb.ref("excluded.expiration"),
+						limit: eb.ref("excluded.limit"),
 					}));
 			})
 			.execute();
