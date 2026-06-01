@@ -4,7 +4,7 @@ import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { ListItem } from "~/common/list-item/ListItem";
-import { useResourceLimit } from "~/common/resource-limit/hook/useResourceLimit";
+import { useResourceLimit } from "~/user/resource-limit/hook/useResourceLimit";
 import { CreateSheet } from "./CreateSheet";
 
 export namespace CreateButton {

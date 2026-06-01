@@ -11,7 +11,7 @@ import type { FeedPatchSchema } from "~/buyer/feed/server/schema/FeedPatchSchema
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { withResourceLimitQuery } from "~/common/resource-limit/query/withResourceLimitQuery";
+import { withResourceLimitQuery } from "~/user/resource-limit/query/withResourceLimitQuery";
 
 export const withFeedQuery = withEntityQuery({
 	logger: getRootLogger([

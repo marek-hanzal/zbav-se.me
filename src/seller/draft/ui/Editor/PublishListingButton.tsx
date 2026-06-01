@@ -4,10 +4,10 @@ import { Button } from "@/lib/client/button";
 import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { useResourceLimit } from "~/common/resource-limit/hook/useResourceLimit";
 import { uiSaveButton } from "~/common/ui/ui";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 import { withListingValidationQuery } from "~/seller/listing/query/withListingValidationQuery";
+import { useResourceLimit } from "~/user/resource-limit/hook/useResourceLimit";
 import type { DraftSchema } from "../../server/schema/DraftSchema";
 
 export namespace PublishListingButton {

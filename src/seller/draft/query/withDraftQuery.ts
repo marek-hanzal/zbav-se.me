@@ -1,6 +1,5 @@
 import { withEntityQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { withResourceLimitQuery } from "~/common/resource-limit/query/withResourceLimitQuery";
 import { draftCollectionFn } from "~/seller/draft/fn/draftCollectionFn";
 import { draftCountFn } from "~/seller/draft/fn/draftCountFn";
 import { draftCreateFn } from "~/seller/draft/fn/draftCreateFn";
@@ -11,6 +10,7 @@ import type { DraftCreateSchema } from "~/seller/draft/server/schema/DraftCreate
 import type { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import { withListingValidationQuery } from "~/seller/listing/query/withListingValidationQuery";
+import { withResourceLimitQuery } from "~/user/resource-limit/query/withResourceLimitQuery";
 import { draftPatchFn } from "../fn/draftPatchFn";
 import type { DraftPatchSchema } from "../server/schema/DraftPatchSchema";
 

@@ -3,13 +3,13 @@ import { Effect } from "effect";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { CountSchema } from "@/lib/common/schema";
-import { resourceLimitCountFx } from "~/common/resource-limit/server/fx/resourceLimitCountFx";
-import { ResourceLimitCountQuerySchema } from "~/common/resource-limit/server/schema/ResourceLimitCountQuerySchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+import { resourceLimitCountFx } from "~/user/resource-limit/server/fx/resourceLimitCountFx";
+import { ResourceLimitCountQuerySchema } from "~/user/resource-limit/server/schema/ResourceLimitCountQuerySchema";
 
 export namespace resourceLimitCountFn {
 	export type Error = Effect.Effect.Error<resourceLimitCountFx>;

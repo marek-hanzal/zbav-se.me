@@ -1,6 +1,5 @@
 import { withEntityQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { withResourceLimitQuery } from "~/common/resource-limit/query/withResourceLimitQuery";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import { listingCollectionFn } from "~/seller/listing/fn/listingCollectionFn";
 import { listingCountFn } from "~/seller/listing/fn/listingCountFn";
@@ -11,6 +10,7 @@ import type { ListingCountQuerySchema } from "~/seller/listing/server/schema/Lis
 import type { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreateSchema";
 import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
+import { withResourceLimitQuery } from "~/user/resource-limit/query/withResourceLimitQuery";
 
 export const withListingQuery = withEntityQuery({
 	logger: getRootLogger([

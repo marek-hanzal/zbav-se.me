@@ -5,9 +5,9 @@ import { useLocale } from "@/lib/client/locale";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { ListItem } from "~/common/list-item/ListItem";
-import { useResourceLimit } from "~/common/resource-limit/hook/useResourceLimit";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
+import { useResourceLimit } from "~/user/resource-limit/hook/useResourceLimit";
 
 export namespace CreateButton {
 	export interface Props extends MarkSuspense.Props, ListItem.PropsEx {

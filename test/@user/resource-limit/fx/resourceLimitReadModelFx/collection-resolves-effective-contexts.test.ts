@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { resourceLimitCollectionFx } from "~/common/resource-limit/server/fx/resourceLimitCollectionFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
+import { resourceLimitCollectionFx } from "~/user/resource-limit/server/fx/resourceLimitCollectionFx";
 import {
 	atResourceLimitReadModelFx,
 	seedResourceLimitReadModelFx,
