@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import type { ResourceLimitCheckSchema } from "../schema/ResourceLimitCheckSchema";
-import type { ResourceLimitInfoSchema } from "../schema/ResourceLimitInfoSchema";
 import { resourceLimitFetchFx } from "./resourceLimitFetchFx";
 
 export namespace resourceLimitCheckFx {
@@ -14,30 +13,27 @@ export const resourceLimitCheckFx = Effect.fn("resourceLimitCheckFx")(function* 
 	count,
 	resource,
 }: resourceLimitCheckFx.Props) {
-	const data = yield* resourceLimitFetchFx({
+	const { limit } = yield* resourceLimitFetchFx({
 		where: {
 			resourceDefinitionId: resource,
 		},
 		scope: {
 			userId,
 		},
-	}).pipe(Effect.catchTag("NotFoundErrorFx", () => Effect.succeed(undefined)));
+	}).pipe(
+		Effect.catchTag("NotFoundErrorFx", () =>
+			Effect.succeed({
+				limit: 0,
+			}),
+		),
+	);
 
-	return (
-		data
-			? {
-					count,
-					limit: data.limit,
-					remaining: Math.max(data.limit - count, 0),
-					isAvailable: count < data.limit,
-				}
-			: {
-					count,
-					limit: 0,
-					remaining: 0,
-					isAvailable: false,
-				}
-	) satisfies ResourceLimitInfoSchema.Type;
+	return {
+		count,
+		limit,
+		remaining: Math.max(limit - count, 0),
+		isAvailable: count < limit,
+	};
 });
 
 export type resourceLimitCheckFx = ReturnType<typeof resourceLimitCheckFx>;
