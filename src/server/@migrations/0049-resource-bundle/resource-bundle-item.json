@@ -1,0 +1,38 @@
+[
+	{
+		"name": "season-founders",
+		"resource": "listing.count",
+		"amount": 50,
+		"expiration": null
+	},
+	{
+		"name": "season-founders",
+		"resource": "feed.count",
+		"amount": 15,
+		"expiration": null
+	},
+	{
+		"name": "season-founders",
+		"resource": "listing.gallery.count",
+		"amount": 20,
+		"expiration": null
+	},
+	{
+		"name": "free",
+		"resource": "listing.count",
+		"amount": 5,
+		"expiration": null
+	},
+	{
+		"name": "free",
+		"resource": "feed.count",
+		"amount": 3,
+		"expiration": null
+	},
+	{
+		"name": "free",
+		"resource": "listing.gallery.count",
+		"amount": 5,
+		"expiration": null
+	}
+]
