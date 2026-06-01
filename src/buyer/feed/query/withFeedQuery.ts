@@ -11,7 +11,7 @@ import type { FeedPatchSchema } from "~/buyer/feed/server/schema/FeedPatchSchema
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { withUserResourceLimitQuery } from "~/user/user-resource/query/withUserResourceLimitQuery";
+import { withResourceLimitQuery } from "~/common/resource/query/withResourceLimitQuery";
 
 export const withFeedQuery = withEntityQuery({
 	logger: getRootLogger([
@@ -76,7 +76,7 @@ export const withFeedQuery = withEntityQuery({
 		create: [
 			{
 				async invalidate({ queryClient }) {
-					await withUserResourceLimitQuery.invalidator(
+					await withResourceLimitQuery.invalidator(
 						queryClient,
 						[
 							"fetch",
@@ -97,7 +97,7 @@ export const withFeedQuery = withEntityQuery({
 		delete: [
 			{
 				async invalidate({ queryClient }) {
-					await withUserResourceLimitQuery.invalidator(
+					await withResourceLimitQuery.invalidator(
 						queryClient,
 						[
 							"fetch",

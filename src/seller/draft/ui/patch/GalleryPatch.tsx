@@ -7,11 +7,11 @@ import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
+import { useResourceLimit } from "~/common/resource/hook/useResourceLimit";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
-import { useResourceLimit } from "~/user/user-resource/hook/useResourceLimit";
 
 export namespace GalleryPatch {
 	export interface Props extends MarkSuspense.Props, Container.Props {
@@ -33,7 +33,6 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	const resourceLimit = useResourceLimit({
 		_suspense,
 		resource: "listing.gallery.count",
-		reference: draft.id,
 		count: uploadIds.length,
 	});
 	const galleryLimit = Math.max(uploadIds.length, Math.floor(resourceLimit.limit), 1);
