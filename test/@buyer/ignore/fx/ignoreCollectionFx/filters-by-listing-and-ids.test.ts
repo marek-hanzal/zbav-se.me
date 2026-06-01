@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { ignoreCollectionFx } from "~/buyer/ignore/server/fx/ignoreCollectionFx";
-import { ignoreCountFx } from "~/buyer/ignore/server/fx/ignoreCountFx";
-import { ignoreToggleFx } from "~/buyer/ignore/server/fx/ignoreToggleFx";
+import { ignoreCollectionFx } from "~/buyer/listing-ignore/server/fx/ignoreCollectionFx";
+import { ignoreCountFx } from "~/buyer/listing-ignore/server/fx/ignoreCountFx";
+import { ignoreToggleFx } from "~/buyer/listing-ignore/server/fx/ignoreToggleFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";

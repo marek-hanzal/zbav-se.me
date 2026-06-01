@@ -3,9 +3,9 @@ import { withFallback } from "@/lib/client/fallback";
 import { TrashIcon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { withIgnoreToggleMutation } from "~/buyer/ignore/mutation/withIgnoreToggleMutation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
+import { withIgnoreToggleMutation } from "~/buyer/listing-ignore/mutation/withIgnoreToggleMutation";
 
 export namespace IgnoreButton {
 	export interface Props extends ConfirmButton.Props, MarkSuspense.Props {

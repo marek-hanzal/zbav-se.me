@@ -1,11 +1,14 @@
 import { z } from "zod";
+import { ActivityTypeEnumSchema } from "~/common/activity/enum/ActivityTypeEnumSchema";
 import { ActivitySchema } from "./ActivitySchema";
 
 export const UnflagSchema = z
 	.looseObject({
 		...ActivitySchema.shape,
 		family: z.literal("reaction"),
-		type: z.literal("unflag"),
+		type: ActivityTypeEnumSchema.extract([
+			"unflag",
+		]),
 		payload: z
 			.looseObject({
 				listingId: z.string().meta({

@@ -1,0 +1,20 @@
+import { z } from "zod";
+import { IgnoreQuerySchema } from "~/buyer/listing-ignore/server/schema/IgnoreQuerySchema";
+
+export const IgnoreCountQuerySchema = z
+	.looseObject({
+		...IgnoreQuerySchema.pick({
+			where: true,
+		}).shape,
+	})
+	.strip()
+	.meta({
+		id: "IgnoreCountQuery",
+		description: "Query object for ignore count",
+	});
+
+export type IgnoreCountQuerySchema = typeof IgnoreCountQuerySchema;
+
+export namespace IgnoreCountQuerySchema {
+	export type Type = z.infer<IgnoreCountQuerySchema>;
+}

@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { favouriteCollectionFx } from "~/buyer/favourite/server/fx/favouriteCollectionFx";
-import { favouriteCountFx } from "~/buyer/favourite/server/fx/favouriteCountFx";
-import { favouriteToggleFx } from "~/buyer/favourite/server/fx/favouriteToggleFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
+import { favouriteCollectionFx } from "~/buyer/listing-favourite/server/fx/favouriteCollectionFx";
+import { favouriteCountFx } from "~/buyer/listing-favourite/server/fx/favouriteCountFx";
+import { favouriteToggleFx } from "~/buyer/listing-favourite/server/fx/favouriteToggleFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
-import { flagToggleFx } from "~/buyer/flag/server/fx/flagToggleFx";
+import { flagToggleFx } from "~/buyer/listing-flag/server/fx/flagToggleFx";
 import { runToggleEntityContractFx } from "~/test/@buyer/common/fx/runToggleEntityContractFx";
 
 describe("flagToggleFx", () => {
@@ -23,7 +23,7 @@ describe("flagToggleFx", () => {
 			recordFx: ({ database, users, listing }) =>
 				Effect.promise(() =>
 					database.kysely
-						.selectFrom("flag")
+						.selectFrom("listing_flag")
 						.select([
 							"listingId",
 							"userId",
@@ -43,7 +43,7 @@ describe("flagToggleFx", () => {
 					return events.map((event) => event.event);
 				}),
 			assertRecordOn: () => {},
-			onEvent: "flag",
+			onEvent: "listing.flag",
 			offEvent: "unflag",
 			activityOnFx: ({ database, users }) =>
 				Effect.promise(() =>
@@ -51,7 +51,7 @@ describe("flagToggleFx", () => {
 						.selectFrom("activity")
 						.select("type")
 						.where("userId", "=", users.seller.id)
-						.where("type", "=", "flag")
+						.where("type", "=", "listing.flag")
 						.executeTakeFirst(),
 				),
 			activityOffFx: ({ database, users }) =>

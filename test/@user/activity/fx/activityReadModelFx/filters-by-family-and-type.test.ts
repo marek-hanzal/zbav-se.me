@@ -57,7 +57,7 @@ describe("activity read model filters by family and type", () => {
 								"listing-c",
 							],
 							family: "reaction",
-							type: "favourite",
+							type: "listing.favourite",
 							payload: {
 								listingId: "listing-c",
 							},

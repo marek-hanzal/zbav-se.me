@@ -5,9 +5,9 @@ import { withFallback } from "@/lib/client/fallback";
 import { Mx } from "@/lib/client/mx";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { withFlagToggleMutation } from "~/buyer/flag/mutation/withFlagToggleMutation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
+import { withFlagToggleMutation } from "~/buyer/listing-flag/mutation/withFlagToggleMutation";
 import { FlagIcon } from "~/common/ui/icon";
 
 export namespace FlagButton {

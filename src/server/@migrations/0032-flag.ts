@@ -3,13 +3,13 @@ import type { Migration } from "kysely/migration";
 export const FlagMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("flag")
+			.createTable("listing_flag")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
-				"flag_[userId]_fk",
+				"listing_flag_[userId]_fk",
 				[
 					"userId",
 				],
@@ -20,7 +20,7 @@ export const FlagMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"flag_[listingId]_fk",
+				"listing_flag_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -30,23 +30,27 @@ export const FlagMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("flag_[userId-listingId]_unique_idx", [
+			.addUniqueConstraint("listing_flag_[userId-listingId]_unique_idx", [
 				"userId",
 				"listingId",
 			])
 			.execute();
 
-		await db.schema.createIndex("flag_[userId]_idx").on("flag").column("userId").execute();
+		await db.schema
+			.createIndex("listing_flag_[userId]_idx")
+			.on("listing_flag")
+			.column("userId")
+			.execute();
 
 		await db.schema
-			.createIndex("flag_[listingId]_idx")
-			.on("flag")
+			.createIndex("listing_flag_[listingId]_idx")
+			.on("listing_flag")
 			.column("listingId")
 			.execute();
 
 		await db.schema
-			.createIndex("flag_[createdAt]_idx")
-			.on("flag")
+			.createIndex("listing_flag_[createdAt]_idx")
+			.on("listing_flag")
 			.column("createdAt")
 			.execute();
 	},

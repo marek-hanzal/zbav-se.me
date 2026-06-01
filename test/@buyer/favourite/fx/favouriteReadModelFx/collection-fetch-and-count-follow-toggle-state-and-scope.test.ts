@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { favouriteCollectionFx } from "~/buyer/favourite/server/fx/favouriteCollectionFx";
-import { favouriteCountFx } from "~/buyer/favourite/server/fx/favouriteCountFx";
-import { favouriteFetchFx } from "~/buyer/favourite/server/fx/favouriteFetchFx";
-import { favouriteToggleFx } from "~/buyer/favourite/server/fx/favouriteToggleFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
+import { favouriteCollectionFx } from "~/buyer/listing-favourite/server/fx/favouriteCollectionFx";
+import { favouriteCountFx } from "~/buyer/listing-favourite/server/fx/favouriteCountFx";
+import { favouriteFetchFx } from "~/buyer/listing-favourite/server/fx/favouriteFetchFx";
+import { favouriteToggleFx } from "~/buyer/listing-favourite/server/fx/favouriteToggleFx";
 import { runToggleReadModelContractFx } from "~/test/@buyer/common/fx/runToggleReadModelContractFx";
 
 describe("favourite read model", () => {

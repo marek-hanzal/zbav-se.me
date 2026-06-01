@@ -1,12 +1,12 @@
 import { Agent } from "@openai/agents";
 import { DateTime } from "luxon";
-import { toolFavouriteToggle } from "~/buyer/favourite/server/tool/toolFavouriteToggle";
 import { toolFeedBrowse } from "~/buyer/feed/server/tool/toolFeedBrowse";
 import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
 import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
 import { toolFeedPatch } from "~/buyer/feed/server/tool/toolFeedPatch";
 import { toolListingBrowse as toolBuyerListingBrowse } from "~/buyer/listing/server/tool/toolListingBrowse";
 import { toolListingDetail as toolBuyerListingDetail } from "~/buyer/listing/server/tool/toolListingDetail";
+import { toolFavouriteToggle } from "~/buyer/listing-favourite/server/tool/toolFavouriteToggle";
 import { toolTransactionCreate } from "~/buyer/transaction/server/tool/toolTransactionCreate";
 import { toolTransactionWorkflow as toolBuyerTransactionWorkflow } from "~/buyer/transaction/server/tool/toolTransactionWorkflow";
 import { toolNow } from "~/common/date/server/tool/toolNow";

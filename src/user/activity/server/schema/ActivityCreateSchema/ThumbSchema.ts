@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ActivityTypeEnumSchema } from "~/common/activity/enum/ActivityTypeEnumSchema";
 import { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 import { ActivitySchema } from "./ActivitySchema";
 
@@ -6,7 +7,9 @@ export const ThumbSchema = z
 	.looseObject({
 		...ActivitySchema.shape,
 		family: z.literal("reaction"),
-		type: z.literal("thumb"),
+		type: ActivityTypeEnumSchema.extract([
+			"thumb",
+		]),
 		payload: z.looseObject({
 			listingId: z.string().meta({
 				description: "Listing identifier",
