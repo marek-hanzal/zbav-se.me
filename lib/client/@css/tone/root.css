@@ -56,7 +56,7 @@
 		var(--tone-primary-light-bg-alt) 92.5%,
 		black
 	);
-	--tone-primary-light-border: color-mix(in srgb, var(--color-pink-400) 10%, white);
+	--tone-primary-light-border: color-mix(in srgb, var(--color-pink-400) 60%, white);
 	--tone-primary-light-border-active: color-mix(
 		in srgb,
 		var(--tone-primary-light-border) 92.5%,
@@ -136,7 +136,7 @@
 		var(--tone-secondary-light-icon) 88%,
 		black
 	);
-	--tone-secondary-light-shadow: color-mix(in srgb, var(--color-slate-700) 10%, white);
+	--tone-secondary-light-shadow: color-mix(in srgb, var(--color-slate-700) 60%, white);
 	--tone-secondary-light-shadow-active: color-mix(
 		in srgb,
 		var(--tone-secondary-light-shadow) 25%,
