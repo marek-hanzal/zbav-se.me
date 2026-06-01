@@ -13,8 +13,10 @@ import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { listingSpotlightBuildFx } from "~/server/listing-spotlight/server/fx/listingSpotlightBuildFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
+import { resourceLimitEnsureFx } from "~/user/resource-limit/server/fx/resourceLimitEnsureFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { listingCountFx } from "./listingCountFx";
 import { listingFetchFx } from "./listingFetchFx";
 import { listingValidateFx } from "./listingValidateFx";
 
@@ -37,6 +39,21 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const dateContext = yield* DateContextFx;
+			const liveListingCount = yield* listingCountFx({
+				userId,
+				where: {
+					status: "live",
+				},
+				scope: {
+					userId,
+				},
+			});
+
+			yield* resourceLimitEnsureFx({
+				count: liveListingCount + 1,
+				resource: "listing.count",
+				userId,
+			});
 
 			const draft = yield* draftFetchFx({
 				userId,
