@@ -11,7 +11,7 @@ import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import { useResourceLimit } from "~/common/resource/hook/useResourceLimit";
+import { useResourceLimit } from "~/common/resource-limit/hook/useResourceLimit";
 import { CloseButton } from "~/common/ui/button";
 import { useAppForm } from "~/common/ui/form";
 

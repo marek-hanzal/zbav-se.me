@@ -1,6 +1,6 @@
 import { withEntityQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { withResourceLimitQuery } from "~/common/resource/query/withResourceLimitQuery";
+import { withResourceLimitQuery } from "~/common/resource-limit/query/withResourceLimitQuery";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import { listingCollectionFn } from "~/seller/listing/fn/listingCollectionFn";
 import { listingCountFn } from "~/seller/listing/fn/listingCountFn";

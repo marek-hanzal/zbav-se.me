@@ -1,21 +1,22 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
+import { z } from "zod";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
-import { resourceLimitFetchFx } from "~/common/resource/server/fx/resourceLimitFetchFx";
-import { ResourceLimitQuerySchema } from "~/common/resource/server/schema/ResourceLimitQuerySchema";
-import { ResourceLimitSchema } from "~/common/resource/server/schema/ResourceLimitSchema";
+import { resourceLimitCollectionFx } from "~/common/resource-limit/server/fx/resourceLimitCollectionFx";
+import { ResourceLimitQuerySchema } from "~/common/resource-limit/server/schema/ResourceLimitQuerySchema";
+import { ResourceLimitSchema } from "~/common/resource-limit/server/schema/ResourceLimitSchema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 
-export namespace resourceLimitFetchFn {
-	export type Error = Effect.Effect.Error<resourceLimitFetchFx>;
+export namespace resourceLimitCollectionFn {
+	export type Error = Effect.Effect.Error<resourceLimitCollectionFx>;
 }
 
-export const resourceLimitFetchFn = createServerFn()
+export const resourceLimitCollectionFn = createServerFn()
 	.middleware([
 		withLogMiddleware,
 		withDatabaseMiddleware,
@@ -30,8 +31,8 @@ export const resourceLimitFetchFn = createServerFn()
 		logger.trace(name, data);
 
 		return zodGuardFx({
-			schema: ResourceLimitSchema,
-			dataFx: resourceLimitFetchFx({
+			schema: z.array(ResourceLimitSchema),
+			dataFx: resourceLimitCollectionFx({
 				...data,
 				scope: {
 					userId: user.id,

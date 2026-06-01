@@ -1,11 +1,11 @@
 import { withEntityQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { resourceLimitCollectionFn } from "~/common/resource/fn/resourceLimitCollectionFn";
-import { resourceLimitCountFn } from "~/common/resource/fn/resourceLimitCountFn";
-import { resourceLimitFetchFn } from "~/common/resource/fn/resourceLimitFetchFn";
-import type { ResourceLimitCountQuerySchema } from "~/common/resource/server/schema/ResourceLimitCountQuerySchema";
-import type { ResourceLimitQuerySchema } from "~/common/resource/server/schema/ResourceLimitQuerySchema";
-import type { ResourceLimitSchema } from "~/common/resource/server/schema/ResourceLimitSchema";
+import { resourceLimitCollectionFn } from "~/common/resource-limit/fn/resourceLimitCollectionFn";
+import { resourceLimitCountFn } from "~/common/resource-limit/fn/resourceLimitCountFn";
+import { resourceLimitFetchFn } from "~/common/resource-limit/fn/resourceLimitFetchFn";
+import type { ResourceLimitCountQuerySchema } from "~/common/resource-limit/server/schema/ResourceLimitCountQuerySchema";
+import type { ResourceLimitQuerySchema } from "~/common/resource-limit/server/schema/ResourceLimitQuerySchema";
+import type { ResourceLimitSchema } from "~/common/resource-limit/server/schema/ResourceLimitSchema";
 
 export const withResourceLimitQuery = withEntityQuery({
 	logger: getRootLogger([

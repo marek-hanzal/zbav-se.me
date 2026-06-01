@@ -14,7 +14,12 @@ export namespace withResourceLimitSelectFx {
 }
 
 export const withResourceLimitSelectFx = Effect.fn("withResourceLimitSelectFx")(function* ({
-	sort = [],
+	sort = [
+		{
+			field: "createdAt",
+			order: "desc",
+		},
+	],
 }: withResourceLimitSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;

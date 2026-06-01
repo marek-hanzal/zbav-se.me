@@ -16,7 +16,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
-import { useResourceLimit } from "~/common/resource/hook/useResourceLimit";
+import { useResourceLimit } from "~/common/resource-limit/hook/useResourceLimit";
 import { useAppForm } from "~/common/ui/form";
 
 const FormSchema = FeedCreateSchema.pick({

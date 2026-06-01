@@ -7,7 +7,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
-import { useResourceLimit } from "~/common/resource/hook/useResourceLimit";
+import { useResourceLimit } from "~/common/resource-limit/hook/useResourceLimit";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";

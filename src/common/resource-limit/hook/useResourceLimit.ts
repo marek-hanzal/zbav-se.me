@@ -1,6 +1,6 @@
 import type { MarkSuspense } from "@/lib/client/type";
-import { withResourceLimitQuery } from "~/common/resource/query/withResourceLimitQuery";
 import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
+import { withResourceLimitQuery } from "~/common/resource-limit/query/withResourceLimitQuery";
 
 export namespace useResourceLimit {
 	export interface Props extends MarkSuspense.Props {
