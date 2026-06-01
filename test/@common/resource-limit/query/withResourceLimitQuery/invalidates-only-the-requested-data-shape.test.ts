@@ -1,7 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { describe, expect, it } from "vitest";
-import { withResourceLimitQuery } from "~/common/resource/query/withResourceLimitQuery";
-import type { ResourceLimitQuerySchema } from "~/common/resource/server/schema/ResourceLimitQuerySchema";
+import { withResourceLimitQuery } from "~/common/resource-limit/query/withResourceLimitQuery";
+import type { ResourceLimitQuerySchema } from "~/common/resource-limit/server/schema/ResourceLimitQuerySchema";
 
 describe("withResourceLimitQuery invalidator", () => {
 	it("invalidates only the targeted fetch key when request data is provided", async () => {

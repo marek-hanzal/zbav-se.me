@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { resourceLimitFetchFx } from "~/common/resource/server/fx/resourceLimitFetchFx";
 import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
+import { resourceLimitFetchFx } from "~/common/resource-limit/server/fx/resourceLimitFetchFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import {
