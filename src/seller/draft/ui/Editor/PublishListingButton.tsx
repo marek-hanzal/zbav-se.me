@@ -7,7 +7,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { uiSaveButton } from "~/common/ui/ui";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
 import { withListingValidationQuery } from "~/seller/listing/query/withListingValidationQuery";
-import { useResourceLimit } from "~/user/resource-limit/hook/useResourceLimit";
+import { withResourceLimitCheckQuery } from "~/user/resource-limit/query/withResourceLimitCheckQuery";
 import type { DraftSchema } from "../../server/schema/DraftSchema";
 
 export namespace PublishListingButton {
@@ -30,8 +30,7 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 			status: "live",
 		},
 	});
-	const resourceLimit = useResourceLimit({
-		_suspense,
+	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
 		resource: "listing.count",
 		count: listingCount,
 	});

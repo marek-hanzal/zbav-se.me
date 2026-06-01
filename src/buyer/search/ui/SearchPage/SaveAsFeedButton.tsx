@@ -17,7 +17,7 @@ import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
-import { useResourceLimit } from "~/user/resource-limit/hook/useResourceLimit";
+import { withResourceLimitCheckQuery } from "~/user/resource-limit/query/withResourceLimitCheckQuery";
 
 const FormSchema = FeedCreateSchema.pick({
 	name: true,
@@ -44,8 +44,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 			type: "user",
 		},
 	});
-	const resourceLimit = useResourceLimit({
-		_suspense,
+	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
 		resource: "feed.count",
 		count: feedCount,
 	});

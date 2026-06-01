@@ -13,7 +13,7 @@ import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate"
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { CloseButton } from "~/common/ui/button";
 import { useAppForm } from "~/common/ui/form";
-import { useResourceLimit } from "~/user/resource-limit/hook/useResourceLimit";
+import { withResourceLimitCheckQuery } from "~/user/resource-limit/query/withResourceLimitCheckQuery";
 
 const FormSchema = FeedCreateSchema.pick({
 	name: true,
@@ -32,8 +32,7 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ _suspense, state, ...props 
 			type: "user",
 		},
 	});
-	const resourceLimit = useResourceLimit({
-		_suspense,
+	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
 		resource: "feed.count",
 		count: feedCount,
 	});

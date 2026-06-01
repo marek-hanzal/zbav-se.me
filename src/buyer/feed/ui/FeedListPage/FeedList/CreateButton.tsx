@@ -4,7 +4,7 @@ import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { ListItem } from "~/common/list-item/ListItem";
-import { useResourceLimit } from "~/user/resource-limit/hook/useResourceLimit";
+import { withResourceLimitCheckQuery } from "~/user/resource-limit/query/withResourceLimitCheckQuery";
 import { CreateSheet } from "./CreateSheet";
 
 export namespace CreateButton {
@@ -20,8 +20,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ _suspense, className, ...
 			type: "user",
 		},
 	});
-	const resourceLimit = useResourceLimit({
-		_suspense,
+	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
 		resource: "feed.count",
 		count: feedCount,
 	});
