@@ -118,7 +118,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 							data-ui-flow={"horizontal"}
 							data-ui-items={"center"}
 							data-ui-gap={"default"}
-							data-ui-text={"lg"}
+							data-ui-text={"md"}
 							className={"px-0"}
 						>
 							<Icon

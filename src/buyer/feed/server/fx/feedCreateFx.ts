@@ -7,6 +7,8 @@ import type { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSche
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { ConflictErrorFx } from "~/server/error/ConflictErrorFx";
+import { resourceLimitEnsureFx } from "~/user/resource-limit/server/fx/resourceLimitEnsureFx";
+import { feedCountFx } from "./feedCountFx";
 
 export namespace feedCreateFx {
 	export interface Props extends FeedCreateSchema.Type {
@@ -32,6 +34,21 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 
 			const id = genId();
 			const now = dateContext.now();
+
+			const feedCount = yield* feedCountFx({
+				where: {
+					type: "user",
+				},
+				scope: {
+					userId,
+				},
+			});
+
+			yield* resourceLimitEnsureFx({
+				count: feedCount + 1,
+				resource: "feed.count",
+				userId,
+			});
 
 			yield* dbFx(
 				async (kysely) => {

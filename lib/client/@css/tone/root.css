@@ -12,7 +12,7 @@
 		var(--tone-brand-light-bg-alt) 92.5%,
 		black
 	);
-	--tone-brand-light-border: color-mix(in srgb, var(--color-pink-300) 30%, white);
+	--tone-brand-light-border: color-mix(in srgb, var(--color-pink-300) 40%, white);
 	--tone-brand-light-border-active: color-mix(
 		in srgb,
 		var(--tone-brand-light-border) 92.5%,
@@ -124,7 +124,7 @@
 		var(--tone-secondary-light-bg-alt) 92.5%,
 		black
 	);
-	--tone-secondary-light-border: color-mix(in srgb, var(--color-violet-400) 10%, white);
+	--tone-secondary-light-border: color-mix(in srgb, var(--color-violet-400) 50%, white);
 	--tone-secondary-light-border-active: color-mix(
 		in srgb,
 		var(--tone-secondary-light-border) 92.5%,
@@ -136,7 +136,7 @@
 		var(--tone-secondary-light-icon) 88%,
 		black
 	);
-	--tone-secondary-light-shadow: color-mix(in srgb, var(--color-slate-700) 60%, white);
+	--tone-secondary-light-shadow: color-mix(in srgb, var(--color-slate-700) 20%, white);
 	--tone-secondary-light-shadow-active: color-mix(
 		in srgb,
 		var(--tone-secondary-light-shadow) 25%,
@@ -244,7 +244,7 @@
 		var(--tone-neutral-light-bg-alt) 92.5%,
 		black
 	);
-	--tone-neutral-light-border: color-mix(in srgb, var(--color-slate-600) 10%, white);
+	--tone-neutral-light-border: color-mix(in srgb, var(--color-slate-600) 17.5%, white);
 	--tone-neutral-light-border-active: color-mix(
 		in srgb,
 		var(--tone-neutral-light-border) 92.5%,
@@ -360,7 +360,7 @@
 		var(--tone-danger-light-bg-alt) 92.5%,
 		black
 	);
-	--tone-danger-light-border: color-mix(in srgb, var(--color-rose-400) 30%, white);
+	--tone-danger-light-border: color-mix(in srgb, var(--color-rose-400) 60%, white);
 	--tone-danger-light-border-active: color-mix(
 		in srgb,
 		var(--tone-danger-light-border) 92.5%,
@@ -400,7 +400,7 @@
 	--tone-link-light-bg-active: color-mix(in srgb, var(--tone-link-light-bg) 92.5%, white);
 	--tone-link-light-bg-alt: color-mix(in srgb, var(--color-blue-100) 25%, white);
 	--tone-link-light-bg-alt-active: color-mix(in srgb, var(--tone-link-light-bg-alt) 92.5%, black);
-	--tone-link-light-border: color-mix(in srgb, var(--color-blue-400) 10%, white);
+	--tone-link-light-border: color-mix(in srgb, var(--color-blue-400) 25%, white);
 	--tone-link-light-border-active: color-mix(in srgb, var(--tone-link-light-border) 92.5%, black);
 	--tone-link-light-icon: color-mix(in srgb, var(--color-blue-700) 85%, white);
 	--tone-link-light-icon-active: color-mix(in srgb, var(--tone-link-light-icon) 88%, black);

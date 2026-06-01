@@ -365,6 +365,10 @@ export const withEntityQuery = <
 		const what: Promise<unknown>[] = [];
 
 		if (invalidate.includes("collection")) {
+			logger.trace("withEntityQuery::invalidator - schedulling collection", {
+				keys: $keys("collection", data?.collection),
+			});
+
 			what.push(
 				queryClient.invalidateQueries({
 					queryKey: $keys("collection", data?.collection),
@@ -374,6 +378,10 @@ export const withEntityQuery = <
 		}
 
 		if (invalidate.includes("fetch")) {
+			logger.trace("withEntityQuery::invalidator - schedulling fetch", {
+				keys: $keys("fetch", data?.fetch),
+			});
+
 			what.push(
 				queryClient.invalidateQueries({
 					queryKey: $keys("fetch", data?.fetch),
@@ -383,6 +391,10 @@ export const withEntityQuery = <
 		}
 
 		if (invalidate.includes("count")) {
+			logger.trace("withEntityQuery::invalidator - schedulling count", {
+				keys: $keys("count", data?.count),
+			});
+
 			what.push(
 				queryClient.invalidateQueries({
 					queryKey: $keys("count", data?.count),
