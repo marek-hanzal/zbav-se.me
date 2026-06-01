@@ -1,11 +1,14 @@
 import { z } from "zod";
+import { ActivityFamilyEnumSchema } from "~/common/activity/enum/ActivityFamilyEnumSchema";
 import { ActivityTypeEnumSchema } from "~/common/activity/enum/ActivityTypeEnumSchema";
 import { ActivitySchema } from "./ActivitySchema";
 
 export const FavouriteSchema = z
 	.looseObject({
 		...ActivitySchema.shape,
-		family: z.literal("reaction"),
+		family: ActivityFamilyEnumSchema.extract([
+			"reaction",
+		]),
 		type: ActivityTypeEnumSchema.extract([
 			"listing.favourite",
 		]),
