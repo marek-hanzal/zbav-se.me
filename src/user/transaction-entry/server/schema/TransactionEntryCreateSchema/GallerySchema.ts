@@ -1,10 +1,13 @@
 import { z } from "zod";
+import { TransactionEntryKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
 import { EntrySchema } from "./EntrySchema";
 
 export const GallerySchema = z
 	.looseObject({
 		...EntrySchema.shape,
-		kind: z.literal("gallery"),
+		kind: TransactionEntryKindEnumSchema.extract([
+			"gallery",
+		]),
 		payload: z
 			.looseObject({
 				uploadIds: z.array(z.string()).min(1).meta({

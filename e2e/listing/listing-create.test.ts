@@ -4,8 +4,10 @@ import { Effect } from "effect";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { leaseTestUserFx, TEST_USER_PASSWORD } from "~/test/user/fx/leaseTestUserFx";
 import { expect, test } from "../test";
+import { createUser } from "../utils/createUser";
 
 const fixturePath = path.resolve(import.meta.dirname, "../fixtures/listing-create-image.jpg");
+const FREE_PLAN_GALLERY_LIMIT = 5;
 
 async function clickSave(page: Page) {
 	await expect(page.locator('[data-action="save"]')).toBeEnabled();
@@ -24,6 +26,37 @@ async function expectImageLoaded(locator: Locator) {
 }
 
 test.setTimeout(120_000);
+
+test("new seller draft gallery uses the free plan photo limit", async ({ page, database }) => {
+	void database;
+
+	const user = createUser();
+
+	await page.goto("/cs/landing");
+	await page.click('[data-action="goto sign-up"]');
+	await page.waitForURL("/cs/sign-up");
+
+	await page.locator('[data-ui="SignUpPage[EmailInput]"]').fill(user.email);
+	await page.locator('[data-ui="SignUpPage[PasswordInput]"]').fill(user.password);
+	await page.locator('[data-ui="SignUpPage[ConfirmPasswordInput]"]').fill(user.password);
+	await page.locator('[data-action="sign up"]').click();
+
+	await page.waitForURL("/cs/app/welcome");
+	await page.locator('[data-action="go home from welcome"]').click();
+	await page.waitForURL("/cs/app/home");
+
+	await page.locator('[data-action="create listing"]').click();
+	await page.waitForURL(/\/cs\/app\/seller\/draft\/[^/]+\/edit$/);
+
+	await page.locator('[data-action="set draft gallery"]').click();
+	await expect(page.locator('[data-ui="GalleryPatch"]')).toBeVisible();
+	await expect(
+		page.locator('[data-ui="GalleryPatch"] [data-ui="PhotoUpload[Container]"]'),
+	).toHaveCount(FREE_PLAN_GALLERY_LIMIT);
+	await expect(page.locator('[data-ui="GalleryPatch"] [data-action="upload photo"]')).toHaveCount(
+		FREE_PLAN_GALLERY_LIMIT,
+	);
+});
 
 test("seller creates listing from draft flow", async ({ page, database }) => {
 	const user = await leaseTestUserFx({

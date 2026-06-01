@@ -5,6 +5,7 @@ import type { DraftTableSchema } from "~/server/database/@table/DraftTableSchema
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
+import { resourceLimitEnsureFx } from "~/user/resource-limit/server/fx/resourceLimitEnsureFx";
 import type { UploadSchema } from "~/user/upload/server/schema/UploadSchema";
 import type { DraftPatchSchema } from "../schema/DraftPatchSchema";
 import type { DraftWhereSchema } from "../schema/DraftWhereSchema";
@@ -59,6 +60,12 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 			}
 
 			if (uploadIds && uploadIds.length > 0) {
+				yield* resourceLimitEnsureFx({
+					count: uploadIds.length,
+					resource: "listing.gallery.count",
+					userId,
+				});
+
 				/**
 				 * Delete old items, except those already
 				 */

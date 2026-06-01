@@ -40,7 +40,7 @@ describe("activity family", () => {
 							],
 							timestamp: new Date("2026-03-09T10:00:00.000Z"),
 							family: "reaction",
-							type: "favourite",
+							type: "listing.favourite",
 							payload: {
 								listingId: "listing-b",
 							},

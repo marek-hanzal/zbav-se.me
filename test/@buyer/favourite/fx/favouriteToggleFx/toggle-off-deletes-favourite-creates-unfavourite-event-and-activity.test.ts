@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { favouriteToggleFx } from "~/buyer/favourite/server/fx/favouriteToggleFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
+import { favouriteToggleFx } from "~/buyer/listing-favourite/server/fx/favouriteToggleFx";
 import { runToggleEntityContractFx } from "~/test/@buyer/common/fx/runToggleEntityContractFx";
 
 describe("favouriteToggleFx", () => {
@@ -33,7 +33,7 @@ describe("favouriteToggleFx", () => {
 			recordFx: ({ database, users, listing }) =>
 				Effect.promise(() =>
 					database.kysely
-						.selectFrom("favourite")
+						.selectFrom("listing_favourite")
 						.select([
 							"listingId",
 							"userId",
@@ -56,7 +56,7 @@ describe("favouriteToggleFx", () => {
 			assertRecordOn: (record, { extra: feed }) => {
 				expect(record.feedId).toBe(feed.id);
 			},
-			onEvent: "favourite",
+			onEvent: "listing.favourite",
 			offEvent: "unfavourite",
 			activityOnFx: ({ database, users }) =>
 				Effect.promise(() =>
@@ -67,7 +67,7 @@ describe("favouriteToggleFx", () => {
 							"family",
 						])
 						.where("userId", "=", users.seller.id)
-						.where("type", "=", "favourite")
+						.where("type", "=", "listing.favourite")
 						.executeTakeFirst(),
 				),
 			assertActivityOn: (activity) => {

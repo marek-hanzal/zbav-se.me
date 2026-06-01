@@ -8,11 +8,11 @@ export const ActivityTypeEnumSchema = z
 		"system",
 		"unknown",
 		"thumb",
-		"favourite",
+		"listing.favourite",
 		"unfavourite",
-		"flag",
+		"listing.flag",
 		"unflag",
-		"ignore",
+		"listing.ignore",
 		"unignore",
 	])
 	.meta({

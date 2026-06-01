@@ -80,7 +80,7 @@ describe("activityArchiveFx", () => {
 							"listing-b",
 						],
 						family: "reaction",
-						type: "favourite",
+						type: "listing.favourite",
 						payload: {
 							listingId: "listing-b",
 						},

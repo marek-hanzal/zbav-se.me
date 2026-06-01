@@ -10,7 +10,7 @@ import type { ListingCountQuerySchema } from "~/seller/listing/server/schema/Lis
 import type { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreateSchema";
 import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
-import { withUserResourceLimitQuery } from "~/user/user-resource/query/withUserResourceLimitQuery";
+import { withResourceLimitQuery } from "~/user/resource-limit/query/withResourceLimitQuery";
 
 export const withListingQuery = withEntityQuery({
 	logger: getRootLogger([
@@ -83,7 +83,7 @@ export const withListingQuery = withEntityQuery({
 			},
 			{
 				async invalidate({ queryClient }) {
-					await withUserResourceLimitQuery.invalidator(
+					await withResourceLimitQuery.invalidator(
 						queryClient,
 						[
 							"fetch",
@@ -104,7 +104,7 @@ export const withListingQuery = withEntityQuery({
 		delete: [
 			{
 				async invalidate({ queryClient }) {
-					await withUserResourceLimitQuery.invalidator(
+					await withResourceLimitQuery.invalidator(
 						queryClient,
 						[
 							"fetch",

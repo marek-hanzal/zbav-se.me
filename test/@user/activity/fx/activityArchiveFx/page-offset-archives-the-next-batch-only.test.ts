@@ -49,7 +49,7 @@ describe("activityArchiveFx", () => {
 						"listing-page",
 					],
 					family: "reaction",
-					type: "favourite",
+					type: "listing.favourite",
 					payload: {
 						listingId: "listing-page",
 					},
@@ -63,7 +63,7 @@ describe("activityArchiveFx", () => {
 						"listing-page",
 					],
 					family: "reaction",
-					type: "favourite",
+					type: "listing.favourite",
 					payload: {
 						listingId: "listing-page",
 					},
@@ -77,7 +77,7 @@ describe("activityArchiveFx", () => {
 						"listing-page",
 					],
 					family: "reaction",
-					type: "favourite",
+					type: "listing.favourite",
 					payload: {
 						listingId: "listing-page",
 					},

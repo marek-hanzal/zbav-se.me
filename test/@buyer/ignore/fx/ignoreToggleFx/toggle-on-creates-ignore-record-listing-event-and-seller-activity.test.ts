@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
-import { ignoreToggleFx } from "~/buyer/ignore/server/fx/ignoreToggleFx";
+import { ignoreToggleFx } from "~/buyer/listing-ignore/server/fx/ignoreToggleFx";
 import { runToggleEntityContractFx } from "~/test/@buyer/common/fx/runToggleEntityContractFx";
 
 describe("ignoreToggleFx", () => {
@@ -23,7 +23,7 @@ describe("ignoreToggleFx", () => {
 			recordFx: ({ database, users, listing }) =>
 				Effect.promise(() =>
 					database.kysely
-						.selectFrom("ignore")
+						.selectFrom("listing_ignore")
 						.select([
 							"listingId",
 							"userId",
@@ -43,7 +43,7 @@ describe("ignoreToggleFx", () => {
 					return events.map((event) => event.event);
 				}),
 			assertRecordOn: () => {},
-			onEvent: "ignore",
+			onEvent: "listing.ignore",
 			offEvent: "unignore",
 			activityOnFx: ({ database, users }) =>
 				Effect.promise(() =>
@@ -51,7 +51,7 @@ describe("ignoreToggleFx", () => {
 						.selectFrom("activity")
 						.select("type")
 						.where("userId", "=", users.seller.id)
-						.where("type", "=", "ignore")
+						.where("type", "=", "listing.ignore")
 						.executeTakeFirst(),
 				),
 			activityOffFx: ({ database, users }) =>

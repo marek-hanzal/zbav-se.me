@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { flagToggleFx } from "~/buyer/flag/server/fx/flagToggleFx";
+import { flagToggleFx } from "~/buyer/listing-flag/server/fx/flagToggleFx";
 import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
 
 describe("flagToggleFx", () => {
@@ -21,7 +21,7 @@ describe("flagToggleFx", () => {
 			assertAfterFx: ({ database, users, listing }) =>
 				Effect.promise(async () => {
 					const flag = await database.kysely
-						.selectFrom("flag")
+						.selectFrom("listing_flag")
 						.select("id")
 						.where("listingId", "=", listing.id)
 						.where("userId", "=", users.seller.id)

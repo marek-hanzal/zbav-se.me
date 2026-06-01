@@ -25,7 +25,7 @@ describe("listingEventRateLimitFx", () => {
 			yield* listingEventCreateFx({
 				userId: buyer.id,
 				listingId: listing.id,
-				event: "favourite",
+				event: "listing.favourite",
 			}).pipe(
 				Effect.provideService(DateContextFx, {
 					now: () => firstWindowNow,
@@ -35,7 +35,7 @@ describe("listingEventRateLimitFx", () => {
 			const duplicate = yield* Effect.either(
 				listingEventRateLimitFx({
 					listingId: listing.id,
-					event: "favourite",
+					event: "listing.favourite",
 				}).pipe(
 					Effect.provideService(DateContextFx, {
 						now: () => firstWindowNow,
@@ -65,7 +65,7 @@ describe("listingEventRateLimitFx", () => {
 					.selectFrom("listing_event")
 					.select("id")
 					.where("listingId", "=", listing.id)
-					.where("event", "=", "favourite")
+					.where("event", "=", "listing.favourite")
 					.execute(),
 			);
 
@@ -87,7 +87,7 @@ describe("listingEventRateLimitFx", () => {
 			const nextWindowEvent = yield* Effect.either(
 				listingEventRateLimitFx({
 					listingId: listing.id,
-					event: "favourite",
+					event: "listing.favourite",
 				}).pipe(
 					Effect.provideService(DateContextFx, {
 						now: () => nextWindowNow,

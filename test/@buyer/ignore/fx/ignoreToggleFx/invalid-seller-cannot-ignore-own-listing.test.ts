@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { ignoreToggleFx } from "~/buyer/ignore/server/fx/ignoreToggleFx";
+import { ignoreToggleFx } from "~/buyer/listing-ignore/server/fx/ignoreToggleFx";
 import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
 
 describe("ignoreToggleFx", () => {
@@ -21,7 +21,7 @@ describe("ignoreToggleFx", () => {
 			assertAfterFx: ({ database, users, listing }) =>
 				Effect.promise(async () => {
 					const ignore = await database.kysely
-						.selectFrom("ignore")
+						.selectFrom("listing_ignore")
 						.select("id")
 						.where("listingId", "=", listing.id)
 						.where("userId", "=", users.seller.id)

@@ -1,4 +1,4 @@
-import { Suspense, useMemo } from "react";
+import { useMemo } from "react";
 import { Container } from "@/lib/client/container";
 import { EmptyState } from "@/lib/client/empty-state";
 import { withFallback } from "@/lib/client/fallback";
@@ -19,7 +19,7 @@ export const FeedList = withFallback(({ _suspense, ...props }: FeedList.Props) =
 	/**
 	 * This is intentional to trigger parent suspense
 	 */
-	const { data: feedCollection } = withFeedQuery.useIdsQuery({
+	const { data: feedCollection } = withFeedQuery.useCollectionQuery({
 		where: {
 			type: "user",
 		},
@@ -58,17 +58,12 @@ export const FeedList = withFallback(({ _suspense, ...props }: FeedList.Props) =
 			{...props}
 		>
 			<EmptyState check={check}>
-				{feedCollection.map((feedId) => {
+				{feedCollection.map((feed) => {
 					return (
-						<Suspense
-							key={feedId}
-							fallback={<Item.Fallback />}
-						>
-							<Item
-								_suspense={"I know"}
-								feedId={feedId}
-							/>
-						</Suspense>
+						<Item
+							key={feed.id}
+							feed={feed}
+						/>
 					);
 				})}
 

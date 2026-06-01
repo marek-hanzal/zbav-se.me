@@ -1,10 +1,13 @@
 import { z } from "zod";
+import { TransactionEntryKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntryKindEnumSchema";
 import { EntrySchema } from "./EntrySchema";
 
 export const PackageSchema = z
 	.looseObject({
 		...EntrySchema.shape,
-		kind: z.literal("package"),
+		kind: TransactionEntryKindEnumSchema.extract([
+			"package",
+		]),
 		payload: z
 			.looseObject({
 				link: z.url().meta({

@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { flagCollectionFx } from "~/buyer/flag/server/fx/flagCollectionFx";
-import { flagCountFx } from "~/buyer/flag/server/fx/flagCountFx";
-import { flagFetchFx } from "~/buyer/flag/server/fx/flagFetchFx";
-import { flagToggleFx } from "~/buyer/flag/server/fx/flagToggleFx";
+import { flagCollectionFx } from "~/buyer/listing-flag/server/fx/flagCollectionFx";
+import { flagCountFx } from "~/buyer/listing-flag/server/fx/flagCountFx";
+import { flagFetchFx } from "~/buyer/listing-flag/server/fx/flagFetchFx";
+import { flagToggleFx } from "~/buyer/listing-flag/server/fx/flagToggleFx";
 import { runToggleReadModelContractFx } from "~/test/@buyer/common/fx/runToggleReadModelContractFx";
 
 describe("flag read model", () => {

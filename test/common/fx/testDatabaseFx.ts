@@ -4,6 +4,7 @@ import { getRootLogger } from "~/common/log/getRootLogger";
 import { migrations } from "~/server/@migrations/migrations";
 import { runAuthMigration } from "~/server/auth/runAuthMigration";
 import type { Database } from "~/server/database/Database";
+import { imports } from "~/server/database/databaseFx/imports";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { translationSyncNodeFx } from "./translationSyncNodeFx";
 
@@ -17,4 +18,5 @@ export const testDatabaseFx = withDatabaseFx<Database>({
 	async onPostMigration(instance) {
 		await translationSyncNodeFx().pipe(withKyselyFx(instance), Effect.runPromise);
 	},
+	imports,
 }).pipe(Effect.provideService(MigrationContextFx, migrations));

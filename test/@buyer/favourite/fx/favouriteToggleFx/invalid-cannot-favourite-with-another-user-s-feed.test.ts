@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { favouriteToggleFx } from "~/buyer/favourite/server/fx/favouriteToggleFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
+import { favouriteToggleFx } from "~/buyer/listing-favourite/server/fx/favouriteToggleFx";
 import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
 
 describe("favouriteToggleFx", () => {
@@ -30,7 +30,7 @@ describe("favouriteToggleFx", () => {
 			assertAfterFx: ({ database, users, listing }) =>
 				Effect.promise(async () => {
 					const favourite = await database.kysely
-						.selectFrom("favourite")
+						.selectFrom("listing_favourite")
 						.select("id")
 						.where("listingId", "=", listing.id)
 						.where("userId", "=", users.buyer.id)

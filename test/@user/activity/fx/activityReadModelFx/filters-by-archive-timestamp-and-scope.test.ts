@@ -41,7 +41,7 @@ describe("activity read model filters by archive timestamp and scope", () => {
 								"listing-c",
 							],
 							family: "reaction",
-							type: "favourite",
+							type: "listing.favourite",
 							payload: {
 								listingId: "listing-c",
 							},

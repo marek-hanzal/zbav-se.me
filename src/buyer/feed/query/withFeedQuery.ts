@@ -11,7 +11,7 @@ import type { FeedPatchSchema } from "~/buyer/feed/server/schema/FeedPatchSchema
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { withUserResourceLimitQuery } from "~/user/user-resource/query/withUserResourceLimitQuery";
+import { withResourceLimitCheckQuery } from "~/user/resource-limit/query/withResourceLimitCheckQuery";
 
 export const withFeedQuery = withEntityQuery({
 	logger: getRootLogger([
@@ -76,42 +76,14 @@ export const withFeedQuery = withEntityQuery({
 		create: [
 			{
 				async invalidate({ queryClient }) {
-					await withUserResourceLimitQuery.invalidator(
-						queryClient,
-						[
-							"fetch",
-							"collection",
-							"count",
-						],
-						{
-							fetch: {
-								where: {
-									resourceDefinitionId: "feed.count",
-								},
-							},
-						},
-					);
+					await withResourceLimitCheckQuery.invalidate(queryClient);
 				},
 			},
 		],
 		delete: [
 			{
 				async invalidate({ queryClient }) {
-					await withUserResourceLimitQuery.invalidator(
-						queryClient,
-						[
-							"fetch",
-							"collection",
-							"count",
-						],
-						{
-							fetch: {
-								where: {
-									resourceDefinitionId: "feed.count",
-								},
-							},
-						},
-					);
+					await withResourceLimitCheckQuery.invalidate(queryClient);
 				},
 			},
 		],

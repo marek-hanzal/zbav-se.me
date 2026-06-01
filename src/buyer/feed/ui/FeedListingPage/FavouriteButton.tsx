@@ -3,9 +3,9 @@ import { withFallback } from "@/lib/client/fallback";
 import { FavouriteIcon, FavouriteOffIcon } from "@/lib/client/icon";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
-import { withFavouriteToggleMutation } from "~/buyer/favourite/mutation/withFavouriteToggleMutation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingMetaSchema } from "~/buyer/listing/server/schema/ListingMetaSchema";
+import { withFavouriteToggleMutation } from "~/buyer/listing-favourite/mutation/withFavouriteToggleMutation";
 
 export namespace FavouriteButton {
 	export interface Props extends Button.Props, MarkSuspense.Props {

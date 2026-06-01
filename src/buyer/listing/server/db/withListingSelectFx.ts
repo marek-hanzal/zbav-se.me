@@ -231,7 +231,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				eb
 					.exists(
 						eb
-							.selectFrom("favourite as f")
+							.selectFrom("listing_favourite as f")
 							.select(sql`1`.as("true"))
 							.whereRef("f.listingId", "=", "l.id")
 							.where("f.userId", "=", userId),
@@ -242,7 +242,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				eb
 					.exists(
 						eb
-							.selectFrom("ignore as i")
+							.selectFrom("listing_ignore as i")
 							.select(sql`1`.as("true"))
 							.whereRef("i.listingId", "=", "l.id")
 							.where("i.userId", "=", userId),
@@ -253,7 +253,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				eb
 					.exists(
 						eb
-							.selectFrom("flag as f")
+							.selectFrom("listing_flag as f")
 							.select(sql`1`.as("true"))
 							.whereRef("f.listingId", "=", "l.id")
 							.where("f.userId", "=", userId),
@@ -419,7 +419,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					query = query.where(({ not, exists, selectFrom }) => {
 						return not(
 							exists(
-								selectFrom("ignore as i")
+								selectFrom("listing_ignore as i")
 									.select("i.listingId")
 									.whereRef("i.listingId", "=", "l.id")
 									.where("i.userId", "=", userId),
@@ -431,7 +431,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				if (where.isFavourite === true) {
 					query = query.where(({ exists, selectFrom }) => {
 						return exists(
-							selectFrom("favourite as f")
+							selectFrom("listing_favourite as f")
 								.select("f.listingId")
 								.whereRef("f.listingId", "=", "l.id")
 								.where("f.userId", "=", userId),

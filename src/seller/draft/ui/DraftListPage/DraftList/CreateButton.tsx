@@ -7,7 +7,7 @@ import type { MarkSuspense } from "@/lib/client/type";
 import { ListItem } from "~/common/list-item/ListItem";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import { withListingQuery } from "~/seller/listing/query/withListingQuery";
-import { useResourceLimit } from "~/user/user-resource/hook/useResourceLimit";
+import { withResourceLimitCheckQuery } from "~/user/resource-limit/query/withResourceLimitCheckQuery";
 
 export namespace CreateButton {
 	export interface Props extends MarkSuspense.Props, ListItem.PropsEx {
@@ -23,8 +23,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ _suspense, ...props }) =>
 			status: "live",
 		},
 	});
-	const resourceLimit = useResourceLimit({
-		_suspense,
+	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
 		resource: "listing.count",
 		count: listingCount,
 	});

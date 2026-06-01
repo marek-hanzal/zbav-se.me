@@ -88,7 +88,7 @@ describe("activityArchiveFx", () => {
 						"tx-all",
 					],
 					family: "reaction",
-					type: "favourite",
+					type: "listing.favourite",
 					payload: {
 						listingId: "listing-all",
 					},
