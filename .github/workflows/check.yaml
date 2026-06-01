@@ -223,6 +223,8 @@ jobs:
         env:
             NITRO_PRESET: node_server
             SERVER_E2E: e2e
+            SERVER_CRON_TOKEN: e2e-cron-token
+            SERVER_MIGRATION_TOKEN: e2e-migration-token
             SERVER_SMTP_HOST: 127.0.0.1
             SERVER_SMTP_PORT: 1025
             SERVER_SMTP_USERNAME: mailpit
