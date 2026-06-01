@@ -41,6 +41,7 @@ env:
     SERVER_AI_TOKEN: ${{ secrets.SERVER_AI_TOKEN }}
     SERVER_AI_SERVER_URL: ${{ vars.SERVER_AI_SERVER_URL }}
     SERVER_AI_MODEL: ${{ vars.SERVER_AI_MODEL }}
+    SERVER_MIGRATION_TOKEN: ${{ secrets.SERVER_MIGRATION_TOKEN }}
     # -------------------------------
     # Local (GHA only)
     # -------------------------------
@@ -98,6 +99,7 @@ jobs:
                   check_var SERVER_AI_TOKEN
                   check_var SERVER_AI_SERVER_URL
                   check_var SERVER_AI_MODEL
+                  check_var SERVER_MIGRATION_TOKEN
 
                   # Local (GHA only)
                   check_var BUNNY_HOST
@@ -249,7 +251,7 @@ jobs:
             - name: Trigger migrations endpoint
               run: |
                   set -euo pipefail
-                  code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST "$MIGRATION_URL")
+                  code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST -H "Authorization: Bearer ${SERVER_MIGRATION_TOKEN}" "$MIGRATION_URL")
                   echo "HTTP $code from $MIGRATION_URL"
                   if [ "$code" != "200" ] && [ "$code" != "204" ]; then
                     echo "Migration trigger failed (expected 200/204)."
