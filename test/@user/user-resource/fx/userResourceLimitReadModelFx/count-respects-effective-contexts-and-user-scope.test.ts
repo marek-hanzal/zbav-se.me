@@ -9,7 +9,7 @@ import {
 } from "./userResourceLimitReadModelFixture";
 
 describe("userResourceLimit read model fx", () => {
-	it("count respects effective contexts, reference filters and user scope", async () => {
+	it("count respects effective bundle limits and user scope", async () => {
 		const database = await testabase("user-resource-limit-count");
 
 		return Effect.gen(function* () {
@@ -43,7 +43,7 @@ describe("userResourceLimit read model fx", () => {
 				}),
 			);
 
-			expect(sellerCountWithoutReference).toBe(8);
+			expect(sellerCountWithoutReference).toBe(3);
 			expect(sellerCountForDraft).toBe(3);
 			expect(buyerCountWithoutReference).toBe(2);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);

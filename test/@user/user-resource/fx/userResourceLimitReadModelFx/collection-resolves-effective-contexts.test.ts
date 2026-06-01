@@ -9,7 +9,7 @@ import {
 } from "./userResourceLimitReadModelFixture";
 
 describe("userResourceLimit read model fx", () => {
-	it("collection resolves effective resource contexts and reference overrides", async () => {
+	it("collection resolves effective resource bundle limits", async () => {
 		const database = await testabase("user-resource-limit-collection");
 
 		return Effect.gen(function* () {
@@ -70,17 +70,17 @@ describe("userResourceLimit read model fx", () => {
 					(item) => item.resourceDefinitionId === "listing.gallery.count",
 				),
 			).toMatchObject({
-				reference: "draft-1",
-				limit: 15,
+				reference: null,
+				limit: 10,
 			});
 			expect(
 				sellerCollectionForDraft.find((item) => item.resourceDefinitionId === "feed.count"),
 			).toMatchObject({
-				reference: "draft-1",
-				limit: 16,
+				reference: null,
+				limit: 4,
 			});
 
-			expect(sellerCollectionWithoutReference).toHaveLength(8);
+			expect(sellerCollectionWithoutReference).toHaveLength(3);
 			expect(
 				sellerCollectionWithoutReference.map((item) => ({
 					resourceDefinitionId: item.resourceDefinitionId,
@@ -100,34 +100,9 @@ describe("userResourceLimit read model fx", () => {
 						limit: 4,
 					},
 					{
-						resourceDefinitionId: "feed.count",
-						reference: "draft-1",
-						limit: 16,
-					},
-					{
-						resourceDefinitionId: "feed.count",
-						reference: "draft-2",
-						limit: 24,
-					},
-					{
 						resourceDefinitionId: "listing.gallery.count",
 						reference: null,
 						limit: 10,
-					},
-					{
-						resourceDefinitionId: "listing.gallery.count",
-						reference: "draft-1",
-						limit: 15,
-					},
-					{
-						resourceDefinitionId: "listing.gallery.count",
-						reference: "draft-2",
-						limit: 19,
-					},
-					{
-						resourceDefinitionId: "listing.gallery.count",
-						reference: "draft-3",
-						limit: 14,
 					},
 				]),
 			);

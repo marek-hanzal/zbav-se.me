@@ -1,28 +1,28 @@
 import { sql } from "kysely";
 import type { Migration } from "kysely/migration";
 
-export const PlanResourceInventoryMigration: Migration = {
+export const ResourceBundleItemMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("plan_resource_inventory")
+			.createTable("resource_bundle_item")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
-			.addColumn("planId", "text", (col) => col.notNull())
+			.addColumn("resourceBundleId", "text", (col) => col.notNull())
 			.addColumn("resourceDefinitionId", "text", (col) => col.notNull())
 			.addColumn("amount", "decimal(10, 2)", (col) => col.notNull())
 			.addColumn("expiration", "integer")
 			.addForeignKeyConstraint(
-				"plan_resource_inventory_[planId]_fk",
+				"resource_bundle_item_[resourceBundleId]_fk",
 				[
-					"planId",
+					"resourceBundleId",
 				],
-				"plan",
+				"resource_bundle",
 				[
 					"id",
 				],
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"plan_resource_inventory_[resourceDefinitionId]_fk",
+				"resource_bundle_item_[resourceDefinitionId]_fk",
 				[
 					"resourceDefinitionId",
 				],
@@ -32,15 +32,15 @@ export const PlanResourceInventoryMigration: Migration = {
 				],
 			)
 			.addUniqueConstraint(
-				"plan_resource_inventory_[planId-resourceDefinitionId]_unique_idx",
+				"resource_bundle_item_[resourceBundleId-resourceDefinitionId]_unique_idx",
 				[
-					"planId",
+					"resourceBundleId",
 					"resourceDefinitionId",
 				],
 			)
-			.addCheckConstraint("plan_resource_inventory_[amount]_chk", sql`"amount" >= 0`)
+			.addCheckConstraint("resource_bundle_item_[amount]_chk", sql`"amount" >= 0`)
 			.addCheckConstraint(
-				"plan_resource_inventory_[expiration]_chk",
+				"resource_bundle_item_[expiration]_chk",
 				sql`"expiration" IS NULL OR "expiration" >= 0`,
 			)
 			.execute();

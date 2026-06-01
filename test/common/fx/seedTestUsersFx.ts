@@ -63,22 +63,29 @@ export namespace seedTestUsersFx {
 	}
 }
 
-const toSeededTestUserLimitRows = (users: Database["user"][]) => {
+const toSeededTestUserResourceBundleRows = (
+	users: Database["user"][],
+	resourceBundleId: string,
+) => {
 	const now = new Date();
 
-	return users.flatMap((user) =>
-		TEST_USER_LIMITS.map((limit) => ({
-			id: genId(),
-			userId: user.id,
-			resourceDefinitionId: limit.resourceDefinitionId,
-			reference: null,
-			createdAt: now,
-			availableAt: now,
-			expiresAt: null,
-			limit: limit.limit,
-		})),
-	);
+	return users.map((user) => ({
+		id: genId(),
+		userId: user.id,
+		resourceBundleId,
+		createdAt: now,
+		availableAt: now,
+		expiresAt: null,
+	}));
 };
+
+const toSeededTestUserResourceBundleLimitRows = (resourceBundleId: string) =>
+	TEST_USER_LIMITS.map((limit) => ({
+		id: genId(),
+		resourceBundleId,
+		resourceDefinitionId: limit.resourceDefinitionId,
+		limit: limit.limit,
+	}));
 
 export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 	database,
@@ -117,9 +124,24 @@ export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 			)
 			.execute();
 
+		const resourceBundleId = genId();
+
 		await database.kysely
-			.insertInto("user_resource_limit")
-			.values(toSeededTestUserLimitRows(users))
+			.insertInto("resource_bundle")
+			.values({
+				id: resourceBundleId,
+				name: "Test users",
+			})
+			.execute();
+
+		await database.kysely
+			.insertInto("resource_bundle_limit")
+			.values(toSeededTestUserResourceBundleLimitRows(resourceBundleId))
+			.execute();
+
+		await database.kysely
+			.insertInto("user_resource_bundle")
+			.values(toSeededTestUserResourceBundleRows(users, resourceBundleId))
 			.execute();
 	});
 });
