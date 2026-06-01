@@ -11,6 +11,19 @@ import { uploadFixtureViaS3 } from "../utils/uploadFixtureViaS3";
 
 const fixturePath = path.resolve(import.meta.dirname, "../fixtures/listing-create-image.jpg");
 
+function cronHeaders(db: string) {
+	const token = process.env.SERVER_CRON_TOKEN;
+
+	if (!token) {
+		throw new Error("SERVER_CRON_TOKEN is required for cron e2e tests");
+	}
+
+	return {
+		authorization: `Bearer ${token}`,
+		"x-e2e-db": db,
+	};
+}
+
 async function signIn(
 	page: Page,
 	user: {
@@ -130,9 +143,7 @@ test("buyer sees cron-expired transaction as a system message", async ({
 
 	const cronResponse = await fetch(new URL("/api/cron/04", appOrigin), {
 		method: "POST",
-		headers: {
-			"x-e2e-db": db,
-		},
+		headers: cronHeaders(db),
 	});
 
 	expect(cronResponse.ok).toBe(true);
@@ -216,9 +227,7 @@ test("seller sees cron-expired transaction as a system message", async ({
 
 	const cronResponse = await fetch(new URL("/api/cron/04", appOrigin), {
 		method: "POST",
-		headers: {
-			"x-e2e-db": db,
-		},
+		headers: cronHeaders(db),
 	});
 
 	expect(cronResponse.ok).toBe(true);
