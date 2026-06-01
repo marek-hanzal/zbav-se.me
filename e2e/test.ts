@@ -1,9 +1,16 @@
+import { createHash } from "node:crypto";
 import path from "node:path";
 import type { APIRequestContext } from "@playwright/test";
 import { test as base, expect } from "@playwright/test";
 import { testabase } from "./utils/testabase";
 
 const appOrigin = process.env.VITE_ORIGIN ?? "https://zbav-se.me.localhost:1355";
+const DATABASE_NAME_LIMIT = 63;
+const DATABASE_NAME_HASH_LENGTH = 8;
+
+function toDatabaseHash(value: string) {
+	return createHash("sha256").update(value).digest("hex").slice(0, DATABASE_NAME_HASH_LENGTH);
+}
 
 function toDatabaseName(
 	file: string,
@@ -26,7 +33,11 @@ function toDatabaseName(
 		.replace(/-+/g, "-")
 		.replace(/^-+|-+$/g, "");
 
-	return `e2e-${rawName || "test"}`.slice(0, 63);
+	const suffix = toDatabaseHash(rawName);
+	const prefixLimit = DATABASE_NAME_LIMIT - suffix.length - 1;
+	const prefix = `e2e-${rawName || "test"}`.slice(0, prefixLimit).replace(/-+$/g, "");
+
+	return `${prefix}-${suffix}`;
 }
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;

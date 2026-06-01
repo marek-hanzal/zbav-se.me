@@ -46,6 +46,16 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 	Effect.gen(function* () {
 		const { seller, buyer } = yield* createUsersFx({});
 
+		yield* Effect.promise(async () => {
+			await database.kysely
+				.deleteFrom("user_resource_bundle")
+				.where("userId", "in", [
+					seller.id,
+					buyer.id,
+				])
+				.execute();
+		});
+
 		const seeds = [
 			limitSeed(
 				seller.id,

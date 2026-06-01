@@ -12,10 +12,17 @@ type ResourceBundleItemImportRow = Pick<
 	"id" | "resourceBundleId" | "resourceDefinitionId" | "amount" | "expiration"
 >;
 
+interface ResourceBundleItemSeed {
+	name: string;
+	resource: string;
+	amount: number;
+	expiration: number | null;
+}
+
 export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 	name: "resource-bundle-item",
 	async run({ kysely }) {
-		const resourceBundleItems = resourceBundleItemSeedData;
+		const resourceBundleItems: ResourceBundleItemSeed[] = resourceBundleItemSeedData;
 
 		if (resourceBundleItems.length === 0) {
 			return;
