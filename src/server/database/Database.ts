@@ -25,9 +25,14 @@ import type { ListingEventTableSchema } from "~/server/database/@table/ListingEv
 import type { ListingSpotlightTableSchema } from "~/server/database/@table/ListingSpotlightTableSchema";
 import type { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
+import type { PlanResourceInventoryTableSchema } from "~/server/database/@table/PlanResourceInventoryTableSchema";
+import type { PlanResourceLimitTableSchema } from "~/server/database/@table/PlanResourceLimitTableSchema";
+import type { PlanStripeTableSchema } from "~/server/database/@table/PlanStripeTableSchema";
+import type { PlanTableSchema } from "~/server/database/@table/PlanTableSchema";
 import type { RateLimitEventTableSchema } from "~/server/database/@table/RateLimitEventTableSchema";
 import type { RateLimitRuleTableSchema } from "~/server/database/@table/RateLimitRuleTableSchema";
 import type { ResourceDefinitionTableSchema } from "~/server/database/@table/ResourceDefinitionTableSchema";
+import type { StripeEventTableSchema } from "~/server/database/@table/StripeEventTableSchema";
 import type { ThumbTableSchema } from "~/server/database/@table/ThumbTableSchema";
 import type { TransactionEntryTableSchema } from "~/server/database/@table/TransactionEntryTableSchema";
 import type { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
@@ -36,8 +41,11 @@ import type { TranslationTableSchema } from "~/server/database/@table/Translatio
 import type { UploadTableSchema } from "~/server/database/@table/UploadTableSchema";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { UserExTableSchema } from "~/server/database/@table/UserExTableSchema";
+import type { UserPlanStripeTableSchema } from "~/server/database/@table/UserPlanStripeTableSchema";
+import type { UserPlanTableSchema } from "~/server/database/@table/UserPlanTableSchema";
 import type { UserResourceLimitTableSchema } from "~/server/database/@table/UserResourceLimitTableSchema";
 import type { UserRestrictionTableSchema } from "~/server/database/@table/UserRestrictionTableSchema";
+import type { UserStripeTableSchema } from "~/server/database/@table/UserStripeTableSchema";
 import type { CategoryFieldTableSchema } from "./@table/CategoryFieldTableSchema";
 import type { ListingAttrDecimalTableSchema } from "./@table/ListingAttrDecimalTableSchema";
 import type { ListingAttrEnumMultiTableSchema } from "./@table/ListingAttrEnumMultiTableSchema";
@@ -78,9 +86,14 @@ export interface Database {
 	listing_spotlight: ListingSpotlightTableSchema.Type;
 	listing: ListingTableSchema.Type;
 	location: LocationTableSchema.Type;
+	plan_resource_inventory: PlanResourceInventoryTableSchema.Type;
+	plan_resource_limit: PlanResourceLimitTableSchema.Type;
+	plan_stripe: PlanStripeTableSchema.Type;
+	plan: PlanTableSchema.Type;
 	rate_limit_event: RateLimitEventTableSchema.Type;
 	rate_limit_rule: RateLimitRuleTableSchema.Type;
 	resource_definition: ResourceDefinitionTableSchema.Type;
+	stripe_event: StripeEventTableSchema.Type;
 	thumb: ThumbTableSchema.Type;
 	transaction_entry: TransactionEntryTableSchema.Type;
 	transaction_user: TransactionUserTableSchema.Type;
@@ -89,7 +102,10 @@ export interface Database {
 	upload: UploadTableSchema.Type;
 	user_event: UserEventTableSchema.Type;
 	user_ex: UserExTableSchema.Type;
+	user_plan_stripe: UserPlanStripeTableSchema.Type;
+	user_plan: UserPlanTableSchema.Type;
 	user_resource_limit: UserResourceLimitTableSchema.Type;
 	user_restriction: UserRestrictionTableSchema.Type;
+	user_stripe: UserStripeTableSchema.Type;
 	user: auth.User;
 }
