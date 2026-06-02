@@ -1,12 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Effect } from "effect";
 import { withLoggerFx } from "@/lib/common/log";
+import type { NoticeSchema } from "@/lib/common/schema";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { RateLimitErrorFx } from "~/server/error/RateLimitErrorFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
+import { withLinkMiddleware } from "~/server/middleware/withLinkMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
+import { withRateLimitMiddleware } from "~/server/middleware/withRateLimitMiddleware";
 import { billingStripeWebhookRequestFx } from "~/user/billing/server/fx/billingStripeWebhookRequestFx";
 
 export const Route = createFileRoute("/api/stripe/webhook")({
@@ -14,35 +16,46 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 		middleware: [
 			withLogMiddleware,
 			withDatabaseMiddleware,
+			withLinkMiddleware,
+			withRateLimitMiddleware({
+				rule: "billing:stripe-webhook",
+				key: [],
+				message: "Too many requests, bro, keep calm and get some coffee.",
+			}),
 		],
 		handlers: {
-			async POST({ request, context: { database, rootLogger } }) {
+			async POST({ request, context: { database, rootLogger, link } }) {
+				const signature = request.headers.get("requestSourceture");
+
+				if (!signature) {
+					return Response.json(
+						{
+							type: "error",
+							message: "Some mysterious header is missing here, guess which one.",
+						} satisfies NoticeSchema.Type,
+						{
+							status: 400,
+							statusText: "Hey bro, what are you trying?",
+						},
+					);
+				}
+
 				const result = await billingStripeWebhookRequestFx({
-					request,
+					signature,
+					async content() {
+						return request.text();
+					},
 				}).pipe(
 					withKyselyFx(database),
 					withDateFx,
 					withLoggerFx(rootLogger),
-					Effect.catchTag("RateLimitErrorFx", (error) => Effect.succeed(error)),
 					Effect.catchTag("RuntimeErrorFx", (error) => Effect.succeed(error)),
 					Effect.runPromise,
 				);
 
-				/**
-				 * TODO: Move rate limit stuff into standalone middleware + extract rate limiting from billingWebhookFx
-				 */
-				if (result instanceof RateLimitErrorFx) {
-					return Response.json(result.toJSON(), {
-						status: 429,
-						headers: {
-							"Retry-After": String(result.window),
-						},
-					});
-				}
-
 				if (result instanceof RuntimeErrorFx) {
 					return Response.json(result.toJSON(), {
-						status: 400,
+						status: 500,
 					});
 				}
 
