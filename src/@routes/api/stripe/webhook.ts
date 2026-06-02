@@ -28,9 +28,9 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 					Effect.runPromise,
 				);
 
-                /**
-                 * TODO: Move rate limit stuff into standalone middleware + extract rate limiting from billingWebhookFx
-                 */
+				/**
+				 * TODO: Move rate limit stuff into standalone middleware + extract rate limiting from billingWebhookFx
+				 */
 				if (result instanceof RateLimitErrorFx) {
 					return Response.json(result.toJSON(), {
 						status: 429,
