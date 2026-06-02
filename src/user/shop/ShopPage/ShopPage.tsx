@@ -1,9 +1,9 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
-import type { MarkSuspense } from "@/lib/client/type";
 import { useLocale } from "@/lib/client/locale";
 import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
+import type { MarkSuspense } from "@/lib/client/type";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { withBillingInfoQuery } from "~/user/billing/query/withBillingInfoQuery";
