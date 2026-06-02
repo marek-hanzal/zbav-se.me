@@ -58,7 +58,7 @@ export const UserEventMigration: Migration = {
         `.execute(db);
 
         await sql`
-            CREATE INDEX user_event_[createdAt-id]_idx
+            CREATE INDEX "user_event_[createdAt-id]_idx"
             ON user_event ("createdAt", id);
         `.execute(db);
 	},
