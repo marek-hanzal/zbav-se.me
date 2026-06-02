@@ -58,8 +58,11 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 		})
 		.click();
 	await page.waitForURL(/\/cs\/app\/shop\?stripe=success$/);
-	await expect(page.locator('[data-ui="ShopPage-[BuyerTitle]"]')).toContainText(
-		"Buyer subscription active",
+	await expect(page.locator('[data-ui="ShopPage-[SubscriptionTitle]"]').first()).toContainText(
+		/Buyer.*active/i,
+	);
+	await expect(page.locator('[data-ui="ShopPage-[CheckoutButton]"]').first()).toContainText(
+		"Active",
 	);
 
 	const buyerBundle = await database.kysely
