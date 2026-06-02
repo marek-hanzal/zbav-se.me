@@ -11,9 +11,6 @@ export const ResourceBundleStripeTableSchema = z
 		priceId: z.string().meta({
 			description: "Stripe price ID mapped to the resource bundle",
 		}),
-		url: z.string().nullable().meta({
-			description: "Optional Stripe checkout or payment link URL",
-		}),
 		createdAt: z.coerce.date().meta({
 			description: "Creation timestamp",
 			type: "string",
