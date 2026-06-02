@@ -27,15 +27,42 @@ env:
     SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
     SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
     SERVER_GITHUB: ${{ secrets.SERVER_GITHUB }}
+    SERVER_HMAC_SECRET: ${{ secrets.SERVER_HMAC_SECRET }}
+    SERVER_SMTP_HOST: ${{ vars.SERVER_SMTP_HOST }}
+    SERVER_SMTP_PORT: ${{ vars.SERVER_SMTP_PORT }}
+    SERVER_SMTP_USERNAME: ${{ vars.SERVER_SMTP_USERNAME }}
+    SERVER_SMTP_PASSWORD: ${{ secrets.SERVER_SMTP_PASSWORD }}
+    SERVER_SMTP_FROM: ${{ vars.SERVER_SMTP_FROM }}
     SERVER_AI_TOKEN: ${{ secrets.SERVER_AI_TOKEN }}
     SERVER_AI_SERVER_URL: ${{ vars.SERVER_AI_SERVER_URL }}
     SERVER_AI_MODEL: ${{ vars.SERVER_AI_MODEL }}
 
 jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        environment: dev
+        steps:
+            - uses: actions/checkout@v6.0.2
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v6.3.0
+              with:
+                  node-version: "24"
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2.2.0
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
+
+            - name: Build
+              run: bun run build
+
     lint:
         name: Lint
         runs-on: ubuntu-latest
-        environment: uat
+        environment: dev
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -56,7 +83,7 @@ jobs:
     dc:
         name: Dependency Cruiser
         runs-on: ubuntu-latest
-        environment: uat
+        environment: dev
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -77,7 +104,7 @@ jobs:
     typecheck:
         name: Typecheck
         runs-on: ubuntu-latest
-        environment: uat
+        environment: dev
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -98,7 +125,7 @@ jobs:
     knip:
         name: Knip
         runs-on: ubuntu-latest
-        environment: uat
+        environment: dev
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -119,7 +146,7 @@ jobs:
     vitest:
         name: Vitest
         runs-on: ubuntu-latest
-        environment: uat
+        environment: dev
         steps:
             - uses: actions/checkout@v6.0.2
 
@@ -180,68 +207,85 @@ jobs:
                   name: vitest-coverage
                   if-no-files-found: ignore
                   path: coverage/vitest
-    # e2e:
-    #     name: Full-Stack Test
-    #     runs-on: ubuntu-latest
-    #     environment: uat
-    #     env:
-    #         NITRO_PRESET: node_server
-    #         SERVER_E2E: e2e
-    #         PORTLESS_STATE_DIR: /tmp/portless
-    #         NODE_EXTRA_CA_CERTS: /tmp/portless/ca.pem
-    #         SSL_CERT_FILE: /tmp/portless/ca.pem
-    #     steps:
-    #         - uses: actions/checkout@v6.0.2
+    e2e:
+        name: Full-Stack Test
+        runs-on: ubuntu-latest
+        environment: dev
+        services:
+            mailpit:
+                image: axllent/mailpit:v1.27
+                ports:
+                    - 1025:1025
+                    - 8025:8025
+                env:
+                    MP_SMTP_AUTH: mailpit:mailpit
+                    MP_SMTP_AUTH_ALLOW_INSECURE: 1
+        env:
+            NITRO_PRESET: node_server
+            SERVER_E2E: e2e
+            SERVER_CRON_TOKEN: e2e-cron-token
+            SERVER_MIGRATION_TOKEN: e2e-migration-token
+            SERVER_SMTP_HOST: 127.0.0.1
+            SERVER_SMTP_PORT: 1025
+            SERVER_SMTP_USERNAME: mailpit
+            SERVER_SMTP_PASSWORD: mailpit
+            SERVER_SMTP_FROM: Zbavík <info@zbav-se.me>
+            MAILPIT_BASE_URL: http://127.0.0.1:8025
+            PORTLESS_STATE_DIR: /tmp/portless
+            NODE_EXTRA_CA_CERTS: /tmp/portless/ca.pem
+            SSL_CERT_FILE: /tmp/portless/ca.pem
+        steps:
+            - uses: actions/checkout@v6.0.2
 
-    #         - name: Setup Node.js
-    #           uses: actions/setup-node@v6.3.0
-    #           with:
-    #               node-version: "24"
+            - name: Setup Node.js
+              uses: actions/setup-node@v6.3.0
+              with:
+                  node-version: "24"
 
-    #         - name: Setup Bun
-    #           uses: oven-sh/setup-bun@v2.2.0
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2.2.0
 
-    #         - name: Install dependencies
-    #           run: bun install --frozen-lockfile
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
 
-    #         - name: Resolve Playwright version
-    #           id: playwright-version
-    #           run: |
-    #               VERSION=$(node -p 'require("./package.json").devDependencies["@playwright/test"]')
-    #               echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+            - name: Resolve Playwright version
+              id: playwright-version
+              run: |
+                  VERSION=$(node -p 'require("./package.json").devDependencies["@playwright/test"]')
+                  echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-    #         - name: Install portless
-    #           run: bun install -g portless
+            - name: Install portless
+              run: bun install -g portless
 
-    #         - name: Start portless proxy
-    #           run: portless proxy start -p 1355 --https
+            - name: Start portless proxy
+              run: portless proxy start -p 1355 --https
 
-    #         - name: Restore Playwright browser cache
-    #           id: playwright-cache
-    #           uses: actions/cache/restore@v5.0.3
-    #           with:
-    #               path: ~/.cache/ms-playwright
-    #               key: ${{ runner.os }}-playwright-chromium-${{ steps.playwright-version.outputs.version }}
+            - name: Restore Playwright browser cache
+              id: playwright-cache
+              uses: actions/cache/restore@v5.0.3
+              with:
+                  path: ~/.cache/ms-playwright
+                  key: ${{ runner.os }}-playwright-chromium-${{ steps.playwright-version.outputs.version }}
 
-    #         - name: Install Playwright browsers
-    #           run: bunx playwright install --with-deps chromium
+            - name: Install Playwright browsers
+              run: bunx playwright install --with-deps chromium
 
-    #         - name: Save Playwright browser cache
-    #           if: steps.playwright-cache.outputs.cache-hit != 'true'
-    #           uses: actions/cache/save@v5.0.3
-    #           with:
-    #               path: ~/.cache/ms-playwright
-    #               key: ${{ runner.os }}-playwright-chromium-${{ steps.playwright-version.outputs.version }}
+            - name: Save Playwright browser cache
+              if: steps.playwright-cache.outputs.cache-hit != 'true'
+              uses: actions/cache/save@v5.0.3
+              with:
+                  path: ~/.cache/ms-playwright
+                  key: ${{ runner.os }}-playwright-chromium-${{ steps.playwright-version.outputs.version }}
 
-    #         - name: Run Playwright
-    #           run: bun run e2e
+            - name: Run Playwright
+              run: bun run e2e
 
-    #         - name: Upload Playwright artifacts
-    #           if: always()
-    #           uses: actions/upload-artifact@v7
-    #           with:
-    #               name: playwright-artifacts
-    #               if-no-files-found: ignore
-    #               path: |
-    #                   playwright-report
-    #                   results
+            - name: Upload Playwright artifacts
+              if: always()
+              uses: actions/upload-artifact@v7
+              with:
+                  name: playwright-artifacts
+                  if-no-files-found: ignore
+                  path: |
+                      playwright-report
+                      results

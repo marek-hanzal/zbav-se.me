@@ -1,6 +1,6 @@
 import { withMutation } from "@/lib/client/mutation";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { signInFn } from "~/user/auth/fn/signInFn";
+import { authClient } from "~/user/auth/authClient";
 
 export namespace withEmailSignInMutation {
 	export interface Props {
@@ -22,8 +22,15 @@ export const withEmailSignInMutation = withMutation<withEmailSignInMutation.Prop
 		];
 	},
 	async mutationFn(data) {
-		return signInFn({
-			data,
+		const result = await authClient.signIn.email({
+			email: data.email,
+			password: data.password,
 		});
+
+		if (result.error) {
+			throw new Error(result.error.message);
+		}
+
+		return result.data;
 	},
 });

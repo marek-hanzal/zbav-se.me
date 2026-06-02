@@ -4,7 +4,6 @@ import { GalleryQuerySchema } from "~/user/gallery/server/schema/GalleryQuerySch
 export const GalleryCountQuerySchema = z
 	.looseObject({
 		...GalleryQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

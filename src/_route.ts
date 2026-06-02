@@ -9,16 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './@routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './@routes/sitemap[.]xml'
+import { Route as RobotsDottxtRouteImport } from './@routes/robots[.]txt'
 import { Route as McpRouteImport } from './@routes/mcp'
 import { Route as ApiRouteImport } from './@routes/api'
 import { Route as DotwellKnownRouteImport } from './@routes/[.]well-known'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
+import { Route as SitemapsPagesDotxmlRouteImport } from './@routes/sitemaps/pages[.]xml'
 import { Route as RedirectSignInRouteImport } from './@routes/redirect/sign-in'
 import { Route as ApiHealthRouteImport } from './@routes/api/health'
 import { Route as ApiE2eRouteImport } from './@routes/api/e2e'
-import { Route as ApiCronRouteImport } from './@routes/api/$cron'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleSignUpRouteImport } from './@routes/$locale/sign-up'
 import { Route as LocaleSignInRouteImport } from './@routes/$locale/sign-in'
@@ -26,13 +28,22 @@ import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
 import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
 import { Route as LocaleAppIndexRouteImport } from './@routes/$locale/app/index'
+import { Route as ApiCronCronRouteImport } from './@routes/api/cron/$cron'
 import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
 import { Route as ApiAgentThreadIdRouteImport } from './@routes/api/agent/$threadId'
+import { Route as LocaleZChar123idChar125DotmdRouteImport } from './@routes/$locale/z/{$id}[.]md'
+import { Route as LocaleStatusMagicLinkRouteImport } from './@routes/$locale/status/magic-link'
+import { Route as LocaleResetPasswordTokenRouteImport } from './@routes/$locale/reset-password/$token'
+import { Route as LocaleForgotSentRouteImport } from './@routes/$locale/forgot/sent'
+import { Route as LocaleForgotPasswordRouteImport } from './@routes/$locale/forgot/password'
 import { Route as LocaleAppWelcomeRouteImport } from './@routes/$locale/app/welcome'
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
 import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
 import { Route as LocaleAppHomeRouteImport } from './@routes/$locale/app/home'
+import { Route as SitemapsListingsDayChar123pageChar125DotxmlRouteImport } from './@routes/sitemaps/listings/$day/{$page}[.]xml'
 import { Route as ApiPublicMigrationRunRouteImport } from './@routes/api/public/migration/run'
+import { Route as LocaleZIdViewRouteImport } from './@routes/$locale/z/$id/view'
+import { Route as LocaleZIdUnavailableRouteImport } from './@routes/$locale/z/$id/unavailable'
 import { Route as LocaleAppBuyerSearchRouteImport } from './@routes/$locale/app/buyer/search'
 import { Route as LocaleAppAgentWelcomeRouteImport } from './@routes/$locale/app/agent/welcome'
 import { Route as LocaleAppAgentContinueRouteImport } from './@routes/$locale/app/agent/continue'
@@ -50,9 +61,20 @@ import { Route as LocaleAppSellerTransactionTransactionIdDetailRouteImport } fro
 import { Route as LocaleAppSellerTransactionListingIdListRouteImport } from './@routes/$locale/app/seller/transaction/$listingId/list'
 import { Route as LocaleAppSellerDraftIdEditRouteImport } from './@routes/$locale/app/seller/draft/$id/edit'
 import { Route as LocaleAppBuyerTransactionTransactionIdDetailRouteImport } from './@routes/$locale/app/buyer/transaction/$transactionId/detail'
+import { Route as LocaleAppBuyerListingIdViewRouteImport } from './@routes/$locale/app/buyer/listing/$id/view'
 import { Route as LocaleAppBuyerFeedIdListRouteImport } from './@routes/$locale/app/buyer/feed/$id/list'
 import { Route as LocaleAppBuyerFeedIdFavouriteListRouteImport } from './@routes/$locale/app/buyer/feed/$id/favourite/list'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
@@ -83,6 +105,11 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleRoute,
 } as any)
+const SitemapsPagesDotxmlRoute = SitemapsPagesDotxmlRouteImport.update({
+  id: '/sitemaps/pages.xml',
+  path: '/sitemaps/pages.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RedirectSignInRoute = RedirectSignInRouteImport.update({
   id: '/redirect/sign-in',
   path: '/redirect/sign-in',
@@ -96,11 +123,6 @@ const ApiHealthRoute = ApiHealthRouteImport.update({
 const ApiE2eRoute = ApiE2eRouteImport.update({
   id: '/e2e',
   path: '/e2e',
-  getParentRoute: () => ApiRoute,
-} as any)
-const ApiCronRoute = ApiCronRouteImport.update({
-  id: '/$cron',
-  path: '/$cron',
   getParentRoute: () => ApiRoute,
 } as any)
 const LocaleTosRoute = LocaleTosRouteImport.update({
@@ -138,6 +160,11 @@ const LocaleAppIndexRoute = LocaleAppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleAppRoute,
 } as any)
+const ApiCronCronRoute = ApiCronCronRouteImport.update({
+  id: '/cron/$cron',
+  path: '/cron/$cron',
+  getParentRoute: () => ApiRoute,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/auth/$',
   path: '/auth/$',
@@ -147,6 +174,33 @@ const ApiAgentThreadIdRoute = ApiAgentThreadIdRouteImport.update({
   id: '/agent/$threadId',
   path: '/agent/$threadId',
   getParentRoute: () => ApiRoute,
+} as any)
+const LocaleZChar123idChar125DotmdRoute =
+  LocaleZChar123idChar125DotmdRouteImport.update({
+    id: '/z/{$id}.md',
+    path: '/z/{$id}.md',
+    getParentRoute: () => LocaleRoute,
+  } as any)
+const LocaleStatusMagicLinkRoute = LocaleStatusMagicLinkRouteImport.update({
+  id: '/status/magic-link',
+  path: '/status/magic-link',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleResetPasswordTokenRoute =
+  LocaleResetPasswordTokenRouteImport.update({
+    id: '/reset-password/$token',
+    path: '/reset-password/$token',
+    getParentRoute: () => LocaleRoute,
+  } as any)
+const LocaleForgotSentRoute = LocaleForgotSentRouteImport.update({
+  id: '/forgot/sent',
+  path: '/forgot/sent',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleForgotPasswordRoute = LocaleForgotPasswordRouteImport.update({
+  id: '/forgot/password',
+  path: '/forgot/password',
+  getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleAppWelcomeRoute = LocaleAppWelcomeRouteImport.update({
   id: '/welcome',
@@ -168,10 +222,26 @@ const LocaleAppHomeRoute = LocaleAppHomeRouteImport.update({
   path: '/home',
   getParentRoute: () => LocaleAppRoute,
 } as any)
+const SitemapsListingsDayChar123pageChar125DotxmlRoute =
+  SitemapsListingsDayChar123pageChar125DotxmlRouteImport.update({
+    id: '/sitemaps/listings/$day/{$page}.xml',
+    path: '/sitemaps/listings/$day/{$page}.xml',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicMigrationRunRoute = ApiPublicMigrationRunRouteImport.update({
   id: '/public/migration/run',
   path: '/public/migration/run',
   getParentRoute: () => ApiRoute,
+} as any)
+const LocaleZIdViewRoute = LocaleZIdViewRouteImport.update({
+  id: '/z/$id/view',
+  path: '/z/$id/view',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleZIdUnavailableRoute = LocaleZIdUnavailableRouteImport.update({
+  id: '/z/$id/unavailable',
+  path: '/z/$id/unavailable',
+  getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleAppBuyerSearchRoute = LocaleAppBuyerSearchRouteImport.update({
   id: '/buyer/search',
@@ -270,6 +340,12 @@ const LocaleAppBuyerTransactionTransactionIdDetailRoute =
     path: '/buyer/transaction/$transactionId/detail',
     getParentRoute: () => LocaleAppRoute,
   } as any)
+const LocaleAppBuyerListingIdViewRoute =
+  LocaleAppBuyerListingIdViewRouteImport.update({
+    id: '/buyer/listing/$id/view',
+    path: '/buyer/listing/$id/view',
+    getParentRoute: () => LocaleAppRoute,
+  } as any)
 const LocaleAppBuyerFeedIdListRoute =
   LocaleAppBuyerFeedIdListRouteImport.update({
     id: '/buyer/feed/$id/list',
@@ -289,30 +365,41 @@ export interface FileRoutesByFullPath {
   '/.well-known': typeof DotwellKnownRoute
   '/api': typeof ApiRouteWithChildren
   '/mcp': typeof McpRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$locale/app': typeof LocaleAppRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
-  '/api/$cron': typeof ApiCronRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
+  '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
+  '/$locale/forgot/sent': typeof LocaleForgotSentRoute
+  '/$locale/reset-password/$token': typeof LocaleResetPasswordTokenRoute
+  '/$locale/status/magic-link': typeof LocaleStatusMagicLinkRoute
+  '/$locale/z/{$id}.md': typeof LocaleZChar123idChar125DotmdRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/cron/$cron': typeof ApiCronCronRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
   '/$locale/app/agent/continue': typeof LocaleAppAgentContinueRoute
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
+  '/$locale/z/$id/unavailable': typeof LocaleZIdUnavailableRoute
+  '/$locale/z/$id/view': typeof LocaleZIdViewRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
+  '/sitemaps/listings/$day/{$page}.xml': typeof SitemapsListingsDayChar123pageChar125DotxmlRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
   '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
@@ -322,6 +409,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/seller/listing/my': typeof LocaleAppSellerListingMyRoute
   '/$locale/app/seller/transaction/list': typeof LocaleAppSellerTransactionListRoute
   '/$locale/app/buyer/feed/$id/list': typeof LocaleAppBuyerFeedIdListRoute
+  '/$locale/app/buyer/listing/$id/view': typeof LocaleAppBuyerListingIdViewRoute
   '/$locale/app/buyer/transaction/$transactionId/detail': typeof LocaleAppBuyerTransactionTransactionIdDetailRoute
   '/$locale/app/seller/draft/$id/edit': typeof LocaleAppSellerDraftIdEditRoute
   '/$locale/app/seller/transaction/$listingId/list': typeof LocaleAppSellerTransactionListingIdListRoute
@@ -333,29 +421,40 @@ export interface FileRoutesByTo {
   '/.well-known': typeof DotwellKnownRoute
   '/api': typeof ApiRouteWithChildren
   '/mcp': typeof McpRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
-  '/api/$cron': typeof ApiCronRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
+  '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
+  '/$locale/forgot/sent': typeof LocaleForgotSentRoute
+  '/$locale/reset-password/$token': typeof LocaleResetPasswordTokenRoute
+  '/$locale/status/magic-link': typeof LocaleStatusMagicLinkRoute
+  '/$locale/z/{$id}.md': typeof LocaleZChar123idChar125DotmdRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/cron/$cron': typeof ApiCronCronRoute
   '/$locale/app': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
   '/$locale/app/agent/continue': typeof LocaleAppAgentContinueRoute
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
+  '/$locale/z/$id/unavailable': typeof LocaleZIdUnavailableRoute
+  '/$locale/z/$id/view': typeof LocaleZIdViewRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
+  '/sitemaps/listings/$day/{$page}.xml': typeof SitemapsListingsDayChar123pageChar125DotxmlRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
   '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
@@ -365,6 +464,7 @@ export interface FileRoutesByTo {
   '/$locale/app/seller/listing/my': typeof LocaleAppSellerListingMyRoute
   '/$locale/app/seller/transaction/list': typeof LocaleAppSellerTransactionListRoute
   '/$locale/app/buyer/feed/$id/list': typeof LocaleAppBuyerFeedIdListRoute
+  '/$locale/app/buyer/listing/$id/view': typeof LocaleAppBuyerListingIdViewRoute
   '/$locale/app/buyer/transaction/$transactionId/detail': typeof LocaleAppBuyerTransactionTransactionIdDetailRoute
   '/$locale/app/seller/draft/$id/edit': typeof LocaleAppSellerDraftIdEditRoute
   '/$locale/app/seller/transaction/$listingId/list': typeof LocaleAppSellerTransactionListingIdListRoute
@@ -378,30 +478,41 @@ export interface FileRoutesById {
   '/.well-known': typeof DotwellKnownRoute
   '/api': typeof ApiRouteWithChildren
   '/mcp': typeof McpRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$locale/app': typeof LocaleAppRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/sign-in': typeof LocaleSignInRoute
   '/$locale/sign-up': typeof LocaleSignUpRoute
   '/$locale/tos': typeof LocaleTosRoute
-  '/api/$cron': typeof ApiCronRoute
   '/api/e2e': typeof ApiE2eRoute
   '/api/health': typeof ApiHealthRoute
   '/redirect/sign-in': typeof RedirectSignInRoute
+  '/sitemaps/pages.xml': typeof SitemapsPagesDotxmlRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/home': typeof LocaleAppHomeRoute
   '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/welcome': typeof LocaleAppWelcomeRoute
+  '/$locale/forgot/password': typeof LocaleForgotPasswordRoute
+  '/$locale/forgot/sent': typeof LocaleForgotSentRoute
+  '/$locale/reset-password/$token': typeof LocaleResetPasswordTokenRoute
+  '/$locale/status/magic-link': typeof LocaleStatusMagicLinkRoute
+  '/$locale/z/{$id}.md': typeof LocaleZChar123idChar125DotmdRoute
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/cron/$cron': typeof ApiCronCronRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
   '/$locale/app/agent/continue': typeof LocaleAppAgentContinueRoute
   '/$locale/app/agent/welcome': typeof LocaleAppAgentWelcomeRoute
   '/$locale/app/buyer/search': typeof LocaleAppBuyerSearchRoute
+  '/$locale/z/$id/unavailable': typeof LocaleZIdUnavailableRoute
+  '/$locale/z/$id/view': typeof LocaleZIdViewRoute
   '/api/public/migration/run': typeof ApiPublicMigrationRunRoute
+  '/sitemaps/listings/$day/{$page}.xml': typeof SitemapsListingsDayChar123pageChar125DotxmlRoute
   '/$locale/app/buyer/favourite/list': typeof LocaleAppBuyerFavouriteListRoute
   '/$locale/app/buyer/feed/default': typeof LocaleAppBuyerFeedDefaultRoute
   '/$locale/app/buyer/feed/list': typeof LocaleAppBuyerFeedListRoute
@@ -411,6 +522,7 @@ export interface FileRoutesById {
   '/$locale/app/seller/listing/my': typeof LocaleAppSellerListingMyRoute
   '/$locale/app/seller/transaction/list': typeof LocaleAppSellerTransactionListRoute
   '/$locale/app/buyer/feed/$id/list': typeof LocaleAppBuyerFeedIdListRoute
+  '/$locale/app/buyer/listing/$id/view': typeof LocaleAppBuyerListingIdViewRoute
   '/$locale/app/buyer/transaction/$transactionId/detail': typeof LocaleAppBuyerTransactionTransactionIdDetailRoute
   '/$locale/app/seller/draft/$id/edit': typeof LocaleAppSellerDraftIdEditRoute
   '/$locale/app/seller/transaction/$listingId/list': typeof LocaleAppSellerTransactionListingIdListRoute
@@ -425,30 +537,41 @@ export interface FileRouteTypes {
     | '/.well-known'
     | '/api'
     | '/mcp'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/$locale/app'
     | '/$locale/landing'
     | '/$locale/privacy'
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
-    | '/api/$cron'
     | '/api/e2e'
     | '/api/health'
     | '/redirect/sign-in'
+    | '/sitemaps/pages.xml'
     | '/$locale/'
     | '/$locale/app/home'
     | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
+    | '/$locale/forgot/password'
+    | '/$locale/forgot/sent'
+    | '/$locale/reset-password/$token'
+    | '/$locale/status/magic-link'
+    | '/$locale/z/{$id}.md'
     | '/api/agent/$threadId'
     | '/api/auth/$'
+    | '/api/cron/$cron'
     | '/$locale/app/'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
     | '/$locale/app/agent/continue'
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
+    | '/$locale/z/$id/unavailable'
+    | '/$locale/z/$id/view'
     | '/api/public/migration/run'
+    | '/sitemaps/listings/$day/{$page}.xml'
     | '/$locale/app/buyer/favourite/list'
     | '/$locale/app/buyer/feed/default'
     | '/$locale/app/buyer/feed/list'
@@ -458,6 +581,7 @@ export interface FileRouteTypes {
     | '/$locale/app/seller/listing/my'
     | '/$locale/app/seller/transaction/list'
     | '/$locale/app/buyer/feed/$id/list'
+    | '/$locale/app/buyer/listing/$id/view'
     | '/$locale/app/buyer/transaction/$transactionId/detail'
     | '/$locale/app/seller/draft/$id/edit'
     | '/$locale/app/seller/transaction/$listingId/list'
@@ -469,29 +593,40 @@ export interface FileRouteTypes {
     | '/.well-known'
     | '/api'
     | '/mcp'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/$locale/landing'
     | '/$locale/privacy'
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
-    | '/api/$cron'
     | '/api/e2e'
     | '/api/health'
     | '/redirect/sign-in'
+    | '/sitemaps/pages.xml'
     | '/$locale'
     | '/$locale/app/home'
     | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
+    | '/$locale/forgot/password'
+    | '/$locale/forgot/sent'
+    | '/$locale/reset-password/$token'
+    | '/$locale/status/magic-link'
+    | '/$locale/z/{$id}.md'
     | '/api/agent/$threadId'
     | '/api/auth/$'
+    | '/api/cron/$cron'
     | '/$locale/app'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
     | '/$locale/app/agent/continue'
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
+    | '/$locale/z/$id/unavailable'
+    | '/$locale/z/$id/view'
     | '/api/public/migration/run'
+    | '/sitemaps/listings/$day/{$page}.xml'
     | '/$locale/app/buyer/favourite/list'
     | '/$locale/app/buyer/feed/default'
     | '/$locale/app/buyer/feed/list'
@@ -501,6 +636,7 @@ export interface FileRouteTypes {
     | '/$locale/app/seller/listing/my'
     | '/$locale/app/seller/transaction/list'
     | '/$locale/app/buyer/feed/$id/list'
+    | '/$locale/app/buyer/listing/$id/view'
     | '/$locale/app/buyer/transaction/$transactionId/detail'
     | '/$locale/app/seller/draft/$id/edit'
     | '/$locale/app/seller/transaction/$listingId/list'
@@ -513,30 +649,41 @@ export interface FileRouteTypes {
     | '/.well-known'
     | '/api'
     | '/mcp'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/$locale/app'
     | '/$locale/landing'
     | '/$locale/privacy'
     | '/$locale/sign-in'
     | '/$locale/sign-up'
     | '/$locale/tos'
-    | '/api/$cron'
     | '/api/e2e'
     | '/api/health'
     | '/redirect/sign-in'
+    | '/sitemaps/pages.xml'
     | '/$locale/'
     | '/$locale/app/home'
     | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/welcome'
+    | '/$locale/forgot/password'
+    | '/$locale/forgot/sent'
+    | '/$locale/reset-password/$token'
+    | '/$locale/status/magic-link'
+    | '/$locale/z/{$id}.md'
     | '/api/agent/$threadId'
     | '/api/auth/$'
+    | '/api/cron/$cron'
     | '/$locale/app/'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
     | '/$locale/app/agent/continue'
     | '/$locale/app/agent/welcome'
     | '/$locale/app/buyer/search'
+    | '/$locale/z/$id/unavailable'
+    | '/$locale/z/$id/view'
     | '/api/public/migration/run'
+    | '/sitemaps/listings/$day/{$page}.xml'
     | '/$locale/app/buyer/favourite/list'
     | '/$locale/app/buyer/feed/default'
     | '/$locale/app/buyer/feed/list'
@@ -546,6 +693,7 @@ export interface FileRouteTypes {
     | '/$locale/app/seller/listing/my'
     | '/$locale/app/seller/transaction/list'
     | '/$locale/app/buyer/feed/$id/list'
+    | '/$locale/app/buyer/listing/$id/view'
     | '/$locale/app/buyer/transaction/$transactionId/detail'
     | '/$locale/app/seller/draft/$id/edit'
     | '/$locale/app/seller/transaction/$listingId/list'
@@ -559,11 +707,29 @@ export interface RootRouteChildren {
   DotwellKnownRoute: typeof DotwellKnownRoute
   ApiRoute: typeof ApiRouteWithChildren
   McpRoute: typeof McpRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   RedirectSignInRoute: typeof RedirectSignInRoute
+  SitemapsPagesDotxmlRoute: typeof SitemapsPagesDotxmlRoute
+  SitemapsListingsDayChar123pageChar125DotxmlRoute: typeof SitemapsListingsDayChar123pageChar125DotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mcp': {
       id: '/mcp'
       path: '/mcp'
@@ -606,6 +772,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/sitemaps/pages.xml': {
+      id: '/sitemaps/pages.xml'
+      path: '/sitemaps/pages.xml'
+      fullPath: '/sitemaps/pages.xml'
+      preLoaderRoute: typeof SitemapsPagesDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/redirect/sign-in': {
       id: '/redirect/sign-in'
       path: '/redirect/sign-in'
@@ -625,13 +798,6 @@ declare module '@tanstack/react-router' {
       path: '/e2e'
       fullPath: '/api/e2e'
       preLoaderRoute: typeof ApiE2eRouteImport
-      parentRoute: typeof ApiRoute
-    }
-    '/api/$cron': {
-      id: '/api/$cron'
-      path: '/$cron'
-      fullPath: '/api/$cron'
-      preLoaderRoute: typeof ApiCronRouteImport
       parentRoute: typeof ApiRoute
     }
     '/$locale/tos': {
@@ -683,6 +849,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppIndexRouteImport
       parentRoute: typeof LocaleAppRoute
     }
+    '/api/cron/$cron': {
+      id: '/api/cron/$cron'
+      path: '/cron/$cron'
+      fullPath: '/api/cron/$cron'
+      preLoaderRoute: typeof ApiCronCronRouteImport
+      parentRoute: typeof ApiRoute
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/auth/$'
@@ -696,6 +869,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/agent/$threadId'
       preLoaderRoute: typeof ApiAgentThreadIdRouteImport
       parentRoute: typeof ApiRoute
+    }
+    '/$locale/z/{$id}.md': {
+      id: '/$locale/z/{$id}.md'
+      path: '/z/{$id}.md'
+      fullPath: '/$locale/z/{$id}.md'
+      preLoaderRoute: typeof LocaleZChar123idChar125DotmdRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/status/magic-link': {
+      id: '/$locale/status/magic-link'
+      path: '/status/magic-link'
+      fullPath: '/$locale/status/magic-link'
+      preLoaderRoute: typeof LocaleStatusMagicLinkRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/reset-password/$token': {
+      id: '/$locale/reset-password/$token'
+      path: '/reset-password/$token'
+      fullPath: '/$locale/reset-password/$token'
+      preLoaderRoute: typeof LocaleResetPasswordTokenRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/forgot/sent': {
+      id: '/$locale/forgot/sent'
+      path: '/forgot/sent'
+      fullPath: '/$locale/forgot/sent'
+      preLoaderRoute: typeof LocaleForgotSentRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/forgot/password': {
+      id: '/$locale/forgot/password'
+      path: '/forgot/password'
+      fullPath: '/$locale/forgot/password'
+      preLoaderRoute: typeof LocaleForgotPasswordRouteImport
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/app/welcome': {
       id: '/$locale/app/welcome'
@@ -725,12 +933,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppHomeRouteImport
       parentRoute: typeof LocaleAppRoute
     }
+    '/sitemaps/listings/$day/{$page}.xml': {
+      id: '/sitemaps/listings/$day/{$page}.xml'
+      path: '/sitemaps/listings/$day/{$page}.xml'
+      fullPath: '/sitemaps/listings/$day/{$page}.xml'
+      preLoaderRoute: typeof SitemapsListingsDayChar123pageChar125DotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/migration/run': {
       id: '/api/public/migration/run'
       path: '/public/migration/run'
       fullPath: '/api/public/migration/run'
       preLoaderRoute: typeof ApiPublicMigrationRunRouteImport
       parentRoute: typeof ApiRoute
+    }
+    '/$locale/z/$id/view': {
+      id: '/$locale/z/$id/view'
+      path: '/z/$id/view'
+      fullPath: '/$locale/z/$id/view'
+      preLoaderRoute: typeof LocaleZIdViewRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/z/$id/unavailable': {
+      id: '/$locale/z/$id/unavailable'
+      path: '/z/$id/unavailable'
+      fullPath: '/$locale/z/$id/unavailable'
+      preLoaderRoute: typeof LocaleZIdUnavailableRouteImport
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/app/buyer/search': {
       id: '/$locale/app/buyer/search'
@@ -851,6 +1080,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppBuyerTransactionTransactionIdDetailRouteImport
       parentRoute: typeof LocaleAppRoute
     }
+    '/$locale/app/buyer/listing/$id/view': {
+      id: '/$locale/app/buyer/listing/$id/view'
+      path: '/buyer/listing/$id/view'
+      fullPath: '/$locale/app/buyer/listing/$id/view'
+      preLoaderRoute: typeof LocaleAppBuyerListingIdViewRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
     '/$locale/app/buyer/feed/$id/list': {
       id: '/$locale/app/buyer/feed/$id/list'
       path: '/buyer/feed/$id/list'
@@ -888,6 +1124,7 @@ interface LocaleAppRouteChildren {
   LocaleAppSellerListingMyRoute: typeof LocaleAppSellerListingMyRoute
   LocaleAppSellerTransactionListRoute: typeof LocaleAppSellerTransactionListRoute
   LocaleAppBuyerFeedIdListRoute: typeof LocaleAppBuyerFeedIdListRoute
+  LocaleAppBuyerListingIdViewRoute: typeof LocaleAppBuyerListingIdViewRoute
   LocaleAppBuyerTransactionTransactionIdDetailRoute: typeof LocaleAppBuyerTransactionTransactionIdDetailRoute
   LocaleAppSellerDraftIdEditRoute: typeof LocaleAppSellerDraftIdEditRoute
   LocaleAppSellerTransactionListingIdListRoute: typeof LocaleAppSellerTransactionListingIdListRoute
@@ -915,6 +1152,7 @@ const LocaleAppRouteChildren: LocaleAppRouteChildren = {
   LocaleAppSellerListingMyRoute: LocaleAppSellerListingMyRoute,
   LocaleAppSellerTransactionListRoute: LocaleAppSellerTransactionListRoute,
   LocaleAppBuyerFeedIdListRoute: LocaleAppBuyerFeedIdListRoute,
+  LocaleAppBuyerListingIdViewRoute: LocaleAppBuyerListingIdViewRoute,
   LocaleAppBuyerTransactionTransactionIdDetailRoute:
     LocaleAppBuyerTransactionTransactionIdDetailRoute,
   LocaleAppSellerDraftIdEditRoute: LocaleAppSellerDraftIdEditRoute,
@@ -938,6 +1176,13 @@ interface LocaleRouteChildren {
   LocaleSignUpRoute: typeof LocaleSignUpRoute
   LocaleTosRoute: typeof LocaleTosRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
+  LocaleForgotPasswordRoute: typeof LocaleForgotPasswordRoute
+  LocaleForgotSentRoute: typeof LocaleForgotSentRoute
+  LocaleResetPasswordTokenRoute: typeof LocaleResetPasswordTokenRoute
+  LocaleStatusMagicLinkRoute: typeof LocaleStatusMagicLinkRoute
+  LocaleZChar123idChar125DotmdRoute: typeof LocaleZChar123idChar125DotmdRoute
+  LocaleZIdUnavailableRoute: typeof LocaleZIdUnavailableRoute
+  LocaleZIdViewRoute: typeof LocaleZIdViewRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
@@ -948,26 +1193,33 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleSignUpRoute: LocaleSignUpRoute,
   LocaleTosRoute: LocaleTosRoute,
   LocaleIndexRoute: LocaleIndexRoute,
+  LocaleForgotPasswordRoute: LocaleForgotPasswordRoute,
+  LocaleForgotSentRoute: LocaleForgotSentRoute,
+  LocaleResetPasswordTokenRoute: LocaleResetPasswordTokenRoute,
+  LocaleStatusMagicLinkRoute: LocaleStatusMagicLinkRoute,
+  LocaleZChar123idChar125DotmdRoute: LocaleZChar123idChar125DotmdRoute,
+  LocaleZIdUnavailableRoute: LocaleZIdUnavailableRoute,
+  LocaleZIdViewRoute: LocaleZIdViewRoute,
 }
 
 const LocaleRouteWithChildren =
   LocaleRoute._addFileChildren(LocaleRouteChildren)
 
 interface ApiRouteChildren {
-  ApiCronRoute: typeof ApiCronRoute
   ApiE2eRoute: typeof ApiE2eRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiAgentThreadIdRoute: typeof ApiAgentThreadIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiCronCronRoute: typeof ApiCronCronRoute
   ApiPublicMigrationRunRoute: typeof ApiPublicMigrationRunRoute
 }
 
 const ApiRouteChildren: ApiRouteChildren = {
-  ApiCronRoute: ApiCronRoute,
   ApiE2eRoute: ApiE2eRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiAgentThreadIdRoute: ApiAgentThreadIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiCronCronRoute: ApiCronCronRoute,
   ApiPublicMigrationRunRoute: ApiPublicMigrationRunRoute,
 }
 
@@ -979,7 +1231,12 @@ const rootRouteChildren: RootRouteChildren = {
   DotwellKnownRoute: DotwellKnownRoute,
   ApiRoute: ApiRouteWithChildren,
   McpRoute: McpRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   RedirectSignInRoute: RedirectSignInRoute,
+  SitemapsPagesDotxmlRoute: SitemapsPagesDotxmlRoute,
+  SitemapsListingsDayChar123pageChar125DotxmlRoute:
+    SitemapsListingsDayChar123pageChar125DotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

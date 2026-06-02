@@ -1,53 +1,85 @@
+import { DateTime } from "luxon";
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
-import type { MarkSuspense } from "@/lib/client/type";
-import type { useView } from "@/lib/client/view";
+import { useLocale } from "@/lib/client/locale";
+import { Markdown } from "@/lib/client/markdown";
+import { useTranslator } from "@/lib/client/translation";
+import { Tx } from "@/lib/client/tx";
+import { Typo } from "@/lib/client/typo";
+import { LabelValue, ValueList } from "@/lib/client/value";
+import { toTimeDiff } from "@/lib/common/time";
 import type { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
-import { SellerInfo } from "../../SellerInfo";
+import { CategoryInline } from "~/common/category/ui/CategoryInline";
 
 export namespace InfoSection {
-	export interface Props extends MarkSuspense.Props {
+	export interface Props extends Container.Props {
 		listing: ListingSchema.Type;
-		view: useView.Use<"seller-info">;
 	}
 }
 
-export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, view }) => {
+export const InfoSection: FC<InfoSection.Props> = ({ listing, ...props }) => {
+	const translator = useTranslator();
+	const locale = useLocale();
+
+	const days = DateTime.fromJSDate(listing.expiresAt).diffNow("days").days;
+
 	return (
 		<Container
 			data-ui={"InfoSection"}
 			data-ui-layout="vertical-flex"
 			data-ui-gap="default"
+			{...props}
 		>
-			{/* <Group>
-				<ValueList
+			<Group>
+				{days > 0 ? (
+					<LabelValue
+						textLabel={translator.text("Listing expires at (label)")}
+						textHint={translator.text("Listing expires at (hint)")}
+						textValue={toTimeDiff({
+							locale,
+							time: listing.expiresAt,
+							type: "human",
+						})}
+					/>
+				) : (
+					<LabelValue
+						textLabel={translator.text("Listing expired at (label)")}
+						textValue={toTimeDiff({
+							locale,
+							time: listing.expiresAt,
+							type: "relative",
+						})}
+					/>
+				)}
+			</Group>
+
+			<Group>
+				<LabelValue
 					textLabel={translator.text("Listing restrictions (label)")}
 					textEmpty={translator.text("Listing restrictions (empty)")}
-					items={listing.restrictions.map((id) => ({
-						id,
-					}))}
-					renderFn={({ id }) => {
-						return <Tx label={`Listing restriction - ${id}`} />;
-					}}
+					textValue={
+						listing.withRestriction ? (
+							<Tx label={`Listing restriction - ${listing.withRestriction}`} />
+						) : null
+					}
 				/>
-			</Group> */}
+			</Group>
 
-			{/* <Group>
+			<Group>
 				<LabelValue
 					textLabel={translator.text("Listing category (label)")}
 					textValue={
 						<CategoryInline
-							_suspense={"I know"}
-							categoryId={listing.category.id}
+							category={listing.category}
 							data-ui-tone="secondary"
 							data-ui-theme="light"
 						/>
 					}
 				/>
-			</Group> */}
+			</Group>
 
-			{/* {listing.description ? (
+			{listing.description ? (
 				<Group>
 					<LabelValue
 						textLabel={translator.text("Listing description (label)")}
@@ -98,7 +130,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, view })
 				</Group>
 			) : null}
 
-			{listing.warranty !== null ? (
+			{listing.warranty != null ? (
 				<Group>
 					<LabelValue
 						textLabel={translator.text("Listing warranty (label)")}
@@ -123,17 +155,7 @@ export const InfoSection: FC<InfoSection.Props> = ({ _suspense, listing, view })
 						/>
 					) : null}
 				</Group>
-			) : null} */}
-
-			{listing.my ? null : (
-				<Group>
-					<SellerInfo
-						_suspense={"I know"}
-						listingId={listing.id}
-						view={view}
-					/>
-				</Group>
-			)}
+			) : null}
 		</Container>
 	);
 };

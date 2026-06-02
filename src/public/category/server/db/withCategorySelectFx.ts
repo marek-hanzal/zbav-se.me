@@ -2,9 +2,9 @@ import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { withLikeEx } from "~/server/database/expression/withLikeEx";
-import type { CategoryFilterSchema } from "../schema/CategoryFilterSchema";
+import { withContainsEx } from "~/server/database/expression/withContainsEx";
 import type { CategorySortSchema } from "../schema/CategorySortSchema";
+import type { CategoryWhereSchema } from "../schema/CategoryWhereSchema";
 
 export namespace withCategorySelectFx {
 	export interface Props {
@@ -32,7 +32,7 @@ export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* 
 
 	return selectFx({
 		select,
-		queryFx(select, where: CategoryFilterSchema.Type) {
+		queryFx(select, where: CategoryWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query: typeof select = select;
 
@@ -48,38 +48,46 @@ export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* 
 					query = query.where("cat.id", "in", where.idIn);
 				}
 
-				if (where.fulltext) {
+				if (where.fulltext?.length) {
 					const fulltext = where.fulltext;
 
 					query = query.where((eb) => {
-						return eb.or([
-							withLikeEx(eb.ref("cat.group"), fulltext),
-							withLikeEx(eb.ref("cat.category"), fulltext),
-							eb.exists(
-								eb
-									.selectFrom("category_spotlight")
-									.select("category_spotlight.categoryId")
-									.whereRef("category_spotlight.categoryId", "=", "cat.id")
-									.where((eb) => {
-										return withLikeEx(
-											eb.ref("category_spotlight.text"),
-											fulltext,
-										);
-									}),
+						return eb.and(
+							fulltext.map((term) =>
+								eb.or([
+									withContainsEx(eb.ref("cat.group"), term),
+									withContainsEx(eb.ref("cat.category"), term),
+									eb.exists(
+										eb
+											.selectFrom("category_spotlight")
+											.select("category_spotlight.categoryId")
+											.whereRef(
+												"category_spotlight.categoryId",
+												"=",
+												"cat.id",
+											)
+											.where((eb) => {
+												return withContainsEx(
+													eb.ref("category_spotlight.text"),
+													term,
+												);
+											}),
+									),
+								]),
 							),
-						]);
+						);
 					});
 				}
 
 				if (where.group) {
 					query = query.where((eb) => {
-						return withLikeEx(eb.ref("cat.group"), where.group);
+						return withContainsEx(eb.ref("cat.group"), where.group);
 					});
 				}
 
 				if (where.category) {
 					query = query.where((eb) => {
-						return withLikeEx(eb.ref("cat.category"), where.category);
+						return withContainsEx(eb.ref("cat.category"), where.category);
 					});
 				}
 

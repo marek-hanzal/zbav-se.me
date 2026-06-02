@@ -1,9 +1,16 @@
 import { z } from "zod";
-import { FeedFilterSchema } from "~/buyer/feed/server/schema/FeedFilterSchema";
+import { WhereSchema } from "@/lib/common/schema";
+import { FeedTypeEnumSchema } from "~/common/feed/enum/FeedTypeEnumSchema";
 
 export const FeedWhereSchema = z
 	.looseObject({
-		...FeedFilterSchema.shape,
+		...WhereSchema.shape,
+		userId: z.string().optional().meta({
+			description: "Exact user id",
+		}),
+		type: FeedTypeEnumSchema.optional().meta({
+			description: "Exact feed type",
+		}),
 	})
 	.strip()
 	.meta({

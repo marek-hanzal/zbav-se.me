@@ -5,7 +5,8 @@ import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { withLikeEx } from "~/server/database/expression/withLikeEx";
+import { withContainsEx } from "~/server/database/expression/withContainsEx";
+import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
 import type { DraftSortSchema } from "../schema/DraftSortSchema";
@@ -68,6 +69,20 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 			//
 			"d.createdAt",
 			"d.updatedAt",
+			//
+			(eb) => {
+				return eb
+					.selectFrom("location as loc")
+					.select((eb) => {
+						return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("json");
+					})
+					.whereRef("loc.id", "=", "d.locationId")
+					.limit(1)
+					.$asScalar()
+					.$castTo<LocationSchema.Type | null>()
+					.as("location");
+			},
+			//
 			(eb) => {
 				return sql<CategorySchema.Type>`
                     to_jsonb(${eb.table("cat")}.*)
@@ -119,24 +134,28 @@ export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
 					query = query.where("d.id", "in", where.idIn);
 				}
 
-				if (where.fulltext) {
+				if (where.fulltext?.length) {
 					const fulltext = where.fulltext;
 
 					query = query.where((eb) => {
-						const categoryIdSelect = eb
-							.selectFrom("category as cat")
-							.select("cat.id")
-							.where((eb) =>
-								eb.or([
-									withLikeEx(eb.ref("cat.category"), fulltext),
-									withLikeEx(eb.ref("cat.group"), fulltext),
-								]),
-							);
+						return eb.and(
+							fulltext.map((term) => {
+								const categoryIdSelect = eb
+									.selectFrom("category as cat")
+									.select("cat.id")
+									.where((eb) =>
+										eb.or([
+											withContainsEx(eb.ref("cat.category"), term),
+											withContainsEx(eb.ref("cat.group"), term),
+										]),
+									);
 
-						return eb.or([
-							withLikeEx(eb.ref("d.title"), fulltext, "both"),
-							eb("d.categoryId", "in", categoryIdSelect),
-						]);
+								return eb.or([
+									withContainsEx(eb.ref("d.title"), term),
+									eb("d.categoryId", "in", categoryIdSelect),
+								]);
+							}),
+						);
 					});
 				}
 

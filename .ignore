@@ -1,0 +1,5 @@
+.git
+.logs
+.output
+coverage
+node_modules

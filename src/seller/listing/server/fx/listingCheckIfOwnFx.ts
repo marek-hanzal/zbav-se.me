@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 
 export namespace listingCheckIfOwnFx {
 	export interface Props {
@@ -25,9 +24,7 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 		listingId,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
-
-	const listing = yield* tryDbFx(async () => {
+	const listing = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("listing")
 			.select("userId")

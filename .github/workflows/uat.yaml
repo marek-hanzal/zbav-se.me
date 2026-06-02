@@ -29,6 +29,11 @@ env:
     SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
     SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
     SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
+    SERVER_SMTP_HOST: ${{ vars.SERVER_SMTP_HOST }}
+    SERVER_SMTP_PORT: ${{ vars.SERVER_SMTP_PORT }}
+    SERVER_SMTP_USERNAME: ${{ vars.SERVER_SMTP_USERNAME }}
+    SERVER_SMTP_PASSWORD: ${{ secrets.SERVER_SMTP_PASSWORD }}
+    SERVER_SMTP_FROM: ${{ vars.SERVER_SMTP_FROM }}
     SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
     SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
     SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
@@ -36,6 +41,8 @@ env:
     SERVER_AI_TOKEN: ${{ secrets.SERVER_AI_TOKEN }}
     SERVER_AI_SERVER_URL: ${{ vars.SERVER_AI_SERVER_URL }}
     SERVER_AI_MODEL: ${{ vars.SERVER_AI_MODEL }}
+    SERVER_MIGRATION_TOKEN: ${{ secrets.SERVER_MIGRATION_TOKEN }}
+    SERVER_CRON_TOKEN: ${{ secrets.SERVER_CRON_TOKEN }}
     # -------------------------------
     # Local (GHA only)
     # -------------------------------
@@ -81,6 +88,11 @@ jobs:
                   check_var SERVER_S3_BUCKET
                   check_var SERVER_S3_KEY
                   check_var SERVER_S3_SECRET
+                  check_var SERVER_SMTP_HOST
+                  check_var SERVER_SMTP_PORT
+                  check_var SERVER_SMTP_USERNAME
+                  check_var SERVER_SMTP_PASSWORD
+                  check_var SERVER_SMTP_FROM
                   check_var SERVER_BETTER_AUTH_SECRET
                   check_var SERVER_GEOAPIFY_TOKEN
                   check_var SERVER_JWT_SECRET
@@ -88,6 +100,8 @@ jobs:
                   check_var SERVER_AI_TOKEN
                   check_var SERVER_AI_SERVER_URL
                   check_var SERVER_AI_MODEL
+                  check_var SERVER_MIGRATION_TOKEN
+                  check_var SERVER_CRON_TOKEN
 
                   # Local (GHA only)
                   check_var BUNNY_HOST
@@ -239,7 +253,7 @@ jobs:
             - name: Trigger migrations endpoint
               run: |
                   set -euo pipefail
-                  code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST "$MIGRATION_URL")
+                  code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST -H "Authorization: Bearer ${SERVER_MIGRATION_TOKEN}" "$MIGRATION_URL")
                   echo "HTTP $code from $MIGRATION_URL"
                   if [ "$code" != "200" ] && [ "$code" != "204" ]; then
                     echo "Migration trigger failed (expected 200/204)."

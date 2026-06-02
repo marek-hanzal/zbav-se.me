@@ -1,4 +1,5 @@
-import { type Migration, sql } from "kysely";
+import { sql } from "kysely";
+import type { Migration } from "kysely/migration";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { UserEventScopeEnumSchema } from "~/common/user-event/enum/UserEventScopeEnumSchema";
 
@@ -54,6 +55,11 @@ export const UserEventMigration: Migration = {
 
 		await sql`
             CREATE INDEX "user_event_[createdAt]_idx" ON "user_event" ("createdAt" DESC);
+        `.execute(db);
+
+		await sql`
+            CREATE INDEX "user_event_[createdAt-id]_idx"
+            ON user_event ("createdAt", id);
         `.execute(db);
 	},
 };

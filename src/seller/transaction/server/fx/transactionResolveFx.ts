@@ -3,8 +3,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { transactionFetchFx } from "~/seller/transaction/server/fx/transactionFetchFx";
 import { transactionPatchCollectionFx } from "~/seller/transaction/server/fx/transactionPatchCollectionFx";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
 import { transactionMessageActivityArchiveFx } from "~/user/transaction/server/fx/transactionMessageActivityArchiveFx";
@@ -50,7 +49,7 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 					status: "sold",
 				},
 				query: {
-					filter: {
+					where: {
 						listingId: transaction.listingId,
 						statusIn: [
 							"interest",
@@ -89,20 +88,19 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 				userId,
 			});
 
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 			const now = dateContext.now().toJSDate();
 
-			yield* tryDbFx(async () =>
-				kysely
+			yield* dbFx(async (kysely) => {
+				return kysely
 					.updateTable("listing")
 					.set({
 						status: "sold",
 						updatedAt: now,
 					})
 					.where("id", "=", transaction.listingId)
-					.executeTakeFirstOrThrow(),
-			);
+					.executeTakeFirstOrThrow();
+			});
 
 			yield* activityCreateFx({
 				userId: transaction.buyerId,

@@ -1,4 +1,5 @@
 import { resolve } from "node:path";
+import react from "@vitejs/plugin-react";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -12,6 +13,9 @@ export default defineConfig({
 		],
 	},
 	cacheDir: "./node_modules/.vite",
+	plugins: [
+		react({}),
+	],
 	resolve: {
 		alias: [
 			{

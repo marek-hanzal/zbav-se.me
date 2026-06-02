@@ -44,6 +44,7 @@ export const DraftLink = withFallback(
 		return (
 			<LinkTo
 				data-action={data.length > 0 ? "continue listing" : "create listing"}
+				preload={false}
 				{...uiMenuButton({})}
 				icon={
 					data.length > 0
@@ -86,6 +87,7 @@ export const DraftLink = withFallback(
 		return (
 			<LinkTo
 				data-action={"create listing"}
+				preload={false}
 				{...uiMenuButton({})}
 				icon={DraftIcon}
 				to="/$locale/app/seller/draft/resolve"

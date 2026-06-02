@@ -1,16 +1,23 @@
 import { z } from "zod";
+import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
+import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
 import { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 import { TransactionTableSchema } from "~/server/database/@table/TransactionTableSchema";
+import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
 
 export const TransactionSchema = z
 	.looseObject({
 		...TransactionTableSchema.shape,
-		// title: z.string().meta({
-		// 	description: "Transaction title",
-		// }),
+		location: LocationSchema,
+		title: z.string().meta({
+			description: "Transaction title",
+		}),
 		status: TransactionStatusEnumSchema,
 		entry: TransactionEntrySchema,
+		priceType: PriceTypeEnumSchema,
+		price: z.coerce.number().nullish(),
+		currency: CurrencyEnumSchema.nullish(),
 		lastAt: z.coerce.date().meta({
 			description: "Timestamp of the latest seller-visible transaction activity",
 		}),
@@ -19,9 +26,16 @@ export const TransactionSchema = z
 			type: "number",
 		}),
 		//
-		withImageUrl: z.array(z.string()).meta({
-			description: "Ordered listing image URLs",
-		}),
+		withImageUrl: z
+			.tuple(
+				[
+					z.string(),
+				],
+				z.string(),
+			)
+			.meta({
+				description: "Ordered listing image URLs",
+			}),
 	})
 	.omit({
 		userId: true,

@@ -1,11 +1,17 @@
 import { z } from "zod";
+import { ActivityFamilyEnumSchema } from "~/common/activity/enum/ActivityFamilyEnumSchema";
+import { ActivityTypeEnumSchema } from "~/common/activity/enum/ActivityTypeEnumSchema";
 import { ActivitySchema } from "./ActivitySchema";
 
 export const BuyerMessageSchema = z
 	.looseObject({
 		...ActivitySchema.shape,
-		family: z.literal("transaction"),
-		type: z.literal("buyer-message"),
+		family: ActivityFamilyEnumSchema.extract([
+			"transaction",
+		]),
+		type: ActivityTypeEnumSchema.extract([
+			"buyer-message",
+		]),
 		payload: z
 			.looseObject({
 				transactionId: z.string().meta({

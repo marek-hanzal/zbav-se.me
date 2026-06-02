@@ -1,21 +1,21 @@
 import z from "zod";
 import { CursorSchema } from "./CursorSchema";
-import type { FilterSchema } from "./FilterSchema";
 import { OrderEnumSchema } from "./OrderEnumSchema";
+import type { WhereSchema } from "./WhereSchema";
 
 export namespace withQuerySchema {
-	export interface Props<TFilterSchema extends FilterSchema, TSort extends string> {
+	export interface Props<TFilterSchema extends WhereSchema, TSort extends string> {
 		filter: TFilterSchema;
 		sort: TSort[];
 	}
 
 	export type QuerySchema<
-		TFilterSchema extends FilterSchema = FilterSchema,
+		TFilterSchema extends WhereSchema = WhereSchema,
 		TSort extends string = string,
 	> = ReturnType<typeof withQuerySchema<TFilterSchema, TSort>>;
 
 	export type Query<
-		TFilterSchema extends FilterSchema = FilterSchema,
+		TFilterSchema extends WhereSchema = WhereSchema,
 		TSort extends string = string,
 	> = z.infer<QuerySchema<TFilterSchema, TSort>>;
 
@@ -80,7 +80,7 @@ export namespace withQuerySchema {
  * // }
  * ```
  */
-export const withQuerySchema = <TFilterSchema extends FilterSchema, TSort extends string>({
+export const withQuerySchema = <TFilterSchema extends WhereSchema, TSort extends string>({
 	filter,
 	sort,
 }: withQuerySchema.Props<TFilterSchema, TSort>) => {

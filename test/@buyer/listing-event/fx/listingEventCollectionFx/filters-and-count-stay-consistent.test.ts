@@ -29,7 +29,7 @@ describe("listingEvent read model", () => {
 			const favourite = yield* listingEventCreateFx({
 				userId: buyer.id,
 				listingId: listing.id,
-				event: "favourite",
+				event: "listing.favourite",
 			});
 			yield* listingEventCreateFx({
 				userId: buyer.id,

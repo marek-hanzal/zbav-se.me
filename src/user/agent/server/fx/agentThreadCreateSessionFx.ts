@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { withAgentThreadSelectFx } from "~/user/agent/server/db/withAgentThreadSelectFx";
 import { agentThreadCreateFx } from "~/user/agent/server/fx/agentThreadCreateFx";
@@ -23,7 +22,6 @@ export const agentThreadCreateSessionFx = Effect.fn("agentThreadCreateSessionFx"
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 			const archivedAt = dateContext.now().toJSDate();
 
@@ -36,7 +34,7 @@ export const agentThreadCreateSessionFx = Effect.fn("agentThreadCreateSessionFx"
 
 			const selectIds = query.clearSelect().select("at.id");
 
-			yield* tryDbFx(async () => {
+			yield* dbFx(async (kysely) => {
 				return kysely
 					.updateTable("agent_thread")
 					.set({

@@ -18,7 +18,6 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 		page: 0,
 		size: 10,
 	},
-	filter,
 	where,
 	scope,
 	sort,
@@ -27,7 +26,6 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	const logger = yield* getLoggerFx("listingCollectionFx");
 	logger.trace("listingCollectionFx", {
 		cursor,
-		filter,
 		where,
 		scope,
 		sort,
@@ -40,7 +38,6 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 			sort,
 		}),
 		cursor,
-		filter,
 		where,
 		scope,
 		limit,

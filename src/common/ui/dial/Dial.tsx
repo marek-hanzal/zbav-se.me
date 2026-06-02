@@ -87,6 +87,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 
 				<Icon
 					icon={BackspaceIcon}
+					data-action={"dial backspace"}
 					onClick={() => {
 						handleChange(internalValue?.slice(0, -1) || undefined);
 					}}
@@ -115,6 +116,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 							index + 1
 						}`}
 						icon={icons[(index + 1) as keyof typeof icons]}
+						data-action={`dial digit ${index + 1}`}
 						onClick={() => {
 							handleChange(digit(internalValue || "", index + 1));
 						}}
@@ -124,6 +126,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 
 				<Item
 					icon={"icon-[fluent--comma-20-filled]"}
+					data-action={"dial decimal"}
 					disabled={!allowDecimals || !internalValue || internalValue.includes(".")}
 					onClick={() => {
 						handleChange(digit(internalValue || "", "."));
@@ -132,6 +135,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 
 				<Item
 					icon={icons[0]}
+					data-action={"dial digit 0"}
 					disabled={false}
 					onClick={() => {
 						handleChange(digit(internalValue || "", 0));
@@ -140,6 +144,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, allowDecima
 
 				<Item
 					icon={ClearIcon}
+					data-action={"dial clear"}
 					disabled={!internalValue}
 					onClick={() => {
 						handleChange(undefined);

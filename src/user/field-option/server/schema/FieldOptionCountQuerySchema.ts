@@ -4,7 +4,6 @@ import { FieldOptionQuerySchema } from "./FieldOptionQuerySchema";
 export const FieldOptionCountQuerySchema = z
 	.looseObject({
 		...FieldOptionQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

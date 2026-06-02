@@ -13,14 +13,12 @@ export namespace listingCountFx {
 }
 
 export const listingCountFx = Effect.fn("listingCountFx")(function* ({
-	filter,
 	where,
 	scope,
 	meta,
 }: listingCountFx.Props) {
 	const logger = yield* getLoggerFx("listingCountFx");
 	logger.trace("listingCountFx", {
-		filter,
 		where,
 		scope,
 		meta,
@@ -30,12 +28,10 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 		selectFx: withListingSelectFx({
 			meta,
 			hasExplicitCategory: hasExplicitCategory([
-				filter,
 				where,
 				scope,
 			]),
 		}),
-		filter,
 		where,
 		scope,
 	});

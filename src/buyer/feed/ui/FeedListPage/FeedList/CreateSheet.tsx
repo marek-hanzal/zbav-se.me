@@ -5,26 +5,37 @@ import { FormField } from "@/lib/client/form";
 import { Mx } from "@/lib/client/mx";
 import { Status } from "@/lib/client/status";
 import { TextInput } from "@/lib/client/text-input";
-import type { StateType } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
+import type { MarkSuspense, StateType } from "@/lib/client/type";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { CloseButton } from "~/common/ui/button";
 import { useAppForm } from "~/common/ui/form";
+import { withResourceLimitCheckQuery } from "~/user/resource-limit/query/withResourceLimitCheckQuery";
 
 const FormSchema = FeedCreateSchema.pick({
 	name: true,
 });
 
 export namespace CreateSheet {
-	export interface Props extends BottomSheet.PropsEx {
+	export interface Props extends MarkSuspense.Props, BottomSheet.PropsEx {
 		state: StateType.Simple<boolean>;
 	}
 }
 
-export const CreateSheet: FC<CreateSheet.Props> = ({ state, ...props }) => {
+export const CreateSheet: FC<CreateSheet.Props> = ({ _suspense, state, ...props }) => {
+	const translator = useTranslator();
+	const { data: feedCount } = withFeedQuery.useCountQuery({
+		where: {
+			type: "user",
+		},
+	});
+	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
+		resource: "feed.count",
+		count: feedCount,
+	});
 	const feedCreateMutation = withFeedQuery.useCreateMutation({
 		onSettled() {
 			state.set(false);
@@ -43,6 +54,10 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ state, ...props }) => {
 			onSubmit: FormSchema,
 		},
 		async onSubmit({ value: { name } }) {
+			if (!resourceLimit.isAvailable) {
+				return;
+			}
+
 			return feedCreateMutation.mutateAsync(getFeedDefaultCreate(name));
 		},
 	});
@@ -135,7 +150,7 @@ export const CreateSheet: FC<CreateSheet.Props> = ({ state, ...props }) => {
 									form.handleSubmit();
 								}}
 								loading={isSubmitting}
-								disabled={!isValid}
+								disabled={!isValid || !resourceLimit.isAvailable}
 							/>
 						)}
 					</form.Subscribe>

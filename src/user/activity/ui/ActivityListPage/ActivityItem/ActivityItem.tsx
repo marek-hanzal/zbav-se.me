@@ -60,7 +60,7 @@ export const ActivityItem = withFallback(({ _suspense, activityId }: ActivityIte
 		)
 		.with(
 			{
-				type: "favourite",
+				type: "listing.favourite",
 			},
 			(item) => <ActivityFavouriteItem item={item} />,
 		)
@@ -72,7 +72,7 @@ export const ActivityItem = withFallback(({ _suspense, activityId }: ActivityIte
 		)
 		.with(
 			{
-				type: "flag",
+				type: "listing.flag",
 			},
 			() => "flag - not yet",
 		)
@@ -84,7 +84,7 @@ export const ActivityItem = withFallback(({ _suspense, activityId }: ActivityIte
 		)
 		.with(
 			{
-				type: "ignore",
+				type: "listing.ignore",
 			},
 			() => "ignore - not yet",
 		)

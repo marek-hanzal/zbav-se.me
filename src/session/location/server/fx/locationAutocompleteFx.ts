@@ -2,8 +2,7 @@ import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import type { LocationTableSchema } from "~/server/database/@table/LocationTableSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { TextTooShortErrorFx } from "~/session/location/server/error/TextTooShortErrorFx";
 import { withLocationListFx } from "~/session/location/server/fx/withLocationListFx";
@@ -37,8 +36,6 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
-
 			const results = yield* withLocationListFx({
 				where: {
 					query: text,
@@ -92,7 +89,7 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 			})) satisfies Omit<LocationTableSchema.Type, "geo">[] as LocationTableSchema.Type[];
 
 			if (locations.length > 0) {
-				yield* tryDbFx(async () =>
+				yield* dbFx(async (kysely) =>
 					kysely
 						.insertInto("location")
 						.values(locations)

@@ -27,7 +27,7 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
-		initial: (feed.query?.filter?.priceTypeIn ?? []).map((priceType) => ({
+		initial: (feed.query?.where?.priceTypeIn ?? []).map((priceType) => ({
 			id: priceType,
 		})),
 		deps: [
@@ -59,8 +59,8 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 						patch: {
 							query: {
 								...feed.query,
-								filter: {
-									...feed.query?.filter,
+								where: {
+									...feed.query?.where,
 									priceTypeIn:
 										selection.optional.multiId() as PriceTypeEnumSchema.Type[],
 								},

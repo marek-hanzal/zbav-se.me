@@ -1,26 +1,40 @@
 import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
+import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/common/gallery/ui/GalleryUpload";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
+import { withResourceLimitCheckQuery } from "~/user/resource-limit/query/withResourceLimitCheckQuery";
 
 export namespace GalleryPatch {
-	export interface Props extends Container.Props {
+	export interface Props extends MarkSuspense.Props, Container.Props {
 		draft: DraftSchema.Type;
 		onCancel(): void;
 		view: useView.Use<"title">;
 	}
 }
 
-export const GalleryPatch: FC<GalleryPatch.Props> = ({ draft, onCancel, view, ...props }) => {
+export const GalleryPatch: FC<GalleryPatch.Props> = ({
+	_suspense,
+	draft,
+	onCancel,
+	view,
+	...props
+}) => {
+	const translator = useTranslator();
 	const [uploadIds, setUploadIds] = useState<string[]>(draft.withUploadIds);
+	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
+		resource: "listing.gallery.count",
+		count: uploadIds.length,
+	});
+	const galleryLimit = Math.max(uploadIds.length, Math.floor(resourceLimit.limit), 1);
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
 			view.set("title");
@@ -52,7 +66,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({ draft, onCancel, view, ..
 						value: uploadIds,
 						set: setUploadIds,
 					}}
-					limit={10}
+					limit={galleryLimit}
 				/>
 
 				<SaveContainer

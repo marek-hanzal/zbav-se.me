@@ -14,13 +14,11 @@ export namespace listingCountFx {
 
 export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	userId,
-	filter,
 	where,
 	scope,
 }: listingCountFx.Props) {
 	const logger = yield* getLoggerFx("listingCountFx");
 	logger.trace("listingCountFx", {
-		filter,
 		where,
 		scope,
 	});
@@ -30,7 +28,6 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 			userId,
 			sort: [],
 		}),
-		filter,
 		where,
 		scope,
 	});

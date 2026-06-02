@@ -1,15 +1,13 @@
 import { z } from "zod";
 import { ActivityQuerySchema } from "./ActivityQuerySchema";
-import { ActivityToolFilterSchema } from "./ActivityToolFilterSchema";
+import { ActivityToolWhereSchema } from "./ActivityToolWhereSchema";
 
 export const ActivityToolQuerySchema = z
 	.looseObject({
 		...ActivityQuerySchema.shape,
-		filter: ActivityToolFilterSchema.optional(),
-		where: ActivityToolFilterSchema.optional(),
+		where: ActivityToolWhereSchema.optional(),
 	})
 	.omit({
-		where: true,
 		limit: true,
 	})
 	.strip()

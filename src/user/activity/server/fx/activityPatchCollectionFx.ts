@@ -1,16 +1,15 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { withActivitySelectFx } from "~/user/activity/server/db/withActivitySelectFx";
-import type { ActivityFilterSchema } from "~/user/activity/server/schema/ActivityFilterSchema";
 import type { ActivityPatchCollectionSchema } from "~/user/activity/server/schema/ActivityPatchCollectionSchema";
+import type { ActivityWhereSchema } from "../schema/ActivityWhereSchema";
 
 export namespace activityPatchCollectionFx {
 	export interface Props extends ActivityPatchCollectionSchema.Type {
-		scope: ActivityFilterSchema.Type;
+		scope: ActivityWhereSchema.Type;
 	}
 }
 
@@ -28,14 +27,11 @@ export const activityPatchCollectionFx = Effect.fn("activityPatchCollectionFx")(
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
-
 			let { select, queryFx } = yield* withActivitySelectFx({
 				sort: query.sort,
 			});
 
 			for (const layer of [
-				query.filter,
 				query.where,
 				scope,
 			]) {
@@ -44,14 +40,14 @@ export const activityPatchCollectionFx = Effect.fn("activityPatchCollectionFx")(
 
 			const selectIds = select.clearSelect().select("i.id");
 
-			const updated = yield* tryDbFx(async () =>
-				kysely
+			const updated = yield* dbFx(async (kysely) => {
+				return kysely
 					.updateTable("activity")
 					.set(patch)
 					.where("id", "in", selectIds)
 					.returning("id")
-					.execute(),
-			);
+					.execute();
+			});
 			const ids = updated.map(({ id }) => id);
 
 			if (ids.length === 0) {

@@ -1,7 +1,7 @@
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import { LabelValue } from "@/lib/client/value";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
-import { translator } from "@/lib/common/translation";
 
 export namespace PriceMinValue {
 	export interface Props extends LabelValue.PropsEx {
@@ -10,6 +10,7 @@ export namespace PriceMinValue {
 }
 
 export const PriceMinValue: React.FC<PriceMinValue.Props> = ({ value, ...props }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const hasValue = value != null;
 

@@ -5,9 +5,9 @@ import { FormField } from "@/lib/client/form";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { Mx } from "@/lib/client/mx";
 import { Status } from "@/lib/client/status";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { TitleSchema } from "~/common/listing/schema/TitleSchema";
 import { EditAction } from "~/common/ui/action/EditAction";
@@ -31,6 +31,7 @@ export namespace TitlePatch {
 }
 
 export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, view, ...props }) => {
+	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
 			view.set("category");

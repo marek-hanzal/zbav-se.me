@@ -3,10 +3,10 @@ import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { useSelection } from "@/lib/client/selection";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view";
 import type { EntitySchema } from "@/lib/common/schema";
-import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
 import { PriceTypeSelect } from "~/common/price-type/ui/PriceTypeSelect";
@@ -31,6 +31,7 @@ export namespace PriceTypePatch {
 }
 
 export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, view, ...props }) => {
+	const translator = useTranslator();
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess({ priceType }) {
 			view.set(priceType === "fixed" || priceType === "haggle" ? "price" : "expires");

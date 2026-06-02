@@ -1,12 +1,15 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
+import { DateContextFx } from "@/lib/common/date";
 import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
+import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
+import type { CategorySchema } from "~/public/category/server/schema/CategorySchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { withLikeEx } from "~/server/database/expression/withLikeEx";
-import { withNormalizedLikeEx } from "~/server/database/expression/withNormalizedLikeEx";
+import { withNormalizedContainsEx } from "~/server/database/expression/withNormalizedContainsEx";
+import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import type { ListingMetaSchema } from "../schema/ListingMetaSchema";
 import type { ListingSortSchema } from "../schema/ListingSortSchema";
 import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
@@ -29,13 +32,16 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	meta,
 	hasExplicitCategory,
 }: withListingSelectFx.Props) {
+	const dateContext = yield* DateContextFx;
 	const { kysely } = yield* KyselyContextFx;
+	const now = dateContext.now().toJSDate();
 
 	let select = kysely
 		.selectFrom("listing as l")
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
-		.where("l.status", "in", [
-			"live",
+		.where("l.status", "not in", [
+			"on-hold",
+			"banned",
 		])
 		.where((eb) => {
 			return eb("cat.restriction", "in", publicCategoryRestrictions);
@@ -100,9 +106,34 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	return selectFx({
 		select: select.select([
 			"l.id",
+			"l.categoryId",
 			"l.galleryId",
 			"l.withImageUrl",
 			"l.createdAt",
+			"l.title",
+			"l.price",
+			"l.currency",
+			"l.priceType",
+			"l.visibleAt",
+			"l.expiresAt",
+			//
+			(eb) => {
+				return eb
+					.selectFrom("location as loc")
+					.select((eb) => {
+						return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("json");
+					})
+					.whereRef("loc.id", "=", "l.locationId")
+					.limit(1)
+					.$asScalar()
+					.$castTo<LocationSchema.Type>()
+					.as("location");
+			},
+			//
+			(eb) => {
+				return sql<CategorySchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category");
+			},
+			//
 			(eb) => {
 				return sql<string[]>`to_jsonb(${eb.ref("l.pros")})`.as("pros");
 			},
@@ -128,6 +159,15 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.$castTo<RestrictionEnumSchema.Type>()
 					.as("withRestriction");
 			},
+			(eb) => {
+				return eb
+					.and([
+						eb("l.status", "=", ListingStatusEnumSchema.enum.live),
+						eb("l.expiresAt", ">", now),
+					])
+					.$castTo<boolean>()
+					.as("isActive");
+			},
 		]),
 		queryFx(select, where: ListingWhereSchema.Type) {
 			return Effect.gen(function* () {
@@ -145,24 +185,26 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					query = query.where("l.id", "in", where.idIn);
 				}
 
-				if (where.fulltext) {
+				if (where.fulltext?.length) {
 					const fulltext = where.fulltext;
 
 					query = query.where((eb) => {
-						const categoryIdSelect = eb
-							.selectFrom("category as cat")
-							.select("cat.id")
-							.where((eb) => {
-								return eb.or([
-									withLikeEx(eb.ref("cat.category"), fulltext),
-									withLikeEx(eb.ref("cat.group"), fulltext),
-								]);
-							});
-
-						return eb.or([
-							withNormalizedLikeEx(eb.ref("l.withTitle"), fulltext, "both"),
-							eb("l.categoryId", "in", categoryIdSelect),
-						]);
+						return eb.and(
+							fulltext.map((term) =>
+								eb.exists(
+									eb
+										.selectFrom("listing_spotlight as ls")
+										.select("ls.listingId")
+										.whereRef("ls.listingId", "=", "l.id")
+										.where((eb) => {
+											return withNormalizedContainsEx(
+												eb.ref("ls.text"),
+												term,
+											);
+										}),
+								),
+							),
+						);
 					});
 				}
 
@@ -172,6 +214,26 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 				if (where.categoryIdIn && where.categoryIdIn.length > 0) {
 					query = query.where("l.categoryId", "in", where.categoryIdIn);
+				}
+
+				if (where.visibleAtBefore) {
+					query = query.where("l.visibleAt", "<", where.visibleAtBefore);
+				}
+
+				if (where.visibleAtLte) {
+					query = query.where("l.visibleAt", "<=", where.visibleAtLte);
+				}
+
+				if (where.visibleAtAfter) {
+					query = query.where("l.visibleAt", ">", where.visibleAtAfter);
+				}
+
+				if (where.expiresAtBefore) {
+					query = query.where("l.expiresAt", "<", where.expiresAtBefore);
+				}
+
+				if (where.expiresAtAfter) {
+					query = query.where("l.expiresAt", ">", where.expiresAtAfter);
 				}
 
 				return yield* Effect.succeed(query);

@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import type { DraftQuerySchema } from "../schema/DraftQuerySchema";
 import type { DraftWhereSchema } from "../schema/DraftWhereSchema";
@@ -25,16 +24,14 @@ export const draftDeleteFx = Effect.fn("draftDeleteFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
-
 			const draft = yield* draftFetchFx({
 				userId,
 				...query,
 			});
 
-			yield* tryDbFx(async () =>
-				kysely.deleteFrom("draft").where("id", "=", draft.id).execute(),
-			);
+			yield* dbFx(async (kysely) => {
+				return kysely.deleteFrom("draft").where("id", "=", draft.id).execute();
+			});
 
 			return draft;
 		}),

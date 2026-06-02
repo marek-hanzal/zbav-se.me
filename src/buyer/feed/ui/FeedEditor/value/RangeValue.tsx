@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import { LabelValue } from "@/lib/client/value";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
-import { translator } from "@/lib/common/translation";
 
 export namespace RangeValue {
 	export interface Props extends LabelValue.PropsEx {
@@ -15,6 +15,7 @@ export namespace RangeValue {
  * Use it in detail cards, summaries, and previews where editable controls are not needed.
  */
 export const RangeValue: FC<RangeValue.Props> = ({ range, ...props }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 
 	return (

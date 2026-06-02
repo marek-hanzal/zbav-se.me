@@ -2,8 +2,8 @@ import { type FC, useMemo } from "react";
 import { Container } from "@/lib/client/container";
 import { EmptyState } from "@/lib/client/empty-state";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
 import { BackHomeButton } from "~/common/nav/BackHomeButton";
 import { TitleContainer } from "~/common/ui/container";
 import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
@@ -22,6 +22,7 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 	refetchInterval = 5_000,
 	...props
 }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const { data: hasTransaction } = withTransactionQuery.useCollectionQuery({
 		cursor: {
@@ -70,7 +71,7 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 				>
 					<ListGroup
 						label={translator.text("Transactions - seller-to-buyer - buyer (title)")}
-						filter={{
+						where={{
 							flow: "seller-to-buyer",
 						}}
 						refetchInterval={refetchInterval}
@@ -82,7 +83,7 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 
 					<ListGroup
 						label={translator.text("Transactions - buyer-to-seller - buyer (title)")}
-						filter={{
+						where={{
 							flow: "buyer-to-seller",
 						}}
 						refetchInterval={refetchInterval}
@@ -96,7 +97,7 @@ export const TransactionListPage: FC<TransactionListPage.Props> = ({
 
 					<ListGroup
 						label={translator.text("Transactions - archived - buyer (title)")}
-						filter={{
+						where={{
 							flow: "archived",
 							activity: "archived",
 						}}

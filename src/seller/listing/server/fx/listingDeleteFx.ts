@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import type { ListingQuerySchema } from "../schema/ListingQuerySchema";
 import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
@@ -25,16 +24,14 @@ export const listingDeleteFx = Effect.fn("listingDeleteFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
-
 			const listing = yield* listingFetchFx({
 				userId,
 				...query,
 			});
 
-			yield* tryDbFx(async () =>
-				kysely.deleteFrom("listing").where("id", "=", listing.id).execute(),
-			);
+			yield* dbFx(async (kysely) => {
+				return kysely.deleteFrom("listing").where("id", "=", listing.id).execute();
+			});
 
 			return listing;
 		}),

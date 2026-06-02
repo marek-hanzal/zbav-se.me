@@ -11,6 +11,7 @@ import type { FeedPatchSchema } from "~/buyer/feed/server/schema/FeedPatchSchema
 import type { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { getRootLogger } from "~/common/log/getRootLogger";
+import { withResourceLimitCheckQuery } from "~/user/resource-limit/query/withResourceLimitCheckQuery";
 
 export const withFeedQuery = withEntityQuery({
 	logger: getRootLogger([
@@ -70,5 +71,21 @@ export const withFeedQuery = withEntityQuery({
 	},
 	async patchCollectionFn(_data: never): Promise<FeedSchema.Type[]> {
 		throw new Error("Feed collection patch is not supported.");
+	},
+	invalidate: {
+		create: [
+			{
+				async invalidate({ queryClient }) {
+					await withResourceLimitCheckQuery.invalidate(queryClient);
+				},
+			},
+		],
+		delete: [
+			{
+				async invalidate({ queryClient }) {
+					await withResourceLimitCheckQuery.invalidate(queryClient);
+				},
+			},
+		],
 	},
 });

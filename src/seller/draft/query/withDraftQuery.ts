@@ -10,6 +10,7 @@ import type { DraftCreateSchema } from "~/seller/draft/server/schema/DraftCreate
 import type { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
 import { withListingValidationQuery } from "~/seller/listing/query/withListingValidationQuery";
+import { withResourceLimitQuery } from "~/user/resource-limit/query/withResourceLimitQuery";
 import { draftPatchFn } from "../fn/draftPatchFn";
 import type { DraftPatchSchema } from "../server/schema/DraftPatchSchema";
 
@@ -78,6 +79,23 @@ export const withDraftQuery = withEntityQuery({
 			{
 				async invalidate({ queryClient }) {
 					await withListingValidationQuery.invalidate(queryClient);
+				},
+			},
+			{
+				async invalidate({ queryClient }) {
+					await withResourceLimitQuery.invalidator(
+						queryClient,
+						[
+							"fetch",
+						],
+						{
+							fetch: {
+								where: {
+									resourceDefinitionId: "listing.gallery.count",
+								},
+							},
+						},
+					);
 				},
 			},
 		],

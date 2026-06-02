@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { useTranslator } from "@/lib/client/translation";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { EditAction } from "~/common/ui/action/EditAction";
 import { TitleContainer } from "~/common/ui/container";
 import type { DraftAttrOfSchema } from "~/user/draft-attr/server/schema/DraftAttrOfSchema";
@@ -23,6 +23,7 @@ export namespace AttrPatch {
 }
 
 export const AttrPatch: FC<AttrPatch.Props> = ({ draftId, attrs, attr, view, ...props }) => {
+	const translator = useTranslator();
 	return (
 		<TitleContainer
 			data-ui={`AttrPatch-${attr.name}`}

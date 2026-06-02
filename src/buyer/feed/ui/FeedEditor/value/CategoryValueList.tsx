@@ -1,11 +1,10 @@
-import { Suspense } from "react";
 import { withFallback } from "@/lib/client/fallback";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
+import { CategoryInline } from "~/common/category/ui/CategoryInline";
 import { withCategoryQuery } from "~/user/category/query/withCategoryQuery";
 import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
-import { CategoryInline } from "~/user/category/ui/CategoryInline";
 
 export namespace CategoryValueList {
 	export interface Props
@@ -18,8 +17,6 @@ export namespace CategoryValueList {
 /**
  * Renders a read-only list of category values in a consistent label/value style.
  * Use it in detail or preview views when you need to show multiple category entries clearly.
- *
- * @see src/draft/ui/DraftEditor/patch/CategoryPatch.tsx
  */
 export const CategoryValueList = withFallback(
 	({ _suspense, categoryIdIn, ...props }: CategoryValueList.Props) => {
@@ -33,7 +30,7 @@ export const CategoryValueList = withFallback(
 			);
 		}
 
-		const { data: categoryIds } = withCategoryQuery.useIdsQuery({
+		const { data: categories } = withCategoryQuery.useCollectionQuery({
 			where: {
 				idIn: categoryIdIn,
 			},
@@ -41,17 +38,8 @@ export const CategoryValueList = withFallback(
 
 		return (
 			<ValueList
-				renderFn={(item) => (
-					<Suspense fallback={<CategoryInline.Fallback />}>
-						<CategoryInline
-							_suspense={"I know"}
-							categoryId={item.id}
-						/>
-					</Suspense>
-				)}
-				items={categoryIds.map((id) => ({
-					id,
-				}))}
+				items={categories}
+				renderFn={(item) => <CategoryInline category={item} />}
 				wrapperProps={{
 					"data-ui-tone": "neutral",
 					"data-ui-theme": "light",
@@ -63,6 +51,7 @@ export const CategoryValueList = withFallback(
 	({
 		...props
 	}: Omit<CategoryValueList.Props, "_suspense" | "categoryIdIn" | "textLabel" | "textEmpty">) => {
+		const translator = useTranslator();
 		return (
 			<ValueList
 				textLabel={translator.text("Loading... (label)")}

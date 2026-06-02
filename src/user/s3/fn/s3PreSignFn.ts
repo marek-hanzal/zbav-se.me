@@ -5,6 +5,8 @@ import { withLoggerFx } from "@/lib/common/log";
 import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { withS3Fx } from "~/common/s3/server/context/withS3Fx";
 import { s3PreSignFx } from "~/common/s3/server/fx/s3PreSignFx";
+import { withDateFx } from "~/server/database/fx/withDateFx";
+import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { ServerS3Schema } from "~/server/env/ServerS3Schema";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -26,7 +28,7 @@ export const s3PreSignFn = createServerFn({
 		withUserMiddleware,
 	])
 	.inputValidator(S3PreSignRequestSchema)
-	.handler(async ({ data, context: { user, rootLogger }, serverFnMeta: { name } }) => {
+	.handler(async ({ data, context: { user, rootLogger, database }, serverFnMeta: { name } }) => {
 		const logger = rootLogger.getChild([
 			"fn",
 			name,
@@ -54,6 +56,8 @@ export const s3PreSignFn = createServerFn({
 				cdn: viteConfig.VITE_CONTENT_CDN,
 			}),
 			withLoggerFx(rootLogger),
+			withDateFx,
+			withKyselyFx(database),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
 import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from "@/lib/client/icon";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 
 export namespace Toolbar {
 	export interface Hooks {
@@ -26,6 +26,7 @@ export const Toolbar: FC<Toolbar.Props> = ({
 	hooks,
 	...props
 }) => {
+	const translator = useTranslator();
 	return (
 		<Container
 			data-ui={"GalleryUpload-[Toolbar]"}

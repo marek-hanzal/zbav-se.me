@@ -3,11 +3,13 @@ import { ThumbEnumSchema } from "~/common/listing/enum/ThumbEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { ListingTableSchema } from "~/server/database/@table/ListingTableSchema";
 import { LocationSchema } from "~/session/location/server/schema/LocationSchema";
+import { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 
 export const ListingSchema = z
 	.looseObject({
 		...ListingTableSchema.shape,
 		location: LocationSchema,
+		category: CategorySchema,
 		distance: z.number().nullable().meta({
 			description:
 				"Distance from the input location to the listing (in km; meta lat/lon must be provided)",
@@ -23,6 +25,9 @@ export const ListingSchema = z
 		}),
 		hasFlag: z.boolean().meta({
 			description: "Whether the user flagged this listing",
+		}),
+		isActive: z.boolean().meta({
+			description: "Whether the listing is currently live and not yet expired",
 		}),
 		transactionId: z.string().nullable().meta({
 			description: "Whether the user has a transaction with this listing",

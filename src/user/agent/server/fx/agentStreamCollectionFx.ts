@@ -2,17 +2,16 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import { withAgentStreamSelectFx } from "../db/withAgentStreamSelectFx";
-import type { AgentStreamFilterSchema } from "../schema/AgentStreamFilterSchema";
 import type { AgentStreamQuerySchema } from "../schema/AgentStreamQuerySchema";
+import type { AgentStreamWhereSchema } from "../schema/AgentStreamWhereSchema";
 
 export namespace agentStreamCollectionFx {
 	export interface Props extends AgentStreamQuerySchema.Type {
-		scope: AgentStreamFilterSchema.Type;
+		scope: AgentStreamWhereSchema.Type;
 	}
 }
 
 export const agentStreamCollectionFx = Effect.fn("agentStreamCollectionFx")(function* ({
-	filter,
 	where,
 	scope,
 	cursor = {
@@ -24,7 +23,6 @@ export const agentStreamCollectionFx = Effect.fn("agentStreamCollectionFx")(func
 }: agentStreamCollectionFx.Props) {
 	const logger = yield* getLoggerFx("agentStreamCollectionFx");
 	logger.trace("agentStreamCollectionFx", {
-		filter,
 		where,
 		scope,
 		cursor,
@@ -38,7 +36,6 @@ export const agentStreamCollectionFx = Effect.fn("agentStreamCollectionFx")(func
 		}),
 		cursor,
 		limit,
-		filter,
 		where,
 		scope,
 	});

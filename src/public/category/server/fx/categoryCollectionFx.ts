@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
-import type { CategoryFilterSchema } from "~/public/category/server/schema/CategoryFilterSchema";
 import type { CategoryQuerySchema } from "~/public/category/server/schema/CategoryQuerySchema";
 import { withCategorySelectFx } from "../db/withCategorySelectFx";
+import type { CategoryWhereSchema } from "../schema/CategoryWhereSchema";
 
 export namespace categoryCollectionFx {
 	export interface Props extends CategoryQuerySchema.Type {
-		scope: CategoryFilterSchema.Type;
+		scope: CategoryWhereSchema.Type;
 	}
 }
 
@@ -16,7 +16,6 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 		page: 0,
 		size: 10,
 	},
-	filter,
 	where,
 	scope,
 	sort,
@@ -25,7 +24,6 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 	const logger = yield* getLoggerFx("categoryCollectionFx");
 	logger.trace("categoryCollectionFx", {
 		cursor,
-		filter,
 		where,
 		scope,
 		sort,
@@ -37,7 +35,6 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 			sort,
 		}),
 		cursor,
-		filter,
 		where,
 		scope,
 		limit,

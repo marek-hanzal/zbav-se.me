@@ -2,9 +2,9 @@ import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
 import { ArrowRightIcon } from "@/lib/client/icon";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { Dial } from "~/common/ui/dial";
 import { useAppForm } from "~/common/ui/form";
@@ -33,6 +33,7 @@ export namespace AttrDecimal {
 }
 
 export const AttrDecimal: FC<AttrDecimal.Props> = ({ draftId, attrs, attr, view, ...props }) => {
+	const translator = useTranslator();
 	const next = useNextAttr(attr, attrs);
 	const mutation = withDraftAttrDecimalPatchMutation.useMutation({
 		onSuccess() {

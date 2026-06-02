@@ -1,9 +1,16 @@
 import { z } from "zod";
-import { FieldFilterSchema } from "./FieldFilterSchema";
+import { WhereSchema } from "@/lib/common/schema";
+import { FieldTypeEnumSchema } from "./FieldTypeEnumSchema";
 
 export const FieldWhereSchema = z
 	.looseObject({
-		...FieldFilterSchema.shape,
+		...WhereSchema.shape,
+		name: z.string().optional().meta({
+			description: "Exact field name",
+		}),
+		type: FieldTypeEnumSchema.optional().meta({
+			description: "Exact field type",
+		}),
 	})
 	.strip()
 	.meta({

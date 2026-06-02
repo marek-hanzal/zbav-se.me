@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { EmptyStatus } from "~/common/status/ui/EmptyStatus";
 
 export namespace FilterEmpty {
@@ -9,6 +9,7 @@ export namespace FilterEmpty {
 }
 
 export const FilterEmpty: FC<FilterEmpty.Props> = (props) => {
+	const translator = useTranslator();
 	return (
 		<EmptyStatus
 			data-ui={"FilterEmpty"}

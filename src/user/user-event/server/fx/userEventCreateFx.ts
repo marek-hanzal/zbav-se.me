@@ -3,8 +3,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { keyOf } from "@/lib/common/key-of";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import type { UserEventCreateSchema } from "../schema/UserEventCreateSchema";
 
@@ -28,11 +27,10 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 
-			return yield* tryDbFx(async () =>
-				kysely
+			return yield* dbFx(async (kysely) => {
+				return kysely
 					.insertInto("user_event")
 					.values({
 						...data,
@@ -42,8 +40,8 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 						createdAt: dateContext.now().toJSDate(),
 					})
 					.returningAll()
-					.executeTakeFirstOrThrow(),
-			);
+					.executeTakeFirstOrThrow();
+			});
 		}),
 	);
 });

@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { Markdown } from "../markdown/Markdown";
 
 export namespace Mx {
@@ -12,5 +12,6 @@ export namespace Mx {
 }
 
 export const Mx: FC<Mx.Props> = ({ label, fallback, ...props }) => {
+	const translator = useTranslator();
 	return label ? <Markdown {...props}>{translator.text(label, fallback)}</Markdown> : null;
 };

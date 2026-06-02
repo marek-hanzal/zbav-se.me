@@ -3,8 +3,8 @@ import type { FC } from "react";
 import { ConfirmButton } from "@/lib/client/button";
 import { TrashIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { uiSaveButton } from "~/common/ui/ui";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
 import type { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
@@ -22,6 +22,7 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 	className,
 	...props
 }) => {
+	const translator = useTranslator();
 	const navigate = useNavigate();
 	const locale = useLocale();
 	const mutation = withDraftQuery.useDeleteMutation({

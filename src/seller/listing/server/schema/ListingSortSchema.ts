@@ -8,6 +8,8 @@ export const ListingSortSchema = z
 				"createdAt",
 				"updatedAt",
 				"expiresAt",
+				//
+				"withLastAt",
 			])
 			.meta({
 				id: "ListingSortField",

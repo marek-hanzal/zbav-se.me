@@ -3,8 +3,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import type { AgentThreadTableSchema } from "~/server/database/@table/AgentThreadTableSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 
 export namespace agentThreadCreateFx {
 	export interface Props {
@@ -20,13 +19,12 @@ export const agentThreadCreateFx = Effect.fn("agentThreadCreateFx")(function* ({
 		userId,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 	const id = genId();
 	const now = dateContext.now().toJSDate();
 
-	yield* tryDbFx(async () =>
-		kysely
+	yield* dbFx(async (kysely) => {
+		return kysely
 			.insertInto("agent_thread")
 			.values({
 				id,
@@ -35,8 +33,8 @@ export const agentThreadCreateFx = Effect.fn("agentThreadCreateFx")(function* ({
 				updatedAt: now,
 				archivedAt: null,
 			})
-			.execute(),
-	);
+			.execute();
+	});
 
 	return yield* Effect.succeed({
 		id,

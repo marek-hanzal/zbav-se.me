@@ -2,24 +2,22 @@ import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
 import { withFieldOptionSelectFx } from "~/user/field-option/server/db/withFieldOptionSelectFx";
-import type { FieldOptionFilterSchema } from "~/user/field-option/server/schema/FieldOptionFilterSchema";
 import type { FieldOptionQuerySchema } from "~/user/field-option/server/schema/FieldOptionQuerySchema";
+import type { FieldOptionWhereSchema } from "../schema/FieldOptionWhereSchema";
 
 export namespace fieldOptionFetchFx {
 	export interface Props extends FieldOptionQuerySchema.Type {
-		scope: FieldOptionFilterSchema.Type;
+		scope: FieldOptionWhereSchema.Type;
 	}
 }
 
 export const fieldOptionFetchFx = Effect.fn("fieldOptionFetchFx")(function* ({
-	filter,
 	where,
 	scope,
 	sort,
 }: fieldOptionFetchFx.Props) {
 	const logger = yield* getLoggerFx("fieldOptionFetchFx");
 	logger.trace("fieldOptionFetchFx", {
-		filter,
 		where,
 		scope,
 		sort,
@@ -30,7 +28,6 @@ export const fieldOptionFetchFx = Effect.fn("fieldOptionFetchFx")(function* ({
 		selectFx: withFieldOptionSelectFx({
 			sort,
 		}),
-		filter,
 		where,
 		scope,
 	});

@@ -32,7 +32,7 @@ describe("transactionPatchCollectionFx — foreign isolation", () => {
 					status: "trade",
 				},
 				query: {
-					filter: {
+					where: {
 						listingId: ownScenario.listingId,
 						statusIn: [
 							"interest",

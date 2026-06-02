@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { withTestabaseFx } from "@/lib/server/test";
-import { databaseFx } from "~/server/database/databaseFx";
 import { seedTestLocationsFx } from "~/test/common/fx/seedTestLocationsFx";
 import { seedTestUsersFx } from "~/test/common/fx/seedTestUsersFx";
+import { testDatabaseFx } from "~/test/common/fx/testDatabaseFx";
 
 export default async function globalSetup() {
 	return withTestabaseFx({
@@ -10,7 +10,7 @@ export default async function globalSetup() {
 		name: "zbav-seme-test-postgres",
 		port: 55432,
 		template: "test",
-		databaseFx,
+		databaseFx: testDatabaseFx,
 		onMigrate: (database) => {
 			return Effect.gen(function* () {
 				yield* seedTestLocationsFx({

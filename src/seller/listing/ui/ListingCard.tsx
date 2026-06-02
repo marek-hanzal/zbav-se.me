@@ -1,7 +1,6 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import type { MarkSuspense } from "@/lib/client/type";
-import { useUpload } from "~/common/gallery/hook/useUpload";
 import { HeroImage } from "~/common/ui/img";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
 
@@ -18,31 +17,17 @@ export namespace ListingCard {
 }
 
 export const ListingCard: FC<ListingCard.Props> = ({ _suspense, listing, hooks, ...props }) => {
-	const hero = useUpload(listing.withImageUrl);
+	const [hero] = listing.withImageUrl;
 
 	return (
 		<Container
-			data-ui={"ListingCard[Container]"}
+			data-ui={"ListingCard"}
 			data-ui-layout="vertical-flex"
 			data-ui-gap="xl"
 			{...props}
 		>
-			<Container
-				data-ui={"ListingCard-[Container.hero]"}
-				data-ui-position="relative"
-			>
-				{/* <ListingPrice
-					data-ui={"ListingOverlay-[ListingPrice]"}
-					price={listing.price}
-					priceType={listing.priceType}
-					currency={listing.currency}
-					data-ui-snap-to="top-center"
-					data-ui-opacity="8"
-					data-ui-z-index
-				/> */}
-
+			<Container>
 				<HeroImage
-					data-ui={"ListingCard-[HeroImage]"}
 					src={hero}
 					alt={`Hero image for listing ${listing.id}`}
 					onClick={hooks.onGallery}

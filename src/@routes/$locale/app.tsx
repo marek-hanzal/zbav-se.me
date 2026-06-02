@@ -1,28 +1,27 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { AgentRuntimeProvider } from "~/user/agent/runtime";
-import { withSessionQuery } from "~/user/auth/query/withSessionQuery";
+import { getSessionFn } from "~/user/auth/fn/getSessionFn";
 
 export const Route = createFileRoute("/$locale/app")({
-	async loader({ context: { queryClient }, params: { locale } }) {
-		const sessionQuery = await withSessionQuery.ensure(
-			queryClient,
-			"No input data here, bro!",
-			{
-				throwOnError: true,
-			},
-		);
+	async loader({ location, params: { locale } }) {
+		const session = await getSessionFn();
 
-		if (!sessionQuery?.user) {
+		if (!session?.user) {
+			const target = new URL(location.href, import.meta.env.VITE_ORIGIN).toString();
+
 			throw redirect({
 				to: "/$locale/sign-in",
 				params: {
 					locale,
 				},
+				search: {
+					target,
+				},
 			});
 		}
 
 		return {
-			user: sessionQuery.user,
+			user: session.user,
 		} as const;
 	},
 	component() {

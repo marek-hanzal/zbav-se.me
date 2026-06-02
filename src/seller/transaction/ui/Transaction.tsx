@@ -1,15 +1,19 @@
-import { type FC, useRef } from "react";
+import { type FC, useRef, useState } from "react";
 import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
+import { Group } from "@/lib/client/group";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
-import { useUpload } from "~/common/gallery/hook/useUpload";
+import { LabelValue } from "@/lib/client/value";
+import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
+import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { HeroImage } from "~/common/ui/img";
 import { AckMessage } from "~/seller/transaction/ui/status/AckMessage";
 import { TransactionChat } from "~/user/transaction/ui/TransactionChat";
 import { TransactionMenuButton } from "~/user/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/user/transaction-entry/ui/TransactionEntryList";
 import { withTransactionQuery } from "../query/withTransactionQuery";
+import { ListingSheet } from "./ListingSheet";
 import { InterestMessage } from "./status/InterestMessage";
 import { TransactionMenu } from "./TransactionMenu";
 
@@ -26,11 +30,13 @@ export const Transaction: FC<Transaction.Props> = ({
 	refresh,
 	...props
 }) => {
+	const translator = useTranslator();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId, {
 		refetchInterval: refresh,
 	});
-	const hero = useUpload(transaction.withImageUrl);
+	const [hero] = transaction.withImageUrl;
+	const [detail, setDetail] = useState(false);
 
 	return (
 		<Container
@@ -41,7 +47,6 @@ export const Transaction: FC<Transaction.Props> = ({
 			{...props}
 		>
 			<Container
-				data-ui="Transaction-[MessageListContainer]"
 				ref={containerRef}
 				data-ui-layout="vertical-header-content"
 				data-ui-height="full"
@@ -50,30 +55,37 @@ export const Transaction: FC<Transaction.Props> = ({
 					"pb-[50%]",
 				]}
 			>
-				<Container
-					data-ui="Transaction-[HeroContainer]"
-					data-ui-position="relative"
-					data-ui-height="content"
-				>
+				<Container data-ui-height="content">
 					<HeroImage
 						src={hero}
 						alt={`Hero image for transaction ${transaction.id}`}
 						className={"h-42"}
+						onClick={() => setDetail((value) => !value)}
 					/>
 
-					{/* <ListingPrice
-						data-ui={"ListingOverlay-[ListingPrice]"}
-						price={transaction.price}
-						priceType={transaction.priceType}
-						currency={transaction.currency}
-						data-ui-snap-to="top-center"
-						data-ui-opacity="8"
-						data-ui-z-index
-					/> */}
+					<Container data-ui-inner={"default"}>
+						<Group>
+							<LabelValue
+								textLabel={translator.text("Listing price (label)")}
+								textValue={
+									<ListingPrice price={transaction as ListingPriceSchema.Type} />
+								}
+							/>
+
+							<LabelValue
+								textLabel={translator.text("Listing location (label)")}
+								textValue={transaction.location.address}
+								textValueProps={{
+									"data-ui-truncate": false,
+									"data-ui-wrap": "wrap",
+								}}
+							/>
+						</Group>
+					</Container>
 				</Container>
 
 				<TransactionEntryList
-					_suspense={"I know"}
+					_suspense={_suspense}
 					side={"seller"}
 					containerRef={containerRef}
 					transactionId={transaction.id}
@@ -81,6 +93,15 @@ export const Transaction: FC<Transaction.Props> = ({
 					data-ui-inner="default"
 				/>
 			</Container>
+
+			<ListingSheet
+				_suspense={_suspense}
+				listingId={transaction.listingId}
+				state={{
+					value: detail,
+					set: setDetail,
+				}}
+			/>
 
 			{match(transaction.status)
 				.with("interest", () => {

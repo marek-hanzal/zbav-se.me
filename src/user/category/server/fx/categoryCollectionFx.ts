@@ -2,14 +2,14 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import { categoryMissCreateFx } from "~/session/category-miss/server/fx/categoryMissCreateFx";
-import type { CategoryFilterSchema } from "~/user/category/server/schema/CategoryFilterSchema";
 import type { CategoryQuerySchema } from "~/user/category/server/schema/CategoryQuerySchema";
 import { withCategorySelectFx } from "../db/withCategorySelectFx";
+import type { CategoryWhereSchema } from "../schema/CategoryWhereSchema";
 
 export namespace categoryCollectionFx {
 	export interface Props extends CategoryQuerySchema.Type {
 		userId: string;
-		scope: CategoryFilterSchema.Type;
+		scope: CategoryWhereSchema.Type;
 	}
 }
 
@@ -20,7 +20,6 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 		size: 10,
 	},
 	limit,
-	filter,
 	where,
 	scope,
 	sort,
@@ -29,7 +28,6 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 	logger.trace("categoryCollectionFx", {
 		cursor,
 		limit,
-		filter,
 		where,
 		scope,
 		sort,
@@ -41,7 +39,6 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 			userId,
 		}),
 		cursor,
-		filter,
 		where,
 		scope,
 		limit,
@@ -49,7 +46,7 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 
 	if (data.length === 0) {
 		yield* categoryMissCreateFx({
-			fulltext: filter?.fulltext ?? where?.fulltext ?? undefined,
+			fulltext: where?.fulltext ?? undefined,
 		});
 	}
 

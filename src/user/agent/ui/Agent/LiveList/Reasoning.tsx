@@ -3,9 +3,9 @@ import { type FC, useEffect, useMemo, useState } from "react";
 import { Container } from "@/lib/client/container";
 import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { useTranslator } from "@/lib/client/translation";
 import { Typo } from "@/lib/client/typo";
 import { list, rangedom } from "@/lib/common/rangedom";
-import { translator } from "@/lib/common/translation";
 import { getResponseStreamEvent } from "~/user/agent/type/getResponseStreamEvent";
 
 export namespace Reasoning {
@@ -17,6 +17,7 @@ export namespace Reasoning {
 }
 
 export const Reasoning: FC<Reasoning.Props> = ({ events, itemId, inline, className, ...props }) => {
+	const translator = useTranslator();
 	const content = useReasoningContent(events, itemId);
 
 	const text = useMemo(() => {
@@ -30,7 +31,9 @@ export const Reasoning: FC<Reasoning.Props> = ({ events, itemId, inline, classNa
 			translator.text("Agent reasoning 07"),
 			translator.text("Agent reasoning 08"),
 		];
-	}, []);
+	}, [
+		translator,
+	]);
 
 	const [reasoningText, setReasoningText] = useState(list(text));
 

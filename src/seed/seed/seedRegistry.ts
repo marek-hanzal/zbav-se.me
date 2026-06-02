@@ -4,7 +4,7 @@ const listingsSeedDefinition: SeedDefinition.Type = {
 	id: "listings",
 	label: "Listings",
 	defaultCount: 5000,
-	defaultUserEmail: "seed-listings@test.cz",
+	defaultUserEmail: "b@x32.cz",
 };
 
 export const seedRegistry = [

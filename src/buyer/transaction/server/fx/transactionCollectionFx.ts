@@ -2,17 +2,16 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import { withTransactionSelectFx } from "~/buyer/transaction/server/db/withTransactionSelectFx";
-import type { TransactionFilterSchema } from "~/buyer/transaction/server/schema/TransactionFilterSchema";
 import type { TransactionQuerySchema } from "~/buyer/transaction/server/schema/TransactionQuerySchema";
+import type { TransactionWhereSchema } from "../schema/TransactionWhereSchema";
 
 export namespace transactionCollectionFx {
 	export interface Props extends TransactionQuerySchema.Type {
-		scope: TransactionFilterSchema.Type;
+		scope: TransactionWhereSchema.Type;
 	}
 }
 
 export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(function* ({
-	filter,
 	where,
 	scope,
 	cursor = {
@@ -24,7 +23,6 @@ export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(func
 }: transactionCollectionFx.Props) {
 	const logger = yield* getLoggerFx("transactionCollectionFx", "transaction");
 	logger.trace("transactionCollectionFx", {
-		filter,
 		where,
 		scope,
 		cursor,
@@ -38,7 +36,6 @@ export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(func
 		}),
 		cursor,
 		limit,
-		filter,
 		where,
 		scope,
 	});

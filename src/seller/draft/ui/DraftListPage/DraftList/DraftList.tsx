@@ -60,7 +60,7 @@ export const DraftList: FC<DraftList.Props> = ({ _suspense, ...props }: DraftLis
 					/>
 				))}
 
-				<CreateButton />
+				<CreateButton _suspense={_suspense} />
 			</EmptyState>
 		</Container>
 	);

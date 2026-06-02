@@ -1,6 +1,7 @@
 import type { Logger } from "@logtape/logtape";
 import { Effect } from "effect";
-import { type Dialect, Kysely, type MigrationResult, Migrator } from "kysely";
+import { type Dialect, Kysely } from "kysely";
+import { type MigrationResult, Migrator } from "kysely/migration";
 import { DialectContextFx } from "./DialectContextFx";
 import { MigrationContextFx } from "./MigrationContextFx";
 
@@ -10,6 +11,14 @@ export namespace withDatabaseFx {
 		kysely: Kysely<TDatabase>;
 	}
 
+	export interface Import<TDatabase> {
+		name: string;
+		/**
+		 * Run the importer, output is ignored, "any" just for convenience to return any promise.
+		 */
+		run(instance: Instance<TDatabase>): Promise<any>;
+	}
+
 	export interface Props<in out TDatabase> {
 		logger: Logger;
 		/**
@@ -17,6 +26,14 @@ export namespace withDatabaseFx {
 		 */
 		onPreMigration?(instance: Instance<TDatabase>): Promise<void>;
 		onPostMigration?(instance: Instance<TDatabase>): Promise<void>;
+		/**
+		 * Those are run after _every_ migration to sync data; importers should
+		 * be independent, so every run should yield same result.
+		 *
+		 * Run after migrations (before onPostMigration hook), one-by-one, so they
+		 * could depend on each other.
+		 */
+		imports?: Import<TDatabase>[];
 	}
 
 	export interface Instance<in out DB> {
@@ -30,6 +47,7 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 	logger,
 	onPreMigration,
 	onPostMigration,
+	imports = [],
 }: withDatabaseFx.Props<TDatabase>) {
 	const dialect = yield* DialectContextFx;
 	const migrations = yield* MigrationContextFx;
@@ -40,6 +58,8 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 		if (kyselyInstance) {
 			return kyselyInstance;
 		}
+
+		const $logger = logger.getChild("query");
 
 		return (kyselyInstance = new Kysely<TDatabase>({
 			dialect,
@@ -52,10 +72,19 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 						break;
 					}
 					case "query": {
-						logger.trace(log.query.sql, {
+						if (log.queryDurationMillis >= 30) {
+							$logger.warn(log.query.sql, {
+								ms: log.queryDurationMillis,
+								params: log.query.parameters,
+							});
+							break;
+						}
+
+						$logger.trace(log.query.sql, {
 							ms: log.queryDurationMillis,
 							params: log.query.parameters,
 						});
+
 						break;
 					}
 				}
@@ -69,6 +98,8 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 			return kysely();
 		},
 		async migrate() {
+			const $logger = logger.getChild("migration");
+
 			await onPreMigration?.(instance);
 
 			const migrator = new Migrator({
@@ -87,14 +118,29 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <const TData
 			results?.forEach((result) => {
 				switch (result.status) {
 					case "Success":
-						console.log(`Migration "${result.migrationName}" executed successfully`);
+						$logger.trace(`Migration "${result.migrationName}" executed successfully`, {
+							migration: result.migrationName,
+						});
 						break;
 
 					case "Error":
-						console.error(`Migration "${result.migrationName}" failed`);
+						logger.trace(`Migration "${result.migrationName}" failed`, {
+							migration: result.migrationName,
+							status: result.status,
+						});
 						break;
 				}
 			});
+
+			for await (const { name, run } of imports) {
+				$logger.trace(`Running import [${name}]`, {
+					name,
+				});
+				await run(instance);
+				$logger.trace(`Import [${name}] done`, {
+					name,
+				});
+			}
 
 			await onPostMigration?.(instance);
 

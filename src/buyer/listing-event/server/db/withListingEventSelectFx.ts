@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { ListingEventFilterSchema } from "../schema/ListingEventFilterSchema";
 import type { ListingEventSortSchema } from "../schema/ListingEventSortSchema";
+import type { ListingEventWhereSchema } from "../schema/ListingEventWhereSchema";
 
 export namespace withListingEventSelectFx {
 	export interface Props {
@@ -26,7 +26,7 @@ export const withListingEventSelectFx = Effect.fn("withListingEventSelectFx")(fu
 
 	return selectFx({
 		select: query.selectAll("le"),
-		queryFx(select, where: ListingEventFilterSchema.Type) {
+		queryFx(select, where: ListingEventWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 

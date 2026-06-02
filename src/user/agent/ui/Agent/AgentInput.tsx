@@ -2,9 +2,9 @@ import { type FC, useState } from "react";
 import { Button } from "@/lib/client/button";
 import { Container } from "@/lib/client/container";
 import { Icon } from "@/lib/client/icon";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import { Typo } from "@/lib/client/typo";
-import { translator } from "@/lib/common/translation";
 import { withProxyMutation } from "~/common/gallery/mutation/withProxyMutation";
 import { GalleryPreview } from "~/common/gallery/ui/GalleryPreview";
 import { GalleryUploadSheet } from "~/common/gallery/ui/GalleryUploadSheet";
@@ -23,6 +23,7 @@ export namespace AgentInput {
 }
 
 export const AgentInput: FC<AgentInput.Props> = ({ chat, ...props }) => {
+	const translator = useTranslator();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 	const [uploads, setUploads] = useState<UploadSchema.Type[]>([]);
 	const uploadIds = uploads.map(({ id }) => id);

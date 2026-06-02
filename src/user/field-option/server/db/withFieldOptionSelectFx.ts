@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { FieldOptionFilterSchema } from "../schema/FieldOptionFilterSchema";
 import type { FieldOptionSortSchema } from "../schema/FieldOptionSortSchema";
+import type { FieldOptionWhereSchema } from "../schema/FieldOptionWhereSchema";
 
 export namespace withFieldOptionSelectFx {
 	export interface Props {
@@ -32,7 +32,7 @@ export const withFieldOptionSelectFx = Effect.fn("withFieldOptionSelectFx")(func
 			"fopt.value",
 			"fopt.sort",
 		]),
-		queryFx(select, where: FieldOptionFilterSchema.Type) {
+		queryFx(select, where: FieldOptionWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let q = select;
 

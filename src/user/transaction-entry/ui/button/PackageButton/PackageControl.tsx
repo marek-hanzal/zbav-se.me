@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { FormField } from "@/lib/client/form";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
 import { PackageSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema/PackageSchema";
@@ -15,6 +15,7 @@ export namespace PackageControl {
 }
 
 export const PackageControl: FC<PackageControl.Props> = ({ onCancel, onSave, ...props }) => {
+	const translator = useTranslator();
 	const form = useAppForm({
 		defaultValues: {
 			link: "",

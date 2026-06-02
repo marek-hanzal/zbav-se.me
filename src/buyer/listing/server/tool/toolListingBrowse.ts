@@ -15,7 +15,7 @@ const logger = getRootLogger([
 const InputSchema = z
 	.looseObject({
 		...ListingQuerySchema.shape,
-		filter: z
+		where: z
 			.looseObject({
 				...ListingWhereSchema.shape,
 				expiresAtBefore: z.iso.datetime().optional().meta({
@@ -38,7 +38,6 @@ const InputSchema = z
 			.strip(),
 	})
 	.omit({
-		where: true,
 		limit: true,
 	})
 	.strip()
@@ -55,7 +54,7 @@ Browse listings, find candidates, sort them.
 
 Hint:
 - normalize inputs (e.g. category/location) before using this tool
-- for 'filter.range' you must provide 'meta.locationId'
+- for 'where.range' you must provide 'meta.locationId'
 - for sort by 'geo' you must provide 'meta.locationId'
     `.trim(),
 	strict: true,

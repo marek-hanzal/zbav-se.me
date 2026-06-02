@@ -10,6 +10,7 @@ import type { ListingCountQuerySchema } from "~/seller/listing/server/schema/Lis
 import type { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreateSchema";
 import type { ListingQuerySchema } from "~/seller/listing/server/schema/ListingQuerySchema";
 import type { ListingSchema } from "~/seller/listing/server/schema/ListingSchema";
+import { withResourceLimitQuery } from "~/user/resource-limit/query/withResourceLimitQuery";
 
 export const withListingQuery = withEntityQuery({
 	logger: getRootLogger([
@@ -78,6 +79,46 @@ export const withListingQuery = withEntityQuery({
 						"count",
 						"collection",
 					]);
+				},
+			},
+			{
+				async invalidate({ queryClient }) {
+					await withResourceLimitQuery.invalidator(
+						queryClient,
+						[
+							"fetch",
+							"collection",
+							"count",
+						],
+						{
+							fetch: {
+								where: {
+									resourceDefinitionId: "listing.count",
+								},
+							},
+						},
+					);
+				},
+			},
+		],
+		delete: [
+			{
+				async invalidate({ queryClient }) {
+					await withResourceLimitQuery.invalidator(
+						queryClient,
+						[
+							"fetch",
+							"collection",
+							"count",
+						],
+						{
+							fetch: {
+								where: {
+									resourceDefinitionId: "listing.count",
+								},
+							},
+						},
+					);
 				},
 			},
 		],

@@ -1,4 +1,5 @@
-import { type Migration, sql } from "kysely";
+import { sql } from "kysely";
+import type { Migration } from "kysely/migration";
 
 export const AgentUsageMigration: Migration = {
 	async up(db) {
@@ -26,7 +27,7 @@ export const AgentUsageMigration: Migration = {
 			.execute();
 
 		await sql`
-        CREATE INDEX "agent_usage_[userId-threadId-createdAt]_idx" ON "agent_usage" ("userId", "threadId", "createdAt" ASC);
+            CREATE INDEX "agent_usage_[userId-threadId-createdAt]_idx" ON "agent_usage" ("userId", "threadId", "createdAt" ASC);
 		`.execute(db);
 
 		await db.schema

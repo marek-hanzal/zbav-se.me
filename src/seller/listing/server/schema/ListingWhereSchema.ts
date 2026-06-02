@@ -1,13 +1,18 @@
 import { z } from "zod";
-import { FilterSchema } from "@/lib/common/schema";
+import { WhereSchema } from "@/lib/common/schema";
 import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
+import { TransactionFlowEnumSchema } from "~/common/user-transaction/enum/TransactionFlowEnumSchema";
 
 export const ListingWhereSchema = z
 	.looseObject({
-		...FilterSchema.shape,
+		...WhereSchema.shape,
 		status: ListingStatusEnumSchema.optional(),
 		userId: z.string().optional().meta({
 			description: "ID of the user; does not have an effect on API endpoints",
+		}),
+		flow: TransactionFlowEnumSchema.optional(),
+		withTransaction: z.boolean().optional().meta({
+			description: "Filter out listings having any transaction.",
 		}),
 	})
 	.strip()

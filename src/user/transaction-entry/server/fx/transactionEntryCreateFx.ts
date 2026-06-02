@@ -4,8 +4,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import type { TransactionEntryTableSchema } from "~/server/database/@table/TransactionEntryTableSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
@@ -51,7 +50,6 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 			> & {
 				scopeUserId: string;
 			}) {
-				const { kysely } = yield* KyselyContextFx;
 				const dateContext = yield* DateContextFx;
 				const id = genId();
 
@@ -61,7 +59,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 					side: transaction.side,
 				});
 
-				yield* tryDbFx(async () => {
+				yield* dbFx(async (kysely) => {
 					return kysely
 						.insertInto("transaction_entry")
 						.values({
@@ -196,9 +194,8 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							access: "protected",
 							userId,
 						});
-						const { kysely } = yield* KyselyContextFx;
 
-						yield* tryDbFx(async () => {
+						yield* dbFx(async (kysely) => {
 							return kysely
 								.updateTable("upload")
 								.set({

@@ -1,70 +1,34 @@
 import { Effect } from "effect";
-import { match } from "ts-pattern";
-import { genId } from "@/lib/common/gen-id";
-import { list } from "@/lib/common/rangedom/list";
-import { rangedom } from "@/lib/common/rangedom/rangedom";
-import { sample } from "@/lib/common/rangedom/sample";
-import { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
-import { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
-import { PriceTypeEnumSchema } from "~/common/price-type/enum/PriceTypeEnumSchema";
-import { CurrencyEnumSchema } from "~/common/schema/CurrencyEnumSchema";
-import { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 import type { SeedRunSummary } from "~/seed/seed/SeedRunSummary";
-import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
-import { draftPatchFx } from "~/seller/draft/server/fx/draftPatchFx";
-import { draftAttrDecimalPatchFx } from "~/seller/draft-attr-decimal/server/fx/draftAttrDecimalPatchFx";
-import { draftAttrEnumMultiPatchFx } from "~/seller/draft-attr-enum-multi/server/fx/draftAttrEnumMultiPatchFx";
-import { draftAttrEnumSinglePatchFx } from "~/seller/draft-attr-enum-single/server/fx/draftAttrEnumSinglePatchFx";
-import { draftAttrNumberPatchFx } from "~/seller/draft-attr-number/server/fx/draftAttrNumberPatchFx";
-import { draftAttrTextPatchFx } from "~/seller/draft-attr-text/server/fx/draftAttrTextPatchFx";
-import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import ListingCategorySeedData from "~/server/@system/seed/data/listing-category-seed.json" with {
 	type: "json",
 };
 import LocationQueries from "~/server/@system/seed/data/location.json" with { type: "json" };
 import type { CategoryTableSchema } from "~/server/database/@table/CategoryTableSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
 import { categoryAttrOfFx } from "~/user/category/server/fx/categoryAttrOfFx";
-import { fieldOptionCollectionFx } from "~/user/field-option/server/fx/fieldOptionCollectionFx";
 import { ensureSeedUploadPoolFx } from "./ensureSeedUploadPoolFx";
 import { ensureSeedUserFx } from "./ensureSeedUserFx";
+import {
+	createListingSeedBatchStoreFx,
+	readListingSeedBatchFx,
+	removeListingSeedBatchFx,
+	removeListingSeedBatchStoreFx,
+	writeListingSeedBatchFx,
+} from "./listingSeedBatchStoreFx";
+import {
+	buildSeedListingPlansFx,
+	type SeedBranchRecord,
+	type SeedResolvedUpload,
+} from "./listingSeedPlanFx";
+import { listingSeedPublishFx } from "./listingSeedPublishFx";
 import { SeedProgressContextFx } from "./SeedProgressContextFx";
 
-const LISTING_CONDITIONS = [
-	1,
-	2,
-	3,
-	4,
-	5,
-	6,
-] as const;
-
-const LISTING_AGES = [
-	1,
-	2,
-	3,
-	4,
-	5,
-	6,
-] as const;
-
-const LISTING_EXPIRATIONS = Object.values(ListingExpireEnumSchema.enum);
-const LISTING_WARRANTIES = Object.values(WarrantyEnumSchema.enum);
+const CREATE_PROGRESS_INTERVAL = 1000;
+const PUBLISH_PLAN_BATCH_SIZE = 1000;
 const LOCATION_QUERY_POOL = LocationQueries as string[];
-
-type SeedBranchRecord = {
-	title: string;
-	description: string;
-	pros: string[];
-	cons: string[];
-	priceMin: number;
-	priceMax: number;
-	priceSpikes: number[];
-	delivery: DeliveryEnumSchema.Type[];
-};
 
 type SeedDataset = Record<string, SeedBranchRecord[]>;
 type CategoryAttrMeta = {
@@ -96,51 +60,8 @@ const toSeedBranch = (slug: string) => {
 	return seedDataset[slug] ?? seedDataset.default ?? [];
 };
 
-const toPriceType = (record: SeedBranchRecord, random = Math.random) => {
-	if (record.priceMax <= 0) {
-		return PriceTypeEnumSchema.enum.free;
-	}
-
-	return random() < 0.82 ? PriceTypeEnumSchema.enum.fixed : PriceTypeEnumSchema.enum.haggle;
-};
-
-const toPrice = (record: SeedBranchRecord, random = Math.random) => {
-	const shouldUseSpike = record.priceSpikes.length > 0 && random() < 0.18;
-
-	if (shouldUseSpike) {
-		return list(record.priceSpikes);
-	}
-
-	if (record.priceMax <= record.priceMin) {
-		return record.priceMin;
-	}
-
-	return rangedom(record.priceMin, record.priceMax);
-};
-
-const withProsCons = (record: SeedBranchRecord) => {
-	return {
-		pros: sample(record.pros, rangedom(0, Math.min(5, record.pros.length))),
-		cons: sample(record.cons, rangedom(0, Math.min(5, record.cons.length))),
-	};
-};
-
-const withDeliverySelection = (record: SeedBranchRecord) => {
-	if (record.delivery.length === 0) {
-		return list([
-			[
-				DeliveryEnumSchema.enum.personal,
-			],
-		]);
-	}
-
-	return sample(record.delivery, rangedom(1, record.delivery.length));
-};
-
 const withListingTotalFx = Effect.fn("withListingTotalFx")(function* () {
-	const { kysely } = yield* KyselyContextFx;
-
-	const row = yield* tryDbFx(async () => {
+	const row = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("listing")
 			.select((eb) => eb.fn.countAll<string>().as("count"))
@@ -151,9 +72,7 @@ const withListingTotalFx = Effect.fn("withListingTotalFx")(function* () {
 });
 
 const withSupportedCategoriesFx = Effect.fn("withSupportedCategoriesFx")(function* () {
-	const { kysely } = yield* KyselyContextFx;
-
-	const categories = yield* tryDbFx(async () => {
+	const categories = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("category")
 			.selectAll()
@@ -350,224 +269,166 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		});
 	}
 
-	type DraftPlan = {
-		draftId: string;
-		title: string;
-	};
-
-	const draftPlans: DraftPlan[] = [];
-
 	yield* progress.startPhase({
 		name: "Creating drafts",
 		total: count,
 	});
 
-	for (let index = 0; index < count; index++) {
-		const category = list(supportedCategories);
-		const branch = toSeedBranch(category.slug);
+	const uploadRows = yield* dbFx(async (kysely) => {
+		return kysely
+			.selectFrom("upload")
+			.select([
+				"id",
+				"url",
+			])
+			.where("id", "in", uploadPool)
+			.execute();
+	});
+	const uploadRowById = new Map(
+		uploadRows.map((item) => {
+			return [
+				item.id,
+				item,
+			] as const;
+		}),
+	);
+	const resolvedUploadPool = uploadPool.flatMap((uploadId) => {
+		const upload = uploadRowById.get(uploadId);
 
-		if (branch.length === 0) {
-			return yield* new RuntimeErrorFx({
-				message: `Seed dataset is empty for category ${category.slug} and default fallback.`,
-			});
-		}
+		return upload
+			? [
+					upload,
+				]
+			: [];
+	}) satisfies SeedResolvedUpload[];
 
-		const record = list(branch);
-		const priceType = toPriceType(record);
-		const price = priceType === PriceTypeEnumSchema.enum.free ? 0 : toPrice(record);
-		const location = list(locations);
-		const uploadCount = rangedom(1, Math.min(4, uploadPool.length));
-		const uploadIds = sample(uploadPool, uploadCount);
-		const prosCons = withProsCons(record);
-		const delivery = withDeliverySelection(record);
-
-		const draft = yield* draftCreateFx({
-			userId: user.id,
+	if (resolvedUploadPool.length === 0) {
+		return yield* new RuntimeErrorFx({
+			message: "No reusable upload rows were resolved for listing seed.",
 		});
+	}
 
-		yield* draftPatchFx({
-			userId: user.id,
-			query: {
-				where: {
-					id: draft.id,
-				},
+	const batchStore = yield* Effect.acquireRelease(createListingSeedBatchStoreFx(), (store) =>
+		removeListingSeedBatchStoreFx(store).pipe(Effect.orDie),
+	);
+	const batchCount = Math.ceil(count / PUBLISH_PLAN_BATCH_SIZE);
+	const batchFilePaths: string[] = [];
+
+	for (let batchIndex = 0; batchIndex < batchCount; batchIndex += 1) {
+		const batchOffset = batchIndex * PUBLISH_PLAN_BATCH_SIZE;
+		const batchSize = Math.min(PUBLISH_PLAN_BATCH_SIZE, count - batchOffset);
+		const plans = yield* buildSeedListingPlansFx({
+			count: batchSize,
+			offset: batchOffset,
+			supportedCategories,
+			locations,
+			uploadPool: resolvedUploadPool,
+			toSeedBranch(slug) {
+				const branch = toSeedBranch(slug);
+
+				if (branch.length === 0) {
+					throw new Error(
+						`Seed dataset is empty for category ${slug} and default fallback.`,
+					);
+				}
+
+				return branch;
 			},
-			scope: {
-				userId: user.id,
+			loadCategoryAttrs(categoryId) {
+				return categoryAttrOfFx({
+					categoryId,
+				});
 			},
-			patch: {
-				categoryId: category.id,
-				title: record.title,
-				description: record.description,
-				locationId: location.id,
-				priceType,
-				price,
-				currency: CurrencyEnumSchema.enum.CZK,
-				expires: list(LISTING_EXPIRATIONS),
-				uploadIds,
-				delivery,
-				pros: prosCons.pros,
-				cons: prosCons.cons,
-				warranty: list(LISTING_WARRANTIES),
-				condition: list([
-					...LISTING_CONDITIONS,
-				]),
-				age: list([
-					...LISTING_AGES,
-				]),
+			onPlanned: ({ count: plannedCount, plan, category }) => {
+				return Effect.gen(function* () {
+					const delta =
+						plannedCount % CREATE_PROGRESS_INTERVAL || CREATE_PROGRESS_INTERVAL;
+					const isBoundary =
+						plannedCount % CREATE_PROGRESS_INTERVAL === 0 || plannedCount === count;
+
+					if (!isBoundary) {
+						return;
+					}
+
+					yield* progress.advance({
+						delta:
+							plannedCount === count
+								? count % CREATE_PROGRESS_INTERVAL || CREATE_PROGRESS_INTERVAL
+								: delta,
+					});
+
+					yield* progress.log({
+						message: `Draft ${plannedCount}/${count}: ${plan.title} (${category.slug}, ${plan.locationLabel})`,
+					});
+				});
 			},
 		});
 
-		const fields = yield* categoryAttrOfFx({
-			categoryId: category.id,
+		const batchFile = yield* writeListingSeedBatchFx({
+			...batchStore,
+			batchIndex,
+			plans,
 		});
 
-		for (const field of fields) {
-			yield* match(field)
-				.with(
-					{
-						type: "decimal",
-					},
-					({ min, max }) => {
-						return draftAttrDecimalPatchFx({
-							draftId: draft.id,
-							fieldId: field.name,
-							userId: user.id,
-							value: rangedom(min ?? 0, max ?? 1024) / 100,
-						});
-					},
-				)
-				.with(
-					{
-						type: "number",
-					},
-					({ min, max }) => {
-						return draftAttrNumberPatchFx({
-							draftId: draft.id,
-							fieldId: field.name,
-							userId: user.id,
-							value: rangedom(min ?? 0, max ?? 1024),
-						});
-					},
-				)
-				.with(
-					{
-						type: "range",
-					},
-					({ min, max }) => {
-						return draftAttrDecimalPatchFx({
-							draftId: draft.id,
-							fieldId: field.name,
-							userId: user.id,
-							value: rangedom(min ?? 0, max ?? 1024),
-						});
-					},
-				)
-				.with(
-					{
-						type: "year",
-					},
-					({ min, max }) => {
-						return draftAttrNumberPatchFx({
-							draftId: draft.id,
-							fieldId: field.name,
-							userId: user.id,
-							value: rangedom(min ?? 1940, max ?? 2099),
-						});
-					},
-				)
-				.with(
-					{
-						type: "text",
-					},
-					() => {
-						return draftAttrTextPatchFx({
-							draftId: draft.id,
-							fieldId: field.name,
-							userId: user.id,
-							value: genId(),
-						});
-					},
-				)
-				.with(
-					{
-						type: "enum-multi",
-					},
-					({ name, max }) => {
-						return Effect.gen(function* () {
-							const values = yield* fieldOptionCollectionFx({
-								where: {
-									fieldId: name,
-								},
-								scope: {},
-							});
-
-							yield* draftAttrEnumMultiPatchFx({
-								draftId: draft.id,
-								fieldId: field.name,
-								userId: user.id,
-								value: sample(values, max ?? 3).map(({ value }) => value),
-							});
-						});
-					},
-				)
-				.with(
-					{
-						type: "enum-single",
-					},
-					({ name }) => {
-						return Effect.gen(function* () {
-							const values = yield* fieldOptionCollectionFx({
-								where: {
-									fieldId: name,
-								},
-								scope: {},
-							});
-
-							yield* draftAttrEnumSinglePatchFx({
-								draftId: draft.id,
-								fieldId: field.name,
-								userId: user.id,
-								value: list(values).value,
-							});
-						});
-					},
-				)
-				.exhaustive();
-		}
-
-		draftPlans.push({
-			draftId: draft.id,
-			title: record.title,
-		});
-
+		batchFilePaths.push(batchFile.filePath);
 		yield* progress.log({
-			message: `Draft ${index + 1}/${count}: ${record.title} (${category.slug}, ${location.label})`,
+			message: `Stored draft batch ${batchIndex + 1}/${batchCount} (${plans.length} listings)`,
 		});
-		yield* progress.advance();
+		yield* Effect.yieldNow();
 	}
 
 	yield* progress.finishPhase();
 
 	yield* progress.startPhase({
 		name: "Publishing listings",
-		total: draftPlans.length,
+		total: count,
 	});
 
-	for (const [index, draftPlan] of draftPlans.entries()) {
-		yield* listingCreateFx({
-			userId: user.id,
-			draftId: draftPlan.draftId,
+	let publishedCount = 0;
+
+	for (const [batchIndex, filePath] of batchFilePaths.entries()) {
+		const batch = yield* readListingSeedBatchFx({
+			filePath,
 		});
-		yield* progress.updateSummary({
-			summary: {
-				createdCount: index + 1,
+		const batchPublishedBase = publishedCount;
+
+		yield* progress.log({
+			message: `Publishing batch ${batchIndex + 1}/${batchFilePaths.length} (${batch.length} listings)`,
+		});
+		yield* listingSeedPublishFx({
+			userId: user.id,
+			plans: batch,
+			onProgress: ({ message, delta, createdCount }) => {
+				return Effect.gen(function* () {
+					if (createdCount != null) {
+						const nextCreatedCount = batchPublishedBase + createdCount;
+
+						yield* progress.updateSummary({
+							summary: {
+								createdCount: nextCreatedCount,
+							},
+						});
+						yield* progress.advance({
+							delta: nextCreatedCount - publishedCount,
+						});
+						publishedCount = nextCreatedCount;
+
+						yield* Effect.yieldNow();
+					}
+
+					if (createdCount == null && delta > 0) {
+						yield* progress.log({
+							message,
+						});
+					}
+				});
 			},
 		});
-		yield* progress.log({
-			message: `Published ${index + 1}/${draftPlans.length}: ${draftPlan.title}`,
+
+		yield* removeListingSeedBatchFx({
+			filePath,
 		});
-		yield* progress.advance();
+		yield* Effect.yieldNow();
 	}
 
 	yield* progress.finishPhase();
@@ -595,7 +456,7 @@ export const listingSeedFx = Effect.fn("listingSeedFx")(function* ({
 		userEmail,
 		userId: user.id,
 		requestedCount: count,
-		createdCount: draftPlans.length,
+		createdCount: publishedCount,
 		beforeTotal,
 		afterTotal,
 		phases: phasePlan.map((phase) => ({

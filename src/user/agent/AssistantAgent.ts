@@ -1,12 +1,12 @@
 import { Agent } from "@openai/agents";
 import { DateTime } from "luxon";
-import { toolFavouriteToggle } from "~/buyer/favourite/server/tool/toolFavouriteToggle";
 import { toolFeedBrowse } from "~/buyer/feed/server/tool/toolFeedBrowse";
 import { toolFeedCreate } from "~/buyer/feed/server/tool/toolFeedCreate";
 import { toolFeedDelete } from "~/buyer/feed/server/tool/toolFeedDelete";
 import { toolFeedPatch } from "~/buyer/feed/server/tool/toolFeedPatch";
 import { toolListingBrowse as toolBuyerListingBrowse } from "~/buyer/listing/server/tool/toolListingBrowse";
 import { toolListingDetail as toolBuyerListingDetail } from "~/buyer/listing/server/tool/toolListingDetail";
+import { toolFavouriteToggle } from "~/buyer/listing-favourite/server/tool/toolFavouriteToggle";
 import { toolTransactionCreate } from "~/buyer/transaction/server/tool/toolTransactionCreate";
 import { toolTransactionWorkflow as toolBuyerTransactionWorkflow } from "~/buyer/transaction/server/tool/toolTransactionWorkflow";
 import { toolNow } from "~/common/date/server/tool/toolNow";
@@ -15,9 +15,9 @@ import { toolListingDetail as toolSellerListingDetail } from "~/seller/listing/s
 import { toolTransactionWorkflow as toolSellerTransactionWorkflow } from "~/seller/transaction/server/tool/toolTransactionWorkflow";
 import { toolLocationBrowse } from "~/session/location/server/tool/toolLocationBrowse";
 import { toolRoute } from "~/session/location/server/tool/toolRoute";
-import { toolTransactionAcknowledge } from "~/user/activity/server/tool/toolTransactionAcknowledge";
 import { AssistantModelSettings } from "~/user/agent/model/AssistantModelSettings";
 import type { withRunnerMiddleware } from "~/user/agent/server/middleware/withRunnerMiddleware";
+import { toolTransactionAcknowledge } from "~/user/transaction/server/tool/toolTransactionAcknowledge";
 import { toolTransactionBrowse } from "~/user/transaction/server/tool/toolTransactionBrowse";
 import { toolCategoryBrowse } from "../category/server/tool/toolCategoryBrowse";
 import { toolKnowledgeBrowse } from "../knowledge/server/tool/toolKnowledgeBrowse";
@@ -157,7 +157,12 @@ Transaction:
 - If a tool result contains raw enum values such as "open", "resolved", "status-open", or "buyer-message", convert them before replying
 - In user-facing Czech, avoid "transaction" when talking about the user's trade inbox; prefer "zpráva" or "zprávy"
 - Transactions are prolonged automatically by users activity
-- If the user wants to dismiss handled message notification, archive the matching activity
+- If the user wants to dismiss a handled message notification without changing the deal state, use the transaction-acknowledge tool
+- transaction-acknowledge is only for explicit "I know", "hotovo", "mark handled", "dismiss this", or "clear this from inbox" intents
+- transaction-acknowledge needs exact listingId and transactionId from another tool and the correct side:
+  - buyer side = current user is buyer and is acknowledging a seller-to-buyer handled message
+  - seller side = current user is seller and is acknowledging a buyer-to-seller handled message
+- transaction-acknowledge hides only the current user's matching activity; it does not send a message, change status, resolve, close, reject, or dispute anything
 
 Gallery:
 - When tool results contain image URLs from [${context.cdn}], render them as images in the response

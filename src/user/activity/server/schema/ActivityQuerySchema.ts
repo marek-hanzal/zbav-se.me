@@ -1,13 +1,11 @@
 import { z } from "zod";
 import { CursorSchema } from "@/lib/common/schema";
-import { ActivityFilterSchema } from "~/user/activity/server/schema/ActivityFilterSchema";
 import { ActivitySortSchema } from "~/user/activity/server/schema/ActivitySortSchema";
 import { ActivityWhereSchema } from "~/user/activity/server/schema/ActivityWhereSchema";
 
 export const ActivityQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
-		filter: ActivityFilterSchema.optional(),
 		where: ActivityWhereSchema.optional(),
 		sort: ActivitySortSchema.array().optional(),
 		limit: z.int().nonnegative().optional().meta({

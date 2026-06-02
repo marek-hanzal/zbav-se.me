@@ -2,8 +2,9 @@ import { Effect } from "effect";
 import { genId } from "@/lib/common/gen-id";
 import { auth } from "~/server/auth/auth";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
+import { withTranslatorFx } from "~/translator/server/fx/withTranslatorFx";
 
 const SEED_USER_PASSWORD = "12345678";
 
@@ -16,9 +17,9 @@ export namespace ensureSeedUserFx {
 export const ensureSeedUserFx = Effect.fn("ensureSeedUserFx")(function* ({
 	email,
 }: ensureSeedUserFx.Props) {
-	const { kysely, dialect } = yield* KyselyContextFx;
+	const { dialect } = yield* KyselyContextFx;
 
-	const current = yield* tryDbFx(async () => {
+	const current = yield* dbFx(async (kysely) => {
 		return kysely.selectFrom("user").selectAll().where("email", "=", email).executeTakeFirst();
 	});
 
@@ -26,7 +27,12 @@ export const ensureSeedUserFx = Effect.fn("ensureSeedUserFx")(function* ({
 		return current;
 	}
 
-	const { api } = auth(() => dialect);
+	const { api } = auth({
+		dialect: () => dialect,
+		translator: yield* withTranslatorFx({
+			locale: "cs",
+		}),
+	});
 
 	yield* Effect.tryPromise({
 		try: async () => {
@@ -45,7 +51,7 @@ export const ensureSeedUserFx = Effect.fn("ensureSeedUserFx")(function* ({
 			}),
 	});
 
-	const created = yield* tryDbFx(async () => {
+	const created = yield* dbFx(async (kysely) => {
 		return kysely.selectFrom("user").selectAll().where("email", "=", email).executeTakeFirst();
 	});
 

@@ -17,5 +17,30 @@ services:
             timeout: 5s
             retries: 5
 
+    mailpit:
+        image: axllent/mailpit:v1.27
+        container_name: zbav-se-mailpit
+        restart: always
+        ports:
+            - "1025:1025"
+            - "8025:8025"
+        environment:
+            MP_SMTP_AUTH: mailpit:mailpit
+            MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
+    cronpilot:
+        image: ghcr.io/orangecoding/cronpilot:latest
+        container_name: cronpilot
+        ports:
+            - "3027:3027"
+        environment:
+            PORT: 3027
+            HOST: 0.0.0.0
+            DB_PATH: /data/cronpilot.db
+            EXEC_TIMEOUT_MS: ${EXEC_TIMEOUT_MS:-1800000}
+            KEEP_MAX_FOR_HISTORY: ${KEEP_MAX_FOR_HISTORY:-5}
+            LOG_LEVEL: ${LOG_LEVEL:-info}
+        restart: unless-stopped
+
 volumes:
     postgres_data:

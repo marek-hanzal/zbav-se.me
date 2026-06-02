@@ -43,6 +43,18 @@ import { AgentStreamMigration } from "~/server/@migrations/0041-agent-stream";
 import { AgentUsageMigration } from "~/server/@migrations/0042-agent-usage";
 import { UserRestrictionMigration } from "~/server/@migrations/0043-user-restriction";
 import { TranslationMigration } from "~/server/@migrations/0044-translation";
+import { ListingSpotlightMigration } from "~/server/@migrations/0045-listing-spotlight";
+import { RateLimitRuleMigration } from "~/server/@migrations/0046-rate-limit-rule";
+import { RateLimitEventMigration } from "~/server/@migrations/0047-rate-limit-event";
+import { ResourceDefinitionMigration } from "~/server/@migrations/0048-resource-definition";
+import { ResourceBundleMigration } from "~/server/@migrations/0049-resource-bundle";
+import { ResourceBundleLimitMigration } from "~/server/@migrations/0050-resource-bundle-limit";
+import { ResourceBundleItemMigration } from "~/server/@migrations/0051-resource-bundle-item";
+import { UserResourceBundleMigration } from "~/server/@migrations/0052-user-resource-bundle";
+import { UserStripeMigration } from "~/server/@migrations/0053-user-stripe";
+import { ResourceBundleStripeMigration } from "~/server/@migrations/0054-resource-bundle-stripe";
+import { UserResourceBundleStripeMigration } from "~/server/@migrations/0055-user-resource-bundle-stripe";
+import { StripeEventMigration } from "~/server/@migrations/0056-stripe-event";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -90,4 +102,16 @@ export const migrations = {
 	"0042-agent-usage": AgentUsageMigration,
 	"0043-user-restriction": UserRestrictionMigration,
 	"0044-translation": TranslationMigration,
+	"0045-listing-spotlight": ListingSpotlightMigration,
+	"0046-rate-limit-rule": RateLimitRuleMigration,
+	"0047-rate-limit-event": RateLimitEventMigration,
+	"0048-resource-definition": ResourceDefinitionMigration,
+	"0049-resource-bundle": ResourceBundleMigration,
+	"0050-resource-bundle-limit": ResourceBundleLimitMigration,
+	"0051-resource-bundle-item": ResourceBundleItemMigration,
+	"0052-user-resource-bundle": UserResourceBundleMigration,
+	"0053-user-stripe": UserStripeMigration,
+	"0054-resource-bundle-stripe": ResourceBundleStripeMigration,
+	"0055-user-resource-bundle-stripe": UserResourceBundleStripeMigration,
+	"0056-stripe-event": StripeEventMigration,
 };

@@ -95,7 +95,7 @@ describe("activity bulk mutation patch contract", () => {
 					userId: owner.id,
 				},
 				query: {
-					filter: {
+					where: {
 						family: "transaction",
 						type: "buyer-message",
 						reference: "listing-bulk",

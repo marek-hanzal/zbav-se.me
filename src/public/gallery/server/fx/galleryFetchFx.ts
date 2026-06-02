@@ -2,24 +2,22 @@ import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
 import { withGallerySelectFx } from "~/public/gallery/server/db/withGallerySelectFx";
-import type { GalleryFilterSchema } from "~/public/gallery/server/schema/GalleryFilterSchema";
 import type { GalleryQuerySchema } from "~/public/gallery/server/schema/GalleryQuerySchema";
+import type { GalleryWhereSchema } from "../schema/GalleryWhereSchema";
 
 export namespace galleryFetchFx {
 	export interface Props extends GalleryQuerySchema.Type {
-		scope: GalleryFilterSchema.Type;
+		scope: GalleryWhereSchema.Type;
 	}
 }
 
 export const galleryFetchFx = Effect.fn("galleryFetchFx")(function* ({
-	filter,
 	where,
 	scope,
 	sort,
 }: galleryFetchFx.Props) {
 	const logger = yield* getLoggerFx("galleryFetchFx");
 	logger.trace("galleryFetchFx", {
-		filter,
 		where,
 		scope,
 		sort,
@@ -30,7 +28,6 @@ export const galleryFetchFx = Effect.fn("galleryFetchFx")(function* ({
 		selectFx: withGallerySelectFx({
 			sort,
 		}),
-		filter,
 		where,
 		scope,
 	});

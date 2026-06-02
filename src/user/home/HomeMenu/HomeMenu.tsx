@@ -6,8 +6,10 @@ import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import type { uiIcon } from "@/lib/client/icon";
 import { SpinnerContainer } from "@/lib/client/spinner";
-import { Tx } from "@/lib/client/tx";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
+import type { Typo } from "@/lib/client/typo";
+import { LabelValue } from "@/lib/client/value";
 import { AgentLink } from "~/user/home/HomeMenu/link/AgentLink";
 import { DraftLink } from "./link/DraftLink";
 import { DraftListLink } from "./link/DraftListLink";
@@ -35,14 +37,17 @@ export namespace HomeMenu {
 /**
  * Builds the home navigation surface with links to key app destinations.
  * Use it as the main navigation entry inside user-facing hub screens.
- *
- * @see src/@user/home/page/HomePage.tsx
  */
 export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: HomeMenu.Props) => {
+	const translator = useTranslator();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const isHome = useMatchRoute()({
 		to: "/$locale/app/home",
 	});
+
+	const miniLabel: Typo.PropsEx = {
+		"data-ui-opacity": "7",
+	};
 
 	return (
 		<Container
@@ -72,147 +77,134 @@ export const HomeMenu = withFallback(({ _suspense, onLinkClick, ...props }: Home
 						/>
 					</Group>
 				)}
-
-				<Tx
-					label="Home - interaction (title)"
-					data-ui-tone="neutral"
-					data-ui-theme="light"
-					data-ui-text="md"
-					data-ui-color="lead"
-					data-ui-opacity="8"
-					className={"text-center"}
-				/>
-
-				<Container
-					data-ui-flow={"vertical"}
-					data-ui-gap={"default"}
-					data-ui-width={"full"}
-				>
-					<Group>
-						<AgentLink
-							_suspense={"I know"}
-							iconProps={icon}
-						/>
-					</Group>
-
-					<Group>
-						<NotificationLink
-							_suspense={"I know"}
-							onLinkClick={onLinkClick}
-							iconProps={icon}
-						/>
-					</Group>
-				</Container>
-
-				<Tx
-					label="Home - quick tools (title)"
-					data-ui-tone="neutral"
-					data-ui-theme="light"
-					data-ui-text="md"
-					data-ui-color="lead"
-					data-ui-opacity="8"
-					className={"text-center"}
-				/>
-
-				<Container
-					data-ui-flow={"vertical"}
-					data-ui-gap={"default"}
-					data-ui-width={"full"}
-				>
-					<Group>
-						<ListingsLink
-							_suspense={"I know"}
-							iconProps={icon}
-						/>
-						<DraftLink
-							_suspense={"I know"}
-							iconProps={icon}
-						/>
-					</Group>
-
-					<Group>
-						<SearchLink
-							_suspense={"I know"}
-							iconProps={icon}
-						/>
-					</Group>
-				</Container>
-
-				<Tx
-					label="Home - seller stuff (title)"
-					data-ui-tone="neutral"
-					data-ui-theme="light"
-					data-ui-text="md"
-					data-ui-color="lead"
-					data-ui-opacity="8"
-					className={"text-center"}
-				/>
-
 				<Group>
-					<MyListingsLink
-						_suspense={"I know"}
-						iconProps={icon}
-					/>
-					<DraftListLink
-						_suspense={"I know"}
-						iconProps={icon}
+					<LabelValue
+						textLabel={translator.text("Home - interaction (title)")}
+						textLabelProps={miniLabel}
+						textValue={
+							<Container
+								data-ui-flow={"vertical"}
+								data-ui-gap={"default"}
+								data-ui-width={"full"}
+							>
+								<Group data-ui-shadow={false}>
+									<AgentLink
+										_suspense={"I know"}
+										iconProps={icon}
+									/>
+
+									<NotificationLink
+										_suspense={"I know"}
+										onLinkClick={onLinkClick}
+										iconProps={icon}
+									/>
+								</Group>
+							</Container>
+						}
 					/>
 				</Group>
 
-				<Tx
-					label="Home - buyer stuff (title)"
-					data-ui-tone="neutral"
-					data-ui-theme="light"
-					data-ui-text="md"
-					data-ui-color="lead"
-					data-ui-opacity="8"
-					className={"text-center"}
-				/>
+				<Group>
+					<LabelValue
+						textLabel={translator.text("Home - quick tools (title)")}
+						textLabelProps={miniLabel}
+						textValue={
+							<Container
+								data-ui-flow={"vertical"}
+								data-ui-gap={"default"}
+								data-ui-width={"full"}
+							>
+								<Group data-ui-shadow={false}>
+									<ListingsLink
+										_suspense={"I know"}
+										iconProps={icon}
+									/>
 
-				<Container
-					data-ui-flow={"vertical"}
-					data-ui-gap={"default"}
-					data-ui-width={"full"}
-				>
-					<Group>
-						<FeedLink
-							_suspense={"I know"}
-							iconProps={icon}
-						/>
-						<FavouritesLink
-							_suspense={"I know"}
-							iconProps={icon}
-						/>
-					</Group>
-				</Container>
+									<DraftLink
+										_suspense={"I know"}
+										iconProps={icon}
+									/>
 
-				<Tx
-					label="Home - misc (title)"
-					data-ui-tone="neutral"
-					data-ui-theme="light"
-					data-ui-text="md"
-					data-ui-color="lead"
-					data-ui-opacity="8"
-					className={"text-center"}
-				/>
-
-				<Container
-					data-ui-flow={"vertical"}
-					data-ui-gap={"default"}
-					data-ui-width={"full"}
-				>
-					<MessageLink
-						_suspense={"I know"}
-						iconProps={icon}
+									<SearchLink
+										_suspense={"I know"}
+										iconProps={icon}
+									/>
+								</Group>
+							</Container>
+						}
 					/>
+				</Group>
 
-					<Group>
-						<ProfileLink
-							_suspense={"I know"}
-							iconProps={icon}
-						/>
-					</Group>
-				</Container>
+				<Group>
+					<LabelValue
+						textLabel={translator.text("Home - seller stuff (title)")}
+						textLabelProps={miniLabel}
+						textValue={
+							<Group data-ui-shadow={false}>
+								<MyListingsLink
+									_suspense={"I know"}
+									iconProps={icon}
+								/>
+								<DraftListLink
+									_suspense={"I know"}
+									iconProps={icon}
+								/>
+							</Group>
+						}
+					/>
+				</Group>
+
+				<Group>
+					<LabelValue
+						textLabel={translator.text("Home - buyer stuff (title)")}
+						textLabelProps={miniLabel}
+						textValue={
+							<Container
+								data-ui-flow={"vertical"}
+								data-ui-gap={"default"}
+								data-ui-width={"full"}
+							>
+								<Group data-ui-shadow={false}>
+									<FeedLink
+										_suspense={"I know"}
+										iconProps={icon}
+									/>
+									<FavouritesLink
+										_suspense={"I know"}
+										iconProps={icon}
+									/>
+								</Group>
+							</Container>
+						}
+					/>
+				</Group>
+
+				<Group>
+					<LabelValue
+						textLabel={translator.text("Home - misc (title)")}
+						textLabelProps={miniLabel}
+						textValue={
+							<Container
+								data-ui-flow={"vertical"}
+								data-ui-gap={"default"}
+								data-ui-width={"full"}
+							>
+								<Group data-ui-shadow={false}>
+									<MessageLink
+										_suspense={"I know"}
+										iconProps={icon}
+										data-ui-shadow={false}
+									/>
+
+									<ProfileLink
+										_suspense={"I know"}
+										iconProps={icon}
+									/>
+								</Group>
+							</Container>
+						}
+					/>
+				</Group>
 			</Container>
 		</Container>
 	);

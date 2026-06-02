@@ -3,9 +3,9 @@ import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { withLikeEx } from "~/server/database/expression/withLikeEx";
+import { withContainsEx } from "~/server/database/expression/withContainsEx";
 import type { LocationSortSchema } from "~/session/location/server/schema/LocationSortSchema";
-import type { LocationFilterSchema } from "../schema/LocationFilterSchema";
+import type { LocationWhereSchema } from "../schema/LocationWhereSchema";
 
 export namespace withLocationSelectFx {
 	export interface Props {
@@ -49,7 +49,7 @@ export const withLocationSelectFx = Effect.fn("withLocationSelectFx")(function* 
 
 	return selectFx({
 		select,
-		queryFx(select, where: LocationFilterSchema.Type) {
+		queryFx(select, where: LocationWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 
@@ -65,17 +65,21 @@ export const withLocationSelectFx = Effect.fn("withLocationSelectFx")(function* 
 					query = query.where("loc.id", "in", where.idIn);
 				}
 
-				if (where.fulltext) {
+				if (where.fulltext?.length) {
 					const term = where.fulltext;
 					query = query.where((eb) => {
-						return eb.or([
-							withLikeEx(eb.ref("loc.query"), term),
-							withLikeEx(eb.ref("loc.address"), term),
-							withLikeEx(eb.ref("loc.country"), term),
-							withLikeEx(eb.ref("loc.municipality"), term),
-							withLikeEx(eb.ref("loc.state"), term),
-							withLikeEx(eb.ref("loc.county"), term),
-						]);
+						return eb.and(
+							term.map((value) =>
+								eb.or([
+									withContainsEx(eb.ref("loc.query"), value),
+									withContainsEx(eb.ref("loc.address"), value),
+									withContainsEx(eb.ref("loc.country"), value),
+									withContainsEx(eb.ref("loc.municipality"), value),
+									withContainsEx(eb.ref("loc.state"), value),
+									withContainsEx(eb.ref("loc.county"), value),
+								]),
+							),
+						);
 					});
 				}
 

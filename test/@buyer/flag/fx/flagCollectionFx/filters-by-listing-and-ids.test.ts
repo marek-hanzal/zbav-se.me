@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { flagCollectionFx } from "~/buyer/flag/server/fx/flagCollectionFx";
-import { flagCountFx } from "~/buyer/flag/server/fx/flagCountFx";
-import { flagToggleFx } from "~/buyer/flag/server/fx/flagToggleFx";
+import { flagCollectionFx } from "~/buyer/listing-flag/server/fx/flagCollectionFx";
+import { flagCountFx } from "~/buyer/listing-flag/server/fx/flagCountFx";
+import { flagToggleFx } from "~/buyer/listing-flag/server/fx/flagToggleFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { testabase } from "~/test/testabase";

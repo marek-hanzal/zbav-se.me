@@ -1,10 +1,10 @@
 import type { FC } from "react";
 import { Group } from "@/lib/client/group";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import { LabelValue } from "@/lib/client/value";
 import { toTimeDiff } from "@/lib/common/time";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
-import { translator } from "@/lib/common/translation";
 import type { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
 
 export namespace Header {
@@ -14,6 +14,7 @@ export namespace Header {
 }
 
 export const Header: FC<Header.Props> = ({ sellerInfo }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 
 	return (

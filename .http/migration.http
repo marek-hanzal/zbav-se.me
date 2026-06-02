@@ -1,0 +1,3 @@
+###
+GET {{VITE_ORIGIN}}/api/public/migration/run
+Authorization: Bearer {{SERVER_MIGRATION_TOKEN}}

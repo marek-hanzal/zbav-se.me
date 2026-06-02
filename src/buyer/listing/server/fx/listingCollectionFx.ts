@@ -1,8 +1,11 @@
 import { Effect } from "effect";
+import { sql } from "kysely";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
 import { hasExplicitCategory } from "~/common/listing/util/hasExplicitCategory";
+import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { withListingSelectFx } from "../db/withListingSelectFx";
 import type { ListingWhereSchema } from "../schema/ListingWhereSchema";
 
@@ -19,7 +22,6 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 		page: 0,
 		size: 10,
 	},
-	filter,
 	where,
 	scope,
 	sort,
@@ -30,7 +32,6 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	logger.trace("listingCollectionFx", {
 		userId,
 		cursor,
-		filter,
 		where,
 		scope,
 		sort,
@@ -38,23 +39,31 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 		limit,
 	});
 
-	return yield* withCollectionFx({
-		selectFx: withListingSelectFx({
-			userId,
-			sort,
-			meta,
-			hasExplicitCategory: hasExplicitCategory([
-				filter,
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const { kysely } = yield* KyselyContextFx;
+
+			yield* Effect.promise(async () => {
+				return sql`SET LOCAL work_mem = '32MB';`.execute(kysely);
+			});
+
+			return yield* withCollectionFx({
+				selectFx: withListingSelectFx({
+					userId,
+					sort,
+					meta,
+					hasExplicitCategory: hasExplicitCategory([
+						where,
+						scope,
+					]),
+				}),
+				cursor,
 				where,
 				scope,
-			]),
+				limit,
+			});
 		}),
-		cursor,
-		filter,
-		where,
-		scope,
-		limit,
-	});
+	);
 });
 
 export type listingCollectionFx = ReturnType<typeof listingCollectionFx>;

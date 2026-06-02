@@ -38,6 +38,9 @@ export const SignOutButton: FC<SignOutButton.Props> = ({ ...props }) => {
 	return (
 		<Button
 			iconEnabled={LockIcon}
+			iconProps={{
+				"data-ui-text": "xl",
+			}}
 			data-action={"sign out"}
 			onClick={() => signOutMutation.mutate({})}
 			disabled={signOutMutation.isPending}

@@ -3,8 +3,8 @@ import { withFallback } from "@/lib/client/fallback";
 import { Group } from "@/lib/client/group";
 import { SpinnerContainer } from "@/lib/client/spinner";
 import { Status } from "@/lib/client/status";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
 import { withListingSellerInfoQuery } from "~/buyer/listing/query/withListingSellerInfoQuery";
 import { SearchIcon } from "~/common/ui/icon";
 import { Header } from "./Header";
@@ -23,6 +23,7 @@ export namespace SellerInfo {
  * @see src/listing/ui/SellerInfoButton.tsx
  */
 export const SellerInfo = withFallback(({ _suspense, listingId, ...props }: SellerInfo.Props) => {
+	const translator = useTranslator();
 	const { data: sellerInfo } = withListingSellerInfoQuery.useSuspenseQuery({
 		id: listingId,
 	});

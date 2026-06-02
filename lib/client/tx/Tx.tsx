@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { Typo } from "../typo/Typo";
 
 export namespace Tx {
@@ -12,6 +12,7 @@ export namespace Tx {
 }
 
 export const Tx: FC<Tx.Props> = ({ label, fallback, ...props }) => {
+	const translator = useTranslator();
 	return label ? (
 		<Typo
 			label={translator.text(label, fallback)}

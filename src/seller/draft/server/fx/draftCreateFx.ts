@@ -4,10 +4,11 @@ import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { draftFetchFx } from "~/seller/draft/server/fx/draftFetchFx";
 import type { DraftCreateSchema } from "~/seller/draft/server/schema/DraftCreateSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { listingCountFx } from "~/seller/listing/server/fx/listingCountFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
+import { resourceLimitEnsureFx } from "~/user/resource-limit/server/fx/resourceLimitEnsureFx";
 
 export namespace draftCreateFx {
 	export interface Props extends DraftCreateSchema.Type {
@@ -27,8 +28,22 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
+			const liveListingCount = yield* listingCountFx({
+				userId,
+				where: {
+					status: "live",
+				},
+				scope: {
+					userId,
+				},
+			});
+
+			yield* resourceLimitEnsureFx({
+				count: liveListingCount + 1,
+				resource: "listing.count",
+				userId,
+			});
 
 			const id = genId();
 			const now = dateContext.now();
@@ -38,7 +53,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 				userId,
 			});
 
-			yield* tryDbFx(async () => {
+			yield* dbFx(async (kysely) => {
 				return kysely
 					.insertInto("draft")
 					.values({

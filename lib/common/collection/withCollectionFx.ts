@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import type { Simplify } from "kysely";
 import type { z } from "zod";
 import type { CursorSchema } from "../schema/CursorSchema";
-import type { FilterSchema } from "../schema/FilterSchema";
+import type { WhereSchema } from "../schema/WhereSchema";
 import type { selectFx } from "../select/selectFx";
 
 export namespace withCollectionFx {
@@ -12,7 +12,7 @@ export namespace withCollectionFx {
 		TDB,
 		TTable extends keyof TDB,
 		TOutput,
-		TFilter extends FilterSchema.Type,
+		TWhere extends WhereSchema.Type,
 		TSelectError,
 		TSelectContext,
 		TQueryError,
@@ -22,16 +22,15 @@ export namespace withCollectionFx {
 			TDB,
 			TTable,
 			TOutput,
-			TFilter,
+			TWhere,
 			TSelectError,
 			TSelectContext,
 			TQueryError,
 			TQueryContext
 		>;
 		//
-		filter?: TFilter;
-		where?: TFilter;
-		scope?: TFilter;
+		where?: TWhere;
+		scope?: TWhere;
 		//
 		cursor: CursorSchema.Type;
 		/**
@@ -46,14 +45,13 @@ export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 	const TDB,
 	const TTable extends keyof TDB,
 	const TOutput,
-	const TFilter extends FilterSchema.Type,
+	const TWhere extends WhereSchema.Type,
 	const TSelectError,
 	const TSelectContext,
 	const TQueryError,
 	const TQueryContext,
 >({
 	selectFx,
-	filter,
 	where,
 	scope,
 	cursor,
@@ -62,14 +60,13 @@ export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 	TDB,
 	TTable,
 	TOutput,
-	TFilter,
+	TWhere,
 	TSelectError,
 	TSelectContext,
 	TQueryError,
 	TQueryContext
 >) {
 	const layers = [
-		filter,
 		where,
 		scope,
 	] as const;

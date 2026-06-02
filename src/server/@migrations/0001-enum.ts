@@ -1,4 +1,4 @@
-import type { Migration } from "kysely";
+import type { Migration } from "kysely/migration";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { AccessEnumSchema } from "~/common/access/AccessEnumSchema";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";

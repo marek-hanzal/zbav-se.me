@@ -1,10 +1,27 @@
+import { createHash } from "node:crypto";
 import path from "node:path";
+import type { APIRequestContext } from "@playwright/test";
 import { test as base, expect } from "@playwright/test";
 import { testabase } from "./utils/testabase";
 
-function toDatabaseName(file: string, title: string, workerIndex: number, retry: number) {
+const appOrigin = process.env.VITE_ORIGIN ?? "https://zbav-se.me.localhost:1355";
+const DATABASE_NAME_LIMIT = 63;
+const DATABASE_NAME_HASH_LENGTH = 8;
+
+function toDatabaseHash(value: string) {
+	return createHash("sha256").update(value).digest("hex").slice(0, DATABASE_NAME_HASH_LENGTH);
+}
+
+function toDatabaseName(
+	file: string,
+	projectName: string,
+	title: string,
+	workerIndex: number,
+	retry: number,
+) {
 	const fileName = path.basename(file, path.extname(file));
 	const rawName = [
+		projectName,
 		fileName,
 		title,
 		`w${workerIndex}`,
@@ -16,19 +33,37 @@ function toDatabaseName(file: string, title: string, workerIndex: number, retry:
 		.replace(/-+/g, "-")
 		.replace(/^-+|-+$/g, "");
 
-	return `e2e-${rawName || "test"}`.slice(0, 63);
+	const suffix = toDatabaseHash(rawName);
+	const prefixLimit = DATABASE_NAME_LIMIT - suffix.length - 1;
+	const prefix = `e2e-${rawName || "test"}`.slice(0, prefixLimit).replace(/-+$/g, "");
+
+	return `${prefix}-${suffix}`;
 }
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 
+type WithRequest = <T>(callback: (request: APIRequestContext) => Promise<T>) => Promise<T>;
+
 export const test = base.extend<{
+	appOrigin: string;
 	db: string;
 	database: TestDatabase;
+	withRequest: WithRequest;
 }>({
+	// biome-ignore lint/correctness/noEmptyPattern: Ssst
+	async appOrigin({}, use) {
+		await use(appOrigin);
+	},
 	// biome-ignore lint/correctness/noEmptyPattern: Ssst
 	async db({}, use, testInfo) {
 		await use(
-			toDatabaseName(testInfo.file, testInfo.title, testInfo.workerIndex, testInfo.retry),
+			toDatabaseName(
+				testInfo.file,
+				testInfo.project.name,
+				testInfo.title,
+				testInfo.workerIndex,
+				testInfo.retry,
+			),
 		);
 	},
 	async database({ db }, use) {
@@ -43,14 +78,74 @@ export const test = base.extend<{
 
 		await use(database);
 
-		await cleanup();
-	},
-	async page({ page, db }, use) {
-		await page.context().setExtraHTTPHeaders({
-			"x-e2e-db": db,
+		await fetch(new URL("/api/e2e", appOrigin), {
+			method: "DELETE",
+			headers: {
+				"x-e2e-db": db,
+			},
 		});
 
-		await use(page);
+		await cleanup();
+	},
+	async withRequest({ appOrigin, db, playwright }, use) {
+		const contexts = new Set<APIRequestContext>();
+
+		const withRequest: WithRequest = async (callback) => {
+			const context = await playwright.request.newContext({
+				baseURL: appOrigin,
+				extraHTTPHeaders: {
+					origin: appOrigin,
+					"x-e2e-db": db,
+				},
+				ignoreHTTPSErrors: true,
+			});
+
+			contexts.add(context);
+
+			try {
+				return await callback(context);
+			} finally {
+				contexts.delete(context);
+				await context.dispose();
+			}
+		};
+
+		await use(withRequest);
+
+		await Promise.all(
+			Array.from(contexts).map(async (context) => {
+				await context.dispose();
+			}),
+		);
+	},
+	async page({ page, db, database }, use) {
+		void database;
+
+		await page.context().route("**/*", async (route) => {
+			const request = route.request();
+			const headers = {
+				...request.headers(),
+			};
+			const isAppRequest = new URL(request.url()).origin === appOrigin;
+
+			if (isAppRequest) {
+				headers["x-e2e-db"] = db;
+			} else {
+				delete headers["x-e2e-db"];
+			}
+
+			await route.continue({
+				headers,
+			});
+		});
+
+		try {
+			await use(page);
+		} finally {
+			if (!page.isClosed()) {
+				await page.close();
+			}
+		}
 	},
 });
 

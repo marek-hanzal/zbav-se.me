@@ -10,10 +10,6 @@ export const ListingQuerySchema = z
 			page: 0,
 			size: 256,
 		}).optional(),
-		filter: ListingWhereSchema.optional().meta({
-			id: "ListingFilter",
-			description: "User-land filters",
-		}),
 		where: ListingWhereSchema.optional().meta({
 			id: "ListingWhere",
 			description: "App-based filters",

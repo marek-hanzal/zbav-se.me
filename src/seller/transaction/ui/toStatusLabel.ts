@@ -1,8 +1,11 @@
 import { match } from "ts-pattern";
-import { translator } from "@/lib/common/translation";
+import type { translator as Translator } from "@/lib/common/translation/translator";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
 
-export const toStatusLabel = (status: TransactionStatusEnumSchema.Type) => {
+export const toStatusLabel = (
+	status: TransactionStatusEnumSchema.Type,
+	translator: Translator.Translator,
+) => {
 	return match(status)
 		.with("interest", () => translator.text("Transaction status interest (label)"))
 		.with("trade", () => translator.text("Transaction status trade (label)"))

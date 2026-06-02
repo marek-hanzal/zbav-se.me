@@ -15,8 +15,10 @@ describe("categoryCollectionFx", () => {
 
 			const firstPage = yield* categoryCollectionFx({
 				userId: user.id,
-				filter: {
-					fulltext,
+				where: {
+					fulltext: [
+						fulltext,
+					],
 				},
 				cursor: {
 					page: 0,
@@ -26,8 +28,10 @@ describe("categoryCollectionFx", () => {
 			});
 			const secondPage = yield* categoryCollectionFx({
 				userId: user.id,
-				filter: {
-					fulltext,
+				where: {
+					fulltext: [
+						fulltext,
+					],
 				},
 				cursor: {
 					page: 1,

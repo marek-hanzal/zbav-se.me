@@ -23,7 +23,9 @@ describe("listingCollectionFx (seller)", () => {
 					userId: seller.id,
 				},
 				where: {
-					fulltext: "target listing",
+					fulltext: [
+						"target listing",
+					],
 				},
 			});
 
@@ -38,7 +40,9 @@ describe("listingCollectionFx (seller)", () => {
 					userId: seller.id,
 				},
 				where: {
-					fulltext: "xyzzy-nonexistent-title",
+					fulltext: [
+						"xyzzy-nonexistent-title",
+					],
 				},
 			});
 

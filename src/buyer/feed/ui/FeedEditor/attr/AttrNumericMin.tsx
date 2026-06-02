@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { z } from "zod";
 import { Container } from "@/lib/client/container";
+import { useTranslator } from "@/lib/client/translation";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import type { AttrWhereSchema } from "~/buyer/listing/server/schema/AttrWhereSchema";
@@ -39,6 +39,7 @@ export namespace AttrNumericMin {
 }
 
 export const AttrNumericMin: FC<AttrNumericMin.Props> = ({ feed, field, attr, view, ...props }) => {
+	const translator = useTranslator();
 	const mutation = withFeedQuery.usePatchMutation({
 		onSuccess() {
 			view.set("default");
@@ -64,10 +65,10 @@ export const AttrNumericMin: FC<AttrNumericMin.Props> = ({ feed, field, attr, vi
 				patch: {
 					query: {
 						...feed.query,
-						filter: {
-							...feed.query?.filter,
+						where: {
+							...feed.query?.where,
 							attrs: {
-								...feed.query?.filter?.attrs,
+								...feed.query?.where?.attrs,
 								[field.name]: {
 									...attr,
 									name: field.name,

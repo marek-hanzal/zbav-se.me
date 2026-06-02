@@ -1,6 +1,6 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 import { ValueList } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 
 export namespace ConditionValueList {
 	export interface Props
@@ -20,6 +20,7 @@ export namespace ConditionValueList {
  * Use it in detail or preview views when you need to show multiple condition entries clearly.
  */
 export const ConditionValueList: FC<ConditionValueList.Props> = ({ conditionIn, ...props }) => {
+	const translator = useTranslator();
 	return (
 		<ValueList
 			data-ui={"ConditionValueList"}

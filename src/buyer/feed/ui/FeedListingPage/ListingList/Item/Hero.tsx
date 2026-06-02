@@ -7,8 +7,8 @@ import { Typo } from "@/lib/client/typo";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { useUpload } from "~/common/gallery/hook/useUpload";
 import type { ListingPriceSchema } from "~/common/listing/schema/ListingPriceSchema";
+import { ListingPrice } from "~/common/listing/ui/ListingPrice";
 import { HeroImage } from "~/common/ui/img";
-import { ListingPrice } from "../../../../../../common/listing/ui/ListingPrice";
 import { Delivery } from "./Delivery";
 import { Distance } from "./Distance";
 
@@ -31,6 +31,7 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 			data-ui-flow={"vertical"}
 			data-ui-height={"full"}
 			data-ui-width={"full"}
+			data-ui-position={"relative"}
 			//
 			data-action={"open listing detail"}
 			onClick={() => listingState.set((prev) => !prev)}
@@ -48,6 +49,15 @@ export const Hero: FC<Hero.Props> = ({ listingId, listingState, ...props }) => {
 			<Container
 				data-ui-flow={"vertical"}
 				data-ui-inner={"sm"}
+				data-ui-snap-to={"bottom-center"}
+				data-ui-tone={"neutral"}
+				data-ui-theme={"light"}
+				data-ui-background={"default"}
+				data-ui-width={"full"}
+				data-ui-opacity={"8"}
+				className={[
+					"bottom-0",
+				]}
 			>
 				<Container
 					data-ui-flow="horizontal"

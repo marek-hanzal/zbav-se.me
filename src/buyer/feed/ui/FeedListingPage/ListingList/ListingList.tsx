@@ -8,6 +8,7 @@ import { useRenderLogger } from "@/lib/client/log";
 import { useMergeRefs } from "@/lib/client/ref";
 import { useScrollTo } from "@/lib/client/scroll-to";
 import { SpinnerContainer } from "@/lib/client/spinner";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import {
@@ -15,7 +16,6 @@ import {
 	VisibilityProvider,
 	VisibleContainer,
 } from "@/lib/client/visibility";
-import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import { getRootLogger } from "~/common/log/getRootLogger";
@@ -37,6 +37,7 @@ export namespace ListingList {
 
 export const ListingList = withFallback(
 	({ ref, scrollToId, feedId, sentinelRef, ...props }: ListingList.Props) => {
+		const translator = useTranslator();
 		const locale = useLocale();
 		const containerRef = useRef<HTMLDivElement>(null);
 		const mergedRef = useMergeRefs([

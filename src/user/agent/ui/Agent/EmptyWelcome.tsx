@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Status } from "@/lib/client/status";
-import { translator } from "@/lib/common/translation";
+import { useTranslator } from "@/lib/client/translation";
 import { AgentStreamItemsQuery } from "../../query/AgentStreamItemsQuery";
 import { withAgentStreamItemsQuery } from "../../query/withAgentStreamItemsQuery";
 
@@ -13,6 +13,7 @@ export namespace EmptyWelcome {
 }
 
 export const EmptyWelcome: FC<EmptyWelcome.Props> = ({ threadId, isPending, ...props }) => {
+	const translator = useTranslator();
 	const { data: items } = withAgentStreamItemsQuery.useSuspenseQuery(
 		AgentStreamItemsQuery(threadId),
 	);

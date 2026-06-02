@@ -13,18 +13,18 @@ export const ListingEventEnumSchema = z
 		/**
 		 * Explicit ignore of the listing
 		 */
-		"ignore",
+		"listing.ignore",
 		"unignore",
 		/**
 		 * Flagged listing
 		 */
-		"flag",
+		"listing.flag",
 		"unflag",
 		/**
 		 * Started transaction by buyer
 		 */
 		"transaction",
-		"favourite",
+		"listing.favourite",
 		"unfavourite",
 		/**
 		 * Positive thumb on the listing

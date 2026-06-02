@@ -2,9 +2,7 @@ import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
-import type { AgentUsageTableSchema } from "~/server/database/@table/AgentUsageTableSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { agentThreadPatchFx } from "~/user/agent/server/fx/agentThreadPatchFx";
 import type { AgentUsageCreateSchema } from "~/user/agent/server/schema/AgentUsageCreateSchema";
@@ -35,7 +33,6 @@ export const agentUsageCreateFx = Effect.fn("agentUsageCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 
 			/**
@@ -53,23 +50,22 @@ export const agentUsageCreateFx = Effect.fn("agentUsageCreateFx")(function* ({
 				},
 			});
 
-			return yield* tryDbFx(
-				async () =>
-					kysely
-						.insertInto("agent_usage")
-						.values({
-							id: genId(),
-							userId,
-							threadId,
-							requests,
-							input,
-							total,
-							output,
-							createdAt: dateContext.now().toJSDate(),
-						})
-						.returningAll()
-						.executeTakeFirstOrThrow() satisfies Promise<AgentUsageTableSchema.Type>,
-			);
+			return yield* dbFx(async (kysely) => {
+				return kysely
+					.insertInto("agent_usage")
+					.values({
+						id: genId(),
+						userId,
+						threadId,
+						requests,
+						input,
+						total,
+						output,
+						createdAt: dateContext.now().toJSDate(),
+					})
+					.returningAll()
+					.executeTakeFirstOrThrow();
+			});
 		}),
 	);
 });

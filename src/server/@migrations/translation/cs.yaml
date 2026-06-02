@@ -1,12 +1,13 @@
+" | ":
+    value: " | "
+", ":
+    value: ", "
 About me (message):
-    value: |
-        Bez keců. Bez ojebů
+    value: Bez keců. Bez ojebů
 About me (title):
     value: Marek Hanzal
 Accept transaction (button):
     value: Přijmout a pokračovat
-Acknowledge transaction (aria):
-    value: Kliknutím potvrď transakci
 Acknowledge transaction (button):
     value: Hotovo
 Activity (title):
@@ -23,7 +24,8 @@ Activity thumb (title):
 Age (title):
     value: Odhad životnosti
 Age 1 (hint):
-    value: Na konci životnosti. Spíš na dojetí / záchranu / pro někoho, kdo ví, do
+    value:
+        Na konci životnosti. Spíš na dojetí / záchranu / pro někoho, kdo ví, do
         čeho jde.
     dynamic: true
 Age 1 (label):
@@ -36,7 +38,8 @@ Age 2 (label):
     value: E — Pozdní roky
     dynamic: true
 Age 3 (hint):
-    value: Známky času jdou vidět, ale pořád funguje / drží se. Zhruba “půlka až za
+    value:
+        Známky času jdou vidět, ale pořád funguje / drží se. Zhruba “půlka až za
         půlkou”.
     dynamic: true
 Age 3 (label):
@@ -67,7 +70,8 @@ Agent (label):
 Agent (title):
     value: Asistent
 Agent empty welcome (content):
-    value: Umím vyřešit cokoli, co umí appka, jen líp a rychleji, pojď mě pořádně
+    value:
+        Umím vyřešit cokoli, co umí appka, jen líp a rychleji, pojď mě pořádně
         protáhnout!
 Agent empty welcome (title):
     value: Co máš dneska na srdci?
@@ -162,8 +166,12 @@ Back to agent welcome page (aria):
     value: Zpět na domovskou stránku práce s agentem
 Back to home (link):
     value: Zpět domů
+Back to sign in:
+    value: Zpátky na přihlášení
 Behind corner (label):
     value: Za rohem!
+Browse listing on (label):
+    value: Jukni se na Zbav-se.mě!
 Buyer activity (hint):
     value: >
         Zevrubná aktivita napovídá, zda je kupující jinak aktivní, nastavuje
@@ -187,8 +195,8 @@ Buyer info (title):
     value: Informace o kupujícím
 Buyer load (hint):
     value: >
-        Pokud kupující odbavuje více zpráv, promítne se to v tomto údaji - tobě
-        to může nastavit očekávání např. v
+        Pokud kupující odbavuje více zpráv, promítne se to v tomto údaji - tobě to
+        může nastavit očekávání např. v
 
         čekání na odpověď.
 Buyer load (label):
@@ -228,10 +236,18 @@ Buyer score 6:
     dynamic: true
 Cancel current agent work (aria):
     value: Kliknutím zruší aktuální práci agenta
+Change password (label):
+    value: Změna hesla
+Change password (title):
+    value: Změň si heslo
 Chat - transaction closed (message):
     value: Vše vyřízeno, chat je vypnutý.
 Chat - transaction resolved - seller cannot write (message):
     value: Máš vyřízeno, nic dalšího tu nemusíš řešit.
+Check your email for the reset link.:
+    value: Mrkni do mailu pro odkaz na reset hesla.
+Check your email for the sign-in link.:
+    value: Check your email for the sign-in link.
 Clear all (button):
     value: Vyčistit vše
 Clear all sorts (button):
@@ -243,8 +259,7 @@ Close draft (hint):
 Close transaction (button):
     value: Hotovo, zavřít
 Closer p90 (hint):
-    value: Udává čas, za jak dlouho kupující obvykle zavře zprávu bez další
-        interakce.
+    value: Udává čas, za jak dlouho kupující obvykle zavře zprávu bez další interakce.
 Closer p90 (label):
     value: Čas zavření zprávy
 Closer rate (hint):
@@ -331,6 +346,8 @@ Condition not selected:
     value: Stav nemáš vybraný
 Confirm Password:
     value: Potvrdit heslo
+Confirm your new password:
+    value: Potvrď nové heslo
 Confirm your password:
     value: Potvrďte své heslo
 Cons 0 (placeholder):
@@ -382,6 +399,8 @@ Current Restriction value (hint):
         ve vyhledávání. Změníš ho ve svém účtu.
 Current Restriction value (label):
     value: Režim obsahu
+Current password (label):
+    value: Stávající heslo
 Decision rate (hint):
     value: >
         Sleduje explicitně dokončené obchody; nízké procento pouze vyjadřuje
@@ -400,6 +419,8 @@ Delete photo (button):
     value: Smazat fotku
 Delivery (title):
     value: Možnost předání
+Delivery not selected:
+    value: Delivery not selected
 Description (placeholder):
     value: Co nabízíš?
 Description (title):
@@ -429,12 +450,32 @@ Draft list (label):
     value: Rozpracované inzeráty
 Draft list (title):
     value: Rozpracované inzeráty
+Email verification email action:
+    value: Kliknutím potvrď svůj email
+Email verification email footer:
+    value: >
+        Tahle zpráva chodí po registraci a na tvou žádost. Pokud se ani jedno
+        nestalo,
+
+        dej nám vědět.
+Email verification email message:
+    value: |
+        Abys mohl používat nějaké další pokročilé funkce, musíme vědět, že
+        tvůj email je platný.
+Email verification email subject:
+    value: Ověření tvého mailu
+Email verification email title:
+    value: Ověř si svůj email
 Email:
     value: Email
 Embedded image - url (label):
     value: (odkaz na obrázek)
+Enter you current password (placeholder):
+    value: Tvoje stávající heslo
 Enter your email:
     value: Zadej svůj email
+Enter your new password:
+    value: Zadej nové heslo
 Enter your password:
     value: Zadej své heslo
 Expiration date not set:
@@ -452,10 +493,14 @@ Expire in 7-days:
     dynamic: true
 Expired rate (hint):
     value: >
-        Nastavuje očekávání, kdy se kupující např. po předání balíčku už ke
-        zprávám nevrátí a obchod neuzavře.
+        Nastavuje očekávání, kdy se kupující např. po předání balíčku už ke zprávám
+        nevrátí a obchod neuzavře.
 Expired rate (label):
     value: Poměr automaticky zavřených zpráv
+Extra attr - label (label):
+    value: Vlastnost
+Extra attr - value (label):
+    value: Hodnota
 Favourites (label):
     value: Moje oblíbené
 Feed (label):
@@ -467,7 +512,8 @@ Feed - common stuff (title):
 Feed - dynamic fields (title):
     value: Hledání v rámci kategorie
 Feed - end of road (message):
-    value: Došel jsi na konec cesty, nicméně si můžeš buď poladit aktuální seznam,
+    value:
+        Došel jsi na konec cesty, nicméně si můžeš buď poladit aktuální seznam,
         nebo se podívej další, které máš připravené.
 Feed - end of road (title):
     value: Konec cesty - prozatím
@@ -489,8 +535,25 @@ Feed delivery not selected:
     value: Jakékoli
 Feed editor (title):
     value: Editace seznamu
+Feed fulltext (hint):
+    value: |
+        Tohle je agresivní hledání, které bere široké okolí inzerátu,
+        např. kategorie, doprovodné výrazy kategorie, titulek inzerátu
+        a další.
+
+        Můžeš začít tímto políčkem, jen pozor, můžeš najít mnohem víc věcí,
+        než čekáš - kategorie nebo limit cen také pomůže.
+Feed fulltext (label):
+    value: Hledám
+Feed fulltext (placeholder):
+    value: Najde téměř všechno
+Feed fulltext (title):
+    value: Hledej všude
+Feed fulltext not filled:
+    value: Zajímá tě všechno
 Feed list empty (message):
-    value: ...ale můžeš si nějaký seznam vytvořit - třeba pro sebe, děti, auto, co
+    value:
+        ...ale můžeš si nějaký seznam vytvořit - třeba pro sebe, děti, auto, co
         tě napadne.
 Feed list empty (title):
     value: Zatím tu nic nemáš...
@@ -500,16 +563,14 @@ Feed location not selected:
     value: Nemáš uvedenou
 Feed location security (hint):
     value: Feed location security (hint)
-Feed name (default):
-    value: Můj seznam
 Feed name (label):
     value: Název seznamu
 Feed name (placeholder):
     value: Např. nářadí
 Feed name (required):
     value: >
-        Nastav si svůj název seznamu, abys poznal, co v něm očekáváš (např.
-        zimní pneu).
+        Nastav si svůj název seznamu, abys poznal, co v něm očekáváš (např. zimní
+        pneu).
 Feed name (title):
     value: Vyber si název
 Feed photo gallery (label):
@@ -528,8 +589,14 @@ Feed sorting (label):
     value: Řazení inzerátů
 Feed sorting not selected:
     value: Výchozí řazení
+Feed title (hint):
+    value: Feed title (hint)
 Feed title (label):
     value: Titulek inzerátu
+Feed title (placeholder):
+    value: Feed title (placeholder)
+Feed title (title):
+    value: Feed title (title)
 Feed title not filled:
     value: Jakýkoli
 Field - battery-condition:
@@ -580,6 +647,8 @@ Flag listing (button):
     value: Nahlásit inzerát
 Flag listing - confirm (button):
     value: Závažná akce - opravdu?
+Forgot password? (link):
+    value: Zapomněl jsi heslo?
 Fulltext (placeholder):
     value: Najít
 Gallery (title):
@@ -600,6 +669,8 @@ Go to my feed (button):
     value: Objevuj!
 Go to my listings (button):
     value: Moje inzeráty
+Go to sign-in (label):
+    value: Přihlášení
 History activity (hint):
     value: Sleduj, jak jsem na projektu aktivní - čím větší číslo, tím víc
         příspěvků. Dneska je vlevo nahoře.
@@ -615,6 +686,8 @@ Home - quick tools (title):
     value: Tržiště
 Home - seller stuff (title):
     value: Prodávám
+"If the button does not work, copy this link into your browser:":
+    value: Když tlačítko nezafunguje, zkopíruj tenhle odkaz do prohlížeče.
 Ignore listing (button):
     value: Ignorovat inzerát
 Ignore listing - confirm (button):
@@ -628,6 +701,9 @@ Invalid email address:
     value: Špatně vyplněná emailová adresa...
 Invalid email or password:
     value: Email, heslo, něco hapruje.
+    dynamic: true
+Invalid password:
+    value: Špatné heslo
     dynamic: true
 Landing - Hero (title):
     value: Nakupuješ nebo prodáváš?
@@ -650,6 +726,8 @@ Listing - Pros (title):
     value: Co chci vyzdvihnout
 Listing - Pros not filled:
     value: Nechceš něco vyzdvihnout?
+Listing - extras (label):
+    value: Vlastnosti kategorie
 Listing age (hint):
     value: |
         Definuje, jak moc moderní věc je.
@@ -704,14 +782,17 @@ Listing common sort value price - unused:
     value: Cena (bez řazení)
     dynamic: true
 Listing condition (hint):
-    value: Stav má přímý vliv na možnosti doručení inzerátu, přesto se snaž být
-        upřímný.
+    value: Stav má přímý vliv na možnosti doručení inzerátu, přesto se snaž být upřímný.
 Listing condition (label):
     value: Stav
 Listing condition not selected:
     value: Jakýkoli stav
 Listing count - empty (label):
     value: Kde nic, tu nic - uprav si nastavení
+Listing created at (label):
+    value: Datum publikace
+Listing delivery (label):
+    value: Možnosti doručení
 Listing delivery - other:
     value: Domluvou/ostatní
     dynamic: true
@@ -731,6 +812,8 @@ Listing description (hint):
 
         Popis jako takový **nepodléhá** vyhledávání, tzn. umělá
         klíčová slova v tomto poli nemají smysl.
+Listing description (label):
+    value: Listing description (label)
 Listing editor (title):
     value: Editor inzerátu
 Listing expiration (hint):
@@ -739,32 +822,58 @@ Listing expiration (hint):
 
         Pokud např. prodáváš na **více bazarech zároveň**, nemusíš myslet na
         všechny, až bude věc prodaná.
+Listing expired at (label):
+    value: Datum ukončení inzerátu
+Listing expires at (hint):
+    value: Za jak dlouho tento inzerát bude archivován.
+Listing expires at (label):
+    value: Zbývající čas
 Listing favourited (label):
     value: Inzerát je oblíbený!
+Listing gallery (label):
+    value: Obrázky
 Listing gallery (title):
     value: Fotky
 Listing ignore (hint):
     value: >
-        Pokud vidíš něco nezákonného, nahlas to. Inzerát musí vysloveně
-        porušovat zákon nebo podmínky
+        Pokud vidíš něco nezákonného, nahlas to. Inzerát musí vysloveně porušovat
+        zákon nebo podmínky
 
         používání.
 
 
-        _**Hlášení jsou kontrolována na obou stranách - zneužití může vést k
-        postihu (např. omezení účtu).**_
+        _**Hlášení jsou kontrolována na obou stranách - zneužití může vést k postihu
+        (např. omezení účtu).**_
 Listing location (hint):
     value: Pozor, umístění je veřejný údaj, ale můžeš napsat třeba název obce.
 Listing location (label):
     value: Umístění
 Listing location not selected:
     value: Polohu nemáš vyplněnou
+Listing no longer active (hint):
+    value: Nestihl jsi to? Nevadí - pohlídej si prodejce, třeba vystaví něco nového.
+Listing no longer active (label):
+    value: Toto je archivovaný inzerát
 Listing photo gallery (label):
     value: Nahraj fotky
+Listing price (label):
+    value: Cena
+Listing price - ask:
+    value: Nabídni cenu
+    dynamic: true
+Listing price - fixed:
+    value: Pevná cena
+    dynamic: true
+Listing price - free:
+    value: Zdarma
+    dynamic: true
+Listing price - haggle:
+    value: Možnost jednání
+    dynamic: true
 Listing restriction (hint):
     value: >
-        Kategorie definuje základní omezení, nicméně máš možnost přitvrdit,
-        pokud to tak cítíš.
+        Kategorie definuje základní omezení, nicméně máš možnost přitvrdit, pokud to
+        tak cítíš.
 Listing restriction (label):
     value: Nastavení omezení
 Listing restriction (title):
@@ -789,7 +898,8 @@ Listing restriction - none:
     value: Běžný obsah
     dynamic: true
 Listing restriction - restricted (hint):
-    value: Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podléhá zvláštním
+    value:
+        Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podléhá zvláštním
         pravidlům.
     dynamic: true
 Listing restriction - restricted:
@@ -802,6 +912,10 @@ Listing restriction - sensitive (hint):
 Listing restriction - sensitive:
     value: Citlivé
     dynamic: true
+Listing restrictions (empty):
+    value: Listing restrictions (empty)
+Listing restrictions (label):
+    value: Dostupnost obsahu inzerátu
 Listing seller hint (label):
     value: Informace o prodejci
 Listing seller info not available (empty):
@@ -812,6 +926,22 @@ Listing seller info not available (message):
         intuici.
 Listing seller info not available (title):
     value: Zatím nemám dost dat
+Listing status (label):
+    value: Stav inzerátu
+Listing status - closed:
+    value: Uzavřené
+    dynamic: true
+Listing status - expired:
+    value: Vypršelé
+    dynamic: true
+Listing status - live:
+    value: Aktivní
+    dynamic: true
+Listing status - sold:
+    value: Prodané
+    dynamic: true
+Listing status not selected:
+    value: Jakýkoli stav
 Listing title (label):
     value: Titulek
 Listing title (placeholder):
@@ -827,6 +957,14 @@ Listing title (title):
     value: Titulek
 Listing title not filled:
     value: Titulek nemáš vyplněný
+Listing unavailable (description):
+    value: Inzerát existuje, nicméně pro jeho zobrazení je potřeba se přihlásit.
+Listing unavailable (message):
+    value:
+        Je mi líto, ale tento inzerát vyžaduje přihlášení. Ne všechno můžu hodit
+        veřejně do internetu.
+Listing unavailable (title):
+    value: Tento inzerát není veřejně dostupný
 Listing unfavourited (label):
     value: Inzerát už není v oblíbených
 Listing warranty (hint):
@@ -871,6 +1009,18 @@ Login (link):
     value: Máš účet? Přihlas se!
 Logo motto (label):
     value: Chytré tržiště pro všechny
+Magic link email action:
+    value: Magic link email action
+Magic link email footer:
+    value: Magic link email footer
+Magic link email message:
+    value: Magic link email message
+Magic link email subject:
+    value: Magic link email subject
+Magic link email title:
+    value: Magic link email title
+Magic link sent:
+    value: Magic link sent
 Mark transaction as successful (button):
     value: Jsem spokojený, zavřít
 Maximum price (label):
@@ -901,9 +1051,6 @@ Minimum price (placeholder):
     value: Minimální cena
 Minimum price not set:
     value: Bez spodního limitu
-Missing identity for an Entity (id). I'm sorry, but I cannot provide better message than this :(:
-    value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
-        better message than this :(
 Move photo left (button):
     value: Move photo left (button)
 Move photo right (button):
@@ -928,7 +1075,8 @@ No categories found (message):
 No categories found (title):
     value: Ajajaj, nic jsme nenašli!
 No drafts (message):
-    value: ...ale můžeš si připravit nějaké inzeráty, které si zveřejníš, až budeš
+    value:
+        ...ale můžeš si připravit nějaké inzeráty, které si zveřejníš, až budeš
         chtít.
 No drafts (title):
     value: Zatím tu nic nemáš...
@@ -991,6 +1139,16 @@ Password is required:
     value: Heslo je povinné, bez něj to nepůjde...
 Password must be at least 8 characters:
     value: Heslo by mělo mít alespoň 8 znaků.
+Password reset email action:
+    value: Otevřít reset hesla
+Password reset email footer:
+    value: Pokud sis o tuhle změnu neřekl(a), tenhle email můžeš v klidu ignorovat.
+Password reset email message:
+    value: Dostali jsme požadavek na reset tvého hesla.
+Password reset email subject:
+    value: Reset hesla
+Password reset email title:
+    value: Reset hesla
 Password:
     value: Heslo
 Passwords do not match:
@@ -1106,8 +1264,12 @@ Reject transaction (button):
     value: Odmítnout a zavřít
 Reject transaction - confirm (button):
     value: Opravdu?
+Reset password (button):
+    value: Nastavit nové heslo
 Reset search (button):
     value: Resetovat
+Reset your password:
+    value: Reset hesla
 Resolve transaction (button):
     value: Vyřízeno
 Restriction available in (label):
@@ -1140,12 +1302,20 @@ Seller score 1:
 Seller score 2:
     value: Vyšší riziko
     dynamic: true
+Send magic link (label):
+    value: Poslat odkaz pro přihlášení
 Send message to agent (aria):
     value: Odešle agentovi zprávu, včetně případných příloh (jako jsou obrázky)
+Send reset link:
+    value: Poslat odkaz
+Send verification email:
+    value: Ověř si svůj email
 Share contact info (button):
     value: Sdílet osobní údaje
 Share contact info (title):
     value: Sdílet osobní údaje
+Share listing (label):
+    value: Zkopírovat odkaz
 Share location (button):
     value: Sdílet adresu
 Share location (title):
@@ -1164,6 +1334,8 @@ Submit draft (button):
     value: Publikovat inzerát
 System update (label):
     value: System update (label)
+This reset link is invalid or expired:
+    value: Tenhle reset link je neplatný nebo už expiroval.
 Thread token usage (label):
     value: Projebané tokeny
 ToS agreement (label):
@@ -1176,6 +1348,9 @@ Token usage (hint):
     value: AIčko je drahý, moc. A tohle jsou tokeny, které jsi profrčel
 Token usage (label):
     value: Propálené tokeny
+Too many magic link requests. Please try again later.:
+    value: Počkej chvilku, nebo mě uvaříš.
+    dynamic: true
 "Too small: expected string to have >=5 characters":
     value: Přitlač - potřebuju nejméně pět znaků.
     dynamic: true
@@ -1255,8 +1430,6 @@ Uploading photo (title):
 User already exists. Use another email.:
     value: Bohužel, tento email už je obsazený.
     dynamic: true
-User email (hint):
-    value: Já ti to říkal - nic jiného o tobě nevím.
 User email (label):
     value: Tímhle se přihlašuješ
 User profile (title):
@@ -1269,6 +1442,8 @@ User score (hint):
         pohodě, D zvedlé obočí a E/F už může být risk.
 User score (label):
     value: Skóre
+Verification email sent. Check your inbox.:
+    value: Poslal jsem ti link na mail, jukni tam.
 View transactions (button):
     value: Zprávy
 Warranty (title):
@@ -1287,8 +1462,18 @@ You got dislike (label):
     value: Někomu se nelíbí tvůj inzerát
 You got like (label):
     value: Někomu se líbí tvůj inzerát!
+Your email is not verified yet.:
+    value: Tvůj email zatím nemám ověřený
+Your email is verified.:
+    value: Všechno v pohodě, email máš ověřený
 Your favourites (title):
     value: Oblíbené
+ask:
+    value: ask
+auth magic link sends email and signs in:
+    value: auth magic link sends email and signs in
+auth sign up sends verification email:
+    value: auth sign up sends verification email
 brand - placeholder:
     value: Vyplň značku
     dynamic: true
@@ -1366,8 +1551,16 @@ dispute:
     value: dispute
 expired:
     value: expired
+fixed:
+    value: fixed
+free:
+    value: free
 gallery:
     value: gallery
+haggle:
+    value: haggle
+haulaway:
+    value: haulaway
 interest:
     value: interest
 like:
@@ -1456,6 +1649,26 @@ sensor.type - full-frame:
     dynamic: true
 sold:
     value: sold
+status-closed:
+    value: status-closed
+status-dispute-buyer:
+    value: status-dispute-buyer
+status-dispute-seller:
+    value: status-dispute-seller
+status-expired:
+    value: status-expired
+status-rejected-buyer:
+    value: status-rejected-buyer
+status-rejected-seller:
+    value: status-rejected-seller
+status-resolved:
+    value: status-resolved
+status-sold:
+    value: status-sold
+status-success:
+    value: status-success
+status-trade:
+    value: status-trade
 success:
     value: success
 trade:
@@ -1471,8 +1684,14 @@ transaction - buyer - status-dispute-seller:
         **Je potřeba tvoje pozornost**
 
 
-        _Prodejce si žádá vyřešit problém - společně se na to podívejte a
-        domluvte se._
+        _Prodejce si žádá vyřešit problém - společně se na to podívejte a domluvte
+        se._
+    dynamic: true
+transaction - buyer - status-expired:
+    value: |
+        **Čas vypršel**
+
+        Automaticky ukončený obchod, dlouho se nic nedělo.
     dynamic: true
 transaction - buyer - status-interest:
     value: |
@@ -1527,6 +1746,12 @@ transaction - seller - status-dispute-seller:
         **Otevřel jsi řešení problému**
 
         _Domluvte se, co je špatně a společně problém rozlouskněte._
+    dynamic: true
+transaction - seller - status-expired:
+    value: |
+        **Čas vypršel**
+
+        Automaticky ukončený obchod, dlouho se nic nedělo.
     dynamic: true
 transaction - seller - status-interest:
     value: |

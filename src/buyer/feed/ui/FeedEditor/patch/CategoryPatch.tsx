@@ -21,10 +21,10 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "single",
-		initial: feed.query?.filter?.categoryId
+		initial: feed.query?.where?.categoryId
 			? [
 					{
-						id: feed.query.filter.categoryId,
+						id: feed.query.where.categoryId,
 					},
 				]
 			: [],
@@ -63,8 +63,8 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 						patch: {
 							query: {
 								...feed.query,
-								filter: {
-									...feed.query?.filter,
+								where: {
+									...feed.query?.where,
 									categoryId: selection.optional.singleId(),
 									attrs: {},
 								},

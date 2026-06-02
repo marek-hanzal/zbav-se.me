@@ -1,15 +1,14 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { agentStreamFetchFx } from "~/user/agent/server/fx/agentStreamFetchFx";
-import type { AgentStreamFilterSchema } from "~/user/agent/server/schema/AgentStreamFilterSchema";
 import type { AgentStreamQuerySchema } from "~/user/agent/server/schema/AgentStreamQuerySchema";
+import type { AgentStreamWhereSchema } from "../schema/AgentStreamWhereSchema";
 
 export namespace agentStreamDeleteFx {
 	export interface Props extends Omit<AgentStreamQuerySchema.Type, "cursor" | "sort"> {
-		scope: AgentStreamFilterSchema.Type;
+		scope: AgentStreamWhereSchema.Type;
 	}
 }
 
@@ -23,13 +22,11 @@ export const agentStreamDeleteFx = Effect.fn("agentStreamDeleteFx")(function* (
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
-
 			const stream = yield* agentStreamFetchFx(query);
 
-			yield* tryDbFx(async () =>
-				kysely.deleteFrom("agent_stream").where("id", "=", stream.id).execute(),
-			);
+			yield* dbFx(async (kysely) => {
+				return kysely.deleteFrom("agent_stream").where("id", "=", stream.id).execute();
+			});
 
 			return stream;
 		}),

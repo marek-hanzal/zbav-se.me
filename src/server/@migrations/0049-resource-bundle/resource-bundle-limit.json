@@ -1,0 +1,32 @@
+[
+	{
+		"name": "season-founders",
+		"resource": "listing.count",
+		"limit": 50
+	},
+	{
+		"name": "season-founders",
+		"resource": "feed.count",
+		"limit": 15
+	},
+	{
+		"name": "season-founders",
+		"resource": "listing.gallery.count",
+		"limit": 20
+	},
+	{
+		"name": "free",
+		"resource": "listing.count",
+		"limit": 5
+	},
+	{
+		"name": "free",
+		"resource": "feed.count",
+		"limit": 3
+	},
+	{
+		"name": "free",
+		"resource": "listing.gallery.count",
+		"limit": 5
+	}
+]

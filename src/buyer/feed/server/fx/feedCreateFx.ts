@@ -4,10 +4,11 @@ import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import type { FeedCreateSchema } from "~/buyer/feed/server/schema/FeedCreateSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { ConflictErrorFx } from "~/server/error/ConflictErrorFx";
+import { resourceLimitEnsureFx } from "~/user/resource-limit/server/fx/resourceLimitEnsureFx";
+import { feedCountFx } from "./feedCountFx";
 
 export namespace feedCreateFx {
 	export interface Props extends FeedCreateSchema.Type {
@@ -29,15 +30,29 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 
 			const id = genId();
 			const now = dateContext.now();
 
-			yield* tryDbFx(
-				async () =>
-					kysely
+			const feedCount = yield* feedCountFx({
+				where: {
+					type: "user",
+				},
+				scope: {
+					userId,
+				},
+			});
+
+			yield* resourceLimitEnsureFx({
+				count: feedCount + 1,
+				resource: "feed.count",
+				userId,
+			});
+
+			yield* dbFx(
+				async (kysely) => {
+					return kysely
 						.insertInto("feed")
 						.values({
 							...data,
@@ -48,7 +63,8 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 							createdAt: now.toJSDate(),
 							updatedAt: now.toJSDate(),
 						})
-						.executeTakeFirstOrThrow(),
+						.executeTakeFirstOrThrow();
+				},
 				{
 					"23505": (e) =>
 						new ConflictErrorFx({

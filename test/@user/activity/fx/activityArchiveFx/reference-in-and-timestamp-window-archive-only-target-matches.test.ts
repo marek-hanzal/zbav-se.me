@@ -49,7 +49,7 @@ describe("activityArchiveFx", () => {
 						"listing-a",
 					],
 					family: "reaction",
-					type: "favourite",
+					type: "listing.favourite",
 					payload: {
 						listingId: "listing-a",
 					},
@@ -64,7 +64,7 @@ describe("activityArchiveFx", () => {
 						"listing-shared",
 					],
 					family: "reaction",
-					type: "favourite",
+					type: "listing.favourite",
 					payload: {
 						listingId: "listing-b",
 					},
@@ -78,7 +78,7 @@ describe("activityArchiveFx", () => {
 						"listing-a",
 					],
 					family: "reaction",
-					type: "favourite",
+					type: "listing.favourite",
 					payload: {
 						listingId: "listing-a",
 					},
@@ -92,7 +92,7 @@ describe("activityArchiveFx", () => {
 						"listing-z",
 					],
 					family: "reaction",
-					type: "favourite",
+					type: "listing.favourite",
 					payload: {
 						listingId: "listing-z",
 					},

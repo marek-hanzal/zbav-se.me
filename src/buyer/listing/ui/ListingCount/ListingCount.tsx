@@ -1,9 +1,9 @@
 import { withFallback } from "@/lib/client/fallback";
 import { Icon, SpinnerIcon } from "@/lib/client/icon";
 import { useLocale } from "@/lib/client/locale";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
 import { toLocaleNumber } from "@/lib/common/to-locale-number";
-import { translator } from "@/lib/common/translation";
 import { withListingQuery } from "~/buyer/listing/query/withListingQuery";
 import type { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
 
@@ -17,6 +17,7 @@ export namespace ListingCount {
 export const ListingCount = withFallback(
 	({ _suspense, textEmpty, query }: ListingCount.Props) => {
 		const locale = useLocale();
+		const translator = useTranslator();
 		const { data: count } = withListingQuery.useCountQuery(query);
 
 		return count > 0

@@ -2,8 +2,8 @@ import type { FC } from "react";
 import { match } from "ts-pattern";
 import { Container } from "@/lib/client/container";
 import { useRenderLogger } from "@/lib/client/log";
+import { useTranslator } from "@/lib/client/translation";
 import type { MarkSuspense } from "@/lib/client/type";
-import { translator } from "@/lib/common/translation";
 import { withTransactionQuery } from "~/buyer/transaction/query/withTransactionQuery";
 import { RejectedMessage } from "~/buyer/transaction/ui/status/RejectedMessage";
 import { TransactionMenu } from "~/buyer/transaction/ui/TransactionMenu";
@@ -18,6 +18,7 @@ export namespace TransactionInput {
 }
 
 export const TransactionInput: FC<TransactionInput.Props> = ({ _suspense, transactionId }) => {
+	const translator = useTranslator();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 
 	useRenderLogger({

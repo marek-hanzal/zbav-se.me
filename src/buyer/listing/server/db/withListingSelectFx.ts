@@ -1,15 +1,17 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
+import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
+import { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
 import { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
-import type { CategorySchema } from "~/public/category/server/schema/CategorySchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { withLikeEx } from "~/server/database/expression/withLikeEx";
+import { withNormalizedContainsEx } from "~/server/database/expression/withNormalizedContainsEx";
 import { withNormalizedLikeEx } from "~/server/database/expression/withNormalizedLikeEx";
 import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
+import type { CategorySchema } from "~/user/category/server/schema/CategorySchema";
 import { withUserRestrictionActiveSelectFx } from "~/user/user-restriction/server/db/withUserRestrictionActiveSelectFx";
 import type { ListingMetaSchema } from "../schema/ListingMetaSchema";
 import type { ListingSortSchema } from "../schema/ListingSortSchema";
@@ -31,8 +33,10 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	hasExplicitCategory,
 }: withListingSelectFx.Props) {
 	const locationId = meta?.locationId;
+	const dateContext = yield* DateContextFx;
 	const { kysely } = yield* KyselyContextFx;
 	const logger = yield* getLoggerFx("withListingSelectFx", "buyer");
+	const now = dateContext.now().toJSDate();
 
 	const fallbackSql = sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`;
 	const restrictionSql = yield* withUserRestrictionActiveSelectFx({
@@ -42,9 +46,9 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	let select = kysely
 		.selectFrom("listing as l")
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
-		.innerJoin("location as loc", "loc.id", "l.locationId")
-		.where("l.status", "in", [
-			"live",
+		.where("l.status", "not in", [
+			"on-hold",
+			"banned",
 		])
 		.where((eb) => {
 			return eb(
@@ -153,7 +157,18 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				"l.updatedAt",
 
 				(eb) => {
-					return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location");
+					return eb
+						.selectFrom("location as loc")
+						.select((eb) => {
+							return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as(
+								"json",
+							);
+						})
+						.whereRef("loc.id", "=", "l.locationId")
+						.limit(1)
+						.$asScalar()
+						.$castTo<LocationSchema.Type>()
+						.as("location");
 				},
 
 				(eb) => {
@@ -216,7 +231,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				eb
 					.exists(
 						eb
-							.selectFrom("favourite as f")
+							.selectFrom("listing_favourite as f")
 							.select(sql`1`.as("true"))
 							.whereRef("f.listingId", "=", "l.id")
 							.where("f.userId", "=", userId),
@@ -227,7 +242,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				eb
 					.exists(
 						eb
-							.selectFrom("ignore as i")
+							.selectFrom("listing_ignore as i")
 							.select(sql`1`.as("true"))
 							.whereRef("i.listingId", "=", "l.id")
 							.where("i.userId", "=", userId),
@@ -238,13 +253,21 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				eb
 					.exists(
 						eb
-							.selectFrom("flag as f")
+							.selectFrom("listing_flag as f")
 							.select(sql`1`.as("true"))
 							.whereRef("f.listingId", "=", "l.id")
 							.where("f.userId", "=", userId),
 					)
 					.$castTo<boolean>()
 					.as("hasFlag"),
+
+				eb
+					.and([
+						eb("l.status", "=", ListingStatusEnumSchema.enum.live),
+						eb("l.expiresAt", ">", now),
+					])
+					.$castTo<boolean>()
+					.as("isActive"),
 
 				eb
 					.selectFrom("transaction as lt")
@@ -287,40 +310,26 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					query = query.where("l.id", "in", where.idIn);
 				}
 
-				if (where.fulltext) {
+				if (where.fulltext?.length) {
 					const fulltext = where.fulltext;
 
 					query = query.where((eb) => {
-						const categoryIdSelect = eb
-							.selectFrom("category as cat")
-							.select("cat.id")
-							.where((eb) =>
-								eb.or([
-									withLikeEx(eb.ref("cat.category"), fulltext),
-									withLikeEx(eb.ref("cat.group"), fulltext),
-									eb.exists(
-										eb
-											.selectFrom("category_spotlight")
-											.select("category_spotlight.categoryId")
-											.whereRef(
-												"category_spotlight.categoryId",
-												"=",
-												"cat.id",
-											)
-											.where((eb) => {
-												return withLikeEx(
-													eb.ref("category_spotlight.text"),
-													fulltext,
-												);
-											}),
-									),
-								]),
-							);
-
-						return eb.or([
-							withNormalizedLikeEx(eb.ref("l.withTitle"), fulltext, "both"),
-							eb("l.categoryId", "in", categoryIdSelect),
-						]);
+						return eb.and(
+							fulltext.map((term) =>
+								eb.exists(
+									eb
+										.selectFrom("listing_spotlight as ls")
+										.select("ls.listingId")
+										.whereRef("ls.listingId", "=", "l.id")
+										.where((eb) => {
+											return withNormalizedContainsEx(
+												eb.ref("ls.text"),
+												term,
+											);
+										}),
+								),
+							),
+						);
 					});
 				}
 
@@ -334,6 +343,14 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 				if (where.categoryIdIn && where.categoryIdIn.length > 0) {
 					query = query.where("l.categoryId", "in", where.categoryIdIn);
+				}
+
+				if (where.statusIn && where.statusIn.length > 0) {
+					query = query.where("l.status", "in", where.statusIn);
+				}
+
+				if (where.statusNotIn && where.statusNotIn.length > 0) {
+					query = query.where("l.status", "not in", where.statusNotIn);
 				}
 
 				if (where.ageIn && where.ageIn.length > 0) {
@@ -402,7 +419,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					query = query.where(({ not, exists, selectFrom }) => {
 						return not(
 							exists(
-								selectFrom("ignore as i")
+								selectFrom("listing_ignore as i")
 									.select("i.listingId")
 									.whereRef("i.listingId", "=", "l.id")
 									.where("i.userId", "=", userId),
@@ -414,7 +431,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				if (where.isFavourite === true) {
 					query = query.where(({ exists, selectFrom }) => {
 						return exists(
-							selectFrom("favourite as f")
+							selectFrom("listing_favourite as f")
 								.select("f.listingId")
 								.whereRef("f.listingId", "=", "l.id")
 								.where("f.userId", "=", userId),

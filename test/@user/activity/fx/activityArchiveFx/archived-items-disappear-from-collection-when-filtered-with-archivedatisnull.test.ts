@@ -53,7 +53,7 @@ describe("activityArchiveFx", () => {
 							"listing-active",
 						],
 						family: "reaction",
-						type: "favourite",
+						type: "listing.favourite",
 						payload: {
 							listingId: "listing-active",
 						},
@@ -66,7 +66,7 @@ describe("activityArchiveFx", () => {
 							"listing-old",
 						],
 						family: "reaction",
-						type: "favourite",
+						type: "listing.favourite",
 						payload: {
 							listingId: "listing-old",
 						},

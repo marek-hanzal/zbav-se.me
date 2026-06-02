@@ -7,10 +7,14 @@ import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
 import { withS3Fx } from "~/common/s3/server/context/withS3Fx";
 import { s3PreSignFx } from "~/common/s3/server/fx/s3PreSignFx";
 import { ServerS3Schema } from "~/server/env/ServerS3Schema";
+import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
+import { testabase } from "~/test/testabase";
 import { withUploadFx } from "~/user/upload/server/context/withUploadFx";
 
 describe("s3PreSignFx", () => {
 	it("generates signed url and CDN path using real S3 config", async () => {
+		const database = await testabase("se-pre-sign");
+
 		const s3Config = ServerS3Schema.parse(process.env);
 		const viteConfig = ViteEnvSchema.parse(process.env);
 		const logger = getLogger("zbav-se.me");
@@ -30,6 +34,7 @@ describe("s3PreSignFx", () => {
 				cdn: viteConfig.VITE_CONTENT_CDN,
 			}),
 			withLoggerFx(logger),
+			withRuntimeFx(database),
 			Effect.runPromise,
 		);
 

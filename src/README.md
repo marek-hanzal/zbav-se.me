@@ -14,3 +14,9 @@ This is the application code.
 - Buyer and seller transaction worker agents live under `src/buyer/transaction/server/tool/` and `src/seller/transaction/server/tool/`.
 - Buyer feed worker agents live under `src/buyer/feed/server/tool/`.
 - Embedded experiments for AI chat live under `src/user/chat/ui/`, with server env contracts in `src/server/env/ServerAiSchema.ts`.
+- XML SEO endpoints live in `src/@routes/` as server-only routes, use the shared streaming XML sitemap domain in `src/common/sitemap/`, and keep large listing segmentation logic in the owning public domain server modules.
+
+## Code Shape
+
+- Do not introduce helpers for straightforward local logic; prefer local constants such as `baseSelect` and adjust the query in place.
+- When a helper is truly needed, place it at the end of the file so the main exported code stays first.

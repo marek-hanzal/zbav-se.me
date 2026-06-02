@@ -2,12 +2,12 @@ import { Effect } from "effect";
 import { withCollectionFx } from "@/lib/common/collection";
 import { getLoggerFx } from "@/lib/common/log";
 import { withFieldOptionSelectFx } from "~/user/field-option/server/db/withFieldOptionSelectFx";
-import type { FieldOptionFilterSchema } from "~/user/field-option/server/schema/FieldOptionFilterSchema";
 import type { FieldOptionQuerySchema } from "~/user/field-option/server/schema/FieldOptionQuerySchema";
+import type { FieldOptionWhereSchema } from "../schema/FieldOptionWhereSchema";
 
 export namespace fieldOptionCollectionFx {
 	export interface Props extends FieldOptionQuerySchema.Type {
-		scope: FieldOptionFilterSchema.Type;
+		scope: FieldOptionWhereSchema.Type;
 	}
 }
 
@@ -17,7 +17,6 @@ export const fieldOptionCollectionFx = Effect.fn("fieldOptionCollectionFx")(func
 		size: 10,
 	},
 	limit,
-	filter,
 	where,
 	scope,
 	sort,
@@ -26,7 +25,6 @@ export const fieldOptionCollectionFx = Effect.fn("fieldOptionCollectionFx")(func
 	logger.trace("fieldOptionCollectionFx", {
 		cursor,
 		limit,
-		filter,
 		where,
 		scope,
 		sort,
@@ -38,7 +36,6 @@ export const fieldOptionCollectionFx = Effect.fn("fieldOptionCollectionFx")(func
 		}),
 		cursor,
 		limit,
-		filter,
 		where,
 		scope,
 	});

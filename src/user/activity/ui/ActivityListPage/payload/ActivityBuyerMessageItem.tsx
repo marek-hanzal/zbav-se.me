@@ -46,7 +46,7 @@ export const ActivityBuyerMessageItem: FC<ActivityBuyerMessageItem.Props> = ({ i
 				bottom={
 					<Container data-ui-flow="vertical">
 						<Typo
-							label={"transaction.title"}
+							label={transaction.title}
 							data-ui-text="sm"
 						/>
 						<Typo

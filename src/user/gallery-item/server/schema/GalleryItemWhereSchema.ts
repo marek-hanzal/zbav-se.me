@@ -1,9 +1,15 @@
 import { z } from "zod";
-import { GalleryItemFilterSchema } from "~/user/gallery-item/server/schema/GalleryItemFilterSchema";
+import { WhereSchema } from "@/lib/common/schema";
 
 export const GalleryItemWhereSchema = z
 	.looseObject({
-		...GalleryItemFilterSchema.shape,
+		...WhereSchema.shape,
+		userId: z.string().optional().meta({
+			description: "Exact user id (access checked via parent gallery)",
+		}),
+		galleryId: z.string().optional().meta({
+			description: "Exact gallery id",
+		}),
 	})
 	.strip()
 	.meta({

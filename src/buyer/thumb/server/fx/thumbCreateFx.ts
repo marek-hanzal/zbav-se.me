@@ -6,8 +6,7 @@ import { listingCheckIfOwnFx } from "~/buyer/listing/server/fx/listingCheckIfOwn
 import { listingFetchFx } from "~/buyer/listing/server/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/buyer/listing-event/server/fx/listingEventCreateFx";
 import type { ThumbCreateSchema } from "~/buyer/thumb/server/schema/ThumbCreateSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { activityCreateFx } from "~/user/activity/server/fx/activityCreateFx";
 
@@ -35,7 +34,6 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 
 			const id = genId();
@@ -54,8 +52,8 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 				scope: {},
 			});
 
-			const thumb = yield* tryDbFx(async () =>
-				kysely
+			const thumb = yield* dbFx(async (kysely) => {
+				return kysely
 					.insertInto("thumb")
 					.values({
 						...data,
@@ -67,8 +65,8 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 					})
 					.onConflict((eb) => eb.doNothing())
 					.returningAll()
-					.executeTakeFirst(),
-			);
+					.executeTakeFirst();
+			});
 
 			if (thumb) {
 				yield* listingEventCreateFx({

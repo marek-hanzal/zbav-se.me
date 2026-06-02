@@ -10,14 +10,7 @@ export const ListingQuerySchema = z
 			page: 0,
 			size: 256,
 		}).optional(),
-		filter: ListingWhereSchema.optional().meta({
-			id: "PublicListingFilter",
-			description: "Public listing filters",
-		}),
-		where: ListingWhereSchema.optional().meta({
-			id: "PublicListingWhere",
-			description: "Public listing filters",
-		}),
+		where: ListingWhereSchema.optional(),
 		sort: ListingSortSchema.array().optional(),
 		meta: ListingMetaSchema.optional(),
 		limit: z.int().nonnegative().optional().meta({

@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import type { FieldCreateSchema } from "../schema/FieldCreateSchema";
 import { fieldFetchFx } from "./fieldFetchFx";
 
@@ -17,9 +16,7 @@ export const fieldCreateFx = Effect.fn("fieldCreateFx")(function* (data: fieldCr
 		...data,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
-
-	yield* tryDbFx(async () => {
+	yield* dbFx(async (kysely) => {
 		return kysely.insertInto("field").values(data).returningAll().executeTakeFirstOrThrow();
 	});
 

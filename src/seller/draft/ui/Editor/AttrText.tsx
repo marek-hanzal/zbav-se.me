@@ -4,9 +4,9 @@ import { Container } from "@/lib/client/container";
 import { FormField } from "@/lib/client/form";
 import { ArrowRightIcon } from "@/lib/client/icon";
 import { Status } from "@/lib/client/status";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
 import { useAppForm } from "~/common/ui/form";
 import { withDraftAttrTextPatchMutation } from "~/seller/draft-attr-text/mutation/withDraftAttrTextPatchMutation";
@@ -34,6 +34,7 @@ export namespace AttrText {
 }
 
 export const AttrText: FC<AttrText.Props> = ({ draftId, attrs, attr, view, ...props }) => {
+	const translator = useTranslator();
 	const next = useNextAttr(attr, attrs);
 	const mutation = withDraftAttrTextPatchMutation.useMutation({
 		onSuccess() {

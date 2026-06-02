@@ -3,6 +3,7 @@ import { SpinnerContainer } from "@/lib/client/spinner";
 import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import { getFeedDefaultCreate } from "~/buyer/feed/service/getFeedDefaultCreate";
+import { withTranslationsQuery } from "~/common/translation/query/withTranslationsQuery";
 
 export const Route = createFileRoute("/$locale/app/buyer/feed/default")({
 	/**
@@ -14,10 +15,15 @@ export const Route = createFileRoute("/$locale/app/buyer/feed/default")({
 	 * The idea is to _ensure_ we've a feed a user _can_ customize
 	 */
 	async loader({ context: { queryClient }, params: { locale } }) {
+		const t = translator({
+			translations: await withTranslationsQuery.ensure(queryClient, {
+				locale,
+			}),
+		});
 		const feed =
 			(await withFeedQuery
 				.ensureEntityQuery(queryClient, {
-					filter: {
+					where: {
 						type: "user",
 					},
 					sort: [
@@ -33,7 +39,7 @@ export const Route = createFileRoute("/$locale/app/buyer/feed/default")({
 				.catch(() => undefined)) ??
 			(await withFeedQuery.createFn(
 				queryClient,
-				getFeedDefaultCreate(translator.text("Feed name (default)")),
+				getFeedDefaultCreate(t.text("Feed name (default)")),
 				[
 					"collection",
 					"count",

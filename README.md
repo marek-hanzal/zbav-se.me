@@ -26,7 +26,8 @@ This repo stays public for transparency and learning, but it is **not open sourc
 ```bash
 bun install
 npm install -g portless
-cp .env.example .env.local
+cp .env.example .env
+docker compose up -d
 ```
 
 ### Run everything
@@ -35,6 +36,8 @@ cp .env.example .env.local
 portless proxy start --https
 bun run dev
 ```
+
+Mailpit is available at <http://127.0.0.1:8025> for local SMTP inbox inspection.
 
 ### Useful root commands
 
@@ -99,6 +102,11 @@ The shared non-production environments are `uat` and `dev`, so the canonical syn
 | s3 | `SERVER_S3_SECRET` | yes | secret | Secret access key for the S3-compatible storage provider. |
 | external-api | `SERVER_GEOAPIFY_TOKEN` | yes | secret | Geoapify API token used for location autocomplete and related geodata lookups. |
 | external-api | `SERVER_GITHUB` | yes | secret | GitHub token used by the server-side GitHub integration. |
+| mail | `SERVER_SMTP_HOST` | yes | variable | SMTP host used for transactional email delivery. Local development and dev/test flows point to Mailpit; uat and production point to Resend SMTP. |
+| mail | `SERVER_SMTP_PORT` | yes | variable | SMTP port used for transactional email delivery. |
+| mail | `SERVER_SMTP_USERNAME` | yes | variable | SMTP username used by the transactional mail transport. |
+| mail | `SERVER_SMTP_PASSWORD` | yes | secret | SMTP password used by the transactional mail transport. |
+| mail | `SERVER_SMTP_FROM` | yes | variable | Sender identity used for transactional emails. |
 | seed | `SEED_CORE_CONCURRENCY` | optional | variable | Optional shared concurrency override for seed jobs that use the generic seed concurrency helper. |
 | seed | `SEED_INTERACTION_BATCH_SIZE` | default: `25` | variable | Optional batch size override for generated interaction seed writes. |
 | seed | `SEED_INTERACTION_CONCURRENCY` | default: `6` | variable | Optional concurrency override for interaction seed generation. |
@@ -126,6 +134,7 @@ bun run workflow:check
 Vitest coverage is scoped to server-side `Fx` and DB `Fx` business flows. Thin `Fn` wrappers, routes, UI, tools, migrations, and seed scripts are intentionally out of the coverage denominator.
 
 The Playwright e2e flow uses `x-e2e-db` to select the per-test database. That header is ignored unless `SERVER_E2E=e2e` is present.
+Playwright runs e2e files in parallel by default. Use `E2E_WORKERS=<count> bun run e2e` to tune local or CI concurrency.
 
 ## Dependency Hygiene
 

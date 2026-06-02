@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
+import { TransactionEntrySensitiveKindEnumSchema } from "~/common/user-transaction/enum/TransactionEntrySensitiveKindEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { Transitions } from "~/user/transaction/server/fx/transactionTransitionFx";
 
 export namespace transactionEntryCleanupSensitiveFx {
@@ -27,17 +27,11 @@ export const transactionEntryCleanupSensitiveFx = Effect.fn("transactionEntryCle
 			return;
 		}
 
-		const { kysely } = yield* KyselyContextFx;
-
-		return yield* tryDbFx(async () => {
+		return yield* dbFx(async (kysely) => {
 			return kysely
 				.deleteFrom("transaction_entry")
 				.where("transactionId", "=", transactionId)
-				.where("kind", "in", [
-					"location",
-					"package",
-					"personal",
-				])
+				.where("kind", "in", TransactionEntrySensitiveKindEnumSchema.options)
 				.executeTakeFirst();
 		});
 	},

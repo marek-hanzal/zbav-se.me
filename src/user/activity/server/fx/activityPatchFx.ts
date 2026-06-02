@@ -1,15 +1,14 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { activityFetchFx } from "~/user/activity/server/fx/activityFetchFx";
-import type { ActivityFilterSchema } from "~/user/activity/server/schema/ActivityFilterSchema";
 import type { ActivityPatchSchema } from "~/user/activity/server/schema/ActivityPatchSchema";
+import type { ActivityWhereSchema } from "../schema/ActivityWhereSchema";
 
 export namespace activityPatchFx {
 	export interface Props extends ActivityPatchSchema.Type {
-		scope: ActivityFilterSchema.Type;
+		scope: ActivityWhereSchema.Type;
 	}
 }
 
@@ -27,14 +26,12 @@ export const activityPatchFx = Effect.fn("activityPatchFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
-
 			const activity = yield* activityFetchFx({
 				...query,
 				scope,
 			});
 
-			yield* tryDbFx(async () => {
+			yield* dbFx(async (kysely) => {
 				return kysely
 					.updateTable("activity")
 					.set(patch)

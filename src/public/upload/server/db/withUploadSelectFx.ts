@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { UploadFilterSchema } from "../schema/UploadFilterSchema";
 import type { UploadSortSchema } from "../schema/UploadSortSchema";
+import type { UploadWhereSchema } from "../schema/UploadWhereSchema";
 
 export namespace withUploadSelectFx {
 	export interface Props {
@@ -30,7 +30,7 @@ export const withUploadSelectFx = Effect.fn("withUploadSelectFx")(function* ({
 			"u.url",
 			"u.createdAt",
 		]),
-		queryFx(select, where: UploadFilterSchema.Type) {
+		queryFx(select, where: UploadWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 

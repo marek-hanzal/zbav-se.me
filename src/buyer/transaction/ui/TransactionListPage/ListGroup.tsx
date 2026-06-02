@@ -1,14 +1,14 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import { Typo } from "@/lib/client/typo";
-import type { TransactionFilterSchema } from "~/buyer/transaction/server/schema/TransactionFilterSchema";
 import { withTransactionQuery } from "../../query/withTransactionQuery";
+import type { TransactionWhereSchema } from "../../server/schema/TransactionWhereSchema";
 import { TransactionList } from "../TransactionList";
 
 export namespace ListGroup {
 	export interface Props extends Container.Props {
 		label: string;
-		filter: TransactionFilterSchema.Type;
+		where: TransactionWhereSchema.Type;
 		refetchInterval: number;
 		typoProps?: Typo.PropsEx;
 	}
@@ -16,14 +16,14 @@ export namespace ListGroup {
 
 export const ListGroup: FC<ListGroup.Props> = ({
 	label,
-	filter,
+	where,
 	refetchInterval,
 	typoProps,
 	...props
 }) => {
 	const { data: transactionCollection } = withTransactionQuery.useIdsQuery(
 		{
-			filter,
+			where,
 			cursor: {
 				page: 0,
 				size: 1000,

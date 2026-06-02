@@ -1,8 +1,8 @@
 import { type FC, Suspense, useState } from "react";
 import { BottomSheet } from "@/lib/client/bottom-sheet";
 import { Button } from "@/lib/client/button";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { CloseButton } from "~/common/ui/button";
 import { BuyerIcon } from "~/common/ui/icon";
 import { BuyerInfo } from "../BuyerInfo";
@@ -20,6 +20,7 @@ export namespace BuyerInfoButton {
  * @see src/transaction/ui/BuyerInfo/BuyerInfo.tsx
  */
 export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({ transactionId, ...props }) => {
+	const translator = useTranslator();
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (

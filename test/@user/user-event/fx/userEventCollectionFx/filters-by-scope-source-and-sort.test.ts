@@ -80,10 +80,8 @@ describe("userEventCollectionFx", () => {
 				scope: {
 					userId: buyer.id,
 				},
-				filter: {
-					source: "transaction",
-				},
 				where: {
+					source: "transaction",
 					event: "transaction.message",
 				},
 				sort: [

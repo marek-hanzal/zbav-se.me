@@ -4,7 +4,7 @@ import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { UserRestrictionContextFx } from "../context/UserRestrictionContextFx";
 import type { UserRestrictionCreateSchema } from "../schema/UserRestrictionCreateSchema";
@@ -95,7 +95,7 @@ export const userRestrictionCreateFx = Effect.fn("userRestrictionCreateFx")(func
 				}
 			});
 
-			return yield* tryDbFx(async () => {
+			return yield* dbFx(async (kysely) => {
 				await kysely
 					.insertInto("user_restriction")
 					.values({

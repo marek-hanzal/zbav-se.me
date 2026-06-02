@@ -1,4 +1,5 @@
-import { type Migration, sql } from "kysely";
+import { sql } from "kysely";
+import type { Migration } from "kysely/migration";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { ActivityPriorityEnumSchema } from "~/common/activity/enum/ActivityPriorityEnumSchema";
 import type { ActivityTypeEnumSchema } from "~/common/activity/enum/ActivityTypeEnumSchema";
@@ -24,11 +25,11 @@ export const ActivityMigration: Migration = {
 					"system",
 					"unknown",
 					"thumb",
-					"favourite",
+					"listing.favourite",
 					"unfavourite",
-					"flag",
+					"listing.flag",
 					"unflag",
-					"ignore",
+					"listing.ignore",
 					"unignore",
 				] as const),
 			)

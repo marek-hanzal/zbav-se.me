@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
+import { useTranslator } from "@/lib/client/translation";
 import { Typo } from "@/lib/client/typo";
-import { translator } from "@/lib/common/translation";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 
 export namespace Delivery {
@@ -11,6 +11,7 @@ export namespace Delivery {
 }
 
 export const Delivery: FC<Delivery.Props> = ({ delivery, ...props }) => {
+	const translator = useTranslator();
 	const [item] = delivery ?? [];
 
 	if (!item || !delivery) {

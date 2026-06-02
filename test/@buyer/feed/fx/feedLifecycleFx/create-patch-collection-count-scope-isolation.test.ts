@@ -23,8 +23,10 @@ describe("feedLifecycleFx", () => {
 				type: "search",
 				name: "MacBooks",
 				query: {
-					filter: {
-						fulltext: "macbook",
+					where: {
+						fulltext: [
+							"macbook",
+						],
 					},
 				},
 			});
@@ -55,15 +57,19 @@ describe("feedLifecycleFx", () => {
 				patch: {
 					name: "Updated MacBooks",
 					query: {
-						filter: {
-							fulltext: "macbook pro",
+						where: {
+							fulltext: [
+								"macbook pro",
+							],
 						},
 					},
 				},
 			});
 
 			expect(patched.name).toBe("Updated MacBooks");
-			expect(patched.query.filter?.fulltext).toBe("macbook pro");
+			expect(patched.query.where?.fulltext).toEqual([
+				"macbook pro",
+			]);
 
 			const foreignPatch = yield* Effect.either(
 				feedPatchFx({
@@ -95,7 +101,9 @@ describe("feedLifecycleFx", () => {
 			});
 
 			expect(fetched.name).toBe("Updated MacBooks");
-			expect(fetched.query.filter?.fulltext).toBe("macbook pro");
+			expect(fetched.query.where?.fulltext).toEqual([
+				"macbook pro",
+			]);
 
 			const collection = yield* feedCollectionFx({
 				scope: {
@@ -103,7 +111,7 @@ describe("feedLifecycleFx", () => {
 				},
 			});
 
-			expect(collection).toHaveLength(2);
+			expect(collection).toHaveLength(3);
 			expect(collection.every((item) => item.userId === owner.id)).toBe(true);
 
 			const count = yield* feedCountFx({
@@ -112,7 +120,7 @@ describe("feedLifecycleFx", () => {
 				},
 			});
 
-			expect(count).toBe(2);
+			expect(count).toBe(3);
 
 			const foreignFetch = yield* Effect.either(
 				feedFetchFx({

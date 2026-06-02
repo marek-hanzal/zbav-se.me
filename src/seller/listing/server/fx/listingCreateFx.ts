@@ -7,14 +7,16 @@ import { getLoggerFx } from "@/lib/common/log";
 import { draftDeleteFx } from "~/seller/draft/server/fx/draftDeleteFx";
 import { draftFetchFx } from "~/seller/draft/server/fx/draftFetchFx";
 import type { ListingCreateSchema } from "~/seller/listing/server/schema/ListingCreateSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
+import { listingSpotlightBuildFx } from "~/server/listing-spotlight/server/fx/listingSpotlightBuildFx";
 import { galleryInsertFx } from "~/user/gallery/server/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/user/gallery-item/server/fx/galleryItemInsertFx";
+import { resourceLimitEnsureFx } from "~/user/resource-limit/server/fx/resourceLimitEnsureFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 import { userEventCreateFx } from "~/user/user-event/server/fx/userEventCreateFx";
+import { listingCountFx } from "./listingCountFx";
 import { listingFetchFx } from "./listingFetchFx";
 import { listingValidateFx } from "./listingValidateFx";
 
@@ -36,8 +38,22 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
+			const liveListingCount = yield* listingCountFx({
+				userId,
+				where: {
+					status: "live",
+				},
+				scope: {
+					userId,
+				},
+			});
+
+			yield* resourceLimitEnsureFx({
+				count: liveListingCount + 1,
+				resource: "listing.count",
+				userId,
+			});
 
 			const draft = yield* draftFetchFx({
 				userId,
@@ -84,7 +100,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				userId,
 			});
 
-			const { geo: withLocation } = yield* tryDbFx(async () => {
+			const { geo: withLocation } = yield* dbFx(async (kysely) => {
 				return kysely
 					.selectFrom("location")
 					.select("geo")
@@ -112,7 +128,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				});
 			}
 
-			yield* tryDbFx(async () => {
+			yield* dbFx(async (kysely) => {
 				return kysely
 					.insertInto("listing")
 					.values({
@@ -174,7 +190,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			});
 
 			{
-				const draftAttrDecimal = yield* tryDbFx(async () => {
+				const draftAttrDecimal = yield* dbFx(async (kysely) => {
 					return kysely
 						.selectFrom("draft_attr_decimal")
 						.selectAll()
@@ -183,7 +199,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				});
 
 				if (draftAttrDecimal.length > 0) {
-					yield* tryDbFx(async () => {
+					yield* dbFx(async (kysely) => {
 						return kysely
 							.insertInto("listing_attr_decimal")
 							.values(
@@ -197,7 +213,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					});
 				}
 
-				const draftAttrNumber = yield* tryDbFx(async () => {
+				const draftAttrNumber = yield* dbFx(async (kysely) => {
 					return kysely
 						.selectFrom("draft_attr_number")
 						.selectAll()
@@ -206,7 +222,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				});
 
 				if (draftAttrNumber.length > 0) {
-					yield* tryDbFx(async () => {
+					yield* dbFx(async (kysely) => {
 						return kysely
 							.insertInto("listing_attr_number")
 							.values(
@@ -220,7 +236,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					});
 				}
 
-				const draftAttrEnumSingle = yield* tryDbFx(async () => {
+				const draftAttrEnumSingle = yield* dbFx(async (kysely) => {
 					return kysely
 						.selectFrom("draft_attr_enum_single")
 						.selectAll()
@@ -229,7 +245,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				});
 
 				if (draftAttrEnumSingle.length > 0) {
-					yield* tryDbFx(async () => {
+					yield* dbFx(async (kysely) => {
 						return kysely
 							.insertInto("listing_attr_enum_single")
 							.values(
@@ -243,7 +259,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					});
 				}
 
-				const draftAttrEnumMulti = yield* tryDbFx(async () => {
+				const draftAttrEnumMulti = yield* dbFx(async (kysely) => {
 					return kysely
 						.selectFrom("draft_attr_enum_multi")
 						.selectAll()
@@ -252,7 +268,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				});
 
 				if (draftAttrEnumMulti.length > 0) {
-					yield* tryDbFx(async () => {
+					yield* dbFx(async (kysely) => {
 						return kysely
 							.insertInto("listing_attr_enum_multi")
 							.values(
@@ -266,7 +282,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					});
 				}
 
-				const draftAttrText = yield* tryDbFx(async () => {
+				const draftAttrText = yield* dbFx(async (kysely) => {
 					return kysely
 						.selectFrom("draft_attr_text")
 						.selectAll()
@@ -275,7 +291,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				});
 
 				if (draftAttrText.length > 0) {
-					yield* tryDbFx(async () => {
+					yield* dbFx(async (kysely) => {
 						return kysely
 							.insertInto("listing_attr_text")
 							.values(
@@ -289,6 +305,10 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					});
 				}
 			}
+
+			yield* listingSpotlightBuildFx({
+				listingId,
+			});
 
 			yield* userEventCreateFx({
 				userId,

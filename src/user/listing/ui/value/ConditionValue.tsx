@@ -1,6 +1,6 @@
 import type { FC } from "react";
+import { useTranslator } from "@/lib/client/translation";
 import { LabelValue } from "@/lib/client/value";
-import { translator } from "@/lib/common/translation";
 
 export namespace ConditionValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {
@@ -13,6 +13,7 @@ export namespace ConditionValue {
  * Use it in detail cards, summaries, and previews where editable controls are not needed.
  */
 export const ConditionValue: FC<ConditionValue.Props> = ({ condition, ...props }) => {
+	const translator = useTranslator();
 	const hasCondition = condition != null;
 	return (
 		<LabelValue

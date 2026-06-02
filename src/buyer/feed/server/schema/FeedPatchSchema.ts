@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { FeedQuerySchema } from "~/buyer/feed/server/schema/FeedQuerySchema";
-import { ListingQuerySchema } from "~/buyer/listing/server/schema/ListingQuerySchema";
 import { FeedTableSchema } from "~/server/database/@table/FeedTableSchema";
+import { ListingQuerySchema } from "./ListingQuerySchema";
 
 export const FeedPatchSchema = z
 	.looseObject({

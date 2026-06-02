@@ -1,4 +1,5 @@
-import { type Migration, sql } from "kysely";
+import { sql } from "kysely";
+import type { Migration } from "kysely/migration";
 import { toEnumGuard } from "@/lib/common/to-enum-guard";
 import type { ListingEventEnumSchema } from "~/common/listing/enum/ListingEventEnumSchema";
 
@@ -10,12 +11,12 @@ export const ListingEventMigration: Migration = {
 				toEnumGuard<ListingEventEnumSchema.Type>()([
 					"impression",
 					"view",
-					"ignore",
+					"listing.ignore",
 					"unignore",
-					"flag",
+					"listing.flag",
 					"unflag",
 					"transaction",
-					"favourite",
+					"listing.favourite",
 					"unfavourite",
 					"like",
 					"dislike",

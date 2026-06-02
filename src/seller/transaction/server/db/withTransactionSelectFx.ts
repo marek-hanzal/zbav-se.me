@@ -4,10 +4,11 @@ import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
+import type { LocationSchema } from "~/session/location/server/schema/LocationSchema";
 import { TransactionEntryDirectionEnumSchema } from "~/user/transaction-entry/server/schema/TransactionEntryDirectionEnumSchema";
 import type { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
-import type { TransactionFilterSchema } from "../schema/TransactionFilterSchema";
 import type { TransactionSortSchema } from "../schema/TransactionSortSchema";
+import type { TransactionWhereSchema } from "../schema/TransactionWhereSchema";
 
 export namespace withTransactionSelectFx {
 	export interface Props {
@@ -82,8 +83,24 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 		select: select
 			.selectAll("lt")
 			.select([
+				"l.title",
 				"l.withImageUrl",
+				"l.price",
+				"l.priceType",
+				"l.currency",
 			])
+			.select((eb) => {
+				return eb
+					.selectFrom("location as loc")
+					.select((eb) => {
+						return sql<LocationSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("json");
+					})
+					.whereRef("loc.id", "=", "l.locationId")
+					.limit(1)
+					.$asScalar()
+					.$castTo<LocationSchema.Type>()
+					.as("location");
+			})
 			.select((eb) => {
 				/**
 				 * Pick the latest seller-visible timeline entry for seller transaction previews.
@@ -145,7 +162,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 					eb.ref("lt.status").$notNull().as("status"),
 				];
 			}),
-		queryFx(select, where: TransactionFilterSchema.Type) {
+		queryFx(select, where: TransactionWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 

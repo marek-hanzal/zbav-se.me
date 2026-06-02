@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { favouriteCreateFx } from "~/buyer/favourite/server/fx/favouriteCreateFx";
 import { feedCreateFx } from "~/buyer/feed/server/fx/feedCreateFx";
-import { ignoreCreateFx } from "~/buyer/ignore/server/fx/ignoreCreateFx";
 import { listingCollectionFx } from "~/buyer/listing/server/fx/listingCollectionFx";
 import { listingCountFx } from "~/buyer/listing/server/fx/listingCountFx";
+import { favouriteCreateFx } from "~/buyer/listing-favourite/server/fx/favouriteCreateFx";
+import { ignoreCreateFx } from "~/buyer/listing-ignore/server/fx/ignoreCreateFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
 import { getDefaultListingCreateFx } from "~/test/listing/fx/getDefaultListingCreateFx";
@@ -108,7 +108,9 @@ describe("buyer listing discovery flow", () => {
 			});
 
 			const filteredWhere = {
-				fulltext: "portable console",
+				fulltext: [
+					"portable console",
+				],
 				categoryIdIn: [
 					listingDefaults.categoryId,
 				],

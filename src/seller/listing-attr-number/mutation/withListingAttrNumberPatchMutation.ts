@@ -1,6 +1,6 @@
 import { withMutation } from "@/lib/client/mutation";
+import { withListingAttrOfQuery } from "~/common/listing-attr/query/withListingAttrOfQuery";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { withListingAttrOfQuery } from "~/user/listing-attr/query/withListingAttrOfQuery";
 import { listingAttrNumberPatchFn } from "../fn/listingAttrNumberPatchFn";
 import type { ListingAttrNumberPatchSchema } from "../server/schema/ListingAttrNumberPatchSchema";
 

@@ -8,12 +8,11 @@ import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
-import type { listingAttrOfFx } from "../../../user/listing-attr/server/fx/listingAttrOfFx";
 import { listingAttrTextPatchFx } from "../server/fx/listingAttrTextPatchFx";
 import { ListingAttrTextPatchSchema } from "../server/schema/ListingAttrTextPatchSchema";
 
 export namespace listingAttrTextPatchFn {
-	export type Error = Effect.Effect.Error<listingAttrOfFx>;
+	export type Error = Effect.Effect.Error<listingAttrTextPatchFx>;
 }
 
 export const listingAttrTextPatchFn = createServerFn()

@@ -1,4 +1,4 @@
-import type { Migration } from "kysely";
+import type { Migration } from "kysely/migration";
 import pgvector from "pgvector";
 import { embedMinHash } from "@/lib/common/embedding";
 import { genId } from "@/lib/common/gen-id";

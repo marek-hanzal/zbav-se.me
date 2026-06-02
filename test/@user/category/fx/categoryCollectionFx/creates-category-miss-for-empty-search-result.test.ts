@@ -15,8 +15,10 @@ describe("categoryCollectionFx", () => {
 
 			const result = yield* categoryCollectionFx({
 				userId: user.id,
-				filter: {
-					fulltext,
+				where: {
+					fulltext: [
+						fulltext,
+					],
 				},
 				scope: {},
 			});

@@ -1,8 +1,7 @@
 import { Effect } from "effect";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 
 export namespace draftCheckIfOwnFx {
 	export interface Props {
@@ -21,9 +20,7 @@ export const draftCheckIfOwnFx = Effect.fn("draftCheckIfOwnFx")(function* ({
 		draftId,
 	});
 
-	const { kysely } = yield* KyselyContextFx;
-
-	const draft = yield* tryDbFx(async () => {
+	const draft = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("draft")
 			.select("userId")

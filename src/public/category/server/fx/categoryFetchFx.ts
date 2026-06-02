@@ -2,24 +2,22 @@ import { Effect } from "effect";
 import { withFetchFx } from "@/lib/common/fetch";
 import { getLoggerFx } from "@/lib/common/log";
 import { withCategorySelectFx } from "~/public/category/server/db/withCategorySelectFx";
-import type { CategoryFilterSchema } from "~/public/category/server/schema/CategoryFilterSchema";
 import type { CategoryQuerySchema } from "~/public/category/server/schema/CategoryQuerySchema";
+import type { CategoryWhereSchema } from "../schema/CategoryWhereSchema";
 
 export namespace categoryFetchFx {
 	export interface Props extends CategoryQuerySchema.Type {
-		scope: CategoryFilterSchema.Type;
+		scope: CategoryWhereSchema.Type;
 	}
 }
 
 export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
-	filter,
 	where,
 	scope,
 	sort,
 }: categoryFetchFx.Props) {
 	const logger = yield* getLoggerFx("categoryFetchFx");
 	logger.trace("categoryFetchFx", {
-		filter,
 		where,
 		scope,
 		sort,
@@ -30,7 +28,6 @@ export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
 		selectFx: withCategorySelectFx({
 			sort,
 		}),
-		filter,
 		where,
 		scope,
 	});

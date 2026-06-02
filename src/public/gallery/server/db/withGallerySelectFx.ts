@@ -5,8 +5,8 @@ import { selectFx } from "@/lib/common/select";
 import { withGalleryItemSelectFx } from "~/public/gallery-item/server/db/withGalleryItemSelectFx";
 import type { GalleryItemSchema } from "~/public/gallery-item/server/schema/GalleryItemSchema";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import type { GalleryFilterSchema } from "../schema/GalleryFilterSchema";
 import type { GallerySortSchema } from "../schema/GallerySortSchema";
+import type { GalleryWhereSchema } from "../schema/GalleryWhereSchema";
 
 export namespace withGallerySelectFx {
 	export interface Props {
@@ -48,7 +48,7 @@ export const withGallerySelectFx = Effect.fn("withGallerySelectFx")(function* ({
 					.as("items");
 			},
 		]),
-		queryFx(select, where: GalleryFilterSchema.Type) {
+		queryFx(select, where: GalleryWhereSchema.Type) {
 			return Effect.gen(function* () {
 				let query = select;
 

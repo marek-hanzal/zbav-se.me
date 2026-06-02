@@ -46,30 +46,25 @@ export const Status: FC<Status.Props> = ({
 			{...uiStatus({
 				className,
 			})}
-			//
 			{...props}
 		>
 			<Container
-				data-ui="Status-[Container.wrapper]"
 				data-ui-layout="vertical-flex"
 				data-ui-items="center"
 				data-ui-width="full"
 				data-ui-gap="lg"
 			>
 				<Icon
-					data-ui="Status-[Icon]"
 					icon={icon}
 					{...iconProps}
 				/>
 
 				<Container
-					data-ui="Status-[Container.title-wrapper]"
 					data-ui-layout="vertical-flex"
 					data-ui-items="center"
 					data-ui-width="full"
 				>
 					<Tx
-						data-ui="Status-[Tx-title]"
 						label={textTitle}
 						data-ui-font="semibold"
 						data-ui-display="block"
@@ -79,7 +74,6 @@ export const Status: FC<Status.Props> = ({
 					/>
 
 					<Mx
-						data-ui="Status-[Tx-message]"
 						label={textMessage}
 						{...messageProps}
 					/>
@@ -88,7 +82,6 @@ export const Status: FC<Status.Props> = ({
 
 			{action && (
 				<Container
-					data-ui="Status-[Container.action]"
 					data-ui-layout="vertical-flex"
 					data-ui-items="center"
 					data-ui-justify="center"

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Badge } from "@/lib/client/badge";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { TypoIcon } from "~/common/ui/typo";
 
 export namespace ErrorBadge {
@@ -15,6 +15,7 @@ export namespace ErrorBadge {
 }
 
 export const ErrorBadge: FC<ErrorBadge.Props> = ({ error, placeholder, ...props }) => {
+	const translator = useTranslator();
 	if (placeholder && !error) {
 		return (
 			<Badge
@@ -41,6 +42,7 @@ export const ErrorBadge: FC<ErrorBadge.Props> = ({ error, placeholder, ...props 
 			data-ui-text="default"
 			data-ui-badge="xs"
 			data-ui-color="lead"
+			data-ui-width="full"
 			{...props}
 		>
 			<TypoIcon icon={"icon-[solar--adhesive-plaster-linear]"}>

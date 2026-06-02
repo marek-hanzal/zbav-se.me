@@ -48,7 +48,7 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 							data-ui-truncate
 						/>
 
-						{/* <Tx
+						<Tx
 							label={transaction.location.address}
 							data-ui-tone="neutral"
 							data-ui-theme="light"
@@ -57,7 +57,7 @@ export const Item = withFallback(({ _suspense, transactionId, ...props }: Item.P
 							data-ui-width="full"
 							data-ui-truncate
 							data-ui-opacity="6"
-						/> */}
+						/>
 					</Container>
 				}
 				bottom={

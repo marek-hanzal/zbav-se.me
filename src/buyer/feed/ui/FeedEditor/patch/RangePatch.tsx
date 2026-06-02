@@ -1,7 +1,7 @@
 import { type FC, useState } from "react";
 import { Container } from "@/lib/client/container";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { withFeedQuery } from "~/buyer/feed/query/withFeedQuery";
 import type { FeedSchema } from "~/buyer/feed/server/schema/FeedSchema";
 import { SaveContainer } from "~/common/container/ui/SaveContainer";
@@ -16,10 +16,11 @@ export namespace RangePatch {
 }
 
 export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+	const translator = useTranslator();
 	const patchMutation = withFeedQuery.usePatchMutation({
 		onSettled,
 	});
-	const currentRange = feed.query?.filter?.range;
+	const currentRange = feed.query?.where?.range;
 	const [rangeValue, setRangeValue] = useState<number | undefined>(currentRange);
 
 	const handleSave = () => {
@@ -32,8 +33,8 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 			patch: {
 				query: {
 					...feed.query,
-					filter: {
-						...feed.query?.filter,
+					where: {
+						...feed.query?.where,
 						range:
 							rangeValue !== undefined && !Number.isNaN(rangeValue)
 								? rangeValue

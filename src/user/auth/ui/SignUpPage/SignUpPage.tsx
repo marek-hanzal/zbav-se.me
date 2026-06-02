@@ -8,40 +8,44 @@ import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { Status } from "@/lib/client/status";
 import { onSubmit } from "@/lib/client/submit";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
-import { translator } from "@/lib/common/translation";
 import { useAppForm } from "~/common/ui/form";
 import { CheckIcon } from "~/common/ui/icon";
 import { Logo } from "~/common/ui/logo";
 import { withRegisterMutation } from "~/user/auth/mutation/withRegisterMutation";
 
-const RegisterSchema = z
-	.looseObject({
-		email: z.email({
-			error() {
-				return translator.text("Invalid email address");
-			},
-		}),
-		password: z.string().min(8, {
-			error() {
-				return translator.text("Password must be at least 8 characters");
-			},
-		}),
-		confirmPassword: z.string().min(1, {
-			error() {
-				return translator.text("Password confirmation is required");
-			},
-		}),
-	})
-	.refine((data) => data.password === data.confirmPassword, {
-		message: translator.text("Passwords do not match"),
-		path: [
-			"confirmPassword",
-		],
-	})
-	.strip();
+const useRegisterSchema = () => {
+	const translator = useTranslator();
 
-type RegisterSchema = typeof RegisterSchema;
+	return z
+		.looseObject({
+			email: z.email({
+				error() {
+					return translator.text("Invalid email address");
+				},
+			}),
+			password: z.string().min(8, {
+				error() {
+					return translator.text("Password must be at least 8 characters");
+				},
+			}),
+			confirmPassword: z.string().min(1, {
+				error() {
+					return translator.text("Password confirmation is required");
+				},
+			}),
+		})
+		.refine((data) => data.password === data.confirmPassword, {
+			message: translator.text("Passwords do not match"),
+			path: [
+				"confirmPassword",
+			],
+		})
+		.strip();
+};
+
+type RegisterSchema = ReturnType<typeof useRegisterSchema>;
 
 export namespace SignUpPage {
 	export interface Props extends Container.Props {
@@ -50,8 +54,10 @@ export namespace SignUpPage {
 }
 
 export const SignUpPage: FC<SignUpPage.Props> = ({ ...props }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const navigate = useNavigate();
+	const schema = useRegisterSchema();
 
 	const mutation = withRegisterMutation.useMutation({
 		async onPostMutation() {
@@ -71,8 +77,8 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ...props }) => {
 			confirmPassword: "",
 		} satisfies z.infer<RegisterSchema>,
 		validators: {
-			onMount: RegisterSchema,
-			onSubmit: RegisterSchema,
+			onMount: schema,
+			onSubmit: schema,
 		},
 		onSubmit: onSubmit({
 			mutation,
@@ -114,7 +120,7 @@ export const SignUpPage: FC<SignUpPage.Props> = ({ ...props }) => {
 							e.stopPropagation();
 							form.handleSubmit();
 						}}
-						className={"space-y-2"}
+						className={"contents"}
 					>
 						<form.AppField name={"email"}>
 							{(field) => (

@@ -26,7 +26,7 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 	});
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "multi",
-		initial: feed.query?.filter?.conditionIn?.map((item) => ({
+		initial: feed.query?.where?.conditionIn?.map((item) => ({
 			id: String(item),
 		})),
 		deps: [
@@ -61,8 +61,8 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 						patch: {
 							query: {
 								...feed.query,
-								filter: {
-									...feed.query?.filter,
+								where: {
+									...feed.query?.where,
 									conditionIn: selection.optional
 										.multiId()
 										.map((id) => Number.parseInt(id, 10)),

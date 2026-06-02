@@ -2,16 +2,15 @@ import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import type { AgentThreadTableSchema } from "~/server/database/@table/AgentThreadTableSchema";
-import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
-import { tryDbFx } from "~/server/database/fx/tryDbFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { agentThreadFetchFx } from "~/user/agent/server/fx/agentThreadFetchFx";
-import type { AgentThreadFilterSchema } from "~/user/agent/server/schema/AgentThreadFilterSchema";
 import type { AgentThreadPatchSchema } from "~/user/agent/server/schema/AgentThreadPatchSchema";
+import type { AgentThreadWhereSchema } from "../schema/AgentThreadWhereSchema";
 
 export namespace agentThreadPatchFx {
 	export interface Props extends AgentThreadPatchSchema.Type {
-		scope: AgentThreadFilterSchema.Type;
+		scope: AgentThreadWhereSchema.Type;
 	}
 }
 
@@ -29,7 +28,6 @@ export const agentThreadPatchFx = Effect.fn("agentThreadPatchFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const { kysely } = yield* KyselyContextFx;
 			const dateContext = yield* DateContextFx;
 			const thread = yield* agentThreadFetchFx({
 				...query,
@@ -37,7 +35,7 @@ export const agentThreadPatchFx = Effect.fn("agentThreadPatchFx")(function* ({
 			});
 			const updatedAt = dateContext.now().toJSDate();
 
-			return yield* tryDbFx(async () => {
+			return yield* dbFx(async (kysely) => {
 				return kysely
 					.updateTable("agent_thread")
 					.set({

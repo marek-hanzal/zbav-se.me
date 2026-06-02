@@ -4,7 +4,6 @@ import { ListingEventQuerySchema } from "~/buyer/listing-event/server/schema/Lis
 export const ListingEventCountQuerySchema = z
 	.looseObject({
 		...ListingEventQuerySchema.pick({
-			filter: true,
 			where: true,
 		}).shape,
 	})

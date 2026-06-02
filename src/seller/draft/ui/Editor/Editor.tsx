@@ -5,10 +5,11 @@ import { Group } from "@/lib/client/group";
 import { LinkTo } from "@/lib/client/link-to";
 import { useLocale } from "@/lib/client/locale";
 import { handleArrowNav } from "@/lib/client/nav";
+import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
 import type { MarkSuspense } from "@/lib/client/type";
 import type { useView } from "@/lib/client/view";
-import { translator } from "@/lib/common/translation";
+import { CategoryValue } from "~/common/category/ui/CategoryValue";
 import { DeliveryValueList } from "~/common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/common/location/ui/LocationValue";
@@ -18,7 +19,6 @@ import { TitleValue } from "~/common/title/ui/TitleValue";
 import { ChevronAction } from "~/common/ui/action/ChevronAction";
 import { TitleContainer } from "~/common/ui/container";
 import { withDraftQuery } from "~/seller/draft/query/withDraftQuery";
-import { CategoryValue } from "~/user/category/ui/CategoryValue";
 import { AgeValue } from "~/user/draft/ui/value/AgeValue";
 import { ConditionValue } from "~/user/draft/ui/value/ConditionValue";
 import { ConsValueList } from "~/user/draft/ui/value/ConsValueList";
@@ -59,6 +59,7 @@ export namespace Editor {
 }
 
 export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props }) => {
+	const translator = useTranslator();
 	const locale = useLocale();
 	const { data: draft } = withDraftQuery.useFetchQuery(draftId);
 
@@ -100,6 +101,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 				<Group>
 					<GalleryValue
+						data-action={"set draft gallery"}
 						urls={draft.withImageUrl}
 						label={translator.text("Listing photo gallery (label)")}
 						onClick={() => view.set("gallery")}
@@ -132,8 +134,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 						<CategoryValue
 							data-action={"select draft category"}
-							_suspense={"I know"}
-							categoryId={draft.categoryId}
+							category={draft.category}
 							action={<ChevronAction />}
 							onClick={() => view.set("category")}
 						/>
@@ -141,9 +142,8 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 					<Group>
 						<LocationValue
-							data-ui={"select draft location"}
-							_suspense={"I know"}
-							locationId={draft.locationId}
+							data-action={"select draft location"}
+							location={draft.location}
 							textLabel={translator.text("Listing location (label)")}
 							textEmpty={translator.text("Listing location not selected")}
 							textHint={translator.text("Listing location (hint)")}
@@ -154,7 +154,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 					<Group>
 						<PriceTypeValue
-							data-ui={"set draft price type"}
+							data-action={"set draft price type"}
 							priceType={draft.priceType}
 							action={<ChevronAction />}
 							onClick={() => view.set("priceType")}
@@ -164,7 +164,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 							.with("fixed", "haggle", () => {
 								return (
 									<PriceValue
-										data-ui={"set draft price"}
+										data-action={"set draft price"}
 										price={draft.price}
 										currency={draft.currency}
 										action={<ChevronAction />}
@@ -187,7 +187,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 					<Group>
 						<ExpiresValue
-							data-ui={"set draft expiration date"}
+							data-action={"set draft expiration date"}
 							expires={draft.expires}
 							action={<ChevronAction />}
 							onClick={() => view.set("expires")}
@@ -301,6 +301,7 @@ export const Editor: FC<Editor.Props> = ({ _suspense, draftId, view, ...props })
 
 				<Group>
 					<PublishListingButton
+						_suspense={_suspense}
 						draft={draft}
 						data-ui-round={undefined}
 						data-ui-border={false}

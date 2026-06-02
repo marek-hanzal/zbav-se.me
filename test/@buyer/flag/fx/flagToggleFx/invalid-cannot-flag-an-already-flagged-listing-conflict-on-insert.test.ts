@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { flagToggleFx } from "~/buyer/flag/server/fx/flagToggleFx";
+import { flagToggleFx } from "~/buyer/listing-flag/server/fx/flagToggleFx";
 import { runToggleEntityErrorContractFx } from "~/test/@buyer/common/fx/runToggleEntityErrorContractFx";
 
 describe("flagToggleFx", () => {
@@ -27,7 +27,7 @@ describe("flagToggleFx", () => {
 			assertAfterFx: ({ database, users, listing }) =>
 				Effect.promise(async () => {
 					const rows = await database.kysely
-						.selectFrom("flag")
+						.selectFrom("listing_flag")
 						.select("id")
 						.where("listingId", "=", listing.id)
 						.where("userId", "=", users.buyer.id)
@@ -36,13 +36,13 @@ describe("flagToggleFx", () => {
 						.selectFrom("listing_event")
 						.select("id")
 						.where("listingId", "=", listing.id)
-						.where("event", "=", "flag")
+						.where("event", "=", "listing.flag")
 						.execute();
 					const activity = await database.kysely
 						.selectFrom("activity")
 						.select("id")
 						.where("userId", "=", users.seller.id)
-						.where("type", "=", "flag")
+						.where("type", "=", "listing.flag")
 						.execute();
 
 					expect(rows).toHaveLength(1);
