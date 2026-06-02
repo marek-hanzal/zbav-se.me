@@ -42,6 +42,7 @@ env:
     SERVER_AI_SERVER_URL: ${{ vars.SERVER_AI_SERVER_URL }}
     SERVER_AI_MODEL: ${{ vars.SERVER_AI_MODEL }}
     SERVER_MIGRATION_TOKEN: ${{ secrets.SERVER_MIGRATION_TOKEN }}
+    SERVER_CRON_TOKEN: ${{ secrets.SERVER_CRON_TOKEN }}
     # -------------------------------
     # Local (GHA only)
     # -------------------------------
@@ -100,6 +101,7 @@ jobs:
                   check_var SERVER_AI_SERVER_URL
                   check_var SERVER_AI_MODEL
                   check_var SERVER_MIGRATION_TOKEN
+                  check_var SERVER_CRON_TOKEN
 
                   # Local (GHA only)
                   check_var BUNNY_HOST
