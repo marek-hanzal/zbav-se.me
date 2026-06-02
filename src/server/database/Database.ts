@@ -29,7 +29,6 @@ import type { RateLimitEventTableSchema } from "~/server/database/@table/RateLim
 import type { RateLimitRuleTableSchema } from "~/server/database/@table/RateLimitRuleTableSchema";
 import type { ResourceBundleItemTableSchema } from "~/server/database/@table/ResourceBundleItemTableSchema";
 import type { ResourceBundleLimitTableSchema } from "~/server/database/@table/ResourceBundleLimitTableSchema";
-import type { ResourceBundleStripeTableSchema } from "~/server/database/@table/ResourceBundleStripeTableSchema";
 import type { ResourceBundleTableSchema } from "~/server/database/@table/ResourceBundleTableSchema";
 import type { ResourceDefinitionTableSchema } from "~/server/database/@table/ResourceDefinitionTableSchema";
 import type { StripeEventTableSchema } from "~/server/database/@table/StripeEventTableSchema";
@@ -89,7 +88,6 @@ export interface Database {
 	rate_limit_rule: RateLimitRuleTableSchema.Type;
 	resource_bundle_item: ResourceBundleItemTableSchema.Type;
 	resource_bundle_limit: ResourceBundleLimitTableSchema.Type;
-	resource_bundle_stripe: ResourceBundleStripeTableSchema.Type;
 	resource_bundle: ResourceBundleTableSchema.Type;
 	resource_definition: ResourceDefinitionTableSchema.Type;
 	stripe_event: StripeEventTableSchema.Type;
