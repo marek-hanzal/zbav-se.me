@@ -52,7 +52,6 @@ import { ResourceBundleLimitMigration } from "~/server/@migrations/0050-resource
 import { ResourceBundleItemMigration } from "~/server/@migrations/0051-resource-bundle-item";
 import { UserResourceBundleMigration } from "~/server/@migrations/0052-user-resource-bundle";
 import { UserStripeMigration } from "~/server/@migrations/0053-user-stripe";
-import { ResourceBundleStripeMigration } from "~/server/@migrations/0054-resource-bundle-stripe";
 import { UserResourceBundleStripeMigration } from "~/server/@migrations/0055-user-resource-bundle-stripe";
 import { StripeEventMigration } from "~/server/@migrations/0056-stripe-event";
 
@@ -111,7 +110,6 @@ export const migrations = {
 	"0051-resource-bundle-item": ResourceBundleItemMigration,
 	"0052-user-resource-bundle": UserResourceBundleMigration,
 	"0053-user-stripe": UserStripeMigration,
-	"0054-resource-bundle-stripe": ResourceBundleStripeMigration,
 	"0055-user-resource-bundle-stripe": UserResourceBundleStripeMigration,
 	"0056-stripe-event": StripeEventMigration,
 };
