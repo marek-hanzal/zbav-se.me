@@ -35,6 +35,11 @@
 		"limit": 10
 	},
 	{
+		"name": "billing:stripe-webhook",
+		"window": 60,
+		"limit": 120
+	},
+	{
 		"name": "s3:presign",
 		"window": 600,
 		"limit": 24
