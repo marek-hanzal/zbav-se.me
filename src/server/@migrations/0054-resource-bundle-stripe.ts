@@ -7,7 +7,6 @@ export const ResourceBundleStripeMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("resourceBundleId", "text", (col) => col.notNull())
 			.addColumn("priceId", "text", (col) => col.notNull())
-			.addColumn("url", "text")
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"resource_bundle_stripe_[resourceBundleId]_fk",

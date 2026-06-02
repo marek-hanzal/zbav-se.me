@@ -15,6 +15,11 @@
 		"limit": 20
 	},
 	{
+		"name": "package:buyer",
+		"resource": "feed.count",
+		"limit": 15
+	},
+	{
 		"name": "free",
 		"resource": "listing.count",
 		"limit": 5
