@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
+import type { MarkSuspense } from "@/lib/client/type";
 import { useLocale } from "@/lib/client/locale";
 import { useTranslator } from "@/lib/client/translation";
 import { Tx } from "@/lib/client/tx";
@@ -10,7 +11,7 @@ import { HomeMenuButton } from "~/user/home/HomeMenu/HomeMenuButton";
 import { CheckoutButton } from "./CheckoutButton/CheckoutButton";
 
 export namespace ShopPage {
-	export interface Props extends TitleContainer.Props {
+	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
 		//
 	}
 }
