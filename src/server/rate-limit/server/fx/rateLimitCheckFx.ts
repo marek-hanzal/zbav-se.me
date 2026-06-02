@@ -3,11 +3,10 @@ import { DateTime } from "luxon";
 import { getLoggerFx } from "@/lib/common/log";
 import { RateLimitErrorFx } from "~/server/error/RateLimitErrorFx";
 import { rateLimitEventFx } from "~/server/rate-limit/server/fx/rateLimitEventFx";
-import type { RateLimitRuleEnumSchema } from "~/server/rate-limit/server/schema/RateLimitRuleEnumSchema";
 
 export namespace rateLimitCheckFx {
 	export interface Props {
-		rule: RateLimitRuleEnumSchema.Type;
+		rule: string;
 		key: string[];
 		message?: string;
 	}
