@@ -28,6 +28,7 @@ import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
 import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
 import { Route as LocaleAppIndexRouteImport } from './@routes/$locale/app/index'
+import { Route as ApiStripeWebhookRouteImport } from './@routes/api/stripe/webhook'
 import { Route as ApiCronCronRouteImport } from './@routes/api/cron/$cron'
 import { Route as ApiAuthSplatRouteImport } from './@routes/api/auth/$'
 import { Route as ApiAgentThreadIdRouteImport } from './@routes/api/agent/$threadId'
@@ -159,6 +160,11 @@ const LocaleAppIndexRoute = LocaleAppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LocaleAppRoute,
+} as any)
+const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
+  id: '/stripe/webhook',
+  path: '/stripe/webhook',
+  getParentRoute: () => ApiRoute,
 } as any)
 const ApiCronCronRoute = ApiCronCronRouteImport.update({
   id: '/cron/$cron',
@@ -390,6 +396,7 @@ export interface FileRoutesByFullPath {
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/cron/$cron': typeof ApiCronCronRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
@@ -445,6 +452,7 @@ export interface FileRoutesByTo {
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/cron/$cron': typeof ApiCronCronRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/$locale/app': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
@@ -503,6 +511,7 @@ export interface FileRoutesById {
   '/api/agent/$threadId': typeof ApiAgentThreadIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/cron/$cron': typeof ApiCronCronRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
   '/$locale/app/': typeof LocaleAppIndexRoute
   '/$locale/app/activity/$priority': typeof LocaleAppActivityPriorityRoute
   '/$locale/app/agent/$threadId': typeof LocaleAppAgentThreadIdRoute
@@ -562,6 +571,7 @@ export interface FileRouteTypes {
     | '/api/agent/$threadId'
     | '/api/auth/$'
     | '/api/cron/$cron'
+    | '/api/stripe/webhook'
     | '/$locale/app/'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
@@ -617,6 +627,7 @@ export interface FileRouteTypes {
     | '/api/agent/$threadId'
     | '/api/auth/$'
     | '/api/cron/$cron'
+    | '/api/stripe/webhook'
     | '/$locale/app'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
@@ -674,6 +685,7 @@ export interface FileRouteTypes {
     | '/api/agent/$threadId'
     | '/api/auth/$'
     | '/api/cron/$cron'
+    | '/api/stripe/webhook'
     | '/$locale/app/'
     | '/$locale/app/activity/$priority'
     | '/$locale/app/agent/$threadId'
@@ -848,6 +860,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/app/'
       preLoaderRoute: typeof LocaleAppIndexRouteImport
       parentRoute: typeof LocaleAppRoute
+    }
+    '/api/stripe/webhook': {
+      id: '/api/stripe/webhook'
+      path: '/stripe/webhook'
+      fullPath: '/api/stripe/webhook'
+      preLoaderRoute: typeof ApiStripeWebhookRouteImport
+      parentRoute: typeof ApiRoute
     }
     '/api/cron/$cron': {
       id: '/api/cron/$cron'
@@ -1211,6 +1230,7 @@ interface ApiRouteChildren {
   ApiAgentThreadIdRoute: typeof ApiAgentThreadIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiCronCronRoute: typeof ApiCronCronRoute
+  ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
   ApiPublicMigrationRunRoute: typeof ApiPublicMigrationRunRoute
 }
 
@@ -1220,6 +1240,7 @@ const ApiRouteChildren: ApiRouteChildren = {
   ApiAgentThreadIdRoute: ApiAgentThreadIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiCronCronRoute: ApiCronCronRoute,
+  ApiStripeWebhookRoute: ApiStripeWebhookRoute,
   ApiPublicMigrationRunRoute: ApiPublicMigrationRunRoute,
 }
 
