@@ -6,7 +6,13 @@ import { rateLimitEventFx } from "~/server/rate-limit/server/fx/rateLimitEventFx
 
 export namespace rateLimitCheckFx {
 	export interface Props {
+		/**
+		 * Rule being checked
+		 */
 		rule: string;
+		/**
+		 * Which key (so not all users should be affected).
+		 */
 		key: string[];
 		message?: string;
 	}
