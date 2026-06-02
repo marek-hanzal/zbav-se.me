@@ -4,9 +4,19 @@ import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
-export const withUserEventCleanupCronFx = Effect.fn("userEventCleanupCronFx")(function* () {
+export namespace withUserEventCleanupCronFx {
+	export interface Props {
+		count: number;
+	}
+}
+
+export const withUserEventCleanupCronFx = Effect.fn("userEventCleanupCronFx")(function* ({
+	count,
+}: withUserEventCleanupCronFx.Props) {
 	const logger = yield* getLoggerFx("userEventCleanupCronFx", "cron");
-	logger.trace("userEventCleanupCronFx");
+	logger.trace("userEventCleanupCronFx", {
+		count,
+	});
 
 	yield* withTransactionFx(
 		Effect.gen(function* () {
@@ -28,7 +38,7 @@ export const withUserEventCleanupCronFx = Effect.fn("userEventCleanupCronFx")(fu
 					)
 					.orderBy("ue.createdAt", "asc")
 					.orderBy("ue.id", "asc")
-					.limit(50_000);
+					.limit(count);
 
 				return kysely.deleteFrom("user_event").where("id", "in", source).execute();
 			});
