@@ -6,5 +6,7 @@ export const Route = createFileRoute("/$locale/app/shop")({
 	async loader() {
 		await billingCustomerEnsureFn();
 	},
-	component: ShopPage,
+	component() {
+		return <ShopPage _suspense="I know" />;
+	},
 });
