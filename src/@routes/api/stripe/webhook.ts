@@ -23,9 +23,14 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 		],
 		handlers: {
 			async POST({ request, context: { database, rootLogger } }) {
-				const signature = request.headers.get("requestSourceture");
+				const logger = rootLogger.getChild([
+					"stripe",
+					"webhook",
+				]);
+				const signature = request.headers.get("Stripe-Signature");
 
 				if (!signature) {
+                    logger.warn("Called stripe webhoook without signature!")
 					return Response.json(
 						{
 							type: "error",
