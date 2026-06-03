@@ -6,7 +6,6 @@ import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
-import { withLinkMiddleware } from "~/server/middleware/withLinkMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withRateLimitMiddleware } from "~/server/middleware/withRateLimitMiddleware";
 import { billingStripeWebhookRequestFx } from "~/user/billing/server/fx/billingStripeWebhookRequestFx";
@@ -16,7 +15,6 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 		middleware: [
 			withLogMiddleware,
 			withDatabaseMiddleware,
-			withLinkMiddleware,
 			withRateLimitMiddleware({
 				rule: "billing:stripe-webhook",
 				key: [],
@@ -24,7 +22,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 			}),
 		],
 		handlers: {
-			async POST({ request, context: { database, rootLogger, link } }) {
+			async POST({ request, context: { database, rootLogger } }) {
 				const signature = request.headers.get("requestSourceture");
 
 				if (!signature) {
