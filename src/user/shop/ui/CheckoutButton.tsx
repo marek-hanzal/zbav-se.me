@@ -8,11 +8,11 @@ import { withBillingCheckoutCreateMutation } from "~/user/billing/mutation/withB
 
 export namespace CheckoutButton {
 	export interface Props extends Button.Props {
-		isBuyerActive: boolean;
+		bundle: string;
 	}
 }
 
-export const CheckoutButton: FC<CheckoutButton.Props> = ({ isBuyerActive, ...props }) => {
+export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, ...props }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
 	const translator = useTranslator();
@@ -29,17 +29,16 @@ export const CheckoutButton: FC<CheckoutButton.Props> = ({ isBuyerActive, ...pro
 			data-ui={"CheckoutButton[Button]"}
 			iconEnabled={UnlockIcon}
 			loading={mutation.isPending}
-			disabled={mutation.isPending || isBuyerActive}
+			disabled={mutation.isPending || isActive}
 			onClick={() => {
 				mutation.mutate({
 					locale,
+					bundle,
 				});
 			}}
 			{...props}
 		>
-			{isBuyerActive
-				? translator.text("Active", "Active")
-				: translator.text("Start Buyer subscription")}
+			{isActive ? translator.text("Active", "Active") : translator.text("Start subscription")}
 		</Button>
 	);
 };

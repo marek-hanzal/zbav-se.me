@@ -7,6 +7,7 @@ import { testabase } from "./utils/testabase";
 const appOrigin = process.env.VITE_ORIGIN ?? "https://zbav-se.me.localhost:1355";
 const DATABASE_NAME_LIMIT = 63;
 const DATABASE_NAME_HASH_LENGTH = 8;
+const STRIPE_E2E_DATABASE_NAME = "e2e-stripe-billing";
 
 function toDatabaseHash(value: string) {
 	return createHash("sha256").update(value).digest("hex").slice(0, DATABASE_NAME_HASH_LENGTH);
@@ -56,14 +57,23 @@ export const test = base.extend<{
 	},
 	// biome-ignore lint/correctness/noEmptyPattern: Ssst
 	async db({}, use, testInfo) {
+		/**
+		 * TODO: Use more reliable way to get the database name, ideally the test itself will send optionally the name or keep it generated
+		 */
+		const isStripeBillingTest = testInfo.file.endsWith(
+			"e2e/billing/billing-stripe-checkout.test.ts",
+		);
+
 		await use(
-			toDatabaseName(
-				testInfo.file,
-				testInfo.project.name,
-				testInfo.title,
-				testInfo.workerIndex,
-				testInfo.retry,
-			),
+			isStripeBillingTest
+				? STRIPE_E2E_DATABASE_NAME
+				: toDatabaseName(
+						testInfo.file,
+						testInfo.project.name,
+						testInfo.title,
+						testInfo.workerIndex,
+						testInfo.retry,
+					),
 		);
 	},
 	async database({ db }, use) {
