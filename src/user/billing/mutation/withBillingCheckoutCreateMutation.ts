@@ -1,7 +1,6 @@
 import { withMutation } from "@/lib/client/mutation";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { billingCheckoutCreateFn } from "../fn/billingCheckoutCreateFn";
-import { withBillingInfoQuery } from "../query/withBillingInfoQuery";
 import type { BillingCheckoutCreateSchema } from "../server/schema/BillingCheckoutCreateSchema";
 import type { BillingCheckoutSchema } from "../server/schema/BillingCheckoutSchema";
 
@@ -26,11 +25,4 @@ export const withBillingCheckoutCreateMutation = withMutation<
 			data,
 		});
 	},
-	invalidate: [
-		{
-			async invalidate(queryClient) {
-				await withBillingInfoQuery.invalidate(queryClient);
-			},
-		},
-	],
 });

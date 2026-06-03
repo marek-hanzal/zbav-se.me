@@ -106,6 +106,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 					"expiration",
 				])
 				.where("resourceBundleId", "in", ids)
+				.where("amount", ">", 0)
 				.execute(),
 			kysely
 				.selectFrom("resource_bundle_limit")
@@ -115,6 +116,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 					"limit",
 				])
 				.where("resourceBundleId", "in", ids)
+				.where("limit", ">", 0)
 				.execute(),
 		]);
 
@@ -142,6 +144,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 
 		return [
 			{
+				bundle: resourceBundle.name,
 				name: stripeBundle.name,
 				price: stripeBundle.price,
 				items: itemsById.get(resourceBundle.id) ?? [],

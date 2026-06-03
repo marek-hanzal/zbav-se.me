@@ -22,7 +22,7 @@ export const BundleSelect: FC<BundleSelect.Props> = ({ _suspense, ...props }) =>
 		>
 			{bundles.map((bundle) => (
 				<BundleItem
-					key={`${bundle.name}:${bundle.price}`}
+					key={bundle.bundle}
 					bundle={bundle}
 				/>
 			))}

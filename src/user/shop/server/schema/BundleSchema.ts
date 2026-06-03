@@ -3,13 +3,14 @@ import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/
 
 export const BundleSchema = z
 	.looseObject({
+		bundle: z.string().min(1),
 		name: z.string().min(1),
 		price: z.coerce.number().nonnegative(),
 		items: z.array(
 			z
 				.looseObject({
 					resourceDefinitionId: ResourceDefinitionEnumSchema,
-					amount: z.coerce.number(),
+					amount: z.coerce.number().positive(),
 					expiration: z.coerce.number().nullable(),
 				})
 				.strip(),
@@ -18,7 +19,7 @@ export const BundleSchema = z
 			z
 				.looseObject({
 					resourceDefinitionId: ResourceDefinitionEnumSchema,
-					limit: z.coerce.number(),
+					limit: z.coerce.number().positive(),
 				})
 				.strip(),
 		),
