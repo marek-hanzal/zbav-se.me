@@ -30,11 +30,18 @@ cp .env.example .env
 docker compose up -d
 ```
 
-### Run everything
+### Run locally
 
 ```bash
 portless proxy start --https
-bun run dev
+bun run dev:stripe
+```
+
+Copy the `whsec_...` webhook signing secret printed by Stripe CLI into
+`SERVER_STRIPE_WEBHOOK_SECRET` in `.env`, then start the app in another terminal:
+
+```bash
+bun run dev:app
 ```
 
 Mailpit is available at <http://127.0.0.1:8025> for local SMTP inbox inspection.
@@ -42,7 +49,8 @@ Mailpit is available at <http://127.0.0.1:8025> for local SMTP inbox inspection.
 ### Useful root commands
 
 ```bash
-bun run dev
+bun run dev:app
+bun run dev:stripe
 bun run build
 bun run lint
 bun run typecheck
@@ -59,7 +67,7 @@ bun run workflow:check
 - API: <https://api.zbav-se.me.localhost:1355>
 - OpenAPI JSON: <https://api.zbav-se.me.localhost:1355/v3/api-docs>
 
-The app scripts stay as plain `portless ...` commands. Start the shared HTTPS proxy with `portless proxy start --https`, then run `bun run dev`. Portless uses its default user-level state and serves the `.localhost` URLs on port `1355`.
+The app script stays a plain `portless ...` command. Start the shared HTTPS proxy with `portless proxy start --https`, then run `bun run dev:app`. Portless uses its default user-level state and serves the `.localhost` URLs on port `1355`.
 
 `syncpack` is wired for the root package through `sp:*` scripts. Use `bun run sp:format` to normalize `package.json` ordering and `bun run sp:update` when dependency versions need a bulk refresh.
 

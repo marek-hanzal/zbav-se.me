@@ -4,8 +4,8 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "dotenv -c development -- portless zbav-se.me vite",
-		"stripe": "stripe listen --forward-to http://zbav-se.me.localhost:1355/api/stripe/webhook",
+		"dev:app": "dotenv -c development -- portless zbav-se.me vite",
+		"dev:stripe": "stripe listen --forward-to http://zbav-se.me.localhost:1355/api/stripe/webhook",
 		"build": "dotenv -c development -- vite build",
 		"e2e:build": "dotenv -c development -- vite build --mode production",
 		"e2e:start": "dotenv -c development -- portless --force zbav-se.me node .output/server/index.mjs",
