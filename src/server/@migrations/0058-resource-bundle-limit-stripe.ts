@@ -19,10 +19,13 @@ export const ResourceBundleLimitStripeMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("resource_bundle_limit_stripe_[resourceBundleLimitId-key]_unique_idx", [
-				"resourceBundleLimitId",
-				"key",
-			])
+			.addUniqueConstraint(
+				"resource_bundle_limit_stripe_[resourceBundleLimitId-key]_unique_idx",
+				[
+					"resourceBundleLimitId",
+					"key",
+				],
+			)
 			.execute();
 
 		await db.schema

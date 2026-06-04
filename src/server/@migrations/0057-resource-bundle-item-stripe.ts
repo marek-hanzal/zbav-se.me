@@ -19,10 +19,13 @@ export const ResourceBundleItemStripeMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("resource_bundle_item_stripe_[resourceBundleItemId-key]_unique_idx", [
-				"resourceBundleItemId",
-				"key",
-			])
+			.addUniqueConstraint(
+				"resource_bundle_item_stripe_[resourceBundleItemId-key]_unique_idx",
+				[
+					"resourceBundleItemId",
+					"key",
+				],
+			)
 			.execute();
 	},
 };
