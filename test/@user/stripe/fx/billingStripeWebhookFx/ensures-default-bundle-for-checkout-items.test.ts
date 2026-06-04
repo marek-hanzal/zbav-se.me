@@ -5,9 +5,9 @@ import { genId } from "@/lib/common/gen-id";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { withStripeConfigFx } from "~/user/billing/server/context/withStripeConfigFx";
-import { withStripConfigEnv } from "~/user/billing/server/env/withStripConfigEnv";
-import { billingStripeWebhookFx } from "~/user/billing/server/fx/billingStripeWebhookFx";
+import { withStripeConfigFx } from "~/user/stripe/server/context/withStripeConfigFx";
+import { withStripConfigEnv } from "~/user/stripe/server/env/withStripConfigEnv";
+import { billingStripeWebhookFx } from "~/user/stripe/server/fx/billingStripeWebhookFx";
 
 const toCheckoutItemEvent = (eventId: string, userId: string): Stripe.Event =>
 	({

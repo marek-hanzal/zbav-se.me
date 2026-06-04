@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import type { Stripe } from "stripe";
 import { match, P } from "ts-pattern";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
-import { stripeClientFx } from "~/user/billing/server/fx/stripeClientFx";
+import { stripeClientFx } from "~/user/stripe/server/fx/stripeClientFx";
 
 export namespace subscriptionFetchFx {
 	export interface Props {

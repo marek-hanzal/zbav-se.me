@@ -8,9 +8,9 @@ import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withRateLimitMiddleware } from "~/server/middleware/withRateLimitMiddleware";
-import { withStripeConfigFx } from "~/user/billing/server/context/withStripeConfigFx";
-import { withStripConfigEnv } from "~/user/billing/server/env/withStripConfigEnv";
-import { billingStripeWebhookFx } from "~/user/billing/server/fx/billingStripeWebhookFx";
+import { withStripeConfigFx } from "~/user/stripe/server/context/withStripeConfigFx";
+import { withStripConfigEnv } from "~/user/stripe/server/env/withStripConfigEnv";
+import { billingStripeWebhookFx } from "~/user/stripe/server/fx/billingStripeWebhookFx";
 
 export const Route = createFileRoute("/api/stripe/webhook")({
 	server: {

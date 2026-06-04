@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { match, P } from "ts-pattern";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
-import { stripeClientFx } from "~/user/billing/server/fx/stripeClientFx";
+import { stripeClientFx } from "~/user/stripe/server/fx/stripeClientFx";
 
 export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 	const stripe = yield* stripeClientFx();

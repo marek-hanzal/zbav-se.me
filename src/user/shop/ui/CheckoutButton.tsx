@@ -4,7 +4,7 @@ import { Button } from "@/lib/client/button";
 import { useLocale } from "@/lib/client/locale";
 import { useTranslator } from "@/lib/client/translation";
 import { UnlockIcon } from "~/common/ui/icon";
-import { withBillingCheckoutCreateMutation } from "~/user/billing/mutation/withBillingCheckoutCreateMutation";
+import { withBillingCheckoutCreateMutation } from "~/user/stripe/mutation/withBillingCheckoutCreateMutation";
 import { withBundleActiveQuery } from "../query/withBundleActiveQuery";
 
 export namespace CheckoutButton {
