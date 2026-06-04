@@ -9,18 +9,6 @@ import { withBundleActiveQuery } from "../query/withBundleActiveQuery";
 import type { BundleSchema } from "../server/schema/BundleSchema";
 import { CheckoutButton } from "./CheckoutButton";
 
-interface BundleItemRow {
-	id: string;
-	resourceDefinitionId: string;
-	amount: number;
-}
-
-interface BundleLimitRow {
-	id: string;
-	resourceDefinitionId: string;
-	limit: number;
-}
-
 export namespace BundleItem {
 	export interface Props extends Container.Props {
 		bundle: BundleSchema.Type;
@@ -33,16 +21,6 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 	const { data: isActive } = withBundleActiveQuery.useSuspenseQuery({
 		bundle: bundle.bundle,
 	});
-	const itemRows: BundleItemRow[] = bundle.items.map((item) => ({
-		id: item.resourceDefinitionId,
-		resourceDefinitionId: item.resourceDefinitionId,
-		amount: item.amount,
-	}));
-	const limitRows: BundleLimitRow[] = bundle.limits.map((limit) => ({
-		id: limit.resourceDefinitionId,
-		resourceDefinitionId: limit.resourceDefinitionId,
-		limit: limit.limit,
-	}));
 
 	return (
 		<Container
@@ -99,7 +77,7 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 					data-ui={"BundleItem-[Items]"}
 					textLabel={translator.text("Bundle items (label)", "Items")}
 					textEmpty={translator.text("Bundle items empty", "No items")}
-					items={itemRows}
+					items={bundle.items}
 					renderFn={(item) => (
 						<Typo label={`${item.amount}x ${item.resourceDefinitionId}`} />
 					)}
@@ -109,7 +87,7 @@ export const BundleItem: FC<BundleItem.Props> = ({ bundle, ...props }) => {
 					data-ui={"BundleItem-[Limits]"}
 					textLabel={translator.text("Bundle limits (label)", "Limits")}
 					textEmpty={translator.text("Bundle limits empty", "No limits")}
-					items={limitRows}
+					items={bundle.limits}
 					renderFn={(limit) => (
 						<Typo label={`${limit.limit} ${limit.resourceDefinitionId}`} />
 					)}
