@@ -1,17 +1,13 @@
 import { Effect } from "effect";
-import Stripe from "stripe";
 import { match, P } from "ts-pattern";
 import { dbFx } from "~/server/database/fx/dbFx";
-import { ServerStripeSchema } from "~/server/env/ServerStripeSchema";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
+import { stripeClientFx } from "~/user/billing/server/fx/stripeClientFx";
 
 export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
-	const stripe = yield* Effect.sync(() => {
-		const stripeConfig = ServerStripeSchema.parse(process.env);
+	const stripe = yield* stripeClientFx();
 
-		return new Stripe(stripeConfig.SERVER_STRIPE_SECRET);
-	});
-	const stripeBundles = yield* Effect.tryPromise({
+	const products = yield* Effect.tryPromise({
 		async try() {
 			const products = await stripe.products.search({
 				/*
@@ -69,15 +65,15 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 		},
 	});
 
-	if (stripeBundles.length === 0) {
+	if (products.length === 0) {
 		return [];
 	}
 
 	const names = [
-		...new Set(stripeBundles.map((bundle) => bundle.bundle)),
+		...new Set(products.map((bundle) => bundle.bundle)),
 	];
-	const { resourceBundles, items, limits } = yield* dbFx(async (kysely) => {
-		const resourceBundles = await kysely
+	const { bundles, items, limits } = yield* dbFx(async (kysely) => {
+		const bundles = await kysely
 			.selectFrom("resource_bundle")
 			.select([
 				"id",
@@ -86,15 +82,15 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 			.where("name", "in", names)
 			.execute();
 
-		if (resourceBundles.length === 0) {
+		if (bundles.length === 0) {
 			return {
-				resourceBundles,
+				bundles,
 				items: [],
 				limits: [],
 			};
 		}
 
-		const ids = resourceBundles.map((bundle) => bundle.id);
+		const ids = bundles.map((bundle) => bundle.id);
 
 		const [items, limits] = await Promise.all([
 			kysely
@@ -121,13 +117,13 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 		]);
 
 		return {
-			resourceBundles,
+			bundles,
 			items,
 			limits,
 		};
 	});
 	const byName = new Map(
-		resourceBundles.map((bundle) => [
+		bundles.map((bundle) => [
 			bundle.name,
 			bundle,
 		]),
@@ -135,20 +131,20 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 	const itemsById = Map.groupBy(items, (item) => item.resourceBundleId);
 	const limitsById = Map.groupBy(limits, (limit) => limit.resourceBundleId);
 
-	return stripeBundles.flatMap((stripeBundle) => {
-		const resourceBundle = byName.get(stripeBundle.bundle);
+	return products.flatMap((stripeBundle) => {
+		const bundle = byName.get(stripeBundle.bundle);
 
-		if (!resourceBundle) {
+		if (!bundle) {
 			return [];
 		}
 
 		return [
 			{
-				bundle: resourceBundle.name,
+				bundle: bundle.name,
 				name: stripeBundle.name,
 				price: stripeBundle.price,
-				items: itemsById.get(resourceBundle.id) ?? [],
-				limits: limitsById.get(resourceBundle.id) ?? [],
+				items: itemsById.get(bundle.id) ?? [],
+				limits: limitsById.get(bundle.id) ?? [],
 			},
 		];
 	});
