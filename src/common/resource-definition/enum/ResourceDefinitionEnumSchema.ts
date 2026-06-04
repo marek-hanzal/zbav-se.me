@@ -2,10 +2,24 @@ import { z } from "zod";
 
 export const ResourceDefinitionEnumSchema = z
 	.enum([
+		/**
+		 * How many listing a user can created (include drafts)
+		 */
 		"listing.count",
-		"feed.count",
+		/**
+		 * How many gallery items may a user attach to the listing (draft)
+		 */
 		"listing.gallery.count",
-		"item:token-150",
+		/**
+		 * How many feeds a user can have
+		 */
+		"feed.count",
+		/**
+		 * Those are token packages
+		 */
+		"item:token-small",
+		"item:token-medium",
+		"item:token-large",
 	])
 	.meta({
 		id: "ResourceDefinitionEnum",
