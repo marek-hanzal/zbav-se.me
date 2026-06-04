@@ -13,7 +13,7 @@ export const withBundleActiveQuery = withQuery({
 	},
 	keys(data: BundleActiveSchema.Type) {
 		return [
-			"shop",
+			"resource-bundle",
 			"bundle",
 			"active",
 			data,

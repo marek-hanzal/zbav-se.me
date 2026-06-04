@@ -5,7 +5,7 @@ import { PriceInline } from "@/lib/client/price-inline";
 import { useTranslator } from "@/lib/client/translation";
 import { Typo } from "@/lib/client/typo";
 import { ValueList } from "@/lib/client/value";
-import { withBundleActiveQuery } from "../query/withBundleActiveQuery";
+import { withBundleActiveQuery } from "~/user/resource-bundle/query/withBundleActiveQuery";
 import type { BundleSchema } from "../server/schema/BundleSchema";
 import { CheckoutButton } from "./CheckoutButton";
 
