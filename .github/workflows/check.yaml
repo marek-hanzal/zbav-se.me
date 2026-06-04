@@ -16,7 +16,7 @@ permissions:
 
 env:
     FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-    NODE_OPTIONS: --max-old-space-size=1600
+    NODE_OPTIONS: --max-old-space-size=1800
     VITE_CONTENT_CDN: ${{ vars.VITE_CONTENT_CDN }}
     VITE_ORIGIN: https://zbav-se.me.localhost:1355
     SERVER_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:55432
