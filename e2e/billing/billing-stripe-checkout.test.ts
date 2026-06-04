@@ -35,7 +35,7 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 		.executeTakeFirstOrThrow();
 
 	await page.goto("/cs/app/shop");
-	const checkoutButton = page.locator('[data-ui="BundleItem-[CheckoutButton]"]').first();
+	const checkoutButton = page.locator('[data-ui="CheckoutButton"]').first();
 
 	await expect(checkoutButton).toBeEnabled();
 	await checkoutButton.click();

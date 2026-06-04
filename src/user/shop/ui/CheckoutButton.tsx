@@ -30,7 +30,7 @@ export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, ...props }) =
 
 	return (
 		<Button
-			data-ui={"CheckoutButton[Button]"}
+			data-ui={"CheckoutButton"}
 			iconEnabled={UnlockIcon}
 			loading={mutation.isPending}
 			disabled={mutation.isPending || isActive}
