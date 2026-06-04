@@ -1,7 +1,7 @@
 [
 	{
 		"name": "package:buyer",
-		"resource": "item:token-150",
+		"resource": "item:token-small",
 		"amount": 1,
 		"expiration": null
 	}

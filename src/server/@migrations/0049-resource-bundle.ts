@@ -1,8 +1,6 @@
 import type { Migration } from "kysely/migration";
 import { genId } from "@/lib/common/gen-id";
-import resourceBundleSeedData from "~/server/@migrations/0049-resource-bundle/resource-bundle.json" with {
-	type: "json",
-};
+import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 
 export const ResourceBundleMigration: Migration = {
 	async up(db) {
@@ -18,9 +16,9 @@ export const ResourceBundleMigration: Migration = {
 		await db
 			.insertInto("resource_bundle")
 			.values(
-				resourceBundleSeedData.map((resourceBundle) => ({
+				ResourceBundleEnumSchema.options.map((name) => ({
 					id: genId(),
-					...resourceBundle,
+					name,
 				})),
 			)
 			.onConflict((oc) => oc.column("name").doNothing())

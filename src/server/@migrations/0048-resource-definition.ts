@@ -1,7 +1,5 @@
 import type { Migration } from "kysely/migration";
-import resourceDefinitionSeedData from "~/server/@migrations/0048-resource-definition/resource-definition.json" with {
-	type: "json",
-};
+import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 
 export const ResourceDefinitionMigration: Migration = {
 	async up(db) {
@@ -10,6 +8,13 @@ export const ResourceDefinitionMigration: Migration = {
 			.addColumn("name", "text", (col) => col.primaryKey().notNull())
 			.execute();
 
-		await db.insertInto("resource_definition").values(resourceDefinitionSeedData).execute();
+		await db
+			.insertInto("resource_definition")
+			.values(
+				ResourceDefinitionEnumSchema.options.map((name) => ({
+					name,
+				})),
+			)
+			.execute();
 	},
 };
