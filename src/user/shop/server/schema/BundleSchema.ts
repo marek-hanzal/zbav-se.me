@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
+import { ResourceBundleItemSchema } from "~/common/resource-bundle-item/server/schema/ResourceBundleItemSchema";
+import { ResourceBundleLimitSchema } from "~/common/resource-bundle-limit/server/schema/ResourceBundleLimitSchema";
 
 export const BundleSchema = z
 	.looseObject({
@@ -7,21 +8,19 @@ export const BundleSchema = z
 		name: z.string().min(1),
 		price: z.coerce.number().nonnegative(),
 		items: z.array(
-			z
-				.looseObject({
-					resourceDefinitionId: ResourceDefinitionEnumSchema,
-					amount: z.coerce.number().positive(),
-					expiration: z.coerce.number().nullable(),
-				})
-				.strip(),
+			ResourceBundleItemSchema.pick({
+				amount: true,
+				id: true,
+				resourceDefinitionId: true,
+				expiration: true,
+			}),
 		),
 		limits: z.array(
-			z
-				.looseObject({
-					resourceDefinitionId: ResourceDefinitionEnumSchema,
-					limit: z.coerce.number().positive(),
-				})
-				.strip(),
+			ResourceBundleLimitSchema.pick({
+				id: true,
+				resourceDefinitionId: true,
+				limit: true,
+			}),
 		),
 	})
 	.strip();
