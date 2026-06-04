@@ -8,7 +8,7 @@ import { billingSubscriptionSyncFx } from "../../../billingSubscriptionSyncFx";
 
 export namespace eventCompletedFx {
 	export interface Props {
-		event: Stripe.Event;
+		event: Stripe.CheckoutSessionCompletedEvent;
 	}
 }
 
@@ -21,7 +21,7 @@ export const eventCompletedFx = Effect.fn("eventCompletedFx")(function* ({
 		type: event.type,
 	});
 
-	const session = event.data.object as Stripe.Checkout.Session;
+	const session = event.data.object;
 	const userId = session.client_reference_id ?? session.metadata?.userId;
 
 	if (!userId) {
@@ -41,7 +41,7 @@ export const eventCompletedFx = Effect.fn("eventCompletedFx")(function* ({
 			lineItems: lineItems.data,
 		});
 
-        // TODO: create general user limit fx and user item fx which will grant to his default bundle those lineItems
+		// TODO: create general user limit fx and user item fx which will grant to his default bundle those lineItems
 	}
 
 	if (session.subscription) {
