@@ -6,6 +6,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
+import { resourceBundleEnsureFx } from "~/user/resource-bundle/server/fx/resourceBundleEnsureFx";
 import { billingSubscriptionSyncFx } from "./billingSubscriptionSyncFx";
 import { stripeClientFx } from "./stripeClientFx";
 
@@ -17,6 +18,23 @@ interface InvoiceSubscriptionFields {
 		  }
 		| null;
 }
+
+const toCheckoutBundleNames = (lineItems: Stripe.LineItem[]) => {
+	const bundleNames = lineItems.flatMap((lineItem) => {
+		const price = lineItem.price;
+		const product = price?.product;
+
+		return [
+			lineItem.metadata?.bundle,
+			price?.metadata.bundle,
+			typeof product === "object" && !product.deleted ? product.metadata.bundle : null,
+		].filter((bundle): bundle is string => Boolean(bundle));
+	});
+
+	return [
+		...new Set(bundleNames),
+	];
+};
 
 export namespace billingStripeWebhookFx {
 	export interface Props {
@@ -100,13 +118,57 @@ const processStripeEventFx = Effect.fn("processStripeEventFx")(function* (event:
 	}
 
 	if (event.type === "checkout.session.completed") {
-		const stripe = yield* stripeClientFx();
 		const session = event.data.object as Stripe.Checkout.Session;
+		const userId = session.client_reference_id ?? session.metadata?.userId ?? null;
+
+		if (userId) {
+			const lineItems = session.line_items
+				? session.line_items.data
+				: yield* Effect.gen(function* () {
+						const stripe = yield* stripeClientFx();
+
+						return yield* Effect.tryPromise({
+							try() {
+								return stripe.checkout.sessions.listLineItems(session.id, {
+									expand: [
+										"data.price.product",
+									],
+									limit: 100,
+								});
+							},
+							catch(error) {
+								return new RuntimeErrorFx({
+									message: "Stripe checkout session line item retrieval failed",
+									cause: error,
+								});
+							},
+						});
+					}).pipe(Effect.map((lineItems) => lineItems.data));
+			const bundleNames = toCheckoutBundleNames(lineItems);
+
+			if (bundleNames.length > 0) {
+				const bundleItem = yield* dbFx(async (kysely) => {
+					return kysely
+						.selectFrom("resource_bundle as rb")
+						.innerJoin("resource_bundle_item as rbi", "rbi.resourceBundleId", "rb.id")
+						.select("rbi.id")
+						.where("rb.name", "in", bundleNames)
+						.executeTakeFirst();
+				});
+
+				if (bundleItem) {
+					yield* resourceBundleEnsureFx({
+						userId,
+					});
+				}
+			}
+		}
 
 		if (!session.subscription) {
 			return;
 		}
 
+		const stripe = yield* stripeClientFx();
 		const subscriptionId =
 			typeof session.subscription === "string"
 				? session.subscription

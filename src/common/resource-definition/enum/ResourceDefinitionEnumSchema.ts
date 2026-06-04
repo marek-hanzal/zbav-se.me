@@ -5,6 +5,7 @@ export const ResourceDefinitionEnumSchema = z
 		"listing.count",
 		"feed.count",
 		"listing.gallery.count",
+		"item:token-150",
 	])
 	.meta({
 		id: "ResourceDefinitionEnum",

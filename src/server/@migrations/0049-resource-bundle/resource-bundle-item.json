@@ -1,1 +1,8 @@
-[]
+[
+	{
+		"name": "package:buyer",
+		"resource": "item:token-150",
+		"amount": 1,
+		"expiration": null
+	}
+]
