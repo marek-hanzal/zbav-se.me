@@ -42,7 +42,9 @@ export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, ...props }) =
 			}}
 			{...props}
 		>
-			{isActive ? translator.text("Active", "Active") : translator.text("Start subscription")}
+			{isActive
+				? translator.text("Subscription already active (label)")
+				: translator.text("Start subscription (label)")}
 		</Button>
 	);
 };
