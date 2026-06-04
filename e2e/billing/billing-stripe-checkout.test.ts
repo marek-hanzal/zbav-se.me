@@ -42,7 +42,26 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
 
 	await page.getByText(/Payment method|Způsob platby/i).scrollIntoViewIfNeeded();
-	const cardNumberInput = page.getByLabel(/Card number|Číslo karty/i);
+	const cardNumberInput = page
+		.getByLabel(/Card number|Číslo karty/i)
+		.or(page.getByPlaceholder(/1234 1234 1234/i))
+		.first();
+	const cardRadio = page.locator('input[type="radio"][value="card"]').first();
+	const cardMethodButton = page.locator('[data-testid="card-accordion-item-button"]').first();
+
+	if (!(await cardNumberInput.isVisible())) {
+		if ((await cardRadio.count()) > 0) {
+			await cardRadio.click({
+				force: true,
+				timeout: 10_000,
+			});
+		} else if (await cardMethodButton.isVisible()) {
+			await cardMethodButton.click({
+				force: true,
+				timeout: 10_000,
+			});
+		}
+	}
 
 	for (let attempt = 0; attempt < 8; attempt++) {
 		if (await cardNumberInput.isVisible()) {
@@ -53,26 +72,27 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 		await page.waitForTimeout(250);
 	}
 
-	await page.locator('[data-testid="card-accordion-item-button"]').evaluate((element) => {
-		if (!(element instanceof HTMLElement)) {
-			throw new Error("Stripe card payment button is not clickable");
-		}
-
-		element.click();
-	});
 	await expect(cardNumberInput).toBeVisible();
 	await cardNumberInput.fill("4242424242424242");
-	await page.getByLabel(/Expiration|Platnost|Datum vypršení/i).fill("1234");
+	await page
+		.getByLabel(/Expiration|Platnost|Datum vypršení/i)
+		.or(page.getByPlaceholder(/MM\s*\/\s*(YY|RR)/i))
+		.first()
+		.fill("1234");
 	await page
 		.getByRole("textbox", {
 			name: /CVC/i,
 		})
+		.or(page.getByPlaceholder(/CVC/i))
+		.first()
 		.fill("567");
 
 	await page
 		.getByRole("textbox", {
 			name: /Cardholder name|Name on card|Jméno na kartě|Jméno držitele karty|Celé jméno/i,
 		})
+		.or(page.getByPlaceholder(/Celé jméno|Full name/i))
+		.first()
 		.fill("Stripe E2E Buyer");
 
 	const countrySelect = page.getByLabel(/Country|region|Země|oblast/i);

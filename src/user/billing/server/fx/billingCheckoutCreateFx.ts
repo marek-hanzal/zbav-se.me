@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import type Stripe from "stripe";
 import { match, P } from "ts-pattern";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
@@ -19,6 +20,7 @@ export namespace billingCheckoutCreateFx {
 export const billingCheckoutCreateFx = Effect.fn("billingCheckoutCreateFx")(function* ({
 	userId,
 	bundle,
+	locale,
 	urlSuccess,
 	urlCancel,
 }: billingCheckoutCreateFx.Props) {
@@ -109,6 +111,7 @@ export const billingCheckoutCreateFx = Effect.fn("billingCheckoutCreateFx")(func
 				mode: "subscription",
 				customer: userStripe.customerId,
 				client_reference_id: userId,
+				locale: locale as Stripe.Checkout.SessionCreateParams.Locale,
 				line_items: [
 					{
 						price: price.id,
