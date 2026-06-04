@@ -35,12 +35,7 @@ export const resourceBundleEnsureFx = Effect.fn("resourceBundleEnsureFx")(functi
 						name: userId,
 					})
 					.onConflict((oc) => {
-						return oc
-							.columns([
-								"id",
-								"name",
-							])
-							.doNothing();
+						return oc.column("id").doNothing();
 					})
 					.execute();
 			});
@@ -65,6 +60,20 @@ export const resourceBundleEnsureFx = Effect.fn("resourceBundleEnsureFx")(functi
 							.doNothing();
 					})
 					.execute();
+			});
+
+			return yield* dbFx(async (kysely) => {
+				return kysely
+					.selectFrom("user_resource_bundle as urb")
+					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+					.select([
+						"urb.id",
+						"urb.expiresAt",
+						"rb.name as resourceBundleName",
+					])
+					.where("urb.userId", "=", userId)
+					.where("urb.resourceBundleId", "=", userId)
+					.executeTakeFirstOrThrow();
 			});
 		}),
 	);

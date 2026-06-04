@@ -4,6 +4,7 @@ import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { userResourceBundleCreateFx } from "~/user/resource-bundle/server/fx/userResourceBundleCreateFx";
+import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 
 describe("userResourceBundleCreateFx", () => {
 	it("assigns the free bundle idempotently", async () => {
@@ -14,11 +15,11 @@ describe("userResourceBundleCreateFx", () => {
 
 			const first = yield* userResourceBundleCreateFx({
 				userId: seller.id,
-				bundle: "free",
+				bundle: ResourceBundleEnumSchema.enum["package:free"],
 			});
 			const second = yield* userResourceBundleCreateFx({
 				userId: seller.id,
-				bundle: "free",
+				bundle: ResourceBundleEnumSchema.enum["package:free"],
 			});
 
 			const rows = yield* Effect.promise(() =>
@@ -30,7 +31,7 @@ describe("userResourceBundleCreateFx", () => {
 						"rb.name",
 					])
 					.where("urb.userId", "=", seller.id)
-					.where("rb.name", "=", "free")
+					.where("rb.name", "=", ResourceBundleEnumSchema.enum["package:free"])
 					.execute(),
 			);
 
@@ -38,7 +39,7 @@ describe("userResourceBundleCreateFx", () => {
 			expect(rows).toEqual([
 				{
 					id: first.id,
-					name: "free",
+					name: ResourceBundleEnumSchema.enum["package:free"],
 				},
 			]);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
