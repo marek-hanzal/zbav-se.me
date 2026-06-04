@@ -3,6 +3,7 @@ import type Stripe from "stripe";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
+import { NoticeSchema } from "@/lib/common/schema";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
@@ -51,11 +52,10 @@ export const billingStripeWebhookFx = Effect.fn("billingStripeWebhookFx")(functi
 		type: event.type,
 	});
 
-	const dateContext = yield* DateContextFx;
-	const now = dateContext.now().toJSDate();
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
+			const dateContext = yield* DateContextFx;
+
 			const stripeEvent = yield* dbFx(async (kysely) => {
 				return kysely
 					.insertInto("stripe_event")
@@ -64,10 +64,12 @@ export const billingStripeWebhookFx = Effect.fn("billingStripeWebhookFx")(functi
 						eventId: event.id,
 						type: event.type,
 						payload: event as unknown as Record<string, unknown>,
-						createdAt: now,
+						createdAt: dateContext.now().toJSDate(),
 						processedAt: null,
 					})
-					.onConflict((oc) => oc.column("eventId").doNothing())
+					.onConflict((oc) => {
+						return oc.column("eventId").doNothing();
+					})
 					.returning([
 						"id",
 						"processedAt",
@@ -77,8 +79,9 @@ export const billingStripeWebhookFx = Effect.fn("billingStripeWebhookFx")(functi
 
 			if (!stripeEvent) {
 				return {
-					processed: false,
-				};
+					type: "warning",
+					message: `Duplicate event [${event.type}]`,
+				} satisfies NoticeSchema.Type;
 			}
 
 			yield* processStripeEventFx(event);
@@ -87,15 +90,16 @@ export const billingStripeWebhookFx = Effect.fn("billingStripeWebhookFx")(functi
 				return kysely
 					.updateTable("stripe_event")
 					.set({
-						processedAt: now,
+						processedAt: dateContext.now().toJSDate(),
 					})
 					.where("id", "=", stripeEvent.id)
 					.execute();
 			});
 
 			return {
-				processed: true,
-			};
+				type: "info",
+				message: "Success",
+			} satisfies NoticeSchema.Type;
 		}),
 	);
 });
