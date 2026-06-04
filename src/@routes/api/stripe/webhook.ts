@@ -30,7 +30,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 				const signature = request.headers.get("Stripe-Signature");
 
 				if (!signature) {
-                    logger.warn("Called stripe webhoook without signature!")
+					logger.warn("Called stripe webhoook without signature!");
 					return Response.json(
 						{
 							type: "error",
