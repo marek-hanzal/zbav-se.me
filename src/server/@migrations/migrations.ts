@@ -54,6 +54,8 @@ import { UserResourceBundleMigration } from "~/server/@migrations/0052-user-reso
 import { UserStripeMigration } from "~/server/@migrations/0053-user-stripe";
 import { UserResourceBundleStripeMigration } from "~/server/@migrations/0055-user-resource-bundle-stripe";
 import { StripeEventMigration } from "~/server/@migrations/0056-stripe-event";
+import { ResourceBundleItemStripeMigration } from "~/server/@migrations/0057-resource-bundle-item-stripe";
+import { ResourceBundleLimitStripeMigration } from "~/server/@migrations/0058-resource-bundle-limit-stripe";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -112,4 +114,6 @@ export const migrations = {
 	"0053-user-stripe": UserStripeMigration,
 	"0055-user-resource-bundle-stripe": UserResourceBundleStripeMigration,
 	"0056-stripe-event": StripeEventMigration,
+	"0057-resource-bundle-item-stripe": ResourceBundleItemStripeMigration,
+	"0058-resource-bundle-limit-stripe": ResourceBundleLimitStripeMigration,
 };
