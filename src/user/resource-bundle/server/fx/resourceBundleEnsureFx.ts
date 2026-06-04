@@ -5,14 +5,6 @@ import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 
-interface ResourceBundleEnsureResult {
-	id: string;
-	userId: string;
-	resourceBundleId: string;
-	resourceBundleName: string;
-	expiresAt: Date | null;
-}
-
 export namespace resourceBundleEnsureFx {
 	export interface Props {
 		userId: string;
@@ -32,39 +24,31 @@ export const resourceBundleEnsureFx = Effect.fn("resourceBundleEnsureFx")(functi
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const insertedResourceBundle = yield* dbFx(async (kysely) => {
+			yield* dbFx(async (kysely) => {
 				return kysely
 					.insertInto("resource_bundle")
 					.values({
-						id: genId(),
+						id: userId,
 						name: userId,
 					})
-					.onConflict((oc) => oc.column("name").doNothing())
-					.returning([
-						"id",
-						"name",
-					])
-					.executeTakeFirst();
+					.onConflict((oc) => {
+						return oc
+							.columns([
+								"id",
+								"name",
+							])
+							.doNothing();
+					})
+					.execute();
 			});
-			const resourceBundle =
-				insertedResourceBundle ??
-				(yield* dbFx(async (kysely) => {
-					return kysely
-						.selectFrom("resource_bundle")
-						.select([
-							"id",
-							"name",
-						])
-						.where("name", "=", userId)
-						.executeTakeFirstOrThrow();
-				}));
-			const userResourceBundle = yield* dbFx(async (kysely) => {
+
+			yield* dbFx(async (kysely) => {
 				return kysely
 					.insertInto("user_resource_bundle")
 					.values({
 						id: genId(),
 						userId,
-						resourceBundleId: resourceBundle.id,
+						resourceBundleId: userId,
 						createdAt: now,
 						availableAt: now,
 						expiresAt: null,
@@ -75,29 +59,10 @@ export const resourceBundleEnsureFx = Effect.fn("resourceBundleEnsureFx")(functi
 								"userId",
 								"resourceBundleId",
 							])
-							.doUpdateSet({
-								availableAt: now,
-								expiresAt: null,
-							});
+							.doNothing();
 					})
-					.returning([
-						"id",
-						"userId",
-						"resourceBundleId",
-						"expiresAt",
-					])
-					.executeTakeFirstOrThrow();
+					.execute();
 			});
-
-			const result: ResourceBundleEnsureResult = {
-				id: userResourceBundle.id,
-				userId: userResourceBundle.userId,
-				resourceBundleId: userResourceBundle.resourceBundleId,
-				resourceBundleName: resourceBundle.name,
-				expiresAt: userResourceBundle.expiresAt,
-			};
-
-			return result;
 		}),
 	);
 });
