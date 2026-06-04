@@ -11,7 +11,7 @@ export const importResourceBundleLimit: withDatabaseFx.Import<Database> = {
 	async run({ kysely }) {
 		const resourceBundleLimits = resourceBundleLimitSeedData;
 		const resourceBundleNames = [
-			...new Set(resourceBundleLimits.map((item) => item.resourceBundleName)),
+			...new Set(resourceBundleLimits.map((item) => item.resourceBundleId)),
 		];
 		const resourceBundles = await kysely
 			.selectFrom("resource_bundle")
@@ -28,10 +28,10 @@ export const importResourceBundleLimit: withDatabaseFx.Import<Database> = {
 			]),
 		);
 		const values = resourceBundleLimits.map((item): ResourceBundleLimitImportRow => {
-			const resourceBundleId = resourceBundleIdByName.get(item.resourceBundleName);
+			const resourceBundleId = resourceBundleIdByName.get(item.resourceBundleId);
 
 			if (!resourceBundleId) {
-				throw new Error(`Missing resource bundle '${item.resourceBundleName}'`);
+				throw new Error(`Missing resource bundle '${item.resourceBundleId}'`);
 			}
 
 			return {
