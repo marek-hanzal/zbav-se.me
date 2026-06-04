@@ -3,12 +3,12 @@ import type Stripe from "stripe";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
-import { NoticeSchema } from "@/lib/common/schema";
+import type { NoticeSchema } from "@/lib/common/schema";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
-import { resourceBundleEnsureFx } from "~/user/resource-bundle/server/fx/resourceBundleEnsureFx";
 import { billingSubscriptionSyncFx } from "./billingSubscriptionSyncFx";
+import { eventCompletedFx } from "./event/checkout/session/eventCompletedFx";
 import { stripeClientFx } from "./stripeClientFx";
 
 interface InvoiceSubscriptionFields {
@@ -122,75 +122,8 @@ const processStripeEventFx = Effect.fn("processStripeEventFx")(function* (event:
 	}
 
 	if (event.type === "checkout.session.completed") {
-		const session = event.data.object as Stripe.Checkout.Session;
-		const userId = session.client_reference_id ?? session.metadata?.userId ?? null;
-
-		if (userId) {
-			const lineItems = session.line_items
-				? session.line_items.data
-				: yield* Effect.gen(function* () {
-						const stripe = yield* stripeClientFx();
-
-						return yield* Effect.tryPromise({
-							try() {
-								return stripe.checkout.sessions.listLineItems(session.id, {
-									expand: [
-										"data.price.product",
-									],
-									limit: 100,
-								});
-							},
-							catch(error) {
-								return new RuntimeErrorFx({
-									message: "Stripe checkout session line item retrieval failed",
-									cause: error,
-								});
-							},
-						});
-					}).pipe(Effect.map((lineItems) => lineItems.data));
-			const bundleNames = toCheckoutBundleNames(lineItems);
-
-			if (bundleNames.length > 0) {
-				const bundleItem = yield* dbFx(async (kysely) => {
-					return kysely
-						.selectFrom("resource_bundle as rb")
-						.innerJoin("resource_bundle_item as rbi", "rbi.resourceBundleId", "rb.id")
-						.select("rbi.id")
-						.where("rb.name", "in", bundleNames)
-						.executeTakeFirst();
-				});
-
-				if (bundleItem) {
-					yield* resourceBundleEnsureFx({
-						userId,
-					});
-				}
-			}
-		}
-
-		if (!session.subscription) {
-			return;
-		}
-
-		const stripe = yield* stripeClientFx();
-		const subscriptionId =
-			typeof session.subscription === "string"
-				? session.subscription
-				: session.subscription.id;
-		const subscription = yield* Effect.tryPromise({
-			try() {
-				return stripe.subscriptions.retrieve(subscriptionId);
-			},
-			catch(error) {
-				return new RuntimeErrorFx({
-					message: "Stripe subscription retrieval failed",
-					cause: error,
-				});
-			},
-		});
-
-		return yield* billingSubscriptionSyncFx({
-			subscription,
+		yield* eventCompletedFx({
+			event,
 		});
 	}
 
