@@ -1,6 +1,6 @@
 import { Context } from "effect";
 
-export interface LocationContext {
+export interface LocationConfig {
 	geoapifyToken: string;
 	/**
 	 * Base API url of (geoapify) service
@@ -16,9 +16,9 @@ export interface LocationContext {
 	route: string;
 }
 
-export class LocationContextFx extends Context.Tag("LocationContextFx")<
-	LocationContextFx,
-	LocationContext
+export class LocationConfigFx extends Context.Tag("LocationConfigFx")<
+	LocationConfigFx,
+	LocationConfig
 >() {
 	//
 }

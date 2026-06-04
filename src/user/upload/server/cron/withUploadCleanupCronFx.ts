@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import { DateContextFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
-import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
-import { S3ContextFx } from "~/common/s3/server/context/S3ContextFx";
-import { withS3Fx } from "~/common/s3/server/context/withS3Fx";
+import { s3ConfigFx } from "~/common/s3/server/context/s3ConfigFx";
+import { withS3ConfigFx } from "~/common/s3/server/context/withS3ConfigFx";
+import { withS3ConfigEnv } from "~/common/s3/server/env/withS3ConfigEnv";
 import { s3ClientFx } from "~/common/s3/server/fx/s3ClientFx";
 import { dbFx } from "~/server/database/fx/dbFx";
-import { ServerS3Schema } from "~/server/env/ServerS3Schema";
-import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
-import { withUploadFx } from "~/user/upload/server/context/withUploadFx";
+import { UploadConfigFx } from "../context/UploadConfigFx";
+import { withUploadConfigFx } from "../context/withUploadConfigFx";
+import { withUploadConfigEnv } from "../env/withUploadConfigEnv";
 
 export namespace withUploadCleanupCronFx {
 	export interface Props {
@@ -19,9 +19,6 @@ export namespace withUploadCleanupCronFx {
 export const withUploadCleanupCronFx = Effect.fn("withUploadCleanupCronFx")(function* ({
 	count,
 }: withUploadCleanupCronFx.Props) {
-	const s3Config = ServerS3Schema.parse(process.env);
-	const viteConfig = ViteEnvSchema.parse(process.env);
-
 	return yield* Effect.gen(function* () {
 		const logger = yield* getLoggerFx("withUploadCleanupCronFx", "cron");
 		logger.trace("withUploadCleanupCronFx", {
@@ -29,8 +26,8 @@ export const withUploadCleanupCronFx = Effect.fn("withUploadCleanupCronFx")(func
 		});
 
 		const dateContext = yield* DateContextFx;
-		const { bucket } = yield* S3ContextFx;
-		const { cdn } = yield* UploadContextFx;
+		const { bucket } = yield* s3ConfigFx;
+		const { cdn } = yield* UploadConfigFx;
 		const client = yield* s3ClientFx();
 		const cdnUrlLike = `${cdn.replace(/\/$/, "")}/%`;
 
@@ -132,17 +129,7 @@ export const withUploadCleanupCronFx = Effect.fn("withUploadCleanupCronFx")(func
 
 			return kysely.deleteFrom("upload").where("id", "in", source).execute();
 		});
-	}).pipe(
-		withS3Fx({
-			api: s3Config.SERVER_S3_API,
-			bucket: s3Config.SERVER_S3_BUCKET,
-			key: s3Config.SERVER_S3_KEY,
-			secret: s3Config.SERVER_S3_SECRET,
-		}),
-		withUploadFx({
-			cdn: viteConfig.VITE_CONTENT_CDN,
-		}),
-	);
+	}).pipe(withS3ConfigFx(withS3ConfigEnv()), withUploadConfigFx(withUploadConfigEnv()));
 });
 
 export type withUploadCleanupCronFx = ReturnType<typeof withUploadCleanupCronFx>;

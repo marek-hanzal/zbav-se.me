@@ -7,6 +7,8 @@ import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+import { withStripeConfigFx } from "../server/context/withStripeConfigFx";
+import { withStripConfigEnv } from "../server/env/withStripConfigEnv";
 import { billingCustomerEnsureFx } from "../server/fx/billingCustomerEnsureFx";
 import { BillingCustomerSchema } from "../server/schema/BillingCustomerSchema";
 
@@ -40,6 +42,7 @@ export const billingCustomerEnsureFn = createServerFn({
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
+			withStripeConfigFx(withStripConfigEnv()),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {

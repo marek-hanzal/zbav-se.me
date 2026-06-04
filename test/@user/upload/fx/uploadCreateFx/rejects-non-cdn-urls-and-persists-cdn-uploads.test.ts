@@ -4,7 +4,7 @@ import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { leaseTestUserFx } from "~/test/user/fx/leaseTestUserFx";
-import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
+import { UploadConfigFx } from "~/user/upload/server/context/UploadConfigFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 describe("uploadCreateFx", () => {
@@ -13,8 +13,8 @@ describe("uploadCreateFx", () => {
 
 		return Effect.gen(function* () {
 			const user = yield* leaseTestUserFx({});
-			const uploadContext = yield* UploadContextFx;
-			const validUrl = `${uploadContext.cdn.replace(/\/$/, "")}/upload-create-valid.jpg`;
+			const uploadConfig = yield* UploadConfigFx;
+			const validUrl = `${uploadConfig.cdn.replace(/\/$/, "")}/upload-create-valid.jpg`;
 
 			const invalid = yield* Effect.either(
 				uploadCreateFx({

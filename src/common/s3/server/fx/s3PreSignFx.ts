@@ -3,10 +3,10 @@ import { genId } from "@/lib/common/gen-id";
 import { keyOf } from "@/lib/common/key-of";
 import { linkTo } from "@/lib/common/link-to";
 import { getLoggerFx } from "@/lib/common/log";
-import { S3ContextFx } from "~/common/s3/server/context/S3ContextFx";
 import { s3ClientFx } from "~/common/s3/server/fx/s3ClientFx";
 import { rateLimitCheckFx } from "~/server/rate-limit/server/fx/rateLimitCheckFx";
-import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
+import { UploadConfigFx } from "~/user/upload/server/context/UploadConfigFx";
+import { s3ConfigFx } from "../context/s3ConfigFx";
 
 export namespace s3PreSignFx {
 	export interface Props {
@@ -36,8 +36,8 @@ export const s3PreSignFx = Effect.fn("s3PreSignFx")(function* ({
 		message: "You've reached rate limit for uploaded images.",
 	});
 
-	const { cdn } = yield* UploadContextFx;
-	const { bucket } = yield* S3ContextFx;
+	const { cdn } = yield* UploadConfigFx;
+	const { bucket } = yield* s3ConfigFx;
 
 	const s3 = yield* s3ClientFx();
 

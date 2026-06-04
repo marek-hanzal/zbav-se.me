@@ -5,7 +5,7 @@ import { draftPatchFx } from "~/seller/draft/server/fx/draftPatchFx";
 import { listingCreateFx } from "~/seller/listing/server/fx/listingCreateFx";
 import { locationAutocompleteFx } from "~/session/location/server/fx/locationAutocompleteFx";
 import { categoryFetchFx } from "~/user/category/server/fx/categoryFetchFx";
-import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
+import { UploadConfigFx } from "~/user/upload/server/context/UploadConfigFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 
 export namespace createListingFx {
@@ -58,7 +58,7 @@ export const createListingFx = (
 		const resolvedUploadId =
 			uploadId ??
 			(yield* Effect.gen(function* () {
-				const uploadContext = yield* UploadContextFx;
+				const uploadContext = yield* UploadConfigFx;
 				const upload = yield* uploadCreateFx({
 					access: "public",
 					url: `${uploadContext.cdn.replace(/\/$/, "")}/test.jpg`,

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { linkTo } from "@/lib/common/link-to";
 import { getLoggerFx } from "@/lib/common/log";
-import { LocationContextFx } from "~/session/location/server/context/LocationContextFx";
+import { LocationConfigFx } from "../context/LocationConfigFx";
 
 export namespace withLocationRequestFx {
 	/**
@@ -46,14 +46,14 @@ export const withLocationRequestFx = Effect.fn("withLocationRequestFx")(function
 		limit,
 	});
 
-	const context = yield* LocationContextFx;
+	const locationConfig = yield* LocationConfigFx;
 
 	const link = linkTo({
-		base: context.api,
-		href: context.autocomplete,
+		base: locationConfig.api,
+		href: locationConfig.autocomplete,
 		query: {
 			text,
-			apiKey: context.geoapifyToken,
+			apiKey: locationConfig.geoapifyToken,
 			lang,
 			limit,
 		},

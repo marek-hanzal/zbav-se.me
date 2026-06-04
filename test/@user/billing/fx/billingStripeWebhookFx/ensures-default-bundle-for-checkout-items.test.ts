@@ -5,6 +5,8 @@ import { genId } from "@/lib/common/gen-id";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { withStripeConfigFx } from "~/user/billing/server/context/withStripeConfigFx";
+import { withStripConfigEnv } from "~/user/billing/server/env/withStripConfigEnv";
 import { billingStripeWebhookFx } from "~/user/billing/server/fx/billingStripeWebhookFx";
 
 const toCheckoutItemEvent = (eventId: string, userId: string): Stripe.Event =>
@@ -90,6 +92,10 @@ describe("billingStripeWebhookFx checkout items", () => {
 				name: buyer.id,
 				expiresAt: null,
 			});
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(
+			withRuntimeFx(database),
+			withStripeConfigFx(withStripConfigEnv()),
+			Effect.runPromise,
+		);
 	});
 });

@@ -2,18 +2,18 @@ import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
-import { ViteEnvSchema } from "~/common/env/ViteEnvSchema";
-import { withS3Fx } from "~/common/s3/server/context/withS3Fx";
+import { withS3ConfigFx } from "~/common/s3/server/context/withS3ConfigFx";
+import { withS3ConfigEnv } from "~/common/s3/server/env/withS3ConfigEnv";
 import { s3PreSignFx } from "~/common/s3/server/fx/s3PreSignFx";
 import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { ServerS3Schema } from "~/server/env/ServerS3Schema";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { S3PreSignRequestSchema } from "~/user/s3/server/schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "~/user/s3/server/schema/S3PreSignResponseSchema";
-import { withUploadFx } from "~/user/upload/server/context/withUploadFx";
+import { withUploadConfigFx } from "~/user/upload/server/context/withUploadConfigFx";
+import { withUploadConfigEnv } from "~/user/upload/server/env/withUploadConfigEnv";
 
 export namespace s3PreSignFn {
 	export type Error = Effect.Effect.Error<s3PreSignFx>;
@@ -35,9 +35,6 @@ export const s3PreSignFn = createServerFn({
 		]);
 		logger.trace(name, data);
 
-		const s3Config = ServerS3Schema.parse(process.env);
-		const viteConfig = ViteEnvSchema.parse(process.env);
-
 		return zodGuardFx({
 			schema: S3PreSignResponseSchema,
 			dataFx: s3PreSignFx({
@@ -46,15 +43,8 @@ export const s3PreSignFn = createServerFn({
 				extension: data.extension,
 			}),
 		}).pipe(
-			withS3Fx({
-				api: s3Config.SERVER_S3_API,
-				bucket: s3Config.SERVER_S3_BUCKET,
-				key: s3Config.SERVER_S3_KEY,
-				secret: s3Config.SERVER_S3_SECRET,
-			}),
-			withUploadFx({
-				cdn: viteConfig.VITE_CONTENT_CDN,
-			}),
+			withS3ConfigFx(withS3ConfigEnv()),
+			withUploadConfigFx(withUploadConfigEnv()),
 			withLoggerFx(rootLogger),
 			withDateFx,
 			withKyselyFx(database),

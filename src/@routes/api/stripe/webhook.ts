@@ -8,6 +8,8 @@ import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withRateLimitMiddleware } from "~/server/middleware/withRateLimitMiddleware";
+import { withStripeConfigFx } from "~/user/billing/server/context/withStripeConfigFx";
+import { withStripConfigEnv } from "~/user/billing/server/env/withStripConfigEnv";
 import { billingStripeWebhookRequestFx } from "~/user/billing/server/fx/billingStripeWebhookRequestFx";
 
 export const Route = createFileRoute("/api/stripe/webhook")({
@@ -51,6 +53,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 				}).pipe(
 					withKyselyFx(database),
 					withDateFx,
+					withStripeConfigFx(withStripConfigEnv()),
 					withLoggerFx(rootLogger),
 					Effect.catchTag("RuntimeErrorFx", (error) => Effect.succeed(error)),
 					Effect.runPromise,

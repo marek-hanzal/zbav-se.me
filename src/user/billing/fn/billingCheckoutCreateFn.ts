@@ -8,6 +8,8 @@ import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddlewa
 import { withLinkMiddleware } from "~/server/middleware/withLinkMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+import { withStripeConfigFx } from "../server/context/withStripeConfigFx";
+import { withStripConfigEnv } from "../server/env/withStripConfigEnv";
 import { billingCheckoutCreateFx } from "../server/fx/billingCheckoutCreateFx";
 import { BillingCheckoutCreateSchema } from "../server/schema/BillingCheckoutCreateSchema";
 import { BillingCheckoutSchema } from "../server/schema/BillingCheckoutSchema";
@@ -61,6 +63,7 @@ export const billingCheckoutCreateFn = createServerFn({
 			}).pipe(
 				withKyselyFx(database),
 				withDateFx,
+				withStripeConfigFx(withStripConfigEnv()),
 				withLoggerFx(rootLogger),
 				Effect.tapError((error) => {
 					return Effect.sync(() => {

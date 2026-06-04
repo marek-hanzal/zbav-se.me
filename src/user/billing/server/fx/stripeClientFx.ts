@@ -1,13 +1,11 @@
 import { Effect } from "effect";
 import Stripe from "stripe";
-import { ServerStripeSchema } from "~/server/env/ServerStripeSchema";
+import { StripeConfigFx } from "../context/StripeConfigFx";
 
-export const stripeClientFx = Effect.fn("stripeClientFx")(() =>
-	Effect.sync(() => {
-		const stripeConfig = ServerStripeSchema.parse(process.env);
+export const stripeClientFx = Effect.fn("stripeClientFx")(function* () {
+	const { secret } = yield* StripeConfigFx;
 
-		return new Stripe(stripeConfig.SERVER_STRIPE_SECRET);
-	}),
-);
+	return new Stripe(secret);
+});
 
 export type stripeClientFx = ReturnType<typeof stripeClientFx>;

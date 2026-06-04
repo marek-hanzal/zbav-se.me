@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { UploadContextFx } from "~/user/upload/server/context/UploadContextFx";
+import { UploadConfigFx } from "~/user/upload/server/context/UploadConfigFx";
 import { uploadCollectionFx } from "~/user/upload/server/fx/uploadCollectionFx";
 import { uploadCreateFx } from "~/user/upload/server/fx/uploadCreateFx";
 import { uploadFetchFx } from "~/user/upload/server/fx/uploadFetchFx";
@@ -14,8 +14,8 @@ describe("uploadCollectionFx", () => {
 
 		return Effect.gen(function* () {
 			const users = yield* createUsersFx({});
-			const uploadContext = yield* UploadContextFx;
-			const cdn = uploadContext.cdn.replace(/\/$/, "");
+			const uploadConfig = yield* UploadConfigFx;
+			const cdn = uploadConfig.cdn.replace(/\/$/, "");
 
 			const first = yield* uploadCreateFx({
 				access: "private",

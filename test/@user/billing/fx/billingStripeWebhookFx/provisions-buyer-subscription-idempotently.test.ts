@@ -5,6 +5,8 @@ import { genId } from "@/lib/common/gen-id";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
+import { withStripeConfigFx } from "~/user/billing/server/context/withStripeConfigFx";
+import { withStripConfigEnv } from "~/user/billing/server/env/withStripConfigEnv";
 import { billingStripeWebhookFx } from "~/user/billing/server/fx/billingStripeWebhookFx";
 
 const customerId = "cus_test_buyer";
@@ -134,7 +136,11 @@ describe("billingStripeWebhookFx", () => {
 					subscriptionId,
 				},
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(
+			withRuntimeFx(database),
+			withStripeConfigFx(withStripConfigEnv()),
+			Effect.runPromise,
+		);
 	});
 
 	it("expires buyer bundle at period end when subscription cancellation is scheduled", async () => {
@@ -184,6 +190,10 @@ describe("billingStripeWebhookFx", () => {
 					name: "package:buyer",
 				},
 			]);
-		}).pipe(withRuntimeFx(database), Effect.runPromise);
+		}).pipe(
+			withRuntimeFx(database),
+			withStripeConfigFx(withStripConfigEnv()),
+			Effect.runPromise,
+		);
 	});
 });
