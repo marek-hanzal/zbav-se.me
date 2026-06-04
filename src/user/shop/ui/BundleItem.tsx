@@ -6,7 +6,7 @@ import { useTranslator } from "@/lib/client/translation";
 import { Typo } from "@/lib/client/typo";
 import { ValueList } from "@/lib/client/value";
 import { withBundleActiveQuery } from "~/user/resource-bundle/query/withBundleActiveQuery";
-import type { BundleSchema } from "../server/schema/BundleSchema";
+import type { BundleSchema } from "~/user/stripe/server/schema/BundleSchema";
 import { CheckoutButton } from "./CheckoutButton";
 
 export namespace BundleItem {

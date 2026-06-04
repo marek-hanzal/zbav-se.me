@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Container } from "@/lib/client/container";
 import type { MarkSuspense } from "@/lib/client/type";
-import { withBundleCollectionQuery } from "../query/withBundleCollectionQuery";
+import { withBundleCollectionQuery } from "~/user/stripe/query/withBundleCollectionQuery";
 import { BundleItem } from "./BundleItem";
 
 export namespace BundleSelect {
