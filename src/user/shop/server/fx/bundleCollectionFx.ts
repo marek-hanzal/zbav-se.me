@@ -96,6 +96,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 			kysely
 				.selectFrom("resource_bundle_item")
 				.select([
+					"id",
 					"resourceBundleId",
 					"resourceDefinitionId",
 					"amount",
@@ -107,6 +108,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 			kysely
 				.selectFrom("resource_bundle_limit")
 				.select([
+					"id",
 					"resourceBundleId",
 					"resourceDefinitionId",
 					"limit",
@@ -140,6 +142,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 
 		return [
 			{
+				id: bundle.id,
 				bundle: bundle.name,
 				name: stripeBundle.name,
 				price: stripeBundle.price,

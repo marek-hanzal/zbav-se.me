@@ -7,6 +7,8 @@ import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+import { withStripeConfigFx } from "~/user/billing/server/context/withStripeConfigFx";
+import { withStripConfigEnv } from "~/user/billing/server/env/withStripConfigEnv";
 import { bundleCollectionFx } from "../fx/bundleCollectionFx";
 import { BundleSchema } from "../schema/BundleSchema";
 
@@ -32,6 +34,7 @@ export const withBundleCollectionFn = createServerFn()
 			dataFx: bundleCollectionFx(),
 		}).pipe(
 			withKyselyFx(database),
+			withStripeConfigFx(withStripConfigEnv()),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) =>
 				Effect.sync(() => {

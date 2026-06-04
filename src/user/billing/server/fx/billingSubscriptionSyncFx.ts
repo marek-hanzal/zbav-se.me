@@ -4,10 +4,6 @@ import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
-import {
-	BillingStripeBundleResourceBundle,
-	BillingStripeBundleSchema,
-} from "../schema/BillingStripeBundleSchema";
 
 type StripeSubscriptionStatus = Stripe.Subscription.Status;
 
@@ -67,12 +63,6 @@ const toStripeBundle = (subscription: Stripe.Subscription) => {
 const toResourceBundleName = (bundle: string | null) => {
 	if (!bundle) {
 		return null;
-	}
-
-	const legacyBundle = BillingStripeBundleSchema.safeParse(bundle);
-
-	if (legacyBundle.success) {
-		return BillingStripeBundleResourceBundle[legacyBundle.data];
 	}
 
 	return bundle;
