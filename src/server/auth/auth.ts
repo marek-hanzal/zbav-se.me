@@ -245,7 +245,7 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 						await Effect.gen(function* () {
 							yield* userResourceBundleCreateFx({
 								userId: user.id,
-								bundle: "free",
+								bundle: "package:free",
 							});
 
 							yield* resourceBundleEnsureFx({
