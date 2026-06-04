@@ -10,15 +10,15 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { withStripeConfigFx } from "../server/context/withStripeConfigFx";
 import { withStripConfigEnv } from "../server/env/withStripConfigEnv";
-import { billingCheckoutCreateFx } from "../server/fx/billingCheckoutCreateFx";
+import { checkoutFx } from "../server/fx/checkoutFx";
 import { BillingCheckoutCreateSchema } from "../server/schema/BillingCheckoutCreateSchema";
 import { BillingCheckoutSchema } from "../server/schema/BillingCheckoutSchema";
 
-export namespace billingCheckoutCreateFn {
-	export type Error = Effect.Effect.Error<billingCheckoutCreateFx>;
+export namespace checkoutFn {
+	export type Error = Effect.Effect.Error<checkoutFx>;
 }
 
-export const billingCheckoutCreateFn = createServerFn({
+export const checkoutFn = createServerFn({
 	method: "POST",
 })
 	.middleware([
@@ -38,7 +38,7 @@ export const billingCheckoutCreateFn = createServerFn({
 
 			return zodGuardFx({
 				schema: BillingCheckoutSchema,
-				dataFx: billingCheckoutCreateFx({
+				dataFx: checkoutFx({
 					...data,
 					userId: user.id,
 					urlSuccess() {

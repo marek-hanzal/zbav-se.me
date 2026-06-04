@@ -9,7 +9,7 @@ import type { BillingCheckoutCreateSchema } from "../schema/BillingCheckoutCreat
 import { ensureCustomerFx } from "./ensureCustomerFx";
 import { stripeClientFx } from "./stripeClientFx";
 
-export namespace billingCheckoutCreateFx {
+export namespace checkoutFx {
 	export interface Props extends BillingCheckoutCreateSchema.Type {
 		userId: string;
 		urlSuccess(): string;
@@ -17,15 +17,15 @@ export namespace billingCheckoutCreateFx {
 	}
 }
 
-export const billingCheckoutCreateFx = Effect.fn("billingCheckoutCreateFx")(function* ({
+export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	userId,
 	bundle,
 	locale,
 	urlSuccess,
 	urlCancel,
-}: billingCheckoutCreateFx.Props) {
-	const logger = yield* getLoggerFx("billingCheckoutCreateFx");
-	logger.trace("billingCheckoutCreateFx", {
+}: checkoutFx.Props) {
+	const logger = yield* getLoggerFx("checkoutFx");
+	logger.trace("checkoutFx", {
 		userId,
 		bundle,
 	});
@@ -149,4 +149,4 @@ export const billingCheckoutCreateFx = Effect.fn("billingCheckoutCreateFx")(func
 	} as const;
 });
 
-export type billingCheckoutCreateFx = ReturnType<typeof billingCheckoutCreateFx>;
+export type checkoutFx = ReturnType<typeof checkoutFx>;

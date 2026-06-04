@@ -1,13 +1,13 @@
 import { withMutation } from "@/lib/client/mutation";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { billingCheckoutCreateFn } from "../fn/billingCheckoutCreateFn";
+import { checkoutFn } from "../fn/checkoutFn";
 import type { BillingCheckoutCreateSchema } from "../server/schema/BillingCheckoutCreateSchema";
 import type { BillingCheckoutSchema } from "../server/schema/BillingCheckoutSchema";
 
 export const withBillingCheckoutCreateMutation = withMutation<
 	BillingCheckoutCreateSchema.Type,
 	BillingCheckoutSchema.Type,
-	billingCheckoutCreateFn.Error
+	checkoutFn.Error
 >({
 	logger: getRootLogger([
 		"mutation",
@@ -21,7 +21,7 @@ export const withBillingCheckoutCreateMutation = withMutation<
 		];
 	},
 	async mutationFn(data) {
-		return billingCheckoutCreateFn({
+		return checkoutFn({
 			data,
 		});
 	},
