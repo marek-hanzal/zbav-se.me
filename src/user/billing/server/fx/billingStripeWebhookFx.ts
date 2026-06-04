@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import type Stripe from "stripe";
 import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
@@ -78,7 +77,54 @@ export const billingStripeWebhookFx = Effect.fn("billingStripeWebhookFx")(functi
 				} satisfies NoticeSchema.Type;
 			}
 
-			yield* processStripeEventFx(event);
+			/**
+			 * TODO: What about to simplify the whole event stuff just to sync user's stuff from Stripe, including one-off items?
+			 * TODO: there is also "charge.succeeded" so we need to use most minimal stripe setup
+			 * TODO: do we've to handle invoice paid too, if we've session.completed?
+			 */
+
+			yield* match(event)
+				.with(
+					{
+						type: "customer.subscription.created",
+					},
+					{
+						type: "customer.subscription.updated",
+					},
+					{
+						type: "customer.subscription.deleted",
+					},
+					(event) => {
+						return billingSubscriptionSyncFx({
+							subscription: event.data.object,
+						});
+					},
+				)
+				.with(
+					{
+						type: "checkout.session.completed",
+					},
+					(event) => {
+						return eventCompletedFx({
+							event,
+						});
+					},
+				)
+				.with(
+					{
+						type: "invoice.paid",
+					},
+					(event) => {
+						return Effect.gen(function* () {
+							return yield* billingSubscriptionSyncFx({
+								subscription: yield* subscriptionFetchFx({
+									id: event.data.object.subscription,
+								}),
+							});
+						});
+					},
+				)
+				.otherwise(() => Effect.void);
 
 			yield* dbFx(async (kysely) => {
 				return kysely
@@ -97,61 +143,3 @@ export const billingStripeWebhookFx = Effect.fn("billingStripeWebhookFx")(functi
 		}),
 	);
 });
-
-/**
- * TODO: we've ts-pattern, use it
- * TODO: split individual events
- * TODO: split into individual files, this is huge piece of crap now
- */
-const processStripeEventFx = Effect.fn("processStripeEventFx")(function* (event: Stripe.Event) {
-	/**
-	 * TODO: What about to simplify the whole event stuff just to sync user's stuff from Stripe, including one-off items?
-	 * TODO: there is also "charge.succeeded" so we need to use most minimal stripe setup
-	 * TODO: do we've to handle invoice paid too, if we've session.completed?
-	 */
-
-	return yield* match(event)
-		.with(
-			{
-				type: "customer.subscription.created",
-			},
-			{
-				type: "customer.subscription.updated",
-			},
-			{
-				type: "customer.subscription.deleted",
-			},
-			(event) => {
-				return billingSubscriptionSyncFx({
-					subscription: event.data.object,
-				});
-			},
-		)
-		.with(
-			{
-				type: "checkout.session.completed",
-			},
-			(event) => {
-				return eventCompletedFx({
-					event,
-				});
-			},
-		)
-		.with(
-			{
-				type: "invoice.paid",
-			},
-			(event) => {
-				return Effect.gen(function* () {
-					return yield* billingSubscriptionSyncFx({
-						subscription: yield* subscriptionFetchFx({
-							id: event.data.object.subscription,
-						}),
-					});
-				});
-			},
-		)
-		.otherwise(() => Effect.void);
-});
-
-export type billingStripeWebhookFx = ReturnType<typeof billingStripeWebhookFx>;
