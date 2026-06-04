@@ -280,16 +280,13 @@ jobs:
             - name: Install Stripe CLI
               run: bun i -g @stripe/cli
 
-            - name: Setup Stripe Buyer resources
-              run: bun run e2e:stripe:setup
-
             - name: Start Stripe webhook bridge
               run: |
-                  nohup stripe listen \
+                  nohup sh -c 'tail -f /dev/null | stripe listen \
                     --api-key "$SERVER_STRIPE_SECRET" \
                     --headers "x-e2e-db:e2e-stripe-billing" \
                     --forward-to https://zbav-se.me.localhost:1355/api/stripe/webhook \
-                    --skip-verify \
+                    --skip-verify' \
                     > /tmp/stripe-listen.log 2>&1 &
 
                   for attempt in {1..30}; do
