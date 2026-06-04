@@ -10,7 +10,7 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withRateLimitMiddleware } from "~/server/middleware/withRateLimitMiddleware";
 import { withStripeConfigFx } from "~/user/billing/server/context/withStripeConfigFx";
 import { withStripConfigEnv } from "~/user/billing/server/env/withStripConfigEnv";
-import { billingStripeWebhookRequestFx } from "~/user/billing/server/fx/billingStripeWebhookRequestFx";
+import { billingStripeWebhookFx } from "~/user/billing/server/fx/billingStripeWebhookFx";
 
 export const Route = createFileRoute("/api/stripe/webhook")({
 	server: {
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 					);
 				}
 
-				const result = await billingStripeWebhookRequestFx({
+				const result = await billingStripeWebhookFx({
 					signature,
 					async content() {
 						return request.text();

@@ -7,32 +7,43 @@ import { getLoggerFx } from "@/lib/common/log";
 import type { NoticeSchema } from "@/lib/common/schema";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { subscriptionFetchFx } from "~/user/stripe/server/fx/subscriptionFetchFx";
+import { StripeConfigFx } from "../context/StripeConfigFx";
 import { billingSubscriptionSyncFx } from "./billingSubscriptionSyncFx";
 import { eventCompletedFx } from "./event/checkout/session/eventCompletedFx";
-
-interface InvoiceSubscriptionFields {
-	subscription?:
-		| string
-		| {
-				id: string;
-		  }
-		| null;
-}
+import { stripeClientFx } from "./stripeClientFx";
 
 export namespace billingStripeWebhookFx {
 	export interface Props {
-		event: Stripe.Event;
+		signature: string;
+		content(): Promise<string>;
 	}
 }
 
 export const billingStripeWebhookFx = Effect.fn("billingStripeWebhookFx")(function* ({
-	event,
+	signature,
+	content,
 }: billingStripeWebhookFx.Props) {
 	const logger = yield* getLoggerFx("billingStripeWebhookFx");
-	logger.trace("billingStripeWebhookFx", {
-		eventId: event.id,
-		type: event.type,
+	logger.trace("billingStripeWebhookFx");
+
+	const stripeConfig = yield* StripeConfigFx;
+	const stripe = yield* stripeClientFx();
+	const event = yield* Effect.tryPromise({
+		try: async () => {
+			return stripe.webhooks.constructEvent(await content(), signature, stripeConfig.webhook);
+		},
+		catch(error) {
+			logger.warn("Invalid Stripe webhook signature", {
+				error,
+			});
+
+			return new RuntimeErrorFx({
+				message: "Invalid Stripe webhook signature",
+				cause: error,
+			});
+		},
 	});
 
 	return yield* withTransactionFx(
