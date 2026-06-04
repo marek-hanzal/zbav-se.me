@@ -5,6 +5,7 @@ import { translator } from "@/lib/common/translation";
 import { auth } from "~/server/auth/auth";
 import type { Database } from "~/server/database/Database";
 import { TEST_USER_PASSWORD, toLeasedTestUserEmail } from "~/test/user/fx/leaseTestUserFx";
+import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 
 const TEST_USER_KEYS = [
 	"a",
@@ -36,7 +37,6 @@ const TEST_USER_KEYS = [
 ] as const;
 
 type TestUserKey = (typeof TEST_USER_KEYS)[number];
-const TEST_USER_RESOURCE_BUNDLE_NAME = "season-founders";
 const TEST_USER_RESOURCE_BUNDLE_AVAILABLE_AT = new Date("2020-01-01T00:00:00.000Z");
 
 export namespace seedTestUsersFx {
@@ -99,7 +99,7 @@ export const seedTestUsersFx = Effect.fn("seedTestUsersFx")(function* ({
 		const resourceBundle = await database.kysely
 			.selectFrom("resource_bundle")
 			.select("id")
-			.where("name", "=", TEST_USER_RESOURCE_BUNDLE_NAME)
+			.where("name", "=", ResourceBundleEnumSchema.enum["extra:founders.promo"])
 			.executeTakeFirstOrThrow();
 
 		await database.kysely
