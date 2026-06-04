@@ -11,6 +11,9 @@ export namespace resourceBundleEnsureFx {
 	}
 }
 
+/**
+ * This Fx ensures user has it's own bundle where we can assigne e.g. items or limits outside of the plan.
+ */
 export const resourceBundleEnsureFx = Effect.fn("resourceBundleEnsureFx")(function* ({
 	userId,
 }: resourceBundleEnsureFx.Props) {

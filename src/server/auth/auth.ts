@@ -35,6 +35,7 @@ import { ServerMailSchema } from "~/server/env/ServerMailSchema";
 import { RateLimitErrorFx } from "~/server/error/RateLimitErrorFx";
 import { toRequestSource } from "~/server/middleware/toRequestSource";
 import { rateLimitCheckFx } from "~/server/rate-limit/server/fx/rateLimitCheckFx";
+import { resourceBundleEnsureFx } from "~/user/resource-bundle/server/fx/resourceBundleEnsureFx";
 import { userResourceBundleCreateFx } from "~/user/resource-bundle/server/fx/userResourceBundleCreateFx";
 
 const logger = getRootLogger("auth");
@@ -241,9 +242,15 @@ export const auth = ({ dialect, config = {}, translator }: auth.Props) => {
 							return;
 						}
 
-						await userResourceBundleCreateFx({
-							userId: user.id,
-							bundle: "free",
+						await Effect.gen(function* () {
+							yield* userResourceBundleCreateFx({
+								userId: user.id,
+								bundle: "free",
+							});
+
+							yield* resourceBundleEnsureFx({
+								userId: user.id,
+							});
 						}).pipe(
 							withKyselyFx(database),
 							withDateFx,
