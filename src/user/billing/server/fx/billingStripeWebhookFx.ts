@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import type Stripe from "stripe";
+import { match } from "ts-pattern";
 import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import type { NoticeSchema } from "@/lib/common/schema";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
+import { subscriptionFetchFx } from "~/user/stripe/server/fx/subscriptionFetchFx";
 import { billingSubscriptionSyncFx } from "./billingSubscriptionSyncFx";
 import { eventCompletedFx } from "./event/checkout/session/eventCompletedFx";
-import { stripeClientFx } from "./stripeClientFx";
 
 interface InvoiceSubscriptionFields {
 	subscription?:
@@ -19,23 +19,6 @@ interface InvoiceSubscriptionFields {
 		  }
 		| null;
 }
-
-const toCheckoutBundleNames = (lineItems: Stripe.LineItem[]) => {
-	const bundleNames = lineItems.flatMap((lineItem) => {
-		const price = lineItem.price;
-		const product = price?.product;
-
-		return [
-			lineItem.metadata?.bundle,
-			price?.metadata.bundle,
-			typeof product === "object" && !product.deleted ? product.metadata.bundle : null,
-		].filter((bundle): bundle is string => Boolean(bundle));
-	});
-
-	return [
-		...new Set(bundleNames),
-	];
-};
 
 export namespace billingStripeWebhookFx {
 	export interface Props {
@@ -110,52 +93,54 @@ export const billingStripeWebhookFx = Effect.fn("billingStripeWebhookFx")(functi
  * TODO: split into individual files, this is huge piece of crap now
  */
 const processStripeEventFx = Effect.fn("processStripeEventFx")(function* (event: Stripe.Event) {
-	if (
-		event.type === "customer.subscription.created" ||
-		event.type === "customer.subscription.updated" ||
-		event.type === "customer.subscription.deleted"
-	) {
-		const subscription = event.data.object as Stripe.Subscription;
-		return yield* billingSubscriptionSyncFx({
-			subscription,
-		});
-	}
+	/**
+	 * TODO: What about to simplify the whole event stuff just to sync user's stuff from Stripe, including one-off items?
+	 * TODO: there is also "charge.succeeded" so we need to use most minimal stripe setup
+	 * TODO: do we've to handle invoice paid too, if we've session.completed?
+	 */
 
-	if (event.type === "checkout.session.completed") {
-		yield* eventCompletedFx({
-			event,
-		});
-	}
-
-	if (event.type === "invoice.paid") {
-		const stripe = yield* stripeClientFx();
-		const invoice = event.data.object as Stripe.Invoice;
-		const invoiceSubscriptionFields = invoice as InvoiceSubscriptionFields;
-		const subscriptionId =
-			typeof invoiceSubscriptionFields.subscription === "string"
-				? invoiceSubscriptionFields.subscription
-				: invoiceSubscriptionFields.subscription?.id;
-
-		if (!subscriptionId) {
-			return;
-		}
-
-		const subscription = yield* Effect.tryPromise({
-			try() {
-				return stripe.subscriptions.retrieve(subscriptionId);
+	return yield* match(event)
+		.with(
+			{
+				type: "customer.subscription.created",
 			},
-			catch(error) {
-				return new RuntimeErrorFx({
-					message: "Stripe subscription retrieval failed",
-					cause: error,
+			{
+				type: "customer.subscription.updated",
+			},
+			{
+				type: "customer.subscription.deleted",
+			},
+			(event) => {
+				return billingSubscriptionSyncFx({
+					subscription: event.data.object,
 				});
 			},
-		});
-
-		return yield* billingSubscriptionSyncFx({
-			subscription,
-		});
-	}
+		)
+		.with(
+			{
+				type: "checkout.session.completed",
+			},
+			(event) => {
+				return eventCompletedFx({
+					event,
+				});
+			},
+		)
+		.with(
+			{
+				type: "invoice.paid",
+			},
+			(event) => {
+				return Effect.gen(function* () {
+					return yield* billingSubscriptionSyncFx({
+						subscription: yield* subscriptionFetchFx({
+							id: event.data.object.subscription,
+						}),
+					});
+				});
+			},
+		)
+		.otherwise(() => Effect.void);
 });
 
 export type billingStripeWebhookFx = ReturnType<typeof billingStripeWebhookFx>;
