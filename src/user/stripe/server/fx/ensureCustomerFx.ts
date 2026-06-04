@@ -6,17 +6,17 @@ import { dbFx } from "~/server/database/fx/dbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { stripeClientFx } from "./stripeClientFx";
 
-export namespace billingCustomerEnsureFx {
+export namespace ensureCustomerFx {
 	export interface Props {
 		userId: string;
 	}
 }
 
-export const billingCustomerEnsureFx = Effect.fn("billingCustomerEnsureFx")(function* ({
+export const ensureCustomerFx = Effect.fn("ensureCustomerFx")(function* ({
 	userId,
-}: billingCustomerEnsureFx.Props) {
-	const logger = yield* getLoggerFx("billingCustomerEnsureFx");
-	logger.trace("billingCustomerEnsureFx", {
+}: ensureCustomerFx.Props) {
+	const logger = yield* getLoggerFx("ensureCustomerFx");
+	logger.trace("ensureCustomerFx", {
 		userId,
 	});
 
@@ -93,4 +93,4 @@ export const billingCustomerEnsureFx = Effect.fn("billingCustomerEnsureFx")(func
 	};
 });
 
-export type billingCustomerEnsureFx = ReturnType<typeof billingCustomerEnsureFx>;
+export type ensureCustomerFx = ReturnType<typeof ensureCustomerFx>;

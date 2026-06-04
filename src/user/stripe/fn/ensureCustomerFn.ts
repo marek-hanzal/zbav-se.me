@@ -9,14 +9,14 @@ import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { withStripeConfigFx } from "../server/context/withStripeConfigFx";
 import { withStripConfigEnv } from "../server/env/withStripConfigEnv";
-import { billingCustomerEnsureFx } from "../server/fx/billingCustomerEnsureFx";
+import { ensureCustomerFx } from "../server/fx/ensureCustomerFx";
 import { BillingCustomerSchema } from "../server/schema/BillingCustomerSchema";
 
-export namespace billingCustomerEnsureFn {
-	export type Error = Effect.Effect.Error<billingCustomerEnsureFx>;
+export namespace ensureCustomerFn {
+	export type Error = Effect.Effect.Error<ensureCustomerFx>;
 }
 
-export const billingCustomerEnsureFn = createServerFn({
+export const ensureCustomerFn = createServerFn({
 	method: "POST",
 })
 	.middleware([
@@ -36,7 +36,7 @@ export const billingCustomerEnsureFn = createServerFn({
 
 		return zodGuardFx({
 			schema: BillingCustomerSchema,
-			dataFx: billingCustomerEnsureFx({
+			dataFx: ensureCustomerFx({
 				userId: user.id,
 			}),
 		}).pipe(

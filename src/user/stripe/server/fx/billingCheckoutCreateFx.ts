@@ -6,7 +6,7 @@ import { getLoggerFx } from "@/lib/common/log";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import type { BillingCheckoutCreateSchema } from "../schema/BillingCheckoutCreateSchema";
-import { billingCustomerEnsureFx } from "./billingCustomerEnsureFx";
+import { ensureCustomerFx } from "./ensureCustomerFx";
 import { stripeClientFx } from "./stripeClientFx";
 
 export namespace billingCheckoutCreateFx {
@@ -31,7 +31,7 @@ export const billingCheckoutCreateFx = Effect.fn("billingCheckoutCreateFx")(func
 	});
 
 	const stripe = yield* stripeClientFx();
-	const userStripe = yield* billingCustomerEnsureFx({
+	const userStripe = yield* ensureCustomerFx({
 		userId,
 	});
 	const products = yield* Effect.tryPromise({

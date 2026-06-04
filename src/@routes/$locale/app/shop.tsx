@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { billingCustomerEnsureFn } from "~/user/stripe/fn/billingCustomerEnsureFn";
+import { ensureCustomerFn } from "~/user/stripe/fn/ensureCustomerFn";
 import { ShopPage } from "~/user/shop/ShopPage/ShopPage";
 
 export const Route = createFileRoute("/$locale/app/shop")({
 	async loader() {
-		await billingCustomerEnsureFn();
+		await ensureCustomerFn();
 	},
 	component() {
 		return <ShopPage _suspense="I know" />;
