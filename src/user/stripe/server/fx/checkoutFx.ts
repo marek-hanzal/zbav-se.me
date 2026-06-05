@@ -37,7 +37,7 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	});
 
 	const product = yield* productFetchFx({
-		product: productId,
+		productId,
 	});
 
 	if (!product.default_price) {
@@ -51,11 +51,6 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 		priceId: product.default_price,
 	});
 
-	const metadata = {
-		userId,
-		bundle,
-	} as const;
-
 	const session = yield* Effect.promise(() => {
 		return stripe.checkout.sessions.create({
 			mode: "subscription",
@@ -68,10 +63,6 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 					quantity: 1,
 				},
 			],
-			metadata,
-			subscription_data: {
-				metadata,
-			},
 			success_url: urlSuccess(),
 			cancel_url: urlCancel(),
 		});

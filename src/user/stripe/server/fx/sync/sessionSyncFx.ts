@@ -145,7 +145,7 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 				}
 
 				const product = yield* productFetchFx({
-					product: priceProduct,
+					productId: priceProduct,
 				});
 				const bundle = product.metadata.bundle;
 
@@ -173,9 +173,9 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 					key,
 					createdAt,
 				});
-                /**
-                 * This is easy to overlook - ignore all tagged errors
-                 */
+				/**
+				 * This is easy to overlook - ignore all tagged errors
+				 */
 			}).pipe(Effect.ignore);
 		},
 		{
