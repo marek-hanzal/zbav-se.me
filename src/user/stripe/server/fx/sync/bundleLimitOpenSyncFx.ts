@@ -81,7 +81,13 @@ export const bundleLimitOpenSyncFx = Effect.fn("bundleLimitOpenSyncFx")(function
 							.doNothing(),
 					)
 					.execute();
-			});
+                    /**
+                     * Ignore all the errors
+                     */
+			}).pipe(Effect.ignore);
+		},
+		{
+			discard: true,
 		},
 	);
 });

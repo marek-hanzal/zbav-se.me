@@ -31,68 +31,50 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 	const expiresAt = dateService.now().toJSDate();
 	const stripe = yield* stripeClientFx();
 
-	const subscriptions = yield* Effect.forEach(
-		yield* Effect.promise(async () => {
-			const subscriptions = await stripe.subscriptions.list({
-				customer: customerId,
-				status: "all",
-				limit: 100,
-			});
-			return subscriptions.data;
-		}),
-		(subscription) => {
-			return subscriptionSyncFx({
-				subscription: subscription.id,
-			}).pipe(
-				Effect.catchTag("SyncSkipErrorFx", (error) => {
-					logger.warn("Stripe subscription sync skipped", {
-						customerId,
-						subscriptionId: subscription.id,
-						reason: error.reason,
-						cause: error.cause,
+	return Effect.all(
+		[
+			Effect.forEach(
+				yield* Effect.promise(async () => {
+					const subscriptions = await stripe.subscriptions.list({
+						customer: customerId,
+						status: "all",
+						limit: 100,
 					});
-
-					return Effect.void;
+					return subscriptions.data;
 				}),
-			);
-		},
+				(subscription) => {
+					return subscriptionSyncFx({
+						subscription: subscription.id,
+					}).pipe(Effect.ignore);
+				},
+				{
+					discard: true,
+					concurrency: 4,
+				},
+			),
+			Effect.forEach(
+				yield* Effect.promise(async () => {
+					const sessions = await stripe.checkout.sessions.list({
+						customer: customerId,
+						limit: 100,
+					});
+					return sessions.data;
+				}),
+				(session) => {
+					return sessionSyncFx({
+						id: session.id,
+						expiresAt,
+					}).pipe(Effect.ignore);
+				},
+				{
+					discard: true,
+				},
+			),
+		],
 		{
-			concurrency: 4,
+			discard: true,
 		},
 	);
-
-	const sessions = yield* Effect.forEach(
-		yield* Effect.promise(async () => {
-			const sessions = await stripe.checkout.sessions.list({
-				customer: customerId,
-				limit: 100,
-			});
-			return sessions.data;
-		}),
-		(session) => {
-			return sessionSyncFx({
-				id: session.id,
-				expiresAt,
-			}).pipe(
-				Effect.catchTag("SyncSkipErrorFx", (error) => {
-					logger.warn("Stripe session sync skipped", {
-						customerId,
-						checkoutSessionId: session.id,
-						reason: error.reason,
-						cause: error.cause,
-					});
-
-					return Effect.void;
-				}),
-			);
-		},
-	);
-
-	return {
-		customerId,
-		subscriptions: subscriptions.length,
-		checkoutSessions: sessions.length,
-	} as const;
 });
 
 export type syncFx = ReturnType<typeof syncFx>;

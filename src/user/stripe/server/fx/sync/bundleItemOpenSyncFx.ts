@@ -52,8 +52,8 @@ export const bundleItemOpenSyncFx = Effect.fn("bundleItemOpenSyncFx")(function* 
 						amount: sourceItem.amount,
 						expiration: sourceItem.expiration,
 					})
-					.onConflict((oc) =>
-						oc
+					.onConflict((oc) => {
+						return oc
 							.columns([
 								"resourceBundleId",
 								"resourceDefinitionId",
@@ -61,8 +61,8 @@ export const bundleItemOpenSyncFx = Effect.fn("bundleItemOpenSyncFx")(function* 
 							.doUpdateSet({
 								amount: sourceItem.amount,
 								expiration: sourceItem.expiration,
-							}),
-					)
+							});
+					})
 					.returningAll()
 					.executeTakeFirstOrThrow();
 
@@ -74,16 +74,22 @@ export const bundleItemOpenSyncFx = Effect.fn("bundleItemOpenSyncFx")(function* 
 						key,
 						createdAt,
 					})
-					.onConflict((oc) =>
-						oc
+					.onConflict((oc) => {
+						return oc
 							.columns([
 								"resourceBundleItemId",
 								"key",
 							])
-							.doNothing(),
-					)
+							.doNothing();
+					})
 					.execute();
-			});
+				/**
+				 * Ignore all errors, keep going
+				 */
+			}).pipe(Effect.ignore);
+		},
+		{
+			discard: true,
 		},
 	);
 });

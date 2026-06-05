@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
+import { NotFoundErrorFx } from "@/lib/common/error";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
@@ -116,13 +117,10 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 			});
 
 			if (!resourceBundle) {
-				return yield* new SyncSkipErrorFx({
+				return yield* new NotFoundErrorFx({
+					resource: "resource_bundle",
+					resourceId: bundle,
 					message: "Stripe source resource bundle is missing",
-					reason: "source bundle missing",
-					cause: {
-						bundle,
-						key,
-					},
 				});
 			}
 
@@ -137,7 +135,7 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 				 * our database.
 				 */
 				const purchaseBundle = yield* dbFx(async (kysely) => {
-					const inserted = await kysely
+					const current = await kysely
 						.insertInto("resource_bundle")
 						.values({
 							id: genId(),
@@ -147,8 +145,8 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 						.returningAll()
 						.executeTakeFirst();
 
-					if (inserted) {
-						return inserted;
+					if (current) {
+						return current;
 					}
 
 					return kysely
@@ -183,20 +181,26 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 						.execute();
 				});
 
-				yield* bundleItemOpenSyncFx({
-					sourceResourceBundleId: resourceBundle.id,
-					purchaseResourceBundleId: purchaseBundle.id,
-					key,
-					createdAt,
-				});
-				yield* bundleLimitOpenSyncFx({
-					sourceResourceBundleId: resourceBundle.id,
-					purchaseResourceBundleId: purchaseBundle.id,
-					key,
-					createdAt,
-				});
-
-				return purchaseBundle;
+				return yield* Effect.all(
+					[
+						bundleItemOpenSyncFx({
+							sourceResourceBundleId: resourceBundle.id,
+							purchaseResourceBundleId: purchaseBundle.id,
+							key,
+							createdAt,
+						}),
+						bundleLimitOpenSyncFx({
+							sourceResourceBundleId: resourceBundle.id,
+							purchaseResourceBundleId: purchaseBundle.id,
+							key,
+							createdAt,
+						}),
+					],
+					{
+						discard: true,
+						concurrency: 2,
+					},
+				);
 			}
 		}),
 	);
