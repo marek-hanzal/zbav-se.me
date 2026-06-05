@@ -62,6 +62,10 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 		};
 	});
 
+	if (bundles.length === 0) {
+		return [];
+	}
+
 	const byName = new Map(
 		bundles.map((bundle) => [
 			bundle.name,
@@ -71,75 +75,67 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 	const itemsById = Map.groupBy(items, (item) => item.resourceBundleId);
 	const limitsById = Map.groupBy(limits, (limit) => limit.resourceBundleId);
 
-	const products = yield* Effect.forEach(
-		bundles,
-		(bundle) => {
-			return Effect.gen(function* () {
-				const prices = yield* Effect.promise(() => {
-					return stripe.prices.list({
-						active: true,
-						lookup_keys: [
-							bundle.name,
-						],
-						expand: [
-							"data.product",
-						],
-						limit: 2,
-					});
-				});
-				const [price] = prices.data;
-
-				if (!price) {
-					return null;
-				}
-
-				if (typeof price.unit_amount !== "number") {
-					return null;
-				}
-
-				if (prices.data.length > 1) {
-					logger.warn("Stripe price lookup key is not unique", {
-						lookupKey: bundle.name,
-						priceIds: prices.data.map((price) => price.id),
-					});
-
-					return null;
-				}
-
-				const product = match(price.product)
-					.with(
-						{
-							id: P.string,
-							metadata: {
-								sort: P.number.optional(),
-							},
-							name: P.string,
-						},
-						(product) => {
-							return product;
-						},
-					)
-					.otherwise(() => null);
-
-				if (!product) {
-					return null;
-				}
-
-				const sort = Number(product.metadata.sort);
-
-				return {
-					bundle: bundle.name,
-					id: bundle.id,
-					name: product.name,
-					price: price.unit_amount,
-					sort: Number.isFinite(sort) ? sort : Number.POSITIVE_INFINITY,
-				};
-			});
-		},
-		{
-			concurrency: 4,
-		},
+	const prices = yield* Effect.promise(() => {
+		return stripe.prices.list({
+			active: true,
+			lookup_keys: bundles.map((bundle) => bundle.name),
+			expand: [
+				"data.product",
+			],
+			limit: 100,
+		});
+	});
+	const pricesByLookupKey = Map.groupBy(
+		prices.data.filter((price) => price.lookup_key),
+		(price) => price.lookup_key ?? "",
 	);
+	const products = bundles.map((bundle) => {
+		const prices = pricesByLookupKey.get(bundle.name) ?? [];
+		const [price] = prices;
+
+		if (!price) {
+			return null;
+		}
+
+		if (typeof price.unit_amount !== "number") {
+			return null;
+		}
+
+		if (prices.length > 1) {
+			logger.warn("Stripe price lookup key is not unique", {
+				lookupKey: bundle.name,
+				priceIds: prices.map((price) => price.id),
+			});
+
+			return null;
+		}
+
+		const product = match(price.product)
+			.with(
+				{
+					id: P.string,
+					name: P.string,
+				},
+				(product) => {
+					return product;
+				},
+			)
+			.otherwise(() => null);
+
+		if (!product) {
+			return null;
+		}
+
+		const sort = Number(product.metadata.sort);
+
+		return {
+			bundle: bundle.name,
+			id: bundle.id,
+			name: product.name,
+			price: price.unit_amount,
+			sort: Number.isFinite(sort) ? sort : Number.POSITIVE_INFINITY,
+		};
+	});
 
 	return products
 		.flatMap((product) => {

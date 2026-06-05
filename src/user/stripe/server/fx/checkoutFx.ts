@@ -1,13 +1,13 @@
 import { Effect } from "effect";
 import type Stripe from "stripe";
+import { NotFoundErrorFx } from "@/lib/common/error";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
-import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
+import { dbFx } from "~/server/database/fx/dbFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import type { BillingCheckoutCreateSchema } from "../schema/BillingCheckoutCreateSchema";
 import { ensureCustomerFx } from "./ensureCustomerFx";
 import { priceFetchFx } from "./priceFetchFx";
-import { productFetchFx } from "./productFetchFx";
 import { stripeClientFx } from "./stripeClientFx";
 
 export namespace checkoutFx {
@@ -36,22 +36,46 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 		userId,
 	});
 
-	const product = yield* productFetchFx({
-		query: {
-			bundle,
-		},
+	const resourceBundle = yield* dbFx(async (kysely) => {
+		return kysely
+			.selectFrom("resource_bundle")
+			.select([
+				"id",
+				"name",
+			])
+			.where("name", "=", bundle)
+			.executeTakeFirst();
 	});
 
-	if (!product.default_price) {
-		return yield* new InvalidRequestErrorFx({
-			message: "Stripe price is missing",
+	if (!resourceBundle) {
+		return yield* new NotFoundErrorFx({
+			resource: "resource_bundle",
+			resourceId: bundle,
+			message: "Stripe checkout resource bundle is missing",
 		});
 	}
 
 	const price = yield* priceFetchFx({
-		productId: product.id,
-		priceId: product.default_price,
+		lookupKey: bundle,
 	});
+	const bundleKey = `stripe:checkout:${genId()}`;
+
+	/*
+	 * Keep our local identifiers on the Stripe objects created by Checkout.
+	 *
+	 * Webhooks only tell us that something changed, while sync reads the current
+	 * Stripe objects. Writing the user/bundle IDs here lets later sync runs resolve
+	 * local state directly from Session/Subscription metadata instead of jumping
+	 * through price/product parents only to rediscover our own catalog mapping.
+	 */
+	const metadata = {
+		userId,
+		customerId: customer.customerId,
+		resourceBundleId: resourceBundle.id,
+		bundle: resourceBundle.name,
+		priceId: price.id,
+		bundleKey,
+	};
 
 	const session = yield* Effect.promise(() => {
 		return stripe.checkout.sessions.create({
@@ -59,6 +83,10 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 			customer: customer.customerId,
 			client_reference_id: userId,
 			locale: locale as Stripe.Checkout.SessionCreateParams.Locale,
+			metadata,
+			subscription_data: {
+				metadata,
+			},
 			line_items: [
 				{
 					price: price.id,
