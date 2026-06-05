@@ -6,7 +6,6 @@ import type { NoticeSchema } from "@/lib/common/schema";
 import { StripeEventTableSchema } from "~/server/database/@table/StripeEventTableSchema";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { StripeConfigFx } from "../context/StripeConfigFx";
 import { stripeClientFx } from "./stripeClientFx";
 import { syncFx } from "./sync/syncFx";
@@ -36,24 +35,13 @@ export const webhookFx = Effect.fn("webhookFx")(function* (props: webhookFx.Prop
 
 	const stripeConfig = yield* StripeConfigFx;
 	const stripe = yield* stripeClientFx();
-	const event = yield* Effect.tryPromise({
-		try: async () => {
-			return stripe.webhooks.constructEvent(
-				await props.content(),
-				props.signature,
-				stripeConfig.webhook,
-			);
-		},
-		catch(error) {
-			logger.warn("Invalid Stripe webhook signature", {
-				error,
-			});
 
-			return new RuntimeErrorFx({
-				message: "Invalid Stripe webhook signature",
-				cause: error,
-			});
-		},
+	const event = yield* Effect.promise(async () => {
+		return stripe.webhooks.constructEvent(
+			await props.content(),
+			props.signature,
+			stripeConfig.webhook,
+		);
 	});
 
 	return yield* withTransactionFx(

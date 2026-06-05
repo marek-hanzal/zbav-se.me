@@ -4,7 +4,6 @@ import { withDateServiceFx } from "@/lib/common/date";
 import { withLoggerFx } from "@/lib/common/log";
 import type { NoticeSchema } from "@/lib/common/schema";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
-import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withRateLimitMiddleware } from "~/server/middleware/withRateLimitMiddleware";
@@ -45,27 +44,35 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 					);
 				}
 
-				const result = await webhookFx({
+				return webhookFx({
 					signature,
 					async content() {
 						return request.text();
 					},
-				}).pipe(
-					withKyselyFx(database),
-					withDateServiceFx(),
-					withStripeConfigFx(withStripConfigEnv()),
-					withLoggerFx(rootLogger),
-					Effect.catchTag("RuntimeErrorFx", (error) => Effect.succeed(error)),
-					Effect.runPromise,
-				);
+				})
+					.pipe(
+						withKyselyFx(database),
+						withDateServiceFx(),
+						withStripeConfigFx(withStripConfigEnv()),
+						withLoggerFx(rootLogger),
+						Effect.runPromise,
+					)
+					.then(Response.json)
+					.catch((error) => {
+						logger.error("Stripe webhook failed", {
+							error,
+						});
 
-				if (result instanceof RuntimeErrorFx) {
-					return Response.json(result.toJSON(), {
-						status: 500,
+						return Response.json(
+							{
+								type: "error",
+								message: "Stripe webhook failed",
+							} satisfies NoticeSchema.Type,
+							{
+								status: 500,
+							},
+						);
 					});
-				}
-
-				return Response.json(result);
 			},
 		},
 	},
