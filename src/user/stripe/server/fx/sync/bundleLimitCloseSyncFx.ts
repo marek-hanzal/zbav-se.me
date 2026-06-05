@@ -29,11 +29,7 @@ export const bundleLimitCloseSyncFx = Effect.fn("bundleLimitCloseSyncFx")(functi
 	return yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("resource_bundle_limit_stripe as rbls")
-			.innerJoin(
-				"resource_bundle_limit as rbl",
-				"rbl.id",
-				"rbls.resourceBundleLimitId",
-			)
+			.innerJoin("resource_bundle_limit as rbl", "rbl.id", "rbls.resourceBundleLimitId")
 			.select("rbl.resourceBundleId")
 			.where("rbls.key", "=", key)
 			.execute();

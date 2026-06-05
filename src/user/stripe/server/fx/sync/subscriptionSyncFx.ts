@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
+import type { Stripe } from "stripe";
 import { match, P } from "ts-pattern";
 import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
@@ -11,9 +12,9 @@ import { SyncSkipErrorFx } from "../../error/SyncSkipErrorFx";
 export namespace subscriptionSyncFx {
 	export interface Props {
 		/**
-		 * Subscription ID. The current subscription object is always refetched from Stripe.
+		 * Subscription ID or expanded object. The current subscription is always refetched.
 		 */
-		subscription: string;
+		subscription: string | Stripe.Subscription;
 	}
 }
 

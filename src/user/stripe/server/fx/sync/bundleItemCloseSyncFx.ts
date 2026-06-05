@@ -29,11 +29,7 @@ export const bundleItemCloseSyncFx = Effect.fn("bundleItemCloseSyncFx")(function
 	return yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("resource_bundle_item_stripe as rbis")
-			.innerJoin(
-				"resource_bundle_item as rbi",
-				"rbi.id",
-				"rbis.resourceBundleItemId",
-			)
+			.innerJoin("resource_bundle_item as rbi", "rbi.id", "rbis.resourceBundleItemId")
 			.select("rbi.resourceBundleId")
 			.where("rbis.key", "=", key)
 			.execute();
