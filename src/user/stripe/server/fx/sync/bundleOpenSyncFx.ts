@@ -2,8 +2,6 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
-import type { ResourceBundleItemTableSchema } from "~/server/database/@table/ResourceBundleItemTableSchema";
-import type { ResourceBundleLimitTableSchema } from "~/server/database/@table/ResourceBundleLimitTableSchema";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { SyncSkipErrorFx } from "../../error/SyncSkipErrorFx";
@@ -126,183 +124,174 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 				});
 			}
 
-			const [sourceItems, sourceLimits] = yield* dbFx(async (kysely) => {
-				return Promise.all([
-					kysely
-						.selectFrom("resource_bundle_item")
-						.selectAll()
-						.where("resourceBundleId", "=", resourceBundle.id)
-						.execute(),
-					kysely
-						.selectFrom("resource_bundle_limit")
-						.selectAll()
-						.where("resourceBundleId", "=", resourceBundle.id)
-						.execute(),
-				]);
-			});
-
-			if (sourceItems.length === 0 && sourceLimits.length === 0) {
-				return yield* new SyncSkipErrorFx({
-					message: "Stripe source resource bundle is empty",
-					reason: "source bundle empty",
-					cause: {
-						bundle,
-						key,
-					},
-				});
-			}
-
 			/*
-			 * The bundle name is the Stripe fulfillment key. This gives support/debugging
-			 * a direct path from a Stripe line item to the exact resource bundle visible in
-			 * our database.
+			 * Fulfillment scope: create the purchase bundle, assign it to the user, then
+			 * copy each source row with its Stripe mapping next to the read that feeds it.
 			 */
-			const purchaseBundle = yield* dbFx(async (kysely) => {
-				const inserted = await kysely
-					.insertInto("resource_bundle")
-					.values({
-						id: genId(),
-						name: key,
-					})
-					.onConflict((oc) => oc.column("name").doNothing())
-					.returningAll()
-					.executeTakeFirst();
-
-				if (inserted) {
-					return inserted;
-				}
-
-				return kysely
-					.selectFrom("resource_bundle")
-					.selectAll()
-					.where("name", "=", key)
-					.executeTakeFirstOrThrow();
-			});
-
-			yield* dbFx(async (kysely) => {
-				return kysely
-					.insertInto("user_resource_bundle")
-					.values({
-						id: genId(),
-						userId,
-						resourceBundleId: purchaseBundle.id,
-						createdAt,
-						availableAt: createdAt,
-						expiresAt: null,
-					})
-					.onConflict((oc) => {
-						return oc
-							.columns([
-								"userId",
-								"resourceBundleId",
-							])
-							.doUpdateSet({
-								availableAt: createdAt,
-								expiresAt: null,
-							});
-					})
-					.execute();
-			});
-
-			/*
-			 * Copy the source bundle rows instead of referencing them. If product setup is
-			 * adjusted later, already fulfilled purchases keep their concrete resources.
-			 */
-			const itemRows = yield* Effect.forEach(sourceItems, (sourceItem) =>
-				dbFx(async (kysely): Promise<ResourceBundleItemTableSchema.Type> => {
-					return kysely
-						.insertInto("resource_bundle_item")
+			{
+				/*
+				 * The bundle name is the Stripe fulfillment key. This gives support/debugging
+				 * a direct path from a Stripe line item to the exact resource bundle visible in
+				 * our database.
+				 */
+				const purchaseBundle = yield* dbFx(async (kysely) => {
+					const inserted = await kysely
+						.insertInto("resource_bundle")
 						.values({
 							id: genId(),
-							resourceBundleId: purchaseBundle.id,
-							resourceDefinitionId: sourceItem.resourceDefinitionId,
-							amount: sourceItem.amount,
-							expiration: sourceItem.expiration,
+							name: key,
 						})
-						.onConflict((oc) =>
-							oc
+						.onConflict((oc) => oc.column("name").doNothing())
+						.returningAll()
+						.executeTakeFirst();
+
+					if (inserted) {
+						return inserted;
+					}
+
+					return kysely
+						.selectFrom("resource_bundle")
+						.selectAll()
+						.where("name", "=", key)
+						.executeTakeFirstOrThrow();
+				});
+
+				yield* dbFx(async (kysely) => {
+					return kysely
+						.insertInto("user_resource_bundle")
+						.values({
+							id: genId(),
+							userId,
+							resourceBundleId: purchaseBundle.id,
+							createdAt,
+							availableAt: createdAt,
+							expiresAt: null,
+						})
+						.onConflict((oc) => {
+							return oc
 								.columns([
+									"userId",
 									"resourceBundleId",
-									"resourceDefinitionId",
 								])
 								.doUpdateSet({
+									availableAt: createdAt,
+									expiresAt: null,
+								});
+						})
+						.execute();
+				});
+
+				/*
+				 * Copy the source bundle rows instead of referencing them. If product setup is
+				 * adjusted later, already fulfilled purchases keep their concrete resources.
+				 */
+				yield* Effect.forEach(
+					yield* dbFx(async (kysely) => {
+						return kysely
+							.selectFrom("resource_bundle_item")
+							.selectAll()
+							.where("resourceBundleId", "=", resourceBundle.id)
+							.execute();
+					}),
+					(sourceItem) => {
+						return dbFx(async (kysely) => {
+							const item = await kysely
+								.insertInto("resource_bundle_item")
+								.values({
+									id: genId(),
+									resourceBundleId: purchaseBundle.id,
+									resourceDefinitionId: sourceItem.resourceDefinitionId,
 									amount: sourceItem.amount,
 									expiration: sourceItem.expiration,
-								}),
-						)
-						.returningAll()
-						.executeTakeFirstOrThrow();
-				}),
-			);
-			const limitRows = yield* Effect.forEach(sourceLimits, (sourceLimit) =>
-				dbFx(async (kysely): Promise<ResourceBundleLimitTableSchema.Type> => {
-					return kysely
-						.insertInto("resource_bundle_limit")
-						.values({
-							id: genId(),
-							resourceBundleId: purchaseBundle.id,
-							resourceDefinitionId: sourceLimit.resourceDefinitionId,
-							limit: sourceLimit.limit,
-						})
-						.onConflict((oc) =>
-							oc
-								.columns([
-									"resourceBundleId",
-									"resourceDefinitionId",
-								])
-								.doUpdateSet({
+								})
+								.onConflict((oc) =>
+									oc
+										.columns([
+											"resourceBundleId",
+											"resourceDefinitionId",
+										])
+										.doUpdateSet({
+											amount: sourceItem.amount,
+											expiration: sourceItem.expiration,
+										}),
+								)
+								.returningAll()
+								.executeTakeFirstOrThrow();
+
+							return kysely
+								.insertInto("resource_bundle_item_stripe")
+								.values({
+									id: genId(),
+									resourceBundleItemId: item.id,
+									key,
+									createdAt,
+								})
+								.onConflict((oc) =>
+									oc
+										.columns([
+											"resourceBundleItemId",
+											"key",
+										])
+										.doNothing(),
+								)
+								.execute();
+						});
+					},
+				);
+				yield* Effect.forEach(
+					yield* dbFx(async (kysely) => {
+						return kysely
+							.selectFrom("resource_bundle_limit")
+							.selectAll()
+							.where("resourceBundleId", "=", resourceBundle.id)
+							.execute();
+					}),
+					(sourceLimit) => {
+						return dbFx(async (kysely) => {
+							const limitRow = await kysely
+								.insertInto("resource_bundle_limit")
+								.values({
+									id: genId(),
+									resourceBundleId: purchaseBundle.id,
+									resourceDefinitionId: sourceLimit.resourceDefinitionId,
 									limit: sourceLimit.limit,
-								}),
-						)
-						.returningAll()
-						.executeTakeFirstOrThrow();
-				}),
-			);
+								})
+								.onConflict((oc) =>
+									oc
+										.columns([
+											"resourceBundleId",
+											"resourceDefinitionId",
+										])
+										.doUpdateSet({
+											limit: sourceLimit.limit,
+										}),
+								)
+								.returningAll()
+								.executeTakeFirstOrThrow();
 
-			yield* Effect.forEach(itemRows, (itemRow) =>
-				dbFx(async (kysely) => {
-					return kysely
-						.insertInto("resource_bundle_item_stripe")
-						.values({
-							id: genId(),
-							resourceBundleItemId: itemRow.id,
-							key,
-							createdAt,
-						})
-						.onConflict((oc) =>
-							oc
-								.columns([
-									"resourceBundleItemId",
-									"key",
-								])
-								.doNothing(),
-						)
-						.execute();
-				}),
-			);
-			yield* Effect.forEach(limitRows, (limitRow) =>
-				dbFx(async (kysely) => {
-					return kysely
-						.insertInto("resource_bundle_limit_stripe")
-						.values({
-							id: genId(),
-							resourceBundleLimitId: limitRow.id,
-							key,
-							createdAt,
-						})
-						.onConflict((oc) =>
-							oc
-								.columns([
-									"resourceBundleLimitId",
-									"key",
-								])
-								.doNothing(),
-						)
-						.execute();
-				}),
-			);
+							return kysely
+								.insertInto("resource_bundle_limit_stripe")
+								.values({
+									id: genId(),
+									resourceBundleLimitId: limitRow.id,
+									key,
+									createdAt,
+								})
+								.onConflict((oc) =>
+									oc
+										.columns([
+											"resourceBundleLimitId",
+											"key",
+										])
+										.doNothing(),
+								)
+								.execute();
+						});
+					},
+				);
 
-			return purchaseBundle;
+				return purchaseBundle;
+			}
 		}),
 	);
 });
