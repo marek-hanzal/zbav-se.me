@@ -1,3 +1,4 @@
+import type { Page } from "@playwright/test";
 import Stripe from "stripe";
 import { expect, test } from "../test";
 import { createUser } from "../utils/createUser";
@@ -10,43 +11,12 @@ test.use({
 
 test.setTimeout(120_000);
 
-test("Stripe checkout provisions buyer subscription", async ({ page, database }) => {
-	test.skip(!process.env.SERVER_STRIPE_SECRET, "SERVER_STRIPE_SECRET is required");
-	test.skip(
-		!process.env.SERVER_STRIPE_WEBHOOK_SECRET,
-		"SERVER_STRIPE_WEBHOOK_SECRET is required",
-	);
-	const stripeSecret = process.env.SERVER_STRIPE_SECRET;
+interface StripeCardFormProps {
+	cardholderName: string;
+	page: Page;
+}
 
-	if (!stripeSecret) {
-		throw new Error("SERVER_STRIPE_SECRET is required");
-	}
-
-	const user = createUser();
-
-	await page.goto("/cs/landing");
-	await page.click('[data-action="goto sign-up"]');
-	await page.waitForURL("/cs/sign-up");
-
-	await page.locator('[data-ui="SignUpPage[EmailInput]"]').fill(user.email);
-	await page.locator('[data-ui="SignUpPage[PasswordInput]"]').fill(user.password);
-	await page.locator('[data-ui="SignUpPage[ConfirmPasswordInput]"]').fill(user.password);
-	await page.locator('[data-action="sign up"]').click();
-	await page.waitForURL("/cs/app/welcome");
-
-	const registeredUser = await database.kysely
-		.selectFrom("user")
-		.select("id")
-		.where("email", "=", user.email)
-		.executeTakeFirstOrThrow();
-
-	await page.goto("/cs/app/shop");
-	const checkoutButton = page.locator('[data-ui="CheckoutButton"]').first();
-
-	await expect(checkoutButton).toBeEnabled();
-	await checkoutButton.click();
-	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
-
+async function fillStripeCardForm({ cardholderName, page }: StripeCardFormProps) {
 	await page.getByText(/Payment method|Způsob platby/i).scrollIntoViewIfNeeded();
 	const cardNumberInput = page
 		.getByLabel(/Card number|Číslo karty/i)
@@ -99,7 +69,7 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 		})
 		.or(page.getByPlaceholder(/Celé jméno|Full name/i))
 		.first()
-		.fill("Stripe E2E Buyer");
+		.fill(cardholderName);
 
 	const countrySelect = page.getByLabel(/Country|region|Země|oblast/i);
 
@@ -119,7 +89,55 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 	if (await postalCodeInput.isVisible()) {
 		await postalCodeInput.fill("11000");
 	}
+}
 
+async function signUpBuyer(page: Page) {
+	const user = createUser();
+
+	await page.goto("/cs/landing");
+	await page.click('[data-action="goto sign-up"]');
+	await page.waitForURL("/cs/sign-up");
+
+	await page.locator('[data-ui="SignUpPage[EmailInput]"]').fill(user.email);
+	await page.locator('[data-ui="SignUpPage[PasswordInput]"]').fill(user.password);
+	await page.locator('[data-ui="SignUpPage[ConfirmPasswordInput]"]').fill(user.password);
+	await page.locator('[data-action="sign up"]').click();
+	await page.waitForURL("/cs/app/welcome");
+
+	return user;
+}
+
+test("Stripe checkout provisions buyer subscription", async ({ page, database }) => {
+	test.skip(!process.env.SERVER_STRIPE_SECRET, "SERVER_STRIPE_SECRET is required");
+	test.skip(
+		!process.env.SERVER_STRIPE_WEBHOOK_SECRET,
+		"SERVER_STRIPE_WEBHOOK_SECRET is required",
+	);
+	const stripeSecret = process.env.SERVER_STRIPE_SECRET;
+
+	if (!stripeSecret) {
+		throw new Error("SERVER_STRIPE_SECRET is required");
+	}
+
+	const user = await signUpBuyer(page);
+
+	const registeredUser = await database.kysely
+		.selectFrom("user")
+		.select("id")
+		.where("email", "=", user.email)
+		.executeTakeFirstOrThrow();
+
+	await page.goto("/cs/app/shop");
+	const checkoutButton = page.locator('[data-ui="CheckoutButton"]').first();
+
+	await expect(checkoutButton).toBeEnabled();
+	await checkoutButton.click();
+	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
+
+	await fillStripeCardForm({
+		cardholderName: "Stripe E2E Buyer",
+		page,
+	});
 	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
 	await page.waitForURL(/\/cs\/app\/shop\?stripe=success$/);
 
@@ -173,4 +191,179 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 	await page.reload();
 	await expect(page.locator('[data-ui="BundleItem-[Active]"]').first()).toBeVisible();
 	await expect(checkoutButton).toContainText(/active/i);
+});
+
+test("Stripe checkout provisions buyer subscription with token upsell", async ({
+	appOrigin,
+	page,
+	database,
+}) => {
+	test.skip(!process.env.SERVER_STRIPE_SECRET, "SERVER_STRIPE_SECRET is required");
+	test.skip(
+		!process.env.SERVER_STRIPE_WEBHOOK_SECRET,
+		"SERVER_STRIPE_WEBHOOK_SECRET is required",
+	);
+	const stripeSecret = process.env.SERVER_STRIPE_SECRET;
+
+	if (!stripeSecret) {
+		throw new Error("SERVER_STRIPE_SECRET is required");
+	}
+
+	const user = await signUpBuyer(page);
+
+	const registeredUser = await database.kysely
+		.selectFrom("user")
+		.select("id")
+		.where("email", "=", user.email)
+		.executeTakeFirstOrThrow();
+
+	await page.goto("/cs/app/shop");
+	const checkoutButton = page.locator('[data-ui="CheckoutButton"]').first();
+
+	await expect(checkoutButton).toBeEnabled();
+	await checkoutButton.click();
+	await page.waitForURL(/^https:\/\/checkout\.stripe\.com\//);
+
+	await fillStripeCardForm({
+		cardholderName: "Stripe E2E Buyer Upsell",
+		page,
+	});
+	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
+	await page.waitForURL(/\/cs\/app\/shop\?stripe=success$/);
+
+	await expect
+		.poll(
+			async () => {
+				return database.kysely
+					.selectFrom("user_resource_bundle as urb")
+					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+					.select([
+						"rb.name",
+						"urb.expiresAt",
+					])
+					.where("urb.userId", "=", registeredUser.id)
+					.where("rb.name", "=", "package:buyer")
+					.executeTakeFirst();
+			},
+			{
+				timeout: 30_000,
+			},
+		)
+		.toEqual({
+			name: "package:buyer",
+			expiresAt: null,
+		});
+
+	const stripe = new Stripe(stripeSecret);
+	const userStripe = await database.kysely
+		.selectFrom("user_stripe")
+		.select("customerId")
+		.where("userId", "=", registeredUser.id)
+		.executeTakeFirstOrThrow();
+	const resourceBundle = await database.kysely
+		.selectFrom("resource_bundle")
+		.select([
+			"id",
+			"name",
+		])
+		.where("name", "=", "package:buyer")
+		.executeTakeFirstOrThrow();
+	const prices = await stripe.prices.list({
+		active: true,
+		lookup_keys: [
+			"item:token-small",
+		],
+		limit: 2,
+	});
+	const [upsellPrice] = prices.data;
+
+	if (!upsellPrice) {
+		throw new Error("Expected item:token-small Stripe price");
+	}
+
+	const bundleKey = `stripe:checkout:upsell-${registeredUser.id}`;
+	const upsellSession = await stripe.checkout.sessions.create({
+		cancel_url: `${appOrigin}/cs/app/shop?stripe=cancel-upsell`,
+		client_reference_id: registeredUser.id,
+		customer: userStripe.customerId,
+		line_items: [
+			{
+				price: upsellPrice.id,
+				quantity: 1,
+			},
+		],
+		metadata: {
+			bundle: resourceBundle.name,
+			bundleKey,
+			customerId: userStripe.customerId,
+			priceId: upsellPrice.id,
+			resourceBundleId: resourceBundle.id,
+			userId: registeredUser.id,
+		},
+		mode: "payment",
+		success_url: `${appOrigin}/cs/app/shop?stripe=success-upsell`,
+	});
+
+	if (!upsellSession.url) {
+		throw new Error("Expected Stripe upsell checkout URL");
+	}
+
+	await page.goto(upsellSession.url);
+	await fillStripeCardForm({
+		cardholderName: "Stripe E2E Token Upsell",
+		page,
+	});
+	await page.locator('[data-testid="hosted-payment-submit-button"]').click();
+	await page.waitForURL(/\/cs\/app\/shop\?stripe=success-upsell$/);
+
+	await expect
+		.poll(
+			async () => {
+				return database.kysely
+					.selectFrom("user_resource_bundle as urb")
+					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+					.select([
+						"rb.name",
+						"urb.expiresAt",
+					])
+					.where("urb.userId", "=", registeredUser.id)
+					.where("rb.name", "=", bundleKey)
+					.executeTakeFirst();
+			},
+			{
+				timeout: 30_000,
+			},
+		)
+		.toEqual({
+			name: bundleKey,
+			expiresAt: null,
+		});
+
+	const tokenItems = await database.kysely
+		.selectFrom("user_resource_bundle as urb")
+		.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+		.innerJoin("resource_bundle_item as rbi", "rbi.resourceBundleId", "rb.id")
+		.select([
+			"rb.name",
+			"rbi.amount",
+			"rbi.resourceDefinitionId",
+		])
+		.where("urb.userId", "=", registeredUser.id)
+		.where("urb.expiresAt", "is", null)
+		.where("rbi.resourceDefinitionId", "=", "item:token-small")
+		.orderBy("rb.name", "asc")
+		.execute();
+
+	expect(tokenItems).toEqual([
+		{
+			name: "package:buyer",
+			amount: "1.00",
+			resourceDefinitionId: "item:token-small",
+		},
+		{
+			name: bundleKey,
+			amount: "1.00",
+			resourceDefinitionId: "item:token-small",
+		},
+	]);
 });

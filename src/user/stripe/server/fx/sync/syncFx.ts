@@ -1,9 +1,77 @@
 import { Effect } from "effect";
+import type { Stripe } from "stripe";
 import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { stripeClientFx } from "../stripeClientFx";
 import { sessionSyncFx } from "./sessionSyncFx";
 import { subscriptionSyncFx } from "./subscriptionSyncFx";
+
+type SubscriptionPriority = {
+	priority: number;
+	timestamp: number;
+};
+
+const subscriptionPeriodEnd = (subscription: Stripe.Subscription) => {
+	return (
+		subscription.items.data
+			.map((item) => item.current_period_end)
+			.find((periodEnd) => Boolean(periodEnd)) ??
+		subscription.cancel_at ??
+		subscription.ended_at ??
+		subscription.canceled_at ??
+		subscription.created
+	);
+};
+
+const subscriptionPriority = (subscription: Stripe.Subscription): SubscriptionPriority => {
+	if (subscription.status === "active" || subscription.status === "trialing") {
+		return {
+			priority: subscription.cancel_at_period_end ? 2 : 3,
+			timestamp: subscriptionPeriodEnd(subscription),
+		};
+	}
+
+	return {
+		priority: 1,
+		timestamp:
+			subscription.ended_at ??
+			subscription.canceled_at ??
+			subscription.cancel_at ??
+			subscription.created,
+	};
+};
+
+const pickCurrentSubscription = (subscriptions: Stripe.Subscription[]) => {
+	return subscriptions.toSorted((left, right) => {
+		const leftPriority = subscriptionPriority(left);
+		const rightPriority = subscriptionPriority(right);
+
+		return (
+			rightPriority.priority - leftPriority.priority ||
+			rightPriority.timestamp - leftPriority.timestamp ||
+			right.created - left.created
+		);
+	})[0];
+};
+
+const pickCurrentSubscriptions = (subscriptions: Stripe.Subscription[]) => {
+	const subscriptionsByBundleId = Map.groupBy(subscriptions, (subscription) => {
+		return subscription.metadata.resourceBundleId;
+	});
+
+	subscriptionsByBundleId.delete(undefined);
+	subscriptionsByBundleId.delete("");
+
+	return Array.from(subscriptionsByBundleId.values()).flatMap((subscriptions) => {
+		const subscription = pickCurrentSubscription(subscriptions);
+
+		return subscription
+			? [
+					subscription,
+				]
+			: [];
+	});
+};
 
 export namespace syncFx {
 	export interface Props {
@@ -42,7 +110,7 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 	}).pipe(
 		Effect.flatMap((subscriptions) => {
 			return Effect.forEach(
-				subscriptions,
+				pickCurrentSubscriptions(subscriptions),
 				(subscription) => {
 					return subscriptionSyncFx({
 						subscription: subscription.id,
