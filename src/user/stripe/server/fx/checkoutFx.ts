@@ -7,6 +7,7 @@ import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import type { BillingCheckoutCreateSchema } from "../schema/BillingCheckoutCreateSchema";
 import { ensureCustomerFx } from "./ensureCustomerFx";
+import { priceFetchFx } from "./priceFetchFx";
 import { stripeClientFx } from "./stripeClientFx";
 
 export namespace checkoutFx {
@@ -72,19 +73,10 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 		});
 	}
 
-	const prices = yield* Effect.promise(() => {
-		return stripe.prices.search({
-			query: `active:'true' AND type:'recurring' AND product:'${product.id}'`,
-			limit: 100,
-		});
+	const price = yield* priceFetchFx({
+		productId: product.id,
+		priceId: defaultPriceId,
 	});
-	const price = prices.data.find((price) => price.id === defaultPriceId);
-
-	if (!price) {
-		return yield* new InvalidRequestErrorFx({
-			message: "Stripe price is missing",
-		});
-	}
 
 	const metadata = {
 		userId,
