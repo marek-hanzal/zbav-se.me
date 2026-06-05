@@ -16,7 +16,9 @@ export function withDateServiceFx(props?: withDateServiceFx.Props) {
 					return DateTime.now();
 				},
 				ofSeconds(seconds: number) {
-					return DateTime.fromSeconds(seconds);
+					return DateTime.fromSeconds(seconds, {
+						zone: "utc",
+					});
 				},
 				...props,
 			}),
