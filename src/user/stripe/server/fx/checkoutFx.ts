@@ -7,6 +7,7 @@ import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import type { BillingCheckoutCreateSchema } from "../schema/BillingCheckoutCreateSchema";
 import { ensureCustomerFx } from "./ensureCustomerFx";
 import { priceFetchFx } from "./priceFetchFx";
+import { productFetchFx } from "./productFetchFx";
 import { stripeClientFx } from "./stripeClientFx";
 
 export namespace checkoutFx {
@@ -31,30 +32,13 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	});
 
 	const stripe = yield* stripeClientFx();
-	const userStripe = yield* ensureCustomerFx({
+	const customer = yield* ensureCustomerFx({
 		userId,
 	});
 
-	const products = yield* Effect.promise(() => {
-		return stripe.products.search({
-			query: `active:'true' AND metadata['bundle']:'${bundle}'`,
-			limit: 100,
-		});
+	const product = yield* productFetchFx({
+		bundle,
 	});
-
-	const [product] = products.data;
-
-	if (!product) {
-		return yield* new InvalidRequestErrorFx({
-			message: "Stripe product is missing",
-		});
-	}
-
-	if (products.data.length > 1) {
-		return yield* new InvalidRequestErrorFx({
-			message: "Stripe product is not unique",
-		});
-	}
 
 	if (!product.default_price) {
 		return yield* new InvalidRequestErrorFx({
@@ -75,7 +59,7 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	const session = yield* Effect.promise(() => {
 		return stripe.checkout.sessions.create({
 			mode: "subscription",
-			customer: userStripe.customerId,
+			customer: customer.customerId,
 			client_reference_id: userId,
 			locale: locale as Stripe.Checkout.SessionCreateParams.Locale,
 			line_items: [
