@@ -13,6 +13,10 @@ export namespace bundleOpenSyncFx {
 	export interface Props {
 		userId: string;
 		/**
+		 * Source application bundle ID copied into Stripe metadata by checkout.
+		 */
+		resourceBundleId: string;
+		/**
 		 * Source application bundle configured in Stripe metadata.
 		 *
 		 * The source bundle is copied into a dedicated purchase bundle, so later changes
@@ -20,7 +24,7 @@ export namespace bundleOpenSyncFx {
 		 */
 		bundle: string;
 		/**
-		 * Deterministic fulfillment key derived from Stripe object IDs.
+		 * Deterministic bundle key stored in Stripe metadata.
 		 *
 		 * It is intentionally not a hash: the value should be readable in production
 		 * when we need to explain why a purchase exists or was skipped.
@@ -44,6 +48,7 @@ export namespace bundleOpenSyncFx {
  */
 export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 	userId,
+	resourceBundleId,
 	bundle,
 	key,
 	createdAt,
@@ -51,6 +56,7 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 	const logger = yield* getLoggerFx("bundleOpenSyncFx");
 	logger.trace("bundleOpenSyncFx", {
 		userId,
+		resourceBundleId,
 		bundle,
 		key,
 	});
@@ -60,7 +66,7 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 			/*
 			 * The mapping tables allow the same key to appear once per copied resource row,
 			 * so a plain unique key constraint would be wrong. The advisory lock serializes
-			 * processing for one Stripe fulfillment key before we check whether any copied
+			 * processing for one Stripe bundle key before we check whether any copied
 			 * row for that purchase already exists.
 			 */
 			yield* dbFx(async (kysely) => {
@@ -112,14 +118,14 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 				return kysely
 					.selectFrom("resource_bundle")
 					.selectAll()
-					.where("name", "=", bundle)
+					.where("id", "=", resourceBundleId)
 					.executeTakeFirst();
 			});
 
 			if (!resourceBundle) {
 				return yield* new NotFoundErrorFx({
 					resource: "resource_bundle",
-					resourceId: bundle,
+					resourceId: resourceBundleId,
 					message: "Stripe source resource bundle is missing",
 				});
 			}
@@ -130,7 +136,7 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 			 */
 			{
 				/*
-				 * The bundle name is the Stripe fulfillment key. This gives support/debugging
+				 * The bundle name is the Stripe bundle key. This gives support/debugging
 				 * a direct path from a Stripe line item to the exact resource bundle visible in
 				 * our database.
 				 */

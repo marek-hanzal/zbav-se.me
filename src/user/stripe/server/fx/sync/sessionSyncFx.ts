@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { DateServiceFx } from "@/lib/common/date";
+import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
-import { lineItemCollectionFx } from "../lineItemCollectionFx";
 import { paymentIntentFetchFx } from "../paymentIntentFetchFx";
-import { productFetchFx } from "../productFetchFx";
 import { resolveUserFx } from "../resolveUserFx";
 import { sessionFetchFx } from "../sessionFetchFx";
 import { bundleCloseSyncFx } from "./bundleCloseSyncFx";
@@ -64,10 +63,22 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 	}
 
 	/*
-	 * Non-payment sessions have no one-off fulfillment contract here.
+	 * Non-payment sessions have no one-off bundle contract here.
 	 */
 	if (session.mode !== "payment") {
 		return yield* Effect.void;
+	}
+
+	const resourceBundleId = session.metadata?.resourceBundleId;
+	const bundle = session.metadata?.bundle;
+	const bundleKey = session.metadata?.bundleKey;
+
+	if (!resourceBundleId || !bundle || !bundleKey) {
+		return yield* new NotFoundErrorFx({
+			resource: "stripe-session-resource-bundle-metadata",
+			resourceId: session.id,
+			message: "Stripe checkout session resource bundle metadata is missing",
+		});
 	}
 
 	if (!session.payment_intent) {
@@ -129,61 +140,27 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 		)
 		.otherwise(() => true);
 
-	const lineItems = yield* lineItemCollectionFx({
-		session,
-	});
-
 	const createdAt = dateService.ofSeconds(session.created).toJSDate();
-	return yield* Effect.forEach(
-		lineItems.data,
-		(lineItem) => {
-			return Effect.gen(function* () {
-				const priceProduct = lineItem.price?.product;
 
-				if (!priceProduct) {
-					return yield* Effect.void;
-				}
+	/*
+	 * One Checkout Session represents one local bundle grant. The bundle key is
+	 * generated before Stripe session creation and persisted in Session metadata, so
+	 * sync does not need to derive identity from Stripe line items.
+	 */
+	if (isClosed) {
+		return yield* bundleCloseSyncFx({
+			key: bundleKey,
+			expiresAt,
+		}).pipe(Effect.ignore);
+	}
 
-				const product = yield* productFetchFx({
-					query: {
-						productId: priceProduct,
-					},
-				});
-				const bundle = product.metadata.bundle;
-
-				if (!bundle) {
-					return yield* Effect.void;
-				}
-
-				/*
-				 * Stripe product metadata is the contract for resolving one-off purchases
-				 * into local source bundles. Price and line item metadata are deliberately
-				 * ignored so product setup remains the single billing catalog source.
-				 */
-				const key = `stripe:checkout-session-line-item:${session.id}:${lineItem.id}`;
-
-				if (isClosed) {
-					return yield* bundleCloseSyncFx({
-						key,
-						expiresAt,
-					});
-				}
-
-				return yield* bundleOpenSyncFx({
-					userId,
-					bundle,
-					key,
-					createdAt,
-				});
-				/**
-				 * This is easy to overlook - ignore all tagged errors
-				 */
-			}).pipe(Effect.ignore);
-		},
-		{
-			discard: true,
-		},
-	);
+	return yield* bundleOpenSyncFx({
+		userId,
+		resourceBundleId,
+		bundle,
+		key: bundleKey,
+		createdAt,
+	}).pipe(Effect.ignore);
 });
 
 export type sessionSyncFx = ReturnType<typeof sessionSyncFx>;

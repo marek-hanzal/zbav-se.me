@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import type { Stripe } from "stripe";
 import { match, P } from "ts-pattern";
 import { DateServiceFx } from "@/lib/common/date";
+import { NotFoundErrorFx } from "@/lib/common/error";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
@@ -29,11 +29,20 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 	subscription,
 }: subscriptionSyncFx.Props) {
 	const logger = yield* getLoggerFx("subscriptionSyncFx");
+	logger.trace("subscriptionSyncFx", {
+		subscription: match(subscription)
+			.with(P.string, (id) => id)
+			.with(
+				{
+					id: P.string,
+				},
+				(subscription) => subscription.id,
+			)
+			.exhaustive(),
+	});
+
 	const resolvedSubscription = yield* subscriptionFetchFx({
 		id: subscription,
-	});
-	logger.trace("subscriptionSyncFx", {
-		subscriptionId: resolvedSubscription.id,
 	});
 
 	const dateContext = yield* DateServiceFx;
@@ -47,25 +56,20 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 			(customer) => customer.id,
 		)
 		.exhaustive();
-	const resourceBundleName =
-		resolvedSubscription.metadata.bundle ||
-		(resolvedSubscription.items.data
-			.map((item) => item.price.metadata.bundle)
-			.find((bundle) => Boolean(bundle)) ??
-			null);
+	const resourceBundleId = resolvedSubscription.metadata.resourceBundleId;
 	const itemPeriodEnd =
 		resolvedSubscription.items.data
 			.map((item) => item.current_period_end)
 			.find((periodEnd) => Boolean(periodEnd)) ?? resolvedSubscription.cancel_at;
-	const periodEnd = itemPeriodEnd ? DateTime.fromSeconds(itemPeriodEnd).toJSDate() : null;
+	const periodEnd = itemPeriodEnd
+		? dateContext.ofSeconds(itemPeriodEnd).toJSDate()
+		: null;
 
-	if (!resourceBundleName) {
-		return yield* new SyncSkipErrorFx({
+	if (!resourceBundleId) {
+		return yield* new NotFoundErrorFx({
+			resource: "stripe-subscription-resource-bundle-metadata",
+			resourceId: resolvedSubscription.id,
 			message: "Stripe subscription metadata does not resolve resource bundle",
-			reason: "subscription metadata missing",
-			cause: {
-				subscription,
-			},
 		});
 	}
 
@@ -76,18 +80,15 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 				"id",
 				"name",
 			])
-			.where("name", "=", resourceBundleName)
+			.where("id", "=", resourceBundleId)
 			.executeTakeFirst();
 	});
 
 	if (!bundle) {
-		return yield* new SyncSkipErrorFx({
+		return yield* new NotFoundErrorFx({
+			resource: "resource_bundle",
+			resourceId: resourceBundleId,
 			message: "Stripe subscription resource bundle is missing",
-			reason: "subscription bundle missing",
-			cause: {
-				resourceBundleName,
-				subscription,
-			},
 		});
 	}
 
@@ -120,9 +121,9 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 	 * is normalized above and cancellation timestamps are read defensively here.
 	 */
 	const endedAt = resolvedSubscription.ended_at
-		? DateTime.fromSeconds(resolvedSubscription.ended_at).toJSDate()
+		? dateContext.ofSeconds(resolvedSubscription.ended_at).toJSDate()
 		: resolvedSubscription.canceled_at
-			? DateTime.fromSeconds(resolvedSubscription.canceled_at).toJSDate()
+			? dateContext.ofSeconds(resolvedSubscription.canceled_at).toJSDate()
 			: null;
 	const expiresAt = isActive
 		? resolvedSubscription.cancel_at_period_end
