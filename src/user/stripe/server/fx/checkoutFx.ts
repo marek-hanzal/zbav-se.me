@@ -20,7 +20,7 @@ export namespace checkoutFx {
 
 export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	userId,
-	productId,
+	bundle,
 	locale,
 	urlSuccess,
 	urlCancel,
@@ -28,7 +28,7 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	const logger = yield* getLoggerFx("checkoutFx");
 	logger.trace("checkoutFx", {
 		userId,
-		productId,
+		bundle,
 	});
 
 	const stripe = yield* stripeClientFx();
@@ -37,7 +37,9 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	});
 
 	const product = yield* productFetchFx({
-		productId,
+		query: {
+			bundle,
+		},
 	});
 
 	if (!product.default_price) {

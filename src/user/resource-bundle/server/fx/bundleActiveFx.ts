@@ -10,7 +10,7 @@ export namespace bundleActiveFx {
 }
 
 export const bundleActiveFx = Effect.fn("bundleActiveFx")(function* ({
-	productId,
+	bundle,
 	userId,
 }: bundleActiveFx.Props) {
 	const dateService = yield* DateServiceFx;
@@ -25,10 +25,7 @@ export const bundleActiveFx = Effect.fn("bundleActiveFx")(function* ({
 					"urb.id",
 				])
 				.where("urb.userId", "=", userId)
-                /**
-                 * TODO: this is currently wrong - we've to find a way how to identify "external" id (e.g. stripe in this case)
-                 */
-				.where("rb.name", "=", productId)
+				.where("rb.name", "=", bundle)
 				.where("urb.availableAt", "<=", now)
 				.where((eb) =>
 					eb.or([

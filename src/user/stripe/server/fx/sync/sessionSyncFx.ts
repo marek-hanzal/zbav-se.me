@@ -145,7 +145,9 @@ export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 				}
 
 				const product = yield* productFetchFx({
-					productId: priceProduct,
+					query: {
+						productId: priceProduct,
+					},
 				});
 				const bundle = product.metadata.bundle;
 
