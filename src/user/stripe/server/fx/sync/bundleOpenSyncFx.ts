@@ -5,6 +5,8 @@ import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
 import { SyncSkipErrorFx } from "../../error/SyncSkipErrorFx";
+import { bundleItemOpenSyncFx } from "./bundleItemOpenSyncFx";
+import { bundleLimitOpenSyncFx } from "./bundleLimitOpenSyncFx";
 
 export namespace bundleOpenSyncFx {
 	export interface Props {
@@ -126,7 +128,7 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 
 			/*
 			 * Fulfillment scope: create the purchase bundle, assign it to the user, then
-			 * copy each source row with its Stripe mapping next to the read that feeds it.
+			 * let item/limit syncs copy their concrete rows and Stripe mappings.
 			 */
 			{
 				/*
@@ -181,114 +183,18 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 						.execute();
 				});
 
-				/*
-				 * Copy the source bundle rows instead of referencing them. If product setup is
-				 * adjusted later, already fulfilled purchases keep their concrete resources.
-				 */
-				yield* Effect.forEach(
-					yield* dbFx(async (kysely) => {
-						return kysely
-							.selectFrom("resource_bundle_item")
-							.selectAll()
-							.where("resourceBundleId", "=", resourceBundle.id)
-							.execute();
-					}),
-					(sourceItem) => {
-						return dbFx(async (kysely) => {
-							const item = await kysely
-								.insertInto("resource_bundle_item")
-								.values({
-									id: genId(),
-									resourceBundleId: purchaseBundle.id,
-									resourceDefinitionId: sourceItem.resourceDefinitionId,
-									amount: sourceItem.amount,
-									expiration: sourceItem.expiration,
-								})
-								.onConflict((oc) =>
-									oc
-										.columns([
-											"resourceBundleId",
-											"resourceDefinitionId",
-										])
-										.doUpdateSet({
-											amount: sourceItem.amount,
-											expiration: sourceItem.expiration,
-										}),
-								)
-								.returningAll()
-								.executeTakeFirstOrThrow();
-
-							return kysely
-								.insertInto("resource_bundle_item_stripe")
-								.values({
-									id: genId(),
-									resourceBundleItemId: item.id,
-									key,
-									createdAt,
-								})
-								.onConflict((oc) =>
-									oc
-										.columns([
-											"resourceBundleItemId",
-											"key",
-										])
-										.doNothing(),
-								)
-								.execute();
-						});
-					},
-				);
-				yield* Effect.forEach(
-					yield* dbFx(async (kysely) => {
-						return kysely
-							.selectFrom("resource_bundle_limit")
-							.selectAll()
-							.where("resourceBundleId", "=", resourceBundle.id)
-							.execute();
-					}),
-					(sourceLimit) => {
-						return dbFx(async (kysely) => {
-							const limitRow = await kysely
-								.insertInto("resource_bundle_limit")
-								.values({
-									id: genId(),
-									resourceBundleId: purchaseBundle.id,
-									resourceDefinitionId: sourceLimit.resourceDefinitionId,
-									limit: sourceLimit.limit,
-								})
-								.onConflict((oc) =>
-									oc
-										.columns([
-											"resourceBundleId",
-											"resourceDefinitionId",
-										])
-										.doUpdateSet({
-											limit: sourceLimit.limit,
-										}),
-								)
-								.returningAll()
-								.executeTakeFirstOrThrow();
-
-							return kysely
-								.insertInto("resource_bundle_limit_stripe")
-								.values({
-									id: genId(),
-									resourceBundleLimitId: limitRow.id,
-									key,
-									createdAt,
-								})
-								.onConflict((oc) =>
-									oc
-										.columns([
-											"resourceBundleLimitId",
-											"key",
-										])
-										.doNothing(),
-								)
-								.execute();
-						});
-					},
-				);
+				yield* bundleItemOpenSyncFx({
+					sourceResourceBundleId: resourceBundle.id,
+					purchaseResourceBundleId: purchaseBundle.id,
+					key,
+					createdAt,
+				});
+				yield* bundleLimitOpenSyncFx({
+					sourceResourceBundleId: resourceBundle.id,
+					purchaseResourceBundleId: purchaseBundle.id,
+					key,
+					createdAt,
+				});
 
 				return purchaseBundle;
 			}

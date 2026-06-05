@@ -4,6 +4,8 @@ import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import { bundleItemCloseSyncFx } from "./bundleItemCloseSyncFx";
+import { bundleLimitCloseSyncFx } from "./bundleLimitCloseSyncFx";
 
 export namespace bundleCloseSyncFx {
 	export interface Props {
@@ -48,37 +50,20 @@ export const bundleCloseSyncFx = Effect.fn("bundleCloseSyncFx")(function* ({
 				);
 			});
 
-			const bundleIds = yield* dbFx(async (kysely) => {
-				const [items, limits] = await Promise.all([
-					kysely
-						.selectFrom("resource_bundle_item_stripe as rbis")
-						.innerJoin(
-							"resource_bundle_item as rbi",
-							"rbi.id",
-							"rbis.resourceBundleItemId",
-						)
-						.select("rbi.resourceBundleId")
-						.where("rbis.key", "=", key)
-						.execute(),
-					kysely
-						.selectFrom("resource_bundle_limit_stripe as rbls")
-						.innerJoin(
-							"resource_bundle_limit as rbl",
-							"rbl.id",
-							"rbls.resourceBundleLimitId",
-						)
-						.select("rbl.resourceBundleId")
-						.where("rbls.key", "=", key)
-						.execute(),
-				]);
-
-				return [
-					...new Set([
-						...items.map((item) => item.resourceBundleId),
-						...limits.map((item) => item.resourceBundleId),
-					]),
-				];
-			});
+			const [items, limits] = yield* Effect.all([
+				bundleItemCloseSyncFx({
+					key,
+				}),
+				bundleLimitCloseSyncFx({
+					key,
+				}),
+			]);
+			const bundleIds = [
+				...new Set([
+					...items.map((item) => item.resourceBundleId),
+					...limits.map((limit) => limit.resourceBundleId),
+				]),
+			];
 
 			if (bundleIds.length === 0) {
 				return yield* new NotFoundErrorFx({
