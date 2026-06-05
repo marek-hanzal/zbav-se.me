@@ -2,7 +2,6 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match, P } from "ts-pattern";
 import { getLoggerFx } from "@/lib/common/log";
-import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { SyncSkippedFx } from "../../error/SyncSkippedFx";
 import { stripeClientFx } from "../stripeClientFx";
 import { bundleExpireFx } from "./bundleExpireFx";
@@ -40,16 +39,8 @@ export const checkoutSessionSyncFx = Effect.fn("checkoutSessionSyncFx")(function
 	});
 
 	const stripe = yield* stripeClientFx();
-	const session = yield* Effect.tryPromise({
-		try() {
-			return stripe.checkout.sessions.retrieve(id);
-		},
-		catch(error) {
-			return new RuntimeErrorFx({
-				message: "Stripe checkout session retrieval failed",
-				cause: error,
-			});
-		},
+	const session = yield* Effect.promise(() => {
+		return stripe.checkout.sessions.retrieve(id);
 	});
 	const subscriptionId = match(session.subscription)
 		.with(P.string, (subscription) => subscription)
@@ -92,20 +83,12 @@ export const checkoutSessionSyncFx = Effect.fn("checkoutSessionSyncFx")(function
 	 * local one-off purchase should be expired.
 	 */
 	const paymentIntent = paymentIntentId
-		? yield* Effect.tryPromise({
-				try() {
-					return stripe.paymentIntents.retrieve(paymentIntentId, {
-						expand: [
-							"latest_charge",
-						],
-					});
-				},
-				catch(error) {
-					return new RuntimeErrorFx({
-						message: "Stripe payment intent retrieval failed",
-						cause: error,
-					});
-				},
+		? yield* Effect.promise(() => {
+				return stripe.paymentIntents.retrieve(paymentIntentId, {
+					expand: [
+						"latest_charge",
+					],
+				});
 			})
 		: null;
 	const isRefunded = match(paymentIntent?.latest_charge)
@@ -143,21 +126,13 @@ export const checkoutSessionSyncFx = Effect.fn("checkoutSessionSyncFx")(function
 		});
 	}
 
-	const lineItems = yield* Effect.tryPromise({
-		try() {
-			return stripe.checkout.sessions.listLineItems(session.id, {
-				expand: [
-					"data.price.product",
-				],
-				limit: 100,
-			});
-		},
-		catch(error) {
-			return new RuntimeErrorFx({
-				message: "Stripe checkout line item retrieval failed",
-				cause: error,
-			});
-		},
+	const lineItems = yield* Effect.promise(() => {
+		return stripe.checkout.sessions.listLineItems(session.id, {
+			expand: [
+				"data.price.product",
+			],
+			limit: 100,
+		});
 	});
 	const oneOffs = yield* Effect.forEach(
 		lineItems.data.flatMap((lineItem) => {

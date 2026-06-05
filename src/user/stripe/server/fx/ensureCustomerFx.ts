@@ -3,7 +3,6 @@ import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
-import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { stripeClientFx } from "./stripeClientFx";
 
 export namespace ensureCustomerFx {
@@ -46,21 +45,13 @@ export const ensureCustomerFx = Effect.fn("ensureCustomerFx")(function* ({
 	}
 
 	const stripe = yield* stripeClientFx();
-	const customer = yield* Effect.tryPromise({
-		try() {
-			return stripe.customers.create({
-				email,
-				metadata: {
-					userId,
-				},
-			});
-		},
-		catch(error) {
-			return new RuntimeErrorFx({
-				message: "Stripe customer creation failed",
-				cause: error,
-			});
-		},
+	const customer = yield* Effect.promise(() => {
+		return stripe.customers.create({
+			email,
+			metadata: {
+				userId,
+			},
+		});
 	});
 	const dateService = yield* DateServiceFx;
 	const now = dateService.now().toJSDate();

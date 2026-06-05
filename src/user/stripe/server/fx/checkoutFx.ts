@@ -34,20 +34,14 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 	const userStripe = yield* ensureCustomerFx({
 		userId,
 	});
-	const products = yield* Effect.tryPromise({
-		try() {
-			return stripe.products.search({
-				query: `active:'true' AND metadata['bundle']:'${bundle}'`,
-				limit: 100,
-			});
-		},
-		catch(error) {
-			return new RuntimeErrorFx({
-				message: "Stripe product search failed",
-				cause: error,
-			});
-		},
+
+	const products = yield* Effect.promise(() => {
+		return stripe.products.search({
+			query: `active:'true' AND metadata['bundle']:'${bundle}'`,
+			limit: 100,
+		});
 	});
+
 	const [product] = products.data;
 
 	if (!product) {
@@ -78,19 +72,11 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 		});
 	}
 
-	const prices = yield* Effect.tryPromise({
-		try() {
-			return stripe.prices.search({
-				query: `active:'true' AND type:'recurring' AND product:'${product.id}'`,
-				limit: 100,
-			});
-		},
-		catch(error) {
-			return new RuntimeErrorFx({
-				message: "Stripe price search failed",
-				cause: error,
-			});
-		},
+	const prices = yield* Effect.promise(() => {
+		return stripe.prices.search({
+			query: `active:'true' AND type:'recurring' AND product:'${product.id}'`,
+			limit: 100,
+		});
 	});
 	const price = prices.data.find((price) => price.id === defaultPriceId);
 
@@ -105,33 +91,25 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 		bundle,
 	} as const;
 
-	const session = yield* Effect.tryPromise({
-		try() {
-			return stripe.checkout.sessions.create({
-				mode: "subscription",
-				customer: userStripe.customerId,
-				client_reference_id: userId,
-				locale: locale as Stripe.Checkout.SessionCreateParams.Locale,
-				line_items: [
-					{
-						price: price.id,
-						quantity: 1,
-					},
-				],
-				metadata,
-				subscription_data: {
-					metadata,
+	const session = yield* Effect.promise(() => {
+		return stripe.checkout.sessions.create({
+			mode: "subscription",
+			customer: userStripe.customerId,
+			client_reference_id: userId,
+			locale: locale as Stripe.Checkout.SessionCreateParams.Locale,
+			line_items: [
+				{
+					price: price.id,
+					quantity: 1,
 				},
-				success_url: urlSuccess(),
-				cancel_url: urlCancel(),
-			});
-		},
-		catch(error) {
-			return new RuntimeErrorFx({
-				message: "Stripe checkout session creation failed",
-				cause: error,
-			});
-		},
+			],
+			metadata,
+			subscription_data: {
+				metadata,
+			},
+			success_url: urlSuccess(),
+			cancel_url: urlCancel(),
+		});
 	});
 
 	if (!session.url) {

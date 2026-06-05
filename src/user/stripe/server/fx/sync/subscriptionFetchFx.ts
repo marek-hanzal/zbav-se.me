@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { stripeClientFx } from "~/user/stripe/server/fx/stripeClientFx";
 
 export namespace subscriptionFetchFx {
@@ -19,16 +18,8 @@ export const subscriptionFetchFx = Effect.fn("subscriptionFetchFx")(function* ({
 }: subscriptionFetchFx.Props) {
 	const stripe = yield* stripeClientFx();
 
-	return yield* Effect.tryPromise({
-		try() {
-			return stripe.subscriptions.retrieve(id);
-		},
-		catch(error) {
-			return new RuntimeErrorFx({
-				message: "Stripe subscription retrieval failed",
-				cause: error,
-			});
-		},
+	return yield* Effect.promise(() => {
+		return stripe.subscriptions.retrieve(id);
 	});
 });
 

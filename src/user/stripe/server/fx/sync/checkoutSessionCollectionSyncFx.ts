@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { getLoggerFx } from "@/lib/common/log";
-import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { stripeClientFx } from "../stripeClientFx";
 import { checkoutSessionSyncFx } from "./checkoutSessionSyncFx";
 
@@ -32,19 +31,11 @@ export const checkoutSessionCollectionSyncFx = Effect.fn("checkoutSessionCollect
 		});
 
 		const stripe = yield* stripeClientFx();
-		const sessions = yield* Effect.tryPromise({
-			try() {
-				return stripe.checkout.sessions.list({
-					limit: 100,
-					payment_intent: paymentIntentId,
-				});
-			},
-			catch(error) {
-				return new RuntimeErrorFx({
-					message: "Stripe checkout sessions by payment intent retrieval failed",
-					cause: error,
-				});
-			},
+		const sessions = yield* Effect.promise(() => {
+			return stripe.checkout.sessions.list({
+				limit: 100,
+				payment_intent: paymentIntentId,
+			});
 		});
 
 		return yield* Effect.forEach(sessions.data, (session) =>

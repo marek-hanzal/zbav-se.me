@@ -1,68 +1,59 @@
 import { Effect } from "effect";
 import { match, P } from "ts-pattern";
 import { dbFx } from "~/server/database/fx/dbFx";
-import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { stripeClientFx } from "~/user/stripe/server/fx/stripeClientFx";
 
 export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 	const stripe = yield* stripeClientFx();
 
-	const products = yield* Effect.tryPromise({
-		async try() {
-			const products = await stripe.products.search({
-				/*
-				 * Stripe search can lag behind writes; bundle products are configured upfront,
-				 * and DB remains the delivery source of truth.
-				 */
-				query: "active:'true' AND -metadata['bundle']:null",
-				expand: [
-					"data.default_price",
-				],
-				limit: 100,
-			});
+	const products = yield* Effect.promise(async () => {
+		const products = await stripe.products.search({
+			/*
+			 * Stripe search can lag behind writes; bundle products are configured upfront,
+			 * and DB remains the delivery source of truth.
+			 */
+			query: "active:'true' AND -metadata['bundle']:null",
+			expand: [
+				"data.default_price",
+			],
+			limit: 100,
+		});
 
-			return products.data
-				.flatMap((product) =>
-					match({
-						bundle: product.metadata.bundle,
-						price: product.default_price,
-					})
-						.with(
-							{
-								bundle: P.string,
-								price: {
-									unit_amount: P.number,
-								},
+		return products.data
+			.flatMap((product) =>
+				match({
+					bundle: product.metadata.bundle,
+					price: product.default_price,
+				})
+					.with(
+						{
+							bundle: P.string,
+							price: {
+								unit_amount: P.number,
 							},
-							({ bundle, price }) => {
-								const sort = Number(product.metadata.sort);
-								const stripeBundle = {
-									bundle,
-									name: product.name,
-									price: price.unit_amount,
-									sort: Number.POSITIVE_INFINITY,
-								};
+						},
+						({ bundle, price }) => {
+							const sort = Number(product.metadata.sort);
+							const stripeBundle = {
+								bundle,
+								name: product.name,
+								price: price.unit_amount,
+								sort: Number.POSITIVE_INFINITY,
+							};
 
-								if (Number.isFinite(sort)) {
-									stripeBundle.sort = sort;
-								}
+							if (Number.isFinite(sort)) {
+								stripeBundle.sort = sort;
+							}
 
-								return [
-									stripeBundle,
-								];
-							},
-						)
-						.otherwise(() => []),
-				)
-				.filter((bundle) => bundle.bundle.length > 0)
-				.toSorted((left, right) => left.sort - right.sort);
-		},
-		catch(error) {
-			return new RuntimeErrorFx({
-				message: "Stripe bundle product list failed",
-				cause: error,
-			});
-		},
+							return [
+								stripeBundle,
+							];
+						},
+					)
+					.otherwise(() => []),
+			)
+			.filter((bundle) => bundle.bundle.length > 0)
+			.toSorted((left, right) => left.sort - right.sort);
 	});
 
 	if (products.length === 0) {
