@@ -38,7 +38,7 @@ describe("listingEventRateLimitFx", () => {
 					event: "listing.favourite",
 				}).pipe(
 					withDateServiceFx({
-						now: () => nextWindowNow,
+						now: () => firstWindowNow,
 					}),
 				),
 			);
@@ -77,7 +77,7 @@ describe("listingEventRateLimitFx", () => {
 					event: "like",
 				}).pipe(
 					withDateServiceFx({
-						now: () => firstWindowNow,
+						now: () => nextWindowNow,
 					}),
 				),
 			);
