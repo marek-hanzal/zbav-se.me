@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import type Stripe from "stripe";
-import { match, P } from "ts-pattern";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
@@ -57,17 +56,7 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 		});
 	}
 
-	const defaultPriceId = match(product.default_price)
-		.with(P.string, (price) => price)
-		.with(
-			{
-				id: P.string,
-			},
-			(price) => price.id,
-		)
-		.otherwise(() => null);
-
-	if (!defaultPriceId) {
+	if (!product.default_price) {
 		return yield* new InvalidRequestErrorFx({
 			message: "Stripe price is missing",
 		});
@@ -75,7 +64,7 @@ export const checkoutFx = Effect.fn("checkoutFx")(function* ({
 
 	const price = yield* priceFetchFx({
 		productId: product.id,
-		priceId: defaultPriceId,
+		priceId: product.default_price,
 	});
 
 	const metadata = {
