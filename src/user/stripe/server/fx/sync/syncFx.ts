@@ -31,17 +31,18 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 	const expiresAt = dateService.now().toJSDate();
 	const stripe = yield* stripeClientFx();
 
-	return Effect.all(
-		[
-			Effect.forEach(
-				yield* Effect.promise(async () => {
-					const subscriptions = await stripe.subscriptions.list({
-						customer: customerId,
-						status: "all",
-						limit: 100,
-					});
-					return subscriptions.data;
-				}),
+	const subscriptionsSyncFx = Effect.promise(async () => {
+		const subscriptions = await stripe.subscriptions.list({
+			customer: customerId,
+			status: "all",
+			limit: 100,
+		});
+
+		return subscriptions.data;
+	}).pipe(
+		Effect.flatMap((subscriptions) => {
+			return Effect.forEach(
+				subscriptions,
 				(subscription) => {
 					return subscriptionSyncFx({
 						subscription: subscription.id,
@@ -51,15 +52,21 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 					discard: true,
 					concurrency: 4,
 				},
-			),
-			Effect.forEach(
-				yield* Effect.promise(async () => {
-					const sessions = await stripe.checkout.sessions.list({
-						customer: customerId,
-						limit: 100,
-					});
-					return sessions.data;
-				}),
+			);
+		}),
+	);
+
+	const sessionsSyncFx = Effect.promise(async () => {
+		const sessions = await stripe.checkout.sessions.list({
+			customer: customerId,
+			limit: 100,
+		});
+
+		return sessions.data;
+	}).pipe(
+		Effect.flatMap((sessions) => {
+			return Effect.forEach(
+				sessions,
 				(session) => {
 					return sessionSyncFx({
 						id: session.id,
@@ -68,13 +75,20 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 				},
 				{
 					discard: true,
+					concurrency: 4,
 				},
-			),
+			);
+		}),
+	);
+
+	return yield* Effect.all(
+		[
+			subscriptionsSyncFx,
+			sessionsSyncFx,
 		],
 		{
 			discard: true,
+			concurrency: 2,
 		},
 	);
 });
-
-export type syncFx = ReturnType<typeof syncFx>;
