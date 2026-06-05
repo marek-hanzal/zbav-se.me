@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import type Stripe from "stripe";
 import { match, P } from "ts-pattern";
+import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { checkoutSessionCollectionSyncFx } from "./checkoutSessionCollectionSyncFx";
 import { checkoutSessionSyncFx } from "./checkoutSessionSyncFx";
@@ -30,7 +30,8 @@ export const syncFx = Effect.fn("syncFx")(function* ({ event }: syncFx.Props) {
 		type: event.type,
 	});
 
-	const expiresAt = DateTime.fromSeconds(event.created).toJSDate();
+	const dateService = yield* DateServiceFx;
+	const expiresAt = dateService.ofSeconds(event.created).toJSDate();
 
 	/*
 	 * Subscription and invoice events converge on the same subscription sync. Checkout
