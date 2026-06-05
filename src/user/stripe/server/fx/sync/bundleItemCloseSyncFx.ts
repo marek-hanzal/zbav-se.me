@@ -5,7 +5,7 @@ import { dbFx } from "~/server/database/fx/dbFx";
 export namespace bundleItemCloseSyncFx {
 	export interface Props {
 		/**
-		 * Deterministic Stripe fulfillment key used by the open sync.
+		 * Deterministic Stripe bundle key used by the open sync.
 		 */
 		key: string;
 	}
@@ -13,7 +13,7 @@ export namespace bundleItemCloseSyncFx {
 
 /**
  * Resolves purchase bundle IDs that were opened from item resources for one Stripe
- * fulfillment key.
+ * bundle key.
  *
  * Close sync expires the user_resource_bundle assignment, not the copied item rows.
  * This Fx only maps Stripe item rows back to the owning purchase bundles.

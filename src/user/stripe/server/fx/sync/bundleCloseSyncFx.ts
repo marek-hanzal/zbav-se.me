@@ -10,7 +10,7 @@ import { bundleLimitCloseSyncFx } from "./bundleLimitCloseSyncFx";
 export namespace bundleCloseSyncFx {
 	export interface Props {
 		/**
-		 * Deterministic Stripe fulfillment key used by the grant sync.
+		 * Deterministic Stripe bundle key used by the grant sync.
 		 */
 		key: string;
 		/**

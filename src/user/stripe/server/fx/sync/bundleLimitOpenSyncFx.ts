@@ -14,7 +14,7 @@ export namespace bundleLimitOpenSyncFx {
 
 /**
  * Copies limit resources from the configured source bundle into one Stripe purchase
- * bundle and records which copied rows came from the Stripe fulfillment key.
+ * bundle and records which copied rows came from the Stripe bundle key.
  *
  * Limits default to replace semantics in the resource model, so replaying this Fx
  * for the same purchase bundle updates the concrete copied limit row and leaves the

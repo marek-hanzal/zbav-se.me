@@ -14,11 +14,11 @@ export namespace bundleItemOpenSyncFx {
 
 /**
  * Copies item resources from the configured source bundle into one Stripe purchase
- * bundle and records which copied rows came from the Stripe fulfillment key.
+ * bundle and records which copied rows came from the Stripe bundle key.
  *
  * This Fx intentionally performs the source read inside the Effect.forEach input.
  * The source rows are only meaningful for this copy pass, so keeping the read next
- * to the write makes the one-off fulfillment path easier to audit.
+ * to the write makes the one-off bundle path easier to audit.
  */
 export const bundleItemOpenSyncFx = Effect.fn("bundleItemOpenSyncFx")(function* ({
 	sourceResourceBundleId,
