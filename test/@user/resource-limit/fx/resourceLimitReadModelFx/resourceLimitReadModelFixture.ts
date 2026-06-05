@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { DateServiceFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import type { testabase } from "~/test/testabase";
@@ -37,7 +37,7 @@ const limitSeed = (
 
 export const atResourceLimitReadModelFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		Effect.provideService(DateServiceFx, {
+		withDateServiceFx({
 			now: () => DateTime.fromISO(iso),
 		}),
 	);

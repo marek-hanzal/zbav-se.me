@@ -38,7 +38,7 @@ describe("listingEventRateLimitFx", () => {
 					event: "listing.favourite",
 				}).pipe(
 					withDateServiceFx({
-						now: () => firstWindowNow,
+						now: () => nextWindowNow,
 					}),
 				),
 			);

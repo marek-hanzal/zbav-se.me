@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateServiceFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { hash } from "@/lib/server/hmac";
 import { ServerHmacSchema } from "~/server/env/ServerHmacSchema";
 import { rateLimitEventFx } from "~/server/rate-limit/server/fx/rateLimitEventFx";
@@ -41,7 +41,7 @@ describe("rateLimitEventFx", () => {
 					"user:1",
 				],
 			}).pipe(
-				Effect.provideService(DateServiceFx, {
+				withDateServiceFx({
 					now: () => DateTime.fromISO("2026-05-11T10:05:59.000Z"),
 				}),
 			);
@@ -51,7 +51,7 @@ describe("rateLimitEventFx", () => {
 					"user:1",
 				],
 			}).pipe(
-				Effect.provideService(DateServiceFx, {
+				withDateServiceFx({
 					now: () => DateTime.fromISO("2026-05-11T10:06:00.000Z"),
 				}),
 			);
@@ -61,7 +61,7 @@ describe("rateLimitEventFx", () => {
 					"user:2",
 				],
 			}).pipe(
-				Effect.provideService(DateServiceFx, {
+				withDateServiceFx({
 					now: () => DateTime.fromISO("2026-05-11T10:06:15.000Z"),
 				}),
 			);

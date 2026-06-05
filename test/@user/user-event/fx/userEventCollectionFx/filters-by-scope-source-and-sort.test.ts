@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateServiceFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -24,7 +24,7 @@ describe("userEventCollectionFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateServiceFx, {
+				withDateServiceFx({
 					now: () => now,
 				}),
 			);
@@ -37,7 +37,7 @@ describe("userEventCollectionFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateServiceFx, {
+				withDateServiceFx({
 					now: () =>
 						now.minus({
 							days: 1,
@@ -53,7 +53,7 @@ describe("userEventCollectionFx", () => {
 				event: "like",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateServiceFx, {
+				withDateServiceFx({
 					now: () =>
 						now.minus({
 							days: 2,
@@ -68,7 +68,7 @@ describe("userEventCollectionFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateServiceFx, {
+				withDateServiceFx({
 					now: () =>
 						now.minus({
 							days: 3,

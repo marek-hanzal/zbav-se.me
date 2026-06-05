@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateServiceFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import { computeActivityFx } from "~/user/user-event/server/fx/computeActivityFx";
 
@@ -42,7 +42,7 @@ describe("computeActivityFx", () => {
 					],
 					days: 90,
 				}).pipe(
-					Effect.provideService(DateServiceFx, {
+					withDateServiceFx({
 						now: () => now,
 					}),
 				),

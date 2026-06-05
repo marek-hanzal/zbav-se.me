@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateServiceFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { userEventSellerInfoFx } from "~/buyer/user-event/server/fx/userEventSellerInfoFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
@@ -42,7 +42,7 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateServiceFx, {
+				withDateServiceFx({
 					now: () => t1Create,
 				}),
 			);
@@ -55,7 +55,7 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.success",
 				isTerminal: true,
 			}).pipe(
-				Effect.provideService(DateServiceFx, {
+				withDateServiceFx({
 					now: () => t1BuyerSuccess,
 				}),
 			);
@@ -68,7 +68,7 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateServiceFx, {
+				withDateServiceFx({
 					now: () => t2Create,
 				}),
 			);
@@ -81,7 +81,7 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.resolved",
 				isTerminal: true,
 			}).pipe(
-				Effect.provideService(DateServiceFx, {
+				withDateServiceFx({
 					now: () => t2SellerResolve,
 				}),
 			);
