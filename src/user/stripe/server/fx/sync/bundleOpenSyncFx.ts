@@ -68,9 +68,9 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 				);
 			});
 
-            /**
-             * Check if the item/limit is already present.
-             */
+			/**
+			 * Check if the item/limit is already present.
+			 */
 			{
 				const { item, limit } = yield* dbFx(async (kysely) => {
 					const [item, limit] = await Promise.all([
@@ -190,8 +190,8 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 						availableAt: createdAt,
 						expiresAt: null,
 					})
-					.onConflict((oc) =>
-						oc
+					.onConflict((oc) => {
+						return oc
 							.columns([
 								"userId",
 								"resourceBundleId",
@@ -199,8 +199,8 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 							.doUpdateSet({
 								availableAt: createdAt,
 								expiresAt: null,
-							}),
-					)
+							});
+					})
 					.execute();
 			});
 
