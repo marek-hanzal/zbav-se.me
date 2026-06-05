@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { match, P } from "ts-pattern";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
+import { ResourceBundleEnumSchema } from "~/user/resource-bundle/server/schema/ResourceBundleEnumSchema";
 import { stripeClientFx } from "~/user/stripe/server/fx/stripeClientFx";
 
 export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
@@ -17,6 +18,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 				"id",
 				"name",
 			])
+			.where("name", "in", ResourceBundleEnumSchema.options)
 			.execute();
 
 		if (bundles.length === 0) {
@@ -113,7 +115,14 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 		const product = match(price.product)
 			.with(
 				{
+					deleted: true,
+				},
+				() => null,
+			)
+			.with(
+				{
 					id: P.string,
+					metadata: P.any,
 					name: P.string,
 				},
 				(product) => {

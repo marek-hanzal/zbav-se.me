@@ -1,332 +1,251 @@
-import { Effect } from "effect";
+import { Effect, Either } from "effect";
 import { DateTime } from "luxon";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import Stripe from "stripe";
+import { describe, expect, it } from "vitest";
 import { genId } from "@/lib/common/gen-id";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
 import { withStripeConfigFx } from "~/user/stripe/server/context/withStripeConfigFx";
-import { withStripConfigEnv } from "~/user/stripe/server/env/withStripConfigEnv";
 import { subscriptionSyncFx } from "~/user/stripe/server/fx/sync/subscriptionSyncFx";
 
-const stripeMocks = vi.hoisted(() => {
-	return {
-		subscriptionRetrieve: vi.fn(),
-	};
-});
-
-vi.mock("~/user/stripe/server/fx/stripeClientFx", async () => {
-	const { Effect } = await import("effect");
-
-	return {
-		stripeClientFx: () =>
-			Effect.succeed({
-				subscriptions: {
-					retrieve: stripeMocks.subscriptionRetrieve,
-				},
-			}),
-	};
-});
-
-const customerId = "cus_test_buyer";
-const subscriptionId = "sub_test_buyer";
-const priceId = "price_1TdDMEJL7ONbiZVohUfwCus6";
+const stripeSecret = process.env.SERVER_STRIPE_SECRET;
+const liveIt = stripeSecret ? it : it.skip;
 
 describe("subscriptionSyncFx", () => {
-	beforeEach(() => {
-		stripeMocks.subscriptionRetrieve.mockReset();
+	liveIt("syncs live Stripe subscription current state idempotently", async () => {
+		if (!stripeSecret) {
+			throw new Error("SERVER_STRIPE_SECRET is required");
+		}
+
+		const database = await testabase("stripe-subscription-sync-live-current-state");
+		const stripe = new Stripe(stripeSecret);
+		const customerIds: string[] = [];
+		const subscriptionIds: string[] = [];
+
+		try {
+			return await Effect.gen(function* () {
+				const { buyer } = yield* createUsersFx({});
+				const now = DateTime.fromISO("2026-06-02T10:00:00.000Z").toJSDate();
+				const resourceBundle = yield* Effect.promise(() => {
+					return database.kysely
+						.selectFrom("resource_bundle")
+						.select([
+							"id",
+						])
+						.where("name", "=", "package:buyer")
+						.executeTakeFirstOrThrow();
+				});
+				const prices = yield* Effect.promise(() => {
+					return stripe.prices.list({
+						active: true,
+						lookup_keys: [
+							"package:buyer",
+						],
+						limit: 2,
+					});
+				});
+				const [price] = prices.data;
+
+				if (!price) {
+					throw new Error("Expected package:buyer Stripe price");
+				}
+
+				const customer = yield* Effect.promise(() => {
+					return stripe.customers.create({
+						email: `stripe-sync-${buyer.id}@example.test`,
+						metadata: {
+							userId: buyer.id,
+						},
+					});
+				});
+				customerIds.push(customer.id);
+
+				const subscription = yield* Effect.promise(() => {
+					return stripe.subscriptions.create({
+						customer: customer.id,
+						items: [
+							{
+								price: price.id,
+							},
+						],
+						metadata: {
+							bundle: "package:buyer",
+							resourceBundleId: resourceBundle.id,
+						},
+						trial_period_days: 1,
+					});
+				});
+				subscriptionIds.push(subscription.id);
+
+				yield* Effect.promise(() => {
+					return database.kysely
+						.insertInto("user_stripe")
+						.values({
+							id: genId(),
+							userId: buyer.id,
+							customerId: customer.id,
+							createdAt: now,
+						})
+						.execute();
+				});
+
+				yield* subscriptionSyncFx({
+					subscription: subscription.id,
+				});
+				yield* subscriptionSyncFx({
+					subscription: subscription.id,
+				});
+
+				const active = yield* Effect.promise(() => {
+					return database.kysely
+						.selectFrom("user_resource_bundle as urb")
+						.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+						.select([
+							"rb.name",
+							"urb.expiresAt",
+						])
+						.where("urb.userId", "=", buyer.id)
+						.where("rb.name", "=", "package:buyer")
+						.execute();
+				});
+
+				yield* Effect.promise(() => {
+					return stripe.subscriptions.update(subscription.id, {
+						cancel_at_period_end: true,
+					});
+				});
+				yield* subscriptionSyncFx({
+					subscription: subscription.id,
+				});
+				const scheduled = yield* Effect.promise(() => {
+					return database.kysely
+						.selectFrom("user_resource_bundle as urb")
+						.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+						.select([
+							"urb.expiresAt",
+						])
+						.where("urb.userId", "=", buyer.id)
+						.where("rb.name", "=", "package:buyer")
+						.executeTakeFirstOrThrow();
+				});
+
+				yield* Effect.promise(() => {
+					return stripe.subscriptions.cancel(subscription.id);
+				});
+				yield* subscriptionSyncFx({
+					subscription: subscription.id,
+				});
+				const canceled = yield* Effect.promise(() => {
+					return database.kysely
+						.selectFrom("user_resource_bundle as urb")
+						.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+						.select([
+							"urb.expiresAt",
+						])
+						.where("urb.userId", "=", buyer.id)
+						.where("rb.name", "=", "package:buyer")
+						.executeTakeFirstOrThrow();
+				});
+
+				expect(active).toEqual([
+					{
+						name: "package:buyer",
+						expiresAt: null,
+					},
+				]);
+				expect(scheduled.expiresAt).toBeInstanceOf(Date);
+				expect(canceled.expiresAt).toBeInstanceOf(Date);
+			}).pipe(
+				withRuntimeFx(database),
+				withStripeConfigFx({
+					secret: stripeSecret,
+					webhook: "whsec_test",
+				}),
+				Effect.runPromise,
+			);
+		} finally {
+			await Promise.allSettled(
+				subscriptionIds.map((subscriptionId) => {
+					return stripe.subscriptions.cancel(subscriptionId);
+				}),
+			);
+			await Promise.allSettled(
+				customerIds.map((customerId) => {
+					return stripe.customers.del(customerId);
+				}),
+			);
+		}
 	});
 
-	it("provisions buyer bundle idempotently", async () => {
-		const database = await testabase("stripe-subscription-sync-buyer");
-		stripeMocks.subscriptionRetrieve.mockResolvedValue({
-			id: subscriptionId,
-			customer: customerId,
-			status: "active",
-			cancel_at_period_end: false,
-			cancel_at: null,
-			canceled_at: null,
-			ended_at: null,
-			metadata: {
-				bundle: "package:buyer",
-			},
-			items: {
-				data: [
+	liveIt("fails loudly when live Stripe subscription is missing resourceBundleId", async () => {
+		if (!stripeSecret) {
+			throw new Error("SERVER_STRIPE_SECRET is required");
+		}
+
+		const database = await testabase("stripe-subscription-sync-live-missing-metadata");
+		const stripe = new Stripe(stripeSecret);
+		const customerIds: string[] = [];
+		const subscriptionIds: string[] = [];
+
+		try {
+			const prices = await stripe.prices.list({
+				active: true,
+				lookup_keys: [
+					"package:buyer",
+				],
+				limit: 2,
+			});
+			const [price] = prices.data;
+
+			if (!price) {
+				throw new Error("Expected package:buyer Stripe price");
+			}
+
+			const customer = await stripe.customers.create();
+			customerIds.push(customer.id);
+			const subscription = await stripe.subscriptions.create({
+				customer: customer.id,
+				items: [
 					{
-						current_period_end: 1_820_000_000,
-						price: {
-							id: priceId,
-							metadata: {
-								bundle: "package:buyer",
-							},
-						},
+						price: price.id,
 					},
 				],
-			},
-		});
-
-		return Effect.gen(function* () {
-			const { buyer } = yield* createUsersFx({});
-			const now = DateTime.fromISO("2026-06-02T10:00:00.000Z").toJSDate();
-
-			yield* Effect.promise(async () => {
-				await database.kysely
-					.insertInto("user_stripe")
-					.values({
-						id: genId(),
-						userId: buyer.id,
-						customerId,
-						createdAt: now,
-					})
-					.execute();
+				trial_period_days: 1,
 			});
+			subscriptionIds.push(subscription.id);
 
-			yield* subscriptionSyncFx({
-				subscription: subscriptionId,
-			});
-			yield* subscriptionSyncFx({
-				subscription: subscriptionId,
-			});
+			const result = await subscriptionSyncFx({
+				subscription: subscription.id,
+			}).pipe(
+				withRuntimeFx(database),
+				withStripeConfigFx({
+					secret: stripeSecret,
+					webhook: "whsec_test",
+				}),
+				Effect.either,
+				Effect.runPromise,
+			);
 
-			const buyerBundles = yield* Effect.promise(() => {
-				return database.kysely
-					.selectFrom("user_resource_bundle as urb")
-					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
-					.select([
-						"urb.expiresAt",
-						"rb.name",
-					])
-					.where("urb.userId", "=", buyer.id)
-					.where("rb.name", "=", "package:buyer")
-					.execute();
-			});
-			const stripeBundleRows = yield* Effect.promise(() => {
-				return database.kysely
-					.selectFrom("user_resource_bundle_stripe")
-					.select([
-						"subscriptionId",
-					])
-					.where("subscriptionId", "=", subscriptionId)
-					.execute();
-			});
-
-			expect(buyerBundles).toEqual([
-				{
-					expiresAt: null,
-					name: "package:buyer",
-				},
-			]);
-			expect(stripeBundleRows).toEqual([
-				{
-					subscriptionId,
-				},
-			]);
-		}).pipe(
-			withRuntimeFx(database),
-			withStripeConfigFx(withStripConfigEnv()),
-			Effect.runPromise,
-		);
-	});
-
-	it("expires buyer bundle at period end when cancellation is scheduled", async () => {
-		const database = await testabase("stripe-subscription-sync-cancel-period-end");
-		stripeMocks.subscriptionRetrieve
-			.mockResolvedValueOnce({
-				id: subscriptionId,
-				customer: customerId,
-				status: "active",
-				cancel_at_period_end: false,
-				cancel_at: null,
-				canceled_at: null,
-				ended_at: null,
-				metadata: {
-					bundle: "package:buyer",
-				},
-				items: {
-					data: [
-						{
-							current_period_end: 1_820_000_000,
-							price: {
-								id: priceId,
-								metadata: {
-									bundle: "package:buyer",
-								},
-							},
-						},
-					],
-				},
-			})
-			.mockResolvedValueOnce({
-				id: subscriptionId,
-				customer: customerId,
-				status: "active",
-				cancel_at_period_end: true,
-				cancel_at: null,
-				canceled_at: null,
-				ended_at: null,
-				metadata: {
-					bundle: "package:buyer",
-				},
-				items: {
-					data: [
-						{
-							current_period_end: 1_820_000_000,
-							price: {
-								id: priceId,
-								metadata: {
-									bundle: "package:buyer",
-								},
-							},
-						},
-					],
-				},
-			});
-
-		return Effect.gen(function* () {
-			const { buyer } = yield* createUsersFx({});
-			const now = DateTime.fromISO("2026-06-02T10:00:00.000Z").toJSDate();
-
-			yield* Effect.promise(async () => {
-				await database.kysely
-					.insertInto("user_stripe")
-					.values({
-						id: genId(),
-						userId: buyer.id,
-						customerId,
-						createdAt: now,
-					})
-					.execute();
-			});
-
-			yield* subscriptionSyncFx({
-				subscription: subscriptionId,
-			});
-			yield* subscriptionSyncFx({
-				subscription: subscriptionId,
-			});
-
-			const buyerBundle = yield* Effect.promise(() => {
-				return database.kysely
-					.selectFrom("user_resource_bundle as urb")
-					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
-					.select([
-						"urb.expiresAt",
-						"rb.name",
-					])
-					.where("urb.userId", "=", buyer.id)
-					.where("rb.name", "=", "package:buyer")
-					.executeTakeFirst();
-			});
-
-			expect(buyerBundle).toEqual({
-				expiresAt: DateTime.fromISO("2027-09-03T19:33:20.000Z").toJSDate(),
-				name: "package:buyer",
-			});
-		}).pipe(
-			withRuntimeFx(database),
-			withStripeConfigFx(withStripConfigEnv()),
-			Effect.runPromise,
-		);
-	});
-
-	it("expires buyer bundle immediately when subscription is canceled immediately", async () => {
-		const database = await testabase("stripe-subscription-sync-cancel-now");
-		stripeMocks.subscriptionRetrieve
-			.mockResolvedValueOnce({
-				id: subscriptionId,
-				customer: customerId,
-				status: "active",
-				cancel_at_period_end: false,
-				cancel_at: null,
-				canceled_at: null,
-				ended_at: null,
-				metadata: {
-					bundle: "package:buyer",
-				},
-				items: {
-					data: [
-						{
-							current_period_end: 1_820_000_000,
-							price: {
-								id: priceId,
-								metadata: {
-									bundle: "package:buyer",
-								},
-							},
-						},
-					],
-				},
-			})
-			.mockResolvedValueOnce({
-				id: subscriptionId,
-				customer: customerId,
-				status: "canceled",
-				cancel_at_period_end: false,
-				cancel_at: null,
-				canceled_at: 1_717_000_000,
-				ended_at: null,
-				metadata: {
-					bundle: "package:buyer",
-				},
-				items: {
-					data: [
-						{
-							current_period_end: 1_820_000_000,
-							price: {
-								id: priceId,
-								metadata: {
-									bundle: "package:buyer",
-								},
-							},
-						},
-					],
-				},
-			});
-
-		return Effect.gen(function* () {
-			const { buyer } = yield* createUsersFx({});
-			const now = DateTime.fromISO("2026-06-02T10:00:00.000Z").toJSDate();
-
-			yield* Effect.promise(async () => {
-				await database.kysely
-					.insertInto("user_stripe")
-					.values({
-						id: genId(),
-						userId: buyer.id,
-						customerId,
-						createdAt: now,
-					})
-					.execute();
-			});
-
-			yield* subscriptionSyncFx({
-				subscription: subscriptionId,
-			});
-			yield* subscriptionSyncFx({
-				subscription: subscriptionId,
-			});
-
-			const buyerBundle = yield* Effect.promise(() => {
-				return database.kysely
-					.selectFrom("user_resource_bundle as urb")
-					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
-					.select([
-						"urb.expiresAt",
-						"rb.name",
-					])
-					.where("urb.userId", "=", buyer.id)
-					.where("rb.name", "=", "package:buyer")
-					.executeTakeFirst();
-			});
-
-			expect(buyerBundle).toEqual({
-				expiresAt: DateTime.fromISO("2024-05-29T16:26:40.000Z").toJSDate(),
-				name: "package:buyer",
-			});
-		}).pipe(
-			withRuntimeFx(database),
-			withStripeConfigFx(withStripConfigEnv()),
-			Effect.runPromise,
-		);
+			expect(Either.isLeft(result)).toBe(true);
+			if (!Either.isLeft(result)) {
+				throw new Error("Expected missing Stripe subscription metadata to fail");
+			}
+			if (result.left._tag !== "NotFoundErrorFx") {
+				throw new Error("Expected NotFoundErrorFx");
+			}
+			expect(result.left.resource).toBe("stripe-subscription-resource-bundle-metadata");
+		} finally {
+			await Promise.allSettled(
+				subscriptionIds.map((subscriptionId) => {
+					return stripe.subscriptions.cancel(subscriptionId);
+				}),
+			);
+			await Promise.allSettled(
+				customerIds.map((customerId) => {
+					return stripe.customers.del(customerId);
+				}),
+			);
+		}
 	});
 });

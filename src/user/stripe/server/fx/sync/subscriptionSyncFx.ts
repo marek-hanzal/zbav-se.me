@@ -6,8 +6,8 @@ import { NotFoundErrorFx } from "@/lib/common/error";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
-import { subscriptionFetchFx } from "../subscriptionFetchFx";
 import { SyncSkipErrorFx } from "../../error/SyncSkipErrorFx";
+import { subscriptionFetchFx } from "../subscriptionFetchFx";
 
 export namespace subscriptionSyncFx {
 	export interface Props {
@@ -61,9 +61,7 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 		resolvedSubscription.items.data
 			.map((item) => item.current_period_end)
 			.find((periodEnd) => Boolean(periodEnd)) ?? resolvedSubscription.cancel_at;
-	const periodEnd = itemPeriodEnd
-		? dateContext.ofSeconds(itemPeriodEnd).toJSDate()
-		: null;
+	const periodEnd = itemPeriodEnd ? dateContext.ofSeconds(itemPeriodEnd).toJSDate() : null;
 
 	if (!resourceBundleId) {
 		return yield* new NotFoundErrorFx({

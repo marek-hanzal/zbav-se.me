@@ -1,6 +1,7 @@
 import { Effect, Either } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
+import { genId } from "@/lib/common/gen-id";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -13,12 +14,22 @@ describe("bundleOpenSyncFx", () => {
 
 		return Effect.gen(function* () {
 			const { buyer } = yield* createUsersFx({});
-			const key = "stripe:checkout-session-line-item:cs_test:li_test";
+			const key = "stripe:checkout:bundle_test";
 			const createdAt = DateTime.fromISO("2026-06-02T10:00:00.000Z").toJSDate();
 			const expiresAt = DateTime.fromISO("2026-06-03T10:00:00.000Z").toJSDate();
+			const resourceBundle = yield* Effect.promise(() => {
+				return database.kysely
+					.selectFrom("resource_bundle")
+					.select([
+						"id",
+					])
+					.where("name", "=", "package:buyer")
+					.executeTakeFirstOrThrow();
+			});
 
 			yield* bundleOpenSyncFx({
 				userId: buyer.id,
+				resourceBundleId: resourceBundle.id,
 				bundle: "package:buyer",
 				key,
 				createdAt,
@@ -26,6 +37,7 @@ describe("bundleOpenSyncFx", () => {
 			const duplicate = yield* Effect.either(
 				bundleOpenSyncFx({
 					userId: buyer.id,
+					resourceBundleId: resourceBundle.id,
 					bundle: "package:buyer",
 					key,
 					createdAt,
@@ -141,6 +153,80 @@ describe("bundleOpenSyncFx", () => {
 			expect(expiredAssignment).toEqual({
 				expiresAt,
 			});
+		}).pipe(withRuntimeFx(database), Effect.runPromise);
+	});
+
+	it("keeps subscription bundle item and purchased item active together", async () => {
+		const database = await testabase("stripe-bundle-grant-sync-combined-item");
+
+		return Effect.gen(function* () {
+			const { buyer } = yield* createUsersFx({});
+			const key = "stripe:checkout:item_token_small";
+			const createdAt = DateTime.fromISO("2026-06-02T10:00:00.000Z").toJSDate();
+			const resourceBundle = yield* Effect.promise(() => {
+				return database.kysely
+					.selectFrom("resource_bundle")
+					.select([
+						"id",
+					])
+					.where("name", "=", "package:buyer")
+					.executeTakeFirstOrThrow();
+			});
+
+			yield* Effect.promise(() => {
+				return database.kysely
+					.insertInto("user_resource_bundle")
+					.values({
+						id: genId(),
+						userId: buyer.id,
+						resourceBundleId: resourceBundle.id,
+						createdAt,
+						availableAt: createdAt,
+						expiresAt: null,
+					})
+					.execute();
+			});
+			yield* bundleOpenSyncFx({
+				userId: buyer.id,
+				resourceBundleId: resourceBundle.id,
+				bundle: "package:buyer",
+				key,
+				createdAt,
+			});
+
+			const activeTokenItems = yield* Effect.promise(() => {
+				return database.kysely
+					.selectFrom("user_resource_bundle as urb")
+					.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+					.innerJoin("resource_bundle_item as rbi", "rbi.resourceBundleId", "rb.id")
+					.select([
+						"rb.name",
+						"rbi.amount",
+						"rbi.resourceDefinitionId",
+					])
+					.where("urb.userId", "=", buyer.id)
+					.where("urb.expiresAt", "is", null)
+					.where("rbi.resourceDefinitionId", "=", "item:token-small")
+					.orderBy("rb.name", "asc")
+					.execute();
+			});
+			const tokenTotal = activeTokenItems.reduce((sum, item) => {
+				return sum + Number(item.amount);
+			}, 0);
+
+			expect(activeTokenItems).toEqual([
+				{
+					name: "package:buyer",
+					amount: "1.00",
+					resourceDefinitionId: "item:token-small",
+				},
+				{
+					name: key,
+					amount: "1.00",
+					resourceDefinitionId: "item:token-small",
+				},
+			]);
+			expect(tokenTotal).toBe(2);
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
 });

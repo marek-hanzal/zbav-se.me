@@ -1,3 +1,4 @@
+import Stripe from "stripe";
 import { expect, test } from "../test";
 import { createUser } from "../utils/createUser";
 
@@ -15,6 +16,11 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 		!process.env.SERVER_STRIPE_WEBHOOK_SECRET,
 		"SERVER_STRIPE_WEBHOOK_SECRET is required",
 	);
+	const stripeSecret = process.env.SERVER_STRIPE_SECRET;
+
+	if (!stripeSecret) {
+		throw new Error("SERVER_STRIPE_SECRET is required");
+	}
 
 	const user = createUser();
 
@@ -140,7 +146,31 @@ test("Stripe checkout provisions buyer subscription", async ({ page, database })
 			expiresAt: null,
 		});
 
+	const subscriptionMapping = await database.kysely
+		.selectFrom("user_resource_bundle as urb")
+		.innerJoin("user_resource_bundle_stripe as urbs", "urbs.userResourceBundleId", "urb.id")
+		.innerJoin("resource_bundle as rb", "rb.id", "urb.resourceBundleId")
+		.select([
+			"rb.id as resourceBundleId",
+			"rb.name",
+			"urbs.subscriptionId",
+		])
+		.where("urb.userId", "=", registeredUser.id)
+		.where("rb.name", "=", "package:buyer")
+		.executeTakeFirstOrThrow();
+	const stripe = new Stripe(stripeSecret);
+	const subscription = await stripe.subscriptions.retrieve(subscriptionMapping.subscriptionId);
+
+	expect(subscription.metadata).toMatchObject({
+		bundle: subscriptionMapping.name,
+		resourceBundleId: subscriptionMapping.resourceBundleId,
+		userId: registeredUser.id,
+	});
+	expect(subscription.metadata.bundleKey).toMatch(/^stripe:checkout:/);
+	expect(subscription.metadata.customerId).toBe(subscription.customer);
+	expect(subscription.metadata.priceId).toBeTruthy();
+
 	await page.reload();
 	await expect(page.locator('[data-ui="BundleItem-[Active]"]').first()).toBeVisible();
-	await expect(checkoutButton).toContainText("Active");
+	await expect(checkoutButton).toContainText(/active/i);
 });

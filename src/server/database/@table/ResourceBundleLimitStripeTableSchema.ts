@@ -6,10 +6,10 @@ export const ResourceBundleLimitStripeTableSchema = z
 			description: "Unique ID of the Stripe mapping for a resource bundle limit",
 		}),
 		resourceBundleLimitId: z.string().meta({
-			description: "ID of the resource bundle limit fulfilled from Stripe",
+			description: "ID of the resource bundle limit copied from Stripe",
 		}),
 		key: z.string().meta({
-			description: "Deterministic Stripe fulfillment key",
+			description: "Deterministic Stripe bundle key",
 		}),
 		createdAt: z.coerce.date().meta({
 			description: "Timestamp from the Stripe source object",
