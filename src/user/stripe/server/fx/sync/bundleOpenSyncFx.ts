@@ -68,41 +68,46 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 				);
 			});
 
-			const currentBundle = yield* dbFx(async (kysely) => {
-				const [item, limit] = await Promise.all([
-					kysely
-						.selectFrom("resource_bundle_item_stripe")
-						.select([
-							"id",
-						])
-						.where("key", "=", key)
-						.executeTakeFirst(),
-					kysely
-						.selectFrom("resource_bundle_limit_stripe")
-						.select([
-							"id",
-						])
-						.where("key", "=", key)
-						.executeTakeFirst(),
-				]);
+            /**
+             * Check if the item/limit is already present.
+             */
+			{
+				const { item, limit } = yield* dbFx(async (kysely) => {
+					const [item, limit] = await Promise.all([
+						kysely
+							.selectFrom("resource_bundle_item_stripe")
+							.select([
+								"id",
+							])
+							.where("key", "=", key)
+							.executeTakeFirst(),
+						kysely
+							.selectFrom("resource_bundle_limit_stripe")
+							.select([
+								"id",
+							])
+							.where("key", "=", key)
+							.executeTakeFirst(),
+					]);
 
-				return {
-					item,
-					limit,
-				};
-			});
-
-			if (currentBundle.item || currentBundle.limit) {
-				return yield* new SyncSkipErrorFx({
-					message: "Stripe one-off purchase was already fulfilled",
-					reason: "one-off already fulfilled",
-					cause: {
-						key,
-					},
+					return {
+						item,
+						limit,
+					};
 				});
+
+				if (item || limit) {
+					return yield* new SyncSkipErrorFx({
+						message: "Stripe one-off purchase was already fulfilled",
+						reason: "one-off already fulfilled",
+						cause: {
+							key,
+						},
+					});
+				}
 			}
 
-			const sourceBundle = yield* dbFx(async (kysely) => {
+			const resourceBundle = yield* dbFx(async (kysely) => {
 				return kysely
 					.selectFrom("resource_bundle")
 					.selectAll()
@@ -110,7 +115,7 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 					.executeTakeFirst();
 			});
 
-			if (!sourceBundle) {
+			if (!resourceBundle) {
 				return yield* new SyncSkipErrorFx({
 					message: "Stripe source resource bundle is missing",
 					reason: "source bundle missing",
@@ -126,12 +131,12 @@ export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 					kysely
 						.selectFrom("resource_bundle_item")
 						.selectAll()
-						.where("resourceBundleId", "=", sourceBundle.id)
+						.where("resourceBundleId", "=", resourceBundle.id)
 						.execute(),
 					kysely
 						.selectFrom("resource_bundle_limit")
 						.selectAll()
-						.where("resourceBundleId", "=", sourceBundle.id)
+						.where("resourceBundleId", "=", resourceBundle.id)
 						.execute(),
 				]);
 			});
