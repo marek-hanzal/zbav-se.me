@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
@@ -32,7 +32,7 @@ export const activityArchiveFx = Effect.fn("activityArchiveFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
+			const dateContext = yield* DateServiceFx;
 
 			let { select, queryFx } = yield* withActivitySelectFx({
 				sort,

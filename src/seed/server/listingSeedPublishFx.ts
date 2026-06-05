@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { type ExpressionBuilder, sql } from "kysely";
 import type { DateTime } from "luxon";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { keyOf } from "@/lib/common/key-of/keyOf";
 import type { ListingExpireEnumSchema } from "~/common/listing/enum/ListingExpireEnumSchema";
@@ -171,7 +171,7 @@ export const listingSeedPublishFx = Effect.fn("listingSeedPublishFx")(function* 
 		return;
 	}
 
-	const dateContext = yield* DateContextFx;
+	const dateService = yield* DateServiceFx;
 	const locationIds = Array.from(
 		new Set(
 			plans.map((plan) => {
@@ -179,7 +179,7 @@ export const listingSeedPublishFx = Effect.fn("listingSeedPublishFx")(function* 
 			}),
 		),
 	);
-	const now = dateContext.now();
+	const now = dateService.now();
 	const locationRows = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("location")

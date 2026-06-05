@@ -1,6 +1,6 @@
+import { withDateServiceFx } from "@/lib/common/date";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { DateContextFx } from "@/lib/common/date";
 import { transactionDisputeFx } from "~/buyer/transaction/server/fx/transactionDisputeFx";
 import type { ScheduleSchema } from "~/common/@cron/schema/ScheduleSchema";
 import { withCronFx } from "~/common/@cron/server/withCronFx";
@@ -15,7 +15,7 @@ type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		Effect.provideService(DateContextFx, {
+		withDateServiceFx({
 			now: () =>
 				DateTime.fromISO(iso, {
 					setZone: true,

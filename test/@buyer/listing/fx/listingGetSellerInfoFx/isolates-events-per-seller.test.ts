@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { listingGetSellerInfoFx } from "~/buyer/listing/server/fx/listingGetSellerInfoFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { createListingFx } from "~/test/listing/fx/createListingFx";
@@ -28,7 +28,7 @@ describe("listingGetSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () =>
 						DateTime.now().minus({
 							days: 10,
@@ -43,7 +43,7 @@ describe("listingGetSellerInfoFx", () => {
 				event: "transaction.open",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () =>
 						DateTime.now().minus({
 							days: 9,
@@ -59,7 +59,7 @@ describe("listingGetSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () =>
 						DateTime.now().minus({
 							days: 8,

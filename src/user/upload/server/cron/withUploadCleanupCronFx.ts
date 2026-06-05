@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { s3ConfigFx } from "~/common/s3/server/context/s3ConfigFx";
 import { withS3ConfigFx } from "~/common/s3/server/context/withS3ConfigFx";
@@ -25,7 +25,7 @@ export const withUploadCleanupCronFx = Effect.fn("withUploadCleanupCronFx")(func
 			count,
 		});
 
-		const dateContext = yield* DateContextFx;
+		const dateContext = yield* DateServiceFx;
 		const { bucket } = yield* s3ConfigFx;
 		const { cdn } = yield* UploadConfigFx;
 		const client = yield* s3ClientFx();

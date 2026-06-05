@@ -1,6 +1,5 @@
-import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { DateContextFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import type { ScheduleSchema } from "~/common/@cron/schema/ScheduleSchema";
 import { withCronFx } from "~/common/@cron/server/withCronFx";
 
@@ -15,7 +14,7 @@ export const runCronAtFx = ({ now, schedule }: runCronAtFx.Props) => {
 	return withCronFx({
 		schedule,
 	}).pipe(
-		Effect.provideService(DateContextFx, {
+		withDateServiceFx({
 			now: () =>
 				DateTime.fromISO(now, {
 					setZone: true,

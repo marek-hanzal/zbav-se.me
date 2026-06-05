@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
@@ -26,7 +26,7 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	});
 
 	const uploadConfig = yield* UploadConfigFx;
-	const dateContext = yield* DateContextFx;
+	const dateService = yield* DateServiceFx;
 
 	logger.trace("Checking CDN url", {
 		userId,
@@ -42,7 +42,7 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	}
 
 	const id = genId();
-	const now = dateContext.now();
+	const now = dateService.now();
 
 	yield* dbFx(async (kysely) => {
 		return kysely

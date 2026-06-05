@@ -2,7 +2,6 @@ import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -11,6 +10,7 @@ import { withTransactionContextFx } from "~/user/transaction/server/context/with
 import { transactionEntryCreateFx } from "~/user/transaction-entry/server/fx/transactionEntryCreateFx";
 import { TransactionEntryCreateSchema } from "~/user/transaction-entry/server/schema/TransactionEntryCreateSchema";
 import { TransactionEntrySchema } from "~/user/transaction-entry/server/schema/TransactionEntrySchema";
+import { withDateServiceFx } from "@/lib/common/date";
 
 export namespace transactionEntryCreateFn {
 	export type Error = Effect.Effect.Error<transactionEntryCreateFx>;
@@ -40,7 +40,7 @@ export const transactionEntryCreateFn = createServerFn({
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withDateFx,
+			withDateServiceFx(),
 			withTransactionContextFx(),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {

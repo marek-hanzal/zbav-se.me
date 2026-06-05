@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
@@ -33,7 +33,7 @@ export const agentUsageCreateFx = Effect.fn("agentUsageCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
+			const dateService = yield* DateServiceFx;
 
 			/**
 			 * Bump thread (no input needed).
@@ -61,7 +61,7 @@ export const agentUsageCreateFx = Effect.fn("agentUsageCreateFx")(function* ({
 						input,
 						total,
 						output,
-						createdAt: dateContext.now().toJSDate(),
+						createdAt: dateService.now().toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();

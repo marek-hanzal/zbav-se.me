@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { keyOf } from "@/lib/common/key-of";
 import { getLoggerFx } from "@/lib/common/log";
@@ -27,7 +27,7 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
+			const dateService = yield* DateServiceFx;
 
 			return yield* dbFx(async (kysely) => {
 				return kysely
@@ -37,7 +37,7 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 						id: genId(),
 						group: keyOf(group),
 						userId,
-						createdAt: dateContext.now().toJSDate(),
+						createdAt: dateService.now().toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();

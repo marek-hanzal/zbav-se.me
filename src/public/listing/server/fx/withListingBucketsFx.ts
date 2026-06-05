@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import type { DateTime } from "luxon";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { withListingSelectFx } from "~/public/listing/server/db/withListingSelectFx";
 
 export namespace withListingBucketsFx {
@@ -15,7 +15,7 @@ export const withListingBucketsFx = Effect.fn("withListingBucketsFx")(function* 
 	now,
 	day,
 }: withListingBucketsFx.Props) {
-	const dateContext = yield* DateContextFx;
+	const dateContext = yield* DateServiceFx;
 	const currentNow = now ?? dateContext.now();
 	const limit = 50_000;
 	const daySql = sql<string>`to_char(date_trunc('day', timezone('UTC', ${sql.ref("l.visibleAt")})), 'YYYY-MM-DD')`;

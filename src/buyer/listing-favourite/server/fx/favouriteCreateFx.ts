@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
@@ -25,7 +25,7 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 		...data,
 	});
 
-	const dateContext = yield* DateContextFx;
+	const dateContext = yield* DateServiceFx;
 
 	const id = genId();
 

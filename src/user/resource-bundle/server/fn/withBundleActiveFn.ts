@@ -3,13 +3,13 @@ import { Effect } from "effect";
 import { z } from "zod";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { bundleActiveFx } from "../fx/bundleActiveFx";
 import { BundleActiveSchema } from "../schema/BundleActiveSchema";
+import { withDateServiceFx } from "@/lib/common/date";
 
 export namespace withBundleActiveFn {
 	export type Error = Effect.Effect.Error<bundleActiveFx>;
@@ -37,7 +37,7 @@ export const withBundleActiveFn = createServerFn()
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withDateFx,
+			withDateServiceFx(),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) =>
 				Effect.sync(() => {

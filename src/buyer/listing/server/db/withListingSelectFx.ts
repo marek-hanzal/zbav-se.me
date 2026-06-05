@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { selectFx } from "@/lib/common/select";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
@@ -33,10 +33,10 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	hasExplicitCategory,
 }: withListingSelectFx.Props) {
 	const locationId = meta?.locationId;
-	const dateContext = yield* DateContextFx;
+	const dateService = yield* DateServiceFx;
 	const { kysely } = yield* KyselyContextFx;
 	const logger = yield* getLoggerFx("withListingSelectFx", "buyer");
-	const now = dateContext.now().toJSDate();
+	const now = dateService.now().toJSDate();
 
 	const fallbackSql = sql<RestrictionEnumSchema.Type>`${RestrictionEnumSchema.enum.none}::restriction_enum`;
 	const restrictionSql = yield* withUserRestrictionActiveSelectFx({

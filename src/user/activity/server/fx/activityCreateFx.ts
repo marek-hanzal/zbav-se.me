@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
@@ -31,7 +31,7 @@ export const activityCreateFx = Effect.fn("activityCreateFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
+			const dateService = yield* DateServiceFx;
 			const id = genId();
 
 			yield* dbFx(async (kysely) => {
@@ -45,7 +45,7 @@ export const activityCreateFx = Effect.fn("activityCreateFx")(function* ({
 						type,
 						payload,
 						priority,
-						timestamp: dateContext.now().toJSDate(),
+						timestamp: dateService.now().toJSDate(),
 						archivedAt: null,
 					})
 					.returningAll()

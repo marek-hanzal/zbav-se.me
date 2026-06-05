@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import type { RestrictionEnumSchema } from "~/common/restriction/enum/RestrictionEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
@@ -61,7 +61,7 @@ const createUserRestrictions = (
 			return;
 		}
 
-		const dateContext = yield* DateContextFx;
+		const dateContext = yield* DateServiceFx;
 		const now = dateContext.now();
 
 		yield* Effect.promise(() =>

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { rateLimitCheckFx } from "~/server/rate-limit/server/fx/rateLimitCheckFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
@@ -33,7 +33,7 @@ describe("rateLimitCheckFx", () => {
 					],
 					message: "You have already flagged this listing",
 				}).pipe(
-					Effect.provideService(DateContextFx, {
+					Effect.provideService(DateServiceFx, {
 						now: () => fixedNow,
 					}),
 				),

@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import type { UserEventTableSchema } from "~/server/database/@table/UserEventTableSchema";
 import type { ActivityEnumSchema } from "../schema/ActivityEnumSchema";
 
@@ -21,9 +21,9 @@ export namespace computeActivityFx {
 export const computeActivityFx = ({
 	source,
 	days,
-}: computeActivityFx.Props): Effect.Effect<computeActivityFx.Result, never, DateContextFx> =>
+}: computeActivityFx.Props): Effect.Effect<computeActivityFx.Result, never, DateServiceFx> =>
 	Effect.gen(function* () {
-		const dateContext = yield* DateContextFx;
+		const dateContext = yield* DateServiceFx;
 
 		let lastUserAtMs: number | null = null;
 

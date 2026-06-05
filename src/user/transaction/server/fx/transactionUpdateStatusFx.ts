@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import type { TransactionSideEnumSchema } from "~/common/user-transaction/enum/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/common/user-transaction/enum/TransactionStatusEnumSchema";
@@ -50,8 +50,8 @@ export const transactionUpdateStatusFx = Effect.fn("transactionUpdateStatusFx")(
 		side: target,
 	});
 
-	const dateContext = yield* DateContextFx;
-	const now = dateContext.now().toJSDate();
+	const dateService = yield* DateServiceFx;
+	const now = dateService.now().toJSDate();
 
 	yield* dbFx(async (kysely) => {
 		return kysely

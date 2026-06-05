@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
@@ -22,8 +22,8 @@ export const resourceBundleEnsureFx = Effect.fn("resourceBundleEnsureFx")(functi
 		userId,
 	});
 
-	const dateContext = yield* DateContextFx;
-	const now = dateContext.now().toJSDate();
+	const dateService = yield* DateServiceFx;
+	const now = dateService.now().toJSDate();
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {

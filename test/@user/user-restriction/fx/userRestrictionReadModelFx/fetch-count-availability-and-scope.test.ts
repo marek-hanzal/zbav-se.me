@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -10,7 +10,7 @@ import { userRestrictionFetchFx } from "~/user/user-restriction/server/fx/userRe
 
 const atFx = <A, E, R>(iso: string, eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
-		Effect.provideService(DateContextFx, {
+		withDateServiceFx({
 			now: () => DateTime.fromISO(iso),
 		}),
 	);

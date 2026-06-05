@@ -1,7 +1,7 @@
 import { getLogger } from "@logtape/logtape";
 import type { Effect } from "effect";
+import { withDateServiceFx } from "@/lib/common/date";
 import { withLoggerFx } from "@/lib/common/log";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
 import { withLocationConfigFx } from "~/session/location/server/context/withLocationConfigFx";
@@ -19,7 +19,7 @@ const withBaseRuntimeFx = (database: TestDatabase) => {
 		eff.pipe(
 			withLoggerFx(logger),
 			withKyselyFx(database),
-			withDateFx,
+			withDateServiceFx(),
 			withTransactionContextFx(),
 			withUploadConfigFx(withUploadConfigEnv()),
 		);

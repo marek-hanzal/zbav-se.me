@@ -4,18 +4,18 @@ import { checkoutFn } from "../fn/checkoutFn";
 import type { BillingCheckoutCreateSchema } from "../server/schema/BillingCheckoutCreateSchema";
 import type { BillingCheckoutSchema } from "../server/schema/BillingCheckoutSchema";
 
-export const withBillingCheckoutCreateMutation = withMutation<
+export const withCheckoutMutation = withMutation<
 	BillingCheckoutCreateSchema.Type,
 	BillingCheckoutSchema.Type,
 	checkoutFn.Error
 >({
 	logger: getRootLogger([
 		"mutation",
-		"withBillingCheckoutCreateMutation",
+		"withCheckoutMutation",
 	]),
 	keys(variables) {
 		return [
-			"billing",
+			"stripe",
 			"checkout",
 			variables,
 		];

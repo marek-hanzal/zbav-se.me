@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { listingFetchFx } from "~/buyer/listing/server/fx/listingFetchFx";
@@ -38,7 +38,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
 			const config = yield* TransactionContextFx;
-			const dateContext = yield* DateContextFx;
+			const dateService = yield* DateServiceFx;
 
 			const listing = yield* listingFetchFx({
 				userId,
@@ -48,7 +48,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				scope: {},
 			});
 
-			const now = dateContext.now();
+			const now = dateService.now();
 
 			const id = genId();
 

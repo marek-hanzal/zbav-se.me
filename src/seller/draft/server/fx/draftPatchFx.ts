@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import type { DraftTableSchema } from "~/server/database/@table/DraftTableSchema";
 import { dbFx } from "~/server/database/fx/dbFx";
@@ -37,7 +37,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
+			const dateService = yield* DateServiceFx;
 
 			const draft = yield* draftFetchFx({
 				...query,
@@ -158,7 +158,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 						...extras,
 						userId,
 						locationId,
-						updatedAt: dateContext.now().toJSDate(),
+						updatedAt: dateService.now().toJSDate(),
 					})
 					.where("id", "=", draft.id)
 					.execute();

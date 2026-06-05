@@ -1,8 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
+import { withDateServiceFx } from "@/lib/common/date";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLinkMiddleware } from "~/server/middleware/withLinkMiddleware";
@@ -62,7 +62,7 @@ export const checkoutFn = createServerFn({
 				}),
 			}).pipe(
 				withKyselyFx(database),
-				withDateFx,
+				withDateServiceFx(),
 				withStripeConfigFx(withStripConfigEnv()),
 				withLoggerFx(rootLogger),
 				Effect.tapError((error) => {

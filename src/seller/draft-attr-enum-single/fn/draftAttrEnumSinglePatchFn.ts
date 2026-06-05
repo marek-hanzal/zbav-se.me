@@ -3,7 +3,6 @@ import { Effect } from "effect";
 import { z } from "zod";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -11,6 +10,7 @@ import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import type { draftAttrOfFx } from "../../../user/draft-attr/server/fx/draftAttrOfFx";
 import { draftAttrEnumSinglePatchFx } from "../server/fx/draftAttrEnumSinglePatchFx";
 import { DraftAttrEnumSinglePatchSchema } from "../server/schema/DraftAttrEnumSinglePatchSchema";
+import { withDateServiceFx } from "@/lib/common/date";
 
 export namespace draftAttrEnumSinglePatchFn {
 	export type Error = Effect.Effect.Error<draftAttrOfFx>;
@@ -39,7 +39,7 @@ export const draftAttrEnumSinglePatchFn = createServerFn()
 		}).pipe(
 			withKyselyFx(database),
 			withLoggerFx(rootLogger),
-			withDateFx,
+			withDateServiceFx(),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
 					logger.error(error._tag, {

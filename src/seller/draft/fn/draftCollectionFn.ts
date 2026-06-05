@@ -1,12 +1,12 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
 import { z } from "zod";
+import { withDateServiceFx } from "@/lib/common/date";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { draftCollectionFx } from "~/seller/draft/server/fx/draftCollectionFx";
 import { DraftQuerySchema } from "~/seller/draft/server/schema/DraftQuerySchema";
 import { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -41,7 +41,7 @@ export const draftCollectionFn = createServerFn()
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withDateFx,
+			withDateServiceFx(),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {

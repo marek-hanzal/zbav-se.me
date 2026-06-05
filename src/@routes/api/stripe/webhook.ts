@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Effect } from "effect";
+import { withDateServiceFx } from "@/lib/common/date";
 import { withLoggerFx } from "@/lib/common/log";
 import type { NoticeSchema } from "@/lib/common/schema";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
@@ -52,7 +52,7 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 					},
 				}).pipe(
 					withKyselyFx(database),
-					withDateFx,
+					withDateServiceFx(),
 					withStripeConfigFx(withStripConfigEnv()),
 					withLoggerFx(rootLogger),
 					Effect.catchTag("RuntimeErrorFx", (error) => Effect.succeed(error)),

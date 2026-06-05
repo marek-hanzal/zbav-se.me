@@ -12,11 +12,11 @@ import { withStripConfigEnv } from "~/user/stripe/server/env/withStripConfigEnv"
 import { bundleCollectionFx } from "../fx/bundleCollectionFx";
 import { BundleSchema } from "../schema/BundleSchema";
 
-export namespace withBundleCollectionFn {
+export namespace bundleCollectionFn {
 	export type Error = Effect.Effect.Error<bundleCollectionFx>;
 }
 
-export const withBundleCollectionFn = createServerFn()
+export const bundleCollectionFn = createServerFn()
 	.middleware([
 		withLogMiddleware,
 		withDatabaseMiddleware,

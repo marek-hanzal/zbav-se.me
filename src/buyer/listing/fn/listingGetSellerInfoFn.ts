@@ -1,11 +1,11 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
+import { withDateServiceFx } from "@/lib/common/date";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { EntitySchema } from "@/lib/common/schema";
 import { listingGetSellerInfoFx } from "~/buyer/listing/server/fx/listingGetSellerInfoFx";
 import { SellerInfoSchema } from "~/buyer/listing/server/schema/SellerInfoSchema";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -36,7 +36,7 @@ export const listingGetSellerInfoFn = createServerFn()
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withDateFx,
+			withDateServiceFx(),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {

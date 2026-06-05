@@ -5,7 +5,7 @@ import { useLocale } from "@/lib/client/locale";
 import { useTranslator } from "@/lib/client/translation";
 import { UnlockIcon } from "~/common/ui/icon";
 import { withBundleActiveQuery } from "~/user/resource-bundle/query/withBundleActiveQuery";
-import { withBillingCheckoutCreateMutation } from "~/user/stripe/mutation/withBillingCheckoutCreateMutation";
+import { withCheckoutMutation } from "~/user/stripe/mutation/withCheckoutMutation";
 
 export namespace CheckoutButton {
 	export interface Props extends Button.Props {
@@ -20,7 +20,7 @@ export const CheckoutButton: FC<CheckoutButton.Props> = ({ bundle, ...props }) =
 	const { data: isActive } = withBundleActiveQuery.useSuspenseQuery({
 		bundle,
 	});
-	const mutation = withBillingCheckoutCreateMutation.useMutation({
+	const mutation = withCheckoutMutation.useMutation({
 		async onPostMutation({ result }) {
 			await navigate({
 				href: result.url,

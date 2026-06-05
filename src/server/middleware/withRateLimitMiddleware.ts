@@ -1,8 +1,8 @@
 import { createMiddleware } from "@tanstack/react-start";
 import { Effect } from "effect";
+import { withDateServiceFx } from "@/lib/common/date";
 import { withLoggerFx } from "@/lib/common/log";
 import type { NoticeSchema } from "@/lib/common/schema";
-import { withDateFx } from "../database/fx/withDateFx";
 import { withKyselyFx } from "../database/fx/withKyselyFx";
 import { RateLimitErrorFx } from "../error/RateLimitErrorFx";
 import { rateLimitCheckFx } from "../rate-limit/server/fx/rateLimitCheckFx";
@@ -37,7 +37,7 @@ export const withRateLimitMiddleware = ({ rule, key, message }: withRateLimitMid
 				message,
 			}).pipe(
 				withKyselyFx(database),
-				withDateFx,
+				withDateServiceFx(),
 				withLoggerFx(rootLogger),
 				Effect.as(undefined),
 				Effect.catchTag("RateLimitErrorFx", (error) => Effect.succeed(error)),

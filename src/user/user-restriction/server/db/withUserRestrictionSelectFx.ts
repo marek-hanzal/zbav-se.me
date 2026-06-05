@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { UserRestrictionSortSchema } from "../schema/UserRestrictionSortSchema";
@@ -16,8 +16,8 @@ export const withUserRestrictionSelectFx = Effect.fn("withUserRestrictionSelectF
 	sort,
 }: withUserRestrictionSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
-	const dateContext = yield* DateContextFx;
-	const now = dateContext.now().toJSDate();
+	const dateService = yield* DateServiceFx;
+	const now = dateService.now().toJSDate();
 
 	let select = kysely.selectFrom("user_restriction as ur");
 
@@ -56,8 +56,8 @@ export const withUserRestrictionSelectFx = Effect.fn("withUserRestrictionSelectF
 			}),
 		queryFx(select, where: UserRestrictionWhereSchema.Type) {
 			return Effect.gen(function* () {
-				const dateContext = yield* DateContextFx;
-				const now = dateContext.now().toJSDate();
+				const dateService = yield* DateServiceFx;
+				const now = dateService.now().toJSDate();
 
 				let query = select;
 

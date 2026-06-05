@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { selectFx } from "@/lib/common/select";
 import { KyselyContextFx } from "~/server/database/context/KyselyContextFx";
 import type { ResourceLimitSortSchema } from "../schema/ResourceLimitSortSchema";
@@ -22,8 +22,8 @@ export const withResourceLimitSelectFx = Effect.fn("withResourceLimitSelectFx")(
 	],
 }: withResourceLimitSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
-	const dateContext = yield* DateContextFx;
-	const now = dateContext.now().toJSDate();
+	const dateService = yield* DateServiceFx;
+	const now = dateService.now().toJSDate();
 
 	let query = kysely
 		.selectFrom("user_resource_bundle as urb")

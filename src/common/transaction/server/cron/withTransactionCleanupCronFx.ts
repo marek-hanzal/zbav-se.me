@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 
@@ -17,7 +17,7 @@ export const withTransactionCleanupCronFx = Effect.fn("vwithTransactionCleanupCr
 		count,
 	});
 
-	const dateContext = yield* DateContextFx;
+	const dateContext = yield* DateServiceFx;
 
 	yield* dbFx(async (kysely) => {
 		const source = kysely

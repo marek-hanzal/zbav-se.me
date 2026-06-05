@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import type { FlagCreateSchema } from "~/buyer/listing-flag/server/schema/FlagCreateSchema";
@@ -21,7 +21,7 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 		listingId,
 	});
 
-	const dateContext = yield* DateContextFx;
+	const dateContext = yield* DateServiceFx;
 
 	const id = genId();
 

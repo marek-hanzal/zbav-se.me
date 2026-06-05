@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { DateContextFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import type { DeliveryEnumSchema } from "~/common/delivery/enum/DeliveryEnumSchema";
 import type { ListingStatusEnumSchema } from "~/common/listing/enum/ListingStatusEnumSchema";
@@ -8,6 +7,7 @@ import type { RestrictionEnumSchema } from "~/common/restriction/enum/Restrictio
 import type { WarrantyEnumSchema } from "~/common/warranty/enum/WarrantyEnumSchema";
 import { listingSpotlightBuildFx } from "~/server/listing-spotlight/server/fx/listingSpotlightBuildFx";
 import type { testabase } from "~/test/testabase";
+import { DateServiceFx } from "@/lib/common/date";
 
 type TestDatabase = Awaited<ReturnType<typeof testabase>>;
 type LocationFixture = {
@@ -212,8 +212,8 @@ export const createUserRestrictionFx = (
 	},
 ) =>
 	Effect.gen(function* () {
-		const dateContext = yield* DateContextFx;
-		const now = dateContext.now();
+		const dateService = yield* DateServiceFx;
+		const now = dateService.now();
 
 		yield* Effect.promise(() =>
 			database.kysely

@@ -5,12 +5,12 @@ import { withLoggerFx } from "@/lib/common/log";
 import { EntitySchema } from "@/lib/common/schema";
 import { transactionRejectFx } from "~/buyer/transaction/server/fx/transactionRejectFx";
 import { TransactionSchema } from "~/buyer/transaction/server/schema/TransactionSchema";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
 import { withTransactionContextFx } from "~/user/transaction/server/context/withTransactionContextFx";
+import { withDateServiceFx } from "@/lib/common/date";
 
 export namespace transactionRejectFn {
 	export type Error = Effect.Effect.Error<transactionRejectFx>;
@@ -40,7 +40,7 @@ export const transactionRejectFn = createServerFn({
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withDateFx,
+			withDateServiceFx(),
 			withTransactionContextFx(),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {

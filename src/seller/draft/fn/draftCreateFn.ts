@@ -5,11 +5,11 @@ import { withLoggerFx } from "@/lib/common/log";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { DraftCreateSchema } from "~/seller/draft/server/schema/DraftCreateSchema";
 import { DraftSchema } from "~/seller/draft/server/schema/DraftSchema";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+import { withDateServiceFx } from "@/lib/common/date";
 
 export namespace draftCreateFn {
 	export type Error = Effect.Effect.Error<draftCreateFx>;
@@ -39,7 +39,7 @@ export const draftCreateFn = createServerFn({
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withDateFx,
+			withDateServiceFx(),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {

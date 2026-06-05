@@ -2,15 +2,14 @@ import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import Pool from "pg-pool";
 import { withDialectFx } from "@/lib/common/database";
+import { withDateServiceFx } from "@/lib/common/date";
 import { withLoggerFx } from "@/lib/common/log";
 import { getRootLogger } from "~/common/log/getRootLogger";
 import { withS3ConfigFx } from "~/common/s3/server/context/withS3ConfigFx";
 import { withS3ConfigEnv } from "~/common/s3/server/env/withS3ConfigEnv";
 import { databaseFx } from "~/server/database/databaseFx";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { ServerDatabaseSchema } from "~/server/env/ServerDatabaseSchema";
-import { ServerGeoapifySchema } from "~/server/env/ServerGeoapifySchema";
 import { withLocationConfigFx } from "~/session/location/server/context/withLocationConfigFx";
 import { withLocationConfigEnv } from "~/session/location/server/env/withLocationConfigEnv";
 import { withTransactionContextFx } from "~/user/transaction/server/context/withTransactionContextFx";
@@ -19,7 +18,6 @@ import { withUploadConfigEnv } from "~/user/upload/server/env/withUploadConfigEn
 
 export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 	const databaseConfig = ServerDatabaseSchema.parse(process.env);
-	const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
 	const logger = getRootLogger("seed");
 
 	return Effect.gen(function* () {
@@ -50,7 +48,7 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 		return yield* effect.pipe(
 			withLoggerFx(logger),
 			withKyselyFx(kysely),
-			withDateFx,
+			withDateServiceFx(),
 			withTransactionContextFx(),
 			withS3ConfigFx(withS3ConfigEnv()),
 			withUploadConfigFx(withUploadConfigEnv()),

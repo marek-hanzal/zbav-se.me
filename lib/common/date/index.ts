@@ -1,2 +1,2 @@
-export { createDateContext } from "./createDateContext";
-export { DateContextFx } from "./DateContextFx";
+export { type DateService, DateServiceFx } from "./DateServiceFx";
+export { withDateServiceFx } from "./withDateServiceFx";

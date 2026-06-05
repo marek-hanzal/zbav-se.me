@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { dbFx } from "~/server/database/fx/dbFx";
 import type { BundleActiveSchema } from "../schema/BundleActiveSchema";
 
@@ -13,8 +13,8 @@ export const bundleActiveFx = Effect.fn("bundleActiveFx")(function* ({
 	bundle,
 	userId,
 }: bundleActiveFx.Props) {
-	const dateContext = yield* DateContextFx;
-	const now = dateContext.now().toJSDate();
+	const dateService = yield* DateServiceFx;
+	const now = dateService.now().toJSDate();
 	const activeBundle = yield* dbFx(async (kysely) => {
 		return kysely
 			.selectFrom("user_resource_bundle as urb")

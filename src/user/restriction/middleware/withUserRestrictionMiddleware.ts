@@ -1,6 +1,6 @@
 import { createMiddleware } from "@tanstack/react-start";
 import { Effect } from "effect";
-import { withDateFx } from "~/server/database/fx/withDateFx";
+import { withDateServiceFx } from "@/lib/common/date";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
@@ -44,7 +44,7 @@ export const withUserRestrictionMiddleware = createMiddleware()
 				current: rows.findLast((row) => row.isAvailable)?.restriction ?? "none",
 				pending: rows.find((row) => !row.isAvailable),
 			} as const;
-		}).pipe(withKyselyFx(database), withDateFx, Effect.runPromise);
+		}).pipe(withKyselyFx(database), withDateServiceFx(), Effect.runPromise);
 
 		logger.trace("Resolved user restriction", {
 			current: restriction.current,

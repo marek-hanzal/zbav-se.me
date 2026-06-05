@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Effect } from "effect";
+import { withDateServiceFx } from "@/lib/common/date";
 import { withLoggerFx } from "@/lib/common/log";
 import type { NoticeSchema } from "@/lib/common/schema";
 import { ScheduleSchema } from "~/common/@cron/schema/ScheduleSchema";
 import { withCronFx } from "~/common/@cron/server/withCronFx";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { ServerCronSchema } from "~/server/env/ServerCronSchema";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
@@ -30,7 +30,7 @@ export const Route = createFileRoute("/api/cron/$cron")({
 					schedule,
 				}).pipe(
 					withKyselyFx(database),
-					withDateFx,
+					withDateServiceFx(),
 					withLoggerFx(rootLogger),
 					Effect.runPromise,
 				);

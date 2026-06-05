@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { feedFetchFx } from "~/buyer/feed/server/fx/feedFetchFx";
 import type { FeedPatchSchema } from "~/buyer/feed/server/schema/FeedPatchSchema";
@@ -27,7 +27,7 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const dateContext = yield* DateContextFx;
+			const dateContext = yield* DateServiceFx;
 
 			const feed = yield* feedFetchFx({
 				...query,

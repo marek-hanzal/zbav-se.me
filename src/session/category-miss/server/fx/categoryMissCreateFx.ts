@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { DateContextFx } from "@/lib/common/date";
+import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
@@ -22,14 +22,14 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 		limit,
 	});
 
-	const dateContext = yield* DateContextFx;
+	const dateService = yield* DateServiceFx;
 	const category = fulltext?.join(" ").trim();
 
 	if (!category || category.length < limit) {
 		return yield* Effect.void;
 	}
 
-	const now = dateContext.now();
+	const now = dateService.now();
 
 	yield* dbFx(async (kysely) => {
 		return kysely

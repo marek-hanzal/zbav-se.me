@@ -5,11 +5,11 @@ import { withLoggerFx } from "@/lib/common/log";
 import { ListingSchema } from "~/buyer/listing/server/schema/ListingSchema";
 import { flagToggleFx } from "~/buyer/listing-flag/server/fx/flagToggleFx";
 import { FlagToggleSchema } from "~/buyer/listing-flag/server/schema/FlagToggleSchema";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
 import { withUserMiddleware } from "~/server/middleware/withUserMiddleware";
+import { withDateServiceFx } from "@/lib/common/date";
 
 export namespace flagToggleFn {
 	export type Error = Effect.Effect.Error<flagToggleFx>;
@@ -39,7 +39,7 @@ export const flagToggleFn = createServerFn({
 			}),
 		}).pipe(
 			withKyselyFx(database),
-			withDateFx,
+			withDateServiceFx(),
 			withLoggerFx(rootLogger),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {

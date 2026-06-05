@@ -1,6 +1,6 @@
 import { withQuery } from "@/lib/client/query";
 import { getRootLogger } from "~/common/log/getRootLogger";
-import { withBundleCollectionFn } from "../server/fn/withBundleCollectionFn";
+import { bundleCollectionFn } from "../server/fn/bundleCollectionFn";
 import type { BundleSchema } from "../server/schema/BundleSchema";
 
 export const withBundleCollectionQuery = withQuery({
@@ -9,7 +9,7 @@ export const withBundleCollectionQuery = withQuery({
 		"withBundleCollectionQuery",
 	]),
 	errors: {} as {
-		query: withBundleCollectionFn.Error;
+		query: bundleCollectionFn.Error;
 	},
 	keys() {
 		return [
@@ -19,6 +19,6 @@ export const withBundleCollectionQuery = withQuery({
 		];
 	},
 	async queryFn(): Promise<BundleSchema.Type[]> {
-		return withBundleCollectionFn();
+		return bundleCollectionFn();
 	},
 });

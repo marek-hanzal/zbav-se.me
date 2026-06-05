@@ -1,22 +1,12 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { DateContextFx } from "@/lib/common/date";
+import { withDateServiceFx } from "@/lib/common/date";
 import { hash } from "@/lib/server/hmac";
 import { ServerHmacSchema } from "~/server/env/ServerHmacSchema";
 import { rateLimitEventFx } from "~/server/rate-limit/server/fx/rateLimitEventFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
-
-type BucketRow = {
-	key: string;
-	window: string;
-	count: number;
-};
-
-function _compareBucketRows(a: BucketRow, b: BucketRow) {
-	return a.window.localeCompare(b.window) || a.key.localeCompare(b.key);
-}
 
 describe("rateLimitEventFx", () => {
 	it("hashes keys and increments the same bucket through onConflict", async () => {
@@ -43,7 +33,7 @@ describe("rateLimitEventFx", () => {
 					"route:/listing/abc",
 				],
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => fixedNow,
 				}),
 			);
@@ -54,7 +44,7 @@ describe("rateLimitEventFx", () => {
 					"route:/listing/abc",
 				],
 			}).pipe(
-				Effect.provideService(DateContextFx, {
+				withDateServiceFx({
 					now: () => fixedNow,
 				}),
 			);

@@ -1,11 +1,11 @@
 import { createServerFn } from "@tanstack/react-start";
 import { Effect } from "effect";
+import { withDateServiceFx } from "@/lib/common/date";
 import { zodGuardFx } from "@/lib/common/fx";
 import { withLoggerFx } from "@/lib/common/log";
 import { withS3ConfigFx } from "~/common/s3/server/context/withS3ConfigFx";
 import { withS3ConfigEnv } from "~/common/s3/server/env/withS3ConfigEnv";
 import { s3PreSignFx } from "~/common/s3/server/fx/s3PreSignFx";
-import { withDateFx } from "~/server/database/fx/withDateFx";
 import { withKyselyFx } from "~/server/database/fx/withKyselyFx";
 import { withDatabaseMiddleware } from "~/server/middleware/withDatabaseMiddleware";
 import { withLogMiddleware } from "~/server/middleware/withLogMiddleware";
@@ -46,7 +46,7 @@ export const s3PreSignFn = createServerFn({
 			withS3ConfigFx(withS3ConfigEnv()),
 			withUploadConfigFx(withUploadConfigEnv()),
 			withLoggerFx(rootLogger),
-			withDateFx,
+			withDateServiceFx(),
 			withKyselyFx(database),
 			Effect.tapError((error) => {
 				return Effect.sync(() => {
