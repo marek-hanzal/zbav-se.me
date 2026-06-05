@@ -1,68 +1,15 @@
 import { Effect } from "effect";
 import { match, P } from "ts-pattern";
+import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { stripeClientFx } from "~/user/stripe/server/fx/stripeClientFx";
 
 export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
+	const logger = yield* getLoggerFx("bundleCollectionFx");
+	logger.trace("bundleCollectionFx");
+
 	const stripe = yield* stripeClientFx();
 
-	const products = yield* Effect.promise(async () => {
-		const products = await stripe.products.search({
-			/*
-			 * Stripe search can lag behind writes; bundle products are configured upfront,
-			 * and DB remains the delivery source of truth.
-			 */
-			query: "active:'true' AND -metadata['bundle']:null",
-			expand: [
-				"data.default_price",
-			],
-			limit: 100,
-		});
-
-		return products.data
-			.flatMap((product) =>
-				match({
-					bundle: product.metadata.bundle,
-					price: product.default_price,
-				})
-					.with(
-						{
-							bundle: P.string,
-							price: {
-								unit_amount: P.number,
-							},
-						},
-						({ bundle, price }) => {
-							const sort = Number(product.metadata.sort);
-							const stripeBundle = {
-								bundle,
-								name: product.name,
-								price: price.unit_amount,
-								sort: Number.POSITIVE_INFINITY,
-							};
-
-							if (Number.isFinite(sort)) {
-								stripeBundle.sort = sort;
-							}
-
-							return [
-								stripeBundle,
-							];
-						},
-					)
-					.otherwise(() => []),
-			)
-			.filter((bundle) => bundle.bundle.length > 0)
-			.toSorted((left, right) => left.sort - right.sort);
-	});
-
-	if (products.length === 0) {
-		return [];
-	}
-
-	const names = [
-		...new Set(products.map((bundle) => bundle.bundle)),
-	];
 	const { bundles, items, limits } = yield* dbFx(async (kysely) => {
 		const bundles = await kysely
 			.selectFrom("resource_bundle")
@@ -70,7 +17,6 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 				"id",
 				"name",
 			])
-			.where("name", "in", names)
 			.execute();
 
 		if (bundles.length === 0) {
@@ -115,6 +61,7 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 			limits,
 		};
 	});
+
 	const byName = new Map(
 		bundles.map((bundle) => [
 			bundle.name,
@@ -124,24 +71,101 @@ export const bundleCollectionFx = Effect.fn("bundleCollectionFx")(function* () {
 	const itemsById = Map.groupBy(items, (item) => item.resourceBundleId);
 	const limitsById = Map.groupBy(limits, (limit) => limit.resourceBundleId);
 
-	return products.flatMap((stripeBundle) => {
-		const bundle = byName.get(stripeBundle.bundle);
+	const products = yield* Effect.forEach(
+		bundles,
+		(bundle) => {
+			return Effect.gen(function* () {
+				const prices = yield* Effect.promise(() => {
+					return stripe.prices.list({
+						active: true,
+						lookup_keys: [
+							bundle.name,
+						],
+						expand: [
+							"data.product",
+						],
+						limit: 2,
+					});
+				});
+				const [price] = prices.data;
 
-		if (!bundle) {
-			return [];
-		}
+				if (!price) {
+					return null;
+				}
 
-		return [
-			{
-				id: bundle.id,
-				bundle: bundle.name,
-				name: stripeBundle.name,
-				price: stripeBundle.price,
-				items: itemsById.get(bundle.id) ?? [],
-				limits: limitsById.get(bundle.id) ?? [],
-			},
-		];
-	});
+				if (typeof price.unit_amount !== "number") {
+					return null;
+				}
+
+				if (prices.data.length > 1) {
+					logger.warn("Stripe price lookup key is not unique", {
+						lookupKey: bundle.name,
+						priceIds: prices.data.map((price) => price.id),
+					});
+
+					return null;
+				}
+
+				const product = match(price.product)
+					.with(
+						{
+							id: P.string,
+							metadata: {
+								sort: P.number.optional(),
+							},
+							name: P.string,
+						},
+						(product) => {
+							return product;
+						},
+					)
+					.otherwise(() => null);
+
+				if (!product) {
+					return null;
+				}
+
+				const sort = Number(product.metadata.sort);
+
+				return {
+					bundle: bundle.name,
+					id: bundle.id,
+					name: product.name,
+					price: price.unit_amount,
+					sort: Number.isFinite(sort) ? sort : Number.POSITIVE_INFINITY,
+				};
+			});
+		},
+		{
+			concurrency: 4,
+		},
+	);
+
+	return products
+		.flatMap((product) => {
+			if (!product) {
+				return [];
+			}
+
+			const bundle = byName.get(product.bundle);
+
+			if (!bundle) {
+				return [];
+			}
+
+			return [
+				{
+					id: bundle.id,
+					bundle: bundle.name,
+					name: product.name,
+					price: product.price,
+					sort: product.sort,
+					items: itemsById.get(bundle.id) ?? [],
+					limits: limitsById.get(bundle.id) ?? [],
+				},
+			];
+		})
+		.toSorted((left, right) => left.sort - right.sort);
 });
 
 export type bundleCollectionFx = ReturnType<typeof bundleCollectionFx>;
