@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
 import { stripeClientFx } from "../stripeClientFx";
-import { checkoutSessionSyncFx } from "./checkoutSessionSyncFx";
+import { sessionSyncFx } from "./sessionSyncFx";
 import { subscriptionSyncFx } from "./subscriptionSyncFx";
 
 export namespace syncFx {
@@ -44,7 +44,7 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 			return subscriptionSyncFx({
 				subscription: subscription.id,
 			}).pipe(
-				Effect.catchTag("SyncSkippedFx", (error) => {
+				Effect.catchTag("SyncSkipErrorFx", (error) => {
 					logger.warn("Stripe subscription sync skipped", {
 						customerId,
 						subscriptionId: subscription.id,
@@ -70,11 +70,11 @@ export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Prop
 			return sessions.data;
 		}),
 		(session) => {
-			return checkoutSessionSyncFx({
+			return sessionSyncFx({
 				id: session.id,
 				expiresAt,
 			}).pipe(
-				Effect.catchTag("SyncSkippedFx", (error) => {
+				Effect.catchTag("SyncSkipErrorFx", (error) => {
 					logger.warn("Stripe session sync skipped", {
 						customerId,
 						checkoutSessionId: session.id,

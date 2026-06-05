@@ -1,11 +1,11 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
+import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { SyncSkippedFx } from "../../error/SyncSkippedFx";
 
-export namespace bundleExpireFx {
+export namespace bundleCloseSyncFx {
 	export interface Props {
 		/**
 		 * Deterministic Stripe fulfillment key used by the grant sync.
@@ -25,12 +25,12 @@ export namespace bundleExpireFx {
  * the user_resource_bundle assignment, so rollback only needs to find the purchase
  * bundle through Stripe mapping rows and expire that assignment.
  */
-export const bundleExpireFx = Effect.fn("bundleExpireFx")(function* ({
+export const bundleCloseSyncFx = Effect.fn("bundleCloseSyncFx")(function* ({
 	key,
 	expiresAt,
-}: bundleExpireFx.Props) {
-	const logger = yield* getLoggerFx("bundleExpireFx");
-	logger.trace("bundleExpireFx", {
+}: bundleCloseSyncFx.Props) {
+	const logger = yield* getLoggerFx("bundleCloseSyncFx");
+	logger.trace("bundleCloseSyncFx", {
 		key,
 		expiresAt,
 	});
@@ -38,7 +38,7 @@ export const bundleExpireFx = Effect.fn("bundleExpireFx")(function* ({
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			/*
-			 * Serialize with bundleGrantSyncFx for the same Stripe key. This prevents a
+			 * Serialize with bundleOpenSyncFx for the same Stripe key. This prevents a
 			 * refund and a delayed success event from interleaving halfway through the same
 			 * purchase bundle.
 			 */
@@ -81,12 +81,10 @@ export const bundleExpireFx = Effect.fn("bundleExpireFx")(function* ({
 			});
 
 			if (bundleIds.length === 0) {
-				return yield* new SyncSkippedFx({
+				return yield* new NotFoundErrorFx({
+					resource: "stripe-one-off-purchase-bundle",
+					resourceId: key,
 					message: "Stripe one-off purchase bundle is missing",
-					reason: "one-off purchase bundle missing",
-					cause: {
-						key,
-					},
 				});
 			}
 
@@ -105,4 +103,4 @@ export const bundleExpireFx = Effect.fn("bundleExpireFx")(function* ({
 	);
 });
 
-export type bundleExpireFx = ReturnType<typeof bundleExpireFx>;
+export type bundleCloseSyncFx = ReturnType<typeof bundleCloseSyncFx>;

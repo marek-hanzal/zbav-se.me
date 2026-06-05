@@ -5,8 +5,8 @@ import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import { dbFx } from "~/server/database/fx/dbFx";
-import { SyncSkippedFx } from "../../error/SyncSkippedFx";
-import { subscriptionFetchFx } from "./subscriptionFetchFx";
+import { subscriptionFetchFx } from "../subscriptionFetchFx";
+import { SyncSkipErrorFx } from "../../error/SyncSkipErrorFx";
 
 export namespace subscriptionSyncFx {
 	export interface Props {
@@ -59,7 +59,7 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 	const periodEnd = itemPeriodEnd ? DateTime.fromSeconds(itemPeriodEnd).toJSDate() : null;
 
 	if (!resourceBundleName) {
-		return yield* new SyncSkippedFx({
+		return yield* new SyncSkipErrorFx({
 			message: "Stripe subscription metadata does not resolve resource bundle",
 			reason: "subscription metadata missing",
 			cause: {
@@ -80,7 +80,7 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 	});
 
 	if (!bundle) {
-		return yield* new SyncSkippedFx({
+		return yield* new SyncSkipErrorFx({
 			message: "Stripe subscription resource bundle is missing",
 			reason: "subscription bundle missing",
 			cause: {
@@ -101,7 +101,7 @@ export const subscriptionSyncFx = Effect.fn("subscriptionSyncFx")(function* ({
 	});
 
 	if (!userStripe) {
-		return yield* new SyncSkippedFx({
+		return yield* new SyncSkipErrorFx({
 			message: "Stripe subscription customer is not linked to a user",
 			reason: "subscription customer missing",
 			cause: {

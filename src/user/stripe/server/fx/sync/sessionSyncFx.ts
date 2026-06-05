@@ -2,16 +2,16 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match, P } from "ts-pattern";
 import { getLoggerFx } from "@/lib/common/log";
-import { SyncSkippedFx } from "../../error/SyncSkippedFx";
+import { SyncSkipErrorFx } from "../../error/SyncSkipErrorFx";
 import { stripeClientFx } from "../stripeClientFx";
-import { bundleExpireFx } from "./bundleExpireFx";
-import { bundleGrantSyncFx } from "./bundleGrantSyncFx";
+import { bundleCloseSyncFx } from "./bundleCloseSyncFx";
+import { bundleOpenSyncFx } from "./bundleOpenSyncFx";
 import { subscriptionSyncFx } from "./subscriptionSyncFx";
 
-export namespace checkoutSessionSyncFx {
+export namespace sessionSyncFx {
 	export interface Props {
 		/**
-		 * Checkout Session ID to refetch from Stripe.
+		 * Session ID to refetch from Stripe.
 		 */
 		id: string;
 		/**
@@ -23,18 +23,18 @@ export namespace checkoutSessionSyncFx {
 }
 
 /**
- * Syncs the latest state of one Stripe Checkout Session into local resources.
+ * Syncs the latest state of one Stripe Session into local resources.
  *
  * Webhooks can arrive out of order, so this Fx does not trust the event payload. It
  * refetches the session, checks the linked PaymentIntent/Charge for refund state,
  * and then either materializes one-off purchase bundles or expires them.
  */
-export const checkoutSessionSyncFx = Effect.fn("checkoutSessionSyncFx")(function* ({
+export const sessionSyncFx = Effect.fn("sessionSyncFx")(function* ({
 	id,
 	expiresAt,
-}: checkoutSessionSyncFx.Props) {
-	const logger = yield* getLoggerFx("checkoutSessionSyncFx");
-	logger.trace("checkoutSessionSyncFx", {
+}: sessionSyncFx.Props) {
+	const logger = yield* getLoggerFx("sessionSyncFx");
+	logger.trace("sessionSyncFx", {
 		id,
 	});
 
@@ -117,7 +117,7 @@ export const checkoutSessionSyncFx = Effect.fn("checkoutSessionSyncFx")(function
 			id: session.id,
 		});
 
-		return yield* new SyncSkippedFx({
+		return yield* new SyncSkipErrorFx({
 			message: "Stripe checkout session user is missing",
 			reason: "checkout user missing",
 			cause: {
@@ -168,17 +168,29 @@ export const checkoutSessionSyncFx = Effect.fn("checkoutSessionSyncFx")(function
 		}),
 		(lineItem) =>
 			(shouldExpire
-				? bundleExpireFx({
+				? bundleCloseSyncFx({
 						key: lineItem.key,
 						expiresAt,
 					})
-				: bundleGrantSyncFx({
+				: bundleOpenSyncFx({
 						userId,
 						bundle: lineItem.bundle,
 						key: lineItem.key,
 						createdAt: DateTime.fromSeconds(session.created).toJSDate(),
 					})
-			).pipe(Effect.catchTag("SyncSkippedFx", () => Effect.succeed(null))),
+			).pipe(
+				Effect.catchTag("SyncSkipErrorFx", () => Effect.succeed(null)),
+				Effect.catchTag("NotFoundErrorFx", (error) => {
+					logger.warn("Stripe one-off purchase sync target was not found", {
+						sessionId: session.id,
+						key: lineItem.key,
+						resource: error.resource,
+						resourceId: error.resourceId,
+					});
+
+					return Effect.succeed(null);
+				}),
+			),
 	);
 
 	return {
@@ -187,4 +199,4 @@ export const checkoutSessionSyncFx = Effect.fn("checkoutSessionSyncFx")(function
 	};
 });
 
-export type checkoutSessionSyncFx = ReturnType<typeof checkoutSessionSyncFx>;
+export type sessionSyncFx = ReturnType<typeof sessionSyncFx>;

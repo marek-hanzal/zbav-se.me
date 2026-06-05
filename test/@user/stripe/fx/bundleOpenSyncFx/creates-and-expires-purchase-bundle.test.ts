@@ -4,10 +4,10 @@ import { describe, expect, it } from "vitest";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
-import { bundleExpireFx } from "~/user/stripe/server/fx/sync/bundleExpireFx";
-import { bundleGrantSyncFx } from "~/user/stripe/server/fx/sync/bundleGrantSyncFx";
+import { bundleCloseSyncFx } from "~/user/stripe/server/fx/sync/bundleCloseSyncFx";
+import { bundleOpenSyncFx } from "~/user/stripe/server/fx/sync/bundleOpenSyncFx";
 
-describe("bundleGrantSyncFx", () => {
+describe("bundleOpenSyncFx", () => {
 	it("creates a dedicated purchase bundle and expires it by Stripe key", async () => {
 		const database = await testabase("stripe-bundle-grant-sync-purchase");
 
@@ -17,14 +17,14 @@ describe("bundleGrantSyncFx", () => {
 			const createdAt = DateTime.fromISO("2026-06-02T10:00:00.000Z").toJSDate();
 			const expiresAt = DateTime.fromISO("2026-06-03T10:00:00.000Z").toJSDate();
 
-			yield* bundleGrantSyncFx({
+			yield* bundleOpenSyncFx({
 				userId: buyer.id,
 				bundle: "package:buyer",
 				key,
 				createdAt,
 			});
 			const duplicate = yield* Effect.either(
-				bundleGrantSyncFx({
+				bundleOpenSyncFx({
 					userId: buyer.id,
 					bundle: "package:buyer",
 					key,
@@ -90,7 +90,7 @@ describe("bundleGrantSyncFx", () => {
 					.execute();
 			});
 
-			yield* bundleExpireFx({
+			yield* bundleCloseSyncFx({
 				key,
 				expiresAt,
 			});
@@ -109,7 +109,7 @@ describe("bundleGrantSyncFx", () => {
 			if (!Either.isLeft(duplicate)) {
 				throw new Error("Expected duplicate Stripe grant to be skipped");
 			}
-			expect(duplicate.left._tag).toBe("SyncSkippedFx");
+			expect(duplicate.left._tag).toBe("SyncSkipErrorFx");
 			expect(purchaseAssignment).toEqual({
 				availableAt: createdAt,
 				expiresAt: null,

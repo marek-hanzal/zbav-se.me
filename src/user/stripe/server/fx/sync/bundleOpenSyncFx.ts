@@ -6,9 +6,9 @@ import type { ResourceBundleItemTableSchema } from "~/server/database/@table/Res
 import type { ResourceBundleLimitTableSchema } from "~/server/database/@table/ResourceBundleLimitTableSchema";
 import { dbFx } from "~/server/database/fx/dbFx";
 import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
-import { SyncSkippedFx } from "../../error/SyncSkippedFx";
+import { SyncSkipErrorFx } from "../../error/SyncSkipErrorFx";
 
-export namespace bundleGrantSyncFx {
+export namespace bundleOpenSyncFx {
 	export interface Props {
 		userId: string;
 		/**
@@ -41,14 +41,14 @@ export namespace bundleGrantSyncFx {
  * expire that single assignment and kill exactly the resources created by the
  * purchase, without subtracting credits or guessing from current bundle config.
  */
-export const bundleGrantSyncFx = Effect.fn("bundleGrantSyncFx")(function* ({
+export const bundleOpenSyncFx = Effect.fn("bundleOpenSyncFx")(function* ({
 	userId,
 	bundle,
 	key,
 	createdAt,
-}: bundleGrantSyncFx.Props) {
-	const logger = yield* getLoggerFx("bundleGrantSyncFx");
-	logger.trace("bundleGrantSyncFx", {
+}: bundleOpenSyncFx.Props) {
+	const logger = yield* getLoggerFx("bundleOpenSyncFx");
+	logger.trace("bundleOpenSyncFx", {
 		userId,
 		bundle,
 		key,
@@ -68,7 +68,7 @@ export const bundleGrantSyncFx = Effect.fn("bundleGrantSyncFx")(function* ({
 				);
 			});
 
-			const existingStripeRows = yield* dbFx(async (kysely) => {
+			const currentBundle = yield* dbFx(async (kysely) => {
 				const [item, limit] = await Promise.all([
 					kysely
 						.selectFrom("resource_bundle_item_stripe")
@@ -92,8 +92,8 @@ export const bundleGrantSyncFx = Effect.fn("bundleGrantSyncFx")(function* ({
 				};
 			});
 
-			if (existingStripeRows.item || existingStripeRows.limit) {
-				return yield* new SyncSkippedFx({
+			if (currentBundle.item || currentBundle.limit) {
+				return yield* new SyncSkipErrorFx({
 					message: "Stripe one-off purchase was already fulfilled",
 					reason: "one-off already fulfilled",
 					cause: {
@@ -111,7 +111,7 @@ export const bundleGrantSyncFx = Effect.fn("bundleGrantSyncFx")(function* ({
 			});
 
 			if (!sourceBundle) {
-				return yield* new SyncSkippedFx({
+				return yield* new SyncSkipErrorFx({
 					message: "Stripe source resource bundle is missing",
 					reason: "source bundle missing",
 					cause: {
@@ -137,7 +137,7 @@ export const bundleGrantSyncFx = Effect.fn("bundleGrantSyncFx")(function* ({
 			});
 
 			if (sourceItems.length === 0 && sourceLimits.length === 0) {
-				return yield* new SyncSkippedFx({
+				return yield* new SyncSkipErrorFx({
 					message: "Stripe source resource bundle is empty",
 					reason: "source bundle empty",
 					cause: {
@@ -302,4 +302,4 @@ export const bundleGrantSyncFx = Effect.fn("bundleGrantSyncFx")(function* ({
 	);
 });
 
-export type bundleGrantSyncFx = ReturnType<typeof bundleGrantSyncFx>;
+export type bundleOpenSyncFx = ReturnType<typeof bundleOpenSyncFx>;
