@@ -1,61 +1,62 @@
 import { Effect } from "effect";
-import type { Stripe } from "stripe";
-import { match, P } from "ts-pattern";
 import { NotFoundErrorFx } from "@/lib/common/error";
 import { getLoggerFx } from "@/lib/common/log";
+import { RuntimeErrorFx } from "~/server/error/RuntimeErrorFx";
 import { stripeClientFx } from "./stripeClientFx";
 
 export namespace priceFetchFx {
 	export interface Props {
-		productId: string;
-		priceId: string | Stripe.Price;
+		lookupKey: string;
 	}
 }
 
 /**
- * Fetches one active recurring Stripe price for the given product.
+ * Fetches one active Stripe price by lookup key.
  *
- * Stripe can expose linked objects either as a plain ID or as an expanded object.
- * This Fx accepts both shapes and then refetches current Stripe data before handing
- * the price to callers.
+ * Our catalog contract is intentionally small: resource_bundle.name maps to the
+ * Stripe Price lookup key. Checkout only needs the fresh price ID, so this Fx does
+ * not accept expanded Stripe objects, validate product parents, or decide whether
+ * a caller needs a recurring or one-off price.
  *
  * Stripe SDK failures stay defects. A missing price is our domain-level mismatch
  * between configured Stripe product data and the checkout flow, so callers get a
  * typed NotFoundErrorFx.
  */
 export const priceFetchFx = Effect.fn("priceFetchFx")(function* ({
-	productId,
-	priceId,
+	lookupKey,
 }: priceFetchFx.Props) {
-	const resolvedPriceId = match(priceId)
-		.with(P.string, (priceId) => priceId)
-		.with(
-			{
-				id: P.string,
-			},
-			(price) => price.id,
-		)
-		.exhaustive();
-
 	const logger = yield* getLoggerFx("priceFetchFx");
 	logger.trace("priceFetchFx", {
-		productId,
-		priceId: resolvedPriceId,
+		lookupKey,
 	});
 
 	const stripe = yield* stripeClientFx();
+
 	const prices = yield* Effect.promise(() => {
-		return stripe.prices.search({
-			query: `active:'true' AND type:'recurring' AND product:'${productId}'`,
-			limit: 100,
+		return stripe.prices.list({
+			active: true,
+			lookup_keys: [
+				lookupKey,
+			],
+			limit: 2,
 		});
 	});
-	const price = prices.data.find((price) => price.id === resolvedPriceId);
+	const [price] = prices.data;
+
+	if (prices.data.length > 1) {
+		return yield* new RuntimeErrorFx({
+			message: "Stripe price lookup key is not unique",
+			cause: {
+				lookupKey,
+				priceIds: prices.data.map((price) => price.id),
+			},
+		});
+	}
 
 	if (!price) {
 		return yield* new NotFoundErrorFx({
 			resource: "stripe-price",
-			resourceId: resolvedPriceId,
+			resourceId: lookupKey,
 			message: "Stripe price was not found",
 		});
 	}
