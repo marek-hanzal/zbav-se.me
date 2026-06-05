@@ -55,9 +55,16 @@ export const Route = createFileRoute("/api/stripe/webhook")({
 						withDateServiceFx(),
 						withStripeConfigFx(withStripConfigEnv()),
 						withLoggerFx(rootLogger),
+						Effect.map(Response.json),
+						Effect.catchTag("InvalidRequestErrorFx", (error) =>
+							Effect.succeed(
+								Response.json(error.toJSON(), {
+									status: 400,
+								}),
+							),
+						),
 						Effect.runPromise,
 					)
-					.then(Response.json)
 					.catch((error) => {
 						logger.error("Stripe webhook failed", {
 							error,

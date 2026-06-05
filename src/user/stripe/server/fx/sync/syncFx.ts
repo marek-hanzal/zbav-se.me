@@ -1,152 +1,98 @@
 import { Effect } from "effect";
-import type Stripe from "stripe";
-import { match, P } from "ts-pattern";
 import { DateServiceFx } from "@/lib/common/date";
 import { getLoggerFx } from "@/lib/common/log";
-import { checkoutSessionCollectionSyncFx } from "./checkoutSessionCollectionSyncFx";
+import { stripeClientFx } from "../stripeClientFx";
 import { checkoutSessionSyncFx } from "./checkoutSessionSyncFx";
 import { subscriptionSyncFx } from "./subscriptionSyncFx";
 
 export namespace syncFx {
 	export interface Props {
 		/**
-		 * Verified Stripe event from webhookFx.
+		 * Stripe Customer ID that should be reconciled from the current Stripe API state.
 		 */
-		event: Stripe.Event;
+		customerId: string;
 	}
 }
 
 /**
- * Routes Stripe events to the smallest sync operation that can refetch current state.
+ * Reconciles one Stripe customer from Stripe API state into local resources.
  *
- * The event type is only a hint for which Stripe object ID to refetch. Local state
- * changes happen in the specialized sync Fxs, which makes event order irrelevant for
- * subscription state and one-off grant/rollback state.
+ * Webhooks are only pings that tell us which customer changed. This Fx deliberately
+ * ignores event payloads and lists current Stripe objects for the customer instead,
+ * so event delivery order cannot drive local state transitions.
  */
-export const syncFx = Effect.fn("syncFx")(function* ({ event }: syncFx.Props) {
+export const syncFx = Effect.fn("syncFx")(function* ({ customerId }: syncFx.Props) {
 	const logger = yield* getLoggerFx("syncFx");
 	logger.trace("syncFx", {
-		id: event.id,
-		type: event.type,
+		customerId,
 	});
 
 	const dateService = yield* DateServiceFx;
-	const expiresAt = dateService.ofSeconds(event.created).toJSDate();
+	const expiresAt = dateService.now().toJSDate();
+	const stripe = yield* stripeClientFx();
 
-	/*
-	 * Subscription and invoice events converge on the same subscription sync. Checkout
-	 * and payment/refund events converge on Checkout Session sync because one-off
-	 * fulfillment keys are derived from Checkout line items.
-	 */
-	const sync = Effect.gen(function* () {
-		return yield* match(event)
-			.with(
-				{
-					type: P.union(
-						"customer.subscription.created",
-						"customer.subscription.updated",
-						"customer.subscription.deleted",
-					),
-				},
-				(event) =>
-					subscriptionSyncFx({
-						subscription: event.data.object.id,
-					}),
-			)
-			.with(
-				{
-					type: P.union(
-						"invoice.paid",
-						"invoice.payment_failed",
-						"invoice.payment_succeeded",
-					),
-				},
-				(event) =>
-					match(event.data.object.parent?.subscription_details?.subscription)
-						.with(P.string, (subscription) =>
-							subscriptionSyncFx({
-								subscription,
-							}),
-						)
-						.with(
-							{
-								id: P.string,
-							},
-							(subscription) =>
-								subscriptionSyncFx({
-									subscription: subscription.id,
-								}),
-						)
-						.otherwise(() => Effect.void),
-			)
-			.with(
-				{
-					type: P.union(
-						"checkout.session.completed",
-						"checkout.session.async_payment_succeeded",
-						"checkout.session.async_payment_failed",
-						"checkout.session.expired",
-					),
-				},
-				(event) =>
-					checkoutSessionSyncFx({
-						id: event.data.object.id,
-						expiresAt,
-					}),
-			)
-			.with(
-				{
-					type: P.union(
-						"payment_intent.succeeded",
-						"payment_intent.payment_failed",
-						"payment_intent.canceled",
-					),
-				},
-				(event) =>
-					checkoutSessionCollectionSyncFx({
-						paymentIntentId: event.data.object.id,
-						expiresAt,
-					}),
-			)
-			.with(
-				{
-					type: "charge.refunded",
-				},
-				(event) =>
-					match(event.data.object.payment_intent)
-						.with(P.string, (paymentIntent) =>
-							checkoutSessionCollectionSyncFx({
-								paymentIntentId: paymentIntent,
-								expiresAt,
-							}),
-						)
-						.with(
-							{
-								id: P.string,
-							},
-							(paymentIntent) =>
-								checkoutSessionCollectionSyncFx({
-									paymentIntentId: paymentIntent.id,
-									expiresAt,
-								}),
-						)
-						.otherwise(() => Effect.void),
-			)
-			.otherwise(() => Effect.void);
-	});
-
-	return yield* sync.pipe(
-		Effect.catchTag("SyncSkippedFx", (error) => {
-			logger.warn("Stripe sync skipped", {
-				eventId: event.id,
-				eventType: event.type,
-				reason: error.reason,
-				cause: error.cause,
+	const subscriptions = yield* Effect.forEach(
+		yield* Effect.promise(async () => {
+			const subscriptions = await stripe.subscriptions.list({
+				customer: customerId,
+				status: "all",
+				limit: 100,
 			});
-
-			return Effect.void;
+			return subscriptions.data;
 		}),
+		(subscription) => {
+			return subscriptionSyncFx({
+				subscription: subscription.id,
+			}).pipe(
+				Effect.catchTag("SyncSkippedFx", (error) => {
+					logger.warn("Stripe subscription sync skipped", {
+						customerId,
+						subscriptionId: subscription.id,
+						reason: error.reason,
+						cause: error.cause,
+					});
+
+					return Effect.void;
+				}),
+			);
+		},
+		{
+			concurrency: 4,
+		},
 	);
+
+	const sessions = yield* Effect.forEach(
+		yield* Effect.promise(async () => {
+			const sessions = await stripe.checkout.sessions.list({
+				customer: customerId,
+				limit: 100,
+			});
+			return sessions.data;
+		}),
+		(session) => {
+			return checkoutSessionSyncFx({
+				id: session.id,
+				expiresAt,
+			}).pipe(
+				Effect.catchTag("SyncSkippedFx", (error) => {
+					logger.warn("Stripe session sync skipped", {
+						customerId,
+						checkoutSessionId: session.id,
+						reason: error.reason,
+						cause: error.cause,
+					});
+
+					return Effect.void;
+				}),
+			);
+		},
+	);
+
+	return {
+		customerId,
+		subscriptions: subscriptions.length,
+		checkoutSessions: sessions.length,
+	} as const;
 });
 
 export type syncFx = ReturnType<typeof syncFx>;

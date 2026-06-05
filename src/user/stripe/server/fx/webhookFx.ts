@@ -1,11 +1,12 @@
 import { Effect } from "effect";
+import { match, P } from "ts-pattern";
 import { DateServiceFx } from "@/lib/common/date";
 import { genId } from "@/lib/common/gen-id";
 import { getLoggerFx } from "@/lib/common/log";
 import type { NoticeSchema } from "@/lib/common/schema";
 import { StripeEventTableSchema } from "~/server/database/@table/StripeEventTableSchema";
 import { dbFx } from "~/server/database/fx/dbFx";
-import { withTransactionFx } from "~/server/database/fx/withTransactionFx";
+import { InvalidRequestErrorFx } from "~/server/error/InvalidRequestErrorFx";
 import { StripeConfigFx } from "../context/StripeConfigFx";
 import { stripeClientFx } from "./stripeClientFx";
 import { syncFx } from "./sync/syncFx";
@@ -43,59 +44,77 @@ export const webhookFx = Effect.fn("webhookFx")(function* (props: webhookFx.Prop
 			stripeConfig.webhook,
 		);
 	});
+	const customerId = match(event.data.object)
+		.with(
+			{
+				customer: P.string,
+			},
+			(object) => object.customer,
+		)
+		.with(
+			{
+				customer: {
+					id: P.string,
+				},
+			},
+			(object) => object.customer.id,
+		)
+		.otherwise(() => null);
 
-	return yield* withTransactionFx(
-		Effect.gen(function* () {
-			const dateContext = yield* DateServiceFx;
+	if (!customerId) {
+		return yield* new InvalidRequestErrorFx({
+			message: "Stripe webhook customer is missing",
+		});
+	}
 
-			const stripeEvent = yield* dbFx(async (kysely) => {
-				return kysely
-					.insertInto("stripe_event")
-					.values({
-						id: genId(),
-						eventId: event.id,
-						type: event.type,
-						payload: StripeEventTableSchema.shape.payload.parse(event),
-						createdAt: dateContext.now().toJSDate(),
-						processedAt: null,
-					})
-					.onConflict((oc) => {
-						return oc.column("eventId").doNothing();
-					})
-					.returning([
-						"id",
-						"processedAt",
-					])
-					.executeTakeFirst();
-			});
+	const dateContext = yield* DateServiceFx;
 
-			if (!stripeEvent) {
-				return {
-					type: "warning",
-					message: `Duplicate event [${event.type}]`,
-				} satisfies NoticeSchema.Type;
-			}
+	const stripeEvent = yield* dbFx(async (kysely) => {
+		return kysely
+			.insertInto("stripe_event")
+			.values({
+				id: genId(),
+				eventId: event.id,
+				type: event.type,
+				payload: StripeEventTableSchema.shape.payload.parse(event),
+				createdAt: dateContext.now().toJSDate(),
+				processedAt: null,
+			})
+			.onConflict((oc) => {
+				return oc.column("eventId").doNothing();
+			})
+			.returning([
+				"id",
+				"processedAt",
+			])
+			.executeTakeFirst();
+	});
 
-			yield* syncFx({
-				event,
-			});
+	if (!stripeEvent) {
+		return {
+			type: "warning",
+			message: `Duplicate event [${event.type}]`,
+		} satisfies NoticeSchema.Type;
+	}
 
-			yield* dbFx(async (kysely) => {
-				return kysely
-					.updateTable("stripe_event")
-					.set({
-						processedAt: dateContext.now().toJSDate(),
-					})
-					.where("id", "=", stripeEvent.id)
-					.execute();
-			});
+	yield* syncFx({
+		customerId,
+	});
 
-			return {
-				type: "info",
-				message: "Success",
-			} satisfies NoticeSchema.Type;
-		}),
-	);
+	yield* dbFx(async (kysely) => {
+		return kysely
+			.updateTable("stripe_event")
+			.set({
+				processedAt: dateContext.now().toJSDate(),
+			})
+			.where("id", "=", stripeEvent.id)
+			.execute();
+	});
+
+	return {
+		type: "info",
+		message: "Success",
+	} satisfies NoticeSchema.Type;
 });
 
 export type webhookFx = ReturnType<typeof webhookFx>;
