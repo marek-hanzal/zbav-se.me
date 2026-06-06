@@ -59,7 +59,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 		const seeds = [
 			limitSeed(
 				seller.id,
-				"listing.count",
+				"seller:limit:listing.count",
 				"2026-05-10T08:00:00.000Z",
 				"2026-05-10T08:00:00.000Z",
 				null,
@@ -67,7 +67,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				seller.id,
-				"listing.count",
+				"seller:limit:listing.count",
 				"2026-05-12T08:00:00.000Z",
 				"2026-05-12T08:45:00.000Z",
 				null,
@@ -75,7 +75,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				seller.id,
-				"listing.count",
+				"seller:limit:listing.count",
 				"2026-05-13T08:00:00.000Z",
 				"2026-05-13T08:30:00.000Z",
 				null,
@@ -83,7 +83,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				seller.id,
-				"feed.count",
+				"buyer:limit:feed.count",
 				"2026-05-10T09:00:00.000Z",
 				"2026-05-10T09:00:00.000Z",
 				null,
@@ -91,7 +91,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				seller.id,
-				"listing.gallery.count",
+				"seller:limit:listing.gallery.count",
 				"2026-05-10T10:00:00.000Z",
 				"2026-05-10T10:00:00.000Z",
 				null,
@@ -99,7 +99,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				seller.id,
-				"listing.gallery.count",
+				"seller:limit:listing.gallery.count",
 				"2026-05-12T11:30:00.000Z",
 				"2026-05-12T11:30:00.000Z",
 				null,
@@ -107,7 +107,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				buyer.id,
-				"feed.count",
+				"buyer:limit:feed.count",
 				"2026-05-10T12:00:00.000Z",
 				"2026-05-10T12:00:00.000Z",
 				null,
@@ -115,7 +115,7 @@ export const seedResourceLimitReadModelFx = (database: TestDatabase) =>
 			),
 			limitSeed(
 				buyer.id,
-				"listing.gallery.count",
+				"seller:limit:listing.gallery.count",
 				"2026-05-10T12:00:00.000Z",
 				"2026-05-10T12:00:00.000Z",
 				null,

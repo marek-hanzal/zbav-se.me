@@ -45,7 +45,7 @@ describe("draftCreateFx listing limit", () => {
 					.values({
 						id: genId(),
 						resourceBundleId: limitSeed.bundleId,
-						resourceDefinitionId: "listing.count",
+						resourceDefinitionId: "seller:limit:listing.count",
 						limit: limitSeed.limit,
 					})
 					.execute();

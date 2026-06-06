@@ -11,7 +11,7 @@ const SellerEnumSchema = z.enum([
 	"seller:limit:listing.gallery.count",
 	/**
 	 * By default, listings are delivered to non-paying buyers with delay, this perk
-     * enables seller to distribute their listings to _all_ users in time.
+	 * enables seller to distribute their listings to _all_ users in time.
 	 */
 	"seller:limit:listing.early-delivery",
 ]);
@@ -21,12 +21,12 @@ const BuyerEnumSchema = z.enum([
 	 * How many feeds a user can have
 	 */
 	"buyer:limit:feed.count",
-    /**
-     * Buyer-side counter-part for sellers' early-delivery.
-     *
-     * This per enables buyers to discover all the listings in the feed early; does not effect
-     * direct links which are enabled all the times.
-     */
+	/**
+	 * Buyer-side counter-part for sellers' early-delivery.
+	 *
+	 * This per enables buyers to discover all the listings in the feed early; does not effect
+	 * direct links which are enabled all the times.
+	 */
 	"buyer:limit:listing.early-discovery",
 	/**
 	 * Early Diescovery
@@ -47,10 +47,10 @@ const CommonEnumSchema = z.enum([
 ]);
 
 export const ResourceDefinitionEnumSchema = z
-	.union([
-		SellerEnumSchema,
-		BuyerEnumSchema,
-		CommonEnumSchema,
+	.enum([
+		...SellerEnumSchema.options,
+		...BuyerEnumSchema.options,
+		...CommonEnumSchema.options,
 	])
 	.meta({
 		id: "ResourceDefinitionEnum",

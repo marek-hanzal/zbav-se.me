@@ -46,7 +46,7 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 
 			yield* resourceLimitEnsureFx({
 				count: feedCount + 1,
-				resource: "feed.count",
+				resource: "buyer:limit:feed.count",
 				userId,
 			});
 

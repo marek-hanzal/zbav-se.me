@@ -13,8 +13,8 @@ describe("resource definition read model", () => {
 			const collection = yield* resourceDefinitionCollectionFx({
 				where: {
 					nameIn: [
-						"listing.count",
-						"feed.count",
+						"seller:limit:listing.count",
+						"buyer:limit:feed.count",
 					],
 				},
 				sort: [
@@ -26,7 +26,7 @@ describe("resource definition read model", () => {
 			});
 			const fetched = yield* resourceDefinitionFetchFx({
 				where: {
-					name: "listing.gallery.count",
+					name: "seller:limit:listing.gallery.count",
 				},
 			});
 

@@ -31,7 +31,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	const translator = useTranslator();
 	const [uploadIds, setUploadIds] = useState<string[]>(draft.withUploadIds);
 	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
-		resource: "listing.gallery.count",
+		resource: "seller:limit:listing.gallery.count",
 		count: uploadIds.length,
 	});
 	const galleryLimit = Math.max(uploadIds.length, Math.floor(resourceLimit.limit), 1);

@@ -350,7 +350,7 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 		])
 		.where("urb.userId", "=", registeredUser.id)
 		.where("urb.expiresAt", "is", null)
-		.where("rbi.resourceDefinitionId", "=", "item:token-small")
+		.where("rbi.resourceDefinitionId", "=", "common:item:token-small")
 		.orderBy("rb.name", "asc")
 		.execute();
 

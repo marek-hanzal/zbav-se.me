@@ -64,7 +64,9 @@ describe("resourceLimit read model fx", () => {
 				"listing.gallery.count",
 			]);
 			expect(
-				sellerCollection.find((item) => item.resourceDefinitionId === "feed.count"),
+				sellerCollection.find(
+					(item) => item.resourceDefinitionId === "buyer:limit:feed.count",
+				),
 			).toMatchObject({
 				limit: 4,
 			});

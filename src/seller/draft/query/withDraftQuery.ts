@@ -91,7 +91,7 @@ export const withDraftQuery = withEntityQuery({
 						{
 							fetch: {
 								where: {
-									resourceDefinitionId: "listing.gallery.count",
+									resourceDefinitionId: "seller:limit:listing.gallery.count",
 								},
 							},
 						},

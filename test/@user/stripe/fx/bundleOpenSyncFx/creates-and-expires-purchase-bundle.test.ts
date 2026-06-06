@@ -206,7 +206,7 @@ describe("bundleOpenSyncFx", () => {
 					])
 					.where("urb.userId", "=", buyer.id)
 					.where("urb.expiresAt", "is", null)
-					.where("rbi.resourceDefinitionId", "=", "item:token-small")
+					.where("rbi.resourceDefinitionId", "=", "common:item:token-small")
 					.orderBy("rb.name", "asc")
 					.execute();
 			});

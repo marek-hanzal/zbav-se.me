@@ -45,7 +45,7 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 		},
 	});
 	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
-		resource: "feed.count",
+		resource: "buyer:limit:feed.count",
 		count: feedCount,
 	});
 	const [isOpen, setIsOpen] = useState(false);

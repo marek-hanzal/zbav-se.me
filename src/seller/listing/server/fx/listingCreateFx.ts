@@ -51,7 +51,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 
 			yield* resourceLimitEnsureFx({
 				count: liveListingCount + 1,
-				resource: "listing.count",
+				resource: "seller:limit:listing.count",
 				userId,
 			});
 

@@ -58,7 +58,7 @@ describe("draftPatchFx gallery limit", () => {
 					.values({
 						id: genId(),
 						resourceBundleId: limitSeed.bundleId,
-						resourceDefinitionId: "listing.gallery.count",
+						resourceDefinitionId: "seller:limit:listing.gallery.count",
 						limit: GALLERY_LIMIT,
 					})
 					.execute();

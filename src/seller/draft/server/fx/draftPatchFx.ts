@@ -62,7 +62,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 			if (uploadIds && uploadIds.length > 0) {
 				yield* resourceLimitEnsureFx({
 					count: uploadIds.length,
-					resource: "listing.gallery.count",
+					resource: "seller:limit:listing.gallery.count",
 					userId,
 				});
 

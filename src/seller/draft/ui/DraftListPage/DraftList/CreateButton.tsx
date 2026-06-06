@@ -24,7 +24,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ _suspense, ...props }) =>
 		},
 	});
 	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
-		resource: "listing.count",
+		resource: "seller:limit:listing.count",
 		count: listingCount,
 	});
 	const draftCreateMutation = withDraftQuery.useCreateMutation({

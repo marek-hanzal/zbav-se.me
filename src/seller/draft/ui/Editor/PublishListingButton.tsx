@@ -31,7 +31,7 @@ export const PublishListingButton: FC<PublishListingButton.Props> = ({
 		},
 	});
 	const { data: resourceLimit } = withResourceLimitCheckQuery.useSuspenseQuery({
-		resource: "listing.count",
+		resource: "seller:limit:listing.count",
 		count: listingCount,
 	});
 
