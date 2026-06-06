@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { resourceLimitCollectionFx } from "~/user/resource-limit/server/fx/resourceLimitCollectionFx";
@@ -58,14 +59,16 @@ describe("resourceLimit read model fx", () => {
 
 			expect(sellerCollection).toHaveLength(4);
 			expect(sellerCollection.map((item) => item.resourceDefinitionId)).toEqual([
-				"feed.count",
-				"listing.count",
-				"listing.count",
-				"listing.gallery.count",
+				ResourceDefinitionEnumSchema.enum["buyer:limit:feed.count"],
+				ResourceDefinitionEnumSchema.enum["seller:limit:listing.count"],
+				ResourceDefinitionEnumSchema.enum["seller:limit:listing.count"],
+				ResourceDefinitionEnumSchema.enum["seller:limit:listing.gallery.count"],
 			]);
 			expect(
 				sellerCollection.find(
-					(item) => item.resourceDefinitionId === "buyer:limit:feed.count",
+					(item) =>
+						item.resourceDefinitionId ===
+						ResourceDefinitionEnumSchema.enum["buyer:limit:feed.count"],
 				),
 			).toMatchObject({
 				limit: 4,
@@ -80,19 +83,23 @@ describe("resourceLimit read model fx", () => {
 			).toEqual(
 				expect.arrayContaining([
 					{
-						resourceDefinitionId: "listing.count",
+						resourceDefinitionId:
+							ResourceDefinitionEnumSchema.enum["seller:limit:listing.count"],
 						limit: 2,
 					},
 					{
-						resourceDefinitionId: "listing.count",
+						resourceDefinitionId:
+							ResourceDefinitionEnumSchema.enum["seller:limit:listing.count"],
 						limit: 7,
 					},
 					{
-						resourceDefinitionId: "feed.count",
+						resourceDefinitionId:
+							ResourceDefinitionEnumSchema.enum["buyer:limit:feed.count"],
 						limit: 4,
 					},
 					{
-						resourceDefinitionId: "listing.gallery.count",
+						resourceDefinitionId:
+							ResourceDefinitionEnumSchema.enum["seller:limit:listing.gallery.count"],
 						limit: 10,
 					},
 				]),

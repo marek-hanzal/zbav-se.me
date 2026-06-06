@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import { resourceDefinitionCollectionFx } from "~/common/resource-definition/server/fx/resourceDefinitionCollectionFx";
 import { resourceDefinitionFetchFx } from "~/common/resource-definition/server/fx/resourceDefinitionFetchFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
@@ -32,17 +33,17 @@ describe("resource definition read model", () => {
 
 			expect(collection).toEqual([
 				{
-					id: "feed.count",
-					name: "feed.count",
+					id: ResourceDefinitionEnumSchema.enum["buyer:limit:feed.count"],
+					name: ResourceDefinitionEnumSchema.enum["buyer:limit:feed.count"],
 				},
 				{
-					id: "listing.count",
-					name: "listing.count",
+					id: ResourceDefinitionEnumSchema.enum["seller:limit:listing.count"],
+					name: ResourceDefinitionEnumSchema.enum["seller:limit:listing.count"],
 				},
 			]);
 			expect(fetched).toEqual({
-				id: "listing.gallery.count",
-				name: "listing.gallery.count",
+				id: ResourceDefinitionEnumSchema.enum["seller:limit:listing.gallery.count"],
+				name: ResourceDefinitionEnumSchema.enum["seller:limit:listing.gallery.count"],
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});

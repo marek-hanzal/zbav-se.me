@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { genId } from "@/lib/common/gen-id";
+import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { draftPatchFx } from "~/seller/draft/server/fx/draftPatchFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
@@ -126,7 +127,7 @@ describe("draftPatchFx gallery limit", () => {
 			expect(patched.withUploadIds).toEqual(atLimitUploadIds);
 			expectTaggedErrorFx(aboveLimit, {
 				tag: "ResourceLimitErrorFx",
-				message: "Resource limit exceeded for [listing.gallery.count]",
+				message: `Resource limit exceeded for [${ResourceDefinitionEnumSchema.enum["seller:limit:listing.gallery.count"]}]`,
 			});
 			expect(galleryItems).toEqual(
 				atLimitUploadIds.map((uploadId, sort) => ({

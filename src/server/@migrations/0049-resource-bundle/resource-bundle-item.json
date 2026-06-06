@@ -1,8 +1,0 @@
-[
-	{
-		"name": "package:buyer",
-		"resource": "item:token-small",
-		"amount": 1,
-		"expiration": null
-	}
-]

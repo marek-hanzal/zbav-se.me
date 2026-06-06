@@ -1,9 +1,6 @@
 import type { withDatabaseFx } from "@/lib/common/database";
 import { genId } from "@/lib/common/gen-id";
-import type { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
-import resourceBundleItemSeedData from "~/server/@migrations/0049-resource-bundle/resource-bundle-item.json" with {
-	type: "json",
-};
+import { resourceBundleItemSeedData } from "~/server/@migrations/0049-resource-bundle/resource-bundle-item";
 import type { ResourceBundleItemTableSchema } from "../@table/ResourceBundleItemTableSchema";
 import type { Database } from "../Database";
 
@@ -12,24 +9,17 @@ type ResourceBundleItemImportRow = Pick<
 	"id" | "resourceBundleId" | "resourceDefinitionId" | "amount" | "expiration"
 >;
 
-interface ResourceBundleItemSeed {
-	name: string;
-	resource: string;
-	amount: number;
-	expiration: number | null;
-}
-
 export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 	name: "resource-bundle-item",
 	async run({ kysely }) {
-		const resourceBundleItems: ResourceBundleItemSeed[] = resourceBundleItemSeedData;
+		const resourceBundleItems = resourceBundleItemSeedData;
 
 		if (resourceBundleItems.length === 0) {
 			return;
 		}
 
 		const resourceBundleNames = [
-			...new Set(resourceBundleItems.map((item) => item.name)),
+			...new Set(resourceBundleItems.map((item) => item.resourceBundleId)),
 		];
 		const resourceBundles = await kysely
 			.selectFrom("resource_bundle")
@@ -46,16 +36,16 @@ export const importResourceBundleItem: withDatabaseFx.Import<Database> = {
 			]),
 		);
 		const values = resourceBundleItems.map((item): ResourceBundleItemImportRow => {
-			const resourceBundleId = resourceBundleIdByName.get(item.name);
+			const resourceBundleId = resourceBundleIdByName.get(item.resourceBundleId);
 
 			if (!resourceBundleId) {
-				throw new Error(`Missing resource bundle '${item.name}'`);
+				throw new Error(`Missing resource bundle '${item.resourceBundleId}'`);
 			}
 
 			return {
 				id: genId(),
 				resourceBundleId,
-				resourceDefinitionId: item.resource as ResourceDefinitionEnumSchema.Type,
+				resourceDefinitionId: item.resourceDefinitionId,
 				amount: item.amount,
 				expiration: item.expiration,
 			};

@@ -2,6 +2,7 @@ import { Effect, Either } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { genId } from "@/lib/common/gen-id";
+import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -131,13 +132,15 @@ describe("bundleOpenSyncFx", () => {
 				{
 					amount: "1.00",
 					expiration: null,
-					resourceDefinitionId: "item:token-small",
+					resourceDefinitionId:
+						ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 				},
 			]);
 			expect(purchaseLimits).toEqual([
 				{
 					limit: "15.00",
-					resourceDefinitionId: "feed.count",
+					resourceDefinitionId:
+						ResourceDefinitionEnumSchema.enum["buyer:limit:feed.count"],
 				},
 			]);
 			expect(itemSources).toEqual([
@@ -218,12 +221,14 @@ describe("bundleOpenSyncFx", () => {
 				{
 					name: "package:buyer",
 					amount: "1.00",
-					resourceDefinitionId: "item:token-small",
+					resourceDefinitionId:
+						ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 				},
 				{
 					name: key,
 					amount: "1.00",
-					resourceDefinitionId: "item:token-small",
+					resourceDefinitionId:
+						ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 				},
 			]);
 			expect(tokenTotal).toBe(2);

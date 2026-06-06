@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { describe, it } from "vitest";
 import { genId } from "@/lib/common/gen-id";
+import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import { draftCreateFx } from "~/seller/draft/server/fx/draftCreateFx";
 import { expectTaggedErrorFx } from "~/test/common/fx/expectTaggedErrorFx";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
@@ -68,7 +69,7 @@ describe("draftCreateFx listing limit", () => {
 
 			expectTaggedErrorFx(result, {
 				tag: "ResourceLimitErrorFx",
-				message: "Resource limit exceeded for [listing.count]",
+				message: `Resource limit exceeded for [${ResourceDefinitionEnumSchema.enum["seller:limit:listing.count"]}]`,
 			});
 		}).pipe(withRuntimeFx(database), Effect.runPromise);
 	});
