@@ -2,6 +2,7 @@ import { Effect, Either } from "effect";
 import { DateTime } from "luxon";
 import Stripe from "stripe";
 import { describe, expect, it } from "vitest";
+import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import { withRuntimeFx } from "~/test/common/fx/withRuntimeFx";
 import { testabase } from "~/test/testabase";
 import { createUsersFx } from "~/test/user/fx/createUsersFx";
@@ -35,14 +36,16 @@ describe("sessionSyncFx", () => {
 			const prices = await stripe.prices.list({
 				active: true,
 				lookup_keys: [
-					"item:token-small",
+					ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 				],
 				limit: 2,
 			});
 			const [price] = prices.data;
 
 			if (!price) {
-				throw new Error("Expected item:token-small Stripe price");
+				throw new Error(
+					`Expected ${ResourceDefinitionEnumSchema.enum["common:item:token-small"]} Stripe price`,
+				);
 			}
 
 			const session = await stripe.checkout.sessions.create({
@@ -117,14 +120,16 @@ describe("sessionSyncFx", () => {
 			const prices = await stripe.prices.list({
 				active: true,
 				lookup_keys: [
-					"item:token-small",
+					ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 				],
 				limit: 2,
 			});
 			const [price] = prices.data;
 
 			if (!price) {
-				throw new Error("Expected item:token-small Stripe price");
+				throw new Error(
+					`Expected ${ResourceDefinitionEnumSchema.enum["common:item:token-small"]} Stripe price`,
+				);
 			}
 
 			const bundleKey = `stripe:checkout:test-${buyer.id}`;

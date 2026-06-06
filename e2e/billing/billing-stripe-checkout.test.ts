@@ -1,5 +1,6 @@
 import type { Page } from "@playwright/test";
 import Stripe from "stripe";
+import { ResourceDefinitionEnumSchema } from "~/common/resource-definition/enum/ResourceDefinitionEnumSchema";
 import { expect, test } from "../test";
 import { createUser } from "../utils/createUser";
 
@@ -271,14 +272,16 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 	const prices = await stripe.prices.list({
 		active: true,
 		lookup_keys: [
-			"item:token-small",
+			ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 		],
 		limit: 2,
 	});
 	const [upsellPrice] = prices.data;
 
 	if (!upsellPrice) {
-		throw new Error("Expected item:token-small Stripe price");
+		throw new Error(
+			`Expected ${ResourceDefinitionEnumSchema.enum["common:item:token-small"]} Stripe price`,
+		);
 	}
 
 	const bundleKey = `stripe:checkout:upsell-${registeredUser.id}`;
@@ -358,12 +361,12 @@ test("Stripe checkout provisions buyer subscription with token upsell", async ({
 		{
 			name: "package:buyer",
 			amount: "1.00",
-			resourceDefinitionId: "item:token-small",
+			resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 		},
 		{
 			name: bundleKey,
 			amount: "1.00",
-			resourceDefinitionId: "item:token-small",
+			resourceDefinitionId: ResourceDefinitionEnumSchema.enum["common:item:token-small"],
 		},
 	]);
 });
